@@ -6,11 +6,11 @@
 #define __OREGION_H
 
 #ifndef DEBUG
-#include <OREGIONS.H>
+#include <OREGIONS.h>
 #endif
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 //---------- define constant ---------//

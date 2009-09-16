@@ -5,7 +5,7 @@
 #define __OVBROWSE_H
 
 #ifndef __OSCROLL_H
-#include <OSCROLL.H>
+#include <OSCROLL.h>
 #endif
 
 //------------ Define macro constant --------------//

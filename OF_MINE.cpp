@@ -1,19 +1,19 @@
 //Filename    : OF_MINE.CPP
 //Description : Firm Mine
 
-#include <OINFO.H>
-#include <OVGA.H>
-#include <OSTR.H>
-#include <OFONT.H>
-#include <ONEWS.H>
-#include <OUNIT.H>
-#include <ORACERES.H>
-#include <OGAME.H>
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <OSITE.H>
-#include <OF_MINE.H>
-#include <OF_FACT.H>
+#include <OINFO.h>
+#include <OVGA.h>
+#include <OSTR.h>
+#include <OFONT.h>
+#include <ONEWS.h>
+#include <OUNIT.h>
+#include <ORACERES.h>
+#include <OGAME.h>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <OSITE.h>
+#include <OF_MINE.h>
+#include <OF_FACT.h>
 
 //--------- Begin of function FirmMine::FirmMine ---------//
 //

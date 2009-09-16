@@ -5,11 +5,11 @@
 // Owner       : Gilbert
 
 
-#include <OSERES.H>
-#include <OSE.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <OCONFIG.H>
+#include <OSERES.h>
+#include <OSE.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <OCONFIG.h>
 #include <string.h>
 #include <stdlib.h>
 

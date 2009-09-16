@@ -7,7 +7,7 @@
 #ifndef NO_MEM_CLASS
 
 #include <stdio.h>
-#include <ALL.H>
+#include <ALL.h>
 
 //--------- Define Constants -----------//
 

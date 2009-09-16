@@ -2,19 +2,19 @@
 //Description : Object Town Array
 
 #include <stdlib.h>
-#include <OBOX.H>
-#include <OWORLD.H>
-#include <OINFO.H>
-#include <OCONFIG.H>
-#include <OSYS.H>
-#include <OTOWN.H>
-#include <OF_MARK.H>
-#include <OF_MONS.H>
-#include <ONATION.H>
-#include <OGAME.H>
+#include <OBOX.h>
+#include <OWORLD.h>
+#include <OINFO.h>
+#include <OCONFIG.h>
+#include <OSYS.h>
+#include <OTOWN.h>
+#include <OF_MARK.h>
+#include <OF_MONS.h>
+#include <ONATION.h>
+#include <OGAME.h>
 
 #ifdef DEBUG
-#include <OFONT.H>
+#include <OFONT.h>
 
 //### begin alex 20/9 ###//
 static unsigned long	last_town_ai_profile_time = 0L;

@@ -1,10 +1,10 @@
 //Filename    : OVBROWIF.CPP
 //Description : Object Visual Browse for the Interface
 
-#include <OSYS.H>
-#include <OINFO.H>
-#include <OVGA.H>
-#include <OVBROWIF.H>
+#include <OSYS.h>
+#include <OINFO.h>
+#include <OVGA.h>
+#include <OVBROWIF.h>
 
 
 //---------- Begin of function VBrowseIF::VBrowseIF -------//

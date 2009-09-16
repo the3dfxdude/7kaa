@@ -1,32 +1,32 @@
 //Filename    : OGAMEMP.CPP
 //Description : Main Game Object - Multiplayer Game (using Imagic multiplayer SDK)
 
-#include <OSYS.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OBOX.H>
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OBUTT3D.H>
-#include <ONATION.H>
-#include <ORACERES.H>
-#include <OREMOTE.H>
-#include <OBATTLE.H>
-#include <OGAME.H>
-#include <ODPLAY.H>
-#include <OIMMPLAY.H>
-#include <OERRCTRL.H>
-#include <OGFILE.H>
-#include <OCONFIG.H>
-#include <OIMGRES.H>
-#include <OGET.H>
-#include <KEY.H>
-#include <OMUSIC.H>
-#include <OBUTTCUS.H>
-#include <OCOLTBL.H>
-#include <OGETA.H>
-#include <OSLIDCUS.H>
-#include <OBLOB.H>
+#include <OSYS.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OBOX.h>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OBUTT3D.h>
+#include <ONATION.h>
+#include <ORACERES.h>
+#include <OREMOTE.h>
+#include <OBATTLE.h>
+#include <OGAME.h>
+#include <ODPLAY.h>
+#include <OIMMPLAY.h>
+#include <OERRCTRL.h>
+#include <OGFILE.h>
+#include <OCONFIG.h>
+#include <OIMGRES.h>
+#include <OGET.h>
+#include <KEY.h>
+#include <OMUSIC.h>
+#include <OBUTTCUS.h>
+#include <OCOLTBL.h>
+#include <OGETA.h>
+#include <OSLIDCUS.h>
+#include <OBLOB.h>
 
 // --------- Define constant --------//
 

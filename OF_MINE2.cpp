@@ -1,16 +1,16 @@
 //Filename    : OF_MINE2.CPP
 //Description : Firm Mine - AI functions
 
-#include <OINFO.H>
-#include <OUNIT.H>
-#include <ORACERES.H>
-#include <OGAME.H>
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <OSITE.H>
-#include <OF_MINE.H>
-#include <OF_FACT.H>
-#include <OF_MARK.H>
+#include <OINFO.h>
+#include <OUNIT.h>
+#include <ORACERES.h>
+#include <OGAME.h>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <OSITE.h>
+#include <OF_MINE.h>
+#include <OF_FACT.h>
+#include <OF_MARK.h>
 
 
 //------- Begin of function FirmMine::process_ai -----------//

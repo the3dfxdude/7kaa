@@ -1,11 +1,11 @@
 //Filename   : OAI_UNIT.CPP
 //Description: AI - unit related functions
 
-#include <ALL.H>
-#include <OUNIT.H>
-#include <OF_INN.H>
-#include <OTOWN.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OUNIT.h>
+#include <OF_INN.h>
+#include <OTOWN.h>
+#include <ONATION.h>
 
 
 //-------- Begin of function Nation::get_skilled_unit -------//

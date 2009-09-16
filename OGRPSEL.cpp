@@ -1,8 +1,8 @@
 #include <memory.h>
-#include <OGRPSEL.H>
-#include <OPOWER.H>
-#include <OUNIT.H>
-#include <ONATION.H>
+#include <OGRPSEL.h>
+#include <OPOWER.h>
+#include <OUNIT.h>
+#include <ONATION.h>
 
 //--------------- begin of function GroupSelect::GroupSelect ----------------//
 GroupSelect::GroupSelect()

@@ -5,17 +5,17 @@
 
 #include <windowsx.h>
 
-#include <ALL.H>
-#include <IMGFUN.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OCOLTBL.H>
-#include <OFILE.H>
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OLOG.H>
+#include <ALL.h>
+#include <IMGFUN.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OCOLTBL.h>
+#include <OFILE.h>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OLOG.h>
 // ##### begin Gilbert 16/9 #######//
-#include <OVGALOCK.H>
+#include <OVGALOCK.h>
 // ##### end Gilbert 16/9 #######//
 
 //-------- Define constant --------//

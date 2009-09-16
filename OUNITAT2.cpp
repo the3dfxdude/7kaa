@@ -2,17 +2,17 @@
 //Description : Object Unit attack processing function
 //Owner		  : Alex
 
-#include <ALL.H>
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <OBULLET.H>
-#include <OU_MARI.H>
-#include <OFIRM.H>
-#include <OGAME.H>
-#include <OTOWN.H>
-#include <OF_CAMP.H>
-#include <OEFFECT.H>
-#include <OU_CART.H>
+#include <ALL.h>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <OBULLET.h>
+#include <OU_MARI.h>
+#include <OFIRM.h>
+#include <OGAME.h>
+#include <OTOWN.h>
+#include <OF_CAMP.h>
+#include <OEFFECT.h>
+#include <OU_CART.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

@@ -5,11 +5,11 @@
 #define __OWORLDMT_H
 
 #ifndef __OMATRIX_H
-#include <OMATRIX.H>
+#include <OMATRIX.h>
 #endif
 
 #ifndef __ODYNARR_H
-#include <ODYNARR.H>
+#include <ODYNARR.h>
 #endif
 
 //-------- World matrix size ------------//

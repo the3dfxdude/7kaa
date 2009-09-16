@@ -5,15 +5,15 @@
 #define __OF_BASE_H
 
 #ifndef __OUNIT_H
-#include <OUNIT.H>
+#include <OUNIT.h>
 #endif
 
 #ifndef __OSKILL_H
-#include <OSKILL.H>
+#include <OSKILL.h>
 #endif
 
 #ifndef __OFIRM_H
-#include <OFIRM.H>
+#include <OFIRM.h>
 #endif
 
 //------- Define constant -----------//

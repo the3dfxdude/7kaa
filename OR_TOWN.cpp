@@ -1,18 +1,18 @@
 //Filename    : OR_TOWN.CPP
 //Description : Town Report
 
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OIMGRES.H>
-#include <OVBROWIF.H>
-#include <OBUTTON.H>
-#include <ORACERES.H>
-#include <OFIRM.H>
-#include <OFIRM.H>
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <OUNIT.H>
-#include <OINFO.H>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OIMGRES.h>
+#include <OVBROWIF.h>
+#include <OBUTTON.h>
+#include <ORACERES.h>
+#include <OFIRM.h>
+#include <OFIRM.h>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <OUNIT.h>
+#include <OINFO.h>
 
 //------------- Define coordinations -----------//
 

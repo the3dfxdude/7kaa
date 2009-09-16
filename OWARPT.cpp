@@ -2,11 +2,11 @@
 // Description : War point
 
 
-#include <COLOR.H>
-#include <OVGABUF.H>
-#include <OWORLD.H>
-#include <OWARPT.H>
-#include <ALL.H>
+#include <COLOR.h>
+#include <OVGABUF.h>
+#include <OWORLD.h>
+#include <OWARPT.h>
+#include <ALL.h>
 
 // --------- define constant ---------//
 

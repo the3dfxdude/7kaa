@@ -3,11 +3,11 @@
 // Onwer       : Gilbert
 
 
-#include <OSNOWRES.H>
-#include <OVGABUF.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <ALL.H>
+#include <OSNOWRES.h>
+#include <OVGABUF.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <ALL.h>
 
 
 // --------- define constant --------//

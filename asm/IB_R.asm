@@ -3,7 +3,7 @@
 ;              but without color key transparency handling
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

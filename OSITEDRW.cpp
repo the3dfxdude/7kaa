@@ -1,15 +1,15 @@
 //Filename    : OSITE2.CPP
 //Description : Object Site Material - display info functions
 
-#include <OVGA.H>
-#include <OINFO.H>
-#include <OFONT.H>
-#include <OWORLD.H>
-#include <OIMGRES.H>
-#include <ORAWRES.H>
-#include <OGODRES.H>
-#include <ORACERES.H>
-#include <OSITE.H>
+#include <OVGA.h>
+#include <OINFO.h>
+#include <OFONT.h>
+#include <OWORLD.h>
+#include <OIMGRES.h>
+#include <ORAWRES.h>
+#include <OGODRES.h>
+#include <ORACERES.h>
+#include <OSITE.h>
 
 //--------- Begin of function Site::disp_info ---------//
 //

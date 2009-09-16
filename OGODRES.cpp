@@ -1,16 +1,16 @@
 //Filename    : OGODRES.CPP
 //Description : God resource class
 
-#include <OSYS.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <OSPRTRES.H>
-#include <ONATION.H>
-#include <OUNIT.H>
-#include <OUNITRES.H>
-#include <OU_GOD.H>
-#include <OF_BASE.H>
-#include <OGODRES.H>
+#include <OSYS.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <OSPRTRES.h>
+#include <ONATION.h>
+#include <OUNIT.h>
+#include <OUNITRES.h>
+#include <OU_GOD.h>
+#include <OF_BASE.h>
+#include <OGODRES.h>
 
 //---------- #define constant ------------//
 

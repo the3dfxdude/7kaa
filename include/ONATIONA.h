@@ -5,11 +5,11 @@
 #define __ONATIONA_H
 
 #ifndef __ODYNARRB_H
-#include <ODYNARRB.H>
+#include <ODYNARRB.h>
 #endif
 
 #ifndef __ONATION_H
-#include <ONATION.H>
+#include <ONATION.h>
 #endif
 
 //---- at least wait for 1 year after a nation is deleted before setting up a new nation. ---//

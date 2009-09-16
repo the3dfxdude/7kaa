@@ -1,19 +1,19 @@
 //Filename    : OGAMMAIN.CPP
 //Description : Main Game Object - Main menu
 
-#include <OVGA.H>
-#include <OIMGRES.H>
-#include <OSYS.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OFONT.H>
-#include <OTUTOR.H>
-#include <OBUTTON.H>
-#include <OBATTLE.H>
-#include <OGFILE.H>
-#include <OMUSIC.H>
-#include <OGAME.H>
-#include <OVGALOCK.H>
+#include <OVGA.h>
+#include <OIMGRES.h>
+#include <OSYS.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OFONT.h>
+#include <OTUTOR.h>
+#include <OBUTTON.h>
+#include <OBATTLE.h>
+#include <OGFILE.h>
+#include <OMUSIC.h>
+#include <OGAME.h>
+#include <OVGALOCK.h>
 
 #undef DISABLE_MULTI_PLAYER
 #undef DISABLE_SINGLE_PLAYER_NEW_GAME

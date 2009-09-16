@@ -6,10 +6,10 @@
 #define __OOPTMENU_H
 
 
-#include <OCONFIG.H>
-#include <OBUTTCUS.H>
-#include <OBUTT3D.H>
-#include <OSLIDCUS.H>
+#include <OCONFIG.h>
+#include <OBUTTCUS.h>
+#include <OBUTT3D.h>
+#include <OSLIDCUS.h>
 
 class OptionMenu
 {

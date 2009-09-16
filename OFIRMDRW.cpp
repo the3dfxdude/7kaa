@@ -1,21 +1,21 @@
 //Filename    : OFIRMDRW.CPP
 //Description : Firm drawing routines
 
-#include <COLCODE.H>
-#include <OSYS.H>
-#include <OVGA.H>
-#include <ONATION.H>
-#include <OSPRITE.H>
-#include <OINFO.H>
-#include <ORAWRES.H>
-#include <OPOWER.H>
-#include <OGAME.H>
-#include <OANLINE.H>
-#include <OIMGRES.H>
-#include <OWORLD.H>
-#include <OF_BASE.H>
-#include <OSE.H>
-#include <OREMOTE.H>
+#include <COLCODE.h>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <ONATION.h>
+#include <OSPRITE.h>
+#include <OINFO.h>
+#include <ORAWRES.h>
+#include <OPOWER.h>
+#include <OGAME.h>
+#include <OANLINE.h>
+#include <OIMGRES.h>
+#include <OWORLD.h>
+#include <OF_BASE.h>
+#include <OSE.h>
+#include <OREMOTE.h>
 
 //------- define static vars -------//
 

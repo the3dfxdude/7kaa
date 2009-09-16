@@ -1,14 +1,14 @@
 //Filename    : OFIRMRES.CPP
 //Description : Firm material resource object
 
-#include <OSYS.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <OUNIT.H>
-#include <ONATION.H>
-#include <OFIRMRES.H>
+#include <OSYS.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <OUNIT.h>
+#include <ONATION.h>
+#include <OFIRMRES.h>
 #if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-	#include <OTRANSL.H>
+#include <OTRANSL.h>
 #endif
 
 //---------- #define constant ------------//

@@ -3,13 +3,13 @@
 // Owner       : Gilbert
 
 
-#include <OEXPMASK.H>
-#include <OFILE.H>
-#include <OWORLDMT.H>
-#include <OVGABUF.H>
-#include <OSTR.H>
-#include <OCOLTBL.H>
-#include <OCONFIG.H>
+#include <OEXPMASK.h>
+#include <OFILE.h>
+#include <OWORLDMT.h>
+#include <OVGABUF.h>
+#include <OSTR.h>
+#include <OCOLTBL.h>
+#include <OCONFIG.h>
 
 // --------- Define Constant ------//
 #define MASK_FILENAME "EXPLMASK.BIN"

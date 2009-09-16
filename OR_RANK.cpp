@@ -1,13 +1,13 @@
 //Filename    : OR_RANK.CPP
 //Description : Ranking report
 
-#include <ODATE.H>
-#include <OFONT.H>
-#include <OGAME.H>
-#include <OCONFIG.H>
-#include <OVBROWIF.H>
-#include <ONATION.H>
-#include <OINFO.H>
+#include <ODATE.h>
+#include <OFONT.h>
+#include <OGAME.h>
+#include <OCONFIG.h>
+#include <OVBROWIF.h>
+#include <ONATION.h>
+#include <OINFO.h>
 
 //------------- Define coordinations -----------//
 

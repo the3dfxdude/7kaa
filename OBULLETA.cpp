@@ -2,14 +2,14 @@
 //Description : Object Bullet Array
 //Owner		  : Alex
 
-#include <OVGA.H>
-#include <OUNIT.H>
-#include <OBULLET.H>
-#include <OWORLD.H>
-#include <OTOWN.H>
-#include <OB_PROJ.H>
-#include <OB_HOMIN.H>
-#include <OB_FLAME.H>
+#include <OVGA.h>
+#include <OUNIT.h>
+#include <OBULLET.h>
+#include <OWORLD.h>
+#include <OTOWN.h>
+#include <OB_PROJ.h>
+#include <OB_HOMIN.h>
+#include <OB_FLAME.h>
 
 
 //--------- Begin of function BulletArray::BulletArray ---------//

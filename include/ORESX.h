@@ -5,7 +5,7 @@
 #define __ORESX_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 //--------- Define structure ResIndex ----------//

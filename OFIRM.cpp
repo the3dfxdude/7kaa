@@ -1,36 +1,36 @@
 //Filename    : OFIRM.CPP
 //Description : Object Firm
 
-#include <OVGA.H>
-#include <ODATE.H>
-#include <OMLINK.H>
-#include <OWORLD.H>
-#include <OPOWER.H>
-#include <OCONFIG.H>
-#include <OGAME.H>
-#include <OUNIT.H>
-#include <ONEWS.H>
-#include <OSYS.H>
-#include <OSPY.H>
-#include <OSITE.H>
-#include <OINFO.H>
-#include <ONEWS.H>
-#include <ONATION.H>
-#include <OFIRM.H>
-#include <ORACERES.H>
-#include <OTOWN.H>
-#include <OSPRITE.H>
-#include <OFIRMRES.H>
-#include <OF_MARK.H>
-#include <OREMOTE.H>
-#include <OF_CAMP.H>
-#include <OF_HARB.H>
-#include <OSERES.H>
-#include <OREBEL.H>
+#include <OVGA.h>
+#include <ODATE.h>
+#include <OMLINK.h>
+#include <OWORLD.h>
+#include <OPOWER.h>
+#include <OCONFIG.h>
+#include <OGAME.h>
+#include <OUNIT.h>
+#include <ONEWS.h>
+#include <OSYS.h>
+#include <OSPY.h>
+#include <OSITE.h>
+#include <OINFO.h>
+#include <ONEWS.h>
+#include <ONATION.h>
+#include <OFIRM.h>
+#include <ORACERES.h>
+#include <OTOWN.h>
+#include <OSPRITE.h>
+#include <OFIRMRES.h>
+#include <OF_MARK.h>
+#include <OREMOTE.h>
+#include <OF_CAMP.h>
+#include <OF_HARB.h>
+#include <OSERES.h>
+#include <OREBEL.h>
 // ###### begin Gilbert 2/10 ######//
-#include <OFIRMDIE.H>
+#include <OFIRMDIE.h>
 // ###### end Gilbert 2/10 ######//
-#include <OUNITRES.H>
+#include <OUNITRES.h>
 
 
 //---------- define static member vars -------------//

@@ -1,15 +1,15 @@
 //Filename    : OSITE.CPP
 //Description : Object Site
 
-#include <OINFO.H>
-#include <OWORLD.H>
-#include <OTOWN.H>
-#include <OFIRM.H>
-#include <OUNIT.H>
-#include <ONEWS.H>
-#include <OGODRES.H>
-#include <ONATION.H>
-#include <OSITE.H>
+#include <OINFO.h>
+#include <OWORLD.h>
+#include <OTOWN.h>
+#include <OFIRM.h>
+#include <OUNIT.h>
+#include <ONEWS.h>
+#include <OGODRES.h>
+#include <ONATION.h>
+#include <OSITE.h>
 
 //-------------- Define constant -----------//
 

@@ -1,19 +1,19 @@
 //Filename    : OFIRMIF3.CPP
 //Description : Firm interface functions - part 3
 
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OINFO.H>
-#include <OSYS.H>
-#include <OBUTT3D.H>
-#include <OMOUSE.H>
-#include <ONEWS.H>
-#include <OUNIT.H>
-#include <ORACERES.H>
-#include <ONATION.H>
-#include <OSPY.H>
-#include <OFIRM.H>
-#include <OREMOTE.H>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OINFO.h>
+#include <OSYS.h>
+#include <OBUTT3D.h>
+#include <OMOUSE.h>
+#include <ONEWS.h>
+#include <OUNIT.h>
+#include <ORACERES.h>
+#include <ONATION.h>
+#include <OSPY.h>
+#include <OFIRM.h>
+#include <OREMOTE.h>
 
 //---------- Define constant ------------//
 

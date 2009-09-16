@@ -2,7 +2,7 @@
 ;Description : Blt exploration mask of 32x32 to the display surface buffer
 ; a modified version, 16 mask
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 ; ------------ Define constant ------------
 

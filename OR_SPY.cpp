@@ -1,15 +1,15 @@
 //Filename    : OR_SPY.CPP
 //Description : Spy Report
 
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OFIRMRES.H>
-#include <ONATION.H>
-#include <ORACERES.H>
-#include <OIMGRES.H>
-#include <OVBROWIF.H>
-#include <OSPY.H>
-#include <OINFO.H>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OFIRMRES.h>
+#include <ONATION.h>
+#include <ORACERES.h>
+#include <OIMGRES.h>
+#include <OVBROWIF.h>
+#include <OSPY.h>
+#include <OINFO.h>
 
 //------------- Define coordinations -----------//
 

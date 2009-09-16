@@ -4,14 +4,14 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include <ALL.H>
-#include <OWORLD.H>
-#include <OSPATH.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OUNIT.H>
-#include <OSYS.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OWORLD.h>
+#include <OSPATH.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OUNIT.h>
+#include <OSYS.h>
+#include <ONATION.h>
 
 #ifdef NO_DEBUG_SEARCH
 #undef err_when

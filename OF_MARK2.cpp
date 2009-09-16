@@ -1,18 +1,18 @@
 //Filename    : OF_MARK2.CPP
 //Description : Firm Market Place - AI functions
 
-#include <OINFO.H>
-#include <ORAWRES.H>
-#include <ORACERES.H>
-#include <OTOWN.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OU_CARA.H>
-#include <OWORLD.H>
-#include <OSYS.H>
-#include <OF_FACT.H>
-#include <OF_MINE.H>
-#include <OF_MARK.H>
+#include <OINFO.h>
+#include <ORAWRES.h>
+#include <ORACERES.h>
+#include <OTOWN.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OU_CARA.h>
+#include <OWORLD.h>
+#include <OSYS.h>
+#include <OF_FACT.h>
+#include <OF_MINE.h>
+#include <OF_MARK.h>
 
 
 //------- Begin of function FirmMarket::process_ai -----------//

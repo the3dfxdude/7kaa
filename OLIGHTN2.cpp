@@ -4,9 +4,9 @@
 
 #include	<math.h>
 #include <stdlib.h>
-#include <ALL.H>
-#include <OVGABUF.H>
-#include <OLIGHTN.H>
+#include <ALL.h>
+#include <OVGABUF.h>
+#include <OLIGHTN.h>
 
 //------------ Define constant ----------//
 

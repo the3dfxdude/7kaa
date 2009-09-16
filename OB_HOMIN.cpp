@@ -1,8 +1,8 @@
 // Filename    : OB_HOMIN.H
 // Description : BulletHoming, Homing bullet
 
-#include <OB_HOMIN.H>
-#include <OWORLD.H>
+#include <OB_HOMIN.h>
+#include <OWORLD.h>
 
 
 // --------- define constant --------//

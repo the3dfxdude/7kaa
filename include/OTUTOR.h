@@ -5,7 +5,7 @@
 #define __OH
 
 #ifndef __ORESX_H
-#include <ORESX.H>
+#include <ORESX.h>
 #endif
 
 //------------ Define constant -----------//

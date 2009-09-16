@@ -36,7 +36,7 @@
  ***********************************************************************/
 
 #ifndef __WINDOWS_
-#include <WINDOWS.H>
+#include <windows.h>
 #endif
 
 #define DMOUSE_VXD  "\\\\.\\DMOUSE.VXD"

@@ -1,17 +1,17 @@
 //Filename   : OU_GOD.CPP
 //Description: God Unit
 
-#include <OSYS.H>
-#include <OGAME.H>
-#include <OBUTT3D.H>
-#include <OGODRES.H>
-#include <OF_BASE.H>
-#include <ORACERES.H>
-#include <OPOWER.H>
-#include <OU_MARI.H>
-#include <OU_GOD.H>
-#include <OWEATHER.H>
-#include <OTORNADO.H>
+#include <OSYS.h>
+#include <OGAME.h>
+#include <OBUTT3D.h>
+#include <OGODRES.h>
+#include <OF_BASE.h>
+#include <ORACERES.h>
+#include <OPOWER.h>
+#include <OU_MARI.h>
+#include <OU_GOD.h>
+#include <OWEATHER.h>
+#include <OTORNADO.h>
 
 //--------- Define static vars ----------//
 

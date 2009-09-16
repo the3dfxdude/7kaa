@@ -1,13 +1,13 @@
 //Filename   : OAI_CAPT.CPP
 //Description: AI - capturing independent towns
 
-#include <ALL.H>
-#include <OREMOTE.H>
-#include <OCONFIG.H>
-#include <OUNIT.H>
-#include <OF_CAMP.H>
-#include <OF_INN.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OREMOTE.h>
+#include <OCONFIG.h>
+#include <OUNIT.h>
+#include <OF_CAMP.h>
+#include <OF_INN.h>
+#include <ONATION.h>
 
 //------- define struct CaptureTown -------//
 

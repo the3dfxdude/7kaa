@@ -5,14 +5,14 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include <ALL.H>
-#include <OGAME.H>
-#include <OVGA.H>
-#include <OTERRAIN.H>
-#include <OWORLD.H>
-#include <OPLASMA.H>
-#include <OREGION.H>
-#include <OFIRMID.H>
+#include <ALL.h>
+#include <OGAME.h>
+#include <OVGA.h>
+#include <OTERRAIN.h>
+#include <OWORLD.h>
+#include <OPLASMA.h>
+#include <OREGION.h>
+#include <OFIRMID.h>
 
 //-------- Begin of function World::generate_map ----------//
 //

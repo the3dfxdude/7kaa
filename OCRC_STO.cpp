@@ -1,17 +1,17 @@
 // Filename    : OCRC_STO.H
 // Description : store of crc of objects
 
-#include <ONATIONA.H>
-#include <OUNIT.H>
-#include <OFIRMA.H>
-#include <OTOWN.H>
-#include <OBULLET.H>
-#include <OREBEL.H>
-#include <OSPY.H>
-#include <OTALKRES.H>
-#include <OREMOTE.H>
-#include <OCRC_STO.H>
-#include <CRC.H>
+#include <ONATIONA.h>
+#include <OUNIT.h>
+#include <OFIRMA.h>
+#include <OTOWN.h>
+#include <OBULLET.h>
+#include <OREBEL.h>
+#include <OSPY.h>
+#include <OTALKRES.h>
+#include <OREMOTE.h>
+#include <OCRC_STO.h>
+#include <CRC.h>
 
 CrcStore::CrcStore() :
 	nations(0), units(0), firms(0), towns(0), bullets(0), rebels(0), spies(0), talk_msgs(0)

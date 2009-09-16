@@ -1,20 +1,20 @@
 //Filename    : OSPY.CPP
 //Description : Object Spy
 
-#include <OPOWER.H>
-#include <OGAME.H>
-#include <ODATE.H>
-#include <ONEWS.H>
-#include <OFONT.H>
-#include <OUNIT.H>
-#include <OWORLD.H>
-#include <OBUTTON.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <ONATION.H>
-#include <ORACERES.H>
-#include <OSYS.H>
-#include <OSPY.H>
+#include <OPOWER.h>
+#include <OGAME.h>
+#include <ODATE.h>
+#include <ONEWS.h>
+#include <OFONT.h>
+#include <OUNIT.h>
+#include <OWORLD.h>
+#include <OBUTTON.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <ONATION.h>
+#include <ORACERES.h>
+#include <OSYS.h>
+#include <OSPY.h>
 
 //----- Define constants for viewing secret menu ------//
 

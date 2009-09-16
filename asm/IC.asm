@@ -2,7 +2,7 @@
 ;Description : copy a rectange from one surface to another
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

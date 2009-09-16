@@ -1,12 +1,12 @@
 //Filename    : OFIRM2.CPP
 //Description : Class Firm - part 2
 
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OSPY.H>
-#include <ONATION.H>
-#include <ORACERES.H>
-#include <OUNIT.H>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OSPY.h>
+#include <ONATION.h>
+#include <ORACERES.h>
+#include <OUNIT.h>
 
 //--------- Begin of function Firm::kill_overseer ---------//
 //

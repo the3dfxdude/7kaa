@@ -3,22 +3,22 @@
 // Ownership  : Gilbert
 
 
-#include <OWORLD.H>
-#include <OMATRIX.H>
-#include <OWEATHER.H>
-#include <OWORLDMT.H>
-#include <OTERRAIN.H>
-#include <OUNIT.H>
-#include <OFIRM.H>
-#include <OFIRMA.H>
-#include	<OCONFIG.H>
+#include <OWORLD.h>
+#include <OMATRIX.h>
+#include <OWEATHER.h>
+#include <OWORLDMT.h>
+#include <OTERRAIN.h>
+#include <OUNIT.h>
+#include <OFIRM.h>
+#include <OFIRMA.h>
+#include <OCONFIG.h>
 // #### begin Gilbert 29/5 #######//
-#include <OSERES.H>
+#include <OSERES.h>
 // #### end Gilbert 29/5 #######//
 #include <math.h>
 //### begin alex 6/8 ###//
 #ifdef DEBUG
-#include <OSYS.H>
+#include <OSYS.h>
 #endif
 //#### end alex 6/8 ####//
 

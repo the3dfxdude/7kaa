@@ -4,13 +4,13 @@
 #ifndef __LOG_H
 #define __LOG_H
 
-#include <OSTR.H>
-#include <OVQUEUE.H>
+#include <OSTR.h>
+#include <OVQUEUE.h>
 
 //#define ENABLE_LOG
 
 #define DEBUG_LOG_GLOBAL 0
-// define DEBUG_LOG_LOCAL before #include <OLOG.H>
+#include <OLOG.h>
 // 1 to force enable debug log of that module, even though DEBUG_LOG_GLOBAL is 0
 // -1 to force disable debug log of that module, even though DEBUG_LOG_GLOBAL is 1
 // 0 to follow DEBUG_LOG_GLOBAL

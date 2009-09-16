@@ -5,15 +5,15 @@
 #define __OTALKRES_H
 
 #ifndef __OSTR_H
-#include <OSTR.H>
+#include <OSTR.h>
 #endif
 
 #ifndef __ODYNARRB_H
-#include <ODYNARRB.H>
+#include <ODYNARRB.h>
 #endif
 
 #ifndef __OTALKMSG_H
-#include <OTALKMSG.H>
+#include <OTALKMSG.h>
 #endif
 
 //-------- define constant ----------//

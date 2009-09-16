@@ -2,7 +2,7 @@
 ;Description : Draw a line in the image buffer
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .DATA
 buf_width	dd ?

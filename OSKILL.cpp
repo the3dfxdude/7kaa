@@ -1,10 +1,10 @@
 //Filename    : OSKILL.CPP
 //Description : Skill class
 
-#include <OSTR.H>
-#include <OFIRMID.H>
-#include <OSITE.H>
-#include <OSKILL.H>
+#include <OSTR.h>
+#include <OFIRMID.h>
+#include <OSITE.h>
+#include <OSKILL.h>
 
 //----------- define static vars -----------//
 

@@ -1,18 +1,18 @@
 //Filename    : OGAMHALL.CPP
 //Description : Hall of Fame
 
-#include <OVGA.H>
-#include <OVGALOCK.H>
-#include <ODATE.H>
-#include <OSTR.H>
-#include <OSYS.H>
-#include <OFONT.H>
-#include <OMOUSE.H>
-#include <OIMGRES.H>
-#include <ORACERES.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OGFILE.H>
+#include <OVGA.h>
+#include <OVGALOCK.h>
+#include <ODATE.h>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
+#include <OIMGRES.h>
+#include <ORACERES.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OGFILE.h>
 
 //------ Begin of function GameFileArray::disp_hall_of_fame -----//
 //

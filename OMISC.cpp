@@ -10,9 +10,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <ALL.H>
-#include <OSTR.H>
-#include <OMISC.H>
+#include <ALL.h>
+#include <OSTR.h>
+#include <OMISC.h>
 
 #define	MOVE_AROUND_TABLE_SIZE	900
 

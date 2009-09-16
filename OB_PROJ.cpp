@@ -3,7 +3,7 @@
 // Owner       : Gilbert
 
 
-#include <OB_PROJ.H>
+#include <OB_PROJ.h>
 
 
 // the height of projectile is as follow :

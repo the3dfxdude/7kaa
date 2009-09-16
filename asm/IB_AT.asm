@@ -2,8 +2,8 @@
 ;Description : Blt a bitmap to the display surface buffer without color key transparency handling
 
 
-INCLUDE IMGFUN.INC
-INCLUDE COLCODE.INC
+INCLUDE IMGFUN.inc
+INCLUDE COLCODE.inc
 
 .CODE
 

@@ -1,31 +1,31 @@
 //Filename    : ONATION.CPP
 //Description : Object Nation - part 1
 
-#include <OSTR.H>
-#include <OSYS.H>
-#include <ODATE.H>
-#include <OBOX.H>
-#include <OVGA.H>
-#include <OFONT.H>
-#include <ONEWS.H>
-#include <OWORLD.H>
-#include <OFIRM.H>
-#include <OGAME.H>
-#include <OPOWER.H>
-#include <OREGIONS.H>
-#include <ORACERES.H>
-#include <OTALKRES.H>
-#include <OMONSRES.H>
-#include <OGODRES.H>
-#include <OTOWN.H>
-#include <OSPY.H>
-#include <OF_MARK.H>
-#include <OF_BASE.H>
-#include <OF_MONS.H>
-#include <OTECHRES.H>
-#include <ONATION.H>
-#include <OREBEL.H>
-#include <OREMOTE.H>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <ODATE.h>
+#include <OBOX.h>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <ONEWS.h>
+#include <OWORLD.h>
+#include <OFIRM.h>
+#include <OGAME.h>
+#include <OPOWER.h>
+#include <OREGIONS.h>
+#include <ORACERES.h>
+#include <OTALKRES.h>
+#include <OMONSRES.h>
+#include <OGODRES.h>
+#include <OTOWN.h>
+#include <OSPY.h>
+#include <OF_MARK.h>
+#include <OF_BASE.h>
+#include <OF_MONS.h>
+#include <OTECHRES.h>
+#include <ONATION.h>
+#include <OREBEL.h>
+#include <OREMOTE.h>
 
 //-------- Define static variables --------//
 

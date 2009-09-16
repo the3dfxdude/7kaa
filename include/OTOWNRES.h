@@ -5,15 +5,15 @@
 #define __OTOWNRES_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __ORESDB_H
-#include <ORESDB.H>
+#include <ORESDB.h>
 #endif
 
 #ifndef __OTOWNREC_H
-#include <OTOWNREC.H>
+#include <OTOWNREC.h>
 #endif
 
 //--------- define game constants --------//

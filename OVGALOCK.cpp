@@ -4,12 +4,12 @@
 // Mainly used by ODPLAY.CPP to separate OVGA.H
 // some GUID initialization problems exist if OVGA.H is included in ODPLAY.CPP
 
-#include <OSYS.H>
-#include <OVGALOCK.H>
-#include <OVGABUF.H>
-#include <OVGA.H>
-#include <OFILE.H>
-#include <OMOUSE.H>
+#include <OSYS.h>
+#include <OVGALOCK.h>
+#include <OVGABUF.h>
+#include <OVGA.h>
+#include <OFILE.h>
+#include <OMOUSE.h>
 
 
 VgaFrontLock::VgaFrontLock()

@@ -3,9 +3,9 @@
 
 #include <string.h>
 
-#include <ALL.H>
-#include <OSYS.H>
-#include <ORESX.H>
+#include <ALL.h>
+#include <OSYS.h>
+#include <ORESX.h>
 
 
 //--------- Format of RES file ------------//

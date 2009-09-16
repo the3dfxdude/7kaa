@@ -2,11 +2,11 @@
 // Description : Generate hill
 // Ownership   : Gilbert
 
-#include <ALL.H>
-#include <OWORLD.H>
-#include <OMATRIX.H>
-#include <OHILLRES.H>
-#include <OTERRAIN.H>
+#include <ALL.h>
+#include <OWORLD.h>
+#include <OMATRIX.h>
+#include <OHILLRES.h>
+#include <OTERRAIN.h>
 
 
 // ---------- begin of function World::gen_hills --------//

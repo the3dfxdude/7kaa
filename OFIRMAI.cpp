@@ -1,14 +1,14 @@
 //Filename    : OFIRMAI.CPP
 //Description : AI functions for the class Firm
 
-#include <OF_INN.H>
-#include <OF_MINE.H>
-#include <OF_FACT.H>
-#include <OF_CAMP.H>
-#include <OF_MARK.H>
-#include <OUNITRES.H>
-#include <OTALKRES.H>
-#include <ONATION.H>
+#include <OF_INN.h>
+#include <OF_MINE.h>
+#include <OF_FACT.h>
+#include <OF_CAMP.h>
+#include <OF_MARK.h>
+#include <OUNITRES.h>
+#include <OTALKRES.h>
+#include <ONATION.h>
 
 //--------- Begin of function Firm::process_common_ai --------//
 //

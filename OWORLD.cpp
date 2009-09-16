@@ -1,28 +1,28 @@
 //Filename    : OWORLD.CPP
 //Description : Object World
 
-#include <OSYS.H>
-#include <OGAME.H>
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OFIRMRES.H>
-#include <OPLANT.H>
-#include <OPOWER.H>
-#include <OSITE.H>
-#include <OINFO.H>
-#include <OTOWN.H>
-#include <ONATION.H>
-#include <OWEATHER.H>
-#include <OTERRAIN.H>
-#include <OWORLD.H>
-#include <OANLINE.H>
-#include <OTORNADO.H>
-#include <OU_VEHI.H>
-#include <OSERES.H>
-#include <OREMOTE.H>
-#include <ONEWS.H>
+#include <OSYS.h>
+#include <OGAME.h>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OFIRMRES.h>
+#include <OPLANT.h>
+#include <OPOWER.h>
+#include <OSITE.h>
+#include <OINFO.h>
+#include <OTOWN.h>
+#include <ONATION.h>
+#include <OWEATHER.h>
+#include <OTERRAIN.h>
+#include <OWORLD.h>
+#include <OANLINE.h>
+#include <OTORNADO.h>
+#include <OU_VEHI.h>
+#include <OSERES.h>
+#include <OREMOTE.h>
+#include <ONEWS.h>
 
 
 //------------ Define static class variables ------------//

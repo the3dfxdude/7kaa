@@ -2,13 +2,13 @@
 // Description : class World for building wall
 // Ownership   : Gilbert
 
-#include <OWORLD.H>
-#include <OMATRIX.H>
-#include <WALLTILE.H>
-#include <OWALLRES.H>
-#include <OTOWN.H>
-#include <OREMOTE.H>
-#include <ONATIONA.H>
+#include <OWORLD.h>
+#include <OMATRIX.h>
+#include <WALLTILE.h>
+#include <OWALLRES.h>
+#include <OTOWN.h>
+#include <OREMOTE.h>
+#include <ONATIONA.h>
 
 #define WALL_GROWTH_RATE 6
 

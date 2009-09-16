@@ -1,13 +1,13 @@
 //Filename    : OMOUSECR.CPP
 //Description : Object Cursor Resource
 
-#include <ALL.H>
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OWORLD.H>
-#include <ODB.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OWORLD.h>
+#include <ODB.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
 
 //---------- define constant ------------//
 

@@ -2,14 +2,14 @@
 //Description : Plant resource object
 //Owner       : Gilbert
 
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <OTERRAIN.H>
-#include <OINFO.H>
-#include <OPLANT.H>
-#include <OCONFIG.H>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <OTERRAIN.h>
+#include <OINFO.h>
+#include <OPLANT.h>
+#include <OCONFIG.h>
 
 //---------- #define constant ------------//
 

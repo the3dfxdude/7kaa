@@ -1,7 +1,7 @@
-#include <OSPREUSE.H>
-#include <OUNIT.H>
-#include <OWORLD.H>
-#include <OMISC.H>
+#include <OSPREUSE.h>
+#include <OUNIT.h>
+#include <OWORLD.h>
+#include <OMISC.h>
 
 #ifdef NO_DEBUG_SEARCH
 #undef err_when
@@ -20,7 +20,7 @@
 #endif
 
 #ifdef DEBUG
-#include <OSYS.H>
+#include <OSYS.h>
 #endif
 
 //------------------- static function --------------------//

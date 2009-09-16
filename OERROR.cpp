@@ -7,10 +7,10 @@
 #include <stdarg.h>
 #include <windows.h>
 
-#include <OSYS.H>
-#include <OBOX.H>
-#include <OVGA.H>
-#include <ALL.H>
+#include <OSYS.h>
+#include <OBOX.h>
+#include <OVGA.h>
+#include <ALL.h>
 
 //------------------------------------------------//
 //

@@ -13,10 +13,10 @@
 #include <string.h>
 #include <limits.h>
 
-#include <OSYS.H>
-#include <OBOX.H>
-#include <OAUDIO.H>
-#include <OVGALOCK.H>
+#include <OSYS.h>
+#include <OBOX.h>
+#include <OAUDIO.h>
+#include <OVGALOCK.h>
 
 //---------------- Define constant ------------------//
 //

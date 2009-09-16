@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <ODYNARR.H>
+#include <ODYNARR.h>
 
 //--------- BEGIN OF FUNCTION DynArray Constructor -------//
 //

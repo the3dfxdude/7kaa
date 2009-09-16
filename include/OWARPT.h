@@ -5,7 +5,7 @@
 #ifndef __OWARPT_H
 #define __OWARPT_H
 
-#include <OWORLDMT.H>
+#include <OWORLDMT.h>
 
 struct WarPoint
 {

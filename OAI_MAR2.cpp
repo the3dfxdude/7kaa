@@ -1,11 +1,11 @@
 //Filename   : OAI_MAR2.CPP
 //Description: AI functions for processing AI marine actions
 
-#include <OTOWN.H>
-#include <OREGIONS.H>
-#include <OU_MARI.H>
-#include <OF_HARB.H>
-#include <ONATION.H>
+#include <OTOWN.h>
+#include <OREGIONS.h>
+#include <OU_MARI.h>
+#include <OF_HARB.h>
+#include <ONATION.h>
 
 //-------- Begin of function Nation::ai_sea_travel -------//
 //

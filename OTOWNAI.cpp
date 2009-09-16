@@ -1,21 +1,21 @@
 //Filename    : OTOWNAI.CPP
 //Description : Object Town AI
 
-#include <OWORLD.H>
-#include <OUNIT.H>
-#include <OCONFIG.H>
-#include <OSITE.H>
-#include <ONEWS.H>
-#include <OTECHRES.H>
-#include <OWALLRES.H>
-#include <ORACERES.H>
-#include <OGODRES.H>
-#include <OSPY.H>
-#include <OTOWN.H>
-#include <ONATION.H>
-#include <OINFO.H>
-#include <OFIRMALL.H>
-#include <OLOG.H>
+#include <OWORLD.h>
+#include <OUNIT.h>
+#include <OCONFIG.h>
+#include <OSITE.h>
+#include <ONEWS.h>
+#include <OTECHRES.h>
+#include <OWALLRES.h>
+#include <ORACERES.h>
+#include <OGODRES.h>
+#include <OSPY.h>
+#include <OTOWN.h>
+#include <ONATION.h>
+#include <OINFO.h>
+#include <OFIRMALL.h>
+#include <OLOG.h>
 
 
 //--------- Begin of function Town::process_ai ----------//

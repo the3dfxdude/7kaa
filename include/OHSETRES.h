@@ -7,7 +7,7 @@
 #define __OHSETRES_H
 
 #ifndef __ORESDB_H
-#include <ORESDB.H>
+#include <ORESDB.h>
 #endif
 
 //------------ Define struct EqPatternRec ---------------//

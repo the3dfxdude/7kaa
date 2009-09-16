@@ -5,31 +5,31 @@
 #define __OUNIT_H
 
 #ifndef __OSPRITE_H
-#include <OSPRITE.H>
+#include <OSPRITE.h>
 #endif
 
 #ifndef __OSPATH_H
-#include <OSPATH.H>
+#include <OSPATH.h>
 #endif
 
 //#ifndef __OSPATHS2_H
-//#include <OSPATHS2.H>
+//#include <OSPATHS2.h>
 //#endif
 
 #ifndef __OUNITRES_H
-#include <OUNITRES.H>
+#include <OUNITRES.h>
 #endif
 
 #ifndef __OBUTTON_H
-#include <OBUTTON.H>
+#include <OBUTTON.h>
 #endif
 
 #ifndef __OSKILL_H
-#include <OSKILL.H>
+#include <OSKILL.h>
 #endif
 
 #ifndef __OSPREUSE_H
-#include <OSPREUSE.H>
+#include <OSPREUSE.h>
 #endif
 
 #ifdef NO_DEBUG_UNIT

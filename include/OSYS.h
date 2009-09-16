@@ -5,11 +5,11 @@
 #define __OSYS_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __WINDOWS_
-#include <WINDOWS.H>
+#include <windows.h>
 #endif
 
 //------ Define common data buffer size  ------//

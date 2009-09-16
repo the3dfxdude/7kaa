@@ -1,15 +1,15 @@
 //Filename    : OBUTTON.CPP
 //Description : Button Object
 
-#include <KEY.H>
-#include <ALL.H>
-#include <OHELP.H>
-#include <OFONT.H>
-#include <OSYS.H>
-#include <OMOUSE.H>
-#include <OVGA.H>
-#include <OIMGRES.H>
-#include <OBUTTON.H>
+#include <KEY.h>
+#include <ALL.h>
+#include <OHELP.h>
+#include <OFONT.h>
+#include <OSYS.h>
+#include <OMOUSE.h>
+#include <OVGA.h>
+#include <OIMGRES.h>
+#include <OBUTTON.h>
 
 //----------- Begin of function Button::Button -----------//
 //

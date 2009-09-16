@@ -1,27 +1,27 @@
 //Filename   : OU_MARI2.CPP
 //Description: UnitMarine - functions for displaying info.
 
-#include <OVGA.H>
-#include <OINFO.H>
-#include <OHELP.H>
-#include <OMOUSE.H>
-#include <OCONFIG.H>
-#include <ORACERES.H>
-#include <OIMGRES.H>
-#include <ORAWRES.H>
-#include <OPOWER.H>
-#include <OFONT.H>
-#include <OBUTTON.H>
-#include <OBUTT3D.H>
-#include <OREMOTE.H>
-#include <OU_CARA.H>
-#include <OU_MARI.H>
-#include <ONATION.H>
-#include <OF_MINE.H>
-#include <OF_FACT.H>
-#include <OBUTTCUS.H>
-#include <OSE.H>
-#include <OF_HARB.H>
+#include <OVGA.h>
+#include <OINFO.h>
+#include <OHELP.h>
+#include <OMOUSE.h>
+#include <OCONFIG.h>
+#include <ORACERES.h>
+#include <OIMGRES.h>
+#include <ORAWRES.h>
+#include <OPOWER.h>
+#include <OFONT.h>
+#include <OBUTTON.h>
+#include <OBUTT3D.h>
+#include <OREMOTE.h>
+#include <OU_CARA.h>
+#include <OU_MARI.h>
+#include <ONATION.h>
+#include <OF_MINE.h>
+#include <OF_FACT.h>
+#include <OBUTTCUS.h>
+#include <OSE.h>
+#include <OF_HARB.h>
 
 #ifdef DEBUG
 #include <stdio.h>

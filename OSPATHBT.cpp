@@ -1,4 +1,4 @@
-#include <OSPATH.H>
+#include <OSPATH.h>
 
 #ifdef NO_DEBUG_SEARCH
 #undef err_when

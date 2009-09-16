@@ -6,15 +6,15 @@
 #define __OBULLET_H
 
 #ifndef __OSPRITE_H
-#include <OSPRITE.H>
+#include <OSPRITE.h>
 #endif
 
 #ifndef __OUNIT_H
-#include <OUNIT.H>
+#include <OUNIT.h>
 #endif
 
 #ifndef __OFIRM_H
-#include <OFIRM.H>
+#include <OFIRM.h>
 #endif
 
 //------ define the parent type ------//

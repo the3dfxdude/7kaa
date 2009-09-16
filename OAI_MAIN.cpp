@@ -1,19 +1,19 @@
 //Filename   : OAI_MAIN.CPP
 //Description: AI - main functions
 
-#include <OSYS.H>
-#include <ONATION.H>
-#include <OWORLD.H>
-#include <OGAME.H>
-#include <OSPY.H>
-#include <OCONFIG.H>
-#include <OUNIT.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OTALKRES.H>
-#include <OF_MINE.H>
-#include <OINFO.H>
-#include <OLOG.H>
+#include <OSYS.h>
+#include <ONATION.h>
+#include <OWORLD.h>
+#include <OGAME.h>
+#include <OSPY.h>
+#include <OCONFIG.h>
+#include <OUNIT.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OTALKRES.h>
+#include <OF_MINE.h>
+#include <OINFO.h>
+#include <OLOG.h>
 
 //--------- Begin of function Nation::Nation --------//
 

@@ -3,7 +3,7 @@
 
 // note : Effect and effect_array are not saved
 
-#include <OEFFECT.H>
+#include <OEFFECT.h>
 
 // ------- Begin of function Effect::Effect -------//
 Effect::Effect() : Sprite()

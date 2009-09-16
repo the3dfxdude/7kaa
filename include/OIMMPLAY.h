@@ -7,7 +7,7 @@
 
 #ifdef IMAGICMP
 
-#include <ODYNARRB.H>
+#include <ODYNARRB.h>
 #include <immlib.h>
 
 extern GUID GAME_GUID;
@@ -126,7 +126,7 @@ protected:
 
 extern MultiPlayerIM mp_im;
 
-#include <MPTYPES.H>
+#include <MPTYPES.h>
 
 #endif // IMAGICMP
 #endif // __OIMMPLAY_H

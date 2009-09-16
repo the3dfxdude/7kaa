@@ -1,7 +1,7 @@
 ;Filename    : I_PIXEL.ASM
 ;Description : PIXELIZE (1:4 tone) of size 32x32 to the display surface buffer
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

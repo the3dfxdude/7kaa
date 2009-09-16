@@ -1,16 +1,16 @@
 //Filename    : ORAWRES.CPP
 //Description : Raw material resource object
 
-#include <OINFO.H>
-#include <OVGA.H>
-#include <OHELP.H>
-#include <OFONT.H>
-#include <OSYS.H>
-#include <OGAMESET.H>
-#include <OF_FACT.H>
-#include <OF_MINE.H>
-#include <OF_MARK.H>
-#include <ORAWRES.H>
+#include <OINFO.h>
+#include <OVGA.h>
+#include <OHELP.h>
+#include <OFONT.h>
+#include <OSYS.h>
+#include <OGAMESET.h>
+#include <OF_FACT.h>
+#include <OF_MINE.h>
+#include <OF_MARK.h>
+#include <ORAWRES.h>
 
 
 //---------- #define constant ------------//

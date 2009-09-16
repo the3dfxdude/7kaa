@@ -2,23 +2,23 @@
 //Description : Class Tutor
 
 
-#include <OSYS.H>
-#include <OGAME.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OVGABUF.H>
-#include <OIMGRES.H>
-#include <OBUTT3D.H>
-#include <OSLIDCUS.H>
-#include <OBOX.H>
-#include <OPOWER.H>
-#include <OFONT.H>
-#include <KEY.H>
-#include <OBLOB.H>
-#include <OTUTOR.H>
-#include <OINFO.H>
+#include <OSYS.h>
+#include <OGAME.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OVGABUF.h>
+#include <OIMGRES.h>
+#include <OBUTT3D.h>
+#include <OSLIDCUS.h>
+#include <OBOX.h>
+#include <OPOWER.h>
+#include <OFONT.h>
+#include <KEY.h>
+#include <OBLOB.h>
+#include <OTUTOR.h>
+#include <OINFO.h>
 // ####### begin Gilbert 4/11 #######//
-#include <OMUSIC.H>
+#include <OMUSIC.h>
 // ####### end Gilbert 4/11 #######//
 
 

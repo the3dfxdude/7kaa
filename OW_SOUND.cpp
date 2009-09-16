@@ -1,12 +1,12 @@
 // Filename   : OW_SOUND.CPP
 // Description: Ambient Sound Functions
 
-#include <OSYS.H>
-#include <OAUDIO.H>
-#include <OSE.H>
-#include <OVOLUME.H>
-#include <OWEATHER.H>
-#include <OWORLD.H>
+#include <OSYS.h>
+#include <OAUDIO.h>
+#include <OSE.h>
+#include <OVOLUME.h>
+#include <OWEATHER.h>
+#include <OWORLD.h>
 
 // ------- define constant -------//
 #define MAX_BIRD 17

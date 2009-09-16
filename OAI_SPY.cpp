@@ -1,12 +1,12 @@
 //Filename   : OAI_SPY.CPP
 //Description: AI - Spy activities
 
-#include <ALL.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OUNIT.H>
-#include <ONATION.H>
-#include <OSPY.H>
+#include <ALL.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OUNIT.h>
+#include <ONATION.h>
+#include <OSPY.h>
 
 //--------- Begin of function Nation::think_spy --------//
 

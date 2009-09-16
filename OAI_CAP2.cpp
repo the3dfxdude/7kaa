@@ -2,13 +2,13 @@
 //Description: AI - capturing AI towns
 
 #include <stdlib.h>
-#include <ALL.H>
-#include <OGAME.H>
-#include <OCONFIG.H>
-#include <OUNIT.H>
-#include <OFIRMALL.H>
-#include <OTALKRES.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OGAME.h>
+#include <OCONFIG.h>
+#include <OUNIT.h>
+#include <OFIRMALL.h>
+#include <OTALKRES.h>
+#include <ONATION.h>
 
 //--------- Begin of function Nation::think_capture_new_enemy_town --------//
 //

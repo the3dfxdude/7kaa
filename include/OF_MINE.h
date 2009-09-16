@@ -5,11 +5,11 @@
 #define __OF_MINE_H
 
 #ifndef __OFIRM_H
-#include <OFIRM.H>
+#include <OFIRM.h>
 #endif
 
 #ifndef __ORAWRES_H
-#include <ORAWRES.H>
+#include <ORAWRES.h>
 #endif
 
 //-------- define constant ---------//

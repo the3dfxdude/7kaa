@@ -1,7 +1,7 @@
 //Filename    : OUNITAAT.CPP
 //Description : Object UnitArray - table for attacking
 
-#include <OUNIT.H>
+#include <OUNIT.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

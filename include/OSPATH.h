@@ -6,15 +6,15 @@
 #define __OSPATH_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OVGA_H
-#include <OVGA.H>
+#include <OVGA.h>
 #endif
 
 #ifndef __OWORLD_H
-#include <OWORLD.H>
+#include <OWORLD.h>
 #endif
 
 //---------- Define constants ------------//

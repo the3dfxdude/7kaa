@@ -1,14 +1,14 @@
 //Filename    : OSCROLL.CPP
 //Description : Object scroll bar
 
-#include <ALL.H>
-#include <KEY.H>
-#include <OSYS.H>
-#include <OMOUSE.H>
-#include <OVGA.H>
-#include <OINFO.H>
-#include <OIMGRES.H>
-#include <OSCROLL.H>
+#include <ALL.h>
+#include <KEY.h>
+#include <OSYS.h>
+#include <OMOUSE.h>
+#include <OVGA.h>
+#include <OINFO.h>
+#include <OIMGRES.h>
+#include <OSCROLL.h>
 
 
 //------- Define constant -----------//

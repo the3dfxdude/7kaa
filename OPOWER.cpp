@@ -1,25 +1,25 @@
 //Filename	  : OPOWER.CPP
 //Description : Object Power
 
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OUNIT.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OSITE.H>
-#include <OSYS.H>
-#include <ONATION.H>
-#include <OBOX.H>
-#include <OIMGRES.H>
-#include <OMOUSECR.H>
-#include <OWORLD.H>
-#include <OINFO.H>
-#include <OU_CARA.H>
-#include <OU_MARI.H>
-#include <OPOWER.H>
-#include <OWALLRES.H>
-#include <OSERES.H>
-#include <OREMOTE.H>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OUNIT.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OSITE.h>
+#include <OSYS.h>
+#include <ONATION.h>
+#include <OBOX.h>
+#include <OIMGRES.h>
+#include <OMOUSECR.h>
+#include <OWORLD.h>
+#include <OINFO.h>
+#include <OU_CARA.h>
+#include <OU_MARI.h>
+#include <OPOWER.h>
+#include <OWALLRES.h>
+#include <OSERES.h>
+#include <OREMOTE.h>
 
 //-------------- Define constant -----------------//
 

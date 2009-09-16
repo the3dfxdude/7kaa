@@ -2,17 +2,17 @@
 //Description : Object Unit movement
 //Owner		  : Alex
 
-#include <ALL.H>
-#include <OWORLD.H>
-#include <OF_HARB.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OU_MARI.H>
-#include <OSPATH.H>
-#include <OSPREUSE.H>
-#include <OSERES.H>
-#include <OLOG.H>
-#include <OEFFECT.H>
+#include <ALL.h>
+#include <OWORLD.h>
+#include <OF_HARB.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OU_MARI.h>
+#include <OSPATH.h>
+#include <OSPREUSE.h>
+#include <OSERES.h>
+#include <OLOG.h>
+#include <OEFFECT.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when
@@ -30,7 +30,7 @@
 
 //-*********** simulate aat ************-//
 #ifdef DEBUG
-	#include <OSYS.H>
+#include <OSYS.h>
 #endif
 //-*********** simulate aat ************-//
 

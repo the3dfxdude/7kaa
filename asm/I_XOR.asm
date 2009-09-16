@@ -2,7 +2,7 @@
 ;Description : Performance XOR operation on a vga image area
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

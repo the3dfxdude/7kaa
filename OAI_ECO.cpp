@@ -1,10 +1,10 @@
 //Filename   : OAI_ECO.CPP
 //Description: AI economy functions
 
-#include <ALL.H>
-#include <OUNIT.H>
-#include <OFIRMALL.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OUNIT.h>
+#include <OFIRMALL.h>
+#include <ONATION.h>
 
 
 //--------- Begin of function Nation::think_reduce_expense --------//

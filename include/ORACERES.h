@@ -5,7 +5,7 @@
 #define __ORACERES_H
 
 #ifndef __ORESDB_H
-#include <ORESDB.H>
+#include <ORESDB.h>
 #endif
 
 //------------ Define race id. -------------//

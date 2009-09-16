@@ -1,18 +1,18 @@
 //Filename    : OUNITDRW.CPP
 //Description : Object Unit Drawing routines
 
-#include <OVGA.H>
-#include <OMOUSE.H>
-#include <OFONT.H>
-#include <OINFO.H>
-#include <OFIRMRES.H>
-#include <OIMGRES.H>
-#include <OPOWER.H>
-#include <OSYS.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OUNIT.H>
-#include <OCONFIG.H>
+#include <OVGA.h>
+#include <OMOUSE.h>
+#include <OFONT.h>
+#include <OINFO.h>
+#include <OFIRMRES.h>
+#include <OIMGRES.h>
+#include <OPOWER.h>
+#include <OSYS.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OUNIT.h>
+#include <OCONFIG.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

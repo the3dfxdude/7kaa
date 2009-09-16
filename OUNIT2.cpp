@@ -1,11 +1,11 @@
 //Filename:    OUNIT2.CPP
 //Description: Unit functions
 
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OUNIT.H>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OUNIT.h>
 
 
 //------- Begin of function Unit::think_aggressive_action --------//

@@ -1,19 +1,19 @@
 //Filename    : OWORLD_M.CPP
 //Description : Object MapMatrix
 
-#include <OVGA.H>
-#include <OMOUSE.H>
-#include <OIMGRES.H>
-#include <OBUTTON.H>
-#include <OPLANT.H>
-#include <OTOWN.H>
-#include <ONATION.H>
-#include <OFIRM.H>
-#include <OSYS.H>
-#include <OPOWER.H>
-#include <OGAME.H>
-#include <OWORLD.H>
-#include <OTERRAIN.H>
+#include <OVGA.h>
+#include <OMOUSE.h>
+#include <OIMGRES.h>
+#include <OBUTTON.h>
+#include <OPLANT.h>
+#include <OTOWN.h>
+#include <ONATION.h>
+#include <OFIRM.h>
+#include <OSYS.h>
+#include <OPOWER.h>
+#include <OGAME.h>
+#include <OWORLD.h>
+#include <OTERRAIN.h>
 
 //-------- Begin of function MapMatrix::MapMatrix ----------//
 

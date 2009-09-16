@@ -1,22 +1,22 @@
 //Filename    : ONATIONA.CPP
 //Description : Object Nation Array
 
-#include <COLOR.H>
-#include <OPOWER.H>
-#include <OGAME.H>
-#include <OF_CAMP.H>
-#include <OUNIT.H>
-#include <OINFO.H>
-#include <OSYS.H>
-#include <ORACERES.H>
-#include <OSPY.H>
-#include <ONATIONA.H>
-#include <OREMOTE.H>
-#include <OLOG.H>
+#include <COLOR.h>
+#include <OPOWER.h>
+#include <OGAME.h>
+#include <OF_CAMP.h>
+#include <OUNIT.h>
+#include <OINFO.h>
+#include <OSYS.h>
+#include <ORACERES.h>
+#include <OSPY.h>
+#include <ONATIONA.h>
+#include <OREMOTE.h>
+#include <OLOG.h>
 
 //### begin alex 22/9 ###//
 #ifdef DEBUG
-#include <OFONT.H>
+#include <OFONT.h>
 
 static unsigned long	last_nation_ai_profile_time = 0L;
 static unsigned long	nation_ai_profile_time = 0L;

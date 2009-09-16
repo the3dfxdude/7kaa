@@ -5,15 +5,15 @@
 #define __OSPINNER_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OINFO_H
-#include <OINFO.H>
+#include <OINFO.h>
 #endif
 
 #ifndef __OFONT_H
-#include <OFONT.H>
+#include <OFONT.h>
 #endif
 
 //------------- Define constant --------------//

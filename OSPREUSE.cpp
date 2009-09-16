@@ -2,12 +2,12 @@
 //Description	:	Object SeekPathReuse
 //Owner			:	Alex
 
-#include <OSPREUSE.H>
-#include <OSPATH.H>
-#include <ALL.H>
-#include <OWORLD.H>
-#include <OUNIT.H>
-#include <OSYS.H>
+#include <OSPREUSE.h>
+#include <OSPATH.h>
+#include <ALL.h>
+#include <OWORLD.h>
+#include <OUNIT.h>
+#include <OSYS.h>
 
 #ifdef NO_DEBUG_SEARCH
 #undef err_when

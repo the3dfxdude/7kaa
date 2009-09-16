@@ -1,8 +1,8 @@
 #ifdef DEBUG
-#include <OSYS.H>
-#include <OMISC.H>
-#include <OMOUSE.H>
-#include <OMOUSE2.H>
+#include <OSYS.h>
+#include <OMISC.h>
+#include <OMOUSE.h>
+#include <OMOUSE2.h>
 
 #define	MAX_SEED_TABLE_SIZE	10 * 4000
 static long	random_seed_backup_table[MAX_SEED_TABLE_SIZE];

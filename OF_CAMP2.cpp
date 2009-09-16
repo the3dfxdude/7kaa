@@ -1,13 +1,13 @@
 //Filename    : OF_CAMP2.CPP
 //Description : Firm Military Camp - AI functions
 
-#include <ONATION.H>
-#include <OINFO.H>
-#include <OCONFIG.H>
-#include <OTOWN.H>
-#include <OSPY.H>
-#include <OUNIT.H>
-#include <OF_CAMP.H>
+#include <ONATION.h>
+#include <OINFO.h>
+#include <OCONFIG.h>
+#include <OTOWN.h>
+#include <OSPY.h>
+#include <OUNIT.h>
+#include <OF_CAMP.h>
 
 //--------- Begin of function FirmCamp::init_derived ---------//
 

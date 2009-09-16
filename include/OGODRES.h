@@ -5,11 +5,11 @@
 #define __OGODRES_H
 
 #ifndef __ONATION_H
-#include <ONATION.H>
+#include <ONATION.h>
 #endif
 
 #ifndef __OFILE_H
-#include <OFILE.H>
+#include <OFILE.h>
 #endif
 
 //------------ Define god id. -------------//

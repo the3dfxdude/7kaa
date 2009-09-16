@@ -3,13 +3,13 @@
 // Owner       : Gilbert
 
 
-#include <OROCKRES.H>
-#include <OGAMESET.H>
-#include <OMISC.H>
-#include <OWORLD.H>
-#include <OVGABUF.H>
-#include <OTERRAIN.H>
-#include <OCONFIG.H>
+#include <OROCKRES.h>
+#include <OGAMESET.h>
+#include <OMISC.h>
+#include <OWORLD.h>
+#include <OVGABUF.h>
+#include <OTERRAIN.h>
+#include <OCONFIG.h>
 #include <string.h>
 
 // ---------- Define constant ------------//

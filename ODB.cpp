@@ -3,8 +3,8 @@
 
 #include <string.h>
 
-#include <ALL.H>
-#include <ODB.H>
+#include <ALL.h>
+#include <ODB.h>
 
 
 //-------- Begin of function Database constructor ------//

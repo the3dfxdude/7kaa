@@ -1,18 +1,18 @@
 //Filename    : OF_FACT2.CPP
 //Description : Firm Factory - AI functions
 
-#include <OINFO.H>
-#include <OUNIT.H>
-#include <OGAME.H>
-#include <OFONT.H>
-#include <ONATION.H>
-#include <ORAWRES.H>
-#include <ORACERES.H>
-#include <OTOWNRES.H>
-#include <OWORLD.H>
-#include <OF_MINE.H>
-#include <OF_MARK.H>
-#include <OF_FACT.H>
+#include <OINFO.h>
+#include <OUNIT.h>
+#include <OGAME.h>
+#include <OFONT.h>
+#include <ONATION.h>
+#include <ORAWRES.h>
+#include <ORACERES.h>
+#include <OTOWNRES.h>
+#include <OWORLD.h>
+#include <OF_MINE.h>
+#include <OF_MARK.h>
+#include <OF_FACT.h>
 
 
 //------- Begin of function FirmFactory::process_ai -----------//

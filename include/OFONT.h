@@ -5,15 +5,15 @@
 #define __OFONT_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OVGABUF_H
-#include <OVGABUF.H>
+#include <OVGABUF.h>
 #endif
 
 #ifndef __OTRANSL_H
-#include <OTRANSL.H>
+#include <OTRANSL.h>
 #endif
 
 //------- Define constant ------------//

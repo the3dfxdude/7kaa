@@ -5,15 +5,15 @@
 #define __OSPRTRES_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __ORESDB_H
-#include <ORESDB.H>
+#include <ORESDB.h>
 #endif
 
 #ifndef __OSFRMRES_H
-#include <OSFRMRES.H>
+#include <OSFRMRES.h>
 #endif
 
 //-------- Define struct SpriteRec ----------//

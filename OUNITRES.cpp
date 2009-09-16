@@ -1,15 +1,15 @@
 //Filename    : OUNITRES.CPP
 //Description : Object Sprite Frame Resource
 
-#include <ALL.H>
-#include <OSTR.H>
-#include <OSYS.H>
-#include <OGAMESET.H>
-#include <ONATION.H>
-#include <OSPRTRES.H>
-#include <OUNITRES.H>
+#include <ALL.h>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <OGAMESET.h>
+#include <ONATION.h>
+#include <OSPRTRES.h>
+#include <OUNITRES.h>
 #if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-	#include <OTRANSL.H>
+#include <OTRANSL.h>
 #endif
 
 #ifdef NO_DEBUG_UNIT

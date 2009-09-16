@@ -2,9 +2,9 @@
 // Description : animated line
 // Onwership   : Gilbert
 
-#include <OANLINE.H>
-#include <OVGABUF.H>
-#include <ALL.H>
+#include <OANLINE.h>
+#include <OVGABUF.h>
+#include <ALL.h>
 #include <math.h>
 
 // ----------- Define color table

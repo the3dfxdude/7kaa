@@ -1,9 +1,9 @@
 //Filename    : OU_VEHI.CPP
 //Description : Unit Vehicle
 
-#include <OWORLD.H>
-#include <OUNITRES.H>
-#include <OU_VEHI.H>
+#include <OWORLD.h>
+#include <OUNITRES.h>
+#include <OU_VEHI.h>
 
 //--------- Begin of function UnitVehicle::set_combat_level ---------//
 //

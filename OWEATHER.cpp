@@ -3,10 +3,10 @@
 // Ownership   : Gilbert
 
 
-#include <OWEATHER.H>
-#include <ALL.H>
+#include <OWEATHER.h>
+#include <ALL.h>
 #include <math.h>
-#include <OWORLDMT.H>
+#include <OWORLDMT.h>
 
 //---------- Define constant -----------//
 #define RAIN_CLOUD 1

@@ -3,8 +3,8 @@
 // Owner       : Gilbert
 
 
-#include <OROCK.H>
-#include <OROCKRES.H>
+#include <OROCK.h>
+#include <OROCKRES.h>
 
 // --------- define constant ----------//
 #define ROCK_ALT_PATH 19

@@ -2,22 +2,22 @@
 //Description : Object Unit attack supporting functions
 //Owner		  : Alex
 
-#include <ALL.H>
-#include <ONEWS.H>
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <OU_MARI.H>
-#include <OSPY.H>
-#include <OGAME.H>
-#include <OTOWN.H>
-#include <OF_CAMP.H>
-#include <OF_MONS.H>
-#include <OEFFECT.H>
-#include <OMONSRES.H>
-#include <OREBEL.H>
-#include <OSERES.H>
-#include <OSYS.H>
-#include <OWARPT.H>
+#include <ALL.h>
+#include <ONEWS.h>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <OU_MARI.h>
+#include <OSPY.h>
+#include <OGAME.h>
+#include <OTOWN.h>
+#include <OF_CAMP.h>
+#include <OF_MONS.h>
+#include <OEFFECT.h>
+#include <OMONSRES.h>
+#include <OREBEL.h>
+#include <OSERES.h>
+#include <OSYS.h>
+#include <OWARPT.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

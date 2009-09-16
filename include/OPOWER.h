@@ -5,7 +5,7 @@
 #define __OPOWER_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 //-------- Define command id. -----------//

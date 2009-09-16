@@ -5,10 +5,10 @@
 #define __OMATRIX_H
 
 #ifndef __OUNITRES_H
-#include <OUNITRES.H>
+#include <OUNITRES.h>
 #endif
 
-#include <OREGION.H>
+#include <OREGION.h>
 
 //----- Define bit meanings Location::flag ------//
 #define 	LOCATE_WALK_LAND			0x01

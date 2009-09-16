@@ -2,7 +2,7 @@
 ;Description : Image buffer font displaying function
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

@@ -6,7 +6,7 @@
 #define __OSPATHS2_H
 
 #ifndef __OSPATH_H
-#include <OSPATH.H>
+#include <OSPATH.h>
 #endif
 
 class NodeS2

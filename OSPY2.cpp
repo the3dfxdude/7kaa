@@ -1,11 +1,11 @@
 //Filename    : OSPY2.CPP
 //Description : Spy AI functions
 
-#include <OINFO.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <ONATION.H>
-#include <OSPY.H>
+#include <OINFO.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <ONATION.h>
+#include <OSPY.h>
 
 //--------- Begin of function Spy::process_ai ----------//
 //

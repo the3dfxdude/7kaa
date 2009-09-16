@@ -2,22 +2,22 @@
 //Description : Nation Report
 
 #include <stdlib.h>
-#include <KEY.H>
-#include <OCONFIG.H>
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OSTR.H>
-#include <OGETA.H>
-#include <ODATE.H>
-#include <OMOUSE.H>
-#include <OIMGRES.H>
-#include <OVBROWIF.H>
-#include <OBUTTON.H>
-#include <OSYS.H>
-#include <ONATION.H>
-#include <OTALKRES.H>
-#include <OINFO.H>
-#include <OREMOTE.H>
+#include <KEY.h>
+#include <OCONFIG.h>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OSTR.h>
+#include <OGETA.h>
+#include <ODATE.h>
+#include <OMOUSE.h>
+#include <OIMGRES.h>
+#include <OVBROWIF.h>
+#include <OBUTTON.h>
+#include <OSYS.h>
+#include <ONATION.h>
+#include <OTALKRES.h>
+#include <OINFO.h>
+#include <OREMOTE.h>
 
 //------------- Define coordinations -----------//
 

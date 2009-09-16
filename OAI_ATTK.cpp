@@ -2,12 +2,12 @@
 //Description: AI - attacking
 
 #include <stdlib.h>
-#include <ALL.H>
-#include <OUNIT.H>
-#include <OCONFIG.H>
-#include <OFIRMALL.H>
-#include <OTALKRES.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OUNIT.h>
+#include <OCONFIG.h>
+#include <OFIRMALL.h>
+#include <OTALKRES.h>
+#include <ONATION.h>
 
 
 //------ Declare static functions --------//

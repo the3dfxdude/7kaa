@@ -2,7 +2,7 @@
 ;Description : Read a bitmap from the display surface buffer
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

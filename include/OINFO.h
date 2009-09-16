@@ -5,15 +5,15 @@
 #define __OINFO_H
 
 #ifndef __OSKILL_H
-#include <OSKILL.H>
+#include <OSKILL.h>
 #endif
 
 #ifndef __ODYNARR_H
-#include <ODYNARR.H>
+#include <ODYNARR.h>
 #endif
 
 #ifndef __OWORLD_H
-#include <OWORLD.H>
+#include <OWORLD.h>
 #endif
 
 //---------- Define constant ---------//

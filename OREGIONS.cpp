@@ -2,12 +2,12 @@
 // Description : functions on RegionStat
 
 #include <stdlib.h>
-#include <ONATION.H>
-#include <OSITE.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OUNIT.H>
-#include <OREGIONS.H>
+#include <ONATION.h>
+#include <OSITE.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OUNIT.h>
+#include <OREGIONS.h>
 
 
 //-------- Begin of function RegionArray::init_region_stat -------//

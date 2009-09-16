@@ -2,9 +2,9 @@
 // Description : Class Snow
 // Ownership   : Gilbert
 
-#include <OSNOW.H>
-#include <OVGABUF.H>
-#include <ALL.H>
+#include <OSNOW.h>
+#include <OVGABUF.h>
+#include <ALL.h>
 
 //------------ Begin of function Snow::set_bound ---------//
 void Snow::set_bound(int x1, int y1, int x2, int y2)

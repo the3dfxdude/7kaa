@@ -1,19 +1,19 @@
 //Filename    : OTOWNINDP.CPP
 //Description : Independent town thining
 
-#include <OWORLD.H>
-#include <OUNIT.H>
-#include <ONEWS.H>
-#include <OCONFIG.H>
-#include <ORACERES.H>
-#include <OGODRES.H>
-#include <OTECHRES.H>
-#include <OREGIONS.H>
-#include <OFIRM.H>
-#include <ONATION.H>
-#include <OINFO.H>
-#include <OTOWN.H>
-#include <OLOG.H>
+#include <OWORLD.h>
+#include <OUNIT.h>
+#include <ONEWS.h>
+#include <OCONFIG.h>
+#include <ORACERES.h>
+#include <OGODRES.h>
+#include <OTECHRES.h>
+#include <OREGIONS.h>
+#include <OFIRM.h>
+#include <ONATION.h>
+#include <OINFO.h>
+#include <OTOWN.h>
+#include <OLOG.h>
 
 //------- Begin of function Town::think_independent_town --------//
 //

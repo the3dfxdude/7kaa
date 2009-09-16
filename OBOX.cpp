@@ -4,16 +4,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <time.H>
+#include <time.h>
 
-#include <KEY.H>
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OMOUSE.H>
-#include <OFONT.H>
-#include <OBUTTON.H>
-#include <OPOWER.H>
-#include <OBOX.H>
+#include <KEY.h>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OMOUSE.h>
+#include <OFONT.h>
+#include <OBUTTON.h>
+#include <OPOWER.h>
+#include <OBOX.h>
 
 //----------- Define constant -------------//
 

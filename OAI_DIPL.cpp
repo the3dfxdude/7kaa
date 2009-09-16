@@ -1,10 +1,10 @@
 //Filename   : OAI_DIPL.CPP
 //Description: AI functions on diplomacy
 
-#include <OTALKRES.H>
-#include <OCONFIG.H>
-#include <OTECHRES.H>
-#include <ONATION.H>
+#include <OTALKRES.h>
+#include <OCONFIG.h>
+#include <OTECHRES.h>
+#include <ONATION.h>
 
 
 //----- Begin of function Nation::think_diplomacy -----//

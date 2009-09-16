@@ -1,29 +1,29 @@
 //Filename    : OTOWNIF.CPP
 //Description : Town interface routines
 
-#include <OINFO.H>
-#include <OBOX.H>
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OHELP.H>
-#include <OSPY.H>
-#include <OSTR.H>
-#include <OFONT.H>
-#include <OMOUSE.H>
-#include <OVBROWIF.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OBUTT3D.H>
-#include <OIMGRES.H>
-#include <ORAWRES.H>
-#include <ORACERES.H>
-#include <OWORLD.H>
-#include <OUNIT.H>
-#include <OTOWN.H>
-#include <OREMOTE.H>
-#include <OSE.H>
-#include <OSERES.H>
-#include <OBUTTCUS.H>
+#include <OINFO.h>
+#include <OBOX.h>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OHELP.h>
+#include <OSPY.h>
+#include <OSTR.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
+#include <OVBROWIF.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OBUTT3D.h>
+#include <OIMGRES.h>
+#include <ORAWRES.h>
+#include <ORACERES.h>
+#include <OWORLD.h>
+#include <OUNIT.h>
+#include <OTOWN.h>
+#include <OREMOTE.h>
+#include <OSE.h>
+#include <OSERES.h>
+#include <OBUTTCUS.h>
 
 
 //------------- Define coordinations -----------//

@@ -5,15 +5,15 @@
 #define __OREMOTE_H
 
 // #ifndef __WINDOWS_
-// #include <WINDOWS.H>
+// #include <windows.h>
 // #endif
 
 // #ifndef __OWSIPX_H
-// #include <OWSIPX.H>
+// #include <OWSIPX.h>
 // #endif
 
-#include <MPTYPES.H>
-#include <OREMOTEQ.H>
+#include <MPTYPES.h>
+#include <OREMOTEQ.h>
 
 //------ Define connectivity mode -------//
 

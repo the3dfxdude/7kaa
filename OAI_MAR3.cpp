@@ -1,14 +1,14 @@
 //Filename   : OAI_MAR3.CPP
 //Description: AI functions on sea exploration, trading
 
-#include <OTOWN.H>
-#include <OREGIONS.H>
-#include <OU_MARI.H>
-#include <OUNITRES.H>
-#include <OSITE.H>
-#include <OF_HARB.H>
-#include <OF_CAMP.H>
-#include <ONATION.H>
+#include <OTOWN.h>
+#include <OREGIONS.h>
+#include <OU_MARI.h>
+#include <OUNITRES.h>
+#include <OSITE.h>
+#include <OF_HARB.h>
+#include <OF_CAMP.h>
+#include <ONATION.h>
 
 
 //------ Begin of function Nation::ai_settle_to_region ------//

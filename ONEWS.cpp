@@ -1,19 +1,19 @@
 //Filename    : ONEWS.CPP
 //Description : Object News
 
-#include <OVGA.H>
-#include <OINFO.H>
-#include <OHELP.H>
-#include <OGAME.H>
-#include <OCONFIG.H>
-#include <OSYS.H>
-#include <OMOUSE.H>
-#include <OFONT.H>
-#include <ODATE.H>
-#include <OIMGRES.H>
-#include <ONATION.H>
-#include <OTALKRES.H>
-#include <ONEWS.H>
+#include <OVGA.h>
+#include <OINFO.h>
+#include <OHELP.h>
+#include <OGAME.h>
+#include <OCONFIG.h>
+#include <OSYS.h>
+#include <OMOUSE.h>
+#include <OFONT.h>
+#include <ODATE.h>
+#include <OIMGRES.h>
+#include <ONATION.h>
+#include <OTALKRES.h>
+#include <ONEWS.h>
 
 //------- define screen coordinations -------//
 

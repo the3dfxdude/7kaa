@@ -1,12 +1,12 @@
 //Filename    : OF_WAR2.CPP
 //Description : Firm War Factory - AI functions
 
-#include <ONATION.H>
-#include <OINFO.H>
-#include <OTOWN.H>
-#include <OUNIT.H>
-#include <OTECHRES.H>
-#include <OF_WAR.H>
+#include <ONATION.h>
+#include <OINFO.h>
+#include <OTOWN.h>
+#include <OUNIT.h>
+#include <OTECHRES.h>
+#include <OF_WAR.h>
 
 //--------- Begin of function FirmWar::process_ai ---------//
 

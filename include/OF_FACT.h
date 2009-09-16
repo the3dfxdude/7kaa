@@ -5,7 +5,7 @@
 #define __OF_FACT_H
 
 #ifndef __OFIRM_H
-#include <OFIRM.H>
+#include <OFIRM.h>
 #endif
 
 //------- Define class FirmFactory --------//

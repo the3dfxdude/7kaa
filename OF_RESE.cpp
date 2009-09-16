@@ -1,26 +1,26 @@
 //Filename    : OF_RESE.CPP
 //Description : Firm Magic Tower
 
-#include <OINFO.H>
-#include <OVGA.H>
-#include <ODATE.H>
-#include <OSTR.H>
-#include <ONEWS.H>
-#include <OFONT.H>
-#include <OCONFIG.H>
-#include <OBUTT3D.H>
-#include <OMOUSE.H>
-#include <OSYS.H>
-#include <OPOWER.H>
-#include <OUNIT.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OTECHRES.H>
-#include <OF_RESE.H>
-#include <OREMOTE.H>
-#include <OSE.H>
-#include <OSERES.H>
-#include <OBUTTCUS.H>
+#include <OINFO.h>
+#include <OVGA.h>
+#include <ODATE.h>
+#include <OSTR.h>
+#include <ONEWS.h>
+#include <OFONT.h>
+#include <OCONFIG.h>
+#include <OBUTT3D.h>
+#include <OMOUSE.h>
+#include <OSYS.h>
+#include <OPOWER.h>
+#include <OUNIT.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OTECHRES.h>
+#include <OF_RESE.h>
+#include <OREMOTE.h>
+#include <OSE.h>
+#include <OSERES.h>
+#include <OBUTTCUS.h>
 
 //------------- Define constant ------------//
 

@@ -2,9 +2,9 @@
 //Description : Object Unit(Ship) functions
 //Owner       : Alex
 
-#include <OU_MARI.H>
-#include <OTERRAIN.H>
-#include <ONATION.H>
+#include <OU_MARI.h>
+#include <OTERRAIN.h>
+#include <ONATION.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

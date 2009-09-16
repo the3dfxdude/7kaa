@@ -2,7 +2,7 @@
 ;Description : Remap a rectangle bar on vga image buffer
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

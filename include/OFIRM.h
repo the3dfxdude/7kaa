@@ -5,27 +5,27 @@
 #define __OFIRM_H
 
 #ifndef __GAMEDEF_H
-#include <GAMEDEF.H>
+#include <GAMEDEF.h>
 #endif
 
 #ifndef __OFIRMA_H
-#include <OFIRMA.H>
+#include <OFIRMA.h>
 #endif
 
 #ifndef __OINFO_H
-#include <OINFO.H>
+#include <OINFO.h>
 #endif
 
 #ifndef __OFIRMID_H
-#include <OFIRMID.H>
+#include <OFIRMID.h>
 #endif
 
 #ifndef __OFIRMRES_H
-#include <OFIRMRES.H>
+#include <OFIRMRES.h>
 #endif
 
 #ifndef __OSKILL_H
-#include <OSKILL.H>
+#include <OSKILL.h>
 #endif
 
 //----------- Define constant ------------//

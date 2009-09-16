@@ -1,28 +1,28 @@
 //Filename    : OF_HARB.CPP
 //Description : Firm Harbor
 
-#include <OINFO.H>
-#include <OVGA.H>
-#include <ODATE.H>
-#include <OHELP.H>
-#include <OMOUSE.H>
-#include <OSTR.H>
-#include <OSYS.H>
-#include <OFONT.H>
-#include <OBUTTON.H>
-#include <OBUTT3D.H>
-#include <OVBROWIF.H>
-#include <OTERRAIN.H>
-#include <OPOWER.H>
-#include <OREGIONS.H>
-#include <OU_MARI.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OF_HARB.H>
-#include <OREMOTE.H>
-#include <OBUTTCUS.H>
-#include <OSE.H>
-#include <OSERES.H>
+#include <OINFO.h>
+#include <OVGA.h>
+#include <ODATE.h>
+#include <OHELP.h>
+#include <OMOUSE.h>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <OFONT.h>
+#include <OBUTTON.h>
+#include <OBUTT3D.h>
+#include <OVBROWIF.h>
+#include <OTERRAIN.h>
+#include <OPOWER.h>
+#include <OREGIONS.h>
+#include <OU_MARI.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OF_HARB.h>
+#include <OREMOTE.h>
+#include <OBUTTCUS.h>
+#include <OSE.h>
+#include <OSERES.h>
 
 
 //------------- Define coordinations -----------//

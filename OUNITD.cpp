@@ -2,14 +2,14 @@
 //Description : Object Unit defense functions
 //Owner		  : Alex
 
-#include <ALL.H>
-#include <OUNIT.H>
-#include <OWORLD.H>
-#include <OFIRM.H>
-#include <ONATION.H>
-#include <OTOWN.H>
-#include <OF_CAMP.H>
-#include <OF_MONS.H>
+#include <ALL.h>
+#include <OUNIT.h>
+#include <OWORLD.h>
+#include <OFIRM.h>
+#include <ONATION.h>
+#include <OTOWN.h>
+#include <OF_CAMP.h>
+#include <OF_MONS.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

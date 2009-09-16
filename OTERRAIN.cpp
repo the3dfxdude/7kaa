@@ -2,13 +2,13 @@
 //Description : Terrain resource object
 //Ownership   : Gilbert
 
-#include <OIMGRES.H>
-#include <COLOR.H>
-#include <OSYS.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <OTERRAIN.H>
-#include <OCONFIG.H>
+#include <OIMGRES.h>
+#include <COLOR.h>
+#include <OSYS.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <OTERRAIN.h>
+#include <OCONFIG.h>
 
 //---------- #define constant ------------//
 

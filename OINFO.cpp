@@ -2,30 +2,30 @@
 //Description : Info class
 
 #include <time.h>
-#include <OVGA.H>
-#include <OIMGRES.H>
-#include <OSPY.H>
-#include <OSTR.H>
-#include <OBUTTON.H>
-#include <OMOUSE.H>
-#include <OFIRM.H>
-#include <OSTR.H>
-#include <ONEWS.H>
-#include <ONATION.H>
-#include <OFONT.H>
-#include <ODATE.H>
-#include <OTOWN.H>
-#include <ODATE.H>
-#include <OGAME.H>
-#include <OGFILE.H>
-#include <OPOWER.H>
-#include <OSITE.H>
-#include <OWALLRES.H>
-#include <OSYS.H>
-#include <OUNIT.H>
-#include <OCOLTBL.H>
-#include <OINFO.H>
-#include <OOPTMENU.H>
+#include <OVGA.h>
+#include <OIMGRES.h>
+#include <OSPY.h>
+#include <OSTR.h>
+#include <OBUTTON.h>
+#include <OMOUSE.h>
+#include <OFIRM.h>
+#include <OSTR.h>
+#include <ONEWS.h>
+#include <ONATION.h>
+#include <OFONT.h>
+#include <ODATE.h>
+#include <OTOWN.h>
+#include <ODATE.h>
+#include <OGAME.h>
+#include <OGFILE.h>
+#include <OPOWER.h>
+#include <OSITE.h>
+#include <OWALLRES.h>
+#include <OSYS.h>
+#include <OUNIT.h>
+#include <OCOLTBL.h>
+#include <OINFO.h>
+#include <OOPTMENU.h>
 
 //------------ Define static vars ----------------//
 

@@ -2,8 +2,8 @@
 ;Description : Diagonal mirror-blt a bitmap to the display surface buffer with color key transparency handling
 
 
-INCLUDE IMGFUN.INC
-INCLUDE COLCODE.INC
+INCLUDE IMGFUN.inc
+INCLUDE COLCODE.inc
 
 .CODE
 

@@ -5,11 +5,11 @@
 #define __OGAMESET_H
 
 #ifndef __ORESX_H
-#include <ORESX.H>
+#include <ORESX.h>
 #endif
 
 #ifndef __ODB_H
-#include <ODB.H>
+#include <ODB.h>
 #endif
 
 //-------- Define struct SetRec ---------//

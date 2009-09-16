@@ -5,7 +5,7 @@
 #define __OU_VEHI_H
 
 #ifndef __OUNIT_H
-#include <OUNIT.H>
+#include <OUNIT.h>
 #endif
 
 //----------- Define class UnitVehicle -----------//

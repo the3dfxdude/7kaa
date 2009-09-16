@@ -4,11 +4,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <ALL.H>
-#include <OGAME.H>
-#include <OSYS.H>
-#include <OFILETXT.H>
-#include <OTRANSL.H>
+#include <ALL.h>
+#include <OGAME.h>
+#include <OSYS.h>
+#include <OFILETXT.h>
+#include <OTRANSL.h>
 
 
 //--------- Define constant ---------//

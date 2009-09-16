@@ -5,15 +5,15 @@
 #define __OGAME_H
 
 #ifndef __WINDOWS_
-#include <WINDOWS.H>
+#include <windows.h>
 #endif
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OCONFIG_H
-#include <OCONFIG.H>
+#include <OCONFIG.h>
 #endif
 
 //-------- Define game modes -----------//

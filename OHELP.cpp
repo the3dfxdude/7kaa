@@ -1,20 +1,20 @@
 //Filename    : OHELP.CPP
 //Description : Object Help
 
-#include <ALL.H>
-#include <OSYS.H>
-#include <OSTR.H>
-#include <OVGA.H>
-#include <OMUSIC.H>
-#include <OFONT.H>
-#include <OINFO.H>
-#include <OGAME.H>
-#include <OUNIT.H>
-#include <OBOX.H>
-#include <OMOUSE.H>
-#include <OVBROWSE.H>
-#include <OFILETXT.H>
-#include <OHELP.H>
+#include <ALL.h>
+#include <OSYS.h>
+#include <OSTR.h>
+#include <OVGA.h>
+#include <OMUSIC.h>
+#include <OFONT.h>
+#include <OINFO.h>
+#include <OGAME.h>
+#include <OUNIT.h>
+#include <OBOX.h>
+#include <OMOUSE.h>
+#include <OVBROWSE.h>
+#include <OFILETXT.h>
+#include <OHELP.h>
 
 
 //---------- Define constant -------------//

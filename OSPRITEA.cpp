@@ -1,17 +1,17 @@
 //Filename    : OSPRITEA.CPP
 //Description : Object SpriteArray
 
-#include <ALL.H>
-#include <OVGA.H>
-#include <OSTR.H>
-#include <OSYS.H>
-#include <OSPRTRES.H>
-#include <OSPRITE.H>
-#include <OUNIT.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <OSPRTRES.h>
+#include <OSPRITE.h>
+#include <OUNIT.h>
 
 #ifdef DEBUG
-#include <OBULLET.H>
-#include <OTORNADO.H>
+#include <OBULLET.h>
+#include <OTORNADO.h>
 
 //### begin alex 3/10 ###//
 static int num_of_unit;

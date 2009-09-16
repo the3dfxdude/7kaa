@@ -5,20 +5,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <OBOX.H>
-#include <OSTR.H>
-#include <ODATE.H>
-#include <OMOUSECR.H>
-#include <OTALKRES.H>
-#include <ONATION.H>
-#include <OWORLD.H>
-#include <OPOWER.H>
-#include <OGAME.H>
-#include <OINFO.H>
-#include <OGFILE.H>
-#include <OSYS.H>
-#include <OAUDIO.H>
-#include <OMUSIC.H>
+#include <OBOX.h>
+#include <OSTR.h>
+#include <ODATE.h>
+#include <OMOUSECR.h>
+#include <OTALKRES.h>
+#include <ONATION.h>
+#include <OWORLD.h>
+#include <OPOWER.h>
+#include <OGAME.h>
+#include <OINFO.h>
+#include <OGFILE.h>
+#include <OSYS.h>
+#include <OAUDIO.h>
+#include <OMUSIC.h>
 
 // -------- define constant ----------//
 #define MIN_FREE_SPACE 1000

@@ -5,7 +5,7 @@
 #define __OREGIONS_H
 
 #ifndef __OFIRMID_H
-#include <OFIRMID.H>
+#include <OFIRMID.h>
 #endif
 
 //-------- Define constant ---------//

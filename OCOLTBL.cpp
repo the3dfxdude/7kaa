@@ -1,8 +1,8 @@
 // Filename    : OCOLTBL.CPP
 // Description : generated color remap table
 
-#include <OCOLTBL.H>
-#include <ALL.H>
+#include <OCOLTBL.h>
+#include <ALL.h>
 #include <math.h>
 
 // ---------- define const -----------//

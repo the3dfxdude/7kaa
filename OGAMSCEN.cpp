@@ -1,18 +1,18 @@
 //Filename    : OGAMSCEN.CPP
 //Description : Select Game Scenario
 
-#include <OSTR.H>
-#include <OSYS.H>
-#include <ONEWS.H>
-#include <ODATE.H>
-#include <OGFILE.H>
-#include <OF_MONS.H>
-#include <OMONSRES.H>
-#include <OFILETXT.H>
-#include <ODIR.H>
-#include <OBOX.H>
-#include <OBATTLE.H>
-#include <OGAME.H>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <ONEWS.h>
+#include <ODATE.h>
+#include <OGFILE.h>
+#include <OF_MONS.h>
+#include <OMONSRES.h>
+#include <OFILETXT.h>
+#include <ODIR.h>
+#include <OBOX.h>
+#include <OBATTLE.h>
+#include <OGAME.h>
 
 //--------- declare static vars ----------//
 

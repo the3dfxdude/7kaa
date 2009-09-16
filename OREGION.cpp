@@ -2,9 +2,9 @@
 // Description : Class RegionArray , info on regions
 
 #include <stdlib.h>
-#include <OINFO.H>
-#include <OREGION.H>
-#include <OREGIONS.H>
+#include <OINFO.h>
+#include <OREGION.h>
+#include <OREGIONS.h>
 
 //--------- Define static function ---------//
 

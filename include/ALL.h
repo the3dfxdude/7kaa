@@ -11,19 +11,19 @@
 #endif
 
 #ifndef __OMISC_H
-#include <OMISC.H>
+#include <OMISC.h>
 #endif
 
 #ifndef __OSTR_H
-#include <OSTR.H>
+#include <OSTR.h>
 #endif
 
 #ifndef __OFILE_H
-#include <OFILE.H>
+#include <OFILE.h>
 #endif
 
 #ifndef __GAMEDEF_H
-#include <GAMEDEF.H>
+#include <GAMEDEF.h>
 #endif
 
 //-------- Define macro functions -------//

@@ -1,18 +1,18 @@
 //Filename    : OMONSRES.CPP
 //Description : Monster resource class
 
-#include <OSYS.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <OSPRTRES.H>
-#include <OUNIT.H>
-#include <OUNITRES.H>
-#include <OTOWN.H>
-#include <OFIRM.H>
-#include <OF_MONS.H>
-#include <OMONSRES.H>
+#include <OSYS.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <OSPRTRES.h>
+#include <OUNIT.h>
+#include <OUNITRES.h>
+#include <OTOWN.h>
+#include <OFIRM.h>
+#include <OF_MONS.h>
+#include <OMONSRES.h>
 #if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-	#include <OTRANSL.H>
+#include <OTRANSL.h>
 #endif
 
 //---------- #define constant ------------//

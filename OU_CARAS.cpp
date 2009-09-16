@@ -1,7 +1,7 @@
-#include <OU_CARA.H>
-#include <OF_MINE.H>
-#include <OF_FACT.H>
-#include <OF_MARK.H>
+#include <OU_CARA.h>
+#include <OF_MINE.h>
+#include <OF_FACT.h>
+#include <OF_MARK.h>
 
 //--------- Begin of function TradeStop::pick_up_set_auto ---------//
 void TradeStop::pick_up_set_auto()

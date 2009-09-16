@@ -1,13 +1,13 @@
 //Filename    : OSPRITE2.CPP
 //Description : Object Sprite
 
-#include <ALL.H>
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OREMOTE.H>
-#include <OUNIT.H>
-#include <OSPRITE.H>
-#include <OSERES.H>
+#include <ALL.h>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OREMOTE.h>
+#include <OUNIT.h>
+#include <OSPRITE.h>
+#include <OSERES.h>
 
 #ifdef DEBUG
 static int check_dir1, check_dir2;

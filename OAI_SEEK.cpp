@@ -1,14 +1,14 @@
 //Filename   : OAI_SEEK.CPP
 //Description: AI - action progressing functions
 
-#include <ALL.H>
-#include <OUNIT.H>
-#include <OF_MINE.H>
-#include <OF_FACT.H>
-#include <OF_HARB.H>
-#include <OTOWN.H>
-#include <OSITE.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OUNIT.h>
+#include <OF_MINE.h>
+#include <OF_FACT.h>
+#include <OF_HARB.h>
+#include <OTOWN.h>
+#include <OSITE.h>
+#include <ONATION.h>
 
 //--------- Begin of function Nation::seek_mine --------//
 //

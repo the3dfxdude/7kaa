@@ -1,11 +1,11 @@
 //Filename    : OGAMESET.CPP
 //Description : Object Game Set
 
-#include <ALL.H>
-#include <OSTR.H>
-#include <ODIR.H>
-#include <OSYS.H>
-#include <OGAMESET.H>
+#include <ALL.h>
+#include <OSTR.h>
+#include <ODIR.h>
+#include <OSYS.h>
+#include <OGAMESET.h>
 
 
 //-------- Define constant -------------//

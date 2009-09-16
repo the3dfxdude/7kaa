@@ -2,8 +2,8 @@
 // Description : class Rain
 // Ownership   : Gilbert
 
-#include <ORAIN.H>
-#include <OVGABUF.H>
+#include <ORAIN.h>
+#include <OVGABUF.h>
 
 
 //------- Begin of function Rain::start_rain --------------//

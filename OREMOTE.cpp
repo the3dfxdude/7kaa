@@ -5,20 +5,20 @@
 #include <windowsx.h>
 #include <mmsystem.h>
 
-#include <ALL.H>
-#include <OBOX.H>
-#include <OVGA.H>
-#include <OSTR.H>
-#include <OFONT.H>
-#include <OSYS.H>
-#include <OWORLD.H>
-#include <OGAME.H>
-#include <OPOWER.H>
-#include <ONATION.H>
-#include <OREMOTE.H>
-#include <ODPLAY.H>
-#include <OIMMPLAY.H>
-#include <OERRCTRL.H>
+#include <ALL.h>
+#include <OBOX.h>
+#include <OVGA.h>
+#include <OSTR.h>
+#include <OFONT.h>
+#include <OSYS.h>
+#include <OWORLD.h>
+#include <OGAME.h>
+#include <OPOWER.h>
+#include <ONATION.h>
+#include <OREMOTE.h>
+#include <ODPLAY.h>
+#include <OIMMPLAY.h>
+#include <OERRCTRL.h>
 
 //---------- Define static variables ----------//
 

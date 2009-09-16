@@ -5,15 +5,15 @@
 #define __OSPRITE_H
 
 #ifndef __ODYNARRB_H
-#include <ODYNARRB.H>
+#include <ODYNARRB.h>
 #endif
 
 #ifndef __OSPRTRES_H
-#include <OSPRTRES.H>
+#include <OSPRTRES.h>
 #endif
 
 #ifndef __OWORLD_H
-#include <OWORLD.H>
+#include <OWORLD.h>
 #endif
 
 //---------- Define action types ---------//

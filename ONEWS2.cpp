@@ -1,14 +1,14 @@
 //Filename    : ONEWS2.CPP
 //Description : News adding functions
 
-#include <OTOWN.H>
-#include <ONATION.H>
-#include <OMONSRES.H>
-#include <OTALKRES.H>
-#include <OFIRM.H>
-#include <OSPY.H>
-#include <OUNIT.H>
-#include <ONEWS.H>
+#include <OTOWN.h>
+#include <ONATION.h>
+#include <OMONSRES.h>
+#include <OTALKRES.h>
+#include <OFIRM.h>
+#include <OSPY.h>
+#include <OUNIT.h>
+#include <ONEWS.h>
 
 
 //------ Begin of function NewsArray::diplomacy -----//

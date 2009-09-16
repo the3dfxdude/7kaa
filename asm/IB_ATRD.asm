@@ -3,8 +3,8 @@
 ;	       with decompression, transparency handling and colormaping
 
 
-INCLUDE IMGFUN.INC
-INCLUDE COLCODE.INC
+INCLUDE IMGFUN.inc
+INCLUDE COLCODE.inc
 
 .CODE
 

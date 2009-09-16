@@ -4,19 +4,19 @@
 #ifdef AMPLUS
 
 #ifndef __OTOWN_H
-#include <OTOWN.H>
+#include <OTOWN.h>
 #endif
 
 #ifndef __NATIONA_H
-#include <ONATIONA.H>
+#include <ONATIONA.h>
 #endif
 
 #ifndef __NATION_H
-#include <ONATION.H>
+#include <ONATION.h>
 #endif
 
 #ifndef __OGFILE_H
-#include <OGFILE.H>
+#include <OGFILE.h>
 #endif
 
 class Version_1_Town

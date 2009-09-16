@@ -1,19 +1,19 @@
 //Filename    : OTALKRES.CPP
 //Description : Object Talk
 
-#include <OMOUSE.H>
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OINFO.H>
-#include <OFONT.H>
-#include <OTECHRES.H>
-#include <OGAMESET.H>
-#include <ONEWS.H>
-#include <ONATION.H>
-#include <OTALKRES.H>
-#include <OREMOTE.H>
+#include <OMOUSE.h>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OINFO.h>
+#include <OFONT.h>
+#include <OTECHRES.h>
+#include <OGAMESET.h>
+#include <ONEWS.h>
+#include <ONATION.h>
+#include <OTALKRES.h>
+#include <OREMOTE.h>
 // #### begin Gilbert 9/10 ######//
-#include <OSE.H>
+#include <OSE.h>
 // #### end Gilbert 9/10 ######//
 
 //---------- the subtitle area ----------//

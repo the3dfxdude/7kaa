@@ -1,7 +1,7 @@
-#include <OU_MARI.H>
-#include <OF_MINE.H>
-#include <OF_FACT.H>
-#include <OF_MARK.H>
+#include <OU_MARI.h>
+#include <OF_MINE.h>
+#include <OF_FACT.h>
+#include <OF_MARK.h>
 
 //--------- Begin of function ShipStop::update_pick_up ---------//
 // enableFlag	- represent which button will be displayed

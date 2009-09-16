@@ -2,10 +2,10 @@
 // Description : generate random rock on map
 
 
-#include <OWORLD.H>
-#include <OROCKRES.H>
-#include <OROCK.H>
-#include <OTERRAIN.H>
+#include <OWORLD.h>
+#include <OROCKRES.h>
+#include <OROCK.h>
+#include <OTERRAIN.h>
 
 
 //--------------- begin of function World::can_add_rock ----------//

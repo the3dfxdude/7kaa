@@ -3,7 +3,7 @@
 ;              surface on the same place
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

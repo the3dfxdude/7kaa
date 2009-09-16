@@ -7,10 +7,10 @@
 #define __OAUDIO_H
 
 #ifndef __ORESX_H
-#include <ORESX.H>
+#include <ORESX.h>
 #endif
 
-#include <OVOLUME.H>
+#include <OVOLUME.h>
 
 #include <mmsystem.h>
 #include <dsound.h>

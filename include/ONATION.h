@@ -6,15 +6,15 @@
 #define __ONATION_H
 
 #ifndef __ONATIONB_H
-#include <ONATIONB.H>
+#include <ONATIONB.h>
 #endif
 
 #ifndef __OUNIT_H
-#include <OUNIT.H>
+#include <OUNIT.h>
 #endif
 
 #ifndef __OTOWN_H
-#include <OTOWN.H>
+#include <OTOWN.h>
 #endif
 
 //--------- define parameters ----------//
@@ -602,7 +602,7 @@ public:
 };
 
 #ifndef __ONATIONA_H
-#include <ONATIONA.H>
+#include <ONATIONA.h>
 #endif
 
 //-------------------------------------//

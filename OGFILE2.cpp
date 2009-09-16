@@ -1,39 +1,39 @@
 //Filename    : OGFILE2.CPP
 //Description : Object Game file, save game and restore game, part 2
 
-#include <OUNITRES.H>
-#include <OFIRMRES.H>
+#include <OUNITRES.h>
+#include <OFIRMRES.h>
 
-#include <OUNIT.H>
-#include <OBULLET.H>
-#include <OSITE.H>
-#include <OTOWN.H>
-#include <ONATION.H>
-#include <OFIRM.H>
-#include <OTECHRES.H>
-#include <ORACERES.H>
-#include <OTOWNRES.H>
-#include <ORAWRES.H>
-#include <OGODRES.H>
-#include <OTALKRES.H>
-#include <OTORNADO.H>
-#include <OMONSRES.H>
-#include <OREBEL.H>
-#include <OSPY.H>
-#include <OSNOWG.H>
-#include <OSYS.H>
-#include <OREGION.H>
-#include <ONEWS.H>
-#include <OTUTOR.H>
-#include <OINFO.H>
-#include <OWEATHER.H>
-#include <OGAME.H>
-#include <OPOWER.H>
-#include <OWORLD.H>
-#include <OGFILE.H>
-#include	<OROCK.H>
+#include <OUNIT.h>
+#include <OBULLET.h>
+#include <OSITE.h>
+#include <OTOWN.h>
+#include <ONATION.h>
+#include <OFIRM.h>
+#include <OTECHRES.h>
+#include <ORACERES.h>
+#include <OTOWNRES.h>
+#include <ORAWRES.h>
+#include <OGODRES.h>
+#include <OTALKRES.h>
+#include <OTORNADO.h>
+#include <OMONSRES.h>
+#include <OREBEL.h>
+#include <OSPY.h>
+#include <OSNOWG.h>
+#include <OSYS.h>
+#include <OREGION.h>
+#include <ONEWS.h>
+#include <OTUTOR.h>
+#include <OINFO.h>
+#include <OWEATHER.h>
+#include <OGAME.h>
+#include <OPOWER.h>
+#include <OWORLD.h>
+#include <OGFILE.h>
+#include <OROCK.h>
 // ##### begin Gilbert 2/10 #######//
-#include <OFIRMDIE.H>
+#include <OFIRMDIE.h>
 // ##### end Gilbert 2/10 #######//
 
 

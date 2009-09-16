@@ -1,14 +1,14 @@
 //Filename    : OUNITAI.CPP
 //Description : Object Unit AI
 
-#include <OSYS.H>
-#include <OSPY.H>
-#include <OREBEL.H>
-#include <OUNIT.H>
-#include <OCONFIG.H>
-#include <OREGIONS.H>
-#include <OF_CAMP.H>
-#include <ONATION.H>
+#include <OSYS.h>
+#include <OSPY.h>
+#include <OREBEL.h>
+#include <OUNIT.h>
+#include <OCONFIG.h>
+#include <OREGIONS.h>
+#include <OF_CAMP.h>
+#include <ONATION.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

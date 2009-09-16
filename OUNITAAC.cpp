@@ -3,17 +3,17 @@
 
 #include <math.h>
 
-#include <ALL.H>
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OSTR.H>
-#include <OREMOTE.H>
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OTERRAIN.H>
-#include <OU_MARI.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OSTR.h>
+#include <OREMOTE.h>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OTERRAIN.h>
+#include <OU_MARI.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

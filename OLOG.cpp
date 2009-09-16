@@ -3,9 +3,9 @@
 // Owner       : Gilbert
 
 
-#include <OLOG.H>
-#include <STDIO.H>
-#include <OFILE.H>
+#include <OLOG.h>
+#include <stdio.h>
+#include <OFILE.h>
 
 
 // -------- begin of function Log::Log ----------//

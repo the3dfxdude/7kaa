@@ -2,13 +2,13 @@
 // Description : destruting firm
 
 
-#include <OSTR.H>
-#include <OFIRMRES.H>
-#include <OFIRMDIE.H>
-#include <OGAMESET.H>
-#include <OGAME.H>
-#include <ORESDB.H>
-#include <ALL.H>
+#include <OSTR.h>
+#include <OFIRMRES.h>
+#include <OFIRMDIE.h>
+#include <OGAMESET.h>
+#include <OGAME.h>
+#include <ORESDB.h>
+#include <ALL.h>
 
 
 #define FIRM_BUILD_DB 	"FDBUILD"

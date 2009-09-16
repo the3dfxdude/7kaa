@@ -1,17 +1,17 @@
 //Filename    : OR_TECH.CPP
 //Description : Technology Report
 
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OIMGRES.H>
-#include <OVBROWIF.H>
-#include <OBUTTON.H>
-#include <OTECHRES.H>
-#include <OGODRES.H>
-#include <ORACERES.H>
-#include <ONATION.H>
-#include <OU_GOD.H>
-#include <OINFO.H>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OIMGRES.h>
+#include <OVBROWIF.h>
+#include <OBUTTON.h>
+#include <OTECHRES.h>
+#include <OGODRES.h>
+#include <ORACERES.h>
+#include <ONATION.h>
+#include <OU_GOD.h>
+#include <OINFO.h>
 
 //------------- Define coordinations -----------//
 

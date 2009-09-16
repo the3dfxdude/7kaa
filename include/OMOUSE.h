@@ -5,7 +5,7 @@
 #define __OMOUSE_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #define DIRECTINPUT_VERSION 0x300

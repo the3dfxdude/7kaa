@@ -1,27 +1,27 @@
 //Filename    : OGFILEA.CPP
 //Description : Game File Array
 
-#include <IO.H>
-#include <KEY.H>
-#include <ODIR.H>
-#include <OSYS.H>
-#include <ODATE.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OPOWER.H>
-#include <ORACERES.H>
-#include <OUNITRES.H>
-#include <OIMGRES.H>
-#include <OVGA.H>
-#include <OBOX.H>
-#include <OFONT.H>
-#include <OINFO.H>
-#include <OGAME.H>
-#include <OGAMESET.H>
-#include <OGFILE.H>
-#include <OBUTT3D.H>
-#include <OSLIDCUS.H>
-#include <OBLOB.H>
+#include <io.h>
+#include <KEY.h>
+#include <ODIR.h>
+#include <OSYS.h>
+#include <ODATE.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OPOWER.h>
+#include <ORACERES.h>
+#include <OUNITRES.h>
+#include <OIMGRES.h>
+#include <OVGA.h>
+#include <OBOX.h>
+#include <OFONT.h>
+#include <OINFO.h>
+#include <OGAME.h>
+#include <OGAMESET.h>
+#include <OGFILE.h>
+#include <OBUTT3D.h>
+#include <OSLIDCUS.h>
+#include <OBLOB.h>
 
 
 

@@ -5,15 +5,15 @@
 #define __OU_MARI_H
 
 #ifndef __OUNIT_H
-#include <OUNIT.H>
+#include <OUNIT.h>
 #endif
 
 #ifndef __F_MARK_H
-#include <OF_MARK.H>
+#include <OF_MARK.h>
 #endif
 
 #ifndef __OU_CARA_H
-#include <OU_CARA.H>
+#include <OU_CARA.h>
 #endif
 
 //------- Define constant ---------//

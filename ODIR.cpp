@@ -3,7 +3,7 @@
 
 #include <string.h>
 #include <windows.h>
-#include <ODIR.H>
+#include <ODIR.h>
 
 
 //----------- Define static function ------------//

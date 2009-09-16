@@ -4,11 +4,11 @@
 
 #include	<math.h>
 #include <time.h>
-#include <OVGABUF.H>
-#include <OMISC.H>
-#include <OLIGHTN.H>
-#include <OWORLDMT.H>
-#include <COLOR.H>
+#include <OVGABUF.h>
+#include <OMISC.h>
+#include <OLIGHTN.h>
+#include <OWORLDMT.h>
+#include <COLOR.h>
 
 //------------ Define constant ----------//
 

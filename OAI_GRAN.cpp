@@ -1,12 +1,12 @@
 //Filename   : OAI_GRAN.CPP
 //Description: AI grand plans
 
-#include <OCONFIG.H>
-#include <OTALKRES.H>
-#include <ORACERES.H>
-#include <OREGIONS.H>
-#include <OF_CAMP.H>
-#include <ONATION.H>
+#include <OCONFIG.h>
+#include <OTALKRES.h>
+#include <ORACERES.h>
+#include <OREGIONS.h>
+#include <OF_CAMP.h>
+#include <ONATION.h>
 
 
 //----- Begin of function Nation::think_grand_plan -----//

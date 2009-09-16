@@ -2,8 +2,8 @@
 // Description : custom slide bar
 
 
-#include <OMOUSE.H>
-#include <OSLIDCUS.H>
+#include <OMOUSE.h>
+#include <OSLIDCUS.h>
 
 // ------- begin of inline function bound ---------//
 

@@ -3,9 +3,9 @@
 // Ownership  : Gilbert
 
 #include <stdlib.h>
-#include <ALL.H>
-#include <OCONFIG.H>
-#include <OPLASMA.H>
+#include <ALL.h>
+#include <OCONFIG.h>
+#include <OPLASMA.h>
 
 // ---------- define constant ----------//
 

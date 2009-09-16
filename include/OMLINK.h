@@ -5,7 +5,7 @@
 #define __OMLINK_H
 
 #ifndef __ODYNARRB_H
-#include <ODYNARRB.H>
+#include <ODYNARRB.h>
 #endif
 
 //--------- Define struct MLinkNode -----------//

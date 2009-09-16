@@ -5,7 +5,7 @@
 #define __OIMAGERES_H
 
 #ifndef  __ORESX_H
-#include <ORESX.H>
+#include <ORESX.h>
 #endif
 
 //----------------------------------------//

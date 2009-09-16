@@ -2,14 +2,14 @@
 //Description : Object Bullet
 //Owner		  : Alex
 
-#include <OVGA.H>
-#include <OUNIT.H>
-#include <OBULLET.H>
-#include <OWORLD.H>
-#include <OSERES.H>
-#include <OU_CART.H>
-#include <OTOWN.H>
-#include <ONATIONA.H>
+#include <OVGA.h>
+#include <OUNIT.h>
+#include <OBULLET.h>
+#include <OWORLD.h>
+#include <OSERES.h>
+#include <OU_CART.h>
+#include <OTOWN.h>
+#include <ONATIONA.h>
 
 // -------- Define constant ---------//
 

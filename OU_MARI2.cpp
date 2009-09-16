@@ -1,10 +1,10 @@
 //Filename    : OU_MARI2.CPP
 //Description : Marine Units AI functions
 
-#include <OINFO.H>
-#include <ONATION.H>
-#include <OF_HARB.H>
-#include <OU_MARI.H>
+#include <OINFO.h>
+#include <ONATION.h>
+#include <OF_HARB.h>
+#include <OU_MARI.h>
 
 
 //------- Begin of function UnitMarine::init_derived --------//

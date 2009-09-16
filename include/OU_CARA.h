@@ -6,23 +6,23 @@
 #define __OU_CARA_H
 
 #ifndef __ODYNARR_H
-#include <ODYNARR.H>
+#include <ODYNARR.h>
 #endif
 
 #ifndef __OSPATH_H
-#include <OSPATH.H>
+#include <OSPATH.h>
 #endif
 
 #ifndef __OUNIT_H
-#include <OUNIT.H>
+#include <OUNIT.h>
 #endif
 
 #ifndef __ORAWRES_H
-#include <ORAWRES.H>
+#include <ORAWRES.h>
 #endif
 
 #ifndef __F_MARK_H
-#include <OF_MARK.H>
+#include <OF_MARK.h>
 #endif
 
 //------------- Define constant -----------//

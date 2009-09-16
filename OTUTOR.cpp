@@ -1,22 +1,22 @@
 //Filename    : OTUTOR.CPP
 //Description : Class Tutor
 
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OAUDIO.H>
-#include <OBATTLE.H>
-#include <OFONT.H>
-#include <OF_MONS.H>
-#include <OMONSRES.H>
-#include <OIMGRES.H>
-#include <OBUTTON.H>
-#include <OBUTT3D.H>
-#include <OGFILE.H>
-#include <OGAME.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <OFILETXT.H>
-#include <OTUTOR.H>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OAUDIO.h>
+#include <OBATTLE.h>
+#include <OFONT.h>
+#include <OF_MONS.h>
+#include <OMONSRES.h>
+#include <OIMGRES.h>
+#include <OBUTTON.h>
+#include <OBUTT3D.h>
+#include <OGFILE.h>
+#include <OGAME.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <OFILETXT.h>
+#include <OTUTOR.h>
 
 //---------- define constant ------------//
 

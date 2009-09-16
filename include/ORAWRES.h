@@ -5,11 +5,11 @@
 #define __ORAWRES_H
 
 #ifndef __ORES_H
-#include <ORES.H>
+#include <ORES.h>
 #endif
 
 #ifndef __ODYNARR_H
-#include <ODYNARR.H>
+#include <ODYNARR.h>
 #endif
 
 //------------- define constant --------------//

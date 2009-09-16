@@ -2,16 +2,16 @@
 //Description : Object Unit idle processing
 //Owner       : Alex
 
-#include <ALL.H>
-#include <OWORLD.H>
-#include <OU_MARI.H>
-#include <ONATION.H>
-#include <OF_MONS.H>
-#include <OTOWN.H>
-#include <OSPY.H>
-#include <OREBEL.H>
-#include <OSYS.H>
-#include <OU_GOD.H>
+#include <ALL.h>
+#include <OWORLD.h>
+#include <OU_MARI.h>
+#include <ONATION.h>
+#include <OF_MONS.h>
+#include <OTOWN.h>
+#include <OSPY.h>
+#include <OREBEL.h>
+#include <OSYS.h>
+#include <OU_GOD.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

@@ -1,12 +1,12 @@
 //Filename    : OTOWNSE2.CPP
 //Description : Object TownZone
 
-#include <OVGA.H>
-#include <OGAME.H>
-#include <OINFO.H>
-#include <OTOWN.H>
-#include <OWORLD.H>
-#include <OTOWNRES.H>
+#include <OVGA.h>
+#include <OGAME.h>
+#include <OINFO.h>
+#include <OTOWN.h>
+#include <OWORLD.h>
+#include <OTOWNRES.h>
 
 
 //------- Begin of function TownBuild::draw -----------//

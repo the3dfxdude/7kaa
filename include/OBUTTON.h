@@ -5,7 +5,7 @@
 #define __OBUTTON_H
 
 #ifndef __OVGABUF_H
-#include <OVGABUF.H>
+#include <OVGABUF.h>
 #endif
 
 //------- Define constant ---------//

@@ -1,23 +1,23 @@
 //Filename    : OTOWNDRW.CPP
 //Description : Town drawing routines
 
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OFONT.H>
-#include <OMOUSE.H>
-#include <OBUTTON.H>
-#include <OINFO.H>
-#include <OIMGRES.H>
-#include <OPOWER.H>
-#include <OWORLD.H>
-#include <OGAME.H>
-#include <OREMOTE.H>
-#include <OANLINE.H>
-#include <OPLANT.H>
-#include <ONATION.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OSE.H>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
+#include <OBUTTON.h>
+#include <OINFO.h>
+#include <OIMGRES.h>
+#include <OPOWER.h>
+#include <OWORLD.h>
+#include <OGAME.h>
+#include <OREMOTE.h>
+#include <OANLINE.h>
+#include <OPLANT.h>
+#include <ONATION.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OSE.h>
 
 
 //------- Begin of function Town::draw -----------//

@@ -2,17 +2,17 @@
 //Description : Object Tornado
 //Ownership   : Gilbert
 
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OUNIT.H>
-#include <OTORNADO.H>
-#include <OWORLD.H>
-#include <OWEATHER.H>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OUNIT.h>
+#include <OTORNADO.h>
+#include <OWORLD.h>
+#include <OWEATHER.h>
 #include <math.h>
-#include <OFIRM.H>
-#include <OFIRMA.H>
-#include <OSERES.H>
-#include <OTOWN.H>
+#include <OFIRM.h>
+#include <OFIRMA.h>
+#include <OSERES.h>
+#include <OTOWN.h>
 
 
 #define M_PI 3.141592654

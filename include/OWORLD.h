@@ -5,15 +5,15 @@
 #define __OWORLD_H
 
 #ifndef __OWORLDMT_H
-#include <OWORLDMT.H>
+#include <OWORLDMT.h>
 #endif
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OUNITRES_H
-#include <OUNITRES.H>
+#include <OUNITRES.h>
 #endif
 
 //----------- Define constant ------------//

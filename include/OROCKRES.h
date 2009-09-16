@@ -7,8 +7,8 @@
 #define __OROCKRES_H
 
 
-#include <GAMEDEF.H>
-#include <ORESDB.H>
+#include <GAMEDEF.h>
+#include <ORESDB.h>
 
 // ----------- Define constant ----------//
 #define ROCK_BLOCKING_TYPE 'R'

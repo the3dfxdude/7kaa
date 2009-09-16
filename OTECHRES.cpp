@@ -1,14 +1,14 @@
 //Filename    : OTECHRES.CPP
 //Description : Tech class
 
-#include <ALL.H>
-#include <OGAME.H>
-#include <OGAMESET.H>
-#include <OF_RESE.H>
-#include <OUNIT.H>
-#include <ORESX.H>
-#include <ONATION.H>
-#include <OTECHRES.H>
+#include <ALL.h>
+#include <OGAME.h>
+#include <OGAMESET.h>
+#include <OF_RESE.h>
+#include <OUNIT.h>
+#include <ORESX.h>
+#include <ONATION.h>
+#include <OTECHRES.h>
 
 //---------- #define constant ------------//
 

@@ -1,25 +1,25 @@
 //Filename    : OF_WAR.CPP
 //Description : Firm War Factory
 
-#include <OINFO.H>
-#include <OVGA.H>
-#include <ODATE.H>
-#include <OSTR.H>
-#include <OCONFIG.H>
-#include <OFONT.H>
-#include <OMOUSE.H>
-#include <OBUTT3D.H>
-#include <OPOWER.H>
-#include <OUNIT.H>
-#include <OGAME.H>
-#include <OSYS.H>
-#include <ONATION.H>
-#include <OF_WAR.H>
-#include <OREMOTE.H>
-#include <OIMGRES.H>
-#include <OSE.H>
-#include <OSERES.H>
-#include <OBUTTCUS.H>
+#include <OINFO.h>
+#include <OVGA.h>
+#include <ODATE.h>
+#include <OSTR.h>
+#include <OCONFIG.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
+#include <OBUTT3D.h>
+#include <OPOWER.h>
+#include <OUNIT.h>
+#include <OGAME.h>
+#include <OSYS.h>
+#include <ONATION.h>
+#include <OF_WAR.h>
+#include <OREMOTE.h>
+#include <OIMGRES.h>
+#include <OSE.h>
+#include <OSERES.h>
+#include <OBUTTCUS.h>
 
 
 //------------- Define constant ------------//

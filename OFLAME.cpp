@@ -5,10 +5,10 @@
 // Frank Jan Sorensen Alias:Frank Patxi (fjs@lab.jt.dk) for the
 // fireroutine.
 
-#include <OFLAME.H>
-#include <OVGABUF.H>
-#include <ALL.H>
-#include <COLCODE.H>
+#include <OFLAME.h>
+#include <OVGABUF.h>
+#include <ALL.h>
+#include <COLCODE.h>
 
 
 //-------------- Begin Function Flame::Flame ----------//

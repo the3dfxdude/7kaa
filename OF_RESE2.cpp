@@ -1,12 +1,12 @@
 //Filename    : OF_RESE2.CPP
 //Description : Firm Research Center - AI functions
 
-#include <ONATION.H>
-#include <OINFO.H>
-#include <OTOWN.H>
-#include <OUNIT.H>
-#include <OTECHRES.H>
-#include <OF_RESE.H>
+#include <ONATION.h>
+#include <OINFO.h>
+#include <OTOWN.h>
+#include <OUNIT.h>
+#include <OTECHRES.h>
+#include <OF_RESE.h>
 
 //--------- Begin of function FirmResearch::process_ai ---------//
 

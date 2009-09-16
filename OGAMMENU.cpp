@@ -1,29 +1,29 @@
 //Filename   : OGAMMENU.CPP
 //Description: In Game Menu
 
-#include <KEY.H>
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OPOWER.H>
-#include <OBOX.H>
-#include <OFONT.H>
-#include <OIMGRES.H>
-#include <OINFO.H>
-#include <OGAME.H>
-#include <OGFILE.H>
-#include <OCONFIG.H>
-#include <ORACERES.H>
-#include <OBUTT3D.H>
-#include <OBUTTCUS.H>
-#include <OCOLTBL.H>
-#include <OMUSIC.H>
-#include <OSLIDCUS.H>
-#include <OAUDIO.H>
-#include <OREMOTE.H>
-#include <OTUTOR.H>
-#include <OOPTMENU.H>
+#include <KEY.h>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OPOWER.h>
+#include <OBOX.h>
+#include <OFONT.h>
+#include <OIMGRES.h>
+#include <OINFO.h>
+#include <OGAME.h>
+#include <OGFILE.h>
+#include <OCONFIG.h>
+#include <ORACERES.h>
+#include <OBUTT3D.h>
+#include <OBUTTCUS.h>
+#include <OCOLTBL.h>
+#include <OMUSIC.h>
+#include <OSLIDCUS.h>
+#include <OAUDIO.h>
+#include <OREMOTE.h>
+#include <OTUTOR.h>
+#include <OOPTMENU.h>
 
 
 //--------- Define Constant ----------//

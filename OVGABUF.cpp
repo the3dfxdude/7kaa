@@ -1,13 +1,13 @@
 //Filename    : OVGABUF.CPP
 //Description : OVGABUF direct draw surface class
 
-#include <ALL.H>
-#include <OMOUSE.H>
-#include <IMGFUN.H>
-#include <OSYS.H>
-#include <OWORLD.H>
-#include <OVGA.H>
-#include <OVGABUF.H>
+#include <ALL.h>
+#include <OMOUSE.h>
+#include <IMGFUN.h>
+#include <OSYS.h>
+#include <OWORLD.h>
+#include <OVGA.h>
+#include <OVGABUF.h>
 
 //-------- Begin of function VgaBuf::VgaBuf ----------//
 

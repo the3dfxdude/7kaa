@@ -5,8 +5,8 @@
 #ifndef __OCRC_STO_H
 #define __OCRC_STO_H
 
-#include <OVQUEUE.H>
-#include <OSTR.H>
+#include <OVQUEUE.h>
+#include <OSTR.h>
 
 class CrcStore
 {

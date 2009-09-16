@@ -2,11 +2,11 @@
 //Description : Object Unit attack functions to handle blocked movement and group attacking
 //Owner		  : Alex
 
-#include <OWORLD.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OUNIT.H>
-#include <OTERRAIN.H>
+#include <OWORLD.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OUNIT.h>
+#include <OTERRAIN.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

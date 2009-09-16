@@ -5,10 +5,10 @@
 #include <string.h>
 #include <windowsx.h>
 
-#include <OSTR.H>
-#include <OMISC.H>
-#include <OTRANSL.H>
-#include <ODATE.H>
+#include <OSTR.h>
+#include <OMISC.h>
+#include <OTRANSL.h>
+#include <ODATE.h>
 
 
 //--------- Define static member variables -----------//

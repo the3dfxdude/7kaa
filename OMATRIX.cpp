@@ -1,18 +1,18 @@
 //Filename    : OMATRIX.CPP
 //Description : Object road direction turn, derived by World, Chain class
 
-#include <ALL.H>
-#include <OVGA.H>
-#include <OMOUSE.H>
-#include <OSYS.H>
-#include <OSITE.H>
-#include <OFIRM.H>
-#include <OTERRAIN.H>
-#include <OPLANT.H>
-#include <OPOWER.H>
-#include <OUNIT.H>
-#include <OWORLD.H>
-#include <OHILLRES.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OMOUSE.h>
+#include <OSYS.h>
+#include <OSITE.h>
+#include <OFIRM.h>
+#include <OTERRAIN.h>
+#include <OPLANT.h>
+#include <OPOWER.h>
+#include <OUNIT.h>
+#include <OWORLD.h>
+#include <OHILLRES.h>
 
 // --------- define constant ----------//
 #define DEFAULT_WALL_TIMEOUT 10

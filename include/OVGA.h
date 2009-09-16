@@ -5,11 +5,11 @@
 #define __OVGA_H
 
 #ifndef __OVGABUF_H
-#include <OVGABUF.H>
+#include <OVGABUF.h>
 #endif
 
 #ifndef __COLOR_H
-#include <COLOR.H>
+#include <COLOR.h>
 #endif
 
 //----------- define constants ----------//

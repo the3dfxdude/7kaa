@@ -3,8 +3,8 @@
 ;              surface on the same place with transparency handling
 
 
-INCLUDE IMGFUN.INC
-INCLUDE COLCODE.INC
+INCLUDE IMGFUN.inc
+INCLUDE COLCODE.inc
 
 .CODE
 

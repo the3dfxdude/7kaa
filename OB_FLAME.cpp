@@ -1,7 +1,7 @@
 // Filename    : OB_FLAME.CPP
 // Description : non-moving bullet attack (flamethrower)
 
-#include <OB_FLAME.H>
+#include <OB_FLAME.h>
 
 
 BulletFlame::BulletFlame() : Bullet()

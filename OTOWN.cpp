@@ -2,36 +2,36 @@
 //Description : Object Town
 
 #include <string.h>
-#include <ALL.H>
-#include <OVGA.H>
-#include <OWORLD.H>
-#include <OSYS.H>
-#include <OIMGRES.H>
-#include <ONEWS.H>
-#include <OCONFIG.H>
-#include <OFONT.H>
-#include <OINFO.H>
-#include <OPLANT.H>
-#include <ODATE.H>
-#include <OSPY.H>
-#include <OCONFIG.H>
-#include <OF_MARK.H>
-#include <OF_CAMP.H>
-#include <OUNIT.H>
-#include <OTERRAIN.H>
-#include <OREBEL.H>
-#include <OSPRTRES.H>
-#include <ORACERES.H>
-#include <ONATION.H>
-#include <OREMOTE.H>
-#include <OTOWN.H>
-#include <ONEWS.H>
-#include <OANLINE.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OWORLD.h>
+#include <OSYS.h>
+#include <OIMGRES.h>
+#include <ONEWS.h>
+#include <OCONFIG.h>
+#include <OFONT.h>
+#include <OINFO.h>
+#include <OPLANT.h>
+#include <ODATE.h>
+#include <OSPY.h>
+#include <OCONFIG.h>
+#include <OF_MARK.h>
+#include <OF_CAMP.h>
+#include <OUNIT.h>
+#include <OTERRAIN.h>
+#include <OREBEL.h>
+#include <OSPRTRES.h>
+#include <ORACERES.h>
+#include <ONATION.h>
+#include <OREMOTE.h>
+#include <OTOWN.h>
+#include <ONEWS.h>
+#include <OANLINE.h>
 // ##### begin Gilbert 9/10 ######//
-#include <OSE.H>
+#include <OSE.h>
 // ##### end Gilbert 9/10 ######//
-#include <OSERES.H>
-#include <OLOG.H>
+#include <OSERES.h>
+#include <OLOG.h>
 
 
 //--------- Begin of function Town::Town ----------//

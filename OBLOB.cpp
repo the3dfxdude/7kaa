@@ -2,8 +2,8 @@
 // Description : fixed size binary block
 
 
-#include <OBLOB.H>
-#include <ALL.H>
+#include <OBLOB.h>
+#include <ALL.h>
 
 
 Blob::Blob() : ptr(NULL), size(0)

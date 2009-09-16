@@ -1,10 +1,10 @@
 //Filename    : OF_HARB2.CPP
 //Description : Firm Harbor - AI functions
 
-#include <OINFO.H>
-#include <OU_MARI.H>
-#include <ONATION.H>
-#include <OF_HARB.H>
+#include <OINFO.h>
+#include <OU_MARI.h>
+#include <ONATION.h>
+#include <OF_HARB.h>
 
 //------- Begin of function FirmHarbor::process_ai -----------//
 //

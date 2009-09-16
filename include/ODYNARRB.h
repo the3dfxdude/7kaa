@@ -5,7 +5,7 @@
 #define __ODYNARRB_H
 
 #ifndef __ODYNARR_H
-#include <ODYNARR.H>
+#include <ODYNARR.h>
 #endif
 
 //------------ Define Constant -------------//

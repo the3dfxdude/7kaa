@@ -1,14 +1,14 @@
 //Filename   : OAI_ACT.CPP
 //Description: AI - action progressing functions
 
-#include <ALL.H>
-#include <OBOX.H>
-#include <OSYS.H>
-#include <OSPY.H>
-#include <OINFO.H>
-#include <OUNIT.H>
-#include <OFIRM.H>
-#include <ONATION.H>
+#include <ALL.h>
+#include <OBOX.h>
+#include <OSYS.h>
+#include <OSPY.h>
+#include <OINFO.h>
+#include <OUNIT.h>
+#include <OFIRM.h>
+#include <ONATION.h>
 
 
 //-------- Begin of function Nation::ai_build_firm -------//

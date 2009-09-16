@@ -1,13 +1,13 @@
 // Filename     : OGETA.CPP
 // Description  : simple get field
 
-#include <OGETA.H>
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OMOUSE.H>
-#include <KEY.H>
-#include <OSYS.H>
-#include <COLCODE.H>
+#include <OGETA.h>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
+#include <KEY.h>
+#include <OSYS.h>
+#include <COLCODE.h>
 
 
 GetA::GetA()

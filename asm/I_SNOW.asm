@@ -2,7 +2,7 @@
 ;Description : Draw random white dots of 32x32 sqaure on vga image buffer
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

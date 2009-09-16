@@ -6,7 +6,7 @@
 #define __OWALLRES_H
 
 #ifndef __ORESDB_H
-#include <ORESDB.H>
+#include <ORESDB.h>
 #endif
 
 //------------ Define constant -------------//

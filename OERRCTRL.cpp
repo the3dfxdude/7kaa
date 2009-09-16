@@ -1,14 +1,14 @@
 // Filename   : OERRCTRL.H
 // Descrition : Error control
 
-#include <OERRCTRL.H>
-#include <ODPLAY.H>
-#include <OIMMPLAY.H>
-#include <CRC.H>
-#include <ALL.H>
+#include <OERRCTRL.h>
+#include <ODPLAY.h>
+#include <OIMMPLAY.h>
+#include <CRC.h>
+#include <ALL.h>
 
 #define DEBUG_LOG_LOCAL 1
-#include <OLOG.H>
+#include <OLOG.h>
 
 // ---------- define constant -----------//
 // 0 don't display log, 1 display exception, 2 display more detail, 3 display all

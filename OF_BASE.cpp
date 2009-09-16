@@ -1,30 +1,30 @@
 //Filename    : OF_BASE.CPP
 //Description : Firm Base
 
-#include <OINFO.H>
-#include <OVGA.H>
-#include <ODATE.H>
-#include <OMOUSE.H>
-#include <OIMGRES.H>
-#include <OHELP.H>
-#include <OSTR.H>
-#include <OFONT.H>
-#include <OCONFIG.H>
-#include <OUNIT.H>
-#include <OSPY.H>
-#include <OGAME.H>
-#include <OBUTT3D.H>
-#include <ONATION.H>
-#include <ORACERES.H>
-#include <OWALLRES.H>
-#include <OGODRES.H>
-#include <OPOWER.H>
-#include <OTOWN.H>
-#include <OWORLD.H>
-#include <OF_BASE.H>
-#include <OREMOTE.H>
-#include <OSERES.H>
-#include <OSE.H>
+#include <OINFO.h>
+#include <OVGA.h>
+#include <ODATE.h>
+#include <OMOUSE.h>
+#include <OIMGRES.h>
+#include <OHELP.h>
+#include <OSTR.h>
+#include <OFONT.h>
+#include <OCONFIG.h>
+#include <OUNIT.h>
+#include <OSPY.h>
+#include <OGAME.h>
+#include <OBUTT3D.h>
+#include <ONATION.h>
+#include <ORACERES.h>
+#include <OWALLRES.h>
+#include <OGODRES.h>
+#include <OPOWER.h>
+#include <OTOWN.h>
+#include <OWORLD.h>
+#include <OF_BASE.h>
+#include <OREMOTE.h>
+#include <OSERES.h>
+#include <OSE.h>
 
 //----------- Define static vars -------------//
 

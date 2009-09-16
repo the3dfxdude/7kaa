@@ -1,27 +1,27 @@
 //Filename    : OFIRMIF.CPP
 //Description : Firm interface routines
 
-#include <OSTR.H>
-#include <KEY.H>
-#include <OVGA.H>
-#include <OHELP.H>
-#include <OMOUSE.H>
-#include <OFONT.H>
-#include <OBUTT3D.H>
-#include <OBUTTON.H>
-#include <OSLIDER.H>
-#include <ONATION.H>
-#include <OINFO.H>
-#include <ORACERES.H>
-#include <OUNIT.H>
-#include <OSPY.H>
-#include <OTOWN.H>
-#include <OWORLD.H>
-#include <OFIRM.H>
-#include <OREMOTE.H>
-#include <OIMGRES.H>
-#include <OGAME.H>
-#include <OSYS.H>
+#include <OSTR.h>
+#include <KEY.h>
+#include <OVGA.h>
+#include <OHELP.h>
+#include <OMOUSE.h>
+#include <OFONT.h>
+#include <OBUTT3D.h>
+#include <OBUTTON.h>
+#include <OSLIDER.h>
+#include <ONATION.h>
+#include <OINFO.h>
+#include <ORACERES.h>
+#include <OUNIT.h>
+#include <OSPY.h>
+#include <OTOWN.h>
+#include <OWORLD.h>
+#include <OFIRM.h>
+#include <OREMOTE.h>
+#include <OIMGRES.h>
+#include <OGAME.h>
+#include <OSYS.h>
 
 //---------- Define static variables ------------//
 

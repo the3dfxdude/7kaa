@@ -6,11 +6,11 @@
 #define __OSPREUSE_H
 
 #ifndef	__OSPATH_H
-#include <OSPATH.H>
+#include <OSPATH.h>
 #endif
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OWORLD_H

@@ -1,10 +1,10 @@
 //Filename   : OU_GOD2.CPP
 //Description: God Unit - AI functions
 
-#include <OGODRES.H>
-#include <ORACERES.H>
-#include <OF_CAMP.H>
-#include <OU_GOD.H>
+#include <OGODRES.h>
+#include <ORACERES.h>
+#include <OF_CAMP.h>
+#include <OU_GOD.h>
 
 //------- Begin of function UnitGod::process_ai --------//
 

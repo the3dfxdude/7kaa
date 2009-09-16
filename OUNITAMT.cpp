@@ -81,11 +81,11 @@
 
 
 
-#include <OUNIT.H>
-#include <OREMOTE.H>
-#include <OU_MARI.H>
-#include <ONATIONA.H>
-#include <OCONFIG.H>
+#include <OUNIT.h>
+#include <OREMOTE.h>
+#include <OU_MARI.h>
+#include <ONATIONA.h>
+#include <OCONFIG.h>
 
 //------------ define static variables ------------//
 static short	mp_selected_caravan_recno[MAX_NATION] = {0};

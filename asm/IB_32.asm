@@ -1,7 +1,7 @@
 ;Filename    : IB_32.ASM
 ;Description : Blt a bitmap of 32x32 to the display surface buffer without color key transparency handling
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

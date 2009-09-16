@@ -2,13 +2,13 @@
 // Description: growth of plant
 // Ownership  : Gilbert
 
-#include <OMATRIX.H>
-#include <OWORLD.H>
-#include <OWORLDMT.H>
-#include <OWEATHER.H>
-#include <OPLANT.H>
-#include <OTERRAIN.H>
-#include <ALL.H>
+#include <OMATRIX.h>
+#include <OWORLD.h>
+#include <OWORLDMT.h>
+#include <OWEATHER.h>
+#include <OPLANT.h>
+#include <OTERRAIN.h>
+#include <ALL.h>
 #include <math.h>
 
 

@@ -5,19 +5,19 @@
 #define __OF_MARK_H
 
 #ifndef __OFIRM_H
-#include <OFIRM.H>
+#include <OFIRM.h>
 #endif
 
 #ifndef __OINFO_H
-#include <OINFO.H>
+#include <OINFO.h>
 #endif
 
 #ifndef __ORAWRES_H
-#include <ORAWRES.H>
+#include <ORAWRES.h>
 #endif
 
 #ifndef __TOWN_H
-#include <OTOWN.H>
+#include <OTOWN.h>
 #endif
 
 //---------- Define constant -----------//

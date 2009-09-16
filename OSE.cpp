@@ -2,11 +2,11 @@
 // Description : Sound Effect Controller
 // Owner       : Gilbert
 
-#include <OSE.H>
-#include <OAUDIO.H>
-#include <OGAMESET.H>
-#include <OMISC.H>
-#include <OCONFIG.H>
+#include <OSE.h>
+#include <OAUDIO.h>
+#include <OGAMESET.h>
+#include <OMISC.h>
+#include <OCONFIG.h>
 
 #define MIN_AUDIO_VOL 10
 

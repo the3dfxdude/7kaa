@@ -2,14 +2,14 @@
 //Description : Wall resource object
 //Ownership   : Gilbert
 
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OGAMESET.H>
-#include <OWORLD.H>
-#include <ONATION.H>
-#include <WALLTILE.H>
-#include <OWALLRES.H>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OGAMESET.h>
+#include <OWORLD.h>
+#include <ONATION.h>
+#include <WALLTILE.h>
+#include <OWALLRES.h>
 
 //---------- #define constant ------------//
 

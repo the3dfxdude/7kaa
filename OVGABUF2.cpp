@@ -1,15 +1,15 @@
 //Filename    : OVGABUF2.CPP
 //Description : OVGABUF direct draw surface class - part 2
 
-#include <ALL.H>
-#include <IMGFUN.H>
-#include <OMOUSE.H>
-#include <OPOWER.H>
-#include <OCOLTBL.H>
-#include <OVGA.H>
-#include <OVGABUF.H>
-#include <OIMGRES.H>
-#include <OFONT.H>
+#include <ALL.h>
+#include <IMGFUN.h>
+#include <OMOUSE.h>
+#include <OPOWER.h>
+#include <OCOLTBL.h>
+#include <OVGA.h>
+#include <OVGABUF.h>
+#include <OIMGRES.h>
+#include <OFONT.h>
 
 //------- Define static class member vars ---------//
 

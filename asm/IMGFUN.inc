@@ -2,7 +2,7 @@
 ;Description : Include file for image buffer processing functions
 
 
-INCLUDE ALL.INC
+INCLUDE ALL.inc
 
 ;---------------------------------------------------
 

@@ -2,11 +2,11 @@
 //Filename		: OAI_INFO.CPP
 //Description	: AI - A.I. info structure
 
-#include <OSYS.H>
-#include <OTOWN.H>
-#include <OF_MARK.H>
-#include <OU_CARA.H>
-#include <ONATION.H>
+#include <OSYS.h>
+#include <OTOWN.h>
+#include <OF_MARK.h>
+#include <OU_CARA.h>
+#include <ONATION.h>
 
 
 //--------- Begin of function Nation::update_ai_firm_array --------//

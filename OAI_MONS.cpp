@@ -1,10 +1,10 @@
 //Filename	 : OAI_MONS.CPP
 //Description: AI functions for dealing with the monsters.
 
-#include <OF_MONS.H>
-#include <ONATION.H>
-#include <OCONFIG.H>
-#include <OMONSRES.H>
+#include <OF_MONS.h>
+#include <ONATION.h>
+#include <OCONFIG.h>
+#include <OMONSRES.h>
 
 //--------- Begin of function Nation::think_attack_monster --------//
 

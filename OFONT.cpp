@@ -3,20 +3,20 @@
 
 #include <string.h>
 
-#include <ALL.H>
-#include <IMGFUN.H>
-#include <OVGA.H>
-#include <OSTR.H>
-#include <OSYS.H>
-#include <ORES.H>
-#include <OINFO.H>
-#include <OGAME.H>
-#include <OMOUSE.H>
-#include <OTRANSL.H>
-#include <ONATION.H>
-#include <OGAME.H>
-#include <OHELP.H>
-#include <OFONT.H>
+#include <ALL.h>
+#include <IMGFUN.h>
+#include <OVGA.h>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <ORES.h>
+#include <OINFO.h>
+#include <OGAME.h>
+#include <OMOUSE.h>
+#include <OTRANSL.h>
+#include <ONATION.h>
+#include <OGAME.h>
+#include <OHELP.h>
+#include <OFONT.h>
 
 //--------------------------------------------------------//
 // A font resource file is composed of three parts :

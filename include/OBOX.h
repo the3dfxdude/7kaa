@@ -5,11 +5,11 @@
 #define __OBOX_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OBUTTON_H
-#include <OBUTTON.H>
+#include <OBUTTON.h>
 #endif
 
 //------- constant for arrow box ----------//

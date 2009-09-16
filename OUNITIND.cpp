@@ -1,13 +1,13 @@
 //Filename    : OUNITIND.CPP
 //Description : Object independent Unit AI
 
-#include <OSYS.H>
-#include <OSPY.H>
-#include <OREBEL.H>
-#include <OUNIT.H>
-#include <OCONFIG.H>
-#include <OF_CAMP.H>
-#include <ONATION.H>
+#include <OSYS.h>
+#include <OSPY.h>
+#include <OREBEL.h>
+#include <OUNIT.h>
+#include <OCONFIG.h>
+#include <OF_CAMP.h>
+#include <ONATION.h>
 
 //--------- Begin of function Unit::think_independent_unit --------//
 //

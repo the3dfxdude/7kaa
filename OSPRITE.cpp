@@ -1,14 +1,14 @@
 //Filename    : OSPRITE.CPP
 //Description : Object Sprite
 
-#include <ALL.H>
-#include <OSTR.H>
-#include <OVGA.H>
-#include <OINFO.H>
-#include <OGAME.H>
-#include <ONATION.H>
-#include <OSPRITE.H>
-#include <OCOLTBL.H>
+#include <ALL.h>
+#include <OSTR.h>
+#include <OVGA.h>
+#include <OINFO.h>
+#include <OGAME.h>
+#include <ONATION.h>
+#include <OSPRITE.h>
+#include <OCOLTBL.h>
 
 //----------- Define static class member variables -----------//
 

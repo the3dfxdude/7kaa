@@ -2,8 +2,8 @@
 // Description : variable length queue
 
 
-#include <OVQUEUE.H>
-#include <ALL.H>
+#include <OVQUEUE.h>
+#include <ALL.h>
 
 #define QUEUE_SIZE_INC 0x1000
 

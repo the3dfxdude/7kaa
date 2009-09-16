@@ -3,9 +3,9 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include <OBOX.H>
-#include <ALL.H>
-#include <OFILE.H>
+#include <OBOX.h>
+#include <ALL.h>
+#include <OFILE.h>
 
 //--------- Define static variables -----------//
 

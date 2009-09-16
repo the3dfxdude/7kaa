@@ -1,21 +1,21 @@
 // Filename    : OOPTMENU.CPP
 // Description : in-game option menu (async version)
 
-#include <OVGA.H>
-#include <OVGABUF.H>
-#include <OINFO.H>
-#include <OCOLTBL.H>
-#include <ORACERES.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <KEY.H>
-#include <OPOWER.H>
-#include <OIMGRES.H>
-#include <OFONT.H>
-#include <OAUDIO.H>
-#include <OMUSIC.H>
-#include <OSYS.H>
-#include <OOPTMENU.H>
+#include <OVGA.h>
+#include <OVGABUF.h>
+#include <OINFO.h>
+#include <OCOLTBL.h>
+#include <ORACERES.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <KEY.h>
+#include <OPOWER.h>
+#include <OIMGRES.h>
+#include <OFONT.h>
+#include <OAUDIO.h>
+#include <OMUSIC.h>
+#include <OSYS.h>
+#include <OOPTMENU.h>
 
 
 enum { BASIC_OPTION_X_SPACE = 78,

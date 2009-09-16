@@ -5,15 +5,15 @@
 #define __ONATIONB_H
 
 #ifndef __OINFO_H
-#include <OINFO.H>
+#include <OINFO.h>
 #endif
 
 #ifndef __ORAWRES_H
-#include <ORAWRES.H>
+#include <ORAWRES.h>
 #endif
 
 #ifndef __OTALKMSG_H
-#include <OTALKMSG.H>
+#include <OTALKMSG.h>
 #endif
 
 //---------- Define constant -----------//

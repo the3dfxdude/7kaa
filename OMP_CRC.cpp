@@ -2,35 +2,35 @@
 //Description : crc checking for multiplayer debugging
 //Owner		  : Alex
 
-#include <CRC.H>
-#include <OU_GOD.H>
-#include <OU_VEHI.H>
-#include <OU_MONS.H>
-#include <OU_CART.H>
-#include <OU_MARI.H>
-#include <OU_CARA.H>
-#include <OFIRM.H>
-#include <OF_BASE.H>
-#include <OF_CAMP.H>
-#include <OF_FACT.H>
-#include <OF_INN.H>
-#include <OF_MARK.H>
-#include <OF_MINE.H>
-#include <OF_RESE.H>
-#include <OF_WAR.H>
-#include <OF_HARB.H>
-#include <OF_MONS.H>
-#include <OTOWN.H>
-#include <ONATIONB.H>
-#include <OBULLET.H>
-#include <OB_PROJ.H>
-#include <OB_HOMIN.H>
-#include <OB_FLAME.H>
+#include <CRC.h>
+#include <OU_GOD.h>
+#include <OU_VEHI.h>
+#include <OU_MONS.h>
+#include <OU_CART.h>
+#include <OU_MARI.h>
+#include <OU_CARA.h>
+#include <OFIRM.h>
+#include <OF_BASE.h>
+#include <OF_CAMP.h>
+#include <OF_FACT.h>
+#include <OF_INN.h>
+#include <OF_MARK.h>
+#include <OF_MINE.h>
+#include <OF_RESE.h>
+#include <OF_WAR.h>
+#include <OF_HARB.h>
+#include <OF_MONS.h>
+#include <OTOWN.h>
+#include <ONATIONB.h>
+#include <OBULLET.h>
+#include <OB_PROJ.h>
+#include <OB_HOMIN.h>
+#include <OB_FLAME.h>
 // ###### patch begin Gilbert 20/1 #######//
-#include <OREBEL.H>
-#include <OSPY.H>
+#include <OREBEL.h>
+#include <OSPY.h>
 // ###### patch end Gilbert 20/1 #######//
-#include <OTALKRES.H>
+#include <OTALKRES.h>
 
 
 // ###### patch begin Gilbert 21/1 #####//

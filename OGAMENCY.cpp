@@ -1,15 +1,15 @@
 // Filename    : OGAMENCY.CPP
 // description : view encyclopedia
 
-#include <ALL.H>
-#include <OIMGRES.H>
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OVGALOCK.H>
-#include <OGAME.H>
-#include <OMUSIC.H>
+#include <ALL.h>
+#include <OIMGRES.h>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OVGALOCK.h>
+#include <OGAME.h>
+#include <OMUSIC.h>
 
 //--------- define constant ---------//
 

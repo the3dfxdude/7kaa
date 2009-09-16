@@ -8,11 +8,11 @@
 // #define INITGUID for dplay.h to define IID_IDirectPlay3A
 #include <dplay.h>
 // #undef INITGUID
-#include <ODPLAY.H>
-#include <ALL.H>
+#include <ODPLAY.h>
+#include <ALL.h>
 #include <string.h>
-#include <OVGALOCK.H>
-#include <OBLOB.H>
+#include <OVGALOCK.h>
+#include <OBLOB.h>
 #include <winbase.h>
 
 

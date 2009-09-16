@@ -2,9 +2,9 @@
 //Description : Resource library with database index reading object
 
 #include <string.h>
-#include <OSYS.H>
-#include <ODB.H>
-#include <ORESDB.H>
+#include <OSYS.h>
+#include <ODB.h>
+#include <ORESDB.h>
 
 
 //-------------------------------------------------------//

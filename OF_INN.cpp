@@ -1,25 +1,25 @@
 //Filename    : OF_INN.CPP
 //Description : Firm Military Inn
 
-#include <OINFO.H>
-#include <OBOX.H>
-#include <OVGA.H>
-#include <OSTR.H>
-#include <OFONT.H>
-#include <OMOUSE.H>
-#include <OHELP.H>
-#include <OVBROWIF.H>
-#include <OGAME.H>
-#include <OTOWN.H>
-#include <OBUTT3D.H>
-#include <ONATION.H>
-#include <ORAWRES.H>
-#include <ORACERES.H>
-#include <OWORLD.H>
-#include <OSPY.H>
-#include <OF_INN.H>
-#include <OREMOTE.H>
-#include <OSERES.H>
+#include <OINFO.h>
+#include <OBOX.h>
+#include <OVGA.h>
+#include <OSTR.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
+#include <OHELP.h>
+#include <OVBROWIF.h>
+#include <OGAME.h>
+#include <OTOWN.h>
+#include <OBUTT3D.h>
+#include <ONATION.h>
+#include <ORAWRES.h>
+#include <ORACERES.h>
+#include <OWORLD.h>
+#include <OSPY.h>
+#include <OF_INN.h>
+#include <OREMOTE.h>
+#include <OSERES.h>
 
 //------------- Define coordinations -----------//
 

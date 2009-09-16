@@ -3,7 +3,7 @@
 ; Width must be dword aligned
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

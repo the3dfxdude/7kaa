@@ -5,8 +5,8 @@
 #ifndef __OFIRMDIE_H
 #define __OFIRMDIE_H
 
-#include <ODYNARRB.H>
-#include <ORESDB.H>
+#include <ODYNARRB.h>
+#include <ORESDB.h>
 
 struct FirmBuild;
 struct FirmBitmap;

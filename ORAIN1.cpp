@@ -2,10 +2,10 @@
 // Description: Class RainDrop
 // Ownership  : Gilbert
 
-#include <ORAIN.H>
-#include <OVGABUF.H>
-#include <COLOR.H>
-#include <OWORLDMT.H>
+#include <ORAIN.h>
+#include <OVGABUF.h>
+#include <COLOR.h>
+#include <OWORLDMT.h>
 
 //--------- Begin of function RainDrop::init ------------//
 //

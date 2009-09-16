@@ -5,7 +5,7 @@
 #define __OU_MONS_H
 
 #ifndef __OUNIT_H
-#include <OUNIT.H>
+#include <OUNIT.h>
 #endif
 
 enum	{	MONSTER_ACTION_STOP = 0,

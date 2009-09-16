@@ -5,7 +5,7 @@
 #define __OVBROWIF_H
 
 #ifndef __OVBROWSE_H
-#include <OVBROWSE.H>
+#include <OVBROWSE.h>
 #endif
 
 //----------- Define variable type -----------//

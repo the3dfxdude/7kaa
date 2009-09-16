@@ -2,7 +2,7 @@
 ;Description : Remap a bitmap on vga image buffer with clipping, with mirroring
 
 
-INCLUDE IMGFUN.INC
+INCLUDE IMGFUN.inc
 
 .CODE
 

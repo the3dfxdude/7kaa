@@ -1,12 +1,12 @@
 //Filename   : OVGA2.CPP
 //Description: Functions for display big image
 
-#include <OSTR.H>
-#include <OSYS.H>
-#include <OFILE.H>
-#include <OMOUSE.H>
-#include <OVGALOCK.H>
-#include <OVGA.H>
+#include <OSTR.h>
+#include <OSYS.h>
+#include <OFILE.h>
+#include <OMOUSE.h>
+#include <OVGALOCK.h>
+#include <OVGA.h>
 
 //---------- Begin of function Vga::disp_image_file --------//
 //

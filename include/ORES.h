@@ -5,7 +5,7 @@
 #define __ORES_H
 
 #ifndef __OFILE_H
-#include <OFILE.H>
+#include <OFILE.h>
 #endif
 
 //--------- Define class Resource ----------//

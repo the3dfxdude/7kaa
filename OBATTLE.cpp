@@ -1,30 +1,30 @@
 //Filename    : OBATTLE.CPP
 //Description : Battle Object
 
-#include <OSYS.H>
-#include <OWORLD.H>
-#include <OPOWER.H>
-#include <OCONFIG.H>
-#include <OSPY.H>
-#include <OMOUSE.H>
-#include <OMUSIC.H>
-#include <OSITE.H>
-#include <ORACERES.H>
-#include <OGODRES.H>
-#include <OTECHRES.H>
-#include <OCONFIG.H>
-#include <OREMOTE.H>
-#include <OTOWN.H>
-#include <OFIRM.H>
-#include <ONEWS.H>
-#include <ONATION.H>
-#include <OMONSRES.H>
-#include <OWALLRES.H>
-#include <OINFO.H>
-#include <OUNITALL.H>
-#include <OGAME.H>
-#include <OBATTLE.H>
-#include <OMOUSECR.H>
+#include <OSYS.h>
+#include <OWORLD.h>
+#include <OPOWER.h>
+#include <OCONFIG.h>
+#include <OSPY.h>
+#include <OMOUSE.h>
+#include <OMUSIC.h>
+#include <OSITE.h>
+#include <ORACERES.h>
+#include <OGODRES.h>
+#include <OTECHRES.h>
+#include <OCONFIG.h>
+#include <OREMOTE.h>
+#include <OTOWN.h>
+#include <OFIRM.h>
+#include <ONEWS.h>
+#include <ONATION.h>
+#include <OMONSRES.h>
+#include <OWALLRES.h>
+#include <OINFO.h>
+#include <OUNITALL.h>
+#include <OGAME.h>
+#include <OBATTLE.h>
+#include <OMOUSECR.h>
 
 //---------- define static functions -------------//
 

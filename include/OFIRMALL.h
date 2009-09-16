@@ -6,16 +6,16 @@
 
 //---------------------------------------//
 
-#include <OF_BASE.H>
-#include <OF_CAMP.H>
-#include <OF_FACT.H>
-#include <OF_INN.H>
-#include <OF_MARK.H>
-#include <OF_MINE.H>
-#include <OF_RESE.H>
-#include <OF_WAR.H>
-#include <OF_HARB.H>
-#include <OF_MONS.H>
+#include <OF_BASE.h>
+#include <OF_CAMP.h>
+#include <OF_FACT.h>
+#include <OF_INN.h>
+#include <OF_MARK.h>
+#include <OF_MINE.h>
+#include <OF_RESE.h>
+#include <OF_WAR.h>
+#include <OF_HARB.h>
+#include <OF_MONS.h>
 
 //---------------------------------------//
 

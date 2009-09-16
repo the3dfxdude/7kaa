@@ -6,17 +6,17 @@
 #include <mmsystem.h>
 
 #define DEBUG_LOG_LOCAL 1
-#include <ALL.H>
-#include <OVGA.H>
-#include <OSTR.H>
-#include <OFONT.H>
-#include <OSYS.H>
-#include <OWORLD.H>
-#include <OPOWER.H>
-#include <ONATION.H>
-#include <OREMOTE.H>
-#include <OERRCTRL.H>
-#include <OLOG.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OSTR.h>
+#include <OFONT.h>
+#include <OSYS.h>
+#include <OWORLD.h>
+#include <OPOWER.h>
+#include <ONATION.h>
+#include <OREMOTE.h>
+#include <OERRCTRL.h>
+#include <OLOG.h>
 
 //---------- Define static functions ----------//
 

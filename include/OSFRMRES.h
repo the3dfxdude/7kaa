@@ -5,11 +5,11 @@
 #define __OSFRMRES_H
 
 #ifndef __ALL_H
-#include <ALL.H>
+#include <ALL.h>
 #endif
 
 #ifndef __OSPRTRES_H
-#include <OSPRTRES.H>
+#include <OSPRTRES.h>
 #endif
 
 

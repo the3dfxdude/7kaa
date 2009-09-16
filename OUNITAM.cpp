@@ -5,14 +5,14 @@
 
 #include <math.h>
 
-#include <ALL.H>
-#include <OVGA.H>
-#include <OSYS.H>
-#include <OSTR.H>
-#include <OREMOTE.H>
-#include <OWORLD.H>
-#include <OTERRAIN.H>
-#include <OUNIT.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OSYS.h>
+#include <OSTR.h>
+#include <OREMOTE.h>
+#include <OWORLD.h>
+#include <OTERRAIN.h>
+#include <OUNIT.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when

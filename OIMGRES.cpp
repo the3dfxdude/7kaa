@@ -3,10 +3,10 @@
 
 #include <string.h>
 
-#include <ALL.H>
-#include <OVGA.H>
-#include <OMOUSE.H>
-#include <OIMGRES.H>
+#include <ALL.h>
+#include <OVGA.h>
+#include <OMOUSE.h>
+#include <OIMGRES.h>
 
 
 //--------- Format of RES file ------------//

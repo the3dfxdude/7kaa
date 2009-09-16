@@ -4,13 +4,13 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include <ALL.H>
-#include <OWORLD.H>
-#include <OSPATHS2.H>
-#include <OUNIT.H>
-#include <OFIRM.H>
-#include <OTOWN.H>
-#include <OSYS.H>
+#include <ALL.h>
+#include <OWORLD.h>
+#include <OSPATHS2.h>
+#include <OUNIT.h>
+#include <OFIRM.h>
+#include <OTOWN.h>
+#include <OSYS.h>
 
 //----------- Define static variables -----------//
 static Location*	world_loc_matrix;

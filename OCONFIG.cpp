@@ -1,12 +1,12 @@
 //Filename    : OCONFIG.CPP
 //Description : Config Object
 
-#include <OSYS.H>
-#include <OHELP.H>
-#include <ONATION.H>
-#include <OUNITRES.H>
-#include <OFIRMRES.H>
-#include <OCONFIG.H>
+#include <OSYS.h>
+#include <OHELP.h>
+#include <ONATION.h>
+#include <OUNITRES.h>
+#include <OFIRMRES.h>
+#include <OCONFIG.h>
 
 
 // ------- define difficult table ---------//

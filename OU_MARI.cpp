@@ -1,16 +1,16 @@
 // Filename    : OU_MARI.CPP
 // Description : sea unit
 
-#include <OSYS.H>
-#include <OTERRAIN.H>
-#include <OU_CARA.H>
-#include <OPOWER.H>
-#include <OU_MARI.H>
-#include <OREMOTE.H>
-#include <ONATIONA.H>
-#include <OCONFIG.H>
+#include <OSYS.h>
+#include <OTERRAIN.h>
+#include <OU_CARA.h>
+#include <OPOWER.h>
+#include <OU_MARI.h>
+#include <OREMOTE.h>
+#include <ONATIONA.h>
+#include <OCONFIG.h>
 #ifdef DEBUG2
-	#include <OFONT.H>
+#include <OFONT.h>
 #endif
 
 //------- Define constant ----------//

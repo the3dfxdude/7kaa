@@ -5,15 +5,15 @@
 #define __OFIRMRES_H
 
 #ifndef __GAMEDEF_H
-#include <GAMEDEF.H>
+#include <GAMEDEF.h>
 #endif
 
 #ifndef __OFIRM_H
-#include <OFIRM.H>
+#include <OFIRM.h>
 #endif
 
 #ifndef __ORESDB_H
-#include <ORESDB.H>
+#include <ORESDB.h>
 #endif
 
 //------- Define constant ----------//

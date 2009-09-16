@@ -4,8 +4,8 @@
 #ifndef __FIRERES_H
 #define __FIRERES_H
 
-#include <OFLAME.H>
-#include <ORESDB.H>
+#include <OFLAME.h>
+#include <ORESDB.h>
 
 #define FIRE_FRAME_MAX 20
 

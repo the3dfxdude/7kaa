@@ -5,15 +5,15 @@
 #define __OGFILE_H
 
 #ifndef __OFILE_H
-#include <OFILE.H>
+#include <OFILE.h>
 #endif
 
 #ifndef __ODYNARR_H
-#include <ODYNARR.H>
+#include <ODYNARR.h>
 #endif
 
 #ifndef __ONATION_Hd
-#include <ONATION.H>
+#include <ONATION.h>
 #endif
 
 

@@ -5,7 +5,7 @@
 #define __OCONFIG_H
 
 #ifndef __OFILE_H
-#include <OFILE.H>
+#include <OFILE.h>
 #endif
 
 //------------- Define constant -------------//

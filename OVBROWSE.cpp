@@ -1,13 +1,13 @@
 //Filename    : OVBROWSE.CPP
 //Description : Object Visual Browse
 
-#include <ALL.H>
-#include <OINFO.H>
-#include <OMOUSE.H>
-#include <OVGA.H>
-#include <OFONT.H>
-#include <OPOWER.H>
-#include <OVBROWSE.H>
+#include <ALL.h>
+#include <OINFO.h>
+#include <OMOUSE.h>
+#include <OVGA.h>
+#include <OFONT.h>
+#include <OPOWER.h>
+#include <OVBROWSE.h>
 
 //---------- Define static class variables -------//
 
