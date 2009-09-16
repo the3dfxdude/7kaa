@@ -136,7 +136,7 @@ struct NodePriorityQueue
 
 class SeekPath
 {
-friend Node;
+friend class Node;
 
 public:
 	char	path_status;

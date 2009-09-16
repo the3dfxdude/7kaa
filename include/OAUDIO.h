@@ -139,7 +139,7 @@ private:
 	int	vol_divide( long dsVolume);		// 0 to -10000
 	int	assign_serial( int &);
 
-	friend	DsVolume;
+	friend class DsVolume;
 };
 
 extern Audio audio;

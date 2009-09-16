@@ -54,7 +54,7 @@ struct StackS2
 
 class SeekPathS2
 {
-friend NodeS2;
+friend class NodeS2;
 
 public:
 	char			path_status;

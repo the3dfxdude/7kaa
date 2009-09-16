@@ -122,7 +122,7 @@ public:
 	int 	write_file(File* filePtr);
 	int	read_file(File* filePtr);
 
-	friend Weather;
+	friend class Weather;
 };
 
 extern Weather weather, weather_forecast[MAX_WEATHER_FORECAST];

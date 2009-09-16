@@ -277,7 +277,7 @@ class World;
 
 class Matrix
 {
-friend World;
+friend class World;
 
 public:
    int       max_x_loc, max_y_loc;      // read from map file
