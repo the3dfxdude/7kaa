@@ -137,7 +137,7 @@ public:
 	void		put_bitmap_dw(int x,int y,char* bitmapPtr)
 				{ IMGbltDW(buf_ptr(), buf_pitch(), x, y, bitmapPtr); }
 
-	void		xor(int x1,int y1,int x2,int y2)
+	void		xor_buf(int x1,int y1,int x2,int y2)
 				{ IMGxor(buf_ptr(), buf_pitch(), x1, y1, x2, y2); }
 
 	void		put_bitmap_area(int desX,int desY,char* bitmapPtr,int srcX1, int srcY1, int srcX2, int srcY2)
