@@ -11,7 +11,7 @@ const unsigned int CRC_LEN = sizeof(CRC_TYPE);
 
 extern "C"
 {
-	CRC_TYPE _stdcall crc8(unsigned char *, int);
+	CRC_TYPE _stdcall crc8(unsigned char *, int) asm("_crc8");
 }
 
 
