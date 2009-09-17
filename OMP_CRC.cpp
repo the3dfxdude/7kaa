@@ -478,7 +478,8 @@ UCHAR FirmMarket::crc8()
 //----------- End of function FirmMarket::clear_ptr -----------//
 void FirmMarket::clear_ptr()
 {
-	for(int i=0; i<MAX_RAW; ++i)
+	int i;
+	for(i=0; i<MAX_RAW; ++i)
 		market_raw_array[i] = NULL;
 
 	for(i=0; i<MAX_PRODUCT; ++i)

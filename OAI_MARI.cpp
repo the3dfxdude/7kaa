@@ -154,7 +154,8 @@ int Nation::ai_build_harbor(int landRegionId, int seaRegionId)
 	Town* townPtr;
 	int 	townSeq = m.random(ai_town_count);
 
-	for( int i=0 ; i<ai_town_count ; i++ )
+	int i;
+	for( i=0 ; i<ai_town_count ; i++ )
 	{
 		if( ++townSeq >= ai_town_count )
 			townSeq=0;
@@ -292,7 +293,8 @@ int Nation::think_move_troop_between_region()
 	RegionStat* regionStat = region_array.region_stat_array;
 	int curRating, minRegionRating=0;
 
-	for( int i=0 ; i<region_array.region_stat_count ; i++, regionStat++ )
+	int i;
+	for( i=0 ; i<region_array.region_stat_count ; i++, regionStat++ )
 	{
 		if( regionStat->nation_presence_count==0 &&
 			 regionStat->independent_town_count==0 &&
@@ -395,7 +397,8 @@ int Nation::think_move_people_between_region()
 	int maxRegionId=0, minRegionId=0;
 	RegionStat* regionStat = region_array.region_stat_array;
 
-	for( int i=0 ; i<region_array.region_stat_count ; i++, regionStat++ )
+	int i;
+	for( i=0 ; i<region_array.region_stat_count ; i++, regionStat++ )
 	{
 		//--- only move to regions in which we have camps ---//
 
@@ -480,7 +483,8 @@ int Nation::ai_is_sea_travel_safe()
 
 	memset( nationShipCountArray, 0, sizeof(nationShipCountArray) );
 
-	for( int i=unit_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=unit_array.size() ; i>0 ; i-- )
 	{
 		if( unit_array.is_deleted(i) )
 			continue;
@@ -550,7 +554,8 @@ int Nation::max_human_battle_ship_count()
 
 	memset( nationShipCountArray, 0, sizeof(nationShipCountArray) );
 
-	for( int i=unit_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=unit_array.size() ; i>0 ; i-- )
 	{
 		if( unit_array.is_deleted(i) )
 			continue;

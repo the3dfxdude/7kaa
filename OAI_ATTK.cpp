@@ -360,7 +360,8 @@ int Nation::ai_attack_target(int targetXLoc, int targetYLoc, int targetCombatLev
 						{
 							//--- this camp can be linked to a town previously processed already (in this case, two towns linked to the same camp) ---//
 
-							for( int k=0 ; k<attack_camp_count ; k++ )
+							int k;
+							for( k=0 ; k<attack_camp_count ; k++ )
 							{
 								if( attack_camp_array[k].firm_recno == townCampArray[j].firm_recno )
 									break;
@@ -554,7 +555,8 @@ void Nation::ai_attack_target_sync()
 
 	int maxDistance=0;
 
-	for( int i=0 ; i<attack_camp_count ; i++ )
+	int i;
+	for( i=0 ; i<attack_camp_count ; i++ )
 	{
 		err_when( attack_camp_array[i].distance < 0 );
 

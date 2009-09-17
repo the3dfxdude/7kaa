@@ -333,7 +333,8 @@ static void disp_owned_scroll()
 	Nation* nationPtr = nation_array[info.viewing_nation_recno];
 	int scrollCount=0;
 
-	for( int i=0 ; i<MAX_RACE ; i++ )
+	int i;
+	for( i=0 ; i<MAX_RACE ; i++ )
 	{
 		if( nationPtr->know_base_array[i] )
 			scrollCount++;

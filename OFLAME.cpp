@@ -290,16 +290,19 @@ void Flame::rise(short wind)
 	char	balanceRnd[BALANCE_PERIOD];
 	char	windRnd[WIND_PERIOD];
 	char	decayRnd[DECAY_PERIOD];
-	for(unsigned balanceN = 0; balanceN < BALANCE_PERIOD; ++balanceN)
+	unsigned balanceN;
+	for(balanceN = 0; balanceN < BALANCE_PERIOD; ++balanceN)
 	{
 		int r = random(4);
 		if(r >= 3)
 			r = 2;
 		balanceRnd[balanceN] = r-1;
 	}
-	for(unsigned windN = 0; windN < WIND_PERIOD; ++windN)
+	unsigned windN;
+	for(windN = 0; windN < WIND_PERIOD; ++windN)
 		windRnd[windN] = wind*random(2);
-	for(unsigned decayN = 0; decayN < DECAY_PERIOD; ++decayN)
+	unsigned decayN;
+	for(decayN = 0; decayN < DECAY_PERIOD; ++decayN)
 		decayRnd[decayN] = random(decay);
 	balanceN = 0;
 	windN = 0;

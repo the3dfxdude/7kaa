@@ -454,7 +454,8 @@ int Power::detect_action()
 
 	selectedArray = (short*) mem_add( sizeof(short) * unit_array.size() );
 
-	for( int i=unit_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=unit_array.size() ; i>0 ; i-- )
 	{
 		if( unit_array.is_deleted(i) )
 			continue;

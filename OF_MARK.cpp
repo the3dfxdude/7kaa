@@ -113,7 +113,8 @@ void FirmMarket::init_derived()
 
 			//--- if the mine doesn't have links to other market ---//
 
-			for( int j=firmPtr->linked_firm_count-1 ; j>=0 ; j-- )
+			int j;
+			for( j=firmPtr->linked_firm_count-1 ; j>=0 ; j-- )
 			{
 				otherFirm = firm_array[ firmPtr->linked_firm_array[j] ];
 
@@ -892,7 +893,8 @@ int FirmMarket::read_derived_file(File* filePtr)
 
 	//----- reset market_raw_array[] & market_product_array[] ----//
 
-	for( int i=0 ; i<MAX_RAW ; i++ )
+	int i;
+	for( i=0 ; i<MAX_RAW ; i++ )
 	{
 		market_raw_array[i]	   = NULL;
 		market_product_array[i] = NULL;
@@ -933,7 +935,8 @@ void FirmMarket::update_trade_link()
 
 	Firm* firmPtr;
 
-	for( int i=0 ; i<linked_firm_count ; i++ )
+	int i;
+	for( i=0 ; i<linked_firm_count ; i++ )
 	{
 		 firmPtr = firm_array[linked_firm_array[i]];
 

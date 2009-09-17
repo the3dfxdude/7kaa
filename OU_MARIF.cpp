@@ -929,7 +929,8 @@ void UnitMarine::disp_goods(int dispY1, int refreshFlag)
 	int	x=INFO_X1+20, y=dispY1+5;
 	String str;
 
-	for(int i=0; i<MAX_RAW; i++, x+=60)
+	int i;
+	for(i=0; i<MAX_RAW; i++, x+=60)
 	{
 		vga_front.d3_panel_up( x, y, x+RAW_SMALL_ICON_WIDTH+5, y+RAW_SMALL_ICON_HEIGHT+5 );
 

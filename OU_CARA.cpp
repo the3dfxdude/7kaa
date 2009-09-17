@@ -451,7 +451,8 @@ void UnitCaravan::disp_goods(int dispY1, int refreshFlag)
 	int	x=INFO_X1+20, y=dispY1+5;
 	String str;
 
-	for(int i=0; i<MAX_RAW; i++, x+=60)
+	int i;
+	for(i=0; i<MAX_RAW; i++, x+=60)
 	{
 		vga_front.d3_panel_up( x, y, x+RAW_SMALL_ICON_WIDTH+5, y+RAW_SMALL_ICON_HEIGHT+5 );
 
@@ -683,7 +684,8 @@ void UnitCaravan::update_stop_list()
 	//----------------------------------------------------------------------//
 	CaravanStop *nodePtr = stop_array;
 	Firm			*firmPtr;
-	for(int i=0; i<MAX_STOP_FOR_CARAVAN; i++, nodePtr++)
+	int i;
+	for(i=0; i<MAX_STOP_FOR_CARAVAN; i++, nodePtr++)
 	{
 		if(!nodePtr->firm_recno)
 			continue;
@@ -792,7 +794,8 @@ void UnitCaravan::update_stop_list()
 		memset(stop_array+stop_defined_num, 0, sizeof(CaravanStop)*(MAX_STOP_FOR_CARAVAN-stop_defined_num));
 
 	#ifdef DEBUG
-		for(int debugCount=0; debugCount<stop_defined_num; debugCount++)
+		int debugCount;
+		for(debugCount=0; debugCount<stop_defined_num; debugCount++)
 			err_when(!stop_array[debugCount].firm_recno);
 
 		for(; debugCount<MAX_STOP_FOR_CARAVAN; debugCount++)

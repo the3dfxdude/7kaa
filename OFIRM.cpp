@@ -345,7 +345,8 @@ void Firm::init_name()
 
 	memset( usedInstanceArray, 0, sizeof(usedInstanceArray) );
 
-	for( int i=firm_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=firm_array.size() ; i>0 ; i-- )
 	{
 		if( firm_array.is_deleted(i) )
 			continue;
@@ -3692,7 +3693,8 @@ char Firm::majority_race()
 
 	memset( raceCountArray, 0, sizeof(raceCountArray) );
 
-	for( int i=0 ; i<worker_count ; i++ )
+	int i;
+	for( i=0 ; i<worker_count ; i++ )
 	{
 		if( worker_array[i].race_id )
 			raceCountArray[ worker_array[i].race_id-1 ]++;

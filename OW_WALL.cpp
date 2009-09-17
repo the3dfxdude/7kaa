@@ -56,7 +56,8 @@ void World::build_wall_section(short x1, short y1, short x2, short y2,
 			{
 				//----- try from the middle, and then butterfly outward ---//
 				short increment = 0;
-				for( short trial=y2-y1-GATE_LENGTH, westGateY=y1+(trial+1)/2;
+				short trial, westGateY;
+				for( trial=y2-y1-GATE_LENGTH, westGateY=y1+(trial+1)/2;
 					trial > 0; --trial, westGateY += increment)
 				{
 					if(can_build_area(x1-GATE_WIDTH+1, westGateY,
@@ -101,7 +102,8 @@ void World::build_wall_section(short x1, short y1, short x2, short y2,
 			{
 				//---- try from the middle, and then butterfly outward ----//
 				short increment = 0;
-				for( short trial=y2-y1-GATE_LENGTH, eastGateY=y1+(trial+1)/2;
+				short trial, eastGateY;
+				for( trial=y2-y1-GATE_LENGTH, eastGateY=y1+(trial+1)/2;
 					trial > 0; --trial, eastGateY += increment)
 				{
 					if(can_build_area(x2, eastGateY,	x2+GATE_WIDTH-1, eastGateY+GATE_LENGTH-1) )
@@ -144,7 +146,8 @@ void World::build_wall_section(short x1, short y1, short x2, short y2,
 			{
 				//------- try from the middle, and then butterfly outward -------//
 				short increment = 0;
-				for( short trial=x2-x1-GATE_LENGTH, northGateX=x1+(trial+1)/2;
+				short trial, northGateX;
+				for( trial=x2-x1-GATE_LENGTH, northGateX=x1+(trial+1)/2;
 					trial > 0; --trial, northGateX += increment)
 				{
 					if(can_build_area(northGateX, y1-GATE_WIDTH+1, 
@@ -193,7 +196,8 @@ void World::build_wall_section(short x1, short y1, short x2, short y2,
 			{
 				//----- try from the middle, and then butterfly outward ----//
 				short increment = 0;
-				for( short trial=x2-x1-GATE_LENGTH, southGateX=x1+(trial+1)/2;
+				short trial, southGateX;
+				for( trial=x2-x1-GATE_LENGTH, southGateX=x1+(trial+1)/2;
 					trial > 0; --trial, southGateX += increment)
 				{
 					if(can_build_area(southGateX, y2, 

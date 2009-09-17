@@ -2656,7 +2656,8 @@ void Town::being_attacked(int attackerUnitRecno, float attackDamage)
 
 			//--- if the resistance of all the races are zero, think_change_nation() ---//
 
-			for( int i=0 ; i<MAX_RACE ; i++ )
+			int i;
+			for( i=0 ; i<MAX_RACE ; i++ )
 			{
 				if( race_loyalty_array[i] >= (float) 1 )		// values between 0 and 1 are considered as 0
 					break;
@@ -2688,7 +2689,8 @@ void Town::being_attacked(int attackerUnitRecno, float attackDamage)
 
 			//--- if the resistance of all the races are zero, think_change_nation() ---//
 
-			for( int i=0 ; i<MAX_RACE ; i++ )
+			int i;
+			for( i=0 ; i<MAX_RACE ; i++ )
 			{
 				if( race_resistance_array[i][attackerNationRecno-1] >= (float) 1 )
 					break;
@@ -2747,7 +2749,8 @@ int Town::mobilize_defender(int attackerNationRecno)
 	int randomPersonId = m.random(population)+1;
 	int popSum=0, raceId=0;
 
-	for( int i=0 ; i<MAX_RACE ; i++ )
+	int i;
+	for( i=0 ; i<MAX_RACE ; i++ )
 	{
 		popSum += race_pop_array[i];
 
@@ -3676,7 +3679,8 @@ void Town::auto_set_layout()
 	memset( max_race_pop_array , 0, sizeof(max_race_pop_array) );
 	memset( raceNeedBuildCount, 0, sizeof(raceNeedBuildCount) );
 
-	for( int i=0 ; i<MAX_RACE ; i++ )
+	int i;
+	for( i=0 ; i<MAX_RACE ; i++ )
 	{
 		if( race_pop_array[i] > 0 )
 			raceNeedBuildCount[i] += (race_pop_array[i]-1)/POPULATION_PER_HOUSE+1;
@@ -4386,7 +4390,8 @@ void Town::update_camp_link()
 
 	Firm* firmPtr;
 
-	for( int i=0 ; i<linked_firm_count ; i++ )
+	int i;
+	for( i=0 ; i<linked_firm_count ; i++ )
 	{
 		 firmPtr = firm_array[linked_firm_array[i]];
 

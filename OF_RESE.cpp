@@ -215,7 +215,8 @@ void FirmResearch::disp_research_menu(int refreshFlag)
 //
 void FirmResearch::detect_research_menu()
 {
-	for( int i = 0; i < added_count; ++i )
+	int i;
+	for( i = 0; i < added_count; ++i )
 	{
 		if(button_research_array[i].detect() )
 		{

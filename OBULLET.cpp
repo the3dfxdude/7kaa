@@ -450,7 +450,8 @@ int Bullet::check_hit()
 				{
 					short firmRecno = locPtr->firm_recno();
 					// check this firm has not been attacked
-					for( short *firmHitPtr = firmHit+firmHitCount-1; firmHitPtr >= firmHit; --firmHitPtr )
+					short *firmHitPtr;
+					for( firmHitPtr = firmHit+firmHitCount-1; firmHitPtr >= firmHit; --firmHitPtr )
 					{
 						if( *firmHitPtr == firmRecno )
 							break;
@@ -466,7 +467,8 @@ int Bullet::check_hit()
 				{
 					short townRecno = locPtr->town_recno();
 					// check this town has not been attacked
-					for( short *townHitPtr = townHit+townHitCount-1; townHitPtr >= townHit; --townHitPtr )
+					short *townHitPtr;
+					for( townHitPtr = townHit+townHitCount-1; townHitPtr >= townHit; --townHitPtr )
 					{
 						if( *townHitPtr == townRecno )
 							break;

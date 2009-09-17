@@ -522,7 +522,8 @@ int Nation::think_request_buy_food()
 	int	  curRating, bestRating=0;
 	int	  relationStatus;
 
-	for( int i=1 ; i<=nation_array.size() ; i++ )
+	int i;
+	for( i=1 ; i<=nation_array.size() ; i++ )
 	{
 		if( nation_array.is_deleted(i) || i==nation_recno )
 			continue;
@@ -616,7 +617,8 @@ int Nation::think_declare_war()
 
 	//---- don't declare a new war if we already has enemies ---//
 
-	for( int i=1 ; i<=nation_array.size() ; i++ )
+	int i;
+	for( i=1 ; i<=nation_array.size() ; i++ )
 	{
 		if( nation_array.is_deleted(i) || i==nation_recno )
 			continue;
@@ -956,7 +958,8 @@ int Nation::think_demand_tech()
 
 		//---- scan which tech that the nation has but we don't have ----//
 
-		for( int techId=1 ; techId<=tech_res.tech_count ; techId++ )
+		int techId;
+		for( techId=1 ; techId<=tech_res.tech_count ; techId++ )
 		{
 			TechInfo *techInfo = tech_res[techId];
 
@@ -1011,7 +1014,8 @@ int Nation::think_request_surrender()
 
 	static int amtArray[] = { 5000, 7500, 10000, 15000, 20000, 30000, 40000, 50000 };
 
-	for( int i=7 ; i>=0 ; i-- )
+	int i;
+	for( i=7 ; i>=0 ; i-- )
 	{
 		if( offerAmount >= amtArray[i] )
 		{

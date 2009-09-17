@@ -2617,7 +2617,8 @@ void Sys::capture_screen()
 {
    String str = "7K";
 
-   for( int i=0 ; i<=99 ; i++ )
+   int i;
+   for( i=0 ; i<=99 ; i++ )
    {
       str  = "7K";
 

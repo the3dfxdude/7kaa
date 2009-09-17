@@ -103,7 +103,8 @@ void Rain::new_spot(short x, short y)
 void Rain::draw_step(VgaBuf *vgabuf)
 {
 	// --------- draw rain spot ------- //
-	for(int i = 0; i < MAX_RAINDROP; ++i)
+	int i;
+ 	for(i = 0; i < MAX_RAINDROP; ++i)
 	{
 		if( spot_flag[i])
 		{
@@ -134,7 +135,8 @@ void Rain::draw_step(VgaBuf *vgabuf)
 int Rain::is_all_clear()
 {
 	int count = 0;
-	for(int i = 0; i < MAX_RAINDROP; ++i)
+	int i;
+	for(i = 0; i < MAX_RAINDROP; ++i)
 		if(drop_flag[i])
 			count++;
 	// update active_drop;

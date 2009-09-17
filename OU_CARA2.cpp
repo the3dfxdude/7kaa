@@ -125,7 +125,8 @@ int UnitCaravan::think_del_stop()
 	Firm*	  firmPtr;
 	Nation* nationPtr = nation_array[nation_recno];
 
-	for( int i=stop_defined_num ; i>0 ; i-- )
+	int i;
+	for( i=stop_defined_num ; i>0 ; i-- )
 	{
 		int firmRecno = stop_array[i-1].firm_recno;
 
@@ -157,7 +158,8 @@ int UnitCaravan::think_del_stop()
 			int hasPickUp=0;
 			TradeStop* tradeStop = stop_array + i - 1; 
 
-			for( int j=PICK_UP_RAW_FIRST ; j<=PICK_UP_RAW_LAST ; j++ )
+			int j;
+			for( j=PICK_UP_RAW_FIRST ; j<=PICK_UP_RAW_LAST ; j++ )
 			{
 				if( tradeStop->pick_up_array[j] )
 					hasPickUp = 1;
@@ -263,7 +265,8 @@ void UnitCaravan::think_set_pick_up_type2(int fromStopId, int toStopId)
 	MarketGoods* marketGoods = fromMarket->market_goods_array;
 	TradeStop* tradeStop = stop_array+fromStopId-1;
 
-	for( int i=0 ; i<MAX_MARKET_GOODS ; i++, marketGoods++ )
+	int i;
+	for( i=0 ; i<MAX_MARKET_GOODS ; i++, marketGoods++ )
 	{
 		if( !marketGoods->product_raw_id )
 			continue;

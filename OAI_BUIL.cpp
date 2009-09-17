@@ -58,7 +58,8 @@ int Nation::think_build_mine()
 
 	if( !config.explore_whole_map )
 	{
-		for( int i=0 ; i<ai_town_count ; i++ )
+		int i;
+		for( i=0 ; i<ai_town_count ; i++ )
 		{
 			Town* townPtr = town_array[ ai_town_array[i] ];
 

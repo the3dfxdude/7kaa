@@ -205,7 +205,8 @@ void ColorTable::generate_table(int absScale, PalDesc & palD, RGBColor (*fp)(RGB
 				dist[cc] = 3*0xff*0xff+1;
 			}
 			int dReservedIndex = 0;
-			for( int d=0; d < palSize; ++d)
+			int d;
+			for( d=0; d < palSize; ++d)
 			{
 				// ------- skip scanning reserved color ------//
 				if( palD.is_reserved(d, dReservedIndex) )
@@ -282,7 +283,8 @@ void ColorTable::generate_table(int absScale, PalDesc & palD, RGBColor (*fp)(RGB
 				dist[cc] = 3*0xff*0xff+1;
 			}
 			int dReservedIndex = 0;
-			for( int d=0; d < palSize; ++d)
+			int d;
+			for( d=0; d < palSize; ++d)
 			{
 				// ------- skip scanning reserved color ------//
 				if( palD.is_reserved(d, dReservedIndex) )
@@ -372,7 +374,8 @@ void ColorTable::generate_table_fast (int absScale, PalDesc &palD, RGBColor (*fp
 				dist[cc] = 3*0xff*0xff+1;
 			}
 
-			for( int d=0; d < palSize; ++d)
+			int d;
+			for( d=0; d < palSize; ++d)
 			{
 				// ------- compare the sqaure distance ----------//
 				thisDiff = color_dist(rgb, palD.get_rgb(d));
@@ -442,7 +445,8 @@ void ColorTable::generate_table_fast (int absScale, PalDesc &palD, RGBColor (*fp
 				dist[cc] = 3*0xff*0xff+1;
 			}
 
-			for( int d=0; d < palSize; ++d)
+			int d;
+			for( d=0; d < palSize; ++d)
 			{
 				// ------- compare the sqaure distance ----------//
 				thisDiff = color_dist(rgb, palD.get_rgb(d));
@@ -537,7 +541,8 @@ void ColorTable::generate_table(PalDesc &sPalD, PalDesc &palD)
 			dist[cc] = 3*0xff*0xff+1;
 		}
 		int dReservedIndex = 0;
-		for( int d=0; d < palSize; ++d)
+		int d;
+		for( d=0; d < palSize; ++d)
 		{
 			// ------- skip scanning reserved color ------//
 			if( palD.is_reserved(d, dReservedIndex) )

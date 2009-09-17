@@ -88,7 +88,8 @@ void GroupSelect::select_grouped_units(int groupNum)
 
 	//---------- count selected units ----------//
 	int groupUnitCount = 0;
-	for(int i=arraySize; i>0; --i)
+	int i;
+	for(i=arraySize; i>0; --i)
 	{
 		if(unit_array.is_deleted(i))
 			continue;

@@ -312,7 +312,8 @@ void UnitArray::move_to_now(int destXLoc, int destYLoc, short* selectedUnitArray
 	int		sizeOneSelectedCount = selectedCount;
 
 	//---------- set Unit::unit_group_id and count the unit by size ----------//
-	for( int i=0 ; i<selectedCount ; i++ )
+	int i;
+	for( i=0 ; i<selectedCount ; i++ )
 	{
 		unitPtr = operator[](selectedUnitArray[i]);
 		err_when(unitPtr->cur_action==SPRITE_IDLE && (unitPtr->cur_x!=unitPtr->next_x || unitPtr->cur_y!=unitPtr->next_y));

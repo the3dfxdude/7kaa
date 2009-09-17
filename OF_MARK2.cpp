@@ -100,7 +100,8 @@ void FirmMarket::think_market_build_factory()
 
 		//----- check if the raw materials are from a local mine, if so don't build a factory, we only build a factory to manufacture goods using raw materials from a remote town.
 
-		for( int j=0 ; j<linked_firm_count ; j++ )
+		int j;
+		for( j=0 ; j<linked_firm_count ; j++ )
 		{
 			firmPtr = firm_array[ linked_firm_array[j] ];
 
@@ -171,7 +172,8 @@ void FirmMarket::ai_update_link_status()
 	Firm*   firmPtr;
 	int 	  rc;
 
-	for(int i=0; i<linked_firm_count; i++)
+	int i;
+	for(i=0; i<linked_firm_count; i++)
 	{
 		err_when(!linked_firm_array[i] || firm_array.is_deleted(linked_firm_array[i]));
 
@@ -440,7 +442,8 @@ int FirmMarket::think_import_specific_product(int productId)
 
 			if( firmPtr->nation_recno != nation_recno )		// if this is not our market
 			{
-				for( int j=firmPtr->linked_town_count-1 ; j>=0 ; j-- )
+				int j;
+				for( j=firmPtr->linked_town_count-1 ; j>=0 ; j-- )
 				{
 					Town* townPtr = town_array[ firmPtr->linked_town_array[j] ];
 

@@ -874,7 +874,8 @@ int SeekPath::continue_seek(int maxTries, char firstSeek)
 	maxNode -= MAX_CHILD_NODE; // generate_successors() can generate a max of MAX_CHILD_NODE new nodes per call
 	Node *bestNodePtr;
 
-	for(int i=0; i<maxNode; i++)
+	int i;
+	for(i=0; i<maxNode; i++)
 	{
 		bestNodePtr = return_best_node();
 
@@ -2836,7 +2837,8 @@ int SeekPath::continue_seek2(int maxTries, char firstSeek)
 	maxNode -= MAX_CHILD_NODE; // generate_successors() can generate a max of MAX_CHILD_NODE new nodes per call
 	Node *bestNodePtr;
 
-	for(int i=0; i<maxNode; i++)
+	int i;
+	for(i=0; i<maxNode; i++)
 	{
 		bestNodePtr = return_best_node();
 

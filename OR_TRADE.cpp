@@ -301,7 +301,8 @@ static void put_caravan_rec(int recNo, int x, int y, int refreshFlag)
 
 	char *bitmapPtr;
 
-	for(int i=0; i<MAX_RAW; i++)
+	int i;
+	for(i=0; i<MAX_RAW; i++)
 	{
 		if( unitPtr->raw_qty_array[i]==0 )
 			continue;
@@ -373,7 +374,8 @@ static void put_ship_rec(int recNo, int x, int y, int refreshFlag)
 
 	char *bitmapPtr;
 
-	for(int i=0; i<MAX_RAW; i++)
+	int i;
+	for(i=0; i<MAX_RAW; i++)
 	{
 		if( unitPtr->raw_qty_array[i]==0 )
 			continue;

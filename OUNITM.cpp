@@ -2650,7 +2650,8 @@ void Unit::terminate_move()
 {
 	#ifdef DEBUG	
 		err_when( next_x != cur_x || next_y != cur_y );
-		for(short h=0, y=cur_y_loc(); h<sprite_info->loc_height; h++, y++)
+		short h, y;
+		for(h=0, y=cur_y_loc(); h<sprite_info->loc_height; h++, y++)
 			for(short w=0, x=cur_x_loc(); w<sprite_info->loc_width; w++, x++)
 				err_when( world.get_unit_recno(x, y, mobile_type) != sprite_recno );
 	#endif

@@ -362,7 +362,8 @@ void World::plant_death(int scanDensity)
 void World::plant_init()
 {
 	plant_count = 0;
-	for(int trial = 50; trial > 0; --trial)
+	int trial;
+	for(trial = 50; trial > 0; --trial)
 		{
 		// ------- randomly select a place to seed plant
 		int y = 1+m.random(max_y_loc-2);

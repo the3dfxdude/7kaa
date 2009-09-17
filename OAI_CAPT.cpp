@@ -84,7 +84,8 @@ int Nation::think_capture_independent()
 
 		//---- check if there are already camps linked to this town ----//
 
-		for( int i=townPtr->linked_firm_count-1 ; i>=0 ; i-- )
+		int i;
+		for( i=townPtr->linked_firm_count-1 ; i>=0 ; i-- )
 		{
 			Firm* firmPtr = firm_array[ townPtr->linked_firm_array[i] ];
 
@@ -148,9 +149,10 @@ int Nation::think_capture_independent()
 		{
 			Town* targetTown = town_array[ capture_town_array[i].town_recno ];
 
-			for( int i=0 ; i<ai_town_count ; i++ )
+			int j;
+			for( j=0 ; j<ai_town_count ; j++ )
 			{
-				Town* ownTown = town_array[ ai_town_array[i] ];
+				Town* ownTown = town_array[ ai_town_array[j] ];
 
 				int townDistance = m.points_distance(targetTown->center_x, targetTown->center_y, 
 										 ownTown->center_x, ownTown->center_y);
@@ -162,7 +164,7 @@ int Nation::think_capture_independent()
 				}
 			}
 
-			if( i==ai_town_count )
+			if( j==ai_town_count )
 				continue;
 		}
 
@@ -377,6 +379,7 @@ int Nation::find_best_capturer(int townRecno, int raceId, int& bestTargetResista
 
 			//--- check if the unit currently in a command base trying to take over an independent town ---//
 
+			int j;
 			for( int j=firmPtr->linked_town_count-1 ; j>=0 ; j-- )
 			{
 				Town* townPtr = town_array[ firmPtr->linked_town_array[j] ];
@@ -442,7 +445,8 @@ int Nation::mobilize_capturer(int unitRecno)
 
 		//-- train a villager with leadership to replace current overseer --//
 
-		for( int i=0 ; i<firmPtr->linked_town_count ; i++ )
+		int i;
+		for( i=0 ; i<firmPtr->linked_town_count ; i++ )
 		{
 			townPtr = town_array[ firmPtr->linked_town_array[i] ];
 

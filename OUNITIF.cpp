@@ -361,7 +361,8 @@ void Unit::disp_button(int dispY1)
 
 	if( unit_res[unit_id]->unit_class == UNIT_CLASS_HUMAN && race_id )
 	{
-		for( int firmId=1; firmId<=MAX_FIRM_TYPE ; firmId++ )
+		int firmId;
+		for( firmId=1; firmId<=MAX_FIRM_TYPE ; firmId++ )
 		{
 			if( firm_res[firmId]->can_build(sprite_recno) )
 				break;
@@ -1427,7 +1428,8 @@ void Unit::detect_spy_menu(int dispY1)
 	if( !canChangeOwnCloak )
 		return;
 
-	for( int i=1 ; i<=nation_array.size()+1 ; i++ )
+	int i;
+	for( i=1 ; i<=nation_array.size()+1 ; i++ )
 	{
 		if( i > nation_array.size() )
 		{

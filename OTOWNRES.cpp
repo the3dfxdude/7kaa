@@ -263,7 +263,8 @@ void TownRes::load_town_name()
 
 		if( townName->name[0]=='@' )		// next race
 		{
-			for( int j=1 ; j<=MAX_RACE ; j++ )
+			int j;
+			for( j=1 ; j<=MAX_RACE ; j++ )
 			{
 				if( strcmp( race_res[j]->code, townName->name+1 ) == 0 )
 					break;

@@ -151,7 +151,8 @@ int Town::form_new_nation()
 
 	int maxPop=0, raceId=0;
 
-	for( int i=0 ; i<MAX_RACE ; i++ )
+	int i;
+	for( i=0 ; i<MAX_RACE ; i++ )
 	{
 		if( race_pop_array[i] > maxPop )
 		{

@@ -1423,7 +1423,8 @@ void Town::detect_spy_menu()
 //
 int Town::has_player_spy()
 {
-	for( int i=0 ; i<MAX_RACE ; i++ )
+	int i;
+	for( i=0 ; i<MAX_RACE ; i++ )
 	{
 		if( race_spy_count_array[i] > 0 )
 			break;
@@ -1905,7 +1906,8 @@ void Town::process_queue()
 	
 	char queueCount = train_queue_count;
 	char skillId, raceId;
-	for(char i=0; i<queueCount; ++i)
+	char i;
+	for(i=0; i<queueCount; ++i)
 	{
 		if(can_train(train_queue_race_array[i]))
 		{

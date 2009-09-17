@@ -671,7 +671,8 @@ void UnitArray::return_camp(int remoteAction, short *selectedUnitArray, int sele
 		{
 			selectedCount = 0;
 
-			for( int i=unit_array.size() ; i>0 ; i-- )
+			int i;
+			for( i=unit_array.size() ; i>0 ; i-- )
 			{
 				if( unit_array.is_deleted(i) )
 					continue;

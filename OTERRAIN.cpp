@@ -141,7 +141,8 @@ int TerrainRes::terrain_height(int height, int *subPtr)
 // ------ Begin of function TerrainRes::min_height ------//
 short TerrainRes::min_height(TerrainTypeCode tc, SubTerrainMask subtc)
 {
-	for(int s=0,j=1 ; s < 3 && !(subtc & j); ++s, j+=j);
+	int s, j;
+	for(s=0,j=1 ; s < 3 && !(subtc & j); ++s, j+=j);
 	return terrain_type_min_height_array[tc-1][s];
 }
 // ------ End of function TerrainRes::min_height ------//
@@ -158,7 +159,8 @@ short TerrainRes::max_height(TerrainTypeCode tc, SubTerrainMask subtc)
 			return 255;
 	}
 
-	for(int s=2,j=2 ; s >= 0 && !(subtc & j); --s, j>>=1);
+	int s, j;
+	for(s=2,j=2 ; s >= 0 && !(subtc & j); --s, j>>=1);
 	return terrain_type_min_height_array[tc-1][s]-1;
 }
 // ------ End of function TerrainRes::max_height ------//

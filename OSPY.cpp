@@ -285,7 +285,8 @@ void Spy::next_day()
 			{
 				Firm* firmPtr = firm_array[spy_place_para];
 
-				for( int i=0 ; i<firmPtr->worker_count ; i++ )
+				int i;
+				for( i=0 ; i<firmPtr->worker_count ; i++ )
 				{
 					if( firmPtr->worker_array[i].spy_recno==spy_recno )
 						break;
@@ -1068,7 +1069,8 @@ int Spy::mobilize_firm_spy()
 
 	if( !spyUnitRecno )
 	{
-		for( int i=0 ; i<firmPtr->worker_count ; i++ )
+		int i;
+		for( i=0 ; i<firmPtr->worker_count ; i++ )
 		{
 			if( firmPtr->worker_array[i].spy_recno == spy_recno )
 				break;
@@ -1350,7 +1352,8 @@ int Spy::get_assassinate_rating(int targetUnitRecno, int& attackRating, int& def
 
 	int spyHitPoints;
 
-	for( int i=0 ; i<firmPtr->worker_count ; i++ )
+	int i;
+	for( i=0 ; i<firmPtr->worker_count ; i++ )
 	{
 		if( firmPtr->worker_array[i].spy_recno == spy_recno )
 		{

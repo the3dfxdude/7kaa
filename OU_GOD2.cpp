@@ -270,7 +270,8 @@ int UnitGod::think_god_attack_target(int& targetXLoc, int& targetYLoc)
 	int   	totalFirm = firm_array.size();
 	int   	firmRecno = m.random(totalFirm)+1;
 
-	for( int i=totalFirm ; i>0 ; i-- )
+	int i;
+	for( i=totalFirm ; i>0 ; i-- )
 	{
 		if( ++firmRecno > totalFirm )
 			firmRecno = 1;

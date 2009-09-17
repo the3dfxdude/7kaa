@@ -78,7 +78,8 @@ void FirmWar::think_new_production()
 	int 		 weaponTypeCount=0, totalWeaponCount=0;
 	UnitInfo* unitInfo;
 
-	for( int unitId=1; unitId<=MAX_UNIT_TYPE ; unitId++ )
+	int unitId;
+	for( unitId=1; unitId<=MAX_UNIT_TYPE ; unitId++ )
 	{
 		unitInfo = unit_res[unitId];
 

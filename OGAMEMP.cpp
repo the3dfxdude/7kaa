@@ -895,7 +895,8 @@ int Game::mp_select_service()
 	returnButton.create(520, 538, "CANCEL-U", "CANCEL-D", 1, 0);
 
 	ButtonCustom serviceButton[BUTTON_NUM];
-	for( int b = 0; b < BUTTON_NUM && mp_obj.get_service_provider(b+1); ++b )
+	int b;
+	for( b = 0; b < BUTTON_NUM && mp_obj.get_service_provider(b+1); ++b )
 	{
 		serviceButton[b].create(buttonX[b], buttonY[b], 
 			buttonX[b]+SERVICE_BUTTON_WIDTH-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
@@ -1683,7 +1684,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	int shareRace = 1;		// host only, 0= exclusive race of each player
 
 	mp_obj.poll_players();
-	for( int p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
+	int p;
+	for( p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
 	{
 		// host only identify himself
 		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.my_player_id )
@@ -2402,7 +2404,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 							// assign initial race
 							int c = m.get_time() % MAX_RACE;
-							for( int t = 0; t < MAX_RACE; ++t, ++c )
+							int t;
+							for( t = 0; t < MAX_RACE; ++t, ++c )
 							{
 								c %= MAX_RACE;
 								if( raceAssigned[c] == 0 )
@@ -2508,7 +2511,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 									break;
 							}
 						}
-						for( int p = 0; p < regPlayerCount && regPlayerId[p] != from; ++p );
+						int p;
+						for( p = 0; p < regPlayerCount && regPlayerId[p] != from; ++p );
 						if( cl <= MAX_RACE && p < regPlayerCount &&
 							(shareRace || raceAssigned[cl-1] == 0 ) )		// more than one player can use the same race
 						{
@@ -2554,7 +2558,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						{
 							for( cl = 1; cl <= MAX_COLOR_SCHEME && colorAssigned[cl-1]; ++cl);
 						}
-						for( int p = 0; p < regPlayerCount && regPlayerId[p] != from; ++p );
+						int p;
+						for( p = 0; p < regPlayerCount && regPlayerId[p] != from; ++p );
 						if( cl <= MAX_COLOR_SCHEME && !colorAssigned[cl-1] && p < regPlayerCount )
 						{
 							if( playerColor[p] > 0 )
@@ -2648,7 +2653,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					int r = tempConfig.race_id = raceGroup[raceGroup()].custom_para.value;
 					if( remote.is_host )
 					{
-						for( int p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id ; ++p );
+						int p;
+						for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id ; ++p );
 						if( r <= MAX_RACE && p < regPlayerCount &&
 							(shareRace || raceAssigned[r-1] == 0 ) )		// more than one player can use the same race
 						{
@@ -2678,7 +2684,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					{
 						if( !colorAssigned[r-1] )
 						{
-							for( int p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id; ++p );
+							int p;
+							for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id; ++p );
 							if( r <= MAX_COLOR_SCHEME && !colorAssigned[r-1] && p < regPlayerCount )
 							{
 								// unmark current color
@@ -3097,7 +3104,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		{
 			// see if all player is ready
 			short sumBalance = 0;
-			for( int q = 0; q < regPlayerCount && playerReadyFlag[q]; ++q)
+			int q;
+			for( q = 0; q < regPlayerCount && playerReadyFlag[q]; ++q)
 			{
 				err_when( playerBalance[q] == 0 );
 				sumBalance += playerBalance[q];
@@ -3488,7 +3496,8 @@ int Game::mp_select_load_option(char *fileName)
 	int shareRace = 1;		// host only, 0= exclusive race of each player
 
 	mp_obj.poll_players();
-	for( int p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
+	int p;
+	for( p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
 	{
 		// host only identify himself
 		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.my_player_id )
@@ -4387,7 +4396,8 @@ int Game::mp_select_load_option(char *fileName)
 
 			// see if all player is ready
 			short sumBalance = 0;
-			for( int q = 0; q < regPlayerCount && playerReadyFlag[q]; ++q)
+			int q;
+			for( q = 0; q < regPlayerCount && playerReadyFlag[q]; ++q)
 			{
 				err_when( playerBalance[q] == 0 );
 				sumBalance += playerBalance[q];

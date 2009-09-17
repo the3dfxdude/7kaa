@@ -181,7 +181,8 @@ void UnitMonster::king_leave_scroll()
 
 	memset( raceCountArray, 0, sizeof(raceCountArray) );
 
-	for( int i=2 ; i<SCROLL_SCAN_RANGE*SCROLL_SCAN_RANGE ; i++ )
+	int i;
+	for( i=2 ; i<SCROLL_SCAN_RANGE*SCROLL_SCAN_RANGE ; i++ )
 	{
 		m.cal_move_around_a_point(i, SCROLL_SCAN_RANGE, SCROLL_SCAN_RANGE, xOffset, yOffset);
 

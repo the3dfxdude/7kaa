@@ -959,7 +959,8 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 		int	minDist=0x7FFFFF, dist, distX, distY;
 		int	closestUnitRecno = -1;
 		Unit	*unitPtr;
-		for(int i=0; i<selectedCount; i++)
+		int i;
+		for(i=0; i<selectedCount; i++)
 		{
 			unitPtr = (Unit*) get_ptr(selectedArray[i]);
 			distX = abs(shipXLoc - unitPtr->next_x_loc());
@@ -1109,7 +1110,8 @@ void UnitArray::ship_to_beach(int destX, int destY, int divided, short* selected
 	// Use the returned reference parameters (landX, landY) for the other
 	// ships to calculate their final location to move to
 	//--------------------------------------------------------------------//
-	for(int i=0; i<selectedCount; i++) // for first unit
+	int i;
+	for(i=0; i<selectedCount; i++) // for first unit
 	{
 		unitPtr = (Unit*) get_ptr(selectedArray[i]);
 		if(unit_res[unitPtr->unit_id]->carry_unit_capacity>0)
@@ -1251,7 +1253,8 @@ void UnitArray::add_way_point(int pointX, int pointY, short* selectedArray, int 
 		DWORD groupId = unit_array.cur_group_id;
 		Unit *unitPtr;
 
-		for(int i=0; i<selectedCount; ++i)
+		int i;
+		for(i=0; i<selectedCount; ++i)
 		{
 			unitPtr = unit_array[selectedArray[i]];
 			unitPtr->unit_group_id = groupId;

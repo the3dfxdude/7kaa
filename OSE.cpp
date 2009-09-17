@@ -164,7 +164,8 @@ void SECtrl::load_info()
 	req_pool = (SERequest *)mem_add(total_effect * sizeof(SERequest) );
 	last_cycle = (char *)mem_add(total_effect * sizeof(char));
 
-	for(short j=0; j < count; ++j)
+	short j;
+	for(j=0; j < count; ++j)
 	{
 		req_pool[j].resx_id = j+1;
 		req_pool[j].wave_ptr = res_wave.get_data(j+1);		// wave data pointer

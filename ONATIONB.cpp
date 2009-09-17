@@ -158,7 +158,8 @@ void NationBase::deinit()
 
 	Town* townPtr;
 
-	for( int i=town_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=town_array.size() ; i>0 ; i-- )
 	{
 		if( town_array.is_deleted(i) )
 			continue;
@@ -374,7 +375,8 @@ void NationBase::hand_over_to(int handoverNationRecno)
 
 	Unit* unitPtr;
 
-	for( int i=unit_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=unit_array.size() ; i>0 ; i-- )
 	{
 		if( unit_array.is_deleted(i) )
 		{
@@ -813,7 +815,8 @@ void NationBase::next_year()
 
 	//------ post income & expense breakdown ------//
 
-	for( int i=0 ; i<INCOME_TYPE_COUNT ; i++ )
+	int i;
+	for( i=0 ; i<INCOME_TYPE_COUNT ; i++ )
 	{
 		last_year_income_array[i] = cur_year_income_array[i];
 		cur_year_income_array[i]  = (float) 0;
@@ -1563,7 +1566,8 @@ void NationBase::succeed_king(int kingUnitRecno)
 
 	Unit* unitPtr;
 
-	for( int i=unit_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=unit_array.size() ; i>0 ; i-- )
 	{
 		if( unit_array.is_deleted(i) )
 			continue;
@@ -1773,7 +1777,8 @@ void NationBase::change_all_people_loyalty(int loyaltyChange, int raceId)
 
 	Unit* unitPtr;
 
-	for( int i=unit_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=unit_array.size() ; i>0 ; i-- )
 	{
 		if( unit_array.is_deleted(i) )
 			continue;

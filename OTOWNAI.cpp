@@ -1001,7 +1001,8 @@ int Town::think_build_base()
 
 	GodInfo* godInfo;
 
-	for( int i=1 ; i<=god_res.god_count ; i++ )
+	int i;
+	for( i=1 ; i<=god_res.god_count ; i++ )
 	{
 		godInfo = god_res[i];
 

@@ -1494,7 +1494,8 @@ void ZoomMatrix::draw_objects()
 
 	Bullet* bulletPtr;
 
-	for( int i=bullet_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=bullet_array.size() ; i>0 ; i-- )
 	{
 		if( bullet_array.is_deleted(i) )
 			continue;

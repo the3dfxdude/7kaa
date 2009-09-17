@@ -135,7 +135,8 @@ void MonsterRes::init_active_monster()
 
 		//--- check if this monster id. is already in the active monster array ---//
 
-		for( int i=0 ; i<activeCount ; i++ )
+		int i;
+		for( i=0 ; i<activeCount ; i++ )
 		{
 			if( active_monster_array[i] == monsterId )
 				break;

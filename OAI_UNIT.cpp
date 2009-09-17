@@ -569,7 +569,8 @@ int Nation::recruit_on_job_worker(Firm* destFirmPtr, int preferedRaceId)
 	int	  hasHuman;
 	Worker* workerPtr;
 
-	for( int i=0 ; i<aiFirmCount ; i++ )
+	int i;
+	for( i=0 ; i<aiFirmCount ; i++ )
 	{
 		firmPtr = firm_array[aiFirmArray[i]];
 

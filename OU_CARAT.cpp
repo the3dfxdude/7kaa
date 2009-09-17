@@ -34,7 +34,8 @@ void UnitCaravan::market_unload_goods()
 	short	unloadQty;
 	int	goodsId, withEmptySlot=0;
 
-	for(int i=0; i<MAX_MARKET_GOODS; i++, marketGoods++)
+	int i;
+	for(i=0; i<MAX_MARKET_GOODS; i++, marketGoods++)
 	{
 		if(marketGoods->raw_id)
 		{
@@ -143,7 +144,8 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 	//-------------------------------------------------//
 	// unload product and then raw
 	//-------------------------------------------------//
-	for(int processed=0, j=0; j<MAX_PRODUCT; j++)
+	int processed, j;
+	for(processed=0, j=0; j<MAX_PRODUCT; j++)
 	{
 		if(processed_product_raw_qty_array[j] || !product_raw_qty_array[j])
 			continue; // this product is processed or no stock in the caravan

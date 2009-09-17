@@ -1271,7 +1271,8 @@ void FirmCamp::sort_soldier()
 
 		short worker_id_array[MAX_WORKER];
 
-		for( int i=0 ; i<worker_count ; i++ )
+		int i;
+		for( i=0 ; i<worker_count ; i++ )
 			worker_id_array[i] = i+1;
 
 		cur_firm_ptr = this;

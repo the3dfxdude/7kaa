@@ -1153,7 +1153,8 @@ void Misc::change_file_ext(char* desFileName, char* srcFileName, char* newExt)
 //
 void Misc::extract_file_name(char* desFileName, char* srcFileName)
 {
-	for( int i=strlen(srcFileName) ; i>=0 ; i-- )
+	int i;
+	for( i=strlen(srcFileName) ; i>=0 ; i-- )
 	{
 		if( srcFileName[i]=='\\' )			// get last '\' before the file name
 			break;

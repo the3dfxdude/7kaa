@@ -236,7 +236,8 @@ void TownArray::think_new_independent_town()
 	Town* townPtr;
 	int   independentTownCount=0, allTotalPop=0;
 
-	for( int i=town_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=town_array.size() ; i>0 ; i-- )
 	{
 		if( town_array.is_deleted(i) )
 			continue;

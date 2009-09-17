@@ -222,7 +222,8 @@ void SpyArray::process_sabotage()
 
 	//-------- reset firms' sabotage_level -------//
 
-	for( int i=firm_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=firm_array.size() ; i>0 ; i-- )
 	{
 		if( firm_array.is_deleted(i) )
 			continue;
@@ -535,7 +536,8 @@ int SpyArray::catch_spy(int spyPlace, int spyPlacePara)
 	int enemySpyCount=0, counterSpySkill=0;
 	Spy* spyPtr;
 
-	for( int i=size() ; i>0 ; i-- )
+	int i;
+	for( i=size() ; i>0 ; i-- )
 	{
 		if( is_deleted(i) )
 			continue;

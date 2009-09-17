@@ -255,7 +255,8 @@ int Nation::think_move_to_region_with_mine()
 	int curRating, bestRating=0, bestRegionId=0;
 	RegionStat* regionStat = region_array.region_stat_array;
 
-	for( int i=0 ; i<region_array.region_stat_count ; i++, regionStat++ )
+	int i;
+	for( i=0 ; i<region_array.region_stat_count ; i++, regionStat++ )
 	{
 		if( regionStat->town_nation_count_array[nation_recno-1] > 0 )		// if we already have towns there
 			continue;

@@ -130,7 +130,8 @@ static void disp_total()
 
 	Nation* nationPtr = nation_array[info.viewing_nation_recno];
 
-	for( int i=0 ; i<INCOME_TYPE_COUNT ; i++ )
+	int i;
+	for( i=0 ; i<INCOME_TYPE_COUNT ; i++ )
 		totalIncome  += nationPtr->income_365days(i);
 
 	for( i=0 ; i<EXPENSE_TYPE_COUNT ; i++ )

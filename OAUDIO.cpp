@@ -116,7 +116,8 @@ int Audio::init()
 	mid_buf_size = 0;
 	wav_buf_size = 0;
 
-	for(int i = 0; i < MAX_WAV_CHANNEL; ++i)
+	int i;
+	for(i = 0; i < MAX_WAV_CHANNEL; ++i)
 	{
 		lp_wav_ch_dsb[i] = NULL;
 		wav_serial_no[i] = 0;
@@ -476,7 +477,8 @@ int Audio::play_wav(char* wavName, DsVolume dsVolume)
 	dsbDesc.lpwfxFormat = (LPWAVEFORMATEX) (wav_buf+0x14);
 	// ------- assign buffer to a channel number ----------//
 	lpDsb = NULL;
-	for( int chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
+	int chanNum;
+	for( chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
 		if(lp_wav_ch_dsb[chanNum] == NULL || (lp_wav_ch_dsb[chanNum]->GetStatus(&dsbStatus),
 			!(dsbStatus & DSBSTATUS_PLAYING)))
 		{
@@ -635,7 +637,8 @@ int Audio::play_wav(short resIdx, DsVolume dsVolume)
 	dsbDesc.lpwfxFormat = (LPWAVEFORMATEX) (wav_buf+0x14);
 	// ------- assign buffer to a channel number ----------//
 	lpDsb = NULL;
-	for( int chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
+	int chanNum;
+	for( chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
 		if(lp_wav_ch_dsb[chanNum] == NULL || (lp_wav_ch_dsb[chanNum]->GetStatus(&dsbStatus),
 			!(dsbStatus & DSBSTATUS_PLAYING)))
 		{
@@ -764,7 +767,8 @@ int Audio::play_resided_wav(char* wavBuf, DsVolume dsVolume)
 	dsbDesc.lpwfxFormat = (LPWAVEFORMATEX) (wavBuf+0x14);
 	// ------- assign buffer to a channel number ----------//
 	lpDsb = NULL;
-	for( int chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
+	int chanNum;
+ 	for( chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
 		if(lp_wav_ch_dsb[chanNum] == NULL || (lp_wav_ch_dsb[chanNum]->GetStatus(&dsbStatus),
 			!(dsbStatus & DSBSTATUS_PLAYING)))
 		{
@@ -1013,7 +1017,8 @@ int Audio::play_long_wav(char *wavName, DsVolume dsVolume)
 	dsbDesc.lpwfxFormat = (LPWAVEFORMATEX) (wav_buf+0x14);
 	// ------- assign buffer to a channel number ----------//
 	lpDsb = NULL;
-	for( int chanNum = 0; chanNum < MAX_LONG_WAV_CH; ++chanNum)
+	int chanNum;
+	for( chanNum = 0; chanNum < MAX_LONG_WAV_CH; ++chanNum)
 		if(lp_lwav_ch_dsb[chanNum] == NULL || (lp_lwav_ch_dsb[chanNum]->GetStatus(&dsbStatus),
 			!(dsbStatus & DSBSTATUS_PLAYING)))
 		{
@@ -1276,7 +1281,8 @@ int	Audio::play_loop_wav(char *wavName, int repeatOffset, DsVolume dsVolume)
 	dsbDesc.lpwfxFormat = (LPWAVEFORMATEX) (wav_buf+0x14);
 	// ------- assign buffer to a channel number ----------//
 	lpDsb = NULL;
-	for( int chanNum = 0; chanNum < MAX_LOOP_WAV_CH; ++chanNum)
+	int chanNum;
+	for( chanNum = 0; chanNum < MAX_LOOP_WAV_CH; ++chanNum)
 		if(lp_loop_ch_dsb[chanNum] == NULL || (lp_loop_ch_dsb[chanNum]->GetStatus(&dsbStatus),
 			!(dsbStatus & DSBSTATUS_PLAYING)))
 		{
@@ -1459,7 +1465,8 @@ void	Audio::yield()
 	VgaFrontLock vgaLock;
 
 	// set break point beyond this point
-	for(int i = 0; i < MAX_LONG_WAV_CH; ++i)
+	int i;
+	for(i = 0; i < MAX_LONG_WAV_CH; ++i)
 	{
 		if( !lp_lwav_ch_dsb[i] )
 			continue;
@@ -1701,7 +1708,8 @@ void Audio::stop_wav()
 		return;
 
 	// ---------- stop all short wave  ------------- //
-	for(int i = 0; i < MAX_WAV_CHANNEL; ++i)
+	int i;
+	for(i = 0; i < MAX_WAV_CHANNEL; ++i)
 		if(lp_wav_ch_dsb[i])
 			{
 			lp_wav_ch_dsb[i]->Stop();

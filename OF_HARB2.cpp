@@ -145,7 +145,8 @@ int FirmHarbor::think_trade()
 	Firm* 		firmPtr;
 	FirmHarbor* firmHarbor;
 
-	for( int i=firm_array.size() ; i>0 ; i-- )
+	int i;
+	for( i=firm_array.size() ; i>0 ; i-- )
 	{
 		if( firm_array.is_deleted(i) )
 			continue;

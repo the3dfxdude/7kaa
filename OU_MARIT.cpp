@@ -71,7 +71,8 @@ void UnitMarine::update_stop_list()
 	//----------------------------------------------------------------------//
 	ShipStop *nodePtr = stop_array;
 	Firm		*firmPtr;
-	for(int i=0; i<MAX_STOP_FOR_SHIP; i++, nodePtr++)
+	int i;
+	for(i=0; i<MAX_STOP_FOR_SHIP; i++, nodePtr++)
 	{
 		if(!nodePtr->firm_recno)
 			continue;
@@ -1004,7 +1005,8 @@ void UnitMarine::harbor_auto_load_goods()
 
 	err_when(linked_mine_num+linked_factory_num+linked_market_num>MAX_LINKED_FIRM_FIRM);
 
-	for(int i=0; i<MAX_PRODUCT; i++)
+	int i;
+	for(i=0; i<MAX_PRODUCT; i++)
 	{
 		if(product_raw_qty_array[i]<carry_goods_capacity)
 			harbor_load_product(i, 1, 1); // 1 -- only consider our market

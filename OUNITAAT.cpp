@@ -437,7 +437,8 @@ void UnitArray::attack_unit(int targetXLoc, int targetYLoc, short targetUnitRecn
 	int tempVar = sizeof(short)*selectedCount;
 	
 	memset(dir_array_count, 0, sizeof(dir_array_count));
-	for(int count=0; count<ATTACK_DIR; count++)
+	int count;
+	for(count=0; count<ATTACK_DIR; count++)
 	{
 		dir_array_ptr[count] = (short*) mem_add(tempVar);
 		memset(dir_array_ptr[count], 0, tempVar);
@@ -465,7 +466,8 @@ void UnitArray::attack_unit(int targetXLoc, int targetYLoc, short targetUnitRecn
 	short unitPos;				// store the position of the unit with minDist
 	short	*curArrayPtr;
 
-	for(int i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
+	int i;
+	for(i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
 		memset(unreachable_table[i], 0, sizeof(char)*MAX_UNIT_SURROUND_SIZE);
 
 	//---------------------------------------------------------------------//
@@ -698,7 +700,8 @@ void UnitArray::attack_firm(int targetXLoc, int targetYLoc, short firmRecno, sho
 	int tempVar = sizeof(short)*selectedCount;
 	
 	memset(dir_array_count, 0, sizeof(dir_array_count));
-	for(int count=0; count<ATTACK_DIR; count++)
+	int count;
+	for(count=0; count<ATTACK_DIR; count++)
 	{
 		dir_array_ptr[count] = (short*) mem_add(tempVar);
 		memset(dir_array_ptr[count], 0, tempVar);
@@ -727,7 +730,8 @@ void UnitArray::attack_firm(int targetXLoc, int targetYLoc, short firmRecno, sho
 	short	*curArrayPtr;
 	char	surroundLoc = get_target_surround_loc(firmWidth, firmHeight);
 
-	for(int i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
+	int i;
+	for(i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
 		memset(unreachable_table[i], 0, sizeof(char)*MAX_UNIT_SURROUND_SIZE);
 
 	//---------------------------------------------------------------------//
@@ -949,7 +953,8 @@ void UnitArray::attack_town(int targetXLoc, int targetYLoc, short townRecno, sho
 	int tempVar = sizeof(short)*selectedCount;
 	
 	memset(dir_array_count, 0, sizeof(dir_array_count));
-	for(int count=0; count<ATTACK_DIR; count++)
+	int count;
+	for(count=0; count<ATTACK_DIR; count++)
 	{
 		dir_array_ptr[count] = (short*) mem_add(tempVar);
 		memset(dir_array_ptr[count], 0, tempVar);
@@ -978,7 +983,8 @@ void UnitArray::attack_town(int targetXLoc, int targetYLoc, short townRecno, sho
 	short	*curArrayPtr;
 	char	surroundLoc = get_target_surround_loc(STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT);
 
-	for(int i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
+	int i;
+ 	for(i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
 		memset(unreachable_table[i], 0, sizeof(char)*MAX_UNIT_SURROUND_SIZE);
 
 	//---------------------------------------------------------------------//
@@ -1193,7 +1199,8 @@ void UnitArray::attack_wall(int targetXLoc, int targetYLoc, short* selectedUnitA
 	int tempVar = sizeof(short)*selectedCount;
 	
 	memset(dir_array_count, 0, sizeof(dir_array_count));
-	for(int count=0; count<ATTACK_DIR; count++)
+	int count;
+	for(count=0; count<ATTACK_DIR; count++)
 	{
 		dir_array_ptr[count] = (short*) mem_add(tempVar);
 		memset(dir_array_ptr[count], 0, tempVar);
@@ -1222,7 +1229,8 @@ void UnitArray::attack_wall(int targetXLoc, int targetYLoc, short* selectedUnitA
 	short	*curArrayPtr;
 	char	surroundLoc = get_target_surround_loc(1, 1);
 
-	for(int i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
+	int i;
+	for(i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
 		memset(unreachable_table[i], 0, sizeof(char)*MAX_UNIT_SURROUND_SIZE);
 
 	//---------------------------------------------------------------------//

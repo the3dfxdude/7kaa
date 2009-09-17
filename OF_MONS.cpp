@@ -847,7 +847,8 @@ int FirmMonster::think_attack_neighbor()
 
 	//--- count the number of generals commanding at least 5 soldiers ---//
 
-	for( int i=0 ; i<monster_general_count ; i++, monsterInFirm++ )
+	int i;
+	for( i=0 ; i<monster_general_count ; i++, monsterInFirm++ )
 	{
 		if( monsterInFirm->soldier_count >= 5 )
 			generalCount++;
@@ -1008,7 +1009,8 @@ int FirmMonster::think_attack_human()
 
 	//--- count the number of generals commanding at least 5 soldiers ---//
 
-	for( int i=0 ; i<monster_general_count ; i++, monsterInFirm++ )
+	int i;
+	for( i=0 ; i<monster_general_count ; i++, monsterInFirm++ )
 	{
 		if( monsterInFirm->soldier_count >= 5 )
 			generalCount++;
