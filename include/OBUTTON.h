@@ -76,10 +76,10 @@ public:
 	//-------- user-defined function button ---------//
 
 	void create_udf(int x1,int y1,int x2,int y2,ButtonFP funcPtr,char elastic=1,char defIsPushed=0)
-		  { create( BUTTON_UDF,x1,y1,x2,y2,funcPtr,elastic,defIsPushed); }
+		  { create( BUTTON_UDF,x1,y1,x2,y2,(void*)funcPtr,elastic,defIsPushed); }
 
 	void paint_udf(int x1,int y1,int x2,int y2,ButtonFP funcPtr,char elastic=1,char defIsPushed=0)
-		  { create( BUTTON_UDF,x1,y1,x2,y2,funcPtr,elastic,defIsPushed); paint(); }
+		  { create( BUTTON_UDF,x1,y1,x2,y2,(void*)funcPtr,elastic,defIsPushed); paint(); }
 
    //--------------------------------------//
 
