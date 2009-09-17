@@ -491,7 +491,10 @@ void ZoomMatrix::draw_weather_effects()
 			// start of an earthquake
 			vibration = weather.quake_rate(top_x_loc+disp_x_loc/2, top_y_loc+disp_y_loc/2)*16/100;
 			if( config.sound_effect_flag && config.earthquake_audio)
-				audio.play_long_wav( DIR_SOUND"QUAKE.WAV", RelVolume(config.earthquake_volume,0) );
+			{
+				RelVolume r(config.earthquake_volume,0);
+				audio.play_long_wav( DIR_SOUND"QUAKE.WAV", DsVolume(r) );
+			}
 		}
 		int vPitch = vga_back.buf_pitch();
 		char *destBitmap = vga_back.buf_ptr() + ZOOM_Y1 * vPitch + ZOOM_X1;
@@ -545,13 +548,19 @@ void ZoomMatrix::draw_weather_effects()
 			if( rain_channel_id == 0)	// from no rain to rain
 			{
 				if( config.sound_effect_flag && config.rain_audio)
-					rain_channel_id = audio.play_loop_wav(DIR_SOUND"RAIN.WAV",11008*2, RelVolume(relVolume,0));
+				{
+					RelVolume r(relVolume,0);
+					rain_channel_id = audio.play_loop_wav(DIR_SOUND"RAIN.WAV",11008*2, DsVolume(r));
+				}
 			}
 			else
 			{
 				// changing rain
 				if( config.sound_effect_flag && config.rain_audio)
-					audio.volume_loop_wav(rain_channel_id, RelVolume(relVolume,0));
+				{
+					RelVolume r(relVolume,0);
+					audio.volume_loop_wav(rain_channel_id, DsVolume(r));
+				}
 				else
 				{
 					// can't stop rain audio immediately
@@ -617,7 +626,10 @@ void ZoomMatrix::draw_weather_effects()
 		{
 			// play sound
 			if( world.lightning_signal == 108 && config.sound_effect_flag && config.lightning_audio)
-				audio.play_long_wav(DIR_SOUND"THUNDER.WAV", RelVolume(config.lightning_volume,0));
+			{
+				RelVolume r(config.lightning_volume,0);
+				audio.play_long_wav(DIR_SOUND"THUNDER.WAV", DsVolume(r));
+			}
 
 			// find the starting and ending point of the lightning
 			lightning_x1 = Lightning::bound_x1 + 20 + short(mRandom % (Lightning::bound_x2-Lightning::bound_x1 - 40));
@@ -693,16 +705,20 @@ void ZoomMatrix::draw_weather_effects()
 		if( wind_channel_id == 0)
 		{
 			if( config.sound_effect_flag && config.wind_audio )
+			{
 				// ###### begin Gilbert 6/8 #######//
 				// wind_channel_id = audio.play_loop_wav(DIR_SOUND"WIND.WAV",0, relVolume);
-				wind_channel_id = audio.play_loop_wav(DIR_SOUND"WIND.WAV",25088*2, RelVolume(relVolume,0));  // 25088 samples, 8-bit stereo, so *2
+				RelVolume r(relVolume,0);
+				wind_channel_id = audio.play_loop_wav(DIR_SOUND"WIND.WAV",25088*2, DsVolume(r));  // 25088 samples, 8-bit stereo, so *2
 				// ###### end Gilbert 6/8 #######//
+			}
 		}
 		else
 		{
 			if( config.wind_audio)
 			{
-				audio.volume_loop_wav(wind_channel_id, RelVolume(relVolume,0));
+				RelVolume r(relVolume,0);
+				audio.volume_loop_wav(wind_channel_id, DsVolume(r));
 			}
 			else
 			{
@@ -1658,12 +1674,14 @@ void ZoomMatrix::draw_objects()
 		if( fire_channel_id == 0)
 		{
 			last_fire_vol = relVolume;
-			fire_channel_id = audio.play_loop_wav( DIR_SOUND"FIRE.WAV",8447 *2, RelVolume(relVolume,0));
+			RelVolume r(relVolume,0);
+			fire_channel_id = audio.play_loop_wav( DIR_SOUND"FIRE.WAV",8447 *2, DsVolume(r));
 		}
 		else if( last_fire_vol - relVolume > 2 || last_fire_vol - relVolume < 2)
 		{
 			last_fire_vol = relVolume;
-			audio.volume_loop_wav(fire_channel_id, RelVolume(relVolume,0));
+			RelVolume r(relVolume,0);
+			audio.volume_loop_wav(fire_channel_id, DsVolume(r));
 		}
 	}
 	else

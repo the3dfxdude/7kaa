@@ -159,9 +159,15 @@ int Music::play(int songId, int playType)
 			if( !DIR_MUSIC[0] || !m.is_file_exist(waveFileStr) || !audio.wav_init_flag )
 				return 0;
 			if( playType & MUSIC_PLAY_LOOPED )
-				music_channel = audio.play_loop_wav(waveFileStr, 0, AbsVolume(config.wav_music_volume,0) );
+			{
+				AbsVolume absv(config.wav_music_volume,0);
+				music_channel = audio.play_loop_wav(waveFileStr, 0, absv );
+			}
 			else
-				music_channel = audio.play_long_wav(waveFileStr, AbsVolume(config.wav_music_volume,0) );
+			{
+				AbsVolume absv(config.wav_music_volume,0);
+				music_channel = audio.play_long_wav(waveFileStr, absv );
+			}
 			play_type = playType;
 			song_id = songId;
 			return music_channel != 0;
@@ -242,7 +248,8 @@ void Music::change_volume(int vol)
 		}
 		else
 		{
-			audio.volume_long_wav(music_channel, AbsVolume(vol,0));
+			AbsVolume absv(vol,0);
+			audio.volume_long_wav(music_channel, DsVolume(absv));
 		}
 	}
 }
