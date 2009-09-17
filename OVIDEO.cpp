@@ -258,7 +258,7 @@ void Video::play( char *fileName, DWORD )
 			iVideoWindow->put_WindowState(SW_MAXIMIZE);
 
 			IBaseFilter *iFilter;
-			if( pGraph->FindFilterByName(L"Video Renderer", &iFilter) == 0)
+			if( pGraph->FindFilterByName((const WCHAR *)L"Video Renderer", &iFilter) == 0)
 			{
 				IBasicVideo *iBasicVideo;
 				if( iFilter->QueryInterface(IID_IBasicVideo, (void **)&iBasicVideo) == 0)
