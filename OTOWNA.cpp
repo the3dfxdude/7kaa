@@ -502,7 +502,7 @@ void TownArray::draw_dot()
 	int			vgaBufPitch = vga_back.buf_pitch();
 
 	// ##### begin Gilbert 16/8 #######//
-	const excitedColorCount = 4;
+	const unsigned int excitedColorCount = 4;
 	char excitedColorArray[MAX_NATION+1][excitedColorCount];
 	for( i = 0; i <= MAX_NATION; ++i )
 	{

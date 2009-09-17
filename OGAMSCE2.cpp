@@ -158,8 +158,8 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 	*(textBuffer.reserve(1)) = '\0';
 
 	Font &textFont = font_std;
-	const TEXT_LINE_SPACE = 4;
-	const ESTIMATED_LINE_IN_TEXT_AREA = 
+	const int TEXT_LINE_SPACE = 4;
+	const int ESTIMATED_LINE_IN_TEXT_AREA = 
 		(TEXT_AREA_Y2 - TEXT_AREA_Y1 + 1) / (textFont.font_height + TEXT_LINE_SPACE);
 
 	SlideVBar textScrollBar;

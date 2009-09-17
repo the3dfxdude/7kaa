@@ -263,7 +263,7 @@ void VgaBuf::indicator(int barType, int x1, int y1, float curValue, float maxVal
 {
 	// -------- get indicator bar background ------------//
 
-	const TEMP_BUFFER_SIZE = 0x2000;
+	const unsigned int TEMP_BUFFER_SIZE = 0x2000;
 	static char tempBuffer[TEMP_BUFFER_SIZE];
 
 	char *bgPtr = image_button.get_ptr(barType & 4 ? "V_HP-BX" : "V_PW-BX");
@@ -314,10 +314,10 @@ void VgaBuf::indicator(int barType, int x1, int y1, float curValue, float maxVal
 
 	IMGblt( destPtr, destPitch, bufferX1, bufferY1, bgPtr);
 
-	const barLeftMargin = 5;
-	const barRightMargin = 5;
-	const barTopMargin = 5;
-	const barBottomMargin = 5;
+	const int barLeftMargin = 5;
+	const int barRightMargin = 5;
+	const int barTopMargin = 5;
+	const int barBottomMargin = 5;
 
 	// ---------- draw energy bar ----------//
 

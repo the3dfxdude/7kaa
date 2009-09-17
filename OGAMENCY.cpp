@@ -32,8 +32,8 @@ enum
 	ENCYC_FRYHTANS,
 };
 
-const START_SLIDE_MODE_TIME = 60000;		// 60 seconds
-const SLIDE_MODE_TIME = 10000;				// 10 seconds
+const int START_SLIDE_MODE_TIME = 60000;		// 60 seconds
+const int SLIDE_MODE_TIME = 10000;			// 10 seconds
 
 // static int sub_class_count_array[ENCYC_CLASS_COUNT] = { 7, 5, 4, 8, 7, 7, 1 };
 static int sub_class_count_array[ENCYC_CLASS_COUNT] = 

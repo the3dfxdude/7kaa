@@ -284,9 +284,9 @@ void Flame::rise(short wind)
 
 
 	// 2nd version assembly version
-	const BALANCE_PERIOD = 11;
-	const WIND_PERIOD = 13;
-	const DECAY_PERIOD = 17;
+	const unsigned int BALANCE_PERIOD = 11;
+	const unsigned int WIND_PERIOD = 13;
+	const unsigned int DECAY_PERIOD = 17;
 	char	balanceRnd[BALANCE_PERIOD];
 	char	windRnd[WIND_PERIOD];
 	char	decayRnd[DECAY_PERIOD];

@@ -1079,7 +1079,7 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 	}
 	else
 	{
-		const mobileTypeCount = 3;
+		const unsigned int mobileTypeCount = 3;
 		static char mobileTypeList[mobileTypeCount] = { UNIT_AIR, UNIT_LAND, UNIT_SEA };
 
 		// pass 1 - find if selecting own nation or spy cloaked nation

@@ -714,17 +714,17 @@ static int percent_to_slide_volume(int percentVolume)
 
 void Game::disp_gen_map_status( int curStep, int maxStep, int section )
 {
-	const POPUP_WINDOW_WIDTH = 266;
-	const POPUP_WINDOW_HEIGHT = 149;
-	const POPUP_WINDOW_X1 = (vga_front.buf_width() - POPUP_WINDOW_WIDTH) / 2;
-	const POPUP_WINDOW_Y1 = (vga_front.buf_height() - POPUP_WINDOW_HEIGHT) / 2;
+	const int POPUP_WINDOW_WIDTH = 266;
+	const int POPUP_WINDOW_HEIGHT = 149;
+	const int POPUP_WINDOW_X1 = (vga_front.buf_width() - POPUP_WINDOW_WIDTH) / 2;
+	const int POPUP_WINDOW_Y1 = (vga_front.buf_height() - POPUP_WINDOW_HEIGHT) / 2;
 
-	const BAR_X1 = POPUP_WINDOW_X1 + 46;
+	const int BAR_X1 = POPUP_WINDOW_X1 + 46;
 	// ###### begin Gilbert 29/10 ######//
-	const BAR_Y1 = POPUP_WINDOW_Y1 + 106;
+	const int BAR_Y1 = POPUP_WINDOW_Y1 + 106;
 	// ###### end Gilbert 29/10 ######//
 
-	const MAX_SECTION = 2;			// section 0 for world.genmap, section 1 for battle.run
+	const int MAX_SECTION = 2;		// section 0 for world.genmap, section 1 for battle.run
 	static int accSectionWeight[MAX_SECTION+1] = { 0, 60, 100 };
 
 	if( section == 0 && curStep == 0)

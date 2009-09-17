@@ -5,9 +5,9 @@
 #include <OCONFIG.h>
 #include <OVOLUME.h>
 
-const DEFAULT_VOL_DROP = 100;	// distance 100, no sound
-const	DEFAULT_DIST_LIMIT = 40;
-const DEFAULT_PAN_DROP = 100;	// distance 100, extreme left or extreme right
+const int DEFAULT_VOL_DROP = 100;	// distance 100, no sound
+const int DEFAULT_DIST_LIMIT = 40;
+const int DEFAULT_PAN_DROP = 100;	// distance 100, extreme left or extreme right
 RelVolume DEF_REL_VOLUME(100,0);
 
 

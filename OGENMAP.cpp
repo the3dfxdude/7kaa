@@ -556,7 +556,7 @@ void World::substitute_pattern()
 {
 	short terrainId;
 	int SubFound;
-	const resultArraySize = 20;
+	const unsigned int resultArraySize = 20;
 	TerrainSubInfo *candSub[resultArraySize];
 
 	for( short y = 0; y < max_y_loc; ++y)

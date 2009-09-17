@@ -14,9 +14,9 @@
 // 0 don't display log, 1 display exception, 2 display more detail, 3 display all
 #define DEBUG_LOG_LEVEL 1
 
-const	SHORT_TIME_OUT = 100;
-const TIME_OUT = 2000;		// 2 sec
-const CONNECT_LOST_TIME = 20000;			// 20 sec
+const int SHORT_TIME_OUT = 100;
+const int TIME_OUT = 2000;		// 2 sec
+const int CONNECT_LOST_TIME = 20000;	// 20 sec
 static String debugStr;
 
 void ErrorControl::init(MultiPlayerType *mp, char ecPlayerId )

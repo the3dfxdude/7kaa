@@ -13,8 +13,8 @@
 
 // -------- Define constant ---------//
 
-const SCAN_RADIUS = 2;
-const SCAN_RANGE = SCAN_RADIUS * 2 + 1;
+const int SCAN_RADIUS = 2;
+const int SCAN_RANGE = SCAN_RADIUS * 2 + 1;
 
 // from the closet to the far
 static char spiral_x[SCAN_RANGE*SCAN_RANGE] = 

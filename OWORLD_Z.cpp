@@ -57,7 +57,7 @@ static Snow			snow;
 //static short		last_brightness = 0;			// reset on new game and load game
 //static int			vibration = -1;				// reset on new game, save on save game
 //static short		lightning_x1, lightning_y1, lightning_x2, lightning_y2; // save on save game
-static init_fire = -10;									// reset on new game and load game
+static int init_fire = -10;						// reset on new game and load game
 
 //-------- Declare static functions ---------//
 

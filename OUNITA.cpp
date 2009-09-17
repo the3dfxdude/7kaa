@@ -250,7 +250,7 @@ void UnitArray::draw_dot()
 	char*   nationColorArray = nation_array.nation_color_array;
 	char	  nationColor;
 	int		vgaBufPitch = vga_back.buf_pitch();
-	const excitedColorCount = 4;
+	const unsigned int excitedColorCount = 4;
 	char excitedColorArray[MAX_NATION+1][excitedColorCount];
 	short playerNationRecno = nation_array.player_recno;
 	short lineFromX, lineFromY, lineToX, lineToY;

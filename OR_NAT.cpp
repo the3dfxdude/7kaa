@@ -64,7 +64,7 @@ static char* chat_receiver_str_array[MAX_CHAT_RECEIVER_TYPE] =
 static VBrowseIF 	 browse_nation, browse_talk_msg;
 static ButtonGroup button_allow_attack(2);
 static ButtonGroup button_chat_receiver(MAX_CHAT_RECEIVER_TYPE);
-static init_get_chat = 0;
+static int init_get_chat = 0;
 static GetA 		 get_chat;
 
 //----------- Define static functions ----------//

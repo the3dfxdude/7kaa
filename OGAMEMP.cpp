@@ -1630,7 +1630,7 @@ int Game::mp_select_session()
 // return 0 = cancel, 1 = ok
 int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 {
-	const offsetY = 212;
+	const int offsetY = 212;
 	char optionMode = OPTION_BASIC;
 	char menuTitleBitmap[] = "TOP-NMPG";
 	
@@ -1658,8 +1658,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	//const colorHeight = 33;
 	static short tickX[MAX_NATION] = { 103, 254, 405, 556, 103, 254, 405 };
 	static short tickY[MAX_NATION] = {  53,  53,  53,  53,  73,  73,  73 };
-	const nameOffsetX = 23;
-	const nameOffsetY = 3;
+	const int nameOffsetX = 23;
+	const int nameOffsetY = 3;
 
 	DynArray messageList(sizeof(MpStructChatMsg));
 	MpStructChatMsg typingMsg(tempConfig.player_name, NULL);
@@ -3446,7 +3446,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 // return 0 = cancel, 1 = ok
 int Game::mp_select_load_option(char *fileName)
 {
-	const offsetY = 212;
+	const int offsetY = 212;
 	char optionMode = OPTION_BASIC;
 	char menuTitleBitmap[] = "TOP-LMPG";
 	
@@ -3469,8 +3469,8 @@ int Game::mp_select_load_option(char *fileName)
 	//const colorHeight = 33;
 	static short tickX[MAX_NATION] = { 103, 254, 405, 556, 103, 254, 405 };
 	static short tickY[MAX_NATION] = {  53,  53,  53,  53,  73,  73,  73 };
-	const nameOffsetX = 23;
-	const nameOffsetY = 3;
+	const int nameOffsetX = 23;
+	const int nameOffsetY = 3;
 
 	DynArray messageList(sizeof(MpStructChatMsg));
 	MpStructChatMsg typingMsg(tempConfig.player_name, NULL);

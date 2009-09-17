@@ -1123,15 +1123,15 @@ void Sys::disp_frames_per_second()
 void Sys::disp_view_mode(int observeMode)
 {
 	// ------- display highlight ----------//
- 	const MIN_MODE_TO_DISPLAY = 1;
-	const MAX_MODE_TO_DISPLAY = 8;
-	const MODE_TO_DISPLAY_COUNT = MAX_MODE_TO_DISPLAY - MIN_MODE_TO_DISPLAY + 1;
+ 	const int MIN_MODE_TO_DISPLAY = 1;
+	const int MAX_MODE_TO_DISPLAY = 8;
+	const int MODE_TO_DISPLAY_COUNT = MAX_MODE_TO_DISPLAY - MIN_MODE_TO_DISPLAY + 1;
 	static short highLightX[MODE_TO_DISPLAY_COUNT] = {  0,  62, 124, 186,  7,  68, 129, 192};
 	static short highLightY[MODE_TO_DISPLAY_COUNT] = {  0,   0,   0,   0, 19,  19,  19,  19};
 	static short darkenX[MODE_TO_DISPLAY_COUNT] = {  7,  69, 132, 195,  13,  75, 139, 201};
 	static short darkenY[MODE_TO_DISPLAY_COUNT] = {  8,   8,   8,   8,  29,  29,  29,  29};
-	const darkenWidth = 58;
-	const darkenHeight = 16;
+	const int darkenWidth = 58;
+	const int darkenHeight = 16;
 	char scrollName[] = "SCROLL-0";
 
 	// disable highlight of the mode before

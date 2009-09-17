@@ -128,7 +128,7 @@ static void disp_virtual_tick(ButtonCustom *, int);
 
 static int select_option()
 {
-	const offsetY = 124;
+	const int offsetY = 124;
 	char optionMode = OPTION_BASIC;
 	char menuTitleBitmap[] = "TOP-NSPG";
 	
@@ -272,7 +272,7 @@ static int select_option()
 
 	// --------- initialize info.random_seed field ----------//
 
-	const mapIdSize = 11;		// enough to hold a dword in decimal
+	const int mapIdSize = 11;		// enough to hold a dword in decimal
 	char mapIdStr[mapIdSize+1];
 	info.init_random_seed(0);
 	ltoa( info.random_seed , mapIdStr, 10);
