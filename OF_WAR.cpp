@@ -622,7 +622,7 @@ void FirmWar::disp_war_info(int dispY1, int refreshFlag)
 
 		x += UNIT_LARGE_ICON_WIDTH+10;
 
-		String str = unitInfo->name;
+		String str(unitInfo->name);
 
 		if( unitInfo->unit_class == UNIT_CLASS_WEAPON )		// add version no.
 		{

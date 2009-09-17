@@ -765,7 +765,7 @@ void TerrainRes::load_anim_info()
 	int i;
 	long bitmapOffset;
 
-	String terAnimDbName = DIR_RES;
+	String terAnimDbName(DIR_RES);
 	terAnimDbName += "TERANM";
 	terAnimDbName += config.terrain_set;
 	terAnimDbName += ".RES";

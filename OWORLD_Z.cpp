@@ -942,7 +942,7 @@ void ZoomMatrix::disp_text()
 
 			if( config.disp_town_name )
 			{
-				String str = townPtr->town_name();
+				String str(townPtr->town_name());
 
 				put_center_text( (townPtr->abs_x1+townPtr->abs_x2)/2,	y, str );
 

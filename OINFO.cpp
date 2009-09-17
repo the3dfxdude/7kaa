@@ -175,7 +175,7 @@ void Info::init_random_seed(int randomSeed)
 
 		fileMapSeed.file_create( "MAP.RS" );
 
-		String str = m.format(random_seed,1);
+		String str(m.format(random_seed,1));
 
 		fileMapSeed.file_write(str, str.len());
 	}

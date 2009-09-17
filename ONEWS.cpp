@@ -294,7 +294,7 @@ int News::put(int y, int detectAction, int& newsHeight)
 	#define NEWS_SECOND_LINE_HEIGHT 16
 	#define NEWS_ICON_WIDTH			  17
 
-	String msgStr  = msg();
+	String msgStr(msg());
 	char*  dateStr = date.date_str(news_date,1);
 
 	int dateWidth = news_font_ptr->text_width(dateStr) + 5;		// 5 is the space between the date and the text

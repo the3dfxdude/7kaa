@@ -2615,7 +2615,7 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
 //
 void Sys::capture_screen()
 {
-   String str = "7K";
+   String str("7K");
 
    int i;
    for( i=0 ; i<=99 ; i++ )

@@ -379,7 +379,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 
 							//---- display the scenario difficulty and bonus points ----//
 
-							String str = translate.process("Difficulty: ");
+							String str(translate.process("Difficulty: "));
 							str += scenInfoArray[rec-1].goal_difficulty;
 
 							font_bible.put(browseSlotX1+TEXT_OFFSET_X+400, browseSlotY1+TEXT_OFFSET_Y,
