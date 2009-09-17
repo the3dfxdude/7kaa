@@ -37,7 +37,7 @@ void Misc::delay(float wait)
 {
    clock_t stopTime;
 
-   stopTime = (long) (clock() + (wait * CLK_TCK));
+   stopTime = (long) (clock() + (wait * CLOCKS_PER_SEC));
 
    while( clock() < stopTime );
 }
