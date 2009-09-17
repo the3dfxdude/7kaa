@@ -934,9 +934,8 @@ void Mouse::poll_event()
 
 			if( earlyDevice == 1 )
 			{
-				switch(mouseMsg->dwOfs)
+				if (mouseMsg->dwOfs == DIMOFS_BUTTON0)
 				{
-				case DIMOFS_BUTTON0:
 					if( mouseMsg->dwData & 0x80)
 					{
 						// mouse button pressed
@@ -963,8 +962,9 @@ void Mouse::poll_event()
 						add_event(&ev);
 						reset_boundary();			// reset_boundary whenever left button is released
 					}
-					break;
-				case DIMOFS_BUTTON1:
+				}
+				else if (mouseMsg->dwOfs == DIMOFS_BUTTON1)
+				{
 					if( mouseMsg->dwData & 0x80)
 					{
 						// mouse button pressed
@@ -989,32 +989,36 @@ void Mouse::poll_event()
 						ev.skey_state = skey_state;
 						add_event(&ev);
 					}
-					break;
-				case DIMOFS_BUTTON2:
+				}
+				else if (mouseMsg->dwOfs == DIMOFS_BUTTON2)
+				{
 					// not interested
-					break;
-				case DIMOFS_BUTTON3:
+				}
+				else if (mouseMsg->dwOfs == DIMOFS_BUTTON3)
+				{
 					// not interested
-					break;
-				case DIMOFS_X:
+				}
+				else if (mouseMsg->dwOfs == DIMOFS_X)
+				{
 					cur_x += micky_to_displacement(mouseMsg->dwData);
 					if(cur_x < bound_x1)
 						cur_x = bound_x1;
 					if(cur_x > bound_x2)
 						cur_x = bound_x2;
 					moveFlag = 1;
-					break;
-				case DIMOFS_Y:
+				}
+				else if (mouseMsg->dwOfs == DIMOFS_Y)
+				{
 					cur_y += micky_to_displacement(mouseMsg->dwData);
 					if(cur_y < bound_y1)
 						cur_y = bound_y1;
 					if(cur_y > bound_y2)
 						cur_y = bound_y2;
 					moveFlag = 1;
-					break;
-				case DIMOFS_Z:
+				}
+				else if (mouseMsg->dwOfs == DIMOFS_Z)
+				{
 					// not interested
-					break;
 				}
 				--mouseLen;
 				++mouseMsg;
