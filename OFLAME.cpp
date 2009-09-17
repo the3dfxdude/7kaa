@@ -288,8 +288,11 @@ void Flame::rise(short wind)
 	const unsigned int WIND_PERIOD = 13;
 	const unsigned int DECAY_PERIOD = 17;
 	char	balanceRnd[BALANCE_PERIOD];
+	char *bRnd = balanceRnd;
 	char	windRnd[WIND_PERIOD];
+	char *wRnd = windRnd;
 	char	decayRnd[DECAY_PERIOD];
+	char *dRnd = decayRnd;
 	unsigned balanceN;
 	for(balanceN = 0; balanceN < BALANCE_PERIOD; ++balanceN)
 	{
@@ -313,6 +316,7 @@ void Flame::rise(short wind)
 	int	rightLen = map_width - leftLen;
 	p = heat_map + (map_height-2)*map_width;
 	unsigned char Decay = (unsigned char) decay;
+	/* Original Visual C++ assembly code for reference
 	_asm
 	{
 		mov	ecx, mapHeight
@@ -443,6 +447,153 @@ void Flame::rise(short wind)
 	rise_4:
 		cld
 	}
+	*/
+
+	__asm__ __volatile__ (
+                "movl %0, %%ecx\n\t"
+                "decl %%ecx\n\t"
+                "movl %1, %%esi\n\t"
+		"decl %%ecx\n"
+	"rise_1:\n\t"
+		"pushl %%ecx\n\t"
+
+		"movl %2, %%ecx\n\t"
+		"# exclude left most dot\n\t"
+		"decl %%ecx\n\t"
+		"movl %3, %%ebx\n\t"
+		"movb $0, (%%esi, %%ebx)\n\t"
+		"incl %%esi\n\t"
+		"cld\n"
+	"rise_2:\n\t"
+		"movl %%esi, %%edi\n\t"
+		"lodsb\n\t"
+		"cmpb %4, %%al\n\t"
+		"jnb rise_2a\n\t"
+		"movl %3, %%ebx\n\t"
+		"movl $0, (%%edi, %%ebx)\n\t"
+		"jmp rise_2b\n"
+	"rise_2a:\n\t"
+		"xorl %%ebx, %%ebx\n\t"
+		"movl %5, %%edx\n\t"
+		"pushl %%edi\n\t"
+		"leal %6, %%edi\n\t"
+		"movb (%%edi,%%edx), %%bl\n\t"
+		"movl %7, %%edx\n\t"
+		"leal %8, %%edi\n\t"
+		"addb (%%edi,%%edx), %%bl\n\t"
+		"movl %9, %%edx\n\t"
+		"leal %10, %%edi\n\t"
+		"subb (%%edi,%%edx), %%al\n\t"
+		"popl %%edi\n\t"
+		"movsbl %%bl, %%ebx\n\t"
+		"addl %3, %%ebx\n\t"
+		"movb %%al, (%%edi,%%ebx)\n\t"
+
+		"# balanceN = (balanceN + 1) %% BALANCE_PERIOD\n\t"
+		"movl %7, %%edx\n\t"
+		"incl %%edx\n\t"
+		"cmpl %11, %%edx\n\t"
+		"jb rise_2c\n\t"
+		"xorl %%edx, %%edx\n"
+	"rise_2c:\n\t"
+		"movl %%edx, %7\n\t"
+
+		"movl %5, %%edx\n\t"
+		"incl %%edx\n\t"
+		"cmpl %12, %%edx\n\t"
+		"jb rise_2d\n\t"
+		"xorl %%edx, %%edx\n"
+	"rise_2d:\n\t"
+		"movl %%edx, %5\n\t"
+
+		"movl %9, %%edx\n\t"
+		"incl %%edx\n\t"
+		"cmpl %13, %%edx\n\t"
+		"jb rise_2e\n\t"
+		"xorl %%edx, %%edx\n"
+	"rise_2e:\n\t"
+		"movl %%edx, %9\n"
+
+	"rise_2b:\n\t"
+		"loop rise_2\n\t"
+
+		"movl %14, %%ecx\n\t"
+		"# ignore rightmost dot\n\t"
+		"decl %%ecx\n\t"
+		"addl %14, %%esi\n\t"
+		"decl %%esi\n\t"
+		"movl %3, %%ebx\n\t"
+		"movb $0, (%%esi,%%ebx)\n\t"
+		"decl %%esi\n\t"
+		"std\n"
+	"rise_3:\n\t"
+		"movl %%esi, %%edi\n\t"
+		"lodsb\n\t"
+		"cmpb %4, %%al\n\t"
+		"jnb rise_3a\n\t"
+		"movl %3, %%ebx\n\t"
+		"movl $0, (%%edi,%%ebx)\n\t"
+		"jmp rise_3b\n"
+	"rise_3a:\n\t"
+		"xorl %%ebx, %%ebx\n\t"
+		"movl %5, %%edx\n\t"
+		"pushl %%edi\n\t"
+		"leal %6, %%edi\n\t"
+		"movb (%%edi,%%edx), %%bl\n\t"
+		"movl %7, %%edx\n\t"
+		"leal %8, %%edi\n\t"
+		"subb (%%edi,%%edx), %%bl\n\t"
+		"movl %9, %%edx\n\t"
+		"leal %10, %%edi\n\t"
+		"subb (%%edi,%%edx), %%al\n\t"
+		"popl %%edi\n\t"
+		"movsbl %%bl, %%ebx\n\t"
+		"addl %3, %%ebx\n\t"
+		"movb %%al, (%%edi, %%ebx)\n\t"
+
+		"# balanceN = (balanceN + 1) %% BALANCE_PERIOD\n\t"
+		"movl %7, %%edx\n\t"
+		"incl %%edx\n\t"
+		"cmpl %11, %%edx\n\t"
+		"jb rise_3c\n\t"
+		"xorl %%edx, %%edx\n"
+	"rise_3c:\n\t"
+		"movl %%edx, %7\n\t"
+
+		"movl %5, %%edx\n\t"
+		"incl %%edx\n\t"
+		"cmpl %12, %%edx\n\t"
+		"jb rise_3d\n\t"
+		"xorl %%edx, %%edx\n"
+	"rise_3d:\n\t"
+		"movl %%edx, %5\n\t"
+
+		"movl %9, %%edx\n\t"
+		"incl %%edx\n\t"
+		"cmpl %13, %%edx\n\t"
+		"jb rise_3e\n\t"
+		"xor %%edx, %%edx\n"
+	"rise_3e:\n\t"
+		"movl %%edx, %9\n"
+
+	"rise_3b:\n\t"
+		"loop rise_3\n\t"
+
+		"popl %%ecx\n\t"
+		"subl %2, %%esi\n\t"
+		"incl %%esi\n\t"
+		"subl %3, %%esi\n\t"
+		"decl %%ecx\n\t"
+		"jz rise_4\n\t"
+		"jmp rise_1\n"
+	"rise_4:\n\t"
+		"cld\n\t"
+		:
+		: "c"(mapHeight),"S"(p),"m"(leftLen),"m"(mapWidth),"m"(Decay),"m"(windN),"m"(wRnd),
+		"m"(balanceN),"m"(bRnd),"m"(decayN),"m"(dRnd),"i"(BALANCE_PERIOD),
+		"i"(WIND_PERIOD),"i"(DECAY_PERIOD),"m"(rightLen)
+		: "%eax","%ebx","%edx","%edi","memory"
+	);
 }
 //-------------- End Function Flame::rise ----------//
 
@@ -459,7 +610,7 @@ void Flame::gen_bitmap(unsigned char shadeColor)
 {
 	// generate color code
 	static unsigned char lastShadeBase = 0;
-	static unsigned char colorTable[256];
+	static unsigned char colorTable[256] __asm__("_colorTable");
 /*	static unsigned char colorTable[256] = 
 	{
 		TRANSPARENT_CODE, 0xd2, 0xd2, 0xd2, 0xd2, 0xd2, 0xd2, 0xd2,
@@ -513,6 +664,7 @@ void Flame::gen_bitmap(unsigned char shadeColor)
 	unsigned char *p = heat_map+(map_height-1)*map_width;
 	short mapHeight = map_height;
 	short mapWidth = map_width;
+	/* Original Visual C++ assembly code for reference
 	_asm
 	{
 		mov	edi, b
@@ -535,6 +687,30 @@ void Flame::gen_bitmap(unsigned char shadeColor)
 		pop	ecx
 		loop	gen_bitmap_loop2
 	}
+	*/
+
+	__asm__ (
+		"cld\n\t"
+		"movzb %2, %%ecx\n\t"
+		"movzb %3, %%edx\n\t"
+		"leal _colorTable, %%ebx\n\t"
+	"gen_bitmap_loop2:\n\t"
+		"pushl %%ecx\n\t"
+		"movl %%edx, %%ecx\n\t"
+	"gen_bitmap_loop3:\n\t"
+		"lodsb\n\t"
+		"xlatb (%%ebx)\n\t"
+		"stosb\n\t"
+		"loop gen_bitmap_loop3\n\t"
+
+		"subl %%edx, %%esi\n\t"
+		"subl %%edx, %%esi\n\t"
+		"popl %%ecx\n\t"
+		"loop gen_bitmap_loop2\n\t"
+		:
+		: "D"(b),"S"(p),"m"(mapHeight),"m"(mapWidth)
+		: "%ebx","%ecx","%edx"
+	);
 }
 //-------------- End Function Flame::gen_bitmap ----------//
 
@@ -591,6 +767,7 @@ void Flame::mask_transparent()
 		}
 		*/
 		int len = map_height * map_width /2;
+		/* Original Visual C++ assembly code for reference
 		_asm
 		{
 			mov	al, TRANSPARENT_CODE
@@ -602,6 +779,16 @@ void Flame::mask_transparent()
 			inc	edi
 			loop	mask_trans_loop1
 		}
+		*/
+		__asm__ (
+			"cld\n"
+		"mask_trans_loop1:\n\t"
+			"stosb\n\t"
+			"inc %%edi\n\t"
+			"loop mask_trans_loop1\n\t"
+			:
+			: "a"(TRANSPARENT_CODE),"D"(b),"c"(len)
+		);
 	}
 	else
 	{
@@ -619,6 +806,7 @@ void Flame::mask_transparent()
 		}
 		*/
 		int	mapHeight = map_height, mapWidth = map_width/2;
+		/* Original Visual C++ assembly code for reference
 		_asm
 		{
 			mov	ecx, mapHeight
@@ -638,6 +826,25 @@ void Flame::mask_transparent()
 			xor	edx,1
 			loop	mask_trans_loop2
 		}
+		*/
+		__asm__ (
+			"xorl %%edx,%%edx\n"
+		"mask_trans_loop2:\n\t"
+			"pushl %%ecx\n\t"
+			"addl %%edx,%%edi\n\t"
+			"movl %3, %%ecx\n"
+		"mask_trans_loop3:\n\t"
+			"stosb\n\t"
+			"incl %%edi\n\t"
+			"loop mask_trans_loop3\n\t"
+			"subl %%edx, %%edi\n\t"
+			"popl %%ecx\n\t"
+			"xorl $1, %%edx\n\t"
+			"loop mask_trans_loop2\n\t"
+			:
+			: "a"(TRANSPARENT_CODE),"c"(mapHeight),"D"(b),"m"(mapWidth)
+			: "%edx"
+		);
 	}
 }
 //-------------- End Function Flame::mask_transparent ----------//

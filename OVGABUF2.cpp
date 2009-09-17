@@ -749,6 +749,7 @@ void VgaBuf::blt_buf( VgaBuf *srcBuf, int x1, int y1 )
 	if( srcWidth & 1)
 	{
 		// odd number
+		/* Original Visual C++ assembly code for reference
 		_asm
 		{
 			mov	eax, y1
@@ -771,10 +772,34 @@ void VgaBuf::blt_buf( VgaBuf *srcBuf, int x1, int y1 )
 			pop	ecx
 			loop	blt_buf_1
 		}
+		*/
+
+		__asm__ __volatile__ (
+			"imull %1\n\t"
+			"addl %2, %%eax\n\t"
+			"movl %%eax, %%edi\n\t"
+			"addl %3, %%edi\n"
+		"blt_buf_1:\n\t"
+			"pushl %%ecx\n\t"
+			"movl %6, %%ecx\n\t"
+			"rep movsb\n\t"
+			"subl %6, %%esi\n\t"
+			"subl %6, %%edi\n\t"
+			"addl %7, %%esi\n\t"
+			"addl %8, %%edi\n\t"
+			"popl %%ecx\n\t"
+			"loop blt_buf_1\n\t"
+			:
+			: "a"(y1), "m"(destPitch), "m"(x1), "m"(destPtr), "S"(srcPtr), "c"(srcHeight), "m"(srcWidth),
+			"m"(srcPitch), "m"(destPitch)
+			: "%edi","memory"
+
+		);
 	}
 	else
 	{
 		// even number
+		/* Original Visual C++ assembly code for reference
 		_asm
 		{
 			mov	eax, y1
@@ -798,6 +823,30 @@ void VgaBuf::blt_buf( VgaBuf *srcBuf, int x1, int y1 )
 			pop	ecx
 			loop	blt_buf_2
 		}
+		*/
+
+		__asm__ __volatile__ (
+			"imull %1\n\t"
+			"addl %2, %%eax\n\t"
+			"movl %%eax, %%edi\n\t"
+			"addl %3, %%edi\n"
+		"blt_buf_2:\n\t"
+			"pushl %%ecx\n\t"
+			"movl %6, %%ecx\n\t"
+			"shrl $1, %%ecx\n\t"
+			"rep movsb\n\t"
+			"subl %6, %%esi\n\t"
+			"subl %6, %%edi\n\t"
+			"addl %7, %%esi\n\t"
+			"addl %8, %%edi\n\t"
+			"popl %%ecx\n\t"
+			"loop blt_buf_2\n\t"
+			:
+			: "a"(y1),"m"(destPitch),"m"(x1),"m"(destPtr),"S"(srcPtr),"c"(srcHeight),"m"(srcWidth),
+			"m"(srcPitch),"m"(destPitch)
+			: "%edi","memory"
+
+		);
 	}
 }
 //------------- End of function VgaBuf::blt_buf ------------//

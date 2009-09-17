@@ -2022,6 +2022,7 @@ void World::process_visibility()
 		const int sizeOfLoc = sizeof(Location);
 		unsigned char *locVisitLevel = &get_loc(0,0)->visit_level;
 		unsigned char decVisitLevel = EXPLORED_VISIBILITY*2+1;
+		/* Original Visual C++ assembly code for reference
 		_asm
 		{
 			mov	ecx, count
@@ -2037,6 +2038,22 @@ process_visit_level_1:
 			add	ebx, edx
 			loop	process_visit_level_1
 		}
+		*/
+
+		__asm__ __volatile__ (
+			"movb %0, %%ah\n"
+		"process_visit_level_1:\n\t"
+			"movb (%%ebx), %%al\n\t"
+			"cmpb %%ah, %%al\n\t"
+			"cmc\n\t"
+			"sbbb $0, %%al\n\t"
+			"movb %%al, (%%ebx)\n\t"
+			"addl %%edx, %%ebx\n\t"
+			"loop process_visit_level_1\n\t"
+			: 
+			: "m"(decVisitLevel), "b"(locVisitLevel), "c"(count), "d"(sizeOfLoc)
+			: "%eax"
+		);
 		// ###### end Gilbert 13/10 ########//
 	}
 }
