@@ -1,7 +1,7 @@
 //Filename    : OERR.CPP
 //Description : Object Error Handling
 
-#include <new.h>
+#include <new>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -22,7 +22,7 @@
 //
 //------------------------------------------------//
 
-static int new_func_handler(size_t);
+static void new_func_handler();
 
 //---------- define static variable ----------//
 
@@ -35,7 +35,7 @@ static char error_flag=0;		// prevent error message dead loop
 //
 Error::Error()
 {
-	_set_new_handler(new_func_handler);        // set_new_handler() is a C++ function
+	std::set_new_handler(new_func_handler);        // set_new_handler() is a C++ function
 
 	extra_handler = NULL;
 }
@@ -44,11 +44,9 @@ Error::Error()
 
 //------- Begin of function new_func_handler ------------//
 //
-static int new_func_handler(size_t allocSize)
+static void new_func_handler()
 {
 	err.mem();
-
-	return 0;
 }
 //-------- End of function new_func_handler --------------//
 
