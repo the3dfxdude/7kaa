@@ -1168,6 +1168,16 @@ void Sys::yield()
 
    isYielding=1;
 
+   /* Call PeekMessage to allow dinput to process messages in the
+    * menu loops. This also works around a wine bug. Note that
+    * with this hack, PeekMessage is now called twice in the
+    * "main_loop" of an actual running game match. Perhaps this
+    * can be addressed, but in the long run, it won't matter.
+    * -jesse Sept 13, 2009
+    */
+   LPMSG lpMsg;
+   PeekMessage(lpMsg, sys.main_hwnd, 0, 0, PM_NOREMOVE);
+
    mouse.poll_event();
 
    audio.yield();
