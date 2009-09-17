@@ -357,7 +357,7 @@ void MultiPlayerDP::poll_service_providers()
 
 	// ------ allocate spaces for service_provider_array -------//
 	VgaFrontLock vgaLock;
-	DirectPlayEnumerate( directPlayEnumerateCallback, this );
+	DirectPlayEnumerateA( directPlayEnumerateCallback, this );
 }
 // ----- end of function MultiPlayerDP::poll_service_providers -----//
 
