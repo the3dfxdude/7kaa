@@ -224,7 +224,7 @@ void Video::play( char *fileName, DWORD )
 			iVideoWindow->HideCursor(OATRUE);
 			iVideoWindow->put_Visible( OAFALSE );
 			iVideoWindow->put_AutoShow( OAFALSE );
-			long windowStyle;
+			LONG windowStyle;
 			iVideoWindow->get_WindowStyle( &windowStyle);
 			windowStyle &= ~WS_BORDER & ~WS_CAPTION & ~WS_SIZEBOX & ~WS_THICKFRAME &
 				~WS_HSCROLL & ~WS_VSCROLL & ~WS_VISIBLE;
@@ -243,14 +243,14 @@ void Video::play( char *fileName, DWORD )
 		if( iVideoWindow )
 		{
 			iVideoWindow->put_Visible( OAFALSE );
-			long windowStyle;
+			LONG windowStyle;
 			iVideoWindow->get_WindowStyle( &windowStyle);
 			windowStyle &= ~WS_BORDER & ~WS_CAPTION & ~WS_SIZEBOX & ~WS_THICKFRAME &
 				~WS_HSCROLL & ~WS_VSCROLL & ~WS_VISIBLE;
 			iVideoWindow->put_WindowStyle( windowStyle);
 
-			long maxWidth;
-			long maxHeight;
+			LONG maxWidth;
+			LONG maxHeight;
 			hr=iVideoWindow->GetMaxIdealImageSize( &maxWidth, &maxHeight);
 #ifdef FULL_SCREEN_VIDEO
 #else
@@ -263,10 +263,10 @@ void Video::play( char *fileName, DWORD )
 				IBasicVideo *iBasicVideo;
 				if( iFilter->QueryInterface(IID_IBasicVideo, (void **)&iBasicVideo) == 0)
 				{
-					long screenWidth;
-					long screenHeight;
-					long videoWidth;
-					long videoHeight;
+					LONG screenWidth;
+					LONG screenHeight;
+					LONG videoWidth;
+					LONG videoHeight;
 					if( iVideoWindow->get_Width(&screenWidth) == 0 &&
 						iVideoWindow->get_Height(&screenHeight) == 0 &&
 						iBasicVideo->GetVideoSize(&videoWidth, &videoHeight) == 0)
@@ -436,7 +436,8 @@ void Video::abort()
 void Video::on_graph_notify()
 {
 	IMediaEvent *pME;
-	long lEventCode, lParam1, lParam2;
+	LONG lEventCode;
+        LONG_PTR lParam1, lParam2;
 	HRESULT hr;
 
 	if( (hr=pGraph->QueryInterface(IID_IMediaEvent, (void **) &pME)) == 0)
