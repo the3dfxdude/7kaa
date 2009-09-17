@@ -46,7 +46,7 @@ struct MemInfo
 
 Mem::Mem()
 {
-   info_array = new MemInfo[100];
+   info_array = (MemInfo *)malloc(sizeof(MemInfo) * 100);
 
    if ( info_array == NULL )
       err.mem();
@@ -88,7 +88,7 @@ char* Mem::add(unsigned memSize, char* fileName, int fileLine)
 
    char *allocPtr;
 
-   allocPtr = new char[ memSize + CHK_VAL_SIZE*2 ]; // Pre-check & Post-check
+   allocPtr = (char *)malloc(sizeof(char)*( memSize + CHK_VAL_SIZE*2 )); // Pre-check & Post-check
 
    if ( allocPtr == NULL )
    {
@@ -151,7 +151,7 @@ char* Mem::add_clear(unsigned memSize, char* fileName, int fileLine)
 
 	char *allocPtr;
 
-	allocPtr = new char[ memSize + CHK_VAL_SIZE*2 ]; // Pre-check & Post-check
+	allocPtr = (char*)malloc(sizeof(char)*( memSize + CHK_VAL_SIZE*2 )); // Pre-check & Post-check
 
 	if ( allocPtr == NULL )
 	{
@@ -211,7 +211,7 @@ char* Mem::resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize, ch
 
    //-------- save the original data first ------//
 
-   char* saveBuf = new char[orgSize];
+   char* saveBuf = (char*)malloc(sizeof(char)*(orgSize));
 
    memcpy( saveBuf, orgPtr, orgSize );
 
@@ -229,7 +229,7 @@ char* Mem::resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize, ch
    if( newPtr != orgPtr )
       memcpy( newPtr, saveBuf, orgSize );
 
-   delete saveBuf;
+   free(saveBuf);
 
    return newPtr;
 }
@@ -331,7 +331,7 @@ void Mem::del(void *freePtr, char* fileName, int fileLine)
 
          //--------- free it up --------------//
 
-         delete truePtr;
+         free(truePtr);
 
          memmove( info_array+i, info_array+i+1, sizeof(MemInfo) * (ptr_used-i-1) ) ;
          ptr_used-- ;
@@ -380,7 +380,7 @@ Mem::~Mem()
 		}
    }
 
-   delete info_array;
+   free(info_array);
 }
 
 //---------- END OF FUNCTION Mem::~Mem ------------//
@@ -433,7 +433,7 @@ char* mem_resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize)
 
    //-------- save the original data first ------//
 
-   char* saveBuf = new char[orgSize];
+   char* saveBuf = (char*)malloc(sizeof(char)*(orgSize));
 
    memcpy( saveBuf, orgPtr, orgSize );
 
@@ -446,7 +446,7 @@ char* mem_resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize)
    if( newPtr != orgPtr )       // only when the pointer has been changed
       memcpy( newPtr, saveBuf, orgSize );
 
-   delete saveBuf;
+   free(saveBuf);
 
    return newPtr;
 }
