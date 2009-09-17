@@ -251,7 +251,7 @@ void FirmWar::disp_build_menu(int refreshFlag)
 		}
 
 		button_cancel.paint(x, y, x+BUILD_BUTTON_WIDTH-1, y+BUILD_BUTTON_HEIGHT*3/4,
-		ButtonCustom::disp_text_button_func, ButtonCustomPara("Done",0) );
+		ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)"Done",0) );
 	}
 	// ###### end Gilbert 10/9 ########//
 }

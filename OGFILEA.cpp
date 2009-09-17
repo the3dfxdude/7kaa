@@ -292,7 +292,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 			{
 				mouse.hide_area(menu_x1, menu_y1, menu_x1+FILE_MENU_WIDTH, menu_y1+FILE_MENU_HEIGHT);
 
-				image_interface.put_front( menu_x1, menu_y1, actionMode==1 ? "SAVEGAME" : "LOADGAME" );
+				image_interface.put_front( menu_x1, menu_y1, actionMode==1 ? (char*)"SAVEGAME" : (char*)"LOADGAME" );
 
 				scrollUp.paint(menu_x1+SCROLL_X1+1,menu_y1+SCROLL_Y1-17, "SV-UP-U", "SV-UP-D");
 				scrollDown.paint(menu_x1+SCROLL_X1+1,menu_y1+SCROLL_Y2+1, "SV-DW-U", "SV-DW-D");

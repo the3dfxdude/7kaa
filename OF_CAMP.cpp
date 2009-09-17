@@ -353,7 +353,7 @@ void FirmCamp::put_info(int refreshFlag)
 		{
 			button_patrol.paint( INFO_X1, INFO_Y1+242, 'A', "PATROL" );
 			button_reward.paint( INFO_X1+BUTTON_ACTION_WIDTH, INFO_Y1+242, 'A', "REWARDCB" );
-			button_defense.paint( INFO_X2-BUTTON_ACTION_WIDTH, INFO_Y1+242, 'A', defense_flag ? "DEFENSE1" : "DEFENSE0" );
+			button_defense.paint( INFO_X2-BUTTON_ACTION_WIDTH, INFO_Y1+242, 'A', defense_flag ? (char*)"DEFENSE1" : (char*)"DEFENSE0" );
 		}
 
 		if( overseer_recno || worker_count )
@@ -473,7 +473,7 @@ void FirmCamp::detect_info()
 	if( button_defense.detect() )
 	{
 		// ##### begin Gilbert 25/9 ######//
-		se_ctrl.immediate_sound( !defense_flag?"TURN_ON":"TURN_OFF");
+		se_ctrl.immediate_sound( !defense_flag?(char*)"TURN_ON":(char*)"TURN_OFF");
 		// ##### end Gilbert 25/9 ######//
 
 		if( !remote.is_enable() )
@@ -489,7 +489,7 @@ void FirmCamp::detect_info()
 			shortPtr[1] = !defense_flag;
 		}
 
-		button_defense.update_bitmap( defense_flag ? "DEFENSE1" : "DEFENSE0" );
+		button_defense.update_bitmap( defense_flag ? (char*)"DEFENSE1" : (char*)"DEFENSE0" );
 	}
 }
 //----------- End of function FirmCamp::detect_info -----------//

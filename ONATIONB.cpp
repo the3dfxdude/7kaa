@@ -2037,12 +2037,12 @@ char* NationBase::peace_duration_str()
 	if( peaceYear > 0 )
 	{
 		str += peaceYear;
-		str += translate.process( peaceYear>1 ? " years" : " year" );
-		str += translate.process( " and " );
+		str += translate.process( peaceYear>1 ? (char*)" years" : (char*)" year" );
+		str += translate.process( (char*)" and " );
 	}
 
 	str += peaceMonth;
-	str += translate.process( peaceMonth>1  ? " months" : " month" );
+	str += translate.process( peaceMonth>1  ? (char*)" months" : (char*)" month" );
 
 	return str;
 }
@@ -2321,12 +2321,12 @@ char* NationRelation::status_duration_str()
 	if( statusYear > 0 )
 	{
 		str += statusYear;
-		str += translate.process( statusYear>1 ? " years" : " year" );
-		str += translate.process( " and " );
+		str += translate.process( statusYear>1 ? (char*)" years" : (char*)" year" );
+		str += translate.process( (char*)" and " );
 	}
 
 	str += statusMonth;
-	str += translate.process( statusMonth>1  ? " months" : " month" );
+	str += translate.process( statusMonth>1  ? (char*)" months" : (char*)" month" );
 
 	return str;
 }

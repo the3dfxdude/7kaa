@@ -301,8 +301,8 @@ static void put_nation_rec(int recNo, int x, int y, int refreshFlag)
 	if( nationRecno != info.viewing_nation_recno )
 	{
 		font_san.put( x+272, y, nationRelation->status_str() );
-		font_san.put( x+355, y, nationRelation->should_attack ? "Yes" : "No" );
-		font_san.put( x+412, y, nationRelation->trade_treaty ? "Yes" : "No" );
+		font_san.put( x+355, y, nationRelation->should_attack ? (char*)"Yes" : (char*)"No" );
+		font_san.put( x+412, y, nationRelation->trade_treaty ? (char*)"Yes" : (char*)"No" );
 		font_san.put( x+465, y, m.format( (int) viewingNation->total_year_trade(nationRecno),2) );
 
 		if( config.show_ai_info )

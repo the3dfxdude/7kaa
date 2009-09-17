@@ -354,7 +354,7 @@ void Unit::disp_button(int dispY1)
 
 	//------- display aggressive mode button ------//
 
-	button_aggressive_mode.paint( x, dispY1, 'A', aggressive_mode ? "AGGRESS1" : "AGGRESS0" );
+	button_aggressive_mode.paint( x, dispY1, 'A', aggressive_mode ? (char*)"AGGRESS1" : (char*)"AGGRESS0" );
 	x += BUTTON_ACTION_WIDTH;
 
 	//---------- only for human units ---------//
@@ -491,7 +491,7 @@ void Unit::disp_button(int dispY1)
 	{
 		int notifyFlag = spy_array[spy_recno]->notify_cloaked_nation_flag;
 
-		button_spy_notify.paint( x, dispY1, 'A', notifyFlag ? "SPYNOTI1" : "SPYNOTI0" );
+		button_spy_notify.paint( x, dispY1, 'A', notifyFlag ? (char*)"SPYNOTI1" : (char*)"SPYNOTI0" );
 		x += BUTTON_ACTION_WIDTH;
 
 		if( x+BUTTON_ACTION_WIDTH-5 > INFO_X2 )
@@ -713,7 +713,7 @@ static void group_change_aggressive_mode()
 	else
 		se_ctrl.immediate_sound("TURN_OFF");
 
-	button_aggressive_mode.update_bitmap( newAggressiveMode ? "AGGRESS1" : "AGGRESS0" );
+	button_aggressive_mode.update_bitmap( newAggressiveMode ? (char*)"AGGRESS1" : (char*)"AGGRESS0" );
 }
 //------ End of static function group_change_aggressive_mode ----//
 
@@ -815,7 +815,7 @@ static void group_change_spy_notify_flag()
 
 	//--------- update the spy bitmap ----------//
 
-	button_spy_notify.update_bitmap( newNotifyFlag ? "SPYNOTI1" : "SPYNOTI0" );
+	button_spy_notify.update_bitmap( newNotifyFlag ? (char*)"SPYNOTI1" : (char*)"SPYNOTI0" );
 
 	if( newNotifyFlag )
 		se_ctrl.immediate_sound("TURN_ON");

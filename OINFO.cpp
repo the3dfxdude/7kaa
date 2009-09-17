@@ -434,7 +434,7 @@ void Info::disp_heading()
 		str += ")";
 	}
 
-	image_icon.put_front(447,26, nationPtr->reputation_change_365days() >= (float)0.0 ? "REPU_UP" : "REPU_DW" );
+	image_icon.put_front(447,26, nationPtr->reputation_change_365days() >= (float)0.0 ? (char*)"REPU_UP" : (char*)"REPU_DW" );
 	font_mid.disp( 476, 30, str, 575);
 }
 //-------- End of function Info::disp_heading --------//
@@ -566,12 +566,12 @@ char* Info::play_time_str()
 	if( playHour > 0 )
 	{
 		str += playHour;
-		str += translate.process( playHour>1 ? " hours" : " hour" );
+		str += translate.process( playHour>1 ? (char*)" hours" : (char*)" hour" );
 		str += translate.process( " and " );
 	}
 
 	str += playMin;
-	str += translate.process( playMin>1  ? " minutes" : " minute" );
+	str += translate.process( playMin>1  ? (char*)" minutes" : (char*)" minute" );
 
 	return str;
 }
@@ -612,12 +612,12 @@ char* Info::game_duration_str()
 	if( playYear > 0 )
 	{
 		str += playYear;
-		str += translate.process( playYear>1 ? " years" : " year" );
-		str += translate.process( " and " );
+		str += translate.process( playYear>1 ? (char*)" years" : (char*)" year" );
+		str += translate.process( (char*)" and " );
 	}
 
 	str += playDay;
-	str += translate.process( playDay>1  ? " days" : " day" );
+	str += translate.process( playDay>1  ? (char*)" days" : (char*)" day" );
 
 	return str;
 }

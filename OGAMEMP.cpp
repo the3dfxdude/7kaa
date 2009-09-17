@@ -955,7 +955,7 @@ int Game::mp_select_service()
 				image_menu2.put_to_buf( &vga_back, "MPG-PG1");
 #endif
 				image_menu.put_back( 234, 15,
-					sub_game_mode == 0 ? "TOP-NMPG" : "TOP-LMPG" );
+					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 				vga.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
 				returnButton.paint();
@@ -1158,7 +1158,7 @@ int Game::mp_select_mode(char *defSaveFileName)
 				image_menu2.put_to_buf( &vga_back, "MPG-PG1");
 #endif
 				image_menu.put_back( 234, 15,
-					sub_game_mode == 0 ? "TOP-NMPG" : "TOP-LMPG" );
+					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 #ifdef IMAGICMP
 				int b = 0;
 				for( b = 0; mp_obj.get_service_provider(b+1); ++b )
@@ -1390,7 +1390,7 @@ int Game::mp_select_session()
 				image_menu2.put_to_buf( &vga_back, "MPG-PG2" );
 #endif
 				image_menu.put_back( 234, 15,
-					sub_game_mode == 0 ? "TOP-NMPG" : "TOP-LMPG" );
+					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 				vga.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
 #ifdef AMPLUS
@@ -2273,7 +2273,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						image_menu.put_front( tickX[p]+3, tickY[p]+3, "NMPG-RCH" );
 					}
 					PlayerDesc *dispPlayer = mp_obj.search_player(regPlayerId[p]);
-					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():"?anonymous?" );
+					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)"?anonymous?" );
 				}
 			}
 
@@ -4087,7 +4087,7 @@ int Game::mp_select_load_option(char *fileName)
 						image_menu.put_front( tickX[p]+3, tickY[p]+3, "NMPG-RCH" );
 					}
 					PlayerDesc *dispPlayer = mp_obj.search_player(regPlayerId[p]);
-					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():"?anonymous?" );
+					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)"?anonymous?" );
 				}
 			}
 

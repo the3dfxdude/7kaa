@@ -230,7 +230,7 @@ void UnitCaravan::detect_stop()
 				// ###### begin Gilbert 26/9 ######//
 				se_ctrl.immediate_sound(
 					button_select_array[i][b].elastic_flag || button_select_array[i][b].pushed_flag ? 
-					"TURN_ON" : "TURN_OFF");
+					(char*)"TURN_ON" : (char*)"TURN_OFF");
 				// ###### end Gilbert 26/9 ######//
 
 				set_stop_pick_up(i+1, b, COMMAND_PLAYER); // b = 1 - MAX_PICK_UP_GOODS

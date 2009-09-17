@@ -205,7 +205,7 @@ void FirmResearch::disp_research_menu(int refreshFlag)
 	// ###### begin Gilbert 16/8 ######//
 	// button_cancel.paint(INFO_X1, y, "CANCEL1", "CANCEL1D" );
 	button_cancel.paint(INFO_X1, y, INFO_X2, y+RESEARCH_OPTION_HEIGHT*3/4,
-		ButtonCustom::disp_text_button_func, ButtonCustomPara("Cancel",0) );
+		ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)"Cancel",0) );
 	// ###### end Gilbert 16/8 ######//
 }
 //----------- End of function FirmResearch::disp_research_menu -----------//

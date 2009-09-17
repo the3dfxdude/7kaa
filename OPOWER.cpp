@@ -1283,7 +1283,7 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 			{
 				Firm *firmPtr = firm_array[selectedFirmRecno];
 				se_res.sound(firmPtr->center_x, firmPtr->center_y, 1,
-					'F', firmPtr->firm_id, firmPtr->under_construction ? "SELU" : "SEL" );
+					'F', firmPtr->firm_id, firmPtr->under_construction ? (char*)"SELU" : (char*)"SEL" );
 			}
 			selectSound = 1;
 		}

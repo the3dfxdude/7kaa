@@ -85,7 +85,7 @@ void UnitMarine::disp_info(int refreshFlag)
 			button_mode[1].create_text( INFO_X1+90, y+3, INFO_X1+155, y+19, "Goods" );
 			button_mode.paint(menu_mode);
 
-			button_auto_trade.paint_text( INFO_X1+165, y+3, INFO_X2-10, y+19, auto_mode ? "T" : "C");
+			button_auto_trade.paint_text( INFO_X1+165, y+3, INFO_X2-10, y+19, auto_mode ? (char*)"T" : (char*)"C");
 		}
 
 		y += 25;
@@ -170,7 +170,7 @@ void UnitMarine::detect_info()
 		if( !remote.is_enable() )
 		{
 			auto_mode = !auto_mode;
-			button_auto_trade.paint_text( INFO_X1+165, INFO_Y1+57, INFO_X2-10, INFO_Y1+73, auto_mode ? "T" : "C");
+			button_auto_trade.paint_text( INFO_X1+165, INFO_Y1+57, INFO_X2-10, INFO_Y1+73, auto_mode ? (char*)"T" : (char*)"C");
 		}
 		else
 		{
@@ -753,7 +753,7 @@ void UnitMarine::detect_stop()
 				// ###### begin Gilbert 25/9 #######//
 				se_ctrl.immediate_sound( 
 					button_select_array[i][b].elastic_flag || button_select_array[i][b].pushed_flag ?
-					"TURN_ON" : "TURN_OFF");
+					(char*)"TURN_ON" : (char*)"TURN_OFF");
 				// ###### end Gilbert 25/9 #######//
 				set_stop_pick_up(i+1, b, COMMAND_PLAYER); // b = 1 - MAX_PICK_UP_GOODS
 			}

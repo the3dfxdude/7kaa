@@ -266,7 +266,7 @@ void VgaBuf::indicator(int barType, int x1, int y1, float curValue, float maxVal
 	const unsigned int TEMP_BUFFER_SIZE = 0x2000;
 	static char tempBuffer[TEMP_BUFFER_SIZE];
 
-	char *bgPtr = image_button.get_ptr(barType & 4 ? "V_HP-BX" : "V_PW-BX");
+	char *bgPtr = image_button.get_ptr(barType & 4 ? (char*)"V_HP-BX" : (char*)"V_PW-BX");
 	if( !bgPtr )
 	{
 		err_here();

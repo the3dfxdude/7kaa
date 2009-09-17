@@ -846,7 +846,7 @@ void Town::disp_train_menu(int refreshFlag)
 		}
 
 		button_cancel3.paint( INFO_X1, y, INFO_X2, y+BUTTON_ACTION_HEIGHT*3/4-1,
-		ButtonCustom::disp_text_button_func, ButtonCustomPara("Done",0) );
+		ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)"Done",0) );
 	}
 	// ####### end Gilbert 13/9 ########//
 }

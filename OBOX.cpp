@@ -183,13 +183,13 @@ int Box::ask_button(char* buttonDes1, char* buttonDes2, int rightClickClose)
 
    Button buttonOk, buttonCancel;
 
-   int buttonWidth1 = 20 + font_san.text_width(buttonDes1 ? buttonDes1 : "Ok");
+   int buttonWidth1 = 20 + font_san.text_width(buttonDes1 ? buttonDes1 : (char*)"Ok");
 
    buttonOk.create_text( box_x1+width/2-buttonWidth1, box_y2-BOX_BUTTON_MARGIN,
-			 (buttonDes1 ? buttonDes1 : "Ok") );
+			 (buttonDes1 ? buttonDes1 : (char*)"Ok") );
 
    buttonCancel.create_text( box_x1+width/2+2 , box_y2-BOX_BUTTON_MARGIN,
-			     (buttonDes2 ? buttonDes2 : "Cancel") );
+			     (buttonDes2 ? buttonDes2 : (char*)"Cancel") );
 
    buttonOk.paint();      // paint button
    buttonCancel.paint();
@@ -237,10 +237,10 @@ void Box::ask_button(Button& buttonOk, Button& buttonCancel, char* strOk, char* 
    width = box_x2-box_x1+1;
 
    buttonOk.create_text( box_x1+width/2-36, box_y2-BOX_BUTTON_MARGIN,
-                         (strOk ? strOk : "Ok") );
+                         (strOk ? strOk : (char*)"Ok") );
 
    buttonCancel.create_text( box_x1+width/2+2 , box_y2-BOX_BUTTON_MARGIN,
-			     (strCancel  ? strCancel  : "Cancel") );
+			     (strCancel  ? strCancel  : (char*)"Cancel") );
 
    buttonOk.paint();      // paint button
    buttonCancel.paint();
