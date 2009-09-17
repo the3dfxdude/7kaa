@@ -1,6 +1,10 @@
 //Filename    : AM.CPP
 //Description : Ambition Entry Program
 
+#include <windows.h>
+#include <initguid.h>
+#include <dshow.h>
+
 #include <ALL.h>
 #include <OANLINE.h>
 #include <OAUDIO.h>
