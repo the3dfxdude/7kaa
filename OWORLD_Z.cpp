@@ -1003,7 +1003,7 @@ void ZoomMatrix::put_center_text(int x, int y, char* str)
 {
 	str = translate.process(str);
 
-	const TEMP_BUFFER_SIZE = 0x2000;
+	const unsigned int TEMP_BUFFER_SIZE = 0x2000;
 	char tempBuffer[TEMP_BUFFER_SIZE];
 	short w = font_news.text_width(str);
 	// ###### begin Gilbert 15/10 #######//
