@@ -104,12 +104,6 @@ public:
 	unsigned long start_play_time;	// the time player start playing the game today
 	unsigned long total_play_time;  	// total time the player has played in all saved games
 
-	char* play_time_str(); // return total time played in string
-	char* game_duration_str();
-
-	short get_report_data(int recNo);
-	short	get_report_data2(int recNo);
-
 	//------- report browsers recno -------//
 
 	short viewing_nation_recno;		// which nation the player is viewing at with the reports.
@@ -149,6 +143,12 @@ public:
 	//---------------------------------//
 
 	char  last_write_offset;				// it is used for an offset locator for excluding static member vars during reading and writing files
+
+	char* play_time_str(); // return total time played in string
+	char* game_duration_str();
+
+	short get_report_data(int recNo);
+	short	get_report_data2(int recNo);
 
 	//------ keep a copy of bitmap of the panel texture -----//
 
