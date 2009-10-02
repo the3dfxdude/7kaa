@@ -33,6 +33,7 @@
 
 enum { HALL_FAME_NUM = 6 };     // No. of Hall of Fame entries
 
+#pragma pack(1)
 struct HallFame         // Hall of Fame
 {
    char  player_name[NationArray::HUMAN_NAME_LEN+1];
@@ -47,6 +48,7 @@ public:
    void  disp_info(int,int,int);
    void  record_data(int);
 };
+#pragma pack()
 
 //-------- Define class GameFile -----------//
 
