@@ -40,6 +40,7 @@ struct ColorRemapMethod
 
 //--------- Define struct ColorRemap ----------//
 
+#pragma pack(1)
 struct ColorRemap
 {
 public:
@@ -50,6 +51,7 @@ public:
 	void	set_remap_color(ColorRemapMethod*);
    void	load(char*);
 };
+#pragma pack()
 
 //----- define struct ScenInfo -------//
 
@@ -71,6 +73,7 @@ struct ScenInfo
 struct Location;
 struct NewNationPara;
 
+#pragma pack(1)
 class Game
 {
 public:
@@ -139,6 +142,7 @@ private:
 	void			mp_disp_players();
 	int			mp_select_load_option(char *);
 };
+#pragma pack()
 
 extern Game game;
 extern char game_demo_mode, game_design_mode;

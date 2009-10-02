@@ -54,6 +54,7 @@ struct GodRec
 
 //------------- Define struct GodInfo --------------//
 
+#pragma pack(1)
 struct GodInfo
 {
 public:
@@ -78,6 +79,7 @@ public:
 	void	enable_know(int nationRecno);
 	void	disable_know(int nationRecno);
 };
+#pragma pack()
 
 //----------- Define class GodRes ---------------//
 

@@ -41,6 +41,7 @@ private:
 
 // -------- define class FirmDie --------//
 
+#pragma pack(1)
 class FirmDie
 {
 public:
@@ -59,9 +60,11 @@ public:
 	int	process();
 	void	draw(int displayLayer);
 };
+#pragma pack()
 
 // -------- define class FirmDieArray --------//
 
+#pragma pack(1)
 class FirmDieArray : public DynArrayB
 {
 public:
@@ -77,6 +80,7 @@ public:
 
 	FirmDie *operator[](int recNo);
 };
+#pragma pack()
 
 extern FirmDieRes firm_die_res;
 extern FirmDieArray firm_die_array;

@@ -17,6 +17,7 @@
 
 class UnitMarine;
 
+#pragma pack(1)
 class FirmHarbor : public Firm
 {
 public:
@@ -116,6 +117,7 @@ private:
 	void	process_queue();
 	void 	repair_ship();
 };
+#pragma pack()
 
 //--------------------------------------//
 

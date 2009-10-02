@@ -23,6 +23,7 @@
 
 //------- Define class FirmBase --------//
 
+#pragma pack(1)
 class FirmBase : public Firm
 {
 public:
@@ -69,6 +70,7 @@ private:
 	void 		think_assign_unit();
 	void 		think_invoke_god();
 };
+#pragma pack()
 
 //--------------------------------------//
 

@@ -14,6 +14,7 @@
 
 //------- Define class FirmWar --------//
 
+#pragma pack(1)
 class FirmWar : public Firm
 {
 public:
@@ -65,6 +66,7 @@ private:
 	int 	should_build_new_weapon();
 	int	think_del();
 };
+#pragma pack()
 
 //--------------------------------------//
 

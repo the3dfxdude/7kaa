@@ -292,6 +292,7 @@ public:
 
 //--------- Define struct AttackInfo ----------//
 
+#pragma pack(1)
 struct AttackInfo
 {
 	BYTE  combat_level;
@@ -315,6 +316,7 @@ struct AttackInfo
 	char	fire_radius;
 	short	effect_id;
 };
+#pragma pack()
 
 //---------- Define class UnitRes ------------//
 

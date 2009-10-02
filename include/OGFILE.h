@@ -50,6 +50,7 @@ public:
 
 //-------- Define class GameFile -----------//
 
+#pragma pack(1)
 class GameFile
 {
 public:
@@ -94,6 +95,7 @@ private:
    void  write_book_mark(short bookMark);
    int   read_book_mark(short bookMark);
 };
+#pragma pack()
 
 //------- Define class GameFileArray --------//
 

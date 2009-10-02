@@ -16,14 +16,17 @@
 
 //------- Define struct RegionPath -------//
 
+#pragma pack(1)
 struct RegionPath
 {
 	BYTE		sea_region_id;				// region id. of the sea route
 	BYTE		land_region_stat_id;
 };
+#pragma pack()
 
 //------- Define class RegionStat --------//
 
+#pragma pack(1)
 class RegionStat
 {
 public:
@@ -61,6 +64,7 @@ public:
 	void		init();
 	void		update_stat();
 };
+#pragma pack()
 
 //--------------------------------------------//
 

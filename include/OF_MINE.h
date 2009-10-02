@@ -18,6 +18,7 @@
 
 //------- Define class FirmMine --------//
 
+#pragma pack(1)
 class FirmMine : public Firm
 {
 public:
@@ -75,6 +76,7 @@ private:
 	int		think_build_market();
 	int		think_inc_productivity();
 };
+#pragma pack()
 
 //--------------------------------------//
 

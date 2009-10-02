@@ -70,6 +70,7 @@ enum { ASSASSINATE_FAIL,
 
 //------------- Define struct Worker ------------//
 
+#pragma pack(1)
 struct Worker
 {
 public:
@@ -107,6 +108,7 @@ public:
 	void	change_hit_points(int changePoints);
 	int	max_attack_range();
 };
+#pragma pack()
 
 class FirmBase;
 class FirmMine;
@@ -121,6 +123,7 @@ class FirmHarbor;
 
 //----------- Define class Firm ------------//
 
+#pragma pack(1)
 class Firm
 {
 public:
@@ -409,6 +412,7 @@ protected:
 			  int	construction_frame();			// for under construction only
 			  // ##### end Gilbert 18/10 #######//
 };
+#pragma pack()
 
 //------------------------------------------//
 

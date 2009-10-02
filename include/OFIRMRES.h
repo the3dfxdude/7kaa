@@ -127,6 +127,7 @@ struct FirmBitmapRec
 
 //------------- Define struct FirmInfo --------------//
 
+#pragma pack(1)
 struct FirmInfo
 {
 	enum { NAME_LEN=20, SHORT_NAME_LEN=12, TITLE_LEN=10 };
@@ -181,6 +182,7 @@ public:
 	void	inc_nation_firm_count(int nationRecno);
 	void	dec_nation_firm_count(int nationRecno);
 };
+#pragma pack()
 
 //------------- Define struct FirmBuild --------------//
 

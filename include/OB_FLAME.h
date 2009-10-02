@@ -9,6 +9,7 @@
 
 // cur_action of BulletFlame is SPRITE_STOP before die
 
+#pragma pack(1)
 class BulletFlame : public Bullet
 {
 public:
@@ -22,5 +23,6 @@ public:
 	virtual	UCHAR crc8();
 	virtual	void	clear_ptr();
 };
+#pragma pack()
 
 #endif

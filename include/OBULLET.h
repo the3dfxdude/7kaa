@@ -26,6 +26,7 @@ enum	{	BULLET_BY_UNIT = 1,
 
 class Unit;
 
+#pragma pack(1)
 class Bullet : public Sprite
 {
 public:
@@ -67,6 +68,7 @@ public:
 	virtual	UCHAR crc8();
 	virtual	void	clear_ptr();
 };
+#pragma pack()
 
 //------- Define class BulletArray ---------//
 

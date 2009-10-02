@@ -18,14 +18,17 @@ typedef char* (*CreateEleFP)();
 
 //--------- Define struct EmptyRoom -----------//
 
+#pragma pack(1)
 struct EmptyRoom
 {
 	short	recno;
 	int   deleted_game_date;
 };
+#pragma pack()
 
 //---------- Define class DynArrayB -----------//
 
+#pragma pack(1)
 class DynArrayB : public DynArray
 {
 public:
@@ -57,6 +60,7 @@ public:
 	int  write_ptr_array(File*, int);
 	int  read_ptr_array(File*, int, CreateEleFP);
 };
+#pragma pack()
 
 //---------------------------------------------//
 

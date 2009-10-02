@@ -34,6 +34,7 @@ enum { SPRITE_IDLE=1,
 
 //---------- Define class Sprite -----------//
 
+#pragma pack(1)
 class Sprite
 {
 public:
@@ -136,6 +137,7 @@ public:
 	virtual	UCHAR crc8();
 	virtual	void	clear_ptr();
 };
+#pragma pack()
 
 //------- Define class SpriteArray ---------//
 

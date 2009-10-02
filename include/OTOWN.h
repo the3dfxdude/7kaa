@@ -64,6 +64,7 @@
 //-------- Define class Town ----------//
 
 class Unit;
+#pragma pack(1)
 class Town
 {
 public:
@@ -385,6 +386,7 @@ private:
 	void  think_rebel();
 	int	think_surrender();
 };
+#pragma pack()
 
 //-------- Begin of class TownArray ------------//
 

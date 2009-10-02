@@ -14,6 +14,7 @@
 
 //----------- Define class God -----------//
 
+#pragma pack(1)
 class UnitGod : public Unit
 {
 public:
@@ -83,6 +84,7 @@ private:
 	void think_zulu_god();
 #endif
 };
+#pragma pack()
 
 //--------------------------------------------//
 

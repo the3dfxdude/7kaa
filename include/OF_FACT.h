@@ -10,6 +10,7 @@
 
 //------- Define class FirmFactory --------//
 
+#pragma pack(1)
 class FirmFactory : public Firm
 {
 public:
@@ -70,6 +71,7 @@ private:
 	int 		think_inc_productivity();
 	int 		think_change_production();
 };
+#pragma pack()
 
 //--------------------------------------//
 

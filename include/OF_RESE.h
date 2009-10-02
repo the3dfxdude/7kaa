@@ -11,6 +11,7 @@
 
 //------- Define class FirmResearch --------//
 
+#pragma pack(1)
 class FirmResearch : public Firm
 {
 public:
@@ -59,6 +60,7 @@ private:
 	void		think_new_research();
 	int		think_del();
 };
+#pragma pack()
 
 //--------------------------------------//
 

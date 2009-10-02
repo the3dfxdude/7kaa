@@ -27,6 +27,7 @@ enum { SMALL_STARTUP_RESOURCE  = 4000,
 
 //---------- Define class Config -----------//
 
+#pragma pack(1)
 class Config
 {
 public:
@@ -211,6 +212,7 @@ public:
 	char			explore_mask_method;		// 0 for none, 1 for masking, 2 for remapping
 	char			fog_mask_method;			// 1 for fast masking, 2 for slow remapping
 };
+#pragma pack()
 
 //------------------------------------------//
 

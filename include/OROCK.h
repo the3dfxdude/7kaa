@@ -9,6 +9,7 @@
 
 // --------- define class Rock -----------//
 
+#pragma pack(1)
 class Rock
 {
 public:
@@ -31,6 +32,7 @@ public:
 private:
 	unsigned random(unsigned);
 };
+#pragma pack()
 
 
 

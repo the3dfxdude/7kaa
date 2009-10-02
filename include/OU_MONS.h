@@ -16,6 +16,7 @@ enum	{	MONSTER_ACTION_STOP = 0,
 
 //----------- Define class Monster -----------//
 
+#pragma pack(1)
 class UnitMonster : public Unit
 {
 public:
@@ -41,6 +42,7 @@ private:
 	void 	group_order_monster(int destXLoc, int destYLoc, int actionType);
 	void 	king_leave_scroll();
 };
+#pragma pack()
 
 //--------------------------------------------//
 

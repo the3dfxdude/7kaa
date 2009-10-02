@@ -6,6 +6,7 @@
 
 #include <OUNIT.h>
 
+#pragma pack(1)
 class UnitExpCart : public Unit
 {
 public:
@@ -22,5 +23,6 @@ public:
 	virtual	UCHAR crc8();
 	virtual	void	clear_ptr();
 };
+#pragma pack()
 
 #endif

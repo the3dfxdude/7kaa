@@ -34,6 +34,7 @@ typedef enum _WeatherType
 
 //--------- Define class Weather ----------//
 
+#pragma pack(1)
 class Weather
 {
 private:
@@ -90,10 +91,12 @@ private:
 	short base_temp();
 	unsigned rand_seed(unsigned);
 };
+#pragma pack()
 
 
 // ------- define class MagicWeather -----------//
 
+#pragma pack(1)
 class MagicWeather
 {
 private:
@@ -124,6 +127,7 @@ public:
 
 	friend class Weather;
 };
+#pragma pack()
 
 extern Weather weather, weather_forecast[MAX_WEATHER_FORECAST];
 extern MagicWeather magic_weather;

@@ -37,6 +37,7 @@ enum	{	NO_EXTRA_MOVE = 0,
 		};
 
 //-------- Define struct ShipStop ----------//
+#pragma pack(1)
 struct ShipStop : public TradeStop
 {
 public:
@@ -45,9 +46,11 @@ public:
 	//----------- multiplayer version --------------//
 	void			mp_pick_up_toggle(int pos);
 };
+#pragma pack()
 
 //------- Define class UnitMarine -------//
 
+#pragma pack(1)
 class UnitMarine : public Unit
 {
 public:
@@ -187,6 +190,7 @@ private:
 
 	int	is_on_coast();
 };
+#pragma pack()
 
 //---------------------------------------//
 

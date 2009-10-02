@@ -10,6 +10,7 @@
 
 //----------- Define class UnitVehicle -----------//
 
+#pragma pack(1)
 class UnitVehicle : public Unit
 {
 public:
@@ -24,6 +25,7 @@ public:
 	virtual	UCHAR crc8();
 	virtual	void	clear_ptr();
 };
+#pragma pack()
 
 //--------------------------------------------//
 

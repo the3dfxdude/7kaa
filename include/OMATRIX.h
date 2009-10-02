@@ -46,6 +46,7 @@ const unsigned char MAX_VISIT_LEVEL = FULL_VISIBILITY;
 
 //------- Define structure Location -------//
 
+#pragma pack(1)
 struct Location
 {
 public:
@@ -270,6 +271,7 @@ public:
 	void	clear_harbor_bit()       { loc_flag &= ~LOCATE_HARBOR_BIT; }
 	int	can_build_whole_harbor() { return loc_flag & LOCATE_HARBOR_BIT; }
 };
+#pragma pack()
 
 //------------ Define class Matrix -----------//
 
