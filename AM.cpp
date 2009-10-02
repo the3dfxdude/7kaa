@@ -353,8 +353,10 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #else
 	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )
 	   game.main_menu();
+#ifndef DISABLE_MULTI_PLAYER
 	else
 		game.multi_player_menu(lpCmdLine);		// if detect launched from lobby
+#endif // DISABLE_MULTI_PLAYER
 #endif
 
    sys.deinit();
