@@ -3,15 +3,15 @@
 
 #if(defined(SPANISH))
 
-#include <ALL.H>
-#include <OSYS.H>
-#include <OVGA.H>
-#include <OPOWER.H>
-#include <OMOUSE.H>
-#include <OMOUSECR.H>
-#include <OMOUSE2.H>
-#include <KEY.H>
-#include <OVGALOCK.H>
+#include <ALL.h>
+#include <OSYS.h>
+#include <OVGA.h>
+#include <OPOWER.h>
+#include <OMOUSE.h>
+#include <OMOUSECR.h>
+#include <OMOUSE2.h>
+#include <KEY.h>
+#include <OVGALOCK.h>
 
 
 //--- define the size of a buffer for real-time vga screen updating ---//
