@@ -455,7 +455,7 @@ void News::firm_destroyed()
 	//
 	//----------------------------------------------//
 
-	str  = firm_gender(short_para1) ? "Ihre " : "Ihr ";
+	str  = firm_gender(short_para1) ? (char*)"Ihre " : (char*)"Ihr ";
 	str += firm_res[short_para1]->name;
 	str += " nahe ";
 	str += town_res.get_name(short_para2);
@@ -517,7 +517,7 @@ void News::firm_captured()
 	//----------------------------------------------//
 
 
-	str  = firm_gender(short_para1) ? "Ihre " : "Ihr ";
+	str  = firm_gender(short_para1) ? (char*)"Ihre " : (char*)"Ihr ";
 	str += firm_res[short_para1]->name;
 	str += " nahe ";
 	str += town_res.get_name(short_para2);
@@ -1218,7 +1218,7 @@ void News::lightning_damage()
 		break;
 
 	case NEWS_LOC_FIRM:
-		str  = firm_gender(short_para2) ? "Ihre " : "Ihr ";
+		str  = firm_gender(short_para2) ? (char*)"Ihre " : (char*)"Ihr ";
 		str += firm_res[short_para2]->name;
 		if( short_para3 )
 		{
@@ -1439,7 +1439,7 @@ void News::firm_worn_out()
 	//
 	//----------------------------------------------//
 
-	str  = firm_gender(short_para1) ? "Ihre " : "Ihr ";
+	str  = firm_gender(short_para1) ? (char*)"Ihre " : (char*)"Ihr ";
 	str += firm_res[short_para1]->name;
 	str += " nahe ";
 	str += town_res.get_name(short_para2);
