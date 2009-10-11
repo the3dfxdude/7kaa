@@ -1460,13 +1460,13 @@ int Audio::is_loop_wav_fading(int ch)
 //------- Begin of function Audio::yield ---------------//
 void	Audio::yield()
 {
+	// unlock vga_front
+	VgaFrontLock vgaLock;
+
 	if( !run_yield)
 		return;
 
 	run_yield = 0;			// suspend recursive Audio::yield();
-
-	// unlock vga_front
-	VgaFrontLock vgaLock;
 
 	// set break point beyond this point
 	int i;
