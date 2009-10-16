@@ -102,11 +102,7 @@
 //------- define game version constant --------//
 
 #ifdef AMPLUS
-	#ifdef IMAGICMP
-		char *GAME_VERSION_STR = "2.12b2";
-	#else
-		char *GAME_VERSION_STR = "2.12b2DX";
-	#endif
+	char *GAME_VERSION_STR = "2.13.0-rc1";
 	const int GAME_VERSION = 212;	// Version 2.00, don't change it unless the format of save game files has been changed
 #else
 	char *GAME_VERSION_STR = "1.11";
