@@ -1,0 +1,30 @@
+Seven Kingdoms: Ancient Adversaries
+-----------------------------------
+
+Release version 2.13.0-rc1
+
+This is the release of the Seven Kingdoms: Ancient Adversaries source
+code as authorized by Enlight by the 7kfans project.  The game is
+provided under the terms of the GPL.  See the file "COPYING" for the
+details of the license.
+
+This release brings Linux support for the game through the Wine API.
+The game should remain compatable with Windows as well.  The purpose
+of the rc release is to bring testers and the needed changes to
+enable packagers and installers.
+
+This version of the game deprecates the I*Magic network library
+and DirectPlay.  Multiplayer is disabled entirely.  Use of these
+are at your own risk.  The project intends to replace the network
+code.
+
+Compilation of the game is provided through the two build scripts;
+in the root directory, and in the asm directory.  The opts.pl sets
+compile options.
+
+Build Requirements
+---------
+* gcc
+* jwasm
+* Wine 1.1.29 or later
+
