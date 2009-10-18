@@ -15,7 +15,7 @@ foreach (@asm_files) {
   }
 
   if ($flag) {
-    my $cmd = "jwasm -q -elf -zzp $_.asm";
+    my $cmd = "jwasm -q -elf -zt1 $_.asm";
     print "$cmd\n";
     system $cmd and die "jwasm failed";
   }
