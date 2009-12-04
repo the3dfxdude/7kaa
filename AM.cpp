@@ -23,7 +23,9 @@
 
 #include <windows.h>
 #include <initguid.h>
+#ifdef ENABLE_INTRO_VIDEO
 #include <dshow.h>
+#endif
 
 #include <ALL.h>
 #include <OANLINE.h>
@@ -67,7 +69,9 @@
 #include <OTRANSL.h>
 #include <OUNIT.h>
 #include <OVGA.h>
+#ifdef ENABLE_INTRO_VIDEO
 #include <OVIDEO.h>
+#endif
 #include <OWALLRES.h>
 #include <OWORLD.h>
 #include <OWEATHER.h>
@@ -122,7 +126,9 @@ Misc              m, m2;
 DateInfo          date;
 Vga               vga;
 VgaBuf            vga_front, vga_back, vga_true_front;
+#ifdef ENABLE_INTRO_VIDEO
 Video             video;
+#endif
 Audio             audio;
 Music             music;
 MultiPlayerType	mp_obj;
@@ -324,6 +330,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	static char lobbyLaunchCmdLine[] = "-!lobby!";
 #endif
 
+#ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//
 
 	sys.set_game_dir();
@@ -357,6 +364,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			video.deinit();
 		}
 	}
+#endif // ENABLE_INTRO_VIDEO
 
    if( !sys.init(hInstance) )
       return FALSE;

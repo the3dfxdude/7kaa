@@ -15,6 +15,7 @@ our @includes = (
 # The flags that are known to work:
 # AMPLUS
 # DISABLE_MULTI_PLAYER
+# ENABLE_INTRO_VIDEO
 # FRENCH
 # GERMAN
 # SPANISH

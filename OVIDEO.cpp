@@ -22,6 +22,7 @@
 //Description : Video for Windows playback class
 //Owner       : Gilbert
 
+#ifdef ENABLE_INTRO_VIDEO
 // for some .h files to define some IIDs
 #include <windows.h>
 #include <windowsx.h>
@@ -561,3 +562,4 @@ static long FAR PASCAL video_win_proc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
+#endif // ENABLE_INTRO_VIDEO
