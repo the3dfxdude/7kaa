@@ -1188,6 +1188,7 @@ void Sys::yield()
 
    isYielding=1;
 
+#ifndef WIN32
    /* Call PeekMessage to allow dinput to process messages in the
     * menu loops. This also works around a wine bug. Note that
     * with this hack, PeekMessage is now called twice in the
@@ -1197,6 +1198,7 @@ void Sys::yield()
     */
    LPMSG lpMsg;
    PeekMessage(lpMsg, sys.main_hwnd, 0, 0, PM_NOREMOVE);
+#endif
 
    mouse.poll_event();
 

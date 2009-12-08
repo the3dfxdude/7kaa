@@ -1480,13 +1480,20 @@ int Audio::is_loop_wav_fading(int ch)
 //------- Begin of function Audio::yield ---------------//
 void	Audio::yield()
 {
+#ifndef WIN32
 	// unlock vga_front
 	VgaFrontLock vgaLock;
+#endif
 
 	if( !run_yield)
 		return;
 
 	run_yield = 0;			// suspend recursive Audio::yield();
+
+#ifdef WIN32
+	// unlock vga_front
+	VgaFrontLock vgaLock;
+#endif
 
 	// set break point beyond this point
 	int i;
