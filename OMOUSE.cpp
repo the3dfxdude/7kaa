@@ -33,6 +33,7 @@
 #include <KEY.h>
 #include <OVGALOCK.h>
 
+#include <cctype>
 
 //--- define the size of a buffer for real-time vga screen updating ---//
 
@@ -1458,7 +1459,7 @@ int Mouse::is_key(unsigned scanCode, unsigned short skeyState, unsigned short ch
 	int retFlag2 = (charValue == 0) || outChar == charValue
 		|| ((flags & K_IGNORE_SHIFT) && shiftChar == charValue)
 		|| ((flags & K_IGNORE_CAP_LOCK) && capitalChar == charValue)
-		|| ((flags & K_CASE_INSENSITIVE) && outChar == (unsigned short) tolower(charValue));
+		|| ((flags & K_CASE_INSENSITIVE) && outChar == (unsigned short) std::tolower(charValue));
 
 	if(retFlag2)
 		return outChar;

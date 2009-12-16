@@ -302,27 +302,6 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//--------------------------------------//
 
-#if(defined(BETA) && defined(AMPLUS))
-#define EXPIRE_YEAR 1998
-#define EXPIRE_MONTH 4
-#define EXPIRE_DAY 30
-	SYSTEMTIME sysTime;
-	GetLocalTime(&sysTime);
-	if( config.expired_flag || sysTime.wYear > EXPIRE_YEAR ||
-		(sysTime.wYear == EXPIRE_YEAR && (sysTime.wMonth > EXPIRE_MONTH
-		|| sysTime.wMonth == EXPIRE_MONTH && sysTime.wDay >= EXPIRE_DAY)) )
-	{
-		if( !config.expired_flag )
-		{
-			// write back config with expired_flag set
-			config.expired_flag = 1;
-			config.save("CONFIG.DAT");
-		}
-		MessageBox( NULL, "Beta version expired", "Seven Kingdoms",
-			MB_OK | MB_ICONSTOP | MB_DEFBUTTON1 | MB_TASKMODAL );
-		return 2;
-	}
-#endif
 
 #ifdef IMAGICMP
 	static char lobbyLaunchCmdLine[] = "IM";

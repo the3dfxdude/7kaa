@@ -274,14 +274,6 @@ void Game::main_menu()
 
 	//--------------------------------------//
 
-	#ifdef DEMO
-		demo_disp_ad_page();
-	#else
-		//---- display game end advertising page ----//
-		vga.disp_image_file("MAINMENU");
-		mouse.wait_press(60);
-		vga.finish_disp_image_file();
-	#endif
 }
 //------------ End of function Game::main_menu -----------//
 
