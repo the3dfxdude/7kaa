@@ -784,7 +784,7 @@ void Sys::main_loop(int isLoadedGame)
 		 //this will redraw the screen after a 'blackout'
 		 //causes a quick flicker, blackouts occur from outside windows events
 		 #ifdef WIN32
-		 sys.need_redraw_flag = 1
+		 sys.need_redraw_flag = 1;
 		 #endif
       }
       else if ( !paused_flag && active_flag )
