@@ -35,7 +35,7 @@ foreach (@c_files) {
 
   if ($flag) {
     my $optlevel = $_ eq "OWORLD" ? "-O1" : "-O2";
-    my $cmd = "g++ $optlevel -g -c @defines @includes $_.cpp";
+    my $cmd = "g++ $optlevel -g -c $defines $includes $_.cpp";
     print "$cmd\n";
     system $cmd and die "g++ failed";
   }
