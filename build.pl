@@ -22,7 +22,7 @@ sub is_file_newer {
 sub assemble {
   foreach my $i (@_) {
     if (is_file_newer("$i.asm","$i.o")) {
-      my $cmd = "jwasm -q -elf -zt1 $i.asm";
+      my $cmd = "jwasm $jwasm_args -zt1 $i.asm -Fo $i.o";
       print "$cmd\n";
       system $cmd and $msg = "build.pl: could not assemble '$i.asm'.\n" and return 0;
     }

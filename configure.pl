@@ -4,7 +4,13 @@ my @wine_ver_req = (1, 1, 34);
 
 my %cfg;
 
+# platform
 $cfg{platform} = detect_platform();
+
+# assembler
+$cfg{jwasm_args} = "-q " . get_jwasm_bin_format($cfg{platform});
+
+# compiler options
 $cfg{wine_prefix} = detect_wine_prefix();
 
 my @includes = (
@@ -30,10 +36,19 @@ DISABLE_MULTI_PLAYER
 @defines = map { "-D$_" } @defines;
 $cfg{defines} = "@defines";
 
+# write the build options
 write_config(\%cfg);
 
 
 print "\nReady to run build.pl\n\n";
+
+1;
+
+sub get_jwasm_bin_format {
+  $_[0] eq 'linux32' and return '-elf';
+  $_[0] eq 'win32' and return '-coff';
+  die "Don't know bin format for platform '$_[0]' to use with jwasm.\n";
+}
 
 sub detect_platform {
   # Detect the platform
