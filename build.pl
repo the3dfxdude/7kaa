@@ -1,75 +1,118 @@
 #!/usr/bin/perl
 
 use File::stat;
-require "files.pl";
 require "opts.pl";
 
-chdir "asm" or die "Missing asm dir";
-foreach (@asm_files) {
-  my $flag = 1;
+our $msg;
 
-  # check modification time
-  if (-e "$_.o") {
-    my $objstat = stat("$_.o");
-    my $cppstat = stat("$_.asm");
-    $cppstat->mtime >= $objstat->mtime or $flag = 0;
+build_targets();
+defined($msg) and print $msg;
+
+1;
+
+# is_file_newer($file, $than)
+# Checks if $file is newer than $than.
+sub is_file_newer {
+  (-f $_[1]) or return 1;
+  my $file = stat($_[0]);
+  my $than = stat($_[1]);
+  return $file->mtime >= $than->mtime;
+}
+
+sub assemble {
+  foreach my $i (@_) {
+    if (is_file_newer("$i.asm","$i.o")) {
+      my $cmd = "jwasm -q -elf -zt1 $i.asm";
+      print "$cmd\n";
+      system $cmd and $msg = "build.pl: could not assemble '$i.asm'.\n" and return 0;
+    }
+  }
+
+  return 1;
+}
+
+sub compile {
+  foreach my $i (@_) {
+    if (is_file_newer("$i.cpp","$i.o")) {
+      # OWORLD currently miscompiles at -O2 on gcc 4.3.3.
+      # A hack follows--should be handled better or investigated and fixed.
+      my $optlevel = $i eq "OWORLD" ? "-O1" : "-O2";
+
+      my $cmd = "g++ $optlevel -g -c $defines $includes $i.cpp";
+      print "$cmd\n";
+      system $cmd and $msg = "build.pl: could not compile '$i.cpp'.\n" and return 0;
+    }
+  }
+  return 1;
+}
+
+sub link_exe {
+  my ($exe, $obj_files, $libs) = @_;
+  defined($exe) or return 1; # No exe targets here
+
+  my $flag = 0;
+  foreach my $i (@$obj_files) {
+    unless (-f $i) {
+      $msg = "build.pl: missing file '$i' for linking.\n";
+      return 0;
+    }
+
+    # check modification times to see if we have to relink
+    if (-f $exe) {
+      is_file_newer($i, $exe) and $flag = 1;
+    } else {
+      $flag = 1;
+    }
   }
 
   if ($flag) {
-    my $cmd = "jwasm -q -elf -zt1 $_.asm";
-    print "$cmd\n";
-    system $cmd and die "jwasm failed";
-  }
-}
-chdir "..";
-
-foreach (@c_files) {
-  my $flag = 1;
-
-  # check modification time
-  if (-e "$_.o") {
-    my $objstat = stat("$_.o");
-    my $cppstat = stat("$_.cpp");
-    $cppstat->mtime >= $objstat->mtime or $flag = 0;
+    my $cmd = "wineg++ -g @$obj_files @$libs -o $exe";
+    print $cmd,"\n";
+    if (system $cmd) {
+      $msg = "build.pl: couldn't create executable '$exe'\n" and
+      return 0;
+    }
   }
 
-  if ($flag) {
-    my $optlevel = $_ eq "OWORLD" ? "-O1" : "-O2";
-    my $cmd = "g++ $optlevel -g -c $defines $includes $_.cpp";
-    print "$cmd\n";
-    system $cmd and die "g++ failed";
+  return 1;
+}
+
+sub recurse_dirs {
+  foreach my $i (@_) {
+    unless (chdir $i) {
+      $msg = "build.pl: directory specified '$i' does not exist.\n";
+      return 0;
+    }
+    print "Entering '$i'.\n";
+    build_targets() or return 0;
+    print "Leaving '$i'.\n";
+    unless (chdir '..') {
+      $msg = "build.pl: parent directory disappeared.\n";
+      return 0;
+    }
   }
+  return 1;
 }
 
-@obj_files = map { "$_.o" } @c_files;
-push ( @obj_files, map { "asm/$_.o" } @asm_files );
+sub build_targets {
+  local @dirs;
+  local @asm_files;
+  local @c_files;
+  local @obj_files;
+  local @libs;
+  local $exe;
 
-my $exe = "AM.exe";
-my $flag = 0;
-foreach (@obj_files) {
-  (-e $_) or die "Missing file '$_' for linking";
-
-  if (-e $exe) {
-    my $exestat = stat($exe);
-    my $objstat = stat($_);
-    $objstat->mtime >= $exestat->mtime and $flag = 1;
-  } else {
-    $flag = 1;
+  unless (-f 'targets.pl') {
+    $msg = "build.pl: no targets file. Stopping.\n";
+    return 0;
   }
+
+  do 'targets.pl';
+
+  recurse_dirs(@dirs) or return 0;
+  assemble(@asm_files) or return 0;
+  compile(@c_files) or return 0;
+  link_exe($exe, \@obj_files, \@libs) or return 0;
+
+  return 1;
 }
-
-if ($flag) {
-  my @libs = qw(
-    gdi32 ddraw msvcrt ole32 dinput dplay dplayx dsound winmm
-  );
-
-  @libs = map { "-l$_" } @libs;
-
-  my $cmd = "wineg++ -g @obj_files @libs -o AM.exe";
-  print $cmd,"\n";
-  system $cmd and die "wineg++ failed\n";
-
-  #system "mv AM.exe* ~/local/sevenkingdoms" and die "oops";
-}
-
-print "\nBuild Complete\n";
