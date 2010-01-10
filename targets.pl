@@ -1,5 +1,5 @@
 ### Directories to build in ###
-@dirs = qw( asm so );
+@dirs = qw( asm );
 
 ### Compiler targets ###
 @c_files = qw(
