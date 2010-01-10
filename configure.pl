@@ -1,5 +1,7 @@
 #!/usr/bin/perl -w
 
+use File::Spec;
+
 my @wine_ver_req = (1, 1, 34);
 
 my %cfg;
@@ -11,15 +13,24 @@ $cfg{platform} = detect_platform();
 $cfg{jwasm_args} = "-q " . get_jwasm_bin_format($cfg{platform});
 
 # compiler options
-$cfg{wine_prefix} = detect_wine_prefix();
+if ($cfg{platform} =~ /^linux/) {
 
-my @includes = (
-"include",
-"$cfg{wine_prefix}/include/wine/windows",
-"$cfg{wine_prefix}/include/wine/msvcrt",
-);
-@includes = map { "-I$_" } @includes;
-$cfg{includes} = "@includes";
+  # search for wine
+  $cfg{wine_prefix} = detect_wine_prefix();
+
+  unless (defined($cfg{wine_prefix})) {
+    print "Wine-" . join('.', @wine_ver_req) . " or later is required.\n";
+    exit 1;
+  }
+
+  my @includes = (
+  "include",
+  "$cfg{wine_prefix}/include/wine/windows",
+  "$cfg{wine_prefix}/include/wine/msvcrt",
+  );
+  @includes = map { "-I$_" } @includes;
+  $cfg{includes} = "@includes";
+}
 
 # The following sets flags used during compiling.
 # The flags that are known to work:
@@ -43,6 +54,19 @@ write_config(\%cfg);
 print "\nReady to run build.pl\n\n";
 
 1;
+
+# which($exe_name)
+# Perl version to avoid using the system command that does not always exist.
+sub which {
+  my @path = File::Spec->path();
+
+  foreach my $i (@path) {
+    my $loc = "$i/$_[0]";
+    (-x $loc) and return $loc;
+  }
+
+  return undef;
+}
 
 sub get_jwasm_bin_format {
   $_[0] eq 'linux32' and return '-elf';
@@ -74,27 +98,13 @@ sub detect_platform {
 }
 
 sub detect_wine_prefix {
-  # Decide where the wine prefix is
-  print "Searching for wine: ";
-  my $wine_executable = `which wine`;
-  chomp $wine_executable;
-  if ($wine_executable =~ /^bash/) {
-    print "not found -- need wine-" . join('.', @wine_ver_req) . " or later\n";
-    die;
-  }
-  my ($wine_prefix) = $wine_executable =~ /(.*)\/bin/;
-  unless (defined($wine_prefix)) {
-    print "malformed path\n";
-    die;
-  }
-
   # Check the wine version
-  print "$wine_prefix\nDetecting wine version: ";
-  my $wine_version = `$wine_prefix/bin/wine --version`;
+  print "Detecting wine version: ";
+  my $wine_version = `wine --version`;
   my @ver = $wine_version =~ /wine-(\d+)\.(\d+)\.(\d+)/;
   unless (@ver == 3) {
-    print "unable to run wine: $wine_version\n";
-    die;
+    print "not found\n";
+    return undef;
   }
   print join('.', @ver);
   my $pass = 1;
@@ -104,9 +114,23 @@ sub detect_wine_prefix {
   if ($pass) {
     print " ok\n";
   } else {
-    print " failed -- need wine-" . join('.', @wine_ver_req) . " or later\n";
-    die;
+    print " failed\n";
+    return undef;
   }
+
+  # Decide where the wine prefix is
+  print "Searching for wine: ";
+  my $wine_executable = which('wine');
+  unless (defined($wine_executable)) {
+    print "not found\n";
+    return undef;
+  }
+  my ($wine_prefix) = $wine_executable =~ /(.*)\/bin/;
+  unless (defined($wine_prefix)) {
+    print "malformed path\n";
+    return undef;
+  }
+  print "$wine_prefix\n";
 
   return $wine_prefix;
 }
