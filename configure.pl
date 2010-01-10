@@ -3,16 +3,27 @@
 use File::Spec;
 
 my @wine_ver_req = (1, 1, 34);
+my @gcc_ver_req = (3, 0, 0);
+my @jwasm_ver_req = (2, '00', 0);
 
 my %cfg;
 
 # platform
 $cfg{platform} = detect_platform();
 
-# assembler
+# assembler setup
+unless (check_jwasm_version()) {
+  print "JWasm " . join('.', @jwasm_ver_req) . " is required.\n";
+  exit 1;
+}
 $cfg{jwasm_args} = "-q " . get_jwasm_bin_format($cfg{platform});
 
-# compiler options
+# compiler setup
+unless (check_gcc_version()) {
+  print "GCC " . join('.', @gcc_ver_req) . " is required.\n";
+  exit 1;
+}
+
 if ($cfg{platform} =~ /^linux/) {
 
   # search for wine
@@ -68,6 +79,28 @@ sub which {
   return undef;
 }
 
+# version_check(\@version, \@requirement)
+sub version_check {
+  my ($ver, $req) = @_;
+
+  # check major number
+  $ver->[0] >= $req->[0] or return 0;
+
+  # if major equals
+  if ($ver->[0] == $req->[0]) {
+    # check medium number
+    $ver->[1] >= $req->[1] or return 0;
+
+    # if medium number equals
+    if ($ver->[1] == $req->[1]) {
+      # check minor number
+      $ver->[2] >= $req->[2] or return 0;
+    }
+  }
+
+  return 1;
+}
+
 sub get_jwasm_bin_format {
   $_[0] eq 'linux32' and return '-elf';
   $_[0] eq 'win32' and return '-coff';
@@ -101,17 +134,13 @@ sub detect_wine_prefix {
   # Check the wine version
   print "Detecting wine version: ";
   my $wine_version = `wine --version`;
-  my @ver = $wine_version =~ /wine-(\d+)\.(\d+)\.(\d+)/;
+  my @ver = $wine_version =~ /^wine-(\d+)\.(\d+)\.(\d+)/;
   unless (@ver == 3) {
     print "not found\n";
     return undef;
   }
   print join('.', @ver);
-  my $pass = 1;
-  $ver[0] >= $wine_ver_req[0] or $pass = 0;
-  ($pass and $ver[0] == $wine_ver_req[0] and $ver[1] >= $wine_ver_req[1]) or $pass = 0;
-  ($pass and $ver[0] == $wine_ver_req[0] and $ver[1] == $wine_ver_req[1] and $ver[2] >= $wine_ver_req[2]) or $pass = 0;
-  if ($pass) {
+  if (version_check(\@ver, \@wine_ver_req)) {
     print " ok\n";
   } else {
     print " failed\n";
@@ -133,6 +162,43 @@ sub detect_wine_prefix {
   print "$wine_prefix\n";
 
   return $wine_prefix;
+}
+
+sub check_gcc_version {
+  print "Detecting gcc version: ";
+  my $gcc_version = `gcc --version`;
+  my @ver = $gcc_version =~ /^gcc \(GCC\) (\d+)\.(\d+)\.(\d+)/;
+  unless (@ver == 3) {
+    print "not found\n";
+    return undef;
+  }
+  print join('.', @ver);
+  if (version_check(\@ver, \@gcc_ver_req)) {
+    print " ok\n";
+    return 1;
+  }
+
+  print " failed\n";
+  return 0;
+}
+
+sub check_jwasm_version {
+  print "Detecting JWasm version: ";
+  my $jwasm_version = `jwasm -?`;
+  my @ver = $jwasm_version =~ /^JWasm v(\d+)\.(\d+)/;
+  $ver[2] = 0;
+  unless (@ver == 3) {
+    print "not found\n";
+    return undef;
+  }
+  print join('.', @ver);
+  if (version_check(\@ver, \@jwasm_ver_req)) {
+    print " ok\n";
+    return 1;
+  }
+
+  print " failed\n";
+  return 0;
 }
 
 sub write_config {
