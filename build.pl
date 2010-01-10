@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 
 use File::stat;
+
+(-f 'opts.pl') or die "Please run configure.pl first.\n";
 require "opts.pl";
 
 our $msg;
