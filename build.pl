@@ -48,6 +48,21 @@ sub compile {
   return 1;
 }
 
+sub compile_resources {
+  foreach my $i (@_) {
+    if (is_file_newer("$i.rc","$i.o")) {
+      my $compiler = $platform =~ /^linux/ ? 'wrc' : 'windres';
+      my $cmd = "$compiler -i $i.rc -o $i.o";
+      print "$cmd\n";
+      if (system $cmd) {
+        $msg = "build.pl: couldn't compile resource '$i'\n" and
+        return 0;
+      }
+    }
+  }
+  return 1;
+}
+
 sub link_exe {
   my ($exe, $obj_files, $libs) = @_;
   defined($exe) or return 1; # No exe targets here
@@ -101,6 +116,7 @@ sub build_targets {
   local @dirs;
   local @asm_files;
   local @c_files;
+  local @rc_files;
   local @obj_files;
   local @libs;
   local $exe;
@@ -115,6 +131,7 @@ sub build_targets {
   recurse_dirs(@dirs) or return 0;
   assemble(@asm_files) or return 0;
   compile(@c_files) or return 0;
+  compile_resources(@rc_files) or return 0;
   link_exe($exe, \@obj_files, \@libs) or return 0;
 
   return 1;

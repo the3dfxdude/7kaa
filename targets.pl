@@ -51,6 +51,11 @@ OMOUSEFR  OTALKSPA  OTALKFRE  OTALKGER  ONEWSFRE  ONEWSSPA
 ONEWSGER
 );
 
+### Resources ###
+@rc_files = qw(
+ico
+);
+
 ### Linking targets ###
 @obj_files = map { "$_.o" } @c_files;
 my @asm_obj_files = qw(
@@ -61,6 +66,7 @@ IB_TR   IB_DW  I_PIXEL I_FREMAP I_BLACK  I_SNOW  IB_ATRDM IB_TRDM
 IB_ATDM IR_AM  IR_A    IB_TDM   IR_M IR
 );
 push ( @obj_files, map { "asm/$_.o" } @asm_obj_files );
+push ( @obj_files, map { "$_.o" } @rc_files );
 
 @libs = qw(
   gdi32 ddraw msvcrt ole32 dinput dplayx dsound winmm
