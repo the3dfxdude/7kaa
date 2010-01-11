@@ -67,4 +67,4 @@ push ( @obj_files, map { "asm/$_.o" } @asm_obj_files );
 );
 @libs = map { "-l$_" } @libs;
 
-$exe = '7k.exe';
+$exe = '7kaa.exe';
