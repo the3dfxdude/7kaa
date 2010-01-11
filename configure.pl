@@ -7,6 +7,14 @@ my @gcc_ver_req = (3, 0, 0);
 my @jwasm_ver_req = (2, '00', 0);
 
 my %cfg;
+my $dxsdk_path;
+
+# parse command line args
+foreach my $i (@ARGV) {
+  if ($i =~ /^--with-dxsdk=/) {
+    ($dxsdk_path) = $i =~ /=(.*)/;
+  }
+}
 
 # platform
 $cfg{platform} = detect_platform();
@@ -40,7 +48,29 @@ if ($cfg{platform} =~ /^linux/) {
   "$cfg{wine_prefix}/include/wine/msvcrt",
   );
   @includes = map { "-I$_" } @includes;
-  $cfg{includes} = "@includes";
+
+  $cfg{cc_dirs} = "";
+  @includes and $cfg{cc_dirs} .= "@includes";
+} elsif ($cfg{platform} =~ /^win32$/) {
+
+  # search for the DXSDK
+  unless (defined($dxsdk_path)) {
+    print "Please specify the DXSDK path with --with-dxsdk=C:/yoursdk\n";
+    exit 1;
+  }
+
+  my @includes = (
+  "include",
+  $dxsdk_path . "/include",
+  );
+  @includes = map { "-I$_" } @includes;
+
+  my @libs = ( $dxsdk_path . "/lib" );
+  @libs = map { "-L$_" } @libs;
+
+  $cfg{cc_dirs} = "";
+  @includes and $cfg{cc_dirs} .= "@includes ";
+  @libs and $cfg{cc_dirs} .= "@libs ";
 }
 
 # The following sets flags used during compiling.
