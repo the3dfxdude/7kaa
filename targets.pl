@@ -63,7 +63,7 @@ IB_ATDM IR_AM  IR_A    IB_TDM   IR_M IR
 push ( @obj_files, map { "asm/$_.o" } @asm_obj_files );
 
 @libs = qw(
-  gdi32 ddraw msvcrt ole32 dinput dplay dplayx dsound winmm
+  gdi32 ddraw msvcrt ole32 dinput dplayx dsound winmm
 );
 @libs = map { "-l$_" } @libs;
 
