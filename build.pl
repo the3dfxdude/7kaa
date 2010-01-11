@@ -68,7 +68,8 @@ sub link_exe {
   }
 
   if ($flag) {
-    my $cmd = "wineg++ -g @$obj_files @$libs -o $exe";
+    my $linker = $platform =~ /^linux/ ? 'wineg++' : 'g++';
+    my $cmd = "$linker -g @$obj_files @$libs -o $exe";
     print $cmd,"\n";
     if (system $cmd) {
       $msg = "build.pl: couldn't create executable '$exe'\n" and
