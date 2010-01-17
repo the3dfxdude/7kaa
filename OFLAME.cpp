@@ -237,9 +237,9 @@ void Flame::rise(short wind)
 {
 	// rise of each particle of frame
 	unsigned char *p;			// pointer to heat_map
-/*
+
 	short x,y;
-	
+/*	
 	// 1st version, left to right, top to bottom
 	for( x=0; x < map_width; ++x)
 	{
@@ -260,7 +260,7 @@ void Flame::rise(short wind)
 			}
 		}
 	}
-	
+*/	
 	 
 	// 2nd version top to bottom, left to center and right to center
 	for( y = map_height-2; y >= 0; --y)
@@ -300,8 +300,9 @@ void Flame::rise(short wind)
 		}
 
 	}
-*/
 
+
+#if 0
 
 	// 2nd version assembly version
 	const unsigned int BALANCE_PERIOD = 11;
@@ -614,6 +615,7 @@ void Flame::rise(short wind)
 		"i"(WIND_PERIOD),"i"(DECAY_PERIOD),"m"(rightLen)
 		: "%eax","%ebx","%edx","%edi","memory"
 	);
+#endif
 }
 //-------------- End Function Flame::rise ----------//
 
