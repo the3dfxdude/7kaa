@@ -197,7 +197,7 @@ sub detect_wine_prefix {
 sub check_gcc_version {
   print "Detecting gcc version: ";
   my $gcc_version = `gcc --version`;
-  my @ver = $gcc_version =~ /^gcc \(GCC\) (\d+)\.(\d+)\.(\d+)/;
+  my @ver = $gcc_version =~ /^gcc \(.*\) (\d+)\.(\d+)\.(\d+)/;
   unless (@ver == 3) {
     print "not found\n";
     return undef;
