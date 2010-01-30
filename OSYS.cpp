@@ -1188,17 +1188,7 @@ void Sys::yield()
 
    isYielding=1;
 
-#ifndef WIN32
-   /* Call PeekMessage to allow dinput to process messages in the
-    * menu loops. This also works around a wine bug. Note that
-    * with this hack, PeekMessage is now called twice in the
-    * "main_loop" of an actual running game match. Perhaps this
-    * can be addressed, but in the long run, it won't matter.
-    * -jesse Sept 13, 2009
-    */
-   LPMSG lpMsg;
-   PeekMessage(lpMsg, sys.main_hwnd, 0, 0, PM_NOREMOVE);
-#endif
+   handle_window_messages();
 
    mouse.poll_event();
 
@@ -1600,6 +1590,35 @@ long Sys::main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
    return DefWindowProc(hWnd, message, wParam, lParam);
 }
 //--------- End of function Sys::main_win_proc ---------//
+
+
+//-------- Begin of function Sys::handle_window_messages --------//
+void Sys::handle_window_messages()
+{
+   static int lastTick;
+
+   int tick = GetTickCount();
+   if (lastTick == tick)
+      return;
+   lastTick = tick;
+
+   MSG msg;
+   while (PeekMessage(&msg, sys.main_hwnd, 0, 0, PM_NOREMOVE))
+   {
+      BOOL r;
+
+      r = GetMessage(&msg, sys.main_hwnd, 0, 0);
+      if (r == -1)
+      {
+         // not handled
+         return;
+      }
+
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+   }
+}
+//-------- End of function Sys::handle_window_messages --------//
 
 
 //-------- Begin of function Sys::process_key --------//

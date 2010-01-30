@@ -178,6 +178,8 @@ public:
 	void 		blt_virtual_buf();
 
 	long		main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	void		handle_window_messages();
+
 	void		pause();
 	void		unpause();
 
