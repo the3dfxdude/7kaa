@@ -1581,7 +1581,7 @@ long Sys::main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
        case WM_ERASEBKGND:
           // do not erase the background
-          return 0;
+          return 1;
 
        default:
           break;
