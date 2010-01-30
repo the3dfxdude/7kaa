@@ -263,24 +263,29 @@ void MouseCursor::process(int curX, int curY)
 	}
 	else
 	{
-		//---- if the cursor is across the screen border -----//
+		/* Save the screen underneath the cursor
+		 * where it will be drawn.
+		 */
+		int save_x1, save_x2, save_y1, save_y2;
 
-		if( cur_x1 < 0 || cur_x2 >= VGA_WIDTH || cur_y1 < 0 || cur_y2 >= VGA_HEIGHT )
-		{
-			vga_front.read_bitmap( max(cur_x1,0), max(cur_y1,0),
-				min(cur_x2,VGA_WIDTH-1), min(cur_y2,VGA_HEIGHT-1), save_scr );
+		save_x1 = max(cur_x1, 0);
+		save_y1 = max(cur_y1, 0);
+		save_x2 = min(cur_x2, VGA_WIDTH-1);
+		save_y2 = min(cur_y2, VGA_HEIGHT-1);
 
-			vga_front.put_bitmap_area_trans( cur_x1, cur_y1, icon_ptr,
-				max(0,cur_x1)-cur_x1, max(0,cur_y1)-cur_y1,
-				min(VGA_WIDTH-1,cur_x2)-cur_x1, min(VGA_HEIGHT-1,cur_y2)-cur_y1 );
+		if ( save_x1 < save_x2 && save_y1 < save_y2 ) {
+			vga_front.read_bitmap( save_x1, save_y1,
+					       save_x2, save_y2, save_scr );
+			vga_front.put_bitmap_area_trans( save_x1,
+							 save_y1,
+							 icon_ptr,
+							 save_x1-cur_x1,
+							 save_y1-cur_y1,
+							 save_x2-cur_x1,
+							 save_y2-cur_y1 );
+
+			cursor_shown = 1;
 		}
-		else  //----- if the whole cursor is on the screen -----//
-		{
-			vga_front.read_bitmap( cur_x1, cur_y1, cur_x2, cur_y2, save_scr );
-			vga_front.put_bitmap_trans( cur_x1, cur_y1, icon_ptr );     // must use PutIcon instead of PutArea for background masking
-		}
-
-		cursor_shown = 1;
 	}
 
 	//------------------------------------------//
