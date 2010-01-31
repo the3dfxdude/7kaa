@@ -46,6 +46,18 @@ This will build the game suited for your system.  If this does
 not work, please tell us.
 
 
+Running
+--------
+You can download the game data if you do not already have the game
+installed. You can find the game data from the 7kfans sourceforge
+page at http://sourceforge.net/projects/skfans/
+
+Copy the executable files "7kaa.exe*" from the build directory to
+your installed game directory.  Run 7kaa.exe to start the game
+instead of the classic enlight version called 7k.exe.  You may
+create a short-cut now.
+
+
 Other Tips
 ---------
 
