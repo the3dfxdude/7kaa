@@ -43,7 +43,6 @@ if ($cfg{platform} =~ /^linux/) {
   }
 
   my @includes = (
-  "include",
   "$cfg{wine_prefix}/include/wine/windows",
   "$cfg{wine_prefix}/include/wine/msvcrt",
   );

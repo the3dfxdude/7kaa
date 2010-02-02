@@ -40,7 +40,9 @@ sub compile {
       # A hack follows--should be handled better or investigated and fixed.
       my $optlevel = $i eq "OWORLD" ? "-O1" : "-O2";
 
-      my $cmd = "g++ $optlevel -g -c $defines $cc_dirs $i.cpp";
+      my $include_paths = "$cc_dirs " . join(' ', map { "-I$_" } @includes );
+
+      my $cmd = "g++ $optlevel -g -c $defines $include_paths $i.cpp";
       print "$cmd\n";
       system $cmd and $msg = "build.pl: could not compile '$i.cpp'.\n" and return 0;
     }
