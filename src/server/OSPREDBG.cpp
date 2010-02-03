@@ -32,10 +32,10 @@
 #undef DEBUG
 #endif
 
-#include <OSPREUSE.H>
+#include <OSPREUSE.h>
 
 #ifdef DEBUG
-#include <OSYS.H>
+#include <OSYS.h>
 
 static ResultNode*	debugSrePtr; // for debug only
 static ResultNode*	debugSreNode1;
