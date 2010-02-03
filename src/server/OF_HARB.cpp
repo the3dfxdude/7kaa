@@ -1098,7 +1098,8 @@ void FirmHarbor::del_hosted_ship(int delUnitRecno)
 
 	//-----------------------------------------//
 
-	for( int i=0 ; i<ship_count ; i++ )
+	int i;
+	for( i=0 ; i<ship_count ; i++ )
 	{
 		if( ship_recno_array[i] == delUnitRecno )
 		{

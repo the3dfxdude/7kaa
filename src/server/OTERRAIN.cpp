@@ -760,7 +760,8 @@ void TerrainRes::load_sub_info()
 			else
 			{
 				// search from the array
-				for(int j = 0; j < ter_sub_rec_count; j++)
+				int j;
+				for(j = 0; j < ter_sub_rec_count; j++)
 				{
 					if(ter_sub_array[j].sub_no == terrainSubInfo->sub_no &&
 						ter_sub_array[j].step_id == terrainSubInfo->step_id-1)
