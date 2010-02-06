@@ -243,7 +243,8 @@ void Info::init_player_reply(int talkToNationRecno)
 
 	int nationCount = nation_filter();
 
-	for( int i=1 ; i<=nationCount ; i++ )
+	int i;
+	for( i=1 ; i<=nationCount ; i++ )
 	{
 		if( nation_filter(i) == talkToNationRecno )
 		{
@@ -1078,7 +1079,8 @@ void Info::player_reply_chat(int withNationRecno)
 
 	int nationCount = nation_filter();
 
-	for( int i=1 ; i<=nationCount ; i++ )
+	int i;
+	for( i=1 ; i<=nationCount ; i++ )
 	{
 		if( nation_filter(i) == withNationRecno )
 		{

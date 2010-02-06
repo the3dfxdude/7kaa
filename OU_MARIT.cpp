@@ -195,7 +195,8 @@ void UnitMarine::update_stop_list()
 		memset(stop_array+stop_defined_num, 0, sizeof(ShipStop)*(MAX_STOP_FOR_SHIP-stop_defined_num));
 
 	#ifdef DEBUG
-		for(int debugCount=0; debugCount<stop_defined_num; debugCount++)
+		int debugCount;
+		for(debugCount=0; debugCount<stop_defined_num; debugCount++)
 			err_when(!stop_array[debugCount].firm_recno);
 
 		for(; debugCount<MAX_STOP_FOR_SHIP; debugCount++)
