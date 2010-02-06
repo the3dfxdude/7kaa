@@ -390,7 +390,7 @@ void Sys::process()
 							continue;
 
 						err_when(i2>arraySize);
-						unit_array.attack(targetPtr->next_x_loc(), targetPtr->next_y_loc(), 0, attackerArray, attackerCount, 0);
+						unit_array.attack(targetPtr->next_x_loc(), targetPtr->next_y_loc(), 0, attackerArray, attackerCount, 0, 0);
 						break;
 					}
 				}
