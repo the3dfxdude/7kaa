@@ -106,7 +106,7 @@
 //------- define game version constant --------//
 
 #ifdef AMPLUS
-	char *GAME_VERSION_STR = "2.13.1-rc1";
+	char *GAME_VERSION_STR = "2.13.1";
 	const int GAME_VERSION = 212;	// Version 2.00, don't change it unless the format of save game files has been changed
 #else
 	char *GAME_VERSION_STR = "1.11";
