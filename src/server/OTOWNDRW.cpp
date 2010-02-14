@@ -31,7 +31,9 @@
 #include <OPOWER.h>
 #include <OWORLD.h>
 #include <OGAME.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OANLINE.h>
 #include <OPLANT.h>
 #include <ONATION.h>
@@ -246,7 +248,11 @@ int Town::draw_detect_link_line(int actionDetect)
 				}
 
 				// ######## begin Gilbert 23/9 ##########//
+#ifdef USE_DPLAY
 				if( firmPtr->firm_id == FIRM_CAMP && !remote.is_enable())
+#else
+				if( firmPtr->firm_id == FIRM_CAMP )
+#endif
 				// ######## end Gilbert 23/9 ##########//
 				{
 					if( nation_recno )

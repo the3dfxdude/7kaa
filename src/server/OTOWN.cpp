@@ -43,7 +43,9 @@
 #include <OSPRTRES.h>
 #include <ORACERES.h>
 #include <ONATION.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OTOWN.h>
 #include <ONEWS.h>
 #include <OANLINE.h>
@@ -287,9 +289,12 @@ void Town::establish_contact_with_player()
 			{
 				NationRelation *relation = (~nation_array)->get_relation(nation_recno);
 
+#ifdef USE_DPLAY
 				if( !remote.is_enable() )
 				{
+#endif
 					relation->has_contact = 1;
+#ifdef USE_DPLAY
 				}
 				else
 				{
@@ -302,6 +307,7 @@ void Town::establish_contact_with_player()
 						relation->contact_msg_flag = 1;
 					}
 				}
+#endif
 			}
 		}
 	}
@@ -1583,6 +1589,7 @@ void Town::collect_tax(char remoteAction)
 
 	//------------------------------------------//
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <town recno> <race id>
@@ -1590,6 +1597,7 @@ void Town::collect_tax(char remoteAction)
 		shortPtr[0] = town_recno;
 		return;
 	}
+#endif
 
 	//----- calculate the loyalty decrease amount ------//
 	//
@@ -1645,6 +1653,7 @@ void Town::reward(char remoteAction)
 
 	//------------------------------------------//
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <town recno> <race id>
@@ -1652,6 +1661,7 @@ void Town::reward(char remoteAction)
 		shortPtr[0] = town_recno;
 		return;
 	}
+#endif
 
 	//----- calculate the loyalty increase amount ------//
 	//
@@ -2353,6 +2363,7 @@ int Town::migrate_to(int destTownRecno, char remoteAction, int raceId)
 			return 0;
 	}
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <town recno> <dest town recno> <race id>
@@ -2362,6 +2373,7 @@ int Town::migrate_to(int destTownRecno, char remoteAction, int raceId)
 		shortPtr[2] = raceId;
 		return 0;
 	}
+#endif
 
 	return can_migrate(destTownRecno, 1, raceId);		// 1- migrate now, 1-allow migrate spy
 }
@@ -3442,6 +3454,7 @@ void Town::release_town_link(int releaseTownRecno)
 //
 void Town::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int setBoth)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <town recno> <link Id> <toggle Flag>
@@ -3451,6 +3464,7 @@ void Town::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int s
 		shortPtr[2] = toggleFlag;
 		return;
 	}
+#endif
 
 	Firm* linkedFirm = firm_array[linked_firm_array[linkId-1]];
 	int 	linkedNationRecno = linkedFirm->nation_recno;
@@ -3527,6 +3541,7 @@ void Town::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int s
 //
 void Town::toggle_town_link(int linkId, int toggleFlag, char remoteAction, int setBoth)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <town recno> <link Id> <toggle Flag>
@@ -3536,6 +3551,7 @@ void Town::toggle_town_link(int linkId, int toggleFlag, char remoteAction, int s
 		shortPtr[2] = toggleFlag;
 		return;
 	}
+#endif
 
 	int linkedNationRecno = town_array[linked_town_array[linkId-1]]->nation_recno == nation_recno;
 
@@ -4350,6 +4366,7 @@ int Town::grant_to_non_own_town(int grantNationRecno, int remoteAction)
 	if( grantNation->cash < 0 )
 		return 0;
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_GRANT_INDEPENDENT, 2*sizeof(short) );
@@ -4357,6 +4374,7 @@ int Town::grant_to_non_own_town(int grantNationRecno, int remoteAction)
 		shortPtr[1] = grantNationRecno;
 		return 1;
 	}
+#endif
 
 	//---- calculate the resistance to be decreased -----//
 

@@ -55,7 +55,9 @@
 #include <OPOWER.h>
 #include <ORACERES.h>
 #include <OREBEL.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OSPATH.h>
 #include <OSPATHS2.h>
 #include <OSITE.h>
@@ -87,9 +89,11 @@
 #include <OEXPMASK.h>
 #include <OREGION.h>
 #include <OWARPT.h>
+#ifdef USE_DPLAY
 #include <ODPLAY.h>
 #include <OIMMPLAY.h>
 #include <OERRCTRL.h>
+#endif
 #include <OMUSIC.h>
 #include <OLOG.h>
 #include <OLONGLOG.h>
@@ -131,17 +135,21 @@ Video             video;
 #endif
 Audio             audio;
 Music             music;
+#ifdef USE_DPLAY
 MultiPlayerType	mp_obj;
 // MultiPlayerDP	mp_dp;
 // MultiPlayerIM	mp_im;
+#endif // USE_DPLAY
 Sys               sys;
 Translate         translate;        // constructor only memset()
 SeekPath          seek_path;
 SeekPathS2        seek_path_s2;
 SeekPathReuse     seek_path_reuse;
 Flame             flame[FLAME_GROW_STEP];
+#ifdef USE_DPLAY
 Remote            remote;
 ErrorControl      ec_remote;
+#endif
 AnimLine          anim_line;
 SECtrl            se_ctrl(&audio);
 SERes             se_res;
@@ -215,7 +223,9 @@ SpriteArray       effect_array(50);
 RegionArray       region_array;
 NewsArray         news_array;
 WarPointArray     war_point_array;
+#ifdef USE_DPLAY
 CrcStore				crc_store;
+#endif
 
 //--------- Game Surface class ------------//
 

@@ -38,7 +38,9 @@
 #include <OWORLD.h>
 #include <OSPY.h>
 #include <OF_INN.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OSERES.h>
 
 //------------- Define coordinations -----------//
@@ -223,6 +225,7 @@ void FirmInn::detect_info()
 			unit_res[inn_unit_array[browse_hire.recno()-1].unit_id]->sprite_id,
 			"RDY" );
 		// ###### end Gilbert 31/7 #######//
+#ifdef USE_DPLAY
 		if(remote.is_enable())
 		{
 			// packet structure : <firm recno>, <hire Id> <nation no>
@@ -232,6 +235,7 @@ void FirmInn::detect_info()
 			shortPtr[2] = nation_recno;
 		}
 		else
+#endif
 		{
 			hire(browse_hire.recno());
 		}

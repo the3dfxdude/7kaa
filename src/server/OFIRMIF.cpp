@@ -38,7 +38,9 @@
 #include <OTOWN.h>
 #include <OWORLD.h>
 #include <OFIRM.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OIMGRES.h>
 #include <OGAME.h>
 #include <OSYS.h>
@@ -302,14 +304,18 @@ int Firm::detect_basic_info()
 
 	if( detectBuilder && button_builder.detect(0, 0, 1) )		// 1-detect right button also
 	{
+#ifdef USE_DPLAY
 		if( !remote.is_enable() )
+#endif
 			set_builder(0);
+#ifdef USE_DPLAY
 		else
 		{
 			// packet structure : <firm recno>
 			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_FIRM_MOBL_BUILDER, sizeof(short));
 			*shortPtr = firm_recno;
 		}
+#endif
 
 		return 1;
 	}

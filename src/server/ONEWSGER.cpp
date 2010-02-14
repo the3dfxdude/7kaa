@@ -32,7 +32,9 @@
 #include <OFONT.h>
 #include <OTECHRES.h>
 #include <OMONSRES.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OGODRES.h>
 #include <ORACERES.h>
 #include <OTALKRES.h>

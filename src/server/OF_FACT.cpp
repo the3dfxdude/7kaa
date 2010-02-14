@@ -37,7 +37,9 @@
 #include <OF_MINE.h>
 #include <OF_MARK.h>
 #include <OF_FACT.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OSE.h>
 
 
@@ -391,6 +393,7 @@ void FirmFactory::disp_factory_info(int dispY1, int refreshFlag)
 //
 void FirmFactory::change_production()
 {
+#ifdef USE_DPLAY
 	if( remote.is_enable() )
 	{
 		// packet structure : <firm recno> <product id>
@@ -399,6 +402,7 @@ void FirmFactory::change_production()
 		shortPtr[1] = product_raw_id >= MAX_PRODUCT ? 1 : product_raw_id + 1;
 	}
 	else
+#endif
 	{
 		// update RemoteMsg::factory_change_product
 		if( ++product_raw_id > MAX_PRODUCT )

@@ -30,7 +30,9 @@
 #include <OTOWN.h>
 #include <OU_MARI.h>
 #include <OF_CAMP.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OF_MONS.h>
 #include <OU_GOD.h>
 #include <OF_HARB.h>
@@ -61,6 +63,7 @@ void Unit::build_firm(int buildXLoc, int buildYLoc, int firmId, char remoteActio
 {
 	err_when(sprite_info->loc_width>1 || sprite_info->loc_height>1);
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable() )
 	{
 		// packet structure : <unit recno> <xLoc> <yLoc> <firmId>
@@ -71,6 +74,7 @@ void Unit::build_firm(int buildXLoc, int buildYLoc, int firmId, char remoteActio
 		shortPtr[3] = firmId;
 		return;
 	}
+#endif
 
 	//----------------------------------------------------------------//
 	// return if the unit is dead
@@ -190,6 +194,7 @@ void Unit::burn(int burnXLoc, int burnYLoc, char remoteAction)
 {
 	err_when(sprite_info->loc_width>1 || sprite_info->loc_height>1);
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <unit recno> <xLoc> <yLoc>
@@ -199,6 +204,7 @@ void Unit::burn(int burnXLoc, int burnYLoc, char remoteAction)
 		shortPtr[2] = burnYLoc;
 		return;
 	}
+#endif
 
 	if(move_to_x_loc==burnXLoc && move_to_y_loc==burnYLoc)
 		return;	// should not burn the unit itself
@@ -1569,6 +1575,7 @@ void Unit::go_cast_power(int castXLoc, int castYLoc, char castPowerType, char re
 	if(hit_points<=0 || action_mode==ACTION_DIE || cur_action==SPRITE_DIE)
 		return;
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable() )
 	{
 		//------------ process multiplayer calling ---------------//
@@ -1580,6 +1587,7 @@ void Unit::go_cast_power(int castXLoc, int castYLoc, char castPowerType, char re
 		shortPtr[3] = castPowerType;
 		return;
 	}
+#endif
 
 	UnitGod *unitGod = (UnitGod *)this;
 
