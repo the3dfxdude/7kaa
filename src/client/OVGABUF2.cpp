@@ -766,107 +766,14 @@ void VgaBuf::blt_buf( VgaBuf *srcBuf, int x1, int y1 )
 	char *destPtr = buf_ptr();
 	int destPitch = buf_pitch();
 
-	if( srcWidth & 1)
+	// this used to be assembly coded, but memcpy() does this better
+	int dest = y1 * destPitch + x1;
+	int src = 0;
+	for (int y=0; y<srcHeight; ++y)
 	{
-		// odd number
-		/* Original Visual C++ assembly code for reference
-		_asm
-		{
-			mov	eax, y1
-			imul	destPitch
-			add	eax, x1
-			mov	edi, eax
-			add	edi, destPtr
-
-			mov	esi, srcPtr
-
-			mov	ecx, srcHeight
-	blt_buf_1:
-			push	ecx
-			mov	ecx, srcWidth
-			rep movsb
-			sub	esi, srcWidth
-			sub	edi, srcWidth
-			add	esi, srcPitch
-			add	edi, destPitch
-			pop	ecx
-			loop	blt_buf_1
-		}
-		*/
-
-		__asm__ __volatile__ (
-			"imull %1\n\t"
-			"addl %2, %%eax\n\t"
-			"movl %%eax, %%edi\n\t"
-			"addl %3, %%edi\n"
-		"blt_buf_1:\n\t"
-			"pushl %%ecx\n\t"
-			"movl %6, %%ecx\n\t"
-			"rep movsb\n\t"
-			"subl %6, %%esi\n\t"
-			"subl %6, %%edi\n\t"
-			"addl %7, %%esi\n\t"
-			"addl %8, %%edi\n\t"
-			"popl %%ecx\n\t"
-			"loop blt_buf_1\n\t"
-			:
-			: "a"(y1), "m"(destPitch), "m"(x1), "m"(destPtr), "S"(srcPtr), "c"(srcHeight), "m"(srcWidth),
-			"m"(srcPitch), "m"(destPitch)
-			: "%edi","memory"
-
-		);
-	}
-	else
-	{
-		// even number
-		/* Original Visual C++ assembly code for reference
-		_asm
-		{
-			mov	eax, y1
-			imul	destPitch
-			add	eax, x1
-			mov	edi, eax
-			add	edi, destPtr
-
-			mov	esi, srcPtr
-
-			mov	ecx, srcHeight
-	blt_buf_2:
-			push	ecx
-			mov	ecx, srcWidth
-			shr	ecx, 1
-			rep movsw
-			sub	esi, srcWidth
-			sub	edi, srcWidth
-			add	esi, srcPitch
-			add	edi, destPitch
-			pop	ecx
-			loop	blt_buf_2
-		}
-		*/
-
-		__asm__ __volatile__ (
-			"imull %1\n\t"
-			"addl %2, %%eax\n\t"
-			"movl %%eax, %%edi\n\t"
-			"addl %3, %%edi\n"
-		"blt_buf_2:\n\t"
-			"pushl %%ecx\n\t"
-			"movl %6, %%ecx\n\t"
-			"shrl $1, %%ecx\n\t"
-			"rep movsb\n\t"
-			"subl %6, %%esi\n\t"
-			"subl %6, %%edi\n\t"
-			"addl %7, %%esi\n\t"
-			"addl %8, %%edi\n\t"
-			"popl %%ecx\n\t"
-			"loop blt_buf_2\n\t"
-			:
-			: "a"(y1),"m"(destPitch),"m"(x1),"m"(destPtr),"S"(srcPtr),"c"(srcHeight),"m"(srcWidth),
-			"m"(srcPitch),"m"(destPitch)
-			: "%edi","memory"
-
-		);
+		memcpy( &destPtr[dest], &srcPtr[src], srcWidth );
+		dest += destPitch;
+		src += srcPitch;
 	}
 }
 //------------- End of function VgaBuf::blt_buf ------------//
