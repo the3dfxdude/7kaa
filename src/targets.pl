@@ -1,2 +1,2 @@
 ### Directories to build in ###
-@dirs = qw( client server );
+@dirs = qw( common client server );
