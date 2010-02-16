@@ -61,7 +61,21 @@ ONEWSGER  OSPREDBG  OLONGLOG
 # OCRC_STO
 # OGAMEMP
 
+@defines = qw( AMPLUS );
+if (defined($debug) && $debug) {
+  push (@defines, "DEBUG");
+}
+
 @includes = qw( ../../include );
+
+if (defined($wine_prefix)) {
+  push (@includes, "$wine_prefix/include/wine/windows",
+                   "$wine_prefix/include/wine/msvcrt");
+}
+
+if (defined($dxsdk_path)) {
+  push (@includes, "$dxsdk_path/include");
+}
 
 ### Resources ###
 @rc_files = qw(
@@ -80,9 +94,16 @@ IB_ATDM IR_AM  IR_A    IB_TDM   IR_M IR
 push ( @obj_files, map { "asm/$_.o" } @asm_obj_files );
 push ( @obj_files, map { "$_.o" } @rc_files );
 
+if (defined($debug) && $debug) {
+  push ( @obj_files, "../common/dbglog.o" );
+}
+
 @libs = qw(
   gdi32 ddraw msvcrt ole32 dinput dsound winmm
 );
-@libs = map { "-l$_" } @libs;
+
+if (defined($dxsdk_path)) {
+  push (@lib_dirs, "$dxsdk_path/lib");
+}
 
 $exe = '7kaa-server.exe';
