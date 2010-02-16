@@ -40,8 +40,7 @@ sub delete_file {
 
 sub clean_directory {
   local @dirs;
-  local @obj_files;
-  local $exe;
+  my @files;
 
   unless (-f 'targets.pl') {
     $msg = "clean.pl: no targets file. Stopping.\n";
@@ -54,14 +53,15 @@ sub clean_directory {
   recurse_dirs(@dirs) or return 0;
 
   # remove object files
-  foreach my $i (@obj_files) {
+  @files = <*.o>;
+  foreach my $i (@files) {
     delete_file($i) or return 0;
   }
 
   # remove exe files
-  if (defined($exe)) {
-    delete_file($exe) or return 0;
-    delete_file("$exe.so") or return 0;
+  @files = <*.exe*>;
+  foreach my $i (@files) {
+    delete_file($i) or return 0;
   }
 
   return 1;
