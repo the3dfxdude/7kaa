@@ -21,10 +21,6 @@
 #ifndef _DBGLOG_H
 #define _DBGLOG_H
 
-#ifdef DEBUG
-
-#include <stdio.h>
-
 #define DBGLOG_ALL_OFF   0x00
 #define DBGLOG_ERR_ON    0x01
 #define DBGLOG_MSG_ON    0x02
@@ -43,6 +39,8 @@ struct __dbglog_channel
 };
 
 extern void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, char *format, ...);
+
+#ifdef DEBUG
 
 #define MSG(...) dbglog_printf(__DBGLOG_MSG, &__dbglog_default_channel, __VA_ARGS__)
 #define ERR(...) dbglog_printf(__DBGLOG_ERR, &__dbglog_default_channel, __VA_ARGS__)

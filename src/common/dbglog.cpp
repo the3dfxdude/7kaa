@@ -19,8 +19,10 @@
  */
 
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include <dbglog.h>
 
 #define DEBUG_LOG_MAX_CHANNELS 256
