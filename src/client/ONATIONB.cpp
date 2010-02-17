@@ -45,7 +45,9 @@
 #include <OTECHRES.h>
 #include <ONATION.h>
 #include <OREBEL.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 
 //-------- Define static variables --------//
 
@@ -141,6 +143,7 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, DWORD playe
 
 	god_res.init_nation_know(nation_recno);
 
+#ifdef USE_DPLAY
 	//### begin alex 23/9 ###//
 	if(remote.is_enable() && nation_recno && !is_ai() && m.is_file_exist("TECHGOD.SYS"))
 	{
@@ -150,6 +153,7 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, DWORD playe
 		god_res.enable_know_all(nation_recno);
 	}
 	//#### end alex 23/9 ####//
+#endif
 }
 //----------- End of function NationBase::init ---------//
 
@@ -1226,6 +1230,7 @@ NationRelation* NationBase::get_relation(int nationRecno)
 
 void NationBase::set_relation_should_attack(short nationRecno, char newValue, char remoteAction)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		short *shortPtr = (short *) remote.new_send_queue_msg(MSG_NATION_SET_SHOULD_ATTACK, 3*sizeof(short));
@@ -1234,6 +1239,7 @@ void NationBase::set_relation_should_attack(short nationRecno, char newValue, ch
 		shortPtr[2] = newValue;
 	}
 	else
+#endif
 	{
 		relation_should_attack_array[nationRecno-1] = newValue;
 		get_relation(nationRecno)->should_attack    = newValue;

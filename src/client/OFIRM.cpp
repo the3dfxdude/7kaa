@@ -42,7 +42,9 @@
 #include <OSPRITE.h>
 #include <OFIRMRES.h>
 #include <OF_MARK.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OF_CAMP.h>
 #include <OF_HARB.h>
 #include <OSERES.h>
@@ -1220,9 +1222,12 @@ void Firm::establish_contact_with_player()
 			{
 				NationRelation *relation = (~nation_array)->get_relation(nation_recno);
 
+#ifdef USE_DPLAY
 				if( !remote.is_enable() )
 				{
+#endif
 					relation->has_contact = 1;
+#ifdef USE_DPLAY
 				}
 				else
 				{
@@ -1235,6 +1240,7 @@ void Firm::establish_contact_with_player()
 						relation->contact_msg_flag = 1;
 					}
 				}
+#endif
 			}
 		}
 	}
@@ -1849,6 +1855,7 @@ int Firm::year_expense()
 
 void Firm::sell_firm(char remoteAction)
 {
+#ifdef USE_DPLAY
    if( !remoteAction && remote.is_enable() )
    {
       // packet structure : <firm recno>
@@ -1856,6 +1863,7 @@ void Firm::sell_firm(char remoteAction)
       *shortPtr = firm_recno;
       return;
    }
+#endif
    //------- sell at 50% of the original cost -------//
 
 	Nation* nationPtr = nation_array[nation_recno];
@@ -1875,6 +1883,7 @@ void Firm::sell_firm(char remoteAction)
 
 void Firm::destruct_firm(char remoteAction)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <firm recno>
@@ -1882,6 +1891,7 @@ void Firm::destruct_firm(char remoteAction)
 		*shortPtr = firm_recno;
 		return;
 	}
+#endif
 
 	se_res.sound(center_x, center_y, 1, 'F', firm_id, "DEST" );
 	
@@ -1896,12 +1906,14 @@ void Firm::destruct_firm(char remoteAction)
 //
 void Firm::cancel_construction(char remoteAction)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable())
 	{
 		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_FIRM_CANCEL, sizeof(short));
 		shortPtr[0] = firm_recno;
 		return;
 	}
+#endif
 	//------ get half of the construction cost back -------//
 
 	Nation* nationPtr = nation_array[nation_recno];
@@ -1975,6 +1987,7 @@ int Firm::pull_town_people(int townRecno, char remoteAction, int raceId, int for
 	err_when( worker_count > MAX_WORKER );
 	err_when( !worker_array );    // this function shouldn't be called if this firm does not need worker
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable() )
 	{
 		// packet structure : <firm recno> <town recno> <race Id or 0> <force Pull>
@@ -1987,6 +2000,7 @@ int Firm::pull_town_people(int townRecno, char remoteAction, int raceId, int for
 		shortPtr[3] = forcePull;
 		return 0;
 	}
+#endif
 
 	//---- people in the town go to work for the firm ---//
 
@@ -2337,6 +2351,7 @@ int Firm::create_unit(int unitId, int townRecno, int unitHasJob)
 //
 int Firm::mobilize_worker(int workerId, char remoteAction)
 {
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable() )
 	{
 		// packet strcture : <firm_recno> <workerId>
@@ -2345,6 +2360,7 @@ int Firm::mobilize_worker(int workerId, char remoteAction)
 		shortPtr[1] = workerId;
 		return 0;
 	}
+#endif
 
 	err_when( !worker_array );    // this function shouldn't be called if this firm does not need worker
 
@@ -2836,6 +2852,7 @@ void Firm::set_worker_home_town(int townRecno, char remoteAction, int workerId)
 	if( !workerId || workerId > worker_count )
 		return;
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable() )
 	{
 		// packet structure : <firm recno> <town recno> <workderId>
@@ -2845,6 +2862,7 @@ void Firm::set_worker_home_town(int townRecno, char remoteAction, int workerId)
 		shortPtr[2] = workerId;
 		return;
 	}
+#endif
 
 	err_when( workerId<1 || workerId>worker_count );
 
@@ -3380,6 +3398,7 @@ void Firm::change_nation(int newNationRecno)
 //
 void Firm::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int setBoth)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <firm recno> <link Id> <toggle Flag>
@@ -3389,6 +3408,7 @@ void Firm::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int s
 		shortPtr[2] = toggleFlag;
 		return;
 	}
+#endif
 
 	int linkedNationRecno = firm_array[linked_firm_array[linkId-1]]->nation_recno;
 
@@ -3471,6 +3491,7 @@ void Firm::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int s
 //
 void Firm::toggle_town_link(int linkId, int toggleFlag, char remoteAction, int setBoth)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <firm recno> <link Id> <toggle Flag>
@@ -3480,6 +3501,7 @@ void Firm::toggle_town_link(int linkId, int toggleFlag, char remoteAction, int s
 		shortPtr[2] = toggleFlag;
 		return;
 	}
+#endif
 
    int linkedNationRecno = town_array[linked_town_array[linkId-1]]->nation_recno;
 
@@ -3799,6 +3821,7 @@ int Firm::is_worker_full()
 //
 void Firm::reward(int workerId, int remoteAction)
 {
+#ifdef USE_DPLAY
 	if( remoteAction==COMMAND_PLAYER && remote.is_enable() )
 	{
 		if( !remoteAction && remote.is_enable() )
@@ -3810,6 +3833,7 @@ void Firm::reward(int workerId, int remoteAction)
 		}
 	}
 	else
+#endif
 	{
 		if( workerId == 0 )
 		{

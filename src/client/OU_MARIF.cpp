@@ -33,7 +33,9 @@
 #include <OFONT.h>
 #include <OBUTTON.h>
 #include <OBUTT3D.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OU_CARA.h>
 #include <OU_MARI.h>
 #include <ONATION.h>
@@ -111,6 +113,7 @@ void UnitMarine::disp_info(int refreshFlag)
 		y += 25;
 	}
 
+#ifdef USE_DPLAY
 	//----- for multiplayer game, skip displaying information for the first frame --------//
 	if(remote.is_enable())
 	{
@@ -121,6 +124,7 @@ void UnitMarine::disp_info(int refreshFlag)
 			return;
 		}
 	}
+#endif
 
 	//-------------------------------------------------------------//
 
@@ -187,10 +191,13 @@ void UnitMarine::detect_info()
 
 	if( button_auto_trade.detect() )
 	{
+#ifdef USE_DPLAY
 		if( !remote.is_enable() )
 		{
+#endif
 			auto_mode = !auto_mode;
 			button_auto_trade.paint_text( INFO_X1+165, INFO_Y1+57, INFO_X2-10, INFO_Y1+73, auto_mode ? (char*)"T" : (char*)"C");
+#ifdef USE_DPLAY
 		}
 		else
 		{
@@ -199,6 +206,7 @@ void UnitMarine::detect_info()
 			*shortPtr = sprite_recno;
 			shortPtr[1] = !auto_mode;
 		}
+#endif
 	}
 }
 //----------- End of function UnitMarine::detect_info -----------//
@@ -799,6 +807,7 @@ void UnitMarine::detect_stop()
 //
 void UnitMarine::set_stop_pick_up(int stopId, int newPickUpType, int remoteAction)
 {
+#ifdef USE_DPLAY
 	int remoteEnable = 0;
 	if(remote.is_enable())
 	{
@@ -874,41 +883,52 @@ void UnitMarine::set_stop_pick_up(int stopId, int newPickUpType, int remoteActio
 
 		remoteEnable = 1;
 	}
+#endif
 
 	switch(newPickUpType)
 	{
 		case AUTO_PICK_UP:
+#ifdef USE_DPLAY
 				if(remoteEnable)
 				{
 					update_ship_stop_and_goods_info_to_dummy(this);
 					stop_array[stopId-1].mp_pick_up_set_auto(dummyShipEnableFlag[stopId-1]);
 				}
 				else
+#endif
 					stop_array[stopId-1].pick_up_set_auto();
 				break;
 
 		case NO_PICK_UP:
+#ifdef USE_DPLAY
 				if(remoteEnable)
 				{
 					update_ship_stop_and_goods_info_to_dummy(this);
 					stop_array[stopId-1].mp_pick_up_set_none(dummyShipEnableFlag[stopId-1]);
 				}
 				else
+#endif
 					stop_array[stopId-1].pick_up_set_none();
 				break;
 
 		default:
 				err_when(newPickUpType<PICK_UP_RAW_FIRST || newPickUpType>PICK_UP_PRODUCT_LAST);
+#ifdef USE_DPLAY
 				if(remoteEnable)
 					stop_array[stopId-1].mp_pick_up_toggle(newPickUpType);
 				else
+#endif
 					stop_array[stopId-1].pick_up_toggle(newPickUpType);
 				break;
 	}
 
 	if( unit_array.selected_recno == sprite_recno )
 	{
+#ifdef USE_DPLAY
 		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+#else
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
+#endif
 		{
 			int y=INFO_Y1+54;
 			UnitInfo* unitInfo = unit_res[unit_id];
@@ -1089,6 +1109,7 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 
 	//-----------------------------------------//
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable())
 	{
 		// packet structure : <unit recno> <stop id> <stop x> <stop y>
@@ -1099,6 +1120,7 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 		shortPtr[3] = stopYLoc;
 		return;
 	}
+#endif
 
 	if(!stop_array[stopId-1].firm_recno)
 		stop_defined_num++;	// no plus one if the recno is defined originally
@@ -1147,7 +1169,11 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 	//-------------------------------------------------------//
 	if(unit_array.selected_recno==sprite_recno)
 	{
+#ifdef USE_DPLAY
 		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+#else
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
+#endif
 			info.disp();
 	}
 }

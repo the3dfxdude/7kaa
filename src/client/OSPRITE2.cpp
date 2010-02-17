@@ -24,7 +24,9 @@
 #include <ALL.h>
 #include <OSYS.h>
 #include <OVGA.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OUNIT.h>
 #include <OSPRITE.h>
 #include <OSERES.h>

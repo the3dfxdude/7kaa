@@ -34,7 +34,9 @@
 #include <OBUTT3D.h>
 #include <ONATION.h>
 #include <OU_CARA.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OF_MINE.h>
 #include <OF_FACT.h>
 #include <OBUTTCUS.h>
@@ -90,6 +92,7 @@ UnitCaravan::UnitCaravan()
 //
 void UnitCaravan::disp_info(int refreshFlag)
 {
+#ifdef USE_DPLAY
 	//----- for multiplayer game, skip displaying information for the first frame --------//
 	if(remote.is_enable())
 	{
@@ -97,6 +100,7 @@ void UnitCaravan::disp_info(int refreshFlag)
 			unit_array.mp_pre_selected_caravan_recno==sprite_recno) // is selected
 			return;
 	}
+#endif
 
 	disp_basic_info(INFO_Y1, refreshFlag);
 
@@ -350,6 +354,7 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 //
 void UnitCaravan::set_stop_pick_up(int stopId, int newPickUpType, int remoteAction)
 {
+#ifdef USE_DPLAY
 	int remoteEnable = 0;
 	if(remote.is_enable())
 	{
@@ -419,20 +424,24 @@ void UnitCaravan::set_stop_pick_up(int stopId, int newPickUpType, int remoteActi
 
 		remoteEnable = 1;
 	}
+#endif
 
 	switch(newPickUpType)
 	{
 		case AUTO_PICK_UP:
+#ifdef USE_DPLAY
 				if(remoteEnable)
 				{
 					update_caravan_stop_and_goods_to_dummy(this);
 					stop_array[stopId-1].mp_pick_up_set_auto(dummyCaravanEnableFlag[stopId-1]);
 				}
 				else
+#endif
 					stop_array[stopId-1].pick_up_set_auto();
 				break;
 
 		case NO_PICK_UP:
+#ifdef USE_DPLAY
 				// if(remoteEnable)
 				if(remoteEnable)
 				{
@@ -440,21 +449,28 @@ void UnitCaravan::set_stop_pick_up(int stopId, int newPickUpType, int remoteActi
 					stop_array[stopId-1].mp_pick_up_set_none(dummyCaravanEnableFlag[stopId-1]);
 				}
 				else
+#endif
 					stop_array[stopId-1].pick_up_set_none();
 				break;
 
 		default:
 				err_when(newPickUpType<PICK_UP_RAW_FIRST || newPickUpType>PICK_UP_PRODUCT_LAST);
+#ifdef USE_DPLAY
 				if(remoteEnable)
 					stop_array[stopId-1].mp_pick_up_toggle(newPickUpType);
 				else
+#endif
 					stop_array[stopId-1].pick_up_toggle(newPickUpType);
 				break;
 	}
 
 	if(unit_array.selected_recno==sprite_recno)
 	{
+#ifdef USE_DPLAY
 		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+#else
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
+#endif
 			disp_stop(INFO_Y1+54, INFO_UPDATE);
 	}
 }
@@ -522,7 +538,7 @@ void UnitCaravan::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAc
 		return;
 
 	//-------------------------------------------//
-
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable())
 	{
 		// packet structure : <unit recno> <stop id> <stop x> <stop y>
@@ -533,6 +549,7 @@ void UnitCaravan::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAc
 		shortPtr[3] = stopYLoc;
 		return;
 	}
+#endif
 
 	if(!stop_array[stopId-1].firm_recno)
 	{
@@ -644,7 +661,11 @@ void UnitCaravan::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAc
 
 	if( unit_array.selected_recno == sprite_recno )
 	{
+#ifdef USE_DPLAY
 		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+#else
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
+#endif
 			info.disp();
 	}
 }
@@ -656,6 +677,7 @@ void UnitCaravan::del_stop(int stopId, char remoteAction)
 {
 	err_when(action_para || action_para2);
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable())
 	{
 		// packet structure : <unit recno> <stop id>
@@ -668,6 +690,7 @@ void UnitCaravan::del_stop(int stopId, char remoteAction)
 	//------ stop is deleted before receiving this message, thus, ignore invalid message -----//
 	if(remote.is_enable() && stop_array[stopId-1].firm_recno==0)
 		return;
+#endif
 
 	stop_array[stopId-1].firm_recno = 0;
 	stop_defined_num--;
@@ -677,7 +700,11 @@ void UnitCaravan::del_stop(int stopId, char remoteAction)
 
 	if( unit_array.selected_recno == sprite_recno )
 	{
+#ifdef USE_DPLAY
 		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+#else
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
+#endif
 			info.disp();
 	}
 }

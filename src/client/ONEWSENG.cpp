@@ -32,7 +32,9 @@
 #include <OFONT.h>
 #include <OTECHRES.h>
 #include <OMONSRES.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OGODRES.h>
 #include <ORACERES.h>
 #include <OTALKRES.h>
@@ -1330,6 +1332,7 @@ void News::multi_quit_game()
 //
 void News::multi_save_game()
 {
+#ifdef USE_DPLAY
 	//---------------- Text Format -----------------//
 	//
 	// The current game has been saved to <file name>.
@@ -1339,6 +1342,7 @@ void News::multi_save_game()
 	str  = "The current game has been saved to ";
 	str += remote.save_file_name;
 	str += ".";
+#endif
 }
 //------- End of function News::multi_save_game -----//
 

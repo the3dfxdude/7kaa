@@ -35,7 +35,9 @@
 #include <OWORLD.h>
 #include <OF_BASE.h>
 #include <OSE.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 
 //------- define static vars -------//
 
@@ -430,7 +432,11 @@ int Firm::draw_detect_link_line(int actionDetect)
 				//
 				// update RemoteMsg::firm_toggle_link_town()
 				//
+#ifdef USE_DPLAY
 				if( firm_id == FIRM_CAMP && !remote.is_enable())
+#else
+				if( firm_id == FIRM_CAMP )
+#endif
 				{
 					if( townPtr->nation_recno )
 						townPtr->update_target_loyalty();

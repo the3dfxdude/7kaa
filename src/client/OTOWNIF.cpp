@@ -40,7 +40,9 @@
 #include <OWORLD.h>
 #include <OUNIT.h>
 #include <OTOWN.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OSE.h>
 #include <OSERES.h>
 #include <OBUTTCUS.h>
@@ -610,16 +612,20 @@ void Town::detect_main_menu()
 	{
 		if((rc = button_cancel_training.detect()))
 		{
+#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
+#endif
 				cancel_train_unit();
 				info.disp();
+#ifdef USE_DPLAY
 			}
 			else
 			{
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_SKIP_RECRUIT, sizeof(short));
 				shortPtr[0] = town_recno;
 			}
+#endif
 		}
 	}
 }
@@ -1048,6 +1054,7 @@ void Town::detect_train_menu()
 		{
 			if( rc==1 )		// left button
 			{
+#ifdef USE_DPLAY
 				if( remote.is_enable() )
 				{
 					// packet structure : <town recno> <skill id> <race id>
@@ -1057,6 +1064,7 @@ void Town::detect_train_menu()
 					shortPtr[2] = race_filter(browse_race.recno());
 				}
 				else
+#endif
 					add_queue(b, race_filter(browse_race.recno()) );
 				// ##### begin Gilbert 26/9 ########//
 				se_ctrl.immediate_sound("TURN_ON");
@@ -1064,6 +1072,7 @@ void Town::detect_train_menu()
 			}
 			else 				// right button - remove queue
 			{
+#ifdef USE_DPLAY
 				if( remote.is_enable() )
 				{
 					// packet structure : <town recno> <skill id> <race id>
@@ -1073,6 +1082,7 @@ void Town::detect_train_menu()
 					shortPtr[2] = -1;		// -1 race_id represent remove queue
 				}
 				else
+#endif
 					remove_queue(b);
 				// ##### begin Gilbert 26/9 ########//
 				se_ctrl.immediate_sound("TURN_OFF");
@@ -1175,9 +1185,12 @@ void Town::detect_auto_menu(int modeCollectTax)
 	{
 		if( modeCollectTax )
 		{
+#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
+#endif
 				set_auto_collect_tax_loyalty(loyaltyLevel);
+#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -1186,12 +1199,16 @@ void Town::detect_auto_menu(int modeCollectTax)
 				*shortPtr = town_recno;
 				shortPtr[1] = loyaltyLevel;
 			}
+#endif
 		}
 		else
 		{
+#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
+#endif
 				set_auto_grant_loyalty(loyaltyLevel);
+#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -1200,14 +1217,17 @@ void Town::detect_auto_menu(int modeCollectTax)
 				*shortPtr = town_recno;
 				shortPtr[1] = loyaltyLevel;
 			}
+#endif
 		}
 	}
 	else if( rc==2 )
 	{
 		// ####### begin Gilbert 11/9 ########//
 		//----- set the national policy -----//
+#ifdef USE_DPLAY
 		if( !remote.is_enable() )
 		{
+#endif
 			Nation* nationPtr = nation_array[nation_recno];
 
 			if( modeCollectTax )
@@ -1233,6 +1253,7 @@ void Town::detect_auto_menu(int modeCollectTax)
 						townPtr->set_auto_grant_loyalty(loyaltyLevel);
 				}
 			}
+#ifdef USE_DPLAY
 		}
 		else
 		{
@@ -1252,6 +1273,7 @@ void Town::detect_auto_menu(int modeCollectTax)
 				shortPtr[1] = loyaltyLevel;
 			}
 		}
+#endif
 		// ####### end Gilbert 11/9 ########//
 	}
 
@@ -1372,13 +1394,16 @@ void Town::detect_spy_menu()
 
 	if( button_spy_mobilize.detect() )
 	{
+#ifdef USE_DPLAY
 		if( !remote.is_enable() )
 		{
+#endif
 			if( spyPtr->mobilize_town_spy() )
 			{
 				spyPtr->notify_cloaked_nation_flag = 0;		// reset it so the player can control it 
 				disp_spy_menu( INFO_UPDATE );
 			}
+#ifdef USE_DPLAY
 		}
 		else
 		{
@@ -1386,6 +1411,7 @@ void Town::detect_spy_menu()
 			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_LEAVE_TOWN, sizeof(short) );
 			*shortPtr = spyPtr->spy_recno;
 		}
+#endif
 	}
 
 	//------ reward spy ---------//
@@ -1401,10 +1427,13 @@ void Town::detect_spy_menu()
 	{
 		if( button_spy_action.detect() )		// set action mode
 		{
+#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
+#endif
 				spyPtr->set_next_action_mode();
 				disp_spy_menu( INFO_UPDATE );
+#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -1412,6 +1441,7 @@ void Town::detect_spy_menu()
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_CYCLE_ACTION, sizeof(short) );
 				*shortPtr = spyPtr->spy_recno;
 			}
+#endif
 		}
 	}
 
@@ -1578,6 +1608,7 @@ int Town::recruit(int trainSkillId, int raceId, char remoteAction)
 		raceId = race_filter(browse_race.recno());
 	}
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <town recno> <skill id> <race id>
@@ -1587,6 +1618,7 @@ int Town::recruit(int trainSkillId, int raceId, char remoteAction)
 		shortPtr[2] = raceId;
 		return 0;
 	}
+#endif
 
 	//---- check if there are units of the race ready for training ----//
 

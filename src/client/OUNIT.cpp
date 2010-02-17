@@ -44,7 +44,9 @@
 #include <OF_MONS.h>
 #include <OF_HARB.h>
 #include <OMONSRES.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OSYS.h>
 
 #if(GAME_FRAMES_PER_DAY!=FRAMES_PER_DAY)
@@ -2198,6 +2200,7 @@ void Unit::spy_change_nation(int newNationRecno, char remoteAction)
 	if( newNationRecno && nation_array.is_deleted(newNationRecno) )      // this can happen in a multiplayer message
 		return;
 
+#ifdef USE_DPLAY
 	//------- if this is a remote action -------//
 
 	if( !remoteAction && remote.is_enable() )
@@ -2208,6 +2211,7 @@ void Unit::spy_change_nation(int newNationRecno, char remoteAction)
 		shortPtr[1] = newNationRecno;
 		return;
 	}
+#endif
 
 	//----- update the var in Spy ------//
 
@@ -2321,6 +2325,7 @@ int Unit::can_spy_change_nation()
 //
 void Unit::resign(int remoteAction)
 {
+#ifdef USE_DPLAY
    if( !remoteAction && remote.is_enable() )
    {
       // packet structure : <unit recno> <nation recno>
@@ -2330,6 +2335,7 @@ void Unit::resign(int remoteAction)
 
       return;
    }
+#endif
 
    //---- increase the wandering count when a unit is disbanded ----//
 

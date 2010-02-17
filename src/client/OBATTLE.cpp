@@ -33,7 +33,9 @@
 #include <OGODRES.h>
 #include <OTECHRES.h>
 #include <OCONFIG.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OTOWN.h>
 #include <OFIRM.h>
 #include <ONEWS.h>

@@ -26,7 +26,9 @@
 #include <OU_CARA.h>
 #include <OPOWER.h>
 #include <OU_MARI.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <ONATIONA.h>
 #include <OCONFIG.h>
 #ifdef DEBUG2
@@ -350,7 +352,11 @@ void UnitMarine::load_unit(int unitRecno)
 
 	if(unit_array.selected_recno==sprite_recno)
 	{
+#ifdef USE_DPLAY
 		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+#else
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
+#endif
 			disp_info(INFO_UPDATE);
 	}
 }
@@ -367,6 +373,7 @@ void UnitMarine::unload_unit(int unitSeqId, char remoteAction)
 {
 	err_when(unitSeqId > unit_count);
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable() )
 	{
 		// packet structure : <unit recno> <unitSeqId>
@@ -375,6 +382,7 @@ void UnitMarine::unload_unit(int unitSeqId, char remoteAction)
 		shortPtr[1] = unitSeqId;
 		return;
 	}
+#endif
 
 	//-------- unload unit now -------//
 
@@ -391,6 +399,7 @@ void UnitMarine::unload_unit(int unitSeqId, char remoteAction)
 //--------- Begin of function UnitMarine::unload_all_units ---------//
 void UnitMarine::unload_all_units(char remoteAction)
 {
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable() )
 	{
 		// packet structure : <unit recno>
@@ -398,6 +407,7 @@ void UnitMarine::unload_all_units(char remoteAction)
 		*shortPtr = sprite_recno;
 		return;
 	}
+#endif
 
 	unloading_unit(1);	// unload all units
 }

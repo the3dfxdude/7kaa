@@ -39,7 +39,9 @@
 #include <OF_FACT.h>
 #include <OF_MINE.h>
 #include <OF_MARK.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OSE.h>
 
 //------- define static vars -------//
@@ -280,13 +282,16 @@ void FirmMarket::detect_info()
 	{
 		if( button_clear_stock[i].detect() )
 		{
+#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
+#endif
 				MarketGoods* marketGoods = market_goods_array+i;
 				
 				clear_market_goods(i+1);
 				info.disp();
 				return;
+#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -295,6 +300,7 @@ void FirmMarket::detect_info()
 				shortPtr[0] = firm_recno;
 				shortPtr[1] = i;
 			}
+#endif
 			se_ctrl.immediate_sound("TURN_OFF");
 		}
 	}
@@ -341,6 +347,7 @@ short FirmMarket::hire_caravan(char remoteAction)
 
 	Nation *nationPtr = nation_array[nation_recno];
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable())
 	{
 		// packet structure : <town recno>
@@ -348,6 +355,7 @@ short FirmMarket::hire_caravan(char remoteAction)
 		*shortPtr = firm_recno;
 		return 0;
 	}
+#endif
 
 	//---------- add the unit now -----------//
 

@@ -27,7 +27,9 @@
 #include <OVGA.h>
 #include <OSYS.h>
 #include <OSTR.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OWORLD.h>
 #include <ONATION.h>
 #include <OFIRM.h>
@@ -161,6 +163,7 @@ void UnitArray::stop(short* selectedUnitArray, int selectedCount, char remoteAct
 	//
 	//--------------------------------------------//
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		short* shortPtr = (short*) remote.new_send_queue_msg(MSG_UNIT_STOP,
@@ -171,6 +174,7 @@ void UnitArray::stop(short* selectedUnitArray, int selectedCount, char remoteAct
 		memcpy( shortPtr+1, selectedUnitArray, sizeof(short) * selectedCount );
 	}
 	else
+#endif
 	{
 		DWORD curGroupId = unit_array.cur_group_id++;
 
@@ -537,6 +541,7 @@ void UnitArray::assign(int destX, int destY, int divided, char remoteAction, sho
 		}
 	}
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable())
 	{
 		// packet structure : <xLoc> <yLoc> <no. of units> <unit recno ...>
@@ -549,6 +554,7 @@ void UnitArray::assign(int destX, int destY, int divided, char remoteAction, sho
 		memcpy(shortPtr+4, selectedArray, sizeof(short)*selectedCount);
 	}
 	else
+#endif
 	{
 		if(!divided)
 		{
@@ -813,6 +819,7 @@ void UnitArray::settle(int destX, int destY, int divided, char remoteAction, sho
 		}
 	}
 
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable())
 	{
 		// packet structure : <xLoc> <yLoc> <no. of units> <divided> <unit recno ...>
@@ -824,6 +831,7 @@ void UnitArray::settle(int destX, int destY, int divided, char remoteAction, sho
 		memcpy(shortPtr+4, selectedArray, sizeof(short)*selectedCount);
 	}
 	else
+#endif
 	{
 		if(!divided)
 		{
@@ -922,6 +930,7 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 	err_when(terrain_res[world.get_loc(shipXLoc, shipYLoc)->terrain_id]->average_type!=TERRAIN_OCEAN);
 	err_when(!selectedCount || selectedCount>1000);
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <xLoc> <yLoc> <ship recno> <no. of units> <divided> <unit recno ...>
@@ -936,6 +945,7 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 
 		return;
 	}
+#endif
 
 	if(!divided)
 	{
@@ -1098,6 +1108,7 @@ void UnitArray::ship_to_beach(int destX, int destY, int divided, short* selected
 {
 	Unit *unitPtr;
 
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <xLoc> <yLoc> <no. of units> <divided> <unit recno ...>
@@ -1111,6 +1122,7 @@ void UnitArray::ship_to_beach(int destX, int destY, int divided, short* selected
 
 		return;
 	}
+#endif
 
 	set_group_id(selectedArray, selectedCount);
 
@@ -1258,6 +1270,7 @@ int UnitArray::divide_attack_by_nation(short nationRecno, short *selectedArray, 
 //
 void UnitArray::add_way_point(int pointX, int pointY, short* selectedArray, int selectedCount, char remoteAction)
 {
+#ifdef USE_DPLAY
 	if(!remoteAction && remote.is_enable())
 	{
 		// packet structure : <xLoc> <yLoc> <no. of units> <unit recno ...>
@@ -1269,6 +1282,7 @@ void UnitArray::add_way_point(int pointX, int pointY, short* selectedArray, int 
 		memcpy(shortPtr+3, selectedArray, sizeof(short)*selectedCount);
 	}
 	else
+#endif
 	{
 		DWORD groupId = unit_array.cur_group_id;
 		Unit *unitPtr;

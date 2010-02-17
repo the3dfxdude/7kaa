@@ -35,7 +35,9 @@
 #include <ORACERES.h>
 #include <OSYS.h>
 #include <OSPY.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 // ###### begin Gilbert 10/10 #######//
 #include <OSE.h>
 // ###### end Gilbert 10/10 #######//
@@ -1208,6 +1210,7 @@ int Spy::cloaked_skill_id()
 //
 void Spy::reward(int remoteAction)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure <spy recno>
@@ -1215,6 +1218,7 @@ void Spy::reward(int remoteAction)
 		shortPtr[0] = spy_recno;
 		return;
 	}
+#endif
 
 	change_loyalty(REWARD_LOYALTY_INCREASE);
 
@@ -1230,6 +1234,7 @@ void Spy::reward(int remoteAction)
 //
 void Spy::set_exposed(int remoteAction)
 {
+#ifdef USE_DPLAY
 	// ##### begin Gilbert 26/9 #######//
 	if( !remoteAction && remote.is_enable() )
 	{
@@ -1238,6 +1243,7 @@ void Spy::set_exposed(int remoteAction)
 		shortPtr[0] = spy_recno;
 		return;
 	}
+#endif
 	// ##### end Gilbert 26/9 #######//
 	exposed_flag = 1;
 }
@@ -1254,6 +1260,7 @@ void Spy::set_exposed(int remoteAction)
 //
 int Spy::assassinate(int targetUnitRecno, int remoteAction)
 {
+#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure <spy recno>
@@ -1262,6 +1269,7 @@ int Spy::assassinate(int targetUnitRecno, int remoteAction)
 		shortPtr[1] = targetUnitRecno;
 		return 0;
 	}
+#endif
 
 	//---------- validate first -----------//
 

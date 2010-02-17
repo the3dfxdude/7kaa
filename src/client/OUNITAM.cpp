@@ -29,7 +29,9 @@
 #include <OVGA.h>
 #include <OSYS.h>
 #include <OSTR.h>
+#ifdef USE_DPLAY
 #include <OREMOTE.h>
+#endif
 #include <OWORLD.h>
 #include <OTERRAIN.h>
 #include <OUNIT.h>
@@ -128,6 +130,7 @@ void UnitArray::move_to(int destXLoc, int destYLoc, int divided, short* selected
 {
 	err_when(destXLoc<0 || destYLoc<0 || destXLoc>MAX_WORLD_X_LOC-1 || destYLoc>MAX_WORLD_Y_LOC-1);
 
+#ifdef USE_DPLAY
 	//-------- if it's a multiplayer game --------//
 	if( !remoteAction && remote.is_enable() )
 	{
@@ -142,6 +145,7 @@ void UnitArray::move_to(int destXLoc, int destYLoc, int divided, short* selected
 		memcpy( shortPtr+4, selectedUnitArray, sizeof(short) * selectedCount );
 	}
 	else
+#endif
 	{
 		err_when( selectedCount > 10000 );		// error
 
