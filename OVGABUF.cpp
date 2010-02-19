@@ -604,6 +604,83 @@ int VgaBuf::write_bmp_file(char* fileName)
 }
 //------------ End of function VgaBuf::write_bmp_file --------------//
 
+int VgaBuf::write_bmp_file(char * fileName, int offset_x, int offset_y, int width, int height)
+{
+    if (!width || !height || !offset_x || !offset_y) return 0;
+    if (offset_x + width > buf_des.dwWidth) return 0;
+    if (offset_y + width > buf_des.dwHeight) return 0;
+    
+    File			bmpFile;
+    bmpFile.file_create(fileName, 1, 0);		// 1-handle error, 0-disable variable file size
+
+    //------------ Write the file header ------------//
+
+    BITMAPFILEHEADER bmpFileHdr;
+
+    bmpFileHdr.bfType 		= 0x4D42; // set the type to "BM"
+    bmpFileHdr.bfReserved1  = 0;
+    bmpFileHdr.bfReserved2  = 0;
+    bmpFileHdr.bfOffBits    = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * 256;
+    bmpFileHdr.bfSize 		= bmpFileHdr.bfOffBits + width * height;
+
+    bmpFile.file_write(&bmpFileHdr, sizeof(bmpFileHdr));
+
+    //------------ Write in the info header -----------//
+
+    BITMAPINFOHEADER bmpInfoHdr;
+
+    bmpInfoHdr.biSize           = sizeof(BITMAPINFOHEADER); 
+    bmpInfoHdr.biWidth			= width;
+    bmpInfoHdr.biHeight			= height;
+    bmpInfoHdr.biPlanes			= 1; 
+    bmpInfoHdr.biBitCount       = 8;
+    bmpInfoHdr.biCompression    = BI_RGB; 
+    bmpInfoHdr.biSizeImage	    = width * height;
+    bmpInfoHdr.biXPelsPerMeter  = 0;
+    bmpInfoHdr.biYPelsPerMeter  = 0; 
+    bmpInfoHdr.biClrUsed	    = 0; 
+    bmpInfoHdr.biClrImportant   = 0; 
+
+    bmpFile.file_write(&bmpInfoHdr, sizeof(bmpInfoHdr));
+
+    //------------ write the color table -----------//
+
+    LPDIRECTDRAWPALETTE ddPalettePtr;				// get the direct draw surface's palette
+    dd_buf->GetPalette(&ddPalettePtr);
+
+    PALETTEENTRY *palEntries = (PALETTEENTRY*) mem_add(sizeof(PALETTEENTRY) * 256);
+    ddPalettePtr->GetEntries(0, 0, 256, palEntries);
+
+    RGBQUAD *colorTable = (RGBQUAD*) mem_add(sizeof(RGBQUAD) * 256); // allocate a color table with 256 entries 
+
+    for (int i = 0; i < 256; i++)
+    {
+        colorTable[i].rgbBlue  = palEntries[i].peBlue;
+        colorTable[i].rgbGreen = palEntries[i].peGreen;
+        colorTable[i].rgbRed   = palEntries[i].peRed; 
+        colorTable[i].rgbReserved = 0;
+    }
+
+    bmpFile.file_write(colorTable, sizeof(RGBQUAD) * 256);
+
+    mem_del(palEntries);
+    mem_del(colorTable);
+
+    //----------- write the bitmap ----------//
+
+    char paddingBytes[4];
+    for (int y = offset_y + height - 1; y >= offset_y; y--) // write in reversed order as DIB's vertical order is reversed
+    {
+        bmpFile.file_write(buf_ptr(offset_x, y), width);
+        if (width % 4 != 0) bmpFile.file_write(paddingBytes, 4 - (width % 4));
+    }
+
+    //------------ close the file -----------//
+
+    bmpFile.file_close();
+
+    return 1;
+}
 
 //---------- Begin of function VgaBuf::put_large_bitmap ---------//
 //

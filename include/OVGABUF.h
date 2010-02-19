@@ -92,6 +92,7 @@ public:
 	void		set_default_buf_ptr()		{ cur_buf_ptr = (char*)buf_des.lpSurface; }
 
 	int 		write_bmp_file(char* fileName);
+	int 		write_bmp_file(char* fileName, int offset_x, int offset_y, int width, int height);
 
 	//---------- painting functions ----------//
 

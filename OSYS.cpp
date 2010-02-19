@@ -1918,11 +1918,9 @@ void Sys::detect_function_key(unsigned scanCode, unsigned skeyState)
          capture_screen();
          break;
 
-#ifdef BETA
       case KEY_F12:
-         sys.signal_exit_flag = 1;
+         capture_minimap();
          break;
-#endif
       }
    }
 }
@@ -2737,6 +2735,52 @@ void Sys::capture_screen()
 }
 //--------- End of function Sys::capture_screen ---------//
 
+//-------- Begin of function Sys::capture_minimap --------//
+//
+void Sys::capture_minimap()
+{
+   String str;
+
+   int i;
+   for (i = 0; i <= 999; i++)
+   {
+      str  = m.format(info.random_seed, 1);
+      str += "_";
+
+      if (i < 100) str += "0";
+      if (i < 10)  str += "0";
+
+      str += i;
+      str += ".BMP";
+
+      if( !m.is_file_exist(str) )
+         break;
+   }
+
+   if (i > 999)        // all file names from DWORLD000 to DWORLD999 have been occupied
+      return;
+
+   if( sys.debug_session )    // in debug session, the buffer is not locked, we need to lock it for capturing the screen
+   {
+      vga_true_front.lock_buf();
+      vga_true_front.write_bmp_file(str, 588, 56, 200, 200);
+      vga_true_front.unlock_buf();
+   }
+   else
+   {
+      vga_front.write_bmp_file(str, 588, 56, 200, 200);
+   }
+
+   //------ display msg --------//
+
+   String str2;
+   str2  = "The current minimap has been written to file ";
+   str2 += str;
+   str2 += ".";
+
+   box.msg( str2 );
+}
+//--------- End of function Sys::capture_minimap ---------//
 
 //--------- Begin of static function static_main_win_proc --------//
 //

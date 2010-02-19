@@ -173,6 +173,7 @@ public:
 	void		disp_view_mode(int observeMode=0);
 	// ##### end Gilbert 22/10 #######//
 	void		capture_screen();
+	void		capture_minimap();
 
 	void 		disp_frame();
 	void 		blt_virtual_buf();
