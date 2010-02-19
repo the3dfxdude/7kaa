@@ -536,9 +536,6 @@ void VgaBuf::rest_area(char* saveScr, int releaseFlag)
 int VgaBuf::write_bmp_file(char* fileName)
 {
 	 File				bmpFile;
-	 BITMAPINFO*	bmpInfoPtr = NULL;
-	 char*			bitmapPtr = NULL;
-
 	 bmpFile.file_create(fileName, 1, 0);		// 1-handle error, 0-disable variable file size
 
 	 //------------ Write the file header ------------//
@@ -546,10 +543,10 @@ int VgaBuf::write_bmp_file(char* fileName)
 	 BITMAPFILEHEADER bmpFileHdr;
 
 	 bmpFileHdr.bfType 		= 0x4D42;			// set the type to "BM"
-	 bmpFileHdr.bfSize 		= buf_size();
 	 bmpFileHdr.bfReserved1 = 0;
 	 bmpFileHdr.bfReserved2 = 0;
 	 bmpFileHdr.bfOffBits   = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD)*256;
+	 bmpFileHdr.bfSize 		= buf_size() + bmpFileHdr.bfOffBits;
 
 	 bmpFile.file_write(&bmpFileHdr, sizeof(bmpFileHdr));
 
