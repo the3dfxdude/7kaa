@@ -45,8 +45,7 @@ void _stdcall IMGbar(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,int co
 {
 	int dest = y1 * pitch + x1;
 	int width = x2 - x1 + 1;
-	color &= 0xff; // note: color is only passed in as an 8-bit value, but lets make sure
-	color |= color<<24 | color<<16 | color<<8;
+	// note: only the byte value of color is used (see memset reference)
 	for (int y=y1; y<=y2; ++y, dest+=pitch)
 	{
 		memset(&imageBuf[dest], color, width);
