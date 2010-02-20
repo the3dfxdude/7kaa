@@ -58,10 +58,10 @@ void _stdcall IMGread(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,char*
 
 	// Alex: note: this is a binary compatible replacement for the asm
 	// TODO: convert bitmapPtr from char to a struct
-	bitmapPtr[0] = width & 0xff;
-	bitmapPtr[1] = width>>8;
-	bitmapPtr[2] = height & 0xff;
-	bitmapPtr[3] = height>>8;
+	((unsigned char*)bitmapPtr)[0] = width & 0xff;
+	((unsigned char*)bitmapPtr)[1] = width>>8;
+	((unsigned char*)bitmapPtr)[2] = height & 0xff;
+	((unsigned char*)bitmapPtr)[3] = height>>8;
 	offset = 4;
 	src_offset = y1 * pitch + x1;
 	for (int y=0; y<height; ++y)
