@@ -107,10 +107,10 @@ sub link_exe {
     my $linker = $platform =~ /^linux/ ? 'wineg++' : 'g++';
 
     my @linker_opts = ("-g -mno-cygwin");
-    defined($debug) and !$debug and push(@linker_opts, "-mwindows");
+    $debug or push(@linker_opts, "-mwindows");
                            
     my $cmd = "$linker " .
-              join(' ', $linker_opts) . ' ' .
+              join(' ', @linker_opts) . ' ' .
               "@$obj_files " .
               join(' ', map { "-l$_" } @$libs) . ' ' .
               join(' ', map { "-L$_" } @$lib_dirs) . ' ' .
