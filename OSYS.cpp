@@ -2682,15 +2682,16 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
 //
 void Sys::capture_screen()
 {
-   String str("7K");
+   String str;
 
    int i;
-   for( i=0 ; i<=99 ; i++ )
+   for (i = 0; i <= 999; i++)
    {
-      str  = "7K";
+      str  = m.format(info.random_seed, 1);
+      str += "_";
 
-      if( i<10 )
-         str += "0";
+      if (i < 100) str += "0";
+      if (i < 10)  str += "0";
 
       str += i;
       str += ".BMP";
@@ -2699,7 +2700,7 @@ void Sys::capture_screen()
          break;
    }
 
-   if( i>99 )        // all file names from DWORLD00 to DWORLD99 have been occupied
+   if (i > 999)        // all file names from DWORLD000 to DWORLD999 have been occupied
       return;
 
    if( sys.debug_session )    // in debug session, the buffer is not locked, we need to lock it for capturing the screen
