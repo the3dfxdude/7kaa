@@ -14,6 +14,8 @@ foreach my $i (@ARGV) {
     ($cfg{dxsdk_path}) = $i =~ /=(.*)/;
   } elsif ($i =~ /^--enable-debug$/) {
     $cfg{debug} = 1;
+  } elsif ($i =~ /^--disable-asm$/) {
+    $cfg{no_asm} = 1;
   }
 }
 
