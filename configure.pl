@@ -16,6 +16,8 @@ foreach my $i (@ARGV) {
     $cfg{debug} = 1;
   } elsif ($i =~ /^--disable-asm$/) {
     $cfg{no_asm} = 1;
+  } elsif ($i =~ /^--enable-server$/) {
+    $cfg{build_server} = 1;
   }
 }
 

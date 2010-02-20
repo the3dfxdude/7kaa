@@ -1,2 +1,5 @@
 ### Directories to build in ###
-@dirs = qw( common client server );
+@dirs = qw( common client );
+if ($build_server) {
+  push (@dirs, 'server');
+}
