@@ -1026,7 +1026,9 @@ int Nation::consider_accept_surrender_request(TalkMsg* talkMsg)
 			return 0;
 	}
 
-	//--- if we are running out of cash, ignore all normal thinking ---//
+	// If our economy is good, then it is harder to convince us
+	// to surrender.  But when we are running out of cash, 
+	// we ignore all normal thinking in the following block.
 
 	if( !(cash < 100 && profit_365days() < 0) )
 	{
