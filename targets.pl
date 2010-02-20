@@ -51,6 +51,22 @@ OMOUSEFR  OTALKSPA  OTALKFRE  OTALKGER  ONEWSFRE  ONEWSSPA
 ONEWSGER  OSPREDBG  OLONGLOG
 );
 
+@defines = qw( AMPLUS );
+if (defined($debug) && $debug) {
+  push (@defines, "DEBUG");
+}
+
+@includes = qw( include );
+ 
+if (defined($wine_prefix)) {
+  push (@includes, "$wine_prefix/include/wine/windows",
+                   "$wine_prefix/include/wine/msvcrt");
+}
+
+if (defined($dxsdk_path)) {
+  push (@includes, "$dxsdk_path/include");
+}
+
 ### Resources ###
 @rc_files = qw(
 ico
@@ -71,6 +87,9 @@ push ( @obj_files, map { "$_.o" } @rc_files );
 @libs = qw(
   gdi32 ddraw msvcrt ole32 dinput dplayx dsound winmm
 );
-@libs = map { "-l$_" } @libs;
+
+if (defined($dxsdk_path)) {
+  push (@lib_dirs, "$dxsdk_path/lib");
+}
 
 $exe = '7kaa.exe';

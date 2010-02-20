@@ -34,13 +34,20 @@ sub assemble {
 }
 
 sub compile {
-  foreach my $i (@_) {
+  my ($c_files, $includes, $defines) = @_;
+  foreach my $i (@$c_files) {
     if (is_file_newer("$i.cpp","$i.o")) {
       # OWORLD currently miscompiles at -O2 on gcc 4.3.3.
       # A hack follows--should be handled better or investigated and fixed.
-      my $optlevel = $i eq "OWORLD" ? "-O1" : "-O2";
+      my @cc_opts;
+      push (@cc_opts, $i eq "OWORLD" ? "-O1" : "-O2");
+      defined($debug) and $debug and push (@cc_opts, "-g");
 
-      my $cmd = "g++ $optlevel -g -c $defines $cc_dirs $i.cpp";
+      my $cmd = "g++ -c " .
+                join(' ', @cc_opts ) . ' ' .
+                join(' ', map { "-D$_" } @$defines ) . ' ' .
+                join(' ', map { "-I$_" } @$includes ) . ' ' .
+                "$i.cpp";
       print "$cmd\n";
       system $cmd and $msg = "build.pl: could not compile '$i.cpp'.\n" and return 0;
     }
@@ -64,7 +71,7 @@ sub compile_resources {
 }
 
 sub link_exe {
-  my ($exe, $obj_files, $libs) = @_;
+  my ($exe, $obj_files, $libs, $lib_dirs) = @_;
   defined($exe) or return 1; # No exe targets here
 
   my $flag = 0;
@@ -84,7 +91,16 @@ sub link_exe {
 
   if ($flag) {
     my $linker = $platform =~ /^linux/ ? 'wineg++' : 'g++';
-    my $cmd = "$linker -g -mno-cygwin -mwindows @$obj_files @$libs -o $exe";
+
+    my @linker_opts = ("-g -mno-cygwin");
+    defined($debug) and !$debug and push(@linker_opts, "-mwindows");
+                           
+    my $cmd = "$linker " .
+              join(' ', $linker_opts) . ' ' .
+              "@$obj_files " .
+              join(' ', map { "-l$_" } @$libs) . ' ' .
+              join(' ', map { "-L$_" } @$lib_dirs) . ' ' .
+              "-o $exe";
     print $cmd,"\n";
     if (system $cmd) {
       $msg = "build.pl: couldn't create executable '$exe'\n" and
@@ -118,7 +134,10 @@ sub build_targets {
   local @c_files;
   local @rc_files;
   local @obj_files;
+  local @defines;
+  local @includes;
   local @libs;
+  local @lib_dirs;
   local $exe;
 
   unless (-f 'targets.pl') {
@@ -130,9 +149,9 @@ sub build_targets {
 
   recurse_dirs(@dirs) or return 0;
   assemble(@asm_files) or return 0;
-  compile(@c_files) or return 0;
+  compile(\@c_files, \@includes, \@defines) or return 0;
   compile_resources(@rc_files) or return 0;
-  link_exe($exe, \@obj_files, \@libs) or return 0;
+  link_exe($exe, \@obj_files, \@libs, \@lib_dirs) or return 0;
 
   return 1;
 }
