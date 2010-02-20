@@ -1,9 +1,14 @@
 #!/usr/bin/perl
 
+use File::Spec;
 use File::stat;
 
-(-f 'opts.pl') or die "Please run configure.pl first.\n";
-require "opts.pl";
+our $top_dir = (File::Spec->splitpath(File::Spec->rel2abs($0)))[1];
+
+our $opts_file = "${top_dir}opts.pl";
+is_file_newer("${top_dir}configure.pl", $opts_file) and die "Build options out of date. Please run configure.pl first.\n";
+
+require $opts_file;
 
 our $msg;
 
@@ -21,9 +26,18 @@ sub is_file_newer {
   return $file->mtime >= $than->mtime;
 }
 
+# needs_building($file, $than)
+# Checks if targets or build options changed in addition to checking
+# whether the object file needs an update.
+sub needs_building {
+  return is_file_newer($_[0], $_[1]) ||
+         is_file_newer('targets.pl', $_[1]) ||
+         is_file_newer($opts_file, $_[1]);
+}
+
 sub assemble {
   foreach my $i (@_) {
-    if (is_file_newer("$i.asm","$i.o")) {
+    if (needs_building("$i.asm","$i.o")) {
       my $cmd = "jwasm $jwasm_args -zt1 -Fo $i.o $i.asm";
       print "$cmd\n";
       system $cmd and $msg = "build.pl: could not assemble '$i.asm'.\n" and return 0;
@@ -36,7 +50,7 @@ sub assemble {
 sub compile {
   my ($c_files, $includes, $defines) = @_;
   foreach my $i (@$c_files) {
-    if (is_file_newer("$i.cpp","$i.o")) {
+    if (needs_building("$i.cpp","$i.o")) {
       # OWORLD currently miscompiles at -O2 on gcc 4.3.3.
       # A hack follows--should be handled better or investigated and fixed.
       my @cc_opts;
@@ -57,7 +71,7 @@ sub compile {
 
 sub compile_resources {
   foreach my $i (@_) {
-    if (is_file_newer("$i.rc","$i.o")) {
+    if (needs_building("$i.rc","$i.o")) {
       my $compiler = $platform =~ /^linux/ ? 'wrc' : 'windres';
       my $cmd = "$compiler -i $i.rc -o $i.o";
       print "$cmd\n";
