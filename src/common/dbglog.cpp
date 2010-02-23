@@ -100,7 +100,7 @@ unsigned char dbglog_get_flags(char *name)
 	return DBGLOG_NEED_INIT;
 }
 
-void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, char *format, ...)
+void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, const char *format, ...)
 {
 	va_list valist;
 

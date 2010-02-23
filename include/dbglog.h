@@ -38,7 +38,7 @@ struct __dbglog_channel
 	char name[32];
 };
 
-extern void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, char *format, ...);
+extern void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, const char *format, ...);
 
 #ifdef DEBUG
 
