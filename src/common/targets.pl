@@ -9,3 +9,8 @@ if (defined($debug) && $debug) {
 }
 
 @includes = qw( ../../include );
+
+if (defined($wine_prefix)) {
+  push (@includes, "$wine_prefix/include/wine/windows",
+                   "$wine_prefix/include/wine/msvcrt");
+}
