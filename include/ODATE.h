@@ -36,7 +36,7 @@ public:
    long  julian(char*);
 
    char* date_str(long,int=0);
-   char* month_str(int);
+   const char* month_str(int);
 
    int   year(long julianDate)  { return get_date(julianDate,'Y'); }
    int   month(long julianDate) { return get_date(julianDate,'M'); }

@@ -909,7 +909,7 @@ static void put_talk_msg_rec(int recNo, int x1, int y, int refreshFlag)
 
 	//---------------------------------------//
 
-	char* str1;
+	const char* str1;
 
 	if( isTo )
 		str1 = translate.process("To");

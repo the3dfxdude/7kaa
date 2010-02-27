@@ -158,7 +158,7 @@ protected:
 	void blacken_fog_of_war();
 
 	void disp_text();
-	void put_center_text(int x, int y, char* str);
+	void put_center_text(int x, int y, const char* str);
 };
 
 //------------------------------------------------//

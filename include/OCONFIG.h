@@ -68,7 +68,7 @@ public:
 	int 			write_file(File* filePtr);
 	int			read_file(File* filePtr, int keepSysSettings=0);
 	int			save(char *);		// save to file
-	int			load(char *);		// load from file
+	int			load(const char *);		// load from file
 
 	void			reset_cheat_setting();
 	void			enable_weather_visual();

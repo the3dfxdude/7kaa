@@ -92,7 +92,7 @@ public:
 	static   char  last_read_success_flag;
 
 public:
-   int   save_game(char* =NULL);
+   int   save_game(const char* =NULL);
    int   load_game(char* =NULL);
 
    void  set_file_name();
@@ -148,7 +148,7 @@ public:
    int  save_game()    { return menu(1); }
    int  load_game()    { return menu(2); }
 
-   void save_new_game(char* =NULL); // save a new game immediately without prompting menu
+   void save_new_game(const char* =NULL); // save a new game immediately without prompting menu
 
    int  read_hall_of_fame();
    int  write_hall_of_fame();    // it may be called by group_res.gen_group() in writting default name

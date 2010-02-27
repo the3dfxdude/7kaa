@@ -48,7 +48,7 @@ public:
    File()     { file_handle=INVALID_HANDLE_VALUE; }
    ~File();
 
-   int   file_open(char*, int=1, int=0);
+   int   file_open(const char*, int=1, int=0);
    int   file_create(char*, int=1, int=0);
 	//### begin alex 24/7 ###//
 	int	file_append(char*, int=1, int=0);

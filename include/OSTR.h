@@ -48,6 +48,7 @@ public:
 public:
    String();                            // default ructor;
    String( char *s);
+   String( const char *s);
    String( String& s);
 
    char*  upper();
@@ -65,10 +66,12 @@ public:
 
    String& operator=( String&); // str1 = str
    String& operator=( char*);   // str1 = char*
+   String& operator=( const char*);   // str1 = char*
    String& operator=( long );   // str1 = long
 
    String& operator+=( String&);        // str1 += str
    String& operator+=( char*);  // str1 += char*
+   String& operator+=( const char*);  // str1 += const char*
    String& operator+=( long );  // str1 += long
 
    String& operator*=(int n);   // str1 *= n

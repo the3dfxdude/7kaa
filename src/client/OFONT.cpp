@@ -238,7 +238,7 @@ void Font::deinit()
 //
 // Return : <int> lastX, the x coordination of the last pixel of last font
 //
-int Font::put(int x,int y,char* textPtr, char clearBack, int x2 )
+int Font::put(int x,int y,const char* textPtr, char clearBack, int x2 )
 {
 	err_when( x<0 || y<0 );
 
@@ -440,7 +440,7 @@ void Font::right_put(int x, int y, char* textPtr)
 //
 // Return : <int> the screen width of the textPtr display using this font
 //
-int Font::text_width(char* textPtr, int textPtrLen, int maxDispWidth)
+int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 {
 	int   charWidth, x=0, lenCount, maxLen=0, wordWidth=0;
 	short textChar;
@@ -597,7 +597,7 @@ int Font::text_height(int lineSpace)
 //
 //-------------------------------------------------------//
 
-void Font::put_paragraph(int x1, int y1, int x2, int y2, char *textPtr,
+void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 								 int lineSpace, int startLine, char dispFlag)
 {
 	if( !init_flag || y1+font_height-1 > y2 )
@@ -610,7 +610,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, char *textPtr,
 	int   x,y,wordX;
 	int   newWord;
 	short textChar;
-	char *wordPtr;
+	const char *wordPtr;
 
    char  flag_under_line=0;     // attribute control flags
    char  flag_hyper_field=0;
@@ -865,7 +865,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, char *textPtr,
 // <int& dispLines>  = no. of lines can be displayed in the textPtr area
 // <int& totalLines> = total no. of lines of the textPtr
 //
-void Font::count_line(int x1, int y1, int x2, int y2, char *textPtr,
+void Font::count_line(int x1, int y1, int x2, int y2, const char *textPtr,
 							 int lineSpace , int& dispLines, int& totalLines)
 {
 	dispLines =0;
@@ -1321,7 +1321,7 @@ void Font::put_char_to_buffer(char* dest, int destPitch, int x, int y, unsigned 
 
 
 //--------- Begin of function Font::put_to_buffer ---------//
-void Font::put_to_buffer(char* dest, int destPitch, int x1, int y1, char *text)
+void Font::put_to_buffer(char* dest, int destPitch, int x1, int y1, const char *text)
 {
 	int x2 = destPitch;			// width of buffer
 	while( *text != '\0' && x1 < x2)

@@ -413,7 +413,7 @@ int Config::save(char *filename)
 //
 // if load() fails, call init to re-initialize it
 //
-int Config::load(char *filename)
+int Config::load(const char *filename)
 {
 	File configFile;
 

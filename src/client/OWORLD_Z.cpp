@@ -1019,7 +1019,7 @@ void ZoomMatrix::disp_text()
 // <int>   x, y - center of the absolute position where the text should be put.
 // <char*> str  - the display string.
 //
-void ZoomMatrix::put_center_text(int x, int y, char* str)
+void ZoomMatrix::put_center_text(int x, int y, const char* str)
 {
 	str = translate.process(str);
 

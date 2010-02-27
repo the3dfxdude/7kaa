@@ -48,7 +48,7 @@
 // return : <int> 1 - saved successfully.
 //                0 - not saved.
 //
-int GameFile::save_game(char* fileName)
+int GameFile::save_game(const char* fileName)
 {
 	File   file;
 	String errStr;

@@ -137,7 +137,7 @@ void Error::mem()
 	if( extra_handler )
 		(*extra_handler)();
 
-	char* strBuf = "Insufficient Memory, execution interrupt.";
+	const char* strBuf = "Insufficient Memory, execution interrupt.";
 
 	//-------- display error message -------//
 
@@ -158,7 +158,7 @@ void Error::mem()
 // <char*> formated erorr message with % argument
 // <....>  the argument list
 //
-void Error::msg( char *format, ... )
+void Error::msg( const char *format, ... )
 {
 	if( error_flag )	// prevent error message dead loop
 		return;
@@ -197,7 +197,7 @@ void Error::msg( char *format, ... )
 // <char*> formated erorr message with % argument
 // <....>  the argument list
 //
-void Error::run( char *format, ... )
+void Error::run( const char *format, ... )
 {
 	if( error_flag )	// prevent error message dead loop
 		return;

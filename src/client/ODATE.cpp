@@ -287,7 +287,7 @@ char* DateInfo::date_str( long julianDate, int shortMonthStr)
 //
 // Return : <char*> the month string
 //
-char* DateInfo::month_str(int monthNo)
+const char* DateInfo::month_str(int monthNo)
 {
 	return translate.process(month_str_array[monthNo-1]);
 }

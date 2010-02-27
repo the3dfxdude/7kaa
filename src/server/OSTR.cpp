@@ -43,6 +43,12 @@ String::String( char *s )
    str_buf[MAX_STR_LEN] = NULL;
 }
 
+String::String( const char *s )
+{
+   strncpy(str_buf, s, MAX_STR_LEN );
+   str_buf[MAX_STR_LEN] = NULL;
+}
+
 String::String( String& s )
 {
    memcpy(str_buf, s.str_buf, MAX_STR_LEN+1 );
@@ -144,6 +150,14 @@ String& String::operator=(char *s)
    return *this;
 }
 
+String& String::operator=(const char *s)
+{
+   strncpy(str_buf, s, MAX_STR_LEN );
+   str_buf[MAX_STR_LEN] = NULL;
+
+   return *this;
+}
+
 String& String::operator=(long value)
 {
    strncpy(str_buf, m.format(value), MAX_STR_LEN );
@@ -164,6 +178,13 @@ String& String::operator+=(String& s)
 }
 
 String& String::operator+=(char *s)
+{
+   strncat( str_buf, s, MAX_STR_LEN );
+   str_buf[MAX_STR_LEN] = NULL;
+   return *this;
+}
+
+String& String::operator+=(const char *s)
 {
    strncat( str_buf, s, MAX_STR_LEN );
    str_buf[MAX_STR_LEN] = NULL;

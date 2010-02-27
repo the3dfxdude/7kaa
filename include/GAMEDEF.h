@@ -27,7 +27,7 @@
 //----------- define game version ------------//
 
 //#define GAME_VERSION_STR   "1.1"
-extern char *GAME_VERSION_STR;
+extern const char *GAME_VERSION_STR;
 //#define GAME_VERSION       110          // Version 1.00, don't change it unless the format of save game files has been changed
 extern const int GAME_VERSION;
 

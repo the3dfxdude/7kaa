@@ -1133,7 +1133,7 @@ float Misc::round_dec(float inNum)
 // return : <int> 1 - the file exists
 //                0 - doesn't exist
 //
-int Misc::is_file_exist(char* fileName)
+int Misc::is_file_exist(const char* fileName)
 {
 	WIN32_FIND_DATA	findData;
 

@@ -103,7 +103,7 @@ public:
    int   rand();
    int   random(int);
 
-   int   is_file_exist(char*);
+   int   is_file_exist(const char*);
    void  change_file_ext(char*,char*,char*);
 	void  extract_file_name(char*, char*);
 

@@ -712,7 +712,7 @@ int GameFileArray::process_action(int saveNew)
 //
 // [char*] fileName - file name of the saved game
 //
-void GameFileArray::save_new_game(char* fileName)
+void GameFileArray::save_new_game(const char* fileName)
 {
 	GameFile  gameFile;
 	GameFile* gameFilePtr;

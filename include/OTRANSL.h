@@ -53,7 +53,7 @@ public:
    void init();
    void deinit();
 
-   char* process(char*);
+   const char* process(const char*);
 
 	static void multi_to_win(char *c, int len);
 };

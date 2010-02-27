@@ -192,7 +192,7 @@ void Translate::deinit()
 // return : <char*> the translated text.
 //		    if not found, return the original text.
 //
-char* Translate::process(char* originalText)
+const char* Translate::process(const char* originalText)
 {
    if( !init_flag )
       return originalText;
@@ -209,7 +209,7 @@ char* Translate::process(char* originalText)
    for( i=tableRecno ; i<=rec_count ; i++ )
    {
       if( strcmp(translate_table[i-1].from_text_ptr, originalText)==0 )
-			return translate_table[i-1].to_text_ptr;
+			return (const char *)translate_table[i-1].to_text_ptr;
 		else
 		{
 			if( translate_table[i-1].from_text_ptr[0] != originalText[0] )		// all original text begins with this letter has been scanned and none has been found 

@@ -29,7 +29,7 @@
 
 //--------- Define static variables -----------//
 
-static char *path_array[] = { "" };	// multiple search path
+static const char *path_array[] = { "" };	// multiple search path
 
 //-------- Begin of function File::file_open ----------//
 //
@@ -46,7 +46,7 @@ static char *path_array[] = { "" };	// multiple search path
 //
 // return : 1-success, 0-fail
 //
-int File::file_open(char* fileName, int handleError, int allowVarySize)
+int File::file_open(const char* fileName, int handleError, int allowVarySize)
 {
 	if( strlen(fileName) > MAX_PATH )
       err.run( "File : file name is too long." );

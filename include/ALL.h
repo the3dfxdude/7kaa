@@ -99,8 +99,8 @@ public:
 
    void internal(char*,char*,int);
    void mem();
-        void msg(char*,...);
-   void run(char*,...);
+        void msg(const char*,...);
+   void run(const char*,...);
 
    void set_extra_handler(ExtraHandler extraHandler) { extra_handler = extraHandler; }
 };

@@ -55,7 +55,7 @@ public:
    // ready to use one-step call functions
 
 	int  ask(char*, char* =NULL, char* =NULL, int= -1, int= -1);
-	void msg(char* msgStr, int enableTimeOut=1, int x1= -1, int y1= -1);
+	void msg(const char* msgStr, int enableTimeOut=1, int x1= -1, int y1= -1);
 	void print(char*, ... );
    void tell(char*,int= -1, int= -1);
 
@@ -66,7 +66,7 @@ public:
    void paint(int);
    void close();
 
-   void calc_size(char*,int,int= -1, int= -1);
+   void calc_size(const char*,int,int= -1, int= -1);
 
    int  ask_button(char* =NULL,char* =NULL,int=1);
    void ask_button(Button&,Button&,char* =NULL,char* =NULL);

@@ -144,7 +144,7 @@ void Box::close()
 // <int>   minHeight = minimum height of the box
 // [int]   x1, y1    = the top left corner of the box
 //
-void Box::calc_size(char* msgStr, int minHeight, int x1, int y1)
+void Box::calc_size(const char* msgStr, int minHeight, int x1, int y1)
 {
 	int width  = BOX_X_MARGIN*2 + font_san.text_width(msgStr, -1, MAX_BOX_WIDTH-BOX_X_MARGIN*2);
 	int height = minHeight + font_san.text_height(BOX_LINE_SPACE);
@@ -319,7 +319,7 @@ int Box::ask(char* msgStr, char* buttonDes1, char* buttonDes2, int x1, int y1)
 // [int]   x1, y1 		 = the left corner of the box, if not given
 //                  		   center the box on the screen.
 //
-void Box::msg(char* msgStr, int enableTimeOut, int x1, int y1)
+void Box::msg(const char* msgStr, int enableTimeOut, int x1, int y1)
 {
 	int savedUseBack = vga.use_back_buf;
 

@@ -64,7 +64,7 @@
 struct HyperField
 {
 	short x1, y1, x2, y2;
-	char* text_ptr;        // pointer to the hyper-field name in the text
+	const char* text_ptr;        // pointer to the hyper-field name in the text
 	short text_len;        // length of the hyper-field name
 };
 
@@ -77,7 +77,7 @@ class Font
 public:
 	char	  init_flag;
 
-	char*   next_text_ptr;      // these 3 vars are used for storing
+	const char*   next_text_ptr;      // these 3 vars are used for storing
 	short   next_text_y;        // the result parameters after calling
 	short   line_count;         // put_paragraph(). Refer to put_paragraph()
 
@@ -113,10 +113,10 @@ public:
 	void use_std_height()		{ font_height = std_font_height; }
 	void use_max_height()		{ font_height = max_font_height; }
 
-	int  text_width(char*, int= -1, int=0);
+	int  text_width(const char*, int= -1, int=0);
 	int  text_height(int=DEFAULT_LINE_SPACE);
 
-	int  put(int,int,char*,char=0,int= -1);
+	int  put(int,int,const char*,char=0,int= -1);
 
 	int  put(int x, int y, int value, char clearBack=0, int x2= -1)
 		  { return put( x, y, m.format(value), clearBack, x2 ); }
@@ -128,13 +128,13 @@ public:
 	void d3_put(int,int,int,int,char*);
 	int  center_put(int,int,int,int,char*,char clearBack=0);
 
-	void put_paragraph(int,int,int,int,char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
+	void put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
 
-	void count_line(int x1, int y1, int x2, int y2, char *text,
+	void count_line(int x1, int y1, int x2, int y2, const char *text,
 						 int lineSpace, int& totalLines, int& dispLines);
 
 	void put_char_to_buffer(char* dest, int destPitch, int x1, int y1, unsigned short text);
-	void put_to_buffer(char* dest, int destPitch, int x1, int y1, char *text);
+	void put_to_buffer(char* dest, int destPitch, int x1, int y1, const char *text);
 	void center_put_to_buffer(char* dest, int destPitch, int x1, int y1, int x2, int y2, char *text);
 
 	short translate_german_char(short textChar);
