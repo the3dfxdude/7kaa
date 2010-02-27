@@ -6,3 +6,5 @@
 *~
 *.exe*
 opts.pl
+tags
+cscope.out
