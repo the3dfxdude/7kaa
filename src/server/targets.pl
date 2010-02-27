@@ -29,7 +29,7 @@ OAI_TOWN  OF_CAMP   OLIGHTN2  OR_TECH   OTOWNIND  OVGA2
 OAI_TRAD  OF_CAMP2  OLOG      OR_TOWN   OTOWNRES  OVGABUF
 OAI_UNIT  OF_FACT   OLZW      OR_TRADE  OTRANSL   OVGABUF2
 OANLINE   OF_FACT2  OMATRIX   OSCROLL   OTUTOR    OVGALOCK
-OAUDIO    OF_HARB   OMEM      OSE       OTUTOR2   OVIDEO
+OAUDIO    OF_HARB   OSE       OTUTOR2   OVIDEO
 OBATTLE   OF_HARB2  OMISC     OSERES    OUNIT     OVOLUME
 OBLOB     OF_INN    OMONSRES  OSFRMRES  OUNIT2    OVQUEUE
 OBOX      OF_INN2   OMOUSE    OSITE     OUNITA    OWALLRES
@@ -93,6 +93,11 @@ IB_ATDM IR_AM  IR_A    IB_TDM   IR_M IR
 );
 push ( @obj_files, map { "asm/$_.o" } @asm_obj_files );
 push ( @obj_files, map { "$_.o" } @rc_files );
+
+@common_c_files = qw(
+OMEM
+);
+push ( @obj_files, map { "../common/$_.o" } @common_c_files );
 
 if (defined($debug) && $debug) {
   push ( @obj_files, "../common/dbglog.o" );
