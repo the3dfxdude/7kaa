@@ -56,7 +56,13 @@ int   World::max_x_loc=200, World::max_y_loc=200;
 
 World::World()
 {
-   memset( this, 0, sizeof(World) );
+	loc_matrix = NULL;
+	next_scroll_time = 0;
+	scan_fire_x = 0;
+	scan_fire_y = 0;
+	lightning_signal = 0;
+	plant_count = 0;
+	plant_limit = 0;
 
    //------- initialize matrix objects -------//
 
