@@ -37,7 +37,31 @@
 
 MouseCursor::MouseCursor()
 {
-	memset( this, 0, sizeof(MouseCursor) );
+	init_flag = 0;
+	hide_all_flag = 0;
+	hide_area_flag = 0;
+	cur_icon = 0;
+	hide_x1 = hide_y1 = hide_x2 = hide_y2 = 0;
+	cur_x1 = cur_y1 = cur_x2 = cur_y2 = 0;
+	hot_spot_x = hot_spot_y = 0;
+	icon_width = 0;
+	icon_height = 0;
+	cursor_shown = 0;
+	processing_flag = 0;
+	wait_mode_count = 0;
+	icon_ptr = icon_data_ptr = NULL;
+	save_scr = save_back_scr = merge_buf = NULL;
+	frame_flag = 0;
+	frame_shown = 0;
+	frame_x1 = frame_y1 = frame_x2 = frame_y2 = 0;
+	frame_origin_x = frame_origin_y = 0;
+	frame_border_x1 = frame_border_y1 = frame_border_x2 = frame_border_y2 = 0;
+	memset(frame_top_save_scr, 0, VGA_WIDTH + 4);
+	memset(frame_bottom_save_scr, 0, VGA_WIDTH + 4);
+	memset(frame_left_save_scr, 0, VGA_WIDTH + 4);
+	memset(frame_right_save_scr, 0, VGA_WIDTH + 4);
+	cursor_count = 0;
+	cursor_info_array = NULL;
 }
 //----------- End of function MouseCursor::MouseCursor ------//
 
