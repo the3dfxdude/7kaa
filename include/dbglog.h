@@ -42,15 +42,15 @@ extern void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel
 
 #ifdef DEBUG
 
-#define MSG(...) dbglog_printf(__DBGLOG_MSG, &__dbglog_default_channel, __VA_ARGS__)
-#define ERR(...) dbglog_printf(__DBGLOG_ERR, &__dbglog_default_channel, __VA_ARGS__)
+#define MSG(format,...) dbglog_printf(__DBGLOG_MSG, &__dbglog_default_channel, format, ##__VA_ARGS__)
+#define ERR(format,...) dbglog_printf(__DBGLOG_ERR, &__dbglog_default_channel, format, ##__VA_ARGS__)
 
 #define DBGLOG_DEFAULT_CHANNEL(s) static struct __dbglog_channel __dbglog_default_channel = { DBGLOG_NEED_INIT, #s }
 
 #else /* !DEBUG */
 
-#define ERR(...)
-#define MSG(...)
+#define ERR(format,...)
+#define MSG(format,...)
 
 #define DBGLOG_DEFAULT_CHANNEL(s)
 
