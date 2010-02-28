@@ -2039,19 +2039,20 @@ void World::process_visibility()
 	if( config.fog_of_war )
 	{
 		// ###### begin Gilbert 13/10 ########//
-		//for( int y = 0; y < max_y_loc; ++y)
-		//{
-		//	Location *locPtr = get_loc(0,y);
-		//	for( int x = 0; x < max_x_loc; ++x, ++locPtr)
-		//	{
-		//		locPtr->dec_visibility();
-		//	}
-		//}
+		for( int y = 0; y < max_y_loc; ++y)
+		{
+			Location *locPtr = get_loc(0,y);
+			for( int x = 0; x < max_x_loc; ++x, ++locPtr)
+			{
+				locPtr->dec_visibility();
+			}
+		}
 		
 		int count = max_x_loc * max_y_loc;
 		const int sizeOfLoc = sizeof(Location);
 		unsigned char *locVisitLevel = &get_loc(0,0)->visit_level;
 		unsigned char decVisitLevel = EXPLORED_VISIBILITY*2+1;
+#if 0
 		/* Original Visual C++ assembly code for reference
 		_asm
 		{
@@ -2084,6 +2085,7 @@ process_visit_level_1:
 			: "m"(decVisitLevel), "b"(locVisitLevel), "c"(count), "d"(sizeOfLoc)
 			: "%eax"
 		);
+#endif
 		// ###### end Gilbert 13/10 ########//
 	}
 }
