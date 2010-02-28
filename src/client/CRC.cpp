@@ -23,8 +23,8 @@ Description : calculate 8-bit CRC
 Converted to C++
 */
 
-#include <ALL.H>
-#include <CRC.H>
+#include <ALL.h>
+#include <CRC.h>
 
 #define DIVISOR	0x14B //101001011b
 
