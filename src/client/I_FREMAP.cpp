@@ -83,8 +83,9 @@ void IMGfogRemap16x16(char* imageBuf, int pitch, int x, int y, char**colorTableA
 		C2subC1 = c2-c1;
 		for (int i=0; i<16; ++i, bxy+=C2subC1)
 		{
-			remap = bxy / 256 / 8;		// bxy >> 11, 256 for fix point, 8 for visibility levels
-			imageBuf[ dest + i ] = colorTableArray[ remap-10 ][ imageBuf[dest+i] ];
+			remap = bxy / 256 / 8		// bxy >> 11, 256 for fix point, 8 for visibility levels
+				- (MAX_VISIBILITY-1);	// there are -10 < x < 10 entries in the colorTableArray
+			imageBuf[ dest + i ] = colorTableArray[ remap ][ ((unsigned char*)imageBuf)[dest+i] ];
 		}
 	}
 }
@@ -126,7 +127,7 @@ void IMGbarRemap16x16(char* imageBuf, int pitch, int x, int y, char* table)
 	{
 		for (int i=0; i<16; ++i)
 		{
-			imageBuf[dest+i] = table[ imageBuf[dest+i] ];
+			imageBuf[dest+i] = table[ ((unsigned char*)imageBuf)[dest+i] ];
 		}
 	}
 }
@@ -163,7 +164,7 @@ void decideBarRemap(char*imageBuf, int pitch, int x, int y, char**colorTableArra
 		else
 		{
 			// visibility < 0 : darker, so subtract MAX_VISIBILITY
-			IMGbarRemap16x16( imageBuf, pitch, x, y, colorTableArray[cornera_lvl-MAX_VISIBILITY] );
+			IMGbarRemap16x16( imageBuf, pitch, x, y, colorTableArray[cornera_lvl-(MAX_VISIBILITY-1)] );
 		}
 	}
 	else
