@@ -77,6 +77,9 @@ IB_ATDM IR_AM  IR_A    IB_TDM   IR_M IR
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
+if (defined($no_asm) && $no_asm) {
+  push (@defines, "NO_ASM");
+}
 
 @includes = qw( ../../include );
 
