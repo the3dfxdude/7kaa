@@ -838,10 +838,10 @@ void Sys::update_view()
 void Sys::detect_view()
 {
 	int enableAction;			// some action is not enabled, when paused.
-#if (defined(AMPLUS) && defined(USE_DPLAY))
+#ifdef USE_DPLAY
 	enableAction = config.frame_speed > 0 || !remote.is_enable();	// AMPLUS allows action when paused in single player
-#else
-	enableAction = config.frame_speed > 0;
+#else  // !USE_DPLAY -- single player or new multiplayer
+	enableAction = 1;
 #endif
 
 	if( enableAction )
