@@ -96,7 +96,20 @@ static int text_line_count;     // used by text_width() & text_height() only
 
 Font::Font(char* fontName)
 {
-	memset( this, 0, sizeof(Font) );
+	init_flag = 0;
+	next_text_ptr = NULL;
+	next_text_y = 0;
+	line_count = 0;
+	font_height = 0;
+	std_font_height = 0;
+	max_font_height = 0;
+	max_font_width = 0;
+	space_width = 0;
+	inter_char_space = 0;
+	first_char = 0;
+	last_char = 0;
+	font_info_array = NULL;
+	font_bitmap_buf = NULL;
 
 	if( fontName )
 		init(fontName);
