@@ -21,6 +21,7 @@
 //Filename    : OFIRM.CPP
 //Description : Object Firm
 
+#include <string.h>
 #include <OVGA.h>
 #include <ODATE.h>
 #include <OMLINK.h>
@@ -76,10 +77,52 @@ static int remove_firm = 0; // true only when the firm is to be removed from the
 //
 Firm::Firm()
 {
-	//####### patch begin Gilbert 21/1 #######// 
-//   memset( (char *)this, 0, sizeof(Firm) );
-	memset( (char *)this + sizeof(void *), 0, sizeof(Firm) - sizeof(void *) );
-	//####### patch end Gilbert 21/1 #######// 
+    firm_id = 0;
+    firm_build_id = 0;
+    firm_recno = 0;
+    firm_ai = 0;
+    ai_processed = 0;
+    ai_status = 0;
+    ai_link_checked = 0;
+    ai_sell_flag = 0;
+    race_id = 0;
+    nation_recno = 0;
+    closest_town_name_id = 0;
+    firm_name_instance_id = 0;
+    loc_x1 = loc_y1 = loc_x2 = loc_y2 = 0;
+    abs_x1 = abs_y1 = abs_x2 = abs_y2 = 0;
+    center_x = center_y = 0;
+    region_id = 0;
+    cur_frame = 0;
+    remain_frame_delay = 0;
+    hit_points = 0.0f;
+    max_hit_points = 0.0f;
+    under_construction = 0;
+    firm_skill_id = 0;
+    overseer_recno = 0;
+    overseer_town_recno = 0;
+    builder_recno = 0;
+    builder_region_id = 0;
+    productivity = 0.0f;
+    worker_array = NULL;
+    worker_count = 0;
+    selected_worker_id = 0;
+    player_spy_count = 0;
+    sabotage_level = 0;
+    linked_firm_count = 0;
+    linked_town_count = 0;
+    memset(linked_firm_array, 0, sizeof(short) * MAX_LINKED_FIRM_FIRM);
+    memset(linked_town_array, 0, sizeof(short) * MAX_LINKED_FIRM_TOWN);
+    memset(linked_firm_enable_array, 0, MAX_LINKED_FIRM_FIRM);
+    memset(linked_town_enable_array, 0, MAX_LINKED_FIRM_TOWN);
+    last_year_income = 0.0f;
+    cur_year_income = 0.0f;
+    setup_date = 0;
+    should_set_power = 0;
+    last_attacked_date = 0;
+    should_close_flag = 0;
+    no_neighbor_space = 0;
+    ai_should_build_factory_count = 0;
 }
 //----------- End of function Firm::Firm ---------//
 
@@ -3609,7 +3652,21 @@ void Firm::auto_defense(short targetRecno)
 //
 Worker::Worker()
 {
-	memset( this, 0, sizeof(Worker) );
+    race_id = 0;
+    unit_id = 0;
+    town_recno = 0;
+    name_id = 0;
+    skill_id = 0;
+    skill_level = 0;
+    skill_level_minor = 0;
+    skill_potential = 0;
+    combat_level = 0;
+    combat_level_minor = 0;
+    spy_recno = 0;
+    rank_id = 0;
+    worker_loyalty = 0;
+    hit_points = 0;
+    extra_para = 0;
 }
 //--------- End of function Worker::Worker -----------//
 
