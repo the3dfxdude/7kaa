@@ -66,7 +66,19 @@ static Button3D button_sample;
 
 Tutor::Tutor()
 {
-	memset( this, 0, sizeof(Tutor) );
+	init_flag = 0;
+	tutor_count = 0;
+	tutor_info_array = NULL;
+	cur_tutor_id = 0;
+	cur_text_block_id = 0;
+	last_text_block_id = 0;
+	cur_speech_wav_id = 0;
+	tutor_text_buf = NULL;
+	tutor_text_buf_size = 0;
+	tutor_intro_buf = NULL;
+	tutor_intro_buf_size = 0;
+	text_block_array = NULL;
+	text_block_count = 0;
 }
 //--------- End of function Tutor::Tutor -----------//
 
