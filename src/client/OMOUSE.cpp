@@ -32,6 +32,7 @@
 #include <OMOUSE2.h>
 #include <KEY.h>
 #include <OVGALOCK.h>
+#include <string.h>
 
 #ifdef WIN32
 #include <cctype>

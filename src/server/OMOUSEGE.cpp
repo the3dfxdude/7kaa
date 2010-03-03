@@ -32,6 +32,7 @@
 #include <OMOUSE2.h>
 #include <KEY.h>
 #include <OVGALOCK.h>
+#include <string.h>
 
 #ifdef WIN32
 #include <cctype>
@@ -77,7 +78,29 @@ static int update_x1, update_y1, update_x2, update_y2;		// coordination of the l
 //
 Mouse::Mouse()
 {
-	memset( this, 0, sizeof(Mouse) );
+	init_flag = 0;
+	handle_flicking = 0;
+	vga_update_buf = NULL;
+	memset(&key_hook_handle, 0, sizeof(HHOOK));
+	memset(&direct_input, 0, sizeof(LPDIRECTINPUT));
+	memset(&di_mouse_device, 0, sizeof(LPDIRECTINPUTDEVICE));
+	memset(&di_keyb_device, 0, sizeof(LPDIRECTINPUTDEVICE));
+	cur_x = cur_y = 0;
+	left_press = right_press = 0;
+	skey_state = 0;
+	bound_x1 = 0;
+	bound_y1 = 0;
+	bound_x2 = 0;
+	bound_y2 = 0;
+	event_skey_state = 0;
+	has_mouse_event = 0;
+	mouse_event_type = (MouseEventType)0;
+	memset(click_buffer, 0, sizeof(MouseClick) * 2);
+	scan_code = 0;
+	key_code = 0;
+	memset(event_buffer, 0, sizeof(MouseEvent) * EVENT_BUFFER_SIZE);
+	head_ptr = 0;
+	tail_ptr = 0;
 	double_speed_threshold = DEFAULT_DOUBLE_SPEED_THRESHOLD;
 	triple_speed_threshold = DEFAULT_TRIPLE_SPEED_THRESHOLD;
 }
