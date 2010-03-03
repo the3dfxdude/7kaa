@@ -16,7 +16,7 @@ OAI_DEFE  OFILE     OGENHILL  OSYS      OU_CARAS
 OAI_DIPL  OFILETXT  OGENMAP   OSYS2     OU_CARAT
 OAI_ECO   OFIRM     OGETA     OSYS3     OU_CART
 OAI_GRAN  OFIRM2    OGFILE    ORES      OTALKENG  OU_GOD
-OAI_INFO  OFIRMA    OGFILE2   ORESDB    OTALKMSG  OU_GOD2
+OAI_INFO  OFIRMA    OGFILE2   OTALKMSG  OU_GOD2
 OAI_MAIN  OFIRMAI   OGFILE3   ORESX     OTALKRES  OU_MARI
 OAI_MAR2  OFIRMDIE  OGFILEA   OROCK     OTECHRES  OU_MARI2
 OAI_MAR3  OFIRMDRW  OGODRES   OROCKRES  OTERRAIN  OU_MARIF
@@ -112,7 +112,7 @@ push ( @obj_files, map { "asm/$_.o" } @asm_obj_files );
 push ( @obj_files, map { "$_.o" } @rc_files );
 
 @common_c_files = qw(
-OMEM
+OMEM ORESDB
 );
 push ( @obj_files, map { "../common/$_.o" } @common_c_files );
 

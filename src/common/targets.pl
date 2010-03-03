@@ -1,8 +1,11 @@
 ### Compiler targets ###
+@c_files = qw(
+OMEM ORESDB
+);
+
 if (defined($debug) && $debug) {
   push (@c_files, "dbglog");
 }
-push (@c_files, "OMEM");
 
 @defines = qw( AMPLUS );
 if (defined($debug) && $debug) {

@@ -154,4 +154,3 @@ char* ResourceDb::read_imported(long offset)
    return data_buf;
 }
 //----------- End of function ResourceDb::read_imported -------------//
-
