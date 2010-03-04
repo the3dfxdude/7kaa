@@ -160,7 +160,7 @@ void Button::paint_text(int pX1, int pY1, char* textPtr, char pElastic, char def
 // Note : it use the color setting in (vga) and (font_san)
 //
 void Button::create(int buttonType, int pX1, int pY1, int pX2, int pY2,
-						  void* bodyPtr, char pElastic, char defIsPushed)
+						  const void* bodyPtr, char pElastic, char defIsPushed)
 {
 	int strLen;
 

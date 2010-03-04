@@ -55,7 +55,7 @@ public:
 	unsigned short button_key;     // button is pressed when user press this key
 
 	char  	  		str_buf[STR_BUF_LEN+1];
-	void* 	  		body_ptr;      // can be a text pointer, bitmap pointer or a pointer to user defined function
+	const void* 	  		body_ptr;      // can be a text pointer, bitmap pointer or a pointer to user defined function
 	char  	  		elastic;
 	Font* 	  		font_ptr;
 
@@ -69,7 +69,7 @@ public:
 	void reset()                         { init_flag=0; }
 	void set_font(Font*);
 	void set_key(unsigned keyCode)       { button_key = keyCode; }
-	void create(int,int,int,int,int,void*,char=1,char=0);
+	void create(int,int,int,int,int,const void*,char=1,char=0);
 	void set_body(void*);
 	void set_help_code(char* helpCode);
 
@@ -78,7 +78,7 @@ public:
 	void create_text(int x1,int y1,int x2,int y2,char* textPtr,char elastic=1,char defIsPushed=0)
 		  { create( BUTTON_TEXT,x1,y1,x2,y2,textPtr,elastic,defIsPushed); }
 
-	void paint_text(int x1,int y1,int x2,int y2,char* textPtr,char elastic=1,char defIsPushed=0)
+	void paint_text(int x1,int y1,int x2,int y2,const char* textPtr,char elastic=1,char defIsPushed=0)
 		  { create( BUTTON_TEXT,x1,y1,x2,y2,textPtr,elastic,defIsPushed); paint(); }
 
 	void create_text(int x1,int y1,char* textPtr,char elastic=1,char defIsPushed=0);

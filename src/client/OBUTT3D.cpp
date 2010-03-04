@@ -61,7 +61,7 @@ Button3D::Button3D()
 //                       (default : 0)
 //
 void Button3D::create(int pX1, int pY1, char buttonStyle,
-							 char* buttonName, char elasticFlag, char defIsPushed)
+							 const char* buttonName, char elasticFlag, char defIsPushed)
 {
 	init_flag = 1;
 
@@ -161,7 +161,7 @@ void Button3D::update_bitmap(char* buttonName)
 
 //-------- Begin of function Button3D::set_help_code -------//
 //
-void Button3D::set_help_code(char* helpCode)
+void Button3D::set_help_code(const char* helpCode)
 {
 	strncpy( help_code, helpCode, HELP_CODE_LEN );
 
