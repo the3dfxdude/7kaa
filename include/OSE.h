@@ -92,10 +92,10 @@ public:
 	void	flush();	// output sound effect to volume
 	void	clear();
 	char	*get_effect_name(int);
-	int	search_effect_id(char *);
+	int	search_effect_id(const char *);
 	int	search_effect_id(char *, int len);
 
-	int	immediate_sound( char *soundName, RelVolume=DEF_REL_VOLUME);	// mainly for button sound, interface
+	int	immediate_sound( const char *soundName, RelVolume=DEF_REL_VOLUME);	// mainly for button sound, interface
 
 //	static long sound_volume(short locX, short locY);
 //	static long sound_volume(short locX, short locY, short limit, short drop);

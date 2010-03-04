@@ -1032,7 +1032,7 @@ void Font::update_field(int x1, int y1, int value, int format, int x2)
 // <int> refreshFlag = refresh flag, either INFO_REPAINT or INFO_UPDATE
 // [char*] helpCode  = help code
 //
-void Font::field(int xDes, int y1, char* desStr, int xValue, int value,
+void Font::field(int xDes, int y1, const char* desStr, int xValue, int value,
 					  int format, int xEnd, int refreshFlag, char* helpCode)
 {
 	int x2;
@@ -1126,7 +1126,7 @@ void Font::update_field(int x1, int y1, double value, int format, int x2)
 // <int> refreshFlag = refresh flag, either INFO_REPAINT or INFO_UPDATE
 // [char*] helpCode  = help code
 //
-void Font::field(int xDes, int y1, char* desStr, int xValue, double value,
+void Font::field(int xDes, int y1, const char* desStr, int xValue, double value,
 					  int format, int xEnd, int refreshFlag, char* helpCode )
 {
 	int x2;
@@ -1205,7 +1205,7 @@ void Font::update_field(int x1, int y1, char* value, int x2)
 // <int> refreshFlag = refresh flag, either INFO_REPAINT or INFO_UPDATE
 // [char*] helpCode  = help code
 //
-void Font::field(int xDes, int y1, char* desStr, int xValue, char* value,
+void Font::field(int xDes, int y1, const char* desStr, int xValue, char* value,
 					  int xEnd, int refreshFlag, char* helpCode )
 {
 	int x2;

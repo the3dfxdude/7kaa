@@ -143,7 +143,7 @@ public:
 
 	void put_field(int,int,char*,int,int,int=1);
 	void update_field(int,int,int,int,int);
-	void field(int,int,char*,int,int,int,int,int,char* helpCode=NULL);
+	void field(int,int,const char*,int,int,int,int,int,char* helpCode=NULL);
 	int  disp(int,int,int,int,int);
 
 	//----- <short> version, call <int> version directly -----//
@@ -154,7 +154,7 @@ public:
 	void update_field(int a,int b,short c,int d,int e)
 		  { update_field(a,b,(int)c,d,e); }
 
-	void field(int a,int b,char* c,int d,short e,int f,int g,int h,char* helpCode=NULL)
+	void field(int a,int b,const char* c,int d,short e,int f,int g,int h,char* helpCode=NULL)
 		  { field(a,b,c,d,(int)e,f,g,h); }
 
 	int  disp(int a,int b,short c,int d,int e)
@@ -168,7 +168,7 @@ public:
 	void update_field(int a,int b,long c,int d,int e)
 		  { update_field(a,b,(int)c,d,e); }
 
-	void field(int a,int b,char* c,int d,long e,int f,int g,int h,char* helpCode=NULL)
+	void field(int a,int b,const char* c,int d,long e,int f,int g,int h,char* helpCode=NULL)
 		  { field(a,b,c,d,(int)e,f,g,h); }
 
 	int  disp(int a,int b,long c,int d,int e)
@@ -178,14 +178,14 @@ public:
 
 	void put_field(int,int,char*,int,double,int=1);
 	void update_field(int,int,double,int,int);
-	void field(int,int,char*,int,double,int,int,int,char* helpCode=NULL);
+	void field(int,int,const char*,int,double,int,int,int,char* helpCode=NULL);
 	int  disp(int,int,double,int,int);
 
 	//-------------- <char*> version ---------------//
 
 	void put_field(int,int,char*,int,char*);
 	void update_field(int,int,char*,int);
-	void field(int,int,char*,int,char*,int,int,char* helpCode=NULL);
+	void field(int,int,const char*,int,char*,int,int,char* helpCode=NULL);
 	int  disp(int,int,char*,int);
 };
 

@@ -395,7 +395,7 @@ char *SECtrl::get_effect_name(int j)
 //
 // <char *> effectName      the name of the effect name
 //
-int SECtrl::search_effect_id(char *effectName)
+int SECtrl::search_effect_id(const char *effectName)
 {
 	err_when(!init_flag);
 	if( !audio_flag )
@@ -515,7 +515,7 @@ long SECtrl::sound_pan(short locX, short locY, short drop)
 */
 
 // ------- Begin Function SECtrl::immediate_sound ------------//
-int SECtrl::immediate_sound(char *soundName, RelVolume relVolume)
+int SECtrl::immediate_sound(const char *soundName, RelVolume relVolume)
 {
 	if( !config.sound_effect_flag )
 		return 0;

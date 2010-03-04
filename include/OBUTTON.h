@@ -83,7 +83,7 @@ public:
 
 	void create_text(int x1,int y1,char* textPtr,char elastic=1,char defIsPushed=0);
 
-	void paint_text(int x1,int y1,char* textPtr,char elastic=1,char defIsPushed=0);
+	void paint_text(int x1,int y1,const char* textPtr,char elastic=1,char defIsPushed=0);
 
 	//-------- bitmap button -------------//
 

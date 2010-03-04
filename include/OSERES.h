@@ -114,7 +114,7 @@ public:
 	short		scan_id(char,short, char *, char,short, int findFirst=0);
 	SEInfo*	operator[] (int);
 	void		sound(short xLoc, short yLoc, short frame, char,short, const char *, char=0,short=0);
-	void		far_sound(short xLoc, short yLoc, short frame, char,short, char *, char=0,short=0);
+	void		far_sound(short xLoc, short yLoc, short frame, char,short, const char *, char=0,short=0);
 
 	static int mark_select_object_time();		// return false if this sound should be skipped due to too frequent
 	static int mark_command_time();				// return false if this sound should be skipped due to too frequent

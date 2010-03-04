@@ -440,7 +440,7 @@ void SERes::sound(short xLoc, short yLoc, short frame,
 // usually used in acknowlege voice
 //
 void SERes::far_sound(short xLoc, short yLoc, short frame,
-	char subjectType,short subjectId, char *action, char objectType,short objectId)
+	char subjectType,short subjectId, const char *action, char objectType,short objectId)
 {
 	//### begin trevor 20/8 ###//
 	if( !config.sound_effect_flag )
