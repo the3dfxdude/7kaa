@@ -22,10 +22,13 @@
 //Description : Resource library with database index reading object
 
 #include <string.h>
+#include <stdint.h>
 #include <OSYS.h>
 #include <ODB.h>
 #include <ORESDB.h>
+#include <dbglog.h>
 
+DBGLOG_DEFAULT_CHANNEL(FileIO);
 
 //-------------------------------------------------------//
 //
@@ -38,38 +41,6 @@
 //   are automatically calculated by LIBDB.EXE
 //
 //-------------------------------------------------------//
-
-
-//---------- Begin of function ResourceDb::init ---------//
-//
-// <char*>     resName			= name of the resource file (e.g. "GIF.RES")
-// <Database*> dbObj				= name of the database      (e.g. Database db("PFILE.DBF"))
-// <int>       indexOffset		= offset of the index field
-// [int]       useCommonBuf   = whether use the vga common buffer to store the data or not
-//										  (default:0)
-//
-void ResourceDb::init(char* resName, Database* dbObj, int indexOffset, int useCommonBuf)
-{
-   deinit();
-
-   file_open( resName );
-
-   db_obj             = dbObj;
-   index_field_offset = indexOffset;
-   use_common_buf     = useCommonBuf;
-
-   if( use_common_buf )
-      data_buf = sys.common_data_buf;
-   else
-      data_buf = NULL;
-
-   err_if( db_obj == NULL )
-      err_now("db_obj is NULL");
-
-   init_flag = 1;
-}
-//----------- End of function ResourceDb::init ------------//
-
 
 //---------- Begin of function ResourceDb::deinit ---------//
 //
@@ -86,89 +57,10 @@ void ResourceDb::deinit()
       if( !read_all )
 			 file_close();
 
-      init_flag=0;
+      init_flag = false;
    }
 }
 //----------- End of function ResourceDb::deinit ----------//
-
-
-//---------- Begin of function ResourceDb::read ----------//
-//
-// Read in data from the resource file and store in an the buffer of this class
-//
-// The index field of the current record in the database object is
-// used to locate the data in the resource file.
-//
-// Syntax : read(int recNo)
-//
-// [int] recNo = the record no. in the database.
-//               (default : current record no.)
-//
-// Return : <char*> data pointer
-//          NULL    if the record has not index to data
-//
-char* ResourceDb::read(int recNo)
-{
-   err_when( !init_flag || !db_obj );
-
-   long* indexFieldPtr;
-	char* recPtr;
-
-   if( (recPtr = db_obj->read(recNo)) == NULL )
-      return NULL;
-
-   indexFieldPtr = (long*) (recPtr+index_field_offset);
-
-   if( memcmp( indexFieldPtr, "    ", 4 ) == 0 )
-      return NULL;      // no sample screen for this file
-
-   file_seek( *indexFieldPtr );
-	data_buf_size = file_get_long();
-
-	err_when( use_common_buf && data_buf_size > COMMON_DATA_BUF_SIZE );
-
-   if( !use_common_buf )
-		data_buf = mem_resize( data_buf, data_buf_size );
-
-	file_read( data_buf, data_buf_size );
-
-   return data_buf;
-}
-//----------- End of function ResourceDb::read -------------//
-
-
-//---------- Begin of function ResourceDb::get_file ----------//
-//
-// Position the file pointer to the beginning of the data and
-// return the file stream
-//
-// Syntax : get_file()
-//
-// Return : <FILE*> the file stream
-//          NULL    if the record has not index to data
-//
-File* ResourceDb::get_file()
-{
-   err_when( !init_flag || !db_obj );
-
-   long* indexFieldPtr;
-   char  emptyField[] = "        ";
-   char* recPtr;
-
-   if( (recPtr = db_obj->read()) == NULL )
-      return NULL;
-
-   indexFieldPtr = (long*) (recPtr+index_field_offset);
-
-   if( memcmp( indexFieldPtr, emptyField, 8 ) == 0 )
-      return NULL;      // no sample screen for this file
-
-   file_seek( *indexFieldPtr + sizeof(long) );
-
-   return this;
-}
-//----------- End of function ResourceDb::get_file -------------//
-
 
 //---------- Begin of function ResourceDb::init_imported ----------//
 //
@@ -180,14 +72,13 @@ File* ResourceDb::get_file()
 // [int]   useCommonBuf = whether use the vga common buffer to store the data or not
 //                     (default:0)
 //
-void ResourceDb::init_imported(char* resName, int readAll, int useCommonBuf)
+void ResourceDb::init_imported(const char* resName, int cacheWholeFile, int useCommonBuf)
 {
    deinit();
 
-   db_obj             = NULL;
-   index_field_offset = NULL;
+   if (!resName) ERR("[ResourceDb::init_imported] NULL filename received\n");
 
-   read_all = readAll;
+   read_all = cacheWholeFile;
 
    file_open( resName );
 
@@ -211,7 +102,7 @@ void ResourceDb::init_imported(char* resName, int readAll, int useCommonBuf)
          data_buf = NULL;
    }
 
-   init_flag = 1;
+   init_flag = true;
 }
 //----------- End of function ResourceDb::init_imported -------------//
 
@@ -229,33 +120,31 @@ void ResourceDb::init_imported(char* resName, int readAll, int useCommonBuf)
 //
 char* ResourceDb::read_imported(long offset)
 {
-	err_when( !init_flag );
-
-	// #### begin Gilbert 4/10 ######//
-//	err_if( offset<0 || offset>=data_buf_size )
-//		err_here();
-	// #### end Gilbert 4/10 ######//
+    if (!init_flag)
+        ERR("[ResourceDb::read_imported] trying to read before initialization\n");
 
 	//-------- read from buffer ---------//
-
 	// ##### begin Gilbert 4/10 #######//
 	if( read_all )
 	{
-		err_when( offset<0 || offset>=data_buf_size );
-		return data_buf + offset + sizeof(long);  // by pass the long parameters which is the size of the data
+		if (offset < 0 || offset >= data_buf_size)
+            ERR("[ResourceDb::read_imported] invalid offset specified #1\n");
+		return data_buf + offset + sizeof(int32_t);  // bypass the long parameters which is the size of the data
 	}
 	// ##### end Gilbert 4/10 #######//
 
 	//---------- read from file ---------//
 
 	// ##### begin Gilbert 2/10 ######//
-	err_when( offset >= file_size() );
+	if (offset >= file_size())
+        ERR("[ResourceDb::read_imported] invalid offset specified #2\n");
 	// ##### end Gilbert 2/10 ######//
 	file_seek( offset );
 
 	data_buf_size = file_get_long();
 
-	err_when( use_common_buf && data_buf_size > COMMON_DATA_BUF_SIZE);
+	if (use_common_buf && data_buf_size > COMMON_DATA_BUF_SIZE)
+        ERR("[ResourceDb::read_imported] data too big for common buffer\n");
 
    if( !use_common_buf )
 		data_buf = mem_resize( data_buf, data_buf_size );
