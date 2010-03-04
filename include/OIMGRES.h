@@ -46,7 +46,7 @@ public:
 
 	void  put_join(int,int,char*);
 
-	char* get_ptr(char* imageName)   { return ResourceIdx::read(imageName); }
+	char* get_ptr(const char* imageName)   { return ResourceIdx::read(imageName); }
 
 	void  put_large(VgaBuf*,int,int,char*);  // put a large image, over 64K
 	void  put_large(VgaBuf*,int,int,int);

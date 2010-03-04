@@ -112,8 +112,8 @@ void Button3D::create(int pX1, int pY1, char buttonStyle,
 //
 // Create BUTTON_TYPE_BITMAP button.
 //
-void Button3D::create(int pX1, int pY1, char* upButtonName,
-							 char* downButtonName, char elasticFlag, char defIsPushed)
+void Button3D::create(int pX1, int pY1, const char* upButtonName,
+							 const char* downButtonName, char elasticFlag, char defIsPushed)
 {
 	init_flag = 1;
 

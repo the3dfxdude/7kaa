@@ -69,8 +69,8 @@ public:
 	void create(int pX1, int pY1, char buttonStyle,
 					char* buttonName, char elasticFlag=1, char defIsPushed=0);
 
-	void create(int pX1, int pY1, char* upButtonName,
-					char* downButtonName, char elasticFlag, char defIsPushed);
+	void create(int pX1, int pY1, const char* upButtonName,
+					const char* downButtonName, char elasticFlag, char defIsPushed);
 
 	void set_key(unsigned keyCode)       { button_key = keyCode; }
 
@@ -78,8 +78,8 @@ public:
 					char* buttonName, char elasticFlag=1, char defIsPushed=0)
 		  { create( pX1, pY1, buttonStyle, buttonName, elasticFlag, defIsPushed ); paint(); }
 
-	void paint(int pX1, int pY1, char* upButtonName,
-					char* downButtonName, char elasticFlag=1, char defIsPushed=0)
+	void paint(int pX1, int pY1, const char* upButtonName,
+					const char* downButtonName, char elasticFlag=1, char defIsPushed=0)
 		  { create( pX1, pY1, upButtonName, downButtonName, elasticFlag, defIsPushed ); paint(); }
 
 	void paint(int defIsPushed= -1);
