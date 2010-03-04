@@ -33,6 +33,7 @@
 #include <ONATION.h>
 #include <OUNIT.h>
 #include <OCONFIG.h>
+#include <dbglog.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when
@@ -48,6 +49,8 @@
 #undef DEBUG
 #endif
 
+DBGLOG_DEFAULT_CHANNEL(Graphics);
+
 //--------- Begin of function Unit::draw ---------//
 //
 // update Unit::draw_outlined() also
@@ -60,7 +63,8 @@ void Unit::draw()
 	SpriteFrame* spriteFrame = cur_sprite_frame(&needMirror);
 	update_abs_pos(spriteFrame);
 
-   err_when( !sprite_info->res_bitmap.init_flag ); 
+    if (!sprite_info->res_bitmap.initialized())
+        ERR("[Unit::draw] trying to read from uninitialized resource\n");
 
 	char* bitmapPtr = sprite_info->res_bitmap.read_imported(spriteFrame->bitmap_offset);
 
@@ -380,7 +384,8 @@ void Unit::draw_outlined()
 	SpriteFrame* spriteFrame = cur_sprite_frame(&needMirror);
 	update_abs_pos(spriteFrame);
 
-   err_when( !sprite_info->res_bitmap.init_flag ); 
+    if (!sprite_info->res_bitmap.initialized())
+        ERR("[Unit::draw_outlined] trying to read from uninitialized resource\n");
 
 	char* bitmapPtr = sprite_info->res_bitmap.read_imported(spriteFrame->bitmap_offset);
 
