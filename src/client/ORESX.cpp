@@ -193,7 +193,7 @@ int ResourceIdx::read_into_user_buf(char* dataName, char* userBuf, int userBufSi
 // Return : <char*> data pointer
 //          NULL    if the record has not index to data
 //
-char* ResourceIdx::read(char* dataName)
+char* ResourceIdx::read(const char* dataName)
 {
    err_when( !init_flag || !dataName );
 
@@ -217,7 +217,7 @@ char* ResourceIdx::read(char* dataName)
 // Return : <int> index of the data in the resource file
 //          0     if the name is not found in the resource file
 //
-int ResourceIdx::get_index(char* dataName)
+int ResourceIdx::get_index(const char* dataName)
 {
 	err_when( !init_flag || !dataName );
 

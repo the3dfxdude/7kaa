@@ -57,7 +57,7 @@ struct SEInfo
 	char	file_name[FILE_NAME_LEN+1];
 	short	effect_id;				// id returned from se_ctrl.scan
 
-	int match(char, short, char *, char, short);
+	int match(char, short, const char *, char, short);
 };
 
 // ---------- Define struct SEInfoIndex -------//
@@ -110,10 +110,10 @@ public:
 	void		init2(SECtrl*);		// init after se_ctrl.init
 	void		deinit();
 
-	SEInfo*	scan(char,short, char *, char,short, int findFirst=0);
+	SEInfo*	scan(char,short, const char *, char,short, int findFirst=0);
 	short		scan_id(char,short, char *, char,short, int findFirst=0);
 	SEInfo*	operator[] (int);
-	void		sound(short xLoc, short yLoc, short frame, char,short, char *, char=0,short=0);
+	void		sound(short xLoc, short yLoc, short frame, char,short, const char *, char=0,short=0);
 	void		far_sound(short xLoc, short yLoc, short frame, char,short, char *, char=0,short=0);
 
 	static int mark_select_object_time();		// return false if this sound should be skipped due to too frequent

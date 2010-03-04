@@ -41,7 +41,7 @@ unsigned long SERes::select_sound_length = 600;	// time between successive selec
 
 
 // --------- begin of function SEInfo::match ----------//
-int SEInfo::match(char subjectType, short subjectId, char *act,
+int SEInfo::match(char subjectType, short subjectId, const char *act,
 						char objectType, short objectId)
 {
 	// object_type == -1, match all object type
@@ -314,7 +314,7 @@ void SERes::build_index()
 //
 // return NULL if not found
 //
-SEInfo* SERes::scan(char subjectType, short subjectId, char *act, 
+SEInfo* SERes::scan(char subjectType, short subjectId, const char *act, 
 						  char objectType, short objectId, int findFirst)
 {
 	err_when(!init_flag);
@@ -407,7 +407,7 @@ SEInfo* SERes::operator[] (int i)
 
 // --------- begin of function SERes::sound ----------//
 void SERes::sound(short xLoc, short yLoc, short frame,
-	char subjectType,short subjectId, char *action, char objectType,short objectId)
+	char subjectType,short subjectId, const char *action, char objectType,short objectId)
 {
 	//### begin trevor 20/8 ###//
 	if( !config.sound_effect_flag )

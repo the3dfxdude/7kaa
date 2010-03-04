@@ -48,7 +48,7 @@ class Directory : public DynArray
 public:
    Directory();
 
-   int       read(char*, int=0);
+   int       read(const char*, int=0);
    FileInfo* operator[](int recNo)  { return (FileInfo*) get(recNo); }
 };
 

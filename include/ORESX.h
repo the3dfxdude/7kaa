@@ -74,10 +74,10 @@ public:
 	void	set_user_buf(char* userDataBuf, int bufSize, int userStartReadPos=0);
 	void  reset_user_buf();
 
-	char* read(char*);
+	char* read(const char*);
 	int	read_into_user_buf(char* dataName, char* userDataBuf, int bufSize, int userStartReadPos=0);
 
-   int   get_index(char*);
+   int   get_index(const char*);
    char* get_data(int);
 	char	*data_name(int);
 

@@ -50,7 +50,7 @@ Directory::Directory() : DynArray( sizeof(FileInfo), 20 )
 //
 // return : <int> the no. of files matched the file spec.
 //
-int Directory::read(char *fileSpec, int sortName)
+int Directory::read(const char *fileSpec, int sortName)
 {
    FileInfo				fileInfo;
 	WIN32_FIND_DATA	findData;
