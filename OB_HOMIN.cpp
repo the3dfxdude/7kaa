@@ -132,7 +132,7 @@ void BulletHoming::process_move()
 			!unitPtr->is_visible() )
 		{
 			// target lost/die, proceed to Bullet::process_move
-			target_type == BULLET_TARGET_NONE;
+			target_type = BULLET_TARGET_NONE;
 		}
 		else
 		{
