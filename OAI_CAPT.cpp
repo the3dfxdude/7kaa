@@ -400,7 +400,7 @@ int Nation::find_best_capturer(int townRecno, int raceId, int& bestTargetResista
 			//--- check if the unit currently in a command base trying to take over an independent town ---//
 
 			int j;
-			for( int j=firmPtr->linked_town_count-1 ; j>=0 ; j-- )
+			for( j=firmPtr->linked_town_count-1 ; j>=0 ; j-- )
 			{
 				Town* townPtr = town_array[ firmPtr->linked_town_array[j] ];
 
