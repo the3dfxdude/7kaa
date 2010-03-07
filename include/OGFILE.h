@@ -140,7 +140,7 @@ public:
 public:
    GameFileArray();
 
-   void init(char *extStr);
+   void init(const char *extStr);
    void deinit();
 
    int  menu(int, int *recno=NULL);
@@ -160,7 +160,7 @@ public:
 
 private:
    void disp_browse();
-   void load_all_game_header(char *extStr);
+   void load_all_game_header(const char *extStr);
    int  process_action(int=0);
    void del_game();
 };

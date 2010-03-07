@@ -111,7 +111,7 @@ GameFileArray::GameFileArray() : DynArray( sizeof(GameFile), 10 )
 
 //------ Begin of function GameFileArray::init ------//
 
-void GameFileArray::init(char *extStr)
+void GameFileArray::init(const char *extStr)
 {
 	//------------- Read Hall of Fame ------------//
 
@@ -850,7 +850,7 @@ int GameFileArray::read_hall_of_fame()
 //
 // Load all headers of all saved game files in current directory.
 //
-void GameFileArray::load_all_game_header(char *extStr)
+void GameFileArray::load_all_game_header(const char *extStr)
 {
 	int       i;
 	Directory gameDir;
