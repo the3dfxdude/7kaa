@@ -104,7 +104,7 @@ public:
 
 		  BOOL   blt_buf(int x1, int y1, int x2, int y2, int putMouseCursor=1);
 
-		  void 	disp_image_file(char* fileName,int x1=0, int y1=0);
+		  void 	disp_image_file(const char* fileName,int x1=0, int y1=0);
 		  void 	finish_disp_image_file();
 
 private:
