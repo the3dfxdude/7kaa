@@ -64,7 +64,7 @@ ImageRes::ImageRes(char* resFile, int readAll, int useCommonBuf) :
 // [int] compressFlag = compress flag
 //								(default: 0)
 //
-void ImageRes::put_front(int x, int y, char* imageName, int compressFlag)
+void ImageRes::put_front(int x, int y, const char* imageName, int compressFlag)
 {
 	char* bitmapPtr = ResourceIdx::read(imageName);
 
