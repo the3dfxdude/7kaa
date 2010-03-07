@@ -151,7 +151,7 @@ void GameSet::close_set()
 //
 // <char*> dbName = the name of the database to be opened
 //
-Database* GameSet::open_db(char* dbName)
+Database* GameSet::open_db(const char* dbName)
 {
 	err_when(!set_opened_flag);
 

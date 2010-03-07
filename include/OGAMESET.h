@@ -82,7 +82,7 @@ public:
 	void	      open_set(int);
 	void	      close_set();
 
-	Database*   open_db(char*);
+	Database*   open_db(const char*);
 	Database*   get_db();
 
 	int         find_set(char*);
