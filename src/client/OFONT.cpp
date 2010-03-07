@@ -958,7 +958,7 @@ void Font::d3_put(int x1, int y1, int x2, int y2, char* desStr)
 //
 // Return : <int> lastX, the x coordination of the last pixel of last font
 //
-int Font::center_put(int x1, int y1, int x2, int y2, char* desStr, char clearBack)
+int Font::center_put(int x1, int y1, int x2, int y2, const char* desStr, char clearBack)
 {
 	int tx = x1 + ((x2-x1+1) - text_width(desStr))/2;
 	int ty = y1 + ((y2-y1+1) - font_height)/2;

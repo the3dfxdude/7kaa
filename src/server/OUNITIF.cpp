@@ -1211,7 +1211,7 @@ void Unit::disp_unit_profile(int dispY1, int refreshFlag)
 
 	//-----------------------------------------//
 
-	char *str=NULL;
+	const char *str=NULL;
 
 	if( race_id )
 	{
