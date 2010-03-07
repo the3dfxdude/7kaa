@@ -395,7 +395,7 @@ int FirmInfo::can_build(int unitRecno)
 	if( !unitPtr->nation_recno )
 		return 0;
 
-	if( !get_nation_tech_level(unitPtr->nation_recno) > 0 )
+	if( !(get_nation_tech_level(unitPtr->nation_recno) > 0) )
 		return 0;
 
 	//------ fortress of power ------//
