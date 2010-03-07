@@ -195,7 +195,7 @@ void Box::ok_button(int timeOut)
 // [int]   rightClickClose = whether pressing the right button will close the window
 //			     (default: 1)
 //
-int Box::ask_button(char* buttonDes1, char* buttonDes2, int rightClickClose)
+int Box::ask_button(const char* buttonDes1, const char* buttonDes2, int rightClickClose)
 {
    int width;
 
@@ -287,7 +287,7 @@ void Box::ask_button(Button& buttonOk, Button& buttonCancel, char* strOk, char* 
 //          0 - if user select "Cancel" button
 //
 //
-int Box::ask(char* msgStr, char* buttonDes1, char* buttonDes2, int x1, int y1)
+int Box::ask(const char* msgStr, const char* buttonDes1, const char* buttonDes2, int x1, int y1)
 {
    int rc;
 
