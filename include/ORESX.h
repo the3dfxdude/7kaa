@@ -81,7 +81,7 @@ public:
    char* get_data(int);
 	char	*data_name(int);
 
-   File* get_file(char*, int&);
+   File* get_file(const char*, int&);
    File* get_file(int, int&);
 };
 

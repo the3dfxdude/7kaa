@@ -316,7 +316,7 @@ char* ResourceIdx::get_data(int indexId)
 // Return : <FILE*> the file stream
 //          NULL    if the record has not index to data
 //
-File* ResourceIdx::get_file(char* dataName, int& dataSize)
+File* ResourceIdx::get_file(const char* dataName, int& dataSize)
 {
    err_when( !init_flag || !dataName || read_all);
 
