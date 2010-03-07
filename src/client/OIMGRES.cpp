@@ -225,7 +225,7 @@ void ImageRes::put_large(VgaBuf* vgaBuf, int x, int y, int bitmapId)
 // <VgaBuf*> vgaBufPtr = the pointer to the Vga buffer
 // <char*>	 imageName = name of the image
 //
-void ImageRes::put_to_buf(VgaBuf* vgaBufPtr, char* imageName)
+void ImageRes::put_to_buf(VgaBuf* vgaBufPtr, const char* imageName)
 {
 	set_user_buf( vgaBufPtr->buf_ptr(), vgaBufPtr->buf_size(), 4 );	// 4-by pass the width and height info of the source data, only read the bitmap into the buffer
 	read(imageName);
