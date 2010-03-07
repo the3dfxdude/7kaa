@@ -392,7 +392,7 @@ void Config::disable_weather_audio()
 
 
 //--------- Begin of function Config::save -------------//
-int Config::save(char *filename)
+int Config::save(const char *filename)
 {
 	File configFile;
 

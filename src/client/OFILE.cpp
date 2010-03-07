@@ -101,7 +101,7 @@ int File::file_open(const char* fileName, int handleError, int allowVarySize)
 //
 // return : 1-success, 0-fail
 //
-int File::file_create(char* fileName, int handleError, int allowVarySize)
+int File::file_create(const char* fileName, int handleError, int allowVarySize)
 {
    if( strlen(fileName) > MAX_PATH )
       err.run( "File : file name is too long." );
