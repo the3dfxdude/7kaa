@@ -71,7 +71,7 @@ public:
 	char  race_id;
 	short	name_id;
 	char  action_mode;
-	char* action_str();
+	const char* action_str();
 
 	int 	cloaked_rank_id();
 	int 	cloaked_skill_id();

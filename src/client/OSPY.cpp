@@ -576,7 +576,7 @@ void Spy::get_killed(int dispNews)
 
 //--------- Begin of function Spy::action_str ----------//
 //
-char* Spy::action_str()
+const char* Spy::action_str()
 {
 	switch( action_mode )
 	{
