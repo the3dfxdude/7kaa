@@ -11,10 +11,7 @@ is_file_newer("${top_dir}configure.pl", $opts_file) and die "Build options out o
 
 require $opts_file;
 
-our $msg;
-
 build_targets();
-defined($msg) and print $msg;
 
 1;
 
@@ -41,7 +38,10 @@ sub assemble {
     if (needs_building("$i.asm","$i.o")) {
       my $cmd = "jwasm $jwasm_args -zt1 -Fo $i.o $i.asm";
       print "$cmd\n";
-      system $cmd and $msg = "build.pl: could not assemble '$i.asm'.\n" and return 0;
+      if (system $cmd) {
+        print "build.pl: could not assemble '$i.asm'.\n";
+        exit 1;
+      }
     }
   }
 
@@ -64,7 +64,10 @@ sub compile {
                 join(' ', map { "-I$_" } @$includes ) . ' ' .
                 "$i.cpp";
       print "$cmd\n";
-      system $cmd and $msg = "build.pl: could not compile '$i.cpp'.\n" and return 0;
+      if (system $cmd) {
+        print "build.pl: could not compile '$i.cpp'.\n";
+        exit 1;
+      }
     }
   }
   return 1;
@@ -77,8 +80,8 @@ sub compile_resources {
       my $cmd = "$compiler -i $i.rc -o $i.o";
       print "$cmd\n";
       if (system $cmd) {
-        $msg = "build.pl: couldn't compile resource '$i'\n" and
-        return 0;
+        print "build.pl: couldn't compile resource '$i'\n";
+        exit 1;
       }
     }
   }
@@ -92,8 +95,8 @@ sub link_exe {
   my $flag = 0;
   foreach my $i (@$obj_files) {
     unless (-f $i) {
-      $msg = "build.pl: missing file '$i' for linking.\n";
-      return 0;
+      print "build.pl: missing file '$i' for linking.\n";
+      exit 1;
     }
 
     # check modification times to see if we have to relink
@@ -118,8 +121,8 @@ sub link_exe {
               "-o $exe";
     print $cmd,"\n";
     if (system $cmd) {
-      $msg = "build.pl: couldn't create executable '$exe'\n" and
-      return 0;
+      print "build.pl: couldn't create executable '$exe'\n";
+      exit 1;
     }
   }
 
@@ -142,15 +145,15 @@ sub include_targets {
   foreach my $i (@_) {
     my $dir = (File::Spec->splitpath(File::Spec->rel2abs($i)))[1];
     unless (-d $dir && chdir $dir) {
-      $msg = "build.pl: unable to enter directory '$dir'.\n";
-      return 0;
+      print "build.pl: unable to enter directory '$dir'.\n";
+      exit 1;
     }
     print "Entering '$dir'.\n";
     build_targets() or return 0;
     print "Leaving '$dir'.\n";
     unless (chdir $orig_dir) {
-      $msg = "build.pl: original directory disappeared.\n";
-      return 0;
+      print "build.pl: original directory disappeared.\n";
+      exit 1;
     }
   }
   return 1;
@@ -169,8 +172,8 @@ sub build_targets {
   local $exe;
 
   unless (-f 'targets.pl') {
-    $msg = "build.pl: no targets file. Stopping.\n";
-    return 0;
+    print "build.pl: no targets file. Stopping.\n";
+    exit 1;
   }
 
   do 'targets.pl';
