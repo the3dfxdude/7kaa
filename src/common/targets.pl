@@ -18,3 +18,5 @@ if (defined($wine_prefix)) {
   push (@includes, "$wine_prefix/include/wine/windows",
                    "$wine_prefix/include/wine/msvcrt");
 }
+
+compile(\@c_files, \@includes, \@defines);

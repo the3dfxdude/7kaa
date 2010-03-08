@@ -92,10 +92,14 @@ if (defined($dxsdk_path)) {
   push (@includes, "$dxsdk_path/include");
 }
 
+compile(\@c_files, \@includes, \@defines);
+
 ### Resources ###
 @rc_files = qw(
 ico
 );
+
+compile_resources(@rc_files);
 
 ### Linking targets ###
 @obj_files = map { "$_.o" } @c_files;
@@ -129,3 +133,5 @@ if (defined($dxsdk_path)) {
 }
 
 $exe = '7kaa.exe';
+
+link_exe ($exe, \@obj_files, \@libs, \@lib_dirs);

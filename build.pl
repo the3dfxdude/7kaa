@@ -11,7 +11,7 @@ is_file_newer("${top_dir}configure.pl", $opts_file) and die "Build options out o
 
 require $opts_file;
 
-build_targets();
+include_targets('targets.pl');
 
 1;
 
@@ -143,19 +143,30 @@ sub link_exe {
 sub include_targets {
   my $orig_dir = cwd;
   foreach my $i (@_) {
-    my $dir = (File::Spec->splitpath(File::Spec->rel2abs($i)))[1];
+    unless (-f $i) {
+      print "build.pl: target script '$i' does not exist.\n";
+      exit;
+    }
+
+    # change directory
+    my ($dir, $inc) = (File::Spec->splitpath(File::Spec->rel2abs($i)))[1,2];
     unless (-d $dir && chdir $dir) {
       print "build.pl: unable to enter directory '$dir'.\n";
       exit 1;
     }
     print "Entering '$dir'.\n";
-    build_targets() or return 0;
+
+    # run script
+    do $inc;
+
+    # go back to the original directory
     print "Leaving '$dir'.\n";
     unless (chdir $orig_dir) {
       print "build.pl: original directory disappeared.\n";
       exit 1;
     }
   }
+
   return 1;
 }
 
