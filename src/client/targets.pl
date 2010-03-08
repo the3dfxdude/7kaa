@@ -1,6 +1,6 @@
 ### Directories to build in ###
 unless ($no_asm) {
-  push (@dirs, 'asm');
+  include_targets(qw( asm/targets.pl ));
 }
 
 ### Compiler targets ###

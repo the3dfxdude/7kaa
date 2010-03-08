@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use Cwd;
 use File::Spec;
 use File::stat;
 
@@ -125,17 +126,30 @@ sub link_exe {
   return 1;
 }
 
-sub recurse_dirs {
+# include_targets(@target_files)
+#
+# Usage: Use in your target files to include build stages found in
+# other directories.  This will change directory to where your
+# target file is found in and execute the target script.
+#
+# Note that the new target file executed will have its own clean
+# scope.  This forces you to redefine what is necessary to run
+# the building.  It makes sense if you are logically grouping
+# various targets by their purpose.
+#
+sub include_targets {
+  my $orig_dir = cwd;
   foreach my $i (@_) {
-    unless (chdir $i) {
-      $msg = "build.pl: directory specified '$i' does not exist.\n";
+    my $dir = (File::Spec->splitpath(File::Spec->rel2abs($i)))[1];
+    unless (-d $dir && chdir $dir) {
+      $msg = "build.pl: unable to enter directory '$dir'.\n";
       return 0;
     }
-    print "Entering '$i'.\n";
+    print "Entering '$dir'.\n";
     build_targets() or return 0;
-    print "Leaving '$i'.\n";
-    unless (chdir '..') {
-      $msg = "build.pl: parent directory disappeared.\n";
+    print "Leaving '$dir'.\n";
+    unless (chdir $orig_dir) {
+      $msg = "build.pl: original directory disappeared.\n";
       return 0;
     }
   }
@@ -161,7 +175,6 @@ sub build_targets {
 
   do 'targets.pl';
 
-  recurse_dirs(@dirs) or return 0;
   assemble(@asm_files) or return 0;
   compile(\@c_files, \@includes, \@defines) or return 0;
   compile_resources(@rc_files) or return 0;

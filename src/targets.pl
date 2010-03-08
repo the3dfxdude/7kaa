@@ -1,5 +1,5 @@
 ### Directories to build in ###
-@dirs = qw( common client );
+include_targets(qw( common/targets.pl client/targets.pl ));
 if ($build_server) {
-  push (@dirs, 'server');
+  include_targets(qw( server/targets.pl ));
 }
