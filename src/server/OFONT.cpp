@@ -140,7 +140,7 @@ Font::~Font()
 // Return : 1 - succeed;
 //          0 - reading palette file error
 //
-void Font::init(char* fontName, int interCharSpace, int italicShift)
+void Font::init(const char* fontName, int interCharSpace, int italicShift)
 {
 	if( init_flag )
 		deinit();

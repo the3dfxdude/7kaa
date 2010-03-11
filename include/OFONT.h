@@ -104,7 +104,7 @@ public:
 	Font(char* =NULL);
 	~Font();
 
-	void init(char* fontName, int interCharSpace=1, int italicShift=0);
+	void init(const char* fontName, int interCharSpace=1, int italicShift=0);
 	void deinit();
 
 	int  height()                    { return font_height; }
