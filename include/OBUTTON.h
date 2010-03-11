@@ -71,7 +71,7 @@ public:
 	void set_key(unsigned keyCode)       { button_key = keyCode; }
 	void create(int,int,int,int,int,const void*,char=1,char=0);
 	void set_body(void*);
-	void set_help_code(char* helpCode);
+	void set_help_code(const char* helpCode);
 
 	//-------- text button ------------//
 

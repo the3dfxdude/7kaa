@@ -50,7 +50,7 @@ Button::Button()
 
 //-------- Begin of function Button::set_help_code -------//
 //
-void Button::set_help_code(char* helpCode)
+void Button::set_help_code(const char* helpCode)
 {
 	strncpy( help_code, helpCode, HELP_CODE_LEN );
 
