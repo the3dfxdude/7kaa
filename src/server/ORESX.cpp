@@ -61,7 +61,7 @@
 // [int]   useCommonBuf = whether use the common buffer to store the data or not
 //									(default:0)
 //
-void ResourceIdx::init(char* resName, int readAll, int useCommonBuf)
+void ResourceIdx::init(const char* resName, int readAll, int useCommonBuf)
 {
    long dataSize;
 

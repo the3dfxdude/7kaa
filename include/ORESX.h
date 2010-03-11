@@ -66,7 +66,7 @@ public:
    ResourceIdx(char* resFile, int readAll, int useCommonBuf=0)
        { init_flag=0; init(resFile, readAll, useCommonBuf); }
 
-   void  init(char* resFile, int readAll, int useCommonBuf=0);
+   void  init(const char* resFile, int readAll, int useCommonBuf=0);
 	void  deinit();
 
 	int   is_inited() 	{ return init_flag; }
