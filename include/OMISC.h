@@ -104,7 +104,7 @@ public:
    int   random(int);
 
    int   is_file_exist(const char*);
-   void  change_file_ext(char*,char*,char*);
+   void  change_file_ext(char*,char*,const char*);
 	void  extract_file_name(char*, char*);
 
    void  put_text_scr(char*);

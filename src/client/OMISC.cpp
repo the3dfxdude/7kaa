@@ -1152,7 +1152,7 @@ int Misc::is_file_exist(const char* fileName)
 // <char*> srcFileName = the source file name
 // <char*> newExt      = the new extension.
 //
-void Misc::change_file_ext(char* desFileName, char* srcFileName, char* newExt)
+void Misc::change_file_ext(char* desFileName, char* srcFileName, const char* newExt)
 {
    int nameLen = m.str_chr(srcFileName, '.');	// include the '.' in the nameLen
 
