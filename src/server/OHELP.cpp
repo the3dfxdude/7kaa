@@ -79,7 +79,7 @@ Help::~Help()
 
 //------- Begin of function Help::init ----------//
 
-void Help::init(char* resName)
+void Help::init(const char* resName)
 {
 	String str;
 

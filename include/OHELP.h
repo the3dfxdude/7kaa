@@ -96,7 +96,7 @@ public:
 	Help();
 	~Help();
 
-	void       init(char* resName);
+	void       init(const char* resName);
 	void       deinit();
 
 	void       load(char*);
