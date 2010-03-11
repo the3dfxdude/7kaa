@@ -85,7 +85,7 @@ public:
 
 		  char	is_inited() 	{ return dd_obj!=NULL; }
 
-		  BOOL   load_pal(char* fileName);
+		  BOOL   load_pal(const char* fileName);
 		  void	init_gray_remap_table();
 
 		  void   activate_pal(VgaBuf*);

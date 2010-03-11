@@ -262,7 +262,7 @@ void Vga::deinit()
 //
 // Load the palette from a file and set it to the front buf.
 //
-BOOL Vga::load_pal(char* fileName)
+BOOL Vga::load_pal(const char* fileName)
 {
    char palBuf[256][3];
    File palFile;
