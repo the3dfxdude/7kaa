@@ -1,71 +1,17 @@
-### Directories to build in ###
-include_targets(qw( asm/targets.pl ));
+my @obj_files;
 
-### Compiler targets ###
-@c_files = qw(
-AM        OGAMESET  ORAIN2    OSPRITE2  OUNITIF
-OAI_ACT   ODYNARR   OGAMHALL  ORAIN3    OSPRITEA  OUNITIND
-OAI_ACT2  ODYNARRB  OGAMMAIN  ORAWRES   OSPRTRES  OUNITM
-OAI_ATTK  OEFFECT   OGAMMENU  OREBEL    OSPY      OUNITRES
-OAI_BUIL  OGAMSCE2  OREGION   OSPY2     OUNITS
-OAI_CAP2  OERROR    OGAMSCEN  OREGIONS  OSPYA     OU_CARA
-OAI_CAPT  OEXPMASK  OGAMSING  OSTR      OU_CARA2
-OAI_DEFE  OFILE     OGENHILL  OSYS      OU_CARAS
-OAI_DIPL  OFILETXT  OGENMAP   OSYS2     OU_CARAT
-OAI_ECO   OFIRM     OGETA     OSYS3     OU_CART
-OAI_GRAN  OFIRM2    OGFILE    ORES      OTALKENG  OU_GOD
-OAI_INFO  OFIRMA    OGFILE2   OTALKMSG  OU_GOD2
-OAI_MAIN  OFIRMAI   OGFILE3   ORESX     OTALKRES  OU_MARI
-OAI_MAR2  OFIRMDIE  OGFILEA   OROCK     OTECHRES  OU_MARI2
-OAI_MAR3  OFIRMDRW  OGODRES   OROCKRES  OTERRAIN  OU_MARIF
-OAI_MARI  OFIRMIF   OGRPSEL   OR_AI     OTORNADO  OU_MARIS
-OAI_MILI  OFIRMIF2  OHELP     OR_ECO    OTOWN     OU_MARIT
-OAI_MONS  OFIRMIF3  OHILLRES  OR_MIL    OTOWNA    OU_MONS
-OAI_QUER  OFIRMRES  OIMGRES   OR_NAT    OTOWNAI   OU_VEHI
-OAI_SEEK  OFONT     OINFO     OR_NEWS   OTOWNBLD  OVBROWIF
-OAI_SPY   OF_BASE   OINGMENU  OR_RANK   OTOWNDRW  OVBROWSE
-OAI_TALK  OF_BASE2  OLIGHTN   OR_SPY    OTOWNIF   OVGA
-OAI_TOWN  OF_CAMP   OLIGHTN2  OR_TECH   OTOWNIND  OVGA2
-OAI_TRAD  OF_CAMP2  OLOG      OR_TOWN   OTOWNRES  OVGABUF
-OAI_UNIT  OF_FACT   OLZW      OR_TRADE  OTRANSL   OVGABUF2
-OANLINE   OF_FACT2  OMATRIX   OSCROLL   OTUTOR    OVGALOCK
-OAUDIO    OF_HARB   OSE       OTUTOR2   OVIDEO
-OBATTLE   OF_HARB2  OMISC     OSERES    OUNIT     OVOLUME
-OBLOB     OF_INN    OMONSRES  OSFRMRES  OUNIT2    OVQUEUE
-OBOX      OF_INN2   OMOUSE    OSITE     OUNITA    OWALLRES
-OBULLET   OF_MARK   OMOUSECR  OSITEDRW  OUNITAAC  OWARPT
-OBULLETA  OF_MARK2  OMP_CRC   OSKILL    OUNITAAT  OWEATHER
-OBUTT3D   OF_MINE   OMUSIC    OSLIDCUS  OUNITAC   OWORLD
-OBUTTCUS  OF_MINE2  ONATIONA  OSNOW1    OUNITAI   OWORLD_M
-OBUTTON   OF_MONS   ONATIONB  OSNOW2    OUNITAM   OWORLD_Z
-OB_FLAME  OF_RESE   ONEWS     OSNOWG    OUNITAMT  OW_FIRE
-OB_HOMIN  OF_RESE2  ONEWS2    OSNOWRES  OUNITAT   OW_PLANT
-OB_PROJ   OF_WAR    ONEWSENG  OSPATH    OUNITAT2  OW_ROCK
-OCOLTBL   OF_WAR2   OOPTMENU  OSPATHBT  OUNITAT3  OW_SOUND
-OCONFIG   OGAMCRED  OPLANT    OSPATHS2  OUNITATB  OW_WALL
-OGAME     OPLASMA   OSPREOFF  OUNITD    OFLAME
-ODATE     OPOWER    OSPRESMO  OUNITDRW  OGF_V1
-ODB       OGAMENCY  ORACERES  OSPREUSE  OUNITHB   OMOUSESP
-ODIR      OGAMEND   ORAIN1    OSPRITE   OUNITI    OMOUSEGE
-OMOUSEFR  OTALKSPA  OTALKFRE  OTALKGER  ONEWSFRE  ONEWSSPA
-ONEWSGER  OSPREDBG  OLONGLOG
-);
+## build asm ##
+push (@obj_files, include_targets(qw( asm/targets.pl )));
+## end build asm ##
 
-# USE_DPLAY
-# OREMOTE
-# OREMOTE2
-# OREMOTEM
-# OREMOTEQ
-# OERRCTRL
-# ODPLAY
-# OCRC_STO
-# OGAMEMP
-
+## defines ##
 @defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
+## end defines ##
 
+## includes ##
 @includes = qw( ../../include );
 
 if (defined($wine_prefix)) {
@@ -76,45 +22,287 @@ if (defined($wine_prefix)) {
 if (defined($dxsdk_path)) {
   push (@includes, "$dxsdk_path/include");
 }
+## end includes ##
 
-compile(\@c_files, \@includes, \@defines);
+## compile ##
+# USE_DPLAY (disabled)
+# OREMOTE
+# OREMOTE2
+# OREMOTEM
+# OREMOTEQ
+# OERRCTRL
+# ODPLAY
+# OCRC_STO
+# OGAMEMP
 
-### Resources ###
-@rc_files = qw(
-ico
+@targets = qw(
+AM.cpp
+OAI_ACT.cpp
+OAI_ACT2.cpp
+OAI_ATTK.cpp
+OAI_BUIL.cpp
+OAI_CAP2.cpp
+OAI_CAPT.cpp
+OAI_DEFE.cpp
+OAI_DIPL.cpp
+OAI_ECO.cpp
+OAI_GRAN.cpp
+OAI_INFO.cpp
+OAI_MAIN.cpp
+OAI_MAR2.cpp
+OAI_MAR3.cpp
+OAI_MARI.cpp
+OAI_MILI.cpp
+OAI_MONS.cpp
+OAI_QUER.cpp
+OAI_SEEK.cpp
+OAI_SPY.cpp
+OAI_TALK.cpp
+OAI_TOWN.cpp
+OAI_TRAD.cpp
+OAI_UNIT.cpp
+OANLINE.cpp
+OAUDIO.cpp
+OBATTLE.cpp
+OBLOB.cpp
+OBOX.cpp
+OBULLET.cpp
+OBULLETA.cpp
+OBUTT3D.cpp
+OBUTTCUS.cpp
+OBUTTON.cpp
+OB_FLAME.cpp
+OB_HOMIN.cpp
+OB_PROJ.cpp
+OCOLTBL.cpp
+OCONFIG.cpp
+ODATE.cpp
+ODB.cpp
+ODIR.cpp
+ODYNARR.cpp
+ODYNARRB.cpp
+OEFFECT.cpp
+OERROR.cpp
+OEXPMASK.cpp
+OFILE.cpp
+OFILETXT.cpp
+OFIRM.cpp
+OFIRM2.cpp
+OFIRMA.cpp
+OFIRMAI.cpp
+OFIRMDIE.cpp
+OFIRMDRW.cpp
+OFIRMIF.cpp
+OFIRMIF2.cpp
+OFIRMIF3.cpp
+OFIRMRES.cpp
+OFLAME.cpp
+OFONT.cpp
+OF_BASE.cpp
+OF_BASE2.cpp
+OF_CAMP.cpp
+OF_CAMP2.cpp
+OF_FACT.cpp
+OF_FACT2.cpp
+OF_HARB.cpp
+OF_HARB2.cpp
+OF_INN.cpp
+OF_INN2.cpp
+OF_MARK.cpp
+OF_MARK2.cpp
+OF_MINE.cpp
+OF_MINE2.cpp
+OF_MONS.cpp
+OF_RESE.cpp
+OF_RESE2.cpp
+OF_WAR.cpp
+OF_WAR2.cpp
+OGAMCRED.cpp
+OGAME.cpp
+OGAMENCY.cpp
+OGAMEND.cpp
+OGAMESET.cpp
+OGAMHALL.cpp
+OGAMMAIN.cpp
+OGAMMENU.cpp
+OGAMSCE2.cpp
+OGAMSCEN.cpp
+OGAMSING.cpp
+OGENHILL.cpp
+OGENMAP.cpp
+OGETA.cpp
+OGFILE.cpp
+OGFILE2.cpp
+OGFILE3.cpp
+OGFILEA.cpp
+OGF_V1.cpp
+OGODRES.cpp
+OGRPSEL.cpp
+OHELP.cpp
+OHILLRES.cpp
+OIMGRES.cpp
+OINFO.cpp
+OINGMENU.cpp
+OLIGHTN.cpp
+OLIGHTN2.cpp
+OLOG.cpp
+OLONGLOG.cpp
+OLZW.cpp
+OMATRIX.cpp
+OMISC.cpp
+OMONSRES.cpp
+OMOUSE.cpp
+OMOUSECR.cpp
+OMOUSEFR.cpp
+OMOUSEGE.cpp
+OMOUSESP.cpp
+OMP_CRC.cpp
+OMUSIC.cpp
+ONATIONA.cpp
+ONATIONB.cpp
+ONEWS.cpp
+ONEWS2.cpp
+ONEWSENG.cpp
+ONEWSFRE.cpp
+ONEWSGER.cpp
+ONEWSSPA.cpp
+OOPTMENU.cpp
+OPLANT.cpp
+OPLASMA.cpp
+OPOWER.cpp
+ORACERES.cpp
+ORAIN1.cpp
+ORAIN2.cpp
+ORAIN3.cpp
+ORAWRES.cpp
+OREBEL.cpp
+OREGION.cpp
+OREGIONS.cpp
+ORES.cpp
+ORESX.cpp
+OROCK.cpp
+OROCKRES.cpp
+OR_AI.cpp
+OR_ECO.cpp
+OR_MIL.cpp
+OR_NAT.cpp
+OR_NEWS.cpp
+OR_RANK.cpp
+OR_SPY.cpp
+OR_TECH.cpp
+OR_TOWN.cpp
+OR_TRADE.cpp
+OSCROLL.cpp
+OSE.cpp
+OSERES.cpp
+OSFRMRES.cpp
+OSITE.cpp
+OSITEDRW.cpp
+OSKILL.cpp
+OSLIDCUS.cpp
+OSNOW1.cpp
+OSNOW2.cpp
+OSNOWG.cpp
+OSNOWRES.cpp
+OSPATH.cpp
+OSPATHBT.cpp
+OSPATHS2.cpp
+OSPREDBG.cpp
+OSPREOFF.cpp
+OSPRESMO.cpp
+OSPREUSE.cpp
+OSPRITE.cpp
+OSPRITE2.cpp
+OSPRITEA.cpp
+OSPRTRES.cpp
+OSPY.cpp
+OSPY2.cpp
+OSPYA.cpp
+OSTR.cpp
+OSYS.cpp
+OSYS2.cpp
+OSYS3.cpp
+OTALKENG.cpp
+OTALKFRE.cpp
+OTALKGER.cpp
+OTALKMSG.cpp
+OTALKRES.cpp
+OTALKSPA.cpp
+OTECHRES.cpp
+OTERRAIN.cpp
+OTORNADO.cpp
+OTOWN.cpp
+OTOWNA.cpp
+OTOWNAI.cpp
+OTOWNBLD.cpp
+OTOWNDRW.cpp
+OTOWNIF.cpp
+OTOWNIND.cpp
+OTOWNRES.cpp
+OTRANSL.cpp
+OTUTOR.cpp
+OTUTOR2.cpp
+OUNIT.cpp
+OUNIT2.cpp
+OUNITA.cpp
+OUNITAAC.cpp
+OUNITAAT.cpp
+OUNITAC.cpp
+OUNITAI.cpp
+OUNITAM.cpp
+OUNITAMT.cpp
+OUNITAT.cpp
+OUNITAT2.cpp
+OUNITAT3.cpp
+OUNITATB.cpp
+OUNITD.cpp
+OUNITDRW.cpp
+OUNITHB.cpp
+OUNITI.cpp
+OUNITIF.cpp
+OUNITIND.cpp
+OUNITM.cpp
+OUNITRES.cpp
+OUNITS.cpp
+OU_CARA.cpp
+OU_CARA2.cpp
+OU_CARAS.cpp
+OU_CARAT.cpp
+OU_CART.cpp
+OU_GOD.cpp
+OU_GOD2.cpp
+OU_MARI.cpp
+OU_MARI2.cpp
+OU_MARIF.cpp
+OU_MARIS.cpp
+OU_MARIT.cpp
+OU_MONS.cpp
+OU_VEHI.cpp
+OVBROWIF.cpp
+OVBROWSE.cpp
+OVGA.cpp
+OVGA2.cpp
+OVGABUF.cpp
+OVGABUF2.cpp
+OVGALOCK.cpp
+OVIDEO.cpp
+OVOLUME.cpp
+OVQUEUE.cpp
+OWALLRES.cpp
+OWARPT.cpp
+OWEATHER.cpp
+OWORLD.cpp
+OWORLD_M.cpp
+OWORLD_Z.cpp
+OW_FIRE.cpp
+OW_PLANT.cpp
+OW_ROCK.cpp
+OW_SOUND.cpp
+OW_WALL.cpp
+ico.rc
 );
+push (@obj_files, build_targets(\@targets, \@includes, \@defines));
+## end compile ##
 
-compile_resources(@rc_files);
-
-### Linking targets ###
-@obj_files = map { "$_.o" } @c_files;
-my @asm_obj_files = qw(
-I_BAR   I_CTRL IB_TRD  IB_A     IC       IC_R    CRC      IJ_T
-IB_T    I_READ I_EMASK IB_TD    I_EREMAP IB_ATRD IB_AT    IB_32
-IB_ATD  IB_R   IB      IR_BAR   IB2      I_LINE  IB_ATR   IB_AR
-IB_TR   IB_DW  I_PIXEL I_FREMAP I_BLACK  I_SNOW  IB_ATRDM IB_TRDM
-IB_ATDM IR_AM  IR_A    IB_TDM   IR_M IR
-);
-push ( @obj_files, map { "asm/$_.o" } @asm_obj_files );
-push ( @obj_files, map { "$_.o" } @rc_files );
-
-@common_c_files = qw(
-OMEM ORESDB
-);
-push ( @obj_files, map { "../common/$_.o" } @common_c_files );
-
-if (defined($debug) && $debug) {
-  push ( @obj_files, "../common/dbglog.o" );
-}
-
-@libs = qw(
-  gdi32 ddraw msvcrt ole32 dinput dsound winmm
-);
-
-if (defined($dxsdk_path)) {
-  push (@lib_dirs, "$dxsdk_path/lib");
-}
-
-$exe = '7kaa-server.exe';
-
-link_exe ($exe, \@obj_files, \@libs, \@lib_dirs);
+## return built objects to caller ##
+@obj_files;

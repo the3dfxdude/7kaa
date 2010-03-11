@@ -1,22 +1,26 @@
-### Compiler targets ###
-@c_files = qw(
-OMEM ORESDB
-);
-
-if (defined($debug) && $debug) {
-  push (@c_files, "dbglog");
-}
-
+## compiler flags ##
 @defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
+## end compiler flags ##
 
+## include paths ##
 @includes = qw( ../../include );
 
 if (defined($wine_prefix)) {
   push (@includes, "$wine_prefix/include/wine/windows",
                    "$wine_prefix/include/wine/msvcrt");
 }
+## end include paths ##
 
-compile(\@c_files, \@includes, \@defines);
+## compile ##
+@targets = qw(
+OMEM.cpp
+ORESDB.cpp
+);
+if (defined($debug) && $debug) {
+  push (@targets, 'dbglog.cpp');
+}
+build_targets(\@targets, \@includes, \@defines);
+## end compile ##
