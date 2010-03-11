@@ -486,7 +486,7 @@ int Help::should_disp()
 
 //--------- Begin of function Help::set_help --------//
 //
-void Help::set_help(int x1, int y1, int x2, int y2, char* helpCode)
+void Help::set_help(int x1, int y1, int x2, int y2, const char* helpCode)
 {
 	err_when( strlen(helpCode) > 8 );
 
