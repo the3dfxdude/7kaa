@@ -40,7 +40,7 @@
 
 #define SECRET_REPORT_COUNT 7
 
-static char* 	secret_report_str_array[] = { "Kingdoms", "Villages", "Economy", "Trade", "Military", "Technology", "Espionage" };
+static const char* 	secret_report_str_array[] = { "Kingdoms", "Villages", "Economy", "Trade", "Military", "Technology", "Espionage" };
 static char	 	secret_view_mode_array[]  = { MODE_NATION, MODE_TOWN, MODE_ECONOMY, MODE_TRADE, MODE_MILITARY, MODE_TECH, MODE_SPY };
 static char	 	secret_view_skill_array[] = { 40, 20, 30, 30, 50, 40, 90 };
 
