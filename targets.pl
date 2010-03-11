@@ -1,2 +1,2 @@
 ### Directories to build in ###
-@dirs = qw( src );
+include_targets(qw( src/targets.pl ));
