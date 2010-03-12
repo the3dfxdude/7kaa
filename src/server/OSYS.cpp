@@ -2684,7 +2684,7 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 // return : <int> 1 - complete string detected
 //                0 - not detected
 //
-int Sys::detect_key_str(int keyStrId, char* keyStr)
+int Sys::detect_key_str(int keyStrId, const char* keyStr)
 {
    err_when( keyStrId < 0 || keyStrId >= MAX_KEY_STR );
 

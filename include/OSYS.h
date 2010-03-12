@@ -247,7 +247,7 @@ private:
 	void		detect_debug_cheat_key(unsigned scanCode, unsigned skeyState);
 	int 		detect_set_speed(unsigned scanCode, unsigned skeyState);
 
-	int 		detect_key_str(int keyStrId, char* keyStr);
+	int 		detect_key_str(int keyStrId, const char* keyStr);
 };
 
 extern Sys sys;
