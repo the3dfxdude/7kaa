@@ -142,7 +142,7 @@ int GameFile::load_game(char* fileName)
 {
 	File file;
 	int  rc=0;
-	char *errMsg = NULL;
+	const char *errMsg = NULL;
 
 	power.win_opened=1;				// to disable power.mouse_handler()
 
