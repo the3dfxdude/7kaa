@@ -243,7 +243,7 @@ void TalkMsg::propose_treaty(const char* treatyTypeStr)
 //
 // talk_para1 - treaty type, NATION_FRIENDLY or NATION_ALLIANCE.
 //
-void TalkMsg::end_treaty(char* treatyTypeStr)
+void TalkMsg::end_treaty(const char* treatyTypeStr)
 {
 	//---------------------------------------------//
 	//

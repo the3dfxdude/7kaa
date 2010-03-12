@@ -97,7 +97,7 @@ public:
 	void		process_accepted_reply();
 
 	void		propose_treaty(const char*);
-	void     end_treaty(char*);
+	void     end_treaty(const char*);
 	void		request_military_aid();
 	void		request_trade_embargo();
 	void     request_cease_war();
