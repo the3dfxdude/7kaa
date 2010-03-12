@@ -1377,7 +1377,7 @@ void Firm::process_construction()
 		#ifdef DEBUG
 		if( config.fast_build && nation_recno==nation_array.player_recno )
 			hit_points += 10;
-		#endif;
+		#endif
 
 		if(hit_points>=max_hit_points)
 		{
