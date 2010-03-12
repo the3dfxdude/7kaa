@@ -61,7 +61,6 @@ sub link_exe {
   my ($exe, $obj_files, $libs, $lib_dirs) = @_;
   defined($exe) or return 1; # No exe targets here
 
-print "@$obj_files\n";
   my $flag = 0;
   foreach my $i (@$obj_files) {
     unless (-f $i) {
