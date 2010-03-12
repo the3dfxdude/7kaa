@@ -2960,7 +2960,7 @@ void Sys::set_game_dir()
 
 //-------- Begin of function Sys::set_one_dir ----------//
 //
-int Sys::set_one_dir( char* checkFileName, char* defaultDir, char* trueDir )
+int Sys::set_one_dir( const char* checkFileName, const char* defaultDir, char* trueDir )
 {
    if( m.is_file_exist( checkFileName ) )
    {

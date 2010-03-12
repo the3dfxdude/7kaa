@@ -201,7 +201,7 @@ public:
 	//---- for setting game directories ----//
 
 	void 		set_game_dir();
-	int 		set_one_dir( char* checkFileName, char* defaultDir, char* trueDir );
+	int 		set_one_dir( const char* checkFileName, const char* defaultDir, char* trueDir );
 	void 		get_cdrom_drive();
 
 	//-------- for load/save games --------//
