@@ -104,7 +104,7 @@ public:
 	void     request_declare_war();
 	void     request_buy_food();
 	void     declare_war();
-	void     give_tribute(char* tributeStr);
+	void     give_tribute(const char* tributeStr);
 	void     demand_tribute(int isAid);
 	void     give_tech();
 	void		demand_tech();

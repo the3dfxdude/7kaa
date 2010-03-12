@@ -522,7 +522,7 @@ void TalkMsg::declare_war()
 //
 // talk_para1 - amount of the tribute.
 //
-void TalkMsg::give_tribute(char* tributeStr)
+void TalkMsg::give_tribute(const char* tributeStr)
 {
 	//---------------------------------------------//
 	//
