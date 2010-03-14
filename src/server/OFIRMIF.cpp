@@ -407,7 +407,7 @@ void Firm::disp_worker_list(int dispY1, int refreshFlag)
 
 			//----- display combat or skill level ------//
 
-			char* spyIconName=NULL;
+			const char* spyIconName=NULL;
 
 			if( workerPtr->spy_recno )
 			{
