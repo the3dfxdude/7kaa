@@ -124,8 +124,8 @@ public:
 	void put_char(int,int,unsigned short);
 	void right_put(int,int,char*);
 
-	int  d3_put(int,int,char*);
-	void d3_put(int,int,int,int,char*);
+	int  d3_put(int,int,const char*);
+	void d3_put(int,int,int,int,const char*);
 	int  center_put(int,int,int,int,const char*,char clearBack=0);
 
 	void put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);

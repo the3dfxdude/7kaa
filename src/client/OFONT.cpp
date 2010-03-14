@@ -907,7 +907,7 @@ void Font::count_line(int x1, int y1, int x2, int y2, const char *textPtr,
 //
 // Return : <int> lastX, the x coordination of the last pixel of last font
 //
-int Font::d3_put(int x1, int y1, char* desStr )
+int Font::d3_put(int x1, int y1, const char* desStr )
 {
 	int marginSpace = font_height/5;
 
@@ -931,7 +931,7 @@ int Font::d3_put(int x1, int y1, char* desStr )
 // <int>   x2,y2      =
 // <char*> desStr     = the spinner description
 //
-void Font::d3_put(int x1, int y1, int x2, int y2, char* desStr)
+void Font::d3_put(int x1, int y1, int x2, int y2, const char* desStr)
 {
 	int tx = x1 + ((x2-x1+1) - text_width(desStr))/2;
    int ty = y1 + ((y2-y1+1) - font_height)/2+1;
