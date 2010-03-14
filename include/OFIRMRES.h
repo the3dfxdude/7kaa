@@ -197,7 +197,7 @@ struct FirmInfo
 	void  set_nation_tech_level(int nationRecno, char techLevel) 	{ nation_tech_level_array[nationRecno-1] = techLevel; }
 
 public:
-	int	get_build_id(char* buildCode);
+	int	get_build_id(const char* buildCode);
 
 	void	inc_nation_firm_count(int nationRecno);
 	void	dec_nation_firm_count(int nationRecno);

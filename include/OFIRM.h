@@ -247,7 +247,7 @@ public:
 	Firm();
 	virtual ~Firm();
 
-	virtual void init(int xLoc, int yLoc, int nationRecno, int firmId, char* buildCode=NULL, short builderRecno=0);
+	virtual void init(int xLoc, int yLoc, int nationRecno, int firmId, const char* buildCode=NULL, short builderRecno=0);
 	virtual void deinit();
 
 	void		init_name();

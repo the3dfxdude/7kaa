@@ -156,7 +156,7 @@ Firm::~Firm()
 // [char*] buildCode = the build code of the firm, no need to give if the firm just have one build type
 // [short] builderRecno = recno of the builder unit
 //
-void Firm::init(int xLoc, int yLoc, int nationRecno, int firmId, char* buildCode, short builderRecno)
+void Firm::init(int xLoc, int yLoc, int nationRecno, int firmId, const char* buildCode, short builderRecno)
 {
 	FirmInfo* firmInfo = firm_res[firmId];
 

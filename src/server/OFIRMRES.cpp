@@ -519,7 +519,7 @@ int FirmInfo::default_link_status(int linkFirmId)
 //
 // <char*> buildCode - the build code
 //
-int FirmInfo::get_build_id(char* buildCode)
+int FirmInfo::get_build_id(const char* buildCode)
 {
 	err_when( build_count<1 );		
 
