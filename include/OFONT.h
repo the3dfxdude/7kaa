@@ -143,7 +143,7 @@ public:
 
 	void put_field(int,int,char*,int,int,int=1);
 	void update_field(int,int,int,int,int);
-	void field(int,int,const char*,int,int,int,int,int,char* helpCode=NULL);
+	void field(int,int,const char*,int,int,int,int,int,const char* helpCode=NULL);
 	int  disp(int,int,int,int,int);
 
 	//----- <short> version, call <int> version directly -----//

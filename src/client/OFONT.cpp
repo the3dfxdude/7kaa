@@ -1046,7 +1046,7 @@ void Font::update_field(int x1, int y1, int value, int format, int x2)
 // [char*] helpCode  = help code
 //
 void Font::field(int xDes, int y1, const char* desStr, int xValue, int value,
-					  int format, int xEnd, int refreshFlag, char* helpCode)
+					  int format, int xEnd, int refreshFlag, const char* helpCode)
 {
 	int x2;
 
