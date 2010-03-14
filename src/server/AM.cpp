@@ -301,31 +301,18 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		config.init();
    }
 
-	//--------------------------------------//
-
-
-#ifdef IMAGICMP
-	static char lobbyLaunchCmdLine[] = "IM";
-#else
-	static char lobbyLaunchCmdLine[] = "-!lobby!";
-#endif
-
    if( !sys.init(hInstance) )
       return FALSE;
 
    err.set_extra_handler( extra_error_handler );   // set extra error handler, save the game when a error happens
 
-#ifdef DEMO
-	game.demo_disp_logo();
-   game.main_menu();
-#else
-	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )
-	   game.main_menu();
-#ifndef DISABLE_MULTI_PLAYER
-	else
-		game.multi_player_menu(lpCmdLine);		// if detect launched from lobby
-#endif // DISABLE_MULTI_PLAYER
-#endif
+   // set mouse cursor now to prevent bugginess later
+   mouse_cursor.set_icon(CURSOR_NORMAL);
+
+   // launch game directly
+   game.init();
+   battle.run(0);
+   game.deinit();
 
    sys.deinit();
 
