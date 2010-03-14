@@ -23,9 +23,6 @@
 
 #include <windows.h>
 #include <initguid.h>
-#ifdef ENABLE_INTRO_VIDEO
-#include <dshow.h>
-#endif
 
 #include <ALL.h>
 #include <OANLINE.h>
@@ -71,9 +68,6 @@
 #include <OTRANSL.h>
 #include <OUNIT.h>
 #include <OVGA.h>
-#ifdef ENABLE_INTRO_VIDEO
-#include <OVIDEO.h>
-#endif
 #include <OWALLRES.h>
 #include <OWORLD.h>
 #include <OWEATHER.h>
@@ -130,9 +124,6 @@ Misc              m, m2;
 DateInfo          date;
 Vga               vga;
 VgaBuf            vga_front, vga_back, vga_true_front;
-#ifdef ENABLE_INTRO_VIDEO
-Video             video;
-#endif
 Audio             audio;
 Music             music;
 #ifdef USE_DPLAY
@@ -318,42 +309,6 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #else
 	static char lobbyLaunchCmdLine[] = "-!lobby!";
 #endif
-
-#ifdef ENABLE_INTRO_VIDEO
-	//----------- play movie ---------------//
-
-	sys.set_game_dir();
-	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )	// skip if launch from lobby
-	{
-		String movieFileStr;
-		movieFileStr = DIR_MOVIE;
-		movieFileStr += "INTRO.AVI";
-
-		video.set_skip_on_fail();
-
-		// ###### begin Gilbert 29/10 #####//
-		if( !m.is_file_exist("SKIPAVI.SYS") && m.is_file_exist(movieFileStr) )
-		// ###### end Gilbert 29/10 #####//
-		{
-			//---------- play the movie now ---------//
-
-			video.init();
-
-			if( video.init_success )
-			{
-				video.play_until_end( movieFileStr, hInstance, 60 );
-			}
-			else
-			{
-				// display a message box (note:sys.main_hwnd is not valid)
-				// MessageBox( NULL, "Cannot initialize ActiveMovie",
-				//   "Seven Kingdoms", MB_OK | MB_ICONWARNING | MB_DEFBUTTON1 | MB_TASKMODAL );
-			}
-
-			video.deinit();
-		}
-	}
-#endif // ENABLE_INTRO_VIDEO
 
    if( !sys.init(hInstance) )
       return FALSE;
