@@ -1218,7 +1218,7 @@ void Font::update_field(int x1, int y1, char* value, int x2)
 // <int> refreshFlag = refresh flag, either INFO_REPAINT or INFO_UPDATE
 // [char*] helpCode  = help code
 //
-void Font::field(int xDes, int y1, const char* desStr, int xValue, char* value,
+void Font::field(int xDes, int y1, const char* desStr, int xValue, const char* value,
 					  int xEnd, int refreshFlag, char* helpCode )
 {
 	int x2;
