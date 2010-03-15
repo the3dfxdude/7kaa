@@ -1507,8 +1507,8 @@ int Mouse::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, uns
 	if( len == 1)
 		return is_key(scanCode, skeyState, keyStr[0], flags);
 
-	char *priChar = NULL;
-	char *numLockChar = NULL;
+	const char *priChar = NULL;
+	const char *numLockChar = NULL;
 	int onNumPad = 0;
 
 	switch(scanCode)
@@ -1619,7 +1619,7 @@ int Mouse::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, uns
 		}
 	}
 
-	char *outChar = skeyState & NUM_LOCK_STATE_MASK ? numLockChar : priChar;
+	const char *outChar = skeyState & NUM_LOCK_STATE_MASK ? numLockChar : priChar;
 	int retFlag2 = outChar ? !strcmp(outChar, keyStr) : 0;
 
 	return retFlag && retFlag2;
