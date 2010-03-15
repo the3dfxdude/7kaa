@@ -185,7 +185,7 @@ public:
 
 	void put_field(int,int,char*,int,char*);
 	void update_field(int,int,char*,int);
-	void field(int,int,const char*,int,const char*,int,int,char* helpCode=NULL);
+	void field(int,int,const char*,int,const char*,int,int,const char* helpCode=NULL);
 	int  disp(int,int,char*,int);
 };
 

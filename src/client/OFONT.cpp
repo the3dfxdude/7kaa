@@ -1219,7 +1219,7 @@ void Font::update_field(int x1, int y1, char* value, int x2)
 // [char*] helpCode  = help code
 //
 void Font::field(int xDes, int y1, const char* desStr, int xValue, const char* value,
-					  int xEnd, int refreshFlag, char* helpCode )
+					  int xEnd, int refreshFlag, const char* helpCode )
 {
 	int x2;
 
