@@ -39,7 +39,7 @@ public:
 	ImageRes(char* resFile, int readAll=0, int useVgaBuf=0);
 
 	void  put_front(int,int,const char*, int compressFlag=0);
-	void  put_back(int,int,char*, int compressFlag=0);
+	void  put_back(int,int,const char*, int compressFlag=0);
 
 	void  put_front(int,int,int, int compressFlag=0);
 	void  put_back(int,int,int, int compressFlag=0);
