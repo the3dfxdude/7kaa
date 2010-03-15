@@ -63,21 +63,21 @@ static int sub_class_count_array[ENCYC_CLASS_COUNT] =
 	{ 7, 5, 4, 8, 7, 7, 17 };
 #endif
 
-static char *race_name[] =
+static const char *race_name[] =
 #ifdef AMPLUS
 	{ "CHINESE", "EGYPTIAN", "GREEK", "JAPANESE", "MAYA", "INDIAN", "NORMAN", "PERSIAN", "VIKING", "ZULU" };
 #else
 	{ "CHINESE", "GREEK", "JAPANESE", "MAYA", "NORMAN", "PERSIAN", "VIKING" };
 #endif
 
-static char *weapon_name[] =
+static const char *weapon_name[] =
 #ifdef AMPLUS
 	{ "CATAPULT", "BALLISTA", "CANNON", "EXPCART", "FLAMETHR", "F_BALLIS" };
 #else
 	{ "CATAPULT", "BALLISTA", "CANNON", "EXPCART", "FLAMETHR" };
 #endif
 
-static char *ship_name[] =
+static const char *ship_name[] =
 {
 	"VESSEL",
 	"TRANSPOR",
@@ -85,7 +85,7 @@ static char *ship_name[] =
 	"GALLEON",
 };
 
-static char *firm_name[] =
+static const char *firm_name[] =
 {
 	"FORT",
 	"FACTORY",
@@ -97,14 +97,14 @@ static char *firm_name[] =
 	"HARBOR",
 };
 
-static char *god_name[] =
+static const char *god_name[] =
 #ifdef AMPLUS
 	{ "CHINESE", "GREEK", "PERSIAN", "NORMAN", "JAPANESE", "MAYA", "VIKING", "EGYPTIAN", "ZULU", "INDIAN" };
 #else
 	{ "CHINESE", "GREEK", "JAPANESE", "MAYA", "NORMAN", "PERSIAN", "VIKING" };
 #endif
 
-static char *monster_name[] =
+static const char *monster_name[] =
 {
 	"HOBGLOB",
 	"SKELETON",
@@ -129,19 +129,19 @@ static char *monster_name[] =
 
 static char monster_page_index[FRYHTAN_MAX_PAGE+1] = { 0, 7, 13, 17 };
 
-static char* button_name_array[ENCYC_CLASS_COUNT] =
+static const char* button_name_array[ENCYC_CLASS_COUNT] =
 {
 	"B_PEOP", "B_WEAP", "B_SHIP", "B_STRUCT", "B_PEOP",
 	"B_GBEING", "B_FRYH",
 };
 
-static char* monster_button_name_array[FRYHTAN_MAX_PAGE] = 
+static const char* monster_button_name_array[FRYHTAN_MAX_PAGE] = 
 {
 	"B_FRYH", "B_FRYH2", "B_FRYH3",
 };
 
-static char std_extension[] = ".ICN";
-static char pal_extension[] = ".COL";
+static const char std_extension[] = ".ICN";
+static const char pal_extension[] = ".COL";
 
 //-------- define static variables ----------//
 
