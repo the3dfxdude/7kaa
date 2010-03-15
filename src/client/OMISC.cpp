@@ -1420,7 +1420,7 @@ char* Misc::roman_number(int inNum)
 {
 	err_when( inNum<1 || inNum >= 1000 );
 
-	static char* roman_number_array[] =
+	static const char* roman_number_array[] =
 	{ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
 
 	static String str;
