@@ -502,7 +502,7 @@ static int disp_score(int winFlag)
 {
 	int x=200, y=360;
 
-	static char* rankStrArray[] =
+	static const char* rankStrArray[] =
 	{ "Population Score", "Military Score", "Economic Score",
 	  "Reputation Score", "Fryhtan Battling Score" };
 
