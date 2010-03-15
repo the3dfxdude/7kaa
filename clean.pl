@@ -1,26 +1,29 @@
 #!/usr/bin/perl
 
-(-f 'opts.pl') or die "Please run configure.pl first.\n";
-require "opts.pl";
+use Cwd;
 
 our $msg;
 
-clean_directory();
+clean_build_files();
 defined($msg) and print $msg;
 
 1;
 
 sub recurse_dirs {
   foreach my $i (@_) {
-    unless (chdir $i) {
-      $msg = "clean.pl: directory specified '$i' does not exist.\n";
+    my $orig_dir = cwd;
+
+    unless (-d $i && chdir $i) {
+      $msg = "clean.pl: could not enter '$i'.\n";
       return 0; 
     }
     print "Entering '$i'\n";
-    clean_directory() or return 0;
+
+    clean_build_files($i) or return 0;
+
     print "Leaving '$i'\n";
-    unless (chdir '..') {
-      $msg = "clean.pl: parent directory disappeared.\n";
+    unless (chdir $orig_dir) {
+      $msg = "clean.pl: original directory disappeared.\n";
       return 0;
     }
   }
@@ -38,19 +41,15 @@ sub delete_file {
   return 1;
 }
 
-sub clean_directory {
-  local @dirs;
-  my @files;
-
-  unless (-f 'targets.pl') {
-    $msg = "clean.pl: no targets file. Stopping.\n";
-    return 0;
-  }
-
-  do 'targets.pl';
-
+sub clean_build_files {
   # recurse build directories
+  opendir (my $dir, '.') or die "Cannot read current directory.\n";
+  my @dirs = grep { -d $_ && not $_ =~ /^\./ } readdir($dir);
+  closedir ($dir);
   recurse_dirs(@dirs) or return 0;
+
+  ## Clean up build files ##
+  my @files;
 
   # remove object files
   @files = <*.o>;

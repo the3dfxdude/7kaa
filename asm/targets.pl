@@ -1,8 +1,43 @@
 ### Assembler targets ###
-@asm_files = qw(
-I_BAR   I_CTRL IB_TRD  IB_A     IC       IC_R    CRC      IJ_T
-IB_T    I_READ I_EMASK IB_TD    I_EREMAP IB_ATRD IB_AT    IB_32
-IB_ATD  IB_R   IB      IR_BAR   IB2      I_LINE  IB_ATR   IB_AR
-IB_TR   IB_DW  I_PIXEL I_FREMAP I_BLACK  I_SNOW  IB_ATRDM IB_TRDM
-IB_ATDM IR_AM  IR_A    IB_TDM   IR_M IR
+@targets = qw(
+CRC.asm
+IB.asm
+IB2.asm
+IB_32.asm
+IB_A.asm
+IB_AR.asm
+IB_AT.asm
+IB_ATD.asm
+IB_ATDM.asm
+IB_ATR.asm
+IB_ATRD.asm
+IB_ATRDM.asm
+IB_DW.asm
+IB_R.asm
+IB_T.asm
+IB_TD.asm
+IB_TDM.asm
+IB_TR.asm
+IB_TRD.asm
+IB_TRDM.asm
+IC.asm
+IC_R.asm
+IJ_T.asm
+IR.asm
+IR_A.asm
+IR_AM.asm
+IR_BAR.asm
+IR_M.asm
+I_BAR.asm
+I_BLACK.asm
+I_CTRL.asm
+I_EMASK.asm
+I_EREMAP.asm
+I_FREMAP.asm
+I_LINE.asm
+I_PIXEL.asm
+I_READ.asm
+I_SNOW.asm
 );
+
+build_targets(\@targets);
