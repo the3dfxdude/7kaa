@@ -58,7 +58,7 @@ static void disp_ranking();
 static void disp_stat();
 
 static void put_stat(int y, char* desStr, char* dispStr);
-static void put_stat(int y, char* desStr, int dispValue);
+static void put_stat(int y, const char* desStr, int dispValue);
 static void put_ranking(int y, int nationRecno);
 
 
@@ -428,7 +428,7 @@ static void put_stat(int y, char* desStr, char* dispStr)
 
 //-------- Begin of static function put_stat --------//
 //
-static void put_stat(int y, char* desStr, int dispValue)
+static void put_stat(int y, const char* desStr, int dispValue)
 {
 	font_bible.put( 140, y, desStr );
 	font_bible.put( 570, y, m.format(dispValue) );
