@@ -49,7 +49,7 @@
 
 //------------ Define static vars ----------------//
 
-static char* skill_name_array[] =
+static const char* skill_name_array[] =
 {
 	"Combat Skill",
 	"Construction Skill",
