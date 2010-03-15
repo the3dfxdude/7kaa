@@ -48,6 +48,9 @@
 #include <OBATTLE.h>
 #include <OMOUSECR.h>
 
+#include <dbglog.h>
+DBGLOG_DEFAULT_CHANNEL(Battle);
+
 //---------- define static functions -------------//
 
 static int is_space(int xLoc1, int yLoc1, int xLoc2, int yLoc2, char mobileType);
@@ -102,28 +105,6 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	#endif
 
 	world.generate_map();
-
-	//------- create player nation --------//
-
-	if( !mpGame )
-	{
-		// if config.race_id == 0, select a random race, but don't call m.random
-		int nationRecno = nation_array.new_nation( NATION_OWN,
-								config.race_id ? config.race_id : 1+m.get_time() % MAX_RACE,
-								config.player_nation_color );
-
-		nation_array.set_human_name( nationRecno, config.player_name );
-	}
-	else
-	{
-		for( int i = 0; i < mpPlayerCount; ++i )
-		{
-			int nationRecno = nation_array.new_nation(mpGame[i]);
-			if( nationRecno != mpGame[i].nation_recno )
-				err.run( "Unexpected nation recno created" );
-			nation_array.set_human_name( nationRecno, mpGame[i].player_name );
-		}
-	}
 
 	//--------- create ai nations --------//
 
@@ -192,15 +173,15 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	// ######## end Gilbert 11/11 #######//
 
 	//------- enable/disable sound effects -------//
-
-#ifdef AMPLUS
-	int songId = (~nation_array)->race_id <= 7 ? (~nation_array)->race_id+1 : music.random_bgm_track();
-	music.play(songId, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
-#else
-	music.play((~nation_array)->race_id +1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
-#endif
+	music.play(music.random_bgm_track(), sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
 
 	mouse_cursor.restore_icon(oldCursor);
+
+        //--- lift the fog of war for the server admin ---//
+        world.unveil(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1);
+        world.visit(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1, 0, 0);
+        config.blacken_map = 0;
+        config.fog_of_war  = 0;
 
 	//--- give the control to the system main loop, start the game now ---//
 
