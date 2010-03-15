@@ -186,7 +186,7 @@ public:
 	void put_field(int,int,char*,int,char*);
 	void update_field(int,int,char*,int);
 	void field(int,int,const char*,int,const char*,int,int,const char* helpCode=NULL);
-	int  disp(int,int,char*,int);
+	int  disp(int,int,const char*,int);
 };
 
 extern Font font_san, font_std, font_small, font_mid, font_news;

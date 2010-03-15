@@ -1307,7 +1307,7 @@ int Font::disp(int x1, int y1, double value, int format, int x2)
 //
 // Return : <int> lastX, the x coordination of the last pixel of last font
 //
-int Font::disp(int x1, int y1, char* textPtr, int x2)
+int Font::disp(int x1, int y1, const char* textPtr, int x2)
 {
 	if( x2<0 )
       x2 = x1+80;
