@@ -111,7 +111,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 
 	if( !retireFlag )		// don't display this when retire
 	{
-		char* fileName;
+		const char* fileName;
 
 		if( winNationRecno && (winNationRecno == nation_array.player_recno) )
 		{
