@@ -66,7 +66,6 @@ int dbglog_init()
 		if (copied > 0)
 		{
 			dbglog_settings[i].flags = DBGLOG_ERR_ON|DBGLOG_MSG_ON;
-printf("setting %s\n", dbglog_settings[i].name);
 		} else {
 			dbglog_settings[i].flags = DBGLOG_NEED_INIT;
 		}
