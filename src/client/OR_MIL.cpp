@@ -388,7 +388,7 @@ static void put_troop_rec(int recNo, int x, int y, int refreshFlag)
 
 	//---- display the status of the general ----//
 
-	char* statusStr;
+	const char* statusStr;
 
 	if( unitPtr->unit_mode == UNIT_MODE_OVERSEE )
 	{
