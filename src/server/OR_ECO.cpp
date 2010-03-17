@@ -195,7 +195,7 @@ static void put_income_rec(int recNo, int x, int y, int refreshFlag)
 {
 	//----- define income descriptions ------//
 
-	static char* income_des_array[INCOME_TYPE_COUNT] =
+	static const char* income_des_array[INCOME_TYPE_COUNT] =
 	{
 		"Sale of Goods",
 		"Exports",
