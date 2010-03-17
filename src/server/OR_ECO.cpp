@@ -226,7 +226,7 @@ static void put_expense_rec(int recNo, int x, int y, int refreshFlag)
 {
 	//----- define expense descriptions -------//
 
-	static char* expense_des_array[EXPENSE_TYPE_COUNT] =
+	static const char* expense_des_array[EXPENSE_TYPE_COUNT] =
 	{
 		"General Costs",
 		"Spy Costs",
