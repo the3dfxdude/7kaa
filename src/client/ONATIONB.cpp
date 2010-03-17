@@ -574,7 +574,7 @@ char* NationBase::nation_name()
 // [int] firstWordOnly - whether only get the first word of the name. 
 //								 (default: 0)
 // 
-char* NationBase::king_name(int firstWordOnly)
+const char* NationBase::king_name(int firstWordOnly)
 {
 	if( nation_name_id < 0 )		// human player custom names
 	{

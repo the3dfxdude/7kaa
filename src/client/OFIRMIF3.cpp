@@ -491,7 +491,7 @@ void Firm::disp_bribe_unit(int dispY1)
 
 	// ####### begin Gilbert 8/8 ########//
 	int 	raceId, unitLoyalty, unitId, rankId;
-	char* unitName;
+	const char* unitName;
 
 	if( selected_worker_id )
 	{

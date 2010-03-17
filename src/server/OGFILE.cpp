@@ -264,7 +264,7 @@ void GameFile::set_file_name()
 	String str, str2;
 	int    i;
 	char   nameChar;
-	char*  baseName;             // the long name which the file name is based on
+	const char*  baseName;             // the long name which the file name is based on
 	char   addStr[] = "0";       // as a small string for adding to the large string
 
 	baseName = (~nation_array)->king_name();

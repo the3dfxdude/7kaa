@@ -155,7 +155,7 @@ public:
 	int 	nation_name_id;			// name of the king/nation
 	char  nation_name_str[NATION_NAME_LEN+1];		// for nation_name()'s use
 	char* nation_name();
-	char* king_name(int firstWordOnly=0);
+	const char* king_name(int firstWordOnly=0);
 
 	DWORD player_id;				   // player id for multiplayer game
 
