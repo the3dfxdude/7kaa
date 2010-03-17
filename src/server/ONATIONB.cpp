@@ -51,7 +51,7 @@
 
 //-------- Define static variables --------//
 
-char* NationRelation::relation_status_str_array[5] =
+const char* NationRelation::relation_status_str_array[5] =
 {
 	"War", "Tense", "Neutral", "Friendly", "Alliance"
 };

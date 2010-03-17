@@ -100,7 +100,7 @@ struct NationRelation			// many-to-many relationships between nations
 	char	trade_treaty;			// whether allow trading with this nation
 
 	char  status;
-	char* status_str()		{ return relation_status_str_array[status]; }
+	const char* status_str()		{ return relation_status_str_array[status]; }
 
 	int	last_change_status_date;
    char* status_duration_str();
@@ -127,7 +127,7 @@ struct NationRelation			// many-to-many relationships between nations
 
 	char	contact_msg_flag;										// used only in multiplayer
 
-	static char* relation_status_str_array[5];
+	static const char* relation_status_str_array[5];
 };
 #pragma pack()
 
