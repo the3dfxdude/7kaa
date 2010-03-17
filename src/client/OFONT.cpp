@@ -990,7 +990,7 @@ int Font::center_put(int x1, int y1, int x2, int y2, const char* desStr, char cl
 //                  3 - 100% percentage
 //                  (default : 1 )
 //
-void Font::put_field(int x1, int y1, char* desStr, int x2, int value, int format )
+void Font::put_field(int x1, int y1, const char* desStr, int x2, int value, int format )
 {
 	vga.d3_panel_up( x1, y1, x2, y1+font_height+3 );
 
@@ -1084,7 +1084,7 @@ void Font::field(int xDes, int y1, const char* desStr, int xValue, int value,
 //                   3 - 100% percentage
 //                   (default : 1 )
 //
-void Font::put_field(int x1, int y1, char* desStr, int x2, double value, int format)
+void Font::put_field(int x1, int y1, const char* desStr, int x2, double value, int format)
 {
 	vga.d3_panel_up( x1, y1, x2, y1+font_height+3 );
 
@@ -1173,7 +1173,7 @@ void Font::field(int xDes, int y1, const char* desStr, int xValue, double value,
 // <int>   x2     = the coordination of the spinner variable
 // <char*> value  = value
 //
-void Font::put_field(int x1, int y1, char* desStr, int x2, char* value)
+void Font::put_field(int x1, int y1, const char* desStr, int x2, char* value)
 {
 	vga.d3_panel_up( x1, y1, x2, y1+font_height+3 );
 
