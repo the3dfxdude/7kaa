@@ -74,10 +74,10 @@ private:
 
 public:
 
-   Database(char* =0, int=0);
+   Database(const char* =NULL, int=0);
    ~Database();
 
-   void  open(char*, int=0);
+   void  open(const char*, int=0);
    void  open_from_buf(char*);
 
 	char* read(long=0);

@@ -32,7 +32,7 @@
 // [char*] fileName  = the name of the DBF file to be opened
 // [int]   bufferAll = read the whole database into memory or not
 //
-Database::Database(char* dbFileName, int bufferAll)
+Database::Database(const char* dbFileName, int bufferAll)
 {
    dbf_buf  = NULL;
    rec_buf  = NULL;
@@ -66,7 +66,7 @@ Database::~Database()
 // return 1 : opened successfully
 //        0 : opening failure
 //
-void Database::open( char* fileName, int bufferAll )
+void Database::open( const char* fileName, int bufferAll )
 {
    close();        // if there is a opened file attached to current database, close it first
 
