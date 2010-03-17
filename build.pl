@@ -20,19 +20,62 @@ do $targets_script;
 
 1;
 
-# is_file_newer($file, $than)
+# get_mtime($file)
+sub get_mtime {
+  my $file = stat($_[0]);
+  return $file->mtime;
+}
+
+# is_file_newer($file, $than, \%mtime_cache)
 # Checks if $file is newer than $than.
 sub is_file_newer {
   (-f $_[1]) or return 1;
-  my $file = stat($_[0]);
-  my $than = stat($_[1]);
-  return $file->mtime >= $than->mtime;
+  defined($_[2]->{$_[0]}) or $_[2]->{$_[0]} = get_mtime($_[0]);
+  defined($_[2]->{$_[1]}) or $_[2]->{$_[1]} = get_mtime($_[1]);
+  return $_[2]->{$_[0]} >= $_[2]->{$_[1]};
 }
 
-# needs_building($file, $than)
+# check_includes($file_to_check, $original_file, $obj, \@inclues, \%mtime_cache)
+sub check_includes {
+  my $flag = 0;
+  my $latest_mtime = 0;
+  open (my $file, $_[0]) or return 0;
+  while (1) {
+    my $line = <$file>;
+    defined($line) or last;
+    my ($include) = $line =~ /#include\s+<([^>]+)>/;
+    if (defined($include)) {
+      
+      foreach my $i (@{$_[3]}) {
+        my $attempt = "$i/$include";
+        if (-f $attempt) {
+          # recursion is disabled for now
+          #unless (defined($_[4]->{$i})) {
+          #  my ($ret, $mtime) = check_includes($attempt, $_[1], $_[2], $_[3], $_[4]);
+          #  $_[4]->{$attempt} = $mtime;
+          #  $ret and $flag = 1;
+          #}
+          if (is_file_newer($attempt, $_[1], $_[4]) &&
+              is_file_newer($attempt, $_[2], $_[4])) {
+            $flag = 1;
+          }
+          $_[4]->{$attempt} > $latest_mtime and $latest_mtime = $_[4]->{$attempt};
+          last;
+        }
+      }
+
+    }
+  }
+  close ($file);
+  return ($flag, $latest_mtime);
+}
+
+# needs_building($file, $than, \@includes, \%mtime_cache)
 # Checks if targets or build options changed in addition to checking
 # whether the object file needs an update.
+# C++ files check the immediate include files if they are newer too.
 sub needs_building {
+  $_[0] =~ /.cpp$/ and (check_includes($_[0], $_[0], $_[1], $_[2], $_[3]))[0] and return 1;
   return is_file_newer($_[0], $_[1]) ||
          is_file_newer('targets.pl', $_[1]) ||
          is_file_newer($opts_file, $_[1]);
@@ -162,6 +205,7 @@ sub break_extension {
 # as needed for the source files to be built.
 #
 sub build_targets {
+  my %mtime_cache;
   my $cxx_cmd;
   my $asm_cmd;
   my $wrc_cmd;
@@ -177,7 +221,7 @@ sub build_targets {
 
     my $obj = "$name.o";
 
-    if (needs_building($i, $obj)) {
+    if (needs_building($i, $obj, $_[1], \%mtime_cache)) {
       my $cmd;
 
       # get the command to build this type of file
