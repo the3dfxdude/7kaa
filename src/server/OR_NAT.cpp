@@ -74,7 +74,7 @@ static const char* report_mode_str_array[MAX_NATION_REPORT_MODE] =
 
 //---------- Define chat receiver str strings ---------//
 
-static char* chat_receiver_str_array[MAX_CHAT_RECEIVER_TYPE] =
+static const char* chat_receiver_str_array[MAX_CHAT_RECEIVER_TYPE] =
 {
 	"Send to the selected kingdom",
 	"Send to all allied human controlled kingdoms",
