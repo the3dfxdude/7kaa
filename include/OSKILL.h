@@ -60,7 +60,7 @@ public:
 	unsigned char skill_level_minor;
 	unsigned char skill_potential;		// skill potential
 
-	static char* skill_str_array[MAX_SKILL];
+	static const char* skill_str_array[MAX_SKILL];
 	static char* skill_code_array[MAX_SKILL];
 	static char  skilled_race_id_array[MAX_SKILL];	// the id. of the race that specialized in this skill.
 	static char  skill_train_cost_array[MAX_SKILL];
@@ -68,7 +68,7 @@ public:
 public:
 	Skill();
 
-	char* skill_des(int shortWord=0);
+	const char* skill_des(int shortWord=0);
 	int 	get_skill(int skillId);
 	void	set_skill(int skillId)		{ skill_id = skillId; }
 };

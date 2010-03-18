@@ -28,7 +28,7 @@
 
 //----------- define static vars -----------//
 
-char* Skill::skill_str_array[MAX_SKILL] =
+const char* Skill::skill_str_array[MAX_SKILL] =
 {
 	"Construction",
 	"Leadership",
@@ -66,7 +66,7 @@ Skill::Skill()
 //
 // [int] shortWord - use short word (default:0)
 //
-char* Skill::skill_des(int shortWord)
+const char* Skill::skill_des(int shortWord)
 {
 	if( skill_id==0 )
 		return "";
