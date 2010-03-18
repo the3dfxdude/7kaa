@@ -477,7 +477,7 @@ static void put_unit_rec(int recNo, int x, int y, int refreshFlag)
 {
 	int   	 unitId = unit_filter(recNo);
 	int   	 unitCount;
-	char* 	 str;
+	const char* 	 str;
 	UnitInfo* unitInfo;
 	Nation* nationPtr = nation_array[info.viewing_nation_recno];
 	int rc = unit_filter(recNo);
