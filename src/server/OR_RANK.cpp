@@ -134,7 +134,7 @@ static void disp_score()
 {
 	int x=NATION_SCORE_X1+6, y=NATION_SCORE_Y1+6;
 
-	static char* rankStrArray[] =
+	static const char* rankStrArray[] =
 	{ "Population Score", "Military Score", "Economic Score",
 	  "Reputation Score", "Fryhtan Battling Score" };
 
