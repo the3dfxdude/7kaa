@@ -61,7 +61,7 @@ public:
 	unsigned char skill_potential;		// skill potential
 
 	static const char* skill_str_array[MAX_SKILL];
-	static char* skill_code_array[MAX_SKILL];
+	static const char* skill_code_array[MAX_SKILL];
 	static char  skilled_race_id_array[MAX_SKILL];	// the id. of the race that specialized in this skill.
 	static char  skill_train_cost_array[MAX_SKILL];
 

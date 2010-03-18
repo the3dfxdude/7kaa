@@ -39,7 +39,7 @@ const char* Skill::skill_str_array[MAX_SKILL] =
 	"Praying",
 };
 
-char* Skill::skill_code_array[MAX_SKILL] =
+const char* Skill::skill_code_array[MAX_SKILL] =
 {
 	"CONS",
 	"LEAD",
