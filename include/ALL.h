@@ -46,6 +46,10 @@
 #include <GAMEDEF.h>
 #endif
 
+//-------- Game Version -----------//
+#define SKVERSION "2.14.0-dev"
+
+
 //-------- Define macro functions -------//
 
 #define max(a,b)        (((a) > (b)) ? (a) : (b))
