@@ -63,7 +63,7 @@ enum { REPORT_BROWSE_X1 = ZOOM_X1+6,
 
 //---------- Define report mode strings ---------//
 
-static char* report_mode_str_array[MAX_NATION_REPORT_MODE] =
+static const char* report_mode_str_array[MAX_NATION_REPORT_MODE] =
 {
 	"Information",
 	"Diplomacy",
