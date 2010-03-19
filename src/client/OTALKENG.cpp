@@ -175,7 +175,7 @@ void TalkMsg::propose_treaty(const char* treatyTypeStr)
 	//---------------------------------------------//
 
 	String treatyStr;
-	char*  articleStr;
+	const char*  articleStr;
 
 	if( treatyTypeStr[0] == 'a' )
 		articleStr = "an ";
