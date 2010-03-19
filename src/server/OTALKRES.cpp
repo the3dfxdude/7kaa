@@ -200,7 +200,7 @@ int TalkRes::set_talk_choices()
 //
 void TalkRes::add_main_choices()
 {
-	static char* talkMsgArray[] =
+	static const char* talkMsgArray[] =
 	{
 		"Propose a trade treaty.",
 		"Propose a friendly treaty.",
