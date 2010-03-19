@@ -101,7 +101,7 @@ void _stdcall IMGbltAreaTransRemapDecompressHMirror(char* imageBuf, int pitch, i
 
 	if (height <= 0) return;
 
-	SeekForward2(&pixelsToSkip, &esi, bitmapBuf, srcY1*bitmapWidth + srcX1);
+	SeekForward2(&pixelsToSkip, &esi, bitmapBuf, (srcY1 +1) * bitmapWidth - srcX2 -1);
 
 	for ( int j=0; j<height; ++j,destline+=pitch )
 	{
