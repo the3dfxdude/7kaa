@@ -140,7 +140,7 @@ public:
 	short			reply_talk_msg_recno;
 
 	TalkMsg		cur_talk_msg;
-	char*			choice_question;
+	const char*		choice_question;
 	char*			choice_question_second_line;
 
 	short			talk_choice_count;
