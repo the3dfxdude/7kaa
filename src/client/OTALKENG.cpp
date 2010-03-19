@@ -619,7 +619,7 @@ void TalkMsg::demand_tribute(int isAid)
 	//
 	//---------------------------------------------//
 
-	char* aidStr;
+	const char* aidStr;
 
 	if( isAid )
 		aidStr = "aid";
