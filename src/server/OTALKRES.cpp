@@ -627,7 +627,7 @@ int TalkRes::can_send_msg(int toNationRecno, int fromNationRecno, int talkId)
 
 //------- Begin of function TalkRes::add_talk_choice --------//
 //
-void TalkRes::add_talk_choice(char* talkStr, int talkPara)
+void TalkRes::add_talk_choice(const char* talkStr, int talkPara)
 {
 	err_when( talk_choice_count >= MAX_TALK_CHOICE );
 

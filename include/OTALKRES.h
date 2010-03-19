@@ -124,7 +124,7 @@ public:
 #pragma pack(1)
 struct TalkChoice
 {
-	char*		str;
+	const char*	str;
 	short		para;
 };
 #pragma pack()
@@ -192,7 +192,7 @@ public:
 	int			read_file(File* filePtr);
 
 private:
-	void			add_talk_choice(char* talkStr, int talkPara);
+	void			add_talk_choice(const char* talkStr, int talkPara);
 
 	void			add_main_choices();
 	int			add_trade_embargo_choices();
