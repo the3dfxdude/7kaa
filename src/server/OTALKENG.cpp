@@ -827,7 +827,7 @@ void TalkMsg::demand_tech()
 	//
 	//---------------------------------------------//
 
-	char* requestStr;
+	const char* requestStr;
 
 	if( nation_array[from_nation_recno]->get_relation_status(to_nation_recno)
 		 >= NATION_FRIENDLY )
