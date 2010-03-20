@@ -364,7 +364,7 @@ int TalkRes::add_buy_food_choices()
 	{
 		choice_question = "How much do you offer for 10 units of food?";
 
-		static char* priceStrArray[] = { "$5.", "$10.", "$15.", "$20." };
+		static const char* priceStrArray[] = { "$5.", "$10.", "$15.", "$20." };
 		static short priceArray[] = { 5, 10, 15, 20 };
 
 		for( int i=0 ; i<4 ; i++ )
