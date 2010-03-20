@@ -79,7 +79,7 @@ Vga::~Vga()
 
 BOOL Vga::init()
 {
-   char* warnStr = "Warning: Due to the low memory of your display card, "
+   const char* warnStr = "Warning: Due to the low memory of your display card, "
                    "you may experience problems when you quit the game or "
                    "switch tasks during the game. "
                    "To avoid this problem, set your Windows display "
