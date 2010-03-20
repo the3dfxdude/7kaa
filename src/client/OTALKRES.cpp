@@ -913,7 +913,7 @@ void TalkRes::disp_talk()
 	{
 		if( !( choice_question && strcmp(choice_question, MESSAGE_SENT_STR)==0 ) )		// if it's currently displaying the has sent notification, display that message
 		{
-			char* msgStr = "You've sent too many messages to this kingdom. "
+			const char* msgStr = "You've sent too many messages to this kingdom. "
 								"You cannot send any new messages until the existing ones are processed.";
 
 			font_san.put_paragraph( TALK_X1, TALK_Y1, TALK_X2, TALK_Y2, msgStr, 4 );
