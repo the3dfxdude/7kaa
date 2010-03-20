@@ -189,7 +189,7 @@ public:
 
 	// ###### begin Gilbert 24/9 ########//
 	// return rockRecno
-	short            search(char *rockTypes, short minWidth, short maxWidth, 
+	short            search(const char *rockTypes, short minWidth, short maxWidth, 
 		short minHeight, short maxHeight, int animatedFlag=-1, int findFirst=0,
 		char terrainType=0);
 	// ###### end Gilbert 24/9 ########//

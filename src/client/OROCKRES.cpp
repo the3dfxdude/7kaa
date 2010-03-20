@@ -515,7 +515,7 @@ void RockRes::draw_block(short rockRecno, short xLoc, short yLoc,
 //
 // return rock recno or 0 (for not found)
 //
-short RockRes::search(char *rockTypes, short minWidth, short maxWidth, short minHeight, short maxHeight,
+short RockRes::search(const char *rockTypes, short minWidth, short maxWidth, short minHeight, short maxHeight,
 	int animatedFlag, int findFirst, char terrainType )
 {
 	// -------- search a rock by rock_type, width and height ---------//
