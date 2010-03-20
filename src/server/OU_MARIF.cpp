@@ -1029,7 +1029,7 @@ static void i_disp_marine_select_button(ButtonCustom *button, int repaintBody)
 	//-------------- put goods icon ---------------//
 
 	int id = button->custom_para.value;
-	char *iconName=NULL;
+	const char *iconName=NULL;
 
 	int x = x1+shift;
 	int y = y1+shift;
