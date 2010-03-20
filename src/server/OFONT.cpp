@@ -1192,7 +1192,7 @@ void Font::put_field(int x1, int y1, const char* desStr, int x2, char* value)
 // <char*> value  = value
 // <int>   x2     = the x2 (right border) of the field
 //
-void Font::update_field(int x1, int y1, char* value, int x2)
+void Font::update_field(int x1, int y1, const char* value, int x2)
 {
 	if( x2<0 )
       x2 = x1+80;
