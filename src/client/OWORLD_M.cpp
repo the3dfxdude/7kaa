@@ -84,7 +84,7 @@ void MapMatrix::paint()
 //
 void MapMatrix::disp_mode_button(int putFront)
 {
-	char* iconName;
+	const char* iconName;
 
 	switch(map_mode)
 	{
