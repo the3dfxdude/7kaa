@@ -1138,7 +1138,7 @@ void Town::disp_auto_menu(int modeCollectTax)
 	else
 		headingStr = "Automatically Grant Money to Villagers when their Loyalty drops below:";
 
-	char* clickStr = "(Left-click below to apply to this village. Right-click below to apply to all your villages.)";
+	const char* clickStr = "(Left-click below to apply to this village. Right-click below to apply to all your villages.)";
 
 	vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+110 );
 
