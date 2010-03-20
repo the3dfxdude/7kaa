@@ -444,7 +444,7 @@ int TalkRes::add_give_tech_choices()
 
 		err_when( nationLevel<1 || nationLevel>3 );
 
-		static char* verStrArray[] = { "Mark I", "Mark II", "Mark III" };
+		static const char* verStrArray[] = { "Mark I", "Mark II", "Mark III" };
 
 		for( i=1 ; i<=min(3, nationLevel) ; i++ )
 			add_talk_choice( verStrArray[i-1], i );
