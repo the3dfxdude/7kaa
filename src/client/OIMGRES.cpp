@@ -158,7 +158,7 @@ void ImageRes::put_back(int x, int y, int bitmapId, int compressFlag)
 // int 	x,y       = the location of the image
 // char* imageName = name of the image
 //
-void ImageRes::put_join(int x, int y, char* imageName)
+void ImageRes::put_join(int x, int y, const char* imageName)
 {
 	char* bitmapPtr = ResourceIdx::read(imageName);
 
