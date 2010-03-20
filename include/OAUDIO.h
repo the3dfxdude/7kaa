@@ -90,7 +90,7 @@ public:
 	int	is_wav_playing(int);
 
 	// functions on long wave
-	int   play_long_wav(char*, DsVolume);
+	int   play_long_wav(const char*, DsVolume);
 	int	stop_long_wav(int);
 	int	is_long_wav_playing(int);
 	void	volume_long_wav(int ch, DsVolume);

@@ -952,7 +952,7 @@ int Audio::is_wav_playing(int serial)
 // load wave file into one part. lwav_bank[c] record which part to be
 // filled next for channel c.
 
-int Audio::play_long_wav(char *wavName, DsVolume dsVolume)
+int Audio::play_long_wav(const char *wavName, DsVolume dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
