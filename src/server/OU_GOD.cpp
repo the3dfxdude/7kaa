@@ -148,7 +148,7 @@ void UnitGod::disp_info(int refreshFlag)
 	{
 		//-------- get the button name --------//
 
-		char* buttonName;
+		const char* buttonName;
 
 		switch(god_id)
 		{
