@@ -466,7 +466,7 @@ int TalkRes::add_request_surrender_choices()
 
 	choice_question = "How much do you offer?";
 
-	static char* strArray[] = { "$5000.", "$7500.", "$10000.",
+	static const char* strArray[] = { "$5000.", "$7500.", "$10000.",
 		"$15000.", "$20000.", "$30000.", "$40000.", "$50000." };
 
 	static int amtArray[] = { 5000, 7500, 10000, 15000, 20000, 30000, 40000, 50000 };
