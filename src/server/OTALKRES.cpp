@@ -349,7 +349,7 @@ int TalkRes::add_buy_food_choices()
 	{
 		choice_question = "How much food do you want to purchase?";
 
-		static char* qtyStrArray[] = { "500.", "1000.", "2000.", "4000." };
+		static const char* qtyStrArray[] = { "500.", "1000.", "2000.", "4000." };
 		static short qtyArray[] = { 500, 1000, 2000, 4000 };
 
 		for( int i=0 ; i<4 ; i++ )
