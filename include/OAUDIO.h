@@ -96,7 +96,7 @@ public:
 	void	volume_long_wav(int ch, DsVolume);
 
 	// functions on loop wave
-	int	play_loop_wav(char *, int repeatOffset, DsVolume);	// return channel no.
+	int	play_loop_wav(const char *, int repeatOffset, DsVolume);	// return channel no.
 	void	stop_loop_wav(int ch);
 	void	volume_loop_wav(int ch, DsVolume);
 	void	fade_out_loop_wav(int ch, int fadeRate);

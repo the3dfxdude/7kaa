@@ -1239,7 +1239,7 @@ int Audio::vol_divide(long dsVolume)
 // return : <int> channel number (1 - MAX_LOOP_WAV_CH)
 //          0     not played
 //
-int	Audio::play_loop_wav(char *wavName, int repeatOffset, DsVolume dsVolume)
+int	Audio::play_loop_wav(const char *wavName, int repeatOffset, DsVolume dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
