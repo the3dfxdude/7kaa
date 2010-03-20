@@ -1131,7 +1131,7 @@ void Town::disp_auto_menu(int modeCollectTax)
 
 	//---------- paint buttons ------------//
 
-	char* headingStr;
+	const char* headingStr;
 
 	if( modeCollectTax )
 		headingStr = "Automatically Collect Tax from Villagers when their Loyalty reaches:";
