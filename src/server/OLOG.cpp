@@ -111,7 +111,7 @@ void Log::dump()
 
 
 // -------- begin of function Log::debug_log ----------//
-void Log::debug_log(char *msg)
+void Log::debug_log(const char *msg)
 {
 	String s;
 	s = msg; 

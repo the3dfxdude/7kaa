@@ -53,7 +53,7 @@ public:
 	void mark(int n, char *file, int line);
 	void dump();
 
-	static void debug_log( char *msg );
+	static void debug_log( const char *msg );
 	static void debug_log( int n );
 };
 
