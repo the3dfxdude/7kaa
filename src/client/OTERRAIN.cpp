@@ -173,7 +173,7 @@ short TerrainRes::max_height(TerrainTypeCode tc, SubTerrainMask subtc)
 {
 	if( subtc & TOP_MASK )
 	{
-		if( tc < TOTAL_TERRAIN_TYPE )
+		if( tc < (TerrainTypeCode)TOTAL_TERRAIN_TYPE )
 			return terrain_type_min_height_array[tc-1+1][0]-1;
 		else
 			return 255;
