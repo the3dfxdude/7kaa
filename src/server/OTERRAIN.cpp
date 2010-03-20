@@ -57,7 +57,7 @@ static int terrain_type_color_array[TOTAL_TERRAIN_TYPE] =		// the color of each 
 	0x2D,
 };
 
-static char* map_tile_name_array[TOTAL_TERRAIN_TYPE] =		// the color of each terrain type on the small map
+static const char* map_tile_name_array[TOTAL_TERRAIN_TYPE] =		// the color of each terrain type on the small map
 {
 	"TERA_S",
 	"TERA_DG",
