@@ -125,7 +125,7 @@ public:
 	short icon_index;
 	char* tech_large_icon();
 	char* tech_small_icon();
-	char* tech_des();			// description of the technology
+	const char* tech_des();			// description of the technology
 
 	//-------- dynamic game vars --------//
 

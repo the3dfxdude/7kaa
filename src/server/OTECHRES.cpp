@@ -216,7 +216,7 @@ char* TechInfo::tech_small_icon()
 
 //---------- Begin of function TechInfo::tech_des -----------//
 
-char* TechInfo::tech_des()
+const char* TechInfo::tech_des()
 {
 	if( unit_id )
 		return unit_res[unit_id]->name;
