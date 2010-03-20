@@ -6,7 +6,12 @@ my @wine_ver_req = (1, 1, 34);
 my @gcc_ver_req = (3, 0, 0);
 my @jwasm_ver_req = (2, '00', 0);
 
-my %cfg;
+# Set-up default config
+my %cfg = (
+  enable_debug => 0,
+  no_asm => 0,
+  build_server => 1
+);
 
 # parse command line args
 foreach my $i (@ARGV) {
@@ -16,8 +21,8 @@ foreach my $i (@ARGV) {
     $cfg{debug} = 1;
   } elsif ($i =~ /^--disable-asm$/) {
     $cfg{no_asm} = 1;
-  } elsif ($i =~ /^--enable-server$/) {
-    $cfg{build_server} = 1;
+  } elsif ($i =~ /^--disable-server$/) {
+    $cfg{build_server} = 0;
   } elsif ($i =~ /^--force-wine$/) {
     @wine_ver_req = (0, 0, 0);
   }
