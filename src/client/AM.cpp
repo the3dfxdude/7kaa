@@ -386,7 +386,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 #ifdef DEBUG
 
-void __cdecl debug_msg( char* fmt, ... )
+void __cdecl debug_msg( const char* fmt, ... )
 {
     char buff[256];
 
