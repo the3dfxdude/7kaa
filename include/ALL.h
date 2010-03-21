@@ -101,7 +101,7 @@ private:
 public:
    Error();
 
-   void internal(char*,char*,int);
+   void internal(char*,const char*,int);
    void mem();
         void msg(const char*,...);
    void run(const char*,...);

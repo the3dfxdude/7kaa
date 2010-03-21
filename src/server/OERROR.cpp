@@ -87,7 +87,7 @@ static void new_func_handler()
 // <int>   lineNum  - the line number of program cause error
 //                    usually is __LINE__
 //
-void Error::internal(char* errMsg,char* fileName,int lineNum)
+void Error::internal(char* errMsg,const char* fileName,int lineNum)
 {
  	if( error_flag )	// prevent error message dead loop
 		return;
