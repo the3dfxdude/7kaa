@@ -51,8 +51,6 @@ static char  table_random_start_up[5] = { 0, 0, 0, 1, 1 };
 
 void Config::init()
 {
-	err_when( Config::PLAYER_NAME_LEN != NationArray::HUMAN_NAME_LEN );
-
 	default_game_setting();
 	default_cheat_setting();
 	default_local_game_setting();

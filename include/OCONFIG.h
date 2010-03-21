@@ -77,7 +77,7 @@ public:
 	void			disable_weather_audio();
 
 public:
-	enum { PLAYER_NAME_LEN=20 };		// should be te same as NationBase::KING_NAME_LEN
+	enum { PLAYER_NAME_LEN=20 }; // should be the same as NationArray::HUMAN_NAME_LEN
 
 	//--------- GLOBAL GAME SETTING --------//
 	//

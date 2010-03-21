@@ -44,7 +44,7 @@ struct NewNationPara;
 class NationArray : public DynArrayB
 {
 public:
-	enum { HUMAN_NAME_LEN=20 };
+	enum { HUMAN_NAME_LEN=20 }; // should be the same as Config::PLAYER_NAME_LEN
 
 	short  	nation_count;    // no. of nations, it's different from nation_array.size() which is a DynArrayB
 	short  	ai_nation_count;
