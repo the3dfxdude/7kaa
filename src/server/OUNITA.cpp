@@ -56,7 +56,7 @@
 
 //--------- Declare static functions ---------//
 
-static void put_profile(int y, char* dispDes, int dispValue);
+static void put_profile(int y, const char* dispDes, int dispValue);
 
 //--------- Begin of function UnitArray::UnitArray ---------//
 //
@@ -526,7 +526,7 @@ void UnitArray::draw_profile()
 
 //--------- Begin of static function put_profile ---------//
 //
-static void put_profile(int y, char* dispDes, int dispValue)
+static void put_profile(int y, const char* dispDes, int dispValue)
 {
 	font_news.put( ZOOM_X1+10, y, dispDes );
 	font_news.put( ZOOM_X1+120, y, dispValue );
