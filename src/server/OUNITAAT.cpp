@@ -1716,12 +1716,12 @@ void UnitArray::check_nearby_location(int targetXLoc, int targetYLoc, char xOffs
 			int debugRightIncreCount = rightIncreCount;
 			char debugUnreachableTable2[MAX_UNIT_SURROUND_SIZE][MAX_UNIT_SURROUND_SIZE];
 			memcpy(debugUnreachableTable2, unreachable_table, sizeof(char)*MAX_UNIT_SURROUND_SIZE*MAX_UNIT_SURROUND_SIZE);
-			for(int i=0; i<MAX_UNIT_SURROUND_SIZE; i++)
+			for(int k=0; k<MAX_UNIT_SURROUND_SIZE; k++)
 			{
 				for(int j=0; j<MAX_UNIT_SURROUND_SIZE; j++)
 				{
-					if(debugUnreachableTable2[i][j] && debugUnreachableTable2[i][j]==1)
-						debugUnreachableTable2[i][j] = 2;	// plus 1 to distinguish the original table
+					if(debugUnreachableTable2[k][j] && debugUnreachableTable2[k][j]==1)
+						debugUnreachableTable2[k][j] = 2;	// plus 1 to distinguish the original table
 				}
 			}
 		#endif
