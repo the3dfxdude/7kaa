@@ -51,7 +51,7 @@ public:
    int   file_open(const char*, int=1, int=0);
    int   file_create(const char*, int=1, int=0);
 	//### begin alex 24/7 ###//
-	int	file_append(char*, int=1, int=0);
+	int	file_append(const char*, int=1, int=0);
 	//#### end alex 24/7 ####//
    void  file_close();
 

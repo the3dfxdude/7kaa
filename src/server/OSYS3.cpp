@@ -33,7 +33,7 @@ static char file_opened_flag = 0;
 static long	match_seed;
 
 //-------- Begin of function Sys::sp_open_seed_file --------//
-void Sys::sp_open_seed_file(char *filename)
+void Sys::sp_open_seed_file(const char *filename)
 {
 	//seedCompareFile.file_open(filename);
 	seedCompareFile.file_append(filename);
