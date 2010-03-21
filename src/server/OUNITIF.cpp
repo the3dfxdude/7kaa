@@ -1569,7 +1569,7 @@ static void disp_debug_info(Unit* unitPtr, int dispY1, int refreshFlag)
 
 	//---------------------------------------//
 
-	static char* action_mode_str_array[] =
+	static const char* action_mode_str_array[] =
 	{
 		"Stop",
 		"Attack unit",
@@ -1599,7 +1599,7 @@ static void disp_debug_info(Unit* unitPtr, int dispY1, int refreshFlag)
 		"Monster defend back firm",
 	};
 
-	static char* unit_mode_str_array[] =
+	static const char* unit_mode_str_array[] =
 	{
 		"",
 		"Oversee",
@@ -1611,7 +1611,7 @@ static void disp_debug_info(Unit* unitPtr, int dispY1, int refreshFlag)
 		"In Harbor",
 	};
 
-	static char* cur_action_str_array[] =
+	static const char* cur_action_str_array[] =
 	{
 		"Idle",
 		"Ready to move",
