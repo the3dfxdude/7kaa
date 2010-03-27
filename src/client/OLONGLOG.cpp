@@ -22,6 +22,7 @@
 
 #include <OLONGLOG.h>
 #include <stdio.h>
+#include <string.h>
 
 
 LongLog::LongLog(char suffix)
