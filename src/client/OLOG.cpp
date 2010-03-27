@@ -26,6 +26,7 @@
 #include <OLOG.h>
 #include <stdio.h>
 #include <OFILE.h>
+#include <windows.h> // OutputDebugString
 
 
 // -------- begin of function Log::Log ----------//
