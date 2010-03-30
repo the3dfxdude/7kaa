@@ -1077,19 +1077,8 @@ void Sys::auto_save()
             sp_write_seed();
             sp_close_seed_file();
 
-            //if(info.game_date-info.game_start_date<=365)
-            if(0)
-            {
-               sp_open_seed_file("nseed.rs");
-               debug_seed_status_flag = DEBUG_SYN_AUTO_SAVE; // continue recording
-            }
-            else
-            {
-               debug_seed_status_flag = NO_DEBUG_SYN;
-               //sp_load_seed_file();
-               //SendMessage(main_hwnd, WM_KEYDOWN, 'L', 0);
-               mouse.add_key_event(DIK_BACKSLASH, m.get_time()); // load file for comparison
-            }
+            debug_seed_status_flag = NO_DEBUG_SYN;
+            mouse.add_key_event(DIK_BACKSLASH, m.get_time()); // load file for comparison
          }
 
          //debug_seed_status_flag = 2;

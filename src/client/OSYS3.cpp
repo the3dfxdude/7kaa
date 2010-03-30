@@ -32,15 +32,6 @@ static int	random_seed_backup_table_data_size;
 static char file_opened_flag = 0;
 static long	match_seed;
 
-//-------- Begin of function Sys::sp_open_seed_file --------//
-void Sys::sp_open_seed_file(const char *filename)
-{
-	//seedCompareFile.file_open(filename);
-	seedCompareFile.file_append(filename);
-	file_opened_flag = 1;
-}
-//--------- End of function Sys::sp_open_seed_file ---------//
-
 
 //-------- Begin of function Sys::sp_create_seed_file --------//
 void Sys::sp_create_seed_file(char *filename)

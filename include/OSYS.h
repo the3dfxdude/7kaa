@@ -187,7 +187,6 @@ public:
 	void		mp_clear_request_save();
 
 	//-------------- single player syn. game testing functions --------------//
-	void		sp_open_seed_file(const char *filename);
 	void		sp_create_seed_file(char *filename);
 	void		sp_close_seed_file();
 	void		sp_load_seed_file();
