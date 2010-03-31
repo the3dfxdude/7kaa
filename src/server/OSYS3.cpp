@@ -23,6 +23,7 @@
 #include <OMISC.h>
 #include <OMOUSE.h>
 #include <OMOUSE2.h>
+#include <stdio.h>
 
 #define	MAX_SEED_TABLE_SIZE	10 * 4000
 static long	random_seed_backup_table[MAX_SEED_TABLE_SIZE];
@@ -150,7 +151,7 @@ void Sys::sp_write_seed()
 	}
 	else
 	{
-		seedCompareFile.file_seek(0L, FILE_END);
+		seedCompareFile.file_seek(0L, SEEK_END);
 		for(int i=0; i<random_seed_backup_pos; i++)
 			seedCompareFile.file_put_long(random_seed_backup_table[i]);
 	}
