@@ -89,7 +89,6 @@ ODYNARRB.cpp
 OEFFECT.cpp
 OERROR.cpp
 OEXPMASK.cpp
-OFILE.cpp
 OFILETXT.cpp
 OFIRM.cpp
 OFIRM2.cpp

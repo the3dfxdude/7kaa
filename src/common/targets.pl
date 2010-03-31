@@ -16,6 +16,7 @@ if (defined($wine_prefix)) {
 
 ## compile ##
 @targets = qw(
+OFILE.cpp
 OMEM.cpp
 ORESDB.cpp
 );
