@@ -26,6 +26,7 @@
 #include <ALL.h>
 #include <OSYS.h>
 #include <ORESX.h>
+#include <stdio.h>
 
 
 //--------- Format of RES file ------------//
@@ -275,7 +276,7 @@ char* ResourceIdx::get_data(int indexId)
 	{
 		if( user_start_read_pos > 0 )
 		{
-			file_seek(user_start_read_pos,FILE_CURRENT);			// skip the width and height info
+			file_seek(user_start_read_pos, SEEK_CUR);			// skip the width and height info
 			dataSize -= user_start_read_pos;
 		}
 
