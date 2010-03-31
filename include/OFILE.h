@@ -28,9 +28,8 @@
 #include <ALL.h>
 #endif
 
-#ifndef __WINDOWS_
-#include <windows.h>
-#endif
+
+#include <stdio.h>
 
 //--------------------------------------//
 
@@ -39,13 +38,13 @@ class File
 public:
    char file_name[MAX_PATH+1];
 
-   HANDLE file_handle;
+   FILE* file_handle;
    int    handle_error;
 
    char   allow_vary_size;    // allow the writing size and the read size to be different
 
 public:
-   File()     { file_handle=INVALID_HANDLE_VALUE; }
+   File()     { file_handle = 0; }
    ~File();
 
    int   file_open(const char*, int=1, int=0);

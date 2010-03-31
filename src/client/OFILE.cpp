@@ -51,7 +51,7 @@ int File::file_open(const char* fileName, int handleError, int allowVarySize)
 	if( strlen(fileName) > MAX_PATH )
       err.run( "File : file name is too long." );
 
-   if( file_handle != INVALID_HANDLE_VALUE )
+   if( file_handle != 0 )
       file_close();
 
    strcpy( file_name, fileName );
@@ -67,15 +67,20 @@ int File::file_open(const char* fileName, int handleError, int allowVarySize)
       strcpy( filePath, path_array[i] );
       strcat( filePath, fileName );
 
-      file_handle = CreateFile(filePath,
+      /*
+       * This replaces
+       *
+       * file_handle = CreateFile(filePath,
 			   GENERIC_READ,
 			   FILE_SHARE_READ,
 			   (LPSECURITY_ATTRIBUTES) NULL,
 			   OPEN_EXISTING,
 			   FILE_ATTRIBUTE_NORMAL,
 			   (HANDLE) NULL);
+      */
+      file_handle = fopen(filePath, "rb");
 
-      if( file_handle != INVALID_HANDLE_VALUE)
+      if( file_handle != 0)
 			return TRUE;
    }
 
@@ -113,15 +118,20 @@ int File::file_create(const char* fileName, int handleError, int allowVarySize)
 
    // cannot use creat() because it can't specify Binary file type
 
-   file_handle = CreateFile(fileName,
+   file_handle = fopen(fileName, "wb+");
+   /* 
+    * This replaces
+    *
+    file_handle = CreateFile(fileName,
 			   GENERIC_WRITE,
 			   0,
 			   (LPSECURITY_ATTRIBUTES) NULL,
 			   CREATE_ALWAYS,
 			   FILE_ATTRIBUTE_NORMAL,
 			   (HANDLE) NULL);
+   */
 
-   if( file_handle == INVALID_HANDLE_VALUE)
+   if( file_handle == 0)
 		err.run( "Error creating file %s", file_name );
 
    return TRUE;
@@ -149,7 +159,7 @@ int File::file_append(const char* fileName, int handleError, int allowVarySize)
 	if( strlen(fileName) > MAX_PATH )
       err.run( "File : file name is too long." );
 
-   if( file_handle != INVALID_HANDLE_VALUE )
+   if( file_handle != 0 )
       file_close();
 
    strcpy( file_name, fileName );
@@ -165,15 +175,20 @@ int File::file_append(const char* fileName, int handleError, int allowVarySize)
       strcpy( filePath, path_array[i] );
       strcat( filePath, fileName );
 
-      file_handle = CreateFile(filePath,
+      file_handle = fopen(filePath, "ab+");
+      /*         
+       * This replaces
+       *
+       file_handle = CreateFile(filePath,
 			   GENERIC_WRITE,
 			   FILE_SHARE_WRITE,
 			   (LPSECURITY_ATTRIBUTES) NULL,
 			   OPEN_EXISTING,
 			   FILE_ATTRIBUTE_NORMAL,
 			   (HANDLE) NULL);
+      */
 
-      if( file_handle != INVALID_HANDLE_VALUE)
+      if( file_handle != 0)
 			return TRUE;
    }
 
@@ -188,10 +203,10 @@ int File::file_append(const char* fileName, int handleError, int allowVarySize)
 //
 void File::file_close()
 {
-   if( file_handle != INVALID_HANDLE_VALUE )
+   if( file_handle != 0 )
    {
-      CloseHandle(file_handle);
-      file_handle = INVALID_HANDLE_VALUE;
+      fclose(file_handle);
+      file_handle = 0;
    }
 }
 //---------- End of function File::file_close ----------//
@@ -217,7 +232,7 @@ File::~File()
 //
 int File::file_write(void* dataBuf, unsigned dataSize)
 {
-   err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+   err_when( file_handle == 0 );       // not initialized
 
    if( allow_vary_size )        // allow the writing size and the read size to be different
    {
@@ -227,14 +242,18 @@ int File::file_write(void* dataBuf, unsigned dataSize)
          file_put_unsigned_short( dataSize );
    }
 
-	DWORD actualWritten;	
 
-   int rc = WriteFile( file_handle, dataBuf, dataSize, &actualWritten, NULL); 
+   fwrite(dataBuf, 1, dataSize, file_handle);
+  /*    
+   * This replaces
+   *
+   int rc = WriteFile(  file_handle, dataBuf, dataSize, &actualWritten, NULL); 
+   */
 		
-   if( !rc && handle_error )
+   if( ferror(file_handle) && handle_error )
       err.run( "Error writing file %s", file_name );
 
-   return rc;
+   return ferror(file_handle) == 0? 1 : 0;
 }
 //---------- End of function File::file_write ----------//
 
@@ -252,7 +271,7 @@ int File::file_read(void* dataBuf, unsigned dataSize)
 {
 	#define MAX_READ_SIZE 0xFFF0
 
-	err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+	err_when( file_handle == 0 );       // not initialized
 
 	int curPos=file_pos();
 
@@ -268,10 +287,14 @@ int File::file_read(void* dataBuf, unsigned dataSize)
          readSize = min(dataSize, writtenSize);  // the read size is the minimum of the written size and the supposed read size
    }
 
-	DWORD actualRead;
 
+   fread(dataBuf, 1, dataSize, file_handle);
+   /*
+    * This replaces
+    *
    int rc=ReadFile( file_handle, dataBuf, dataSize, &actualRead, NULL);
-		
+    */		
+
    //-------- if the data size has been reduced ----------//
 
    if( readSize < writtenSize )
@@ -284,7 +307,7 @@ int File::file_read(void* dataBuf, unsigned dataSize)
 
    //----- if reading error, popup box and ask for retry -----//
 
-	if( !rc && handle_error )
+	if( ferror(file_handle) && handle_error )
 	{
 		char msgStr[100];
 
@@ -297,7 +320,7 @@ int File::file_read(void* dataBuf, unsigned dataSize)
 		}
 	}
 
-	return rc;
+	return ferror(file_handle) == 0? 1 : 0;
 }
 //---------- End of function File::file_read ----------//
 
@@ -312,11 +335,16 @@ int File::file_read(void* dataBuf, unsigned dataSize)
 //
 int File::file_put_short(short value)
 {
-   err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+   err_when( file_handle == 0 );       // not initialized
 
-	DWORD actualWritten;	
+   /*
+    * This replaces
+    *
+   WriteFile( file_handle, &value, sizeof(short), &actualWritten, NULL ) ;
+    */
+    fwrite( &value, 1, sizeof(short), file_handle);
 
-	if( WriteFile( file_handle, &value, sizeof(short), &actualWritten, NULL ) )
+	if( !ferror(file_handle) )
 		return TRUE;
 	else
 	{
@@ -337,12 +365,18 @@ int File::file_put_short(short value)
 //
 short File::file_get_short()
 {
-   err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+   err_when( file_handle == 0 );       // not initialized
 
-	DWORD actualRead;	
 	short value;
 
-	if( ReadFile( file_handle, &value, sizeof(short), &actualRead, NULL ) )
+    /*
+     * This replaces
+     *
+   ReadFile( file_handle, &value, sizeof(short), &actualRead, NULL );
+     */
+    fread(&value, 1, sizeof(short), file_handle);
+
+	if(!ferror(file_handle))
 		return value;
 	else
 	{
@@ -365,11 +399,16 @@ short File::file_get_short()
 //
 int File::file_put_unsigned_short(unsigned short value)
 {
-   err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+   err_when( file_handle == 0 );       // not initialized
 
-	DWORD actualWritten;	
+   /*
+    * This replaces
+    *
+ WriteFile( file_handle, &value, sizeof(unsigned short), &actualWritten, NULL )
+    */
+   fwrite(&value, 1, sizeof(unsigned short), file_handle);
 
-	if( WriteFile( file_handle, &value, sizeof(unsigned short), &actualWritten, NULL ) )
+	if(!ferror(file_handle))
 		return TRUE;
 	else
 	{
@@ -390,12 +429,17 @@ int File::file_put_unsigned_short(unsigned short value)
 //
 unsigned short File::file_get_unsigned_short()
 {
-   err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+   err_when( file_handle == 0 );       // not initialized
 
-	DWORD actualRead;	
 	unsigned short value;
+    /*   
+     * This replaces
+     *
+ ReadFile( file_handle, &value, sizeof(unsigned short), &actualRead, NULL ) 
+     */
+    fread(&value, 1, sizeof(unsigned short), file_handle);
 
-	if( ReadFile( file_handle, &value, sizeof(unsigned short), &actualRead, NULL ) )
+	if(!ferror(file_handle))
 		return value;
 	else
 	{
@@ -418,11 +462,16 @@ unsigned short File::file_get_unsigned_short()
 //
 int File::file_put_long(long value)
 {
-   err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+   err_when( file_handle == 0 );       // not initialized
 
-	DWORD actualWritten;	
+   /*
+    * This replaces
+    *
+  WriteFile( file_handle, &value, sizeof(long), &actualWritten, NULL ) 
+    */
+   fwrite(&value, 1, sizeof(long), file_handle);
 
-	if( WriteFile( file_handle, &value, sizeof(long), &actualWritten, NULL ) )
+   if(!ferror(file_handle))
 		return TRUE;
 	else
 	{
@@ -443,12 +492,18 @@ int File::file_put_long(long value)
 //
 long File::file_get_long()
 {
-   err_when( file_handle == INVALID_HANDLE_VALUE );       // not initialized
+   err_when( file_handle == 0 );       // not initialized
 
-	DWORD actualRead;	
 	long  value;
 
-	if( ReadFile( file_handle, &value, sizeof(long), &actualRead, NULL ) )
+   /*
+    * This replaces
+    *
+   ReadFile( file_handle, &value, sizeof(long), &actualRead, NULL ) 
+    */
+    fread(&value, 1, sizeof(long), file_handle);
+
+    if(!ferror(file_handle))
 		return value;
 	else
 	{
@@ -472,10 +527,24 @@ long File::file_get_long()
 //
 long File::file_seek(long offset, int whence)
 {
-	if( whence == -1 )
-      whence = FILE_BEGIN;
+	switch(whence){
+        case FILE_BEGIN:
+            whence = SEEK_SET;
+            break;
+        case FILE_CURRENT:
+            whence = SEEK_CUR;
+            break;
+        case FILE_END:
+            whence = SEEK_END;
+            break;
+        default:
+            whence = SEEK_SET;
+            break;
+    }
 
-	return SetFilePointer( file_handle, offset, NULL, whence );
+    fseek(file_handle, offset, whence);
+
+	return ftell(file_handle);
 }
 //------------ End of function File::file_seek ----------//
 
@@ -488,7 +557,7 @@ long File::file_seek(long offset, int whence)
 //
 long File::file_pos()
 {
-   return SetFilePointer( file_handle, 0, NULL, FILE_CURRENT );	 
+   return ftell(file_handle);
 }
 
 //------------ End of function File::file_pos ----------//
@@ -498,7 +567,13 @@ long File::file_pos()
 
 long File::file_size()
 {
-	return GetFileSize(file_handle, NULL);
+    long actual = ftell(file_handle);
+    fseek(file_handle, 0, SEEK_END);
+
+    long size = ftell(file_handle);
+
+    fseek(file_handle, actual, SEEK_SET);
+	return size;
 }
 //------------ End of function File::file_size ----------//
 
