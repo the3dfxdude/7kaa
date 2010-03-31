@@ -21,72 +21,57 @@
 //Filename    : OFILE.CPP
 //Description : Object File
 
-#include <windows.h>
 #include <stdio.h>
-#include <OBOX.h>
-#include <ALL.h>
+#include <stdint.h>
+#include <ctype.h>
+#include <string.h>
+#include <dbglog.h>
 #include <OFILE.h>
 
-//--------- Define static variables -----------//
-
-static const char *path_array[] = { "" };	// multiple search path
+DBGLOG_DEFAULT_CHANNEL(FileIO);
 
 //-------- Begin of function File::file_open ----------//
 //
 // Open an existing file for reading
-// If the file is not found, call err.run()
 //
 // <char*> fileName      = name of the file
-// [int]   handleError   = handle error
-//                         ( if 1, when error happen, err.run() will be called
-//                           immediately )
-//                         ( default : 1 )
-// [int]   allowVarySize = allow the writing size and the read size to be different
-//                         ( default : 0 )
+// [int]   handleError   = Treat RW operation failures as fatal or not
+//                         (default true, 1). Original code maked the game 
+//                         quit immediately on fatal errors; now this only
+//                         affects error channel being used to output error
+//                         message (ERR or MSG)
+// [int]   fileType = FLAT (0, default) or STRUCTURED (1). Structured file stores 
+//                    its data as a records, where every record has the
+//                    following format: [entry size: uint16; entry data: bytes]
+//                    However this behaviour is used with read/write methods only;
+//                    put/get methods (e.g. put_short) still write raw data.
 //
 // return : 1-success, 0-fail
 //
-int File::file_open(const char* fileName, int handleError, int allowVarySize)
+int File::file_open(const char* fileName, int handleError, int fileType)
 {
-	if( strlen(fileName) > MAX_PATH )
-      err.run( "File : file name is too long." );
+	if (strlen(fileName) > max_path)
+		ERR("[File::file_open] file name is too long: %s\n", fileName);
 
-   if( file_handle != 0 )
-      file_close();
+	if (file_handle != NULL)
+		file_close();
 
-   strcpy( file_name, fileName );
+	strcpy(file_name, fileName);
+	for (int i = 0; i < strlen(fileName); i++)
+	{
+		file_name[i] = tolower(file_name[i]);
+		if (file_name[i] == '\\') file_name[i] = '/';
+	}
 
-   handle_error    = handleError;
-   allow_vary_size = allowVarySize;
+	handle_error = handleError;
+	file_type = (FileType)fileType;
 
-   //--------- search all path to open the file ------//
+	file_handle = fopen(file_name, "rb");
+	if (file_handle != NULL)
+		return 1;
 
-   for( int i=0 ; i<sizeof(path_array)/sizeof(path_array[0]) ; i++ )
-   {
-      char    filePath[MAX_PATH];
-      strcpy( filePath, path_array[i] );
-      strcat( filePath, fileName );
-
-      /*
-       * This replaces
-       *
-       * file_handle = CreateFile(filePath,
-			   GENERIC_READ,
-			   FILE_SHARE_READ,
-			   (LPSECURITY_ATTRIBUTES) NULL,
-			   OPEN_EXISTING,
-			   FILE_ATTRIBUTE_NORMAL,
-			   (HANDLE) NULL);
-      */
-      file_handle = fopen(filePath, "rb");
-
-      if( file_handle != 0)
-			return TRUE;
-   }
-
-	err.run( "Error opening file %s.", file_name );
-
-   return FALSE;
+	ERR("[File::file_open] error opening file: %s\n", file_name);
+	return 0;
 }
 //---------- End of function File::file_open ----------//
 
@@ -96,118 +81,53 @@ int File::file_open(const char* fileName, int handleError, int allowVarySize)
 // Create a new file for writing (reading is also permitted)
 //
 // <char*> fileName      = name of the file
-// [int]   handleError   = handle error
-//                         ( if 1, when error happen, err.run() will be called
-//                           immediately )
-//                         ( default : 1 )
-// [int]   allowVarySize = allow the writing size and the read size to be different
-//                         ( default : 0 )
-//
+// [int]   handleError   = Treat RW operation failures as fatal or not
+//                         (default true, 1). Original code maked the game 
+//                         quit immediately on fatal errors; now this only
+//                         affects error channel being used to output error
+//                         message (ERR or MSG)
+// [int]   fileType = FLAT (0, default) or STRUCTURED (1). Structured file stores 
+//                    its data as a records, where every record has the
+//                    following format: [entry size: uint16; entry data: bytes]
+//                    However this behaviour is used with read/write methods only;
+//                    put/get methods (e.g. put_short) still write raw data.
 //
 // return : 1-success, 0-fail
 //
-int File::file_create(const char* fileName, int handleError, int allowVarySize)
+int File::file_create(const char* fileName, int handleError, int fileType)
 {
-   if( strlen(fileName) > MAX_PATH )
-      err.run( "File : file name is too long." );
+	if (strlen(fileName) > max_path)
+		ERR("[File::file_create] file name is too long: %s\n", fileName);
 
-   strcpy( file_name, fileName );
+	strcpy(file_name, fileName);
+	for (int i = 0; i < strlen(fileName); i++)
+	{
+		file_name[i] = tolower(file_name[i]);
+		if (file_name[i] == '\\') file_name[i] = '/';
+	}
 
-   handle_error    = handleError;
-   allow_vary_size = allowVarySize;
+	handle_error = handleError;
+	file_type = (FileType)fileType;
 
-   // cannot use creat() because it can't specify Binary file type
+	file_handle = fopen(fileName, "wb+");
+	if (file_handle != NULL)
+		return 1;
 
-   file_handle = fopen(fileName, "wb+");
-   /* 
-    * This replaces
-    *
-    file_handle = CreateFile(fileName,
-			   GENERIC_WRITE,
-			   0,
-			   (LPSECURITY_ATTRIBUTES) NULL,
-			   CREATE_ALWAYS,
-			   FILE_ATTRIBUTE_NORMAL,
-			   (HANDLE) NULL);
-   */
-
-   if( file_handle == 0)
-		err.run( "Error creating file %s", file_name );
-
-   return TRUE;
+	ERR("[File::file_create] error creating file: %s\n", file_name);
+	return 0;
 }
 //---------- End of function File::file_create ----------//
-
-//### begin alex 24/7 ###//
-//-------- Begin of function File::file_append ----------//
-//
-// Open an existing file for reading
-// If the file is not found, call err.run()
-//
-// <char*> fileName      = name of the file
-// [int]   handleError   = handle error
-//                         ( if 1, when error happen, err.run() will be called
-//                           immediately )
-//                         ( default : 1 )
-// [int]   allowVarySize = allow the writing size and the read size to be different
-//                         ( default : 0 )
-//
-// return : 1-success, 0-fail
-//
-int File::file_append(const char* fileName, int handleError, int allowVarySize)
-{
-	if( strlen(fileName) > MAX_PATH )
-      err.run( "File : file name is too long." );
-
-   if( file_handle != 0 )
-      file_close();
-
-   strcpy( file_name, fileName );
-
-   handle_error    = handleError;
-   allow_vary_size = allowVarySize;
-
-   //--------- search all path to open the file ------//
-
-   for( int i=0 ; i<sizeof(path_array)/sizeof(path_array[0]) ; i++ )
-   {
-      char    filePath[MAX_PATH];
-      strcpy( filePath, path_array[i] );
-      strcat( filePath, fileName );
-
-      file_handle = fopen(filePath, "ab+");
-      /*         
-       * This replaces
-       *
-       file_handle = CreateFile(filePath,
-			   GENERIC_WRITE,
-			   FILE_SHARE_WRITE,
-			   (LPSECURITY_ATTRIBUTES) NULL,
-			   OPEN_EXISTING,
-			   FILE_ATTRIBUTE_NORMAL,
-			   (HANDLE) NULL);
-      */
-
-      if( file_handle != 0)
-			return TRUE;
-   }
-
-	err.run( "Error opening file %s.", file_name );
-
-   return FALSE;
-}
-//---------- End of function File::file_append ----------//
-//#### end alex 24/7 ####//
 
 //-------- Begin of function File::file_close ----------//
 //
 void File::file_close()
 {
-   if( file_handle != 0 )
-   {
-      fclose(file_handle);
-      file_handle = 0;
-   }
+	if (file_handle != NULL)
+	{
+		file_name[0] = '\0';
+		fclose(file_handle);
+		file_handle = NULL;
+	}
 }
 //---------- End of function File::file_close ----------//
 
@@ -216,7 +136,7 @@ void File::file_close()
 //
 File::~File()
 {
-   file_close();
+	file_close();
 }
 //---------- End of function File::~File ----------//
 
@@ -232,28 +152,41 @@ File::~File()
 //
 int File::file_write(void* dataBuf, unsigned dataSize)
 {
-   err_when( file_handle == 0 );       // not initialized
+	if (file_handle == NULL)
+	{
+		ERR("[File::file_write] trying to write to uninitialized file: %s\n", file_name);
+		return 0;
+	}
 
-   if( allow_vary_size )        // allow the writing size and the read size to be different
-   {
-      if( dataSize > 0xFFFF )
-         file_put_unsigned_short(0);    // if exceed the unsigned short limit, don't write it
-      else
-         file_put_unsigned_short( dataSize );
-   }
+	if (file_type == File::STRUCTURED)
+	{
+		// writing record size
+		if (dataSize > 0xFFFF)
+		{
+			// If 'dataSize' exceed the unsigned short limit, write 0
+			// instead of actual record size. Such a record may be
+			// correctly read though (if proper data size will be
+			// specified when calling successive file_read).
+			file_put_unsigned_short(0);
+			MSG("[File::file_write] warning: record size exceeds uint16 max value\n");
+		}
+		else
+		{
+			file_put_unsigned_short(dataSize);
+		}
+	}
 
+	fwrite(dataBuf, 1, dataSize, file_handle);
 
-   fwrite(dataBuf, 1, dataSize, file_handle);
-  /*    
-   * This replaces
-   *
-   int rc = WriteFile(  file_handle, dataBuf, dataSize, &actualWritten, NULL); 
-   */
-		
-   if( ferror(file_handle) && handle_error )
-      err.run( "Error writing file %s", file_name );
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			ERR("[File::file_write] error occured while writing file: %s\n", file_name);
+		else
+			MSG("[File::file_write] error occured while writing file: %s\n", file_name);
+	}
 
-   return ferror(file_handle) == 0? 1 : 0;
+	return ferror(file_handle) == 0 ? 1 : 0;
 }
 //---------- End of function File::file_write ----------//
 
@@ -269,311 +202,198 @@ int File::file_write(void* dataBuf, unsigned dataSize)
 //
 int File::file_read(void* dataBuf, unsigned dataSize)
 {
-	#define MAX_READ_SIZE 0xFFF0
-
-	err_when( file_handle == 0 );       // not initialized
-
-	int curPos=file_pos();
-
-  start_read:
-
-   unsigned readSize=dataSize, writtenSize=dataSize;
-
-   if( allow_vary_size )        // allow the writing size and the read size to be different
-   {
-      writtenSize = file_get_unsigned_short();
-
-      if( writtenSize )    // writtenSize==0, if the size > 0xFFFF
-         readSize = min(dataSize, writtenSize);  // the read size is the minimum of the written size and the supposed read size
-   }
-
-
-   fread(dataBuf, 1, dataSize, file_handle);
-   /*
-    * This replaces
-    *
-   int rc=ReadFile( file_handle, dataBuf, dataSize, &actualRead, NULL);
-    */		
-
-   //-------- if the data size has been reduced ----------//
-
-   if( readSize < writtenSize )
-      file_seek( writtenSize-readSize, FILE_CURRENT );
-
-   //---- if the data size has been increased, reset the unread area ---//
-
-   if( readSize < dataSize )
-      memset( (char*)dataBuf+readSize, 0, dataSize-readSize );
-
-   //----- if reading error, popup box and ask for retry -----//
-
-	if( ferror(file_handle) && handle_error )
+	if (file_handle == NULL)
 	{
-		char msgStr[100];
-
-		sprintf( msgStr, "Error reading file %s, Retry ?", file_name );
-
-		if( box.ask(msgStr) )
-		{
-			file_seek( curPos );
-			goto start_read;
-		}
+		ERR("[File::file_read] trying to read from uninitialized file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0? 1 : 0;
+	unsigned bytesToRead = dataSize, recordSize = dataSize;
+
+	if (file_type == File::STRUCTURED)
+	{
+		recordSize = file_get_unsigned_short();
+		if (recordSize && recordSize < dataSize) // recordSize==0, if the size > 0xFFFF
+			bytesToRead = recordSize; // the read size is the minimum of the record size and the supposed read size
+	}
+
+	fread(dataBuf, 1, bytesToRead, file_handle);
+
+	// In the case of file_type == File::STRUCTURED
+	// if the record was read partially,
+	// skip remaining bytes in record and seek to next one
+	if (bytesToRead < recordSize)
+		file_seek(recordSize - bytesToRead, SEEK_CUR);
+
+	// In the case of file_type == File::STRUCTURED
+	// if the actual record size was smaller than requested data size,
+	// fill the remaining bytes in buffer with 0
+	if (bytesToRead < dataSize)
+		memset((char*)dataBuf + bytesToRead, 0, dataSize - bytesToRead);
+
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			ERR("[File::file_read] error occured while reading file: %s\n", file_name);
+		else
+			MSG("[File::file_read] error occured while reading file: %s\n", file_name);
+	}
+
+	return ferror(file_handle) == 0 ? 1 : 0;
 }
 //---------- End of function File::file_read ----------//
 
 
-//-------- Begin of function File::file_put_short ----------//
-//
-// Put a short integer to the file
-//
-// <short int> = the short integer
-//
-// return : 1-success, 0-fail
-//
-int File::file_put_short(short value)
+int File::file_put_short(int16_t value)
 {
-   err_when( file_handle == 0 );       // not initialized
-
-   /*
-    * This replaces
-    *
-   WriteFile( file_handle, &value, sizeof(short), &actualWritten, NULL ) ;
-    */
-    fwrite( &value, 1, sizeof(short), file_handle);
-
-	if( !ferror(file_handle) )
-		return TRUE;
-	else
+	if (file_handle == NULL)
 	{
-		if( handle_error )
-			err.run( "Error writing file %s", file_name );
-
-		return FALSE;
-	}
-}
-//---------- End of function File::file_put_short ----------//
-
-
-//-------- Begin of function File::file_get_short ----------//
-//
-// Get a short integer from the file
-//
-// return : the short integer
-//
-short File::file_get_short()
-{
-   err_when( file_handle == 0 );       // not initialized
-
-	short value;
-
-    /*
-     * This replaces
-     *
-   ReadFile( file_handle, &value, sizeof(short), &actualRead, NULL );
-     */
-    fread(&value, 1, sizeof(short), file_handle);
-
-	if(!ferror(file_handle))
-		return value;
-	else
-	{
-		if( handle_error )
-			err.run( "Error reading file %s", file_name );
-
-		return FALSE;
-	}
-}
-//---------- End of function File::file_get_short ----------//
-
-
-//-------- Begin of function File::file_put_unsigned_short ----------//
-//
-// Put a unsigned short integer to the file
-//
-// <unsigned short> = the short integer
-//
-// return : 1-success, 0-fail
-//
-int File::file_put_unsigned_short(unsigned short value)
-{
-   err_when( file_handle == 0 );       // not initialized
-
-   /*
-    * This replaces
-    *
- WriteFile( file_handle, &value, sizeof(unsigned short), &actualWritten, NULL )
-    */
-   fwrite(&value, 1, sizeof(unsigned short), file_handle);
-
-	if(!ferror(file_handle))
-		return TRUE;
-	else
-	{
-		if( handle_error )
-			err.run( "Error writing file %s", file_name );
-
-		return FALSE;
-	}
-}
-//---------- End of function File::file_put_unsigned_short ----------//
-
-
-//-------- Begin of function File::file_get_unsigned_short ----------//
-//
-// Get a short integer from the file
-//
-// return : the short integer
-//
-unsigned short File::file_get_unsigned_short()
-{
-   err_when( file_handle == 0 );       // not initialized
-
-	unsigned short value;
-    /*   
-     * This replaces
-     *
- ReadFile( file_handle, &value, sizeof(unsigned short), &actualRead, NULL ) 
-     */
-    fread(&value, 1, sizeof(unsigned short), file_handle);
-
-	if(!ferror(file_handle))
-		return value;
-	else
-	{
-		if( handle_error )
-			err.run( "Error reading file %s", file_name );
-		
+		ERR("[File::file_put_short] trying to write to ininitialized file: %s\n", file_name);
 		return 0;
 	}
-}
-//---------- End of function File::file_get_unsigned_short ----------//
 
+	fwrite(&value, 1, sizeof(int16_t), file_handle);
 
-//-------- Begin of function File::file_put_long ----------//
-//
-// Put a long integer to the file
-//
-// <long int> = the long integer
-//
-// return : 1-success, 0-fail
-//
-int File::file_put_long(long value)
-{
-   err_when( file_handle == 0 );       // not initialized
-
-   /*
-    * This replaces
-    *
-  WriteFile( file_handle, &value, sizeof(long), &actualWritten, NULL ) 
-    */
-   fwrite(&value, 1, sizeof(long), file_handle);
-
-   if(!ferror(file_handle))
-		return TRUE;
-	else
+	if (ferror(file_handle))
 	{
-		if( handle_error )
-			err.run( "Error writing file %s", file_name );
-
-		return FALSE;
+		if (handle_error)
+			ERR("[File::file_put_short] error occured while writing file: %s\n", file_name);
+		else
+			MSG("[File::file_put_short] error occured while writing file: %s\n", file_name);
 	}
+
+	return ferror(file_handle) == 0 ? 1 : 0;
 }
-//---------- End of function File::file_put_long ----------//
 
-
-//-------- Begin of function File::file_get_long ----------//
-//
-// Get a long integer from the file
-//
-// return : the long integer
-//
-long File::file_get_long()
+int16_t File::file_get_short()
 {
-   err_when( file_handle == 0 );       // not initialized
-
-	long  value;
-
-   /*
-    * This replaces
-    *
-   ReadFile( file_handle, &value, sizeof(long), &actualRead, NULL ) 
-    */
-    fread(&value, 1, sizeof(long), file_handle);
-
-    if(!ferror(file_handle))
-		return value;
-	else
-	{
-		if( handle_error )
-			err.run( "Error reading file %s", file_name );
-
-		return FALSE;
-	}
-}
-//---------- End of function File::file_get_long ----------//
-
-
-//---------- Start of function File::file_seek ---------//
-//
-// <long> offset = seek offset
-// [int]  whence = FILE_BEGIN, FILE_CURRENT, FILE_END
-//                 (default : FILE_BEGIN)
-//
-// return : the offset of the pointer's new position, measured in
-//          bytes from the file beginning.
-//
-long File::file_seek(long offset, int whence)
-{
-	switch(whence){
-        case FILE_BEGIN:
-            whence = SEEK_SET;
-            break;
-        case FILE_CURRENT:
-            whence = SEEK_CUR;
-            break;
-        case FILE_END:
-            whence = SEEK_END;
-            break;
-        default:
-            whence = SEEK_SET;
-            break;
+    if (file_handle == NULL)
+    {
+        ERR("[File::file_get_short] trying to read from uninitialized file: %s\n", file_name);
+        return 0;
     }
 
-    fseek(file_handle, offset, whence);
+    int16_t value;
+    fread(&value, 1, sizeof(int16_t), file_handle);
 
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			ERR("[File::file_get_short] error occured while reading file: %s\n", file_name);
+		else
+			MSG("[File::file_get_short] error occured while reading file: %s\n", file_name);
+	}
+
+	return ferror(file_handle) == 0 ? value : 0;
+}
+
+int File::file_put_unsigned_short(uint16_t value)
+{
+    if (file_handle == NULL)
+    {
+        ERR("[File::file_put_unsigned_short] trying to write to uninitialized file: %s\n", file_name);
+        return 0;
+    }
+
+    fwrite(&value, 1, sizeof(uint16_t), file_handle);
+
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			ERR("[File::file_put_unsigned_short] error occured while writing file: %s\n", file_name);
+		else
+			MSG("[File::file_put_unsigned_short] error occured while writing file: %s\n", file_name);
+	}
+
+	return ferror(file_handle) == 0 ? 1 : 0;
+}
+
+uint16_t File::file_get_unsigned_short()
+{
+    if (file_handle == NULL)
+    {
+        ERR("[File::file_get_unsigned_short] trying to read from uninitialized file: %s\n", file_name);
+        return 0;
+    }
+
+    uint16_t value;
+    fread(&value, 1, sizeof(uint16_t), file_handle);
+
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			ERR("[File::file_get_unsigned_short] error occured while reading file: %s\n", file_name);
+		else
+			MSG("[File::file_get_unsigned_short] error occured while reading file: %s\n", file_name);
+	}
+
+	return ferror(file_handle) == 0 ? value : 0;
+}
+
+int File::file_put_long(int32_t value)
+{
+    if (file_handle == NULL)
+    {
+        ERR("[File::file_put_long] trying to write to uninitialized file: %s\n", file_name);
+        return 0;
+    }
+
+    fwrite(&value, 1, sizeof(int32_t), file_handle);
+
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			ERR("[File::file_put_long] error occured while writing file: %s\n", file_name);
+		else
+			MSG("[File::file_put_long] error occured while writing file: %s\n", file_name);
+	}
+
+	return ferror(file_handle) == 0 ? 1 : 0;
+}
+
+int32_t File::file_get_long()
+{
+    if (file_handle == NULL)
+    {
+        ERR("[File::file_get_long] trying to read from uninitialized file: %s\n", file_name);
+        return 0;
+    }
+
+    int32_t value;
+    fread(&value, 1, sizeof(int32_t), file_handle);
+
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			ERR("[File::file_get_long] error occured while reading file: %s\n", file_name);
+		else
+			MSG("[File::file_get_long] error occured while reading file: %s\n", file_name);
+	}
+
+	return ferror(file_handle) == 0 ? value : 0;
+}
+
+//---------- Start of function File::file_seek ---------//
+// whence = SEEK_SET, SEEK_CUR, SEEK_END (default: SEEK_SET)
+// return : new offset from the file beginning.
+long File::file_seek(long offset, int whence)
+{
+	fseek(file_handle, offset, whence);
 	return ftell(file_handle);
 }
-//------------ End of function File::file_seek ----------//
 
-
-//---------- Start of function File::file_pos ---------//
-//
-// Get the position of current file pointer
-//
-// return : the position of current file pointer
-//
 long File::file_pos()
 {
-   return ftell(file_handle);
+	return ftell(file_handle);
 }
-
-//------------ End of function File::file_pos ----------//
-
-
-//---------- Start of function File::file_size ---------//
 
 long File::file_size()
 {
-    long actual = ftell(file_handle);
-    fseek(file_handle, 0, SEEK_END);
+	long actual = ftell(file_handle);
+	fseek(file_handle, 0, SEEK_END);
 
-    long size = ftell(file_handle);
+	long size = ftell(file_handle);
 
-    fseek(file_handle, actual, SEEK_SET);
+	fseek(file_handle, actual, SEEK_SET);
 	return size;
 }
-//------------ End of function File::file_size ----------//
-
