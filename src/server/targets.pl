@@ -82,7 +82,6 @@ ODIR.cpp
 ODYNARR.cpp
 ODYNARRB.cpp
 OEFFECT.cpp
-OERROR.cpp
 OEXPMASK.cpp
 OFILETXT.cpp
 OFIRM.cpp
