@@ -32,6 +32,10 @@
 #include <OVGA.h>
 #include <ALL.h>
 
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(fatal);
+
 //------------------------------------------------//
 //
 // There are several types of errors :
@@ -108,6 +112,7 @@ void Error::internal(char* errMsg,const char* fileName,int lineNum)
 
 	//-------- display error message -------//
 
+	ERR("%s\n", strBuf);
 	OutputDebugString( strBuf );
 
 	if( vga.is_inited() )
@@ -141,6 +146,7 @@ void Error::mem()
 
 	//-------- display error message -------//
 
+	ERR("%s\n", strBuf);
 	OutputDebugString( strBuf );
 
 	if( vga.is_inited() )
@@ -180,6 +186,7 @@ void Error::msg( const char *format, ... )
 
 	//-------- display error message -------//
 
+	ERR("%s\n", strBuf);
 	OutputDebugString( strBuf );
 
 	if( vga.is_inited() )
@@ -222,6 +229,7 @@ void Error::run( const char *format, ... )
 
 	//-------- display error message -------//
 
+	ERR("%s\n", strBuf);
 	OutputDebugString( strBuf );
 
 	if( vga.is_inited() )
