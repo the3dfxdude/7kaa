@@ -1,13 +1,12 @@
 my @obj_files;
 
-## build asm ##
-push (@obj_files, include_targets(qw( asm/targets.pl )));
-## end build asm ##
-
 ## defines ##
 @defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
+}
+if (defined($no_asm) && $no_asm) {
+  push (@defines, "NO_ASM");
 }
 ## end defines ##
 
@@ -62,7 +61,6 @@ OAI_TOWN.cpp
 OAI_TRAD.cpp
 OAI_UNIT.cpp
 OANLINE.cpp
-OAUDIO.cpp
 OBATTLE.cpp
 OBLOB.cpp
 OBOX.cpp
@@ -149,11 +147,7 @@ OLZW.cpp
 OMATRIX.cpp
 OMISC.cpp
 OMONSRES.cpp
-OMOUSE.cpp
 OMOUSECR.cpp
-OMOUSEFR.cpp
-OMOUSEGE.cpp
-OMOUSESP.cpp
 OMP_CRC.cpp
 OMUSIC.cpp
 ONATIONA.cpp
@@ -278,10 +272,6 @@ OU_MONS.cpp
 OU_VEHI.cpp
 OVBROWIF.cpp
 OVBROWSE.cpp
-OVGA.cpp
-OVGA2.cpp
-OVGABUF.cpp
-OVGABUF2.cpp
 OVGALOCK.cpp
 OVOLUME.cpp
 OVQUEUE.cpp

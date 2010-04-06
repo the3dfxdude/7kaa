@@ -1,6 +1,9 @@
 ## libraries to link ##
+@dxlibs = qw(
+  gdi32 ddraw dsound dinput
+);
 @libs = qw(
-  gdi32 ddraw msvcrt ole32 dinput dsound winmm
+  ole32 msvcrt winmm
 );
 ## end libraries to link ##
 
@@ -12,16 +15,25 @@ if (defined($dxsdk_path)) {
 
 ## statically shared objects ##
 @common_objs = include_targets('common/targets.pl');
+#@nogui = include_targets('gui/none/targets.pl');
+@win32gui = include_targets('gui/win32/targets.pl');
+@imgfun = include_targets('imgfun/targets.pl');
 ## end statically shared objects ##
 
 ## build game client ##
 @client_objs = include_targets('client/targets.pl');
-link_exe ('7kaa.exe', [@common_objs, @client_objs], \@libs, \@lib_dirs);
+link_exe ('7kaa.exe',
+          [@common_objs, @win32gui, @imgfun, @client_objs],
+          [@libs, @dxlibs],
+          \@lib_dirs);
 ## end build game client ##
 
 ## build game server ##
 if ($build_server) {
   @server_objs = include_targets('server/targets.pl');
-  link_exe ('7kaa-server.exe', [@common_objs, @server_objs], \@libs, \@lib_dirs);
+  link_exe ('7kaa-server.exe',
+            [@common_objs, @win32gui, @imgfun, @server_objs],
+            [@libs, @dxlibs],
+            \@lib_dirs);
 }
 ## end build game server ##
