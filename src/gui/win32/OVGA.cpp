@@ -315,6 +315,23 @@ BOOL Vga::load_pal(const char* fileName)
 }
 //----------- End of function Vga::load_pal ----------//
 
+//--------- Start of function Vga::refresh_palette ----------//
+//
+// When the system changes the palette, this function will set
+// the palette back to the correct entries.
+//
+void Vga::refresh_palette()
+{
+   // we can't restore if dd_pal is not initialized
+   if (!dd_pal) return;
+
+   // if we are temporarily overriding, then we should be okay
+   if (back_up_pal) return;
+
+   // restore palette
+   dd_pal->SetEntries(0, 0, 256, pal_entry_buf);
+}
+//----------- End of function Vga::refresh_palette ----------//
 
 //--------- Start of function Vga::init_color_table ----------//
 

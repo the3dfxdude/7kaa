@@ -94,6 +94,7 @@ public:
 
 		  void  init_surface(VgaBuf* surface, enum vga_surface_type t);
 		  BOOL   load_pal(const char* fileName);
+		  void  refresh_palette();
 		  void	init_gray_remap_table();
 
 		  void   activate_pal(VgaBuf*);

@@ -1609,14 +1609,8 @@ long Sys::main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
           // if we changed the palette, do nothing
           if ((HWND)wParam == hWnd) break;
 
-          // we can't restore if dd_pal is not initialized
-          if (!vga.dd_pal) break;
-
-          // if we are temporarily overriding, then we should be okay
-          if (vga.back_up_pal) break;
-
-          // restore palette
-          vga.dd_pal->SetEntries(0, 0, 256, vga.pal_entry_buf);
+          // set the current palette again
+          vga.refresh_palette();
           break;
 
        default:
