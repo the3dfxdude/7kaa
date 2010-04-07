@@ -52,6 +52,13 @@
 #define get_bitmap_width(bitmapPtr)  (*(short*)bitmapPtr)
 #define get_bitmap_height(bitmapPtr) (*((short*)bitmapPtr+1))
 
+//-------- Vga surface types ---------------//
+
+enum vga_surface_type {
+	VGA_FRONT,
+	VGA_BACK
+};
+
 //-------- Define class Vga ----------------//
 
 class ColorTable;
@@ -85,6 +92,7 @@ public:
 
 		  char	is_inited() 	{ return dd_obj!=NULL; }
 
+		  void  init_surface(VgaBuf* surface, enum vga_surface_type t);
 		  BOOL   load_pal(const char* fileName);
 		  void	init_gray_remap_table();
 
