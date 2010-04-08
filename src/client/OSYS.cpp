@@ -292,10 +292,6 @@ int Sys::init_win()
 LRESULT CALLBACK win_hook_proc(int nCode, WORD wParam, LONG lParam)
 {
    static int lastnCode;
-   int a=0;
-
-   if( vga_true_front.dd_buf && vga_true_front.dd_buf->IsLost() )
-      a = 1;
 
    lastnCode = nCode;
 
