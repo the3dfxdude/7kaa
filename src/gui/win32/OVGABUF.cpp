@@ -139,6 +139,9 @@ void VgaBuf::deinit()
 {
 	if( dd_buf )
 	{
+		if( buf_locked )
+			unlock_buf();
+
 		dd_buf->Release();
 		dd_buf = NULL;
 	}

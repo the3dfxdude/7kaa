@@ -366,20 +366,6 @@ int Sys::init_directx()
 //
 void Sys::deinit_directx()
 {
-   if( vga_back.dd_buf && vga_back.buf_locked )
-   {
-      DEBUG_LOG("Attempt vga_back.unlock_buf()");
-      vga_back.unlock_buf();
-      DEBUG_LOG("vga_back.unlock_buf() finish");
-   }
-
-   if( vga_front.dd_buf && vga_front.buf_locked )
-   {
-      DEBUG_LOG("Attempt vga_front.unlock_buf()");
-      vga_front.unlock_buf();
-      DEBUG_LOG("vga_front.unlock_buf() finish");
-   }
-
    DEBUG_LOG("Attempt vga_back.deinit()");
    vga_back.deinit();
    DEBUG_LOG("vga_back.deinit() finish");
