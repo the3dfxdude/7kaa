@@ -117,7 +117,7 @@ Mouse::~Mouse()
 
 //------------ Start of Mouse::init ------------//
 //
-void Mouse::init(LPDIRECTINPUT createdDirectInput)
+void Mouse::init()
 {
 	//-------- set starting position ---------//
 
@@ -144,15 +144,7 @@ void Mouse::init(LPDIRECTINPUT createdDirectInput)
 		err.run( "Failed installing direct mouse." );
 */
 	HRESULT hr;
-	if( createdDirectInput )
-	{
-		direct_input = createdDirectInput;
-		hr = direct_input->AddRef();
-	}
-	else
-	{
-		hr = DirectInputCreate(window.app_hinstance, DIRECTINPUT_VERSION, &direct_input, NULL);
-	}
+	hr = DirectInputCreate(window.app_hinstance, DIRECTINPUT_VERSION, &direct_input, NULL);
 	if(hr)
 		err.run( "Failed creating DirectInput");
 
