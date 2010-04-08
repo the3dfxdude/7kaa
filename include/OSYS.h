@@ -87,9 +87,6 @@ enum	{	NO_DEBUG_SYN = 0,
 class Sys
 {
 public:
-	HINSTANCE	app_hinstance;			// handle of the application running
-	HWND		main_hwnd;
-
 	char		game_version;			// VERSION_???
 
 	char     active_flag;    		// we are the active app.
@@ -177,9 +174,6 @@ public:
 	void 		disp_frame();
 	void 		blt_virtual_buf();
 
-	long		main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	void		handle_window_messages();
-
 	void		pause();
 	void		unpause();
 
@@ -211,7 +205,6 @@ public:
 	void		load_game();
 
 private:
-	int		init_win();
 	int		init_directx();
 	int 		init_objects();
 

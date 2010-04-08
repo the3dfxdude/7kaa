@@ -27,6 +27,7 @@ OVGA2.cpp
 OVGABUF.cpp
 OVGABUF2.cpp
 OVGALOCK.cpp
+syswin.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);

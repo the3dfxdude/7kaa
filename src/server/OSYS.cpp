@@ -49,6 +49,7 @@
 #include <OSPREUSE.h>
 #include <OSPY.h>
 #include <OSYS.h>
+#include <syswin.h>
 #ifdef USE_DPLAY
 #include <OREMOTE.h>
 #endif
@@ -85,12 +86,6 @@
 
 //----------- Declare static functions -----------//
 
-static long FAR PASCAL static_main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-//------- Define static functions -----------//
-
-LRESULT CALLBACK win_hook_proc(int nCode, WORD wParam, LONG lParam);
-
 static void test_lzw();
 
 static void locate_king_general(int rankId);
@@ -106,7 +101,6 @@ static int  get_mouse_loc_in_zoom_map(int &x, int &y);
 
 static unsigned long last_frame_time=0, last_resend_time=0;
 static char          remote_send_success_flag=1;
-static HHOOK         win_hook_handle=NULL;
 static char          scenario_cheat_flag=0;
 
 //----------- Begin of function Sys::Sys -----------//
@@ -141,8 +135,6 @@ int Sys::init()
 
    //------- initialize basic vars --------//
 
-   app_hinstance = (HINSTANCE)GetModuleHandle(NULL);
-
 	#ifdef BETA
 		debug_session       = m.is_file_exist("DEBUG.SYS");
 		testing_session     = m.is_file_exist("TESTING.SYS");
@@ -161,7 +153,7 @@ int Sys::init()
 
    //------- initialize more stuff ---------//
 
-   if( !init_win() )
+   if( !window.init() )
       return FALSE;
 
    if( !init_directx() )
@@ -199,108 +191,12 @@ void Sys::deinit()
       vga_front.unlock_buf();
 
    //-------------------------------------//
-/*
-   extern char low_video_memory_flag;
 
-   if( low_video_memory_flag )
-   {
-      ShowWindow(sys.main_hwnd, SW_MINIMIZE );
-
-      unsigned curTime = m.get_time();
-      while( m.get_time() < curTime + 4000 );
-   }
-*/
-   //---------------------------------------//
-
-   PostMessage(main_hwnd, WM_CLOSE, 0, 0);
+   window.deinit();
 
    init_flag = 0;
-
-   MSG msg;
-
-   while( GetMessage(&msg, NULL, 0, 0) )
-   {
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
-   }
 }
 //--------- End of function Sys::deinit ---------//
-
-
-//-------- Begin of function Sys::init_win --------//
-//
-int Sys::init_win()
-{
-   //--------- register window class --------//
-
-   WNDCLASS    wc;
-   BOOL        rc;
-
-   wc.style          = CS_DBLCLKS;
-   wc.lpfnWndProc    = static_main_win_proc;
-   wc.cbClsExtra     = 0;
-   wc.cbWndExtra     = 0;
-   wc.hInstance      = app_hinstance;
-   wc.hIcon          = LoadIcon( app_hinstance, MAKEINTATOM(IDI_ICON1));
-   wc.hCursor        = LoadCursor( NULL, IDC_ARROW );
-   wc.hbrBackground  = (HBRUSH)GetStockObject(BLACK_BRUSH);
-   wc.lpszMenuName   = NULL;
-   wc.lpszClassName  = WIN_CLASS_NAME;
-
-   rc = RegisterClass( &wc );
-
-   if( !rc )
-      return FALSE;
-
-   //------ install keyboard hook ---------//
-/*
-   win_hook_handle = SetWindowsHookEx(WH_CBT, (HOOKPROC) win_hook_proc, sys.app_hinstance, NULL);
-
-   if( !win_hook_handle )
-      err.run( "Failed installing keyboard hook." );
-*/
-   //--------- create window -----------//
-
-   main_hwnd = CreateWindowEx(
-       WS_EX_APPWINDOW | WS_EX_TOPMOST,
-       WIN_CLASS_NAME,
-       WIN_TITLE,
-       WS_VISIBLE |    // so we dont have to call ShowWindow
-       WS_POPUP,
-       0,
-       0,
-       GetSystemMetrics(SM_CXSCREEN),
-       GetSystemMetrics(SM_CYSCREEN),
-       NULL,
-       NULL,
-       app_hinstance,
-       NULL );
-
-   if( !main_hwnd )
-      return FALSE;
-
-   UpdateWindow( main_hwnd );
-   SetFocus( main_hwnd );
-
-   return TRUE;
-}
-//-------- End of function Sys::init_win --------//
-
-
-//------- Begin of function win_hook_proc --------//
-
-LRESULT CALLBACK win_hook_proc(int nCode, WORD wParam, LONG lParam)
-{
-   static int lastnCode;
-
-   lastnCode = nCode;
-
-   if( sys.init_flag && nCode == HCBT_SETFOCUS )
-      sys.pause();
-
-   return CallNextHookEx(win_hook_handle, nCode, wParam, lParam);
-}
-//-------- End of function win_hook_proc --------//
 
 
 //-------- Begin of function Sys::init_directx --------//
@@ -407,7 +303,7 @@ int Sys::init_objects()
    mouse_cursor.init();
    mouse_cursor.set_frame_border(ZOOM_X1,ZOOM_Y1,ZOOM_X2,ZOOM_Y2);
 
-   mouse.init(app_hinstance, main_hwnd, NULL);
+   mouse.init(NULL);
 
    //------- init resource class ----------//
 
@@ -767,14 +663,7 @@ void Sys::main_loop(int isLoadedGame)
 
    while( 1 )
    {
-      if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-      {
-         if (!GetMessage( &msg, NULL, 0, 0))
-             break;
-         TranslateMessage(&msg);
-         DispatchMessage(&msg);
-      }
-      else if ( !paused_flag && active_flag )
+      if ( !paused_flag && active_flag )
       {
          // #### begin Gilbert 31/10 ######//
          int rc = 0;
@@ -971,7 +860,7 @@ void Sys::main_loop(int isLoadedGame)
       }
       else
       {
-         WaitMessage();
+         window.handle_messages();
       }
    }
 
@@ -1102,7 +991,7 @@ void Sys::pause()
    if( paused_flag )
       return;
 
-   InvalidateRect(main_hwnd, NULL, TRUE);
+   window.flag_redraw();
 
    paused_flag = TRUE;
 }
@@ -1187,7 +1076,7 @@ void Sys::yield()
 
    isYielding=1;
 
-   handle_window_messages();
+   window.handle_messages();
 
    mouse.poll_event();
 
@@ -1543,94 +1432,6 @@ int Sys::should_next_frame()
    return 1;
 }
 //--------- End of function Sys::should_next_frame ---------//
-
-
-//-------- Begin of function Sys::main_win_proc --------//
-//
-long Sys::main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-   switch( message )
-   {
-      case WM_CREATE:
-         sys.main_hwnd = hWnd;
-         break;
-
-      case WM_ACTIVATEAPP:
-         // ####### begin Gilbert 3/11 #######//
-         // active_flag = (BOOL)wParam && GetForegroundWindow() == hWnd && !IsIconic(hWnd);
-         active_flag = (BOOL)wParam && !IsIconic(hWnd);
-         // ####### end Gilbert 3/11 #######//
-
-         //--------------------------------------------------------------//
-         // while we were not-active something bad happened that caused us
-         // to pause, like a surface restore failing or we got a palette
-         // changed, now that we are active try to fix things
-         //--------------------------------------------------------------//
-
-         if( active_flag )
-         {
-            unpause();
-            need_redraw_flag = 1;      // for Sys::disp_frame to redraw the screen
-         }
-         else
-            pause();
-         break;
-
-       case WM_DESTROY:
-          main_hwnd = NULL;
-          // game.deinit();          // end of game
-          deinit_directx();
-          PostQuitMessage( 0 );
-          break;
-
-       case WM_ERASEBKGND:
-          // do not erase the background
-          return 1;
-
-       case WM_PALETTECHANGED:
-          // if we changed the palette, do nothing
-          if ((HWND)wParam == hWnd) break;
-
-          // set the current palette again
-          vga.refresh_palette();
-          break;
-
-       default:
-          break;
-   }
-
-   return DefWindowProc(hWnd, message, wParam, lParam);
-}
-//--------- End of function Sys::main_win_proc ---------//
-
-
-//-------- Begin of function Sys::handle_window_messages --------//
-void Sys::handle_window_messages()
-{
-   static int lastTick;
-
-   int tick = GetTickCount();
-   if (lastTick == tick)
-      return;
-   lastTick = tick;
-
-   MSG msg;
-   while (PeekMessage(&msg, sys.main_hwnd, 0, 0, PM_NOREMOVE))
-   {
-      BOOL r;
-
-      r = GetMessage(&msg, sys.main_hwnd, 0, 0);
-      if (r == -1)
-      {
-         // not handled
-         return;
-      }
-
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
-   }
-}
-//-------- End of function Sys::handle_window_messages --------//
 
 
 //-------- Begin of function Sys::process_key --------//
@@ -2754,17 +2555,6 @@ void Sys::capture_screen()
    box.msg( str2 );
 }
 //--------- End of function Sys::capture_screen ---------//
-
-
-//--------- Begin of static function static_main_win_proc --------//
-//
-// Callback for all Windows messages
-//
-static long FAR PASCAL static_main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-   return sys.main_win_proc(hWnd, message, wParam, lParam);
-}
-//--------- End of static function static_main_win_proc --------//
 
 
 //-------- Begin of function Sys::load_game --------//

@@ -25,6 +25,7 @@
 
 #include <ALL.h>
 #include <OSYS.h>
+#include <syswin.h>
 #include <OVGA.h>
 #include <OPOWER.h>
 #include <OMOUSE.h>
@@ -116,7 +117,7 @@ Mouse::~Mouse()
 
 //------------ Start of Mouse::init ------------//
 //
-void Mouse::init(HINSTANCE hinst, HWND hwnd, LPDIRECTINPUT createdDirectInput)
+void Mouse::init(LPDIRECTINPUT createdDirectInput)
 {
 	//-------- set starting position ---------//
 
@@ -150,7 +151,7 @@ void Mouse::init(HINSTANCE hinst, HWND hwnd, LPDIRECTINPUT createdDirectInput)
 	}
 	else
 	{
-		hr = DirectInputCreate(hinst, DIRECTINPUT_VERSION, &direct_input, NULL);
+		hr = DirectInputCreate(window.app_hinstance, DIRECTINPUT_VERSION, &direct_input, NULL);
 	}
 	if(hr)
 		err.run( "Failed creating DirectInput");
@@ -166,7 +167,7 @@ void Mouse::init(HINSTANCE hinst, HWND hwnd, LPDIRECTINPUT createdDirectInput)
 		err.run( "Failed creating mouse interface from DirectInput");
 
 	// ------- set cooperative level --------//
-	hr = di_mouse_device->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+	hr = di_mouse_device->SetCooperativeLevel(window.main_hwnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
 
 	// ------- set data format ---------//
 	if(!hr)
@@ -213,7 +214,7 @@ void Mouse::init(HINSTANCE hinst, HWND hwnd, LPDIRECTINPUT createdDirectInput)
 		err.run( "Failed creating keyboard interface from DirectInput");
 
 	// ------- set cooperative level --------//
-	hr = di_keyb_device->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	hr = di_keyb_device->SetCooperativeLevel(window.main_hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 	// ------- set data format ---------//
 	if(!hr)

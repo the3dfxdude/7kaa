@@ -32,6 +32,7 @@
 #include <OCOLTBL.h>
 #include <OFILE.h>
 #include <OSYS.h>
+#include <syswin.h>
 #include <OVGA.h>
 #include <OLOG.h>
 // ##### begin Gilbert 16/9 #######//
@@ -115,7 +116,7 @@ BOOL Vga::init()
 
 			if( new_config_dat_flag )
 			{
-				MessageBox(sys.main_hwnd, warnStr,
+				MessageBox(window.main_hwnd, warnStr,
 					WIN_TITLE, MB_OK | MB_ICONWARNING | MB_SETFOREGROUND );
 			}
 
@@ -187,10 +188,10 @@ BOOL Vga::set_mode()
    // Convert it to a plain window
    //-----------------------------------------------------------//
 
-   dwStyle = GetWindowStyle(sys.main_hwnd);
+   dwStyle = GetWindowStyle(window.main_hwnd);
    dwStyle |= WS_POPUP;
    dwStyle &= ~(WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX);
-   SetWindowLong(sys.main_hwnd, GWL_STYLE, dwStyle);
+   SetWindowLong(window.main_hwnd, GWL_STYLE, dwStyle);
 
    //-----------------------------------------------------------//
    // grab exclusive mode if we are going to run as fullscreen
@@ -198,7 +199,7 @@ BOOL Vga::set_mode()
    //-----------------------------------------------------------//
 
    DEBUG_LOG("Attempt DirectDraw SetCooperativeLevel");
-   rc = dd_obj->SetCooperativeLevel( sys.main_hwnd,
+   rc = dd_obj->SetCooperativeLevel( window.main_hwnd,
                         DDSCL_EXCLUSIVE |
                         DDSCL_FULLSCREEN );
    DEBUG_LOG("DirectDraw SetCooperativeLevel finish");

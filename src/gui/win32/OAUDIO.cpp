@@ -34,6 +34,7 @@
 #include <limits.h>
 
 #include <OSYS.h>
+#include <syswin.h>
 #include <OBOX.h>
 #include <OAUDIO.h>
 #include <OVGALOCK.h>
@@ -229,7 +230,7 @@ int Audio::init_wav()
 
 	if( rc==DS_OK )		// Create succeeded
 	{
-		lp_direct_sound->SetCooperativeLevel(sys.main_hwnd, DSSCL_NORMAL);
+		lp_direct_sound->SetCooperativeLevel(window.main_hwnd, DSSCL_NORMAL);
 		wav_init_flag=1;
 	}
 

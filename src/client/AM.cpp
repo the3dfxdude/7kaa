@@ -106,6 +106,7 @@
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
 // ###### end Gilbert 23/10 #######//
+#include <syswin.h>
 
 //------- define game version constant --------//
 
@@ -140,6 +141,7 @@ MultiPlayerType	mp_obj;
 // MultiPlayerDP	mp_dp;
 // MultiPlayerIM	mp_im;
 #endif // USE_DPLAY
+SysWindow         window;
 Sys               sys;
 Translate         translate;        // constructor only memset()
 SeekPath          seek_path;
