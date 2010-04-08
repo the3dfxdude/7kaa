@@ -158,7 +158,7 @@ public:
 	Sys();
 	~Sys();
 
-	int		init(HINSTANCE hInstance);
+	int		init();
 	void		deinit();
 	void		deinit_directx();
 	void		deinit_objects();

@@ -301,7 +301,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		config.init();
    }
 
-   if( !sys.init(hInstance) )
+   if( !sys.init() )
       return FALSE;
 
    err.set_extra_handler( extra_error_handler );   // set extra error handler, save the game when a error happens

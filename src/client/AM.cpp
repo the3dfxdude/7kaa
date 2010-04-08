@@ -355,7 +355,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 #endif // ENABLE_INTRO_VIDEO
 
-   if( !sys.init(hInstance) )
+   if( !sys.init() )
       return FALSE;
 
    err.set_extra_handler( extra_error_handler );   // set extra error handler, save the game when a error happens
