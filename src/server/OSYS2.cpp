@@ -1077,18 +1077,7 @@ void Sys::blt_virtual_buf()
 		frontLocked=1;
 	}
 
-	RECT bltRect;
-
-	bltRect.left   = 0;
-	bltRect.top    = 0;
-	bltRect.right  = VGA_WIDTH-1;
-	bltRect.bottom = VGA_HEIGHT-1;
-
-	int rc = vga_true_front.dd_buf->BltFast(
-						 0, 0,
-						 vga_front.dd_buf,        // src surface
-						 &bltRect,               // src rect (all of it)
-						 DDBLTFAST_WAIT );
+	vga_true_front.blt_virtual_buf( &vga_front );
 
 	if( frontLocked )
 		vga_front.lock_buf();

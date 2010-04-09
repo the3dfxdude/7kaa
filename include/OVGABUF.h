@@ -263,6 +263,7 @@ public:
 
 	// --------- VgaBuf to VgaBuf copy ------------ //
 	void		blt_buf( VgaBuf *srcBuf, int x1, int y1 );
+	void 		blt_virtual_buf( VgaBuf *source );
 };
 
 extern VgaBuf vga_front, vga_back, vga_true_front;
