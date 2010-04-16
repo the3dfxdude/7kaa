@@ -5,9 +5,6 @@ my @defines;
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
-if (defined($no_asm) && $no_asm) {
-  push (@defines, "NO_ASM");
-}
 ## end compiler flags ##
 
 ## include paths ##
@@ -20,13 +17,7 @@ if (defined($wine_prefix)) {
 ## end include paths ##
 
 my @targets = qw(
-OMOUSE.cpp
-OVGA.cpp
-OVGA2.cpp
-OVGABUF.cpp
-OVGABUF2.cpp
-OVGALOCK.cpp
-syswin.cpp
+OAUDIO.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);

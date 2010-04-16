@@ -17,13 +17,14 @@ if (defined($dxsdk_path)) {
 @common_objs = include_targets('common/targets.pl');
 #@nogui = include_targets('gui/none/targets.pl');
 @win32gui = include_targets('gui/win32/targets.pl');
+@anygui = include_targets('gui/any/targets.pl');
 @imgfun = include_targets('imgfun/targets.pl');
 ## end statically shared objects ##
 
 ## build game client ##
 @client_objs = include_targets('client/targets.pl');
 link_exe ('7kaa.exe',
-          [@common_objs, @win32gui, @imgfun, @client_objs],
+          [@common_objs, @anygui, @win32gui, @imgfun, @client_objs],
           [@libs, @dxlibs],
           \@lib_dirs);
 ## end build game client ##
@@ -32,7 +33,7 @@ link_exe ('7kaa.exe',
 if ($build_server) {
   @server_objs = include_targets('server/targets.pl');
   link_exe ('7kaa-server.exe',
-            [@common_objs, @win32gui, @imgfun, @server_objs],
+            [@common_objs, @anygui, @win32gui, @imgfun, @server_objs],
             [@libs, @dxlibs],
             \@lib_dirs);
 }
