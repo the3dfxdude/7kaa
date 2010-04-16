@@ -31,10 +31,10 @@
 #include <stdio.h>
 #include <climits>
 
-#include <OSYS.h>
 #include <OBOX.h>
-#include <OAUDIO.h>
+#include <OSYS.h>
 #include <OVGALOCK.h>
+#include <audio-openal.h>
 
 #define LWAV_STREAM_BUFSIZ    0x1000
 #define LWAV_BANKS            4

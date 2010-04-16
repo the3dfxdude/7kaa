@@ -17,7 +17,7 @@ if (defined($wine_prefix)) {
 ## end include paths ##
 
 my @targets = qw(
-OAUDIO.cpp
+audio-openal.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);
