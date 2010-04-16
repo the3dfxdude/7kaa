@@ -5,6 +5,7 @@
 *.[oa]
 *~
 *.exe*
+*.swp
 opts.pl
 tags
 cscope.out
