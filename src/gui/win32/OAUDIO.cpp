@@ -1200,34 +1200,6 @@ int Audio::is_long_wav_playing(int serial)
 }
 //------- End of function Audio::is_long_wav_playing ------------//
 
-//--------------- Begin of Audio::vol_multiply --------------//
-long Audio::vol_multiply(int relVolume)
-{
-	long dsVolume = (wav_volume * relVolume) - 10000;
-	if( dsVolume > 0 )
-		dsVolume = 0;
-	else if( dsVolume < -10000 )
-		dsVolume = -10000;
-	return dsVolume;
-}
-//--------------- End of Audio::vol_multiply --------------//
-
-
-//--------------- Begin of Audio::vol_divide --------------//
-int Audio::vol_divide(long dsVolume)
-{
-	if( wav_volume == 0)
-		return 0;
-
-	int relVolume = (dsVolume + 10000) / wav_volume;
-	if( relVolume < 0)
-		relVolume = 0;
-	else if( relVolume > 100 )
-		relVolume = 100;
-	return relVolume;
-}
-//--------------- End of Audio::vol_divide --------------//
-
 
 //------- Begin of function Audio::play_loop_wav -------//
 //
@@ -2043,6 +2015,14 @@ void Audio::set_wav_volume(int wavVolume)
 	wav_volume = wavVolume;
 }
 //--------------- End of Audio::set_wav_volume --------------//
+
+
+//--------------- Begin of Audio::get_wav_volume --------------//
+int Audio::get_wav_volume() const
+{
+  return wav_volume;
+}
+//--------------- End of Audio::get_wav_volume --------------//
 
 
 //-------------- Begin of Audio::set_cd_volume -------------//

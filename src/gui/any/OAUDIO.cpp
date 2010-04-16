@@ -1,7 +1,8 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 1997-2010 Enlight Software Ltd. and others
+ * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010 Enlight Software Ltd. and others
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -242,18 +243,6 @@ int Audio::is_long_wav_playing(int serial)
 	return 0;
 }
 
-long Audio::vol_multiply(int relVolume)
-{
-	WARN_UNIMPLEMENTED("vol_multiply");
-	return 0;
-}
-
-int Audio::vol_divide(long dsVolume)
-{
-	WARN_UNIMPLEMENTED("vol_divide");
-	return 0;
-}
-
 // Play digitized wav from the wav resource file
 //
 // <char*>        wavName = name of the wav in the resource file
@@ -374,6 +363,11 @@ void Audio::set_wav_volume(int wavVolume)
 	WARN_UNIMPLEMENTED("set_wav_volume");
 }
 
+int Audio::get_wav_volume() const
+{
+  return 0;
+}
+
 // Set cd volume
 //
 // <int> cdVolume = cd volume, 0-100
@@ -382,13 +376,6 @@ void Audio::set_cd_volume(int cdVolume)
 {
 	WARN_UNIMPLEMENTED("set_cd_volume");
 
-}
-
-int Audio::assign_serial(int &s)
-{
-	if( s == INT_MAX)
-		return s = 1;
-	return ++s;
 }
 
 void Audio::volume_long_wav(int serial, DsVolume dsVolume)

@@ -40,8 +40,12 @@ DsVolume::DsVolume(AbsVolume &absVolume) : ds_vol(absVolume.abs_vol*100-10000), 
 }
 
 DsVolume::DsVolume(RelVolume &relVolume)
-	: ds_vol(audio.vol_multiply(relVolume.rel_vol)), ds_pan(relVolume.ds_pan)
 {
+	ds_vol = audio.get_wav_volume() * relVolume.rel_vol - 10000;
+	ds_vol = min(ds_vol, 0);
+	ds_vol = max(ds_vol, -10000);
+
+	ds_pan = relVolume.ds_pan;
 }
 
 
