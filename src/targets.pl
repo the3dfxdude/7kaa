@@ -3,7 +3,7 @@
   gdi32 ddraw dsound dinput
 );
 @libs = qw(
-  ole32 msvcrt winmm
+  ole32 msvcrt winmm openal
 );
 ## end libraries to link ##
 

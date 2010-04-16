@@ -25,6 +25,9 @@
 #ifndef AUDIO_OPENAL_H
 #define AUDIO_OPENAL_H
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
 #include <ORESX.h>
 #include <OVOLUME.h>
 
@@ -35,7 +38,7 @@ public:
 
 	char  mid_init_flag;   // whether the midi driver has been installed
 	char  wav_init_flag;   // whether the wave driver has been installed
-	char	cd_init_flag;
+	char  cd_init_flag;
 
 	char  mid_flag;        // flag determing whether MIDI music should be playing
 	char  wav_flag;		  // flag determing whether WAV sound effects should be playing
@@ -44,8 +47,8 @@ public:
 	char* mid_buf;
 	char* wav_buf;
 
-	int	mid_buf_size;
-	int	wav_buf_size;
+	int   mid_buf_size;
+	int   wav_buf_size;
 
 	ResourceIdx mid_res;
 	ResourceIdx wav_res;
@@ -54,23 +57,23 @@ public:
 	Audio();
 	~Audio();
 
-	int  	init();
-	void 	deinit();
+	int	init();
+	void	deinit();
 
-	void  yield();		// called by sys every some time
+	void	yield();		// called by sys every some time
 
-	int  	play_mid(char*);
+	int	play_mid(char*);
 
 	// functions on short wave
-	int  	play_wav(char*, DsVolume);
-	int  	play_wav(short resIdx, DsVolume);
+	int	play_wav(char*, DsVolume);
+	int	play_wav(short resIdx, DsVolume);
 	int	play_resided_wav(char *, DsVolume);
 	int	get_free_wav_ch();
 	int	stop_wav(int);
 	int	is_wav_playing(int);
 
 	// functions on long wave
-	int   play_long_wav(const char*, DsVolume);
+	int	play_long_wav(const char*, DsVolume);
 	int	stop_long_wav(int);
 	int	is_long_wav_playing(int);
 	void	volume_long_wav(int ch, DsVolume);
@@ -83,37 +86,39 @@ public:
 	DsVolume get_loop_wav_volume(int ch);
 	int	is_loop_wav_fading(int ch);
 
-	int   play_cd(int, int retVolume);
+	int	play_cd(int, int retVolume);
 
-	void 	stop_mid();
-	void 	stop_wav();             // and stop also long wav
+	void	stop_mid();
+	void	stop_wav();             // and stop also long wav
 	void	stop_cd();
 	void	stop_long_wav();
 
-	int  	is_mid_playing();
-	int  	is_wav_playing();
+	int	is_mid_playing();
+	int	is_wav_playing();
 	int	is_cd_playing();
 
-	void 	toggle_mid(int);
-	void 	toggle_wav(int);
-	void 	toggle_cd(int);
+	void	toggle_mid(int);
+	void	toggle_wav(int);
+	void	toggle_cd(int);
 
-	void 	set_mid_volume(int);
-	void 	set_wav_volume(int);    // 0 to 100
-	void 	set_cd_volume(int);
+	void	set_mid_volume(int);
+	void	set_wav_volume(int);    // 0 to 100
+	void	set_cd_volume(int);
 
 	int	get_wav_volume() const; // 0 to 100
 
 private:
-	int  	init_mid();
-	int  	init_wav();
+	ALCdevice  *al_device;
+	ALCcontext *al_context;
+
+private:
+	int	init_mid();
+	int	init_wav();
 	int	init_cd();
 
 	void	deinit_mid();
 	void	deinit_wav();
 	void	deinit_cd();
-
-	friend class DsVolume;
 };
 
 extern Audio audio;

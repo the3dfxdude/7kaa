@@ -28,8 +28,9 @@
 			__LINE__, func); \
 	} while (0)
 
-#include <stdio.h>
+#include <cassert>
 #include <climits>
+#include <stdio.h>
 
 #include <OBOX.h>
 #include <OSYS.h>
@@ -43,6 +44,8 @@
 
 Audio::Audio()
 {
+	this->al_context = NULL;
+	this->al_device  = NULL;
 }
 
 Audio::~Audio()
@@ -57,7 +60,8 @@ Audio::~Audio()
 //
 int Audio::init()
 {
-	WARN_UNIMPLEMENTED("init");
+	this->init_wav();
+
 	return 1;
 }
 
@@ -73,8 +77,47 @@ void Audio::deinit()
 //
 int Audio::init_wav()
 {
-	WARN_UNIMPLEMENTED("init_wav");
+	assert(!this->wav_init_flag);
+
+	this->al_device = alcOpenDevice(NULL);
+	if (this->al_device == NULL)
+	{
+		fprintf(stderr, __FILE__":%i: alcOpenDevice failed\n",
+			__LINE__);
+		goto err;
+	}
+
+	this->al_context = alcCreateContext(this->al_device, NULL);
+	if (this->al_context == NULL)
+	{
+		fprintf(stderr, __FILE__":%i: alcCreateContext failed: 0x%x\n",
+			__LINE__, alcGetError(this->al_device));
+		goto err;
+	}
+
+	this->wav_init_flag = 1;
+	return 1;
+
+err:
+	this->deinit_wav();
 	return 0;
+}
+
+void Audio::deinit_wav()
+{
+	this->wav_init_flag = 0;
+
+	if (this->al_context != NULL)
+	{
+		alcDestroyContext(this->al_context);
+		this->al_context = NULL;
+	}
+
+	if (this->al_device != NULL)
+	{
+		alcCloseDevice(this->al_device);
+		this->al_device = NULL;
+	}
 }
 
 // Initialize MIDI mid driver
@@ -85,7 +128,12 @@ int Audio::init_wav()
 int Audio::init_mid()
 {
 	WARN_UNIMPLEMENTED("init_mid");
-	return 1;
+	this->mid_init_flag = 0;
+	return this->mid_init_flag;
+}
+
+void Audio::deinit_mid()
+{
 }
 
 // Initialize the audio CD player
@@ -96,22 +144,12 @@ int Audio::init_mid()
 int Audio::init_cd()
 {
 	WARN_UNIMPLEMENTED("init_cd");
-	return 0;
+	this->cd_init_flag = 0;
+	return this->cd_init_flag;
 }
 
 void Audio::deinit_cd()
 {
-	WARN_UNIMPLEMENTED("deinit_cd");
-}
-
-void Audio::deinit_wav()
-{
-	WARN_UNIMPLEMENTED("deinit_wav");
-}
-
-void Audio::deinit_mid()
-{
-	WARN_UNIMPLEMENTED("deinit_mid");
 }
 
 // Play a midi mid from the mid resource file
@@ -282,7 +320,7 @@ int Audio::is_loop_wav_fading(int ch)
 void Audio::yield()
 {
 	VgaFrontLock vgaLock;
-	WARN_UNIMPLEMENTED("yield");
+	//WARN_UNIMPLEMENTED("yield");
 }
 
 void Audio::stop_wav()
