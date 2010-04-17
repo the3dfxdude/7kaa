@@ -148,7 +148,7 @@ void FirmHarbor::deinit_derived()
 
 //--------- Begin of function FirmHarbor::init ---------//
 //
-void FirmHarbor::init(int xLoc, int yLoc, int nationRecno, int firmId, char* buildCode, short builderRecno)
+void FirmHarbor::init(int xLoc, int yLoc, int nationRecno, int firmId, const char* buildCode, short builderRecno)
 {
 	// ignore raceId and find north, south, west or east harbor
 

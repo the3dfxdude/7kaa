@@ -69,7 +69,7 @@ public:
 public:
 	FirmHarbor();
 
-	void  init(int xLoc, int yLoc, int nationRecno, int firmId, char* buildCode=NULL, short builderRecno=0);
+	void  init(int xLoc, int yLoc, int nationRecno, int firmId, const char* buildCode=NULL, short builderRecno=0);
 	void  deinit_derived();
 	void 	put_info(int refreshFlag);
 	void 	detect_info();
