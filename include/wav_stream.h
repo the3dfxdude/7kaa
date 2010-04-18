@@ -46,7 +46,7 @@ public:
 	~WavStream();
 	bool open(File *file);
 	void close();
-	ssize_t read(void *buffer, size_t frame_count);
+	long read(void *buffer, size_t frame_count);
 	bool seek(size_t frame_no);
 	int32_t frame_rate() const;
 	int channels() const;

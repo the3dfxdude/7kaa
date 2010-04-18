@@ -29,7 +29,7 @@ class AudioStream
 {
 public:
 	virtual ~AudioStream() {};
-	virtual ssize_t read(int16_t *buffer, size_t frame_count) = 0;
+	virtual long read(void *buffer, size_t frame_count) = 0;
 	virtual bool seek(size_t frame_no) = 0;
 	virtual int32_t frame_rate() const = 0; /* in PCM frames per sec */
 	virtual int channels() const = 0;

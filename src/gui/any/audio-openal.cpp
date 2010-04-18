@@ -53,6 +53,8 @@ Audio::~Audio()
 	deinit();
 }
 
+#include <wav_stream.h>
+
 // Initialize the mid driver
 //
 // return : <int> 1 - initialized successfully
@@ -60,6 +62,27 @@ Audio::~Audio()
 //
 int Audio::init()
 {
+	File *in;
+	FILE *out;
+	WavStream ws;
+	char buffer[1024];
+	long rd;
+
+	in = new File;
+	in->file_open("music/greek.wav");
+	if (ws.open(in))
+		printf("OPENED WAV FILE\n");
+	out = fopen("test.pcm", "wb");
+	for (;;)
+	{
+		rd = ws.read(buffer, sizeof(buffer) / ws.frame_size());
+		if (rd == 0)
+			break;
+		fwrite(buffer, ws.frame_size(), rd, out);
+	}
+
+	fclose(out);
+
 	this->init_wav();
 
 	return 1;

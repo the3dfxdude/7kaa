@@ -79,6 +79,8 @@ void WavStream::clear()
 	this->good = true;
 }
 
+#include <stdio.h>
+
 bool WavStream::advance_to_chunk(const char *name, uint32_t *sizep)
 {
 	char buffer[4];
@@ -132,10 +134,6 @@ bool WavStream::open(File *file)
 	ok = ok && (size >= FormatHeader::SIZE);
 	ok = ok && read_format_header(this->file, &fmth);
 	ok = ok && ::seek(this->file, size - FormatHeader::SIZE, SEEK_CUR);
-
-	if (!ok)
-		goto err;
-
 	if (fmth.audio_format != 1
 	    || (fmth.bits_per_sample != 8 && fmth.bits_per_sample != 16)
 	    || (fmth.num_channels != 1 && fmth.num_channels != 2))
@@ -146,6 +144,7 @@ bool WavStream::open(File *file)
 
 	this->bytes = fmth.bits_per_sample / 8;
 	this->chans = fmth.num_channels;
+	this->fram_rate = fmth.frame_rate;
 
 	ok = ok && this->advance_to_chunk("data", &size);
 	if (!ok)
@@ -194,7 +193,7 @@ void WavStream::close()
 	this->clear();
 }
 
-ssize_t WavStream::read(void *buffer, size_t frame_count)
+long WavStream::read(void *buffer, size_t frame_count)
 {
 	size_t read_size;
 
@@ -205,7 +204,7 @@ ssize_t WavStream::read(void *buffer, size_t frame_count)
 	if (read_size == 0)
 		return 0;
 
-	if (this->bytes == 16)
+	if (this->bytes == 2)
 	{
 		int16_t *buf = static_cast<int16_t *>(buffer);
 		int16_t *p;
@@ -224,7 +223,7 @@ ssize_t WavStream::read(void *buffer, size_t frame_count)
 			}
 		}
 	}
-	else if (this->bytes == 8)
+	else if (this->bytes == 1)
 	{
 		if (!this->file->file_read(buffer, this->chans * read_size))
 		{

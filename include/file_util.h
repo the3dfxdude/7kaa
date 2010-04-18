@@ -39,6 +39,8 @@ bool read_le(File *file, T *valp)
 		val |= static_cast<T>(c) << (8 * n);
 	}
 
+	*valp = val;
+
 	return true;
 }
 
