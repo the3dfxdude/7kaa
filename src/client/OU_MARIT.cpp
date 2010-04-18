@@ -795,7 +795,7 @@ void UnitMarine::harbor_unload_product()
 			else
 				useEmptySlot = 0;
 
-			unloadQty = (short)((marketPtr->max_stock_qty-marketProductPtr->stock_qty)*curStock/totalDemand + 0.5);
+			unloadQty = totalDemand ? (short)((marketPtr->max_stock_qty-marketProductPtr->stock_qty)*curStock/totalDemand + 0.5) : 0;
 			unloadQty = min((short)(marketPtr->max_stock_qty-marketProductPtr->stock_qty), unloadQty);
 			unloadQty = min(product_raw_qty_array[i], unloadQty);
 
