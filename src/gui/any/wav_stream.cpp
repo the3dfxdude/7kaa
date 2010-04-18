@@ -123,7 +123,10 @@ bool WavStream::open(File *file)
 	ok = ok && (memcmp(name, "WAVE", 4) == 0);
 
 	if (!ok)
+	{
+		ERR("[WavStream::open] Not a wave file\n");
 		goto err;
+	}
 
 	ok = ok && this->advance_to_chunk("fmt ", &size);
 	ok = ok && (size >= FormatHeader::SIZE);
@@ -137,7 +140,7 @@ bool WavStream::open(File *file)
 	    || (fmth.bits_per_sample != 8 && fmth.bits_per_sample != 16)
 	    || (fmth.num_channels != 1 && fmth.num_channels != 2))
 	{
-		ERR("WavStream::open: Unsupported format\n");
+		ERR("[WavStream::open] Unsupported format\n");
 		goto err;
 	}
 
@@ -145,6 +148,12 @@ bool WavStream::open(File *file)
 	this->chans = fmth.num_channels;
 
 	ok = ok && this->advance_to_chunk("data", &size);
+	if (!ok)
+	{
+		ERR("[WavStream::open] Missing data chunk\n");
+		goto err;
+	}
+
 	this->data_offset = this->file->file_pos();
 	this->data_length = size / this->frame_size();
 	this->data_left = this->data_length;
@@ -169,6 +178,7 @@ bool WavStream::seek(size_t frame_no)
 	            + sizeof(uint16_t) * frame_no * this->chans,
 	            SEEK_SET))
 	{
+		ERR("[WavStream::seek] Seek failed\n");
 		this->good = false;
 		return false;
 	}
