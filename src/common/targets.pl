@@ -16,6 +16,7 @@ if (defined($wine_prefix)) {
 
 ## compile ##
 @targets = qw(
+file_util.cpp
 OCONFIG.cpp
 OERROR.cpp
 OFILE.cpp

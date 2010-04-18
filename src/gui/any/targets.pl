@@ -18,6 +18,7 @@ if (defined($wine_prefix)) {
 
 my @targets = qw(
 audio-openal.cpp
+wav_stream.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);
