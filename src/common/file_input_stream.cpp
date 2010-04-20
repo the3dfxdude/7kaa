@@ -36,6 +36,8 @@ long FileInputStream::read(void *buffer, long length)
 {
 	if (this->file == NULL)
 		return 0;
+
+	return this->file->file_read(buffer, length);
 }
 
 bool FileInputStream::seek(long offset, int whence)
@@ -44,6 +46,14 @@ bool FileInputStream::seek(long offset, int whence)
 		return false;
 
 	return ::seek(this->file, offset, whence);
+}
+
+long FileInputStream::tell()
+{
+	if (this->file == NULL)
+		return -1;
+
+	return this->file->file_pos();
 }
 
 bool FileInputStream::open(File *file)
