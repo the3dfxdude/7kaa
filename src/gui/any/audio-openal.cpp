@@ -22,11 +22,6 @@
 //Filename    : OAUDIO.CPP
 //Description : Object Midi Audio and Digitized Sound
 
-#define WARN_UNIMPLEMENTED(func) \
-	do { \
-		ERR(__FILE__":%i: %s unimplemented.\n", __LINE__, func); \
-	} while (0)
-
 #include <assert.h>
 #include <limits.h>
 #include <stdio.h>
@@ -47,6 +42,14 @@
 #define LOOPWAV_STREAM_BUFSIZ 0x1000
 #define LOOPWAV_BANKS         4
 
+#define PANNING_Z     (-1.f)
+#define PANNING_MAX_X (20.f)
+
+#define WARN_UNIMPLEMENTED(func) \
+	do { \
+		ERR(__FILE__":%i: %s unimplemented.\n", __LINE__, func); \
+	} while (0)
+
 DBGLOG_DEFAULT_CHANNEL(Audio);
 
 static bool check_al(int line)
@@ -59,9 +62,6 @@ static bool check_al(int line)
 	return false;
 }
 #define check_al() check_al(__LINE__)
-
-#define PANNING_Z     (-1.f)
-#define PANNING_MAX_X (20.f)
 
 /* panning is in [-10,000; 10,000] */
 static void set_source_panning(ALuint source, int panning)
@@ -414,12 +414,12 @@ int Audio::get_free_wav_ch()
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
 //
-int Audio::stop_wav(int serial)
+int Audio::stop_wav(int id)
 {
 	if (!this->wav_init_flag)
-		return 0;
+		return 1;
 
-	WARN_UNIMPLEMENTED("stop_wav");
+	this->stop_long_wav(id);
 	return 1;
 }
 
@@ -594,7 +594,7 @@ void Audio::volume_loop_wav(int id, DsVolume vol)
 	check_al();
 }
 
-void Audio::fade_out_loop_wav(int ch, int fade_rate_msec)
+void Audio::fade_out_loop_wav(int ch, int fade_duration_msec)
 {
 	if (!this->wav_init_flag)
 		return;
@@ -621,7 +621,7 @@ DsVolume Audio::get_loop_wav_volume(int id)
 	alGetSourcefv(sc->source, AL_POSITION, position);
 
 	return DsVolume(gain * 10000.f - 10000.f + .5f,
-			(position[0] / PANNING_MAX_X) * 10000.f + .5f);
+	                (position[0] / PANNING_MAX_X) * 10000.f + .5f);
 }
 
 int Audio::is_loop_wav_fading(int id)
@@ -681,9 +681,12 @@ void Audio::stop_wav()
 	this->streams.clear();
 }
 
-void Audio::stop_loop_wav(int ch)
+void Audio::stop_loop_wav(int id)
 {
-	WARN_UNIMPLEMENTED("stop_loop_wav");
+	if (!this->wav_init_flag)
+		return;
+
+	this->stop_long_wav(id);
 }
 
 // <int> trackId - the id. of the CD track to play.
