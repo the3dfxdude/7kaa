@@ -31,7 +31,7 @@ bool read_le(File *file, T *valp)
 	T val = T();
 	unsigned char c;
 
-	for (int n = 0; n < sizeof(T); n++)
+	for (int n = 0; n < static_cast<int>(sizeof(T)); n++)
 	{
 		if (!file->file_read(&c, 1))
 			return false;

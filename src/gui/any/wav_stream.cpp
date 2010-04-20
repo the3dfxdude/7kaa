@@ -107,6 +107,22 @@ bool WavStream::advance_to_chunk(const char *name, uint32_t *sizep)
 	return false;
 }
 
+bool WavStream::open(const char *file_name)
+{
+	File *file;
+
+	this->close();
+
+	file = new File;
+	if (!file->file_open(file_name) || !this->open(file))
+	{
+		delete file;
+		return false;
+	}
+
+	return true;
+}
+
 bool WavStream::open(File *file)
 {
 	char name[4];
@@ -160,6 +176,7 @@ bool WavStream::open(File *file)
 	return true;
 
 err:
+	this->file = NULL; /* do not close file on error */
 	this->close();
 	return false;
 }

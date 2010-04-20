@@ -25,14 +25,54 @@
 #ifndef AUDIO_OPENAL_H
 #define AUDIO_OPENAL_H
 
+#include <map>
+
 #include <AL/al.h>
 #include <AL/alc.h>
 
 #include <ORESX.h>
 #include <OVOLUME.h>
+#include <audio_stream.h>
 
 class Audio
 {
+private:
+	class StreamContext
+	{
+	public:
+		AudioStream *stream;
+		ALuint source;
+
+		/* frames played since fade started */
+		size_t fade_frames_played;
+
+		/* 
+		 * Number of frames over which volume fades to zero.  A value of
+		 * 0 means not fading.
+		 */
+		size_t fade_frames;
+
+		bool looping;
+
+		/* where to restart playing after reaching the end */
+		size_t loop_start_frame;
+
+		bool streaming;
+
+	public:
+		StreamContext();
+		~StreamContext();
+		bool init(AudioStream *as);
+		bool stream_data(int new_buffer_count = 0);
+		void stop();
+
+	private:
+		/* forbid copying */
+		StreamContext(const StreamContext &) {}
+	};
+
+	typedef std::map<int, StreamContext *> StreamMap;
+
 public:
 	char  init_flag;
 
@@ -110,6 +150,8 @@ public:
 private:
 	ALCdevice  *al_device;
 	ALCcontext *al_context;
+
+	StreamMap streams;
 
 private:
 	int	init_mid();

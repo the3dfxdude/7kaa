@@ -45,6 +45,7 @@ public:
 	WavStream();
 	~WavStream();
 	bool open(File *file);
+	bool open(const char *file_name);
 	void close();
 	long read(void *buffer, size_t frame_count);
 	bool seek(size_t frame_no);

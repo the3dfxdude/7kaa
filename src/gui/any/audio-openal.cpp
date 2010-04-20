@@ -28,19 +28,95 @@
 			__LINE__, func); \
 	} while (0)
 
-#include <cassert>
-#include <climits>
+#include <assert.h>
+#include <limits.h>
 #include <stdio.h>
 
+#include <ALL.h>
 #include <OBOX.h>
 #include <OSYS.h>
 #include <OVGALOCK.h>
 #include <audio-openal.h>
+#include <dbglog.h>
+#include <wav_stream.h>
 
 #define LWAV_STREAM_BUFSIZ    0x1000
 #define LWAV_BANKS            4
 #define LOOPWAV_STREAM_BUFSIZ 0x1000
 #define LOOPWAV_BANKS         4
+
+DBGLOG_DEFAULT_CHANNEL(Audio);
+
+static bool check_al(int line)
+{
+	ALenum err = alGetError();
+	if (err == AL_NO_ERROR)
+		return true;
+
+	ERR(__FILE__":%i: OpenAL error: 0x%x\n", line, err);
+	return false;
+}
+#define check_al() check_al(__LINE__)
+
+/* panning is in [-10,000; 10,000] */
+static void set_source_panning(ALuint source, int panning)
+{
+	const float Z = -1.f;
+	const float MAX_X = 20.f;
+
+	panning = MAX(panning, -10000);
+	panning = MIN(panning, 10000);
+
+	alSource3f(source, AL_POSITION, MAX_X * panning / 10000.f, 0, Z);
+}
+
+/* volume is in [-10,000; 0] */
+static void set_source_volume(ALuint source, int volume)
+{
+	volume = MAX(volume, -10000);
+	volume = MIN(volume, 0);
+
+	alSourcef(source, AL_GAIN, (volume + 10000.f) / 10000.f);
+}
+
+ALenum openal_format(AudioStream *as)
+{
+	switch (as->sample_size())
+	{
+		case 1:
+			switch (as->channels())
+			{
+				case 1: return AL_FORMAT_MONO8;
+				case 2: return AL_FORMAT_STEREO8;
+			}
+			break;
+
+		case 2:
+			switch (as->channels())
+			{
+				case 1: return AL_FORMAT_MONO16;
+				case 2: return AL_FORMAT_STEREO16;
+			}
+			break;
+	}
+
+	abort();
+}
+
+template <typename M>
+static typename M::key_type max_key(
+	const M *map,
+	const typename M::key_type &dflt = typename M::key_type())
+{
+	typename M::const_reverse_iterator i;
+
+	i = map->rbegin();
+	if (i != map->rend())
+		return i->first;
+	else
+		return dflt;
+}
+
 
 Audio::Audio()
 {
@@ -53,8 +129,6 @@ Audio::~Audio()
 	deinit();
 }
 
-#include <wav_stream.h>
-
 // Initialize the mid driver
 //
 // return : <int> 1 - initialized successfully
@@ -62,30 +136,12 @@ Audio::~Audio()
 //
 int Audio::init()
 {
-	File *in;
-	FILE *out;
-	WavStream ws;
-	char buffer[1024];
-	long rd;
-
-	in = new File;
-	in->file_open("music/greek.wav");
-	if (ws.open(in))
-		printf("OPENED WAV FILE\n");
-	out = fopen("test.pcm", "wb");
-	for (;;)
-	{
-		rd = ws.read(buffer, sizeof(buffer) / ws.frame_size());
-		if (rd == 0)
-			break;
-		fwrite(buffer, ws.frame_size(), rd, out);
-	}
-
-	fclose(out);
-
 	this->init_wav();
 
-	return 1;
+	this->init_flag = this->wav_init_flag || this->mid_init_flag
+	                  || this->cd_init_flag;
+
+	return this->init_flag;
 }
 
 void Audio::deinit()
@@ -100,6 +156,7 @@ void Audio::deinit()
 //
 int Audio::init_wav()
 {
+	ALCint attributes[] = {0};
 	assert(!this->wav_init_flag);
 
 	this->al_device = alcOpenDevice(NULL);
@@ -110,11 +167,17 @@ int Audio::init_wav()
 		goto err;
 	}
 
-	this->al_context = alcCreateContext(this->al_device, NULL);
+	this->al_context = alcCreateContext(this->al_device, attributes);
 	if (this->al_context == NULL)
 	{
 		fprintf(stderr, __FILE__":%i: alcCreateContext failed: 0x%x\n",
 			__LINE__, alcGetError(this->al_device));
+		goto err;
+	}
+
+	if (!alcMakeContextCurrent(this->al_context))
+	{
+		ERR("alcMakeContextCurrent failed\n");
 		goto err;
 	}
 
@@ -185,6 +248,7 @@ void Audio::deinit_cd()
 int Audio::play_mid(char* midName)
 {
 	WARN_UNIMPLEMENTED("play_mid");
+	return 0;
 }
 
 void Audio::stop_mid()
@@ -275,9 +339,42 @@ int Audio::is_wav_playing(int serial)
 //                0 - wav not played
 // Audio::yield() keeps on feeding data to it
 
-int Audio::play_long_wav(const char *wavName, DsVolume dsVolume)
+int Audio::play_long_wav(const char *file_name, DsVolume volume)
 {
-	WARN_UNIMPLEMENTED("play_long_wav");
+	const int BUFFER_COUNT = 4;
+
+	MSG("play_long_wav(\"%s\")\n", file_name);
+
+	StreamContext *sc = NULL;
+	WavStream *ws = NULL;
+	int id;
+
+	ws = new WavStream;
+	if (!ws->open(file_name))
+		goto err;
+
+	sc = new StreamContext;
+
+	if (!sc->init(ws))
+		goto err;
+
+	set_source_panning(sc->source, volume.ds_pan);
+	set_source_volume(sc->source, volume.ds_vol);
+
+	if (!check_al())
+		goto err;
+
+	if (!sc->stream_data(BUFFER_COUNT))
+		goto err;
+
+	id = max_key(&this->streams) + 1;
+	this->streams[id] = sc;
+
+	return id;
+
+err:
+	delete sc;
+	delete ws;
 	return 0;
 }
 
@@ -288,9 +385,22 @@ int Audio::play_long_wav(const char *wavName, DsVolume dsVolume)
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
 //
-int Audio::stop_long_wav(int serial)
+int Audio::stop_long_wav(int id)
 {
-	WARN_UNIMPLEMENTED("stop_long_wav");
+	StreamMap::iterator itr;
+	StreamContext *sc;
+
+	MSG("stop_long_wav(%i)\n", id);
+
+	itr = this->streams.find(id);
+	if (itr == this->streams.end())
+		return 1;
+
+	sc = itr->second;
+	sc->stop();
+	this->streams.erase(itr);
+	delete sc;
+
 	return 1;
 }
 
@@ -298,10 +408,9 @@ int Audio::stop_long_wav(int serial)
 //
 // <int>        the serial no returned by play_wav or play_resided_wav
 //
-int Audio::is_long_wav_playing(int serial)
+int Audio::is_long_wav_playing(int id)
 {
-	WARN_UNIMPLEMENTED("is_long_wav_playing");
-	return 0;
+	return (this->streams.find(id) != this->streams.end());
 }
 
 // Play digitized wav from the wav resource file
@@ -324,7 +433,7 @@ void Audio::volume_loop_wav(int ch, DsVolume dsVolume)
 	WARN_UNIMPLEMENTED("volume_loop_wav");
 }
 
-void Audio::fade_out_loop_wav(int ch, int fadeRate)
+void Audio::fade_out_loop_wav(int ch, int fade_rate_msec)
 {
 	WARN_UNIMPLEMENTED("fade_out_loop_wav");
 }
@@ -338,12 +447,28 @@ DsVolume Audio::get_loop_wav_volume(int ch)
 int Audio::is_loop_wav_fading(int ch)
 {
 	WARN_UNIMPLEMENTED("is_loop_wav_fading");
+	return 0;
 }
 
 void Audio::yield()
 {
 	VgaFrontLock vgaLock;
-	//WARN_UNIMPLEMENTED("yield");
+	StreamMap::iterator si;
+
+	for (si = this->streams.begin(); si != this->streams.end();)
+	{
+		StreamContext *sc = si->second;
+		sc->stream_data();
+
+		if (!sc->streaming)
+		{
+			/* TODO: should make sure it's drained first */
+			delete sc;
+			this->streams.erase(si++);
+		}
+		else
+			++si;
+	}
 }
 
 void Audio::stop_wav()
@@ -366,6 +491,7 @@ void Audio::stop_loop_wav(int ch)
 int Audio::play_cd(int trackId, int volume)
 {
 	WARN_UNIMPLEMENTED("play_cd");
+	return 0;
 }
 
 void Audio::stop_cd()
@@ -382,6 +508,7 @@ int Audio::is_mid_playing()
 int Audio::is_wav_playing()
 {
 	WARN_UNIMPLEMENTED("is_wav_playing");
+	return 0;
 }
 
 int Audio::is_cd_playing()
@@ -444,4 +571,152 @@ void Audio::volume_long_wav(int serial, DsVolume dsVolume)
 	WARN_UNIMPLEMENTED("volume_long_wav");
 }
 
-// vi: sw=8
+
+Audio::StreamContext::StreamContext()
+{
+	this->stream = NULL;
+	this->source = 0;
+	this->fade_frames_played = 0;
+	this->fade_frames = 0;
+	this->looping = false;
+	this->loop_start_frame = 0;
+	this->streaming = true;
+}
+
+Audio::StreamContext::~StreamContext()
+{
+	/* TODO: drain */
+
+	if (this->source != 0)
+		alDeleteSources(1, &this->source);
+
+	delete this->stream;
+}
+
+bool Audio::StreamContext::init(AudioStream *as)
+{
+	if (this->source != 0)
+		return false;
+
+	alGenSources(1, &this->source);
+	if (!check_al())
+		goto err;
+
+	this->stream = as;
+
+	return true;
+
+err:
+	return false;
+}
+
+bool Audio::StreamContext::stream_data(int new_buffer_count)
+{
+	const size_t BUFFER_SIZE = 0x4000;
+
+	/*
+	 * This constant determines how many milliseconds of audio data go into
+	 * one buffer.  The larger it is, the less probability of skipping, but
+	 * the longer the delay from calling stop() to the point when it
+	 * actually stops.
+	 */
+	const size_t MAX_BUFFER_TIME_MS = 50;
+
+	uint8_t data[BUFFER_SIZE];
+	size_t frames_read;
+	size_t max_frames;
+	ALenum format;
+	ALuint buf;
+	ALint state;
+
+	if (!this->streaming)
+		return false;
+
+	format = openal_format(this->stream);
+	max_frames = this->stream->frame_rate() * MAX_BUFFER_TIME_MS / 1000;
+
+	for (;;)
+	{
+		buf = 0;
+
+		if (new_buffer_count > 0)
+		{
+			alGenBuffers(1, &buf);
+			if (!check_al())
+				goto err;
+
+			new_buffer_count--;
+		}
+		else
+		{
+			ALint processed;
+
+			alGetSourcei(this->source, AL_BUFFERS_PROCESSED,
+			             &processed);
+
+			if (processed == 0)
+				break;
+
+			alSourceUnqueueBuffers(this->source, 1, &buf);
+			if (!check_al())
+				goto err;
+		}
+
+		size_t space_frames = sizeof(data) / this->stream->frame_size();
+		space_frames = MIN(space_frames, max_frames);
+		frames_read = this->stream->read(data, space_frames);
+
+		/* TODO: handle looping and fading */
+		if (frames_read == 0)
+		{
+			printf("END OF STREAM\n");
+			this->streaming = false;
+			return true;
+		}
+
+		alBufferData(buf, format, data,
+		             frames_read * this->stream->frame_size(),
+		             this->stream->frame_rate());
+		if (!check_al())
+			goto err;
+
+		alSourceQueueBuffers(this->source, 1, &buf);
+		if (!check_al())
+			goto err;
+	}
+
+	alGetSourcei(this->source, AL_SOURCE_STATE, &state);
+
+	if (state != AL_PLAYING)
+	{
+		alSourcePlay(this->source);
+		check_al();
+	}
+
+	return true;
+
+err:
+	if (buf != 0)
+		alDeleteBuffers(1, &buf);
+
+	this->streaming = false;
+	return false;
+}
+
+void Audio::StreamContext::stop()
+{
+	ALint count;
+	ALuint buf;
+
+	alSourceStop(this->source);
+
+	for (;;)
+	{
+		alGetSourcei(this->source, AL_BUFFERS_PROCESSED, &count);
+		if (count == 0)
+			break;
+
+		alSourceUnqueueBuffers(this->source, 1, &buf);
+		alDeleteBuffers(1, &buf);
+	}
+}
