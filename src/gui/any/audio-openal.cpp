@@ -512,7 +512,7 @@ err:
 
 // stop a short sound effect started by play_long_wav
 //
-// <int>        the serial no returned by play_long_wav
+// id - the serial no returned by play_long_wav
 //
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
@@ -550,20 +550,32 @@ int Audio::is_long_wav_playing(int id)
 
 // Play digitized wav from the wav resource file
 //
-// <char*>        wavName = name of the wav in the resource file
-// int				repeatOffset = offset of wave data to play on repeat
-//											i.e. 0 to start of wave data
+// file_name     - name of the wav in the resource file
+// repeat_offset - offset of wave data to play on repeat
+//                 i.e. 0 to start of wave data
 //
-// return : <int> channel number (1 - MAX_LOOP_WAV_CH)
-//          0     not played
+// return: channel number
+//         0 - not played
 //
-int Audio::play_loop_wav(const char *wavName, int repeatOffset, DsVolume dsVolume)
+int Audio::play_loop_wav(const char *file_name, int repeat_offset, DsVolume vol)
 {
+	int id;
+	StreamContext *sc;
+
 	if (!this->wav_init_flag)
 		return 0;
 
-	WARN_UNIMPLEMENTED("play_loop_wav");
-	return 0;
+	MSG("play_loop_wav(\"%s\", %i)\n", file_name, repeat_offset);
+
+	id = this->play_long_wav(file_name, vol);
+	if (id == 0)
+		return 0;
+
+	sc = this->streams[id];
+	sc->loop_start_frame = repeat_offset / sc->stream->frame_size();
+	sc->looping = true;
+
+	return id;
 }
 
 void Audio::volume_loop_wav(int id, DsVolume vol)
@@ -882,13 +894,29 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 		space_frames = MIN(space_frames, max_frames);
 		frames_read = this->stream->read(data, space_frames);
 
-		/* TODO: handle looping and fading */
 		if (frames_read == 0)
 		{
-			alDeleteBuffers(1, &buf);
-			this->streaming = false;
-			break;
+			if (this->looping)
+			{
+				this->stream->seek(this->loop_start_frame);
+				frames_read = this->stream->read(data,
+				                                 space_frames);
+				if (frames_read == 0)
+				{
+					alDeleteBuffers(1, &buf);
+					this->streaming = false;
+					break;
+				}
+			}
+			else
+			{
+				alDeleteBuffers(1, &buf);
+				this->streaming = false;
+				break;
+			}
 		}
+
+		/* TODO: handle fading */
 
 		alBufferData(buf, format, data,
 		             frames_read * this->stream->frame_size(),

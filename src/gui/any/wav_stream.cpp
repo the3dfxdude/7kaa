@@ -80,8 +80,6 @@ void WavStream::clear()
 	this->good = true;
 }
 
-#include <stdio.h>
-
 bool WavStream::advance_to_chunk(const char *name, uint32_t *sizep)
 {
 	char buffer[4];
@@ -190,8 +188,7 @@ bool WavStream::seek(size_t frame_no)
 	if (frame_no >= this->data_length)
 		return false;
 
-	if (!this->in->seek(this->data_offset
-	                    + sizeof(uint16_t) * frame_no * this->chans,
+	if (!this->in->seek(this->data_offset + this->frame_size() * frame_no,
 	                    SEEK_SET))
 	{
 		ERR("[WavStream::seek] Seek failed\n");
