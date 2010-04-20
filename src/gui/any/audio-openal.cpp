@@ -159,6 +159,8 @@ int Audio::init_wav()
 	ALCint attributes[] = {0};
 	assert(!this->wav_init_flag);
 
+	this->wav_res.init(DIR_RES"A_WAVE2.RES", 0, 0);
+
 	this->al_device = alcOpenDevice(NULL);
 	if (this->al_device == NULL)
 	{
