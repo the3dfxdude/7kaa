@@ -60,16 +60,19 @@ static bool check_al(int line)
 }
 #define check_al() check_al(__LINE__)
 
+#define PANNING_Z     (-1.f)
+#define PANNING_MAX_X (20.f)
+
 /* panning is in [-10,000; 10,000] */
 static void set_source_panning(ALuint source, int panning)
 {
-	const float Z = -1.f;
-	const float MAX_X = 20.f;
-
 	panning = MAX(panning, -10000);
 	panning = MIN(panning, 10000);
 
-	alSource3f(source, AL_POSITION, MAX_X * panning / 10000.f, 0, Z);
+	alSource3f(source, AL_POSITION,
+	           PANNING_MAX_X * panning / 10000.f,
+	           0,
+	           PANNING_Z);
 }
 
 /* volume is in [-10,000; 0] */
@@ -579,22 +582,40 @@ void Audio::fade_out_loop_wav(int ch, int fade_rate_msec)
 	WARN_UNIMPLEMENTED("fade_out_loop_wav");
 }
 
-DsVolume Audio::get_loop_wav_volume(int ch)
+DsVolume Audio::get_loop_wav_volume(int id)
 {
+	StreamContext *sc;
+	StreamMap::const_iterator itr;
+	float position[3];
+	float gain;
+
 	if (!this->wav_init_flag)
 		return DsVolume(0, 0);
 
-	WARN_UNIMPLEMENTED("get_loop_wav_volume");
-	return DsVolume(0, 0);
+	itr = this->streams.find(id);
+	if (itr == this->streams.end())
+		return DsVolume(0, 0);
+
+	sc = itr->second;
+	alGetSourcef(sc->source, AL_GAIN, &gain);
+	alGetSourcefv(sc->source, AL_POSITION, position);
+
+	return DsVolume(gain * 10000.f - 10000.f + .5f,
+			(position[0] / PANNING_MAX_X) * 10000.f + .5f);
 }
 
-int Audio::is_loop_wav_fading(int ch)
+int Audio::is_loop_wav_fading(int id)
 {
+	StreamMap::const_iterator itr;
+
 	if (!this->wav_init_flag)
 		return false;
 
-	WARN_UNIMPLEMENTED("is_loop_wav_fading");
-	return false;
+	itr = this->streams.find(id);
+	if (itr == this->streams.end())
+		return false;
+
+	return (itr->second->fade_frames != 0);
 }
 
 void Audio::yield()
@@ -729,7 +750,7 @@ int Audio::get_wav_volume() const
 
 	ALfloat vol;
 	alGetListenerf(AL_GAIN, &vol);
-	return static_cast<int>(vol * 100.f + .5f);
+	return (vol * 100.f + .5f);
 }
 
 // Set cd volume
