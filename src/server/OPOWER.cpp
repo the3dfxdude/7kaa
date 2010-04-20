@@ -864,10 +864,10 @@ Location* Power::test_detect(int curX, int curY, char *mobileType)
 	//---- expand the area outwards to cover sprites that are in their way moving into the area
 
 	int detectSpread = mouse.skey_state & CONTROL_KEY_MASK ? 0 : DETECT_SPREAD;
-	int selXLoc1=max(0, curXLoc-detectSpread);   	// expand 2 tiles in case of big sprite
-	int selYLoc1=max(0, curYLoc-detectSpread);
-	int selXLoc2=min(MAX_WORLD_X_LOC-1, curXLoc+detectSpread);
-	int selYLoc2=min(MAX_WORLD_Y_LOC-1, curYLoc+detectSpread);
+	int selXLoc1=MAX(0, curXLoc-detectSpread);   	// expand 2 tiles in case of big sprite
+	int selYLoc1=MAX(0, curYLoc-detectSpread);
+	int selXLoc2=MIN(MAX_WORLD_X_LOC-1, curXLoc+detectSpread);
+	int selYLoc2=MIN(MAX_WORLD_Y_LOC-1, curYLoc+detectSpread);
 
 	//---------- select sprite --------------//
 
@@ -989,10 +989,10 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 
 	//-- expand the area outwards to cover sprites that are in their way moving into the area
 
-	selXLoc1=max(0, selXLoc1-DETECT_SPREAD);		// expand 2 tiles in case of big sprite
-	selYLoc1=max(0, selYLoc1-DETECT_SPREAD);
-	selXLoc2=min(MAX_WORLD_X_LOC-1,selXLoc2+DETECT_SPREAD);
-	selYLoc2=min(MAX_WORLD_Y_LOC-1,selYLoc2+DETECT_SPREAD);
+	selXLoc1=MAX(0, selXLoc1-DETECT_SPREAD);		// expand 2 tiles in case of big sprite
+	selYLoc1=MAX(0, selYLoc1-DETECT_SPREAD);
+	selXLoc2=MIN(MAX_WORLD_X_LOC-1,selXLoc2+DETECT_SPREAD);
+	selYLoc2=MIN(MAX_WORLD_Y_LOC-1,selYLoc2+DETECT_SPREAD);
 
 	//------ calc absolute positions for fast comparsion ---//
 

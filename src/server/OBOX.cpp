@@ -418,7 +418,7 @@ void Box::arrow_box(char* boxText, char* boxTitle, int saveScrFlag)
       if( arrow_x == 0 )
 			vga_front.save_scr( box_x1, box_y1, box_x2, box_y2 );
 		else
-			vga_front.save_scr( min(box_x1,arrow_x), min(box_y1,arrow_y), max(box_x2,arrow_x), max(box_y2,arrow_y) );
+			vga_front.save_scr( MIN(box_x1,arrow_x), MIN(box_y1,arrow_y), MAX(box_x2,arrow_x), MAX(box_y2,arrow_y) );
    }
 
    //------- Draw box (and arrow if specified object) ------//

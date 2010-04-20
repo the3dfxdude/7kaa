@@ -921,8 +921,8 @@ int Unit::think_reward()
 			neededLoyalty += 30;
 		}
 
-		neededLoyalty = max( UNIT_BETRAY_LOYALTY+10, neededLoyalty );		// 10 points above the betray loyalty level to prevent betrayal
-		neededLoyalty = min( 100, neededLoyalty );
+		neededLoyalty = MAX( UNIT_BETRAY_LOYALTY+10, neededLoyalty );		// 10 points above the betray loyalty level to prevent betrayal
+		neededLoyalty = MIN( 100, neededLoyalty );
 	}
 	else
 	{

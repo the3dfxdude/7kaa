@@ -192,7 +192,7 @@ void Nation::notify_talk_msg(TalkMsg* talkMsg)
 			// $1000 for 100 ai relation increase if the nation's cash is 1000.
 			//--------------------------------------------------------------//
 
-			relationChange = 100 * talkMsg->talk_para1 / max(1000, (int) cash);
+			relationChange = 100 * talkMsg->talk_para1 / MAX(1000, (int) cash);
 			break;
 
 		case TALK_GIVE_TECH:
@@ -276,7 +276,7 @@ int Nation::ai_trade_with_rating(int withNationRecno)
 		//--------------------------------------------------------------//
 
 		if( raw_count_array[i] && !nationPtr->raw_count_array[i] )
-			tradeRating += min(30, nationPtr->total_population/3);
+			tradeRating += MIN(30, nationPtr->total_population/3);
 
 		//--------------------------------------------------------------//
 		//
@@ -528,7 +528,7 @@ int Nation::should_consider_friendly(int withNationRecno)
 
 	//--- don't ally with nations with too low reputation ---//
 
-	return withNation->reputation >= min(20, reputation) - 20;
+	return withNation->reputation >= MIN(20, reputation) - 20;
 }
 //------ End of function Nation::should_consider_friendly -----//
 
@@ -577,7 +577,7 @@ int Nation::consider_alliance_rating(int nationRecno)
 //
 int Nation::consider_take_tribute(TalkMsg* talkMsg)
 {
-	int cashSignificance = 100 * talkMsg->talk_para1 / max(1000, (int) cash);		
+	int cashSignificance = 100 * talkMsg->talk_para1 / MAX(1000, (int) cash);		
 
 	//--- It does not necessarily want the tribute ---//
 
@@ -606,7 +606,7 @@ int Nation::consider_take_tribute(TalkMsg* talkMsg)
 //
 int Nation::consider_take_aid(TalkMsg* talkMsg)
 {
-	int cashSignificance = 100 * talkMsg->talk_para1 / max(1000, (int) cash);		
+	int cashSignificance = 100 * talkMsg->talk_para1 / MAX(1000, (int) cash);		
 
 	//--- It does not necessarily want the tribute ---//
 

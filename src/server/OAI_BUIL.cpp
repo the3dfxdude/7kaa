@@ -306,9 +306,9 @@ int Nation::ai_supported_inn_count()
 
 	int innCount = int( cash / 5000 * (100+pref_hire_unit) / 100 );
 
-	innCount = min(3, innCount);		// maximum 3 inns, minimum 1 inn.
+	innCount = MIN(3, innCount);		// maximum 3 inns, minimum 1 inn.
 
-	return max(1, innCount);
+	return MAX(1, innCount);
 }
 //---------- End of function Nation::ai_supported_inn_count --------//
 

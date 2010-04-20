@@ -259,7 +259,7 @@ double FileTxt::get_num()
 // Read a line from this text file to the given buffer
 //
 // <char*> textBuf = a pre-allocated text buffer with a len of bufLen+1
-// <int>   bufLen  = max no. of chars the buffer can store
+// <int>   bufLen  = MAX no. of chars the buffer can store
 //
 void FileTxt::read_line(char* textBuf, int bufLen)
 {
@@ -288,7 +288,7 @@ void FileTxt::read_line(char* textBuf, int bufLen)
 // It will read all coming text until it encounter PAGE BREAK or EOF character
 //
 // <char*> textPtr = a pre-allocated text buffer with a len of bufLen+1
-// <int>   bufLen  = max no. of chars the buffer can store
+// <int>   bufLen  = MAX no. of chars the buffer can store
 //
 // return : <int> textReadLen = the length of text actually read into textPtr
 //

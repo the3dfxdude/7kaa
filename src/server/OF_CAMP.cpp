@@ -713,7 +713,7 @@ void FirmCamp::train_unit()
 
 		if( workerPtr->combat_level < overseerSkill )
 		{
-			incValue = max(20, overseerSkill-workerPtr->combat_level)
+			incValue = MAX(20, overseerSkill-workerPtr->combat_level)
 						  * workerPtr->hit_points / workerPtr->max_hit_points()
 						  * (100+workerPtr->skill_potential*2) / 100;
 
@@ -732,7 +732,7 @@ void FirmCamp::train_unit()
 
 		if( workerPtr->skill_potential > 0 && workerPtr->skill_level < 100 )
 		{
-			incValue = (int) max(50, overseerUnit->skill.skill_level-workerPtr->skill_level)
+			incValue = (int) MAX(50, overseerUnit->skill.skill_level-workerPtr->skill_level)
 						  * workerPtr->hit_points / workerPtr->max_hit_points()
 						  * workerPtr->skill_potential*2 / 100;
 

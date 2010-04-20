@@ -140,7 +140,7 @@ int Nation::think_capture_independent()
 
 		int targetResistance  = capture_expected_resistance(townRecno);
 		int averageResistance = townPtr->average_resistance(nation_recno);
-		int minResistance 	 = min( averageResistance, targetResistance );
+		int minResistance 	 = MIN( averageResistance, targetResistance );
 
 		if( minResistance < 50 - pref_peacefulness/5 )		// 30 to 50 depending on
 		{

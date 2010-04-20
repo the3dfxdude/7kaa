@@ -446,7 +446,7 @@ int TalkRes::add_give_tech_choices()
 
 		static const char* verStrArray[] = { "Mark I", "Mark II", "Mark III" };
 
-		for( i=1 ; i<=min(3, nationLevel) ; i++ )
+		for( i=1 ; i<=MIN(3, nationLevel) ; i++ )
 			add_talk_choice( verStrArray[i-1], i );
 
 		return 1;

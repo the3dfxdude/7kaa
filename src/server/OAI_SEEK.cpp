@@ -353,7 +353,7 @@ void Nation::cal_location_score(short x1, short y1, short width, short height, i
 	//
 	//	if any L can build, score += 1, if all set of L can build the total
 	// score of this edge is 100. For each corner, the score is 50 if
-	// can build.  Thus, the max. score == 600
+	// can build.  Thus, the MAX. score == 600
 	//
 	//-----------------------------------------------------------------//
 	short x, y, i, count;
@@ -503,8 +503,8 @@ int Nation::find_best_firm_loc(short buildFirmId, short refXLoc, short refYLoc, 
 
 	refX1 -= firmLocWidth/2;		// since we use loc_x1 as the building reference, we need to shift it so it will match the use of center_x in effective distance
 	refY1 -= firmLocHeight/2;
-	refX1 = max(0, refX1);
-	refY1 = max(0, refY1);
+	refX1 = MAX(0, refX1);
+	refY1 = MAX(0, refY1);
 
 	if( refX2 - firmLocWidth/2 >= MAX_WORLD_X_LOC )
 		refX2 = MAX_WORLD_X_LOC-1;
@@ -548,7 +548,7 @@ int Nation::find_best_firm_loc(short buildFirmId, short refXLoc, short refYLoc, 
 			}
 			else
 			{
-				*refMatrixPtr = 10-max(t1, t2);		// it's negative value, and the value is lower for the outer ones
+				*refMatrixPtr = 10-MAX(t1, t2);		// it's negative value, and the value is lower for the outer ones
 			}
 		}
 	}
@@ -664,12 +664,12 @@ int Nation::find_best_firm_loc(short buildFirmId, short refXLoc, short refYLoc, 
 
 			if( weightAdd )
 			{
-				for( yLocB=max(refY1,refBY1) ; yLocB<=min(refY2,refBY2) ; yLocB++ )
+				for( yLocB=MAX(refY1,refBY1) ; yLocB<=MIN(refY2,refBY2) ; yLocB++ )
 				{
-					xLocB = max(refX1,refBX1);
+					xLocB = MAX(refX1,refBX1);
 					refMatrixPtr = refMatrix + (yLocB-refY1)*refWidth + (xLocB-refX1);
 
-					for( ; xLocB<=min(refX2,refBX2) ; xLocB++ )
+					for( ; xLocB<=MIN(refX2,refBX2) ; xLocB++ )
 					{
 						*refMatrixPtr++ += weightAdd;
 					}
@@ -680,12 +680,12 @@ int Nation::find_best_firm_loc(short buildFirmId, short refXLoc, short refYLoc, 
 
 			if( weightReduce )
 			{
-				for( yLocB=max(refY1,refCY1) ; yLocB<=min(refY2,refCY2) ; yLocB++ )
+				for( yLocB=MAX(refY1,refCY1) ; yLocB<=MIN(refY2,refCY2) ; yLocB++ )
 				{
-					xLocB = max(refX1,refCX1);
+					xLocB = MAX(refX1,refCX1);
 					refMatrixPtr = refMatrix + (yLocB-refY1)*refWidth + (xLocB-refX1);
 
-					for( ; xLocB<=min(refX2,refCX2) ; xLocB++ )
+					for( ; xLocB<=MIN(refX2,refCX2) ; xLocB++ )
 					{
 						*refMatrixPtr++ -= weightReduce;
 					}

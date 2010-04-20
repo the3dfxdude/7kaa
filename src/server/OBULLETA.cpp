@@ -137,7 +137,7 @@ int BulletArray::bullet_path_possible(short startXLoc, short startYLoc, char att
 	int xStep	= (goX - originX)/bulletSpeed;
 	int yStep	= (goY - originY)/bulletSpeed;
 
-	int totalStep = max(1, max(abs(xStep), abs(yStep)));
+	int totalStep = MAX(1, MAX(abs(xStep), abs(yStep)));
 	int curStep = 0;
 
 	//------------------------------------------------------//

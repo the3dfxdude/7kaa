@@ -115,7 +115,7 @@ int Unit::move_try_to_range_attack(Unit* targetUnit)
 //									is firm_id if target is a firm
 //									is 0 if target is a town or a wall
 // <short>	searchMode	-	search mode being used
-// <short>	maxRange		-	max attack range of this unit
+// <short>	maxRange		-	MAX attack range of this unit
 //
 int Unit::move_to_range_attack(int targetXLoc, int targetYLoc, short miscNo, short searchMode, short maxRange)
 {
@@ -267,7 +267,7 @@ int Unit::can_attack_different_target_type()
 // <int> targetYLoc		- target y location
 // <int> targetWidth		- target width
 // <int> targetHeight	- target height
-// <int> maxRange			- max attack range of this unit
+// <int> maxRange			- MAX attack range of this unit
 //
 // return 1 if place found
 // return 0 otherwise
@@ -289,10 +289,10 @@ int Unit::possible_place_for_range_attack(int targetXLoc, int targetYLoc, int ta
 	//----------------- init parameters -----------------//
 	Location *locPtr = world.get_loc(curXLoc, curYLoc);
 	int regionId = locPtr->region_id;
-	int xLoc1 = max(targetXLoc-maxRange, 0);
-	int yLoc1 = max(targetYLoc-maxRange, 0);
-	int xLoc2 = min(targetXLoc+targetWidth-1+maxRange, MAX_WORLD_X_LOC-1);
-	int yLoc2 = min(targetYLoc+targetHeight-1+maxRange, MAX_WORLD_Y_LOC-1);
+	int xLoc1 = MAX(targetXLoc-maxRange, 0);
+	int yLoc1 = MAX(targetYLoc-maxRange, 0);
+	int xLoc2 = MIN(targetXLoc+targetWidth-1+maxRange, MAX_WORLD_X_LOC-1);
+	int yLoc2 = MIN(targetYLoc+targetHeight-1+maxRange, MAX_WORLD_Y_LOC-1);
 	int checkXLoc, checkYLoc;
 
 	//--------- do adjustment for UNIT_SEA and UNIT_AIR ---------//
@@ -851,10 +851,10 @@ int Unit::free_space_for_range_attack(int targetXLoc, int targetYLoc, int target
 
 	Location *locPtr = world.get_loc(curXLoc, curYLoc);
 	int regionId = locPtr->region_id;
-	int xLoc1 = max(targetXLoc-maxRange, 0);
-	int yLoc1 = max(targetYLoc-maxRange, 0);
-	int xLoc2 = min(targetXLoc+targetWidth-1+maxRange, MAX_WORLD_X_LOC-1);
-	int yLoc2 = min(targetYLoc+targetHeight-1+maxRange, MAX_WORLD_Y_LOC-1);
+	int xLoc1 = MAX(targetXLoc-maxRange, 0);
+	int yLoc1 = MAX(targetYLoc-maxRange, 0);
+	int xLoc2 = MIN(targetXLoc+targetWidth-1+maxRange, MAX_WORLD_X_LOC-1);
+	int yLoc2 = MIN(targetYLoc+targetHeight-1+maxRange, MAX_WORLD_Y_LOC-1);
 	int checkXLoc, checkYLoc;
 
 	//--------- do adjustment for UNIT_SEA and UNIT_AIR ---------//

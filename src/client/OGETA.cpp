@@ -242,14 +242,14 @@ void GetA::paint(int paintCursor)
 		{
 		case 0:
 			IMGbltArea(bitmap, textWidth, 0, 0, back_ground_bitmap, 
-				0, 0, min(textWidth, backGroundWidth)-1, min(textHeight, backGroundHeight)-1 );
+				0, 0, MIN(textWidth, backGroundWidth)-1, MIN(textHeight, backGroundHeight)-1 );
 			break;
 		case 1:
 			{
 				int l = (x_limit - x + 1 - textWidth ) / 2;
 				if( l >= 0 && l < backGroundWidth )
 				IMGbltArea(bitmap, textWidth, 0, 0, back_ground_bitmap, 
-					l, 0, min(l+textWidth, backGroundWidth)-1, min(textHeight, backGroundHeight)-1 );
+					l, 0, MIN(l+textWidth, backGroundWidth)-1, MIN(textHeight, backGroundHeight)-1 );
 			}
 			break;
 		case -1:
@@ -257,7 +257,7 @@ void GetA::paint(int paintCursor)
 				int l = x_limit - textWidth + 1 - x;
 				if( l < backGroundWidth )
 					IMGbltArea(bitmap, textWidth, 0, 0, back_ground_bitmap, 
-						l, 0, min(x_limit-x+1, backGroundWidth)-1, min(textHeight, backGroundHeight)-1 );
+						l, 0, MIN(x_limit-x+1, backGroundWidth)-1, MIN(textHeight, backGroundHeight)-1 );
 			}
 			break;
 		default:
@@ -272,7 +272,7 @@ void GetA::paint(int paintCursor)
 		if( leftX < textWidth )
 		{
 			IMGbar( bitmap, textWidth, 
-				leftX, font_ptr->height()-1, min(rightX, textWidth-1), font_ptr->height()-1, 0);
+				leftX, font_ptr->height()-1, MIN(rightX, textWidth-1), font_ptr->height()-1, 0);
 		}
 
 		// vertical bar
@@ -300,7 +300,7 @@ void GetA::paint(int paintCursor)
 				short backGroundHeight = *(1+(short *)back_ground_bitmap);
 				if( textWidth < backGroundWidth && x+textWidth <= x_limit )		// fill right
 					vga_front.put_bitmap_area(x, y, back_ground_bitmap,
-					textWidth, 0, min(x_limit-x, backGroundWidth-1), backGroundHeight-1 );
+					textWidth, 0, MIN(x_limit-x, backGroundWidth-1), backGroundHeight-1 );
 				vga_front.put_bitmap_trans(x, y, sys.common_data_buf);
 			}
 			break;
@@ -329,12 +329,12 @@ void GetA::paint(int paintCursor)
 				if( x < l && l-x <= backGroundWidth)
 				{
 					vga_front.put_bitmap_area(x, y, back_ground_bitmap, 
-						0, 0, min(l-x, backGroundWidth)-1, backGroundHeight-1);
+						0, 0, MIN(l-x, backGroundWidth)-1, backGroundHeight-1);
 				}
 				if( l+textWidth <= x_limit && l+textWidth-x < backGroundWidth)
 				{
 					vga_front.put_bitmap_area(x, y, back_ground_bitmap,
-						l+textWidth-x, 0, min(x_limit-x+1, backGroundWidth)-1, backGroundHeight-1);
+						l+textWidth-x, 0, MIN(x_limit-x+1, backGroundWidth)-1, backGroundHeight-1);
 				}
 				vga_front.put_bitmap_trans(l, y, sys.common_data_buf);
 			}
@@ -357,7 +357,7 @@ void GetA::paint(int paintCursor)
 				int l = x_limit - textWidth + 1;
 				if( x < l )
 					vga_front.put_bitmap_area(0, 0, back_ground_bitmap,
-					0, 0, min(l-x, backGroundWidth)-1, backGroundHeight-1 );
+					0, 0, MIN(l-x, backGroundWidth)-1, backGroundHeight-1 );
 				vga_front.put_bitmap_trans(l, y, sys.common_data_buf);
 			}
 			break;
@@ -469,12 +469,12 @@ unsigned GetA::detect()
 
 unsigned GetA::mark_begin()
 {
-	return min( cursor_pos, mark_cursor_pos );
+	return MIN( cursor_pos, mark_cursor_pos );
 }
 
 unsigned GetA::mark_end()
 {
-	return max( cursor_pos, mark_cursor_pos );
+	return MAX( cursor_pos, mark_cursor_pos );
 }
 
 void GetA::select_whole()

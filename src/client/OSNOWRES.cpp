@@ -69,7 +69,7 @@ void SnowInfo::draw_at(short absX, short absY)
 	{
 		// no put_bitmap_area_remap
 		vga_back.put_bitmap_area_trans_decompress( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-			max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1);
+			MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1);
 	}
 	else
 	//---- the whole sprite is inside the view area ------//

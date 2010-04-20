@@ -330,7 +330,7 @@ int Firm::spy_bribe(int bribeAmount, short briberSpyRecno, short workerId)
 
 		newSpy->spy_skill = 10;
 		newSpy->action_mode = SPY_IDLE;
-		newSpy->spy_loyalty = min( 100, max(30,succeedChance) );		// within the 30-100 range
+		newSpy->spy_loyalty = MIN( 100, MAX(30,succeedChance) );		// within the 30-100 range
 
 		newSpy->true_nation_recno    = spyPtr->true_nation_recno;
 		newSpy->cloaked_nation_recno = spyPtr->cloaked_nation_recno;

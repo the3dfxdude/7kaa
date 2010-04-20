@@ -554,7 +554,7 @@ void UnitGod::persian_cast_power(int unitRecno, int divider)
 	{
 		float changePoints = (float) unitPtr->max_hit_points / (6+m.random(4));	 // divided by (6 to 9)
 
-		changePoints = max( changePoints, 10 );
+		changePoints = MAX( changePoints, 10 );
 
 		unitPtr->change_hit_points( changePoints/divider );
 	}
@@ -574,7 +574,7 @@ void UnitGod::japanese_cast_power(int unitRecno, int divider)
 	{
 		int changePoints = 7 + m.random(8);		// decrease 7 to 15 loyalty points instantly
 
-		unitPtr->change_loyalty( -max(1, changePoints/divider) );
+		unitPtr->change_loyalty( -MAX(1, changePoints/divider) );
 	}
 }
 //---------- End of function UnitGod::japanese_cast_power ----------//
@@ -617,9 +617,9 @@ void UnitGod::persian_cast_power(Worker* workerPtr, int nationRecno, int divider
 	{
 		int changePoints = workerPtr->max_hit_points() / (4+m.random(4));	 // divided by (4 to 7)
 
-		changePoints = max( changePoints, 10 );
+		changePoints = MAX( changePoints, 10 );
 
-		workerPtr->change_hit_points( max(1, changePoints/divider) );
+		workerPtr->change_hit_points( MAX(1, changePoints/divider) );
 	}
 }
 //---------- End of function UnitGod::persian_cast_power ----------//
@@ -635,7 +635,7 @@ void UnitGod::japanese_cast_power(Worker* workerPtr, int nationRecno, int divide
 	{
 		int changePoints = 7 + m.random(8);		// decrease 7 to 15 loyalty points instantly
 
-		workerPtr->change_loyalty( -max(1, changePoints/divider) );
+		workerPtr->change_loyalty( -MAX(1, changePoints/divider) );
 	}
 }
 //---------- End of function UnitGod::japanese_cast_power ----------//
@@ -651,7 +651,7 @@ void UnitGod::maya_cast_power(Worker* workerPtr, int nationRecno, int divider)
 	{
 		int changePoints = 15 + m.random(10);		// add 15 to 25 points to its combat level instantly
 
-		int newCombatLevel = workerPtr->combat_level + max(1, changePoints/divider);
+		int newCombatLevel = workerPtr->combat_level + MAX(1, changePoints/divider);
 
 		if( newCombatLevel > 100 )
 			newCombatLevel = 100;

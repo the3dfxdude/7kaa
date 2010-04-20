@@ -1106,7 +1106,7 @@ int Audio::play_long_wav(const char *wavName, DsVolume dsVolume)
 	}
 
 	// write to pointers
-	memcpy(lpvPtr1, wav_buf, min(dwBytes1, readStreamSize));
+	memcpy(lpvPtr1, wav_buf, MIN(dwBytes1, readStreamSize));
 	if( dwBytes1 > readStreamSize )
 	{	// end of file, fill the remaining with zero
 		memset((char *)lpvPtr1+readStreamSize, 0, dwBytes1 - readStreamSize);
@@ -1117,7 +1117,7 @@ int Audio::play_long_wav(const char *wavName, DsVolume dsVolume)
 		readStreamSize -= dwBytes1;
 		if(lpvPtr2 && dwBytes2 > 0)
 		{
-			memcpy(lpvPtr2, wav_buf+dwBytes1, min(dwBytes2, readStreamSize));
+			memcpy(lpvPtr2, wav_buf+dwBytes1, MIN(dwBytes2, readStreamSize));
 			if( dwBytes2 > readStreamSize )
 			{ // end of file, fill the remaining with zero
 				memset((char *)lpvPtr2+readStreamSize, 0 , dwBytes2 - readStreamSize);
@@ -1342,13 +1342,13 @@ int	Audio::play_loop_wav(const char *wavName, int repeatOffset, DsVolume dsVolum
 
 	// write to pointers, assume wave file repeating size is
 	// larger than OptBufferSize * LOOPWAV_BANKS
-	memcpy(lpvPtr1, wav_buf, min(dwBytes1, readStreamSize));
+	memcpy(lpvPtr1, wav_buf, MIN(dwBytes1, readStreamSize));
 	if( dwBytes1 < readStreamSize )
 	{
 		readStreamSize -= dwBytes1;
 		if(lpvPtr2 && dwBytes2 > 0)
 		{
-			memcpy(lpvPtr2, wav_buf+dwBytes1, min(dwBytes2, readStreamSize));
+			memcpy(lpvPtr2, wav_buf+dwBytes1, MIN(dwBytes2, readStreamSize));
 		}
 	}
 

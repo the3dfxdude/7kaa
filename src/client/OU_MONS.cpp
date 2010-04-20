@@ -138,9 +138,9 @@ void UnitMonster::die()
 	{
 		int txLoc, tyLoc, foundFlag=0;
 
-		for( tyLoc=max(yLoc-1,0) ; tyLoc<=min(yLoc+1,MAX_WORLD_Y_LOC-1) && !foundFlag ; tyLoc++ )
+		for( tyLoc=MAX(yLoc-1,0) ; tyLoc<=MIN(yLoc+1,MAX_WORLD_Y_LOC-1) && !foundFlag ; tyLoc++ )
 		{
-			for( txLoc=max(xLoc-1,0) ; txLoc<=min(xLoc+1,MAX_WORLD_X_LOC-1) ; txLoc++ )
+			for( txLoc=MAX(xLoc-1,0) ; txLoc<=MIN(xLoc+1,MAX_WORLD_X_LOC-1) ; txLoc++ )
 			{
 				if( world.get_loc(txLoc,tyLoc)->can_build_site() )
 				{
@@ -209,11 +209,11 @@ void UnitMonster::king_leave_scroll()
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;
 
-		xLoc = max(0, xLoc);
-		xLoc = min(MAX_WORLD_X_LOC-1, xLoc);
+		xLoc = MAX(0, xLoc);
+		xLoc = MIN(MAX_WORLD_X_LOC-1, xLoc);
 
-		yLoc = max(0, yLoc);
-		yLoc = min(MAX_WORLD_Y_LOC-1, yLoc);
+		yLoc = MAX(0, yLoc);
+		yLoc = MIN(MAX_WORLD_Y_LOC-1, yLoc);
 
 		locPtr = world.get_loc(xLoc, yLoc);
 
@@ -253,11 +253,11 @@ void UnitMonster::king_leave_scroll()
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;
 
-		xLoc = max(0, xLoc);
-		xLoc = min(MAX_WORLD_X_LOC-1, xLoc);
+		xLoc = MAX(0, xLoc);
+		xLoc = MIN(MAX_WORLD_X_LOC-1, xLoc);
 
-		yLoc = max(0, yLoc);
-		yLoc = min(MAX_WORLD_Y_LOC-1, yLoc);
+		yLoc = MAX(0, yLoc);
+		yLoc = MIN(MAX_WORLD_Y_LOC-1, yLoc);
 
 		locPtr = world.get_loc(xLoc, yLoc);
 
@@ -296,11 +296,11 @@ int UnitMonster::random_attack()
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;
 
-		xLoc = max(0, xLoc);
-		xLoc = min(MAX_WORLD_X_LOC-1, xLoc);
+		xLoc = MAX(0, xLoc);
+		xLoc = MIN(MAX_WORLD_X_LOC-1, xLoc);
 
-		yLoc = max(0, yLoc);
-		yLoc = min(MAX_WORLD_Y_LOC-1, yLoc);
+		yLoc = MAX(0, yLoc);
+		yLoc = MIN(MAX_WORLD_Y_LOC-1, yLoc);
 
 		locPtr = world.get_loc(xLoc, yLoc);
 
@@ -428,11 +428,11 @@ void UnitMonster::group_order_monster(int destXLoc, int destYLoc, int actionType
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;
 
-		xLoc = max(0, xLoc);
-		xLoc = min(MAX_WORLD_X_LOC-1, xLoc);
+		xLoc = MAX(0, xLoc);
+		xLoc = MIN(MAX_WORLD_X_LOC-1, xLoc);
 
-		yLoc = max(0, yLoc);
-		yLoc = min(MAX_WORLD_Y_LOC-1, yLoc);
+		yLoc = MAX(0, yLoc);
+		yLoc = MIN(MAX_WORLD_Y_LOC-1, yLoc);
 
 		locPtr = world.get_loc(xLoc, yLoc);
 

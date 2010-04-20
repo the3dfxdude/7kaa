@@ -683,7 +683,7 @@ void Spy::update_loyalty()
 	if( race_id == ownNation->race_id )
 		targetLoyalty += 20;
 
-	targetLoyalty = min( targetLoyalty, 100 );
+	targetLoyalty = MIN( targetLoyalty, 100 );
 
 	if( spy_loyalty > targetLoyalty )		
 		spy_loyalty--;
@@ -700,9 +700,9 @@ void Spy::change_loyalty(int changeAmt)
 {
 	int newLoyalty = spy_loyalty + changeAmt;
 
-	newLoyalty = max(0, newLoyalty);
+	newLoyalty = MAX(0, newLoyalty);
 
-	spy_loyalty = min(100, newLoyalty);
+	spy_loyalty = MIN(100, newLoyalty);
 }
 //---------- End of function Spy::change_loyalty ----------//
 
@@ -943,7 +943,7 @@ int Spy::capture_firm()
 				//--- if the worker obey, update its loyalty ---//
 
 				if( obeyFlag )
-					workerPtr->worker_loyalty = max(UNIT_BETRAY_LOYALTY, obeyChance/2);
+					workerPtr->worker_loyalty = MAX(UNIT_BETRAY_LOYALTY, obeyChance/2);
 
 				//--- if the worker does not obey, it is mobilized and attack the base ---//
 

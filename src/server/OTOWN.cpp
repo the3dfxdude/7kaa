@@ -901,7 +901,7 @@ void Town::init_pop(int raceId, int addPop, int addLoyalty, int hasJob, int firs
 	if(population>=MAX_TOWN_POPULATION)
 		return;
 
-	int addPopulation = min(addPop, MAX_TOWN_POPULATION-population);
+	int addPopulation = MIN(addPop, MAX_TOWN_POPULATION-population);
 	
 	//-------- update population ---------//
 
@@ -1283,12 +1283,12 @@ void Town::update_target_loyalty()
 			if( firmPtr->nation_recno == nation_recno )	// if the command base belongs to the same nation
 			{
 				targetLoyalty = race_target_loyalty_array[j] + thisInfluence;
-				race_target_loyalty_array[j] = min(100, targetLoyalty);
+				race_target_loyalty_array[j] = MIN(100, targetLoyalty);
 			}
 			else if( unitPtr->race_id == j+1 )		// for enemy camps, only decrease same race peasants
 			{
 				targetLoyalty = race_target_loyalty_array[j] - thisInfluence;
-				race_target_loyalty_array[j] = max(0, targetLoyalty);
+				race_target_loyalty_array[j] = MAX(0, targetLoyalty);
 			}
 		}
 	}
@@ -1346,13 +1346,13 @@ void Town::update_loyalty()
 
 			loyaltyInc = (targetLoyalty-race_loyalty_array[i]) / 30;
 
-			change_loyalty( i+1, max(loyaltyInc, (float)0.5) );
+			change_loyalty( i+1, MAX(loyaltyInc, (float)0.5) );
 		}
 		else if(race_loyalty_array[i] > targetLoyalty)
 		{
 			loyaltyDec = (race_loyalty_array[i]-targetLoyalty) / 30;
 
-			change_loyalty( i+1, -max(loyaltyDec, (float)0.5) );
+			change_loyalty( i+1, -MAX(loyaltyDec, (float)0.5) );
 		}
 	}
 }
@@ -1368,8 +1368,8 @@ void Town::change_loyalty(int raceId, float loyaltyChange)
 {
 	float newLoyalty = race_loyalty_array[raceId-1] + loyaltyChange;
 
-   newLoyalty = min( 100, newLoyalty );
-	newLoyalty = max(   0, newLoyalty );
+   newLoyalty = MIN( 100, newLoyalty );
+	newLoyalty = MAX(   0, newLoyalty );
 
 	race_loyalty_array[raceId-1] = newLoyalty;
 }
@@ -1389,8 +1389,8 @@ void Town::change_resistance(int raceId, int nationRecno, float resistanceChange
 
 	float newResistance = race_resistance_array[raceId-1][nationRecno-1] + resistanceChange;
 
-	newResistance = min( 100, newResistance );
-	newResistance = max(   0, newResistance );
+	newResistance = MIN( 100, newResistance );
+	newResistance = MAX(   0, newResistance );
 
 	race_resistance_array[raceId-1][nationRecno-1] = newResistance;
 }
@@ -1493,7 +1493,7 @@ int Town::camp_influence(int unitRecno)
 
 	thisInfluence += (int) nationPtr->reputation/2;;
 
-	thisInfluence = min(100, thisInfluence);
+	thisInfluence = MIN(100, thisInfluence);
 
 	return thisInfluence;
 }
@@ -1537,7 +1537,7 @@ void Town::update_resistance()
 				{
 					float decValue = (race_resistance_array[i][j]-targetResistance) / 30;
 
-					race_resistance_array[i][j] -= max(1, decValue);
+					race_resistance_array[i][j] -= MAX(1, decValue);
 
 					if(race_resistance_array[i][j] < targetResistance) // avoid resistance oscillate between taregtLoyalty-1 and taregtLoyalty+1
 						race_resistance_array[i][j] = (float)targetResistance;
@@ -1608,7 +1608,7 @@ void Town::collect_tax(char remoteAction)
 
 	int loyaltyDecrease = COLLECT_TAX_LOYALTY_DECREASE + accumulated_collect_tax_penalty/5;
 
-	loyaltyDecrease = min(loyaltyDecrease, COLLECT_TAX_LOYALTY_DECREASE+10);
+	loyaltyDecrease = MIN(loyaltyDecrease, COLLECT_TAX_LOYALTY_DECREASE+10);
 
 	accumulated_collect_tax_penalty += 10;
 
@@ -1672,7 +1672,7 @@ void Town::reward(char remoteAction)
 
 	int loyaltyIncrease = TOWN_REWARD_LOYALTY_INCREASE - accumulated_reward_penalty/5;
 
-	loyaltyIncrease = max(3, loyaltyIncrease);
+	loyaltyIncrease = MAX(3, loyaltyIncrease);
 
 	accumulated_reward_penalty += 10;
 
@@ -2026,10 +2026,10 @@ int Town::create_rebel_unit(int raceId, int isLeader)
 		int combatLevel 	  = 10 + population*2 + m.random(10);		// the higher the population is, the higher the combat level will be
 		int leadershipLevel = 10 + population   + m.random(10);		// the higher the population is, the higher the combat level will be
 
-		unitPtr->set_combat_level( min(combatLevel, 100) );
+		unitPtr->set_combat_level( MIN(combatLevel, 100) );
 
 		unitPtr->skill.skill_id 	= SKILL_LEADING;
-		unitPtr->skill.skill_level = min(leadershipLevel, 100);
+		unitPtr->skill.skill_level = MIN(leadershipLevel, 100);
 	}
 	else
 	{
@@ -2106,7 +2106,7 @@ void Town::assign_unit(int unitRecno)
 					float newResistance = race_resistance_array[unitPtr->race_id-1][i]
 												 + loyaltyInc + RESISTANCE_INCREASE;
 
-					race_resistance_array[unitPtr->race_id-1][i]	= min(newResistance, 100);
+					race_resistance_array[unitPtr->race_id-1][i]	= MIN(newResistance, 100);
 				}
 			}
 		}
@@ -2253,7 +2253,7 @@ int Town::think_migrate_one(Town* targetTown, int raceId, int townDistance)
 	if( recruitable_race_pop(raceId,0)==0 )		//0-don't recruit spies
 		return 0;
 
-	//---- if the target town's population has already reached its max ----//
+	//---- if the target town's population has already reached its MAX ----//
 
 	if( targetTown->population>=MAX_TOWN_POPULATION )
 		return 0 ;
@@ -2311,7 +2311,7 @@ int Town::think_migrate_one(Town* targetTown, int raceId, int townDistance)
 
 		//---------- migrate now ----------//
 
-		int newLoyalty = max( targetAttractLevel/2, 40 );
+		int newLoyalty = MAX( targetAttractLevel/2, 40 );
 
 		migrate(raceId, targetTown->town_recno, newLoyalty);
 		return 1;
@@ -2681,7 +2681,7 @@ void Town::being_attacked(int attackerUnitRecno, float attackDamage)
 				else
 					loyaltyDec = (float) 10 / race_pop_array[raceId-1];
 
-				loyaltyDec = min( loyaltyDec, (float) 1 );
+				loyaltyDec = MIN( loyaltyDec, (float) 1 );
 
 				change_loyalty( raceId, -loyaltyDec * attackDamage / (20/ATTACK_SLOW_DOWN) );
 			}
@@ -2711,7 +2711,7 @@ void Town::being_attacked(int attackerUnitRecno, float attackDamage)
 					continue;
 
 				loyaltyDec = (float) 10 / race_pop_array[raceId-1];		// decrease faster for independent towns than towns belonging to nations
-				loyaltyDec = min( loyaltyDec, (float) 1 );
+				loyaltyDec = MIN( loyaltyDec, (float) 1 );
 
 				race_resistance_array[raceId-1][attackerNationRecno-1] -= loyaltyDec * attackDamage / (20/ATTACK_SLOW_DOWN);
 
@@ -2879,8 +2879,8 @@ int Town::mobilize_defender(int attackerNationRecno)
 
 	int combatLevel = town_combat_level + m.random(20) - 10;		// -10 to +10 random difference
 
-	combatLevel = min(combatLevel, 100);
-	combatLevel = max(combatLevel, 10);
+	combatLevel = MIN(combatLevel, 100);
+	combatLevel = MAX(combatLevel, 10);
 
 	unitPtr->set_combat_level(combatLevel);
 
@@ -3170,7 +3170,7 @@ void Town::distribute_demand()
 				{
 					//--- towns always try to buy goods from their own markets first ---//
 
-					ownShareDemand = min(townDemand, marketGoodsInfo->total_own_supply);
+					ownShareDemand = MIN(townDemand, marketGoodsInfo->total_own_supply);
 
 					if( firmMarket->nation_recno == nation_recno )
 					{
@@ -4380,7 +4380,7 @@ int Town::grant_to_non_own_town(int grantNationRecno, int remoteAction)
 
 	int resistanceDec = IND_TOWN_GRANT_RESISTANCE_DECREASE - accumulated_enemy_grant_penalty/5;
 
-	resistanceDec = max(3, resistanceDec);
+	resistanceDec = MAX(3, resistanceDec);
 
 	accumulated_enemy_grant_penalty += 10;
 

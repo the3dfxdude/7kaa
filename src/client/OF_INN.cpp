@@ -302,8 +302,8 @@ int FirmInn::hire(short recNo)
 	if( race_res.is_same_race(unitPtr->race_id, nationPtr->race_id) )
 		unitLoyalty += 20;
 
-	unitLoyalty = max( 40, unitLoyalty );
-	unitLoyalty = min( 100, unitLoyalty );
+	unitLoyalty = MAX( 40, unitLoyalty );
+	unitLoyalty = MIN( 100, unitLoyalty );
 
 	if( unitPtr->spy_recno )
 		spy_array[unitPtr->spy_recno]->spy_loyalty = unitLoyalty;

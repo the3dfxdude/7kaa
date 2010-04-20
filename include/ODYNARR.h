@@ -216,7 +216,7 @@ inline void DynArray::pop(void* ent)
 //
 inline void DynArray::start()
 {
-   cur_pos = min(1,last_ele);
+   cur_pos = MIN(1,last_ele);
 }
 
 inline void DynArray::end()
@@ -257,7 +257,7 @@ inline void DynArray::jump(int step)
    cur_pos+=step;
 
    if ( cur_pos < 0 )
-      cur_pos = min(1,last_ele) ;
+      cur_pos = MIN(1,last_ele) ;
 
    if ( cur_pos > last_ele )
       cur_pos = last_ele;

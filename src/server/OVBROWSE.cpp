@@ -138,12 +138,12 @@ void VBrowse::init_var(int totalRec, int recNo)
    rec_no     = recNo;
 
    top_rec_no = recNo - disp_max_rec/2;
-   top_rec_no = max(1,top_rec_no);
+   top_rec_no = MAX(1,top_rec_no);
 
    if( top_rec_no+disp_max_rec-1 > total_rec_num )      // if there is an empty area at the lower part of the browser
    {
       top_rec_no = total_rec_num-disp_max_rec+1;
-      top_rec_no = max(top_rec_no,1);
+      top_rec_no = MAX(top_rec_no,1);
    }
 
    //------------- initialize scroll bar ---------------//
@@ -193,7 +193,7 @@ void VBrowse::open(int recNo, int newTotalRec)
 	if( !newTotalRec )
 	{
 		top_rec_no = rec_no - disp_max_rec/2;
-		top_rec_no = max(1,top_rec_no);
+		top_rec_no = MAX(1,top_rec_no);
 	}
 	else	// keep the original top_rec_no
 	{
@@ -207,7 +207,7 @@ void VBrowse::open(int recNo, int newTotalRec)
 	if( top_rec_no+disp_max_rec-1 > total_rec_num )      // if there is an empty area at the lower part of the browser
 	{
 		top_rec_no = total_rec_num-disp_max_rec+1;
-		top_rec_no = max(top_rec_no,1);
+		top_rec_no = MAX(top_rec_no,1);
 	}
 
 	//------- display all records -------//

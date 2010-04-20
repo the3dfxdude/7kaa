@@ -322,7 +322,7 @@ void TownArray::think_new_independent_town()
 		err_when( loopCount++ > 100 );
 
 		addPop = race_wander_pop_array[raceId-1];
-		addPop = min(maxTownPop-townPtr->population, addPop);
+		addPop = MIN(maxTownPop-townPtr->population, addPop);
 
 		townResistance = independent_town_resistance();
 

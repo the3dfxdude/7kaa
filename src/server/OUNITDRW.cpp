@@ -96,12 +96,12 @@ void Unit::draw()
 		if( needMirror )	// if this direction needed to be mirrored
 		{
 			vga_back.put_bitmap_area_trans_remap_decompress_hmirror( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
-				max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
+				MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
 		}
 		else
 		{
 			vga_back.put_bitmap_area_trans_remap_decompress( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
-				max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
+				MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
 		}
 	}
 
@@ -186,7 +186,7 @@ void Unit::draw_selected()
 		if( max_hit_points <= hit_bar_max_array[i] || i==HIT_BAR_TYPE_COUNT-1 )
 		{
 			hitBarColor = hit_bar_color_array[i];
-			hitBarMax   = max_hit_points; 	// max( max_hit_points, hit_bar_max_array[i] );
+			hitBarMax   = max_hit_points; 	// MAX( max_hit_points, hit_bar_max_array[i] );
 			break;
 		}
 	}
@@ -263,7 +263,7 @@ void Unit::draw_selected()
 	else
 		IMGbar( dataPtr, curBarWidth, curBarWidth-1, 1, curBarWidth-1, 1, NO_BAR_DARK_BORDER );				// right -without hit
 
-	IMGbar( dataPtr, curBarWidth, 1, 1, min(pointX,curBarWidth-2), 1, hitBarColor+HIT_BAR_BODY );	// bar body
+	IMGbar( dataPtr, curBarWidth, 1, 1, MIN(pointX,curBarWidth-2), 1, hitBarColor+HIT_BAR_BODY );	// bar body
 
 	if( pointX < curBarWidth - 2 )
 		IMGbar( dataPtr, curBarWidth, pointX+1, 1, curBarWidth-2, 1, NO_BAR_BODY );	// bar body
@@ -417,12 +417,12 @@ void Unit::draw_outlined()
 		if( needMirror )	// if this direction needed to be mirrored
 		{
 			vga_back.put_bitmap_area_trans_remap_decompress_hmirror( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
-				max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
+				MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
 		}
 		else
 		{
 			vga_back.put_bitmap_area_trans_remap_decompress( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
-				max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
+				MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1, colorRemapTable );
 		}
 	}
 

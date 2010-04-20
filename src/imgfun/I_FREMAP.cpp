@@ -153,7 +153,7 @@ void decideBarRemap(char*imageBuf, int pitch, int x, int y, char**colorTableArra
 	if ( (cornera_lvl==cornerb_lvl) && (cornerc_lvl==cornerd_lvl) && (cornera_lvl==cornerc_lvl) )
 	{
 		// no interpolation needed
-		if (cornera_lvl == MAX_VISIBILITY)	// max visibility
+		if (cornera_lvl == MAX_VISIBILITY)	// MAX visibility
 		{
 			// (don't do anything)
 		}

@@ -271,7 +271,7 @@ int Font::put(int x,int y,const char* textPtr, char clearBack, int x2 )
 	if( x2 < 0 ) // default
 		x2 = x+max_font_width*textPtrLen;
 
-	x2 = min( x2, VGA_WIDTH-1 );
+	x2 = MIN( x2, VGA_WIDTH-1 );
 
 	if( !Vga::use_back_buf )
 		mouse.hide_area( x, y, x2, y+font_height );
@@ -478,7 +478,7 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 //		textChar = translate_german_char(textChar);
 //#endif
 
-		//-- if the line exceed the given max width, advance to next line --//
+		//-- if the line exceed the given MAX width, advance to next line --//
 
 		if( maxDispWidth && x > maxDispWidth )
 		{
@@ -544,7 +544,7 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 	if( textPtr[-1] == '\n' )       // if last character is line feed, don't count double
 		text_line_count--;
 
-	return max(maxLen,x);
+	return MAX(maxLen,x);
 }
 //----------- End of function Font::text_width ----//
 

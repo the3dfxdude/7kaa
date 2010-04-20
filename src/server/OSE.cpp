@@ -40,7 +40,7 @@ void SERequest::add_request(RelVolume relVolume)
 	}
 	else
 	{
-		// not enough space, remove the min volume one.
+		// not enough space, remove the MIN volume one.
 		RelVolume minVolume = relVolume;
 		for( int i = 0; i < MAX_SE_STORE; ++i)
 		{
@@ -218,7 +218,7 @@ void SECtrl::clear()
 // Request to sound an effect
 //
 // <int> soundEffect        the id of the sound effect, return from SECtrl::search_effect_id
-// <long> vol               volume (0 - 100 max loudness)
+// <long> vol               volume (0 - 100 MAX loudness)
 // <long> pan               pan (-10000 = full left; 10000 = full right)
 // note the request is abolished if vol is 0 or soundEffect is 0
 //
@@ -461,7 +461,7 @@ const default_vol_limit = 20;
 const default_vol_drop = 100;
 long SECtrl::sound_volume(short locX, short locY)
 {
-	short dist = max( locX >= 0? locX : -locX, locY >= 0? locY:-locY);
+	short dist = MAX( locX >= 0? locX : -locX, locY >= 0? locY:-locY);
 	err_when( default_vol_drop <= default_vol_limit);
 
 	if( dist > default_vol_limit)
@@ -473,7 +473,7 @@ long SECtrl::sound_volume(short locX, short locY)
 
 long SECtrl::sound_volume(short locX, short locY, short limit, short drop)
 {
-	short dist = max( locX >= 0? locX : -locX, locY >= 0? locY:-locY);
+	short dist = MAX( locX >= 0? locX : -locX, locY >= 0? locY:-locY);
 	err_when( drop <= limit);
 
 	if( dist > limit)

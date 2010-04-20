@@ -1823,7 +1823,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
          }
          break;
 
-      case 'b':      // finish building a firm instantly or increase the hit points of a firm to its max
+      case 'b':      // finish building a firm instantly or increase the hit points of a firm to its MAX
          if( firm_array.selected_recno )
          {
             Firm* firmPtr = firm_array[firm_array.selected_recno];
@@ -1847,7 +1847,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
          {
             Unit* unitPtr = unit_array[unit_array.selected_recno];
 
-            unitPtr->set_combat_level( min(100, unitPtr->skill.combat_level+20) );
+            unitPtr->set_combat_level( MIN(100, unitPtr->skill.combat_level+20) );
          }
          break;
 
@@ -1859,7 +1859,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
             Unit* unitPtr = unit_array[unit_array.selected_recno];
 
             if( unitPtr->skill.skill_id )
-               unitPtr->skill.skill_level = min(100, unitPtr->skill.skill_level+20);
+               unitPtr->skill.skill_level = MIN(100, unitPtr->skill.skill_level+20);
          }
          break;
 
@@ -1874,7 +1874,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
             {
                Spy* spyPtr = spy_array[unitPtr->spy_recno];
 
-               spyPtr->spy_skill = min(100, spyPtr->spy_skill+20);
+               spyPtr->spy_skill = MIN(100, spyPtr->spy_skill+20);
             }
          }
          break;

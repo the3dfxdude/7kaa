@@ -223,7 +223,7 @@ void FirmRes::load_firm_build()
 
 			firmBuild->frame_delay_array[j] = m.atoi( firmFrameRec->delay, firmFrameRec->DELAY_LEN );
 
-			//---- get the min offset_x, offset_y and max width, height ----//
+			//---- get the MIN offset_x, offset_y and MAX width, height ----//
 			//
 			// So we can get the largest area of all the frames in this building
 			// and this will serve as a normal size setting for this building,

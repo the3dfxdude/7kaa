@@ -530,8 +530,8 @@ int TerrainRes::scan(int primaryType, int secondaryType,	int patternId,
 		secondaryType = primaryType;
 
 	// ----------- search 1, search the lower type -------//
-	int terrainId = nw_type_min[min(primaryType, secondaryType)-1];
-	int terrainIdMax = nw_type_max[min(primaryType, secondaryType)-1];
+	int terrainId = nw_type_min[MIN(primaryType, secondaryType)-1];
+	int terrainIdMax = nw_type_max[MIN(primaryType, secondaryType)-1];
 	TerrainInfo* terrainInfo = terrain_info_array+terrainId-1;
 	// int firstTerrainId=0, instanceCount=0;
 
@@ -572,8 +572,8 @@ int TerrainRes::scan(int primaryType, int secondaryType,	int patternId,
 	// ----------- search 2, search the higher type ---------//
 	if( primaryType != secondaryType)
 	{
-		terrainId = nw_type_min[max(primaryType, secondaryType)-1];
-		terrainIdMax = nw_type_max[max(primaryType, secondaryType)-1];
+		terrainId = nw_type_min[MAX(primaryType, secondaryType)-1];
+		terrainIdMax = nw_type_max[MAX(primaryType, secondaryType)-1];
 		terrainInfo = terrain_info_array+terrainId-1;
 		// int firstTerrainId=0, instanceCount=0;
 

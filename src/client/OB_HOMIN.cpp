@@ -154,7 +154,7 @@ void BulletHoming::process_move()
 
 			int xStep 	= abs(go_x - (cur_x+adjX))/speed;
 			int yStep 	= abs(go_y - (cur_y+adjY))/speed;
-			total_step  = cur_step +  max(xStep, yStep);
+			total_step  = cur_step +  MAX(xStep, yStep);
 
 			// a homing bullet has a limited range, if the target go outside the
 			// the limit, the bullet can't attack the target

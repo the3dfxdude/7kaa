@@ -968,7 +968,7 @@ void UnitArray::move_to_now(int destXLoc, int destYLoc, short* selectedUnitArray
 void UnitArray::construct_sorted_array(short* selectedUnitArray, int selectedCount)
 {
 	Unit*			unitPtr;
-	int			min, dist;		// for comparison
+	int			MIN, dist;		// for comparison
 	int			i, j, k;
 	const int	c = 1000;		// c value for the d(x,y) function
 
@@ -1002,12 +1002,12 @@ void UnitArray::construct_sorted_array(short* selectedUnitArray, int selectedCou
 	//------ sorting the distance and store in sortedDistance Array -------//
 	for(j=0; j<selectedCount; j++)
 	{
-		min = 0xFFFFFF;
+		MIN = 0xFFFFFF;
 		for(i=0; i<selectedCount; i++)
 		{	
-			if(done_flag[i]==0 && (dist = distance[i])<min)
+			if(done_flag[i]==0 && (dist = distance[i])<MIN)
 			{
-				min = dist;
+				MIN = dist;
 				k = i;
 			}
 		}
@@ -1017,28 +1017,28 @@ void UnitArray::construct_sorted_array(short* selectedUnitArray, int selectedCou
 
 	//----------------- find the minimum value --------------//
 	#ifdef DEBUG
-		min = 0xFFFFFF;
+		MIN = 0xFFFFFF;
 		for(j=0; j<selectedCount; j++)
 		{
-			if((dist = distance[j])<min)
-				min = dist;
+			if((dist = distance[j])<MIN)
+				MIN = dist;
 		}
 
-		err_when(min!=distance[sorted_distance[0]]);
+		err_when(MIN!=distance[sorted_distance[0]]);
 	#else
-		min = distance[sorted_distance[0]];
+		MIN = distance[sorted_distance[0]];
 	#endif
 	
 	int defArraySize		= 5;	//****** BUGHERE, 5 is chosen arbitrary
 	int *leftQuotZ  = (int*) mem_add(defArraySize*sizeof(int));
 	int *rightQuotZ = (int*) mem_add(defArraySize*sizeof(int));
-	int remainder = min%c;
+	int remainder = MIN%c;
 	int index;
 
 	//-- adjust the value to allow changing form between upper left and lower right shape --//
 	
 	for(j=0; j<defArraySize; j++)
-		leftQuotZ[j] = rightQuotZ[j] = min-remainder;
+		leftQuotZ[j] = rightQuotZ[j] = MIN-remainder;
 	
 	for(j=0; j<selectedCount; j++)
 	{
@@ -1069,12 +1069,12 @@ void UnitArray::construct_sorted_array(short* selectedUnitArray, int selectedCou
 	//---------- sorting -------------//
 	for(j=0; j<selectedCount; j++)
 	{
-		min = 0xFFFFFF;
+		MIN = 0xFFFFFF;
 		for(i=0; i<selectedCount; i++)
 		{	
-			if((dist = distance[i])<min)
+			if((dist = distance[i])<MIN)
 			{
-				min = dist;
+				MIN = dist;
 				k = i;
 			}
 		}

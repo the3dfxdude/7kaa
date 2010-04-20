@@ -114,7 +114,7 @@ void Bullet::init(char parentType, short parentRecno, short targetXLoc, short ta
 	int xStep 	= (go_x - cur_x)/attackInfo->bullet_speed;
 	int yStep 	= (go_y - cur_y)/attackInfo->bullet_speed;
 
-	total_step  = max(1, max(abs(xStep), abs(yStep)));
+	total_step  = MAX(1, MAX(abs(xStep), abs(yStep)));
 	cur_step    = 0;
 
 	err_when( total_step < 0 );		// number overflow

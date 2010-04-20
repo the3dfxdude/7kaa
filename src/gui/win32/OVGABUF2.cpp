@@ -225,7 +225,7 @@ void VgaBuf::separator(int x1, int y1, int x2, int y2)
 //
 // <int>   x1, y1, x2, y2 = coordination of the indicator
 // <float> curValue       = the value of the bar
-// <float> maxValue       = max value, the bar width = maxBarWidth * curValue / maxValue
+// <float> maxValue       = MAX value, the bar width = maxBarWidth * curValue / maxValue
 // <int>   indiColor      = color of the indicator
 // [int]   backColor      = background color
 //                          (default : vga.color_down)
@@ -276,7 +276,7 @@ void VgaBuf::indicator(int x1, int y1, int x2, int y2, float curValue,
 // <int>   barType        = bar style, bit 0 = disp curValue, bit 1 =  disp '/' and maxValue, bit 2 = longer bar, bit 3 = use another back buffer
 // <int>   x1, y1         = coordination of the indicator
 // <float> curValue       = the value of the bar
-// <float> maxValue       = max value, the bar width = maxBarWidth * curValue / maxValue
+// <float> maxValue       = MAX value, the bar width = maxBarWidth * curValue / maxValue
 // <int>   colorScheme    = color of the indicator // not used
 //
 void VgaBuf::indicator(int barType, int x1, int y1, float curValue, float maxValue, int colorScheme)
@@ -416,7 +416,7 @@ void VgaBuf::indicator(int barType, int x1, int y1, float curValue, float maxVal
 //
 // <int>   x1, y1, x2, y2 = coordination of the indicator
 // <float> curValue       = the value of the bar
-// <float> maxValue       = max value, the bar width = maxBarWidth * curValue / maxValue
+// <float> maxValue       = MAX value, the bar width = maxBarWidth * curValue / maxValue
 // <int>   indiColor      = color of the indicator
 // [int]   backColor      = background color
 //                          (default : vga.color_down)
@@ -432,7 +432,7 @@ void VgaBuf::v_indicator(int x1, int y1, int x2, int y2, float curValue,
       int barHeight = (int) ((float)(y2-y1) * curValue / maxValue);
 
       int halfWidth = (x2-x1+1)/2-1;
-		int ty1        = max(y2-barHeight,y1); // when curValue>0, even the actual bar width < 1, one pixel will also be painted
+		int ty1        = MAX(y2-barHeight,y1); // when curValue>0, even the actual bar width < 1, one pixel will also be painted
 		int x;
 
 		indiColor+=halfWidth;

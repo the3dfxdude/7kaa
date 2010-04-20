@@ -87,8 +87,8 @@ enum	{	SEARCH_SUB_MODE_NORMAL=0,
 #define MIN_BACKGROUND_NODE_USED_UP		400		// don't do any new search if the current available nodes is < this value
 
 #define MAX_CHILD_NODE    8		// one for each direction
-//#define MAX_STACK_NUM  2000		// maximum no. of stack entity in stack_aray, which is shared by all SeekPath objects. It is calculated based on: max possiblity: 500(max node) x 8(max child node) = 4000. Practical no. possiblities=2000. Memory occupied: 2000*4 = 8K
-#define MAX_STACK_NUM  MAX_BACKGROUND_NODE	// maximum no. of stack entity in stack_aray, which is shared by all SeekPath objects. It is calculated based on: max possiblity: 500(max node) x 8(max child node) = 4000. Practical no. possiblities=2000. Memory occupied: 2000*4 = 8K
+//#define MAX_STACK_NUM  2000		// maximum no. of stack entity in stack_aray, which is shared by all SeekPath objects. It is calculated based on: MAX possiblity: 500(MAX node) x 8(MAX child node) = 4000. Practical no. possiblities=2000. Memory occupied: 2000*4 = 8K
+#define MAX_STACK_NUM  MAX_BACKGROUND_NODE	// maximum no. of stack entity in stack_aray, which is shared by all SeekPath objects. It is calculated based on: MAX possiblity: 500(MAX node) x 8(MAX child node) = 4000. Practical no. possiblities=2000. Memory occupied: 2000*4 = 8K
 
 //---------- Define class Node -----------//
 

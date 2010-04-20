@@ -599,7 +599,7 @@ int SpyArray::catch_spy(int spyPlace, int spyPlacePara)
 		{
 			int escapeChance = 100 + spyPtr->spy_skill - counterSpySkill;
 
-			escapeChance = max( spyPtr->spy_skill/10, escapeChance );
+			escapeChance = MAX( spyPtr->spy_skill/10, escapeChance );
 
 			if( m.random(escapeChance) == 0 )
 			{

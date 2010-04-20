@@ -168,7 +168,7 @@ int File::file_write(void* dataBuf, unsigned dataSize)
 			// correctly read though (if proper data size will be
 			// specified when calling successive file_read).
 			file_put_unsigned_short(0);
-			MSG("[File::file_write] warning: record size exceeds uint16 max value\n");
+			MSG("[File::file_write] warning: record size exceeds uint16 MAX value\n");
 		}
 		else
 		{

@@ -368,7 +368,7 @@ void PlantBitmap::draw(int xLoc, int yLoc)
 	if( x1 < 0 || x2 >= ZOOM_WIDTH || y1 < 0 || y2 >= ZOOM_HEIGHT )
 	{
 		vga_back.put_bitmap_area_trans_decompress( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-			max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1 );
+			MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1 );
 	}
 
 	//---- the whole sprite is inside the view area ------//

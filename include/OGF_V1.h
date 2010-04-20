@@ -68,7 +68,7 @@ public:
 	short population;
 	short jobless_population;
 
-	short	max_race_pop_array[VERSION_1_MAX_RACE];			// the max population the current town layout supports
+	short	max_race_pop_array[VERSION_1_MAX_RACE];			// the MAX population the current town layout supports
 	short race_pop_array[VERSION_1_MAX_RACE];     		// population of each race
 	unsigned char race_pop_growth_array[VERSION_1_MAX_RACE];		// population growth, when it reaches 100, there will be one more person in the town
 	short jobless_race_pop_array[VERSION_1_MAX_RACE];

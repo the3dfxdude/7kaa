@@ -50,7 +50,7 @@
 // <int> locWidth    = width and height of each location
 // <int> locHeight
 //
-// <int> maxCargoWidth  = max. widht of height of cargo
+// <int> maxCargoWidth  = MAX. widht of height of cargo
 //       maxCargoHeight  (unit is Loc, not pixel
 //
 // <int> saveAreaToBuf = whether save the area to a buffer,

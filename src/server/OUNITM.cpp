@@ -724,8 +724,8 @@ int Unit::searching(int destXLoc, int destYLoc, int preserveAction, short search
 	/*err_when(sprite_info->loc_width!=sprite_info->loc_height);
 	if(sprite_info->loc_width>1) // not size 1x1
 	{
-		destXLoc = move_to_x_loc = min(destXLoc, MAX_WORLD_X_LOC-sprite_info->loc_width);
-		destYLoc = move_to_y_loc = min(destYLoc, MAX_WORLD_Y_LOC-sprite_info->loc_height);
+		destXLoc = move_to_x_loc = MIN(destXLoc, MAX_WORLD_X_LOC-sprite_info->loc_width);
+		destYLoc = move_to_y_loc = MIN(destYLoc, MAX_WORLD_Y_LOC-sprite_info->loc_height);
 	}
 	else
 	{*/
@@ -899,7 +899,7 @@ int Unit::searching(int destXLoc, int destYLoc, int preserveAction, short search
 
 	//-------------------------------------------------------//
 	// PATH_NODE_USED_UP happens when:
-	// Exceed the object's max's node limitation, the closest path
+	// Exceed the object's MAX's node limitation, the closest path
 	// is returned. Get to the closest path first and continue
 	// to seek the path in the background.
 	//-------------------------------------------------------//
@@ -984,8 +984,8 @@ void Unit::move_to_firm_surround(int destXLoc, int destYLoc, int width, int heig
 		}
 	}//else, new order or searching is required
 		
-	int destX = max(0, ((width>1) ? destXLoc : destXLoc - width + 1));
-	int destY = max(0, ((height>1) ? destYLoc : destYLoc - height + 1));
+	int destX = MAX(0, ((width>1) ? destXLoc : destXLoc - width + 1));
+	int destY = MAX(0, ((height>1) ? destYLoc : destYLoc - height + 1));
 		
 	FirmInfo *firmInfo = firm_res[miscNo];
 	stop();
@@ -1073,8 +1073,8 @@ void Unit::move_to_town_surround(int destXLoc, int destYLoc, int width, int heig
 		}
 	}//else, new order or searching is required
 		
-	int destX = max(0, ((width>1) ? destXLoc : destXLoc - width + 1));
-	int destY = max(0, ((height>1) ? destYLoc : destYLoc - height + 1));
+	int destX = MAX(0, ((width>1) ? destXLoc : destXLoc - width + 1));
+	int destY = MAX(0, ((height>1) ? destYLoc : destYLoc - height + 1));
 		
 	stop();
 	set_move_to_surround(destX, destY, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, BUILDING_TYPE_TOWN_MOVE_TO);
@@ -1157,8 +1157,8 @@ void Unit::move_to_wall_surround(int destXLoc, int destYLoc, int width, int heig
 		}
 	}//else, new order or searching is required
 		
-	int destX = max(0, ((width>1) ? destXLoc : destXLoc - width + 1));
-	int destY = max(0, ((height>1) ? destYLoc : destYLoc - height + 1));
+	int destX = MAX(0, ((width>1) ? destXLoc : destXLoc - width + 1));
+	int destY = MAX(0, ((height>1) ? destYLoc : destYLoc - height + 1));
 		
 	stop();
 	set_move_to_surround(destX, destY, 1, 1, BUILDING_TYPE_WALL);
@@ -1241,8 +1241,8 @@ void Unit::move_to_unit_surround(int destXLoc, int destYLoc, int width, int heig
 		}
 	}//else, new order or searching is required
 		
-	int destX = max(0, ((width>1) ? destXLoc : destXLoc - width + 1));
-	int destY = max(0, ((height>1) ? destYLoc : destYLoc - height + 1));
+	int destX = MAX(0, ((width>1) ? destXLoc : destXLoc - width + 1));
+	int destY = MAX(0, ((height>1) ? destYLoc : destYLoc - height + 1));
 		
 	err_when(unit_array.is_deleted(miscNo));
 	Unit *unitPtr = unit_array[miscNo];
@@ -1639,7 +1639,7 @@ int Unit::avail_node_enough_for_search(short x1, short y1, short x2, short y2)
 	short majDist = dispX>dispY ? dispX : dispY;
 	short minDist = abs(dispX-dispY);
 
-	int nodeRequire = min(VALID_BACKGROUND_SEARCH_NODE, majDist<<5); // *32
+	int nodeRequire = MIN(VALID_BACKGROUND_SEARCH_NODE, majDist<<5); // *32
 	int totalNode = seek_path.total_node_avail;
 	if(totalNode < nodeRequire)
 	{
@@ -1986,10 +1986,10 @@ void Unit::set_next(int newNextX, int newNextY, int para, int blockedChecked)
 			if( !config.explore_whole_map && is_own() )
 			// ###### end Gilbert 24/5 ######//
 			{
-				int xLoc1 = max(0,newNextXLoc-EXPLORE_RANGE);
-				int yLoc1 = max(0,newNextYLoc-EXPLORE_RANGE);
-				int xLoc2 = min(MAX_WORLD_X_LOC-1, newNextXLoc+EXPLORE_RANGE);
-				int yLoc2 = min(MAX_WORLD_Y_LOC-1, newNextYLoc+EXPLORE_RANGE);
+				int xLoc1 = MAX(0,newNextXLoc-EXPLORE_RANGE);
+				int yLoc1 = MAX(0,newNextYLoc-EXPLORE_RANGE);
+				int xLoc2 = MIN(MAX_WORLD_X_LOC-1, newNextXLoc+EXPLORE_RANGE);
+				int yLoc2 = MIN(MAX_WORLD_Y_LOC-1, newNextYLoc+EXPLORE_RANGE);
 				int exploreWidth = move_step_magn()-1;
 
 				if( newNextYLoc < curNextYLoc )			// if move upwards, explore upper area
@@ -2028,54 +2028,54 @@ void Unit::set_next(int newNextX, int newNextY, int para, int blockedChecked)
 	switch(final_dir)
 	{
 		case DIR_N:
-				checkXLoc1 = min(curXLoc+1, MAX_WORLD_X_LOC-1);
-				checkYLoc1 = checkYLoc2 = max(curYLoc-1, 0);
-				checkXLoc2 = max(curXLoc-1, 0);
+				checkXLoc1 = MIN(curXLoc+1, MAX_WORLD_X_LOC-1);
+				checkYLoc1 = checkYLoc2 = MAX(curYLoc-1, 0);
+				checkXLoc2 = MAX(curXLoc-1, 0);
 				break;
 
 		case DIR_NE:
-				checkXLoc1 = min(curXLoc+1, MAX_WORLD_X_LOC-1);
+				checkXLoc1 = MIN(curXLoc+1, MAX_WORLD_X_LOC-1);
 				checkYLoc1 = curYLoc;
 				checkXLoc2 = curXLoc;
-				checkYLoc2 = max(curYLoc-1, 0);
+				checkYLoc2 = MAX(curYLoc-1, 0);
 				break;
 
 		case DIR_E:
-				checkXLoc1 = checkXLoc2 = min(curXLoc+1, MAX_WORLD_X_LOC-1);
-				checkYLoc1 = min(curYLoc+1, MAX_WORLD_Y_LOC-1);
-				checkYLoc2 = max(curYLoc-1, 0);
+				checkXLoc1 = checkXLoc2 = MIN(curXLoc+1, MAX_WORLD_X_LOC-1);
+				checkYLoc1 = MIN(curYLoc+1, MAX_WORLD_Y_LOC-1);
+				checkYLoc2 = MAX(curYLoc-1, 0);
 				break;
 
 		case DIR_SE:
 				checkXLoc1 = curXLoc;
-				checkYLoc1 = min(curYLoc+1, MAX_WORLD_Y_LOC-1);
-				checkXLoc2 = min(curXLoc+1, MAX_WORLD_X_LOC-1);
+				checkYLoc1 = MIN(curYLoc+1, MAX_WORLD_Y_LOC-1);
+				checkXLoc2 = MIN(curXLoc+1, MAX_WORLD_X_LOC-1);
 				checkYLoc2 = curYLoc;
 				break;
 
 		case DIR_S:
-				checkXLoc1 = max(curXLoc-1, 0);
-				checkYLoc1 = checkYLoc2 = min(curYLoc+1, MAX_WORLD_Y_LOC-1);
-				checkXLoc2 = min(curXLoc+1, MAX_WORLD_X_LOC-1);
+				checkXLoc1 = MAX(curXLoc-1, 0);
+				checkYLoc1 = checkYLoc2 = MIN(curYLoc+1, MAX_WORLD_Y_LOC-1);
+				checkXLoc2 = MIN(curXLoc+1, MAX_WORLD_X_LOC-1);
 				break;
 
 		case DIR_SW:
-				checkXLoc1 = max(curXLoc-1, 0);
+				checkXLoc1 = MAX(curXLoc-1, 0);
 				checkYLoc1 = curYLoc;
 				checkXLoc2 = curXLoc;
-				checkYLoc2 = min(curYLoc, MAX_WORLD_Y_LOC-1);
+				checkYLoc2 = MIN(curYLoc, MAX_WORLD_Y_LOC-1);
 				break;
 
 		case DIR_W:
-				checkXLoc1 = checkXLoc2 = max(curXLoc-1, 0);
-				checkYLoc1 = max(curYLoc-1, 0);
-				checkYLoc2 = min(curYLoc+1, MAX_WORLD_Y_LOC-1);
+				checkXLoc1 = checkXLoc2 = MAX(curXLoc-1, 0);
+				checkYLoc1 = MAX(curYLoc-1, 0);
+				checkYLoc2 = MIN(curYLoc+1, MAX_WORLD_Y_LOC-1);
 				break;
 
 		case DIR_NW:
 				checkXLoc1 = curXLoc;
-				checkYLoc1 = max(curYLoc-1, 0);
-				checkXLoc2 = max(curXLoc-1, 0);
+				checkYLoc1 = MAX(curYLoc-1, 0);
+				checkXLoc2 = MAX(curXLoc-1, 0);
 				checkYLoc2 = curYLoc;
 				break;
 	}

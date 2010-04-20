@@ -659,7 +659,7 @@ int SeekPathS2::continue_seek(int maxTries, char firstSeek)
 	//------ seek the path using the A star algorithm -----//
 
 	NodeS2 *bestNodePtr;
-	int  maxNode = max_node-MAX_CHILD_NODE;	// generate_successors() can generate a max of MAX_CHILD_NODE new nodes per call
+	int  maxNode = max_node-MAX_CHILD_NODE;	// generate_successors() can generate a MAX of MAX_CHILD_NODE new nodes per call
 
 	if(maxTries < maxNode)
 		maxNode = maxTries-MAX_CHILD_NODE;  // limit the nodes used in shortest path searching
@@ -678,7 +678,7 @@ int SeekPathS2::continue_seek(int maxTries, char firstSeek)
 			break;
 		}
 
-		//----- exceed the object's max's node limitation, return the closest path ----//
+		//----- exceed the object's MAX's node limitation, return the closest path ----//
 		if( node_count >= maxNode )
 		{
 			path_status = PATH_NODE_USED_UP;

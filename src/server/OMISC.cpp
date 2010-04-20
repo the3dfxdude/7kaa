@@ -70,7 +70,7 @@ void Misc::delay(float wait)
 //
 // <char *> = destination string
 // <char *> = source string      (source should be longer than dest)
-// <int>    = max. no. of characters in the dest. string.
+// <int>    = MAX. no. of characters in the dest. string.
 //            ( destStr should be allocated as destStr[destLen+1] )
 //
 void Misc::str_shorten(char* destStr, char* srcStr, int destLen)
@@ -971,7 +971,7 @@ int Misc::points_distance(int x1, int y1, int x2, int y2)
 	int x = abs(x1-x2);
 	int y = abs(y1-y2);
 
-	return max(x, y);
+	return MAX(x, y);
 }
 //---------- End of function Misc::points_distance ---------//
 
@@ -1325,7 +1325,7 @@ void Misc::cal_move_around_a_point_v2(short num, short width, short height, int&
 
 	int sqtCount = 1;
 
-	while(sqtCount<210)	// the max. size of the map is 200x200
+	while(sqtCount<210)	// the MAX. size of the map is 200x200
 	{
 		if(num2<=sqtCount*sqtCount)
 			break;

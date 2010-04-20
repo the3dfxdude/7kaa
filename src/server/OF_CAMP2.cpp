@@ -420,9 +420,9 @@ int FirmCamp::ai_recruit(int recruitCombatLevel)
 	if( worker_count == MAX_WORKER || !overseer_recno )
 		return 0;
 
-	int recruitCount = max( 1, recruitCombatLevel / 20 );
+	int recruitCount = MAX( 1, recruitCombatLevel / 20 );
 
-	recruitCount = min( recruitCount, MAX_WORKER-worker_count );
+	recruitCount = MIN( recruitCount, MAX_WORKER-worker_count );
 
 	//--- first try to recruit soldiers directly from a linked village ---//
 
@@ -440,7 +440,7 @@ int FirmCamp::ai_recruit(int recruitCombatLevel)
 
 		//-- recruit majority race first, but will also consider other races --//
 
-		raceId = max( 1, majorityRace );
+		raceId = MAX( 1, majorityRace );
 
 		for( int j=0 ; j<MAX_RACE ; j++ )
 		{
@@ -515,7 +515,7 @@ int FirmCamp::ai_combat_level_needed()
 	//--- if the overseer is the king, increase its combat level needed ---//
 
 	if( overseer_recno && unit_array[overseer_recno]->rank_id == RANK_KING )
-		combatNeeded = max(400, combatNeeded);
+		combatNeeded = MAX(400, combatNeeded);
 
 	//---------------------------------------//
 
@@ -1050,7 +1050,7 @@ int FirmCamp::think_capture_use_spy2(Town* targetTown, int raceId, int curSpyLev
 		targetResistance = targetTown->race_target_resistance_array[raceId-1][nation_recno-1];
 	}
 
-	int minResistance = min(curResistance, targetResistance);
+	int minResistance = MIN(curResistance, targetResistance);
 
 	//----- if the resistance is low enough, don't have to use spies -----//
 
@@ -1223,10 +1223,10 @@ int FirmCamp::think_attack_nearby_enemy()
 	int xLoc2 = loc_x2 + scanRange;
 	int yLoc2 = loc_y2 + scanRange;
 
-	xLoc1 = max( xLoc1, 0 );
-	yLoc1 = max( yLoc1, 0 );
-	xLoc2 = min( xLoc2, MAX_WORLD_X_LOC-1 );
-	yLoc2 = min( yLoc2, MAX_WORLD_Y_LOC-1 );
+	xLoc1 = MAX( xLoc1, 0 );
+	yLoc1 = MAX( yLoc1, 0 );
+	xLoc2 = MIN( xLoc2, MAX_WORLD_X_LOC-1 );
+	yLoc2 = MIN( yLoc2, MAX_WORLD_Y_LOC-1 );
 
 	//------------------------------------------//
 

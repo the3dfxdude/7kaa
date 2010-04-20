@@ -47,7 +47,7 @@
 //------- define constant --------//
 
 #define MAX_TOWN_GROWTH_POPULATION  60		// grow up to 60 persons in a town
-#define MAX_TOWN_POPULATION  60		// max number of unitw in a town
+#define MAX_TOWN_POPULATION  60		// MAX number of unitw in a town
 
 //-------- Define constant -----------//
 
@@ -130,7 +130,7 @@ public:
 	short jobless_population;
 	short worker_population()		{ return population-jobless_population; }
 			
-	short	max_race_pop_array[MAX_RACE];			// the max population the current town layout supports
+	short	max_race_pop_array[MAX_RACE];			// the MAX population the current town layout supports
 	short race_pop_array[MAX_RACE];     		// population of each race
 	unsigned char race_pop_growth_array[MAX_RACE];		// population growth, when it reaches 100, there will be one more person in the town
 	short jobless_race_pop_array[MAX_RACE];

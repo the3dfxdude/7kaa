@@ -141,7 +141,7 @@ SpriteFrame* Sprite::cur_sprite_frame(int *needMirror)
 			{
 				SpriteGuardStop *guardStopAction = sprite_info->guard_stop_array + curDir;
 				return sprite_frame_res[guardStopAction->first_frame_recno+
-					min(guard_count,guardStopAction->frame_count)-1];
+					MIN(guard_count,guardStopAction->frame_count)-1];
 			}
 			else
 				return sprite_frame_res[sprite_info->attack_array[cur_attack][curDir].first_frame_recno+cur_frame-1];
@@ -163,7 +163,7 @@ SpriteFrame* Sprite::cur_sprite_frame(int *needMirror)
 
 					SpriteGuardStop *guardStopAction = sprite_info->guard_stop_array + curDir;
 					return sprite_frame_res[guardStopAction->first_frame_recno+
-						min(guard_count,guardStopAction->frame_count)-1];
+						MIN(guard_count,guardStopAction->frame_count)-1];
 				}
 				else
 				{
@@ -250,13 +250,13 @@ void Sprite::draw()
 			if( !sprite_info->remap_bitmap_flag )
 			{
 				vga_back.put_bitmap_area_trans_decompress_hmirror( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1 );
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1 );
 			}
 			else
 			{
 				vga_back.remap_bitmap_area_hmirror( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
 					vga.vga_color_table->get_table_array(),
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1 );
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1 );
 			}
 		}
 		else
@@ -264,13 +264,13 @@ void Sprite::draw()
 			if( !sprite_info->remap_bitmap_flag )
 			{
 				vga_back.put_bitmap_area_trans_decompress( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1 );
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1 );
 			}
 			else
 			{
 				vga_back.remap_bitmap_area( x1+ZOOM_X1, y1+ZOOM_Y1, bitmapPtr,
 					vga.vga_color_table->get_table_array(),
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1 );
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1 );
 			}
 		}
 	}

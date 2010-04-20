@@ -3435,7 +3435,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				mp_obj.after_send();
 				if( recvPtr )
 				{
-					trial = max(trial, 1000);
+					trial = MAX(trial, 1000);
 					startTime = m.get_time();
 					if( ((MpStructBase *)recvPtr)->msg_id == MPMSG_END_SETTING )
 					{
@@ -4792,7 +4792,7 @@ int Game::mp_select_load_option(char *fileName)
 				mp_obj.after_send();
 				if( recvPtr )
 				{
-					trial = max(trial, 1000);
+					trial = MAX(trial, 1000);
 					startTime = m.get_time();
 					if( ((MpStructBase *)recvPtr)->msg_id == MPMSG_END_SETTING )
 					{

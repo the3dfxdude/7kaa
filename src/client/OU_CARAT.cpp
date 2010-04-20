@@ -76,7 +76,7 @@ void UnitCaravan::market_unload_goods()
 				if(raw_qty_array[goodsId]) // have this goods
 				{
 					//---------- process unload -------------//
-					unloadQty = (short) min(raw_qty_array[goodsId], curMarket->max_stock_qty-marketGoods->stock_qty);
+					unloadQty = (short) MIN(raw_qty_array[goodsId], curMarket->max_stock_qty-marketGoods->stock_qty);
 					raw_qty_array[goodsId]		  -= unloadQty;
 					err_when(raw_qty_array[goodsId]<0);
 					marketGoods->stock_qty += unloadQty;
@@ -108,7 +108,7 @@ void UnitCaravan::market_unload_goods()
 			{
 				if(product_raw_qty_array[goodsId]) // have this goods
 				{
-					unloadQty = (short) min(product_raw_qty_array[goodsId], curMarket->max_stock_qty-marketGoods->stock_qty);
+					unloadQty = (short) MIN(product_raw_qty_array[goodsId], curMarket->max_stock_qty-marketGoods->stock_qty);
 					product_raw_qty_array[goodsId]	-= unloadQty;
 					err_when(product_raw_qty_array[goodsId]<0);
 					marketGoods->stock_qty	+= unloadQty;
@@ -199,7 +199,7 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 		processed_product_raw_qty_array[j] += 2;
 		curMarket->set_goods(0, j+1, position);
 
-		short unloadQty = (short) min(product_raw_qty_array[j], curMarket->max_stock_qty-marketGoods->stock_qty);
+		short unloadQty = (short) MIN(product_raw_qty_array[j], curMarket->max_stock_qty-marketGoods->stock_qty);
 		product_raw_qty_array[j] -= unloadQty;
 		marketGoods->stock_qty	 += unloadQty;
 		processed++;
@@ -240,7 +240,7 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 			processed_raw_qty_array[j] += 2;
 			curMarket->set_goods(1, j+1, position);
 
-			short unloadQty = (short) min(raw_qty_array[j], curMarket->max_stock_qty-marketGoods->stock_qty);
+			short unloadQty = (short) MIN(raw_qty_array[j], curMarket->max_stock_qty-marketGoods->stock_qty);
 			raw_qty_array[j]			-= unloadQty;
 			marketGoods->stock_qty	+= unloadQty;
 			processed++;
@@ -362,10 +362,10 @@ void UnitCaravan::market_load_goods_now(MarketGoods* marketGoods, float loadQty)
 		err_when(marketGoods->raw_id);
 		(goodsId = marketGoods->product_raw_id)--;
 
-		qty = min(MAX_CARAVAN_CARRY_QTY-product_raw_qty_array[goodsId], (int)loadQty);
+		qty = MIN(MAX_CARAVAN_CARRY_QTY-product_raw_qty_array[goodsId], (int)loadQty);
 		if(marketNationRecno!=nation_recno) // calculate the qty again if this is not our own market
 		{
-			qty = (nationPtr->cash>0) ? (short) min(nationPtr->cash/PRODUCT_PRICE, qty) : 0;
+			qty = (nationPtr->cash>0) ? (short) MIN(nationPtr->cash/PRODUCT_PRICE, qty) : 0;
 
 			if(qty)
 				nationPtr->import_goods(IMPORT_PRODUCT, marketNationRecno, (float)qty * PRODUCT_PRICE);
@@ -381,10 +381,10 @@ void UnitCaravan::market_load_goods_now(MarketGoods* marketGoods, float loadQty)
 		err_when(marketGoods->product_raw_id);
 		(goodsId = marketGoods->raw_id)--;
 
-		qty = min(MAX_CARAVAN_CARRY_QTY-raw_qty_array[goodsId], (int)loadQty);
+		qty = MIN(MAX_CARAVAN_CARRY_QTY-raw_qty_array[goodsId], (int)loadQty);
 		if(marketNationRecno!=nation_recno) // calculate the qty again if this is not our own market
 		{
-			qty = (nationPtr->cash>0) ? (short) min(nationPtr->cash/RAW_PRICE, qty) : 0;
+			qty = (nationPtr->cash>0) ? (short) MIN(nationPtr->cash/RAW_PRICE, qty) : 0;
 
 			if(qty)
 				nationPtr->import_goods(IMPORT_RAW, marketNationRecno, (float)qty * RAW_PRICE);
@@ -425,8 +425,8 @@ void UnitCaravan::mine_load_goods(char pickUpType)
 	{
 		int		goodsId = curMine->raw_id-1;
 		short		maxLoadQty = (pickUpType!=AUTO_PICK_UP) ? (short)curMine->stock_qty :
-									 max(0, (int)(curMine->stock_qty-MIN_FIRM_STOCK_QTY)); // max Qty mine can supply
-		short		qty = min(MAX_CARAVAN_CARRY_QTY-raw_qty_array[goodsId], maxLoadQty); // max Qty caravan can carry
+									 MAX(0, (int)(curMine->stock_qty-MIN_FIRM_STOCK_QTY)); // MAX Qty mine can supply
+		short		qty = MIN(MAX_CARAVAN_CARRY_QTY-raw_qty_array[goodsId], maxLoadQty); // MAX Qty caravan can carry
 
 		raw_qty_array[goodsId]		+= qty;
 		err_when(raw_qty_array[goodsId]<0 || raw_qty_array[goodsId]>MAX_CARAVAN_CARRY_QTY);
@@ -484,7 +484,7 @@ void UnitCaravan::factory_unload_goods()
 
 	if(raw_qty_array[goodsId]) // caravan has this raw materials
 	{
-		short qty = min(raw_qty_array[goodsId], (short)(curFactory->max_raw_stock_qty-curFactory->raw_stock_qty));
+		short qty = MIN(raw_qty_array[goodsId], (short)(curFactory->max_raw_stock_qty-curFactory->raw_stock_qty));
 		raw_qty_array[goodsId] -= qty;
 		err_when(raw_qty_array[goodsId]<0);
 		curFactory->raw_stock_qty += qty;
@@ -514,8 +514,8 @@ void UnitCaravan::factory_load_goods(char pickUpType)
 	{
 		int		goodsId = curFactory->product_raw_id-1;
 		short		maxLoadQty = (pickUpType!=AUTO_PICK_UP) ? (short)curFactory->stock_qty :
-									 max(0, (int)(curFactory->stock_qty-MIN_FIRM_STOCK_QTY)); // max Qty factory can supply
-		short		qty = min(MAX_CARAVAN_CARRY_QTY-product_raw_qty_array[goodsId], maxLoadQty); // max Qty caravan can carry
+									 MAX(0, (int)(curFactory->stock_qty-MIN_FIRM_STOCK_QTY)); // MAX Qty factory can supply
+		short		qty = MIN(MAX_CARAVAN_CARRY_QTY-product_raw_qty_array[goodsId], maxLoadQty); // MAX Qty caravan can carry
 
 		product_raw_qty_array[goodsId]	+= qty;
 		err_when(product_raw_qty_array[goodsId]<0 || product_raw_qty_array[goodsId]>MAX_CARAVAN_CARRY_QTY);

@@ -135,7 +135,7 @@ void Nation::optimize_town_race_region(int regionId)
 			if( joblessCount > 0 &&
 				 townPtr->majority_race() != raceId )
 			{
-				int migrateCount = min(8, joblessCount);		// migrate a maximum of 8 units at a time
+				int migrateCount = MIN(8, joblessCount);		// migrate a maximum of 8 units at a time
 
 				add_action( destTown->loc_x1, destTown->loc_y1,
 					townPtr->loc_x1, townPtr->loc_y1, ACTION_AI_SETTLE_TO_OTHER_TOWN, 0, migrateCount);

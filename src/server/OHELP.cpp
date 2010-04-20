@@ -383,16 +383,16 @@ void Help::disp_help(int centerX, int centerY, char* helpTitle, char* helpDetail
 
 	if( winWidth * winHeight > HELP_SCR_BUF_SIZE )
 	{
-		x1 = max( 2, centerX - HELP_SCR_BUF_WIDTH  / 2 );
-		y1 = max( 2, centerY - HELP_SCR_BUF_HEIGHT / 2 );
+		x1 = MAX( 2, centerX - HELP_SCR_BUF_WIDTH  / 2 );
+		y1 = MAX( 2, centerY - HELP_SCR_BUF_HEIGHT / 2 );
 
 		x2 = x1 + HELP_SCR_BUF_WIDTH - 1;
 		y2 = y1 + HELP_SCR_BUF_HEIGHT - 1;
 	}
 	else
 	{
-		x1 = max( 2, centerX - winWidth  / 2 );
-		y1 = max( 2, centerY - winHeight / 2 );
+		x1 = MAX( 2, centerX - winWidth  / 2 );
+		y1 = MAX( 2, centerY - winHeight / 2 );
 
 		x2 = x1 + winWidth - 1;
 		y2 = y1 + winHeight - 1;

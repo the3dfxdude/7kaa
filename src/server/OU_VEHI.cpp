@@ -36,7 +36,7 @@ void UnitVehicle::set_combat_level(int combatLevel)
 	max_hit_points = unit_res[unitInfo->vehicle_id]->hit_points +
 						  unit_res[unitInfo->solider_id]->hit_points * combatLevel / 100;
 
-	hit_points = min(hit_points, max_hit_points);
+	hit_points = MIN(hit_points, max_hit_points);
 }
 //-------- End of function UnitVehicle::set_combat_level -----------//
 
@@ -60,8 +60,8 @@ void UnitVehicle::dismount()
 	float soliderHitPoints = hit_points * solider_hit_points / (solider_hit_points+vehicle_hit_points);
 	float vehicleHitPoints = hit_points * vehicle_hit_points / (solider_hit_points+vehicle_hit_points);
 
-	soliderHitPoints = max(1, soliderHitPoints);
-	vehicleHitPoints = max(1, vehicleHitPoints);
+	soliderHitPoints = MAX(1, soliderHitPoints);
+	vehicleHitPoints = MAX(1, vehicleHitPoints);
 
 	//-------- add the solider unit ---------//
 

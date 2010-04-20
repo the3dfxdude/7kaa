@@ -271,7 +271,7 @@ int Nation::ai_assign_worker(ActionNode* actionNode)
 	if( MAX_WORKER - firmPtr->worker_count < actionNode->instance_count )		// if the firm now has more workers, reduce the number needed to be assigned to the firm 
 	{
 		err_when( actionNode->processing_instance_count >= actionNode->instance_count );
-		actionNode->instance_count = max( actionNode->processing_instance_count+1, MAX_WORKER - firmPtr->worker_count ); 
+		actionNode->instance_count = MAX( actionNode->processing_instance_count+1, MAX_WORKER - firmPtr->worker_count ); 
 	}
 
 	//---------------------------------------------------------------------------//

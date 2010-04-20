@@ -396,9 +396,9 @@ void Vga::adjust_brightness(int changeValue)
       newGreen = (int)pal_entry_buf[i].peGreen + changeValue;
       newBlue  = (int)pal_entry_buf[i].peBlue  + changeValue;
 
-      palBuf[i].peRed   = min(255, max(newRed,0) );
-      palBuf[i].peGreen = min(255, max(newGreen,0) );
-      palBuf[i].peBlue  = min(255, max(newBlue,0) );
+      palBuf[i].peRed   = MIN(255, MAX(newRed,0) );
+      palBuf[i].peGreen = MIN(255, MAX(newGreen,0) );
+      palBuf[i].peBlue  = MIN(255, MAX(newBlue,0) );
    }
 
    //------------ set palette ------------//

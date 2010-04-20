@@ -261,10 +261,10 @@ void MouseCursor::process(int curX, int curY)
 		// restore screen previously saved
 		int save_x1, save_x2, save_y1, save_y2;
 
-		save_x1 = max(cur_x1, 0);
-		save_y1 = max(cur_y1, 0);
-		save_x2 = min(cur_x2, VGA_WIDTH-1);
-		save_y2 = min(cur_y2, VGA_HEIGHT-1);
+		save_x1 = MAX(cur_x1, 0);
+		save_y1 = MAX(cur_y1, 0);
+		save_x2 = MIN(cur_x2, VGA_WIDTH-1);
+		save_y2 = MIN(cur_y2, VGA_HEIGHT-1);
 
 		if ( save_x1 < save_x2 && save_y1 < save_y2 )
 		{
@@ -282,10 +282,10 @@ void MouseCursor::process(int curX, int curY)
 
 	if( frame_flag )
 	{
-		curX = max(curX, ZOOM_X1);
-		curY = max(curY, ZOOM_Y1);
-		curX = min(curX, ZOOM_X2);
-		curY = min(curY, ZOOM_Y2);
+		curX = MAX(curX, ZOOM_X1);
+		curY = MAX(curY, ZOOM_Y1);
+		curX = MIN(curX, ZOOM_X2);
+		curY = MIN(curY, ZOOM_Y2);
 
 		process_frame(curX, curY);
 	}
@@ -311,10 +311,10 @@ void MouseCursor::process(int curX, int curY)
 		 */
 		int save_x1, save_x2, save_y1, save_y2;
 
-		save_x1 = max(cur_x1, 0);
-		save_y1 = max(cur_y1, 0);
-		save_x2 = min(cur_x2, VGA_WIDTH-1);
-		save_y2 = min(cur_y2, VGA_HEIGHT-1);
+		save_x1 = MAX(cur_x1, 0);
+		save_y1 = MAX(cur_y1, 0);
+		save_x2 = MIN(cur_x2, VGA_WIDTH-1);
+		save_y2 = MIN(cur_y2, VGA_HEIGHT-1);
 
 		if ( save_x1 < save_x2 && save_y1 < save_y2 ) {
 			vga_front.read_bitmap( save_x1, save_y1,
@@ -453,27 +453,27 @@ void MouseCursor::disp_back_buf(int bltX1, int bltY1, int bltX2, int bltY2)
 	{
 		//--- save the front buffer area which will be overwritten ---//
 
-		int x1 = max(cur_x1,bltX1);
-		int y1 = max(cur_y1,bltY1);
-		int x2 = min(cur_x2,bltX2);
-		int y2 = min(cur_y2,bltY2);
+		int x1 = MAX(cur_x1,bltX1);
+		int y1 = MAX(cur_y1,bltY1);
+		int x2 = MIN(cur_x2,bltX2);
+		int y2 = MIN(cur_y2,bltY2);
 
 		vga_back.read_bitmap( x1, y1, x2, y2, save_back_scr );
 
 		//--- merge the save area of the back buf with the front buf's save area ---//
 
-		// save_scr width  : min(cur_x2,VGA_WIDTH-1) -max(cur_x1,0)+1;
-		// save_scr height : min(cur_y2,VGA_HEIGHT-1)-max(cur_y1,0)+1;
+		// save_scr width  : MIN(cur_x2,VGA_WIDTH-1) -MAX(cur_x1,0)+1;
+		// save_scr height : MIN(cur_y2,VGA_HEIGHT-1)-MAX(cur_y1,0)+1;
 
-		IMGblt( save_scr+4, min(cur_x2,VGA_WIDTH-1) -max(cur_x1,0)+1, x1-max(cur_x1,0), y1-max(cur_y1,0), save_back_scr );		// +4 is the width & height info
+		IMGblt( save_scr+4, MIN(cur_x2,VGA_WIDTH-1) -MAX(cur_x1,0)+1, x1-MAX(cur_x1,0), y1-MAX(cur_y1,0), save_back_scr );		// +4 is the width & height info
 
 		//--------- display the mouse cursor now -----------//
 
 		if( cur_x1 < bltX1 || cur_x2 > bltX2 || cur_y1 < bltY1 || cur_y2 > bltY2 )
 		{
 			vga_back.put_bitmap_area_trans( cur_x1, cur_y1, icon_ptr,
-				max(bltX1,cur_x1)-cur_x1, max(bltY1,cur_y1)-cur_y1,
-				min(bltX2,cur_x2)-cur_x1, min(bltY2,cur_y2)-cur_y1 );
+				MAX(bltX1,cur_x1)-cur_x1, MAX(bltY1,cur_y1)-cur_y1,
+				MIN(bltX2,cur_x2)-cur_x1, MIN(bltY2,cur_y2)-cur_y1 );
 		}
 
 		//---- the whole sprite is inside the view area ------//

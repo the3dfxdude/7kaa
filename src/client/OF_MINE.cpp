@@ -311,7 +311,7 @@ void FirmMine::set_next_output_firm()
 {
 	int i, firmRecno, firmId;
 
-	for( i=0 ; i<linked_firm_count ; i++ )		// max tries
+	for( i=0 ; i<linked_firm_count ; i++ )		// MAX tries
 	{
 		if( ++next_output_link_id > linked_firm_count )    // next firm in the link
 			next_output_link_id = 1;
@@ -356,8 +356,8 @@ void FirmMine::produce_raw()
 
 	float produceQty = (float) 100 * productivity / 100;
 
-	produceQty = min( produceQty, reserve_qty );
-	produceQty = min( produceQty, max_stock_qty-stock_qty );
+	produceQty = MIN( produceQty, reserve_qty );
+	produceQty = MIN( produceQty, max_stock_qty-stock_qty );
 
 	reserve_qty -= produceQty;
 	stock_qty	+= produceQty;
@@ -403,7 +403,7 @@ void FirmMine::draw(int displayLayer)
 	{
 		int cargoCount = MAX_CARGO	* (int)stock_qty / (int)max_stock_qty;
 
-		draw_cargo( max(1,cargoCount), raw_res.small_raw_icon(raw_id) );
+		draw_cargo( MAX(1,cargoCount), raw_res.small_raw_icon(raw_id) );
 	}
 }
 //--------- End of function FirmMine::draw -----------//

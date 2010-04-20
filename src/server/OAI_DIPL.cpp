@@ -187,7 +187,7 @@ void Nation::ai_notify_reply(int talkMsgRecno)
 			{
 				//-- the less cash the nation, the more it will appreciate the tribute --//
 
-				relationChange = 100 * talkMsg->talk_para1 / max(1000, (int) cash);
+				relationChange = 100 * talkMsg->talk_para1 / MAX(1000, (int) cash);
 			}
 			else
 			{
@@ -1030,7 +1030,7 @@ int Nation::think_request_surrender()
 
 	//----- calculate the amount this nation can offer ----//
 
-	int offerAmount = (int)cash - min(5000, (int)fixed_expense_365days());
+	int offerAmount = (int)cash - MIN(5000, (int)fixed_expense_365days());
 
 	static int amtArray[] = { 5000, 7500, 10000, 15000, 20000, 30000, 40000, 50000 };
 

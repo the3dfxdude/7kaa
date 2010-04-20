@@ -448,10 +448,10 @@ void World::unveil(int xLoc1, int yLoc1, int xLoc2, int yLoc2)
 	if( config.explore_whole_map )
 		return;
 
-	xLoc1 = max( 0, xLoc1 - EXPLORE_RANGE);
-	yLoc1 = max( 0, yLoc1 - EXPLORE_RANGE);
-	xLoc2 = min( MAX_WORLD_X_LOC-1, xLoc2 + EXPLORE_RANGE);
-	yLoc2 = min( MAX_WORLD_Y_LOC-1, yLoc2 + EXPLORE_RANGE);
+	xLoc1 = MAX( 0, xLoc1 - EXPLORE_RANGE);
+	yLoc1 = MAX( 0, yLoc1 - EXPLORE_RANGE);
+	xLoc2 = MIN( MAX_WORLD_X_LOC-1, xLoc2 + EXPLORE_RANGE);
+	yLoc2 = MIN( MAX_WORLD_Y_LOC-1, yLoc2 + EXPLORE_RANGE);
 
 	explore( xLoc1, yLoc1, xLoc2, yLoc2 );
 }
@@ -1501,10 +1501,10 @@ void World::set_power(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int nationRecn
 	int   	 xLoc, yLoc, centerY, t;
 	Location* locPtr = loc_matrix;
 
-	xLoc1 = max( 0, xLoc1 - EFFECTIVE_POWER_DISTANCE+1);
-	yLoc1 = max( 0, yLoc1 - EFFECTIVE_POWER_DISTANCE+1);
-	xLoc2 = min( MAX_WORLD_X_LOC-1, xLoc2 + EFFECTIVE_POWER_DISTANCE-1);
-	yLoc2 = min( MAX_WORLD_Y_LOC-1, yLoc2 + EFFECTIVE_POWER_DISTANCE-1);
+	xLoc1 = MAX( 0, xLoc1 - EFFECTIVE_POWER_DISTANCE+1);
+	yLoc1 = MAX( 0, yLoc1 - EFFECTIVE_POWER_DISTANCE+1);
+	xLoc2 = MIN( MAX_WORLD_X_LOC-1, xLoc2 + EFFECTIVE_POWER_DISTANCE-1);
+	yLoc2 = MIN( MAX_WORLD_Y_LOC-1, yLoc2 + EFFECTIVE_POWER_DISTANCE-1);
 
 	centerY = (yLoc1+yLoc2) / 2;
 
@@ -1564,10 +1564,10 @@ void World::restore_power(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int townRe
 	int   	 xLoc, yLoc, centerY, t;
 	Location* locPtr = loc_matrix;
 
-	xLoc1 = max( 0, xLoc1 - EFFECTIVE_POWER_DISTANCE+1);
-	yLoc1 = max( 0, yLoc1 - EFFECTIVE_POWER_DISTANCE+1);
-	xLoc2 = min( MAX_WORLD_X_LOC-1, xLoc2 + EFFECTIVE_POWER_DISTANCE-1);
-	yLoc2 = min( MAX_WORLD_Y_LOC-1, yLoc2 + EFFECTIVE_POWER_DISTANCE-1);
+	xLoc1 = MAX( 0, xLoc1 - EFFECTIVE_POWER_DISTANCE+1);
+	yLoc1 = MAX( 0, yLoc1 - EFFECTIVE_POWER_DISTANCE+1);
+	xLoc2 = MIN( MAX_WORLD_X_LOC-1, xLoc2 + EFFECTIVE_POWER_DISTANCE-1);
+	yLoc2 = MIN( MAX_WORLD_Y_LOC-1, yLoc2 + EFFECTIVE_POWER_DISTANCE-1);
 
 	centerY = (yLoc1+yLoc2) / 2;
 
@@ -1952,10 +1952,10 @@ void World::visit(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int range, int ext
 {
 	if(config.fog_of_war)
 	{
-		int left   = max( 0, xLoc1 - range);
-		int top    = max( 0, yLoc1 - range);
-		int right  = min( MAX_WORLD_X_LOC-1, xLoc2 + range);
-		int bottom = min( MAX_WORLD_Y_LOC-1, yLoc2 + range);
+		int left   = MAX( 0, xLoc1 - range);
+		int top    = MAX( 0, yLoc1 - range);
+		int right  = MIN( MAX_WORLD_X_LOC-1, xLoc2 + range);
+		int bottom = MIN( MAX_WORLD_Y_LOC-1, yLoc2 + range);
 
 		// ----- mark the visit_level of the square around the unit ------//
 		for( int yLoc=top ; yLoc<=bottom ; yLoc++ )
@@ -1995,10 +1995,10 @@ void World::visit(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int range, int ext
 // set specific visit_level on the surrounding unit, town and firm
 void World::visit_shell(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int visitLevel)
 {
-	int left   = max( 0, xLoc1 );
-	int top    = max( 0, yLoc1 );
-	int right  = min( MAX_WORLD_X_LOC-1, xLoc2);
-	int bottom = min( MAX_WORLD_Y_LOC-1, yLoc2);
+	int left   = MAX( 0, xLoc1 );
+	int top    = MAX( 0, yLoc1 );
+	int right  = MIN( MAX_WORLD_X_LOC-1, xLoc2);
+	int bottom = MIN( MAX_WORLD_Y_LOC-1, yLoc2);
 
 	// ------- top side ---------//
 	if( yLoc1 >= 0)

@@ -240,21 +240,21 @@ void WallInfo::draw(int xLoc, int yLoc, char *remapTbl)
 		{
 			if( remapTbl)
 				vga_back.put_bitmap_area_trans_remap( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1,
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1,
 					remapTbl);
 			else
 				vga_back.put_bitmap_area_trans( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1);
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1);
 		}
 		else
 		{
 			if( remapTbl)
 				vga_back.put_bitmap_area_remap( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1,
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1,
 					remapTbl);
 			else
 				vga_back.put_bitmap_area( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1);
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1);
 		}
 	}
 
@@ -314,21 +314,21 @@ void WallInfo::draw_at(int absBaseX, int absBaseY, char *remapTbl)
 		{
 			if( remapTbl)
 				vga_back.put_bitmap_area_trans_remap( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1,
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1,
 					remapTbl);
 			else
 				vga_back.put_bitmap_area_trans( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1);
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1);
 		}
 		else
 		{
 			if( remapTbl)
 				vga_back.put_bitmap_area_remap( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1,
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1,
 					remapTbl);
 			else
 				vga_back.put_bitmap_area( x1+ZOOM_X1, y1+ZOOM_Y1, bitmap_ptr,
-					max(0,x1)-x1, max(0,y1)-y1, min(ZOOM_WIDTH-1,x2)-x1, min(ZOOM_HEIGHT-1,y2)-y1);
+					MAX(0,x1)-x1, MAX(0,y1)-y1, MIN(ZOOM_WIDTH-1,x2)-x1, MIN(ZOOM_HEIGHT-1,y2)-y1);
 
 		}
 	}

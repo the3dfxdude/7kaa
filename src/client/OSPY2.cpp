@@ -175,7 +175,7 @@ int Spy::think_bribe()
 	Nation* ownNation = nation_array[true_nation_recno];
 	Unit*   overseerUnit = unit_array[firmPtr->overseer_recno];
 
-	if( spy_skill < min(50, overseerUnit->skill.skill_level) ||
+	if( spy_skill < MIN(50, overseerUnit->skill.skill_level) ||
 		 !ownNation->ai_should_spend(30) )
 	{
 		return 0;
@@ -206,7 +206,7 @@ int Spy::think_bribe()
 
 	int bribeAmount = MAX_BRIBE_AMOUNT * (100-succeedChange) / 100;
 
-	bribeAmount = max(100, bribeAmount);
+	bribeAmount = MAX(100, bribeAmount);
 
 	//--- only bribe when the nation has enough money ---//
 
@@ -254,8 +254,8 @@ int Spy::think_reward()
 
 	int neededLoyalty = spy_skill * (100+ownNation->pref_loyalty_concern) / 100;
 
-	neededLoyalty = max( UNIT_BETRAY_LOYALTY+10, neededLoyalty );		// 10 points above the betray loyalty level to prevent betrayal
-	neededLoyalty = min( 100, neededLoyalty );
+	neededLoyalty = MAX( UNIT_BETRAY_LOYALTY+10, neededLoyalty );		// 10 points above the betray loyalty level to prevent betrayal
+	neededLoyalty = MIN( 100, neededLoyalty );
 
 	//------- if the loyalty is already high enough ------//
 

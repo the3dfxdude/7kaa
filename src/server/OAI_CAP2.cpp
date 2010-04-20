@@ -549,10 +549,10 @@ int Nation::mobile_defense_combat_level(int targetXLoc, int targetYLoc, int targ
 	int xLoc2 = targetXLoc + scanRangeX;
 	int yLoc2 = targetYLoc + scanRangeY;
 
-	xLoc1 = max( xLoc1, 0 );
-	yLoc1 = max( yLoc1, 0 );
-	xLoc2 = min( xLoc2, MAX_WORLD_X_LOC-1 );
-	yLoc2 = min( yLoc2, MAX_WORLD_Y_LOC-1 );
+	xLoc1 = MAX( xLoc1, 0 );
+	yLoc1 = MAX( yLoc1, 0 );
+	xLoc2 = MIN( xLoc2, MAX_WORLD_X_LOC-1 );
+	yLoc2 = MIN( yLoc2, MAX_WORLD_Y_LOC-1 );
 
 	//------------------------------------------//
 

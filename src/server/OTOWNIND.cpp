@@ -410,8 +410,8 @@ int Town::independent_unit_join_nation(int raceId, int toNationRecno)
 				skillLevel = m.random(50);
 
 			combatLevel = skillLevel + m.random(40) - 20;
-         combatLevel = min(combatLevel, 100);
-			combatLevel = max(combatLevel, 10);
+         combatLevel = MIN(combatLevel, 100);
+			combatLevel = MAX(combatLevel, 10);
 			break;
 
 		case 1:		// peasants

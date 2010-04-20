@@ -177,7 +177,7 @@ int NewsArray::put(int detectAction)
 
 	int dispCount=0;
 
-	for( i=size() ; i>=max(1,last_clear_recno+1) ; i-- )
+	for( i=size() ; i>=MAX(1,last_clear_recno+1) ; i-- )
 	{
 		newsPtr = (News*) get(i);
 

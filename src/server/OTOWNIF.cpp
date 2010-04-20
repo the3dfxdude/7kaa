@@ -1812,7 +1812,7 @@ int Town::recruit(int trainSkillId, int raceId, char remoteAction)
 //
 int Town::recruit_dec_loyalty(int raceId, int decNow)
 {
-	float loyaltyDec = min( 5, (float) MAX_TOWN_POPULATION / race_pop_array[raceId-1] );
+	float loyaltyDec = MIN( 5, (float) MAX_TOWN_POPULATION / race_pop_array[raceId-1] );
 
 	//------ recruitment without training decreases loyalty --------//
 
@@ -1820,7 +1820,7 @@ int Town::recruit_dec_loyalty(int raceId, int decNow)
 	{
 		loyaltyDec += accumulated_recruit_penalty/5;
 
-		loyaltyDec = min(loyaltyDec, 10);
+		loyaltyDec = MIN(loyaltyDec, 10);
 
 		accumulated_recruit_penalty += 5;
 

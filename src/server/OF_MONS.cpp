@@ -540,7 +540,7 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 // <int> rankId		= rank id. of the monster. 
 // <int> combatLevel = the combat level of the monster
 // [int] hitPoints	= set the hit points of the monster to this
-//							  (default: hit points of the monster is set to the max hit points when it is first created.)
+//							  (default: hit points of the monster is set to the MAX hit points when it is first created.)
 //
 // return: <int> the unit recno of the mobile unit created.
 //
@@ -613,11 +613,11 @@ void FirmMonster::being_attacked(int attackerUnitRecno)
 		set_hostile_nation(attackerNationRecno);		// also set hostile with the nation
 	}
 
-	//------ max no. of defender it should call out -----//
+	//------ MAX no. of defender it should call out -----//
 
 	int maxDefender = MAX_MONSTER_IN_FIRM * monster_aggressiveness / 200;
 
-	if( total_defender() >= maxDefender )	// only mobilize new ones when the max defender no. has been reached yet
+	if( total_defender() >= maxDefender )	// only mobilize new ones when the MAX defender no. has been reached yet
 		return;
 
 	current_monster_action_mode = MONSTER_ACTION_DEFENSE;
@@ -897,11 +897,11 @@ int FirmMonster::think_attack_neighbor()
 		xLoc = center_x + xOffset;
 		yLoc = center_y + yOffset;
 
-		xLoc = max(0, xLoc);
-		xLoc = min(MAX_WORLD_X_LOC-1, xLoc);
+		xLoc = MAX(0, xLoc);
+		xLoc = MIN(MAX_WORLD_X_LOC-1, xLoc);
 
-		yLoc = max(0, yLoc);
-		yLoc = min(MAX_WORLD_Y_LOC-1, yLoc);
+		yLoc = MAX(0, yLoc);
+		yLoc = MIN(MAX_WORLD_Y_LOC-1, yLoc);
 
 		locPtr = world.get_loc(xLoc, yLoc);
 
@@ -989,10 +989,10 @@ int FirmMonster::think_expansion()
 	MonsterInfo* monsterInfo = monster_res[monster_king.monster_id];
    FirmInfo* firmInfo = firm_res[FIRM_MONSTER];
    char	teraMask = UnitRes::mobile_type_to_mask(UNIT_LAND);
-   int	xLoc1 = max(0, loc_x1-EXPAND_FIRM_DISTANCE);
-	int	yLoc1 = max(0, loc_y1-EXPAND_FIRM_DISTANCE);
-	int	xLoc2 = min(MAX_WORLD_X_LOC-1, loc_x2+EXPAND_FIRM_DISTANCE);
-	int	yLoc2 = min(MAX_WORLD_Y_LOC-1, loc_y2+EXPAND_FIRM_DISTANCE);
+   int	xLoc1 = MAX(0, loc_x1-EXPAND_FIRM_DISTANCE);
+	int	yLoc1 = MAX(0, loc_y1-EXPAND_FIRM_DISTANCE);
+	int	xLoc2 = MIN(MAX_WORLD_X_LOC-1, loc_x2+EXPAND_FIRM_DISTANCE);
+	int	yLoc2 = MIN(MAX_WORLD_Y_LOC-1, loc_y2+EXPAND_FIRM_DISTANCE);
 
    if( !world.locate_space_random(xLoc1, yLoc1, xLoc2, yLoc2,
 		 firmInfo->loc_width+FREE_SPACE_DISTANCE*2,

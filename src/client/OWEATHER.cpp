@@ -38,12 +38,12 @@
 
 
 //-------- Begin of function Lightning::rand_seed ----------//
-unsigned Weather::rand_seed(unsigned max)
+unsigned Weather::rand_seed(unsigned MAX)
 {
    #define MULTIPLIER      0x015a4e35L
    #define INCREMENT       1
    seed = MULTIPLIER * seed + INCREMENT;
-	return seed % max;
+	return seed % MAX;
 }
 //-------- End of function Lightning::rand_seed ----------//
 
@@ -439,7 +439,7 @@ short Weather::quake_rate(short x, short y)
 {
 	err_when( !is_quake() );
 
-	short dist = max( abs(x - quake_x), abs(y - quake_y) );
+	short dist = MAX( abs(x - quake_x), abs(y - quake_y) );
 	short damage = 100 - dist / 2;
 	return damage > 0 ? damage : 0;
 }

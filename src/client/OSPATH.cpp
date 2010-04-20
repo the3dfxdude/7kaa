@@ -701,27 +701,27 @@ int SeekPath::seek(int sx,int sy,int dx,int dy, DWORD groupId, char mobileType,
 		case SEARCH_MODE_ATTACK_UNIT_BY_RANGE:
 		case SEARCH_MODE_ATTACK_WALL_BY_RANGE:
 				building_id = miscNo;
-				building_x1 = max(dx-attack_range, 0);
-				building_y1 = max(dy-attack_range, 0);
-				building_x2 = min(dx+attack_range, MAX_WORLD_X_LOC-1);
-				building_y2 = min(dy+attack_range, MAX_WORLD_Y_LOC-1);
+				building_x1 = MAX(dx-attack_range, 0);
+				building_y1 = MAX(dy-attack_range, 0);
+				building_x2 = MIN(dx+attack_range, MAX_WORLD_X_LOC-1);
+				building_y2 = MIN(dy+attack_range, MAX_WORLD_Y_LOC-1);
 				break;
 
 		case SEARCH_MODE_ATTACK_FIRM_BY_RANGE:
 				building_id = miscNo;
-				building_x1 = max(dx-attack_range, 0);
-				building_y1 = max(dy-attack_range, 0);
+				building_x1 = MAX(dx-attack_range, 0);
+				building_y1 = MAX(dy-attack_range, 0);
 				search_firm_info = firm_res[building_id];
-				building_x2 = min(dx+search_firm_info->loc_width-1+attack_range, MAX_WORLD_X_LOC-1);
-				building_y2 = min(dy+search_firm_info->loc_height-1+attack_range, MAX_WORLD_Y_LOC-1);
+				building_x2 = MIN(dx+search_firm_info->loc_width-1+attack_range, MAX_WORLD_X_LOC-1);
+				building_y2 = MIN(dy+search_firm_info->loc_height-1+attack_range, MAX_WORLD_Y_LOC-1);
 				break;
 
 		case SEARCH_MODE_ATTACK_TOWN_BY_RANGE:
 				building_id = miscNo;
-				building_x1 = max(dx-attack_range, 0);
-				building_y1 = max(dy-attack_range, 0);
-				building_x2 = min(dx+STD_TOWN_LOC_WIDTH-1+attack_range, MAX_WORLD_X_LOC-1);
-				building_y2 = min(dy+STD_TOWN_LOC_HEIGHT-1+attack_range, MAX_WORLD_Y_LOC-1);
+				building_x1 = MAX(dx-attack_range, 0);
+				building_y1 = MAX(dy-attack_range, 0);
+				building_x2 = MIN(dx+STD_TOWN_LOC_WIDTH-1+attack_range, MAX_WORLD_X_LOC-1);
+				building_y2 = MIN(dy+STD_TOWN_LOC_HEIGHT-1+attack_range, MAX_WORLD_Y_LOC-1);
 				break;
 	}
 
@@ -891,7 +891,7 @@ int SeekPath::continue_seek(int maxTries, char firstSeek)
 
 	//------ seek the path using the A star algorithm -----//
 	int maxNode = (total_node_avail<maxTries) ? total_node_avail : maxTries;
-	maxNode -= MAX_CHILD_NODE; // generate_successors() can generate a max of MAX_CHILD_NODE new nodes per call
+	maxNode -= MAX_CHILD_NODE; // generate_successors() can generate a MAX of MAX_CHILD_NODE new nodes per call
 	Node *bestNodePtr;
 
 	int i;
@@ -909,7 +909,7 @@ int SeekPath::continue_seek(int maxTries, char firstSeek)
 			break;
 		}
 
-		//----- exceed the object's max's node limitation, return the closest path ----//
+		//----- exceed the object's MAX's node limitation, return the closest path ----//
 		if( node_count >= maxNode )
 		{
 			path_status = PATH_NODE_USED_UP;
@@ -2637,27 +2637,27 @@ int SeekPath::seek2(int sx, int sy, int dx, int dy, short miscNo, short numOfPat
 		case SEARCH_MODE_ATTACK_WALL_BY_RANGE:
 				err_when(attack_range==0);
 				building_id = miscNo;
-				building_x1 = max(dx-attack_range, 0);
-				building_y1 = max(dy-attack_range, 0);
-				building_x2 = min(dx+attack_range, MAX_WORLD_X_LOC-1);
-				building_y2 = min(dy+attack_range, MAX_WORLD_Y_LOC-1);
+				building_x1 = MAX(dx-attack_range, 0);
+				building_y1 = MAX(dy-attack_range, 0);
+				building_x2 = MIN(dx+attack_range, MAX_WORLD_X_LOC-1);
+				building_y2 = MIN(dy+attack_range, MAX_WORLD_Y_LOC-1);
 				break;
 
 		case SEARCH_MODE_ATTACK_FIRM_BY_RANGE:
 				building_id = miscNo;
-				building_x1 = max(dx-attack_range, 0);
-				building_y1 = max(dy-attack_range, 0);
+				building_x1 = MAX(dx-attack_range, 0);
+				building_y1 = MAX(dy-attack_range, 0);
 				search_firm_info = firm_res[building_id];
-				building_x2 = min(dx+search_firm_info->loc_width-1+attack_range, MAX_WORLD_X_LOC-1);
-				building_y2 = min(dy+search_firm_info->loc_height-1+attack_range, MAX_WORLD_Y_LOC-1);
+				building_x2 = MIN(dx+search_firm_info->loc_width-1+attack_range, MAX_WORLD_X_LOC-1);
+				building_y2 = MIN(dy+search_firm_info->loc_height-1+attack_range, MAX_WORLD_Y_LOC-1);
 				break;
 
 		case SEARCH_MODE_ATTACK_TOWN_BY_RANGE:
 				building_id = miscNo;
-				building_x1 = max(dx-attack_range, 0);
-				building_y1 = max(dy-attack_range, 0);
-				building_x2 = min(dx+STD_TOWN_LOC_WIDTH-1+attack_range, MAX_WORLD_X_LOC-1);
-				building_y2 = min(dy+STD_TOWN_LOC_HEIGHT-1+attack_range, MAX_WORLD_Y_LOC-1);
+				building_x1 = MAX(dx-attack_range, 0);
+				building_y1 = MAX(dy-attack_range, 0);
+				building_x2 = MIN(dx+STD_TOWN_LOC_WIDTH-1+attack_range, MAX_WORLD_X_LOC-1);
+				building_y2 = MIN(dy+STD_TOWN_LOC_HEIGHT-1+attack_range, MAX_WORLD_Y_LOC-1);
 				break;
 	
 		case SEARCH_MODE_TO_LAND_FOR_SHIP:
@@ -2854,7 +2854,7 @@ int SeekPath::continue_seek2(int maxTries, char firstSeek)
 
 	//------ seek the path using the A star algorithm -----//
 	int maxNode = (total_node_avail<maxTries) ? total_node_avail : maxTries;
-	maxNode -= MAX_CHILD_NODE; // generate_successors() can generate a max of MAX_CHILD_NODE new nodes per call
+	maxNode -= MAX_CHILD_NODE; // generate_successors() can generate a MAX of MAX_CHILD_NODE new nodes per call
 	Node *bestNodePtr;
 
 	int i;
@@ -2872,7 +2872,7 @@ int SeekPath::continue_seek2(int maxTries, char firstSeek)
 			break;
 		}
 
-		//----- exceed the object's max's node limitation, return the closest path ----//
+		//----- exceed the object's MAX's node limitation, return the closest path ----//
 		if( node_count >= maxNode )
 		//if( i >= maxNode )
 		{

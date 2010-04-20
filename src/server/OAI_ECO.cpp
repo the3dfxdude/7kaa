@@ -87,7 +87,7 @@ int Nation::ai_should_spend(int importanceRating, float spendAmt)
 		return 0;
 
 	float fixedExpense = fixed_expense_365days();
-	float stdCashLevel = max(fixedExpense,2000) * (150+pref_cash_reserve) / 100;
+	float stdCashLevel = MAX(fixedExpense,2000) * (150+pref_cash_reserve) / 100;
 	float trueProfit = true_profit_365days();
 
 	//----- if we are losing money, don't spend on non-important things -----//

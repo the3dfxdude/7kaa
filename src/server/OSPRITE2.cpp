@@ -230,7 +230,7 @@ int Sprite::get_dir(int curX, int curY, int destX, int destY)
 {
 	unsigned xDiff( abs(destX - curX) );
 	unsigned yDiff( abs(destY - curY) );
-	unsigned squSize = max(xDiff, yDiff); // the size of the square we consider
+	unsigned squSize = MAX(xDiff, yDiff); // the size of the square we consider
 
 	if( destX == curX )
 	{

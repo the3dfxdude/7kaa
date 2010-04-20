@@ -285,7 +285,7 @@ void Town::think_defense()
 
 		if( unitPtr->nation_recno == nation_recno )
 		{
-			curDis = max( abs(unitPtr->cur_x_loc()-enemyXLoc), abs(unitPtr->cur_y_loc()-enemyYLoc) );
+			curDis = MAX( abs(unitPtr->cur_x_loc()-enemyXLoc), abs(unitPtr->cur_y_loc()-enemyYLoc) );
 
 			if( curDis < minDis )
 			{
@@ -314,10 +314,10 @@ int Town::detect_enemy(int alertNum)
 {
 	//------ check if any enemies have entered in the city -----//
 
-	int xLoc1 = max(0, loc_x1-WALL_SPACE_LOC);
-	int yLoc1 = max(0, loc_y1-WALL_SPACE_LOC);
-	int xLoc2 = min(MAX_WORLD_X_LOC-1, loc_x2+WALL_SPACE_LOC);
-	int yLoc2 = min(MAX_WORLD_Y_LOC-1, loc_y2+WALL_SPACE_LOC);
+	int xLoc1 = MAX(0, loc_x1-WALL_SPACE_LOC);
+	int yLoc1 = MAX(0, loc_y1-WALL_SPACE_LOC);
+	int xLoc2 = MIN(MAX_WORLD_X_LOC-1, loc_x2+WALL_SPACE_LOC);
+	int yLoc2 = MIN(MAX_WORLD_Y_LOC-1, loc_y2+WALL_SPACE_LOC);
 	int xLoc, yLoc, unitRecno;
 	int enemyCount=0;
 	Location* locPtr;
@@ -356,7 +356,7 @@ int Town::detect_enemy(int alertNum)
 // Think about building a specific type of firm next to this town.
 //
 // <int> firmId  - id. of the firm to be built.
-// <int> maxFirm - max. no. of firm of this type to be built next to this town.
+// <int> maxFirm - MAX. no. of firm of this type to be built next to this town.
 //
 int Town::think_build_firm(int firmId, int maxFirm)
 {
@@ -419,7 +419,7 @@ void Town::think_collect_tax()
 	if( yearProfit < 0 )								// we are losing money now
 		minLoyalty -= (-yearProfit) / 100;		// more aggressive in collecting tax if we are losing a lot of money
 
-	minLoyalty = max( 55, minLoyalty );
+	minLoyalty = MAX( 55, minLoyalty );
 
 	//---------------------------------------------//
 
@@ -526,7 +526,7 @@ int Town::think_ai_migrate()
 
 	int migrateCount = (average_loyalty() - MIN_RECRUIT_LOYALTY) / 5;
 
-	migrateCount = min( migrateCount, jobless_population );
+	migrateCount = MIN( migrateCount, jobless_population );
 
 	if( migrateCount <= 0 )
 		return 0;
@@ -904,7 +904,7 @@ int Town::think_build_research()
 
 	int maxResearch = 2 * (50+nationPtr->pref_use_weapon) / 50;
 
-	maxResearch = min(nationPtr->ai_town_count, maxResearch);
+	maxResearch = MIN(nationPtr->ai_town_count, maxResearch);
 
 	if( nationPtr->ai_research_count >= maxResearch )
 		return 0;
@@ -962,7 +962,7 @@ int Town::think_build_war_factory()
 
 	int maxWarFactory = (1+totalWeaponTechLevel) * nationPtr->pref_use_weapon / 100;
 
-	maxWarFactory = min(nationPtr->ai_town_count, maxWarFactory);
+	maxWarFactory = MIN(nationPtr->ai_town_count, maxWarFactory);
 
 	if( nationPtr->ai_war_count >= maxWarFactory )
 		return 0;
@@ -1286,10 +1286,10 @@ int Town::think_attack_nearby_enemy()
 	int xLoc2 = loc_x2 + SCAN_X_RANGE;
 	int yLoc2 = loc_y2 + SCAN_Y_RANGE;
 
-	xLoc1 = max( xLoc1, 0 );
-	yLoc1 = max( yLoc1, 0 );
-	xLoc2 = min( xLoc2, MAX_WORLD_X_LOC-1 );
-	yLoc2 = min( yLoc2, MAX_WORLD_Y_LOC-1 );
+	xLoc1 = MAX( xLoc1, 0 );
+	yLoc1 = MAX( yLoc1, 0 );
+	xLoc2 = MIN( xLoc2, MAX_WORLD_X_LOC-1 );
+	yLoc2 = MIN( yLoc2, MAX_WORLD_Y_LOC-1 );
 
 	//------------------------------------------//
 
@@ -1559,7 +1559,7 @@ int Town::think_counter_spy()
 	int spyCount;
 	int curSpyLevel = spy_array.total_spy_skill_level( SPY_TOWN, town_recno, nation_recno, spyCount );
 
-	if( spyCount >= 1+ownNation->pref_counter_spy/40 )		// 1 to 3 spies at max in each town
+	if( spyCount >= 1+ownNation->pref_counter_spy/40 )		// 1 to 3 spies at MAX in each town
 		return 0;
 
 	//---- if the spy skill needed is more than the current skill level ----//
@@ -1787,11 +1787,11 @@ int Town::think_scout()
 	else
 		destY = center_y - 50 - m.random(50);
 
-	destX = max(0, destX);
-	destX = min(MAX_WORLD_X_LOC-1, destX);
+	destX = MAX(0, destX);
+	destX = MIN(MAX_WORLD_X_LOC-1, destX);
 
-	destY = max(0, destY);
-	destY = min(MAX_WORLD_Y_LOC-1, destY);
+	destY = MAX(0, destY);
+	destY = MIN(MAX_WORLD_Y_LOC-1, destY);
 
 	ownNation->add_action( destX, destY, loc_x1, loc_y1, ACTION_AI_SCOUT, 0);
 

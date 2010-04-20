@@ -154,7 +154,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage)
 			if( attackDamage >= COMPARE_POINT )
 				targetUnit->hit_points -= attackDamage - DEFAULT_ARMOR_OVER_ATTACK_SLOW_DOWN;
 			else
-				targetUnit->hit_points -= min(attackDamage,ONE_OVER_ATTACK_SLOW_DOWN);  // in case attackDamage = 0, no hit_point is reduced
+				targetUnit->hit_points -= MIN(attackDamage,ONE_OVER_ATTACK_SLOW_DOWN);  // in case attackDamage = 0, no hit_point is reduced
 #ifdef DEBUG
 		}
 #endif

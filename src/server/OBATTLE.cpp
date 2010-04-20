@@ -254,7 +254,7 @@ void Battle::run_sim()
 	for(nationCount=1; nationCount<=maxNationCount; nationCount++)
 	{
 		xLoc = 0;
-		yLoc = min(20*nationCount, 180);
+		yLoc = MIN(20*nationCount, 180);
 
 		for(int createCount=0; createCount<10; createCount++, xLoc+=4) // createCount<50
 		{

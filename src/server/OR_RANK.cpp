@@ -563,7 +563,7 @@ int Info::get_rank_score(int rankType, int nationRecno)
 
 	int rankScore = 100 * nation_rank_data_array[rankType-1][nationRecno-1] / maxValue;
 
-	return max(0, rankScore);
+	return MAX(0, rankScore);
 }
 //----------- End of function Info::get_rank_score -----------//
 

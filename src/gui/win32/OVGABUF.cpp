@@ -695,7 +695,7 @@ void VgaBuf::put_large_bitmap(int x1, int y1, File* filePtr)
 	}
 	else //----- if the picture size > 64K, read in line by line -----//
 	{
-		int bufferLine = COMMON_DATA_BUF_SIZE / pictWidth;   // max. no. of lines can be in the buffer
+		int bufferLine = COMMON_DATA_BUF_SIZE / pictWidth;   // MAX. no. of lines can be in the buffer
 		int ty=y1+bufferLine-1;
 
 		if( ty> y2 )

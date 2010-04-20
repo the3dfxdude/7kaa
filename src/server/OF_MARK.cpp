@@ -552,7 +552,7 @@ void FirmMarket::draw(int displayLayer)
 			//------- draw cargo on the firm bitmap buffer --------//
 
 			cargoCount = MAX_CARGO * (int)marketGoods->stock_qty/(int)max_stock_qty;
-			cargoCount = max(1, cargoCount);
+			cargoCount = MAX(1, cargoCount);
 
 			x = ZOOM_X1 + (loc_x1-world.zoom_matrix->top_x_loc) * ZOOM_LOC_WIDTH + section_point_array[sectionId].x;
 			y = ZOOM_Y1 + (loc_y1-world.zoom_matrix->top_y_loc) * ZOOM_LOC_HEIGHT + section_point_array[sectionId].y;
@@ -623,8 +623,8 @@ void FirmMarket::input_goods(int maxInputQty)
 						if( firmMine->next_output_firm_recno == firm_recno &&
 							 firmMine->stock_qty > 0 && marketGoods->stock_qty < max_stock_qty )
 						{
-							inputQty = min( firmMine->stock_qty, maxInputQty );
-							inputQty = min( inputQty, max_stock_qty - marketGoods->stock_qty );
+							inputQty = MIN( firmMine->stock_qty, maxInputQty );
+							inputQty = MIN( inputQty, max_stock_qty - marketGoods->stock_qty );
 
 							firmMine->stock_qty	  -= inputQty;
 							marketGoods->stock_qty += inputQty;
@@ -667,8 +667,8 @@ void FirmMarket::input_goods(int maxInputQty)
 						if( firmFactory->next_output_firm_recno == firm_recno &&
 							 firmFactory->stock_qty > 0 && marketGoods->stock_qty < max_stock_qty )
 						{
-							inputQty = min( firmFactory->stock_qty, maxInputQty );
-							inputQty = min( inputQty, max_stock_qty - marketGoods->stock_qty );
+							inputQty = MIN( firmFactory->stock_qty, maxInputQty );
+							inputQty = MIN( inputQty, max_stock_qty - marketGoods->stock_qty );
 
 							firmFactory->stock_qty -= inputQty;
 							marketGoods->stock_qty += inputQty;
@@ -770,7 +770,7 @@ void FirmMarket::sell_goods()
 	{
 		if( marketGoods->product_raw_id && marketGoods->stock_qty > 0 )
 		{
-			saleQty = min(marketGoods->month_demand/30, marketGoods->stock_qty);
+			saleQty = MIN(marketGoods->month_demand/30, marketGoods->stock_qty);
 
 			marketGoods->stock_qty -= saleQty;
 
@@ -841,7 +841,7 @@ void FirmMarket::set_next_output_firm()
 {
 	int i, firmRecno, firmId;
 
-	for( i=0 ; i<linked_firm_count ; i++ )		// max tries
+	for( i=0 ; i<linked_firm_count ; i++ )		// MAX tries
 	{
 		if( ++next_output_link_id > linked_firm_count )    // next firm in the link
 			next_output_link_id = 1;

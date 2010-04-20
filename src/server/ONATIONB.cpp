@@ -103,7 +103,7 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, DWORD playe
 	color_scheme_id = colorSchemeId;
 	player_id    	 = playerId;
 
-	colorSchemeId	 = min( colorSchemeId, MAX_COLOR_SCHEME );
+	colorSchemeId	 = MIN( colorSchemeId, MAX_COLOR_SCHEME );
 	nation_color	 = game.color_remap_array[colorSchemeId].main_color;
 
 	last_war_date   = info.game_date;
@@ -1052,8 +1052,8 @@ void NationBase::change_ai_relation_level(short nationRecno, int levelChange)
 
 	int newLevel = nationRelation->ai_relation_level + levelChange;
 
-	newLevel = min(newLevel, 100);
-	newLevel = max(newLevel, 0  );
+	newLevel = MIN(newLevel, 100);
+	newLevel = MAX(newLevel, 0  );
 
 	nationRelation->ai_relation_level = newLevel;
 }
@@ -1450,7 +1450,7 @@ int NationBase::trade_rating(int nationRecno)
 	int tradeRating2 = 50 * (int) nation_array[nationRecno]->get_relation(nation_recno)->last_year_import[IMPORT_TOTAL] / (int) (last_year_income+1) +
 							 50 * (int) get_relation(nationRecno)->last_year_import[IMPORT_TOTAL] / (int) (last_year_expense+1);
 
-	return max(tradeRating1, tradeRating2);
+	return MAX(tradeRating1, tradeRating2);
 }
 //------- End of function NationBase::trade_rating -------//
 
@@ -1576,7 +1576,7 @@ void NationBase::succeed_king(int kingUnitRecno)
 	if( newKing->skill.skill_id == SKILL_LEADING )
 		newKingLeadership = newKing->skill.skill_level;
 
-	newKingLeadership = max( 20, newKingLeadership );		// give the king a minimum level of leadership
+	newKingLeadership = MAX( 20, newKingLeadership );		// give the king a minimum level of leadership
 
 	//----- set the common loyalty change for all races ------//
 

@@ -537,7 +537,7 @@ void FirmBase::train_unit()
 
 		if( workerPtr->skill_level < overseerSkill )
 		{
-			incValue = max(20, overseerSkill-workerPtr->skill_level)
+			incValue = MAX(20, overseerSkill-workerPtr->skill_level)
 						  * workerPtr->hit_points / workerPtr->max_hit_points()
 						  * (100+workerPtr->skill_potential*2) / 100;
 

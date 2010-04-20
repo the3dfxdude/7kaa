@@ -544,7 +544,7 @@ static void disp_worker_hit_points(int x1, int y1, int x2, int hitPoints, int ma
 	enum { HIT_BAR_DARK_BORDER = 3,
 			 HIT_BAR_BODY 		   = 1 };
 
-	int barWidth = (x2-x1+1) * hitPoints / max(hitPoints, maxHitPoints);
+	int barWidth = (x2-x1+1) * hitPoints / MAX(hitPoints, maxHitPoints);
 
 	vga_front.bar( x1, y1, x1+barWidth-1, y1+1, hitBarColor + HIT_BAR_BODY );
 

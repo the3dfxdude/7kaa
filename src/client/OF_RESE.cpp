@@ -493,7 +493,7 @@ void FirmResearch::process_research()
 						 / techInfo->complex_level
 						 / levelDivider;					// more complex and higher level technology will take longer to research
 
-	int techId = tech_id;		// techInfo->progress() will reset tech_id if the current research level is the max tech level, so we have to save it now
+	int techId = tech_id;		// techInfo->progress() will reset tech_id if the current research level is the MAX tech level, so we have to save it now
 
 	if( techInfo->progress(nation_recno, progressPoint) )
 	{

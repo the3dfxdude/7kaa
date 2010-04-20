@@ -389,7 +389,7 @@ void TechInfo::set_nation_tech_level(int nationRecno, int techLevel)
 	else if( firm_id )
 		firm_res[firm_id]->set_nation_tech_level( nationRecno, techLevel );
 
-	//--- if the max level has been reached and there are still other firms researching this technology ---//
+	//--- if the MAX level has been reached and there are still other firms researching this technology ---//
 
 	if( techLevel == max_tech_level && is_nation_researching(nationRecno) > 0 )
 	{

@@ -319,11 +319,11 @@ int Nation::ai_assign_spy(ActionNode* actionNode)
    	int destXLoc = spyUnit->next_x_loc() + m.random(20) - 10;
 		int destYLoc = spyUnit->next_y_loc() + m.random(20) - 10;
 
-		destXLoc = max(0, destXLoc);
-		destXLoc = min(MAX_WORLD_X_LOC-1, destXLoc);
+		destXLoc = MAX(0, destXLoc);
+		destXLoc = MIN(MAX_WORLD_X_LOC-1, destXLoc);
 
-		destYLoc = max(0, destYLoc);
-		destYLoc = min(MAX_WORLD_Y_LOC-1, destXLoc);
+		destYLoc = MAX(0, destYLoc);
+		destYLoc = MIN(MAX_WORLD_Y_LOC-1, destXLoc);
 
 		spyUnit->move_to( destXLoc, destYLoc );
 

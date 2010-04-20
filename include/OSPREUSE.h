@@ -58,7 +58,7 @@ class SeekPathReuse
 	public:
 		char			incomplete_search;
 
-		static int				max_node;				// max number of node used in searching
+		static int				max_node;				// MAX number of node used in searching
 		static short			total_num_of_path;	// equal to number of unit to process path-reuse
 		static short			cur_path_num;			// which unit in the group is processing path-reuse
 		static short			unit_size;				// the size of the current unit

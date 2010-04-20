@@ -205,11 +205,11 @@ int Nation::ai_build_harbor(int landRegionId, int seaRegionId)
 		xLoc = homeXLoc + xOffset;
 		yLoc = homeYLoc + yOffset;
 
-		xLoc = max(0, xLoc);
-		xLoc = min(MAX_WORLD_X_LOC-1, xLoc);
+		xLoc = MAX(0, xLoc);
+		xLoc = MIN(MAX_WORLD_X_LOC-1, xLoc);
 
-		yLoc = max(0, yLoc);
-		yLoc = min(MAX_WORLD_Y_LOC-1, yLoc);
+		yLoc = MAX(0, yLoc);
+		yLoc = MIN(MAX_WORLD_Y_LOC-1, yLoc);
 
 		locPtr = world.get_loc(xLoc, yLoc);
 

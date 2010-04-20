@@ -1133,11 +1133,11 @@ void Unit::update_loyalty()
 		if( nation_contribution > total_reward*2 )
 		{
 			int decLoyalty = (nation_contribution - total_reward*2)/2;
-			targetLoyalty -= min(50, decLoyalty);		// this affect 50 points at maximum
+			targetLoyalty -= MIN(50, decLoyalty);		// this affect 50 points at maximum
 		}
 
-		targetLoyalty = min( targetLoyalty, 100 );
-		target_loyalty = max( targetLoyalty, 0 );
+		targetLoyalty = MIN( targetLoyalty, 100 );
+		target_loyalty = MAX( targetLoyalty, 0 );
 	}
 
 	//-------- if this is a soldier ---------//
@@ -1186,8 +1186,8 @@ void Unit::update_loyalty()
 			if( targetLoyalty < 0 )
 				targetLoyalty = 0;
 
-			targetLoyalty = min( targetLoyalty, 100 );
-			target_loyalty = max( targetLoyalty, 0 );
+			targetLoyalty = MIN( targetLoyalty, 100 );
+			target_loyalty = MAX( targetLoyalty, 0 );
 		}
 		else
 		{
@@ -1203,7 +1203,7 @@ void Unit::update_loyalty()
 	{
 		int incValue = (target_loyalty - loyalty)/10;
 
-		int newLoyalty = (int) loyalty + max(1, incValue);
+		int newLoyalty = (int) loyalty + MAX(1, incValue);
 
 		if( newLoyalty > target_loyalty )
 			newLoyalty = target_loyalty;
@@ -1794,9 +1794,9 @@ void Unit::change_loyalty(int changeAmt)
 {
    int newLoyalty = loyalty + changeAmt;
 
-   newLoyalty = max(0, newLoyalty);
+   newLoyalty = MAX(0, newLoyalty);
 
-   loyalty = min(100, newLoyalty);
+   loyalty = MIN(100, newLoyalty);
 }
 //----------- End of function Unit::change_loyalty -----------//
 
@@ -1855,7 +1855,7 @@ void Unit::set_combat_level(int combatLevel)
 
    hit_points = hit_points * max_hit_points / oldMaxHitPoints;
 
-   hit_points = min(hit_points, max_hit_points);
+   hit_points = MIN(hit_points, max_hit_points);
 
    // --------- update can_guard_flag -------//
 
@@ -1873,7 +1873,7 @@ void Unit::set_combat_level(int combatLevel)
    }
 
    max_power = skill.combat_level + 50;
-   cur_power = min(cur_power, max_power);
+   cur_power = MIN(cur_power, max_power);
 }
 //-------- End of function Unit::set_combat_level -----------//
 
@@ -2279,10 +2279,10 @@ int Unit::can_spy_change_nation()
    int xLoc1=cur_x_loc()-SPY_ENEMY_RANGE, yLoc1=cur_y_loc()-SPY_ENEMY_RANGE;
    int xLoc2=cur_x_loc()+SPY_ENEMY_RANGE, yLoc2=cur_y_loc()+SPY_ENEMY_RANGE;
 
-   xLoc1 = max(0, xLoc1);
-   yLoc1 = max(0, yLoc1);
-   xLoc2 = min(MAX_WORLD_X_LOC-1, xLoc2);
-   yLoc2 = min(MAX_WORLD_Y_LOC-1, yLoc2);
+   xLoc1 = MAX(0, xLoc1);
+   yLoc1 = MAX(0, yLoc1);
+   xLoc2 = MIN(MAX_WORLD_X_LOC-1, xLoc2);
+   yLoc2 = MIN(MAX_WORLD_Y_LOC-1, yLoc2);
 
    int       xLoc, yLoc;
    int       unitRecno, trueNationRecno = true_nation_recno();

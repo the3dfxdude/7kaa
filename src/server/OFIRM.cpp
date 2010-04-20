@@ -711,7 +711,7 @@ void Firm::assign_overseer(int newOverseerRecno)
 				overseer_town_recno = assign_settle(unitPtr->race_id, unitPtr->loyalty, 1); // the overseer settles down
 
 				if(!overseer_town_recno)
-					return; // reach max population and no space to create town, return without assigning
+					return; // reach MAX population and no space to create town, return without assigning
 			}
 
 			Unit *unitPtr = unit_array[newOverseerRecno];
@@ -1687,7 +1687,7 @@ void Firm::update_loyalty()
 		{
 			int incValue = (targetLoyalty - workerPtr->worker_loyalty)/10;
 
-			int newLoyalty = (int) workerPtr->worker_loyalty + max(1, incValue);
+			int newLoyalty = (int) workerPtr->worker_loyalty + MAX(1, incValue);
 
 			if( newLoyalty > targetLoyalty )
 				newLoyalty = targetLoyalty;
@@ -2301,7 +2301,7 @@ void Firm::update_worker()
 		{
 			err_when(workerPtr->skill_level<0 || workerPtr->skill_level>100);
 
-			incValue = max(10, 100-workerPtr->skill_level)
+			incValue = MAX(10, 100-workerPtr->skill_level)
 						  * workerPtr->hit_points / workerPtr->max_hit_points()
 						  * (100+workerPtr->skill_potential) / 100 / 2;
 
@@ -2813,7 +2813,7 @@ void Firm::think_worker_migrate()
 
 			if( targetAttractLevel > curAttractLevel )
 			{
-				int newLoyalty = max( REBEL_LOYALTY+1, targetAttractLevel/2 );
+				int newLoyalty = MAX( REBEL_LOYALTY+1, targetAttractLevel/2 );
 
 				worker_migrate(workerId, townRecno, newLoyalty);
 				return;
@@ -3837,8 +3837,8 @@ void Worker::change_loyalty(int loyaltyChange)
 
 	int newLoyalty = worker_loyalty + loyaltyChange;
 
-	newLoyalty 		= min( 100, newLoyalty );
-	worker_loyalty = max( 0, newLoyalty );
+	newLoyalty 		= MIN( 100, newLoyalty );
+	worker_loyalty = MAX( 0, newLoyalty );
 }
 //---------- End of function Worker::change_loyalty --------//
 
@@ -3852,8 +3852,8 @@ void Worker::change_hit_points(int changePoints)
 	int newHitPoints = hit_points + changePoints;
 	int maxHitPoints = max_hit_points();
 
-	newHitPoints = min( maxHitPoints, newHitPoints );
-	hit_points   = max( 0, newHitPoints );
+	newHitPoints = MIN( maxHitPoints, newHitPoints );
+	hit_points   = MAX( 0, newHitPoints );
 }
 //---------- End of function Worker::change_hit_points --------//
 

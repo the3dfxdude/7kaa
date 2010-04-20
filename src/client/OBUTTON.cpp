@@ -317,8 +317,8 @@ void Button::paint(int defIsPushed, int repaintBody)
 		int tx = x1 + ((x2-x1) - font_ptr->text_width(str_buf))/2;
 		int ty = y1 + ((y2-y1) - font_ptr->height())/2 - 1;
 
-		tx = max( tx, x1+4 );
-		ty = max( ty, y1+1 );
+		tx = MAX( tx, x1+4 );
+		ty = MAX( ty, y1+1 );
 
 		font_ptr->put( tx, ty, str_buf, 0, x2-3 );
 	}

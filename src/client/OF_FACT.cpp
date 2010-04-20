@@ -327,7 +327,7 @@ void FirmFactory::draw(int displayLayer)
 	{
 		int cargoCount = MAX_CARGO * (int)stock_qty / (int)max_stock_qty;
 
-		draw_cargo( max(1,cargoCount), raw_res.small_product_icon(product_raw_id) );
+		draw_cargo( MAX(1,cargoCount), raw_res.small_product_icon(product_raw_id) );
 	}
 }
 //--------- End of function FirmFactory::draw -----------//
@@ -447,7 +447,7 @@ void FirmFactory::production()
 
 	float produceQty = (float) 20 * productivity / 100;
 
-	produceQty = min( produceQty, max_stock_qty-stock_qty );
+	produceQty = MIN( produceQty, max_stock_qty-stock_qty );
 
 	manufacture(produceQty);
 }
@@ -491,10 +491,10 @@ void FirmFactory::input_raw()
 			if( firmMine->next_output_firm_recno == firm_recno &&
 				 firmMine->raw_id==product_raw_id && firmMine->stock_qty > 0 )
 			{
-				inputQty = min( firmMine->stock_qty, max_raw_stock_qty - raw_stock_qty );
+				inputQty = MIN( firmMine->stock_qty, max_raw_stock_qty - raw_stock_qty );
 
 				if( firmMine->nation_recno != nation_recno )			// make sure it has the cash to pay for the raw materials
-					inputQty = min( inputQty, nationPtr->cash/RAW_PRICE );
+					inputQty = MIN( inputQty, nationPtr->cash/RAW_PRICE );
 
 				if( inputQty > 0 )
 				{
@@ -526,10 +526,10 @@ void FirmFactory::input_raw()
 					if( marketGoods->raw_id == product_raw_id &&
 						 marketGoods->stock_qty > 0 )
 					{
-						inputQty = min( marketGoods->stock_qty, max_raw_stock_qty - raw_stock_qty );
+						inputQty = MIN( marketGoods->stock_qty, max_raw_stock_qty - raw_stock_qty );
 
 						if( firmMarket->nation_recno != nation_recno )			// make sure it has the cash to pay for the raw materials
-							inputQty = min( inputQty, nationPtr->cash/RAW_PRICE );
+							inputQty = MIN( inputQty, nationPtr->cash/RAW_PRICE );
 
 						if( inputQty > 0 )
 						{
@@ -565,8 +565,8 @@ void FirmFactory::manufacture(float maxMftQty)
 
 	float	inputQty;
 
-	inputQty = min(raw_stock_qty, maxMftQty);
-	inputQty = min(inputQty, max_stock_qty-stock_qty);
+	inputQty = MIN(raw_stock_qty, maxMftQty);
+	inputQty = MIN(inputQty, max_stock_qty-stock_qty);
 
 	if( inputQty <= 0 )
 		return;
@@ -587,7 +587,7 @@ void FirmFactory::set_next_output_firm()
 {
 	int i, firmRecno, firmId;
 
-	for( i=0 ; i<linked_firm_count ; i++ )		// max tries
+	for( i=0 ; i<linked_firm_count ; i++ )		// MAX tries
 	{
 		if( ++next_output_link_id > linked_firm_count )    // next firm in the link
 			next_output_link_id = 1;

@@ -200,7 +200,7 @@ long WavStream::read(void *buffer, size_t frame_count)
 	if (!this->good)
 		return -1;
 
-	read_size = min(frame_count, this->data_left);
+	read_size = MIN(frame_count, this->data_left);
 	if (read_size == 0)
 		return 0;
 

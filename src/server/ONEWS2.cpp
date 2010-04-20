@@ -1083,7 +1083,7 @@ News* NewsArray::add_news(int newsId, int newsType, int nationRecno, int nationR
 
 	if( news_add_flag )
 	{
-		//--- if no. of news reaches max., delete the oldest one ---//
+		//--- if no. of news reaches MAX., delete the oldest one ---//
 
 		if( size() >= MAX_NEWS )
 		{

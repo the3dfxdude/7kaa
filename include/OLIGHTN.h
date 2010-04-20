@@ -46,7 +46,7 @@ public:
 	double v;					// magnitude of movement of x,y
 	double a, a0;				// magnitude of ax, ay
 	double r, r0;				// magnitude of rx, ry
-	double wide;				// radian, max of angle of random vector
+	double wide;				// radian, MAX of angle of random vector
 	unsigned	seed;				// last random number
 	char	energy_level;		// initially 8
 
