@@ -38,6 +38,8 @@
 #include <OVGALOCK.h>
 #include <audio-openal.h>
 #include <dbglog.h>
+#include <file_input_stream.h>
+#include <mem_input_stream.h>
 #include <wav_stream.h>
 
 #define LWAV_STREAM_BUFSIZ    0x1000
@@ -136,6 +138,10 @@ Audio::~Audio()
 //
 int Audio::init()
 {
+	this->wav_flag = true;
+	this->mid_flag = true;
+	this->cd_flag = true;
+
 	this->init_wav();
 
 	this->init_flag = this->wav_init_flag || this->mid_init_flag
@@ -206,11 +212,12 @@ int Audio::init_wav()
 			case ALC_MONO_SOURCES:
 				MSG("ALC_MONO_SOURCES: %i\n",
 				    attributes[n + 1]);
+				this->max_sources = attributes[n + 1];
 				break;
 			case ALC_STEREO_SOURCES:
 				MSG("ALC_STEREO_SOURCES: %i\n",
 				    attributes[n + 1]);
-				this->max_sources = attributes[n + 1];
+				 attributes[n + 1];
 				break;
 		}
 	}
@@ -270,6 +277,7 @@ int Audio::init_cd()
 
 void Audio::deinit_cd()
 {
+	WARN_UNIMPLEMENTED("deinit_cd");
 }
 
 // Play a midi mid from the mid resource file
@@ -279,7 +287,7 @@ void Audio::deinit_cd()
 // return : <int> 1 - mid loaded and is playing
 //                0 - mid not played
 //
-int Audio::play_mid(char* midName)
+int Audio::play_mid(char *midName)
 {
 	WARN_UNIMPLEMENTED("play_mid");
 	return 0;
@@ -292,38 +300,63 @@ void Audio::stop_mid()
 
 // Play digitized wav from the wav resource file
 //
-// <char*>        wavName = name of the wav in the resource file
-// long vol = volume (0 to 100)
-// long pan = pan (-10000 to 10000)
+// <char*>        file_name = name of the wav in the resource file
 //
 // return : <int> non-zero - wav loaded and is playing, return a serial no. to be referred in stop_wav and is_wav_playing
 //                0 - wav not played
 //
-int Audio::play_wav(char* wavName, DsVolume dsVolume)
+int Audio::play_wav(char *file_name, DsVolume vol)
 {
+	int idx;
+
 	if (!this->wav_init_flag)
 		return 0;
 
-	WARN_UNIMPLEMENTED("play_wav");
-	return 0;
+	MSG("play_wav(\"%s\")\n", file_name);
+
+	if (m.is_file_exist(file_name))
+		return this->play_long_wav(file_name, vol);
+
+	idx = this->wav_res.get_index(file_name);
+	if (idx == 0)
+		return 0;
+
+	return this->play_wav(idx, vol);
 }
 
 // Play digitized wav from the wav resource file
 //
-// short resIdx = index of wave file in A_WAVE2.RES
-// long vol = volume (0 to 100)
-// long pan = pan (-10000 to 10000)
+// index - index of wave file in A_WAVE2.RES
 //
-// return : <int> 1 - wav loaded and is playing
-//                0 - wav not played
+// return: 1 - wav loaded and is playing
+//         0 - wav not played
 //
-int Audio::play_wav(short resIdx, DsVolume dsVolume)
+int Audio::play_wav(short index, DsVolume vol)
 {
-	if (!this->wav_init_flag)
+	int size;
+	char *data;
+	MemInputStream *in;
+
+	/* get size by ref */
+	if (this->wav_res.get_file(index, size) == NULL)
 		return 0;
 
-	WARN_UNIMPLEMENTED("play_wav");
-	return 0;
+	data = new char[size];
+
+	this->wav_res.set_user_buf(data, size);
+	if (this->wav_res.get_data(index) == NULL)
+	{
+		this->wav_res.reset_user_buf();
+		delete[] data;
+		return 0;
+	}
+
+	this->wav_res.reset_user_buf();
+
+	in = new MemInputStream;
+	in->open(data, size);
+
+	return this->play_long_wav(in, vol);
 }
 
 // Play digitized wav from the wav file in memory
@@ -335,7 +368,7 @@ int Audio::play_wav(short resIdx, DsVolume dsVolume)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Audio::play_resided_wav(char* wavBuf, DsVolume dsVolume)
+int Audio::play_resided_wav(char *wavBuf, DsVolume dsVolume)
 {
 	if (!this->wav_init_flag)
 		return 0;
@@ -346,11 +379,15 @@ int Audio::play_resided_wav(char* wavBuf, DsVolume dsVolume)
 
 int Audio::get_free_wav_ch()
 {
+	int free_count;
+
 	if (!this->wav_init_flag)
 		return 0;
 
-	WARN_UNIMPLEMENTED("get_free_wav_ch");
-	return 0;
+	free_count = this->max_sources
+	             - static_cast<int>(this->streams.size());
+
+	return MAX(free_count, 0);
 }
 
 // stop a short sound effect started by play_wav or play_resided_wav
@@ -385,36 +422,60 @@ int Audio::is_wav_playing(int serial)
 // Play digitized wav from the wav file
 // suitable for very large wave file
 //
-// <char*>        wavName = name of the wave file
+// file_name - name of the wave file
 //
-// return : <int> 1 - wav loaded and is playing
-//                0 - wav not played
+// return: 1 - wav loaded and is playing
+//         0 - wav not played
 // Audio::yield() keeps on feeding data to it
-
-int Audio::play_long_wav(const char *file_name, DsVolume volume)
+//
+int Audio::play_long_wav(const char *file_name, DsVolume vol)
 {
-	const int BUFFER_COUNT = 4;
+	FileInputStream *in = new FileInputStream;
 
 	if (!this->wav_init_flag)
 		return 0;
 
 	MSG("play_long_wav(\"%s\")\n", file_name);
 
+	if (!in->open(file_name))
+	{
+		delete in;
+		return 0;
+	}
+
+	return this->play_long_wav(in, vol);
+}
+
+/*
+ * in  - wav file stream to play.  Claims ownership and will delete it.
+ * vol - volume/panning
+ *
+ * return: 1 on success, 0 on failure
+ */
+int Audio::play_long_wav(InputStream *in, DsVolume vol)
+{
+	const int BUFFER_COUNT = 4;
+
 	StreamContext *sc = NULL;
 	WavStream *ws = NULL;
 	int id;
 
+	assert(this->wav_init_flag);
+
 	ws = new WavStream;
-	if (!ws->open(file_name))
+	if (!ws->open(in))
+	{
+		delete in;
 		goto err;
+	}
 
 	sc = new StreamContext;
 
 	if (!sc->init(ws))
 		goto err;
 
-	set_source_panning(sc->source, volume.ds_pan);
-	set_source_volume(sc->source, volume.ds_vol);
+	set_source_panning(sc->source, vol.ds_pan);
+	set_source_volume(sc->source, vol.ds_vol);
 
 	if (!check_al())
 		goto err;
@@ -530,12 +591,20 @@ void Audio::yield()
 
 	for (si = this->streams.begin(); si != this->streams.end();)
 	{
-		StreamContext *sc = si->second;
-		sc->stream_data();
+		ALint state;
+		StreamContext *sc;
 
-		if (!sc->streaming)
+		sc = si->second;
+
+		if (sc->stream_data())
 		{
-			/* TODO: should make sure it's drained first */
+			++si;
+			continue;
+		}
+
+		alGetSourcei(sc->source, AL_SOURCE_STATE, &state);
+		if (state != AL_PLAYING)
+		{
 			delete sc;
 			this->streams.erase(si++);
 		}
@@ -694,12 +763,11 @@ Audio::StreamContext::StreamContext()
 
 Audio::StreamContext::~StreamContext()
 {
-	/* TODO: drain */
-
 	if (this->source != 0)
+	{
+		this->stop();
 		alDeleteSources(1, &this->source);
-
-	delete this->stream;
+	}
 }
 
 bool Audio::StreamContext::init(AudioStream *as)
@@ -778,9 +846,8 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 		/* TODO: handle looping and fading */
 		if (frames_read == 0)
 		{
-			printf("END OF STREAM\n");
 			this->streaming = false;
-			return true;
+			return false;
 		}
 
 		alBufferData(buf, format, data,
@@ -817,14 +884,19 @@ void Audio::StreamContext::stop()
 	ALint count;
 	ALuint buf;
 
+	assert(this->source != 0);
+
 	alSourceStop(this->source);
 
-	for (;;)
-	{
-		alGetSourcei(this->source, AL_BUFFERS_PROCESSED, &count);
-		if (count == 0)
-			break;
+	ALint state;
+	alGetSourcei(this->source, AL_SOURCE_STATE, &state);
+	printf("STOPPED: %i\n", state == AL_STOPPED);
+	alGetSourcei(this->source, AL_BUFFERS_PROCESSED, &count);
 
+	printf("deleting %i buffers\n", count);
+
+	while (count-- > 0)
+	{
 		alSourceUnqueueBuffers(this->source, 1, &buf);
 		alDeleteBuffers(1, &buf);
 	}

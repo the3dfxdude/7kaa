@@ -16,12 +16,14 @@ if (defined($wine_prefix)) {
 
 ## compile ##
 @targets = qw(
-file_util.cpp
 OCONFIG.cpp
 OERROR.cpp
 OFILE.cpp
 OMEM.cpp
 ORESDB.cpp
+file_input_stream.cpp
+file_util.cpp
+mem_input_stream.cpp
 );
 if (defined($debug) && $debug) {
   push (@targets, 'dbglog.cpp');

@@ -33,10 +33,10 @@ MemInputStream::~MemInputStream()
 	this->close();
 }
 
-void MemInputStream::open(uint8_t *data, size_t length, bool own_data)
+void MemInputStream::open(void *data, size_t length, bool own_data)
 {
 	this->close();
-	this->data = data;
+	this->data = static_cast<uint8_t *>(data);
 	this->length = length;
 	this->own_data = own_data;
 }

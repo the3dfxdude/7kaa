@@ -23,12 +23,12 @@
 #define WAV_STREAM_H
 
 #include <audio_stream.h>
-#include <OFILE.h>
+#include <input_stream.h>
 
 class WavStream: public AudioStream
 {
 private:
-	File *file;
+	InputStream *in;
 	int32_t fram_rate;    /* in PCM frames per second */
 	uint32_t data_length; /* in PCM frames */
 	uint32_t data_left;   /* in PCM frames */
@@ -44,7 +44,7 @@ private:
 public:
 	WavStream();
 	~WavStream();
-	bool open(File *file);
+	bool open(InputStream *in);
 	bool open(const char *file_name);
 	void close();
 	long read(void *buffer, size_t frame_count);

@@ -25,6 +25,7 @@
 
 #include <ALL.h>
 #include <dbglog.h>
+#include <file_input_stream.h>
 #include <file_util.h>
 #include <wav_stream.h>
 
@@ -42,16 +43,16 @@ struct FormatHeader
 	uint16_t bits_per_sample;
 };
 
-static bool read_format_header(File *file, FormatHeader *hdrp)
+static bool read_format_header(InputStream *in, FormatHeader *hdrp)
 {
 	bool ok = true;
 
-	ok = ok && read_le<uint16_t>(file, &hdrp->audio_format);
-	ok = ok && read_le<uint16_t>(file, &hdrp->num_channels);
-	ok = ok && read_le<uint32_t>(file, &hdrp->frame_rate);
-	ok = ok && read_le<uint32_t>(file, &hdrp->byte_rate);
-	ok = ok && read_le<uint16_t>(file, &hdrp->block_align);
-	ok = ok && read_le<uint16_t>(file, &hdrp->bits_per_sample);
+	ok = ok && read_le<uint16_t>(in, &hdrp->audio_format);
+	ok = ok && read_le<uint16_t>(in, &hdrp->num_channels);
+	ok = ok && read_le<uint32_t>(in, &hdrp->frame_rate);
+	ok = ok && read_le<uint32_t>(in, &hdrp->byte_rate);
+	ok = ok && read_le<uint16_t>(in, &hdrp->block_align);
+	ok = ok && read_le<uint16_t>(in, &hdrp->bits_per_sample);
 
 	return ok;
 }
@@ -69,7 +70,7 @@ WavStream::~WavStream()
 
 void WavStream::clear()
 {
-	this->file = NULL;
+	this->in = NULL;
 	this->data_offset = 0;
 	this->data_length = 0;
 	this->data_left = 0;
@@ -89,8 +90,8 @@ bool WavStream::advance_to_chunk(const char *name, uint32_t *sizep)
 
 	for (;;)
 	{
-		ok = ok && file->file_read(buffer, 4);
-		ok = ok && read_le<uint32_t>(this->file, &size);
+		ok = ok && in->read(buffer, 4);
+		ok = ok && read_le<uint32_t>(this->in, &size);
 
 		if (!ok)
 			return false;
@@ -101,7 +102,7 @@ bool WavStream::advance_to_chunk(const char *name, uint32_t *sizep)
 			return true;
 		}
 
-		ok = ok && ::seek(this->file, size, SEEK_CUR);
+		ok = ok && this->in->seek(size, SEEK_CUR);
 	}
 
 	return false;
@@ -109,21 +110,21 @@ bool WavStream::advance_to_chunk(const char *name, uint32_t *sizep)
 
 bool WavStream::open(const char *file_name)
 {
-	File *file;
+	FileInputStream *in;
 
 	this->close();
 
-	file = new File;
-	if (!file->file_open(file_name) || !this->open(file))
+	in = new FileInputStream;
+	if (!in->open(file_name) || !this->open(in))
 	{
-		delete file;
+		delete in;
 		return false;
 	}
 
 	return true;
 }
 
-bool WavStream::open(File *file)
+bool WavStream::open(InputStream *in)
 {
 	char name[4];
 	uint32_t size;
@@ -131,13 +132,13 @@ bool WavStream::open(File *file)
 	FormatHeader fmth;
 
 	this->close();
-	this->file = file;
+	this->in = in;
 
-	ok = ok && ::seek(file, 0, SEEK_SET);
-	ok = ok && file->file_read(name, 4);
+	ok = ok && this->in->seek(0, SEEK_SET);
+	ok = ok && in->read(name, 4);
 	ok = ok && (memcmp(name, "RIFF", 4) == 0);
-	ok = ok && ::seek(file, 4, SEEK_CUR);
-	ok = ok && file->file_read(name, 4);
+	ok = ok && this->in->seek(4, SEEK_CUR);
+	ok = ok && in->read(name, 4);
 	ok = ok && (memcmp(name, "WAVE", 4) == 0);
 
 	if (!ok)
@@ -148,8 +149,8 @@ bool WavStream::open(File *file)
 
 	ok = ok && this->advance_to_chunk("fmt ", &size);
 	ok = ok && (size >= FormatHeader::SIZE);
-	ok = ok && read_format_header(this->file, &fmth);
-	ok = ok && ::seek(this->file, size - FormatHeader::SIZE, SEEK_CUR);
+	ok = ok && read_format_header(this->in, &fmth);
+	ok = ok && this->in->seek(size - FormatHeader::SIZE, SEEK_CUR);
 	if (fmth.audio_format != 1
 	    || (fmth.bits_per_sample != 8 && fmth.bits_per_sample != 16)
 	    || (fmth.num_channels != 1 && fmth.num_channels != 2))
@@ -169,14 +170,14 @@ bool WavStream::open(File *file)
 		goto err;
 	}
 
-	this->data_offset = this->file->file_pos();
+	this->data_offset = this->in->tell();
 	this->data_length = size / this->frame_size();
 	this->data_left = this->data_length;
 
 	return true;
 
 err:
-	this->file = NULL; /* do not close file on error */
+	this->in = NULL; /* do not close in on error */
 	this->close();
 	return false;
 }
@@ -189,10 +190,9 @@ bool WavStream::seek(size_t frame_no)
 	if (frame_no >= this->data_length)
 		return false;
 
-	if (!::seek(this->file,
-	            this->data_offset
-	            + sizeof(uint16_t) * frame_no * this->chans,
-	            SEEK_SET))
+	if (!this->in->seek(this->data_offset
+	                    + sizeof(uint16_t) * frame_no * this->chans,
+	                    SEEK_SET))
 	{
 		ERR("[WavStream::seek] Seek failed\n");
 		this->good = false;
@@ -206,7 +206,7 @@ bool WavStream::seek(size_t frame_no)
 
 void WavStream::close()
 {
-	delete this->file;
+	delete this->in;
 	this->clear();
 }
 
@@ -232,7 +232,7 @@ long WavStream::read(void *buffer, size_t frame_count)
 			{
 				p = &buf[n * this->chans + c];
 
-				if (!read_le<int16_t>(this->file, p))
+				if (!read_le<int16_t>(this->in, p))
 				{
 					this->good = false;
 					return n;
@@ -242,7 +242,7 @@ long WavStream::read(void *buffer, size_t frame_count)
 	}
 	else if (this->bytes == 1)
 	{
-		if (!this->file->file_read(buffer, this->chans * read_size))
+		if (!this->in->read(buffer, this->chans * read_size))
 		{
 			this->good = false;
 			return 0;

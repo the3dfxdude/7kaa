@@ -24,26 +24,6 @@
 
 #include <OFILE.h>
 
-/* Reads a little-endian integer */
-template <typename T>
-bool read_le(File *file, T *valp)
-{
-	T val = T();
-	unsigned char c;
-
-	for (int n = 0; n < static_cast<int>(sizeof(T)); n++)
-	{
-		if (!file->file_read(&c, 1))
-			return false;
-
-		val |= static_cast<T>(c) << (8 * n);
-	}
-
-	*valp = val;
-
-	return true;
-}
-
 bool seek(File *file, long off, int whence);
 
 #endif

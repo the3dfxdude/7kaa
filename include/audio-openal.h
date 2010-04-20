@@ -33,6 +33,7 @@
 #include <ORESX.h>
 #include <OVOLUME.h>
 #include <audio_stream.h>
+#include <input_stream.h>
 
 class Audio
 {
@@ -80,15 +81,14 @@ public:
 	char  wav_init_flag;   // whether the wave driver has been installed
 	char  cd_init_flag;
 
-	char  mid_flag;        // flag determing whether MIDI music should be playing
-	char  wav_flag;		  // flag determing whether WAV sound effects should be playing
-	char  cd_flag;			  // flag determing whether Audio CD track should be playing
+	// flag determing whether MIDI music should be playing
+	char  mid_flag;
 
-	char* mid_buf;
-	char* wav_buf;
+	// flag determing whether WAV sound effects should be playing
+	char  wav_flag;
 
-	int   mid_buf_size;
-	int   wav_buf_size;
+	// flag determing whether Audio CD track should be playing
+	char  cd_flag;
 
 	ResourceIdx mid_res;
 	ResourceIdx wav_res;
@@ -163,6 +163,8 @@ private:
 	void	deinit_mid();
 	void	deinit_wav();
 	void	deinit_cd();
+
+	int	play_long_wav(InputStream *, DsVolume);
 };
 
 extern Audio audio;
