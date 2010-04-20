@@ -24,8 +24,7 @@
 
 #define WARN_UNIMPLEMENTED(func) \
 	do { \
-		fprintf(stderr, __FILE__":%i: %s unimplemented.\n", \
-			__LINE__, func); \
+		ERR(__FILE__":%i: %s unimplemented.\n", __LINE__, func); \
 	} while (0)
 
 #include <assert.h>
@@ -165,22 +164,22 @@ int Audio::init_wav()
 	this->al_device = alcOpenDevice(NULL);
 	if (this->al_device == NULL)
 	{
-		fprintf(stderr, __FILE__":%i: alcOpenDevice failed\n",
-			__LINE__);
+		ERR("alcOpenDevice failed\n");
 		goto err;
 	}
 
 	this->al_context = alcCreateContext(this->al_device, attributes);
 	if (this->al_context == NULL)
 	{
-		fprintf(stderr, __FILE__":%i: alcCreateContext failed: 0x%x\n",
-			__LINE__, alcGetError(this->al_device));
+		ERR("alcCreateContext failed: 0x%x\n",
+		    alcGetError(this->al_device));
 		goto err;
 	}
 
 	if (!alcMakeContextCurrent(this->al_context))
 	{
-		ERR("alcMakeContextCurrent failed\n");
+		ERR("alcMakeContextCurrent failed: 0x%x\n",
+		    alcGetError(this->al_device));
 		goto err;
 	}
 
