@@ -131,7 +131,6 @@ public:
 	void	stop_mid();
 	void	stop_wav();             // and stop also long wav
 	void	stop_cd();
-	void	stop_long_wav();
 
 	int	is_mid_playing();
 	int	is_wav_playing();

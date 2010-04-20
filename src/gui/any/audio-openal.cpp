@@ -629,18 +629,15 @@ void Audio::yield()
 
 void Audio::stop_wav()
 {
+	StreamMap::const_iterator itr;
+
 	if (!this->wav_init_flag)
 		return;
 
-	WARN_UNIMPLEMENTED("stop_wav");
-}
+	for (itr = this->streams.begin(); itr != this->streams.end(); ++itr)
+		delete itr->second;
 
-void Audio::stop_long_wav()
-{
-	if (!this->wav_init_flag)
-		return;
-
-	WARN_UNIMPLEMENTED("stop_long_wav");
+	this->streams.clear();
 }
 
 void Audio::stop_loop_wav(int ch)
