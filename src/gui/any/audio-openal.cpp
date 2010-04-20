@@ -566,12 +566,20 @@ int Audio::play_loop_wav(const char *wavName, int repeatOffset, DsVolume dsVolum
 	return 0;
 }
 
-void Audio::volume_loop_wav(int ch, DsVolume dsVolume)
+void Audio::volume_loop_wav(int id, DsVolume vol)
 {
+	StreamMap::const_iterator itr;
+
 	if (!this->wav_init_flag)
 		return;
 
-	WARN_UNIMPLEMENTED("volume_loop_wav");
+	itr = this->streams.find(id);
+	if (itr == this->streams.end())
+		return;
+
+	alSourcef(itr->second->source, AL_GAIN,
+	          (vol.ds_vol + 10000.f) / 10000.f);
+	check_al();
 }
 
 void Audio::fade_out_loop_wav(int ch, int fade_rate_msec)
