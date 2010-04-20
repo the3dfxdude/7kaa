@@ -74,6 +74,11 @@ bool MemInputStream::seek(long offset, int whence)
 	return true;
 }
 
+long MemInputStream::tell()
+{
+	return this->pos;
+}
+
 void MemInputStream::close()
 {
 	if (this->data == NULL)
