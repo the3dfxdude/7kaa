@@ -269,6 +269,9 @@ void Audio::stop_mid()
 //
 int Audio::play_wav(char* wavName, DsVolume dsVolume)
 {
+	if (!this->wav_init_flag)
+		return 0;
+
 	WARN_UNIMPLEMENTED("play_wav");
 	return 0;
 }
@@ -284,6 +287,9 @@ int Audio::play_wav(char* wavName, DsVolume dsVolume)
 //
 int Audio::play_wav(short resIdx, DsVolume dsVolume)
 {
+	if (!this->wav_init_flag)
+		return 0;
+
 	WARN_UNIMPLEMENTED("play_wav");
 	return 0;
 }
@@ -299,12 +305,18 @@ int Audio::play_wav(short resIdx, DsVolume dsVolume)
 //
 int Audio::play_resided_wav(char* wavBuf, DsVolume dsVolume)
 {
+	if (!this->wav_init_flag)
+		return 0;
+
 	WARN_UNIMPLEMENTED("play_resided_wav");
 	return 0;
 }
 
 int Audio::get_free_wav_ch()
 {
+	if (!this->wav_init_flag)
+		return 0;
+
 	WARN_UNIMPLEMENTED("get_free_wav_ch");
 	return 0;
 }
@@ -318,6 +330,9 @@ int Audio::get_free_wav_ch()
 //
 int Audio::stop_wav(int serial)
 {
+	if (!this->wav_init_flag)
+		return 0;
+
 	WARN_UNIMPLEMENTED("stop_wav");
 	return 1;
 }
@@ -328,8 +343,11 @@ int Audio::stop_wav(int serial)
 //
 int Audio::is_wav_playing(int serial)
 {
+	if (!this->wav_init_flag)
+		return false;
+
 	WARN_UNIMPLEMENTED("is_wav_playing");
-	return 0;
+	return false;
 }
 
 // Play digitized wav from the wav file
@@ -344,6 +362,9 @@ int Audio::is_wav_playing(int serial)
 int Audio::play_long_wav(const char *file_name, DsVolume volume)
 {
 	const int BUFFER_COUNT = 4;
+
+	if (!this->wav_init_flag)
+		return 0;
 
 	MSG("play_long_wav(\"%s\")\n", file_name);
 
@@ -392,6 +413,9 @@ int Audio::stop_long_wav(int id)
 	StreamMap::iterator itr;
 	StreamContext *sc;
 
+	if (!this->wav_init_flag)
+		return 1;
+
 	MSG("stop_long_wav(%i)\n", id);
 
 	itr = this->streams.find(id);
@@ -426,30 +450,45 @@ int Audio::is_long_wav_playing(int id)
 //
 int Audio::play_loop_wav(const char *wavName, int repeatOffset, DsVolume dsVolume)
 {
+	if (!this->wav_init_flag)
+		return 0;
+
 	WARN_UNIMPLEMENTED("play_loop_wav");
 	return 0;
 }
 
 void Audio::volume_loop_wav(int ch, DsVolume dsVolume)
 {
+	if (!this->wav_init_flag)
+		return;
+
 	WARN_UNIMPLEMENTED("volume_loop_wav");
 }
 
 void Audio::fade_out_loop_wav(int ch, int fade_rate_msec)
 {
+	if (!this->wav_init_flag)
+		return;
+
 	WARN_UNIMPLEMENTED("fade_out_loop_wav");
 }
 
 DsVolume Audio::get_loop_wav_volume(int ch)
 {
+	if (!this->wav_init_flag)
+		return DsVolume(0, 0);
+
 	WARN_UNIMPLEMENTED("get_loop_wav_volume");
 	return DsVolume(0, 0);
 }
 
 int Audio::is_loop_wav_fading(int ch)
 {
+	if (!this->wav_init_flag)
+		return false;
+
 	WARN_UNIMPLEMENTED("is_loop_wav_fading");
-	return 0;
+	return false;
 }
 
 void Audio::yield()
@@ -475,11 +514,17 @@ void Audio::yield()
 
 void Audio::stop_wav()
 {
+	if (!this->wav_init_flag)
+		return;
+
 	WARN_UNIMPLEMENTED("stop_wav");
 }
 
 void Audio::stop_long_wav()
 {
+	if (!this->wav_init_flag)
+		return;
+
 	WARN_UNIMPLEMENTED("stop_long_wav");
 }
 
@@ -509,8 +554,11 @@ int Audio::is_mid_playing()
 
 int Audio::is_wav_playing()
 {
+	if (!this->wav_init_flag)
+		return false;
+
 	WARN_UNIMPLEMENTED("is_wav_playing");
-	return 0;
+	return false;
 }
 
 int Audio::is_cd_playing()
@@ -527,6 +575,9 @@ void Audio::toggle_mid(int midFlag)
 void Audio::toggle_wav(int wavFlag)
 {
 	WARN_UNIMPLEMENTED("toggle_wav");
+
+	if (!this->wav_init_flag)
+		return;
 }
 
 void Audio::toggle_cd(int cdFlag)
@@ -550,6 +601,9 @@ void Audio::set_mid_volume(int midVolume)
 //
 void Audio::set_wav_volume(int vol)
 {
+	if (!this->wav_init_flag)
+		return;
+
 	vol = MAX(vol, 0);
 	vol = MIN(vol, 100);
 	alListenerf(AL_GAIN, vol / 100.f);
@@ -558,6 +612,9 @@ void Audio::set_wav_volume(int vol)
 
 int Audio::get_wav_volume() const
 {
+	if (!this->wav_init_flag)
+		return 0;
+
 	ALfloat vol;
 	alGetListenerf(AL_GAIN, &vol);
 	return static_cast<int>(vol * 100.f + .5f);
@@ -575,6 +632,9 @@ void Audio::set_cd_volume(int cdVolume)
 
 void Audio::volume_long_wav(int serial, DsVolume dsVolume)
 {
+	if (!this->wav_init_flag)
+		return;
+
 	WARN_UNIMPLEMENTED("volume_long_wav");
 }
 
