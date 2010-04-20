@@ -157,6 +157,7 @@ void Audio::deinit()
 int Audio::init_wav()
 {
 	ALCint attributes[] = {0};
+
 	assert(!this->wav_init_flag);
 
 	this->wav_res.init(DIR_RES"A_WAVE2.RES", 0, 0);
@@ -546,16 +547,21 @@ void Audio::set_mid_volume(int midVolume)
 
 // Set wav volume
 //
-// <int> wavVolume = wav volume, 0-100
+// <int> vol = wav volume, 0-100
 //
-void Audio::set_wav_volume(int wavVolume)
+void Audio::set_wav_volume(int vol)
 {
-	WARN_UNIMPLEMENTED("set_wav_volume");
+	vol = MAX(vol, 0);
+	vol = MIN(vol, 100);
+	alListenerf(AL_GAIN, vol / 100.f);
+	check_al();
 }
 
 int Audio::get_wav_volume() const
 {
-  return 0;
+	ALfloat vol;
+	alGetListenerf(AL_GAIN, &vol);
+	return static_cast<int>(vol * 100.f + .5f);
 }
 
 // Set cd volume
