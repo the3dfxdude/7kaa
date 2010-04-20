@@ -662,12 +662,22 @@ void Audio::set_cd_volume(int cdVolume)
 
 }
 
-void Audio::volume_long_wav(int serial, DsVolume dsVolume)
+void Audio::volume_long_wav(int id, DsVolume vol)
 {
 	if (!this->wav_init_flag)
 		return;
 
-	WARN_UNIMPLEMENTED("volume_long_wav");
+	StreamContext *sc;
+	StreamMap::const_iterator itr;
+
+	itr = this->streams.find(id);
+	if (itr == this->streams.end())
+		return;
+
+	sc = itr->second;
+	set_source_volume(sc->source, vol.ds_vol);
+	set_source_panning(sc->source, vol.ds_pan);
+	check_al();
 }
 
 
