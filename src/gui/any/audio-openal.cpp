@@ -30,6 +30,7 @@
 #include <assert.h>
 #include <limits.h>
 #include <stdio.h>
+#include <vector>
 
 #include <ALL.h>
 #include <OBOX.h>
@@ -155,7 +156,9 @@ void Audio::deinit()
 //
 int Audio::init_wav()
 {
-	ALCint attributes[] = {0};
+	ALCint size;
+
+	std::vector<ALCint> attributes;
 
 	assert(!this->wav_init_flag);
 
@@ -168,7 +171,9 @@ int Audio::init_wav()
 		goto err;
 	}
 
-	this->al_context = alcCreateContext(this->al_device, attributes);
+	attributes.push_back(0);
+
+	this->al_context = alcCreateContext(this->al_device, &attributes[0]);
 	if (this->al_context == NULL)
 	{
 		ERR("alcCreateContext failed: 0x%x\n",
@@ -183,7 +188,34 @@ int Audio::init_wav()
 		goto err;
 	}
 
-	this->wav_init_flag = 1;
+	attributes.clear();
+	alcGetIntegerv(this->al_device, ALC_ATTRIBUTES_SIZE, 1, &size);
+	attributes.resize(size);
+	alcGetIntegerv(this->al_device, ALC_ALL_ATTRIBUTES,
+	               attributes.size(), &attributes[0]);
+
+	this->max_sources = 16; /* default, in case OpenAL doesn't tell us */
+
+	for (int n = 0;; n += 2)
+	{
+		if (attributes[n] == 0)
+			break;
+
+		switch (attributes[n])
+		{
+			case ALC_MONO_SOURCES:
+				MSG("ALC_MONO_SOURCES: %i\n",
+				    attributes[n + 1]);
+				break;
+			case ALC_STEREO_SOURCES:
+				MSG("ALC_STEREO_SOURCES: %i\n",
+				    attributes[n + 1]);
+				this->max_sources = attributes[n + 1];
+				break;
+		}
+	}
+
+	this->wav_init_flag = true;
 	return 1;
 
 err:
@@ -193,7 +225,7 @@ err:
 
 void Audio::deinit_wav()
 {
-	this->wav_init_flag = 0;
+	this->wav_init_flag = false;
 
 	if (this->al_context != NULL)
 	{

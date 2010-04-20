@@ -153,6 +153,8 @@ private:
 
 	StreamMap streams;
 
+	int	max_sources;
+
 private:
 	int	init_mid();
 	int	init_wav();
