@@ -337,6 +337,9 @@ int Audio::play_wav(short index, DsVolume vol)
 	char *data;
 	MemInputStream *in;
 
+	if (!this->wav_init_flag)
+		return 0;
+
 	/* get size by ref */
 	if (this->wav_res.get_file(index, size) == NULL)
 		return 0;
@@ -368,13 +371,24 @@ int Audio::play_wav(short index, DsVolume vol)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Audio::play_resided_wav(char *wavBuf, DsVolume dsVolume)
+int Audio::play_resided_wav(char *buf, DsVolume vol)
 {
+	uint32_t size;
+	MemInputStream *in;
+
 	if (!this->wav_init_flag)
 		return 0;
 
-	WARN_UNIMPLEMENTED("play_resided_wav");
-	return 0;
+	MSG("play_resided_wav(%p, (%i, %i))\n", buf, vol.ds_vol, vol.ds_pan);
+
+	/* read the wav size from the RIFF header */
+	size = buf[4] | (buf[5] << 8) | (buf[6] << 16) | (buf[7] << 24);
+	size += 8;
+
+	in = new MemInputStream;
+	in->open(buf, size, false);
+
+	return this->play_long_wav(in, vol);
 }
 
 int Audio::get_free_wav_ch()
@@ -480,8 +494,7 @@ int Audio::play_long_wav(InputStream *in, DsVolume vol)
 	if (!check_al())
 		goto err;
 
-	if (!sc->stream_data(BUFFER_COUNT))
-		goto err;
+	sc->stream_data(BUFFER_COUNT);
 
 	id = max_key(&this->streams) + 1;
 	this->streams[id] = sc;
@@ -603,13 +616,14 @@ void Audio::yield()
 		}
 
 		alGetSourcei(sc->source, AL_SOURCE_STATE, &state);
-		if (state != AL_PLAYING)
+		if (state == AL_STOPPED)
 		{
 			delete sc;
 			this->streams.erase(si++);
+			continue;
 		}
-		else
-			++si;
+
+		++si;
 	}
 }
 
@@ -728,7 +742,6 @@ int Audio::get_wav_volume() const
 void Audio::set_cd_volume(int cdVolume)
 {
 	WARN_UNIMPLEMENTED("set_cd_volume");
-
 }
 
 void Audio::volume_long_wav(int id, DsVolume vol)
@@ -846,8 +859,9 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 		/* TODO: handle looping and fading */
 		if (frames_read == 0)
 		{
+			alDeleteBuffers(1, &buf);
 			this->streaming = false;
-			return false;
+			break;
 		}
 
 		alBufferData(buf, format, data,
@@ -869,7 +883,7 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 		check_al();
 	}
 
-	return true;
+	return this->streaming;
 
 err:
 	if (buf != 0)
@@ -887,13 +901,7 @@ void Audio::StreamContext::stop()
 	assert(this->source != 0);
 
 	alSourceStop(this->source);
-
-	ALint state;
-	alGetSourcei(this->source, AL_SOURCE_STATE, &state);
-	printf("STOPPED: %i\n", state == AL_STOPPED);
 	alGetSourcei(this->source, AL_BUFFERS_PROCESSED, &count);
-
-	printf("deleting %i buffers\n", count);
 
 	while (count-- > 0)
 	{
