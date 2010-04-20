@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef MEM_INPUT_STREAM_H
-#define MEM_INPUT_STREAM_H
+#ifndef FILE_INPUT_STREAM_H
+#define FILE_INPUT_STREAM_H
 
 #include <OFILE.h>
 #include <input_stream.h>
@@ -36,6 +36,7 @@ public:
 	bool open(const char *file_name);
 	long read(void *buffer, long length);
 	bool seek(long offset, int whence);
+	long tell();
 	void close();
 };
 
