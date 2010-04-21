@@ -131,7 +131,7 @@ Audio::Audio()
 
 Audio::~Audio()
 {
-	deinit();
+	this->deinit();
 }
 
 // Initialize the mid driver
@@ -155,7 +155,10 @@ int Audio::init()
 
 void Audio::deinit()
 {
-	WARN_UNIMPLEMENTED("deinit");
+	this->init_flag = 0;
+	this->deinit_wav();
+	this->deinit_mid();
+	this->deinit_cd();
 }
 
 // Initialize digitized wav driver
@@ -237,6 +240,8 @@ void Audio::deinit_wav()
 {
 	this->wav_init_flag = false;
 
+	this->stop_wav();
+
 	if (this->al_context != NULL)
 	{
 		alcDestroyContext(this->al_context);
@@ -264,6 +269,7 @@ int Audio::init_mid()
 
 void Audio::deinit_mid()
 {
+	WARN_UNIMPLEMENTED("deinit_mid");
 }
 
 // Initialize the audio CD player
@@ -312,7 +318,7 @@ int Audio::play_wav(char *file_name, DsVolume vol)
 {
 	int idx;
 
-	if (!this->wav_init_flag)
+	if (!this->wav_init_flag || !this->wav_flag)
 		return 0;
 
 	MSG("play_wav(\"%s\")\n", file_name);
@@ -340,7 +346,7 @@ int Audio::play_wav(short index, DsVolume vol)
 	char *data;
 	MemInputStream *in;
 
-	if (!this->wav_init_flag)
+	if (!this->wav_init_flag || !this->wav_flag)
 		return 0;
 
 	/* get size by ref */
@@ -379,7 +385,7 @@ int Audio::play_resided_wav(char *buf, DsVolume vol)
 	uint32_t size;
 	MemInputStream *in;
 
-	if (!this->wav_init_flag)
+	if (!this->wav_init_flag || !this->wav_flag)
 		return 0;
 
 	MSG("play_resided_wav(%p, (%i, %i))\n", buf, vol.ds_vol, vol.ds_pan);
@@ -416,24 +422,16 @@ int Audio::get_free_wav_ch()
 //
 int Audio::stop_wav(int id)
 {
-	if (!this->wav_init_flag)
-		return 1;
-
-	this->stop_long_wav(id);
-	return 1;
+	return this->stop_long_wav(id);
 }
 
 // return wheather a short sound effect is stopped
 //
 // <int>        the serial no returned by play_wav or play_resided_wav
 //
-int Audio::is_wav_playing(int serial)
+int Audio::is_wav_playing(int id)
 {
-	if (!this->wav_init_flag)
-		return false;
-
-	WARN_UNIMPLEMENTED("is_wav_playing");
-	return false;
+	return this->is_long_wav_playing(id);
 }
 
 // Play digitized wav from the wav file
@@ -562,7 +560,7 @@ int Audio::play_loop_wav(const char *file_name, int repeat_offset, DsVolume vol)
 	int id;
 	StreamContext *sc;
 
-	if (!this->wav_init_flag)
+	if (!this->wav_init_flag || !this->wav_flag)
 		return 0;
 
 	MSG("play_loop_wav(\"%s\", %i)\n", file_name, repeat_offset);
@@ -652,7 +650,11 @@ int Audio::is_loop_wav_fading(int id)
 
 void Audio::yield()
 {
+	/* FIXME: This object causes a frame flip.  Looks like a hack that could
+	 * use some fixing.
+	 */
 	VgaFrontLock vgaLock;
+
 	StreamMap::iterator si;
 
 	for (si = this->streams.begin(); si != this->streams.end();)
@@ -683,9 +685,6 @@ void Audio::yield()
 void Audio::stop_wav()
 {
 	StreamMap::const_iterator itr;
-
-	if (!this->wav_init_flag)
-		return;
 
 	for (itr = this->streams.begin(); itr != this->streams.end(); ++itr)
 		delete itr->second;
@@ -725,8 +724,7 @@ int Audio::is_wav_playing()
 	if (!this->wav_init_flag)
 		return false;
 
-	WARN_UNIMPLEMENTED("is_wav_playing");
-	return false;
+	return (!this->streams.empty());
 }
 
 int Audio::is_cd_playing()
@@ -740,12 +738,12 @@ void Audio::toggle_mid(int midFlag)
 	WARN_UNIMPLEMENTED("toggle_mid");
 }
 
-void Audio::toggle_wav(int wavFlag)
+void Audio::toggle_wav(int wav_flag)
 {
-	WARN_UNIMPLEMENTED("toggle_wav");
+	if (!wav_flag)
+		this->stop_wav();
 
-	if (!this->wav_init_flag)
-		return;
+	this->wav_flag = wav_flag;
 }
 
 void Audio::toggle_cd(int cdFlag)
@@ -1001,7 +999,6 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 			if (!this->apply_fading(data, frames_read))
 			{
 				this->streaming = false;
-				printf("fading finished\n");
 				break;
 			}
 		}
