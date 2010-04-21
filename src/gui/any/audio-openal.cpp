@@ -122,6 +122,28 @@ static typename M::key_type max_key(
 		return dflt;
 }
 
+/* ueturns an unused key that's greater than 0 */
+template <typename M>
+static typename M::key_type unused_key(const M *map)
+{
+	typename M::key_type id;
+
+	id = max_key(map) + 1;
+	id = MAX(id, 1);
+
+	if (map->find(id) == map->end())
+		return id;
+
+	do
+	{
+		id++;
+		id = MAX(id, 1);
+	}
+	while (map->find(id) != map->end());
+
+	return id;
+}
+
 
 Audio::Audio()
 {
@@ -497,7 +519,7 @@ int Audio::play_long_wav(InputStream *in, DsVolume vol)
 
 	sc->stream_data(BUFFER_COUNT);
 
-	id = max_key(&this->streams) + 1;
+	id = unused_key(&this->streams);
 	this->streams[id] = sc;
 
 	return id;
