@@ -156,6 +156,7 @@ private:
 	StreamMap streams;
 
 	int	max_sources;
+	int	wav_volume; // -10000 to 0
 
 private:
 	int	init_mid();

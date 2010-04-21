@@ -63,22 +63,24 @@ static bool check_al(int line)
 }
 #define check_al() check_al(__LINE__)
 
-static inline float centibels_to_ratio(int cb)
+/* By this conversion, 0dB == 1 and -6dB == 0.5 */
+static inline float millibels_to_ratio(long cb)
 {
 	if (cb <= -10000)
 		return 0.f;
+	cb = MIN(cb, 0);
 
-	return pow(10.f, cb / 1000.f);
+	return pow(10.f, cb / 2000.f);
 }
 
-static inline long ratio_to_centibels(float ratio)
+static inline long ratio_to_millibels(float ratio)
 {
 	const float log10 = log(10.f);
 
 	if (ratio == 0.f)
 		return -10000;
 
-	return (1000.f * log(ratio) / log10 + .5f);
+	return (2000.f * log(ratio) / log10 + .5f);
 }
 
 /* panning is in [-10,000; 10,000] */
@@ -94,15 +96,15 @@ static void set_source_panning(ALuint source, int panning)
 }
 
 /* volume is in [-10,000; 0] */
-static void set_source_volume(ALuint source, int volume_centibels)
+static void set_source_volume(ALuint source, int volume_millibels)
 {
-	volume_centibels = MAX(volume_centibels, -10000);
-	volume_centibels = MIN(volume_centibels, 0);
+	volume_millibels = MAX(volume_millibels, -10000);
+	volume_millibels = MIN(volume_millibels, 0);
 
 	MSG("set_source_volume(%x, %f)\n",
-	    source, centibels_to_ratio(volume_centibels));
+	    source, millibels_to_ratio(volume_millibels));
 
-	alSourcef(source, AL_GAIN, centibels_to_ratio(volume_centibels));
+	alSourcef(source, AL_GAIN, millibels_to_ratio(volume_millibels));
 }
 
 ALenum openal_format(AudioStream *as)
@@ -534,7 +536,7 @@ int Audio::play_long_wav(InputStream *in, const DsVolume &vol)
 		goto err;
 
 	set_source_panning(sc->source, vol.ds_pan);
-	set_source_volume(sc->source, vol.ds_vol);
+	set_source_volume(sc->source, vol.ds_vol + this->wav_volume);
 
 	if (!check_al())
 		goto err;
@@ -624,17 +626,7 @@ int Audio::play_loop_wav(const char *file_name, int repeat_offset,
 
 void Audio::volume_loop_wav(int id, const DsVolume &vol)
 {
-	StreamMap::const_iterator itr;
-
-	if (!this->wav_init_flag)
-		return;
-
-	itr = this->streams.find(id);
-	if (itr == this->streams.end())
-		return;
-
-	alSourcef(itr->second->source, AL_GAIN, centibels_to_ratio(vol.ds_vol));
-	check_al();
+	this->volume_long_wav(id, vol);
 }
 
 void Audio::fade_out_loop_wav(int id, int fade_duration_msec)
@@ -675,12 +667,13 @@ DsVolume Audio::get_loop_wav_volume(int id)
 
 	alGetSourcef(sc->source, AL_GAIN, &gain);
 	alGetSourcefv(sc->source, AL_POSITION, position);
+	gain *= millibels_to_ratio(this->wav_volume);
 
 	if (sc->fade_frames != 0)
 		gain *= 1.f - float(sc->fade_frames_played)
 		              / sc->fade_frames;
 
-	return DsVolume(ratio_to_centibels(gain),
+	return DsVolume(ratio_to_millibels(gain),
 	                (position[0] / PANNING_MAX_X) * 10000.f + .5f);
 }
 
@@ -810,13 +803,17 @@ void Audio::set_mid_volume(int midVolume)
 	WARN_UNIMPLEMENTED("set_mid_volume");
 }
 
-
 // Set wav volume
 //
 // <int> vol = wav volume, 0-100
 //
 void Audio::set_wav_volume(int vol)
 {
+	StreamMap::const_iterator itr;
+	float gain;
+	float gain_mult;
+	int diff;
+
 	if (!this->wav_init_flag)
 		return;
 
@@ -824,8 +821,18 @@ void Audio::set_wav_volume(int vol)
 
 	vol = MAX(vol, 0);
 	vol = MIN(vol, 100);
-	alListenerf(AL_GAIN, vol / 100.f);
-	check_al();
+	vol = vol * 100 - 10000;
+	diff = vol - this->wav_volume;
+	gain_mult = millibels_to_ratio(diff);
+
+	for (itr = this->streams.begin(); itr != this->streams.end(); ++itr)
+	{
+		alGetSourcef(itr->second->source, AL_GAIN, &gain);
+		alSourcef(itr->second->source, AL_GAIN, gain * gain_mult);
+		check_al();
+	}
+
+	this->wav_volume = vol;
 }
 
 int Audio::get_wav_volume() const
@@ -833,9 +840,7 @@ int Audio::get_wav_volume() const
 	if (!this->wav_init_flag)
 		return 0;
 
-	ALfloat vol;
-	alGetListenerf(AL_GAIN, &vol);
-	return (vol * 100.f + .5f);
+	return ((this->wav_volume + 10000) / 100);
 }
 
 // Set cd volume
@@ -847,6 +852,7 @@ void Audio::set_cd_volume(int cdVolume)
 	WARN_UNIMPLEMENTED("set_cd_volume");
 }
 
+/* Changes the volume/panning of a wave.  Does not attenuate by wav_volume. */
 void Audio::volume_long_wav(int id, const DsVolume &vol)
 {
 	StreamContext *sc;
