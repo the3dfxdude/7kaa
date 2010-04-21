@@ -24,6 +24,7 @@
 
 #include <assert.h>
 #include <limits.h>
+#include <math.h>
 #include <vector>
 
 #include <ALL.h>
@@ -62,6 +63,24 @@ static bool check_al(int line)
 }
 #define check_al() check_al(__LINE__)
 
+static inline float centibels_to_ratio(int cb)
+{
+	if (cb <= -10000)
+		return 0.f;
+
+	return pow(10.f, cb / 1000.f);
+}
+
+static inline long ratio_to_centibels(float ratio)
+{
+	const float log10 = log(10.f);
+
+	if (ratio == 0.f)
+		return -10000;
+
+	return (1000.f * log(ratio) / log10 + .5f);
+}
+
 /* panning is in [-10,000; 10,000] */
 static void set_source_panning(ALuint source, int panning)
 {
@@ -75,12 +94,15 @@ static void set_source_panning(ALuint source, int panning)
 }
 
 /* volume is in [-10,000; 0] */
-static void set_source_volume(ALuint source, int volume)
+static void set_source_volume(ALuint source, int volume_centibels)
 {
-	volume = MAX(volume, -10000);
-	volume = MIN(volume, 0);
+	volume_centibels = MAX(volume_centibels, -10000);
+	volume_centibels = MIN(volume_centibels, 0);
 
-	alSourcef(source, AL_GAIN, (volume + 10000.f) / 10000.f);
+	MSG("set_source_volume(%x, %f)\n",
+	    source, centibels_to_ratio(volume_centibels));
+
+	alSourcef(source, AL_GAIN, centibels_to_ratio(volume_centibels));
 }
 
 ALenum openal_format(AudioStream *as)
@@ -471,7 +493,8 @@ int Audio::play_long_wav(const char *file_name, const DsVolume &vol)
 	if (!this->wav_init_flag)
 		return 0;
 
-	MSG("play_long_wav(\"%s\")\n", file_name);
+	MSG("play_long_wav(\"%s\", (%li, %li))\n", file_name,
+	    vol.ds_vol, vol.ds_pan);
 
 	if (!in->open(file_name))
 	{
@@ -585,7 +608,8 @@ int Audio::play_loop_wav(const char *file_name, int repeat_offset,
 	if (!this->wav_init_flag || !this->wav_flag)
 		return 0;
 
-	MSG("play_loop_wav(\"%s\", %i)\n", file_name, repeat_offset);
+	MSG("play_loop_wav(\"%s\", %i, (%li, %li)\n", file_name, repeat_offset,
+	    vol.ds_vol, vol.ds_pan);
 
 	id = this->play_long_wav(file_name, vol);
 	if (id == 0)
@@ -609,8 +633,7 @@ void Audio::volume_loop_wav(int id, const DsVolume &vol)
 	if (itr == this->streams.end())
 		return;
 
-	alSourcef(itr->second->source, AL_GAIN,
-	          (vol.ds_vol + 10000.f) / 10000.f);
+	alSourcef(itr->second->source, AL_GAIN, centibels_to_ratio(vol.ds_vol));
 	check_al();
 }
 
@@ -657,7 +680,7 @@ DsVolume Audio::get_loop_wav_volume(int id)
 		gain *= 1.f - float(sc->fade_frames_played)
 		              / sc->fade_frames;
 
-	return DsVolume(gain * 10000.f - 10000.f + .5f,
+	return DsVolume(ratio_to_centibels(gain),
 	                (position[0] / PANNING_MAX_X) * 10000.f + .5f);
 }
 
@@ -826,11 +849,13 @@ void Audio::set_cd_volume(int cdVolume)
 
 void Audio::volume_long_wav(int id, const DsVolume &vol)
 {
+	StreamContext *sc;
+	StreamMap::const_iterator itr;
+
 	if (!this->wav_init_flag)
 		return;
 
-	StreamContext *sc;
-	StreamMap::const_iterator itr;
+	MSG("volume_long_wav(%i, (%li, %li))\n", id, vol.ds_vol, vol.ds_pan);
 
 	itr = this->streams.find(id);
 	if (itr == this->streams.end())

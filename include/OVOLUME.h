@@ -32,7 +32,7 @@ class PosVolume;
 class DsVolume
 {
 public:
-	long	ds_vol;			// -10,000 to 0 (DSBVOLUME_MIN to DSBVOLUME_MAX)
+	long	ds_vol;			// -10,000 to 0 [cB]
 	long	ds_pan;			// -10,000 to 10,000
 
 public:
