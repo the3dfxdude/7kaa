@@ -66,7 +66,7 @@ private:
 		bool init(AudioStream *as);
 		bool stream_data(int new_buffer_count = 0);
 		void stop();
-		bool apply_fading(void *buffer, size_t frames);
+		void apply_fading(void *buffer, size_t frames);
 
 	private:
 		/* forbid copying */

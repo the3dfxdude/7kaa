@@ -649,8 +649,13 @@ DsVolume Audio::get_loop_wav_volume(int id)
 		return DsVolume(0, 0);
 
 	sc = itr->second;
+
 	alGetSourcef(sc->source, AL_GAIN, &gain);
 	alGetSourcefv(sc->source, AL_POSITION, position);
+
+	if (sc->fade_frames != 0)
+		gain *= 1.f - float(sc->fade_frames_played)
+		              / sc->fade_frames;
 
 	return DsVolume(gain * 10000.f - 10000.f + .5f,
 	                (position[0] / PANNING_MAX_X) * 10000.f + .5f);
@@ -875,8 +880,7 @@ err:
 	return false;
 }
 
-/* return: whether the stream is still fading */
-bool Audio::StreamContext::apply_fading(void *buffer, size_t frames)
+void Audio::StreamContext::apply_fading(void *buffer, size_t frames)
 {
 	size_t n;
 	int ch;
@@ -888,7 +892,7 @@ bool Audio::StreamContext::apply_fading(void *buffer, size_t frames)
 	assert(this->fade_frames > 0);
 
 	if (this->fade_frames_played >= this->fade_frames)
-		return false;
+		return;
 
 	ch = this->stream->channels();
 	incr = -1.f / this->fade_frames;
@@ -938,8 +942,6 @@ bool Audio::StreamContext::apply_fading(void *buffer, size_t frames)
 	this->fade_frames_played += frames;
 	this->fade_frames_played = MIN(this->fade_frames_played,
 	                               this->fade_frames);
-
-	return true;
 }
 
 bool Audio::StreamContext::stream_data(int new_buffer_count)
@@ -1019,13 +1021,7 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 		}
 
 		if (this->fade_frames != 0)
-		{
-			if (!this->apply_fading(data, frames_read))
-			{
-				this->streaming = false;
-				break;
-			}
-		}
+			this->apply_fading(data, frames_read);
 
 		alBufferData(buf, format, data,
 		             frames_read * this->stream->frame_size(),
