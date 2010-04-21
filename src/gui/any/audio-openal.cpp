@@ -594,12 +594,24 @@ void Audio::volume_loop_wav(int id, DsVolume vol)
 	check_al();
 }
 
-void Audio::fade_out_loop_wav(int ch, int fade_duration_msec)
+void Audio::fade_out_loop_wav(int id, int fade_duration_msec)
 {
+	StreamMap::const_iterator itr;
+	StreamContext *sc;
+
 	if (!this->wav_init_flag)
 		return;
 
-	WARN_UNIMPLEMENTED("fade_out_loop_wav");
+	MSG("fade_out_loop_wav(%i, %i)\n", id, fade_duration_msec);
+
+	itr = this->streams.find(id);
+	if (itr == this->streams.end())
+		return;
+
+	sc = itr->second;
+	sc->fade_frames_played = 0;
+	sc->fade_frames = sc->stream->frame_rate() * fade_duration_msec
+	                  / 1000;
 }
 
 DsVolume Audio::get_loop_wav_volume(int id)
@@ -841,6 +853,73 @@ err:
 	return false;
 }
 
+/* return: whether the stream is still fading */
+bool Audio::StreamContext::apply_fading(void *buffer, size_t frames)
+{
+	size_t n;
+	int ch;
+	uint8_t *u8buf;
+	int16_t *s16buf;
+	float incr;
+	float f;
+
+	assert(this->fade_frames > 0);
+
+	if (this->fade_frames_played >= this->fade_frames)
+		return false;
+
+	ch = this->stream->channels();
+	incr = -1.f / this->fade_frames;
+	f = 1.f - float(this->fade_frames_played) / this->fade_frames;
+
+	switch (this->stream->sample_size())
+	{
+		case 1:
+			u8buf = static_cast<uint8_t *>(buffer);
+
+			for (n = 0; n < frames; n++)
+			{
+				for (int c = 0; c < ch; c++)
+				{
+					uint8_t v = u8buf[n * ch + c];
+
+					u8buf[n * ch + c] =
+						f * (v - 128) + 128 + .5f;
+				}
+
+				f += incr;
+				f = MAX(f, 0.f);
+			}
+			break;
+
+		case 2:
+			s16buf = static_cast<int16_t *>(buffer);
+
+			for (n = 0; n < frames; n++)
+			{
+				for (int c = 0; c < ch; c++)
+				{
+					s16buf[n * ch + c] =
+						f * s16buf[n * ch + c] + .5f;
+				}
+
+				f += incr;
+				f = MAX(f, 0.f);
+			}
+			break;
+
+		default:
+			abort();
+			break;
+	}
+
+	this->fade_frames_played += frames;
+	this->fade_frames_played = MIN(this->fade_frames_played,
+	                               this->fade_frames);
+
+	return true;
+}
+
 bool Audio::StreamContext::stream_data(int new_buffer_count)
 {
 	const size_t BUFFER_SIZE = 0x4000;
@@ -906,20 +985,26 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 				                                 space_frames);
 				if (frames_read == 0)
 				{
-					alDeleteBuffers(1, &buf);
 					this->streaming = false;
 					break;
 				}
 			}
 			else
 			{
-				alDeleteBuffers(1, &buf);
 				this->streaming = false;
 				break;
 			}
 		}
 
-		/* TODO: handle fading */
+		if (this->fade_frames != 0)
+		{
+			if (!this->apply_fading(data, frames_read))
+			{
+				this->streaming = false;
+				printf("fading finished\n");
+				break;
+			}
+		}
 
 		alBufferData(buf, format, data,
 		             frames_read * this->stream->frame_size(),
@@ -930,6 +1015,12 @@ bool Audio::StreamContext::stream_data(int new_buffer_count)
 		alSourceQueueBuffers(this->source, 1, &buf);
 		if (!check_al())
 			goto err;
+	}
+
+	if (!this->streaming)
+	{
+		alDeleteBuffers(1, &buf);
+		check_al();
 	}
 
 	alGetSourcei(this->source, AL_SOURCE_STATE, &state);
