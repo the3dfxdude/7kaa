@@ -24,7 +24,6 @@
 
 #include <assert.h>
 #include <limits.h>
-#include <stdio.h>
 #include <vector>
 
 #include <ALL.h>
@@ -410,7 +409,7 @@ int Audio::play_resided_wav(char *buf, const DsVolume &vol)
 	if (!this->wav_init_flag || !this->wav_flag)
 		return 0;
 
-	MSG("play_resided_wav(%p, (%i, %i))\n", buf, vol.ds_vol, vol.ds_pan);
+	MSG("play_resided_wav(%p))\n", buf);
 
 	/* read the wav size from the RIFF header */
 	size = buf[4] | (buf[5] << 8) | (buf[6] << 16) | (buf[7] << 24);
@@ -792,6 +791,8 @@ void Audio::set_wav_volume(int vol)
 {
 	if (!this->wav_init_flag)
 		return;
+
+	MSG("set_wav_volume(%i)\n", vol);
 
 	vol = MAX(vol, 0);
 	vol = MIN(vol, 100);
