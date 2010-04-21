@@ -101,28 +101,30 @@ public:
 	int	init();
 	void	deinit();
 
-	void	yield();		// called by sys every some time
+	void	yield(); // called by sys every some time
 
 	int	play_mid(char*);
 
 	// functions on short wave
-	int	play_wav(char*, DsVolume);
-	int	play_wav(short resIdx, DsVolume);
-	int	play_resided_wav(char *, DsVolume);
+	int	play_wav(char*, const DsVolume &);
+	int	play_wav(short resIdx, const DsVolume &);
+	int	play_resided_wav(char *, const DsVolume &);
 	int	get_free_wav_ch();
 	int	stop_wav(int);
 	int	is_wav_playing(int);
 
 	// functions on long wave
-	int	play_long_wav(const char*, DsVolume);
+	int	play_long_wav(const char*, const DsVolume &);
 	int	stop_long_wav(int);
 	int	is_long_wav_playing(int);
-	void	volume_long_wav(int ch, DsVolume);
+	void	volume_long_wav(int ch, const DsVolume &);
 
 	// functions on loop wave
-	int	play_loop_wav(const char *, int repeatOffset, DsVolume);	// return channel no.
+
+	// return channel no.
+	int	play_loop_wav(const char *, int repeatOffset, const DsVolume &);
 	void	stop_loop_wav(int ch);
-	void	volume_loop_wav(int ch, DsVolume);
+	void	volume_loop_wav(int ch, const DsVolume &);
 	void	fade_out_loop_wav(int ch, int fadeRate);
 	DsVolume get_loop_wav_volume(int ch);
 	int	is_loop_wav_fading(int ch);
@@ -164,7 +166,7 @@ private:
 	void	deinit_wav();
 	void	deinit_cd();
 
-	int	play_long_wav(InputStream *, DsVolume);
+	int	play_long_wav(InputStream *, const DsVolume &);
 };
 
 extern Audio audio;

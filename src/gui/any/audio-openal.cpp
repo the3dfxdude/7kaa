@@ -336,7 +336,7 @@ void Audio::stop_mid()
 // return : <int> non-zero - wav loaded and is playing, return a serial no. to be referred in stop_wav and is_wav_playing
 //                0 - wav not played
 //
-int Audio::play_wav(char *file_name, DsVolume vol)
+int Audio::play_wav(char *file_name, const DsVolume &vol)
 {
 	int idx;
 
@@ -362,7 +362,7 @@ int Audio::play_wav(char *file_name, DsVolume vol)
 // return: 1 - wav loaded and is playing
 //         0 - wav not played
 //
-int Audio::play_wav(short index, DsVolume vol)
+int Audio::play_wav(short index, const DsVolume &vol)
 {
 	int size;
 	char *data;
@@ -402,7 +402,7 @@ int Audio::play_wav(short index, DsVolume vol)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Audio::play_resided_wav(char *buf, DsVolume vol)
+int Audio::play_resided_wav(char *buf, const DsVolume &vol)
 {
 	uint32_t size;
 	MemInputStream *in;
@@ -465,7 +465,7 @@ int Audio::is_wav_playing(int id)
 //         0 - wav not played
 // Audio::yield() keeps on feeding data to it
 //
-int Audio::play_long_wav(const char *file_name, DsVolume vol)
+int Audio::play_long_wav(const char *file_name, const DsVolume &vol)
 {
 	FileInputStream *in = new FileInputStream;
 
@@ -489,7 +489,7 @@ int Audio::play_long_wav(const char *file_name, DsVolume vol)
  *
  * return: 1 on success, 0 on failure
  */
-int Audio::play_long_wav(InputStream *in, DsVolume vol)
+int Audio::play_long_wav(InputStream *in, const DsVolume &vol)
 {
 	const int BUFFER_COUNT = 4;
 
@@ -577,7 +577,8 @@ int Audio::is_long_wav_playing(int id)
 // return: channel number
 //         0 - not played
 //
-int Audio::play_loop_wav(const char *file_name, int repeat_offset, DsVolume vol)
+int Audio::play_loop_wav(const char *file_name, int repeat_offset,
+                         const DsVolume &vol)
 {
 	int id;
 	StreamContext *sc;
@@ -598,7 +599,7 @@ int Audio::play_loop_wav(const char *file_name, int repeat_offset, DsVolume vol)
 	return id;
 }
 
-void Audio::volume_loop_wav(int id, DsVolume vol)
+void Audio::volume_loop_wav(int id, const DsVolume &vol)
 {
 	StreamMap::const_iterator itr;
 
@@ -817,7 +818,7 @@ void Audio::set_cd_volume(int cdVolume)
 	WARN_UNIMPLEMENTED("set_cd_volume");
 }
 
-void Audio::volume_long_wav(int id, DsVolume vol)
+void Audio::volume_long_wav(int id, const DsVolume &vol)
 {
 	if (!this->wav_init_flag)
 		return;
