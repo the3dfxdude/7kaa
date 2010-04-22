@@ -27,15 +27,11 @@
 #ifndef AUDIO_WIN32_H
 #define AUDIO_WIN32_H
 
-#ifndef __ORESX_H
-#include <ORESX.h>
-#endif
-
-#include <OVOLUME.h>
-
 #include <windows.h>
 #include <mmsystem.h>
 #include <dsound.h>
+
+#include <audio_base.h>
 
 //------ Define constant -----------//
 
@@ -50,28 +46,8 @@
 
 //--------------- Define class Audio ---------------//
 
-class Audio
+class Audio: public AudioBase
 {
-public:
-	char  init_flag;
-
-	char  mid_init_flag;   // whether the midi driver has been installed
-	char  wav_init_flag;   // whether the wave driver has been installed
-	char	cd_init_flag;
-
-	char  mid_flag;        // flag determing whether MIDI music should be playing
-	char  wav_flag;		  // flag determing whether WAV sound effects should be playing
-	char  cd_flag;			  // flag determing whether Audio CD track should be playing
-
-	char* mid_buf;
-	char* wav_buf;
-
-	int	mid_buf_size;
-	int	wav_buf_size;
-
-	ResourceIdx mid_res;
-	ResourceIdx wav_res;
-
 public:
 	Audio();
 	~Audio();
@@ -84,23 +60,23 @@ public:
 	int  	play_mid(char*);
 
 	// functions on short wave
-	int  	play_wav(char*, DsVolume);
-	int  	play_wav(short resIdx, DsVolume);
-	int	play_resided_wav(char *, DsVolume);
+	int  	play_wav(char*, const DsVolume &);
+	int  	play_wav(short resIdx, const DsVolume &);
+	int	play_resided_wav(char *, const DsVolume &);
 	int	get_free_wav_ch();
 	int	stop_wav(int);
 	int	is_wav_playing(int);
 
 	// functions on long wave
-	int   play_long_wav(const char*, DsVolume);
+	int   play_long_wav(const char*, const DsVolume &);
 	int	stop_long_wav(int);
 	int	is_long_wav_playing(int);
-	void	volume_long_wav(int ch, DsVolume);
+	void	volume_long_wav(int ch, const DsVolume &);
 
 	// functions on loop wave
-	int	play_loop_wav(const char *, int repeatOffset, DsVolume);	// return channel no.
+	int	play_loop_wav(const char *, int repeatOffset, const DsVolume &);	// return channel no.
 	void	stop_loop_wav(int ch);
-	void	volume_loop_wav(int ch, DsVolume);
+	void	volume_loop_wav(int ch, const DsVolume &);
 	void	fade_out_loop_wav(int ch, int fadeRate);
 	DsVolume get_loop_wav_volume(int ch);
 	int	is_loop_wav_fading(int ch);
@@ -158,6 +134,14 @@ private:
 	short	loopwav_bank[MAX_LOOP_WAV_CH];
 	DWORD	loopwav_fade_time[MAX_LOOP_WAV_CH];
 	int	loopwav_fade_rate[MAX_LOOP_WAV_CH];
+
+	char* mid_buf;
+	char* wav_buf;
+
+	int	mid_buf_size;
+	int	wav_buf_size;
+
+	ResourceIdx mid_res;
 
 	int	assign_serial( int &);
 };

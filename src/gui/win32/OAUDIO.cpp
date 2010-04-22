@@ -418,7 +418,7 @@ void Audio::stop_mid()
 // return : <int> non-zero - wav loaded and is playing, return a serial no. to be referred in stop_wav and is_wav_playing
 //                0 - wav not played
 //
-int Audio::play_wav(char* wavName, DsVolume dsVolume)
+int Audio::play_wav(char* wavName, const DsVolume &dsVolume)
 {
 /*
 	//---- redirect to play_long_wav -------//
@@ -595,7 +595,7 @@ int Audio::play_wav(char* wavName, DsVolume dsVolume)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Audio::play_wav(short resIdx, DsVolume dsVolume)
+int Audio::play_wav(short resIdx, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -755,7 +755,7 @@ int Audio::play_wav(short resIdx, DsVolume dsVolume)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Audio::play_resided_wav(char* wavBuf, DsVolume dsVolume)
+int Audio::play_resided_wav(char* wavBuf, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -953,7 +953,7 @@ int Audio::is_wav_playing(int serial)
 // load wave file into one part. lwav_bank[c] record which part to be
 // filled next for channel c.
 
-int Audio::play_long_wav(const char *wavName, DsVolume dsVolume)
+int Audio::play_long_wav(const char *wavName, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -1212,7 +1212,7 @@ int Audio::is_long_wav_playing(int serial)
 // return : <int> channel number (1 - MAX_LOOP_WAV_CH)
 //          0     not played
 //
-int	Audio::play_loop_wav(const char *wavName, int repeatOffset, DsVolume dsVolume)
+int	Audio::play_loop_wav(const char *wavName, int repeatOffset, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -1379,7 +1379,7 @@ int	Audio::play_loop_wav(const char *wavName, int repeatOffset, DsVolume dsVolum
 
 
 //------- Begin of function Audio::volume_loop_wav -------//
-void	Audio::volume_loop_wav(int ch, DsVolume dsVolume)
+void	Audio::volume_loop_wav(int ch, const DsVolume &dsVolume)
 {
 	int chanNum = ch-1;
 	if( chanNum < 0 || chanNum >= MAX_LOOP_WAV_CH)
@@ -2053,7 +2053,7 @@ int Audio::assign_serial(int &s)
 
 
 // ------------ Begin of function Audio::volume_long_wav -------//
-void Audio::volume_long_wav(int serial, DsVolume dsVolume)
+void Audio::volume_long_wav(int serial, const DsVolume &dsVolume)
 {
 	if( is_long_wav_playing(serial) )
 	{

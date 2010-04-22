@@ -30,12 +30,11 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include <ORESX.h>
-#include <OVOLUME.h>
+#include <audio_base.h>
 #include <audio_stream.h>
 #include <input_stream.h>
 
-class Audio
+class Audio: public AudioBase
 {
 private:
 	class StreamContext
@@ -74,25 +73,6 @@ private:
 	};
 
 	typedef std::map<int, StreamContext *> StreamMap;
-
-public:
-	char  init_flag;
-
-	char  mid_init_flag;   // whether the midi driver has been installed
-	char  wav_init_flag;   // whether the wave driver has been installed
-	char  cd_init_flag;
-
-	// flag determing whether MIDI music should be playing
-	char  mid_flag;
-
-	// flag determing whether WAV sound effects should be playing
-	char  wav_flag;
-
-	// flag determing whether Audio CD track should be playing
-	char  cd_flag;
-
-	ResourceIdx mid_res;
-	ResourceIdx wav_res;
 
 public:
 	Audio();
