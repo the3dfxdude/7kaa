@@ -10,7 +10,8 @@ my @jwasm_ver_req = (2, '00', 0);
 my %cfg = (
   enable_debug => 0,
   no_asm => 0,
-  build_server => 1
+  build_server => 1,
+  audio_backend => "OpenAL"
 );
 
 # parse command line args
@@ -25,6 +26,8 @@ foreach my $i (@ARGV) {
     $cfg{build_server} = 0;
   } elsif ($i =~ /^--force-wine$/) {
     @wine_ver_req = (0, 0, 0);
+  } elsif ($i =~ /^--with-audio-backend=(.*)$/) {
+    $cfg{audio_backend} = $1;
   }
 }
 

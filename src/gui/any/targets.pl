@@ -5,6 +5,9 @@ my @defines;
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
+if (defined($audio_backend)) {
+  push (@defines, "AUDIO_BACKEND=$audio_backend");
+}
 ## end compiler flags ##
 
 ## include paths ##

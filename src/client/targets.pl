@@ -8,6 +8,9 @@ if (defined($debug) && $debug) {
 if (defined($no_asm) && $no_asm) {
   push (@defines, "NO_ASM");
 }
+if (defined($audio_backend)) {
+  push (@defines, "AUDIO_BACKEND=$audio_backend");
+}
 ## end compiler flags ##
 
 ## include paths ##
