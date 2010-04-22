@@ -17,7 +17,7 @@ if (defined($wine_prefix)) {
 ## end include paths ##
 
 my @targets = qw(
-audio-openal.cpp
+openal_audio.cpp
 wav_stream.cpp
 );
 

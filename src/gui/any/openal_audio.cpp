@@ -19,8 +19,8 @@
  *
  */
 
-//Filename    : OAUDIO.CPP
-//Description : Object Midi Audio and Digitized Sound
+//Filename    : openal_audio.cpp
+//Description : Object Midi OpenALAudio and Digitized Sound
 
 #include <assert.h>
 #include <limits.h>
@@ -31,10 +31,10 @@
 #include <OBOX.h>
 #include <OSYS.h>
 #include <OVGALOCK.h>
-#include <audio-openal.h>
 #include <dbglog.h>
 #include <file_input_stream.h>
 #include <mem_input_stream.h>
+#include <openal_audio.h>
 #include <wav_stream.h>
 
 #define LWAV_STREAM_BUFSIZ    0x1000
@@ -168,13 +168,13 @@ static typename M::key_type unused_key(const M *map)
 }
 
 
-Audio::Audio()
+OpenALAudio::OpenALAudio()
 {
 	this->al_context = NULL;
 	this->al_device  = NULL;
 }
 
-Audio::~Audio()
+OpenALAudio::~OpenALAudio()
 {
 	this->deinit();
 }
@@ -184,7 +184,7 @@ Audio::~Audio()
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Audio::init()
+int OpenALAudio::init()
 {
 	this->wav_flag = true;
 	this->mid_flag = true;
@@ -198,7 +198,7 @@ int Audio::init()
 	return this->init_flag;
 }
 
-void Audio::deinit()
+void OpenALAudio::deinit()
 {
 	this->init_flag = 0;
 	this->deinit_wav();
@@ -211,7 +211,7 @@ void Audio::deinit()
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Audio::init_wav()
+int OpenALAudio::init_wav()
 {
 	ALCint size;
 
@@ -281,7 +281,7 @@ err:
 	return 0;
 }
 
-void Audio::deinit_wav()
+void OpenALAudio::deinit_wav()
 {
 	this->wav_init_flag = false;
 
@@ -305,14 +305,14 @@ void Audio::deinit_wav()
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Audio::init_mid()
+int OpenALAudio::init_mid()
 {
 	WARN_UNIMPLEMENTED("init_mid");
 	this->mid_init_flag = 0;
 	return this->mid_init_flag;
 }
 
-void Audio::deinit_mid()
+void OpenALAudio::deinit_mid()
 {
 	WARN_UNIMPLEMENTED("deinit_mid");
 }
@@ -322,14 +322,14 @@ void Audio::deinit_mid()
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Audio::init_cd()
+int OpenALAudio::init_cd()
 {
 	WARN_UNIMPLEMENTED("init_cd");
 	this->cd_init_flag = 0;
 	return this->cd_init_flag;
 }
 
-void Audio::deinit_cd()
+void OpenALAudio::deinit_cd()
 {
 	WARN_UNIMPLEMENTED("deinit_cd");
 }
@@ -341,13 +341,13 @@ void Audio::deinit_cd()
 // return : <int> 1 - mid loaded and is playing
 //                0 - mid not played
 //
-int Audio::play_mid(char *midName)
+int OpenALAudio::play_mid(char *midName)
 {
 	WARN_UNIMPLEMENTED("play_mid");
 	return 0;
 }
 
-void Audio::stop_mid()
+void OpenALAudio::stop_mid()
 {
 	WARN_UNIMPLEMENTED("stop_mid");
 }
@@ -359,7 +359,7 @@ void Audio::stop_mid()
 // return : <int> non-zero - wav loaded and is playing, return a serial no. to be referred in stop_wav and is_wav_playing
 //                0 - wav not played
 //
-int Audio::play_wav(char *file_name, const DsVolume &vol)
+int OpenALAudio::play_wav(char *file_name, const DsVolume &vol)
 {
 	int idx;
 
@@ -385,7 +385,7 @@ int Audio::play_wav(char *file_name, const DsVolume &vol)
 // return: 1 - wav loaded and is playing
 //         0 - wav not played
 //
-int Audio::play_wav(short index, const DsVolume &vol)
+int OpenALAudio::play_wav(short index, const DsVolume &vol)
 {
 	int size;
 	char *data;
@@ -425,7 +425,7 @@ int Audio::play_wav(short index, const DsVolume &vol)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Audio::play_resided_wav(char *buf, const DsVolume &vol)
+int OpenALAudio::play_resided_wav(char *buf, const DsVolume &vol)
 {
 	uint32_t size;
 	MemInputStream *in;
@@ -445,7 +445,7 @@ int Audio::play_resided_wav(char *buf, const DsVolume &vol)
 	return this->play_long_wav(in, vol);
 }
 
-int Audio::get_free_wav_ch()
+int OpenALAudio::get_free_wav_ch()
 {
 	int free_count;
 
@@ -465,7 +465,7 @@ int Audio::get_free_wav_ch()
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
 //
-int Audio::stop_wav(int id)
+int OpenALAudio::stop_wav(int id)
 {
 	return this->stop_long_wav(id);
 }
@@ -474,7 +474,7 @@ int Audio::stop_wav(int id)
 //
 // <int>        the serial no returned by play_wav or play_resided_wav
 //
-int Audio::is_wav_playing(int id)
+int OpenALAudio::is_wav_playing(int id)
 {
 	return this->is_long_wav_playing(id);
 }
@@ -486,9 +486,9 @@ int Audio::is_wav_playing(int id)
 //
 // return: 1 - wav loaded and is playing
 //         0 - wav not played
-// Audio::yield() keeps on feeding data to it
+// OpenALAudio::yield() keeps on feeding data to it
 //
-int Audio::play_long_wav(const char *file_name, const DsVolume &vol)
+int OpenALAudio::play_long_wav(const char *file_name, const DsVolume &vol)
 {
 	FileInputStream *in = new FileInputStream;
 
@@ -513,7 +513,7 @@ int Audio::play_long_wav(const char *file_name, const DsVolume &vol)
  *
  * return: 1 on success, 0 on failure
  */
-int Audio::play_long_wav(InputStream *in, const DsVolume &vol)
+int OpenALAudio::play_long_wav(InputStream *in, const DsVolume &vol)
 {
 	const int BUFFER_COUNT = 4;
 
@@ -561,7 +561,7 @@ err:
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
 //
-int Audio::stop_long_wav(int id)
+int OpenALAudio::stop_long_wav(int id)
 {
 	StreamMap::iterator itr;
 	StreamContext *sc;
@@ -587,7 +587,7 @@ int Audio::stop_long_wav(int id)
 //
 // <int>        the serial no returned by play_wav or play_resided_wav
 //
-int Audio::is_long_wav_playing(int id)
+int OpenALAudio::is_long_wav_playing(int id)
 {
 	return (this->streams.find(id) != this->streams.end());
 }
@@ -601,8 +601,8 @@ int Audio::is_long_wav_playing(int id)
 // return: channel number
 //         0 - not played
 //
-int Audio::play_loop_wav(const char *file_name, int repeat_offset,
-                         const DsVolume &vol)
+int OpenALAudio::play_loop_wav(const char *file_name, int repeat_offset,
+                               const DsVolume &vol)
 {
 	int id;
 	StreamContext *sc;
@@ -624,12 +624,12 @@ int Audio::play_loop_wav(const char *file_name, int repeat_offset,
 	return id;
 }
 
-void Audio::volume_loop_wav(int id, const DsVolume &vol)
+void OpenALAudio::volume_loop_wav(int id, const DsVolume &vol)
 {
 	this->volume_long_wav(id, vol);
 }
 
-void Audio::fade_out_loop_wav(int id, int fade_duration_msec)
+void OpenALAudio::fade_out_loop_wav(int id, int fade_duration_msec)
 {
 	StreamMap::const_iterator itr;
 	StreamContext *sc;
@@ -649,7 +649,7 @@ void Audio::fade_out_loop_wav(int id, int fade_duration_msec)
 	                  / 1000;
 }
 
-DsVolume Audio::get_loop_wav_volume(int id)
+DsVolume OpenALAudio::get_loop_wav_volume(int id)
 {
 	StreamContext *sc;
 	StreamMap::const_iterator itr;
@@ -677,7 +677,7 @@ DsVolume Audio::get_loop_wav_volume(int id)
 	                (position[0] / PANNING_MAX_X) * 10000.f + .5f);
 }
 
-int Audio::is_loop_wav_fading(int id)
+int OpenALAudio::is_loop_wav_fading(int id)
 {
 	StreamMap::const_iterator itr;
 
@@ -691,7 +691,7 @@ int Audio::is_loop_wav_fading(int id)
 	return (itr->second->fade_frames != 0);
 }
 
-void Audio::yield()
+void OpenALAudio::yield()
 {
 	/* FIXME: This object causes a frame flip.  Looks like a hack that could
 	 * use some fixing.
@@ -725,7 +725,7 @@ void Audio::yield()
 	}
 }
 
-void Audio::stop_wav()
+void OpenALAudio::stop_wav()
 {
 	StreamMap::const_iterator itr;
 
@@ -735,7 +735,7 @@ void Audio::stop_wav()
 	this->streams.clear();
 }
 
-void Audio::stop_loop_wav(int id)
+void OpenALAudio::stop_loop_wav(int id)
 {
 	if (!this->wav_init_flag)
 		return;
@@ -745,24 +745,24 @@ void Audio::stop_loop_wav(int id)
 
 // <int> trackId - the id. of the CD track to play.
 //
-int Audio::play_cd(int trackId, int volume)
+int OpenALAudio::play_cd(int trackId, int volume)
 {
 	WARN_UNIMPLEMENTED("play_cd");
 	return 0;
 }
 
-void Audio::stop_cd()
+void OpenALAudio::stop_cd()
 {
 	WARN_UNIMPLEMENTED("stop_cd");
 }
 
-int Audio::is_mid_playing()
+int OpenALAudio::is_mid_playing()
 {
 	WARN_UNIMPLEMENTED("is_mid_playing");
 	return 0;
 }
 
-int Audio::is_wav_playing()
+int OpenALAudio::is_wav_playing()
 {
 	if (!this->wav_init_flag)
 		return false;
@@ -770,18 +770,18 @@ int Audio::is_wav_playing()
 	return (!this->streams.empty());
 }
 
-int Audio::is_cd_playing()
+int OpenALAudio::is_cd_playing()
 {
 	WARN_UNIMPLEMENTED("is_cd_playing");
 	return 0;
 }
 
-void Audio::toggle_mid(int midFlag)
+void OpenALAudio::toggle_mid(int midFlag)
 {
 	WARN_UNIMPLEMENTED("toggle_mid");
 }
 
-void Audio::toggle_wav(int wav_flag)
+void OpenALAudio::toggle_wav(int wav_flag)
 {
 	if (!wav_flag)
 		this->stop_wav();
@@ -789,7 +789,7 @@ void Audio::toggle_wav(int wav_flag)
 	this->wav_flag = wav_flag;
 }
 
-void Audio::toggle_cd(int cdFlag)
+void OpenALAudio::toggle_cd(int cdFlag)
 {
 	WARN_UNIMPLEMENTED("toggle_cd");
 }
@@ -798,7 +798,7 @@ void Audio::toggle_cd(int cdFlag)
 //
 // <int> midVolume = mid volume, 0-100
 //
-void Audio::set_mid_volume(int midVolume)
+void OpenALAudio::set_mid_volume(int midVolume)
 {
 	WARN_UNIMPLEMENTED("set_mid_volume");
 }
@@ -807,7 +807,7 @@ void Audio::set_mid_volume(int midVolume)
 //
 // <int> vol = wav volume, 0-100
 //
-void Audio::set_wav_volume(int vol)
+void OpenALAudio::set_wav_volume(int vol)
 {
 	StreamMap::const_iterator itr;
 	float gain;
@@ -835,7 +835,7 @@ void Audio::set_wav_volume(int vol)
 	this->wav_volume = vol;
 }
 
-int Audio::get_wav_volume() const
+int OpenALAudio::get_wav_volume() const
 {
 	if (!this->wav_init_flag)
 		return 0;
@@ -847,13 +847,13 @@ int Audio::get_wav_volume() const
 //
 // <int> cdVolume = cd volume, 0-100
 //
-void Audio::set_cd_volume(int cdVolume)
+void OpenALAudio::set_cd_volume(int cdVolume)
 {
 	WARN_UNIMPLEMENTED("set_cd_volume");
 }
 
 /* Changes the volume/panning of a wave.  Does not attenuate by wav_volume. */
-void Audio::volume_long_wav(int id, const DsVolume &vol)
+void OpenALAudio::volume_long_wav(int id, const DsVolume &vol)
 {
 	StreamContext *sc;
 	StreamMap::const_iterator itr;
@@ -874,7 +874,7 @@ void Audio::volume_long_wav(int id, const DsVolume &vol)
 }
 
 
-Audio::StreamContext::StreamContext()
+OpenALAudio::StreamContext::StreamContext()
 {
 	this->stream = NULL;
 	this->source = 0;
@@ -885,7 +885,7 @@ Audio::StreamContext::StreamContext()
 	this->streaming = true;
 }
 
-Audio::StreamContext::~StreamContext()
+OpenALAudio::StreamContext::~StreamContext()
 {
 	if (this->source != 0)
 	{
@@ -894,7 +894,7 @@ Audio::StreamContext::~StreamContext()
 	}
 }
 
-bool Audio::StreamContext::init(AudioStream *as)
+bool OpenALAudio::StreamContext::init(AudioStream *as)
 {
 	if (this->source != 0)
 		return false;
@@ -911,7 +911,7 @@ err:
 	return false;
 }
 
-void Audio::StreamContext::apply_fading(void *buffer, size_t frames)
+void OpenALAudio::StreamContext::apply_fading(void *buffer, size_t frames)
 {
 	size_t n;
 	int ch;
@@ -975,7 +975,7 @@ void Audio::StreamContext::apply_fading(void *buffer, size_t frames)
 	                               this->fade_frames);
 }
 
-bool Audio::StreamContext::stream_data(int new_buffer_count)
+bool OpenALAudio::StreamContext::stream_data(int new_buffer_count)
 {
 	const size_t BUFFER_SIZE = 0x4000;
 
@@ -1089,7 +1089,7 @@ err:
 	return false;
 }
 
-void Audio::StreamContext::stop()
+void OpenALAudio::StreamContext::stop()
 {
 	ALint count;
 	ALuint buf;

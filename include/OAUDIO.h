@@ -22,6 +22,10 @@
 #ifndef OAUDIO_H
 #define OAUDIO_H
 
-#include "audio-openal.h"
+#include <win32_audio.h>
+#include <openal_audio.h>
+
+typedef OpenALAudio Audio;
+extern Audio audio;
 
 #endif

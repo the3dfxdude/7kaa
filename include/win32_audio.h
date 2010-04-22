@@ -20,12 +20,12 @@
  */
 
 //Filename    : OAUDIO.H
-//Description : Object Midi Audio and Digitized Sound
+//Description : Object Midi Win32Audio and Digitized Sound
 //Ownership   : Gilbert
 
 
-#ifndef AUDIO_WIN32_H
-#define AUDIO_WIN32_H
+#ifndef WIN32_AUDIO_H
+#define WIN32_AUDIO_H
 
 #include <windows.h>
 #include <mmsystem.h>
@@ -44,13 +44,13 @@
 
 #define MAX_LOOP_WAV_CH        4
 
-//--------------- Define class Audio ---------------//
+//--------------- Define class Win32Audio ---------------//
 
-class Audio: public AudioBase
+class Win32Audio: public AudioBase
 {
 public:
-	Audio();
-	~Audio();
+	Win32Audio();
+	~Win32Audio();
 
 	int  	init();
 	void 	deinit();
@@ -126,7 +126,7 @@ private:
 	short	lwav_bufsiz[MAX_LONG_WAV_CH];
 		// buffer size of each channel = lwav_bufsiz[c]*LWAV_BANKS
 	long	wav_volume;						// -10000 to 0
-	char	run_yield;						// 0 = skip Audio::yield()
+	char	run_yield;						// 0 = skip Win32Audio::yield()
 
 	LPDIRECTSOUNDBUFFER lp_loop_ch_dsb[MAX_LOOP_WAV_CH];
 	File* loopwav_fileptr[MAX_LOOP_WAV_CH];
@@ -145,8 +145,6 @@ private:
 
 	int	assign_serial( int &);
 };
-
-extern Audio audio;
 
 //--------------------------------------------------//
 

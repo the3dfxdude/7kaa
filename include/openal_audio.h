@@ -20,10 +20,10 @@
  */
 
 //Filename    : OAUDIO.H
-//Description : Object Midi Audio and Digitized Sound
+//Description : Object Midi OpenALAudio and Digitized Sound
 
-#ifndef AUDIO_OPENAL_H
-#define AUDIO_OPENAL_H
+#ifndef OPENAL_AUDIO_H
+#define OPENAL_AUDIO_H
 
 #include <map>
 
@@ -34,7 +34,7 @@
 #include <audio_stream.h>
 #include <input_stream.h>
 
-class Audio: public AudioBase
+class OpenALAudio: public AudioBase
 {
 private:
 	class StreamContext
@@ -75,8 +75,8 @@ private:
 	typedef std::map<int, StreamContext *> StreamMap;
 
 public:
-	Audio();
-	~Audio();
+	OpenALAudio();
+	~OpenALAudio();
 
 	int	init();
 	void	deinit();
@@ -149,7 +149,5 @@ private:
 
 	int	play_long_wav(InputStream *, const DsVolume &);
 };
-
-extern Audio audio;
 
 #endif
