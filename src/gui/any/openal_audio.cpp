@@ -68,7 +68,6 @@ static inline float millibels_to_ratio(long cb)
 {
 	if (cb <= -10000)
 		return 0.f;
-	cb = MIN(cb, 0);
 
 	return pow(10.f, cb / 2000.f);
 }
@@ -667,7 +666,6 @@ DsVolume OpenALAudio::get_loop_wav_volume(int id)
 
 	alGetSourcef(sc->source, AL_GAIN, &gain);
 	alGetSourcefv(sc->source, AL_POSITION, position);
-	gain *= millibels_to_ratio(this->wav_volume);
 
 	if (sc->fade_frames != 0)
 		gain *= 1.f - float(sc->fade_frames_played)
