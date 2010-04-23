@@ -24,61 +24,61 @@
 
 FileInputStream::FileInputStream()
 {
-	this->file = NULL;
+   this->file = NULL;
 }
 
 FileInputStream::~FileInputStream()
 {
-	this->close();
+   this->close();
 }
 
 long FileInputStream::read(void *buffer, long length)
 {
-	if (this->file == NULL)
-		return 0;
+   if (this->file == NULL)
+      return 0;
 
-	return this->file->file_read(buffer, length);
+   return this->file->file_read(buffer, length);
 }
 
 bool FileInputStream::seek(long offset, int whence)
 {
-	if (this->file == NULL)
-		return false;
+   if (this->file == NULL)
+      return false;
 
-	return ::seek(this->file, offset, whence);
+   return ::seek(this->file, offset, whence);
 }
 
 long FileInputStream::tell()
 {
-	if (this->file == NULL)
-		return -1;
+   if (this->file == NULL)
+      return -1;
 
-	return this->file->file_pos();
+   return this->file->file_pos();
 }
 
 bool FileInputStream::open(File *file)
 {
-	this->close();
-	this->file = file;
-	return (file == NULL);
+   this->close();
+   this->file = file;
+   return (file == NULL);
 }
 
 bool FileInputStream::open(const char *file_name)
 {
-	this->close();
-	this->file = new File;
+   this->close();
+   this->file = new File;
 
-	if (!this->file->file_open(file_name))
-	{
-		this->close();
-		return false;
-	}
+   if (!this->file->file_open(file_name))
+   {
+      this->close();
+      return false;
+   }
 
-	return true;
+   return true;
 }
 
 void FileInputStream::close()
 {
-	delete this->file;
-	this->file = NULL;
+   delete this->file;
+   this->file = NULL;
 }

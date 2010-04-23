@@ -28,30 +28,30 @@
 class WavStream: public AudioStream
 {
 private:
-	InputStream *in;
-	int32_t fram_rate;    /* in PCM frames per second */
-	uint32_t data_length; /* in PCM frames */
-	uint32_t data_left;   /* in PCM frames */
-	long data_offset;     /* in bytes from beginning of file */
-	uint8_t bytes;        /* bytes per sample */
-	int chans;            /* number of channels */
-	bool good;
+   InputStream *in;
+   int32_t fram_rate;    /* in PCM frames per second */
+   uint32_t data_length; /* in PCM frames */
+   uint32_t data_left;   /* in PCM frames */
+   long data_offset;     /* in bytes from beginning of file */
+   uint8_t bytes;        /* bytes per sample */
+   int chans;            /* number of channels */
+   bool good;
 
 private:
-	void clear();
-	bool advance_to_chunk(const char *name, uint32_t *sizep);
+   void clear();
+   bool advance_to_chunk(const char *name, uint32_t *sizep);
 
 public:
-	WavStream();
-	~WavStream();
-	bool open(InputStream *in);
-	bool open(const char *file_name);
-	void close();
-	long read(void *buffer, size_t frame_count);
-	bool seek(size_t frame_no);
-	int32_t frame_rate() const;
-	int channels() const;
-	int sample_size() const;
+   WavStream();
+   ~WavStream();
+   bool open(InputStream *in);
+   bool open(const char *file_name);
+   void close();
+   long read(void *buffer, size_t frame_count);
+   bool seek(size_t frame_no);
+   int32_t frame_rate() const;
+   int channels() const;
+   int sample_size() const;
 };
 
 #endif
