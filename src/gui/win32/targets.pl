@@ -30,7 +30,10 @@ OVGABUF.cpp
 OVGABUF2.cpp
 OVGALOCK.cpp
 syswin.cpp
-win32_audio.cpp
 );
+
+if (defined($audio_backend) && $audio_backend eq "Win32") {
+  push (@targets, "win32_audio.cpp");
+}
 
 build_targets(\@targets, \@includes, \@defines);

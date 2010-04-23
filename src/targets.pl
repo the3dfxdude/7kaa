@@ -8,8 +8,7 @@
 if (defined($audio_backend) && $audio_backend eq "OpenAL") {
   if ($platform =~ /^linux/) {
     push (@libs, "openal");
-  }
-  elsif ($platform =~ /^win32/) {
+  } elsif ($platform =~ /^win32/) {
     push (@libs, "openal32");
   }
 }
