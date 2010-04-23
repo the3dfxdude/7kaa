@@ -3,8 +3,16 @@
   gdi32 ddraw dsound dinput
 );
 @libs = qw(
-  ole32 msvcrt winmm openal
+  ole32 msvcrt winmm
 );
+if (defined($audio_backend) && $audio_backend eq "OpenAL") {
+  if ($platform =~ /^linux/) {
+    push (@libs, "openal");
+  }
+  elsif ($platform =~ /^win32/) {
+    push (@libs, "openal32");
+  }
+}
 ## end libraries to link ##
 
 ## library paths ##

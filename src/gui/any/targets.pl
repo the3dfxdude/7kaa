@@ -20,8 +20,11 @@ if (defined($wine_prefix)) {
 ## end include paths ##
 
 my @targets = qw(
-openal_audio.cpp
 wav_stream.cpp
 );
+
+if (defined($audio_backend) && $audio_backend eq "OpenAL") {
+  push (@targets, "openal_audio.cpp");
+}
 
 build_targets(\@targets, \@includes, \@defines);
