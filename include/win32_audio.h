@@ -2,7 +2,6 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010 Enlight Software Ltd. and others
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-//Filename    : OAUDIO.H
-//Description : Object Midi Win32Audio and Digitized Sound
-//Ownership   : Gilbert
-
-
 #ifndef WIN32_AUDIO_H
 #define WIN32_AUDIO_H
 

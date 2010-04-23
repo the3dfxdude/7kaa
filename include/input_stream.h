@@ -1,6 +1,5 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
- * InputStream 
  *
  * Copyright 2010 Unavowed <unavowed@vexillium.org>
  *

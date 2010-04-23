@@ -1,6 +1,5 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
- * FileInputStream 
  *
  * Copyright 2010 Unavowed <unavowed@vexillium.org>
  *
@@ -18,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 #include <file_input_stream.h>
 #include <file_util.h>
 

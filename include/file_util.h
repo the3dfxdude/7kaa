@@ -1,6 +1,5 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
- * File utilities
  *
  * Copyright 2010 Unavowed <unavowed@vexillium.org>
  *
@@ -18,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 #ifndef FILE_UTIL_H
 #define FILE_UTIL_H
 
