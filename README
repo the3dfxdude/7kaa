@@ -26,7 +26,6 @@ Building the game
 
 General Requirements
 * GCC 3.0 or later
-* JWasm 2.00 or later
 * Perl (checked with 5.10.1)
 
 Linux
@@ -35,12 +34,16 @@ Linux
 Windows
 * DX7 SDK (later not tested)
 
+Optional Requirements
+* JWasm 2.00 or later
+* OpenAL
+
 
 We do not (yet?) provide the typical Makefile setup.  To build
 execute:
-./configure
+./configure.pl
 Followed by:
-./build
+./build.pl
 
 This will build the game suited for your system.  If this does
 not work, please tell us.
