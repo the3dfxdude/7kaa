@@ -126,7 +126,14 @@ BOOL Vga::init()
    }
 
    if( !set_mode() )
+   {
+      MessageBox( sys.main_hwnd,
+                  "Unable to change to 800x600x8bpp video mode. "
+                  "Your display might not support this video mode.",
+                  WIN_TITLE,
+                  MB_OK | MB_ICONWARNING | MB_SETFOREGROUND );
       return FALSE;
+   }
 
    return TRUE;
 }
