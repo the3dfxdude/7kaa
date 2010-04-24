@@ -8,7 +8,7 @@ my @jwasm_ver_req = (2, '00', 0);
 
 # Set-up default config
 my %cfg = (
-  enable_debug => 0,
+  debug => 0,
   no_asm => 0,
   build_server => 1,
   audio_backend => "OpenAL"
