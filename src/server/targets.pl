@@ -9,7 +9,11 @@ if (defined($no_asm) && $no_asm) {
   push (@defines, "NO_ASM");
 }
 if (defined($audio_backend)) {
-  push (@defines, "AUDIO_BACKEND=$audio_backend");
+  if ($audio_backend =~ /OpenAL/i) {
+    push (@defines, 'USE_OPENAL');
+  } elsif ($audio_backend =~ /dsound/i) {
+    push (@defines, 'USE_DSOUND');
+  }
 }
 ## end defines ##
 

@@ -1,17 +1,10 @@
 ## libraries to link ##
 @dxlibs = qw(
-  gdi32 ddraw dsound dinput
+  gdi32 ddraw dinput
 );
 @libs = qw(
   ole32 msvcrt winmm
 );
-if (defined($audio_backend) && $audio_backend eq "OpenAL") {
-  if ($platform =~ /^linux/) {
-    push (@libs, "openal");
-  } elsif ($platform =~ /^win32/) {
-    push (@libs, "openal32");
-  }
-}
 ## end libraries to link ##
 
 ## library paths ##
@@ -20,11 +13,25 @@ if (defined($dxsdk_path)) {
 }
 ## end library paths ##
 
+## Build audio backend ##
+if (defined($audio_backend)) {
+  if ($audio_backend =~ /OpenAL/i) {
+    if ($platform =~ /^linux/) {
+      push (@libs, "openal");
+    } elsif ($platform =~ /^win32/) {
+      push (@libs, "openal32");
+    }
+    @anygui = include_targets('gui/any/targets.pl');
+  } elsif ($audio_backend =~ /dsound/i) {
+    push (@libs, 'dsound');
+  }
+}
+## Done building the audio backend ##
+
 ## statically shared objects ##
 @common_objs = include_targets('common/targets.pl');
 #@nogui = include_targets('gui/none/targets.pl');
 @win32gui = include_targets('gui/win32/targets.pl');
-@anygui = include_targets('gui/any/targets.pl');
 @imgfun = include_targets('imgfun/targets.pl');
 ## end statically shared objects ##
 

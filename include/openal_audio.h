@@ -146,4 +146,6 @@ private:
    int	play_long_wav(InputStream *, const DsVolume &);
 };
 
+typedef OpenALAudio Audio;
+
 #endif

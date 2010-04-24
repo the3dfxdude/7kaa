@@ -9,7 +9,11 @@ if (defined($no_asm) && $no_asm) {
   push (@defines, "NO_ASM");
 }
 if (defined($audio_backend)) {
-  push (@defines, "AUDIO_BACKEND=$audio_backend");
+  if ($audio_backend =~ /OpenAL/i) {
+    push (@defines, 'USE_OPENAL');
+  } elsif ($audio_backend =~ /dsound/i) {
+    push (@defines, 'USE_DSOUND');
+  }
 }
 ## end compiler flags ##
 
@@ -32,8 +36,16 @@ OVGALOCK.cpp
 syswin.cpp
 );
 
-if (defined($audio_backend) && $audio_backend eq "Win32") {
-  push (@targets, "win32_audio.cpp");
+my @objs = build_targets(\@targets, \@includes, \@defines);
+
+## this is will be split out
+if (defined($audio_backend) && $audio_backend =~ /dsound/i) {
+  my @dsound_defines = qw( AMPLUS USE_DSOUND );
+  if (defined($debug) && $debug) {
+    push (@dsound_defines, "DEBUG");
+  }
+
+  push (@objs, build_targets(['win32_audio.cpp'], \@includes, \@dsound_defines));
 }
 
-build_targets(\@targets, \@includes, \@defines);
+@objs;

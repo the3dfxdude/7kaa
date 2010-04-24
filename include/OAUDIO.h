@@ -21,17 +21,13 @@
 #ifndef OAUDIO_H
 #define OAUDIO_H
 
-#include <win32_audio.h>
+#if defined(USE_OPENAL)
 #include <openal_audio.h>
-
-#ifndef AUDIO_BACKEND
+#elif defined(USE_DSOUND)
+#include <win32_audio.h>
+#else
 #error "You need to define an audio backend, such as OpenAL or Win32"
 #endif
-
-#define AUDIO_BACKEND_CLASS_NAME2(backend) backend##Audio
-#define AUDIO_BACKEND_CLASS_NAME(backend) AUDIO_BACKEND_CLASS_NAME2(backend)
-
-typedef AUDIO_BACKEND_CLASS_NAME(AUDIO_BACKEND) Audio;
 
 extern Audio audio;
 
