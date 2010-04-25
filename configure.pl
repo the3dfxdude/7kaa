@@ -35,7 +35,7 @@ foreach my $i (@ARGV) {
 $cfg{platform} = detect_platform();
 
 # assembler setup
-unless (check_jwasm_version()) {
+unless ($cfg{no_asm} || check_jwasm_version()) {
   print "JWasm " . join('.', @jwasm_ver_req) . " is required.\n";
   exit 1;
 }
