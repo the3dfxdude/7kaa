@@ -18,8 +18,8 @@
  *
  */
 
-//Filename    : win32_audio.cpp
-//Description : Object Midi Win32Audio and Digitized Sound
+//Filename    : dsound_audio.cpp
+//Description : Object Midi Audio and Digitized Sound
 
 #include <windows.h>
 #include <windowsx.h>
@@ -92,32 +92,32 @@ static char * wavefile_data(char *wavfile_buf)
 //--------- End of function wavefile_offset------------//
 
 
-//--------- Begin of function Win32Audio::Win32Audio ----------//
+//--------- Begin of function DSoundAudio::DSoundAudio ----------//
 
-Win32Audio::Win32Audio()
+DSoundAudio::DSoundAudio()
 {
 	init_flag = 0;
 }
-//--------- Begin of function Win32Audio::Win32Audio ----------//
+//--------- Begin of function DSoundAudio::DSoundAudio ----------//
 
 
-//--------- Begin of function Win32Audio::~Win32Audio ----------//
+//--------- Begin of function DSoundAudio::~DSoundAudio ----------//
 
-Win32Audio::~Win32Audio()
+DSoundAudio::~DSoundAudio()
 {
 	deinit();
 }
-//--------- Begin of function Win32Audio::~Win32Audio ----------//
+//--------- Begin of function DSoundAudio::~DSoundAudio ----------//
 
 
-//--------- Begin of function Win32Audio::init ----------//
+//--------- Begin of function DSoundAudio::init ----------//
 //
 // Initialize the mid driver
 //
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Win32Audio::init()
+int DSoundAudio::init()
 {
 	//-------- init vars -----------//
 
@@ -185,12 +185,12 @@ int Win32Audio::init()
 
 	return 1;
 }
-//--------- End of function Win32Audio::init ----------//
+//--------- End of function DSoundAudio::init ----------//
 
 
-//--------- Begin of function Win32Audio::deinit ----------//
+//--------- Begin of function DSoundAudio::deinit ----------//
 
-void Win32Audio::deinit()
+void DSoundAudio::deinit()
 {
 	if( init_flag )
 	{
@@ -206,17 +206,17 @@ void Win32Audio::deinit()
 		deinit_cd();
 	}
 }
-//--------- End of function Win32Audio::deinit ----------//
+//--------- End of function DSoundAudio::deinit ----------//
 
 
-//--------- Begin of function Win32Audio::init_wav ----------//
+//--------- Begin of function DSoundAudio::init_wav ----------//
 //
 // Initialize digitized wav driver
 //
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Win32Audio::init_wav()
+int DSoundAudio::init_wav()
 {
 	if( wav_init_flag )
 		return 1;
@@ -235,17 +235,17 @@ int Win32Audio::init_wav()
 
 	return wav_init_flag;
 }
-//--------- End of function Win32Audio::init_wav ----------//
+//--------- End of function DSoundAudio::init_wav ----------//
 
 
-//--------- Begin of function Win32Audio::init_mid ----------//
+//--------- Begin of function DSoundAudio::init_mid ----------//
 //
 // Initialize MIDI mid driver
 //
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Win32Audio::init_mid()
+int DSoundAudio::init_mid()
 {
 	if( mid_init_flag )
 		return 1;
@@ -258,17 +258,17 @@ int Win32Audio::init_mid()
 
 	return 1;
 }
-//--------- End of function Win32Audio::init_mid ----------//
+//--------- End of function DSoundAudio::init_mid ----------//
 
 
-//--------- Begin of function Win32Audio::init_cd ----------//
+//--------- Begin of function DSoundAudio::init_cd ----------//
 //
 // Initialize the audio CD player
 //
 // return : <int> 1 - initialized successfully
 //                0 - init fail
 //
-int Win32Audio::init_cd()
+int DSoundAudio::init_cd()
 {
 	mci_open.lpstrDeviceType = (LPCSTR) MCI_DEVTYPE_CD_AUDIO;
 
@@ -290,12 +290,12 @@ int Win32Audio::init_cd()
 	cd_init_flag = 0;
 	return 0;
 }
-//--------- End of function Win32Audio::init_cd ----------//
+//--------- End of function DSoundAudio::init_cd ----------//
 
 
-//--------- Begin of function Win32Audio::deinit_cd ----------//
+//--------- Begin of function DSoundAudio::deinit_cd ----------//
 
-void Win32Audio::deinit_cd()
+void DSoundAudio::deinit_cd()
 {
 	if( cd_init_flag )
 	{
@@ -306,12 +306,12 @@ void Win32Audio::deinit_cd()
 		cd_init_flag = 0;
 	}
 }
-//--------- End of function Win32Audio::deinit_cd ----------//
+//--------- End of function DSoundAudio::deinit_cd ----------//
 
 
-//--------- Begin of function Win32Audio::deinit_wav ----------//
+//--------- Begin of function DSoundAudio::deinit_wav ----------//
 
-void Win32Audio::deinit_wav()
+void DSoundAudio::deinit_wav()
 {
 	stop_wav();
 
@@ -327,12 +327,12 @@ void Win32Audio::deinit_wav()
 		wav_init_flag = 0;
 	}
 }
-//--------- End of function Win32Audio::deinit_wav ----------//
+//--------- End of function DSoundAudio::deinit_wav ----------//
 
 
-//--------- Begin of function Win32Audio::deinit_mid ----------//
+//--------- Begin of function DSoundAudio::deinit_mid ----------//
 
-void Win32Audio::deinit_mid()
+void DSoundAudio::deinit_mid()
 {
 	if( !mid_init_flag )
 		return;
@@ -345,10 +345,10 @@ void Win32Audio::deinit_mid()
 
 	mid_init_flag = 0;
 }
-//--------- End of function Win32Audio::deinit_mid ----------//
+//--------- End of function DSoundAudio::deinit_mid ----------//
 
 
-//------- Begin of function Win32Audio::play_mid -------//
+//------- Begin of function DSoundAudio::play_mid -------//
 //
 // Play a midi mid from the mid resource file
 //
@@ -357,7 +357,7 @@ void Win32Audio::deinit_mid()
 // return : <int> 1 - mid loaded and is playing
 //                0 - mid not played
 //
-int Win32Audio::play_mid(char* midName)
+int DSoundAudio::play_mid(char* midName)
 {
 	if( !mid_init_flag || !mid_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -389,12 +389,12 @@ int Win32Audio::play_mid(char* midName)
 
 	return 1;
 }
-//------- End of function Win32Audio::play_mid -------//
+//------- End of function DSoundAudio::play_mid -------//
 
 
-//------- Begin of function Win32Audio::stop_mid -------//
+//------- Begin of function DSoundAudio::stop_mid -------//
 //
-void Win32Audio::stop_mid()
+void DSoundAudio::stop_mid()
 {
 	if( !mid_init_flag || !mid_flag )
 		return;
@@ -403,10 +403,10 @@ void Win32Audio::stop_mid()
 
 	mciSendCommand(mci_open.wDeviceID, MCI_STOP, NULL, NULL);
 }
-//------- End of function Win32Audio::stop_mid -------//
+//------- End of function DSoundAudio::stop_mid -------//
 
 
-//------- Begin of function Win32Audio::play_wav -------//
+//------- Begin of function DSoundAudio::play_wav -------//
 //
 // Play digitized wav from the wav resource file
 //
@@ -417,7 +417,7 @@ void Win32Audio::stop_mid()
 // return : <int> non-zero - wav loaded and is playing, return a serial no. to be referred in stop_wav and is_wav_playing
 //                0 - wav not played
 //
-int Win32Audio::play_wav(char* wavName, const DsVolume &dsVolume)
+int DSoundAudio::play_wav(char* wavName, const DsVolume &dsVolume)
 {
 /*
 	//---- redirect to play_long_wav -------//
@@ -580,10 +580,10 @@ int Win32Audio::play_wav(char* wavName, const DsVolume &dsVolume)
 
 	return wav_serial_no[chanNum] = assign_serial(max_wav_serial_no);
 }
-//------- End of function Win32Audio::play_wav -------//
+//------- End of function DSoundAudio::play_wav -------//
 
 
-//------- Begin of function Win32Audio::play_wav -------//
+//------- Begin of function DSoundAudio::play_wav -------//
 //
 // Play digitized wav from the wav resource file
 //
@@ -594,7 +594,7 @@ int Win32Audio::play_wav(char* wavName, const DsVolume &dsVolume)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Win32Audio::play_wav(short resIdx, const DsVolume &dsVolume)
+int DSoundAudio::play_wav(short resIdx, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -740,10 +740,10 @@ int Win32Audio::play_wav(short resIdx, const DsVolume &dsVolume)
 
 	return wav_serial_no[chanNum] = assign_serial(max_wav_serial_no);
 }
-//------- End of function Win32Audio::play_wav -------//
+//------- End of function DSoundAudio::play_wav -------//
 
 
-//------- Begin of function Win32Audio::play_resided_wav -------//
+//------- Begin of function DSoundAudio::play_resided_wav -------//
 //
 // Play digitized wav from the wav file in memory
 //
@@ -754,7 +754,7 @@ int Win32Audio::play_wav(short resIdx, const DsVolume &dsVolume)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 //
-int Win32Audio::play_resided_wav(char* wavBuf, const DsVolume &dsVolume)
+int DSoundAudio::play_resided_wav(char* wavBuf, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -862,11 +862,11 @@ int Win32Audio::play_resided_wav(char* wavBuf, const DsVolume &dsVolume)
 
 	return wav_serial_no[chanNum] = assign_serial(max_wav_serial_no);
 }
-//------- End of function Win32Audio::play_resided_wav -------//
+//------- End of function DSoundAudio::play_resided_wav -------//
 
 // ###### begin Gilbert 6/12 ########//
-//------- Begin of function Win32Audio::get_free_wav_ch --------//
-int Win32Audio::get_free_wav_ch()
+//------- Begin of function DSoundAudio::get_free_wav_ch --------//
+int DSoundAudio::get_free_wav_ch()
 {
 	int count = 0;
 	DWORD dsbStatus;
@@ -885,10 +885,10 @@ int Win32Audio::get_free_wav_ch()
 	
 	return count;
 }
-//------- End of function Win32Audio::get_free_wav_ch --------//
+//------- End of function DSoundAudio::get_free_wav_ch --------//
 // ###### end Gilbert 6/12 ########//
 
-//------- Begin of function Win32Audio::stop_wav ------------//
+//------- Begin of function DSoundAudio::stop_wav ------------//
 //
 // stop a short sound effect started by play_wav or play_resided_wav
 //
@@ -897,7 +897,7 @@ int Win32Audio::get_free_wav_ch()
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
 //
-int Win32Audio::stop_wav(int serial)
+int DSoundAudio::stop_wav(int serial)
 {
 	for( int chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
 	{
@@ -912,15 +912,15 @@ int Win32Audio::stop_wav(int serial)
 	}
 	return 0;
 }
-//------- End of function Win32Audio::stop_wav ------------//
+//------- End of function DSoundAudio::stop_wav ------------//
 
-//------- Begin of function Win32Audio::is_wav_playing ------------//
+//------- Begin of function DSoundAudio::is_wav_playing ------------//
 //
 // return wheather a short sound effect is stopped
 //
 // <int>        the serial no returned by play_wav or play_resided_wav
 //
-int Win32Audio::is_wav_playing(int serial)
+int DSoundAudio::is_wav_playing(int serial)
 {
 	DWORD dsbStatus;
 	for( int chanNum = 0; chanNum < MAX_WAV_CHANNEL; ++chanNum)
@@ -933,9 +933,9 @@ int Win32Audio::is_wav_playing(int serial)
 	}
 	return 0;
 }
-//------- End of function Win32Audio::is_wav_playing ------------//
+//------- End of function DSoundAudio::is_wav_playing ------------//
 
-//------- Begin of function Win32Audio::play_long_wav --------//
+//------- Begin of function DSoundAudio::play_long_wav --------//
 //
 // Play digitized wav from the wav file
 // suitable for very large wave file
@@ -945,14 +945,14 @@ int Win32Audio::is_wav_playing(int serial)
 // return : <int> 1 - wav loaded and is playing
 //                0 - wav not played
 // note : it uses streaming DirectSoundBuffer
-// Win32Audio::yield() keeps on feeding data to it
+// DSoundAudio::yield() keeps on feeding data to it
 
 // Create a DirectSoundBuffer of size lwav_buf_size[c]*LWAV_BANKS
-// divide into LWAV_BANKS parts. Each time Win32Audio::yield() is called,
+// divide into LWAV_BANKS parts. Each time DSoundAudio::yield() is called,
 // load wave file into one part. lwav_bank[c] record which part to be
 // filled next for channel c.
 
-int Win32Audio::play_long_wav(const char *wavName, const DsVolume &dsVolume)
+int DSoundAudio::play_long_wav(const char *wavName, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -1148,9 +1148,9 @@ int Win32Audio::play_long_wav(const char *wavName, const DsVolume &dsVolume)
 	run_yield = 1;
 	return lwav_serial_no[chanNum] = assign_serial(max_lwav_serial_no);
 }
-//------- End of function Win32Audio::play_long_wav ----------//
+//------- End of function DSoundAudio::play_long_wav ----------//
 
-//------- Begin of function Win32Audio::stop_long_wav ------------//
+//------- Begin of function DSoundAudio::stop_long_wav ------------//
 //
 // stop a short sound effect started by play_long_wav
 //
@@ -1159,7 +1159,7 @@ int Win32Audio::play_long_wav(const char *wavName, const DsVolume &dsVolume)
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
 //
-int Win32Audio::stop_long_wav(int serial)
+int DSoundAudio::stop_long_wav(int serial)
 {
 	for( int chanNum = 0; chanNum < MAX_LONG_WAV_CH; ++chanNum)
 	{
@@ -1176,15 +1176,15 @@ int Win32Audio::stop_long_wav(int serial)
 	}
 	return 0;
 }
-//------- End of function Win32Audio::stop_long_wav ------------//
+//------- End of function DSoundAudio::stop_long_wav ------------//
 
-//------- Begin of function Win32Audio::is_long_wav_playing ------------//
+//------- Begin of function DSoundAudio::is_long_wav_playing ------------//
 //
 // return wheather a short sound effect is stopped
 //
 // <int>        the serial no returned by play_wav or play_resided_wav
 //
-int Win32Audio::is_long_wav_playing(int serial)
+int DSoundAudio::is_long_wav_playing(int serial)
 {
 	DWORD dsbStatus;
 	for( int chanNum = 0; chanNum < MAX_LONG_WAV_CH; ++chanNum)
@@ -1197,10 +1197,10 @@ int Win32Audio::is_long_wav_playing(int serial)
 	}
 	return 0;
 }
-//------- End of function Win32Audio::is_long_wav_playing ------------//
+//------- End of function DSoundAudio::is_long_wav_playing ------------//
 
 
-//------- Begin of function Win32Audio::play_loop_wav -------//
+//------- Begin of function DSoundAudio::play_loop_wav -------//
 //
 // Play digitized wav from the wav resource file
 //
@@ -1211,7 +1211,7 @@ int Win32Audio::is_long_wav_playing(int serial)
 // return : <int> channel number (1 - MAX_LOOP_WAV_CH)
 //          0     not played
 //
-int	Win32Audio::play_loop_wav(const char *wavName, int repeatOffset, const DsVolume &dsVolume)
+int	DSoundAudio::play_loop_wav(const char *wavName, int repeatOffset, const DsVolume &dsVolume)
 {
 	if( !wav_init_flag || !wav_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -1374,11 +1374,11 @@ int	Win32Audio::play_loop_wav(const char *wavName, int repeatOffset, const DsVol
 	run_yield = 1;
 	return chanNum+1;
 }
-//------- End of function Win32Audio::play_loop_wav ---------//
+//------- End of function DSoundAudio::play_loop_wav ---------//
 
 
-//------- Begin of function Win32Audio::volume_loop_wav -------//
-void	Win32Audio::volume_loop_wav(int ch, const DsVolume &dsVolume)
+//------- Begin of function DSoundAudio::volume_loop_wav -------//
+void	DSoundAudio::volume_loop_wav(int ch, const DsVolume &dsVolume)
 {
 	int chanNum = ch-1;
 	if( chanNum < 0 || chanNum >= MAX_LOOP_WAV_CH)
@@ -1392,14 +1392,14 @@ void	Win32Audio::volume_loop_wav(int ch, const DsVolume &dsVolume)
 		loopwav_fade_rate[chanNum] = 0;
 	}
 }
-//------- End of function Win32Audio::volume_loop_wav -------//
+//------- End of function DSoundAudio::volume_loop_wav -------//
 
 
-//------- Begin of function Win32Audio::fade_out_loop_wav -------//
+//------- Begin of function DSoundAudio::fade_out_loop_wav -------//
 //
 // <int> fadeRate, time for volume 100 wave drop to slience
 //
-void Win32Audio::fade_out_loop_wav(int ch, int fadeRate)
+void DSoundAudio::fade_out_loop_wav(int ch, int fadeRate)
 {
 	int chanNum = ch-1;
 	if( chanNum < 0 || chanNum >= MAX_LOOP_WAV_CH)
@@ -1410,11 +1410,11 @@ void Win32Audio::fade_out_loop_wav(int ch, int fadeRate)
 		loopwav_fade_time[chanNum] = m.get_time();
 	}
 }
-//------- End of function Win32Audio::fade_out_loop_wav -------//
+//------- End of function DSoundAudio::fade_out_loop_wav -------//
 
 
-//------- Begin of function Win32Audio::get_loop_wav_volume -------//
-DsVolume Win32Audio::get_loop_wav_volume(int ch)
+//------- Begin of function DSoundAudio::get_loop_wav_volume -------//
+DsVolume DSoundAudio::get_loop_wav_volume(int ch)
 {
 	int chanNum = ch-1;
 	if( chanNum < 0 || chanNum >= MAX_LOOP_WAV_CH)
@@ -1434,11 +1434,11 @@ DsVolume Win32Audio::get_loop_wav_volume(int ch)
 	RelVolume rel = RelVolume(0,0);
 	return DsVolume(rel);
 }
-//------- End of function Win32Audio::get_loop_wav_volume -------//
+//------- End of function DSoundAudio::get_loop_wav_volume -------//
 
 
-//------- Begin of function Win32Audio::is_loop_wav_fading -------//
-int Win32Audio::is_loop_wav_fading(int ch)
+//------- Begin of function DSoundAudio::is_loop_wav_fading -------//
+int DSoundAudio::is_loop_wav_fading(int ch)
 {
 	int chanNum = ch-1;
 	if( chanNum < 0 || chanNum >= MAX_LOOP_WAV_CH)
@@ -1446,11 +1446,11 @@ int Win32Audio::is_loop_wav_fading(int ch)
 
 	return lp_loop_ch_dsb[chanNum] && loopwav_fade_rate[chanNum];
 }
-//------- End of function Win32Audio::is_loop_wav_fading -------//
+//------- End of function DSoundAudio::is_loop_wav_fading -------//
 
 
-//------- Begin of function Win32Audio::yield ---------------//
-void	Win32Audio::yield()
+//------- Begin of function DSoundAudio::yield ---------------//
+void	DSoundAudio::yield()
 {
 #ifndef WIN32
 	// unlock vga_front
@@ -1460,7 +1460,7 @@ void	Win32Audio::yield()
 	if( !run_yield)
 		return;
 
-	run_yield = 0;			// suspend recursive Win32Audio::yield();
+	run_yield = 0;			// suspend recursive DSoundAudio::yield();
 
 #ifdef WIN32
 	// unlock vga_front
@@ -1697,15 +1697,15 @@ void	Win32Audio::yield()
 		}
 	}
 
-	run_yield = 1;		// resume Win32Audio::yield();
+	run_yield = 1;		// resume DSoundAudio::yield();
 }
 
-//------- End of function Win32Audio::yield ---------------//
+//------- End of function DSoundAudio::yield ---------------//
 
 
-//------- Begin of function Win32Audio::stop_wav -------//
+//------- Begin of function DSoundAudio::stop_wav -------//
 //
-void Win32Audio::stop_wav()
+void DSoundAudio::stop_wav()
 {
 	if( !wav_init_flag || !wav_flag )
 		return;
@@ -1730,11 +1730,11 @@ void Win32Audio::stop_wav()
 	}
 
 }
-//------- End of function Win32Audio::stop_wav -------//
+//------- End of function DSoundAudio::stop_wav -------//
 
-//------- Begin of function Win32Audio::stop_long_wav -------//
+//------- Begin of function DSoundAudio::stop_long_wav -------//
 //
-void Win32Audio::stop_long_wav()
+void DSoundAudio::stop_long_wav()
 {
 	if( !wav_init_flag || !wav_flag )
 		return;
@@ -1750,11 +1750,11 @@ void Win32Audio::stop_long_wav()
 			lwav_fileptr[i] = NULL;
 		}
 }
-//------- End of function Win32Audio::stop_long_wav -------//
+//------- End of function DSoundAudio::stop_long_wav -------//
 
 
-//------- Begin of function Win32Audio::stop_loop_wav -------//
-void	Win32Audio::stop_loop_wav(int ch)
+//------- Begin of function DSoundAudio::stop_loop_wav -------//
+void	DSoundAudio::stop_loop_wav(int ch)
 {
 	int chanNum = ch-1;
 	if( chanNum < 0 || chanNum >= MAX_LOOP_WAV_CH)
@@ -1769,14 +1769,14 @@ void	Win32Audio::stop_loop_wav(int ch)
 		loopwav_fileptr[chanNum] = NULL;
 	}
 }
-//------- End of function Win32Audio::stop_loop_wav ---------//
+//------- End of function DSoundAudio::stop_loop_wav ---------//
 
 
-//------- Begin of function Win32Audio::play_cd -------//
+//------- Begin of function DSoundAudio::play_cd -------//
 //
 // <int> trackId - the id. of the CD track to play.
 //
-int Win32Audio::play_cd(int trackId, int volume)
+int DSoundAudio::play_cd(int trackId, int volume)
 {
 	if( !cd_init_flag || !cd_flag )
 		return 0;
@@ -1794,7 +1794,7 @@ int Win32Audio::play_cd(int trackId, int volume)
 	if( !mciError )
 		maxTrack = mciStatusParms.dwReturn;
 
-	//--- Send an MCI_PLAY command to the CD Win32Audio driver ---//
+	//--- Send an MCI_PLAY command to the CD DSoundAudio driver ---//
 
 	mci_open.lpstrDeviceType = (LPCSTR) MCI_DEVTYPE_CD_AUDIO;
 
@@ -1812,12 +1812,12 @@ int Win32Audio::play_cd(int trackId, int volume)
 	return 1;
 	// ###### end Gilbert 3/10 ########//
 }
-//------- End of function Win32Audio::play_cd -------//
+//------- End of function DSoundAudio::play_cd -------//
 
 
-//------- Begin of function Win32Audio::stop_cd -------//
+//------- Begin of function DSoundAudio::stop_cd -------//
 //
-void Win32Audio::stop_cd()
+void DSoundAudio::stop_cd()
 {
 	if( !cd_init_flag || !cd_flag )
 		return;
@@ -1826,12 +1826,12 @@ void Win32Audio::stop_cd()
 	dwResult = mciSendCommand(mci_open.wDeviceID, MCI_STOP,
 		MCI_WAIT, (DWORD)(LPVOID)NULL);
 }
-//------- End of function Win32Audio::stop_cd -------//
+//------- End of function DSoundAudio::stop_cd -------//
 
 
-//------- Begin of function Win32Audio::is_mid_playing -------//
+//------- Begin of function DSoundAudio::is_mid_playing -------//
 //
-int Win32Audio::is_mid_playing()
+int DSoundAudio::is_mid_playing()
 {
 	if( !mid_init_flag || !mid_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -1840,12 +1840,12 @@ int Win32Audio::is_mid_playing()
 
 	return 0;
 }
-//------- End of function Win32Audio::is_mid_playing -------//
+//------- End of function DSoundAudio::is_mid_playing -------//
 
 
-//------- Begin of function Win32Audio::is_wav_playing -------//
+//------- Begin of function DSoundAudio::is_wav_playing -------//
 //
-int Win32Audio::is_wav_playing()
+int DSoundAudio::is_wav_playing()
 {
 	int playingChannelCount = 0;
 	DWORD dwStatus;
@@ -1873,12 +1873,12 @@ int Win32Audio::is_wav_playing()
 
 	return (playingChannelCount > 0);
 }
-//------- End of function Win32Audio::is_wav_playing -------//
+//------- End of function DSoundAudio::is_wav_playing -------//
 
 
-//------- Begin of function Win32Audio::is_cd_playing -------//
+//------- Begin of function DSoundAudio::is_cd_playing -------//
 //
-int Win32Audio::is_cd_playing()
+int DSoundAudio::is_cd_playing()
 {
 	if( !cd_init_flag || !cd_flag )   // a initialized and workable midi device can be disabled by user setting
 		return 0;
@@ -1897,52 +1897,52 @@ int Win32Audio::is_cd_playing()
 		return status.dwReturn == MCI_MODE_PLAY;
 	return 0;
 }
-//------- End of function Win32Audio::is_cd_playing -------//
+//------- End of function DSoundAudio::is_cd_playing -------//
 
 
-//----------------- Begin of Win32Audio::toggle_mid -----------------//
+//----------------- Begin of DSoundAudio::toggle_mid -----------------//
 //
-void Win32Audio::toggle_mid(int midFlag)
+void DSoundAudio::toggle_mid(int midFlag)
 {
 	if( !midFlag )
 		stop_mid();
 
 	mid_flag = midFlag;
 }
-//------------------- End of Win32Audio::toggle_mid ------------------//
+//------------------- End of DSoundAudio::toggle_mid ------------------//
 
 
-//----------------- Begin of Win32Audio::toggle_wav -----------------//
+//----------------- Begin of DSoundAudio::toggle_wav -----------------//
 //
-void Win32Audio::toggle_wav(int wavFlag)
+void DSoundAudio::toggle_wav(int wavFlag)
 {
 	if( !wavFlag )
 		stop_wav();
 
 	wav_flag = wavFlag;
 }
-//------------------- End of Win32Audio::toggle_wav ------------------//
+//------------------- End of DSoundAudio::toggle_wav ------------------//
 
 
-//----------------- Begin of Win32Audio::toggle_cd -----------------//
+//----------------- Begin of DSoundAudio::toggle_cd -----------------//
 //
-void Win32Audio::toggle_cd(int cdFlag)
+void DSoundAudio::toggle_cd(int cdFlag)
 {
 	if( !cdFlag )
 		stop_cd();
 
 	cd_flag = cdFlag;
 }
-//------------------- End of Win32Audio::toggle_cd ------------------//
+//------------------- End of DSoundAudio::toggle_cd ------------------//
 
 
-//-------------- Begin of Win32Audio::set_mid_volume -------------//
+//-------------- Begin of DSoundAudio::set_mid_volume -------------//
 //
 // Set mid volume
 //
 // <int> midVolume = mid volume, 0-100
 //
-void Win32Audio::set_mid_volume(int midVolume)
+void DSoundAudio::set_mid_volume(int midVolume)
 {
 	if( !mid_init_flag )
 		return;
@@ -1950,16 +1950,16 @@ void Win32Audio::set_mid_volume(int midVolume)
 	//.. insert code here ...//
 
 }
-//--------------- End of Win32Audio::set_mid_volume --------------//
+//--------------- End of DSoundAudio::set_mid_volume --------------//
 
 
-//-------------- Begin of Win32Audio::set_wav_volume -------------//
+//-------------- Begin of DSoundAudio::set_wav_volume -------------//
 //
 // Set wav volume
 //
 // <int> wavVolume = wav volume, 0-100
 //
-void Win32Audio::set_wav_volume(int wavVolume)
+void DSoundAudio::set_wav_volume(int wavVolume)
 {
 	if( !wav_init_flag )
 		return;
@@ -2013,24 +2013,24 @@ void Win32Audio::set_wav_volume(int wavVolume)
 
 	wav_volume = wavVolume;
 }
-//--------------- End of Win32Audio::set_wav_volume --------------//
+//--------------- End of DSoundAudio::set_wav_volume --------------//
 
 
-//--------------- Begin of Win32Audio::get_wav_volume --------------//
-int Win32Audio::get_wav_volume() const
+//--------------- Begin of DSoundAudio::get_wav_volume --------------//
+int DSoundAudio::get_wav_volume() const
 {
   return wav_volume;
 }
-//--------------- End of Win32Audio::get_wav_volume --------------//
+//--------------- End of DSoundAudio::get_wav_volume --------------//
 
 
-//-------------- Begin of Win32Audio::set_cd_volume -------------//
+//-------------- Begin of DSoundAudio::set_cd_volume -------------//
 //
 // Set cd volume
 //
 // <int> cdVolume = cd volume, 0-100
 //
-void Win32Audio::set_cd_volume(int cdVolume)
+void DSoundAudio::set_cd_volume(int cdVolume)
 {
 	if( !cd_init_flag )
 		return;
@@ -2038,21 +2038,21 @@ void Win32Audio::set_cd_volume(int cdVolume)
 	//.. insert code here ...//
 
 }
-//--------------- End of Win32Audio::set_cd_volume --------------//
+//--------------- End of DSoundAudio::set_cd_volume --------------//
 
 
-//-------------- Begin of function Win32Audio::assign_serial ----------//
-int Win32Audio::assign_serial(int &s)
+//-------------- Begin of function DSoundAudio::assign_serial ----------//
+int DSoundAudio::assign_serial(int &s)
 {
 	if( s == INT_MAX)
 		return s = 1;
 	return ++s;
 }
-//-------------- End of function Win32Audio::assign_serial ----------//
+//-------------- End of function DSoundAudio::assign_serial ----------//
 
 
-// ------------ Begin of function Win32Audio::volume_long_wav -------//
-void Win32Audio::volume_long_wav(int serial, const DsVolume &dsVolume)
+// ------------ Begin of function DSoundAudio::volume_long_wav -------//
+void DSoundAudio::volume_long_wav(int serial, const DsVolume &dsVolume)
 {
 	if( is_long_wav_playing(serial) )
 	{
@@ -2067,5 +2067,5 @@ void Win32Audio::volume_long_wav(int serial, const DsVolume &dsVolume)
 		}
 	}
 }
-// ------------ End of function Win32Audio::volume_long_wav -------//
+// ------------ End of function DSoundAudio::volume_long_wav -------//
 

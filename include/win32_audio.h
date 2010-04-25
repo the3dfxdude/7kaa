@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef WIN32_AUDIO_H
-#define WIN32_AUDIO_H
+#ifndef DSOUND_AUDIO_H
+#define DSOUND_AUDIO_H
 
 #include <windows.h>
 #include <mmsystem.h>
@@ -37,13 +37,13 @@
 
 #define MAX_LOOP_WAV_CH        4
 
-//--------------- Define class Win32Audio ---------------//
+//--------------- Define class DSoundAudio ---------------//
 
-class Win32Audio: public AudioBase
+class DSoundAudio: public AudioBase
 {
 public:
-   Win32Audio();
-   ~Win32Audio();
+   DSoundAudio();
+   ~DSoundAudio();
 
    int  	init();
    void 	deinit();
@@ -119,7 +119,7 @@ private:
    short	lwav_bufsiz[MAX_LONG_WAV_CH];
    // buffer size of each channel = lwav_bufsiz[c]*LWAV_BANKS
    long	wav_volume;						// -10000 to 0
-   char	run_yield;						// 0 = skip Win32Audio::yield()
+   char	run_yield;						// 0 = skip DSoundAudio::yield()
 
    LPDIRECTSOUNDBUFFER lp_loop_ch_dsb[MAX_LOOP_WAV_CH];
    File* loopwav_fileptr[MAX_LOOP_WAV_CH];
@@ -141,6 +141,6 @@ private:
 
 //--------------------------------------------------//
 
-typedef Win32Audio Audio;
+typedef DSoundAudio Audio;
 
 #endif
