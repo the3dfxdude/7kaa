@@ -27,7 +27,6 @@ if (defined($wine_prefix)) {
 ## end include paths ##
 
 my @targets = qw(
-OMOUSE.cpp
 OVGA.cpp
 OVGA2.cpp
 OVGABUF.cpp
@@ -36,16 +35,4 @@ OVGALOCK.cpp
 syswin.cpp
 );
 
-my @objs = build_targets(\@targets, \@includes, \@defines);
-
-## this is will be split out
-if (defined($audio_backend) && $audio_backend =~ /dsound/i) {
-  my @dsound_defines = qw( AMPLUS USE_DSOUND );
-  if (defined($debug) && $debug) {
-    push (@dsound_defines, "DEBUG");
-  }
-
-  push (@objs, build_targets(['win32_audio.cpp'], \@includes, \@dsound_defines));
-}
-
-@objs;
+build_targets(\@targets, \@includes, \@defines);

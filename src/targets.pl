@@ -21,9 +21,10 @@ if (defined($audio_backend)) {
     } elsif ($platform =~ /^win32/) {
       push (@libs, "openal32");
     }
-    @anygui = include_targets('gui/any/targets.pl');
+    @audio = include_targets('audio/openal/targets.pl');
   } elsif ($audio_backend =~ /dsound/i) {
     push (@libs, 'dsound');
+    @audio = include_targets('audio/dsound/targets.pl');
   }
 }
 ## Done building the audio backend ##
@@ -31,14 +32,15 @@ if (defined($audio_backend)) {
 ## statically shared objects ##
 @common_objs = include_targets('common/targets.pl');
 #@nogui = include_targets('gui/none/targets.pl');
-@win32gui = include_targets('gui/win32/targets.pl');
+@input = include_targets('input/dinput/targets.pl');
+@video = include_targets('video/ddraw/targets.pl');
 @imgfun = include_targets('imgfun/targets.pl');
 ## end statically shared objects ##
 
 ## build game client ##
 @client_objs = include_targets('client/targets.pl');
 link_exe ('7kaa.exe',
-          [@common_objs, @anygui, @win32gui, @imgfun, @client_objs],
+          [@common_objs, @audio, @input, @video, @imgfun, @client_objs],
           [@libs, @dxlibs],
           \@lib_dirs);
 ## end build game client ##
@@ -47,7 +49,7 @@ link_exe ('7kaa.exe',
 if ($build_server) {
   @server_objs = include_targets('server/targets.pl');
   link_exe ('7kaa-server.exe',
-            [@common_objs, @anygui, @win32gui, @imgfun, @server_objs],
+            [@common_objs, @audio, @input, @video, @imgfun, @server_objs],
             [@libs, @dxlibs],
             \@lib_dirs);
 }
