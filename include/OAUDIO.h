@@ -24,7 +24,7 @@
 #if defined(USE_OPENAL)
 #include <openal_audio.h>
 #elif defined(USE_DSOUND)
-#include <win32_audio.h>
+#include <dsound_audio.h>
 #else
 #error "You need to define an audio backend, such as OpenAL or Win32"
 #endif

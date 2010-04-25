@@ -32,7 +32,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include <win32_audio.h>
+#include <dsound_audio.h>
 #include <OSYS.h>
 #include <syswin.h>
 #include <OBOX.h>

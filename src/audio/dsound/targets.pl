@@ -17,7 +17,7 @@ if (defined($wine_prefix)) {
 ## end include paths ##
 
 my @targets = qw(
-win32_audio.cpp
+dsound_audio.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);
