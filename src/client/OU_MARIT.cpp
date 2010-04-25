@@ -926,7 +926,7 @@ void UnitMarine::harbor_unload_raw()
 			err_when(factoryPtr->firm_id != FIRM_FACTORY);
 			err_when(factoryPtr->product_raw_id-1!=i);
 			
-			unloadQty = (short)((factoryPtr->max_raw_stock_qty-factoryPtr->raw_stock_qty)*curStock/totalDemand + 0.5);
+			unloadQty = totalDemand ? (short)((factoryPtr->max_raw_stock_qty-factoryPtr->raw_stock_qty)*curStock/totalDemand + 0.5) : 0;
 			unloadQty = MIN((short)(factoryPtr->max_raw_stock_qty-factoryPtr->raw_stock_qty), unloadQty);
 			unloadQty = MIN(raw_qty_array[i], unloadQty);
 
@@ -959,7 +959,7 @@ void UnitMarine::harbor_unload_raw()
 			else
 				useEmptySlot = 0;
 
-			unloadQty = (short)((marketPtr->max_stock_qty-marketRawPtr->stock_qty)*curStock/totalDemand + 0.5);
+			unloadQty = totalDemand ? (short)((marketPtr->max_stock_qty-marketRawPtr->stock_qty)*curStock/totalDemand + 0.5) : 0;
 			unloadQty = MIN((short)(marketPtr->max_stock_qty-marketRawPtr->stock_qty), unloadQty);
 			unloadQty = MIN(raw_qty_array[i], unloadQty);
 
@@ -1176,7 +1176,7 @@ void UnitMarine::harbor_load_product(int goodsId, int autoPickUp, int considerMo
 		err_when(factoryPtr->product_raw_id-1!=goodsId);
 
 		loadQty = MAX((short) (factoryPtr->stock_qty-keepStockQty), 0);
-		loadQty = MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty);
+		loadQty = totalSupply ? MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty) : 0;
 
 		if(factoryPtr->nation_recno!=nation_recno)
 		{
@@ -1213,7 +1213,7 @@ void UnitMarine::harbor_load_product(int goodsId, int autoPickUp, int considerMo
 		marketProductPtr = marketPtr->market_product_array[goodsId];
 
 		loadQty = MAX((short) marketProductPtr->stock_qty-keepStockQty, 0);
-		loadQty = MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty);
+		loadQty = totalSupply ? MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty) : 0;
 
 		if(marketPtr->nation_recno!=nation_recno)
 		{
@@ -1357,7 +1357,7 @@ void UnitMarine::harbor_load_raw(int goodsId, int autoPickUp, int considerMode)
 		err_when(minePtr->raw_id-1!=goodsId);
 
 		loadQty = MAX((short) (minePtr->stock_qty-keepStockQty), 0);
-		loadQty = MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty);
+		loadQty = totalSupply ? MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty) : 0;
 
 		if(minePtr->nation_recno!=nation_recno)
 		{
@@ -1394,7 +1394,7 @@ void UnitMarine::harbor_load_raw(int goodsId, int autoPickUp, int considerMode)
 		marketRawPtr = marketPtr->market_raw_array[goodsId];
 
 		loadQty = MAX((short) marketRawPtr->stock_qty-keepStockQty, 0);
-		loadQty = MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty);
+		loadQty = totalSupply ? MIN((short) ((float)loadQty*curDemand/totalSupply), loadQty) : 0;
 
 		if(marketPtr->nation_recno!=nation_recno)
 		{
