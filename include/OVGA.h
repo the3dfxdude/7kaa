@@ -93,7 +93,7 @@ public:
 		  char	is_inited() 	{ return dd_obj!=NULL; }
 
 		  void  init_surface(VgaBuf* surface, enum vga_surface_type t);
-		  BOOL   load_pal(const char* fileName);
+		  BOOL  init_pal(const char* fileName);
 		  void  refresh_palette();
 		  void	init_gray_remap_table();
 

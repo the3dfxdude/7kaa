@@ -220,9 +220,9 @@ int Sys::init_directx()
       return FALSE;
    DEBUG_LOG("vga.init() ok");
 
-   DEBUG_LOG("Attempt vga.load_pal()");
-   vga.load_pal(DIR_RES"PAL_STD.RES");
-   DEBUG_LOG("vga.load_pal() finish");
+   DEBUG_LOG("Attempt vga.init_pal()");
+   vga.init_pal(DIR_RES"PAL_STD.RES");
+   DEBUG_LOG("vga.init_pal() finish");
 
    if( sys.debug_session )                // if we are currently in a debug session, don't lock the front buffer otherwise the system will hang up
    {

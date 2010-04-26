@@ -278,11 +278,11 @@ void Vga::init_surface(VgaBuf* surface, enum vga_surface_type t)
 }
 //-------- End of function Vga::init_surface ----------//
 
-//--------- Start of function Vga::load_pal ----------//
+//--------- Start of function Vga::init_pal ----------//
 //
 // Load the palette from a file and set it to the front buf.
 //
-BOOL Vga::load_pal(const char* fileName)
+BOOL Vga::init_pal(const char* fileName)
 {
    char palBuf[256][3];
    File palFile;
@@ -314,7 +314,7 @@ BOOL Vga::load_pal(const char* fileName)
 
    return TRUE;
 }
-//----------- End of function Vga::load_pal ----------//
+//----------- End of function Vga::init_pal ----------//
 
 //--------- Start of function Vga::refresh_palette ----------//
 //
