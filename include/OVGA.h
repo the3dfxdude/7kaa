@@ -98,6 +98,7 @@ public:
 		  void	init_gray_remap_table();
 
 		  void   activate_pal(VgaBuf*);
+		  int    set_custom_palette(char*);
 		  void   release_pal();
 
 		  void 	d3_panel_up(int x1,int y1,int x2,int y2,int vgaFrontOnly=0,int drawBorderOnly=0);

@@ -75,7 +75,7 @@ void Vga::disp_image_file(const char* fileName, int x1, int y1)
 		err_when( !m.is_file_exist(str) );
 
 		VgaFrontLock vgaLock;
-		VgaCustomPalette::set_custom_palette(str);
+		set_custom_palette(str);
 	}
 
 	//------- bilt the back buffer to the front ---------//

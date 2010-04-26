@@ -372,6 +372,34 @@ void Vga::activate_pal(VgaBuf* vgaBufPtr)
 //--------- End of function Vga::activate_pal ----------//
 
 
+//-------- Begin of function Vga::set_custom_palette ----------//
+//
+// Set the palette by reading a palette file.
+//
+int Vga::set_custom_palette(char *fileName)
+{
+   PALETTEENTRY palEntry[256];
+   char palBuf[256][3];
+   File palFile;
+
+   palFile.file_open(fileName);
+   palFile.file_seek(8);     				// bypass the header info
+   palFile.file_read(palBuf, 256*3);
+   palFile.file_close();
+
+   for(int i=0; i<256; i++)
+   {
+      palEntry[i].peRed   = palBuf[i][0];
+      palEntry[i].peGreen = palBuf[i][1];
+      palEntry[i].peBlue  = palBuf[i][2];
+      palEntry[i].peFlags = 0;
+   }
+
+   return !dd_pal->SetEntries(0, 0, 256, palEntry);
+}
+//--------- End of function Vga::set_custom_palette ----------//
+
+
 //-------- Begin of function Vga::adjust_brightness ----------//
 //
 // <int> changeValue - the value to add to the RGB values of

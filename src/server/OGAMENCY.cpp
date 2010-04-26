@@ -653,7 +653,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 		if( palNamePtr && m.is_file_exist(palNamePtr) )
 		{
 			VgaFrontLock vgaLock;
-			VgaCustomPalette::set_custom_palette(palNamePtr);
+			vga.set_custom_palette(palNamePtr);
 		}
 
 		if( !firstDisp )
