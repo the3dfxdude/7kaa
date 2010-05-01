@@ -280,7 +280,8 @@ void Vga::init_surface(VgaBuf* surface, enum vga_surface_type t)
 
 //--------- Start of function Vga::init_pal ----------//
 //
-// Load the palette from a file and set it to the front buf.
+// Loads the default game palette specified by fileName. Creates the ddraw
+// palette.
 //
 BOOL Vga::init_pal(const char* fileName)
 {
@@ -298,12 +299,12 @@ BOOL Vga::init_pal(const char* fileName)
    {
       for(int i=0; i<256; i++)
       {
-         pal_entry_buf[i].peRed   = palBuf[i][0];
-         pal_entry_buf[i].peGreen = palBuf[i][1];
-         pal_entry_buf[i].peBlue  = palBuf[i][2];
+         game_pal[i].peRed   = palBuf[i][0];
+         game_pal[i].peGreen = palBuf[i][1];
+         game_pal[i].peBlue  = palBuf[i][2];
       }
 
-      HRESULT rc = dd_obj->CreatePalette( DDPCAPS_8BIT, pal_entry_buf, &dd_pal, NULL );
+      HRESULT rc = dd_obj->CreatePalette( DDPCAPS_8BIT, game_pal, &dd_pal, NULL );
 
       if( rc != DD_OK )
          return FALSE;
@@ -330,7 +331,7 @@ void Vga::refresh_palette()
    if (back_up_pal) return;
 
    // restore palette
-   dd_pal->SetEntries(0, 0, 256, pal_entry_buf);
+   dd_pal->SetEntries(0, 0, 256, game_pal);
 }
 //----------- End of function Vga::refresh_palette ----------//
 
@@ -340,14 +341,16 @@ void Vga::init_color_table()
 {
    //----- initialize interface color table -----//
 
-   PalDesc palDesc( (unsigned char*) pal_entry_buf, sizeof(PALETTEENTRY), 256, 8);
+   PalDesc palDesc( (unsigned char*) game_pal, sizeof(PALETTEENTRY), 256, 8);
    vga_color_table->generate_table( MAX_BRIGHTNESS_ADJUST_DEGREE, palDesc, ColorTable::bright_func );
 }
 //----------- End of function Vga::init_color_table ----------//
 
 
 //--------- Start of function Vga::release_pal ----------//
-
+//
+// Releases the ddraw palette.
+//
 void Vga::release_pal()
 {
    // ##### begin Gilbert 16/9 #######//
@@ -420,9 +423,9 @@ void Vga::adjust_brightness(int changeValue)
 
    for( i=0 ; i<256 ; i++ )
    {
-      newRed   = (int)pal_entry_buf[i].peRed   + changeValue;
-      newGreen = (int)pal_entry_buf[i].peGreen + changeValue;
-      newBlue  = (int)pal_entry_buf[i].peBlue  + changeValue;
+      newRed   = (int)game_pal[i].peRed   + changeValue;
+      newGreen = (int)game_pal[i].peGreen + changeValue;
+      newBlue  = (int)game_pal[i].peBlue  + changeValue;
 
       palBuf[i].peRed   = MIN(255, MAX(newRed,0) );
       palBuf[i].peGreen = MIN(255, MAX(newGreen,0) );
@@ -747,7 +750,7 @@ void Vga::init_gray_remap_table()
 // #define FIRST_GRAY_COLOR   0x96
 // #define GRAY_SCALE_COUNT   10    // no. of gray colors
 
-   PALETTEENTRY* palEntry = vga.pal_entry_buf;
+   PALETTEENTRY* palEntry = game_pal;
    int i, grayIndex;
 
    for( i=0 ; i<256 ; i++, palEntry++ )

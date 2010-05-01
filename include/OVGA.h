@@ -70,7 +70,7 @@ public:
 		  LPDIRECTDRAW2        dd_obj;
 		  LPDIRECTDRAWPALETTE  dd_pal;
 
-		  PALETTEENTRY pal_entry_buf[256];
+		  PALETTEENTRY game_pal[256];
 
 		  ColorTable*			  vga_color_table;
 		  unsigned char		  gray_remap_table[256];
