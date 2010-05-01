@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.13.1
+Release version 2.13.2
 Project website: www.7kfans.com
 
 This is the release of the Seven Kingdoms: Ancient Adversaries source
@@ -38,9 +38,9 @@ Windows
 
 We do not (yet?) provide the typical Makefile setup.  To build
 execute:
-./configure
+./configure.pl
 Followed by:
-./build
+./build.pl
 
 This will build the game suited for your system.  If this does
 not work, please tell us.
