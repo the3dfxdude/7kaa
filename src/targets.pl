@@ -1,6 +1,6 @@
 ## libraries to link ##
 @dxlibs = qw(
-  gdi32 ddraw dinput
+  dinput
 );
 @libs = qw(
   ole32 msvcrt winmm
@@ -29,11 +29,14 @@ if (defined($audio_backend)) {
 }
 ## Done building the audio backend ##
 
+## Build the video backend ##
+push (@libs, 'gdi32', 'ddraw');
+@video = include_targets('video/targets.pl');
+## Done building the vidio backend ##
+
 ## statically shared objects ##
 @common_objs = include_targets('common/targets.pl');
-#@nogui = include_targets('gui/none/targets.pl');
 @input = include_targets('input/dinput/targets.pl');
-@video = include_targets('video/ddraw/targets.pl');
 @imgfun = include_targets('imgfun/targets.pl');
 ## end statically shared objects ##
 

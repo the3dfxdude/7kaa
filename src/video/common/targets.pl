@@ -1,5 +1,3 @@
-my @defines;
-
 ## compiler flags ##
 @defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
@@ -18,20 +16,21 @@ if (defined($audio_backend)) {
 ## end compiler flags ##
 
 ## include paths ##
-my @includes = qw( ../../../include );
+@includes = qw( ../../../include );
 
 if (defined($wine_prefix)) {
   push (@includes, "$wine_prefix/include/wine/windows",
                    "$wine_prefix/include/wine/msvcrt");
 }
-## end include paths ##
 
-my @targets = qw(
-OVGA.cpp
-OVGA2.cpp
-OVGABUF.cpp
-OVGABUF2.cpp
-syswin.cpp
+if (defined($dxsdk_path)) {
+  push (@includes, "$dxsdk_path/include");
+}
+## include paths ##
+
+@targets = qw(
+OCOLTBL.cpp
+OVGALOCK.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);

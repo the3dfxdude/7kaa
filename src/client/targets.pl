@@ -79,7 +79,6 @@ OBUTTON.cpp
 OB_FLAME.cpp
 OB_HOMIN.cpp
 OB_PROJ.cpp
-OCOLTBL.cpp
 ODATE.cpp
 ODB.cpp
 ODIR.cpp
