@@ -30,6 +30,7 @@ if (defined($dxsdk_path)) {
 
 @targets = qw(
 OCOLTBL.cpp
+OVGA2.cpp
 OVGALOCK.cpp
 );
 

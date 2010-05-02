@@ -28,7 +28,6 @@ if (defined($wine_prefix)) {
 
 my @targets = qw(
 OVGA.cpp
-OVGA2.cpp
 OVGABUF.cpp
 OVGABUF2.cpp
 syswin.cpp
