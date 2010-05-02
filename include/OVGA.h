@@ -62,7 +62,6 @@ enum vga_surface_type {
 //-------- Define class Vga ----------------//
 
 class ColorTable;
-class VgaCustomPalette;
 
 class Vga
 {
@@ -71,11 +70,10 @@ public:
 		  LPDIRECTDRAWPALETTE  dd_pal;
 
 		  PALETTEENTRY game_pal[256];
+		  LPPALETTEENTRY custom_pal;
 
 		  ColorTable*			  vga_color_table;
 		  unsigned char		  gray_remap_table[256];
-
-		  VgaCustomPalette*	  back_up_pal;
 
 		  static VgaBuf*		  active_buf;
 		  static char			  use_back_buf;
@@ -99,6 +97,7 @@ public:
 
 		  void   activate_pal(VgaBuf*);
 		  int    set_custom_palette(char*);
+		  void   free_custom_palette();
 		  void   release_pal();
 
 		  void 	d3_panel_up(int x1,int y1,int x2,int y2,int vgaFrontOnly=0,int drawBorderOnly=0);

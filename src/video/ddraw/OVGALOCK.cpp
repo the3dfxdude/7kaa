@@ -53,46 +53,15 @@ void VgaFrontLock::re_unlock()
 }
 
 
+#ifdef USE_DPLAY
 VgaCustomPalette::VgaCustomPalette(char *fileName)
 {
-	backup_pal = NULL;
-	if( save_palette() && fileName)
-		vga.set_custom_palette(fileName);
+	vga.set_custom_palette(fileName);
 }
 
 VgaCustomPalette::~VgaCustomPalette()
 {
-	restore_palette();
-	if( backup_pal)
-		mem_del(backup_pal);
-}
-
-
-int VgaCustomPalette::save_palette()
-{
-	// ------ allocate space --------//
-	if( !backup_pal )
-		backup_pal = mem_add( sizeof(PALETTEENTRY) * 256);
-
-	// ------- get current palette --------//
-	if( vga.dd_pal->GetEntries(0, 0, 256, (PALETTEENTRY *)backup_pal) )
-	{
-		// get palette fail, free backup_pal to indicate save_palette failed
-		mem_del(backup_pal);
-		backup_pal = NULL;
-		return 0;
-	}
-	else
-		return 1;
-}
-
-
-int VgaCustomPalette::restore_palette()
-{
-	if( backup_pal)
-		return !vga.dd_pal->SetEntries(0, 0, 256, (PALETTEENTRY *)backup_pal);
-	else
-		return 1;
+	vga.free_custom_palette();
 }
 
 
@@ -127,4 +96,5 @@ MouseDispCount::~MouseDispCount()
 	ev = mouse.get_event();
 
 }
+#endif //USE_DPLAY
 

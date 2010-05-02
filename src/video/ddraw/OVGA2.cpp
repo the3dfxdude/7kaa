@@ -36,11 +36,6 @@
 //
 void Vga::disp_image_file(const char* fileName, int x1, int y1)
 {
-	//-------- backup and switch palette ----------//
-
-	if( !back_up_pal )		// only save the palette when there isn't one saved already
-		back_up_pal = new VgaCustomPalette(NULL);
-
 	//---- load the interface into the back buffer ----//
 
 	File pictFile;
@@ -98,11 +93,7 @@ void Vga::finish_disp_image_file()
 
 	{
 		VgaFrontLock vgaLock;
-
-		err_when( !back_up_pal );
-
-		delete back_up_pal;
-		back_up_pal = NULL;
+		free_custom_palette();
 	}
 
 	mouse.show();

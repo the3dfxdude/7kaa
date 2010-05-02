@@ -162,10 +162,6 @@ void Game::view_encyclopedia()
 {
 	music.stop();			// no music for encyclopedia as it reads files from the CDROM
 
-	//-------- backup and switch palette ----------//
-
-	VgaCustomPalette *backupPal = new VgaCustomPalette(NULL);
-
 	//---- load the interface into the back buffer ----//
 
 	image_encyc.put_to_buf( &vga_back, "ENCYC" );
@@ -337,7 +333,7 @@ void Game::view_encyclopedia()
 		vga_front.bar( 0, 0, VGA_WIDTH-1, VGA_HEIGHT-1, 0 );
 
 		VgaFrontLock vgaLock;
-		delete backupPal;
+		vga.free_custom_palette();
 	}
 }
 //--------- End of function Game::view_encyclopedia ---------//

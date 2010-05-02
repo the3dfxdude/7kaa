@@ -70,8 +70,6 @@ Vga::~Vga()
    deinit();      // 1-is final
 
    delete vga_color_table;
-
-   err_when( back_up_pal );      // this must be free up immediately after its use
 }
 //-------- End of function Vga::~Vga ----------//
 
@@ -327,11 +325,11 @@ void Vga::refresh_palette()
    // we can't restore if dd_pal is not initialized
    if (!dd_pal) return;
 
-   // if we are temporarily overriding, then we should be okay
-   if (back_up_pal) return;
-
-   // restore palette
-   dd_pal->SetEntries(0, 0, 256, game_pal);
+   // restore current palette
+   if (custom_pal)
+      dd_pal->SetEntries(0, 0, 256, custom_pal);
+   else
+      dd_pal->SetEntries(0, 0, 256, game_pal);
 }
 //----------- End of function Vga::refresh_palette ----------//
 
@@ -360,6 +358,8 @@ void Vga::release_pal()
       dd_pal = NULL;
    }
    // ##### end Gilbert 16/9 #######//
+
+   free_custom_palette();
 }
 //----------- End of function Vga::release_pal ----------//
 
@@ -377,11 +377,13 @@ void Vga::activate_pal(VgaBuf* vgaBufPtr)
 
 //-------- Begin of function Vga::set_custom_palette ----------//
 //
-// Set the palette by reading a palette file.
+// Read the custom palette specified by fileName and set to display.
 //
 int Vga::set_custom_palette(char *fileName)
 {
-   PALETTEENTRY palEntry[256];
+   if (!custom_pal)
+      custom_pal = (LPPALETTEENTRY)mem_add(sizeof(PALETTEENTRY)*256);
+
    char palBuf[256][3];
    File palFile;
 
@@ -392,15 +394,32 @@ int Vga::set_custom_palette(char *fileName)
 
    for(int i=0; i<256; i++)
    {
-      palEntry[i].peRed   = palBuf[i][0];
-      palEntry[i].peGreen = palBuf[i][1];
-      palEntry[i].peBlue  = palBuf[i][2];
-      palEntry[i].peFlags = 0;
+      custom_pal[i].peRed   = palBuf[i][0];
+      custom_pal[i].peGreen = palBuf[i][1];
+      custom_pal[i].peBlue  = palBuf[i][2];
+      custom_pal[i].peFlags = 0;
    }
 
-   return !dd_pal->SetEntries(0, 0, 256, palEntry);
+   return !dd_pal->SetEntries(0, 0, 256, custom_pal);
 }
 //--------- End of function Vga::set_custom_palette ----------//
+
+
+//--------- Begin of function Vga::free_custom_palette ----------//
+//
+// Frees the custom palette and restores the game palette.
+//
+void Vga::free_custom_palette()
+{
+   if (custom_pal)
+   {
+      mem_del(custom_pal);
+      custom_pal = NULL; 
+   }
+   if (dd_pal)
+      dd_pal->SetEntries(0, 0, 256, game_pal);
+}
+//--------- End of function Vga::free_custom_palette ----------//
 
 
 //-------- Begin of function Vga::adjust_brightness ----------//
