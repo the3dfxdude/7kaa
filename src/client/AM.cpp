@@ -71,6 +71,7 @@
 #include <OTRANSL.h>
 #include <OUNIT.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #ifdef ENABLE_INTRO_VIDEO
 #include <OVIDEO.h>
 #endif
@@ -130,6 +131,7 @@ MouseCursor       mouse_cursor;
 Misc              m, m2;
 DateInfo          date;
 Vga               vga;
+VgaUtil           vga_util;
 VgaBuf            vga_front, vga_back, vga_true_front;
 #ifdef ENABLE_INTRO_VIDEO
 Video             video;

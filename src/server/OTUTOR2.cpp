@@ -146,7 +146,7 @@ int Tutor::select_tutor(int actionMode)
 	// int x=menuX1, y=menuY1+17;
 
 	// vga_back.adjust_brightness( x, y, x+menuX1-1, y+menuY1-1, -6 );
-	// vga.blt_buf( x, y, x+menuX1-1, y+menuY1-1, 0 );
+	// vga_util.blt_buf( x, y, x+menuX1-1, y+menuY1-1, 0 );
 
 	mouse_cursor.set_icon(CURSOR_NORMAL);
 

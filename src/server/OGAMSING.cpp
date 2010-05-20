@@ -22,6 +22,7 @@
 //Description : Single player game interface
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSYS.h>
 #include <OMOUSE.h>
 #include <OFONT.h>
@@ -552,7 +553,7 @@ static int select_option()
 					image_menu2.put_to_buf( &vga_back, "SPG-BSC");
 #endif
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_RACE )
 					raceGroup.paint( reverse_race_table[tempConfig.race_id-1] );
@@ -588,7 +589,7 @@ static int select_option()
 				{
 					image_menu.put_to_buf( &vga_back, "SPG-O1");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_MAP_ID )
 					mapIdField.paint();
@@ -615,7 +616,7 @@ static int select_option()
 				{
 					image_menu.put_to_buf( &vga_back, "SPG-O2");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_RAW )
 				{
@@ -649,7 +650,7 @@ static int select_option()
 				{
 					image_menu.put_to_buf( &vga_back, "SPG-GOAL");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_CLEAR_ENEMY )
 					clearEnemyButton.paint();

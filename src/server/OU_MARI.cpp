@@ -180,7 +180,7 @@ void UnitMarine::draw()
 	#ifdef DEBUG2
 		if(selected_flag && 0)
 		{
-			vga.d3_panel_up( INFO_X1, INFO_Y1+144, INFO_X2, INFO_Y1+144+87 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1+144, INFO_X2, INFO_Y1+144+87 );
 
 			int 	 x=INFO_X1+4, y=INFO_Y1+200, refreshFlag=INFO_REPAINT;
 			font_san.field( x, y, " " , x+2, sprite_recno, 1, INFO_X2-2, refreshFlag);
@@ -257,7 +257,7 @@ void UnitMarine::draw_outlined()
 	#ifdef DEBUG2
 		if(selected_flag && 0)
 		{
-			vga.d3_panel_up( INFO_X1, INFO_Y1+144, INFO_X2, INFO_Y1+144+87 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1+144, INFO_X2, INFO_Y1+144+87 );
 
 			int 	 x=INFO_X1+4, y=INFO_Y1+200, refreshFlag=INFO_REPAINT;
 			font_san.field( x, y, " " , x+2, sprite_recno, 1, INFO_X2-2, refreshFlag);

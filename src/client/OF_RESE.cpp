@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <ODATE.h>
 #include <OSTR.h>
 #include <ONEWS.h>
@@ -291,13 +292,13 @@ void i_disp_research_button(ButtonCustom *button, int repaintBody)
 
 	if( button->pushed_flag )
 	{
-		vga.d3_panel2_down(x1, y1, x2, y2);
+		vga_util.d3_panel2_down(x1, y1, x2, y2);
 		x1++;
 		y1++;
 	}
 	else
 	{
-		vga.d3_panel2_up(x1, y1, x2, y2);
+		vga_util.d3_panel2_up(x1, y1, x2, y2);
 		x2--;
 		y2--;
 	}
@@ -344,7 +345,7 @@ void FirmResearch::disp_research_info(int dispY1, int refreshFlag)
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+50 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+50 );
 
 	if( !tech_id )
 		return;
@@ -357,7 +358,7 @@ void FirmResearch::disp_research_info(int dispY1, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_down( x, y, x+TECH_LARGE_ICON_WIDTH+3, y+TECH_LARGE_ICON_HEIGHT+3, 2 );
+		vga_util.d3_panel_down( x, y, x+TECH_LARGE_ICON_WIDTH+3, y+TECH_LARGE_ICON_HEIGHT+3, 2 );
 		vga_front.put_bitmap( x+2, y+2, techInfo->tech_large_icon() );
 
 		//----------- display text ------------//

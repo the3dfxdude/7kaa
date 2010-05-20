@@ -22,6 +22,7 @@
 //Description : Firm interface functions - part 3
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OFONT.h>
 #include <OINFO.h>
 #include <OSYS.h>
@@ -111,13 +112,13 @@ void Firm::disp_bribe_menu(int refreshFlag)
 
 		if( bribe_result == BRIBE_SUCCEED )
 		{
-			vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+24 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+24 );
 
 			font_san.center_put( INFO_X1, y, INFO_X2, y2, "Bribing Succeeded." );
 		}
 		else
 		{
-			vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
 
 			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, "Bribing Failed." );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Was Caught" );
@@ -233,9 +234,9 @@ int Firm::validate_cur_bribe()
 static void disp_bribe_button(int y, int bribeAmount, int buttonUp)
 {
 	if( buttonUp )
-		vga.d3_panel_up( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1 );
+		vga_util.d3_panel_up( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1 );
 	else
-		vga.d3_panel_down( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1 );
+		vga_util.d3_panel_down( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1 );
 
 	//--------- if display cancel button ---------//
 
@@ -485,7 +486,7 @@ void Firm::disp_bribe_unit(int dispY1)
 {
 	//---------------- paint the panel -----------------//
 
-	vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+46);
+	vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+46);
 
 	//------- get the info of the bribe target ---------//
 
@@ -546,7 +547,7 @@ void Firm::disp_assassinate_result(int refreshFlag)
 
 	if( assassinate_result == ASSASSINATE_SUCCEED_AT_LARGE )
 	{
-		vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+43 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+43 );
 
 		font_san.center_put( INFO_X1, y, INFO_X2, y2, "Assassination Succeeded." );
 		font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Escaped." );
@@ -554,14 +555,14 @@ void Firm::disp_assassinate_result(int refreshFlag)
 	else if( assassinate_result == ASSASSINATE_SUCCEED_KILLED )
 	{
 		#ifdef GERMAN
-			vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+80 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+80 );
 
 			font_san.center_put( INFO_X1, y, INFO_X2, y2, "Assassination Succeeded." );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy" );				// German text is longer
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Was Caught" );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "And Executed." );
 		#else
-			vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
 
 			font_san.center_put( INFO_X1, y, INFO_X2, y2, "Assassination Succeeded." );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Was Caught" );
@@ -571,14 +572,14 @@ void Firm::disp_assassinate_result(int refreshFlag)
 	else
 	{
 		#ifdef GERMAN
-			vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+80 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+80 );
 
 			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, "Assassination Failed." );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy" );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Was Caught" );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "And Executed." );
 		#else
-			vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
+			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
 
 			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, "Assassination Failed." );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Was Caught" );

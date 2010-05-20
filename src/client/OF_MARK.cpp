@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSTR.h>
 #include <OBUTTON.h>
 #include <OBUTT3D.h>
@@ -409,7 +410,7 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 	{
 		if( refreshFlag == INFO_REPAINT )
 		{
-			vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+51 );
+			vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+51 );
 			font_san.center_put( INFO_X1, dispY1+3 , INFO_X2, dispY1+25, "You're not permitted to" );
 			font_san.center_put( INFO_X1, dispY1+23, INFO_X2, dispY1+51, "trade with this market." );
 		}
@@ -428,7 +429,7 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 	for( i=0, marketGoods=market_goods_array ; i<MAX_MARKET_GOODS ; i++, marketGoods++, y+=53 )
 	{
 		if( refreshFlag == INFO_REPAINT )
-			vga.d3_panel_up( INFO_X1, y, INFO_X2, y+51 );
+			vga_util.d3_panel_up( INFO_X1, y, INFO_X2, y+51 );
 
 		if( marketGoods->raw_id )
 		{
@@ -510,7 +511,7 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 void FirmMarket::disp_income(int dispY1, int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+23 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+23 );
 
 	int x=INFO_X1+4, y=dispY1+4;
 

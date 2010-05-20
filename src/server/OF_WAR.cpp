@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <ODATE.h>
 #include <OSTR.h>
 #include <OCONFIG.h>
@@ -393,12 +394,12 @@ void FirmWar::disp_build_button(int y, int unitId, int buttonUp)
 	int y0 = y;
 	if( buttonUp )
 	{
-		vga.d3_panel_up( INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2 );
+		vga_util.d3_panel_up( INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2 );
 		x = INFO_X1;
 	}
 	else
 	{
-		vga.d3_panel_down( INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2 );
+		vga_util.d3_panel_down( INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2 );
 		x = INFO_X1+1;
 		y++;
 	}
@@ -442,8 +443,8 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_up( x1, y1, x2, y2, 1 );
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_up( x1, y1, x2, y2, 1 );
 		}
 		x2--;
 		y2--;
@@ -452,8 +453,8 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_down( x1, y1, x2, y2, 1 );
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_down( x1, y1, x2, y2, 1 );
 		}
 		x1++;
 		y1++;
@@ -518,11 +519,11 @@ void FirmWar::disp_queue_button(int y, int unitId, int buttonUp)
 
 	if( buttonUp )
 	{
-		vga.d3_panel_up( x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
+		vga_util.d3_panel_up( x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
 	}
 	else
 	{
-		vga.d3_panel_down( x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
+		vga_util.d3_panel_down( x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
 		x++;
 		y++;
 	}
@@ -546,8 +547,8 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_up( x1, y1, x2, y2, 1, 1);
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_up( x1, y1, x2, y2, 1, 1);
 		}
 		x2--;
 		y2--;
@@ -556,8 +557,8 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_down( x1, y1, x2, y2, 1, 1);
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_down( x1, y1, x2, y2, 1, 1);
 		}
 		x1++;
 		y1++;
@@ -632,7 +633,7 @@ void FirmWar::disp_war_info(int dispY1, int refreshFlag)
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+50 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+50 );
 
 	if( !build_unit_id )
 		return;
@@ -645,7 +646,7 @@ void FirmWar::disp_war_info(int dispY1, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_down( x, y, x+UNIT_LARGE_ICON_WIDTH+3, y+UNIT_LARGE_ICON_HEIGHT+3, 2 );
+		vga_util.d3_panel_down( x, y, x+UNIT_LARGE_ICON_WIDTH+3, y+UNIT_LARGE_ICON_HEIGHT+3, 2 );
 		vga_front.put_bitmap( x+2, y+2, unitInfo->get_large_icon_ptr(0) );
 
 		//----------- display text ------------//

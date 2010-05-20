@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <ODATE.h>
 #include <OIMGRES.h>
 #include <OHELP.h>
@@ -532,7 +533,7 @@ void FirmCamp::disp_camp_info(int dispY1, int refreshFlag)
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+46);
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+46);
 
 	if( !overseer_recno )
 		return;
@@ -549,10 +550,10 @@ void FirmCamp::disp_camp_info(int dispY1, int refreshFlag)
 	}
 	else
 	{
-		vga.blt_buf( x-2, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y-1, 0 );
-		vga.blt_buf( x-2, y+UNIT_LARGE_ICON_HEIGHT+1, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
-		vga.blt_buf( x-2, y-2, x-1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
-		vga.blt_buf( x+UNIT_LARGE_ICON_WIDTH, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
+		vga_util.blt_buf( x-2, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y-1, 0 );
+		vga_util.blt_buf( x-2, y+UNIT_LARGE_ICON_HEIGHT+1, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
+		vga_util.blt_buf( x-2, y-2, x-1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
+		vga_util.blt_buf( x+UNIT_LARGE_ICON_WIDTH, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
 	}
 
 	//-------------------------------------//
@@ -612,7 +613,7 @@ void FirmCamp::disp_camp_info(int dispY1, int refreshFlag)
 			}
 		}
 
-		vga.blt_buf( x2, y-1, INFO_X2-2, dispY1+44, 0 );
+		vga_util.blt_buf( x2, y-1, INFO_X2-2, dispY1+44, 0 );
 	}
 }
 //----------- End of function FirmCamp::disp_camp_info -----------//
@@ -1362,7 +1363,7 @@ static int sort_soldier_id_function( const void *a, const void *b )
 static void disp_debug_info(FirmCamp* firmPtr, int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, INFO_Y2-40, INFO_X2, INFO_Y2 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y2-40, INFO_X2, INFO_Y2 );
 
 	int x=INFO_X1+3, y=INFO_Y2-37, x2=x+120;
 

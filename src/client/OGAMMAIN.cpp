@@ -22,6 +22,7 @@
 //Description : Main Game Object - Main menu
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OIMGRES.h>
 #include <OSYS.h>
 #include <OMOUSE.h>
@@ -113,7 +114,7 @@ void Game::main_menu()
 
 			image_interface.put_to_buf( &vga_back, "M_MAIN" );
 
-			vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1);	// blt the main menu screen from the back buffer to the front buffer
+			vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1);	// blt the main menu screen from the back buffer to the front buffer
 
 			disp_version();
 
@@ -413,7 +414,7 @@ void Game::single_player_menu()
 	//------ display the single player menu options ------//
 
 	// image_interface.put_large( &vga_back, 247, 242, "M_SINGLE" );
-	// vga.blt_buf(247, 242, 545, 567);
+	// vga_util.blt_buf(247, 242, 545, 567);
 	// sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
 	int refreshFlag = 1, i;
 	mouse_cursor.set_icon(CURSOR_NORMAL);
@@ -434,7 +435,7 @@ void Game::single_player_menu()
 		{
 			image_interface.put_to_buf( &vga_back, "M_MAIN" );
 
-			vga.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
+			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 
 			if(!menuBitmap)
 			{
@@ -684,7 +685,7 @@ void Game::multi_player_menu(char *cmdLine)
 		{
 			image_interface.put_to_buf( &vga_back, "M_MAIN" );
 
-			vga.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
+			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 
 			if(!menuBitmap)
 			{

@@ -22,6 +22,7 @@
 //Description : Unit Caravan
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSTR.h>
 #include <OHELP.h>
 #include <OFONT.h>
@@ -167,7 +168,7 @@ void UnitCaravan::disp_stop(int dispY1, int refreshFlag)
 		{
 			if( refreshFlag == INFO_REPAINT )
 			{
-				vga.d3_panel_up(x, y, INFO_X2, y+58);
+				vga_util.d3_panel_up(x, y, INFO_X2, y+58);
 #if(defined(FRENCH))
 				button_set_stop[i].paint_text( x+4, y+37, x+86, y+56, "Set Stop" );
 #else
@@ -180,7 +181,7 @@ void UnitCaravan::disp_stop(int dispY1, int refreshFlag)
 		{
 			if( refreshFlag == INFO_REPAINT )
 			{
-				vga.d3_panel_up(x, y, INFO_X2, y+58);
+				vga_util.d3_panel_up(x, y, INFO_X2, y+58);
 
 				//-------- display name of the stop --------//
 
@@ -310,7 +311,7 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 		}
 		else
 		{
-			vga.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
+			vga_util.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
 		}
 	}
 
@@ -333,10 +334,10 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 	else
 	{
 		x1 = x;
-		vga.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
+		vga_util.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
 
 		x1 = x+SELECT_BUTTON_WIDTH*NO_PICK_UP;
-		vga.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
+		vga_util.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
 	}
 
 	//###### end trevor 13/9 #######//
@@ -482,7 +483,7 @@ void UnitCaravan::set_stop_pick_up(int stopId, int newPickUpType, int remoteActi
 void UnitCaravan::disp_goods(int dispY1, int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+42 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+42 );
 
 	int	x=INFO_X1+20, y=dispY1+5;
 	String str;

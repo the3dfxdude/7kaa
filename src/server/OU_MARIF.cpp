@@ -22,6 +22,7 @@
 //Description: UnitMarine - functions for displaying info.
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OINFO.h>
 #include <OHELP.h>
 #include <OMOUSE.h>
@@ -101,7 +102,7 @@ void UnitMarine::disp_info(int refreshFlag)
 	{
 		if( refreshFlag == INFO_REPAINT )
 		{
-			vga.d3_panel_up( INFO_X1, y, INFO_X2, y+22 );
+			vga_util.d3_panel_up( INFO_X1, y, INFO_X2, y+22 );
 
 			button_mode[0].create_text( INFO_X1+5, y+3, INFO_X1+80, y+19, "Units" );
 			button_mode[1].create_text( INFO_X1+90, y+3, INFO_X1+155, y+19, "Goods" );
@@ -395,7 +396,7 @@ void UnitMarine::disp_unit_list(int dispY1, int refreshFlag)
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+88 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+88 );
 
 	//------ display population composition -------//
 
@@ -447,7 +448,7 @@ void UnitMarine::disp_unit_list(int dispY1, int refreshFlag)
 		{
 			if( last_unit_id_array[i] != 0 )
 			{
-				vga.blt_buf( x-2, y-2, x+49, y+25, 0 );
+				vga_util.blt_buf( x-2, y-2, x+49, y+25, 0 );
 				last_unit_id_array[i] = 0;
 			}
 		}
@@ -506,14 +507,14 @@ void UnitMarine::disp_unit_info(int dispY1, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+71 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+71 );
 	}
 	else
 	{
 		if( lastSelected != selected_unit_id > 0 )
 		{
 			lastSelected = selected_unit_id > 0;
-			vga.blt_buf( INFO_X1, dispY1, INFO_X2, dispY1+71, 0 );
+			vga_util.blt_buf( INFO_X1, dispY1, INFO_X2, dispY1+71, 0 );
 		}
 	}
 
@@ -627,7 +628,7 @@ void UnitMarine::disp_stop(int dispY1, int refreshFlag)
 		{
 			if( refreshFlag == INFO_REPAINT )
 			{
-				vga.d3_panel_up(x, y, INFO_X2, y+58);
+				vga_util.d3_panel_up(x, y, INFO_X2, y+58);
 #if(defined(FRENCH))
 				button_set_stop[i].paint_text( x+4, y+37, x+90, y+56, "Faire Escale" );
 #else
@@ -639,7 +640,7 @@ void UnitMarine::disp_stop(int dispY1, int refreshFlag)
 		{
 			if( refreshFlag == INFO_REPAINT )
 			{
-				vga.d3_panel_up(x, y, INFO_X2, y+58);
+				vga_util.d3_panel_up(x, y, INFO_X2, y+58);
 
 				//-------- display name of the stop --------//
 
@@ -712,7 +713,7 @@ void UnitMarine::disp_goods_select_button(int stopNum, int dispY1, int refreshFl
 		}
 		else
 		{
-			vga.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
+			vga_util.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
 		}
 	}
 
@@ -735,10 +736,10 @@ void UnitMarine::disp_goods_select_button(int stopNum, int dispY1, int refreshFl
 	else
 	{
 		x1 = x;
-		vga.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
+		vga_util.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
 
 		x1 = x+SELECT_BUTTON_WIDTH*NO_PICK_UP;
-		vga.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
+		vga_util.blt_buf( x1, y, x1+SELECT_BUTTON_WIDTH, y+SELECT_BUTTON_HEIGHT, 0 );
 	}
 
 	//###### end trevor 3/10 #######//
@@ -964,7 +965,7 @@ void UnitMarine::update_stop_and_goods_info()
 void UnitMarine::disp_goods(int dispY1, int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+42 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+42 );
 
 	int	x=INFO_X1+20, y=dispY1+5;
 	String str;

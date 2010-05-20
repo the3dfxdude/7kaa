@@ -22,6 +22,7 @@
 // Description : in-game option menu (async version)
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OVGABUF.h>
 #include <OINFO.h>
 #include <OCOLTBL.h>
@@ -219,7 +220,7 @@ void OptionMenu::disp(int needRepaint)
 		if( refresh_flag & IGOPTION_PAGE )
 		{
 			image_interface.put_to_buf( &vga_back, "OPTIONS");
-			vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+			vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 
 			start_button.paint();
 			cancel_button.paint();
@@ -487,7 +488,7 @@ static void disp_virtual_button(ButtonCustom *button, int)
 // ---------- begin of static function disp_slide_bar  -----//
 static void disp_slide_bar(SlideBar *slideBar, int)
 {
-	vga.blt_buf(slideBar->scrn_x1, slideBar->scrn_y1, 
+	vga_util.blt_buf(slideBar->scrn_x1, slideBar->scrn_y1, 
 		slideBar->scrn_x2, slideBar->scrn_y2, 0 );
 
 	image_interface.put_front(slideBar->rect_left(), slideBar->scrn_y1, "SLIDBALL");

@@ -23,6 +23,7 @@
 
 #include <KEY.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSYS.h>
 #include <OMOUSE.h>
 #include <OMOUSECR.h>
@@ -86,7 +87,7 @@ void Game::in_game_menu()
 	int x=GAME_MENU_X1+20, y=GAME_MENU_Y1+17;
 
 //	vga_back.adjust_brightness( x, y, x+GAME_MENU_WIDTH-1, y+GAME_MENU_HEIGHT-1, -6 );
-//	vga.blt_buf( x, y, x+GAME_MENU_WIDTH-1, y+GAME_MENU_HEIGHT-1, 0 );
+//	vga_util.blt_buf( x, y, x+GAME_MENU_WIDTH-1, y+GAME_MENU_HEIGHT-1, 0 );
 
 	image_interface.put_front( GAME_MENU_X1, GAME_MENU_Y1, "GAMEMENU" );
 	init_game_menu_option_flag();
@@ -438,7 +439,7 @@ int Game::in_game_option_menu()
 			if( refreshFlag & IGOPTION_PAGE )
 			{
 				image_interface.put_to_buf( &vga_back, "OPTIONS");
-				vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+				vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 
 				startButton.paint();
 				cancelButton.paint();
@@ -671,7 +672,7 @@ static void disp_virtual_button(ButtonCustom *button, int)
 // ---------- begin of static function disp_slide_bar  -----//
 static void disp_slide_bar(SlideBar *slideBar, int)
 {
-	vga.blt_buf(slideBar->scrn_x1, slideBar->scrn_y1, 
+	vga_util.blt_buf(slideBar->scrn_x1, slideBar->scrn_y1, 
 		slideBar->scrn_x2, slideBar->scrn_y2, 0 );
 
 	image_interface.put_front(slideBar->rect_left(), slideBar->scrn_y1, "SLIDBALL");

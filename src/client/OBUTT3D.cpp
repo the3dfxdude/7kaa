@@ -23,6 +23,7 @@
 
 #include <OSYS.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OHELP.h>
 #include <OMOUSE.h>
 #include <OIMGRES.h>
@@ -225,7 +226,7 @@ void Button3D::paint(int defIsPushed)
 
 			if( !vga.use_back_buf )
 			{
-				vga.blt_buf( x1, y1, x1+BUTTON_ACTION_WIDTH-1, y1+BUTTON_ACTION_HEIGHT-1, 0 );
+				vga_util.blt_buf( x1, y1, x1+BUTTON_ACTION_WIDTH-1, y1+BUTTON_ACTION_HEIGHT-1, 0 );
 				vga_back.put_bitmap( x1, y1, save_back_buf );
 			}
 		}
@@ -360,7 +361,7 @@ void Button3D::hide()
 	if( !init_flag )
 		return;
 
-	vga.blt_buf( x1, y1, x2, y2, 0 );
+	vga_util.blt_buf( x1, y1, x2, y2, 0 );
 
 	enable_flag=0;
 }

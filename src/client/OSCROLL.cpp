@@ -26,6 +26,7 @@
 #include <OSYS.h>
 #include <OMOUSE.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OINFO.h>
 #include <OIMGRES.h>
 #include <OSCROLL.h>
@@ -51,7 +52,7 @@
 // <int> totalRec    = total no. of records
 // [int] pageType    = yes or no, refered when down button is pressed
 //                     (default : 1)
-// [int] ifFlag   = if call vga.d3_panel_down instead of VgaBuf::d3_panel_down
+// [int] ifFlag   = if call vga_util.d3_panel_down instead of VgaBuf::d3_panel_down
 //						  (default: 0)
 // [int] vgaFrontOnly = do all the bitmap processing on the front buffer only
 //								(default: 0)
@@ -100,19 +101,19 @@ void ScrollBar::paint(int topRecNo)
 
 	if( if_flag )
 	{
-		vga.d3_panel_down( x1, y1, x2, y2, vga_front_only );      // scroll panel
+		vga_util.d3_panel_down( x1, y1, x2, y2, vga_front_only );      // scroll panel
 
 		//-------- cursor button --------//
 
 		if( type == VERTICAL )
 		{
-			vga.d3_panel_up( x1+2, y1+2 , x2-2, y1+13, vga_front_only);  // up button
-			vga.d3_panel_up( x1+2, y2-13, x2-2, y2-2 , vga_front_only);  // down button
+			vga_util.d3_panel_up( x1+2, y1+2 , x2-2, y1+13, vga_front_only);  // up button
+			vga_util.d3_panel_up( x1+2, y2-13, x2-2, y2-2 , vga_front_only);  // down button
 		}
 		else
 		{
-			vga.d3_panel_up( x1+2 , y1+2, x1+13, y2-2, vga_front_only);  // left button
-			vga.d3_panel_up( x2-13, y1+2, x2-2, y2-2 , vga_front_only);  // right button
+			vga_util.d3_panel_up( x1+2 , y1+2, x1+13, y2-2, vga_front_only);  // left button
+			vga_util.d3_panel_up( x2-13, y1+2, x2-2, y2-2 , vga_front_only);  // right button
 		}
 	}
 	else
@@ -204,14 +205,14 @@ void ScrollBar::refresh(int topRecNo, int forceRefresh, int pageSkipRec, int dis
 			if( type == VERTICAL )
 			{
 				if( !vga.use_back_buf && !vga_front_only )
-					vga.blt_buf( x1, y1+12, x2, y2-13, 0 );
+					vga_util.blt_buf( x1, y1+12, x2, y2-13, 0 );
 
 				Vga::active_buf->draw_d3_up_border( x1+2, indicator_y, x2-2, indicator_y+indicator_height-1 );
 			}
 			else
 			{
 				if( !vga.use_back_buf && !vga_front_only )
-					vga.blt_buf( x1+12, y1, x2-13, y2, 0 );
+					vga_util.blt_buf( x1+12, y1, x2-13, y2, 0 );
 
 				Vga::active_buf->draw_d3_up_border( indicator_y, y1+2, indicator_y+indicator_height-1, y2-2 );
 			}
@@ -348,7 +349,7 @@ int ScrollBar::detect()
 					if( if_flag )
 					{
 						if( !vga.use_back_buf && !vga_front_only )
-							vga.blt_buf( x1, y1+12, x2, y2-13, 0 );
+							vga_util.blt_buf( x1, y1+12, x2, y2-13, 0 );
 
 						Vga::active_buf->draw_d3_up_border( x1+2, indicator_y, x2-2, indicator_y+indicator_height-1 );
 					}
@@ -376,7 +377,7 @@ int ScrollBar::detect()
 					if( if_flag )
 					{
 						if( !vga.use_back_buf && !vga_front_only )
-							vga.blt_buf( x1+12, y1, x2-13, y2, 0 );
+							vga_util.blt_buf( x1+12, y1, x2-13, y2, 0 );
 
 						Vga::active_buf->draw_d3_up_border( indicator_y, y1+2, indicator_y+indicator_height-1, y2-2 );
 					}

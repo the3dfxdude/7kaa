@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <ODATE.h>
 #include <OMOUSE.h>
 #include <OIMGRES.h>
@@ -323,7 +324,7 @@ void FirmBase::disp_base_info(int dispY1, int refreshFlag)
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+46);
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+46);
 
 	if( !overseer_recno )
 		return;
@@ -340,10 +341,10 @@ void FirmBase::disp_base_info(int dispY1, int refreshFlag)
 	}
 	else
 	{
-		vga.blt_buf( x-2, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y-1, 0 );
-		vga.blt_buf( x-2, y+UNIT_LARGE_ICON_HEIGHT+1, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
-		vga.blt_buf( x-2, y-2, x-1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
-		vga.blt_buf( x+UNIT_LARGE_ICON_WIDTH, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
+		vga_util.blt_buf( x-2, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y-1, 0 );
+		vga_util.blt_buf( x-2, y+UNIT_LARGE_ICON_HEIGHT+1, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
+		vga_util.blt_buf( x-2, y-2, x-1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
+		vga_util.blt_buf( x+UNIT_LARGE_ICON_WIDTH, y-2, x+UNIT_LARGE_ICON_WIDTH+1, y+UNIT_LARGE_ICON_HEIGHT+2, 0 );
 	}
 
 	//-------------------------------------//
@@ -403,7 +404,7 @@ void FirmBase::disp_base_info(int dispY1, int refreshFlag)
 			}
 		}
 
-		vga.blt_buf( x2, y-1, INFO_X2-2, dispY1+44, 0 );
+		vga_util.blt_buf( x2, y-1, INFO_X2-2, dispY1+44, 0 );
 	}
 }
 //----------- End of function FirmBase::disp_base_info -----------//
@@ -584,7 +585,7 @@ void FirmBase::disp_god_info(int dispY1, int refreshFlag)
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+50 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+50 );
 
 	//-------- display the icon of the mythical creature -------//
 
@@ -593,7 +594,7 @@ void FirmBase::disp_god_info(int dispY1, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_down( x, y, x+UNIT_LARGE_ICON_WIDTH+3, y+UNIT_LARGE_ICON_HEIGHT+3, 2 );
+		vga_util.d3_panel_down( x, y, x+UNIT_LARGE_ICON_WIDTH+3, y+UNIT_LARGE_ICON_HEIGHT+3, 2 );
 		vga_front.put_bitmap( x+2, y+2, unitInfo->get_large_icon_ptr(0) );
 
 		//----------- display text ------------//

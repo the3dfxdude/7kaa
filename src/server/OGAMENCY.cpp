@@ -24,6 +24,7 @@
 #include <ALL.h>
 #include <OIMGRES.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSYS.h>
 #include <OMOUSE.h>
 #include <OMOUSECR.h>
@@ -189,7 +190,7 @@ void Game::view_encyclopedia()
 
 	//------- bilt the back buffer to the front ---------//
 
-	vga.blt_buf( 0,0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0 );
+	vga_util.blt_buf( 0,0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0 );
 	mouse.show();
 
 	disp_class_buttons();
@@ -358,7 +359,7 @@ static int detect_main_class_button()
 		if( mouse.single_click( BUTTON_X, BUTTON_Y + (c-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
 			BUTTON_Y + c*BUTTON_Y_SPACING-1) )
 		{
-			vga.blt_buf( BUTTON_X, BUTTON_Y + (main_class_id-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
+			vga_util.blt_buf( BUTTON_X, BUTTON_Y + (main_class_id-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
 				BUTTON_Y + main_class_id*BUTTON_Y_SPACING-1, 0);
 
 			// ###### begin Gilbert 22/9 #######//
@@ -395,7 +396,7 @@ static int detect_sub_class_button(int n, int firstButton)
 		{
 			// int subClassId = sub_class_id_array[main_class_id-1];
 
-			// vga.blt_buf( BUTTON_X, BUTTON_Y + (subClassId-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
+			// vga_util.blt_buf( BUTTON_X, BUTTON_Y + (subClassId-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
 			// BUTTON_Y + subClassId*BUTTON_Y_SPACING-1, 0);
 
 			// ###### begin Gilbert 22/9 #######//
@@ -447,7 +448,7 @@ static void disp_class_buttons()
 		subClassId -= monster_page_index[monsterSubClass-1];
 	}
 
-	vga.blt_buf( BUTTON_X, 14, BUTTON_X+BUTTON_WIDTH-1, VGA_HEIGHT-40, 0 );
+	vga_util.blt_buf( BUTTON_X, 14, BUTTON_X+BUTTON_WIDTH-1, VGA_HEIGHT-40, 0 );
 
 	int y=CLASS_BUTTON_Y;
 	// ###### begin Gilbert 22/9 #######//
@@ -653,7 +654,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 		}
 
 		if( !firstDisp )
-			vga.blt_buf(174,12,787,587, 0);
+			vga_util.blt_buf(174,12,787,587, 0);
 
 		return 1;
 	}

@@ -22,6 +22,7 @@
 //Description : System resource management object
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OMOUSE.h>
 #include <OFONT.h>
 #include <OBUTT3D.h>
@@ -583,7 +584,7 @@ void Sys::disp_frame()
 				vga.use_front();
 			}
 
-			vga.blt_buf(0,0, VGA_WIDTH-1, VGA_HEIGHT-1, 0);
+			vga_util.blt_buf(0,0, VGA_WIDTH-1, VGA_HEIGHT-1, 0);
 			// ###### begin Gilbert 4/11 ######//
 			disp_view_mode();
 			// ###### end Gilbert 4/11 ######//
@@ -749,7 +750,7 @@ void Sys::update_view()
 
 		//------------------------------------//
 
-		vga.blt_buf(ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2);
+		vga_util.blt_buf(ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2);
 	}
 	else
 	{
@@ -822,7 +823,7 @@ void Sys::update_view()
 			vga.use_front();
 			Vga::opaque_flag = 0;
 
-			vga.blt_buf(ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2);
+			vga_util.blt_buf(ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2);
 
 			// ###### begin Gilbert 5/11 #######//
 			report_disp_frame_no = 1;
@@ -998,7 +999,7 @@ void Sys::disp_map()
 
 	//------- blt the map area to the front screen --------//
 
-	vga.blt_buf( MAP_X1, MAP_Y1 , MAP_X2 , MAP_Y2);
+	vga_util.blt_buf( MAP_X1, MAP_Y1 , MAP_X2 , MAP_Y2);
 }
 //-------- End of function Sys::disp_map --------//
 

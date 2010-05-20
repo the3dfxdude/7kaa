@@ -25,6 +25,7 @@
 #include <KEY.h>
 #include <OCONFIG.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OFONT.h>
 #include <OSTR.h>
 #include <OGETA.h>
@@ -369,9 +370,9 @@ static void disp_button()
 		//-----------------------------------------//
 
 		if( info.nation_report_mode == i )
-			vga.d3_panel_down( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2 );
+			vga_util.d3_panel_down( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2 );
 		else
-			vga.d3_panel_up( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2 );
+			vga_util.d3_panel_up( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2 );
 
 		font_san.center_put( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2, report_mode_str_array[i-1] );
 
@@ -489,7 +490,7 @@ static void detect_detail()
 //
 static void disp_nation_info()
 {
-	vga.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_DET_Y2 );
+	vga_util.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_DET_Y2 );
 
 	//----------- display info ------------//
 
@@ -694,7 +695,7 @@ static void detect_nation_info()
 //
 static void disp_debug_info()
 {
-	vga.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_DET_Y2 );
+	vga_util.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_DET_Y2 );
 
 	//----------- display info ------------//
 
@@ -764,7 +765,7 @@ static void disp_nation_talk()
 	if( nationRecno != info.viewing_nation_recno &&
 		 info.viewing_nation_recno == nation_array.player_recno )
 	{
-		vga.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_TALK_Y2 );
+		vga_util.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_TALK_Y2 );
 
 		if( info.last_talk_nation_recno != nationRecno && !info.player_reply_mode )
 			talk_res.init_conversion(nationRecno);
@@ -963,7 +964,7 @@ static void disp_nation_chat(int refreshFlag)
 
 	//-------- display the chat get control -------//
 
-	vga.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_TALK_Y2 );
+	vga_util.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_TALK_Y2 );
 
 	font_san.put( REPORT_DET_X1+10, REPORT_DET_Y1+10,
 					  "Please enter your chat message and press <Enter> to send." );
@@ -993,9 +994,9 @@ static void disp_nation_chat(int refreshFlag)
 	for( int i=1 ; i<=MAX_CHAT_RECEIVER_TYPE ; i++, y+=22 )
 	{
 		if( info.chat_receiver_type == i )
-			vga.d3_panel_down( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20 );
+			vga_util.d3_panel_down( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20 );
 		else
-			vga.d3_panel_up( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20 );
+			vga_util.d3_panel_up( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20 );
 
 		font_san.center_put( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20, chat_receiver_str_array[i-1] );
 	}

@@ -22,6 +22,7 @@
 //Description : Technology Report
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OFONT.h>
 #include <OIMGRES.h>
 #include <OVBROWIF.h>
@@ -294,7 +295,7 @@ static void put_tech_rec(int recNo, int x, int y, int refreshFlag)
 
 		//----- display the research progress bar -----//
 
-		vga.d3_panel_down( x+320, y-2, x+440, y+14 );
+		vga_util.d3_panel_down( x+320, y-2, x+440, y+14 );
 		vga_back.indicator( x+321, y-1, x+439, y+13, techInfo->get_progress(info.viewing_nation_recno), (float)100, VGA_GRAY );
 	}
 }
@@ -346,7 +347,7 @@ static void disp_scroll(int x, int y, int raceId)
 //
 static void disp_owned_scroll()
 {
-	vga.d3_panel_down( SCROLL_X1, SCROLL_Y1, SCROLL_X2, SCROLL_Y2 );
+	vga_util.d3_panel_down( SCROLL_X1, SCROLL_Y1, SCROLL_X2, SCROLL_Y2 );
 
 	//------ count the number of acquired scrolls ------//
 

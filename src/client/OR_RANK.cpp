@@ -28,6 +28,7 @@
 #include <OVBROWIF.h>
 #include <ONATION.h>
 #include <OINFO.h>
+#include <vga_util.h>
 
 //------------- Define coordinations -----------//
 
@@ -138,7 +139,7 @@ static void disp_score()
 	{ "Population Score", "Military Score", "Economic Score",
 	  "Reputation Score", "Fryhtan Battling Score" };
 
-	vga.d3_panel_down( NATION_SCORE_X1, NATION_SCORE_Y1, NATION_SCORE_X2, NATION_SCORE_Y2 );
+	vga_util.d3_panel_down( NATION_SCORE_X1, NATION_SCORE_Y1, NATION_SCORE_X2, NATION_SCORE_Y2 );
 
 	//------ display individual scores ---------//
 
@@ -228,7 +229,7 @@ static void disp_goal()
 						 config.goal_economic_score_flag +
 						 config.goal_total_score_flag;
 
-	vga.d3_panel_down( NATION_GOAL_X1, NATION_GOAL_Y1, NATION_GOAL_X2, NATION_GOAL_Y2 );
+	vga_util.d3_panel_down( NATION_GOAL_X1, NATION_GOAL_Y1, NATION_GOAL_X2, NATION_GOAL_Y2 );
 
 	//------------------------------------//
 
@@ -363,7 +364,7 @@ static void disp_goal()
 //
 static void disp_play_time(int y1)
 {
-	vga.d3_panel_down( PLAY_TIME_X1, y1, PLAY_TIME_X2, y1+24 );
+	vga_util.d3_panel_down( PLAY_TIME_X1, y1, PLAY_TIME_X2, y1+24 );
 
 	String str;
 

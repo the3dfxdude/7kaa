@@ -47,6 +47,7 @@
 #include <OGAME.h>
 #include <OBATTLE.h>
 #include <OMOUSECR.h>
+#include <vga_util.h>
 
 #include <dbglog.h>
 DBGLOG_DEFAULT_CHANNEL(Battle);
@@ -211,7 +212,7 @@ void Battle::run_sim()
 
 	//--------- refresh world ---------//
 	world.refresh();
-	vga.blt_buf(0, 0, VGA_WIDTH-1, VGA_HEIGHT-1);
+	vga_util.blt_buf(0, 0, VGA_WIDTH-1, VGA_HEIGHT-1);
 	world.paint();
 
 	//------- create player nation --------//
@@ -635,7 +636,7 @@ void Battle::run_test()
 
 	world.refresh();
 
-	vga.blt_buf(0, 0, VGA_WIDTH-1, VGA_HEIGHT-1);
+	vga_util.blt_buf(0, 0, VGA_WIDTH-1, VGA_HEIGHT-1);
 
 	world.paint();
 

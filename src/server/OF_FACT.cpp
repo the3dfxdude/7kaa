@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSTR.h>
 #include <OUNIT.h>
 #include <OGAME.h>
@@ -340,7 +341,7 @@ void FirmFactory::disp_factory_info(int dispY1, int refreshFlag)
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+70);
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+70);
 
 	//---------- display production info -------------//
 

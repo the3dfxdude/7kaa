@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <ODATE.h>
 #include <OHELP.h>
 #include <OMOUSE.h>
@@ -435,9 +436,9 @@ int FirmHarbor::should_show_harbor_info()
 void FirmHarbor::put_det(int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( SHIP_DET_X1, SHIP_DET_Y1, SHIP_DET_X2, SHIP_DET_Y2 );
+		vga_util.d3_panel_up( SHIP_DET_X1, SHIP_DET_Y1, SHIP_DET_X2, SHIP_DET_Y2 );
 	else
-		vga.blt_buf( SHIP_DET_X1, SHIP_DET_Y1, SHIP_DET_X2, SHIP_DET_Y2, 0 );
+		vga_util.blt_buf( SHIP_DET_X1, SHIP_DET_Y1, SHIP_DET_X2, SHIP_DET_Y2, 0 );
 
 	if( browse_ship.none_record )
 		return;
@@ -491,7 +492,7 @@ int FirmHarbor::detect_det()
 		if( button_mode.detect() >= 0 )
 		{
 			ship_disp_mode = button_mode.button_pressed;
-			vga.blt_buf( SHIP_DET_X1, SHIP_DET_Y1+22, SHIP_DET_X2, SHIP_DET_Y2, 0 );
+			vga_util.blt_buf( SHIP_DET_X1, SHIP_DET_Y1+22, SHIP_DET_X2, SHIP_DET_Y2, 0 );
 			put_det(INFO_UPDATE);
 			return 1;
 		}
@@ -578,7 +579,7 @@ void FirmHarbor::disp_ship_units(UnitMarine* shipUnit, int dispY1, int refreshFl
 		{
 			if( last_unit_race_array[i] != 0 )
 			{
-				vga.blt_buf( x-2, y-2, x+36, y+25, 0 );
+				vga_util.blt_buf( x-2, y-2, x+36, y+25, 0 );
 				last_unit_race_array[i] = 0;
 			}
 		}
@@ -641,12 +642,12 @@ void FirmHarbor::disp_build_button(int y, int unitId, int buttonUp)
 	int y0 = y;
 	if(buttonUp)
 	{
-		vga.d3_panel_up(INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2);
+		vga_util.d3_panel_up(INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2);
 		x = INFO_X1;
 	}
 	else
 	{
-		vga.d3_panel_down(INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2);
+		vga_util.d3_panel_down(INFO_X1, y, INFO_X2-1, y+BUILD_BUTTON_HEIGHT-2);
 		x = INFO_X1+1;
 		y++;
 	}
@@ -678,8 +679,8 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_up( x1, y1, x2, y2, 1 );
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_up( x1, y1, x2, y2, 1 );
 		}
 		x2--;
 		y2--;
@@ -688,8 +689,8 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_down( x1, y1, x2, y2, 1 );
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_down( x1, y1, x2, y2, 1 );
 		}
 		x1++;
 		y1++;
@@ -749,10 +750,10 @@ void FirmHarbor::disp_queue_button(int y, int unitId, int buttonUp)
 		queuedCount++;
 
 	if(buttonUp)
-		vga.d3_panel_up(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
+		vga_util.d3_panel_up(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
 	else
 	{
-		vga.d3_panel_down(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
+		vga_util.d3_panel_down(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
 		x++;
 		y++;
 	}
@@ -777,8 +778,8 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_up( x1, y1, x2, y2, 1, 1);
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_up( x1, y1, x2, y2, 1, 1);
 		}
 		x2--;
 		y2--;
@@ -787,8 +788,8 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_down( x1, y1, x2, y2, 1, 1);
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_down( x1, y1, x2, y2, 1, 1);
 		}
 		x1++;
 		y1++;
@@ -1011,9 +1012,9 @@ void FirmHarbor::disp_build_info(int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( MSG_X1, MSG_Y1, MSG_X2, MSG_Y2 );
+		vga_util.d3_panel_up( MSG_X1, MSG_Y1, MSG_X2, MSG_Y2 );
 
-		vga.d3_panel_down(x, y, x+UNIT_SMALL_ICON_WIDTH+3, y+UNIT_SMALL_ICON_HEIGHT+3 );
+		vga_util.d3_panel_down(x, y, x+UNIT_SMALL_ICON_WIDTH+3, y+UNIT_SMALL_ICON_HEIGHT+3 );
 		vga_front.put_bitmap(x+2, y+2, unit_res[build_unit_id]->get_small_icon_ptr(RANK_SOLDIER) );
 	}
 

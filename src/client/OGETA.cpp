@@ -23,6 +23,7 @@
 
 #include <OGETA.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OFONT.h>
 #include <OMOUSE.h>
 #include <KEY.h>
@@ -289,7 +290,7 @@ void GetA::paint(int paintCursor)
 			if( !back_ground_bitmap )
 			{
 				if( x+textWidth <= x_limit )		// fill right
-					vga.blt_buf( x+textWidth, y, x_limit, y + font_ptr->max_font_height-1, 0);
+					vga_util.blt_buf( x+textWidth, y, x_limit, y + font_ptr->max_font_height-1, 0);
 				IMGjoinTrans(vga_front.buf_ptr(), vga_front.buf_pitch(), 
 					vga_back.buf_ptr(), vga_back.buf_pitch(),
 					x, y, sys.common_data_buf);
@@ -311,11 +312,11 @@ void GetA::paint(int paintCursor)
 				int l = x + (x_limit - x + 1 - textWidth ) / 2;
 				if( x < l )
 				{
-					vga.blt_buf( x, y, l-1, y + font_ptr->max_font_height-1, 0);
+					vga_util.blt_buf( x, y, l-1, y + font_ptr->max_font_height-1, 0);
 				}
 				if( l+textWidth <= x_limit )
 				{
-					vga.blt_buf( l+textWidth, y, x_limit, y + font_ptr->max_font_height-1, 0);
+					vga_util.blt_buf( l+textWidth, y, x_limit, y + font_ptr->max_font_height-1, 0);
 				}
 				IMGjoinTrans(vga_front.buf_ptr(), vga_front.buf_pitch(), 
 					vga_back.buf_ptr(), vga_back.buf_pitch(),
@@ -345,7 +346,7 @@ void GetA::paint(int paintCursor)
 			{
 				int l = x_limit - textWidth + 1;
 				if( x < l )		// fill left
-					vga.blt_buf( x, y, l-1, y + font_ptr->max_font_height-1, 0);
+					vga_util.blt_buf( x, y, l-1, y + font_ptr->max_font_height-1, 0);
 				IMGjoinTrans(vga_front.buf_ptr(), vga_front.buf_pitch(), 
 					vga_back.buf_ptr(), vga_back.buf_pitch(),
 					l, y, sys.common_data_buf);

@@ -22,6 +22,7 @@
 //Description : Hall of Fame
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OVGALOCK.h>
 #include <ODATE.h>
 #include <OSTR.h>
@@ -40,7 +41,7 @@
 //
 void GameFileArray::disp_hall_of_fame()
 {
-	vga.disp_image_file("HALLFAME");
+	vga_util.disp_image_file("HALLFAME");
 
 	//---------- display hall of fame records ------------//
 
@@ -54,7 +55,7 @@ void GameFileArray::disp_hall_of_fame()
 
 	mouse.wait_press(60);		// 60 seconds to time out
 
-	vga.finish_disp_image_file();
+	vga_util.finish_disp_image_file();
 }
 //------- End of function GameFileArray::disp_hall_of_fame -----//
 

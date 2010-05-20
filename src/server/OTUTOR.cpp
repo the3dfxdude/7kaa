@@ -22,6 +22,7 @@
 //Description : Class Tutor
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSYS.h>
 #include <OAUDIO.h>
 #include <OBATTLE.h>
@@ -433,7 +434,7 @@ void Tutor::disp()
 	vga.use_back();
 
 	Vga::opaque_flag = config.opaque_report;
-	vga.d3_panel_down( TUTOR_X1, TUTOR_Y1, TUTOR_X2, TUTOR_Y2 );
+	vga_util.d3_panel_down( TUTOR_X1, TUTOR_Y1, TUTOR_X2, TUTOR_Y2 );
 	Vga::opaque_flag = 0;
 
 	TutorTextBlock* tutorTextBlock = text_block_array+cur_text_block_id-1;

@@ -22,6 +22,7 @@
 //Description : Object Site Material - display info functions
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OINFO.h>
 #include <OFONT.h>
 #include <OWORLD.h>
@@ -43,7 +44,7 @@ void Site::disp_info(int refreshFlag)
 	if( site_type == SITE_RAW )
 	{
 		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, "Natural Resource" );
-		vga.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+59, 1 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+59, 1 );
 
 		int x=INFO_X1+4, y=INFO_Y1+24;
 
@@ -56,7 +57,7 @@ void Site::disp_info(int refreshFlag)
 	else if( site_type == SITE_SCROLL )
 	{
 		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, "Scroll of Power" );
-		vga.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+59, 1 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+59, 1 );
 
 		int x=INFO_X1+4, y=INFO_Y1+24;
 
@@ -71,7 +72,7 @@ void Site::disp_info(int refreshFlag)
 	else if( site_type == SITE_GOLD_COIN )
 	{
 		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, "Treasure" );
-		vga.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+43, 1 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+43, 1 );
 
 		int x=INFO_X1+4, y=INFO_Y1+24;
 

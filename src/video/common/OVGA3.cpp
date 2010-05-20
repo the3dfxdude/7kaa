@@ -27,6 +27,7 @@
 #include <OMOUSECR.h>
 #include <OCOLTBL.h>
 #include <OVGA.h>
+#include <vga_util.h>
 
 //-------- Define constant --------//
 
@@ -34,7 +35,7 @@
 #define DOWN_OPAQUE_COLOR     (VGA_GRAY+13)
 
 
-//--------- Begin of function Vga::blt_buf ----------//
+//--------- Begin of function VgaUtil::blt_buf ----------//
 //
 // Blt the back buffer to the front buffer.
 //
@@ -43,7 +44,7 @@
 //                        before blitting.
 //                        (default: 1)
 //
-BOOL Vga::blt_buf(int x1, int y1, int x2, int y2, int putBackCursor)
+BOOL VgaUtil::blt_buf(int x1, int y1, int x2, int y2, int putBackCursor)
 {
    if( putBackCursor )
    {
@@ -77,10 +78,10 @@ BOOL Vga::blt_buf(int x1, int y1, int x2, int y2, int putBackCursor)
 
    return TRUE;
 }
-//---------- End of function Vga::blt_buf ----------//
+//---------- End of function VgaUtil::blt_buf ----------//
 
 
-//----------- Begin of function Vga::d3_panel_up ------------//
+//----------- Begin of function VgaUtil::d3_panel_up ------------//
 //
 // <int> x1,y1,x2,y2  = the four vertex of the panel
 // [int] vgaFrontOnly = do all the bitmap processing on the front buffer only
@@ -88,7 +89,7 @@ BOOL Vga::blt_buf(int x1, int y1, int x2, int y2, int putBackCursor)
 // [int] drawBorderOnly = draw border only, do not brighten the center area
 //                        (default: 0)
 //
-void Vga::d3_panel_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
+void VgaUtil::d3_panel_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
 {
    err_when( x1>x2 || y1>y2 || x1<0 || y1<0 || x2>=VGA_WIDTH || y2>=VGA_HEIGHT );
 
@@ -125,13 +126,13 @@ void Vga::d3_panel_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorde
 
    //----- blt the area from the back buffer to the front buffer ------//
 
-   if( !vgaFrontOnly && !use_back_buf )      // only blt the back to the front is the active buffer is the front
-      vga.blt_buf(x1, y1, x2, y2, 0);
+   if( !vgaFrontOnly && !vga.use_back_buf )      // only blt the back to the front is the active buffer is the front
+      blt_buf(x1, y1, x2, y2, 0);
 }
-//------------- End of function Vga::d3_panel_up ------------//
+//------------- End of function VgaUtil::d3_panel_up ------------//
 
 
-//----------- Begin of function Vga::d3_panel_down ------------//
+//----------- Begin of function VgaUtil::d3_panel_down ------------//
 //
 // <int> x1,y1,x2,y2  = the four vertex of the panel
 // [int] vgaFrontOnly = do all the bitmap processing on the front buffer only
@@ -139,7 +140,7 @@ void Vga::d3_panel_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorde
 // [int] drawBorderOnly = draw border only, do not brighten the center area
 //                        (default: 0)
 //
-void Vga::d3_panel_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
+void VgaUtil::d3_panel_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
 {
    err_when( x1>x2 || y1>y2 || x1<0 || y1<0 || x2>=VGA_WIDTH || y2>=VGA_HEIGHT );
 
@@ -176,13 +177,13 @@ void Vga::d3_panel_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBor
 
    //----- blt the area from the back buffer to the front buffer ------//
 
-   if( !vgaFrontOnly && !use_back_buf )      // only blt the back to the front is the active buffer is the front
-      vga.blt_buf(x1, y1, x2, y2, 0);
+   if( !vgaFrontOnly && !vga.use_back_buf )      // only blt the back to the front is the active buffer is the front
+      blt_buf(x1, y1, x2, y2, 0);
 }
-//------------- End of function Vga::d3_panel_down ------------//
+//------------- End of function VgaUtil::d3_panel_down ------------//
 
 
-//----------- Begin of function Vga::d3_panel2_up ------------//
+//----------- Begin of function VgaUtil::d3_panel2_up ------------//
 //
 // <int> x1,y1,x2,y2  = the four vertex of the panel
 // [int] vgaFrontOnly = do all the bitmap processing on the front buffer only
@@ -190,7 +191,7 @@ void Vga::d3_panel_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBor
 // [int] drawBorderOnly = draw border only, do not brighten the center area
 //                        (default: 0)
 //
-void Vga::d3_panel2_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
+void VgaUtil::d3_panel2_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
 {
    err_when( x1>x2 || y1>y2 || x1<0 || y1<0 || x2>=VGA_WIDTH || y2>=VGA_HEIGHT );
 
@@ -236,13 +237,13 @@ void Vga::d3_panel2_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBord
 
    //----- blt the area from the back buffer to the front buffer ------//
 
-   if( !vgaFrontOnly && !use_back_buf )      // only blt the back to the front is the active buffer is the front
-      vga.blt_buf(x1, y1, x2, y2, 0);
+   if( !vgaFrontOnly && !vga.use_back_buf )      // only blt the back to the front is the active buffer is the front
+      blt_buf(x1, y1, x2, y2, 0);
 }
-//------------- End of function Vga::d3_panel_up ------------//
+//------------- End of function VgaUtil::d3_panel_up ------------//
 
 
-//----------- Begin of function Vga::d3_panel2_down ------------//
+//----------- Begin of function VgaUtil::d3_panel2_down ------------//
 //
 // <int> x1,y1,x2,y2  = the four vertex of the panel
 // [int] vgaFrontOnly = do all the bitmap processing on the front buffer only
@@ -250,7 +251,7 @@ void Vga::d3_panel2_up(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBord
 // [int] drawBorderOnly = draw border only, do not brighten the center area
 //                        (default: 0)
 //
-void Vga::d3_panel2_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
+void VgaUtil::d3_panel2_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBorderOnly)
 {
    err_when( x1>x2 || y1>y2 || x1<0 || y1<0 || x2>=VGA_WIDTH || y2>=VGA_HEIGHT );
 
@@ -294,13 +295,13 @@ void Vga::d3_panel2_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBo
 
    //----- blt the area from the back buffer to the front buffer ------//
 
-   if( !vgaFrontOnly && !use_back_buf )      // only blt the back to the front is the active buffer is the front
-      vga.blt_buf(x1, y1, x2, y2, 0);
+   if( !vgaFrontOnly && !vga.use_back_buf )      // only blt the back to the front is the active buffer is the front
+      blt_buf(x1, y1, x2, y2, 0);
 }
-//------------- End of function Vga::d3_panel2_down ------------//
+//------------- End of function VgaUtil::d3_panel2_down ------------//
 
 
-//------------- Start of function Vga::separator --------------//
+//------------- Start of function VgaUtil::separator --------------//
 //
 // Draw a VGA separator line
 //
@@ -309,7 +310,7 @@ void Vga::d3_panel2_down(int x1,int y1,int x2,int y2,int vgaFrontOnly,int drawBo
 // int x1,y1       - the top left vertex of the separator
 // int x2,y2       - the bottom right vertex of the separator
 //
-void Vga::separator(int x1, int y1, int x2, int y2)
+void VgaUtil::separator(int x1, int y1, int x2, int y2)
 {
    err_when( x1>x2 || y1>y2 || x1<0 || y1<0 || x2>=VGA_WIDTH || y2>=VGA_HEIGHT );
 
@@ -324,4 +325,4 @@ void Vga::separator(int x1, int y1, int x2, int y2)
       vga_front.adjust_brightness(x2, y1, x2, y2, IF_DOWN_BRIGHTNESS_ADJUST);
    }
 }
-//--------------- End of function Vga::separator --------------//
+//--------------- End of function VgaUtil::separator --------------//

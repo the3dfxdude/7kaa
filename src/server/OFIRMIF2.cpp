@@ -23,6 +23,7 @@
 
 #include <OINFO.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSYS.h>
 #include <OSPY.h>
 #include <OSTR.h>
@@ -89,7 +90,7 @@ void Firm::disp_spy_menu(int refreshFlag)
 		int x=SPY_BROWSE_X1+2;
 		int y=SPY_BROWSE_Y1-23;
 
-		vga.d3_panel_up( SPY_BROWSE_X1, y, SPY_BROWSE_X2, SPY_BROWSE_Y1-3 );
+		vga_util.d3_panel_up( SPY_BROWSE_X1, y, SPY_BROWSE_X2, SPY_BROWSE_Y1-3 );
 
 		font_san.put( x+4  , y+4, "Spy Skill" );
 		font_san.put( x+70 , y+4, "Loyalty" );
@@ -503,7 +504,7 @@ static void put_spy_rec(int recNo, int x, int y, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_down(x+1, y+1, x+UNIT_SMALL_ICON_WIDTH+4, y+UNIT_SMALL_ICON_HEIGHT+4 );
+		vga_util.d3_panel_down(x+1, y+1, x+UNIT_SMALL_ICON_WIDTH+4, y+UNIT_SMALL_ICON_HEIGHT+4 );
 
 		vga_front.put_bitmap(x+3, y+3, unit_res[unitId]->get_small_icon_ptr(rankId) );
 	}
@@ -525,7 +526,7 @@ static void put_spy_rec(int recNo, int x, int y, int refreshFlag)
 
 	//------ display the action mode of the spy ------//
 
-	vga.blt_buf( x+95, y+6, x2, y+5+font_san.height(), 0 );
+	vga_util.blt_buf( x+95, y+6, x2, y+5+font_san.height(), 0 );
 
    font_san.use_max_height();
 	font_san.center_put( x+95, y+6, x2, y+5+font_san.height(), spyPtr->action_str() );

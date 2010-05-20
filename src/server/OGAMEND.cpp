@@ -22,6 +22,7 @@
 //Description : Game ending screen
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OVGALOCK.h>
 #include <ODATE.h>
 #ifdef USE_DPLAY

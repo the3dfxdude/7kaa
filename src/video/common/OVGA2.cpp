@@ -27,14 +27,31 @@
 #include <OMOUSE.h>
 #include <OVGALOCK.h>
 #include <OVGA.h>
+#include <vga_util.h>
 
-//---------- Begin of function Vga::disp_image_file --------//
+//----------- Begin of function VgaUtil::VgaUtil -----------//
+
+VgaUtil::VgaUtil()
+{
+}
+//----------- End of function VgaUtil::VgaUtil -----------//
+
+
+//----------- Begin of function VgaUtil::~VgaUtil -----------//
+
+VgaUtil::~VgaUtil()
+{
+}
+//----------- End of function VgaUtil::~VgaUtil -----------//
+
+
+//---------- Begin of function VgaUtil::disp_image_file --------//
 //
 // <char*> fileName - file name of the image
 // [int]   x1, y1   - the top left display position of the image
 //							 (default: 0)
 //
-void Vga::disp_image_file(const char* fileName, int x1, int y1)
+void VgaUtil::disp_image_file(const char* fileName, int x1, int y1)
 {
 	//---- load the interface into the back buffer ----//
 
@@ -70,19 +87,19 @@ void Vga::disp_image_file(const char* fileName, int x1, int y1)
 		err_when( !m.is_file_exist(str) );
 
 		VgaFrontLock vgaLock;
-		set_custom_palette(str);
+		vga.set_custom_palette(str);
 	}
 
 	//------- bilt the back buffer to the front ---------//
 
-	vga.blt_buf( 0,0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0 );
+	blt_buf( 0,0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0 );
 }
-//----------- End of function Vga::disp_image_file ---------//
+//----------- End of function VgaUtil::disp_image_file ---------//
 
 
-//---------- Begin of function Vga::finish_disp_image_file --------//
+//---------- Begin of function VgaUtil::finish_disp_image_file --------//
 //
-void Vga::finish_disp_image_file()
+void VgaUtil::finish_disp_image_file()
 {
 	//------- exiting: turn dark --------//
 
@@ -93,9 +110,9 @@ void Vga::finish_disp_image_file()
 
 	{
 		VgaFrontLock vgaLock;
-		free_custom_palette();
+		vga.free_custom_palette();
 	}
 
 	mouse.show();
 }
-//----------- End of function Vga::finish_disp_image_file ---------//
+//----------- End of function VgaUtil::finish_disp_image_file ---------//

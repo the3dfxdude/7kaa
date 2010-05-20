@@ -23,6 +23,7 @@
 
 #include <OSYS.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OVGALOCK.h>
 #include <OFONT.h>
 #include <OMOUSE.h>
@@ -46,57 +47,57 @@ void Game::view_credits()
 {
 	//----- display the first page ------//
 
-	vga.disp_image_file("CREDITS1");
+	vga_util.disp_image_file("CREDITS1");
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
-		vga.finish_disp_image_file();
+		vga_util.finish_disp_image_file();
 		return;								// 60 seconds to time out
 	}
 
 	//------ display the 2nd page -----//
 
-	vga.disp_image_file("CREDITS2");
+	vga_util.disp_image_file("CREDITS2");
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
-		vga.finish_disp_image_file();
+		vga_util.finish_disp_image_file();
 		return;
 	}
 
 	//------ display the 3rd page -----//
 
-	vga.disp_image_file("CREDITS3");
+	vga_util.disp_image_file("CREDITS3");
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
-		vga.finish_disp_image_file();
+		vga_util.finish_disp_image_file();
 		return;
 	}
 
 	//------ display the 4th page -----//
 
-	vga.disp_image_file("CREDITS4");
+	vga_util.disp_image_file("CREDITS4");
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
-		vga.finish_disp_image_file();
+		vga_util.finish_disp_image_file();
 		return;								// 60 seconds to time out
 	}
 
 #if(defined(FRENCH))
 	//------ display the 5th page -----//
 
-	vga.disp_image_file("CREDITS5");
+	vga_util.disp_image_file("CREDITS5");
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
-		vga.finish_disp_image_file();
+		vga_util.finish_disp_image_file();
 		return;								// 60 seconds to time out
 	}
 #endif
 
-	vga.finish_disp_image_file();
+	vga_util.finish_disp_image_file();
 }
 //------ End of function Game::view_credits ------//
 

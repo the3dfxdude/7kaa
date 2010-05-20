@@ -23,6 +23,7 @@
 
 #include <KEY.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OMOUSE.h>
 #include <OFONT.h>
 #include <OMOUSE.h>
@@ -278,7 +279,7 @@ void Unit::disp_basic_info(int dispY1, int refreshFlag)
 	{
 		int dispName = unit_id == UNIT_CARAVAN || unit_res[unit_id]->unit_class == UNIT_CLASS_SHIP;		// only display names for caravans and ships as their names are not displayed in the other part of the interface
 
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+21 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+21 );
 
 		if( nation_recno )
 		{
@@ -287,7 +288,7 @@ void Unit::disp_basic_info(int dispY1, int refreshFlag)
 			if( dispName )
 				font_san.center_put( INFO_X1+21, dispY1, INFO_X2-2, dispY1+21, unit_name(dispTitle) );
 
-			vga.d3_panel_down( INFO_X1+3, dispY1+3, INFO_X1+20, dispY1+18 );
+			vga_util.d3_panel_down( INFO_X1+3, dispY1+3, INFO_X1+20, dispY1+18 );
 
 			//------- display the nation color box -------//
 
@@ -308,7 +309,7 @@ void Unit::disp_basic_info(int dispY1, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+27 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+27 );
 
 		if( nation_recno == nation_array.player_recno &&
 			 can_resign())
@@ -1021,7 +1022,7 @@ void Unit::disp_build(int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
 
 		String str;
 
@@ -1064,7 +1065,7 @@ void Unit::disp_settle(int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
 
 		font_san.put_paragraph( INFO_X1+7, INFO_Y1+5, INFO_X2-7, INFO_Y2-5,
 										"Please select a location to settle." );
@@ -1133,7 +1134,7 @@ void Unit::disp_unit_info(int dispY1, int refreshFlag)
 		return;
 
 	if( refreshFlag==INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+87 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+87 );
 
 	int 	 x=INFO_X1+4, y=dispY1+4;
 	String str;
@@ -1288,7 +1289,7 @@ void Unit::disp_unit_profile(int dispY1, int refreshFlag)
 
 	//---------------- paint the panel --------------//
 
-	vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+44);
+	vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+44);
 
 	vga_front.put_bitmap( x, dispY1+3, unit_res[unit_id]->get_large_icon_ptr(rank_id) );
 
@@ -1363,7 +1364,7 @@ void Unit::disp_spy_menu(int dispY1, int refreshFlag)
 	{
 		if( refreshFlag==INFO_REPAINT )
 		{
-			vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+26 );
+			vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+26 );
 			font_san.center_put( INFO_X1, dispY1, INFO_X2-2, dispY1+26, "Enemies Nearby" );
 		}
 
@@ -1374,7 +1375,7 @@ void Unit::disp_spy_menu(int dispY1, int refreshFlag)
 
 	if( refreshFlag==INFO_REPAINT )
 	{
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+spyMenuHeight-1 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+spyMenuHeight-1 );
 		font_san.put( INFO_X1+6, dispY1+6, "Spy Cloak:" );
 	}
 
@@ -1624,7 +1625,7 @@ static void disp_debug_info(Unit* unitPtr, int dispY1, int refreshFlag)
 	};
 
 	if( refreshFlag == INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+65 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+65 );
 
 	int x=INFO_X1+3, y=dispY1+3;
 

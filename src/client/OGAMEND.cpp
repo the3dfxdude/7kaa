@@ -22,6 +22,7 @@
 //Description : Game ending screen
 
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OVGALOCK.h>
 #include <ODATE.h>
 #ifdef USE_DPLAY
@@ -122,7 +123,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 		else
 			fileName = "LOSEGAME";
 
-		vga.disp_image_file(fileName);
+		vga_util.disp_image_file(fileName);
 
 		music.play(songId, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
 		mouse.wait_press(60);		// 60 seconds to time out
@@ -134,7 +135,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 
 	//------- display the statistic -------//
 
-	vga.disp_image_file("RESULTS");
+	vga_util.disp_image_file("RESULTS");
 
 	if( winNationRecno )
 	{
@@ -155,7 +156,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 
 	//-------- display ranking and score ----------//
 
-	vga.disp_image_file("RESULTS");
+	vga_util.disp_image_file("RESULTS");
 
 	info.set_rank_data(0);		// count all nations, not only those that have contact with the player
 
@@ -170,11 +171,11 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 	if( !game_has_ended )
 	{
 		if( !game_file_array.add_hall_of_fame(totalScore) )
-			vga.finish_disp_image_file();		// if add_hall_of_fame() has displayed the bitmap, it should have called vga.finish_disp_image_file() already
+			vga_util.finish_disp_image_file();		// if add_hall_of_fame() has displayed the bitmap, it should have called vga_util.finish_disp_image_file() already
 	}
 	else
 	{
-		vga.finish_disp_image_file();
+		vga_util.finish_disp_image_file();
 	}
 
 	//--------- set game_has_ended to 1 --------//

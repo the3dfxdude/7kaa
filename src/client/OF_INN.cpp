@@ -24,6 +24,7 @@
 #include <OINFO.h>
 #include <OBOX.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSTR.h>
 #include <OFONT.h>
 #include <OMOUSE.h>
@@ -382,7 +383,7 @@ void FirmInn::disp_unit_info(int dispY1, InnUnit* hireInfoPtr, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+54 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+54 );
 	}
 
 	//------ display population composition of this resident town -----//

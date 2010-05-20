@@ -33,6 +33,7 @@
 #include <OUNITRES.h>
 #include <OIMGRES.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OBOX.h>
 #include <OFONT.h>
 #include <OINFO.h>
@@ -246,7 +247,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 	int x=menu_x1, y=menu_y1+17;
 
 	// vga_back.adjust_brightness( x, y, x+menu_x1-1, y+menu_y1-1, -6 );
-	vga.blt_buf( x, y, x+menu_x1-1, y+menu_y1-1, 0 );
+	vga_util.blt_buf( x, y, x+menu_x1-1, y+menu_y1-1, 0 );
 
 	mouse_cursor.set_icon(CURSOR_NORMAL);
 

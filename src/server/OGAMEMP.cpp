@@ -26,6 +26,7 @@
 #include <OMOUSECR.h>
 #include <OBOX.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OFONT.h>
 #include <OBUTT3D.h>
 #include <ONATION.h>
@@ -976,7 +977,7 @@ int Game::mp_select_service()
 #endif
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
-				vga.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
+				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
 				returnButton.paint();
 				for( b = 0; b < buttonCount; ++b )
@@ -1201,7 +1202,7 @@ int Game::mp_select_mode(char *defSaveFileName)
 						vga.use_front();
 				}
 #endif
-				vga.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
+				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
 				if( createButton.enable_flag )
 					createButton.paint();
@@ -1411,7 +1412,7 @@ int Game::mp_select_session()
 #endif
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
-				vga.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
+				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
 #ifdef AMPLUS
 				scrollBar.paint();
@@ -1478,7 +1479,7 @@ int Game::mp_select_session()
 			if( refreshFlag & SSOPTION_DISP_SESSION )
 			{
 #ifndef AMPLUS
-				vga.blt_buf(SESSION_BUTTON_X1, SESSION_BUTTON_Y1, SESSION_DESC_X2, SESSION_BUTTON_Y2, 0);
+				vga_util.blt_buf(SESSION_BUTTON_X1, SESSION_BUTTON_Y1, SESSION_DESC_X2, SESSION_BUTTON_Y2, 0);
 #endif
 				for( b = 0, s = BASE_SESSION; b < MAX_BUTTON; ++b, ++s )
 				{
@@ -1487,7 +1488,7 @@ int Game::mp_select_session()
 					vga_back.put_bitmap(
 						SESSION_BUTTON_X1, b*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1,
 						browseArea[(s-1)%MAX_BUTTON].ptr);
-					vga.blt_buf(
+					vga_util.blt_buf(
 						SESSION_BUTTON_X1, b*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1,
 						SESSION_BUTTON_X2, (b+1)*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1-1, 0);
 #endif
@@ -2143,7 +2144,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					image_menu2.put_to_buf( &vga_back, "MPG-BSC");
 #endif
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_RACE )
 					raceGroup.paint( reverse_race_table[tempConfig.race_id-1] );
@@ -2177,7 +2178,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				{
 					image_menu.put_to_buf( &vga_back, "MPG-O1");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				// ###### begin Gilbert 25/10 #######//
 				if( refreshFlag & SGOPTION_MAP_ID )
@@ -2206,7 +2207,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				{
 					image_menu.put_to_buf( &vga_back, "MPG-O2");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_RAW )
 				{
@@ -2240,7 +2241,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				{
 					image_menu.put_to_buf( &vga_back, "MPG-GOAL");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_CLEAR_ENEMY )
 					clearEnemyButton.paint();
@@ -2285,7 +2286,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			// -------- refresh players in the session --------//
 			if( mRefreshFlag & MGOPTION_PLAYERS )
 			{
-				vga.blt_buf( 96, 46, 702, 100, 0 );
+				vga_util.blt_buf( 96, 46, 702, 100, 0 );
 				for( p = 0; p < regPlayerCount; ++p)
 				{
 					if( playerReadyFlag[p] )
@@ -2306,7 +2307,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			// ------------- display incoming chat message --------//
 			if( mRefreshFlag & MGOPTION_IN_MESSAGE )
 			{
-				vga.blt_buf( 101, 135, 700, 202, 0 );
+				vga_util.blt_buf( 101, 135, 700, 202, 0 );
 				for( p = 1; p <= 4 && p <= messageList.size() ; ++p)
 				{
 					int ny = 136+(p-1)*16;
@@ -3957,7 +3958,7 @@ int Game::mp_select_load_option(char *fileName)
 					image_menu2.put_to_buf( &vga_back, "MPG-BSC");
 #endif
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_RACE )
 					raceGroup.paint( reverse_race_table[tempConfig.race_id-1] );
@@ -3991,7 +3992,7 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					image_menu.put_to_buf( &vga_back, "MPG-O1");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				// ###### begin Gilbert 24/10 #######//
 				if( refreshFlag & SGOPTION_MAP_ID )
@@ -4020,7 +4021,7 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					image_menu.put_to_buf( &vga_back, "MPG-O2");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_RAW )
 				{
@@ -4054,7 +4055,7 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					image_menu.put_to_buf( &vga_back, "MPG-GOAL");
 					image_menu.put_back( 234, 15, menuTitleBitmap);
-					vga.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
+					vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 				}
 				if( refreshFlag & SGOPTION_CLEAR_ENEMY )
 					clearEnemyButton.paint();
@@ -4099,7 +4100,7 @@ int Game::mp_select_load_option(char *fileName)
 			// -------- refresh players in the session --------//
 			if( mRefreshFlag & MGOPTION_PLAYERS )
 			{
-				vga.blt_buf( 96, 46, 702, 100, 0 );
+				vga_util.blt_buf( 96, 46, 702, 100, 0 );
 				for( p = 0; p < regPlayerCount; ++p)
 				{
 					if( playerReadyFlag[p] )
@@ -4120,7 +4121,7 @@ int Game::mp_select_load_option(char *fileName)
 			// ------------- display incoming chat message --------//
 			if( mRefreshFlag & MGOPTION_IN_MESSAGE )
 			{
-				vga.blt_buf( 101, 135, 700, 202, 0 );
+				vga_util.blt_buf( 101, 135, 700, 202, 0 );
 				for( p = 1; p <= 4 && p <= messageList.size() ; ++p)
 				{
 					int ny = 136+(p-1)*16;
@@ -4880,7 +4881,7 @@ static void disp_scroll_bar_func(SlideVBar *scroll, int)
 {
 	short rectTop = scroll->rect_top();
 	short rectBottom = scroll->rect_bottom();
-	vga.blt_buf(scroll->scrn_x1, scroll->scrn_y1, scroll->scrn_x2, scroll->scrn_y2, 0);
+	vga_util.blt_buf(scroll->scrn_x1, scroll->scrn_y1, scroll->scrn_x2, scroll->scrn_y2, 0);
 	vga_front.bar( scroll->scrn_x1, rectTop, scroll->scrn_x2, rectBottom, VGA_YELLOW+1);
 	if( rectBottom - rectTop > 6 )
 	{

@@ -25,6 +25,7 @@
 #include <OINFO.h>
 #include <OVGA.h>
 #include <OVBROWIF.h>
+#include <vga_util.h>
 
 
 //---------- Begin of function VBrowseIF::VBrowseIF -------//
@@ -53,7 +54,7 @@ void VBrowseIF::init_var(int totalRec, int recNo)
 //
 void VBrowseIF::paint()
 {
-	vga.d3_panel_down( x1, y1, x2-SCROLL_BAR_WIDTH-3, y2, vga_front_only );  // the list content box
+	vga_util.d3_panel_down( x1, y1, x2-SCROLL_BAR_WIDTH-3, y2, vga_front_only );  // the list content box
 
 	scroll_bar.paint();
 }
@@ -72,7 +73,7 @@ void VBrowseIF::paint()
 void VBrowseIF::refresh(int newRecNo, int newTotalRec)
 {
 	if( !vga_front_only && !vga.use_back_buf )
-		vga.blt_buf( x1, y1, x2-SCROLL_BAR_WIDTH-3, y2, 0 );  // the list content box
+		vga_util.blt_buf( x1, y1, x2-SCROLL_BAR_WIDTH-3, y2, 0 );  // the list content box
 
 	VBrowse::refresh(newRecNo, newTotalRec);
 }
@@ -88,7 +89,7 @@ void VBrowseIF::disp_all()
 	int recNo;
 
 	if( !vga_front_only && !vga.use_back_buf )
-		vga.blt_buf( ix1, iy1, ix2, iy2, 0 ); // clear background
+		vga_util.blt_buf( ix1, iy1, ix2, iy2, 0 ); // clear background
 
 	int scrollRecno = (disp_frame && x_max_rec==1) ? rec_no : top_rec_no;
 
@@ -128,10 +129,10 @@ void VBrowseIF::disp_one(int recNo, int dispType)
 
 	if( disp_frame && dispType == CLEAR_HIGH && !vga.use_back_buf && !vga_front_only )
 	{
-		vga.blt_buf( x-2, y-2			  , x+rec_width+1, y-2				, 0 );	// top
-		vga.blt_buf( x-2, y+rec_height+1, x+rec_width+1, y+rec_height+1, 0 );	// bottom
-		vga.blt_buf( x-2, y-2			  , x-2		     , y+rec_height+1, 0 );	// left
-		vga.blt_buf( x+rec_width+1, y-2 , x+rec_width+1, y+rec_height+1, 0 );	// right
+		vga_util.blt_buf( x-2, y-2			  , x+rec_width+1, y-2				, 0 );	// top
+		vga_util.blt_buf( x-2, y+rec_height+1, x+rec_width+1, y+rec_height+1, 0 );	// bottom
+		vga_util.blt_buf( x-2, y-2			  , x-2		     , y+rec_height+1, 0 );	// left
+		vga_util.blt_buf( x+rec_width+1, y-2 , x+rec_width+1, y+rec_height+1, 0 );	// right
 	}
 
 	if( dispType == DISP_REC )

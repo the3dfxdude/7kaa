@@ -35,6 +35,7 @@
 #include <ORACERES.h>
 #include <OSYS.h>
 #include <OSPY.h>
+#include <vga_util.h>
 
 //----- Define constants for viewing secret menu ------//
 
@@ -320,7 +321,7 @@ void SpyArray::disp_view_secret_menu(int spyRecno, int refreshFlag)
 
 	//------------------------------------//
 
-	vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
+	vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
 
 	font_san.put_paragraph( INFO_X1+7, INFO_Y1+5, INFO_X2-7, INFO_Y2-5,
 									"Steal which type of secrets?" );

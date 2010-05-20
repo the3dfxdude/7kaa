@@ -24,6 +24,7 @@
 #include <OINFO.h>
 #include <OBOX.h>
 #include <OVGA.h>
+#include <vga_util.h>
 #include <OSYS.h>
 #include <OHELP.h>
 #include <OSPY.h>
@@ -258,7 +259,7 @@ void Town::disp_main_menu(int refreshFlag)
 		int x=RACE_BROWSE_X1+2;
 		int y=RACE_BROWSE_Y1-23;
 
-		vga.d3_panel_up( RACE_BROWSE_X1, y, RACE_BROWSE_X2, RACE_BROWSE_Y1-3 );
+		vga_util.d3_panel_up( RACE_BROWSE_X1, y, RACE_BROWSE_X2, RACE_BROWSE_Y1-3 );
 
 		font_san.put( x+2  , y+4, "Population" );
 		font_san.put( x+70 , y+4, "Peasants" );
@@ -285,7 +286,7 @@ void Town::disp_main_menu(int refreshFlag)
 
 		//---------- paint total section ----------//
 
-		vga.d3_panel_up( RACE_BROWSE_X1, RACE_BROWSE_Y2+3, RACE_BROWSE_X2, RACE_BROWSE_Y2+23 );
+		vga_util.d3_panel_up( RACE_BROWSE_X1, RACE_BROWSE_Y2+3, RACE_BROWSE_X2, RACE_BROWSE_Y2+23 );
 
 		font_san.put( RACE_BROWSE_X1+5, RACE_BROWSE_Y2+7, "Total" );
 		font_san.put( RACE_BROWSE_X1+128, RACE_BROWSE_Y2+7, "Avg" );
@@ -638,7 +639,7 @@ void Town::disp_basic_info(int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+21 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+21 );
 
 		if( nation_recno )
 		{
@@ -671,12 +672,12 @@ void Town::disp_train_info(int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_up( MSG_X1, MSG_Y1, MSG_X2, MSG_Y2 );
+		vga_util.d3_panel_up( MSG_X1, MSG_Y1, MSG_X2, MSG_Y2 );
 
-		vga.d3_panel_down(x, y, x+RACE_ICON_WIDTH+3, y+RACE_ICON_HEIGHT+3 );
+		vga_util.d3_panel_down(x, y, x+RACE_ICON_WIDTH+3, y+RACE_ICON_HEIGHT+3 );
 		vga_front.put_bitmap(x+2, y+2, race_res[unitPtr->race_id]->icon_bitmap_ptr );
 
-		// vga.d3_panel_down(x+RACE_ICON_WIDTH+6, y, MSG_X2-4, MSG_Y2-4 );
+		// vga_util.d3_panel_down(x+RACE_ICON_WIDTH+6, y, MSG_X2-4, MSG_Y2-4 );
 	}
 
 	int totalDays;
@@ -766,7 +767,7 @@ static void put_race_rec(int recNo, int x, int y, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_down(x+1, y+1, x+RACE_ICON_WIDTH+4, y+RACE_ICON_HEIGHT+4 );
+		vga_util.d3_panel_down(x+1, y+1, x+RACE_ICON_WIDTH+4, y+RACE_ICON_HEIGHT+4 );
 		vga_front.put_bitmap(x+3, y+3, raceInfo->icon_bitmap_ptr);
 	}
 
@@ -892,8 +893,8 @@ static void i_disp_skill_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_up( x1, y1, x2, y2, 1 );
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_up( x1, y1, x2, y2, 1 );
 		}
 		x2--;
 		y2--;
@@ -902,8 +903,8 @@ static void i_disp_skill_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_down( x1, y1, x2, y2, 1 );
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_down( x1, y1, x2, y2, 1 );
 		}
 		x1++;
 		y1++;
@@ -956,10 +957,10 @@ void Town::disp_queue_button(int y, int skillId, int buttonUp)
 	}
 
 	if(buttonUp)
-		vga.d3_panel_up(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
+		vga_util.d3_panel_up(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
 	else
 	{
-		vga.d3_panel_down(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
+		vga_util.d3_panel_down(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
 		x++;
 		y++;
 	}
@@ -983,8 +984,8 @@ static void i_disp_queue_skill_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_up( x1, y1, x2, y2, 1, 1);
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_up( x1, y1, x2, y2, 1, 1);
 		}
 		x2--;
 		y2--;
@@ -993,8 +994,8 @@ static void i_disp_queue_skill_button(ButtonCustom *button, int repaintBody)
 	{
 		if( repaintBody )
 		{
-			vga.blt_buf(x1, y1, x2, y2, 0);
-			vga.d3_panel2_down( x1, y1, x2, y2, 1, 1);
+			vga_util.blt_buf(x1, y1, x2, y2, 0);
+			vga_util.d3_panel2_down( x1, y1, x2, y2, 1, 1);
 		}
 		x1++;
 		y1++;
@@ -1140,7 +1141,7 @@ void Town::disp_auto_menu(int modeCollectTax)
 
 	const char* clickStr = "(Left-click below to apply to this village. Right-click below to apply to all your villages.)";
 
-	vga.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+110 );
+	vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+110 );
 
 	font_san.put_paragraph( INFO_X1+7, INFO_Y1+8, INFO_X2-7, INFO_Y2-5, headingStr );
 
@@ -1308,7 +1309,7 @@ void Town::disp_spy_menu(int refreshFlag)
 		int x=RACE_BROWSE_X1+2;
 		int y=RACE_BROWSE_Y1-23;
 
-		vga.d3_panel_up( RACE_BROWSE_X1, y, RACE_BROWSE_X2, RACE_BROWSE_Y1-3 );
+		vga_util.d3_panel_up( RACE_BROWSE_X1, y, RACE_BROWSE_X2, RACE_BROWSE_Y1-3 );
 
 		font_san.put( x+4  , y+4, "Spy Skill" );
 		font_san.put( x+70 , y+4, "Loyalty" );
@@ -1551,7 +1552,7 @@ static void put_spy_rec(int recNo, int x, int y, int refreshFlag)
 
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga.d3_panel_down(x+1, y+1, x+RACE_ICON_WIDTH+4, y+RACE_ICON_HEIGHT+4 );
+		vga_util.d3_panel_down(x+1, y+1, x+RACE_ICON_WIDTH+4, y+RACE_ICON_HEIGHT+4 );
 		vga_front.put_bitmap(x+3, y+3, race_res[spyPtr->race_id]->icon_bitmap_ptr);
 	}
 
@@ -1574,7 +1575,7 @@ static void put_spy_rec(int recNo, int x, int y, int refreshFlag)
 
 	//------ display the action mode of the spy ------//
 
-	vga.blt_buf( x+95, y+6, x2, y+5+font_san.height(), 0 );
+	vga_util.blt_buf( x+95, y+6, x2, y+5+font_san.height(), 0 );
 
 	font_san.center_put( x+95, y+6, x2, y+5+font_san.height(), spyPtr->action_str() );
 }
@@ -2034,7 +2035,7 @@ void Town::disp_debug_resistance(int refreshFlag)
 		return;
 
 	if( refreshFlag==INFO_REPAINT )
-		vga.d3_panel_up( INFO_X1, INFO_Y2-50, INFO_X2, INFO_Y2 );
+		vga_util.d3_panel_up( INFO_X1, INFO_Y2-50, INFO_X2, INFO_Y2 );
 
 	//------ display resistance (only for independent town) -----//
 
