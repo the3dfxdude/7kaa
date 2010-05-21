@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,37 +42,37 @@
 
 //------ Define static class member vars ---------//
 
-char    Vga::use_back_buf = 0;
-char    Vga::opaque_flag  = 0;
-VgaBuf* Vga::active_buf   = &vga_front;      // default: front buffer
+char    VgaBase::use_back_buf = 0;
+char    VgaBase::opaque_flag  = 0;
+VgaBuf* VgaBase::active_buf   = &vga_front;      // default: front buffer
 
 char    low_video_memory_flag = 0;
 
-//-------- Begin of function Vga::Vga ----------//
+//-------- Begin of function VgaDDraw::Vga ----------//
 
-Vga::Vga()
+VgaDDraw::VgaDDraw()
 {
 	memset( this, 0, sizeof(Vga) );
 
    vga_color_table = new ColorTable;
 }
-//-------- End of function Vga::Vga ----------//
+//-------- End of function VgaDDraw::Vga ----------//
 
 
-//-------- Begin of function Vga::~Vga ----------//
+//-------- Begin of function VgaDDraw::~Vga ----------//
 
-Vga::~Vga()
+VgaDDraw::~VgaDDraw()
 {
    deinit();      // 1-is final
 
    delete vga_color_table;
 }
-//-------- End of function Vga::~Vga ----------//
+//-------- End of function VgaDDraw::~Vga ----------//
 
 
-//-------- Begin of function Vga::init ----------//
+//-------- Begin of function VgaDDraw::init ----------//
 
-BOOL Vga::init()
+BOOL VgaDDraw::init()
 {
    const char* warnStr = "Warning: Due to the low memory of your display card, "
                    "you may experience problems when you quit the game or "
@@ -124,12 +125,12 @@ BOOL Vga::init()
 
    return TRUE;
 }
-//-------- End of function Vga::init ----------//
+//-------- End of function VgaDDraw::init ----------//
 
 
-//-------- Begin of function Vga::init_dd ----------//
+//-------- Begin of function VgaDDraw::init_dd ----------//
 
-BOOL Vga::init_dd()
+BOOL VgaDDraw::init_dd()
 {
    if(dd_obj)        // the Direct Draw object has been initialized already
       return TRUE;
@@ -167,12 +168,12 @@ BOOL Vga::init_dd()
 
    return TRUE;
 }
-//-------- End of function Vga::init_dd ----------//
+//-------- End of function VgaDDraw::init_dd ----------//
 
 
-//-------- Begin of function Vga::set_mode ----------//
+//-------- Begin of function VgaDDraw::set_mode ----------//
 
-BOOL Vga::set_mode()
+BOOL VgaDDraw::set_mode()
 {
    DWORD   dwStyle;
    HRESULT rc;
@@ -228,12 +229,12 @@ BOOL Vga::set_mode()
 
    return TRUE;
 }
-//-------- End of function Vga::set_mode ----------//
+//-------- End of function VgaDDraw::set_mode ----------//
 
 
-//-------- Begin of function Vga::deinit ----------//
+//-------- Begin of function VgaDDraw::deinit ----------//
 
-void Vga::deinit()
+void VgaDDraw::deinit()
 {
    release_pal();
 
@@ -249,14 +250,14 @@ void Vga::deinit()
       dd_obj = NULL;
    }
 }
-//-------- End of function Vga::deinit ----------//
+//-------- End of function VgaDDraw::deinit ----------//
 
-//--------- Start of function Vga::init_surface ----------//
+//--------- Start of function VgaDDraw::init_surface ----------//
 //
 // VgaBuf should call Vga to get the system's surface,
 // however, it is currently used the other way around.
 //
-void Vga::init_surface(VgaBuf* surface, enum vga_surface_type t)
+void VgaDDraw::init_surface(VgaBuf* surface, enum vga_surface_type t)
 {
    if( !dd_obj ) return;
 
@@ -269,14 +270,14 @@ void Vga::init_surface(VgaBuf* surface, enum vga_surface_type t)
       surface->init_back(dd_obj);
    }
 }
-//-------- End of function Vga::init_surface ----------//
+//-------- End of function VgaDDraw::init_surface ----------//
 
-//--------- Start of function Vga::init_pal ----------//
+//--------- Start of function VgaDDraw::init_pal ----------//
 //
 // Loads the default game palette specified by fileName. Creates the ddraw
 // palette.
 //
-BOOL Vga::init_pal(const char* fileName)
+BOOL VgaDDraw::init_pal(const char* fileName)
 {
    char palBuf[256][3];
    File palFile;
@@ -308,14 +309,14 @@ BOOL Vga::init_pal(const char* fileName)
 
    return TRUE;
 }
-//----------- End of function Vga::init_pal ----------//
+//----------- End of function VgaDDraw::init_pal ----------//
 
-//--------- Start of function Vga::refresh_palette ----------//
+//--------- Start of function VgaDDraw::refresh_palette ----------//
 //
 // When the system changes the palette, this function will set
 // the palette back to the correct entries.
 //
-void Vga::refresh_palette()
+void VgaDDraw::refresh_palette()
 {
    // we can't restore if dd_pal is not initialized
    if (!dd_pal) return;
@@ -326,25 +327,25 @@ void Vga::refresh_palette()
    else
       dd_pal->SetEntries(0, 0, 256, game_pal);
 }
-//----------- End of function Vga::refresh_palette ----------//
+//----------- End of function VgaDDraw::refresh_palette ----------//
 
-//--------- Start of function Vga::init_color_table ----------//
+//--------- Start of function VgaDDraw::init_color_table ----------//
 
-void Vga::init_color_table()
+void VgaDDraw::init_color_table()
 {
    //----- initialize interface color table -----//
 
    PalDesc palDesc( (unsigned char*) game_pal, sizeof(PALETTEENTRY), 256, 8);
    vga_color_table->generate_table( MAX_BRIGHTNESS_ADJUST_DEGREE, palDesc, ColorTable::bright_func );
 }
-//----------- End of function Vga::init_color_table ----------//
+//----------- End of function VgaDDraw::init_color_table ----------//
 
 
-//--------- Start of function Vga::release_pal ----------//
+//--------- Start of function VgaDDraw::release_pal ----------//
 //
 // Releases the ddraw palette.
 //
-void Vga::release_pal()
+void VgaDDraw::release_pal()
 {
    if (custom_pal)
    {
@@ -360,25 +361,25 @@ void Vga::release_pal()
    }
    // ##### end Gilbert 16/9 #######//
 }
-//----------- End of function Vga::release_pal ----------//
+//----------- End of function VgaDDraw::release_pal ----------//
 
 
-//-------- Begin of function Vga::activate_pal ----------//
+//-------- Begin of function VgaDDraw::activate_pal ----------//
 //
 // we are getting the palette focus, select our palette
 //
-void Vga::activate_pal(VgaBuf* vgaBufPtr)
+void VgaDDraw::activate_pal(VgaBuf* vgaBufPtr)
 {
    vgaBufPtr->activate_pal(dd_pal);
 }
-//--------- End of function Vga::activate_pal ----------//
+//--------- End of function VgaDDraw::activate_pal ----------//
 
 
-//-------- Begin of function Vga::set_custom_palette ----------//
+//-------- Begin of function VgaDDraw::set_custom_palette ----------//
 //
 // Read the custom palette specified by fileName and set to display.
 //
-int Vga::set_custom_palette(char *fileName)
+int VgaDDraw::set_custom_palette(char *fileName)
 {
    if (!custom_pal)
       custom_pal = (LPPALETTEENTRY)mem_add(sizeof(PALETTEENTRY)*256);
@@ -401,14 +402,14 @@ int Vga::set_custom_palette(char *fileName)
 
    return !dd_pal->SetEntries(0, 0, 256, custom_pal);
 }
-//--------- End of function Vga::set_custom_palette ----------//
+//--------- End of function VgaDDraw::set_custom_palette ----------//
 
 
-//--------- Begin of function Vga::free_custom_palette ----------//
+//--------- Begin of function VgaDDraw::free_custom_palette ----------//
 //
 // Frees the custom palette and restores the game palette.
 //
-void Vga::free_custom_palette()
+void VgaDDraw::free_custom_palette()
 {
    if (custom_pal)
    {
@@ -418,10 +419,10 @@ void Vga::free_custom_palette()
    if (dd_pal)
       dd_pal->SetEntries(0, 0, 256, game_pal);
 }
-//--------- End of function Vga::free_custom_palette ----------//
+//--------- End of function VgaDDraw::free_custom_palette ----------//
 
 
-//-------- Begin of function Vga::adjust_brightness ----------//
+//-------- Begin of function VgaDDraw::adjust_brightness ----------//
 //
 // <int> changeValue - the value to add to the RGB values of
 //                     all the colors in the palette.
@@ -429,7 +430,7 @@ void Vga::free_custom_palette()
 //
 // <int> preserveContrast - whether preserve the constrast or not
 //
-void Vga::adjust_brightness(int changeValue)
+void VgaDDraw::adjust_brightness(int changeValue)
 {
    //---- find out the maximum rgb value can change without affecting the contrast ---//
 
@@ -458,14 +459,14 @@ void Vga::adjust_brightness(int changeValue)
 
    vga_front.temp_restore_lock();
 }
-//--------- End of function Vga::adjust_brightness ----------//
+//--------- End of function VgaDDraw::adjust_brightness ----------//
 
 
-//----------- Begin of function Vga::init_gray_remap_table ----------//
+//----------- Begin of function VgaDDraw::init_gray_remap_table ----------//
 //
 // Initialize a gray remap table for VgaBuf::convert_gray to use.
 //
-void Vga::init_gray_remap_table()
+void VgaDDraw::init_gray_remap_table()
 {
    //------ create a color to gray-scale remap table ------//
 
@@ -496,5 +497,5 @@ void Vga::init_gray_remap_table()
       gray_remap_table[i] = FIRST_GRAY_COLOR + grayIndex;
    }
 }
-//--------- End of function Vga::init_gray_remap_table -----------//
+//--------- End of function VgaDDraw::init_gray_remap_table -----------//
 

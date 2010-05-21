@@ -1,7 +1,7 @@
 my @obj_files;
 
 ## compiler flags ##
-@defines = qw( AMPLUS );
+@defines = qw( AMPLUS USE_DDRAW );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
