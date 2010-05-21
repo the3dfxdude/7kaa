@@ -346,6 +346,12 @@ void Vga::init_color_table()
 //
 void Vga::release_pal()
 {
+   if (custom_pal)
+   {
+      mem_del(custom_pal);
+      custom_pal = NULL;
+   }
+
    // ##### begin Gilbert 16/9 #######//
    if( dd_pal )
    {
@@ -353,8 +359,6 @@ void Vga::release_pal()
       dd_pal = NULL;
    }
    // ##### end Gilbert 16/9 #######//
-
-   free_custom_palette();
 }
 //----------- End of function Vga::release_pal ----------//
 
