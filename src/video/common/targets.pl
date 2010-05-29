@@ -30,9 +30,9 @@ if (defined($dxsdk_path)) {
 
 @targets = qw(
 OCOLTBL.cpp
-OVGA2.cpp
-OVGA3.cpp
 OVGALOCK.cpp
+vgautil.cpp
+vgautil2.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);
