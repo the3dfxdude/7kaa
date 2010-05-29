@@ -18,7 +18,7 @@
  *
  */
 
-//Filename    : OVGA3.CPP
+//Filename    : vgautil2.cpp
 //Description : VGA drawing functions
 
 #include <ALL.h>

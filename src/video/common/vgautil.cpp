@@ -18,7 +18,7 @@
  *
  */
 
-//Filename   : OVGA2.CPP
+//Filename   : vgautil.cpp
 //Description: Functions for display big image
 
 #include <OSTR.h>
