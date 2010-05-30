@@ -499,3 +499,35 @@ void VgaDDraw::init_gray_remap_table()
 }
 //--------- End of function VgaDDraw::init_gray_remap_table -----------//
 
+
+//----------- Begin of function VgaDDraw::create_surface ----------//
+//
+// Create a DirectDraw Surface
+//
+// On success, the pointer to the surface is returned. The caller is
+// responsible for releasing the surface when done.
+//
+// On failure, the return is NULL.
+//
+LPDIRECTDRAWSURFACE2 VgaDDraw::create_surface(LPDDSURFACEDESC ddsd)
+{
+   LPDIRECTDRAWSURFACE2 dd_buf;
+   LPDIRECTDRAWSURFACE dd1Buf;
+   HRESULT rc;
+
+   rc = dd_obj->CreateSurface( ddsd, &dd1Buf, NULL );
+   if( rc != DD_OK )
+      return NULL;
+
+   rc = dd1Buf->QueryInterface(IID_IDirectDrawSurface2, (void **)&dd_buf);
+   if( rc != DD_OK )
+   {
+      dd1Buf->Release();
+      return NULL;
+   }
+
+   dd1Buf->Release();
+
+   return dd_buf;
+}
+//--------- End of function VgaDDraw::create_surface -----------//

@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,19 +67,11 @@ void VgaBuf::init_front(LPDIRECTDRAW2 ddPtr)
 	ddsd.dwFlags = DDSD_CAPS;
 	ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 
-	LPDIRECTDRAWSURFACE dd1Buf;
-	rc = ddPtr->CreateSurface( &ddsd, &dd1Buf, NULL );
-	if( rc != DD_OK )
-		err.run( "Error creating Direct Draw front surface!" );
-
-	rc = dd1Buf->QueryInterface(IID_IDirectDrawSurface2, (void **)&dd_buf);
-	if( rc != DD_OK )
+	dd_buf = vga.create_surface( &ddsd );
+	if (!dd_buf)
 	{
-		dd1Buf->Release();
 		err.run ( "Error creating Direct Draw front surface!!" );
 	}
-
-	dd1Buf->Release();
 
 	is_front = 1;
 }
@@ -95,7 +88,6 @@ void VgaBuf::init_front(LPDIRECTDRAW2 ddPtr)
 void VgaBuf::init_back( LPDIRECTDRAW2 ddPtr, DWORD w, DWORD h )
 {
 	DDSURFACEDESC       ddsd;
-	HRESULT             rc;
 
 	//--------- fill in surface desc -----------//
 
@@ -108,19 +100,11 @@ void VgaBuf::init_back( LPDIRECTDRAW2 ddPtr, DWORD w, DWORD h )
 	ddsd.dwWidth  = w ? w : VGA_WIDTH;
 	ddsd.dwHeight = h ? h : VGA_HEIGHT;
 
-	LPDIRECTDRAWSURFACE dd1Buf;
-	rc = ddPtr->CreateSurface( &ddsd, &dd1Buf, NULL );
-	if( rc != DD_OK )
-		err.run( "Error creating direct draw back surface!" );
-
-	rc = dd1Buf->QueryInterface(IID_IDirectDrawSurface2, (void **)&dd_buf);
-	if( rc != DD_OK )
+	dd_buf = vga.create_surface( &ddsd );
+	if( !dd_buf )
 	{
-		dd1Buf->Release();
 		err.run( "Error creating direct draw back surface!!" );
 	}
-
-	dd1Buf->Release();
 }
 //-------- End of function VgaBuf::init_back ----------//
 

@@ -61,6 +61,9 @@ public:
 	void   free_custom_palette();
 	void   adjust_brightness(int changeValue);
 
+	// DDraw private
+	LPDIRECTDRAWSURFACE2 create_surface(LPDDSURFACEDESC ddsd);
+
 private:
 	BOOL   init_dd();
 	void   init_gray_remap_table();
