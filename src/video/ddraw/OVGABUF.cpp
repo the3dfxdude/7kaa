@@ -55,14 +55,6 @@ void VgaBuf::init_front(LPDIRECTDRAW2 ddPtr)
 {
 	DDSURFACEDESC       ddsd;
 	HRESULT             rc;
-	DDCAPS              ddcaps;
-
-	//------ Get Direct Draw capacity info --------//
-
-	ddcaps.dwSize = sizeof( ddcaps );
-
-	if( ddPtr->GetCaps( &ddcaps, NULL ) != DD_OK )
-		err.run( "Error creating Direct Draw front surface!" );
 
 	//---------------------------------------------//
 	// Create the Front Buffer
