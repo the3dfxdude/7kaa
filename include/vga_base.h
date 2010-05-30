@@ -48,13 +48,6 @@
 #define get_bitmap_width(bitmapPtr)  (*(short*)bitmapPtr)
 #define get_bitmap_height(bitmapPtr) (*((short*)bitmapPtr+1))
 
-//-------- Vga surface types ---------------//
-
-enum vga_surface_type {
-	VGA_FRONT,
-	VGA_BACK
-};
-
 //-------- Define class Vga ----------------//
 
 class VgaBase
@@ -73,7 +66,6 @@ public:
 
 	virtual char   is_inited() =0;
 
-	virtual void   init_surface(VgaBuf* surface, enum vga_surface_type t) =0;
 	virtual BOOL   init_pal(const char* fileName) =0;
 	virtual void   refresh_palette() =0;
 

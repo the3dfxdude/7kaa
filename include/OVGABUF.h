@@ -72,8 +72,8 @@ public:
 
 	//---------- system functions ----------//
 
-	void 		init_front(LPDIRECTDRAW2 ddPtr);
-	void 		init_back(LPDIRECTDRAW2 ddPtr, DWORD =0, DWORD =0);
+	void 		init_front();
+	void 		init_back(DWORD =0, DWORD =0);
 	void		deinit();
 
 	BOOL		is_buf_lost();

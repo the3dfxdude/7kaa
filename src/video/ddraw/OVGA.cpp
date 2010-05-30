@@ -252,25 +252,6 @@ void VgaDDraw::deinit()
 }
 //-------- End of function VgaDDraw::deinit ----------//
 
-//--------- Start of function VgaDDraw::init_surface ----------//
-//
-// VgaBuf should call Vga to get the system's surface,
-// however, it is currently used the other way around.
-//
-void VgaDDraw::init_surface(VgaBuf* surface, enum vga_surface_type t)
-{
-   if( !dd_obj ) return;
-
-   if( t == VGA_FRONT )
-   {
-      surface->init_front(dd_obj);
-   }
-   else if( t == VGA_BACK )
-   {
-      surface->init_back(dd_obj);
-   }
-}
-//-------- End of function VgaDDraw::init_surface ----------//
 
 //--------- Start of function VgaDDraw::init_pal ----------//
 //

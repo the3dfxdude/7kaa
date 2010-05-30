@@ -52,7 +52,7 @@ VgaBuf::~VgaBuf()
 //
 // Create a direct draw front buffer.
 //
-void VgaBuf::init_front(LPDIRECTDRAW2 ddPtr)
+void VgaBuf::init_front()
 {
 	DDSURFACEDESC       ddsd;
 	HRESULT             rc;
@@ -85,7 +85,7 @@ void VgaBuf::init_front(LPDIRECTDRAW2 ddPtr)
 // [DWORD] w      : width of the surface [default 0 : VGA_WIDTH]
 // [DWORD] h      : height of the surface [default 0 : VGA_HEIGHT]
 //
-void VgaBuf::init_back( LPDIRECTDRAW2 ddPtr, DWORD w, DWORD h )
+void VgaBuf::init_back( DWORD w, DWORD h )
 {
 	DDSURFACEDESC       ddsd;
 

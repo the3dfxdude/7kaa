@@ -52,7 +52,6 @@ public:
 
 	char   is_inited()  { return dd_obj!=NULL; }
 
-	void   init_surface(VgaBuf* surface, enum vga_surface_type t);
 	BOOL   init_pal(const char* fileName);
 	void   refresh_palette();
 
