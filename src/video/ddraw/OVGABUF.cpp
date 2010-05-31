@@ -149,44 +149,6 @@ void VgaBuf::activate_pal(LPDIRECTDRAWPALETTE ddPalPtr)
 //--------- End of function VgaBuf::activate_pal ----------//
 
 
-//-------- Begin of function VgaBuf::color_match ----------//
-
-DWORD VgaBuf::color_match(COLORREF rgb)
-{
-	COLORREF 		rgbT;
-	HDC 				hdc;
-	DWORD 			dw = CLR_INVALID;
-	DDSURFACEDESC 	ddsd;
-	HRESULT 			hres;
-
-	if( dd_buf->GetDC(&hdc) == DD_OK )
-	{
-		 rgbT = GetPixel(hdc, 0, 0);
-		 SetPixel(hdc, 0, 0, rgb);
-		 dd_buf->ReleaseDC(hdc);
-	}
-
-	ddsd.dwSize = sizeof(ddsd);
-	hres = dd_buf->Lock(NULL, &ddsd, DDLOCK_WAIT, NULL);
-
-	if (hres == DD_OK)
-	{
-		 dw  = *(DWORD *)ddsd.lpSurface;
-		 dw &= (1 << ddsd.ddpfPixelFormat.dwRGBBitCount)-1;
-		 dd_buf->Unlock(NULL);
-	}
-
-	if (dd_buf->GetDC(&hdc) == DD_OK)
-	{
-		 SetPixel(hdc, 0, 0, rgbT);
-		 dd_buf->ReleaseDC(hdc);
-	}
-
-	return dw;
-}
-//-------- End Endof function VgaBuf::color_match ----------//
-
-
 //-------- Begin of function VgaBuf::is_buf_lost ----------//
 //
 BOOL VgaBuf::is_buf_lost()
