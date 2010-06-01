@@ -35,8 +35,10 @@
 #include <dsound_audio.h>
 #include <OSYS.h>
 #include <syswin.h>
-#include <OBOX.h>
 #include <OVGALOCK.h>
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Audio);
 
 //---------------- Define constant ------------------//
 //
@@ -970,9 +972,7 @@ int DSoundAudio::play_long_wav(const char *wavName, const DsVolume &dsVolume)
 	File* filePtr = new File;		// new File;
 	if(!filePtr->file_open(wavName,0,0))
 	{
-		char errmsg[60];
-		sprintf(errmsg, "Cannot open %s", wavName);
-		box.msg(errmsg);
+		ERR("Cannot open %s\n", wavName);
 		delete filePtr;
 		return 0;
 	}
@@ -1225,9 +1225,7 @@ int	DSoundAudio::play_loop_wav(const char *wavName, int repeatOffset, const DsVo
 
 	if(!filePtr->file_open(wavName,0,0))
 	{
-		char errmsg[60];
-		sprintf(errmsg, "Cannot open %s", wavName);
-		box.msg(errmsg);
+		ERR("Cannot open %s\n", wavName);
 		delete filePtr;
 		return 0;
 	}
