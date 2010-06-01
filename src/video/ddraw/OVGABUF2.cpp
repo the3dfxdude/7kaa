@@ -777,24 +777,3 @@ void VgaBuf::blt_buf( VgaBuf *srcBuf, int x1, int y1 )
 	}
 }
 //------------- End of function VgaBuf::blt_buf ------------//
-
-
-//-------- Begin of function VgaBuf::blt_virtual_buf --------//
-//
-// Blit entire source surface to local destination surface.
-//
-void VgaBuf::blt_virtual_buf( VgaBuf *source )
-{
-	RECT bltRect;
-
-	bltRect.left   = 0;
-	bltRect.top    = 0;
-	bltRect.right  = VGA_WIDTH-1;
-	bltRect.bottom = VGA_HEIGHT-1;
-
-	dd_buf->BltFast( 0, 0,
-			 source->dd_buf,   // src surface
-			 &bltRect,         // src rect (all of it)
-			 DDBLTFAST_WAIT );
-}
-//--------- End of function VgaBuf::blt_virtual_buf ---------//

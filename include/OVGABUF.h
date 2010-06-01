@@ -32,7 +32,7 @@
 #include <IMGFUN.h>
 #endif
 
-#include <ddraw.h>
+#include <surface.h>
 
 //-------- Define class VgaBuf ----------------//
 
@@ -40,22 +40,22 @@ class File;
 
 class VgaBuf
 {
+protected:
+	Surface *surface;
+
 public:
-	LPDIRECTDRAWSURFACE2  dd_buf;
-	DDSURFACEDESC			buf_des;
 	BOOL						buf_locked;			// whether the and back buffers have been locked or not.
-   char*						cur_buf_ptr;
 	char						is_front;			// whether it's the front buffer or not
-	char						save_locked_flag;
+	char                                            save_locked_flag;
 
 	//--------- back buffer ----------//
 
-	char* buf_ptr()					{ return cur_buf_ptr; }
-	char*	buf_ptr(int x, int y)	{ return cur_buf_ptr + buf_des.lPitch*y + x; }
-	int 	buf_pitch()					{ return buf_des.lPitch; }
-	int	buf_size()					{ return buf_des.dwWidth * buf_des.dwHeight; }
-	int   buf_width()					{ return buf_des.dwWidth; }
-	int   buf_height()            { return buf_des.dwHeight; }
+	char* buf_ptr()             { return surface->buf_ptr(); }
+	char* buf_ptr(int x, int y) { return surface->buf_ptr(x,y); }
+	int   buf_pitch()           { return surface->buf_pitch(); }
+	int   buf_size()            { return surface->buf_size(); }
+	int   buf_width()           { return surface->buf_width(); }
+	int   buf_height()          { return surface->buf_height(); }
 
 	//---- GUI colors -----//
 
@@ -76,10 +76,9 @@ public:
 	void 		init_back(DWORD =0, DWORD =0);
 	void		deinit();
 
-	BOOL		is_buf_lost();
-	BOOL		restore_buf();
-
-	void		activate_pal(LPDIRECTDRAWPALETTE ddPalPtr);
+	void            activate_pal(LPDIRECTDRAWPALETTE ddPalPtr) { surface->activate_pal(ddPalPtr); }
+	BOOL		is_buf_lost() { return surface->is_buf_lost(); }
+	BOOL		restore_buf() { return surface->restore_buf(); }
 
 	void		lock_buf();
 	void		unlock_buf();
@@ -87,10 +86,10 @@ public:
 	void		temp_unlock();
 	void		temp_restore_lock();
 
-	void		set_buf_ptr(char* bufPtr)	{ cur_buf_ptr = bufPtr; }
-	void		set_default_buf_ptr()		{ cur_buf_ptr = (char*)buf_des.lpSurface; }
+	void set_buf_ptr(char* bufPtr) { surface->set_buf_ptr(bufPtr); }
+	void set_default_buf_ptr()     { surface->set_default_buf_ptr(); }
 
-	int 		write_bmp_file(char* fileName);
+	int  write_bmp_file(char* fileName) { return surface->write_bmp_file(fileName); }
 
 	//---------- painting functions ----------//
 
@@ -262,7 +261,7 @@ public:
 
 	// --------- VgaBuf to VgaBuf copy ------------ //
 	void		blt_buf( VgaBuf *srcBuf, int x1, int y1 );
-	void 		blt_virtual_buf( VgaBuf *source );
+	void blt_virtual_buf( VgaBuf *source ) { surface->blt_virtual_buf(source->surface); }
 };
 
 extern VgaBuf vga_front, vga_back, vga_true_front;

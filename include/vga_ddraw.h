@@ -26,6 +26,8 @@
 #define __VGA_DDRAW_H
 
 #include <vga_base.h>
+#include <windows.h>
+#include <ddraw.h>
 
 //-------- Define class VgaDDraw ----------------//
 
@@ -61,7 +63,7 @@ public:
 	void   adjust_brightness(int changeValue);
 
 	// DDraw private
-	LPDIRECTDRAWSURFACE2 create_surface(LPDDSURFACEDESC ddsd);
+	Surface* create_surface(LPDDSURFACEDESC ddsd);
 
 private:
 	BOOL   init_dd();

@@ -67,8 +67,8 @@ void VgaBuf::init_front()
 	ddsd.dwFlags = DDSD_CAPS;
 	ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 
-	dd_buf = vga.create_surface( &ddsd );
-	if (!dd_buf)
+	surface = vga.create_surface( &ddsd );
+	if (!surface)
 	{
 		err.run ( "Error creating Direct Draw front surface!!" );
 	}
@@ -100,8 +100,8 @@ void VgaBuf::init_back( DWORD w, DWORD h )
 	ddsd.dwWidth  = w ? w : VGA_WIDTH;
 	ddsd.dwHeight = h ? h : VGA_HEIGHT;
 
-	dd_buf = vga.create_surface( &ddsd );
-	if( !dd_buf )
+	surface = vga.create_surface( &ddsd );
+	if( !surface )
 	{
 		err.run( "Error creating direct draw back surface!!" );
 	}
@@ -113,68 +113,13 @@ void VgaBuf::init_back( DWORD w, DWORD h )
 
 void VgaBuf::deinit()
 {
-	if( dd_buf )
+	if( surface )
 	{
-		if( buf_locked )
-			unlock_buf();
-
-		dd_buf->Release();
-		dd_buf = NULL;
+		delete surface;
+		surface = NULL;
 	}
 }
 //-------- End of function VgaBuf::deinit ----------//
-
-
-//-------- Begin of function VgaBuf::activate_pal ----------//
-//
-// Activate a palette to the current direct draw surface buffer.
-//
-void VgaBuf::activate_pal(LPDIRECTDRAWPALETTE ddPalPtr)
-{
-	err_when(!ddPalPtr || !dd_buf);
-
-	HRESULT rc = dd_buf->SetPalette(ddPalPtr);
-
-	if( rc == DDERR_SURFACELOST )
-	{
-		dd_buf->Restore();
-		rc = dd_buf->SetPalette(ddPalPtr);
-	}
-
-#ifdef DEBUG
-	if( rc != DD_OK )
-		debug_msg( "VgaBuf::activate_pal(), failed activating the palette" );
-#endif
-}
-//--------- End of function VgaBuf::activate_pal ----------//
-
-
-//-------- Begin of function VgaBuf::is_buf_lost ----------//
-//
-BOOL VgaBuf::is_buf_lost()
-{
-	return dd_buf && dd_buf->IsLost() == DDERR_SURFACELOST;
-}
-//--------- End of function VgaBuf::is_buf_lost ----------//
-
-
-//-------- Begin of function VgaBuf::restore_buf ----------//
-//
-// Restore buffers that have been lost.
-//
-BOOL VgaBuf::restore_buf()
-{
-	if( dd_buf == NULL || dd_buf->Restore() != DD_OK )
-	{
-#ifdef DEBUG
-		 debug_msg("Error restoring direct draw buffer");
-#endif
-		 return FALSE;
-	}
-
-	return TRUE;
-}
-//--------- End of function VgaBuf::restore_buf ----------//
 
 
 //------------- Begin of function VgaBuf::lock_buf --------------//
@@ -184,17 +129,7 @@ void VgaBuf::lock_buf()
 	err_if( buf_locked )
 		err_now( "VgaBuf::lock_buf() error, buffer already locked." );
 
-	memset( &buf_des, 0, sizeof(buf_des) );
-
-	buf_des.dwSize = sizeof(buf_des);
-
-	int rc = dd_buf->Lock(NULL, &buf_des, DDLOCK_WAIT, NULL);
-
-	cur_buf_ptr = (char*) buf_des.lpSurface;
-
-	//--------------------------------------//
-
-	if( rc==DD_OK )
+	if( surface->lock_buf() )
 		buf_locked = TRUE;
 	else
 	{
@@ -216,35 +151,15 @@ void VgaBuf::lock_buf()
 void VgaBuf::unlock_buf()
 {
 	// ####### begin Gilbert 16/9 #####//
-	if( !dd_buf )
+	if( !surface )
 		return;
 	// ####### end Gilbert 16/9 #####//
 	err_when( !buf_locked );
 
-	int rc = dd_buf->Unlock(NULL);
-
-	if( rc==DD_OK )
+	if( surface->unlock_buf() )
 		buf_locked = FALSE;
 	else
 	{
-		switch(rc)
-		{
-		case DDERR_INVALIDOBJECT:
-			err_now( "VgaBuf::unlock_buf error: DDERR_INVALIDOBJECT" );
-				
-		case DDERR_INVALIDPARAMS:
-			err_now( "VgaBuf::unlock_buf error: DDERR_INVALIDPARAMS" );
-				
-		case DDERR_INVALIDRECT:
-			err_now( "VgaBuf::unlock_buf error: DDERR_INVALIDRECT" );
-				
-		case DDERR_NOTLOCKED:
-			err_now( "VgaBuf::unlock_buf error: DDERR_NOTLOCKED" );
-				
-		case DDERR_SURFACELOST:
-			err_now( "VgaBuf::unlock_buf error: DDERR_SURFACELOST" );
-		}
-
 		if( is_front )
 			err_now( "VgaBuf::unlock_buf() unlocking front buffer failed." );
 		else
@@ -464,89 +379,6 @@ void VgaBuf::rest_area(char* saveScr, int releaseFlag)
 		mem_del( saveScr );
 }
 //------------ End of function VgaBuf::rest_area ----------//
-
-
-//------------ Begin of function VgaBuf::write_bmp_file --------------//
-//
-// Load a BMP file into the current VgaBuf DIB object.
-//
-// <char*> fileName - the name of the BMP file.
-//
-// return : <int> 1-succeeded, 0-failed.
-//
-int VgaBuf::write_bmp_file(char* fileName)
-{
-	 File				bmpFile;
-	 BITMAPINFO*	bmpInfoPtr = NULL;
-	 char*			bitmapPtr = NULL;
-
-	 bmpFile.file_create(fileName, 1, 0);		// 1-handle error, 0-disable variable file size
-
-	 //------------ Write the file header ------------//
-
-	 BITMAPFILEHEADER bmpFileHdr;
-
-	 bmpFileHdr.bfType 		= 0x4D42;			// set the type to "BM"
-	 bmpFileHdr.bfSize 		= buf_size();
-	 bmpFileHdr.bfReserved1 = 0;
-	 bmpFileHdr.bfReserved2 = 0;
-	 bmpFileHdr.bfOffBits   = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD)*256;
-
-	 bmpFile.file_write(&bmpFileHdr, sizeof(bmpFileHdr));
-
-	 //------------ Write in the info header -----------//
-
-	 BITMAPINFOHEADER bmpInfoHdr;
-
-	 bmpInfoHdr.biSize			 = sizeof(BITMAPINFOHEADER);
-	 bmpInfoHdr.biWidth			 = buf_des.dwWidth;
-	 bmpInfoHdr.biHeight			 = buf_des.dwHeight;
-	 bmpInfoHdr.biPlanes			 = 1; 
-	 bmpInfoHdr.biBitCount		 = 8;
-    bmpInfoHdr.biCompression	 = BI_RGB; 
-	 bmpInfoHdr.biSizeImage	    = buf_size();
-	 bmpInfoHdr.biXPelsPerMeter = 0;
-    bmpInfoHdr.biYPelsPerMeter = 0; 
-	 bmpInfoHdr.biClrUsed		 = 0; 
-    bmpInfoHdr.biClrImportant  = 0; 
-
-	 bmpFile.file_write(&bmpInfoHdr, sizeof(bmpInfoHdr));
-
-	 //------------ write the color table -----------//
-
-	 LPDIRECTDRAWPALETTE ddPalettePtr;				// get the direct draw surface's palette
-	 dd_buf->GetPalette(&ddPalettePtr);
-
-	 PALETTEENTRY *palEntries = (PALETTEENTRY*) mem_add( sizeof(PALETTEENTRY)*256 );
-	 ddPalettePtr->GetEntries(0, 0, 256, palEntries);
-	
-	 RGBQUAD *colorTable = (RGBQUAD*) mem_add( sizeof(RGBQUAD)*256 );		// allocate a color table with 256 entries 
-		
-	 for( int i=0 ; i<256 ; i++ )
-	 {
-		 colorTable[i].rgbBlue  = palEntries[i].peBlue;
-		 colorTable[i].rgbGreen = palEntries[i].peGreen;
-		 colorTable[i].rgbRed   = palEntries[i].peRed; 
-		 colorTable[i].rgbReserved = 0;
-	 }
-		 
-	 bmpFile.file_write(colorTable, sizeof(RGBQUAD)*256);
-
-	 mem_del(palEntries);
-	 mem_del(colorTable);
-
-	 //----------- write the bitmap ----------//
-
-	 for( int y=buf_height()-1 ; y>=0 ; y-- )					// write in reversed order as DIB's vertical order is reversed
-		 bmpFile.file_write(buf_ptr(0,y), buf_width());
-
-	 //------------ close the file -----------//
-
-	 bmpFile.file_close();
-
-	 return 1;
-}
-//------------ End of function VgaBuf::write_bmp_file --------------//
 
 
 //---------- Begin of function VgaBuf::put_large_bitmap ---------//

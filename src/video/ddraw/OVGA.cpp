@@ -490,7 +490,7 @@ void VgaDDraw::init_gray_remap_table()
 //
 // On failure, the return is NULL.
 //
-LPDIRECTDRAWSURFACE2 VgaDDraw::create_surface(LPDDSURFACEDESC ddsd)
+Surface* VgaDDraw::create_surface(LPDDSURFACEDESC ddsd)
 {
    LPDIRECTDRAWSURFACE2 dd_buf;
    LPDIRECTDRAWSURFACE dd1Buf;
@@ -509,6 +509,6 @@ LPDIRECTDRAWSURFACE2 VgaDDraw::create_surface(LPDDSURFACEDESC ddsd)
 
    dd1Buf->Release();
 
-   return dd_buf;
+   return new Surface(dd_buf);
 }
 //--------- End of function VgaDDraw::create_surface -----------//
