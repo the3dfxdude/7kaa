@@ -29,11 +29,6 @@
 //------- Define static functions -----------//
 
 static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-LRESULT CALLBACK win_hook_proc(int nCode, WORD wParam, LONG lParam);
-
-//----------- Define static variables ------------//
-
-static HHOOK         win_hook_handle=NULL;
 
 //----------- Begin of function SysWindow::SysWindow -----------//
 
@@ -81,13 +76,6 @@ int SysWindow::init()
    if( !rc )
       return 0;
 
-   //------ install keyboard hook ---------//
-/*
-   win_hook_handle = SetWindowsHookEx(WH_CBT, (HOOKPROC) win_hook_proc, sys.app_hinstance, NULL);
-
-   if( !win_hook_handle )
-      err.run( "Failed installing keyboard hook." );
-*/
    //--------- create window -----------//
 
    main_hwnd = CreateWindowEx(
@@ -149,21 +137,6 @@ void SysWindow::deinit()
    }
 }
 //-------- End of function SysWindow::deinit --------//
-
-//------- Begin of function win_hook_proc --------//
-
-LRESULT CALLBACK win_hook_proc(int nCode, WORD wParam, LONG lParam)
-{
-   static int lastnCode;
-
-   lastnCode = nCode;
-
-   if( sys.init_flag && nCode == HCBT_SETFOCUS )
-      sys.pause();
-
-   return CallNextHookEx(win_hook_handle, nCode, wParam, lParam);
-}
-//-------- End of function win_hook_proc --------//
 
 //--------- Begin of static function main_win_proc --------//
 //
