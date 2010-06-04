@@ -31,7 +31,7 @@ OVGA.cpp
 OVGABUF.cpp
 OVGABUF2.cpp
 surface_ddraw.cpp
-syswin.cpp
+vga_win.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);
