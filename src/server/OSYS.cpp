@@ -203,11 +203,6 @@ void Sys::deinit()
 //
 int Sys::init_directx()
 {
-   DEBUG_LOG("Attempt audio.init()");
-   audio.init();
-   DEBUG_LOG(audio.wav_init_flag);
-   music.init();
-   se_ctrl.init();
 
    //-------- initialize DirectDraw --------//
 
@@ -249,6 +244,15 @@ int Sys::init_directx()
    vga_back.lock_buf();
    DEBUG_LOG("vga_back.lock_buf() finish");
 
+
+   //---------- Initialize Audio ----------//
+
+   DEBUG_LOG("Attempt audio.init()");
+   audio.init();
+   DEBUG_LOG(audio.wav_init_flag);
+   music.init();
+   se_ctrl.init();
+
    return TRUE;
 }
 //-------- End of function Sys::init_directx --------//
@@ -258,6 +262,14 @@ int Sys::init_directx()
 //
 void Sys::deinit_directx()
 {
+   se_ctrl.deinit();
+   music.deinit();
+   DEBUG_LOG("Attempt audio.deinit()");
+   audio.deinit();
+   DEBUG_LOG("audio.deinit() finish");
+
+   //------------------------------//
+
    DEBUG_LOG("Attempt vga_back.deinit()");
    vga_back.deinit();
    DEBUG_LOG("vga_back.deinit() finish");
@@ -277,13 +289,6 @@ void Sys::deinit_directx()
    vga.deinit();
    DEBUG_LOG("vga.deinit() finish");
 
-   //------------------------------//
-
-   se_ctrl.deinit();
-   music.deinit();
-   DEBUG_LOG("Attempt audio.deinit()");
-   audio.deinit();
-   DEBUG_LOG("audio.deinit() finish");
 }
 //--------- End of function Sys::deinit_directx ---------//
 
