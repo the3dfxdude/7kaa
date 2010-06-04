@@ -99,6 +99,8 @@ int SysWindow::init()
    UpdateWindow( main_hwnd );
    SetFocus( main_hwnd );
 
+   ShowCursor(FALSE);
+
    init_flag = 1;
 
    return 1;

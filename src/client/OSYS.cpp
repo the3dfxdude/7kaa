@@ -209,10 +209,6 @@ int Sys::init_directx()
    music.init();
    se_ctrl.init();
 
-   //---------------------------------------//
-
-   ShowCursor(FALSE);
-
    //-------- initialize DirectDraw --------//
 
    DEBUG_LOG("Attempt vga.init()");
