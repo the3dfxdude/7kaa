@@ -119,16 +119,35 @@ struct MouseEvent               // event buffer structure
 
 class Mouse
 {
-public:
-	char 	 init_flag;
-	char   handle_flicking;
-
+private:
+	char   init_flag;
 	char*  vga_update_buf;
-
-	HHOOK  key_hook_handle;
-	// HANDLE direct_mouse_handle;
+	
 	LPDIRECTINPUT direct_input;
 	LPDIRECTINPUTDEVICE di_mouse_device, di_keyb_device;
+
+	// ------ mouse setting ---------- //
+	int	double_speed_threshold;				// default DEFAULT_DOUBLE_SPEED_THRESHOLD
+	int	triple_speed_threshold;				// default DEFAULT_TRIPLE_SPEED_THRESHOLD
+
+	//-------- click buffer ---------//
+
+	MouseClick click_buffer[2];    // left button & right button only
+
+	//-------- event buffer ---------//
+
+	enum { EVENT_BUFFER_SIZE = 20 };  // No. of events can be stored in buffer
+
+	MouseEvent event_buffer[EVENT_BUFFER_SIZE];
+
+	int 	head_ptr;        // head pointer to the event buffer
+	int 	tail_ptr;        // tail pointer to the event buffer
+
+public:
+	HHOOK  key_hook_handle;
+	// HANDLE direct_mouse_handle;
+
+	char   handle_flicking;
 
 	//------- real-time mouse state -------//
 
@@ -144,28 +163,14 @@ public:
 	int	bound_x2;
 	int	bound_y2;
 
-	// ------ mouse setting ---------- //
-	int	double_speed_threshold;				// default DEFAULT_DOUBLE_SPEED_THRESHOLD
-	int	triple_speed_threshold;				// default DEFAULT_TRIPLE_SPEED_THRESHOLD
-
 	//-------- click & key buffer ---------//
 
 	unsigned short event_skey_state;
 	char 	   has_mouse_event;		 // if has_mouse_event, mouse_event_type is valid
 	MouseEventType mouse_event_type;
-	MouseClick click_buffer[2];    // left button & right button only
 											 // use : LEFT_BUTTON=0, RIGHT_BUTTON=1
 	unsigned scan_code;             // key pressed, keyboard event
 	unsigned key_code;				// converted from scan_code and event_skey_state
-
-	//-------- event buffer ---------//
-
-	enum { EVENT_BUFFER_SIZE = 20 };  // No. of events can be stored in buffer
-
-	MouseEvent event_buffer[EVENT_BUFFER_SIZE];
-
-	int 	head_ptr;        // head pointer to the event buffer
-	int 	tail_ptr;        // tail pointer to the event buffer
 
 public:
 	Mouse();
