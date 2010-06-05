@@ -24,14 +24,7 @@
 #ifndef __VGABUF_H
 #define __VGABUF_H
 
-#ifndef __WINDOWS_
-#include <windows.h>
-#endif
-
-#ifndef __IMGFUN_H
 #include <IMGFUN.h>
-#endif
-
 #include <surface.h>
 
 //-------- Define class VgaBuf ----------------//
