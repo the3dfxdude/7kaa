@@ -187,7 +187,8 @@ void Sys::sp_compare_seed()
 		//debug_seed_status_flag = 0;
 		if(debug_seed_status_flag==DEBUG_SYN_AUTO_LOAD)
 			//debug_seed_status_flag = DENUG_SYN_AUTO_SAVE;
-			mouse.add_key_event(DIK_LBRACKET, m.get_time()); // save seed for comparison
+			// DIK_LBRACKET = 0x1A
+			mouse.add_key_event(0x1A, m.get_time()); // save seed for comparison
 		else
 			debug_seed_status_flag = NO_DEBUG_SYN;
 	}

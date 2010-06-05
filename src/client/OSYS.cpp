@@ -944,7 +944,8 @@ void Sys::auto_save()
             sp_close_seed_file();
 
             debug_seed_status_flag = NO_DEBUG_SYN;
-            mouse.add_key_event(DIK_BACKSLASH, m.get_time()); // load file for comparison
+            // DIK_BACKSLASH = 0x2B
+            mouse.add_key_event(0x2B, m.get_time()); // load file for comparison
          }
 
          //debug_seed_status_flag = 2;
