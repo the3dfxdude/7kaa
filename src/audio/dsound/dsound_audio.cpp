@@ -34,7 +34,7 @@
 
 #include <dsound_audio.h>
 #include <OSYS.h>
-#include <syswin.h>
+#include <OVGA.h>
 #include <OVGALOCK.h>
 #include <dbglog.h>
 
@@ -231,7 +231,7 @@ int DSoundAudio::init_wav()
 
 	if( rc==DS_OK )		// Create succeeded
 	{
-		lp_direct_sound->SetCooperativeLevel(window.main_hwnd, DSSCL_NORMAL);
+		lp_direct_sound->SetCooperativeLevel(vga.main_hwnd, DSSCL_NORMAL);
 		wav_init_flag=1;
 	}
 

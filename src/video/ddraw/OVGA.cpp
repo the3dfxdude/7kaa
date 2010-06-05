@@ -33,7 +33,6 @@
 #include <OCOLTBL.h>
 #include <OFILE.h>
 #include <OSYS.h>
-#include <syswin.h>
 #include <OVGA.h>
 #include <OLOG.h>
 // ##### begin Gilbert 16/9 #######//
@@ -52,9 +51,13 @@ char    low_video_memory_flag = 0;
 
 VgaDDraw::VgaDDraw()
 {
-	memset( this, 0, sizeof(Vga) );
+   memset( this, 0, sizeof(Vga) );  // FIXME
 
    vga_color_table = new ColorTable;
+
+   // window related
+   main_hwnd = NULL;
+   app_hinstance = NULL;
 }
 //-------- End of function VgaDDraw::Vga ----------//
 
@@ -79,6 +82,9 @@ BOOL VgaDDraw::init()
                    "switch tasks during the game. "
                    "To avoid this problem, set your Windows display "
                    "to 800x600 256 color mode before running the game.";
+
+   if( !create_window() )
+      return FALSE;
 
    //--------- Initialize DirectDraw object --------//
 
@@ -110,7 +116,7 @@ BOOL VgaDDraw::init()
 
 			if( new_config_dat_flag )
 			{
-				MessageBox(window.main_hwnd, warnStr,
+				MessageBox(main_hwnd, warnStr,
 					WIN_TITLE, MB_OK | MB_ICONWARNING | MB_SETFOREGROUND );
 			}
 
@@ -182,10 +188,10 @@ BOOL VgaDDraw::set_mode()
    // Convert it to a plain window
    //-----------------------------------------------------------//
 
-   dwStyle = GetWindowStyle(window.main_hwnd);
+   dwStyle = GetWindowStyle(main_hwnd);
    dwStyle |= WS_POPUP;
    dwStyle &= ~(WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX);
-   SetWindowLong(window.main_hwnd, GWL_STYLE, dwStyle);
+   SetWindowLong(main_hwnd, GWL_STYLE, dwStyle);
 
    //-----------------------------------------------------------//
    // grab exclusive mode if we are going to run as fullscreen
@@ -193,7 +199,7 @@ BOOL VgaDDraw::set_mode()
    //-----------------------------------------------------------//
 
    DEBUG_LOG("Attempt DirectDraw SetCooperativeLevel");
-   rc = dd_obj->SetCooperativeLevel( window.main_hwnd,
+   rc = dd_obj->SetCooperativeLevel( main_hwnd,
                         DDSCL_EXCLUSIVE |
                         DDSCL_FULLSCREEN );
    DEBUG_LOG("DirectDraw SetCooperativeLevel finish");
@@ -249,6 +255,8 @@ void VgaDDraw::deinit()
       DEBUG_LOG("vga.dd_obj->Release() finish");
       dd_obj = NULL;
    }
+
+   destroy_window();
 }
 //-------- End of function VgaDDraw::deinit ----------//
 

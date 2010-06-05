@@ -19,8 +19,6 @@
  *
  */
 
-#include <syswin.h>
-
 #include <OSYS.h>
 #include <OVGA.h>
 
@@ -30,28 +28,9 @@
 
 static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-//----------- Begin of function SysWindow::SysWindow -----------//
-
-SysWindow::SysWindow()
-{
-   init_flag = 0;
-   main_hwnd = NULL;
-   app_hinstance = NULL;
-}
-//----------- End of function SysWindow::SysWindow -----------//
-
-
-//----------- Begin of function SysWindow::~SysWindow -----------//
-
-SysWindow::~SysWindow()
-{
-   deinit();
-}
-//----------- End of function SysWindow::~SysWindow -----------//
-
-//-------- Begin of function SysWindow::init --------//
+//-------- Begin of function VgaDDraw::create_window --------//
 //
-int SysWindow::init()
+int VgaDDraw::create_window()
 {
    app_hinstance = (HINSTANCE)GetModuleHandle(NULL);
 
@@ -101,15 +80,13 @@ int SysWindow::init()
 
    ShowCursor(FALSE);
 
-   init_flag = 1;
-
    return 1;
 }
-//-------- End of function SysWindow::init --------//
+//-------- End of function VgaDDraw::create_window --------//
 
-//-------- Begin of function SysWindow::deinit --------//
+//-------- Begin of function VgaDDraw::destroy_window --------//
 //
-void SysWindow::deinit()
+void VgaDDraw::destroy_window()
 {
 /*
    extern char low_video_memory_flag;
@@ -124,10 +101,8 @@ void SysWindow::deinit()
 */
    //---------------------------------------//
 
-   if (init_flag) {
+   if (main_hwnd) {
       PostMessage(main_hwnd, WM_CLOSE, 0, 0);
-
-      init_flag = 0;
 
       MSG msg;
 
@@ -136,9 +111,11 @@ void SysWindow::deinit()
          TranslateMessage(&msg);
          DispatchMessage(&msg);
       }
+
+      main_hwnd = NULL;
    }
 }
-//-------- End of function SysWindow::deinit --------//
+//-------- End of function VgaDDraw::destroy_window --------//
 
 //--------- Begin of static function main_win_proc --------//
 //
@@ -149,7 +126,7 @@ static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
    switch( message )
    {
       case WM_CREATE:
-         window.main_hwnd = hWnd;
+         vga.main_hwnd = hWnd;
          break;
 
       case WM_ACTIVATEAPP:
@@ -174,7 +151,7 @@ static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
          break;
 
        case WM_DESTROY:
-          window.main_hwnd = NULL;
+          vga.main_hwnd = NULL;
           // game.deinit();          // end of game
           sys.deinit_directx();
           PostQuitMessage( 0 );
@@ -200,8 +177,8 @@ static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
 }
 //--------- End of static function main_win_proc --------//
 
-//-------- Begin of function SysWindow::handle_messages --------//
-void SysWindow::handle_messages()
+//-------- Begin of function VgaDDraw::handle_messages --------//
+void VgaDDraw::handle_messages()
 {
    static int lastTick;
 
@@ -226,12 +203,12 @@ void SysWindow::handle_messages()
       DispatchMessage(&msg);
    }
 }
-//-------- End of function SysWindow::handle_messages --------//
+//-------- End of function VgaDDraw::handle_messages --------//
 
-//-------- Begin of function SysWindow::flag_redraw --------//
-void SysWindow::flag_redraw()
+//-------- Begin of function VgaDDraw::flag_redraw --------//
+void VgaDDraw::flag_redraw()
 {
    InvalidateRect(main_hwnd, NULL, TRUE);
 }
-//-------- End of function SysWindow::flag_redraw ----------//
+//-------- End of function VgaDDraw::flag_redraw ----------//
 

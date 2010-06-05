@@ -45,6 +45,9 @@ public:
 	ColorTable*    vga_color_table;
 	unsigned char  gray_remap_table[256];
 
+	HINSTANCE	app_hinstance; // handle of the application running
+	HWND		main_hwnd;
+
 public:
 	VgaDDraw();
 	~VgaDDraw();
@@ -62,6 +65,9 @@ public:
 	void   free_custom_palette();
 	void   adjust_brightness(int changeValue);
 
+	void   handle_messages();
+	void   flag_redraw();
+
 	// DDraw private
 	Surface* create_surface(LPDDSURFACEDESC ddsd);
 
@@ -71,6 +77,8 @@ private:
         void   init_color_table();
 	BOOL   set_mode();
 	void   release_pal();
+	int    create_window();
+	void   destroy_window();
 };
 
 typedef VgaDDraw Vga;

@@ -49,7 +49,6 @@
 #include <OSPREUSE.h>
 #include <OSPY.h>
 #include <OSYS.h>
-#include <syswin.h>
 #ifdef USE_DPLAY
 #include <OREMOTE.h>
 #endif
@@ -153,9 +152,6 @@ int Sys::init()
 
    //------- initialize more stuff ---------//
 
-   if( !window.init() )
-      return FALSE;
-
    if( !init_directx() )
       return FALSE;
 
@@ -191,8 +187,6 @@ void Sys::deinit()
       vga_front.unlock_buf();
 
    //-------------------------------------//
-
-   window.deinit();
 
    init_flag = 0;
 }
@@ -861,7 +855,7 @@ void Sys::main_loop(int isLoadedGame)
       }
       else
       {
-         window.handle_messages();
+         vga.handle_messages();
       }
    }
 
@@ -992,7 +986,7 @@ void Sys::pause()
    if( paused_flag )
       return;
 
-   window.flag_redraw();
+   vga.flag_redraw();
 
    paused_flag = TRUE;
 }
@@ -1077,7 +1071,7 @@ void Sys::yield()
 
    isYielding=1;
 
-   window.handle_messages();
+   vga.handle_messages();
 
    mouse.poll_event();
 

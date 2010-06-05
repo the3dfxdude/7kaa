@@ -25,7 +25,6 @@
 
 #include <ALL.h>
 #include <OSYS.h>
-#include <syswin.h>
 #include <OVGA.h>
 #include <OPOWER.h>
 #include <OMOUSE.h>
@@ -144,7 +143,7 @@ void Mouse::init()
 		err.run( "Failed installing direct mouse." );
 */
 	HRESULT hr;
-	hr = DirectInputCreate(window.app_hinstance, DIRECTINPUT_VERSION, &direct_input, NULL);
+	hr = DirectInputCreate(vga.app_hinstance, DIRECTINPUT_VERSION, &direct_input, NULL);
 	if(hr)
 		err.run( "Failed creating DirectInput");
 
@@ -159,7 +158,7 @@ void Mouse::init()
 		err.run( "Failed creating mouse interface from DirectInput");
 
 	// ------- set cooperative level --------//
-	hr = di_mouse_device->SetCooperativeLevel(window.main_hwnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+	hr = di_mouse_device->SetCooperativeLevel(vga.main_hwnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
 
 	// ------- set data format ---------//
 	if(!hr)
@@ -206,7 +205,7 @@ void Mouse::init()
 		err.run( "Failed creating keyboard interface from DirectInput");
 
 	// ------- set cooperative level --------//
-	hr = di_keyb_device->SetCooperativeLevel(window.main_hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	hr = di_keyb_device->SetCooperativeLevel(vga.main_hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 	// ------- set data format ---------//
 	if(!hr)

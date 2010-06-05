@@ -1,7 +1,7 @@
 my @defines;
 
 ## compiler flags ##
-@defines = qw( AMPLUS USE_DSOUND );
+@defines = qw( AMPLUS USE_DSOUND USE_DDRAW );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
