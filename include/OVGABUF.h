@@ -72,8 +72,7 @@ public:
 
 	//---------- system functions ----------//
 
-	void 		init_front();
-	void 		init_back(DWORD =0, DWORD =0);
+	void            init(Surface *s, char front);
 	void		deinit();
 
 	void            activate_pal(LPDIRECTDRAWPALETTE ddPalPtr) { surface->activate_pal(ddPalPtr); }

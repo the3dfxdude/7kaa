@@ -177,6 +177,73 @@ BOOL VgaDDraw::init_dd()
 //-------- End of function VgaDDraw::init_dd ----------//
 
 
+//-------- Begin of function VgaBuf::init_front ----------//
+//
+// Create a direct draw front buffer.
+//
+int VgaDDraw::init_front(VgaBuf *b)
+{
+   DDSURFACEDESC       ddsd;
+   HRESULT             rc;
+   Surface             *surface;
+
+   //---------------------------------------------//
+   // Create the Front Buffer
+   //---------------------------------------------//
+
+   ZeroMemory( &ddsd, sizeof(ddsd) );
+   ddsd.dwSize = sizeof( ddsd );
+
+   ddsd.dwFlags = DDSD_CAPS;
+   ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
+
+   surface = create_surface( &ddsd );
+   if (!surface)
+   {
+      err.run ( "Error creating Direct Draw front surface!!" );
+      return 0;
+   }
+
+   b->init(surface, 1);
+}
+//-------- End of function VgaBuf::init_front ----------//
+
+
+//-------- Begin of function VgaBuf::init_back ----------//
+//
+// Create a direct draw back buffer.
+//
+// [DWORD] w      : width of the surface [default 0 : VGA_WIDTH]
+// [DWORD] h      : height of the surface [default 0 : VGA_HEIGHT]
+//
+int VgaDDraw::init_back( VgaBuf *b, DWORD w, DWORD h )
+{
+   DDSURFACEDESC       ddsd;
+   Surface             *surface;
+
+   //--------- fill in surface desc -----------//
+
+   memset( &ddsd, 0, sizeof( ddsd ) );
+   ddsd.dwSize = sizeof( ddsd );
+   ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT |DDSD_WIDTH;
+
+   ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
+
+   ddsd.dwWidth  = w ? w : VGA_WIDTH;
+   ddsd.dwHeight = h ? h : VGA_HEIGHT;
+
+   surface = create_surface( &ddsd );
+   if( !surface )
+   {
+      err.run( "Error creating direct draw back surface!!" );
+      return 0;
+   }
+
+   b->init(surface, 0);
+}
+//-------- End of function VgaBuf::init_back ----------//
+
+
 //-------- Begin of function VgaDDraw::set_mode ----------//
 
 BOOL VgaDDraw::set_mode()

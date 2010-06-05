@@ -212,22 +212,22 @@ int Sys::init_directx()
    if( sys.debug_session )                // if we are currently in a debug session, don't lock the front buffer otherwise the system will hang up
    {
       DEBUG_LOG("Attempt vga_front.init_back()");
-      vga_front.init_back();
+      vga.init_back(&vga_front);
       vga_front.is_front = 1;       // set it to 1, overriding the setting in init_back()
       DEBUG_LOG("Attempt vga_true_front.init_front()");
-      vga_true_front.init_front();
+      vga.init_front(&vga_true_front);
       DEBUG_LOG("Attempt vga.activate_pal()");
       vga.activate_pal(&vga_true_front);
       DEBUG_LOG("vga.activate_pal() finish");
    }
    else
    {
-      vga_front.init_front();
+      vga.init_front(&vga_front);
       vga.activate_pal(&vga_front);
    }
 
    DEBUG_LOG("Attempt vga_back.init_back()");
-   vga_back.init_back();
+   vga.init_back(&vga_back);
    DEBUG_LOG("vga_back.init_back() finish");
 
    DEBUG_LOG("Attempt vga_front.lock_buf()");

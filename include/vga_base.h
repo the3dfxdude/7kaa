@@ -62,6 +62,8 @@ public:
 	~VgaBase() {};
  
 	virtual BOOL   init() =0;
+	virtual int    init_front(VgaBuf*) =0;
+	virtual int    init_back(VgaBuf*, DWORD =0, DWORD =0) =0;
 	virtual void   deinit() =0;
 
 	virtual char   is_inited() =0;
