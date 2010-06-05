@@ -74,9 +74,9 @@ static DIDEVICEOBJECTDATA mouse_data[MOUSE_BUFFER_SIZE];
 static DIDEVICEOBJECTDATA keyb_data[KEYB_BUFFER_SIZE];
 static int update_x1, update_y1, update_x2, update_y2;		// coordination of the last double-buffer update area
 
-//--------- Start of Mouse::Mouse ---------//
+//--------- Start of MouseDInput::MouseDInput ---------//
 //
-Mouse::Mouse()
+MouseDInput::MouseDInput()
 {
 	init_flag = 0;
 	handle_flicking = 0;
@@ -103,23 +103,23 @@ Mouse::Mouse()
 	double_speed_threshold = DEFAULT_DOUBLE_SPEED_THRESHOLD;
 	triple_speed_threshold = DEFAULT_TRIPLE_SPEED_THRESHOLD;
 }
-//---------- End of Mouse::Mouse ---------//
+//---------- End of MouseDInput::MouseDInput ---------//
 
 
-//---------- Begin of Mouse::~Mouse --------//
+//---------- Begin of MouseDInput::~MouseDInput --------//
 //
 // Deinitialize the mouse driver, reset event handler
 //
-Mouse::~Mouse()
+MouseDInput::~MouseDInput()
 {
 	deinit();
 }
-//------------ End of Mouse::~Mouse --------//
+//------------ End of MouseDInput::~MouseDInput --------//
 
 
-//------------ Start of Mouse::init ------------//
+//------------ Start of MouseDInput::init ------------//
 //
-void Mouse::init()
+void MouseDInput::init()
 {
 	//-------- set starting position ---------//
 
@@ -263,12 +263,12 @@ void Mouse::init()
 
 	init_flag = 1;
 }
-//------------- End of Mouse::init -------------//
+//------------- End of MouseDInput::init -------------//
 
 
-//------------ Start of Mouse::deinit ------------//
+//------------ Start of MouseDInput::deinit ------------//
 //
-void Mouse::deinit()
+void MouseDInput::deinit()
 {
 	if( init_flag )
 	{
@@ -299,38 +299,38 @@ void Mouse::deinit()
 		direct_input = NULL;
 	}
 }
-//------------- End of Mouse::deinit -------------//
+//------------- End of MouseDInput::deinit -------------//
 
 
-//--------- Start of Mouse::hide -------//
+//--------- Start of MouseDInput::hide -------//
 //
 // Suspend the mouse function, use resume() to resume to function
 //
-void Mouse::hide()
+void MouseDInput::hide()
 {
 	mouse_cursor.hide_all_flag=1;
 
 	mouse_cursor.process(cur_x, cur_y);
 }
-//---------- End of Mouse::hide --------//
+//---------- End of MouseDInput::hide --------//
 
 
-//--------- Start of Mouse::show -------//
+//--------- Start of MouseDInput::show -------//
 //
 // Resume the mouse function which is previously hideed by hide()
 //
-void Mouse::show()
+void MouseDInput::show()
 {
 	mouse_cursor.hide_all_flag=0;
 
 	mouse_cursor.process(cur_x, cur_y);
 }
-//---------- End of Mouse::show --------//
+//---------- End of MouseDInput::show --------//
 
 
-//--------- Begin of Mouse::hide_area ----------//
+//--------- Begin of MouseDInput::hide_area ----------//
 //
-void Mouse::hide_area(int x1, int y1, int x2, int y2)
+void MouseDInput::hide_area(int x1, int y1, int x2, int y2)
 {
 	mouse_cursor.hide_area_flag++;
 
@@ -382,12 +382,12 @@ void Mouse::hide_area(int x1, int y1, int x2, int y2)
 		mouse_cursor.process(cur_x, cur_y);
 	}
 }
-//--------- End of Mouse::hide_area --------------//
+//--------- End of MouseDInput::hide_area --------------//
 
 
-//--------- Begin of Mouse::show_area ----------//
+//--------- Begin of MouseDInput::show_area ----------//
 //
-void Mouse::show_area()
+void MouseDInput::show_area()
 {
 	mouse_cursor.hide_area_flag--;
 
@@ -423,14 +423,14 @@ void Mouse::show_area()
 		}
 	}
 }
-//--------- End of Mouse::show_area --------------//
+//--------- End of MouseDInput::show_area --------------//
 
 
-//--------- Start of Mouse::add_event ---------//
+//--------- Start of MouseDInput::add_event ---------//
 //
 // Called by handler interrupt to procss the state
 //
-void Mouse::add_event(MouseEvent *mouseEvent)
+void MouseDInput::add_event(MouseEvent *mouseEvent)
 {
 	//---- call the game object to see if the mouse cursor icon needs to be changed, or if the nation selection square needs to be activated ----//
 
@@ -453,14 +453,14 @@ void Mouse::add_event(MouseEvent *mouseEvent)
 	if(++head_ptr >= EVENT_BUFFER_SIZE)       // increment the head ptr
 		head_ptr = 0;
 }
-//----------- End of Mouse::add_event ----------//
+//----------- End of MouseDInput::add_event ----------//
 
 
-//--------- Start of Mouse::add_key_event ---------//
+//--------- Start of MouseDInput::add_key_event ---------//
 //
 // Called by key handler to save the key pressed
 //
-void Mouse::add_key_event(unsigned scanCode, DWORD timeStamp)
+void MouseDInput::add_key_event(unsigned scanCode, DWORD timeStamp)
 {
 	if((head_ptr == tail_ptr-1) ||               // see if the buffer is full
 		(head_ptr == EVENT_BUFFER_SIZE-1 && tail_ptr == 0))
@@ -483,10 +483,10 @@ void Mouse::add_key_event(unsigned scanCode, DWORD timeStamp)
 	if(++head_ptr >= EVENT_BUFFER_SIZE)  // increment the head ptr
 		head_ptr = 0;
 }
-//----------- End of Mouse::add_key_event ----------//
+//----------- End of MouseDInput::add_key_event ----------//
 
 
-//--------- Start of Mouse::get_event ---------//
+//--------- Start of MouseDInput::get_event ---------//
 //
 // Get next event from the event buffer
 //
@@ -500,7 +500,7 @@ void Mouse::add_key_event(unsigned scanCode, DWORD timeStamp)
 //			if( RIGHT_BUTTON or RIGHT_BUTTON_RELEASE, read click_buffer[RIGHT_BUTTON]
 // 3. if is_key_event(), check event_skey_state, scan_code and key_code 
 //
-int Mouse::get_event()
+int MouseDInput::get_event()
 {
 	if(head_ptr == tail_ptr)     // no event queue left in the buffer
 	{
@@ -569,10 +569,10 @@ int Mouse::get_event()
 
    return 1;
 }
-//----------- End of Mouse::get_event ----------//
+//----------- End of MouseDInput::get_event ----------//
 
 
-//--------- Begin of Mouse::in_area ----------//
+//--------- Begin of MouseDInput::in_area ----------//
 //
 // <Real-time access>
 //
@@ -583,14 +583,14 @@ int Mouse::get_event()
 // Return : 1 - if the mouse cursor is in the area
 //          0 - if not
 //
-int Mouse::in_area(int x1, int y1, int x2, int y2)
+int MouseDInput::in_area(int x1, int y1, int x2, int y2)
 {
 	return( cur_x >= x1 && cur_y >= y1 && cur_x <= x2 && cur_y <= y2 );
 }
-//--------- End of Mouse::in_area --------------//
+//--------- End of MouseDInput::in_area --------------//
 
 
-//--------- Begin of Mouse::press_area ----------//
+//--------- Begin of MouseDInput::press_area ----------//
 //
 // <Real-time access>
 //
@@ -603,7 +603,7 @@ int Mouse::in_area(int x1, int y1, int x2, int y2)
 //			   1 - if the area has been pressed (right button)
 //          0 - if not
 //
-int Mouse::press_area(int x1, int y1, int x2, int y2, int buttonId)
+int MouseDInput::press_area(int x1, int y1, int x2, int y2, int buttonId)
 {
 	if( cur_x >= x1 && cur_y >= y1 && cur_x <= x2 && cur_y <= y2 )
 	{
@@ -616,14 +616,14 @@ int Mouse::press_area(int x1, int y1, int x2, int y2, int buttonId)
 
 	return 0;
 }
-//--------- End of Mouse::press_area --------------//
+//--------- End of MouseDInput::press_area --------------//
 
 
-//--------- Begin of Mouse::set_boundary ----------//
+//--------- Begin of MouseDInput::set_boundary ----------//
 //
 // for each parameter, put -1 to mean unchange
 //
-void Mouse::set_boundary(int x1, int y1, int x2, int y2)
+void MouseDInput::set_boundary(int x1, int y1, int x2, int y2)
 {
 	if( x1 >= 0)
 		bound_x1 = x1;
@@ -634,21 +634,21 @@ void Mouse::set_boundary(int x1, int y1, int x2, int y2)
 	if( y2 >= 0)
 		bound_y2 = y2 > MOUSE_Y_UPPER_LIMIT ? MOUSE_Y_UPPER_LIMIT : y2;
 }
-//--------- End of Mouse::set_boundary ----------//
+//--------- End of MouseDInput::set_boundary ----------//
 
 
-//--------- Begin of Mouse::reset_boundary ----------//
-void Mouse::reset_boundary()
+//--------- Begin of MouseDInput::reset_boundary ----------//
+void MouseDInput::reset_boundary()
 {
 	bound_x1 = 0;
 	bound_y1 = 0;
 	bound_x2 = MOUSE_X_UPPER_LIMIT;
 	bound_y2 = MOUSE_Y_UPPER_LIMIT;
 }
-//--------- End of Mouse::set_boundary ----------//
+//--------- End of MouseDInput::set_boundary ----------//
 
 
-//--------- Begin of Mouse::single_click ----------//
+//--------- Begin of MouseDInput::single_click ----------//
 //
 // <Event queue access>
 //
@@ -662,7 +662,7 @@ void Mouse::reset_boundary()
 //				2 - if the area has been clicked (right click)
 //          0 - if not
 //
-int Mouse::single_click(int x1, int y1, int x2, int y2,int buttonId)
+int MouseDInput::single_click(int x1, int y1, int x2, int y2,int buttonId)
 {
 	if( !has_mouse_event )
 		return 0;
@@ -697,10 +697,10 @@ int Mouse::single_click(int x1, int y1, int x2, int y2,int buttonId)
 
    return 0;
 }
-//--------- End of Mouse::single_click --------------//
+//--------- End of MouseDInput::single_click --------------//
 
 
-//--------- Begin of Mouse::double_click ----------//
+//--------- Begin of MouseDInput::double_click ----------//
 //
 // <Event queue access>
 //
@@ -717,7 +717,7 @@ int Mouse::single_click(int x1, int y1, int x2, int y2,int buttonId)
 // Return : 1 - if the area has been clicked
 //          0 - if not
 //
-int Mouse::double_click(int x1, int y1, int x2, int y2,int buttonId)
+int MouseDInput::double_click(int x1, int y1, int x2, int y2,int buttonId)
 {
 	if( !has_mouse_event )
       return 0;
@@ -752,10 +752,10 @@ int Mouse::double_click(int x1, int y1, int x2, int y2,int buttonId)
 
    return 0;
 }
-//--------- End of Mouse::double_click --------------//
+//--------- End of MouseDInput::double_click --------------//
 
 
-//--------- Begin of Mouse::any_click ----------//
+//--------- Begin of MouseDInput::any_click ----------//
 //
 // <Event queue access>
 //
@@ -768,7 +768,7 @@ int Mouse::double_click(int x1, int y1, int x2, int y2,int buttonId)
 // Return : >0 - the no. of click if the area has been clicked
 //          0  - if not
 //
-int Mouse::any_click(int x1, int y1, int x2, int y2,int buttonId)
+int MouseDInput::any_click(int x1, int y1, int x2, int y2,int buttonId)
 {
    if( !has_mouse_event )
       return 0;
@@ -803,10 +803,10 @@ int Mouse::any_click(int x1, int y1, int x2, int y2,int buttonId)
 
 	return 0;
 }
-//--------- End of Mouse::any_click --------------//
+//--------- End of MouseDInput::any_click --------------//
 
 
-//--------- Begin of Mouse::any_click ----------//
+//--------- Begin of MouseDInput::any_click ----------//
 //
 // <Event queue access>
 //
@@ -819,7 +819,7 @@ int Mouse::any_click(int x1, int y1, int x2, int y2,int buttonId)
 // Return : >0 - the no. of click if the area has been clicked
 //          0  - if not
 //
-int Mouse::any_click(int buttonId)
+int MouseDInput::any_click(int buttonId)
 {
 	if( !has_mouse_event )
       return 0;
@@ -844,10 +844,10 @@ int Mouse::any_click(int buttonId)
 
 	return 0;
 }
-//--------- End of Mouse::any_click --------------//
+//--------- End of MouseDInput::any_click --------------//
 
 
-//--------- Begin of Mouse::release_click ----------//
+//--------- Begin of MouseDInput::release_click ----------//
 //
 // <Event queue access>
 //
@@ -861,7 +861,7 @@ int Mouse::any_click(int buttonId)
 //				2 - if the area has been clicked (right click)
 //          0 - if not
 //
-int Mouse::release_click(int x1, int y1, int x2, int y2,int buttonId)
+int MouseDInput::release_click(int x1, int y1, int x2, int y2,int buttonId)
 {
 	if( !has_mouse_event )
 		return 0;
@@ -894,14 +894,14 @@ int Mouse::release_click(int x1, int y1, int x2, int y2,int buttonId)
 
    return 0;
 }
-//--------- End of Mouse::release_click --------------//
+//--------- End of MouseDInput::release_click --------------//
 
 
-//--------- Begin of Mouse::poll_event ----------//
+//--------- Begin of MouseDInput::poll_event ----------//
 //
 // Poll mouse events from the direct mouse VXD.
 //
-void Mouse::poll_event()
+void MouseDInput::poll_event()
 {
 	if(!init_flag)
 		return;
@@ -1160,13 +1160,13 @@ void Mouse::poll_event()
 	}
 	// ####### end Gilbert 12/4 ########//
 }
-//--------- End of Mouse::poll_event --------------//
+//--------- End of MouseDInput::poll_event --------------//
 
 
 // ####### begin Gilbert 31/10 #########//
-//--------- Begin of Mouse::update_skey_state ----------//
+//--------- Begin of MouseDInput::update_skey_state ----------//
 // called after task switch to get the lastest state of ctrl/alt/shift key
-void Mouse::update_skey_state()
+void MouseDInput::update_skey_state()
 {
 	// ------- get initial keyboard state ----------//
 	skey_state = 0;
@@ -1201,11 +1201,11 @@ void Mouse::update_skey_state()
 	}
 #endif
 }
-//--------- End of Mouse::update_skey_state ----------//
+//--------- End of MouseDInput::update_skey_state ----------//
 // ####### end Gilbert 31/10 #########//
 
 
-//--------- Begin of Mouse::wait_press ----------//
+//--------- Begin of MouseDInput::wait_press ----------//
 //
 // Wait until one of the mouse buttons is pressed.
 //
@@ -1215,7 +1215,7 @@ void Mouse::update_skey_state()
 // return: <int> 1-left mouse button
 //					  2-right mouse button
 //
-int Mouse::wait_press(int timeOutSecond)
+int MouseDInput::wait_press(int timeOutSecond)
 {
 	while( mouse.left_press || mouse.any_click() || mouse.key_code )		// avoid repeat clicking
 	{
@@ -1258,33 +1258,33 @@ int Mouse::wait_press(int timeOutSecond)
 
 	return rc;
 }
-//--------- End of Mouse::wait_press --------------//
+//--------- End of MouseDInput::wait_press --------------//
 
 
-//--------- Begin of Mouse::reset_click ----------//
+//--------- Begin of MouseDInput::reset_click ----------//
 //
 // Reset queued mouse clicks.
 //
-void Mouse::reset_click()
+void MouseDInput::reset_click()
 {
 	click_buffer[0].count=0;
 	click_buffer[1].count=0;
 }
-//--------- End of Mouse::reset_click --------------//
+//--------- End of MouseDInput::reset_click --------------//
 
 
-// ------ Begin of Mouse::mickey_to_displacment -------//
-long Mouse::micky_to_displacement(DWORD w)
+// ------ Begin of MouseDInput::mickey_to_displacment -------//
+long MouseDInput::micky_to_displacement(DWORD w)
 {
 	long d = (long)w ;
 	// long a = abs(d);
 	// return a >= double_speed_threshold ? (a >= triple_speed_threshold ? 3 * d : 2 * d) : d;
 	return abs(d) >= double_speed_threshold ? d+d : d;
 }
-// ------ End of Mouse::mickey_to_displacment -------//
+// ------ End of MouseDInput::mickey_to_displacment -------//
 
 
-// ------ Begin of Mouse::is_key -------//
+// ------ Begin of MouseDInput::is_key -------//
 // compare key with key code
 // e.g. to test a key is alt-a,
 // call mouse.is_key(mouse.scan_code, mouse.event_skey_state, 'a', K_CHAR_KEY | K_IS_ALT)
@@ -1296,7 +1296,7 @@ long Mouse::micky_to_displacement(DWORD w)
 // the same function call returns 0
 // use mouse.is_key(mouse.scan_code, mouse.event_skey_state, (WORD) 0, K_CHAR_KEY | K_IS_ALT ) instead
 //
-int Mouse::is_key(unsigned scanCode, unsigned short skeyState, unsigned short charValue, unsigned flags)
+int MouseDInput::is_key(unsigned scanCode, unsigned short skeyState, unsigned short charValue, unsigned flags)
 {
 	unsigned short priChar = 0, shiftChar = 0, capitalChar = 0;
 #if(defined(FRENCH)||defined(GERMAN)||defined(SPANISH))
@@ -1628,11 +1628,11 @@ int Mouse::is_key(unsigned scanCode, unsigned short skeyState, unsigned short ch
 	else
 		return 0;
 }
-// ------ End of Mouse::is_key -------//
+// ------ End of MouseDInput::is_key -------//
 
 
-// ------ Begin of Mouse::is_key -------//
-int Mouse::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, unsigned flags)
+// ------ Begin of MouseDInput::is_key -------//
+int MouseDInput::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, unsigned flags)
 {
 	int len = strlen(keyStr);
 	if( len == 0)
@@ -1757,4 +1757,4 @@ int Mouse::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, uns
 
 	return retFlag && retFlag2;
 }
-// ------ End of Mouse::is_key -------//
+// ------ End of MouseDInput::is_key -------//

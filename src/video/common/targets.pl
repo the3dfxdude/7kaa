@@ -1,5 +1,5 @@
 ## compiler flags ##
-@defines = qw( AMPLUS USE_DDRAW );
+@defines = qw( AMPLUS USE_DDRAW USE_DINPUT );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
