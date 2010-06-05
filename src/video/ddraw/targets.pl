@@ -28,8 +28,6 @@ if (defined($wine_prefix)) {
 
 my @targets = qw(
 OVGA.cpp
-OVGABUF.cpp
-OVGABUF2.cpp
 surface_ddraw.cpp
 vga_win.cpp
 );
