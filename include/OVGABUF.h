@@ -75,10 +75,10 @@ public:
 	void            init(Surface *s, char front);
 	void		deinit();
 
-	void            activate_pal(LPDIRECTDRAWPALETTE ddPalPtr) { surface->activate_pal(ddPalPtr); }
 	BOOL		is_buf_lost() { return surface->is_buf_lost(); }
 	BOOL		restore_buf() { return surface->restore_buf(); }
 
+	Surface*        get_buf() { return surface; }
 	void		lock_buf();
 	void		unlock_buf();
 

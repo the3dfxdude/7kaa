@@ -426,7 +426,8 @@ void VgaDDraw::release_pal()
 //
 void VgaDDraw::activate_pal(VgaBuf* vgaBufPtr)
 {
-   vgaBufPtr->activate_pal(dd_pal);
+   Surface *s = vgaBufPtr->get_buf();
+   s->activate_pal(dd_pal);
 }
 //--------- End of function VgaDDraw::activate_pal ----------//
 

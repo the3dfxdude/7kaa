@@ -58,7 +58,7 @@ public:
 	int   write_bmp_file(char *fileName);
 	void  blt_virtual_buf(SurfaceDDraw *src);
 
-	// Only use these in Vga or VgaBuf or SurfaceDDraw
+	// Only use these in Vga
 	int   activate_pal(LPDIRECTDRAWPALETTE ddPalPtr);
         int   is_buf_lost();
         int   restore_buf();
