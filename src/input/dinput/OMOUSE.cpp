@@ -81,7 +81,6 @@ Mouse::Mouse()
 	init_flag = 0;
 	handle_flicking = 0;
 	vga_update_buf = NULL;
-	memset(&key_hook_handle, 0, sizeof(HHOOK));
 	memset(&direct_input, 0, sizeof(LPDIRECTINPUT));
 	memset(&di_mouse_device, 0, sizeof(LPDIRECTINPUTDEVICE));
 	memset(&di_keyb_device, 0, sizeof(LPDIRECTINPUTDEVICE));
@@ -131,21 +130,6 @@ void Mouse::init()
 	cur_x = pt.x;
 	cur_y = pt.y;
 
-/*
-	//------ install keyboard hook ---------//
-
-	key_hook_handle = SetWindowsHookEx(WH_KEYBOARD, (HOOKPROC) key_hook_proc, sys.app_hinstance, NULL);
-
-	if( !key_hook_handle )
-		err.run( "Failed installing keyboard hook." );
-*/
-	//-------- initialize DirectInput Mouse device--------//
-/*
-	direct_mouse_handle = DMouseOpen();
-
-	if( !direct_mouse_handle )
-		err.run( "Failed installing direct mouse." );
-*/
 	HRESULT hr;
 	hr = DirectInputCreate(vga.app_hinstance, DIRECTINPUT_VERSION, &direct_input, NULL);
 	if(hr)
@@ -288,9 +272,6 @@ void Mouse::deinit()
 {
 	if( init_flag )
 	{
-		// UnhookWindowsHookEx(key_hook_handle);
-
-		// DMouseClose(direct_mouse_handle);
 		init_flag = 0;
 	}
 
@@ -914,18 +895,6 @@ int Mouse::release_click(int x1, int y1, int x2, int y2,int buttonId)
    return 0;
 }
 //--------- End of Mouse::release_click --------------//
-
-
-//------- Begin of function key_hook_proc --------//
-
-LRESULT CALLBACK key_hook_proc(int nCode, WORD wParam, LONG lParam)
-{
-	if (nCode >= 0)
-		mouse.add_key_event(wParam, m.get_time());
-
-	return CallNextHookEx(mouse.key_hook_handle, nCode, wParam, lParam);
-}
-//-------- End of function key_hook_proc --------//
 
 
 //--------- Begin of Mouse::poll_event ----------//

@@ -144,9 +144,6 @@ private:
 	int 	tail_ptr;        // tail pointer to the event buffer
 
 public:
-	HHOOK  key_hook_handle;
-	// HANDLE direct_mouse_handle;
-
 	char   handle_flicking;
 
 	//------- real-time mouse state -------//
