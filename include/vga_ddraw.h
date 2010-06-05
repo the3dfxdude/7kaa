@@ -52,14 +52,14 @@ public:
 	VgaDDraw();
 	~VgaDDraw();
 
-	BOOL   init();
+	int    init();
         int    init_front(VgaBuf*);
         int    init_back(VgaBuf*, DWORD =0, DWORD =0);
 	void   deinit();
 
 	char   is_inited()  { return dd_obj!=NULL; }
 
-	BOOL   init_pal(const char* fileName);
+	int    init_pal(const char* fileName);
 	void   refresh_palette();
 
 	void   activate_pal(VgaBuf*);
@@ -74,10 +74,10 @@ public:
 	Surface* create_surface(LPDDSURFACEDESC ddsd);
 
 private:
-	BOOL   init_dd();
+	int    init_dd();
 	void   init_gray_remap_table();
         void   init_color_table();
-	BOOL   set_mode();
+	int    set_mode();
 	void   release_pal();
 	int    create_window();
 	void   destroy_window();

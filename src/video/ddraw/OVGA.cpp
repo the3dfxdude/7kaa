@@ -75,7 +75,7 @@ VgaDDraw::~VgaDDraw()
 
 //-------- Begin of function VgaDDraw::init ----------//
 
-BOOL VgaDDraw::init()
+int VgaDDraw::init()
 {
    const char* warnStr = "Warning: Due to the low memory of your display card, "
                    "you may experience problems when you quit the game or "
@@ -84,12 +84,12 @@ BOOL VgaDDraw::init()
                    "to 800x600 256 color mode before running the game.";
 
    if( !create_window() )
-      return FALSE;
+      return 0;
 
    //--------- Initialize DirectDraw object --------//
 
    if( !init_dd() )
-      return FALSE;
+      return 0;
 
    // get current display mode
    DDSURFACEDESC ddsd;
@@ -127,19 +127,19 @@ BOOL VgaDDraw::init()
    }
 
    if( !set_mode() )
-      return FALSE;
+      return 0;
 
-   return TRUE;
+   return 1;
 }
 //-------- End of function VgaDDraw::init ----------//
 
 
 //-------- Begin of function VgaDDraw::init_dd ----------//
 
-BOOL VgaDDraw::init_dd()
+int VgaDDraw::init_dd()
 {
    if(dd_obj)        // the Direct Draw object has been initialized already
-      return TRUE;
+      return 1;
 
    //--------- Create direct draw object --------//
 
@@ -153,7 +153,7 @@ BOOL VgaDDraw::init_dd()
 #ifdef DEBUG
       debug_msg("DirectDrawCreate failed err=%d", rc);
 #endif
-      return FALSE;
+      return 0;
    }
 
    //-------- Query DirectDraw2 interface --------//
@@ -167,12 +167,12 @@ BOOL VgaDDraw::init_dd()
       debug_msg("Query DirectDraw2 failed err=%d", rc);
 #endif
       dd1Obj->Release();
-      return FALSE;
+      return 0;
    }
 
    dd1Obj->Release();
 
-   return TRUE;
+   return 1;
 }
 //-------- End of function VgaDDraw::init_dd ----------//
 
@@ -246,7 +246,7 @@ int VgaDDraw::init_back( VgaBuf *b, DWORD w, DWORD h )
 
 //-------- Begin of function VgaDDraw::set_mode ----------//
 
-BOOL VgaDDraw::set_mode()
+int VgaDDraw::set_mode()
 {
    DWORD   dwStyle;
    HRESULT rc;
@@ -276,7 +276,7 @@ BOOL VgaDDraw::set_mode()
 #ifdef DEBUG
       debug_msg("SetCooperativeLevel failed err=%d", rc);
 #endif
-      return FALSE;
+      return 0;
    }
 
    //-------------- set Direct Draw mode ---------------//
@@ -293,14 +293,14 @@ BOOL VgaDDraw::set_mode()
 #ifdef DEBUG
       debug_msg("SetMode failed err=%d", rc);
 #endif
-      return FALSE;
+      return 0;
    }
 
    //----------- display the system cursor -------------//
 
    SetCursor(NULL);
 
-   return TRUE;
+   return 1;
 }
 //-------- End of function VgaDDraw::set_mode ----------//
 
@@ -333,7 +333,7 @@ void VgaDDraw::deinit()
 // Loads the default game palette specified by fileName. Creates the ddraw
 // palette.
 //
-BOOL VgaDDraw::init_pal(const char* fileName)
+int VgaDDraw::init_pal(const char* fileName)
 {
    char palBuf[256][3];
    File palFile;
@@ -357,13 +357,13 @@ BOOL VgaDDraw::init_pal(const char* fileName)
       HRESULT rc = dd_obj->CreatePalette( DDPCAPS_8BIT, game_pal, &dd_pal, NULL );
 
       if( rc != DD_OK )
-         return FALSE;
+         return 0;
    }
 
    init_color_table();
    init_gray_remap_table();
 
-   return TRUE;
+   return 1;
 }
 //----------- End of function VgaDDraw::init_pal ----------//
 
