@@ -22,6 +22,7 @@
 // Description : custom slide bar
 
 
+#include <ALL.h>
 #include <OMOUSE.h>
 #include <OSLIDCUS.h>
 
