@@ -1,7 +1,16 @@
 ## compiler flags ##
-@defines = qw( AMPLUS USE_DDRAW );
+@defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
+}
+if (defined($video_backend)) {
+  if ($video_backend =~ /sdl/i) {
+    push (@defines, 'USE_SDL');
+  } elsif ($video_backend =~ /ddraw/i) {
+    push (@defines, 'USE_DDRAW');
+  } elsif ($video_backend =~ /none/i) {
+    push (@defines, 'USE_NOVIDEO');
+  }
 }
 ## end compiler flags ##
 

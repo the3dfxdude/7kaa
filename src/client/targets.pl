@@ -1,7 +1,7 @@
 my @obj_files;
 
 ## compiler flags ##
-@defines = qw( AMPLUS USE_DDRAW USE_DINPUT );
+@defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
@@ -13,6 +13,24 @@ if (defined($audio_backend)) {
     push (@defines, 'USE_OPENAL');
   } elsif ($audio_backend =~ /dsound/i) {
     push (@defines, 'USE_DSOUND');
+  }
+}
+if (defined($video_backend)) {
+  if ($video_backend =~ /sdl/i) {
+    push (@defines, 'USE_SDL');
+  } elsif ($video_backend =~ /ddraw/i) {
+    push (@defines, 'USE_DDRAW');
+  } elsif ($video_backend =~ /none/i) {
+    push (@defines, 'USE_NOVIDEO');
+  }
+}
+if (defined($input_backend)) {
+  if ($input_backend =~ /sdl/i) {
+    push (@defines, 'USE_SDL');
+  } elsif ($input_backend =~ /dinput/i) {
+    push (@defines, 'USE_DINPUT');
+  } elsif ($input_backend =~ /none/i) {
+    push (@defines, 'USE_NOINPUT');
   }
 }
 ## end compiler flags ##

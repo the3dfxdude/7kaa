@@ -27,6 +27,10 @@
 
 #if defined(USE_DDRAW)
 #include <surface_ddraw.h>
+#elif defined(USE_SDL)
+#include <surface_sdl.h>
+#elif defined(USE_NOVIDEO)
+#include <surface_none.h>
 #else
 #error "A video backend must be specified."
 #endif

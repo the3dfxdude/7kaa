@@ -12,6 +12,8 @@ my %cfg = (
   no_asm => 0,
   build_server => 1,
   audio_backend => "OpenAL"
+  video_backend => "ddraw"
+  input_backend => "dinput"
 );
 
 # parse command line args
