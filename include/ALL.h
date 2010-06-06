@@ -55,12 +55,6 @@
 #define MAX(a,b)        (((a) > (b)) ? (a) : (b))
 #define MIN(a,b)        (((a) < (b)) ? (a) : (b))
 
-//---------- Debug functions -------//
-
-#ifdef DEBUG
-void __cdecl debug_msg( const char* fmt, ... );
-#endif
-
 //---------- define class Mem ----------//
 
 struct MemInfo;

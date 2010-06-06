@@ -381,29 +381,6 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 //---------- End of function WinMain ----------//
 
 
-//----------- Begin of function Msg ----------//
-//
-// Routine for displaying debug messages
-//
-
-#ifdef DEBUG
-
-void __cdecl debug_msg( const char* fmt, ... )
-{
-    char buff[256];
-
-    lstrcpy( buff, "SEVEN KINGDOMS: " );
-    wvsprintf( buff+lstrlen(buff), fmt, (char*)(&fmt+1) );
-    lstrcat( buff, "\r\n" );
-
-    OutputDebugString( buff );
-}
-
-#endif
-
-//----------- End of function Msg ----------//
-
-
 //------- Begin of function extra_error_handler -----------//
 
 static void extra_error_handler()

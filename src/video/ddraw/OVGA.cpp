@@ -38,6 +38,9 @@
 // ##### begin Gilbert 16/9 #######//
 #include <OVGALOCK.h>
 // ##### end Gilbert 16/9 #######//
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Vga);
 
 //------ Define static class member vars ---------//
 
@@ -150,9 +153,7 @@ int VgaDDraw::init_dd()
 
    if( rc != DD_OK )
    {
-#ifdef DEBUG
-      debug_msg("DirectDrawCreate failed err=%d", rc);
-#endif
+      ERR("DirectDrawCreate failed err=%d", rc);
       return 0;
    }
 
@@ -163,9 +164,7 @@ int VgaDDraw::init_dd()
    DEBUG_LOG("Query DirectDraw2 finish");
    if( rc != DD_OK )
    {
-#ifdef DEBUG
-      debug_msg("Query DirectDraw2 failed err=%d", rc);
-#endif
+      ERR("Query DirectDraw2 failed err=%d", rc);
       dd1Obj->Release();
       return 0;
    }
@@ -273,9 +272,7 @@ int VgaDDraw::set_mode()
 
    if( rc != DD_OK )
    {
-#ifdef DEBUG
-      debug_msg("SetCooperativeLevel failed err=%d", rc);
-#endif
+      ERR("SetCooperativeLevel failed err=%d", rc);
       return 0;
    }
 
@@ -290,9 +287,7 @@ int VgaDDraw::set_mode()
 
    if( rc != DD_OK )
    {
-#ifdef DEBUG
-      debug_msg("SetMode failed err=%d", rc);
-#endif
+      ERR("SetMode failed err=%d", rc);
       return 0;
    }
 

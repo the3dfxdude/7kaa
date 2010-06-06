@@ -86,10 +86,6 @@ void VgaBuf::lock_buf()
 			err_now( "VgaBuf::lock_buf() locking front buffer failed." );
 		else
 			err_now( "VgaBuf::lock_buf() locking back buffer failed." );
-
-#ifdef DEBUG
-		debug_msg( "Failed to lock the buffer." );
-#endif
 	}
 }
 //--------------- End of function VgaBuf::lock_buf --------------//
@@ -113,10 +109,6 @@ void VgaBuf::unlock_buf()
 			err_now( "VgaBuf::unlock_buf() unlocking front buffer failed." );
 		else
 			err_now( "VgaBuf::unlock_buf() unlocking back buffer failed." );
-
-#ifdef DEBUG
-		debug_msg( "Failed to unlock the buffer." );
-#endif
 	}
 }
 //--------------- End of function VgaBuf::unlock_buf --------------//
