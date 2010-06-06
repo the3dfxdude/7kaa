@@ -11,9 +11,10 @@ my %cfg = (
   debug => 0,
   no_asm => 0,
   build_server => 1,
-  audio_backend => "OpenAL"
-  video_backend => "ddraw"
-  input_backend => "dinput"
+  audio_backend => "OpenAL",
+  video_backend => "ddraw",
+  input_backend => "dinput",
+  disable_wine => 0
 );
 
 # parse command line args
@@ -28,6 +29,8 @@ foreach my $i (@ARGV) {
     $cfg{build_server} = 0;
   } elsif ($i =~ /^--force-wine$/) {
     @wine_ver_req = (0, 0, 0);
+  } elsif ($i =~ /^--disable-wine$/) {
+    $cfg{disable_wine} = 1;
   } elsif ($i =~ /^--with-audio-backend=(.*)$/) {
     $cfg{audio_backend} = $1;
   }
@@ -51,12 +54,14 @@ unless (check_gcc_version()) {
 
 if ($cfg{platform} =~ /^linux/) {
 
-  # search for wine
-  $cfg{wine_prefix} = detect_wine_prefix();
+  if (!$cfg{disable_wine}) {
+    # search for wine
+    $cfg{wine_prefix} = detect_wine_prefix();
 
-  unless (defined($cfg{wine_prefix})) {
-    print "Wine-" . join('.', @wine_ver_req) . " or later is required.\n";
-    exit 1;
+    unless (defined($cfg{wine_prefix})) {
+      print "Wine-" . join('.', @wine_ver_req) . " or later is required.\n";
+      exit 1;
+    }
   }
 
 } elsif ($cfg{platform} =~ /^win32$/) {
@@ -157,13 +162,11 @@ sub detect_wine_prefix {
   # Check the wine version
   print "Detecting wine version: ";
   my $wine_version = `wine --version`;
-  my @ver = $wine_version =~ /^wine-(\d+)\.(\d+)\.(\d+)/;
-  unless (@ver == 3) {
-    print "not found\n";
-    return undef;
-  }
-  print join('.', @ver);
-  if (version_check(\@ver, \@wine_ver_req)) {
+  my @ver = split ('-', $wine_version);
+  my @dots = split ('\.', $ver[1]);
+  defined($dots[2]) or $dots[2] = 0;
+  print join('.', @dots);
+  if (version_check(\@dots, \@wine_ver_req)) {
     print " ok\n";
   } else {
     print " failed\n";
