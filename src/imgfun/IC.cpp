@@ -42,7 +42,7 @@
 // int  x2,y2       - the bottom right vertex of the bar
 //
 
-void _stdcall IMGcopy(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x1, int y1, int x2, int y2)
+void IMGcall IMGcopy(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x1, int y1, int x2, int y2)
 {
 	int width = x2 - x1 + 1;
 	int height = y2 - y1 + 1;

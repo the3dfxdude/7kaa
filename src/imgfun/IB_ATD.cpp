@@ -84,7 +84,7 @@ extern void SeekForward2(int *ppixelsToSkip, int* pesi, char*bitmapBuf, int seek
 //
 //-------------------------------------------------
 
-void _stdcall IMGbltAreaTransDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
+void IMGcall IMGbltAreaTransDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
 {
 	int destline = (desY+srcY1)*pitch + (desX+srcX1);
 	int bitmapWidth = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);

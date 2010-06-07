@@ -48,7 +48,7 @@
 // <char..> bitmap image
 //
 //-------------------------------------------------
-void _stdcall IMGblt32x32(char*imageBuf,int pitch,int x,int y,char*bitmapBuf)
+void IMGcall IMGblt32x32(char*imageBuf,int pitch,int x,int y,char*bitmapBuf)
 {
 	int destline = y*pitch + x;
 	int bitmapWidth = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);

@@ -56,7 +56,7 @@
 //-------------------------------------------------
 
 // [alex] TODO: use a struct for bitmaps
-void _stdcall IMGbltArea(char* imageBuf,int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
+void IMGcall IMGbltArea(char* imageBuf,int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
 {
 	int dest = (desY+srcY1) * pitch + (desX+srcX1);
 	int bitmapWidth = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);

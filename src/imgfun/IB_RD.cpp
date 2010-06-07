@@ -66,7 +66,7 @@
 //
 //-------------------------------------------------
 
-void _stdcall IMGremapDecompress(char* desPtr, char* srcPtr, char* colorTable)
+void IMGcall IMGremapDecompress(char* desPtr, char* srcPtr, char* colorTable)
 {
 	int width = ((unsigned char*)srcPtr)[0] + (((unsigned char*)srcPtr)[1]<<8);
 	int height = ((unsigned char*)srcPtr)[2] + (((unsigned char*)srcPtr)[3]<<8);

@@ -52,7 +52,7 @@
 //-------------------------------------------------
 
 
-void _stdcall IMGbltTrans(char* imageBuf, int pitch, int x, int y, char* bitmapPtr)
+void IMGcall IMGbltTrans(char* imageBuf, int pitch, int x, int y, char* bitmapPtr)
 {
 	int destline = y * pitch + x;
 	int width = ((unsigned char*)bitmapPtr)[0] + (((unsigned char*)bitmapPtr)[1]<<8);

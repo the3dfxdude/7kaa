@@ -41,7 +41,7 @@
 // int  x2,y2       - the bottom right vertex of the bar
 // char *colorTable - the pointer to the remap table
 //
-void _stdcall IMGremapBar(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,unsigned char *colorTable)
+void IMGcall IMGremapBar(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,unsigned char *colorTable)
 {
 	int dest = y1 * pitch + x1;
 	int width = x2 - x1 + 1;

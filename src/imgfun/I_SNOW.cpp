@@ -43,7 +43,7 @@
 // int  x1,y1       - the top left vertex of the bar
 // int  randSeed    - random seed
 // int  seaLevel    - draw white dot if height > seaLevel
-void _stdcall IMGsnow32x32(char*imageBuf,int pitch,int x1,int y1,int randSeed,int seaLevel)
+void IMGcall IMGsnow32x32(char*imageBuf,int pitch,int x1,int y1,int randSeed,int seaLevel)
 {
 	int destline = y1*pitch + x1;
 	for (int j=0; j<32; j+=2, destline+=2*pitch)

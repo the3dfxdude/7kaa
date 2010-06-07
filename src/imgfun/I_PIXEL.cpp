@@ -37,7 +37,7 @@
 //
 //-------------------------------------------------
 
-void _stdcall IMGpixel32x32(char* imageBuf,int pitch,int x,int y,int color)
+void IMGcall IMGpixel32x32(char* imageBuf,int pitch,int x,int y,int color)
 {
 	int line_start;
 	for (int j=0; j<32; j+=2)

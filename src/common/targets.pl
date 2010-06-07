@@ -3,6 +3,9 @@
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
+if (defined($no_asm) && $no_asm) {
+  push (@defines, "NO_ASM");
+}
 if (defined($video_backend)) {
   if ($video_backend =~ /sdl/i) {
     push (@defines, 'USE_SDL');

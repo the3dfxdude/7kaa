@@ -50,7 +50,7 @@
 // <char..> bitmap image
 //
 //-------------------------------------------------
-void _stdcall IMGblt2(char*imageBuf,int pitch,int x,int y,int bitmapWidth,int bitmapHeight,char*bitmapBuf)
+void IMGcall IMGblt2(char*imageBuf,int pitch,int x,int y,int bitmapWidth,int bitmapHeight,char*bitmapBuf)
 {
 	int destline = y*pitch + x;
 	int esi = 0;		// [Alex] NOTE: bitmapBuf is actually the RAW bitmap data, ignore the comments above!!

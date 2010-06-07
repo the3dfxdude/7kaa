@@ -43,7 +43,7 @@
 // int  x2,y2       - the bottom right vertex of the bar
 // char *colorTable - the pointer to the remap table
 //
-void _stdcall IMGcopyRemap(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x1, int y1, int x2, int y2, unsigned char* colorTable)
+void IMGcall IMGcopyRemap(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x1, int y1, int x2, int y2, unsigned char* colorTable)
 {
 	int width = x2 - x1 + 1;
 	int height = y2 - y1 + 1;

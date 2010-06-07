@@ -38,7 +38,7 @@ Converted to C++
 // int dataLen            - length of data
 //
 
-CRC_TYPE _stdcall crc8(unsigned char * dataBuf, int dataLen)
+CRC_TYPE IMGcall crc8(unsigned char * dataBuf, int dataLen)
 {
 	int crc = 0;
 	if (dataLen > 0)

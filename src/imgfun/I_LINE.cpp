@@ -45,7 +45,7 @@ inline void line_point (char* imageBuf, int pitch, int w, int h, int x, int y, i
 // int  x2,y2 	 - the bottom right vertex of the bar
 // int  color 	 - the color of the line
 //
-void _stdcall IMGline(char* imageBuf,int pitch,int w, int h, int x1,int y1,int x2,int y2,int color)
+void IMGcall IMGline(char* imageBuf,int pitch,int w, int h, int x1,int y1,int x2,int y2,int color)
 {
 	int acc = 0;		// accumulator for the overflow (bresenham's line algorithm)
 	int dirx;

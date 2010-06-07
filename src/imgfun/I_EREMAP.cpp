@@ -121,7 +121,7 @@ void IMGremap16x16 (char *imageBuf, int pitch, int x, int y,  char* maskPtr, cha
 // [alex] TODO: Merge this with I_EMASK, since they are so similar
 // TODO: multiply the decision by the size of the masks, rather than
 //   defining separate arrays for I_EMASK & I_EREMAP
-void _stdcall IMGexploreRemap32x32( char *imageBuf,int pitch, int x, int y, char *maskPtr, char **colorTableArray, int northRow, int thisRow, int southRow)
+void IMGcall IMGexploreRemap32x32( char *imageBuf,int pitch, int x, int y, char *maskPtr, char **colorTableArray, int northRow, int thisRow, int southRow)
 {
 	int maskLookup;
 	// NORTH-WEST quadrant decision

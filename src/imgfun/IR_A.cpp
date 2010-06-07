@@ -40,7 +40,7 @@
 // int  srcX1, srcY1 srcX2, srcY2 - where to get on the source buffer
 //
 
-void _stdcall IMGremapArea(char*imageBuf,int pitch,int desX,int desY,char*bitmapPtr,unsigned char**colorTableArray,int srcX1,int srcY1,int srcX2,int srcY2)
+void IMGcall IMGremapArea(char*imageBuf,int pitch,int desX,int desY,char*bitmapPtr,unsigned char**colorTableArray,int srcX1,int srcY1,int srcX2,int srcY2)
 {
 	int dest = (desY+srcY1) * pitch + (desX+srcX1);
 	int bitmapWidth = ((unsigned char*)bitmapPtr)[0] + (((unsigned char*)bitmapPtr)[1]<<8);

@@ -54,7 +54,7 @@
 //
 //-------------------------------------------------
 // Note: this function is used by the mouse cursor
-void _stdcall IMGbltAreaTrans(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
+void IMGcall IMGbltAreaTrans(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
 {
 	int destline = (desY+srcY1)*pitch + (desX+srcX1);
 	int bitmapWidth = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);

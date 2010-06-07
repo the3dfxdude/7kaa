@@ -49,7 +49,7 @@
 //
 //-------------------------------------------------
 
-void _stdcall IMGread(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,char* bitmapPtr)
+void IMGcall IMGread(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,char* bitmapPtr)
 {
 	int width = x2-x1 + 1;
 	int height = y2-y1 + 1;

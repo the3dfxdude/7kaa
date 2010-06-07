@@ -70,7 +70,7 @@
 //
 //-------------------------------------------------
 
-void _stdcall IMGbltTransDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf)
+void IMGcall IMGbltTransDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf)
 {
 	int destline = desY * pitch + desX;
 	int width = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);

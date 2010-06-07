@@ -53,7 +53,7 @@
 //
 //-------------------------------------------------
 
-void _stdcall IMGjoinTrans(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x, int y, char* bitmapPtr)
+void IMGcall IMGjoinTrans(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x, int y, char* bitmapPtr)
 {
 	int destline = y * imgPitch + x;
 	int backline = y * backPitch + x;

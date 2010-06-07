@@ -42,7 +42,7 @@
 // char **colorTableArray - the pointer to the scale 0 of remap table array
 //
 
-void _stdcall IMGremapHMirror(char* imageBuf, int pitch, int x, int y, char* bitmapPtr, unsigned char** colorTableArray)
+void IMGcall IMGremapHMirror(char* imageBuf, int pitch, int x, int y, char* bitmapPtr, unsigned char** colorTableArray)
 {
 	int destline = y * pitch + x;
 	int width = ((unsigned char*)bitmapPtr)[0] + (((unsigned char*)bitmapPtr)[1]<<8);

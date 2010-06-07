@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,21 +18,26 @@
  *
  */
 
-// Filename    : CRC.H
-// Description : header of assembly function crc.asm
+//Filename    : asmfun.h
+//Description : Header file for asm compilation
 
-#ifndef __CRC_H
-#define __CRC_H
+#ifndef _ASMFUN_H
+#define _ASMFUN_H
 
-#include <asmfun.h>
 
-typedef unsigned char CRC_TYPE;
-const unsigned int CRC_LEN = sizeof(CRC_TYPE);
+#if (defined(NO_ASM))
 
-extern "C"
-{
-	CRC_TYPE IMGcall crc8(unsigned char *, int) __asmsym__("_crc8");
-}
+#define __asmsym__(s)
+#define IMGcall
 
+#else // ASM Requires Wine or Win32 and JWasm!!
+
+#include <windows.h>
+
+#define __asmsym__(s) __asm__(s)
+#define IMGcall _stdcall
 
 #endif
+
+
+#endif // _ASMFUN_H

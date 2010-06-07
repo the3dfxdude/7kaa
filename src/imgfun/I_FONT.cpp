@@ -64,7 +64,7 @@
 //
 // note (alex streit): the original ASM version was optimized for LODSW, which uses 16bits.
 // when converting to C++ I went with the endian independent "unsigned char"
-void _stdcall IMGputBitFont(char* imageBuf,int pitch,int x,int y,int bitmapWidth,int fontOffset,int fontWidth,int fontHeight,char* bitmapPtr,int foreColor,int backColor)
+void IMGcall IMGputBitFont(char* imageBuf,int pitch,int x,int y,int bitmapWidth,int fontOffset,int fontWidth,int fontHeight,char* bitmapPtr,int foreColor,int backColor)
 {
 	// the font is stored using a 1-bit pattern (8 bits to a byte)
 	int srcBit = fontOffset % BITS_PER_BYTE;	// was (fontOffset&0x7)

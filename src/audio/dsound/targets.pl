@@ -5,6 +5,9 @@ my @defines;
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
+if (defined($no_asm) && $no_asm) {
+  push (@defines, "NO_ASM");
+}
 ## end compiler flags ##
 
 ## include paths ##

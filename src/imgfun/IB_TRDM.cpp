@@ -70,7 +70,7 @@
 // <char..> bitmap image
 //
 //-------------------------------------------------
-void _stdcall IMGbltTransRemapDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable)
+void IMGcall IMGbltTransRemapDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable)
 {
 	int destline = desY * pitch + desX;
 	int width = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);

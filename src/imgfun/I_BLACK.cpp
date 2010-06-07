@@ -42,7 +42,7 @@
 // int  pitch       - the pitch of the display surface buffer
 // int  x1,y1       - the top left vertex of the bar
 
-void _stdcall IMGblack32x32(char* imageBuf,int pitch,int x1,int y1)
+void IMGcall IMGblack32x32(char* imageBuf,int pitch,int x1,int y1)
 {
 	int dest = y1*pitch + x1;
 	for (int y=0; y<FIXED_WIDTH; ++y, dest+=pitch)

@@ -119,7 +119,7 @@ void IMGmask16x16 (char *imageBuf, int pitch, int x, int y,  char* maskPtr)
 //
 //--------------------------------------------------------
 
-void _stdcall IMGexploreMask32x32(char *imageBuf,int pitch, int x, int y, char *maskPtr, int northRow, int thisRow, int southRow)
+void IMGcall IMGexploreMask32x32(char *imageBuf,int pitch, int x, int y, char *maskPtr, int northRow, int thisRow, int southRow)
 {
 	int maskLookup;
 	// NORTH-WEST quadrant decision

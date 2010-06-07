@@ -41,7 +41,7 @@
 // int  x2,y2       - the bottom right vertex of the bar
 // int  color       - the color of the line
 //
-void _stdcall IMGbar(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,int color)
+void IMGcall IMGbar(char* imageBuf,int pitch,int x1,int y1,int x2,int y2,int color)
 {
 	int dest = y1 * pitch + x1;
 	int width = x2 - x1 + 1;

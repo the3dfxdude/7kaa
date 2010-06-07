@@ -52,7 +52,7 @@
 // <char..> bitmap image
 //
 //-------------------------------------------------
-void _stdcall IMGbltTransRemap(char* imageBuf, int pitch, int x, int y, char* bitmapBuf, char*colorTable)
+void IMGcall IMGbltTransRemap(char* imageBuf, int pitch, int x, int y, char* bitmapBuf, char*colorTable)
 {
 	int destline = y*pitch + x;
 	int bitmapWidth = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);

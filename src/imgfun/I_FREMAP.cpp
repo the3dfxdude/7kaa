@@ -199,7 +199,7 @@ void decideBarRemap(char*imageBuf, int pitch, int x, int y, char**colorTableArra
 //
 //--------------------------------------------------------
 
-void _stdcall IMGfogRemap32x32(char *imageBuf, int pitch, int x, int y, char**colorTableArray, unsigned char*northRow, unsigned char*thisRow, unsigned char*southRow)
+void IMGcall IMGfogRemap32x32(char *imageBuf, int pitch, int x, int y, char**colorTableArray, unsigned char*northRow, unsigned char*thisRow, unsigned char*southRow)
 {
 	decideBarRemap(imageBuf, pitch, x, y, colorTableArray, northRow[2], northRow[1], thisRow[1], thisRow[2]);
 	decideBarRemap(imageBuf, pitch, x+16, y, colorTableArray, northRow[1], northRow[0], thisRow[0], thisRow[1]);

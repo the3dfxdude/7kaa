@@ -72,7 +72,7 @@
 //-------------------------------------------------
 
 // [alex] TODO: replace char* bitmaps with structs, change method signature and get rid of the unsigned override
-void _stdcall IMGbltTransRemapDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable)
+void IMGcall IMGbltTransRemapDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable)
 {
 	int destline = desY * pitch + desX;
 	int width = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1]<<8);
