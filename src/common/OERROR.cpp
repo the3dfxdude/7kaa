@@ -25,7 +25,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
+
+#ifdef __WIN32__
 #include <windows.h>
+#endif
 
 #include <OSYS.h>
 #include <OBOX.h>
@@ -113,7 +116,9 @@ void Error::internal(char* errMsg,const char* fileName,int lineNum)
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
+#ifdef __WIN32__
 	OutputDebugString( strBuf );
+#endif
 
 	if( vga.is_inited() )
 		box.msg( strBuf, 0 );
@@ -147,7 +152,9 @@ void Error::mem()
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
+#ifdef __WIN32__
 	OutputDebugString( strBuf );
+#endif
 
 	if( vga.is_inited() )
 		box.msg( strBuf, 0 );
@@ -187,7 +194,9 @@ void Error::msg( const char *format, ... )
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
+#ifdef __WIN32__
 	OutputDebugString( strBuf );
+#endif
 
 	if( vga.is_inited() )
 		box.msg( strBuf, 0 );
@@ -230,7 +239,9 @@ void Error::run( const char *format, ... )
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
+#ifdef __WIN32__
 	OutputDebugString( strBuf );
+#endif
 
 	if( vga.is_inited() )
 		box.msg( strBuf, 0 );
