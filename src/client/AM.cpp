@@ -21,13 +21,14 @@
 //Filename    : AM.CPP
 //Description : Ambition Entry Program
 
-#include <windows.h>
+#include <ALL.h>
+
 #include <initguid.h>
+
 #ifdef ENABLE_INTRO_VIDEO
 #include <dshow.h>
 #endif
 
-#include <ALL.h>
 #include <OANLINE.h>
 #include <OAUDIO.h>
 #include <OBATTLE.h>
