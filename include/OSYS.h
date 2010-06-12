@@ -24,13 +24,7 @@
 #ifndef __OSYS_H
 #define __OSYS_H
 
-#ifndef __ALL_H
 #include <ALL.h>
-#endif
-
-#ifndef __WINDOWS_
-#include <windows.h>
-#endif
 
 //------ Define common data buffer size  ------//
 
