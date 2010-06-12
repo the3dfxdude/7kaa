@@ -24,6 +24,7 @@
 #ifndef __VGABUF_H
 #define __VGABUF_H
 
+#include <win32_compat.h>
 #include <IMGFUN.h>
 #include <surface.h>
 

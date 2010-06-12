@@ -22,7 +22,6 @@
 //Description : Object Directory
 
 #include <string.h>
-#include <windows.h>
 #include <ODIR.h>
 
 
@@ -53,6 +52,7 @@ Directory::Directory() : DynArray( sizeof(FileInfo), 20 )
 int Directory::read(const char *fileSpec, int sortName)
 {
    FileInfo				fileInfo;
+#ifndef NO_WINDOWS  // FIXME
 	WIN32_FIND_DATA	findData;
    
    //----------- get the file list -------------//
@@ -80,6 +80,9 @@ int Directory::read(const char *fileSpec, int sortName)
       quick_sort( sort_file_function );
 
    return size();       // DynArray::size()
+#else
+   return 0;
+#endif
 }
 //-------- End of function Directory::read -------//
 

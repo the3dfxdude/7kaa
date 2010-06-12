@@ -557,7 +557,6 @@ static void test_lzw()
 //
 void Sys::main_loop(int isLoadedGame)
 {
-   MSG msg;
    // #### begin Gilbert 31/10 #####//
    // int rc;
    // #### end Gilbert 31/10 #####//
@@ -2750,6 +2749,7 @@ void Sys::get_cdrom_drive()
 
    cdrom_drive = 0;
 
+#ifndef NO_WINDOWS  // FIXME
    driveStr[1] = ':';
    driveStr[2] = '\\';
    driveStr[3] = 0;
@@ -2771,6 +2771,7 @@ void Sys::get_cdrom_drive()
          }
       }
    }
+#endif
 }
 //--------- End of function Sys::get_cdrom_drive ---------------//
 

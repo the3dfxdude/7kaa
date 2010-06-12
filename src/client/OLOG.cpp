@@ -26,7 +26,9 @@
 #include <OLOG.h>
 #include <stdio.h>
 #include <OFILE.h>
+#ifndef NO_WINDOWS
 #include <windows.h> // OutputDebugString
+#endif
 
 
 // -------- begin of function Log::Log ----------//
@@ -117,7 +119,9 @@ void Log::debug_log(const char *msg)
 	String s;
 	s = msg; 
 	s += "\r\n"; 
+#ifndef NO_WINDOWS
 	OutputDebugString(s);
+#endif
 }
 
 
@@ -126,6 +130,8 @@ void Log::debug_log(int n)
 	String s;
 	s = n; 
 	s += "\r\n"; 
+#ifndef NO_WINDOWS
 	OutputDebugString(s);
+#endif
 }
 // -------- end of function Log::debug_log ----------//

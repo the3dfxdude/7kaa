@@ -1,7 +1,8 @@
 ## libraries to link ##
-@libs = qw(
-  ole32 msvcrt winmm
-);
+my @libs;
+unless ($disable_wine) {
+  push (@libs, 'ole32','msvcrt','winmm');
+}
 ## end libraries to link ##
 
 ## library paths ##
@@ -70,7 +71,11 @@ if (defined($input_backend)) {
 
 ## build game client ##
 @client_objs = include_targets('client/targets.pl');
-link_exe ('7kaa.exe',
+my $client_exe_name = '7kaa';
+unless ($disable_wine) {
+  $client_exe_name .= '.exe';
+}
+link_exe ($client_exe_name,
           [@common_objs, @audio, @input, @video, @imgfun, @client_objs],
           \@libs,
           \@lib_dirs);
@@ -78,8 +83,12 @@ link_exe ('7kaa.exe',
 
 ## build game server ##
 if ($build_server) {
+  my $server_exe_name = '7kaa-server';
+  unless ($disable_wine) {
+    $server_exe_name .= '.exe';
+  }
   @server_objs = include_targets('server/targets.pl');
-  link_exe ('7kaa-server.exe',
+  link_exe ($server_exe_name,
             [@common_objs, @audio, @input, @video, @imgfun, @server_objs],
             \@libs,
             \@lib_dirs);

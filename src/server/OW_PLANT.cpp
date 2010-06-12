@@ -30,6 +30,7 @@
 #include <OTERRAIN.h>
 #include <ALL.h>
 #include <math.h>
+#include <stdlib.h>
 
 
 //------------ Define constant ---------------//

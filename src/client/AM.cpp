@@ -23,7 +23,9 @@
 
 #include <ALL.h>
 
+#ifndef NO_WINDOWS
 #include <initguid.h>
+#endif
 
 #ifdef ENABLE_INTRO_VIDEO
 #include <dshow.h>
@@ -302,8 +304,12 @@ static void extra_error_handler();
 // DEBUG3 - debugging some functions (e.g. Location::get_loc()) which
 //          will cause major slowdown.
 //
+#ifdef NO_WINDOWS
+int main()
+#else
 int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 						  LPSTR lpCmdLine, int nCmdShow)
+#endif
 {
 	//try to read from CONFIG.DAT, moved to AM.CPP
 
@@ -326,7 +332,9 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	//----------- play movie ---------------//
 
 	sys.set_game_dir();
+#ifndef NO_WINDOWS
 	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )	// skip if launch from lobby
+#endif
 	{
 		String movieFileStr;
 		movieFileStr = DIR_MOVIE;
@@ -367,12 +375,16 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	game.demo_disp_logo();
    game.main_menu();
 #else
+#ifndef NO_WINDOWS
 	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )
+#endif // !NO_WINDOWS
 	   game.main_menu();
+#ifndef NO_WINDOWS
 #ifndef DISABLE_MULTI_PLAYER
 	else
 		game.multi_player_menu(lpCmdLine);		// if detect launched from lobby
 #endif // DISABLE_MULTI_PLAYER
+#endif // !NO_WINDOWS
 #endif
 
    sys.deinit();

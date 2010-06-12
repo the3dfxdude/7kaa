@@ -24,11 +24,9 @@
 #ifndef __ALL_H
 #define __ALL_H
 
-//--------- Include other headers -------//
+#include <win32_compat.h>
 
-#ifndef __WINDOWS_
-#include <windows.h>
-#endif
+//--------- Include other headers -------//
 
 #ifndef __OMISC_H
 #include <OMISC.h>

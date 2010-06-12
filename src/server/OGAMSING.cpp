@@ -39,6 +39,7 @@
 #include <OBUTTCUS.h>
 #include <OCOLTBL.h>
 #include <OGETA.h>
+#include <stdlib.h>
 
 //---------- Define option modes --------//
 
@@ -508,6 +509,7 @@ static int select_option()
 
 	while(1)
 	{
+#ifndef NO_WINDOWS  // FIXME
 		MSG msg;
 		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
 		{
@@ -526,6 +528,7 @@ static int select_option()
 			WaitMessage();
 			continue;
 		}
+#endif
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;

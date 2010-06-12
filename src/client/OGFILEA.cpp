@@ -21,7 +21,12 @@
 //Filename    : OGFILEA.CPP
 //Description : Game File Array
 
+#ifndef NO_WINDOWS
 #include <io.h>
+#else
+#include <unistd.h>
+#endif
+
 #include <KEY.h>
 #include <ODIR.h>
 #include <OSYS.h>
@@ -633,8 +638,12 @@ void GameFile::disp_info(int x, int y)
 
 	SYSTEMTIME sysTime;
 	FILETIME localFileTime;
+#ifndef NO_WINDOWS  //FIXME
 	FileTimeToLocalFileTime( &file_date, &localFileTime );
 	FileTimeToSystemTime( &localFileTime, &sysTime );
+#else
+	memset(&sysTime, 0, sizeof(SYSTEMTIME));
+#endif
 
 	str  = translate.process("File Date: ");
 	str += date.date_str(date.julian(sysTime.wYear, sysTime.wMonth,sysTime.wDay), 1);

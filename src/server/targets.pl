@@ -8,6 +8,9 @@ if (defined($debug) && $debug) {
 if (defined($no_asm) && $no_asm) {
   push (@defines, "NO_ASM");
 }
+if ($disable_wine) {
+  push (@defines, "NO_WINDOWS");
+}
 if (defined($audio_backend)) {
   if ($audio_backend =~ /OpenAL/i) {
     push (@defines, 'USE_OPENAL');
@@ -308,8 +311,11 @@ OW_PLANT.cpp
 OW_ROCK.cpp
 OW_SOUND.cpp
 OW_WALL.cpp
-ico.rc
 );
+unless ($disable_wine) {
+  push (@targets, 'ico.rc');
+}
+
 push (@obj_files, build_targets(\@targets, \@includes, \@defines));
 ## end compile ##
 

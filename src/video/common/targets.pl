@@ -6,6 +6,9 @@ if (defined($debug) && $debug) {
 if (defined($no_asm) && $no_asm) {
   push (@defines, "NO_ASM");
 }
+if ($disable_wine) {
+  push (@defines, "NO_WINDOWS");
+}
 if (defined($audio_backend)) {
   if ($audio_backend =~ /OpenAL/i) {
     push (@defines, 'USE_OPENAL');

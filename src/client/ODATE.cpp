@@ -23,7 +23,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <windowsx.h>
 
 #include <OSTR.h>
 #include <OMISC.h>

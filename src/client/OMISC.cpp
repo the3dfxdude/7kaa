@@ -21,11 +21,13 @@
 //Filename    : OMISC.CPP
 //Description : Object of Misc useful functions
 
+#ifndef NO_WINDOWS
 #include <windows.h>
 #include <windowsx.h>
 #include <mmsystem.h>
-
 #include <dos.h>
+#endif 
+
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
@@ -1135,11 +1137,15 @@ float Misc::round_dec(float inNum)
 //
 int Misc::is_file_exist(const char* fileName)
 {
+#ifndef NO_WINDOWS // FIXME
 	WIN32_FIND_DATA	findData;
 
    HANDLE findHandle = FindFirstFile( fileName, &findData );
 
    return findHandle!=INVALID_HANDLE_VALUE;
+#else
+   return 0;
+#endif
 }
 //---------- End of function Misc::is_file_exist ---------//
 
@@ -1235,7 +1241,11 @@ char* Misc::num_th(int inNum)
 //
 unsigned long Misc::get_time()
 {
+#ifndef NO_WINDOWS // FIXME
 	return timeGetTime();
+#else
+	return 0;
+#endif
 }
 //---------- End of function Misc::get_time ---------//
 

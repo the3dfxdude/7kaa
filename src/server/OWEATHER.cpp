@@ -27,6 +27,7 @@
 #include <ALL.h>
 #include <math.h>
 #include <OWORLDMT.h>
+#include <stdlib.h>
 
 //---------- Define constant -----------//
 #define RAIN_CLOUD 1

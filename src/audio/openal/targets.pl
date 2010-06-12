@@ -17,6 +17,9 @@ if (defined($debug) && $debug) {
 if (defined($no_asm) && $no_asm) {
   push (@defines, "NO_ASM");
 }
+if ($disable_wine) {
+  push (@defines, "NO_WINDOWS");
+}
 ## end compiler flags ##
 
 ## include paths ##

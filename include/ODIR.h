@@ -24,13 +24,8 @@
 #ifndef __ODIR_H
 #define __ODIR_H
 
-#ifndef __WINDOWS_
-#include <windows.h>
-#endif
-
-#ifndef __ODYNARR_H
+#include <win32_compat.h>
 #include <ODYNARR.h>
-#endif
 
 //---------- Define struct FileInfo ----------//
 

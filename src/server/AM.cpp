@@ -23,7 +23,9 @@
 
 #include <ALL.h>
 
+#ifndef NO_WINDOWS
 #include <initguid.h>
+#endif
 
 #include <OANLINE.h>
 #include <OAUDIO.h>
@@ -292,8 +294,12 @@ static void extra_error_handler();
 // DEBUG3 - debugging some functions (e.g. Location::get_loc()) which
 //          will cause major slowdown.
 //
+#ifdef NO_WINDOWS
+int main()
+#else
 int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 						  LPSTR lpCmdLine, int nCmdShow)
+#endif
 {
 	//try to read from CONFIG.DAT, moved to AM.CPP
 
