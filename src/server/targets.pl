@@ -194,8 +194,6 @@ ORAWRES.cpp
 OREBEL.cpp
 OREGION.cpp
 OREGIONS.cpp
-ORES.cpp
-ORESX.cpp
 OROCK.cpp
 OROCKRES.cpp
 OR_AI.cpp

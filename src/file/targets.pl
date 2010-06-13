@@ -34,7 +34,9 @@ if (defined($wine_prefix)) {
 ODB.cpp
 ODIR.cpp
 OFILE.cpp
+ORES.cpp
 ORESDB.cpp
+ORESX.cpp
 file_input_stream.cpp
 file_util.cpp
 mem_input_stream.cpp
