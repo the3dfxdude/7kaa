@@ -32,8 +32,11 @@ if (defined($wine_prefix)) {
 ## compile ##
 @targets = qw(
 OCONFIG.cpp
+ODATE.cpp
 OERROR.cpp
 OMEM.cpp
+OMISC.cpp
+OSTR.cpp
 );
 if (defined($debug) && $debug) {
   push (@targets, 'dbglog.cpp');

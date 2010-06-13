@@ -100,7 +100,6 @@ OBUTTON.cpp
 OB_FLAME.cpp
 OB_HOMIN.cpp
 OB_PROJ.cpp
-ODATE.cpp
 ODYNARR.cpp
 ODYNARRB.cpp
 OEFFECT.cpp
@@ -169,7 +168,6 @@ OLOG.cpp
 OLONGLOG.cpp
 OLZW.cpp
 OMATRIX.cpp
-OMISC.cpp
 OMONSRES.cpp
 OMOUSECR.cpp
 OMP_CRC.cpp
@@ -232,7 +230,6 @@ OSPRTRES.cpp
 OSPY.cpp
 OSPY2.cpp
 OSPYA.cpp
-OSTR.cpp
 OSYS.cpp
 OSYS2.cpp
 OSYS3.cpp
