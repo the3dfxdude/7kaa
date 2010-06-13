@@ -101,7 +101,6 @@ OB_FLAME.cpp
 OB_HOMIN.cpp
 OB_PROJ.cpp
 ODATE.cpp
-ODB.cpp
 ODYNARR.cpp
 ODYNARRB.cpp
 OEFFECT.cpp

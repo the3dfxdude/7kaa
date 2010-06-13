@@ -31,6 +31,7 @@ if (defined($wine_prefix)) {
 
 ## compile ##
 @targets = qw(
+ODB.cpp
 ODIR.cpp
 OFILE.cpp
 ORESDB.cpp
