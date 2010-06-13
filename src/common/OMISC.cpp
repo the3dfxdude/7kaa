@@ -1247,7 +1247,7 @@ unsigned long Misc::get_time()
 	struct timeval tv;
 	int ret;
 	ret = gettimeofday(&tv, NULL);
-	if (!ret)
+	if (ret)
 	{
 		ERR("gettimeofday returned %d\n", ret);
 		return 0;
