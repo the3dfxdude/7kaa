@@ -102,7 +102,6 @@ OB_HOMIN.cpp
 OB_PROJ.cpp
 ODATE.cpp
 ODB.cpp
-ODIR.cpp
 ODYNARR.cpp
 ODYNARRB.cpp
 OEFFECT.cpp

@@ -31,12 +31,12 @@ if (defined($wine_prefix)) {
 
 ## compile ##
 @targets = qw(
-OCONFIG.cpp
-OERROR.cpp
-OMEM.cpp
+ODIR.cpp
+OFILE.cpp
+ORESDB.cpp
+file_input_stream.cpp
+file_util.cpp
+mem_input_stream.cpp
 );
-if (defined($debug) && $debug) {
-  push (@targets, 'dbglog.cpp');
-}
 build_targets(\@targets, \@includes, \@defines);
 ## end compile ##

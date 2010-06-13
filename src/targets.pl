@@ -66,6 +66,7 @@ if (defined($input_backend)) {
 
 ## statically shared objects ##
 @common_objs = include_targets('common/targets.pl');
+push(@common_objs, include_targets('file/targets.pl'));
 @imgfun = include_targets('imgfun/targets.pl');
 ## end statically shared objects ##
 
