@@ -37,6 +37,7 @@
 #include <ALL.h>
 #include <OSTR.h>
 #include <OMISC.h>
+#include <ODIR.h>
 
 #include <dbglog.h>
 
@@ -1143,15 +1144,8 @@ float Misc::round_dec(float inNum)
 //
 int Misc::is_file_exist(const char* fileName)
 {
-#ifndef NO_WINDOWS // FIXME
-	WIN32_FIND_DATA	findData;
-
-   HANDLE findHandle = FindFirstFile( fileName, &findData );
-
-   return findHandle!=INVALID_HANDLE_VALUE;
-#else
-   return 0;
-#endif
+   Directory dir;
+   return dir.read(fileName, 0) == 1;
 }
 //---------- End of function Misc::is_file_exist ---------//
 
