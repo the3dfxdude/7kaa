@@ -26,6 +26,8 @@
 #include <windowsx.h>
 #include <mmsystem.h>
 #include <dos.h>
+#else
+#include <sys/time.h>
 #endif 
 
 #include <string.h>
@@ -35,6 +37,10 @@
 #include <ALL.h>
 #include <OSTR.h>
 #include <OMISC.h>
+
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Misc);
 
 #define	MOVE_AROUND_TABLE_SIZE	900
 
@@ -1241,10 +1247,18 @@ char* Misc::num_th(int inNum)
 //
 unsigned long Misc::get_time()
 {
-#ifndef NO_WINDOWS // FIXME
+#ifndef NO_WINDOWS
 	return timeGetTime();
 #else
-	return 0;
+	struct timeval tv;
+	int ret;
+	ret = gettimeofday(&tv, NULL);
+	if (!ret)
+	{
+		ERR("gettimeofday returned %d\n", ret);
+		return 0;
+	}
+	return tv.tv_usec / 1000;
 #endif
 }
 //---------- End of function Misc::get_time ---------//
