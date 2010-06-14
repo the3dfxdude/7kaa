@@ -50,28 +50,41 @@ DBGLOG_DEFAULT_CHANNEL(FileIO);
 //
 int File::file_open(const char* fileName, int handleError, int fileType)
 {
-	if (strlen(fileName) > max_path)
+	char name[max_path];
+	int size = strlen(fileName);
+
+	if (size > max_path)
 		ERR("[File::file_open] file name is too long: %s\n", fileName);
 
 	if (file_handle != NULL)
 		file_close();
 
-	strcpy(file_name, fileName);
-	for (int i = 0; i < strlen(fileName); i++)
+	strcpy(name, fileName);
+	for (int i = 0; i < size; i++)
 	{
-		file_name[i] = tolower(file_name[i]);
-		if (file_name[i] == '\\') file_name[i] = '/';
+		if (name[i] == '\\') name[i] = '/';
 	}
 
 	handle_error = handleError;
 	file_type = (FileType)fileType;
 
-	file_handle = fopen(file_name, "rb");
-	if (file_handle != NULL)
-		return 1;
+	file_handle = fopen(name, "rb");
+	if (!file_handle)
+        {
+		for (int i = 0; i < size; i++)
+		{
+			name[i] = tolower(name[i]);
+		}
+		file_handle = fopen(name, "rb");
+        }
+	if (!file_handle)
+	{
+		ERR("[File::file_open] error opening file: %s\n", name);
+		return 0;
+	}
 
-	ERR("[File::file_open] error opening file: %s\n", file_name);
-	return 0;
+	strcpy(file_name, name);
+	return 1;
 }
 //---------- End of function File::file_open ----------//
 
