@@ -21,9 +21,15 @@
 //Filename    : ODIR.CPP
 //Description : Object Directory
 
+#include <stdlib.h>
 #include <string.h>
 #include <ODIR.h>
 
+#ifdef NO_WINDOWS
+#include <dirent.h>
+#include <ctype.h>
+#include <sys/stat.h>
+#endif
 
 //----------- Define static function ------------//
 
@@ -52,7 +58,7 @@ Directory::Directory() : DynArray( sizeof(FileInfo), 20 )
 int Directory::read(const char *fileSpec, int sortName)
 {
    FileInfo				fileInfo;
-#ifndef NO_WINDOWS  // FIXME
+#ifndef NO_WINDOWS
 	WIN32_FIND_DATA	findData;
    
    //----------- get the file list -------------//
@@ -79,10 +85,134 @@ int Directory::read(const char *fileSpec, int sortName)
    if( sortName )
       quick_sort( sort_file_function );
 
-   return size();       // DynArray::size()
 #else
-   return 0;
+
+   char dirname[MAX_PATH];
+   char search[MAX_PATH];
+   struct dirent **namelist;
+   int n;
+
+   char *slash = strrchr((char*)fileSpec, '\\');
+   if (slash)
+   {
+      char *s = (char*)fileSpec;
+      char *d = dirname;
+      int i = 0;
+      while (s != slash && i < MAX_PATH - 1)
+      {
+         if (*d == '\\')
+            *d = '/';
+         else
+            *d = tolower(*s);
+         d++;
+         s++;
+         i++;
+      }
+      *d = 0;
+
+      i = 0;
+      d = search;
+      s++;
+      while (*s && i < MAX_PATH - 1)
+      {
+         if (*s == '*')
+         {
+            s++;
+            i++;
+            continue;
+         }
+         else if (*s == '.')
+         {
+            *d = *s;
+         }
+         else
+         {
+            *d = tolower(*s);
+         }
+         d++;
+         s++;
+         i++;
+      }
+      *d = 0;
+   } else {
+      char *s = (char*)fileSpec;
+      char *d = search;
+      int i = 0;
+
+      while (*s && i < MAX_PATH - 1)
+      {
+         if (*s == '*')
+         {
+            s++;
+            i++;
+            continue;
+         }
+         else if (*s == '.')
+         {
+            *d = *s;
+         }
+         else
+         {
+            *d = tolower(*s);
+         }
+         d++;
+         s++;
+         i++;
+      }
+      *d = 0;
+
+
+      dirname[0] = '.';
+      dirname[1] = 0;
+   }
+
+   n = scandir(dirname, &namelist, 0, alphasort);
+   for (int i = 0; i < n; i++)
+   {
+      char filename[MAX_PATH];
+      char *s = namelist[i]->d_name;
+      char *d = filename;
+      int j = 0;
+      while (*s && j < MAX_PATH - 1)
+      {
+         if (isalpha(*s))
+            *d = tolower(*s);
+         else
+            *d = *s;
+         d++;
+         s++;
+         j++;
+      }
+      *d = 0;
+
+      if (strstr(filename, search))
+      {
+         char full_path[MAX_PATH];
+         struct stat file_stat;
+
+         full_path[0] = 0;
+         strcat(full_path, dirname);
+         strcat(full_path, "/");
+         strcat(full_path, namelist[i]->d_name);
+
+         stat(full_path, &file_stat);
+
+         strncpy(fileInfo.name, namelist[i]->d_name, MAX_PATH - 2);
+
+         fileInfo.size = file_stat.st_size;
+         fileInfo.time.dwLowDateTime = 0;
+         fileInfo.time.dwHighDateTime = 0;
+
+         linkin( &fileInfo );
+      }
+      free(namelist[i]);
+   }
+   if (n > -1)
+     free(namelist);
+
 #endif
+
+   return size();       // DynArray::size()
 }
 //-------- End of function Directory::read -------//
 
