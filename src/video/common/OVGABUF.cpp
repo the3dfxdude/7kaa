@@ -34,7 +34,10 @@
 
 VgaBuf::VgaBuf()
 {
-	memset( this, 0, sizeof(VgaBuf) );
+	surface = NULL;
+	buf_locked = FALSE;
+	is_front = 0;
+	save_locked_flag = 0;
 }
 //-------- End of function VgaBuf::VgaBuf ----------//
 
