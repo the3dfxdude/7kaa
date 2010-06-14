@@ -14,7 +14,8 @@ my %cfg = (
   audio_backend => "OpenAL",
   video_backend => "ddraw",
   input_backend => "dinput",
-  disable_wine => 0
+  disable_wine => 0,
+  wine_prefix => "/usr"
 );
 
 # parse command line args
@@ -62,6 +63,11 @@ if ($cfg{platform} =~ /^linux/) {
       print "Wine-" . join('.', @wine_ver_req) . " or later is required.\n";
       exit 1;
     }
+  } else {
+    # use sdl and openal backend
+    $cfg{video_backend} = 'sdl';
+    $cfg{input_backend} = 'sdl';
+    $cfg{audio_backend} = 'OpenAL';
   }
 
 } elsif ($cfg{platform} =~ /^win32$/) {

@@ -2,6 +2,8 @@
 my @libs;
 unless ($disable_wine) {
   push (@libs, 'ole32','msvcrt','winmm');
+} else {
+  push (@libs, 'SDL');
 }
 ## end libraries to link ##
 

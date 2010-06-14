@@ -29,14 +29,15 @@ General Requirements
 * Perl (checked with 5.10.1)
 
 Linux
-* Wine 1.1.34 or later
+* SDL 1.2
+* OpenAL
 
 Windows
-* DX7 SDK (later not tested)
+* DX7 SDK or later
 
 Optional Requirements
 * JWasm 2.00 or later
-* OpenAL
+* Wine 1.1.34 or later
 
 
 We do not (yet?) provide the typical Makefile setup.  To build
