@@ -1,6 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
+ * Copyright 1997,1998 Enlight Software Ltd.
  * Copyright 2010 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
