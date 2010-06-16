@@ -117,7 +117,22 @@ class MouseSDL
 {
 private:
 	char*  vga_update_buf;
+
+	// ------ mouse setting ---------- //
+	int	double_speed_threshold;				// default DEFAULT_DOUBLE_SPEED_THRESHOLD
+	int	triple_speed_threshold;				// default DEFAULT_TRIPLE_SPEED_THRESHOLD
+
+	//-------- click buffer ---------//
 	MouseClick click_buffer[2];    // left button & right button only
+
+        //-------- event buffer ---------//
+
+        enum { EVENT_BUFFER_SIZE = 20 };  // No. of events can be stored in buffer
+
+        MouseEvent event_buffer[EVENT_BUFFER_SIZE];
+
+        int     head_ptr;        // head pointer to the event buffer
+        int     tail_ptr;        // tail pointer to the event buffer
 
 public:
 	char   handle_flicking;
@@ -183,23 +198,26 @@ public:
 	int  	any_click(int=0);
 	int	release_click(int,int,int,int,int=0);
 
-	int  	click_x(int buttonId=0)     { return 0; }
-	int  	click_y(int buttonId=0)     { return 0; }
-	int  	release_x(int buttonId=0)   { return 0; }
-	int  	release_y(int buttonId=0)   { return 0; }
-	int  	click_count(int buttonId=0) { return 0; }
+	int  	click_x(int buttonId=0)     { return click_buffer[buttonId].x; }
+	int  	click_y(int buttonId=0)     { return click_buffer[buttonId].y; }
+	int  	release_x(int buttonId=0)   { return click_buffer[buttonId].release_x; }
+	int  	release_y(int buttonId=0)   { return click_buffer[buttonId].release_y; }
+	int  	click_count(int buttonId=0) { return click_buffer[buttonId].count; }
 
-	int	is_mouse_event()            { return 0; }
-	int	is_key_event()              { return 0; }
-	int	is_any_event()              { return 0; }
-	int	is_press_button_event()     { return 0; }
-	int	is_release_button_event()   { return 0; }
+	int	is_mouse_event()            { return has_mouse_event; }
+	int	is_key_event()              { return scan_code; }
+	int	is_any_event()              { return has_mouse_event || scan_code; }
+	int	is_press_button_event()     { return has_mouse_event && (mouse_event_type == LEFT_BUTTON || mouse_event_type == RIGHT_BUTTON); }
+	int	is_release_button_event()   { return has_mouse_event && (mouse_event_type == LEFT_BUTTON_RELEASE || mouse_event_type == RIGHT_BUTTON_RELEASE); }
 
 	void	reset_click();
 
 	static int is_key(unsigned keyCode, unsigned short skeyState, unsigned short charValue, unsigned flags = 0 );
 	static int is_key(unsigned keyCode, unsigned short skeyState, char *keyStr, unsigned flags = 0 );
 	// see omouse2.h for flags
+
+private:
+	long	micky_to_displacement(unsigned long);
 };
 //---------- End of define class ---------------//
 

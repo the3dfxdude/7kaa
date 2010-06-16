@@ -226,8 +226,15 @@ void VgaSDL::handle_messages()
 {
    SDL_Event event;
 
-   while (SDL_PollEvent(&event))
-   {
+   SDL_PumpEvents();
+
+   while (SDL_PeepEvents(&event,
+                         1,
+                         SDL_GETEVENT,
+                         SDL_ALLEVENTS ^
+                         SDL_KEYEVENTMASK ^
+                         SDL_MOUSEEVENTMASK ^
+                         SDL_JOYEVENTMASK) > 0) {
 
       switch (event.type) {
       case SDL_ACTIVEEVENT:
@@ -238,33 +245,6 @@ void VgaSDL::handle_messages()
             sys.unpause();
          } else {
             sys.pause();
-         }
-         break;
-      case SDL_MOUSEMOTION:
-      {
-         mouse.cur_x = event.motion.x;
-         mouse.cur_y = event.motion.y;
-         sys.need_redraw_flag = 1;
-         break;
-      }
-      case SDL_MOUSEBUTTONDOWN:
-         if (event.button.button == SDL_BUTTON_LEFT)
-         {
-            mouse.left_press = (event.button.state == SDL_PRESSED);
-         }
-         else if (event.button.button == SDL_BUTTON_RIGHT)
-         {
-            mouse.right_press = (event.button.state == SDL_PRESSED);
-         }
-         break;
-      case SDL_MOUSEBUTTONUP:
-         if (event.button.button == SDL_BUTTON_LEFT)
-         {
-            mouse.left_press = !(event.button.state == SDL_RELEASED);
-         } 
-         else if (event.button.button == SDL_BUTTON_RIGHT)
-         {
-            mouse.right_press = !(event.button.state == SDL_RELEASED);
          }
          break;
       case SDL_QUIT:
