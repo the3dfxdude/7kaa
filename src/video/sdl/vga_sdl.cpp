@@ -70,6 +70,8 @@ int VgaSDL::init()
       return 0;
    }
 
+   SDL_WM_SetCaption(WIN_TITLE, WIN_TITLE);
+
    sys.active_flag = 1;
 
    return 1;
