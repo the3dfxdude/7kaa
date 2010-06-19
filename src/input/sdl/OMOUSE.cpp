@@ -91,6 +91,8 @@ MouseSDL::~MouseSDL()
 //
 void MouseSDL::init()
 {
+	update_skey_state();
+
 	//------- initialize VGA update buffer -------//
 
 	vga_update_buf = mem_add( VGA_UPDATE_BUF_SIZE );
@@ -360,7 +362,7 @@ int MouseSDL::get_event()
 
 	case KEY_PRESS:
 		scan_code = eptr->scan_code;
-		key_code = mouse.is_key(mouse.scan_code, mouse.event_skey_state, (WORD) 0, K_CHAR_KEY);
+		key_code = mouse.is_key(scan_code, event_skey_state, (WORD) 0, K_CHAR_KEY);
 		has_mouse_event = 0;
 		break;
 
@@ -788,7 +790,12 @@ void MouseSDL::poll_event()
 			}
 			break;
 		case SDL_KEYDOWN:
+			update_skey_state();
+			add_key_event(event.key.keysym.sym, m.get_time());
+			break;
 		case SDL_KEYUP:
+			update_skey_state();
+			break;
 		case SDL_JOYAXISMOTION:
 		case SDL_JOYBALLMOTION:
 		case SDL_JOYHATMOTION:
@@ -815,6 +822,33 @@ void MouseSDL::poll_event()
 // called after task switch to get the lastest state of ctrl/alt/shift key
 void MouseSDL::update_skey_state()
 {
+	int modstate = SDL_GetModState();
+	SDL_GetMouseState(&cur_x, &cur_y);
+
+	skey_state = 0;
+	if (modstate & KMOD_LSHIFT)
+		skey_state |= LEFT_SHIFT_KEY_MASK;
+	if (modstate & KMOD_RSHIFT)
+		skey_state |= RIGHT_SHIFT_KEY_MASK;
+	if (modstate & KMOD_LCTRL)
+		skey_state |= LEFT_CONTROL_KEY_MASK;
+	if (modstate & KMOD_RCTRL)
+		skey_state |= RIGHT_CONTROL_KEY_MASK;
+	if (modstate & KMOD_LALT)
+		skey_state |= LEFT_ALT_KEY_MASK;
+	if (modstate & KMOD_RALT)
+#if(defined(FRENCH)||defined(SPANISH))
+		skey_state |= GRAPH_KEY_MASK;
+#else
+		skey_state |= RIGHT_ALT_KEY_MASK;
+#endif
+	if (modstate & KMOD_NUM)
+		skey_state |= NUM_LOCK_STATE_MASK;
+	if (modstate & KMOD_CAPS)
+		skey_state |= CAP_LOCK_STATE_MASK;
+	if (modstate & KMOD_MODE) // Alt Gr key
+		skey_state |= GRAPH_KEY_MASK;
+	skey_state |= INSERT_STATE_MASK; // enable insert mode by default
 }
 //--------- End of MouseSDL::update_skey_state ----------//
 // ####### end Gilbert 31/10 #########//
@@ -913,7 +947,337 @@ long MouseSDL::micky_to_displacement(unsigned long w)
 //
 int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short charValue, unsigned flags)
 {
-   return 0;
+	unsigned short priChar = 0, shiftChar = 0, capitalChar = 0;
+#if(defined(FRENCH)||defined(GERMAN)||defined(SPANISH))
+	unsigned short altChar = 0;
+#endif
+	unsigned onNumPad = 0;
+
+	switch(scanCode)
+	{
+	case SDLK_ESCAPE: priChar = shiftChar = capitalChar = KEY_ESC; break;
+#if(defined(SPANISH))
+	case SDLK_1: priChar = capitalChar = '1'; shiftChar = '!'; altChar = '|'; break;
+#else
+	case SDLK_1: priChar = capitalChar = '1'; shiftChar = '!'; break;
+#endif
+#if(defined(FRENCH)||defined(SPANISH))
+	case SDLK_2: priChar = capitalChar = '2'; shiftChar = '\"'; altChar = '@'; break;
+#elif(defined(GERMAN))
+	case SDLK_2: priChar = capitalChar = '2'; shiftChar = '\"'; altChar = (UCHAR)'²'; break;
+#else
+	case SDLK_2: priChar = capitalChar = '2'; shiftChar = '@'; break;
+#endif
+#if(defined(FRENCH))
+	case SDLK_3: priChar = capitalChar = '3'; shiftChar = '/'; altChar = (UCHAR)'£'; break;
+#elif(defined(SPANISH))
+	case SDLK_3: priChar = capitalChar = '3'; shiftChar = (UCHAR)'·'; altChar = '#'; break;
+#elif(defined(GERMAN))
+	case SDLK_3: priChar = capitalChar = '3'; shiftChar = (UCHAR)'§'; altChar = (UCHAR)'³'; break;
+#else
+	case SDLK_3: priChar = capitalChar = '3'; shiftChar = '#'; break;
+#endif
+	case SDLK_4: priChar = capitalChar = '4'; shiftChar = '$'; break;
+	case SDLK_5: priChar = capitalChar = '5'; shiftChar = '%'; break;
+#if(defined(FRENCH))
+	case SDLK_6: priChar = capitalChar = '6'; shiftChar = '?'; altChar = (UCHAR)'¬';break;
+#elif(defined(SPANISH))
+	case SDLK_6: priChar = capitalChar = '6'; shiftChar = '&'; break;
+#elif(defined(GERMAN))
+	case SDLK_6: priChar = capitalChar = '6'; shiftChar = '&'; break;
+#else
+	case SDLK_6: priChar = capitalChar = '6'; shiftChar = '^'; break;
+#endif
+#if(defined(GERMAN))
+	case SDLK_7: priChar = capitalChar = '7'; shiftChar = '/'; altChar = '{'; break;
+	case SDLK_8: priChar = capitalChar = '8'; shiftChar = '('; altChar = '['; break;
+	case SDLK_9: priChar = capitalChar = '9'; shiftChar = ')'; altChar = ']'; break;
+	case SDLK_0: priChar = capitalChar = '0'; shiftChar = '='; altChar = '}'; break;
+	case 0x0c:  priChar = capitalChar = (UCHAR)'ß'; shiftChar = '\?'; altChar = '\\'; break;
+	case 0x0d:  priChar = capitalChar = (UCHAR)'´'; shiftChar = (UCHAR)'`'; break;
+#elif(defined(SPANISH))
+	case SDLK_7: priChar = capitalChar = '7'; shiftChar = '/'; break;
+	case SDLK_8: priChar = capitalChar = '8'; shiftChar = '('; break;
+	case SDLK_9: priChar = capitalChar = '9'; shiftChar = ')'; break;
+	case SDLK_0: priChar = capitalChar = '0'; shiftChar = '='; break;
+	case 0x0c:  priChar = capitalChar = '\''; shiftChar = '?'; break;
+	case 0x0d:  priChar = capitalChar = (UCHAR)'¡'; shiftChar = (UCHAR)'¿'; break;
+#else
+	case SDLK_7: priChar = capitalChar = '7'; shiftChar = '&'; break;
+	case SDLK_8: priChar = capitalChar = '8'; shiftChar = '*'; break;
+	case SDLK_9: priChar = capitalChar = '9'; shiftChar = '('; break;
+	case SDLK_0: priChar = capitalChar = '0'; shiftChar = ')'; break;
+	case SDLK_MINUS: priChar = capitalChar = '-'; shiftChar = '_'; break;
+	case SDLK_EQUALS: priChar = capitalChar = '='; shiftChar = '+'; break;
+#endif
+	case SDLK_BACKSPACE: priChar = capitalChar = shiftChar = KEY_BACK_SPACE; break;   // backspace
+	case SDLK_TAB: priChar = capitalChar = shiftChar = KEY_TAB; break;
+#if(defined(GERMAN))
+	case SDLK_q: priChar = 'q'; capitalChar = shiftChar = 'Q'; altChar = '@'; break;
+#else
+	case SDLK_q: priChar = 'q'; capitalChar = shiftChar = 'Q'; break;
+#endif
+	case SDLK_w: priChar = 'w'; capitalChar = shiftChar = 'W'; break;
+	case SDLK_e: priChar = 'e'; capitalChar = shiftChar = 'E'; break;
+	case SDLK_r: priChar = 'r'; capitalChar = shiftChar = 'R'; break;
+	case SDLK_t: priChar = 't'; capitalChar = shiftChar = 'T'; break;
+#if(defined(GERMAN))
+	case 0x15:  priChar = 'z'; capitalChar = shiftChar = 'Z'; break;
+#else
+	case SDLK_y: priChar = 'y'; capitalChar = shiftChar = 'Y'; break;
+#endif
+	case SDLK_u: priChar = 'u'; capitalChar = shiftChar = 'U'; break;
+	case SDLK_i: priChar = 'i'; capitalChar = shiftChar = 'I'; break;
+	case SDLK_o: priChar = 'o'; capitalChar = shiftChar = 'O'; break;
+	case SDLK_p: priChar = 'p'; capitalChar = shiftChar = 'P'; break;
+#if(defined(FRENCH))
+	case 0x1a:  priChar = capitalChar = shiftChar = '^'; altChar = '['; break;
+	case 0x1b:  priChar = capitalChar = (UCHAR)'¸';shiftChar = (UCHAR)'¨'; altChar = ']'; break;
+#elif(defined(SPANISH))
+	case 0x1a:  priChar = capitalChar = '`'; shiftChar = '^'; altChar = '['; break;
+	case 0x1b:  priChar = capitalChar = '+';shiftChar = '*'; altChar = ']'; break;
+#elif(defined(GERMAN))
+	case 0x1a:  priChar = (UCHAR)'ü'; capitalChar = shiftChar = (UCHAR)'Ü'; break;
+	case 0x1b:  priChar = capitalChar = shiftChar = '+'; altChar = '~'; break;
+#else
+	case SDLK_LEFTBRACKET: priChar = capitalChar = '['; shiftChar = '{'; break;
+	case SDLK_RIGHTBRACKET: priChar = capitalChar = ']'; shiftChar = '}'; break;
+#endif
+	case SDLK_KP_ENTER:		// Enter on numeric keypad
+		onNumPad = 1;			// fall through
+	case SDLK_RETURN: priChar = capitalChar = shiftChar = KEY_RETURN;	break;
+	case SDLK_a: priChar = 'a'; capitalChar = shiftChar = 'A'; break;
+	case SDLK_s: priChar = 's'; capitalChar = shiftChar = 'S'; break;
+	case SDLK_d: priChar = 'd'; capitalChar = shiftChar = 'D'; break;
+	case SDLK_f: priChar = 'f'; capitalChar = shiftChar = 'F'; break;
+	case SDLK_g: priChar = 'g'; capitalChar = shiftChar = 'G'; break;
+	case SDLK_h: priChar = 'h'; capitalChar = shiftChar = 'H'; break;
+	case SDLK_j: priChar = 'j'; capitalChar = shiftChar = 'J'; break;
+	case SDLK_k: priChar = 'k'; capitalChar = shiftChar = 'K'; break;
+	case SDLK_l: priChar = 'l'; capitalChar = shiftChar = 'L'; break;
+#if(defined(FRENCH))
+	case SDLK_SEMICOLON: priChar = capitalChar = ';'; shiftChar = ':'; altChar = '~'; break;
+	case 0x28:  priChar = capitalChar = shiftChar = '`'; altChar = '{'; break;
+	case 0x29:  priChar = capitalChar = '#'; shiftChar = '|'; altChar = '\\'; break;
+	case 0x2b:  priChar = capitalChar = '<'; shiftChar = '>'; altChar = '}'; break;
+#elif(defined(SPANISH))
+	case 0x27:  priChar = (UCHAR)'ñ'; capitalChar = shiftChar = (UCHAR)'Ñ'; break;
+	case 0x28:  priChar = capitalChar = (UCHAR)'´'; shiftChar = (UCHAR)'¨'; altChar = '{'; break;
+	case 0x29:  priChar = capitalChar = (UCHAR)'º'; shiftChar = (UCHAR)'ª'; altChar = '\\'; break;
+	case 0x2b:  priChar = (UCHAR)'ç'; capitalChar = shiftChar = (UCHAR)'Ç'; altChar = '}'; break;
+#elif(defined(GERMAN))
+	case 0x27:  priChar = (UCHAR)'ö'; capitalChar = shiftChar = (UCHAR)'Ö'; break;
+	case 0x28:  priChar = (UCHAR)'ä'; capitalChar = shiftChar = (UCHAR)'Ä'; break;
+	case 0x29:  priChar = capitalChar = '^'; shiftChar = (UCHAR)'°'; break;
+	case 0x2b:  priChar = capitalChar = '#'; shiftChar = '\''; break;
+#else
+	case SDLK_SEMICOLON: priChar = capitalChar = ';'; shiftChar = ':'; break;
+	case SDLK_QUOTEDBL: priChar = capitalChar = '\''; shiftChar = '\"'; break;
+	case SDLK_BACKQUOTE: priChar = capitalChar = '~'; shiftChar = '`'; break;
+	case SDLK_BACKSLASH: priChar = capitalChar = '\\'; shiftChar = '|'; break;
+#endif
+#if(defined(GERMAN))
+	case 0x2c:  priChar = 'y'; capitalChar = shiftChar = 'Y'; break;
+#else
+	case SDLK_z: priChar = 'z'; capitalChar = shiftChar = 'Z'; break;
+#endif
+	case SDLK_x: priChar = 'x'; capitalChar = shiftChar = 'X'; break;
+	case SDLK_c: priChar = 'c'; capitalChar = shiftChar = 'C'; break;
+	case SDLK_v: priChar = 'v'; capitalChar = shiftChar = 'V'; break;
+	case SDLK_b: priChar = 'b'; capitalChar = shiftChar = 'B'; break;
+	case SDLK_n: priChar = 'n'; capitalChar = shiftChar = 'N'; break;
+#if(defined(GERMAN))
+	case SDLK_m: priChar = 'm'; capitalChar = shiftChar = 'M'; altChar = (UCHAR)'µ'; break;
+#else
+	case SDLK_m: priChar = 'm'; capitalChar = shiftChar = 'M'; break;
+#endif
+#if(defined(FRENCH))
+	case SDLK_COMMA: priChar = capitalChar = ','; shiftChar = '\''; altChar = (UCHAR)'¯'; break;
+	case SDLK_PERIOD: priChar = capitalChar = '.'; shiftChar = '\"'; altChar = (UCHAR)'­'; break;
+	case 0x35:  priChar = (UCHAR)'é'; capitalChar = shiftChar = (UCHAR)'É'; altChar = (UCHAR)'´'; break;
+#elif(defined(SPANISH))
+	case SDLK_COMMA: priChar = capitalChar = ','; shiftChar = ';'; break;
+	case SDLK_PERIOD: priChar = capitalChar = '.'; shiftChar = ':'; break;
+	case 0x35:  priChar = capitalChar = '-'; shiftChar = '_'; break;
+#else
+	case SDLK_COMMA: priChar = capitalChar = ','; shiftChar = '<'; break;
+	case SDLK_PERIOD: priChar = capitalChar = '.'; shiftChar = '>'; break;
+	case SDLK_SLASH: priChar = capitalChar = '/'; shiftChar = '\?'; break;
+#endif
+	case SDLK_KP_MULTIPLY: priChar = capitalChar = shiftChar = '*'; onNumPad = 1; break; // * on numeric keypad
+	case SDLK_SPACE: priChar = capitalChar = shiftChar = ' '; break;
+	case SDLK_KP_PLUS: priChar = capitalChar = shiftChar = '+'; onNumPad = 1; break; // + on numeric keypad
+	case SDLK_KP_DIVIDE: priChar = capitalChar = shiftChar = '/'; onNumPad = 1; break;		// / on numeric keypad
+	case SDLK_KP_MINUS: priChar = capitalChar = shiftChar = '-'; onNumPad = 1; break;	// - on numeric keypad
+#if(defined(GERMAN))
+	case 0x56:  priChar = capitalChar = '<'; shiftChar = '>'; altChar = '|'; break;
+#endif
+		
+	case SDLK_KP7: priChar = shiftChar = capitalChar = '7'; onNumPad = 1; break;
+	case SDLK_KP8: priChar = shiftChar = capitalChar = '8'; onNumPad = 1; break;
+	case SDLK_KP9: priChar = shiftChar = capitalChar = '9'; onNumPad = 1; break;
+	case SDLK_KP4: priChar = shiftChar = capitalChar = '4'; onNumPad = 1; break;
+	case SDLK_KP5: priChar = shiftChar = capitalChar = '5'; onNumPad = 1; break;
+	case SDLK_KP6: priChar = shiftChar = capitalChar = '6'; onNumPad = 1; break;
+	case SDLK_KP1: priChar = shiftChar = capitalChar = '1'; onNumPad = 1; break;
+	case SDLK_KP2: priChar = shiftChar = capitalChar = '2'; onNumPad = 1; break;
+	case SDLK_KP3: priChar = shiftChar = capitalChar = '3'; onNumPad = 1; break;
+	case SDLK_KP0: priChar = shiftChar = capitalChar = '0'; onNumPad = 1; break;
+	case SDLK_KP_PERIOD: priChar = shiftChar = capitalChar = '.'; onNumPad = 1; break;
+
+	// function keys
+	case SDLK_F1: priChar = shiftChar = capitalChar = KEY_F1; break;
+	case SDLK_F2: priChar = shiftChar = capitalChar = KEY_F2; break;
+	case SDLK_F3: priChar = shiftChar = capitalChar = KEY_F3; break;
+	case SDLK_F4: priChar = shiftChar = capitalChar = KEY_F4; break;
+	case SDLK_F5: priChar = shiftChar = capitalChar = KEY_F5; break;
+	case SDLK_F6: priChar = shiftChar = capitalChar = KEY_F6; break;
+	case SDLK_F7: priChar = shiftChar = capitalChar = KEY_F7; break;
+	case SDLK_F8: priChar = shiftChar = capitalChar = KEY_F8; break;
+	case SDLK_F9: priChar = shiftChar = capitalChar = KEY_F9; break;
+	case SDLK_F10: priChar = shiftChar = capitalChar = KEY_F10; break;
+	case SDLK_F11: priChar = shiftChar = capitalChar = KEY_F11; break;
+	case SDLK_F12: priChar = shiftChar = capitalChar = KEY_F12; break;
+
+	// arrow keys
+#if(defined(GERMAN))
+	case 0x67:		// fall through, German keyboard called "Pos 1"
+#endif
+	case SDLK_HOME: priChar = shiftChar = capitalChar = KEY_HOME; break;
+	case SDLK_UP: priChar = shiftChar = capitalChar = KEY_UP; break;
+	case SDLK_PAGEUP: priChar = shiftChar = capitalChar = KEY_PGUP; break;
+	case SDLK_LEFT: priChar = shiftChar = capitalChar = KEY_LEFT; break;
+	case SDLK_RIGHT: priChar = shiftChar = capitalChar = KEY_RIGHT; break;
+	case SDLK_END: priChar = shiftChar = capitalChar = KEY_END; break;
+	case SDLK_DOWN: priChar = shiftChar = capitalChar = KEY_DOWN; break;
+	case SDLK_PAGEDOWN: priChar = shiftChar = capitalChar = KEY_PGDN; break;
+	case SDLK_INSERT: priChar = shiftChar = capitalChar = KEY_INS; break;
+	case SDLK_DELETE: priChar = shiftChar = capitalChar = KEY_DEL; break;
+
+#if(defined(SPANISH))
+	// other keys
+	case 0x56: priChar = capitalChar = '<'; shiftChar = '>'; break;
+#endif
+
+	// other keys found in Japanese keyboard
+#if 0   //FIXME: Japanese
+	case SDLK_NUMPADCOMMA: priChar = shiftChar = capitalChar = ','; break;
+#endif
+	case SDLK_KP_EQUALS: priChar = shiftChar = capitalChar = '='; break;
+	case SDLK_AT: priChar = shiftChar = capitalChar = '@'; break;
+	case SDLK_COLON: priChar = shiftChar = capitalChar = ':'; break;
+	case SDLK_UNDERSCORE: priChar = shiftChar = capitalChar = '_'; break;
+	default:
+		ERR("unhandled key %x\n", scanCode);
+	}
+
+	// check flags
+	int retFlag = 1;
+
+	// check shift key state
+	if( !(flags & K_IGNORE_SHIFT) )
+	{
+		if( flags & K_IS_SHIFT )
+		{
+			if( !(skeyState & SHIFT_KEY_MASK) )
+				retFlag = 0;
+		}
+		else
+		{
+			if( skeyState & SHIFT_KEY_MASK )
+				retFlag = 0;
+		}
+	}
+
+	// check contrl key state
+	if( !(flags & K_IGNORE_CTRL) )
+	{
+		if( flags & K_IS_CTRL )
+		{
+			if( !(skeyState & CONTROL_KEY_MASK) )
+				retFlag = 0;
+		}
+		else
+		{
+			if( skeyState & CONTROL_KEY_MASK )
+				retFlag = 0;
+		}
+	}
+
+	// check alt key state
+	if( !(flags & K_IGNORE_ALT) )
+	{
+		if( flags & K_IS_ALT )
+		{
+			if( !(skeyState & ALT_KEY_MASK) )
+				retFlag = 0;
+		}
+		else
+		{
+			if( skeyState & ALT_KEY_MASK )
+				retFlag = 0;
+		}
+	}
+
+	// check numpad state
+	if( !(flags & K_IGNORE_NUMPAD) )
+	{
+		if( flags & K_ON_NUMPAD )
+		{
+			if( !onNumPad )
+				retFlag = 0;
+		}
+		else
+		{
+			if( onNumPad )
+				retFlag = 0;
+		}
+	}
+
+	unsigned outChar = priChar;
+	if( flags & K_TRANSLATE_KEY ) 
+	{
+#if(defined(FRENCH)||defined(GERMAN)||defined(SPANISH))
+		if( (skeyState & GRAPH_KEY_MASK) && altChar )
+ 		{
+			outChar = altChar;
+ 		}
+ 		else
+ 		{
+#endif
+			if( priChar == capitalChar )
+			{
+				// non-letter
+				outChar = skeyState & SHIFT_KEY_MASK ? shiftChar : priChar;
+			}
+			else
+			{
+				// letter
+				outChar = skeyState & CAP_LOCK_STATE_MASK ? 
+					(skeyState & SHIFT_KEY_MASK ? priChar : capitalChar) :
+					(skeyState & SHIFT_KEY_MASK ? shiftChar : priChar) ;
+			}
+#if(defined(FRENCH)||defined(GERMAN)||defined(SPANISH))
+		}
+#endif
+	}
+
+	if(!retFlag)
+		return 0;
+
+	int retFlag2 = (charValue == 0) || outChar == charValue
+		|| ((flags & K_IGNORE_SHIFT) && shiftChar == charValue)
+		|| ((flags & K_IGNORE_CAP_LOCK) && capitalChar == charValue)
+#ifdef WIN32
+		|| ((flags & K_CASE_INSENSITIVE) && outChar == (unsigned short) std::tolower(charValue));
+#else
+		|| ((flags & K_CASE_INSENSITIVE) && outChar == (unsigned short) tolower(charValue));
+#endif
+
+	if(retFlag2)
+		return outChar;
+	else
+		return 0;
 }
 // ------ End of MouseSDL::is_key -------//
 
@@ -921,6 +1285,128 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short
 // ------ Begin of MouseSDL::is_key -------//
 int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, unsigned flags)
 {
-   return 0;
+	int len = strlen(keyStr);
+
+	if( len == 0)
+		return 0;
+	if( len == 1)
+		return is_key(scanCode, skeyState, keyStr[0], flags);
+
+	const char *priChar = NULL;
+	const char *numLockChar = NULL;
+	int onNumPad = 0;
+
+	switch(scanCode)
+	{
+	case SDLK_F1: numLockChar = priChar = "F1"; break;
+	case SDLK_F2: numLockChar = priChar = "F2"; break;
+	case SDLK_F3: numLockChar = priChar = "F3"; break;
+	case SDLK_F4: numLockChar = priChar = "F4"; break;
+	case SDLK_F5: numLockChar = priChar = "F5"; break;
+	case SDLK_F6: numLockChar = priChar = "F6"; break;
+	case SDLK_F7: numLockChar = priChar = "F7"; break;
+	case SDLK_F8: numLockChar = priChar = "F8"; break;
+	case SDLK_F9: numLockChar = priChar = "F9"; break;
+	case SDLK_F10: numLockChar = priChar = "F10"; break;
+	case SDLK_F11: numLockChar = priChar = "F11"; break;
+	case SDLK_F12: numLockChar = priChar = "F12"; break;
+
+	case SDLK_KP7: priChar = "HOME"; numLockChar = "7"; onNumPad = 1; break;
+	case SDLK_KP8: priChar = "UP"; numLockChar = "8"; onNumPad = 1; break;
+	case SDLK_KP9: priChar = "PAGE UP"; numLockChar = "9"; onNumPad = 1; break;
+	case SDLK_KP4: priChar = "LEFT"; numLockChar = "4"; onNumPad = 1; break;
+	case SDLK_KP5: priChar = "CENTER"; numLockChar = "5"; onNumPad = 1; break;
+	case SDLK_KP6: priChar = "RIGHT"; numLockChar = "6"; onNumPad = 1; break;
+	case SDLK_KP1: priChar = "END"; numLockChar = "1"; onNumPad = 1; break;
+	case SDLK_KP2: priChar = "DOWN"; numLockChar = "2"; onNumPad = 1; break;
+	case SDLK_KP3: priChar = "PAGE DOWN"; numLockChar = "3"; onNumPad = 1; break;
+	case SDLK_KP0: priChar = "INSERT"; numLockChar = "0"; onNumPad = 1; break;
+	case SDLK_KP_PERIOD: priChar = "DELETE"; numLockChar = "."; onNumPad = 1; break;
+
+	// keys above arrow keys
+	case SDLK_HOME: priChar = numLockChar = "HOME"; break;
+	case SDLK_UP: priChar = numLockChar = "UP"; break;
+	case SDLK_PAGEUP: priChar = numLockChar = "PAGE UP"; break;
+	case SDLK_LEFT: priChar = numLockChar = "LEFT"; break;
+	case SDLK_RIGHT: priChar = numLockChar = "RIGHT"; break;
+	case SDLK_END: priChar = numLockChar = "END"; break;
+	case SDLK_DOWN: priChar = numLockChar = "DOWN"; break;
+	case SDLK_PAGEDOWN: priChar = numLockChar = "PAGE DOWN"; break;
+	case SDLK_INSERT: priChar = numLockChar = "INSERT"; break;
+	case SDLK_DELETE: priChar = numLockChar = "DELETE"; break;
+
+	// 104-key only
+	case SDLK_LSUPER: priChar = numLockChar = "LEFT WINDOW"; break;
+	case SDLK_RSUPER: priChar = numLockChar = "RIGHT WINDOW"; break;
+	case SDLK_MENU: priChar = numLockChar = "APP MENU"; break;
+	}
+
+	// check flags
+	int retFlag = 1;
+
+	// check shift key state
+	if( !(flags & K_IGNORE_SHIFT) )
+	{
+		if( flags & K_IS_SHIFT )
+		{
+			if( !(skeyState & SHIFT_KEY_MASK) )
+				retFlag = 0;
+		}
+		else
+		{
+			if( skeyState & SHIFT_KEY_MASK )
+				retFlag = 0;
+		}
+	}
+
+	// check contrl key state
+	if( !(flags & K_IGNORE_CTRL) )
+	{
+		if( flags & K_IS_CTRL )
+		{
+			if( !(skeyState & CONTROL_KEY_MASK) )
+				retFlag = 0;
+		}
+		else
+		{
+			if( skeyState & CONTROL_KEY_MASK )
+				retFlag = 0;
+		}
+	}
+
+	// check alt key state
+	if( !(flags & K_IGNORE_ALT) )
+	{
+		if( flags & K_IS_ALT )
+		{
+			if( !(skeyState & ALT_KEY_MASK) )
+				retFlag = 0;
+		}
+		else
+		{
+			if( skeyState & ALT_KEY_MASK )
+				retFlag = 0;
+		}
+	}
+
+	// check numpad state
+	if( !(flags & K_IGNORE_NUMPAD) )
+	{
+		if( flags & K_ON_NUMPAD )
+		{
+			if( !onNumPad )
+				retFlag = 0;
+		}
+		else
+		{
+			if( onNumPad )
+				retFlag = 0;
+		}
+	}
+
+	const char *outChar = skeyState & NUM_LOCK_STATE_MASK ? numLockChar : priChar;
+	int retFlag2 = outChar ? !strcmp(outChar, keyStr) : 0;
+
+	return retFlag && retFlag2;
 }
 // ------ End of MouseSDL::is_key -------//
