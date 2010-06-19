@@ -42,6 +42,7 @@ VgaSDL::VgaSDL()
 {
    front = NULL;
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
+   custom_pal = NULL;
    vga_color_table = NULL;
 }
 //-------- End of function VgaSDL::VgaSDL ----------//
@@ -169,7 +170,10 @@ int VgaSDL::init_pal(const char* fileName)
 //
 void VgaSDL::refresh_palette()
 {
-   SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
+   if (custom_pal)
+      SDL_SetColors(front, custom_pal, 0, VGA_PALETTE_SIZE);
+   else
+      SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
 }
 //----------- End of function VgaSDL::refresh_palette ----------//
 
@@ -192,6 +196,26 @@ void VgaSDL::activate_pal(VgaBuf* vgaBufPtr)
 //
 int VgaSDL::set_custom_palette(char *fileName)
 {
+   if (!custom_pal)
+      custom_pal = (SDL_Color*)mem_add(sizeof(SDL_Color)*VGA_PALETTE_SIZE);
+
+   char palBuf[VGA_PALETTE_SIZE][3];
+   File palFile;
+
+   palFile.file_open(fileName);
+   palFile.file_seek(8);     				// bypass the header info
+   palFile.file_read(palBuf, VGA_PALETTE_SIZE*3);
+   palFile.file_close();
+
+   for(int i=0; i<VGA_PALETTE_SIZE; i++)
+   {
+      custom_pal[i].r = palBuf[i][0];
+      custom_pal[i].g = palBuf[i][1];
+      custom_pal[i].b = palBuf[i][2];
+   }
+
+   refresh_palette();
+
    return 1;
 }
 //--------- End of function VgaSDL::set_custom_palette ----------//
@@ -203,6 +227,12 @@ int VgaSDL::set_custom_palette(char *fileName)
 //
 void VgaSDL::free_custom_palette()
 {
+   if (custom_pal)
+   {
+      mem_del(custom_pal);
+      custom_pal = NULL; 
+   }
+   refresh_palette();
 }
 //--------- End of function VgaSDL::free_custom_palette ----------//
 

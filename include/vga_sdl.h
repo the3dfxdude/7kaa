@@ -38,6 +38,7 @@ class VgaSDL : public VgaBase
 private:
 	SDL_Surface*   front;
 	SDL_Color      game_pal[VGA_PALETTE_SIZE];
+	SDL_Color*     custom_pal;
 
 public:
 	ColorTable*    vga_color_table;
