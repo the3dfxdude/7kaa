@@ -40,7 +40,7 @@ public:
 	~SurfaceSDL();
 
 	char* buf_ptr()             { return (char *)surface->pixels; }
-	char* buf_ptr(int x, int y) { return (char *)surface->pixels + surface->pitch * surface->h + surface->w;  }
+	char* buf_ptr(int x, int y) { return (char *)surface->pixels + surface->pitch * y + x;  }
 	int   buf_pitch()           { return surface->pitch; }
 	int   buf_size()            { return surface->h * surface->w; }
 	int   buf_width()           { return surface->w; }
