@@ -1,6 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
+ * Copyright 1997,1998 Enlight Software Ltd.
  * Copyright 2010 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
@@ -247,6 +248,32 @@ void VgaSDL::free_custom_palette()
 //
 void VgaSDL::adjust_brightness(int changeValue)
 {
+   //---- find out the maximum rgb value can change without affecting the contrast ---//
+
+   int          i;
+   int          newRed, newGreen, newBlue;
+   SDL_Color palBuf[VGA_PALETTE_SIZE];
+
+   //------------ change palette now -------------//
+
+   for( i=0 ; i<VGA_PALETTE_SIZE ; i++ )
+   {
+      newRed   = (int)game_pal[i].r + changeValue;
+      newGreen = (int)game_pal[i].g + changeValue;
+      newBlue  = (int)game_pal[i].b + changeValue;
+
+      palBuf[i].r = MIN(255, MAX(newRed,0));
+      palBuf[i].g = MIN(255, MAX(newGreen,0));
+      palBuf[i].b = MIN(255, MAX(newBlue,0));
+   }
+
+   //------------ set palette ------------//
+
+   vga_front.temp_unlock();
+
+   SDL_SetColors(front, palBuf, 0, VGA_PALETTE_SIZE);
+
+   vga_front.temp_restore_lock();
 }
 //--------- End of function VgaSDL::adjust_brightness ----------//
 
