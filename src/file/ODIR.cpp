@@ -31,6 +31,10 @@
 #include <sys/stat.h>
 #endif
 
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Directory);
+
 //----------- Define static function ------------//
 
 static int sort_file_function( const void *a, const void *b );
@@ -87,6 +91,8 @@ int Directory::read(const char *fileSpec, int sortName)
 
 #else
 
+   MSG("Listing Directory %s sortName=%d\n", fileSpec, sortName);
+
    char dirname[MAX_PATH];
    char search[MAX_PATH];
    struct dirent **namelist;
@@ -100,10 +106,12 @@ int Directory::read(const char *fileSpec, int sortName)
       int i = 0;
       while (s != slash && i < MAX_PATH - 1)
       {
-         if (*d == '\\')
+         if (*s == '\\')
             *d = '/';
-         else
+         else if (isalpha(*s))
             *d = tolower(*s);
+         else
+            *d = *s;
          d++;
          s++;
          i++;
@@ -121,13 +129,13 @@ int Directory::read(const char *fileSpec, int sortName)
             i++;
             continue;
          }
-         else if (*s == '.')
+         else if (isalpha(*s))
          {
-            *d = *s;
+            *d = tolower(*s);
          }
          else
          {
-            *d = tolower(*s);
+            *d = *s;
          }
          d++;
          s++;
@@ -147,13 +155,13 @@ int Directory::read(const char *fileSpec, int sortName)
             i++;
             continue;
          }
-         else if (*s == '.')
+         else if (isalpha(*s))
          {
-            *d = *s;
+            *d = tolower(*s);
          }
          else
          {
-            *d = tolower(*s);
+            *d = *s;
          }
          d++;
          s++;
@@ -166,6 +174,7 @@ int Directory::read(const char *fileSpec, int sortName)
       dirname[1] = 0;
    }
 
+   MSG("directory=%s search=%s\n", dirname, search);
    n = scandir(dirname, &namelist, 0, alphasort);
    for (int i = 0; i < n; i++)
    {
