@@ -14,8 +14,7 @@ my %cfg = (
   audio_backend => "OpenAL",
   video_backend => "ddraw",
   input_backend => "dinput",
-  disable_wine => 0,
-  wine_prefix => "/usr"
+  disable_wine => 0
 );
 
 # parse command line args
