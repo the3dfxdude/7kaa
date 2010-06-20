@@ -1246,13 +1246,18 @@ unsigned long Misc::get_time()
 #else
 	struct timeval tv;
 	int ret;
+	static time_t starting_time = 0;
+
+	if (!starting_time)
+		starting_time = time(NULL);
+
 	ret = gettimeofday(&tv, NULL);
 	if (ret)
 	{
 		ERR("gettimeofday returned %d\n", ret);
 		return 0;
 	}
-	return tv.tv_usec / 1000;
+	return (tv.tv_sec - starting_time) * 1000 + tv.tv_usec / 1000;
 #endif
 }
 //---------- End of function Misc::get_time ---------//
