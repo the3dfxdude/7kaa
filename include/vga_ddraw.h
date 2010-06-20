@@ -69,6 +69,7 @@ public:
 
 	void   handle_messages();
 	void   flag_redraw();
+	void   toggle_full_screen();
 
 	// DDraw private
 	Surface* create_surface(LPDDSURFACEDESC ddsd);

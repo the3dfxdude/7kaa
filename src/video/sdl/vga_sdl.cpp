@@ -65,7 +65,7 @@ int VgaSDL::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, SDL_HWSURFACE|SDL_HWPALETTE);
+   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, SDL_HWSURFACE|SDL_HWPALETTE|SDL_FULLSCREEN);
    if (!front)
    {
       SDL_Quit();
@@ -320,4 +320,13 @@ void VgaSDL::flag_redraw()
 {
 }
 //-------- End of function VgaSDL::flag_redraw ----------//
+
+
+//-------- Begin of function VgaSDL::toggle_full_screen --------//
+void VgaSDL::toggle_full_screen()
+{
+   SDL_WM_ToggleFullScreen(front);
+}
+//-------- End of function VgaSDL::toggle_full_screen ----------//
+
 

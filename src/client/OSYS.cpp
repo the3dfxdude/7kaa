@@ -1512,6 +1512,9 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
             groupId = keyCode-'0';
             group_select.select_grouped_units(groupId);
             break;
+         case '\r':
+            vga.toggle_full_screen();
+            break;
       }
    }
 
@@ -1986,7 +1989,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             box.msg( "sys.testing_session is now 0." );
          break;
 
-      case '\r':
+      case '\\':
          if(debug2_enable_flag)
             debug2_enable_flag = 0;
          else

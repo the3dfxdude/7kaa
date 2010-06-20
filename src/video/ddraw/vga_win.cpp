@@ -212,3 +212,11 @@ void VgaDDraw::flag_redraw()
 }
 //-------- End of function VgaDDraw::flag_redraw ----------//
 
+
+//-------- Begin of function VgaDDraw::toggle_full_screen --------//
+void VgaDDraw::toggle_full_screen()
+{
+   // unsupported
+}
+//-------- End of function VgaDDraw::toggle_full_screen ----------//
+
