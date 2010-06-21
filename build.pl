@@ -91,6 +91,7 @@ sub get_cxx_cmd {
   # OWORLD currently miscompiles at -O2 on gcc 4.3.3.
   #push (@cc_opts, $no_asm ? "-O2" : "-O1");
   defined($debug) and $debug and push (@cc_opts, "-g");
+  $platform =~ /linux64/i and push (@cc_opts, "-m32");
   push (@cc_opts, map { "-D$_" } @{$_[1]});
   push (@cc_opts, map { "-I$_" } @{$_[0]});
   return "@cc_opts";

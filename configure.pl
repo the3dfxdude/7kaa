@@ -136,6 +136,7 @@ sub version_check {
 
 sub get_jwasm_bin_format {
   $_[0] eq 'linux32' and return '-elf';
+  $_[0] eq 'linux64' and return '-elf';
   $_[0] eq 'win32' and return '-coff';
   die "Don't know bin format for platform '$_[0]' to use with jwasm.\n";
 }
