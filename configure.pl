@@ -66,7 +66,6 @@ if ($cfg{platform} =~ /^linux/) {
     # use sdl and openal backend
     $cfg{video_backend} = 'sdl';
     $cfg{input_backend} = 'sdl';
-    $cfg{audio_backend} = 'OpenAL';
   }
 
 } elsif ($cfg{platform} =~ /^win32$/) {
