@@ -122,12 +122,19 @@ sub link_exe {
 
   if ($flag) {
     my $linker = 'g++';
+    my @linker_opts;
+
     if ($platform =~ /^linux/ && !$disable_wine) {
       $linker = 'wineg++';
     }
 
-    my @linker_opts = ("-g -mno-cygwin");
-    $debug or push(@linker_opts, "-mwindows");
+    $debug or push(@linker_opts, '-g');
+
+    # windows based compiler options
+    unless ($disable_wine) {
+      push(@linker_opts, '-mno-cygwin');
+      $debug or push(@linker_opts, '-mwindows');
+    }
                            
     my $cmd = "$linker " .
               join(' ', @linker_opts) . ' ' .
