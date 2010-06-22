@@ -129,6 +129,7 @@ sub link_exe {
     }
 
     $debug or push(@linker_opts, '-g');
+    $platform =~ /linux64/i and push (@linker_opts, "-m32");
 
     # windows based compiler options
     unless ($disable_wine) {
