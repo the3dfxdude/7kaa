@@ -145,7 +145,9 @@ sub detect_platform {
   print "Platform: ";
   # if (command line override) {
   if ($^O eq 'linux') {
-    if (`uname -m` eq 'x86_64') {
+    my $arch = `uname -m`;
+    chomp $arch;
+    if ($arch eq 'x86_64') {
       # probably won't build 64-bit binary, but it needs to be detected and
       # handled
       print "linux64\n";
