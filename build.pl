@@ -128,7 +128,7 @@ sub link_exe {
       $linker = 'wineg++';
     }
 
-    $debug or push(@linker_opts, '-g');
+    $debug and push(@linker_opts, '-g');
     $platform =~ /linux64/i and push (@linker_opts, "-m32");
 
     # windows based compiler options
