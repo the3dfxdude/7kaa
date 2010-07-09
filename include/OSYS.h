@@ -124,6 +124,7 @@ public:
 
 	char  	cdrom_drive;
 
+	char    dir_config[MAX_PATH+1];
 	char  	dir_image[MAX_PATH+1];
 	char  	dir_encyc[MAX_PATH+1];
 #ifdef AMPLUS
@@ -187,6 +188,7 @@ public:
 
 	//---- for setting game directories ----//
 
+	int 		set_config_dir();
 	void 		set_game_dir();
 	int 		set_one_dir( const char* checkFileName, const char* defaultDir, char* trueDir );
 	void 		get_cdrom_drive();

@@ -82,6 +82,15 @@
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
 // ##### end Gilbert 23/10 ######//
+#ifdef NO_WINDOWS
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <errno.h>
+#endif
+
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Sys);
 
 //----------- Declare static functions -----------//
 
@@ -148,6 +157,7 @@ int Sys::init()
 
 //	debug_session       = m.is_file_exist("DEBUG.SYS");
 
+   set_config_dir(); // where saves, config.dat, and hall of fame are kept
 	set_game_dir();      // set game directories names and game version
 
    //------- initialize more stuff ---------//
@@ -424,6 +434,53 @@ void Sys::deinit_objects()
    game_file_array.deinit();
 }
 //------- End of function Sys::deinit_objects -----------//
+
+
+//-------- Begin of function Sys::set_config_dir --------//
+//
+int Sys::set_config_dir()
+{
+#ifdef NO_WINDOWS
+   const char *default_config_dir = "/.7kaa";
+   const char *home_env_var = "HOME";
+#else // WINDOWS
+   const char *default_config_dir = "\\.7kaa";
+   const char *home_env_var = "USERPROFILE";
+#endif 
+   int r;
+
+   // Find the path for the config directory--this is based on the default
+   // location for the logged in user.
+   char *home = getenv(home_env_var);
+
+   if (strlen(home) + strlen(default_config_dir) >= MAX_PATH)
+   {
+      ERR("Game config dir path too long.\n");
+      return 0;
+   }
+
+   strcpy(dir_config, home);
+   strcat(dir_config, default_config_dir);
+
+   MSG("Game config dir path: %s\n", dir_config);
+
+   // create the config directory
+#ifdef NO_WINDOWS
+   r = mkdir(dir_config, 0777) == -1 ? errno == EEXIST : 1;
+#else // WINDOWS
+   r = !CreateDirectory(dir_config, NULL) ?
+       GetLastError() == ERROR_ALREADY_EXISTS : 1;
+#endif
+
+   if (!r)
+   {
+      ERR("Unable to acquire a usable game config dir.\n");
+      return 0;
+   }
+
+   return 1;
+}
+//------- End of function Sys::set_config_dir -----------//
 
 
 //-------- Begin of function Sys::run --------//
