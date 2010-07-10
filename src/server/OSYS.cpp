@@ -2725,115 +2725,20 @@ void Sys::mp_clear_request_save()
 //
 void Sys::set_game_dir()
 {
-   //------- If it should run from the CDROM ------//
-
-   get_cdrom_drive();
-
-   set_one_dir( "IMAGE\\HALLFAME.ICN"    , "IMAGE\\", dir_image );
-   set_one_dir( "ENCYC\\SEAT\\NORMAN.ICN", "ENCYC\\", dir_encyc );
-#ifdef AMPLUS
-   set_one_dir( "ENCYC2\\SEAT\\EGYPTIAN.ICN", "ENCYC2\\", dir_encyc2 );
-#endif
-   set_one_dir( "MOVIE\\INTRO.AVI"       , "MOVIE\\", dir_movie );
-
-#ifdef DEMO
-   set_one_dir( "MUSIC\\DEMO.WAV"        , "MUSIC\\", dir_music );
-   set_one_dir( "TUTORIAL\\STANDARD.TUT" , "TUTORIAL\\", dir_tutorial );
-   set_one_dir( "SCENARIO\\DEMO.SCN"     , "SCENARIO\\", dir_scenario );
-#else
-   set_one_dir( "MUSIC\\NORMAN.WAV"      , "MUSIC\\", dir_music );
-   set_one_dir( "TUTORIAL\\1BAS_MIL.TUT" , "TUTORIAL\\", dir_tutorial );
-   set_one_dir( "SCENARIO\\7FOR7.SCN"    , "SCENARIO\\", dir_scenario );
-#endif
-
-#if(MAX_SCENARIO_PATH >= 2)
-   set_one_dir( "SCENARI2\\SCN_01.SCN"    , "SCENARI2\\", dir_scenario_path[1] );
-#endif
+   strcpy(dir_image, "IMAGE\\");
+   strcpy(dir_encyc, "ENCYC\\");
+   strcpy(dir_encyc2, "ENCYC2\\");
+   strcpy(dir_movie, "MOVIE\\");
+   strcpy(dir_music, "MUSIC\\");
+   strcpy(dir_tutorial, "TUTORIAL\\");
+   strcpy(dir_scenario, "SCENARIO\\");
+   strcpy(dir_scenario_path[1], "SCENARI2\\");
 
    //-------- set game version ---------//
 
-   #ifdef BETA
-      game_version = VERSION_FULL;
-   #else
-      #ifdef DEMO
-         game_version = VERSION_DEMO;
-      #else
-         if( 1 ) // no longer checkcd if( cdrom_drive )
-            game_version = VERSION_FULL;     // single player game is not available when game_version == VERSION_FULL
-         else
-            game_version = VERSION_MULTIPLAYER_ONLY;
-      #endif
-   #endif
+   game_version = VERSION_FULL;
 }
 //----------- End of function Sys::set_game_dir ----------//
-
-
-//-------- Begin of function Sys::set_one_dir ----------//
-//
-int Sys::set_one_dir( const char* checkFileName, const char* defaultDir, char* trueDir )
-{
-   if( m.is_file_exist( checkFileName ) )
-   {
-      strcpy( trueDir, defaultDir );
-   }
-   else
-   {
-      if( cdrom_drive )
-      {
-         strcpy( trueDir, "D:\\" );
-         strcat( trueDir, defaultDir );
-
-         trueDir[0] = cdrom_drive;
-      }
-      else
-      {
-         strcpy( trueDir, "" );
-         return 0;
-      }
-   }
-
-   return 1;
-}
-//----------- End of function Sys::set_one_dir ----------//
-
-
-//-------- Start of function Sys::get_cdrom_drive -------------//
-//
-// Get the drive letter of the CDROM and restore the result in cdrom_drive.
-//
-void Sys::get_cdrom_drive()
-{
-   unsigned char  i;
-   char  driveStr[4];
-   static char checkFileName[30] = "D:\\7K.EXE";        // check this file to identify the disc
-
-   cdrom_drive = 0;
-
-#ifndef NO_WINDOWS  // FIXME
-   driveStr[1] = ':';
-   driveStr[2] = '\\';
-   driveStr[3] = 0;
-
-	// ##### patch begin Gilbert 14/10 ######//
-   for(i='C'; i<='Z'; i++)
-	// ##### patch end Gilbert 14/10 ######//
-   {
-      checkFileName[0] = i;
-
-      driveStr[0] = i;
-
-      if(GetDriveType(driveStr) == DRIVE_CDROM)
-      {
-         if( m.is_file_exist(checkFileName) )
-         {
-            cdrom_drive = i;
-            break;
-         }
-      }
-   }
-#endif
-}
-//--------- End of function Sys::get_cdrom_drive ---------------//
 
 
 //-------- Start of function locate_king_general -------------//
