@@ -453,7 +453,7 @@ int Sys::set_config_dir()
    // location for the logged in user.
    char *home = getenv(home_env_var);
 
-   if (strlen(home) + strlen(default_config_dir) >= MAX_PATH)
+   if (strlen(home) + strlen(default_config_dir) >= MAX_PATH-2)
    {
       ERR("Game config dir path too long.\n");
       return 0;
@@ -467,14 +467,17 @@ int Sys::set_config_dir()
    // create the config directory
 #ifdef NO_WINDOWS
    r = mkdir(dir_config, 0777) == -1 ? errno == EEXIST : 1;
+   strcat(dir_config, "/");
 #else // WINDOWS
    r = !CreateDirectory(dir_config, NULL) ?
        GetLastError() == ERROR_ALREADY_EXISTS : 1;
+   strcat(dir_config, "\\");
 #endif
 
    if (!r)
    {
       ERR("Unable to acquire a usable game config dir.\n");
+      dir_config[0] = 0;
       return 0;
    }
 
