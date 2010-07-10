@@ -441,10 +441,8 @@ void Sys::deinit_objects()
 int Sys::set_config_dir()
 {
 #ifdef NO_WINDOWS
-   const char *default_config_dir = "/.7kaa";
    const char *home_env_var = "HOME";
 #else // WINDOWS
-   const char *default_config_dir = "\\.7kaa";
    const char *home_env_var = "USERPROFILE";
 #endif 
    int r;
@@ -453,26 +451,25 @@ int Sys::set_config_dir()
    // location for the logged in user.
    char *home = getenv(home_env_var);
 
-   if (strlen(home) + strlen(default_config_dir) >= MAX_PATH-2)
+   if (strlen(home) + strlen(DEFAULT_DIR_CONFIG) >= MAX_PATH-2)
    {
       ERR("Game config dir path too long.\n");
       return 0;
    }
 
    strcpy(dir_config, home);
-   strcat(dir_config, default_config_dir);
+   strcat(dir_config, DEFAULT_DIR_CONFIG);
 
    MSG("Game config dir path: %s\n", dir_config);
 
    // create the config directory
 #ifdef NO_WINDOWS
    r = mkdir(dir_config, 0777) == -1 ? errno == EEXIST : 1;
-   strcat(dir_config, "/");
 #else // WINDOWS
    r = !CreateDirectory(dir_config, NULL) ?
        GetLastError() == ERROR_ALREADY_EXISTS : 1;
-   strcat(dir_config, "\\");
 #endif
+   strcat(dir_config, PATH_DELIM);
 
    if (!r)
    {
@@ -2728,14 +2725,14 @@ void Sys::mp_clear_request_save()
 //
 void Sys::set_game_dir()
 {
-   strcpy(dir_image, "IMAGE\\");
-   strcpy(dir_encyc, "ENCYC\\");
-   strcpy(dir_encyc2, "ENCYC2\\");
-   strcpy(dir_movie, "MOVIE\\");
-   strcpy(dir_music, "MUSIC\\");
-   strcpy(dir_tutorial, "TUTORIAL\\");
-   strcpy(dir_scenario, "SCENARIO\\");
-   strcpy(dir_scenario_path[1], "SCENARI2\\");
+   strcpy(dir_image, DEFAULT_DIR_IMAGE);
+   strcpy(dir_encyc, DEFAULT_DIR_ENCYC);
+   strcpy(dir_encyc2, DEFAULT_DIR_ENCYC2);
+   strcpy(dir_movie, DEFAULT_DIR_MOVIE);
+   strcpy(dir_music, DEFAULT_DIR_MUSIC);
+   strcpy(dir_tutorial, DEFAULT_DIR_TUTORIAL);
+   strcpy(dir_scenario, DEFAULT_DIR_SCENARIO);
+   strcpy(dir_scenario_path[1], DEFAULT_DIR_SCENARI2);
 
    //-------- set game version ---------//
 

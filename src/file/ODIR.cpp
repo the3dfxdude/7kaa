@@ -98,7 +98,7 @@ int Directory::read(const char *fileSpec, int sortName)
    struct dirent **namelist;
    int n;
 
-   char *slash = strrchr((char*)fileSpec, '\\');
+   char *slash = strrchr((char*)fileSpec, '/');
    if (slash)
    {
       char *s = (char*)fileSpec;
