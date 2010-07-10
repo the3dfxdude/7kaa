@@ -70,6 +70,9 @@ if ($cfg{platform} =~ /^linux/) {
 
 } elsif ($cfg{platform} =~ /^win32$/) {
 
+  # we don't support wine on windows
+  $cfg{disable_wine} = 1;
+
   # search for the DXSDK
   unless (defined($cfg{dxsdk_path})) {
     print "Please specify the DXSDK path with --with-dxsdk=C:/yoursdk\n";

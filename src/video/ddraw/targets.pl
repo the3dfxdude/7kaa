@@ -20,7 +20,7 @@ if (defined($audio_backend)) {
 ## include paths ##
 my @includes = qw( ../../../include );
 
-if (defined($wine_prefix)) {
+if (!$disable_wine && defined($wine_prefix)) {
   push (@includes, "$wine_prefix/include/wine/windows",
                    "$wine_prefix/include/wine/msvcrt");
 }
