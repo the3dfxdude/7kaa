@@ -380,7 +380,8 @@ void Tutor::run(int tutorId, int inGameCall)
 		}
 		else
 		{
-			str = "TUTORIAL\\STANDARD.TUT";
+			str = DIR_TUTORIAL;
+			str += "STANDARD.TUT";
 
 			if( m.is_file_exist(str) )
 				game_file.load_game("", str);
