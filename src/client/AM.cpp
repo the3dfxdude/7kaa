@@ -311,6 +311,8 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 						  LPSTR lpCmdLine, int nCmdShow)
 #endif
 {
+	sys.set_config_dir();
+
 	//try to read from CONFIG.DAT, moved to AM.CPP
 
 	if( !config.load("CONFIG.DAT") )
