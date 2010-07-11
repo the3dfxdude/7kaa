@@ -93,7 +93,7 @@ public:
 
 public:
    int   save_game(const char* =NULL);
-   int   load_game(char* =NULL);
+   int   load_game(const char*, char*);
 
    void  set_file_name();
    void  disp_info(int x, int y);

@@ -39,6 +39,9 @@
 #include <OSYS.h>
 #include <OAUDIO.h>
 #include <OMUSIC.h>
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 // -------- define constant ----------//
 #define MIN_FREE_SPACE 1000
@@ -50,6 +53,7 @@
 //
 int GameFile::save_game(const char* fileName)
 {
+	char full_path[MAX_PATH+1];
 	File   file;
 	String errStr;
 
@@ -59,6 +63,13 @@ int GameFile::save_game(const char* fileName)
 		strcpy( file_name, fileName );
 
 	int rc = 1;
+
+	if (!m.path_cat(full_path, sys.dir_config, file_name, MAX_PATH))
+	{
+		rc = 0;
+		errStr = "Path too long to the saved game";
+	}
+
 	char lowDiskSpaceFlag = 0;
 #ifndef NO_WINDOWS  // FIXME
 	DWORD sectorPerCluster = 0;
@@ -87,7 +98,7 @@ int GameFile::save_game(const char* fileName)
 
 	if( rc )
 	{
-		rc = file.file_create( file_name, 0, 1 );	// 0=tell File don't handle error itself
+		rc = file.file_create(full_path, 0, 1); // 0=tell File don't handle error itself
 																   // 1=allow the writing size and the read size to be different
 		if( !rc )
 			errStr = "Error creating saved game file.";
@@ -140,8 +151,9 @@ int GameFile::save_game(const char* fileName)
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
-int GameFile::load_game(char* fileName)
+int GameFile::load_game(const char *base_path, char* fileName)
 {
+	char full_path[MAX_PATH+1];
 	File file;
 	int  rc=0;
 	const char *errMsg = NULL;
@@ -157,7 +169,14 @@ int GameFile::load_game(char* fileName)
 		strcpy( file_name, fileName );
 
 	rc = 1;
-	if( !file.file_open( file_name, 0, 1 ) )   // 0=tell File don't handle error itself
+
+	if (!m.path_cat(full_path, base_path, file_name, MAX_PATH))
+	{
+		rc = 0;
+		errMsg = "Path too long to the saved game";
+	}
+
+	if(rc && !file.file_open(full_path, 0, 1)) // 0=tell File don't handle error itself
 	{
 		rc = 0;
 		errMsg = "Cannot open save game file";

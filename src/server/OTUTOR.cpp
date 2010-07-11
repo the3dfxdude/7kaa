@@ -376,14 +376,14 @@ void Tutor::run(int tutorId, int inGameCall)
 
 		if( m.is_file_exist(str) )
 		{
-			game_file.load_game(str);
+			game_file.load_game("", str);
 		}
 		else
 		{
 			str = "TUTORIAL\\STANDARD.TUT";
 
 			if( m.is_file_exist(str) )
-				game_file.load_game(str);
+				game_file.load_game("", str);
 		}
 
 		//------ fix firm_build_id problem -----//

@@ -48,7 +48,9 @@
 #include <OBUTT3D.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
+#include <dbglog.h>
 
+DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 
 //--------- Define constant ---------//
@@ -702,7 +704,7 @@ int GameFileArray::process_action(int saveNew)
 	{
 		GameFile* gameFile = game_file_array[browse_recno];
 
-		int rc = gameFile->load_game();
+		int rc = gameFile->load_game((const char*)sys.dir_config, NULL);
 		if( rc > 0 )
 			strcpy( last_file_name, gameFile->file_name );
 		return rc;
@@ -778,6 +780,7 @@ void GameFileArray::save_new_game(const char* fileName)
 
 void GameFileArray::del_game()
 {
+	char full_path[MAX_PATH+1];
 	int recNo = browse_recno;
 
 	if( !box.ask( "This saved game will be deleted, proceed ?" ) )
@@ -785,7 +788,13 @@ void GameFileArray::del_game()
 
 	//---------------------------------------------------//
 
-	unlink(game_file_array[recNo]->file_name);   // unlink() is a C standard function in io.h, for delete file
+	if (!m.path_cat(full_path, sys.dir_config, game_file_array[recNo]->file_name, MAX_PATH))
+	{
+		ERR("Path to the saved game too long.\n");
+		return;
+	}
+
+	unlink(full_path);   // unlink() is a C standard function in io.h, for delete file
 
 	go(recNo);
 	linkout();
@@ -799,10 +808,17 @@ void GameFileArray::del_game()
 //
 int GameFileArray::write_hall_of_fame()
 {
+	char full_path[MAX_PATH+1];
 	int  rc;
 	File file;
 
-	rc = file.file_create( HALL_OF_FAME_FILE_NAME, 0, 1 );  // 0=don't handle error itself
+	if (!m.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
+	{
+		ERR("Path to the hall of fame too long.\n");
+		return 0;
+	}
+
+	rc = file.file_create( full_path, 0, 1 );  // 0=don't handle error itself
 
 	if( !rc )
 		return 0;
@@ -828,13 +844,20 @@ int GameFileArray::write_hall_of_fame()
 //
 int GameFileArray::read_hall_of_fame()
 {
-	if( !m.is_file_exist(HALL_OF_FAME_FILE_NAME) )
-		return 0;
-
+	char full_path[MAX_PATH+1];
 	int  rc;
 	File file;
 
-	rc = file.file_open( HALL_OF_FAME_FILE_NAME, 0, 1 );   // 0=don't handle error itself
+	if (!m.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
+	{
+		ERR("Path to the hall of fame too long.\n");
+		return 0;
+	}
+
+	if( !m.is_file_exist(full_path) )
+		return 0;
+
+	rc = file.file_open(full_path, 0, 1);   // 0=don't handle error itself
                                                         // 1=allow the writing size and the read size to be different
 	if( !rc )
 		return 0;
@@ -862,12 +885,18 @@ int GameFileArray::read_hall_of_fame()
 //
 void GameFileArray::load_all_game_header(const char *extStr)
 {
+	char full_path[MAX_PATH+1];
 	int       i;
 	Directory gameDir;
 	GameFile  gameFile;
 	File      file;
 
-	gameDir.read( extStr, 1 );  // 1-Sort file names
+	if (!m.path_cat(full_path, sys.dir_config, extStr, MAX_PATH))
+	{
+		ERR("Path to the config directory too long.\n");
+		return;
+	}
+	gameDir.read(full_path, 1);  // 1-Sort file names
 
 	//-------- read in the headers of all game sets -------//
 
@@ -875,7 +904,12 @@ void GameFileArray::load_all_game_header(const char *extStr)
 
 	for( i=1 ; i<=gameDir.size() ; i++ )
 	{
-		if( file.file_open( gameDir[i]->name, 1, 1 )      // last 1=allow varying read & write size
+		if (!m.path_cat(full_path, sys.dir_config, gameDir[i]->name, MAX_PATH))
+		{
+			ERR("Path to the saved game too long.\n");
+			continue;
+		}
+		if( file.file_open(full_path, 1, 1)      // last 1=allow varying read & write size
 			&& file.file_read(&gameFile, sizeof(GameFile))
 			&& gameFile.validate_header() )
 		{
