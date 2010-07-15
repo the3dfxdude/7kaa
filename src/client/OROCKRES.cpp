@@ -215,8 +215,8 @@ void RockRes::load_bitmap_info()
 		rockBitmapInfo->loc_y = m.atoi(rockBitmapRec->loc_y, rockBitmapRec->LOC_LEN);
 		rockBitmapInfo->frame = m.atoi(rockBitmapRec->frame, rockBitmapRec->FRAME_NO_LEN);
 
-		long bitmapOffset;
-		memcpy( &bitmapOffset, rockBitmapRec->bitmap_ptr, sizeof(long) );
+		uint32_t bitmapOffset;
+		memcpy( &bitmapOffset, rockBitmapRec->bitmap_ptr, sizeof(uint32_t) );
 		rockBitmapInfo->bitmap_ptr = res_bitmap.read_imported(bitmapOffset);
 	}
 }

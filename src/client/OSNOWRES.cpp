@@ -138,7 +138,7 @@ void SnowRes::load_info()
 	SnowRec		*snowRec;
 	SnowInfo		*snowInfo;
 	int			i;
-	long			bitmapOffset;
+	uint32_t		bitmapOffset;
 	
 	//---- read in snow map count and initialize snow info array ----//
 
@@ -158,7 +158,7 @@ void SnowRes::load_info()
 		snowInfo = snow_info_array+i;
 
 		snowInfo->snow_map_id = i+1;
-		memcpy( &bitmapOffset, snowRec->bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, snowRec->bitmap_ptr, sizeof(uint32_t) );
 		snowInfo->bitmap_ptr	= res_bitmap.read_imported(bitmapOffset);
 		if( snowRec->offset_x[0] != '\0' && snowRec->offset_x[0] != ' ')
 			snowInfo->offset_x = (short) m.atoi(snowRec->offset_x, snowRec->OFFSET_LEN);

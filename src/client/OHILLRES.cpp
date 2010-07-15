@@ -93,7 +93,7 @@ void HillRes::load_hill_block_info()
 	HillBlockRec		*hillBlockRec;
 	HillBlockInfo		*hillBlockInfo;
 	int			i;
-	long			bitmapOffset;
+	uint32_t		bitmapOffset;
 	
 	//---- read in hill count and initialize hill block info array ----//
 
@@ -133,7 +133,7 @@ void HillRes::load_hill_block_info()
 		hillBlockInfo->offset_x = m.atoi(hillBlockRec->offset_x, hillBlockRec->OFFSET_LEN);
 		hillBlockInfo->offset_y = m.atoi(hillBlockRec->offset_y, hillBlockRec->OFFSET_LEN);
 
-		memcpy( &bitmapOffset, hillBlockRec->bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, hillBlockRec->bitmap_ptr, sizeof(uint32_t) );
 		hillBlockInfo->bitmap_ptr = res_bitmap.read_imported(bitmapOffset);
 	}
 

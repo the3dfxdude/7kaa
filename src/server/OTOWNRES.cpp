@@ -220,7 +220,7 @@ void TownRes::load_town_build()
 	TownBuildRec  	*townBuildRec;
 	TownBuild     	*townBuild;
 	int      	  	i;
-	long			  	bitmapOffset;
+	uint32_t			bitmapOffset;
 	Database 		*dbTownBuild = game_set.open_db(TOWN_BUILD_DB);
 
 	town_build_count = (short) dbTownBuild->rec_count();
@@ -241,7 +241,7 @@ void TownRes::load_town_build()
 		townBuild->build_code  = m.atoi(townBuildRec->build_code, TownBuildRec::BUILD_CODE_LEN);
 		townBuild->race_id     = m.atoi(townBuildRec->race_id, TownBuildRec::RACE_ID_LEN);
 
-		memcpy( &bitmapOffset, townBuildRec->bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, townBuildRec->bitmap_ptr, sizeof(uint32_t) );
 
 		townBuild->bitmap_ptr    = res_bitmap.read_imported(bitmapOffset);
 		townBuild->bitmap_width  = *((short*)townBuild->bitmap_ptr);

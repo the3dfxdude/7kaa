@@ -177,7 +177,7 @@ void PlantRes::load_plant_bitmap()
 	PlantBitmapRec  *plantBitmapRec;
 	PlantBitmap     *plantBitmap;
 	int      		i;
-	long				bitmapOffset;
+	uint32_t			bitmapOffset;
 
 	String plantDbName;
 	plantDbName = DIR_RES;
@@ -204,7 +204,7 @@ void PlantRes::load_plant_bitmap()
 
 		plantBitmap->size = m.atoi( plantBitmapRec->size, plantBitmapRec->SIZE_LEN );
 
-		memcpy( &bitmapOffset, plantBitmapRec->bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, plantBitmapRec->bitmap_ptr, sizeof(uint32_t) );
 
 		plantBitmap->bitmap_ptr 	= res_bitmap.read_imported(bitmapOffset);
 		plantBitmap->bitmap_width  = *((short*)plantBitmap->bitmap_ptr);
