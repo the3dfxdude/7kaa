@@ -38,7 +38,7 @@ public:
 private:
    enum     { DEF_BUF_SIZE = 5120 };   // default buffer size : 5K
 
-   long     *index_buf;         // index buffer pointer
+   uint32_t *index_buf;         // index buffer pointer
    char     *data_buf;          // data buffer pointer
    unsigned data_buf_size;      // size of the data buffer
 
