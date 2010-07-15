@@ -62,7 +62,7 @@ inline char *itoa(int num, char *str, int radix)
 	return str;
 }
 
-inline char *ltoa(int num, char *str, int radix)
+inline char *ltoa(long num, char *str, int radix)
 {
 	sprintf(str,"%ld",num);
 	return str;
