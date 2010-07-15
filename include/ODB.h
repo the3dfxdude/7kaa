@@ -24,9 +24,9 @@
 #ifndef __ODB_H
 #define __ODB_H
 
-#ifndef __OFILE_H
+#include <stdint.h>
+
 #include <OFILE.h>
-#endif
 
 
 //-------- Define class Database ------------//
@@ -35,11 +35,12 @@ class Database : public File
 {
 private:
 
+#pragma pack(1)
    struct DbfHeader
    {
       char     dbf_id;
       char     last_update[3];
-      long     last_rec;
+      uint32_t last_rec;
       unsigned short data_offset;
       unsigned short rec_size;
    };
@@ -48,7 +49,7 @@ private:
    {
       char     field_name[11];
       char     field_type;
-      long     dummy[4];
+      uint32_t dummy[4];
       union
       {
         unsigned char_len;
@@ -61,6 +62,7 @@ private:
 
       char filler[14];
    };
+#pragma pack()
 
 private:
 
