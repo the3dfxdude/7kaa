@@ -140,7 +140,7 @@ void MouseCursor::load_cursor_info()
 	CursorRec  		*cursorRec;
 	CursorInfo     *cursorInfo;
 	int      		i;
-	long				bitmapOffset;
+	uint32_t			bitmapOffset;
 	Database 		dbCursor(CURSOR_DBF, 1);		// 1-read all into the buffer
 
 	cursor_count = (short) dbCursor.rec_count();
@@ -155,7 +155,7 @@ void MouseCursor::load_cursor_info()
 		cursorRec  = (CursorRec*) dbCursor.read(i+1);
 		cursorInfo = cursor_info_array+i;
 
-		memcpy( &bitmapOffset, cursorRec->bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, cursorRec->bitmap_ptr, sizeof(uint32_t) );
 
 		cursorInfo->bitmap_ptr = res_bitmap.read_imported(bitmapOffset);
 
