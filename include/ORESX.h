@@ -24,9 +24,9 @@
 #ifndef __ORESX_H
 #define __ORESX_H
 
-#ifndef __ALL_H
+#include <stdint.h>
+
 #include <ALL.h>
-#endif
 
 //--------- Define structure ResIndex ----------//
 
@@ -34,7 +34,7 @@
 struct ResIndex
 {
    char name[9];
-   long pointer;
+   uint32_t pointer;
 };
 #pragma pack()
 
