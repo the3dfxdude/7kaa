@@ -68,7 +68,7 @@ struct FontInfo	// info for each character
 	char				offset_y;
 	unsigned char	width;
 	unsigned char	height;
-	long				bitmap_offset;	// file offset relative to bitmap data
+	uint32_t			bitmap_offset;	// file offset relative to bitmap data
 };
 #pragma pack()
 
