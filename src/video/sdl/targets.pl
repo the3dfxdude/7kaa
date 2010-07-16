@@ -1,7 +1,7 @@
 my @defines;
 
 ## compiler flags ##
-@defines = qw( AMPLUS USE_SDL NO_WINDOWS );
+@defines = qw( AMPLUS USE_SDL );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
@@ -14,6 +14,9 @@ if (defined($audio_backend)) {
   } elsif ($audio_backend =~ /dsound/i) {
     push (@defines, 'USE_DSOUND');
   }
+}
+if ($disable_wine) {
+  push (@defines, "NO_WINDOWS");
 }
 ## end compiler flags ##
 
