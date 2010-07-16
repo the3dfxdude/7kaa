@@ -2,8 +2,6 @@
 my @libs;
 unless ($disable_wine) {
   push (@libs, 'ole32','msvcrt','winmm');
-} else {
-  push (@libs, 'SDL');
 }
 ## end libraries to link ##
 
@@ -32,11 +30,7 @@ if (defined($audio_backend)) {
 ## Build the video backend ##
 if (defined($video_backend)) {
   if ($video_backend =~ /sdl/i) {
-    if ($platform =~ /^linux/) {
-      #push (@libs, "openal");
-    } elsif ($platform =~ /^win32/) {
-      #push (@libs, "openal32");
-    }
+    push (@libs, 'SDL');
     @video = include_targets('video/sdl/targets.pl');
   } elsif ($video_backend =~ /ddraw/i) {
     push (@libs, 'gdi32', 'ddraw');
