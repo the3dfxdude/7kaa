@@ -20,6 +20,7 @@
 #ifndef INPUT_STREAM_H
 #define INPUT_STREAM_H
 
+#include <stdint.h>
 #include <stdio.h>
 
 class InputStream
@@ -34,7 +35,7 @@ public:
 
 /* Reads a little-endian integer */
 template <typename T>
-bool read_le(InputStream *is, T *valp)
+bool read_le_integer(InputStream *is, T *valp)
 {
    T val = T();
    unsigned char c;
@@ -51,5 +52,30 @@ bool read_le(InputStream *is, T *valp)
 
    return true;
 }
+
+/*
+ * Reads a non-integer little-endian value of the same size as the integer
+ * type AliasT.
+ */
+template <typename T, typename AliasT>
+bool read_le_alias(InputStream *is, T *valp)
+{
+   union { T val; AliasT al; } u;
+
+   if (!read_le_integer<AliasT>(is, &u.al))
+      return false;
+
+   *valp = u.val;
+   return true;
+}
+
+template <typename T>
+bool read_le(InputStream *is, T *valp)
+{
+   return read_le_integer<T>(is, valp);
+}
+
+template <> bool read_le<float>(InputStream *is, float *valp);
+template <> bool read_le<double>(InputStream *is, double *valp);
 
 #endif
