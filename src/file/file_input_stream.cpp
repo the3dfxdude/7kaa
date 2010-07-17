@@ -23,6 +23,7 @@
 FileInputStream::FileInputStream()
 {
    this->file = NULL;
+   this->own_file = false;
 }
 
 FileInputStream::~FileInputStream()
@@ -54,17 +55,17 @@ long FileInputStream::tell()
    return this->file->file_pos();
 }
 
-bool FileInputStream::open(File *file)
+bool FileInputStream::open(File *file, bool own_file)
 {
    this->close();
    this->file = file;
-   return (file == NULL);
+   this->own_file = own_file;
+   return (file != NULL);
 }
 
 bool FileInputStream::open(const char *file_name)
 {
-   this->close();
-   this->file = new File;
+   this->open(new File);
 
    if (!this->file->file_open(file_name))
    {
@@ -77,6 +78,9 @@ bool FileInputStream::open(const char *file_name)
 
 void FileInputStream::close()
 {
-   delete this->file;
+   if (this->own_file)
+      delete this->file;
+
    this->file = NULL;
+   this->own_file = false;
 }
