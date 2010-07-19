@@ -19,6 +19,22 @@
  */
 #include <input_stream.h>
 
+/*
+ * Reads a non-integer little-endian value of the same size as the integer
+ * type AliasT.
+ */
+template <typename T, typename AliasT>
+bool read_le_alias(InputStream *is, T *valp)
+{
+   union { T val; AliasT al; } u;
+
+   if (!read_le_integer<AliasT>(is, &u.al))
+      return false;
+
+   *valp = u.val;
+   return true;
+}
+
 template <>
 bool read_le<float>(InputStream *is, float *valp)
 {
