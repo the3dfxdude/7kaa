@@ -76,7 +76,7 @@ public:
 class GameFile
 {
 public:
-   size_t   class_size;    // for version compare
+   uint32_t class_size;    // for version compare
    char     file_name[MAX_PATH+1];
 
    char     player_name[NationArray::HUMAN_NAME_LEN+1];
