@@ -39,6 +39,7 @@ ORESDB.cpp
 ORESX.cpp
 file_input_stream.cpp
 file_util.cpp
+input_stream.cpp
 mem_input_stream.cpp
 );
 build_targets(\@targets, \@includes, \@defines);
