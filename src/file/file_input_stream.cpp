@@ -36,7 +36,10 @@ long FileInputStream::read(void *buffer, long length)
    if (this->file == NULL)
       return 0;
 
-   return this->file->file_read(buffer, length);
+   if (!this->file->file_read(buffer, length))
+		return 0;
+
+	return length;
 }
 
 bool FileInputStream::seek(long offset, int whence)
