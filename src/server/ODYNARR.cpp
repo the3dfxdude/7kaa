@@ -25,6 +25,9 @@
 #include <string.h>
 
 #include <ODYNARR.h>
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(DynArray);
 
 //--------- BEGIN OF FUNCTION DynArray Constructor -------//
 //
@@ -509,6 +512,8 @@ int DynArray::write_file(File* filePtr)
 int DynArray::read_file(File* filePtr)
 {
    char* bodyBuf = body_buf;     // preserve body_buf which has been allocated
+
+   ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
    if( !filePtr->file_read( this, sizeof(DynArray) ) )
       return 0;

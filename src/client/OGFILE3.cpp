@@ -24,23 +24,26 @@
 #include <OUNIT.h>
 
 #include <OBULLET.h>
-#include <OU_MARI.h>
 #include <OB_PROJ.h>
-#include <OSITE.h>
-#include <OTOWN.h>
-#include <ONATION.h>
 #include <OFIRM.h>
-#include <OTORNADO.h>
+#include <OGFILE.h>
+#include <ONATION.h>
+#include <ONEWS.h>
 #include <OREBEL.h>
-#include <OSPY.h>
-#include <OSNOWG.h>
 #include <OREGION.h>
 #include <OREGIONS.h>
-#include <ONEWS.h>
-#include <OGFILE.h>
+#include <OSITE.h>
+#include <OSNOWG.h>
+#include <OSPY.h>
+#include <OTORNADO.h>
+#include <OTOWN.h>
+#include <OU_MARI.h>
+#include <dbglog.h>
 #include <file_reader.h>
 
 #include <OGF_V1.h>
+
+DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 //------- declare static functions -------//
 
@@ -621,6 +624,8 @@ int Bullet::write_file(File* filePtr)
 int Bullet::read_file(File* filePtr)
 {
 	char* vfPtr = *((char**)this);      // save the virtual function table pointer
+
+	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
 	if( !filePtr->file_read( this, sizeof(Bullet) ) )
 		return 0;
@@ -1268,10 +1273,12 @@ int Nation::read_file(File* filePtr)
 	}
 	else
 	{
+		ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 		if( !filePtr->file_read( this, sizeof(Nation) ) )
 			return 0;
 	}
 #else
+	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	if( !filePtr->file_read( this, sizeof(Nation) ) )
 		return 0;
 #endif
@@ -1437,6 +1444,8 @@ int Tornado::read_file(File* filePtr)
 {
    char* vfPtr = *((char**)this);      // save the virtual function table pointer
 
+	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+
    if( !filePtr->file_read( this, sizeof(Tornado) ) )
       return 0;
 
@@ -1527,6 +1536,8 @@ int SnowGroundArray::write_file(File* filePtr)
 //
 int SnowGroundArray::read_file(File* filePtr)
 {
+	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+
    if( !filePtr->file_read( this, sizeof(SnowGroundArray)) )
       return 0;
 
@@ -1573,6 +1584,8 @@ int RegionArray::write_file(File* filePtr)
 //
 int RegionArray::read_file(File* filePtr)
 {
+	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+
    if( !filePtr->file_read( this, sizeof(RegionArray)) )
       return 0;
 
