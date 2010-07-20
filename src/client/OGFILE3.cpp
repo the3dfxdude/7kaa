@@ -38,6 +38,7 @@
 #include <OREGIONS.h>
 #include <ONEWS.h>
 #include <OGFILE.h>
+#include <file_reader.h>
 
 #include <OGF_V1.h>
 
@@ -242,12 +243,120 @@ int Unit::write_file(File* filePtr)
 //
 int Unit::read_file(File* filePtr)
 {
-   char* vfPtr = *((char**)this);      // save the virtual function table pointer
+	FileReader r;
+	uint32_t u32;
+	uint16_t u16;
 
-   if( !filePtr->file_read( this, sizeof(Unit) ) )
-      return 0;
+	if (!r.init(filePtr))
+		return 0;
 
-   *((char**)this) = vfPtr;
+	r.read(&u16); /* record size */
+	r.read(&u32); /* virtual table pointer */
+
+	/* Sprite */
+	r.read(&this->sprite_id);
+	r.read(&this->sprite_recno);
+	r.read(&this->mobile_type);
+	r.read(&this->cur_action);
+	r.read(&this->cur_dir);
+	r.read(&this->cur_frame);
+	r.read(&this->cur_attack);
+	r.read(&this->final_dir);
+	r.read(&this->turn_delay);
+	r.read(&this->guard_count);
+	r.read(&this->remain_attack_delay);
+	r.read(&this->remain_frames_per_step);
+	r.read(&this->cur_x);
+	r.read(&this->cur_y);
+	r.read(&this->go_x);
+	r.read(&this->go_y);
+	r.read(&this->next_x);
+	r.read(&this->next_y);
+	r.read(&this->sprite_info);
+
+	/* Unit */
+	r.read(&this->unit_id);
+	r.read(&this->rank_id);
+	r.read(&this->race_id);
+	r.read(&this->nation_recno);
+	r.read(&this->ai_unit);
+	r.read(&this->name_id);
+	r.read(&this->unit_group_id);
+	r.read(&this->team_id);
+	r.read(&this->selected_flag);
+	r.read(&this->group_select_id);
+	r.read(&this->waiting_term);
+	r.read(&this->blocked_by_member);
+	r.read(&this->swapping);
+	r.read(&this->leader_unit_recno);
+	r.read(&this->action_misc);
+	r.read(&this->action_misc_para);
+	r.read(&this->action_mode);
+	r.read(&this->action_para);
+	r.read(&this->action_x_loc);
+	r.read(&this->action_y_loc);
+	r.read(&this->action_mode2);
+	r.read(&this->action_para2);
+	r.read(&this->action_x_loc2);
+	r.read(&this->action_y_loc2);
+	r.read(this->blocked_edge, 4);
+	r.read(&this->attack_dir);
+	r.read(&this->range_attack_x_loc);
+	r.read(&this->range_attack_y_loc);
+	r.read(&this->move_to_x_loc);
+	r.read(&this->move_to_y_loc);
+	r.read(&this->loyalty);
+	r.read(&this->target_loyalty);
+	r.read(&this->hit_points);
+	r.read(&this->max_hit_points);
+
+	r.read(&this->skill.combat_level);
+	r.read(&this->skill.skill_id);
+	r.read(&this->skill.skill_level);
+	r.read(&this->skill.combat_level_minor);
+	r.read(&this->skill.skill_level_minor);
+	r.read(&this->skill.skill_potential);
+
+	r.read(&this->unit_mode);
+	r.read(&this->unit_mode_para);
+	r.read(&this->spy_recno);
+	r.read(&this->nation_contribution);
+	r.read(&this->total_reward);
+	r.read(&this->attack_info_array);
+	r.read(&this->attack_count);
+	r.read(&this->attack_range);
+	r.read(&this->cur_power);
+	r.read(&this->max_power);
+	r.read(&this->result_node_array);
+	r.read(&this->result_node_count);
+	r.read(&this->result_node_recno);
+	r.read(&this->result_path_dist);
+	r.read(&this->way_point_array);
+	r.read(&this->way_point_array_size);
+	r.read(&this->way_point_count);
+	r.read(&this->ai_action_id);
+	r.read(&this->original_action_mode);
+	r.read(&this->original_action_para);
+	r.read(&this->original_action_x_loc);
+	r.read(&this->original_action_y_loc);
+	r.read(&this->original_target_x_loc);
+	r.read(&this->original_target_y_loc);
+	r.read(&this->ai_original_target_x_loc);
+	r.read(&this->ai_original_target_y_loc);
+	r.read(&this->ai_no_suitable_action);
+	r.read(&this->can_guard_flag);
+	r.read(&this->can_attack_flag);
+	r.read(&this->force_move_flag);
+	r.read(&this->home_camp_firm_recno);
+	r.read(&this->aggressive_mode);
+	r.read(&this->seek_path_fail_count);
+	r.read(&this->ignore_power_nation);
+	r.read(&this->team_info);
+
+	if (!r.good())
+		return 0;
+
+	r.deinit();
 
 	//--------------- read in memory data ----------------//
 
