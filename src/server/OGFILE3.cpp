@@ -457,6 +457,8 @@ int UnitMarine::read_derived_file(File* filePtr)
 	//---- backup virtual functions table pointer of splash ----//
 	char* splashVfPtr = *((char **)&splash);
 
+	ERR(__FILE__":%d: UnitMarine::read_derived_file();\n", __LINE__);
+
 	//--------- read file --------//
 	if( !Unit::read_derived_file(filePtr) )
 		return 0;
@@ -774,7 +776,6 @@ int FirmArray::write_file(File* filePtr)
 int FirmArray::read_file(File* filePtr)
 {
 	Firm*   firmPtr;
-	char*   vfPtr;
 	int     i, firmId, firmRecno;
 
 	int firmCount      = filePtr->file_get_short();  // get no. of firms from file
@@ -796,26 +797,91 @@ int FirmArray::read_file(File* filePtr)
       }
       else
       {
+			FileReader r;
+			uint16_t u16;
+			uint32_t u32;
+
          //----- create firm object -----------//
 
          firmRecno = create_firm( firmId );
          firmPtr   = firm_array[firmRecno];
 
+			if (!r.init(filePtr))
+				return 0;
+
+			r.read(&u16); /* record size */
+			r.read(&u32); /* virtual table pointer */
+
+			r.read(&firmPtr->firm_id);
+			r.read(&firmPtr->firm_build_id);
+			r.read(&firmPtr->firm_recno);
+			r.read(&firmPtr->firm_ai);
+			r.read(&firmPtr->ai_processed);
+			r.read(&firmPtr->ai_status);
+			r.read(&firmPtr->ai_link_checked);
+			r.read(&firmPtr->ai_sell_flag);
+			r.read(&firmPtr->race_id);
+			r.read(&firmPtr->nation_recno);
+			r.read(&firmPtr->closest_town_name_id);
+			r.read(&firmPtr->firm_name_instance_id);
+			r.read(&firmPtr->loc_x1);
+			r.read(&firmPtr->loc_y1);
+			r.read(&firmPtr->loc_x2);
+			r.read(&firmPtr->loc_y2);
+			r.read(&firmPtr->abs_x1);
+			r.read(&firmPtr->abs_y1);
+			r.read(&firmPtr->abs_x2);
+			r.read(&firmPtr->abs_y2);
+			r.read(&firmPtr->center_x);
+			r.read(&firmPtr->center_y);
+			r.read(&firmPtr->region_id);
+			r.read(&firmPtr->cur_frame);
+			r.read(&firmPtr->remain_frame_delay);
+			r.read(&firmPtr->hit_points);
+			r.read(&firmPtr->max_hit_points);
+			r.read(&firmPtr->under_construction);
+			r.read(&firmPtr->firm_skill_id);
+			r.read(&firmPtr->overseer_recno);
+			r.read(&firmPtr->overseer_town_recno);
+			r.read(&firmPtr->builder_recno);
+			r.read(&firmPtr->builder_region_id);
+			r.read(&firmPtr->productivity);
+			r.read(&firmPtr->worker_array);
+			r.read(&firmPtr->worker_count);
+			r.read(&firmPtr->selected_worker_id);
+			r.read(&firmPtr->player_spy_count);
+			r.read(&firmPtr->sabotage_level);
+			r.read(&firmPtr->linked_firm_count);
+			r.read(&firmPtr->linked_town_count);
+
+			for (int n = 0; n < MAX_LINKED_FIRM_FIRM; n++)
+				r.read(&firmPtr->linked_firm_array[n]);
+
+			for (int n = 0; n < MAX_LINKED_FIRM_TOWN; n++)
+				r.read(&firmPtr->linked_town_array[n]);
+
+			r.read(firmPtr->linked_firm_enable_array, MAX_LINKED_FIRM_FIRM);
+			r.read(firmPtr->linked_town_enable_array, MAX_LINKED_FIRM_TOWN);
+			r.read(&firmPtr->last_year_income);
+			r.read(&firmPtr->cur_year_income);
+			r.read(&firmPtr->setup_date);
+			r.read(&firmPtr->should_set_power);
+			r.read(&firmPtr->last_attacked_date);
+			r.read(&firmPtr->should_close_flag);
+			r.read(&firmPtr->no_neighbor_space);
+			r.read(&firmPtr->ai_should_build_factory_count);
+
+			if (!r.good())
+				return 0;
+
+			r.deinit();
+
          //---- read data in base class -----//
-
-         vfPtr = *((char**)firmPtr);      // save the virtual function table pointer
-
-         if( !filePtr->file_read( firmPtr, sizeof(Firm) ) )
-            return 0;
-
 
 			#ifdef AMPLUS
 				if(!game_file_array.same_version && firmPtr->firm_id > FIRM_BASE)
 					firmPtr->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
 			#endif
-
-
-         *((char**)firmPtr) = vfPtr;
 
          //--------- read worker_array ---------//
 
@@ -894,6 +960,8 @@ int Firm::read_derived_file(File* filePtr)
 
    if( readSize > 0 )
    {
+		ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+
       if( !filePtr->file_read( (char*) this + sizeof(Firm), readSize ) )
          return 0;
    }
@@ -1263,6 +1331,9 @@ int Nation::read_file(File* filePtr)
 	if(!game_file_array.same_version)
 	{
 		Version_1_Nation *oldNationPtr = (Version_1_Nation*) mem_add(sizeof(Version_1_Nation));
+
+		ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+
 		if(!filePtr->file_read(oldNationPtr, sizeof(Version_1_Nation)))
 		{
 			mem_del(oldNationPtr);
@@ -1584,10 +1655,26 @@ int RegionArray::write_file(File* filePtr)
 //
 int RegionArray::read_file(File* filePtr)
 {
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	FileReader r;
+	uint16_t u16;
 
-   if( !filePtr->file_read( this, sizeof(RegionArray)) )
-      return 0;
+	if (!r.init(filePtr))
+		return 0;
+
+	r.read(&u16); /* record size */
+
+	r.read(&this->init_flag);
+	r.read(&this->region_info_array);
+	r.read(&this->region_info_count);
+	r.read(&this->region_stat_array);
+	r.read(&this->region_stat_count);
+	r.read(&this->connect_bits);
+	r.read(this->region_sorted_array, sizeof(this->region_sorted_array));
+
+	if (!r.good())
+		return 0;
+
+	r.deinit();
 
    if( region_info_count > 0 )
       region_info_array = (RegionInfo *) mem_add(sizeof(RegionInfo)*region_info_count);
