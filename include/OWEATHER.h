@@ -26,9 +26,9 @@
 #ifndef __OWEATHER_H
 #define __OWEATHER_H
 
-#ifndef __ALL_H
+#include <stdint.h>
+
 #include <ALL.h>
-#endif
 
 //--------- Define constant ----------//
 #define MAX_WEATHER_FORECAST 3
@@ -66,7 +66,7 @@ private:
 
 	short wind_spd;
 	// #### begin Gilbert 31/10 #######//
-	long	high_wind_day;
+	int32_t high_wind_day;
 	// #### end Gilbert 31/10 #######//
 	short	wind_dir;
 	short windy_speed;
