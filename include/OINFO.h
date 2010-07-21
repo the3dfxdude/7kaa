@@ -24,17 +24,11 @@
 #ifndef __OINFO_H
 #define __OINFO_H
 
-#ifndef __OSKILL_H
+#include <stdint.h>
+
 #include <OSKILL.h>
-#endif
-
-#ifndef __ODYNARR_H
 #include <ODYNARR.h>
-#endif
-
-#ifndef __OWORLD_H
 #include <OWORLD.h>
-#endif
 
 //---------- Define constant ---------//
 
@@ -124,8 +118,8 @@ public:
 
 	int  random_seed;
 
-	unsigned long start_play_time;	// the time player start playing the game today
-	unsigned long total_play_time;  	// total time the player has played in all saved games
+	uint32_t start_play_time;	// the time player start playing the game today
+	uint32_t total_play_time;  	// total time the player has played in all saved games
 
 	//------- report browsers recno -------//
 
