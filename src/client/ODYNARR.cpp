@@ -26,6 +26,7 @@
 
 #include <ODYNARR.h>
 #include <dbglog.h>
+#include <file_reader.h>
 
 DBGLOG_DEFAULT_CHANNEL(DynArray);
 
@@ -511,14 +512,30 @@ int DynArray::write_file(File* filePtr)
 //
 int DynArray::read_file(File* filePtr)
 {
-   char* bodyBuf = body_buf;     // preserve body_buf which has been allocated
+	FileReader r;
+	uint16_t u16;
+	uint32_t u32;
 
-   ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	if (!r.init(filePtr))
+		return 0;
 
-   if( !filePtr->file_read( this, sizeof(DynArray) ) )
-      return 0;
+	r.read(&u16); /* record size */
 
-   body_buf = mem_resize( bodyBuf, ele_num*ele_size );
+   r.read(&this->ele_num);
+   r.read(&this->block_num);
+   r.read(&this->cur_pos);
+   r.read(&this->last_ele);
+   r.read(&this->ele_size);
+   r.read(&this->sort_offset);
+   r.read(&this->sort_type);
+	r.read(&u32); /* body_buf pointer */
+
+	if (!r.good())
+		return 0;
+
+	r.deinit();
+
+   this->body_buf = mem_resize(this->body_buf, this->ele_num*this->ele_size);
 
 	if( last_ele > 0 )
 	{
