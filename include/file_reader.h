@@ -37,6 +37,7 @@ public:
    void deinit();
    bool read(void *buf, size_t len);
    bool good() const;
+   bool skip(size_t len);
 
    template <typename T>
    bool read(T *v)
@@ -65,6 +66,19 @@ public:
 
       return true;
    }
+
+   template <typename T>
+   bool read_array(T *array, size_t len)
+   {
+      for (size_t n = 0; n < len; n++)
+      {
+	 if (!this->read(&array[n]))
+	    break;
+      }
+
+      return this->ok;
+   }
 };
 
+/* vim: set ts=8 sw=3: */
 #endif

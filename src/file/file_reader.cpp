@@ -48,7 +48,7 @@ bool FileReader::init(File *file)
    if (this->file->file_type != File::FLAT)
       this->file->file_type = File::FLAT;
 
-   MSG("Reader::init() at 0x%lx\n", this->is.tell());
+   MSG("init() at 0x%lx\n", this->is.tell());
    return true;
 }
 
@@ -57,7 +57,7 @@ void FileReader::deinit()
    if (this->file == NULL)
       return;
 
-   MSG("Reader::deinit() at 0x%lx\n", this->is.tell());
+   MSG("deinit() at 0x%lx\n", this->is.tell());
 
    this->file->file_type = this->original_type;
    this->is.close();
@@ -79,3 +79,16 @@ bool FileReader::good() const
 {
    return this->ok;
 }
+
+bool FileReader::skip(size_t len)
+{
+   if (!this->ok)
+      return false;
+
+   if (!this->is.seek(len, SEEK_CUR))
+      this->ok = false;
+
+   return this->ok;
+}
+
+/* vim: set ts=8 sw=3: */
