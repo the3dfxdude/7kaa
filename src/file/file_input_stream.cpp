@@ -37,9 +37,9 @@ long FileInputStream::read(void *buffer, long length)
       return 0;
 
    if (!this->file->file_read(buffer, length))
-		return 0;
+      return 0;
 
-	return length;
+   return length;
 }
 
 bool FileInputStream::seek(long offset, int whence)
@@ -87,3 +87,5 @@ void FileInputStream::close()
    this->file = NULL;
    this->own_file = false;
 }
+
+/* vim: set ts=8 sw=3: */

@@ -40,4 +40,5 @@ public:
    void close();
 };
 
+/* vim: set ts=8 sw=3: */
 #endif
