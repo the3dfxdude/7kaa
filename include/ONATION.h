@@ -132,7 +132,7 @@ struct ActionNode
 	short action_para2;		// parameter for the action. e.g. firm race id. for building FirmBase
 	WORD	action_id;			// an unique id. for identifying this node
 
-	long 	add_date;			// when this action is added
+	int32_t add_date;			// when this action is added
 	short	unit_recno;
 
 	short	action_x_loc;		// can be firm loc, or target loc, etc
@@ -148,7 +148,7 @@ struct ActionNode
 	char  processing_instance_count;
 	char  processed_instance_count;
 
-	long  next_retry_date; 				// continue processing this action after this date, this is used when training a unit for construction
+	int32_t next_retry_date; 				// continue processing this action after this date, this is used when training a unit for construction
 };
 #pragma pack()
 
