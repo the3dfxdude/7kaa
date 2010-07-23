@@ -457,7 +457,7 @@ int UnitMarine::read_derived_file(File* filePtr)
 	//---- backup virtual functions table pointer of splash ----//
 	char* splashVfPtr = *((char **)&splash);
 
-	ERR(__FILE__":%d: UnitMarine::read_derived_file();\n", __LINE__);
+	MSG(__FILE__":%d: UnitMarine::read_derived_file();\n", __LINE__);
 
 	//--------- read file --------//
 	if( !Unit::read_derived_file(filePtr) )
@@ -627,7 +627,7 @@ int Bullet::read_file(File* filePtr)
 {
 	char* vfPtr = *((char**)this);      // save the virtual function table pointer
 
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
 	if( !filePtr->file_read( this, sizeof(Bullet) ) )
 		return 0;
@@ -960,7 +960,7 @@ int Firm::read_derived_file(File* filePtr)
 
    if( readSize > 0 )
    {
-		ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
       if( !filePtr->file_read( (char*) this + sizeof(Firm), readSize ) )
          return 0;
@@ -1633,12 +1633,12 @@ int Nation::read_file(File* filePtr)
 	}
 	else
 	{
-		ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 		if( !filePtr->file_read( this, sizeof(Nation) ) )
 			return 0;
 	}
 #else
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	if( !filePtr->file_read( this, sizeof(Nation) ) )
 		return 0;
 #endif
@@ -1804,7 +1804,7 @@ int Tornado::read_file(File* filePtr)
 {
    char* vfPtr = *((char**)this);      // save the virtual function table pointer
 
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
    if( !filePtr->file_read( this, sizeof(Tornado) ) )
       return 0;
@@ -1896,7 +1896,7 @@ int SnowGroundArray::write_file(File* filePtr)
 //
 int SnowGroundArray::read_file(File* filePtr)
 {
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
    if( !filePtr->file_read( this, sizeof(SnowGroundArray)) )
       return 0;

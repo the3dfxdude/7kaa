@@ -1021,7 +1021,7 @@ int TalkRes::read_file(File* filePtr)
 
 	//------ read in TalkRes --------//
 
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
 	if( !filePtr->file_read( this, sizeof(TalkRes) ) )
 		return 0;
@@ -1141,7 +1141,7 @@ int Game::write_file(File* filePtr)
 //
 int Game::read_file(File* filePtr)
 {
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(Game) );
 }
 //--------- End of function Game::read_file ---------------//
@@ -1170,7 +1170,7 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 	short	soundEffectVol  = sound_effect_volume;
 	char	helpMode			 = help_mode;
 
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	int rc = filePtr->file_read( this, sizeof(Config) );
 
 	if( keepSysSettings )
@@ -1210,7 +1210,7 @@ int Info::read_file(File* filePtr)
 
 	//------- read the info data ----------//
 
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, readSize );
 }
 //--------- End of function Info::read_file ---------------//
@@ -1230,7 +1230,7 @@ int Power::write_file(File* filePtr)
 //
 int Power::read_file(File* filePtr)
 {
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(Power) );
 }
 //--------- End of function Power::read_file ---------------//
@@ -1290,7 +1290,7 @@ int Weather::write_file(File* filePtr)
 //
 int Weather::read_file(File* filePtr)
 {
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(Weather) );
 }
 //--------- End of function Weather::read_file ---------------//
@@ -1310,7 +1310,7 @@ int MagicWeather::write_file(File* filePtr)
 //
 int MagicWeather::read_file(File* filePtr)
 {
-	ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(MagicWeather) );
 }
 //--------- End of function MagicWeahter::read_file ---------------//
