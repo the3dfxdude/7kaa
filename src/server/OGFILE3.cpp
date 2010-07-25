@@ -1679,20 +1679,204 @@ static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 	return r.good();
 }
 
+static bool read_nation(File *file, Nation *nat)
+{
+	FileReader r;
+
+	if (!r.init(file))
+		return false;
+
+	r.skip(2); /* record size */
+	r.skip(4); /* virtual table pointer */
+
+	/* NationBase */
+	r.read(&nat->nation_recno);
+	r.read(&nat->nation_type);
+	r.read(&nat->race_id);
+	r.read(&nat->color_scheme_id);
+	r.read(&nat->nation_color);
+	r.read(&nat->king_unit_recno);
+	r.read(&nat->king_leadership);
+	r.read(&nat->nation_name_id);
+	r.read_array(nat->nation_name_str, Nation::NATION_NAME_LEN+1);
+	r.read(&nat->player_id);
+	r.read(&nat->next_frame_ready);
+	r.read(&nat->last_caravan_id);
+	r.read(&nat->nation_firm_count);
+	r.read(&nat->last_build_firm_date);
+	r.read_array(nat->know_base_array, MAX_RACE);
+	r.read_array(nat->base_count_array, MAX_RACE);
+	r.read(&nat->is_at_war_today);
+	r.read(&nat->is_at_war_yesterday);
+	r.read(&nat->last_war_date);
+	r.read(&nat->last_attacker_unit_recno);
+	r.read(&nat->last_independent_unit_join_date);
+	r.read(&nat->cheat_enabled_flag);
+	r.read(&nat->cash);
+	r.read(&nat->food);
+	r.read(&nat->reputation);
+	r.read(&nat->kill_monster_score);
+	r.read(&nat->auto_collect_tax_loyalty);
+	r.read(&nat->auto_grant_loyalty);
+	r.read(&nat->cur_year_profit);
+	r.read(&nat->last_year_profit);
+	r.read(&nat->cur_year_fixed_income);
+	r.read(&nat->last_year_fixed_income);
+	r.read(&nat->cur_year_fixed_expense);
+	r.read(&nat->last_year_fixed_expense);
+	r.read_array(nat->cur_year_income_array, INCOME_TYPE_COUNT);
+	r.read_array(nat->last_year_income_array, INCOME_TYPE_COUNT);
+	r.read(&nat->cur_year_income);
+	r.read(&nat->last_year_income);
+	r.read_array(nat->cur_year_expense_array, EXPENSE_TYPE_COUNT);
+	r.read_array(nat->last_year_expense_array, EXPENSE_TYPE_COUNT);
+	r.read(&nat->cur_year_expense);
+	r.read(&nat->last_year_expense);
+	r.read(&nat->cur_year_cheat);
+	r.read(&nat->last_year_cheat);
+	r.read(&nat->cur_year_food_in);
+	r.read(&nat->last_year_food_in);
+	r.read(&nat->cur_year_food_out);
+	r.read(&nat->last_year_food_out);
+	r.read(&nat->cur_year_food_change);
+	r.read(&nat->last_year_food_change);
+	r.read(&nat->cur_year_reputation_change);
+	r.read(&nat->last_year_reputation_change);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		read_nation_relation(&r, &nat->relation_array[n]);
+
+	r.read_array(nat->relation_status_array, MAX_NATION);
+	r.read_array(nat->relation_passable_array, MAX_NATION);
+	r.read(nat->relation_should_attack_array, MAX_NATION);
+	r.read(&nat->is_allied_with_player);
+	r.read(&nat->total_population);
+	r.read(&nat->total_jobless_population);
+	r.read(&nat->total_unit_count);
+	r.read(&nat->total_human_count);
+	r.read(&nat->total_general_count);
+	r.read(&nat->total_weapon_count);
+	r.read(&nat->total_ship_count);
+	r.read(&nat->total_firm_count);
+	r.read(&nat->total_spy_count);
+	r.read(&nat->total_ship_combat_level);
+	r.read(&nat->largest_town_recno);
+	r.read(&nat->largest_town_pop);
+	r.read_array(nat->raw_count_array, MAX_RAW);
+	r.read_array(nat->last_unit_name_id_array, MAX_UNIT_TYPE);
+	r.read(&nat->population_rating);
+	r.read(&nat->military_rating);
+	r.read(&nat->economic_rating);
+   r.read(&nat->overall_rating);
+	r.read(&nat->enemy_soldier_killed);
+	r.read(&nat->own_soldier_killed);
+	r.read(&nat->enemy_civilian_killed);
+	r.read(&nat->own_civilian_killed);
+	r.read(&nat->enemy_weapon_destroyed);
+	r.read(&nat->own_weapon_destroyed);
+	r.read(&nat->enemy_ship_destroyed);
+	r.read(&nat->own_ship_destroyed);
+	r.read(&nat->enemy_firm_destroyed);
+	r.read(&nat->own_firm_destroyed);
+
+	/* Nation */
+	r.skip(29); /* action_array */
+
+	r.read(&nat->last_action_id);
+	r.read(&nat->ai_town_array);
+	r.read(&nat->ai_base_array);
+	r.read(&nat->ai_mine_array);
+	r.read(&nat->ai_factory_array);
+	r.read(&nat->ai_camp_array);
+	r.read(&nat->ai_research_array);
+	r.read(&nat->ai_war_array);
+	r.read(&nat->ai_harbor_array);
+	r.read(&nat->ai_market_array);
+	r.read(&nat->ai_inn_array);
+	r.read(&nat->ai_general_array);
+	r.read(&nat->ai_caravan_array);
+	r.read(&nat->ai_ship_array);
+	r.read(&nat->ai_town_size);
+	r.read(&nat->ai_base_size);
+	r.read(&nat->ai_mine_size);
+	r.read(&nat->ai_factory_size);
+	r.read(&nat->ai_camp_size);
+	r.read(&nat->ai_research_size);
+	r.read(&nat->ai_war_size);
+	r.read(&nat->ai_harbor_size);
+	r.read(&nat->ai_market_size);
+	r.read(&nat->ai_inn_size);
+	r.read(&nat->ai_general_size);
+	r.read(&nat->ai_caravan_size);
+	r.read(&nat->ai_ship_size);
+	r.read(&nat->ai_town_count);
+	r.read(&nat->ai_base_count);
+	r.read(&nat->ai_mine_count);
+	r.read(&nat->ai_factory_count);
+	r.read(&nat->ai_camp_count);
+	r.read(&nat->ai_research_count);
+	r.read(&nat->ai_war_count);
+	r.read(&nat->ai_harbor_count);
+	r.read(&nat->ai_market_count);
+	r.read(&nat->ai_inn_count);
+	r.read(&nat->ai_general_count);
+	r.read(&nat->ai_caravan_count);
+	r.read(&nat->ai_ship_count);
+	r.read(&nat->ai_base_town_count);
+	r.read_array(nat->firm_should_close_array, MAX_FIRM_TYPE);
+	r.read(nat->ai_region_array, MAX_AI_REGION * sizeof(AIRegion));
+	r.read(&nat->ai_region_count);
+	r.read(&nat->pref_force_projection);
+	r.read(&nat->pref_military_development);
+	r.read(&nat->pref_economic_development);
+	r.read(&nat->pref_inc_pop_by_capture);
+	r.read(&nat->pref_inc_pop_by_growth);
+	r.read(&nat->pref_peacefulness);
+	r.read(&nat->pref_military_courage);
+	r.read(&nat->pref_territorial_cohesiveness);
+	r.read(&nat->pref_trading_tendency);
+	r.read(&nat->pref_allying_tendency);
+	r.read(&nat->pref_honesty);
+	r.read(&nat->pref_town_harmony);
+	r.read(&nat->pref_loyalty_concern);
+	r.read(&nat->pref_forgiveness);
+	r.read(&nat->pref_collect_tax);
+	r.read(&nat->pref_hire_unit);
+	r.read(&nat->pref_use_weapon);
+	r.read(&nat->pref_keep_general);
+	r.read(&nat->pref_keep_skilled_unit);
+	r.read(&nat->pref_diplomacy_retry);
+	r.read(&nat->pref_attack_monster);
+	r.read(&nat->pref_spy);
+	r.read(&nat->pref_counter_spy);
+	r.read(&nat->pref_food_reserve);
+	r.read(&nat->pref_cash_reserve);
+	r.read(&nat->pref_use_marine);
+	r.read(&nat->pref_unit_chase_distance);
+	r.read(&nat->pref_repair_concern);
+	r.read(&nat->pref_scout);
+	r.read(&nat->ai_capture_enemy_town_recno);
+	r.read(&nat->ai_capture_enemy_town_plan_date);
+	r.read(&nat->ai_capture_enemy_town_start_attack_date);
+	r.read(&nat->ai_capture_enemy_town_use_all_camp);
+	r.read(&nat->ai_last_defend_action_date);
+	r.read(&nat->ai_attack_target_x_loc);
+	r.read(&nat->ai_attack_target_y_loc);
+	r.read(&nat->ai_attack_target_nation_recno);
+
+	for (int n = 0; n < MAX_SUITABLE_ATTACK_CAMP; n++)
+		read_attack_camp(&r, &nat->attack_camp_array[n]);
+
+	r.read(&nat->attack_camp_count);
+	r.read(&nat->lead_attack_camp_recno);
+
+	return r.good();
+}
 
 //--------- Begin of function Nation::read_file ---------//
 //
 int Nation::read_file(File* filePtr)
 {
-	char* vfPtr = *((char**)this);      // save the virtual function table pointer
-
-	//---- save the action_array first before loading in the whole Nation class ----//
-
-	char* saveActionArray = (char*) mem_add( sizeof(DynArray) );
-
-	memcpy( saveActionArray, &action_array, sizeof(DynArray) );
-
-	//--------------------------------------------------//
 #ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
@@ -1709,23 +1893,13 @@ int Nation::read_file(File* filePtr)
 	}
 	else
 	{
-		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
-		if( !filePtr->file_read( this, sizeof(Nation) ) )
+		if (!read_nation(filePtr, this))
 			return 0;
 	}
 #else
-	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
-	if( !filePtr->file_read( this, sizeof(Nation) ) )
+	if (!read_nation(filePtr, this))
 		return 0;
 #endif
-
-	*((char**)this) = vfPtr;
-
-	//---------- restore action_array  ------------//
- 
-	memcpy( &action_array, saveActionArray, sizeof(DynArray) );
-
-	mem_del( saveActionArray );
 
 	//-------------- read AI Action Array --------------//
 
