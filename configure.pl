@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+use Cwd qw(abs_path);
 use File::Spec;
 
 my @wine_ver_req = (1, 1, 34);
@@ -106,9 +107,10 @@ print "\nReady to run build.pl\n\n";
 sub which {
   my @path = File::Spec->path();
 
+  # check the path for the executable
   foreach my $i (@path) {
     my $loc = "$i/$_[0]";
-    (-x $loc) and return $loc;
+    (-x $loc) and return abs_path($loc);
   }
 
   return undef;

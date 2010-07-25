@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Cwd;
+use Cwd qw(abs_path cwd);
 use File::Spec;
 use File::stat;
 
@@ -19,6 +19,20 @@ unless (-f $targets_script) {
 do $targets_script;
 
 1;
+
+# which($exe_name)
+# Perl version to avoid using the system command that does not always exist.
+sub which {
+  my @path = File::Spec->path();
+
+  # check the path for the executable
+  foreach my $i (@path) {
+    my $loc = "$i/$_[0]";
+    (-x $loc) and return abs_path($loc);
+  }
+
+  return undef;
+}
 
 # get_mtime($file)
 sub get_mtime {
