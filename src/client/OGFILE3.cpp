@@ -451,20 +451,96 @@ int Unit::read_derived_file(File* filePtr)
 }
 //----------- End of function Unit::read_derived_file ---------//
 
+static void read_sprite(FileReader *r, Sprite *s)
+{
+	r->skip(4); /* virtual table pointer */
+
+	r->read(&s->sprite_id);
+	r->read(&s->sprite_recno);
+	r->read(&s->mobile_type);
+	r->read(&s->cur_action);
+	r->read(&s->cur_dir);
+	r->read(&s->cur_frame);
+	r->read(&s->cur_attack);
+	r->read(&s->final_dir);
+	r->read(&s->turn_delay);
+	r->read(&s->guard_count);
+	r->read(&s->remain_attack_delay);
+	r->read(&s->remain_frames_per_step);
+	r->read(&s->cur_x);
+	r->read(&s->cur_y);
+	r->read(&s->go_x);
+	r->read(&s->go_y);
+	r->read(&s->next_x);
+	r->read(&s->next_y);
+	r->read(&s->sprite_info);
+}
+
+static void read_trade_stop(FileReader *r, TradeStop *ts)
+{
+	r->read(&ts->firm_recno);
+	r->read(&ts->firm_loc_x1);
+	r->read(&ts->firm_loc_y1);
+	r->read(&ts->pick_up_type);
+	r->read(ts->pick_up_array, MAX_PICK_UP_GOODS);
+}
+
+static void read_attack_info(FileReader *r, AttackInfo *ai)
+{
+	r->read(&ai->combat_level);
+	r->read(&ai->attack_delay);
+	r->read(&ai->attack_range);
+	r->read(&ai->attack_damage);
+   r->read(&ai->pierce_damage);
+	r->read(&ai->bullet_out_frame);
+	r->read(&ai->bullet_speed);
+	r->read(&ai->bullet_radius);
+	r->read(&ai->bullet_sprite_id);
+	r->read(&ai->dll_bullet_sprite_id);
+	r->read(&ai->eqv_attack_next);
+	r->read(&ai->min_power);
+	r->read(&ai->consume_power);
+	r->read(&ai->fire_radius);
+	r->read(&ai->effect_id);
+}
+
 //--------- Begin of function UnitMarine::read_derived_file ---------//
 int UnitMarine::read_derived_file(File* filePtr)
 {
-	//---- backup virtual functions table pointer of splash ----//
-	char* splashVfPtr = *((char **)&splash);
+	FileReader r;
 
-	MSG(__FILE__":%d: UnitMarine::read_derived_file();\n", __LINE__);
-
-	//--------- read file --------//
-	if( !Unit::read_derived_file(filePtr) )
+	if (!r.init(filePtr))
 		return 0;
 
-	// -------- restore virtual function table pointer -------//
-	*((char **)&splash) = splashVfPtr ;
+	r.skip(2); /* record size */
+
+	read_sprite(&r, &this->splash);
+	r.read(&this->menu_mode);
+	r.read(&this->extra_move_in_beach);
+	r.read(&this->in_beach);
+	r.read(&this->selected_unit_id);
+	r.read_array(this->unit_recno_array, MAX_UNIT_IN_SHIP);
+	r.read(&this->unit_count);
+	r.read(&this->journey_status);
+	r.read(&this->dest_stop_id);
+	r.read(&this->stop_defined_num);
+	r.read(&this->wait_count);
+	r.read(&this->stop_x_loc);
+	r.read(&this->stop_y_loc);
+	r.read(&this->auto_mode);
+	r.read(&this->cur_firm_recno);
+	r.read(&this->carry_goods_capacity);
+
+	for (int n = 0; n < MAX_STOP_FOR_SHIP; n++)
+		read_trade_stop(&r, &this->stop_array[n]);
+
+	r.read_array(this->raw_qty_array, MAX_RAW);
+	r.read_array(this->product_raw_qty_array, MAX_PRODUCT);
+	read_attack_info(&r, &this->ship_attack_info);
+	r.read(&this->attack_mode_selected);
+	r.read(&this->last_load_goods_date);
+
+	r.deinit();
 
 	// ------- post-process the data read --------//
 	splash.sprite_info = sprite_res[splash.sprite_id];
