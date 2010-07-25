@@ -24,6 +24,8 @@
 #ifndef __MISC_H
 #define __MISC_H
 
+#include <stdint.h>
+
 //-------- Define macro constant ---------//
 
 #define LINE_FEED    0xA        // Line feed ascii code
@@ -38,7 +40,7 @@ public:
 
 	char  str_buf[STR_BUF_LEN+1];
 	char	freeze_seed;
-	long  random_seed;
+	int32_t random_seed;
 
 public:
 	Misc();
