@@ -1312,6 +1312,57 @@ static bool read_version_1_nation_array(File *file, Version_1_NationArray *na)
 	return r.good();
 }
 
+static bool read_nation_array(File *file, NationArray *na)
+{
+	FileReader r;
+
+	if (!r.init(file))
+		return false;
+
+	r.skip(2); /* record size */
+
+	/* DynArray and DynArrayB skipped */
+
+	r.read(&na->nation_count);
+	r.read(&na->ai_nation_count);
+	r.read(&na->last_del_nation_date);
+	r.read(&na->last_new_nation_date);
+	r.read(&na->max_nation_population);
+	r.read(&na->all_nation_population);
+   r.read(&na->independent_town_count);
+	r.read_array(na->independent_town_count_race_array, MAX_RACE);
+	r.read(&na->max_nation_units);
+	r.read(&na->max_nation_humans);
+	r.read(&na->max_nation_generals);
+	r.read(&na->max_nation_weapons);
+	r.read(&na->max_nation_ships);
+	r.read(&na->max_nation_spies);
+	r.read(&na->max_nation_firms);
+	r.read(&na->max_nation_tech_level);
+	r.read(&na->max_population_rating);
+	r.read(&na->max_military_rating);
+	r.read(&na->max_economic_rating);
+	r.read(&na->max_reputation);
+	r.read(&na->max_kill_monster_score);
+	r.read(&na->max_overall_rating);
+	r.read(&na->max_population_nation_recno);
+	r.read(&na->max_military_nation_recno);
+	r.read(&na->max_economic_nation_recno);
+	r.read(&na->max_reputation_nation_recno);
+	r.read(&na->max_kill_monster_nation_recno);
+	r.read(&na->max_overall_nation_recno);
+	r.read(&na->last_alliance_id);
+	r.read(&na->nation_peace_days);
+	r.read(&na->player_recno);
+	r.read(&na->player_ptr);
+	r.read_array(na->nation_color_array, MAX_NATION+1);
+	r.read_array(na->nation_power_color_array, MAX_NATION+2);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		r.read_array(na->human_name_array[n], NationArray::HUMAN_NAME_LEN+1);
+
+	return r.good();
+}
 
 //-------- Start of function NationArray::read_file -------------//
 //
@@ -1332,11 +1383,11 @@ int NationArray::read_file(File* filePtr)
 	}
 	else
 	{
-		if( !filePtr->file_read( (char*) this + sizeof(DynArrayB), sizeof(NationArray)-sizeof(DynArrayB) ) )
+		if (!read_nation_array(filePtr, this))
 			return 0;
 	}
 #else
-   if( !filePtr->file_read( (char*) this + sizeof(DynArrayB), sizeof(NationArray)-sizeof(DynArrayB) ) )
+	if (!read_nation_array(filePtr, this))
       return 0;
 #endif
 
