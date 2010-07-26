@@ -299,13 +299,13 @@ sub build_targets {
         # get the command to build this type of file
         if ($i eq 'cpp') {
           my $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
-          $cmd = "$cxx_cmd $j.cpp -o $name.o";
+          $cmd = "$cxx_cmd $j.cpp -o $j.o";
         } elsif ($i eq 'asm') {
           my $asm_cmd = get_asm_cmd();
-          $cmd = "$asm_cmd -Fo $name.o $j.asm";
+          $cmd = "$asm_cmd -Fo $j.o $j.asm";
         } elsif ($i eq 'rc') {
           my $wrc_cmd = get_wrc_cmd();
-          $cmd = "$wrc_cmd -i $j.rc -o $name.o";
+          $cmd = "$wrc_cmd -i $j.rc -o $j.o";
         } else {
           print "build.pl: cannot identify how to build file type '$extension'\n";
           exit 1;
