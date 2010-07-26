@@ -1587,6 +1587,7 @@ static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 
 	/* Nation */
 	r.skip(29); /* action_array */
+	memset(&v1n->action_array, 0, sizeof(v1n->action_array));
 
 	r.read(&v1n->last_action_id);
 	r.read(&v1n->ai_town_array);
