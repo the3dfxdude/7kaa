@@ -701,14 +701,32 @@ int Bullet::write_file(File* filePtr)
 //
 int Bullet::read_file(File* filePtr)
 {
-	char* vfPtr = *((char**)this);      // save the virtual function table pointer
+	FileReader r;
 
-	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG("Bullet::read_file()\n");
 
-	if( !filePtr->file_read( this, sizeof(Bullet) ) )
+	if (!r.init(filePtr))
 		return 0;
 
-	*((char**)this) = vfPtr;
+	r.skip(2); /* record size */
+
+	read_sprite(&r, this);
+
+	r.read(&this->parent_type);
+	r.read(&this->parent_recno);
+	r.read(&this->target_mobile_type);
+	r.read(&this->attack_damage);
+	r.read(&this->damage_radius);
+	r.read(&this->nation_recno);
+	r.read(&this->fire_radius);
+	r.read(&this->origin_x);
+	r.read(&this->origin_y);
+	r.read(&this->target_x_loc);
+	r.read(&this->target_y_loc);
+	r.read(&this->cur_step);
+	r.read(&this->total_step);
+
+	r.deinit();
 
    //------------ post-process the data read ----------//
 
