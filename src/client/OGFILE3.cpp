@@ -780,17 +780,21 @@ int Bullet::read_derived_file(File *filePtr)
 
 int Projectile::read_derived_file(File *filePtr)
 {
-	//--- backup virtual function table pointer of act_bullet and bullet_shadow ---//
-   char* actBulletVfPtr = *((char**)&act_bullet);
-   char* bulletShadowVfPtr = *((char**)&bullet_shadow);
+	FileReader r;
 
-	//---------- read file ----------//
-	if( !Bullet::read_derived_file(filePtr) )
+	if (!r.init(filePtr))
 		return 0;
 
-	//------ restore virtual function table pointer --------//
-	*((char**)&act_bullet) = actBulletVfPtr;
-	*((char**)&bullet_shadow) = bulletShadowVfPtr;
+	r.skip(2); /* record size */
+
+	r.read(&this->z_coff);
+	read_sprite(&r, &this->act_bullet);
+	read_sprite(&r, &this->bullet_shadow);
+
+	if (!r.good())
+		return 0;
+
+	r.deinit();
 
    //----------- post-process the data read ----------//
 	act_bullet.sprite_info = sprite_res[act_bullet.sprite_id];
