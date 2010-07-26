@@ -2104,14 +2104,25 @@ int Tornado::write_file(File* filePtr)
 //
 int Tornado::read_file(File* filePtr)
 {
-   char* vfPtr = *((char**)this);      // save the virtual function table pointer
+	FileReader r;
 
-	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+	MSG("Tornado::read_file()\n");
 
-   if( !filePtr->file_read( this, sizeof(Tornado) ) )
-      return 0;
+	if (!r.init(filePtr))
+		return 0;
 
-   *((char**)this) = vfPtr;
+	r.skip(2); /* record size */
+
+	read_sprite(&r, this);
+   r.read(&this->attack_damage);
+   r.read(&this->life_time);
+   r.read(&this->dmg_offset_x);
+   r.read(&this->dmg_offset_y);
+
+	if (!r.good())
+		return 0;
+
+	r.deinit();
 
    //------------ post-process the data read ----------//
 
