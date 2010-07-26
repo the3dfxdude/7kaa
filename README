@@ -46,8 +46,9 @@ execute:
 Followed by:
 ./build.pl
 
-This will build the game suited for your system.  If this does
-not work, please tell us.
+If GNU Parallel is installed, jobs will automatically execute
+in parallel. If platform detection does not work for you, or
+you have build failures, please contact us.
 
 
 Running

@@ -11,6 +11,8 @@ is_file_newer("${top_dir}configure.pl", $opts_file) and die "Build options out o
 
 require $opts_file;
 
+my $parallel = (-x "${top_dir}parallel") ? "${top_dir}parallel" : which('parallel');
+
 my $targets_script = defined($ARGV[0]) ? $ARGV[0] : 'targets.pl';
 unless (-f $targets_script) {
   print "build.pl: target script '$targets_script' does not exist.\n";
@@ -232,11 +234,11 @@ sub break_extension {
 #
 sub build_targets {
   my %mtime_cache;
-  my $cxx_cmd;
-  my $asm_cmd;
-  my $wrc_cmd;
   my @built_objects;
 
+  my %jobs;
+
+  # Read in input files, catagorize into jobs by extension
   foreach my $i (@{$_[0]}) {
     my ($name, $extension) = break_extension($i);
 
@@ -248,32 +250,76 @@ sub build_targets {
     my $obj = "$name.o";
 
     if (needs_building($i, $obj, $_[1], \%mtime_cache)) {
+      push (@{$jobs{$extension}}, $name);
+    }
+
+    push (@built_objects, $obj);
+  }
+
+
+  # execute the jobs
+  foreach my $i (keys %jobs) {
+
+    # Using the GNU parallel build system
+    if (defined($parallel)) {
       my $cmd;
 
       # get the command to build this type of file
-      if ($extension eq 'cpp') {
-        defined($cxx_cmd) or $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
-        $cmd = "$cxx_cmd $i -o $obj";
-      } elsif ($extension eq 'asm') {
-        defined($asm_cmd) or $asm_cmd = get_asm_cmd();
-        $cmd = "$asm_cmd -Fo $name.o $i";
-      } elsif ($extension eq 'rc') {
-        defined($wrc_cmd) or $wrc_cmd = get_wrc_cmd();
-        $cmd = "$wrc_cmd -i $i -o $name.o";
+      if ($i eq 'cpp') {
+        my $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
+        $cmd = "$cxx_cmd {}.cpp -o {}.o";
+      } elsif ($i eq 'asm') {
+        my $asm_cmd = get_asm_cmd();
+        $cmd = "$asm_cmd -Fo {}.o {}.asm";
+      } elsif ($i eq 'rc') {
+        my $wrc_cmd = get_wrc_cmd();
+        $cmd = "$wrc_cmd -i {}.rc -o {}.o";
       } else {
         print "build.pl: cannot identify how to build file type '$extension'\n";
         exit 1;
       }
 
-      print "$cmd\n";
-      if (system $cmd) {
-        print "build.pl: couldn't build '$i'. Stopping.\n";
+      my $manager;
+      if (!open($manager, "|-", "$parallel -u -H 1 --verbose '$cmd'")) {
+        print "build.pl: couldn't start the parallel build mananger.";
         exit 1;
+      }
+      foreach my $i (@{$jobs{$i}}) {
+        print $manager "$i\n";
+      }
+      if (!close($manager)) {
+        print "build.pl: the build job failed. Stopping.\n";
+        exit 1;
+      }
+
+    # systems that cannot use GNU parallel
+    } else {
+      foreach my $j (@{$jobs{$i}}) {
+        my $cmd;
+        # get the command to build this type of file
+        if ($i eq 'cpp') {
+          my $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
+          $cmd = "$cxx_cmd $j.cpp -o $name.o";
+        } elsif ($i eq 'asm') {
+          my $asm_cmd = get_asm_cmd();
+          $cmd = "$asm_cmd -Fo $name.o $j.asm";
+        } elsif ($i eq 'rc') {
+          my $wrc_cmd = get_wrc_cmd();
+          $cmd = "$wrc_cmd -i $j.rc -o $name.o";
+        } else {
+          print "build.pl: cannot identify how to build file type '$extension'\n";
+          exit 1;
+        }
+
+        print "$cmd\n";
+        if (system $cmd) {
+          print "build.pl: couldn't build '$i'. Stopping.\n";
+          exit 1;
+        }
       }
 
     }
 
-    push (@built_objects, $obj);
   }
 
   return @built_objects;
