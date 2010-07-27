@@ -9,31 +9,51 @@ my @jwasm_ver_req = (2, '00', 0);
 
 # Set-up default config
 my %cfg = (
-  debug => 0,
-  no_asm => 0,
-  build_server => 1,
+  debug => 1,
+  no_asm => 1,
+  build_server => 0,
   audio_backend => "OpenAL",
-  video_backend => "ddraw",
-  input_backend => "dinput",
-  disable_wine => 0
+  video_backend => "sdl",
+  input_backend => "sdl",
+  disable_wine => 1
 );
 
 # parse command line args
 foreach my $i (@ARGV) {
   if ($i =~ /^--with-dxsdk=/) {
     ($cfg{dxsdk_path}) = $i =~ /=(.*)/;
+    $cfg{video_backend} = 'ddraw';
+    $cfg{input_backend} = 'dinput';
   } elsif ($i =~ /^--enable-debug$/) {
     $cfg{debug} = 1;
+  } elsif ($i =~ /^--disable-debug$/) {
+    $cfg{debug} = 0;
   } elsif ($i =~ /^--disable-asm$/) {
     $cfg{no_asm} = 1;
+  } elsif ($i =~ /^--enable-asm$/) {
+    $cfg{no_asm} = 0;
   } elsif ($i =~ /^--disable-server$/) {
     $cfg{build_server} = 0;
+  } elsif ($i =~ /^--enable-server$/) {
+    $cfg{build_server} = 1;
   } elsif ($i =~ /^--force-wine$/) {
     @wine_ver_req = (0, 0, 0);
+  } elsif ($i =~ /^--enable-wine$/) {
+    $cfg{disable_wine} = 0;
+    $cfg{video_backend} = 'ddraw';
+    $cfg{input_backend} = 'dinput';
   } elsif ($i =~ /^--disable-wine$/) {
     $cfg{disable_wine} = 1;
+    $cfg{video_backend} = 'sdl';
+    $cfg{input_backend} = 'sdl';
   } elsif ($i =~ /^--with-audio-backend=(.*)$/) {
     $cfg{audio_backend} = $1;
+  } elsif ($i =~ /^--help$/) {
+    print "Call configure.pl with any of the following options:\n";
+    print "--disable-debug: Do not compile in extra debugging code\n";
+    print "--enable-wine: Use Winelib on x86 linux\n";
+    print "--enable-asm: Use old 386 asm code (needs JWasm 2.x)\n";
+    print "The default settings builds a native game binary for sdl and openal.\n";
   }
 }
 
@@ -63,10 +83,6 @@ if ($cfg{platform} =~ /^linux/) {
       print "Wine-" . join('.', @wine_ver_req) . " or later is required.\n";
       exit 1;
     }
-  } else {
-    # use sdl and openal backend
-    $cfg{video_backend} = 'sdl';
-    $cfg{input_backend} = 'sdl';
   }
 
 } elsif ($cfg{platform} =~ /^win32$/) {
