@@ -46,7 +46,7 @@ extern const int GAME_VERSION;
 #endif
 
 // config dir
-#define DEFAULT_DIR_CONFIG PATH_DELIM".7kaa"
+#define DEFAULT_DIR_CONFIG PATH_DELIM"/.config/7kaa"
 
 // top level data dirs
 #define DEFAULT_DIR_RES      "resource"PATH_DELIM
