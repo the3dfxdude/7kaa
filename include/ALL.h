@@ -45,7 +45,7 @@
 #endif
 
 //-------- Game Version -----------//
-#define SKVERSION "2.14.0-rc1"
+#define SKVERSION "2.14.0"
 
 
 //-------- Define macro functions -------//
