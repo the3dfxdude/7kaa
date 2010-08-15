@@ -780,93 +780,26 @@ void Flame::mask_transparent()
 	if( map_width & 1)
 	{
 		// odd number
-		/*
 		for( short y = 0; y < map_height; ++y)
 			for( short x = y & 1; x < map_width; x += 2)
 		{
-			*b = 255;
+			*b = TRANSPARENT_CODE;
 			b += 2;
 		}
-		*/
-		int len = map_height * map_width /2;
-		/* Original Visual C++ assembly code for reference
-		_asm
-		{
-			mov	al, TRANSPARENT_CODE
-			mov	edi, b
-			mov	ecx, len
-			cld
-		mask_trans_loop1:
-			stosb
-			inc	edi
-			loop	mask_trans_loop1
-		}
-		*/
-		__asm__ (
-			"cld\n"
-		"mask_trans_loop1:\n\t"
-			"stosb\n\t"
-			"inc %%edi\n\t"
-			"loop mask_trans_loop1\n\t"
-			:
-			: "a"(TRANSPARENT_CODE),"D"(b),"c"(len)
-		);
 	}
 	else
 	{
 		// even number
-		/*
 		for( short y = 0; y < map_height; ++y)
 		{
 			b+= y & 1;		// shift one byte on odd line
 			for( short x = y & 1; x < map_width; x += 2)
 			{
-				*b = 255;
+				*b = TRANSPARENT_CODE;
 				b += 2;
 			}
 			b-= y & 1;		// shift back to even dot.
 		}
-		*/
-		int	mapHeight = map_height, mapWidth = map_width/2;
-		/* Original Visual C++ assembly code for reference
-		_asm
-		{
-			mov	ecx, mapHeight
-			mov	edi, b
-			mov	al, TRANSPARENT_CODE
-			mov	edx,0
-		mask_trans_loop2:
-			push	ecx
-			add	edi, edx
-			mov	ecx, mapWidth
-		mask_trans_loop3:
-			stosb
-			inc	edi
-			loop	mask_trans_loop3
-			sub	edi, edx
-			pop	ecx
-			xor	edx,1
-			loop	mask_trans_loop2
-		}
-		*/
-		__asm__ (
-			"xorl %%edx,%%edx\n"
-		"mask_trans_loop2:\n\t"
-			"pushl %%ecx\n\t"
-			"addl %%edx,%%edi\n\t"
-			"movl %3, %%ecx\n"
-		"mask_trans_loop3:\n\t"
-			"stosb\n\t"
-			"incl %%edi\n\t"
-			"loop mask_trans_loop3\n\t"
-			"subl %%edx, %%edi\n\t"
-			"popl %%ecx\n\t"
-			"xorl $1, %%edx\n\t"
-			"loop mask_trans_loop2\n\t"
-			:
-			: "a"(TRANSPARENT_CODE),"c"(mapHeight),"D"(b),"m"(mapWidth)
-			: "%edx"
-		);
 	}
 }
 //-------------- End Function Flame::mask_transparent ----------//
