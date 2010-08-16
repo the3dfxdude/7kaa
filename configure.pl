@@ -58,6 +58,7 @@ foreach my $i (@ARGV) {
     print "--enable-asm: Use old 386 asm code (needs JWasm 2.x)\n";
     print "--enable-multilib: Compile 32-bit binary on 64-bit cpu architecture.\n";
     print "The default settings builds a native game binary for sdl and openal.\n";
+    exit 0;
   }
 }
 
