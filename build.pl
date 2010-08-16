@@ -109,7 +109,7 @@ sub get_cxx_cmd {
   defined($ENV{CFLAGS}) and push (@cc_opts, $ENV{CFLAGS});
   defined($ENV{CXXFLAGS}) and push (@cc_opts, $ENV{CXXFLAGS});
   defined($debug) and $debug and push (@cc_opts, "-g");
-  $platform =~ /linux64/i and push (@cc_opts, "-m32");
+  defined($enable_multilib) and $enable_multilib and push (@cc_opts, "-m32");
   push (@cc_opts, map { "-D$_" } @{$_[1]});
   push (@cc_opts, map { "-I$_" } @{$_[0]});
   return "@cc_opts";
@@ -148,7 +148,7 @@ sub link_exe {
 
     defined($ENV{LDFLAGS}) and push(@linker_opts, $ENV{LDFLAGS});
     $debug and push(@linker_opts, '-g');
-    $platform =~ /linux64/i and push (@linker_opts, "-m32");
+    defined($enable_multilib) and $enable_multilib and push (@cc_opts, "-m32");
 
     # windows based compiler options
     unless ($disable_wine) {

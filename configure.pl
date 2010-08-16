@@ -15,7 +15,8 @@ my %cfg = (
   audio_backend => "OpenAL",
   video_backend => "sdl",
   input_backend => "sdl",
-  disable_wine => 1
+  disable_wine => 1,
+  enable_multilib => 0
 );
 
 # parse command line args
@@ -48,11 +49,14 @@ foreach my $i (@ARGV) {
     $cfg{input_backend} = 'sdl';
   } elsif ($i =~ /^--with-audio-backend=(.*)$/) {
     $cfg{audio_backend} = $1;
+  } elsif ($i =~ /^--enable-multilib$/) {
+    $cfg{enable_multilib} = 1;
   } elsif ($i =~ /^--help$/) {
     print "Call configure.pl with any of the following options:\n";
     print "--disable-debug: Do not compile in extra debugging code\n";
     print "--enable-wine: Use Winelib on x86 linux\n";
     print "--enable-asm: Use old 386 asm code (needs JWasm 2.x)\n";
+    print "--enable-multilib: Compile 32-bit binary on 64-bit cpu architecture.\n";
     print "The default settings builds a native game binary for sdl and openal.\n";
   }
 }
