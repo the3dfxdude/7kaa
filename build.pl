@@ -106,6 +106,8 @@ sub get_cxx_cmd {
   my @cc_opts = ('g++', '-c');
   # OWORLD currently miscompiles at -O2 on gcc 4.3.3.
   #push (@cc_opts, $no_asm ? "-O2" : "-O1");
+  defined($ENV{CFLAGS}) and push (@cc_opts, $ENV{CFLAGS});
+  defined($ENV{CXXFLAGS}) and push (@cc_opts, $ENV{CXXFLAGS});
   defined($debug) and $debug and push (@cc_opts, "-g");
   $platform =~ /linux64/i and push (@cc_opts, "-m32");
   push (@cc_opts, map { "-D$_" } @{$_[1]});
@@ -144,6 +146,7 @@ sub link_exe {
       $linker = 'wineg++';
     }
 
+    defined($ENV{LDFLAGS}) and push(@linker_opts, $ENV{LDFLAGS});
     $debug and push(@linker_opts, '-g');
     $platform =~ /linux64/i and push (@linker_opts, "-m32");
 
