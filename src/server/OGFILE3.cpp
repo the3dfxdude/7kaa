@@ -1523,6 +1523,13 @@ static void read_attack_camp(FileReader *r, AttackCamp *ac)
 	r->read<int32_t>(&ac->patrol_date);
 }
 
+static void read_ai_region(FileReader *r, AIRegion *reg)
+{
+	r->read<int8_t>(&reg->region_id);
+	r->read<int8_t>(&reg->town_count);
+	r->read<int8_t>(&reg->base_town_count);
+}
+
 static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 {
 	FileReader r;
@@ -1669,7 +1676,10 @@ static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 	r.read<int16_t>(&v1n->ai_ship_count);
 	r.read<int16_t>(&v1n->ai_base_town_count);
 	r.read_array<int16_t>(v1n->firm_should_close_array, MAX_FIRM_TYPE);
-	r.read(v1n->ai_region_array, MAX_AI_REGION * sizeof(AIRegion));
+	
+	for (int n = 0; n < MAX_AI_REGION; n++)
+		read_ai_region(&r, &v1n->ai_region_array[n]);
+
 	r.read<int8_t>(&v1n->ai_region_count);
 	r.read<int8_t>(&v1n->pref_force_projection);
 	r.read<int8_t>(&v1n->pref_military_development);
@@ -1863,7 +1873,10 @@ static bool read_nation(File *file, Nation *nat)
 	r.read<int16_t>(&nat->ai_ship_count);
 	r.read<int16_t>(&nat->ai_base_town_count);
 	r.read_array<int16_t>(nat->firm_should_close_array, MAX_FIRM_TYPE);
-	r.read(nat->ai_region_array, MAX_AI_REGION * sizeof(AIRegion));
+	
+	for (int n = 0; n < MAX_AI_REGION; n++)
+		read_ai_region(&r, &nat->ai_region_array[n]);
+
 	r.read<int8_t>(&nat->ai_region_count);
 	r.read<int8_t>(&nat->pref_force_projection);
 	r.read<int8_t>(&nat->pref_military_development);
