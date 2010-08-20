@@ -268,6 +268,24 @@ static void read_sprite(FileReader *r, Sprite *s)
 	r->read(&s->sprite_info);
 }
 
+template <typename FileT, typename MemT, typename Visitor>
+static bool visit(Visitor *vis, MemT *val)
+{
+	return vis->template visit<FileT, MemT>(val);
+}
+
+template <typename FileT, typename MemT, typename Visitor>
+static bool visit_array(Visitor *vis, MemT *array, size_t len)
+{
+	return vis->template visit_array<FileT, MemT>(array, len);
+}
+
+template <typename T, typename Visitor>
+static bool visit_pointer(Visitor *vis, T **ptr)
+{
+	return vis->template visit(ptr);
+}
+
 //--------- Begin of function Unit::read_file ---------//
 //
 int Unit::read_file(File* filePtr)
@@ -1309,54 +1327,61 @@ static bool read_version_1_nation_array(File *file, Version_1_NationArray *na)
 	return r.good();
 }
 
+template <typename Visitor>
+static void visit_nation_array(Visitor *v, NationArray *na)
+{
+	v->skip(2); /* record size */
+
+	/* DynArray and DynArrayB skipped */
+
+	visit<int16_t>(v, &na->nation_count);
+	visit<int16_t>(v, &na->ai_nation_count);
+	visit<int32_t>(v, &na->last_del_nation_date);
+	visit<int32_t>(v, &na->last_new_nation_date);
+	visit<int32_t>(v, &na->max_nation_population);
+	visit<int32_t>(v, &na->all_nation_population);
+   visit<int16_t>(v, &na->independent_town_count);
+	visit_array<int16_t>(v, na->independent_town_count_race_array, MAX_RACE);
+	visit<int32_t>(v, &na->max_nation_units);
+	visit<int32_t>(v, &na->max_nation_humans);
+	visit<int32_t>(v, &na->max_nation_generals);
+	visit<int32_t>(v, &na->max_nation_weapons);
+	visit<int32_t>(v, &na->max_nation_ships);
+	visit<int32_t>(v, &na->max_nation_spies);
+	visit<int32_t>(v, &na->max_nation_firms);
+	visit<int32_t>(v, &na->max_nation_tech_level);
+	visit<int32_t>(v, &na->max_population_rating);
+	visit<int32_t>(v, &na->max_military_rating);
+	visit<int32_t>(v, &na->max_economic_rating);
+	visit<int32_t>(v, &na->max_reputation);
+	visit<int32_t>(v, &na->max_kill_monster_score);
+	visit<int32_t>(v, &na->max_overall_rating);
+	visit<int16_t>(v, &na->max_population_nation_recno);
+	visit<int16_t>(v, &na->max_military_nation_recno);
+	visit<int16_t>(v, &na->max_economic_nation_recno);
+	visit<int16_t>(v, &na->max_reputation_nation_recno);
+	visit<int16_t>(v, &na->max_kill_monster_nation_recno);
+	visit<int16_t>(v, &na->max_overall_nation_recno);
+	visit<int32_t>(v, &na->last_alliance_id);
+	visit<int32_t>(v, &na->nation_peace_days);
+	visit<int16_t>(v, &na->player_recno);
+	visit_pointer(v, &na->player_ptr);
+	visit_array<int8_t>(v, na->nation_color_array, MAX_NATION+1);
+	visit_array<int8_t>(v, na->nation_power_color_array, MAX_NATION+2);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_array<int8_t>(v, na->human_name_array[n], NationArray::HUMAN_NAME_LEN+1);
+}
+
 static bool read_nation_array(File *file, NationArray *na)
 {
 	FileReader r;
+	FileReaderVisitor v(&r);
 
 	if (!r.init(file))
 		return false;
 
-	r.skip(2); /* record size */
-
-	/* DynArray and DynArrayB skipped */
-
-	r.read<int16_t>(&na->nation_count);
-	r.read<int16_t>(&na->ai_nation_count);
-	r.read<int32_t>(&na->last_del_nation_date);
-	r.read<int32_t>(&na->last_new_nation_date);
-	r.read<int32_t>(&na->max_nation_population);
-	r.read<int32_t>(&na->all_nation_population);
-   r.read<int16_t>(&na->independent_town_count);
-	r.read_array<int16_t>(na->independent_town_count_race_array, MAX_RACE);
-	r.read<int32_t>(&na->max_nation_units);
-	r.read<int32_t>(&na->max_nation_humans);
-	r.read<int32_t>(&na->max_nation_generals);
-	r.read<int32_t>(&na->max_nation_weapons);
-	r.read<int32_t>(&na->max_nation_ships);
-	r.read<int32_t>(&na->max_nation_spies);
-	r.read<int32_t>(&na->max_nation_firms);
-	r.read<int32_t>(&na->max_nation_tech_level);
-	r.read<int32_t>(&na->max_population_rating);
-	r.read<int32_t>(&na->max_military_rating);
-	r.read<int32_t>(&na->max_economic_rating);
-	r.read<int32_t>(&na->max_reputation);
-	r.read<int32_t>(&na->max_kill_monster_score);
-	r.read<int32_t>(&na->max_overall_rating);
-	r.read<int16_t>(&na->max_population_nation_recno);
-	r.read<int16_t>(&na->max_military_nation_recno);
-	r.read<int16_t>(&na->max_economic_nation_recno);
-	r.read<int16_t>(&na->max_reputation_nation_recno);
-	r.read<int16_t>(&na->max_kill_monster_nation_recno);
-	r.read<int16_t>(&na->max_overall_nation_recno);
-	r.read<int32_t>(&na->last_alliance_id);
-	r.read<int32_t>(&na->nation_peace_days);
-	r.read<int16_t>(&na->player_recno);
-	r.read(&na->player_ptr);
-	r.read_array<int8_t>(na->nation_color_array, MAX_NATION+1);
-	r.read_array<int8_t>(na->nation_power_color_array, MAX_NATION+2);
-
-	for (int n = 0; n < MAX_NATION; n++)
-		r.read_array<int8_t>(na->human_name_array[n], NationArray::HUMAN_NAME_LEN+1);
+	visit_nation_array(&v, na);
 
 	return r.good();
 }
@@ -1483,24 +1508,6 @@ static void write_ai_info(File* filePtr, short* aiInfoArray, short aiInfoCount, 
 	filePtr->file_write( aiInfoArray, sizeof(short) * aiInfoCount );
 }
 //----------- End of static function write_ai_info ---------//
-
-template <typename FileT, typename MemT, typename Visitor>
-static bool visit(Visitor *vis, MemT *val)
-{
-	return vis->template visit<FileT, MemT>(val);
-}
-
-template <typename FileT, typename MemT, typename Visitor>
-static bool visit_array(Visitor *vis, MemT *array, size_t len)
-{
-	return vis->template visit_array<FileT, MemT>(array, len);
-}
-
-template <typename T, typename Visitor>
-static bool visit_pointer(Visitor *vis, T **ptr)
-{
-	return vis->template visit(ptr);
-}
 
 template <typename Visitor>
 static void visit_nation_relation(Visitor *v, NationRelation *nr)
@@ -1962,7 +1969,7 @@ static bool read_nation(File *file, Nation *nat)
 		return false;
 
 	visit_nation(&v, nat);
-	memset(&nat->action_array, 0, sizeof(nat->action_array)); /* XXX */
+	memset(&nat->action_array, 0, sizeof(nat->action_array));
 
 	return r.good();
 }
