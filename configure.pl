@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+use Cwd qw(abs_path);
 use File::Spec;
 
 my @wine_ver_req = (1, 1, 34);
@@ -8,31 +9,56 @@ my @jwasm_ver_req = (2, '00', 0);
 
 # Set-up default config
 my %cfg = (
-  debug => 0,
-  no_asm => 0,
-  build_server => 1,
+  debug => 1,
+  no_asm => 1,
+  build_server => 0,
   audio_backend => "OpenAL",
-  video_backend => "ddraw",
-  input_backend => "dinput",
-  disable_wine => 0
+  video_backend => "sdl",
+  input_backend => "sdl",
+  disable_wine => 1,
+  enable_multilib => 0
 );
 
 # parse command line args
 foreach my $i (@ARGV) {
   if ($i =~ /^--with-dxsdk=/) {
     ($cfg{dxsdk_path}) = $i =~ /=(.*)/;
+    $cfg{video_backend} = 'ddraw';
+    $cfg{input_backend} = 'dinput';
   } elsif ($i =~ /^--enable-debug$/) {
     $cfg{debug} = 1;
+  } elsif ($i =~ /^--disable-debug$/) {
+    $cfg{debug} = 0;
   } elsif ($i =~ /^--disable-asm$/) {
     $cfg{no_asm} = 1;
+  } elsif ($i =~ /^--enable-asm$/) {
+    $cfg{no_asm} = 0;
   } elsif ($i =~ /^--disable-server$/) {
     $cfg{build_server} = 0;
+  } elsif ($i =~ /^--enable-server$/) {
+    $cfg{build_server} = 1;
   } elsif ($i =~ /^--force-wine$/) {
     @wine_ver_req = (0, 0, 0);
+  } elsif ($i =~ /^--enable-wine$/) {
+    $cfg{disable_wine} = 0;
+    $cfg{video_backend} = 'ddraw';
+    $cfg{input_backend} = 'dinput';
   } elsif ($i =~ /^--disable-wine$/) {
     $cfg{disable_wine} = 1;
+    $cfg{video_backend} = 'sdl';
+    $cfg{input_backend} = 'sdl';
   } elsif ($i =~ /^--with-audio-backend=(.*)$/) {
     $cfg{audio_backend} = $1;
+  } elsif ($i =~ /^--enable-multilib$/) {
+    $cfg{enable_multilib} = 1;
+  } elsif ($i =~ /^--help$/) {
+    print "Call configure.pl with any of the following options:\n";
+    print "--disable-debug: Do not compile in extra debugging code\n";
+    print "--enable-wine: Use Winelib on x86 linux\n";
+    print "--enable-asm: Use old 386 asm code (needs JWasm 2.x)\n";
+    print "--enable-multilib: Compile 32-bit binary on 64-bit cpu architecture.\n";
+    print "The default settings builds a native game binary for sdl and openal.\n";
+    exit 0;
   }
 }
 
@@ -62,22 +88,13 @@ if ($cfg{platform} =~ /^linux/) {
       print "Wine-" . join('.', @wine_ver_req) . " or later is required.\n";
       exit 1;
     }
-  } else {
-    # use sdl and openal backend
-    $cfg{video_backend} = 'sdl';
-    $cfg{input_backend} = 'sdl';
   }
 
 } elsif ($cfg{platform} =~ /^win32$/) {
 
-  # we don't support wine on windows
-  $cfg{disable_wine} = 1;
+  # wine and windows are equivalent, and this is required on windows
+  $cfg{disable_wine} = 0;
 
-  # search for the DXSDK
-  unless (defined($cfg{dxsdk_path})) {
-    print "Please specify the DXSDK path with --with-dxsdk=C:/yoursdk\n";
-    exit 1;
-  }
 }
 
 # The following sets flags used during compiling.
@@ -106,9 +123,10 @@ print "\nReady to run build.pl\n\n";
 sub which {
   my @path = File::Spec->path();
 
+  # check the path for the executable
   foreach my $i (@path) {
     my $loc = "$i/$_[0]";
-    (-x $loc) and return $loc;
+    (-x $loc) and return abs_path($loc);
   }
 
   return undef;

@@ -28,6 +28,9 @@
 #include <dos.h>
 #else
 #include <sys/time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <errno.h>
 #endif 
 
 #include <string.h>
@@ -1184,6 +1187,50 @@ int Misc::path_cat(char *dest, const char *src1, const char *src2, int max_len)
    return 1;
 }
 //---------- End of function Misc::path_cat ---------//
+
+
+// misc_mkdir -- helper function to mkpath
+int misc_mkdir(char *path)
+{
+#ifdef NO_WINDOWS
+   return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
+#else // WINDOWS
+   return !CreateDirectory(path, NULL) ?
+       GetLastError() == ERROR_ALREADY_EXISTS : 1;
+#endif
+}
+
+
+//------- Begin of function Misc::mkpath ---------//
+// Given an absolute path to a directory, create the
+// directory, and all intermediate directories if
+// necessary.
+int Misc::mkpath(char *abs_path)
+{
+   char path_copy[MAX_PATH+1];
+   int count;
+
+   count = 0;
+   while (count < MAX_PATH) {
+     if (!abs_path[count]) {
+        if (count > 0) {
+          path_copy[count] = 0;
+          if (!misc_mkdir(path_copy))
+             return 0;
+        }
+        return 1;
+     } else if (abs_path[count] == PATH_DELIM[0] && count > 0) {
+        path_copy[count] = 0;
+        if (!misc_mkdir(path_copy))
+           return 0;
+     }
+
+     path_copy[count] = abs_path[count];
+     count++;
+   }
+   return 0;
+}
+//-------- End of function Misc::mkpath ----------//
 
 
 //------- Begin of function Misc::change_file_ext ---------//

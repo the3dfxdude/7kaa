@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Cwd;
+use Cwd qw(abs_path cwd);
 use File::Spec;
 use File::stat;
 
@@ -11,6 +11,8 @@ is_file_newer("${top_dir}configure.pl", $opts_file) and die "Build options out o
 
 require $opts_file;
 
+my $parallel = (-x "${top_dir}parallel") ? "${top_dir}parallel" : which('parallel');
+
 my $targets_script = defined($ARGV[0]) ? $ARGV[0] : 'targets.pl';
 unless (-f $targets_script) {
   print "build.pl: target script '$targets_script' does not exist.\n";
@@ -19,6 +21,20 @@ unless (-f $targets_script) {
 do $targets_script;
 
 1;
+
+# which($exe_name)
+# Perl version to avoid using the system command that does not always exist.
+sub which {
+  my @path = File::Spec->path();
+
+  # check the path for the executable
+  foreach my $i (@path) {
+    my $loc = "$i/$_[0]";
+    (-x $loc) and return abs_path($loc);
+  }
+
+  return undef;
+}
 
 # get_mtime($file)
 sub get_mtime {
@@ -90,8 +106,10 @@ sub get_cxx_cmd {
   my @cc_opts = ('g++', '-c');
   # OWORLD currently miscompiles at -O2 on gcc 4.3.3.
   #push (@cc_opts, $no_asm ? "-O2" : "-O1");
+  defined($ENV{CFLAGS}) and push (@cc_opts, $ENV{CFLAGS});
+  defined($ENV{CXXFLAGS}) and push (@cc_opts, $ENV{CXXFLAGS});
   defined($debug) and $debug and push (@cc_opts, "-g");
-  $platform =~ /linux64/i and push (@cc_opts, "-m32");
+  defined($enable_multilib) and $enable_multilib and push (@cc_opts, "-m32");
   push (@cc_opts, map { "-D$_" } @{$_[1]});
   push (@cc_opts, map { "-I$_" } @{$_[0]});
   return "@cc_opts";
@@ -128,8 +146,9 @@ sub link_exe {
       $linker = 'wineg++';
     }
 
+    defined($ENV{LDFLAGS}) and push(@linker_opts, $ENV{LDFLAGS});
     $debug and push(@linker_opts, '-g');
-    $platform =~ /linux64/i and push (@linker_opts, "-m32");
+    defined($enable_multilib) and $enable_multilib and push (@cc_opts, "-m32");
 
     # windows based compiler options
     unless ($disable_wine) {
@@ -218,11 +237,11 @@ sub break_extension {
 #
 sub build_targets {
   my %mtime_cache;
-  my $cxx_cmd;
-  my $asm_cmd;
-  my $wrc_cmd;
   my @built_objects;
 
+  my %jobs;
+
+  # Read in input files, catagorize into jobs by extension
   foreach my $i (@{$_[0]}) {
     my ($name, $extension) = break_extension($i);
 
@@ -234,32 +253,76 @@ sub build_targets {
     my $obj = "$name.o";
 
     if (needs_building($i, $obj, $_[1], \%mtime_cache)) {
+      push (@{$jobs{$extension}}, $name);
+    }
+
+    push (@built_objects, $obj);
+  }
+
+
+  # execute the jobs
+  foreach my $i (keys %jobs) {
+
+    # Using the GNU parallel build system
+    if (defined($parallel)) {
       my $cmd;
 
       # get the command to build this type of file
-      if ($extension eq 'cpp') {
-        defined($cxx_cmd) or $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
-        $cmd = "$cxx_cmd $i -o $obj";
-      } elsif ($extension eq 'asm') {
-        defined($asm_cmd) or $asm_cmd = get_asm_cmd();
-        $cmd = "$asm_cmd -Fo $name.o $i";
-      } elsif ($extension eq 'rc') {
-        defined($wrc_cmd) or $wrc_cmd = get_wrc_cmd();
-        $cmd = "$wrc_cmd -i $i -o $name.o";
+      if ($i eq 'cpp') {
+        my $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
+        $cmd = "$cxx_cmd {}.cpp -o {}.o";
+      } elsif ($i eq 'asm') {
+        my $asm_cmd = get_asm_cmd();
+        $cmd = "$asm_cmd -Fo {}.o {}.asm";
+      } elsif ($i eq 'rc') {
+        my $wrc_cmd = get_wrc_cmd();
+        $cmd = "$wrc_cmd -i {}.rc -o {}.o";
       } else {
         print "build.pl: cannot identify how to build file type '$extension'\n";
         exit 1;
       }
 
-      print "$cmd\n";
-      if (system $cmd) {
-        print "build.pl: couldn't build '$i'. Stopping.\n";
+      my $manager;
+      if (!open($manager, "|-", "$parallel -u -H 1 --verbose '$cmd'")) {
+        print "build.pl: couldn't start the parallel build mananger.";
         exit 1;
+      }
+      foreach my $i (@{$jobs{$i}}) {
+        print $manager "$i\n";
+      }
+      if (!close($manager)) {
+        print "build.pl: the build job failed. Stopping.\n";
+        exit 1;
+      }
+
+    # systems that cannot use GNU parallel
+    } else {
+      foreach my $j (@{$jobs{$i}}) {
+        my $cmd;
+        # get the command to build this type of file
+        if ($i eq 'cpp') {
+          my $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
+          $cmd = "$cxx_cmd $j.cpp -o $j.o";
+        } elsif ($i eq 'asm') {
+          my $asm_cmd = get_asm_cmd();
+          $cmd = "$asm_cmd -Fo $j.o $j.asm";
+        } elsif ($i eq 'rc') {
+          my $wrc_cmd = get_wrc_cmd();
+          $cmd = "$wrc_cmd -i $j.rc -o $j.o";
+        } else {
+          print "build.pl: cannot identify how to build file type '$extension'\n";
+          exit 1;
+        }
+
+        print "$cmd\n";
+        if (system $cmd) {
+          print "build.pl: couldn't build '$i'. Stopping.\n";
+          exit 1;
+        }
       }
 
     }
 
-    push (@built_objects, $obj);
   }
 
   return @built_objects;

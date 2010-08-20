@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.13.1-rc1
+Release version 2.14.0
 Project website: www.7kfans.com
 
 This is the release of the Seven Kingdoms: Ancient Adversaries source
@@ -9,16 +9,13 @@ code as authorized by Enlight by the 7kfans project.  The game is
 provided under the terms of the GPL.  See the file "COPYING" for the
 details of the license.
 
-This release brings Linux support for the game through the Wine API.
-The game source should remain compatable with Windows as well.  
-However, this release is intended as an interim solution for linux
-and Windows users while the game undergoes an extensive rewrite to
-make it truly multiplatform.
+This release brings SDL and OpenAL support. The whole 2.14.xx series
+should be considered BETA, and even sometimes ALPHA, in terms of
+quality.
 
 This version of the game deprecates the I*Magic network library and
 DirectPlay.  Building the game will disable the network option by
-default.  Renable it at your own risk.  In the future, the 7kfans
-project intends to replace the network code anyhow.
+default.  Renable it at your own risk.
 
 
 Building the game
@@ -32,13 +29,6 @@ Linux
 * SDL 1.2
 * OpenAL
 
-Windows
-* DX7 SDK or later
-
-Optional Requirements
-* JWasm 2.00 or later
-* Wine 1.1.34 or later
-
 
 We do not (yet?) provide the typical Makefile setup.  To build
 execute:
@@ -46,8 +36,11 @@ execute:
 Followed by:
 ./build.pl
 
-This will build the game suited for your system.  If this does
-not work, please tell us.
+If GNU Parallel is installed, jobs will automatically execute
+in parallel.
+
+If platform detection does not work for you, or you have build
+failures, please contact us.
 
 
 Running
@@ -62,10 +55,3 @@ instead of the classic enlight version called 7k.exe.  You may
 create a short-cut now.
 
 
-Other Tips
----------
-
-Since the game runs on Wine's DDraw, users may find the game runs
-rather slow for such an old game.  We cannot correct this issue when
-using DDraw, but there are solutions found over at the Wine Project:
-http://wiki.winehq.org/DirectDraw

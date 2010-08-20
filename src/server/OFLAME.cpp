@@ -632,7 +632,7 @@ void Flame::gen_bitmap(unsigned char shadeColor)
 {
 	// generate color code
 	static unsigned char lastShadeBase = 0;
-	static unsigned char colorTable[256] __asm__("_colorTable");
+	static unsigned char colorTable[256];
 /*	static unsigned char colorTable[256] = 
 	{
 		TRANSPARENT_CODE, 0xd2, 0xd2, 0xd2, 0xd2, 0xd2, 0xd2, 0xd2,
@@ -684,55 +684,13 @@ void Flame::gen_bitmap(unsigned char shadeColor)
 
 	unsigned char *b = bitmap+2*sizeof(short);
 	unsigned char *p = heat_map+(map_height-1)*map_width;
-	short mapHeight = map_height;
-	short mapWidth = map_width;
-	/* Original Visual C++ assembly code for reference
-	_asm
+
+	for(int i = 0; i < map_height; i++)
 	{
-		mov	edi, b
-		mov	esi, p
-		cld
-		movzx	ecx, mapHeight
-		movzx	edx, mapWidth
-		lea	ebx, colorTable
-	gen_bitmap_loop2:
-		push	ecx
-		mov	ecx, edx
-	gen_bitmap_loop3:
-		lodsb
-		xlatb	[ebx]
-		stosb
-		loop	gen_bitmap_loop3
-
-		sub	esi, edx
-		sub	esi, edx
-		pop	ecx
-		loop	gen_bitmap_loop2
+		for(int j = 0; j < map_width; j++)
+			*b++ = colorTable[(unsigned int)*p++];
+		p -= 2 * map_width;
 	}
-	*/
-
-	__asm__ (
-		"cld\n\t"
-		"movzb %2, %%ecx\n\t"
-		"movzb %3, %%edx\n\t"
-		"leal _colorTable, %%ebx\n\t"
-	"gen_bitmap_loop2:\n\t"
-		"pushl %%ecx\n\t"
-		"movl %%edx, %%ecx\n\t"
-	"gen_bitmap_loop3:\n\t"
-		"lodsb\n\t"
-		"xlatb (%%ebx)\n\t"
-		"stosb\n\t"
-		"loop gen_bitmap_loop3\n\t"
-
-		"subl %%edx, %%esi\n\t"
-		"subl %%edx, %%esi\n\t"
-		"popl %%ecx\n\t"
-		"loop gen_bitmap_loop2\n\t"
-		:
-		: "D"(b),"S"(p),"m"(mapHeight),"m"(mapWidth)
-		: "%ebx","%ecx","%edx"
-	);
 }
 //-------------- End Function Flame::gen_bitmap ----------//
 
@@ -780,93 +738,26 @@ void Flame::mask_transparent()
 	if( map_width & 1)
 	{
 		// odd number
-		/*
 		for( short y = 0; y < map_height; ++y)
 			for( short x = y & 1; x < map_width; x += 2)
 		{
-			*b = 255;
+			*b = TRANSPARENT_CODE;
 			b += 2;
 		}
-		*/
-		int len = map_height * map_width /2;
-		/* Original Visual C++ assembly code for reference
-		_asm
-		{
-			mov	al, TRANSPARENT_CODE
-			mov	edi, b
-			mov	ecx, len
-			cld
-		mask_trans_loop1:
-			stosb
-			inc	edi
-			loop	mask_trans_loop1
-		}
-		*/
-		__asm__ (
-			"cld\n"
-		"mask_trans_loop1:\n\t"
-			"stosb\n\t"
-			"inc %%edi\n\t"
-			"loop mask_trans_loop1\n\t"
-			:
-			: "a"(TRANSPARENT_CODE),"D"(b),"c"(len)
-		);
 	}
 	else
 	{
 		// even number
-		/*
 		for( short y = 0; y < map_height; ++y)
 		{
 			b+= y & 1;		// shift one byte on odd line
 			for( short x = y & 1; x < map_width; x += 2)
 			{
-				*b = 255;
+				*b = TRANSPARENT_CODE;
 				b += 2;
 			}
 			b-= y & 1;		// shift back to even dot.
 		}
-		*/
-		int	mapHeight = map_height, mapWidth = map_width/2;
-		/* Original Visual C++ assembly code for reference
-		_asm
-		{
-			mov	ecx, mapHeight
-			mov	edi, b
-			mov	al, TRANSPARENT_CODE
-			mov	edx,0
-		mask_trans_loop2:
-			push	ecx
-			add	edi, edx
-			mov	ecx, mapWidth
-		mask_trans_loop3:
-			stosb
-			inc	edi
-			loop	mask_trans_loop3
-			sub	edi, edx
-			pop	ecx
-			xor	edx,1
-			loop	mask_trans_loop2
-		}
-		*/
-		__asm__ (
-			"xorl %%edx,%%edx\n"
-		"mask_trans_loop2:\n\t"
-			"pushl %%ecx\n\t"
-			"addl %%edx,%%edi\n\t"
-			"movl %3, %%ecx\n"
-		"mask_trans_loop3:\n\t"
-			"stosb\n\t"
-			"incl %%edi\n\t"
-			"loop mask_trans_loop3\n\t"
-			"subl %%edx, %%edi\n\t"
-			"popl %%ecx\n\t"
-			"xorl $1, %%edx\n\t"
-			"loop mask_trans_loop2\n\t"
-			:
-			: "a"(TRANSPARENT_CODE),"c"(mapHeight),"D"(b),"m"(mapWidth)
-			: "%edx"
-		);
 	}
 }
 //-------------- End Function Flame::mask_transparent ----------//

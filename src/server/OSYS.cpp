@@ -82,11 +82,6 @@
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
 // ##### end Gilbert 23/10 ######//
-#ifdef NO_WINDOWS
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <errno.h>
-#endif
 
 #include <dbglog.h>
 
@@ -463,20 +458,15 @@ int Sys::set_config_dir()
    MSG("Game config dir path: %s\n", dir_config);
 
    // create the config directory
-#ifdef NO_WINDOWS
-   r = mkdir(dir_config, 0777) == -1 ? errno == EEXIST : 1;
-#else // WINDOWS
-   r = !CreateDirectory(dir_config, NULL) ?
-       GetLastError() == ERROR_ALREADY_EXISTS : 1;
-#endif
-   strcat(dir_config, PATH_DELIM);
-
-   if (!r)
+   if (!m.mkpath(dir_config))
    {
       ERR("Unable to acquire a usable game config dir.\n");
       dir_config[0] = 0;
       return 0;
    }
+
+   // place ending delimiter to help with concatenating
+   strcat(dir_config, PATH_DELIM);
 
    return 1;
 }
