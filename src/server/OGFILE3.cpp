@@ -39,6 +39,7 @@
 #include <OTOWN.h>
 #include <OU_MARI.h>
 #include <dbglog.h>
+#include <file_io_visitor.h>
 #include <file_reader.h>
 
 #include <OGF_V1.h>
@@ -1482,445 +1483,485 @@ static void write_ai_info(File* filePtr, short* aiInfoArray, short aiInfoCount, 
 }
 //----------- End of static function write_ai_info ---------//
 
-
-static void read_nation_relation(FileReader *r, NationRelation *nr)
+template <typename FileT, typename MemT, typename Visitor>
+static bool visit(Visitor *vis, MemT *val)
 {
-	r->read<int8_t>(&nr->has_contact);
-	r->read<int8_t>(&nr->should_attack);
-
-	r->read<int8_t>(&nr->trade_treaty);
-
-	r->read<int8_t>(&nr->status);
-
-	r->read<int32_t>(&nr->last_change_status_date);
-
-	r->read<int8_t>(&nr->ai_relation_level);
-	r->read<int8_t>(&nr->ai_secret_attack);
-	r->read<int8_t>(&nr->ai_demand_trade_treaty);
-
-	r->read<float>(&nr->good_relation_duration_rating);
-	r->read<int16_t>(&nr->started_war_on_us_count);
-
-	r->read_array<float>(nr->cur_year_import, IMPORT_TYPE_COUNT);
-	r->read_array<float>(nr->last_year_import, IMPORT_TYPE_COUNT);
-	r->read_array<float>(nr->lifetime_import, IMPORT_TYPE_COUNT);
-
-	r->read_array<int32_t>(nr->last_talk_reject_date_array, MAX_TALK_TYPE);
-
-	r->read<int32_t>(&nr->last_military_aid_date);
-
-	r->read<int32_t>(&nr->last_give_gift_date);
-	r->read<int16_t>(&nr->total_given_gift_amount);
-
-	r->read<int8_t>(&nr->contact_msg_flag);
+	return vis->template visit<FileT, MemT>(val);
 }
 
-static void read_attack_camp(FileReader *r, AttackCamp *ac)
+template <typename FileT, typename MemT, typename Visitor>
+static bool visit_array(Visitor *vis, MemT *array, size_t len)
 {
-	r->read<int16_t>(&ac->firm_recno);
-	r->read<int16_t>(&ac->combat_level);
-	r->read<int16_t>(&ac->distance);
-	r->read<int32_t>(&ac->patrol_date);
+	return vis->template visit_array<FileT, MemT>(array, len);
 }
 
-static void read_ai_region(FileReader *r, AIRegion *reg)
+template <typename T, typename Visitor>
+static bool visit_pointer(Visitor *vis, T **ptr)
 {
-	r->read<int8_t>(&reg->region_id);
-	r->read<int8_t>(&reg->town_count);
-	r->read<int8_t>(&reg->base_town_count);
+	return vis->template visit(ptr);
+}
+
+template <typename Visitor>
+static void visit_nation_relation(Visitor *v, NationRelation *nr)
+{
+	visit<int8_t>(v, &nr->has_contact);
+	visit<int8_t>(v, &nr->should_attack);
+
+	visit<int8_t>(v, &nr->trade_treaty);
+
+	visit<int8_t>(v, &nr->status);
+
+	visit<int32_t>(v, &nr->last_change_status_date);
+
+	visit<int8_t>(v, &nr->ai_relation_level);
+	visit<int8_t>(v, &nr->ai_secret_attack);
+	visit<int8_t>(v, &nr->ai_demand_trade_treaty);
+
+	visit<float>(v, &nr->good_relation_duration_rating);
+	visit<int16_t>(v, &nr->started_war_on_us_count);
+
+	visit_array<float>(v, nr->cur_year_import, IMPORT_TYPE_COUNT);
+	visit_array<float>(v, nr->last_year_import, IMPORT_TYPE_COUNT);
+	visit_array<float>(v, nr->lifetime_import, IMPORT_TYPE_COUNT);
+
+	visit_array<int32_t>(v, nr->last_talk_reject_date_array, MAX_TALK_TYPE);
+
+	visit<int32_t>(v, &nr->last_military_aid_date);
+
+	visit<int32_t>(v, &nr->last_give_gift_date);
+	visit<int16_t>(v, &nr->total_given_gift_amount);
+
+	visit<int8_t>(v, &nr->contact_msg_flag);
+}
+
+template <typename Visitor>
+static void visit_attack_camp(Visitor *v, AttackCamp *ac)
+{
+	visit<int16_t>(v, &ac->firm_recno);
+	visit<int16_t>(v, &ac->combat_level);
+	visit<int16_t>(v, &ac->distance);
+	visit<int32_t>(v, &ac->patrol_date);
+}
+
+template <typename Visitor>
+static void visit_ai_region(Visitor *v, AIRegion *reg)
+{
+	visit<int8_t>(v, &reg->region_id);
+	visit<int8_t>(v, &reg->town_count);
+	visit<int8_t>(v, &reg->base_town_count);
+}
+
+template <typename Visitor>
+static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
+{
+	v->skip(2); /* record size */
+	v->skip(4); /* virtual table pointer */
+
+	/* NationBase */
+	visit<int16_t>(v, &v1n->nation_recno);
+	visit<int8_t>(v, &v1n->nation_type);
+	visit<int8_t>(v, &v1n->race_id);
+	visit<int8_t>(v, &v1n->color_scheme_id);
+	visit<int8_t>(v, &v1n->nation_color);
+	visit<int16_t>(v, &v1n->king_unit_recno);
+	visit<int8_t>(v, &v1n->king_leadership);
+	visit<int32_t>(v, &v1n->nation_name_id);
+
+	visit_array<int8_t>(v, v1n->nation_name_str,
+							  Version_1_Nation::NATION_NAME_LEN+1);
+
+	visit<uint32_t>(v, &v1n->player_id);
+	visit<int8_t>(v, &v1n->next_frame_ready);
+	visit<int16_t>(v, &v1n->last_caravan_id);
+	visit<int16_t>(v, &v1n->nation_firm_count);
+	visit<int32_t>(v, &v1n->last_build_firm_date);
+	visit_array<int8_t>(v, v1n->know_base_array, VERSION_1_MAX_RACE);
+	visit_array<int8_t>(v, v1n->base_count_array, VERSION_1_MAX_RACE);
+	visit<int8_t>(v, &v1n->is_at_war_today);
+	visit<int8_t>(v, &v1n->is_at_war_yesterday);
+	visit<int32_t>(v, &v1n->last_war_date);
+	visit<int16_t>(v, &v1n->last_attacker_unit_recno);
+	visit<int32_t>(v, &v1n->last_independent_unit_join_date);
+	visit<int8_t>(v, &v1n->cheat_enabled_flag);
+	visit<float>(v, &v1n->cash);
+	visit<float>(v, &v1n->food);
+	visit<float>(v, &v1n->reputation);
+	visit<float>(v, &v1n->kill_monster_score);
+	visit<int16_t>(v, &v1n->auto_collect_tax_loyalty);
+	visit<int16_t>(v, &v1n->auto_grant_loyalty);
+	visit<float>(v, &v1n->cur_year_profit);
+	visit<float>(v, &v1n->last_year_profit);
+	visit<float>(v, &v1n->cur_year_fixed_income);
+	visit<float>(v, &v1n->last_year_fixed_income);
+	visit<float>(v, &v1n->cur_year_fixed_expense);
+	visit<float>(v, &v1n->last_year_fixed_expense);
+	visit_array<float>(v, v1n->cur_year_income_array, INCOME_TYPE_COUNT);
+	visit_array<float>(v, v1n->last_year_income_array, INCOME_TYPE_COUNT);
+	visit<float>(v, &v1n->cur_year_income);
+	visit<float>(v, &v1n->last_year_income);
+	visit_array<float>(v, v1n->cur_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit_array<float>(v, v1n->last_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit<float>(v, &v1n->cur_year_expense);
+	visit<float>(v, &v1n->last_year_expense);
+	visit<float>(v, &v1n->cur_year_cheat);
+	visit<float>(v, &v1n->last_year_cheat);
+	visit<float>(v, &v1n->cur_year_food_in);
+	visit<float>(v, &v1n->last_year_food_in);
+	visit<float>(v, &v1n->cur_year_food_out);
+	visit<float>(v, &v1n->last_year_food_out);
+	visit<float>(v, &v1n->cur_year_food_change);
+	visit<float>(v, &v1n->last_year_food_change);
+	visit<float>(v, &v1n->cur_year_reputation_change);
+	visit<float>(v, &v1n->last_year_reputation_change);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_nation_relation(v, &v1n->relation_array[n]);
+
+	visit_array<int8_t>(v, v1n->relation_status_array, MAX_NATION);
+	visit_array<int8_t>(v, v1n->relation_passable_array, MAX_NATION);
+
+	visit_array<int8_t>(v, v1n->relation_should_attack_array, MAX_NATION);
+	visit<int8_t>(v, &v1n->is_allied_with_player);
+	visit<int32_t>(v, &v1n->total_population);
+	visit<int32_t>(v, &v1n->total_jobless_population);
+	visit<int32_t>(v, &v1n->total_unit_count);
+	visit<int32_t>(v, &v1n->total_human_count);
+	visit<int32_t>(v, &v1n->total_general_count);
+	visit<int32_t>(v, &v1n->total_weapon_count);
+	visit<int32_t>(v, &v1n->total_ship_count);
+	visit<int32_t>(v, &v1n->total_firm_count);
+	visit<int32_t>(v, &v1n->total_spy_count);
+	visit<int32_t>(v, &v1n->total_ship_combat_level);
+	visit<int16_t>(v, &v1n->largest_town_recno);
+	visit<int16_t>(v, &v1n->largest_town_pop);
+	visit_array<int16_t>(v, v1n->raw_count_array, MAX_RAW);
+	visit_array<int16_t>(v, v1n->last_unit_name_id_array,
+								VERSION_1_MAX_UNIT_TYPE);
+	visit<int32_t>(v, &v1n->population_rating);
+	visit<int32_t>(v, &v1n->military_rating);
+	visit<int32_t>(v, &v1n->economic_rating);
+	visit<int32_t>(v, &v1n->overall_rating);
+	visit<int32_t>(v, &v1n->enemy_soldier_killed);
+	visit<int32_t>(v, &v1n->own_soldier_killed);
+	visit<int32_t>(v, &v1n->enemy_civilian_killed);
+	visit<int32_t>(v, &v1n->own_civilian_killed);
+	visit<int32_t>(v, &v1n->enemy_weapon_destroyed);
+	visit<int32_t>(v, &v1n->own_weapon_destroyed);
+	visit<int32_t>(v, &v1n->enemy_ship_destroyed);
+	visit<int32_t>(v, &v1n->own_ship_destroyed);
+	visit<int32_t>(v, &v1n->enemy_firm_destroyed);
+	visit<int32_t>(v, &v1n->own_firm_destroyed);
+
+	/* Nation */
+	v->skip(29); /* action_array */
+
+	visit<uint16_t>(v, &v1n->last_action_id);
+	visit_pointer(v, &v1n->ai_town_array);
+	visit_pointer(v, &v1n->ai_base_array);
+	visit_pointer(v, &v1n->ai_mine_array);
+	visit_pointer(v, &v1n->ai_factory_array);
+	visit_pointer(v, &v1n->ai_camp_array);
+	visit_pointer(v, &v1n->ai_research_array);
+	visit_pointer(v, &v1n->ai_war_array);
+	visit_pointer(v, &v1n->ai_harbor_array);
+	visit_pointer(v, &v1n->ai_market_array);
+	visit_pointer(v, &v1n->ai_inn_array);
+	visit_pointer(v, &v1n->ai_general_array);
+	visit_pointer(v, &v1n->ai_caravan_array);
+	visit_pointer(v, &v1n->ai_ship_array);
+	visit<int16_t>(v, &v1n->ai_town_size);
+	visit<int16_t>(v, &v1n->ai_base_size);
+	visit<int16_t>(v, &v1n->ai_mine_size);
+	visit<int16_t>(v, &v1n->ai_factory_size);
+	visit<int16_t>(v, &v1n->ai_camp_size);
+	visit<int16_t>(v, &v1n->ai_research_size);
+	visit<int16_t>(v, &v1n->ai_war_size);
+	visit<int16_t>(v, &v1n->ai_harbor_size);
+	visit<int16_t>(v, &v1n->ai_market_size);
+	visit<int16_t>(v, &v1n->ai_inn_size);
+	visit<int16_t>(v, &v1n->ai_general_size);
+	visit<int16_t>(v, &v1n->ai_caravan_size);
+	visit<int16_t>(v, &v1n->ai_ship_size);
+	visit<int16_t>(v, &v1n->ai_town_count);
+	visit<int16_t>(v, &v1n->ai_base_count);
+	visit<int16_t>(v, &v1n->ai_mine_count);
+	visit<int16_t>(v, &v1n->ai_factory_count);
+	visit<int16_t>(v, &v1n->ai_camp_count);
+	visit<int16_t>(v, &v1n->ai_research_count);
+	visit<int16_t>(v, &v1n->ai_war_count);
+	visit<int16_t>(v, &v1n->ai_harbor_count);
+	visit<int16_t>(v, &v1n->ai_market_count);
+	visit<int16_t>(v, &v1n->ai_inn_count);
+	visit<int16_t>(v, &v1n->ai_general_count);
+	visit<int16_t>(v, &v1n->ai_caravan_count);
+	visit<int16_t>(v, &v1n->ai_ship_count);
+	visit<int16_t>(v, &v1n->ai_base_town_count);
+	visit_array<int16_t>(v, v1n->firm_should_close_array, MAX_FIRM_TYPE);
+	
+	for (int n = 0; n < MAX_AI_REGION; n++)
+		visit_ai_region(v, &v1n->ai_region_array[n]);
+
+	visit<int8_t>(v, &v1n->ai_region_count);
+	visit<int8_t>(v, &v1n->pref_force_projection);
+	visit<int8_t>(v, &v1n->pref_military_development);
+	visit<int8_t>(v, &v1n->pref_economic_development);
+	visit<int8_t>(v, &v1n->pref_inc_pop_by_capture);
+	visit<int8_t>(v, &v1n->pref_inc_pop_by_growth);
+	visit<int8_t>(v, &v1n->pref_peacefulness);
+	visit<int8_t>(v, &v1n->pref_military_courage);
+	visit<int8_t>(v, &v1n->pref_territorial_cohesiveness);
+	visit<int8_t>(v, &v1n->pref_trading_tendency);
+	visit<int8_t>(v, &v1n->pref_allying_tendency);
+	visit<int8_t>(v, &v1n->pref_honesty);
+	visit<int8_t>(v, &v1n->pref_town_harmony);
+	visit<int8_t>(v, &v1n->pref_loyalty_concern);
+	visit<int8_t>(v, &v1n->pref_forgiveness);
+	visit<int8_t>(v, &v1n->pref_collect_tax);
+	visit<int8_t>(v, &v1n->pref_hire_unit);
+	visit<int8_t>(v, &v1n->pref_use_weapon);
+	visit<int8_t>(v, &v1n->pref_keep_general);
+	visit<int8_t>(v, &v1n->pref_keep_skilled_unit);
+	visit<int8_t>(v, &v1n->pref_diplomacy_retry);
+	visit<int8_t>(v, &v1n->pref_attack_monster);
+	visit<int8_t>(v, &v1n->pref_spy);
+	visit<int8_t>(v, &v1n->pref_counter_spy);
+	visit<int8_t>(v, &v1n->pref_food_reserve);
+	visit<int8_t>(v, &v1n->pref_cash_reserve);
+	visit<int8_t>(v, &v1n->pref_use_marine);
+	visit<int8_t>(v, &v1n->pref_unit_chase_distance);
+	visit<int8_t>(v, &v1n->pref_repair_concern);
+	visit<int8_t>(v, &v1n->pref_scout);
+	visit<int16_t>(v, &v1n->ai_capture_enemy_town_recno);
+	visit<int32_t>(v, &v1n->ai_capture_enemy_town_plan_date);
+	visit<int32_t>(v, &v1n->ai_capture_enemy_town_start_attack_date);
+	visit<int8_t>(v, &v1n->ai_capture_enemy_town_use_all_camp);
+	visit<int32_t>(v, &v1n->ai_last_defend_action_date);
+	visit<int16_t>(v, &v1n->ai_attack_target_x_loc);
+	visit<int16_t>(v, &v1n->ai_attack_target_y_loc);
+	visit<int16_t>(v, &v1n->ai_attack_target_nation_recno);
+
+	for (int n = 0; n < MAX_SUITABLE_ATTACK_CAMP; n++)
+		visit_attack_camp(v, &v1n->attack_camp_array[n]);
+
+	visit<int16_t>(v, &v1n->attack_camp_count);
+	visit<int16_t>(v, &v1n->lead_attack_camp_recno);
 }
 
 static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 {
 	FileReader r;
+	FileReaderVisitor v(&r);
 
 	if (!r.init(file))
 		return false;
 
-	r.skip(2); /* record size */
-	r.skip(4); /* virtual table pointer */
-
-	/* NationBase */
-	r.read<int16_t>(&v1n->nation_recno);
-	r.read<int8_t>(&v1n->nation_type);
-	r.read<int8_t>(&v1n->race_id);
-	r.read<int8_t>(&v1n->color_scheme_id);
-	r.read<int8_t>(&v1n->nation_color);
-	r.read<int16_t>(&v1n->king_unit_recno);
-	r.read<int8_t>(&v1n->king_leadership);
-	r.read<int32_t>(&v1n->nation_name_id);
-	r.read_array<int8_t>(v1n->nation_name_str, Version_1_Nation::NATION_NAME_LEN+1);
-	r.read<uint32_t>(&v1n->player_id);
-	r.read<int8_t>(&v1n->next_frame_ready);
-	r.read<int16_t>(&v1n->last_caravan_id);
-	r.read<int16_t>(&v1n->nation_firm_count);
-	r.read<int32_t>(&v1n->last_build_firm_date);
-	r.read_array<int8_t>(v1n->know_base_array, VERSION_1_MAX_RACE);
-	r.read_array<int8_t>(v1n->base_count_array, VERSION_1_MAX_RACE);
-	r.read<int8_t>(&v1n->is_at_war_today);
-	r.read<int8_t>(&v1n->is_at_war_yesterday);
-	r.read<int32_t>(&v1n->last_war_date);
-	r.read<int16_t>(&v1n->last_attacker_unit_recno);
-	r.read<int32_t>(&v1n->last_independent_unit_join_date);
-	r.read<int8_t>(&v1n->cheat_enabled_flag);
-	r.read<float>(&v1n->cash);
-	r.read<float>(&v1n->food);
-	r.read<float>(&v1n->reputation);
-	r.read<float>(&v1n->kill_monster_score);
-	r.read<int16_t>(&v1n->auto_collect_tax_loyalty);
-	r.read<int16_t>(&v1n->auto_grant_loyalty);
-	r.read<float>(&v1n->cur_year_profit);
-	r.read<float>(&v1n->last_year_profit);
-	r.read<float>(&v1n->cur_year_fixed_income);
-	r.read<float>(&v1n->last_year_fixed_income);
-	r.read<float>(&v1n->cur_year_fixed_expense);
-	r.read<float>(&v1n->last_year_fixed_expense);
-	r.read_array<float>(v1n->cur_year_income_array, INCOME_TYPE_COUNT);
-	r.read_array<float>(v1n->last_year_income_array, INCOME_TYPE_COUNT);
-	r.read<float>(&v1n->cur_year_income);
-	r.read<float>(&v1n->last_year_income);
-	r.read_array<float>(v1n->cur_year_expense_array, EXPENSE_TYPE_COUNT);
-	r.read_array<float>(v1n->last_year_expense_array, EXPENSE_TYPE_COUNT);
-	r.read<float>(&v1n->cur_year_expense);
-	r.read<float>(&v1n->last_year_expense);
-	r.read<float>(&v1n->cur_year_cheat);
-	r.read<float>(&v1n->last_year_cheat);
-	r.read<float>(&v1n->cur_year_food_in);
-	r.read<float>(&v1n->last_year_food_in);
-	r.read<float>(&v1n->cur_year_food_out);
-	r.read<float>(&v1n->last_year_food_out);
-	r.read<float>(&v1n->cur_year_food_change);
-	r.read<float>(&v1n->last_year_food_change);
-	r.read<float>(&v1n->cur_year_reputation_change);
-	r.read<float>(&v1n->last_year_reputation_change);
-
-	for (int n = 0; n < MAX_NATION; n++)
-		read_nation_relation(&r, &v1n->relation_array[n]);
-
-	r.read_array<int8_t>(v1n->relation_status_array, MAX_NATION);
-	r.read_array<int8_t>(v1n->relation_passable_array, MAX_NATION);
-	r.read_array<int8_t>(v1n->relation_should_attack_array, MAX_NATION);
-	r.read<int8_t>(&v1n->is_allied_with_player);
-	r.read<int32_t>(&v1n->total_population);
-	r.read<int32_t>(&v1n->total_jobless_population);
-	r.read<int32_t>(&v1n->total_unit_count);
-	r.read<int32_t>(&v1n->total_human_count);
-	r.read<int32_t>(&v1n->total_general_count);
-	r.read<int32_t>(&v1n->total_weapon_count);
-	r.read<int32_t>(&v1n->total_ship_count);
-	r.read<int32_t>(&v1n->total_firm_count);
-	r.read<int32_t>(&v1n->total_spy_count);
-	r.read<int32_t>(&v1n->total_ship_combat_level);
-	r.read<int16_t>(&v1n->largest_town_recno);
-	r.read<int16_t>(&v1n->largest_town_pop);
-	r.read_array<int16_t>(v1n->raw_count_array, MAX_RAW);
-	r.read_array<int16_t>(v1n->last_unit_name_id_array, VERSION_1_MAX_UNIT_TYPE);
-	r.read<int32_t>(&v1n->population_rating);
-	r.read<int32_t>(&v1n->military_rating);
-	r.read<int32_t>(&v1n->economic_rating);
-	r.read<int32_t>(&v1n->overall_rating);
-	r.read<int32_t>(&v1n->enemy_soldier_killed);
-	r.read<int32_t>(&v1n->own_soldier_killed);
-	r.read<int32_t>(&v1n->enemy_civilian_killed);
-	r.read<int32_t>(&v1n->own_civilian_killed);
-	r.read<int32_t>(&v1n->enemy_weapon_destroyed);
-	r.read<int32_t>(&v1n->own_weapon_destroyed);
-	r.read<int32_t>(&v1n->enemy_ship_destroyed);
-	r.read<int32_t>(&v1n->own_ship_destroyed);
-	r.read<int32_t>(&v1n->enemy_firm_destroyed);
-	r.read<int32_t>(&v1n->own_firm_destroyed);
-
-	/* Nation */
-	r.skip(29); /* action_array */
+	visit_version_1_nation(&v, v1n);
 	memset(&v1n->action_array, 0, sizeof(v1n->action_array));
 
-	r.read<uint16_t>(&v1n->last_action_id);
-	r.read(&v1n->ai_town_array);
-	r.read(&v1n->ai_base_array);
-	r.read(&v1n->ai_mine_array);
-	r.read(&v1n->ai_factory_array);
-	r.read(&v1n->ai_camp_array);
-	r.read(&v1n->ai_research_array);
-	r.read(&v1n->ai_war_array);
-	r.read(&v1n->ai_harbor_array);
-	r.read(&v1n->ai_market_array);
-	r.read(&v1n->ai_inn_array);
-	r.read(&v1n->ai_general_array);
-	r.read(&v1n->ai_caravan_array);
-	r.read(&v1n->ai_ship_array);
-	r.read<int16_t>(&v1n->ai_town_size);
-	r.read<int16_t>(&v1n->ai_base_size);
-	r.read<int16_t>(&v1n->ai_mine_size);
-	r.read<int16_t>(&v1n->ai_factory_size);
-	r.read<int16_t>(&v1n->ai_camp_size);
-	r.read<int16_t>(&v1n->ai_research_size);
-	r.read<int16_t>(&v1n->ai_war_size);
-	r.read<int16_t>(&v1n->ai_harbor_size);
-	r.read<int16_t>(&v1n->ai_market_size);
-	r.read<int16_t>(&v1n->ai_inn_size);
-	r.read<int16_t>(&v1n->ai_general_size);
-	r.read<int16_t>(&v1n->ai_caravan_size);
-	r.read<int16_t>(&v1n->ai_ship_size);
-	r.read<int16_t>(&v1n->ai_town_count);
-	r.read<int16_t>(&v1n->ai_base_count);
-	r.read<int16_t>(&v1n->ai_mine_count);
-	r.read<int16_t>(&v1n->ai_factory_count);
-	r.read<int16_t>(&v1n->ai_camp_count);
-	r.read<int16_t>(&v1n->ai_research_count);
-	r.read<int16_t>(&v1n->ai_war_count);
-	r.read<int16_t>(&v1n->ai_harbor_count);
-	r.read<int16_t>(&v1n->ai_market_count);
-	r.read<int16_t>(&v1n->ai_inn_count);
-	r.read<int16_t>(&v1n->ai_general_count);
-	r.read<int16_t>(&v1n->ai_caravan_count);
-	r.read<int16_t>(&v1n->ai_ship_count);
-	r.read<int16_t>(&v1n->ai_base_town_count);
-	r.read_array<int16_t>(v1n->firm_should_close_array, MAX_FIRM_TYPE);
+	return r.good();
+}
+
+template <typename Visitor>
+static bool visit_nation(Visitor *v, Nation *nat)
+{
+	v->skip(2); /* record size */
+	v->skip(4); /* virtual table pointer */
+
+	/* NationBase */
+	visit<int16_t>(v, &nat->nation_recno);
+	visit<int8_t>(v, &nat->nation_type);
+	visit<int8_t>(v, &nat->race_id);
+	visit<int8_t>(v, &nat->color_scheme_id);
+	visit<int8_t>(v, &nat->nation_color);
+	visit<int16_t>(v, &nat->king_unit_recno);
+	visit<int8_t>(v, &nat->king_leadership);
+	visit<int32_t>(v, &nat->nation_name_id);
+	visit_array<int8_t>(v, nat->nation_name_str, Nation::NATION_NAME_LEN+1);
+	visit<uint32_t>(v, &nat->player_id);
+	visit<int8_t>(v, &nat->next_frame_ready);
+	visit<int16_t>(v, &nat->last_caravan_id);
+	visit<int16_t>(v, &nat->nation_firm_count);
+	visit<int32_t>(v, &nat->last_build_firm_date);
+	visit_array<int8_t>(v, nat->know_base_array, MAX_RACE);
+	visit_array<int8_t>(v, nat->base_count_array, MAX_RACE);
+	visit<int8_t>(v, &nat->is_at_war_today);
+	visit<int8_t>(v, &nat->is_at_war_yesterday);
+	visit<int32_t>(v, &nat->last_war_date);
+	visit<int16_t>(v, &nat->last_attacker_unit_recno);
+	visit<int32_t>(v, &nat->last_independent_unit_join_date);
+	visit<int8_t>(v, &nat->cheat_enabled_flag);
+	visit<float>(v, &nat->cash);
+	visit<float>(v, &nat->food);
+	visit<float>(v, &nat->reputation);
+	visit<float>(v, &nat->kill_monster_score);
+	visit<int16_t>(v, &nat->auto_collect_tax_loyalty);
+	visit<int16_t>(v, &nat->auto_grant_loyalty);
+	visit<float>(v, &nat->cur_year_profit);
+	visit<float>(v, &nat->last_year_profit);
+	visit<float>(v, &nat->cur_year_fixed_income);
+	visit<float>(v, &nat->last_year_fixed_income);
+	visit<float>(v, &nat->cur_year_fixed_expense);
+	visit<float>(v, &nat->last_year_fixed_expense);
+	visit_array<float>(v, nat->cur_year_income_array, INCOME_TYPE_COUNT);
+	visit_array<float>(v, nat->last_year_income_array, INCOME_TYPE_COUNT);
+	visit<float>(v, &nat->cur_year_income);
+	visit<float>(v, &nat->last_year_income);
+	visit_array<float>(v, nat->cur_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit_array<float>(v, nat->last_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit<float>(v, &nat->cur_year_expense);
+	visit<float>(v, &nat->last_year_expense);
+	visit<float>(v, &nat->cur_year_cheat);
+	visit<float>(v, &nat->last_year_cheat);
+	visit<float>(v, &nat->cur_year_food_in);
+	visit<float>(v, &nat->last_year_food_in);
+	visit<float>(v, &nat->cur_year_food_out);
+	visit<float>(v, &nat->last_year_food_out);
+	visit<float>(v, &nat->cur_year_food_change);
+	visit<float>(v, &nat->last_year_food_change);
+	visit<float>(v, &nat->cur_year_reputation_change);
+	visit<float>(v, &nat->last_year_reputation_change);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_nation_relation(v, &nat->relation_array[n]);
+
+	visit_array<int8_t>(v, nat->relation_status_array, MAX_NATION);
+	visit_array<int8_t>(v, nat->relation_passable_array, MAX_NATION);
+	visit_array<int8_t>(v, nat->relation_should_attack_array, MAX_NATION);
+	visit<int8_t>(v, &nat->is_allied_with_player);
+	visit<int32_t>(v, &nat->total_population);
+	visit<int32_t>(v, &nat->total_jobless_population);
+	visit<int32_t>(v, &nat->total_unit_count);
+	visit<int32_t>(v, &nat->total_human_count);
+	visit<int32_t>(v, &nat->total_general_count);
+	visit<int32_t>(v, &nat->total_weapon_count);
+	visit<int32_t>(v, &nat->total_ship_count);
+	visit<int32_t>(v, &nat->total_firm_count);
+	visit<int32_t>(v, &nat->total_spy_count);
+	visit<int32_t>(v, &nat->total_ship_combat_level);
+	visit<int16_t>(v, &nat->largest_town_recno);
+	visit<int16_t>(v, &nat->largest_town_pop);
+	visit_array<int16_t>(v, nat->raw_count_array, MAX_RAW);
+	visit_array<int16_t>(v, nat->last_unit_name_id_array, MAX_UNIT_TYPE);
+	visit<int32_t>(v, &nat->population_rating);
+	visit<int32_t>(v, &nat->military_rating);
+	visit<int32_t>(v, &nat->economic_rating);
+   visit<int32_t>(v, &nat->overall_rating);
+	visit<int32_t>(v, &nat->enemy_soldier_killed);
+	visit<int32_t>(v, &nat->own_soldier_killed);
+	visit<int32_t>(v, &nat->enemy_civilian_killed);
+	visit<int32_t>(v, &nat->own_civilian_killed);
+	visit<int32_t>(v, &nat->enemy_weapon_destroyed);
+	visit<int32_t>(v, &nat->own_weapon_destroyed);
+	visit<int32_t>(v, &nat->enemy_ship_destroyed);
+	visit<int32_t>(v, &nat->own_ship_destroyed);
+	visit<int32_t>(v, &nat->enemy_firm_destroyed);
+	visit<int32_t>(v, &nat->own_firm_destroyed);
+
+	/* Nation */
+	v->skip(29); /* action_array */
+
+	visit<uint16_t>(v, &nat->last_action_id);
+	visit_pointer(v, &nat->ai_town_array);
+	visit_pointer(v, &nat->ai_base_array);
+	visit_pointer(v, &nat->ai_mine_array);
+	visit_pointer(v, &nat->ai_factory_array);
+	visit_pointer(v, &nat->ai_camp_array);
+	visit_pointer(v, &nat->ai_research_array);
+	visit_pointer(v, &nat->ai_war_array);
+	visit_pointer(v, &nat->ai_harbor_array);
+	visit_pointer(v, &nat->ai_market_array);
+	visit_pointer(v, &nat->ai_inn_array);
+	visit_pointer(v, &nat->ai_general_array);
+	visit_pointer(v, &nat->ai_caravan_array);
+	visit_pointer(v, &nat->ai_ship_array);
+	visit<int16_t>(v, &nat->ai_town_size);
+	visit<int16_t>(v, &nat->ai_base_size);
+	visit<int16_t>(v, &nat->ai_mine_size);
+	visit<int16_t>(v, &nat->ai_factory_size);
+	visit<int16_t>(v, &nat->ai_camp_size);
+	visit<int16_t>(v, &nat->ai_research_size);
+	visit<int16_t>(v, &nat->ai_war_size);
+	visit<int16_t>(v, &nat->ai_harbor_size);
+	visit<int16_t>(v, &nat->ai_market_size);
+	visit<int16_t>(v, &nat->ai_inn_size);
+	visit<int16_t>(v, &nat->ai_general_size);
+	visit<int16_t>(v, &nat->ai_caravan_size);
+	visit<int16_t>(v, &nat->ai_ship_size);
+	visit<int16_t>(v, &nat->ai_town_count);
+	visit<int16_t>(v, &nat->ai_base_count);
+	visit<int16_t>(v, &nat->ai_mine_count);
+	visit<int16_t>(v, &nat->ai_factory_count);
+	visit<int16_t>(v, &nat->ai_camp_count);
+	visit<int16_t>(v, &nat->ai_research_count);
+	visit<int16_t>(v, &nat->ai_war_count);
+	visit<int16_t>(v, &nat->ai_harbor_count);
+	visit<int16_t>(v, &nat->ai_market_count);
+	visit<int16_t>(v, &nat->ai_inn_count);
+	visit<int16_t>(v, &nat->ai_general_count);
+	visit<int16_t>(v, &nat->ai_caravan_count);
+	visit<int16_t>(v, &nat->ai_ship_count);
+	visit<int16_t>(v, &nat->ai_base_town_count);
+	visit_array<int16_t>(v, nat->firm_should_close_array, MAX_FIRM_TYPE);
 	
 	for (int n = 0; n < MAX_AI_REGION; n++)
-		read_ai_region(&r, &v1n->ai_region_array[n]);
+		visit_ai_region(v, &nat->ai_region_array[n]);
 
-	r.read<int8_t>(&v1n->ai_region_count);
-	r.read<int8_t>(&v1n->pref_force_projection);
-	r.read<int8_t>(&v1n->pref_military_development);
-	r.read<int8_t>(&v1n->pref_economic_development);
-	r.read<int8_t>(&v1n->pref_inc_pop_by_capture);
-	r.read<int8_t>(&v1n->pref_inc_pop_by_growth);
-	r.read<int8_t>(&v1n->pref_peacefulness);
-	r.read<int8_t>(&v1n->pref_military_courage);
-	r.read<int8_t>(&v1n->pref_territorial_cohesiveness);
-	r.read<int8_t>(&v1n->pref_trading_tendency);
-	r.read<int8_t>(&v1n->pref_allying_tendency);
-	r.read<int8_t>(&v1n->pref_honesty);
-	r.read<int8_t>(&v1n->pref_town_harmony);
-	r.read<int8_t>(&v1n->pref_loyalty_concern);
-	r.read<int8_t>(&v1n->pref_forgiveness);
-	r.read<int8_t>(&v1n->pref_collect_tax);
-	r.read<int8_t>(&v1n->pref_hire_unit);
-	r.read<int8_t>(&v1n->pref_use_weapon);
-	r.read<int8_t>(&v1n->pref_keep_general);
-	r.read<int8_t>(&v1n->pref_keep_skilled_unit);
-	r.read<int8_t>(&v1n->pref_diplomacy_retry);
-	r.read<int8_t>(&v1n->pref_attack_monster);
-	r.read<int8_t>(&v1n->pref_spy);
-	r.read<int8_t>(&v1n->pref_counter_spy);
-	r.read<int8_t>(&v1n->pref_food_reserve);
-	r.read<int8_t>(&v1n->pref_cash_reserve);
-	r.read<int8_t>(&v1n->pref_use_marine);
-	r.read<int8_t>(&v1n->pref_unit_chase_distance);
-	r.read<int8_t>(&v1n->pref_repair_concern);
-	r.read<int8_t>(&v1n->pref_scout);
-	r.read<int16_t>(&v1n->ai_capture_enemy_town_recno);
-	r.read<int32_t>(&v1n->ai_capture_enemy_town_plan_date);
-	r.read<int32_t>(&v1n->ai_capture_enemy_town_start_attack_date);
-	r.read<int8_t>(&v1n->ai_capture_enemy_town_use_all_camp);
-	r.read<int32_t>(&v1n->ai_last_defend_action_date);
-	r.read<int16_t>(&v1n->ai_attack_target_x_loc);
-	r.read<int16_t>(&v1n->ai_attack_target_y_loc);
-	r.read<int16_t>(&v1n->ai_attack_target_nation_recno);
+	visit<int8_t>(v, &nat->ai_region_count);
+	visit<int8_t>(v, &nat->pref_force_projection);
+	visit<int8_t>(v, &nat->pref_military_development);
+	visit<int8_t>(v, &nat->pref_economic_development);
+	visit<int8_t>(v, &nat->pref_inc_pop_by_capture);
+	visit<int8_t>(v, &nat->pref_inc_pop_by_growth);
+	visit<int8_t>(v, &nat->pref_peacefulness);
+	visit<int8_t>(v, &nat->pref_military_courage);
+	visit<int8_t>(v, &nat->pref_territorial_cohesiveness);
+	visit<int8_t>(v, &nat->pref_trading_tendency);
+	visit<int8_t>(v, &nat->pref_allying_tendency);
+	visit<int8_t>(v, &nat->pref_honesty);
+	visit<int8_t>(v, &nat->pref_town_harmony);
+	visit<int8_t>(v, &nat->pref_loyalty_concern);
+	visit<int8_t>(v, &nat->pref_forgiveness);
+	visit<int8_t>(v, &nat->pref_collect_tax);
+	visit<int8_t>(v, &nat->pref_hire_unit);
+	visit<int8_t>(v, &nat->pref_use_weapon);
+	visit<int8_t>(v, &nat->pref_keep_general);
+	visit<int8_t>(v, &nat->pref_keep_skilled_unit);
+	visit<int8_t>(v, &nat->pref_diplomacy_retry);
+	visit<int8_t>(v, &nat->pref_attack_monster);
+	visit<int8_t>(v, &nat->pref_spy);
+	visit<int8_t>(v, &nat->pref_counter_spy);
+	visit<int8_t>(v, &nat->pref_food_reserve);
+	visit<int8_t>(v, &nat->pref_cash_reserve);
+	visit<int8_t>(v, &nat->pref_use_marine);
+	visit<int8_t>(v, &nat->pref_unit_chase_distance);
+	visit<int8_t>(v, &nat->pref_repair_concern);
+	visit<int8_t>(v, &nat->pref_scout);
+	visit<int16_t>(v, &nat->ai_capture_enemy_town_recno);
+	visit<int32_t>(v, &nat->ai_capture_enemy_town_plan_date);
+	visit<int32_t>(v, &nat->ai_capture_enemy_town_start_attack_date);
+	visit<int8_t>(v, &nat->ai_capture_enemy_town_use_all_camp);
+	visit<int32_t>(v, &nat->ai_last_defend_action_date);
+	visit<int16_t>(v, &nat->ai_attack_target_x_loc);
+	visit<int16_t>(v, &nat->ai_attack_target_y_loc);
+	visit<int16_t>(v, &nat->ai_attack_target_nation_recno);
 
 	for (int n = 0; n < MAX_SUITABLE_ATTACK_CAMP; n++)
-		read_attack_camp(&r, &v1n->attack_camp_array[n]);
+		visit_attack_camp(v, &nat->attack_camp_array[n]);
 
-	r.read<int16_t>(&v1n->attack_camp_count);
-	r.read<int16_t>(&v1n->lead_attack_camp_recno);
-
-	return r.good();
+	visit<int16_t>(v, &nat->attack_camp_count);
+	visit<int16_t>(v, &nat->lead_attack_camp_recno);
 }
 
 static bool read_nation(File *file, Nation *nat)
 {
 	FileReader r;
+	FileReaderVisitor v(&r);
 
 	if (!r.init(file))
 		return false;
 
-	r.skip(2); /* record size */
-	r.skip(4); /* virtual table pointer */
-
-	/* NationBase */
-	r.read<int16_t>(&nat->nation_recno);
-	r.read<int8_t>(&nat->nation_type);
-	r.read<int8_t>(&nat->race_id);
-	r.read<int8_t>(&nat->color_scheme_id);
-	r.read<int8_t>(&nat->nation_color);
-	r.read<int16_t>(&nat->king_unit_recno);
-	r.read<int8_t>(&nat->king_leadership);
-	r.read<int32_t>(&nat->nation_name_id);
-	r.read_array<int8_t>(nat->nation_name_str, Nation::NATION_NAME_LEN+1);
-	r.read<uint32_t>(&nat->player_id);
-	r.read<int8_t>(&nat->next_frame_ready);
-	r.read<int16_t>(&nat->last_caravan_id);
-	r.read<int16_t>(&nat->nation_firm_count);
-	r.read<int32_t>(&nat->last_build_firm_date);
-	r.read_array<int8_t>(nat->know_base_array, MAX_RACE);
-	r.read_array<int8_t>(nat->base_count_array, MAX_RACE);
-	r.read<int8_t>(&nat->is_at_war_today);
-	r.read<int8_t>(&nat->is_at_war_yesterday);
-	r.read<int32_t>(&nat->last_war_date);
-	r.read<int16_t>(&nat->last_attacker_unit_recno);
-	r.read<int32_t>(&nat->last_independent_unit_join_date);
-	r.read<int8_t>(&nat->cheat_enabled_flag);
-	r.read<float>(&nat->cash);
-	r.read<float>(&nat->food);
-	r.read<float>(&nat->reputation);
-	r.read<float>(&nat->kill_monster_score);
-	r.read<int16_t>(&nat->auto_collect_tax_loyalty);
-	r.read<int16_t>(&nat->auto_grant_loyalty);
-	r.read<float>(&nat->cur_year_profit);
-	r.read<float>(&nat->last_year_profit);
-	r.read<float>(&nat->cur_year_fixed_income);
-	r.read<float>(&nat->last_year_fixed_income);
-	r.read<float>(&nat->cur_year_fixed_expense);
-	r.read<float>(&nat->last_year_fixed_expense);
-	r.read_array<float>(nat->cur_year_income_array, INCOME_TYPE_COUNT);
-	r.read_array<float>(nat->last_year_income_array, INCOME_TYPE_COUNT);
-	r.read<float>(&nat->cur_year_income);
-	r.read<float>(&nat->last_year_income);
-	r.read_array<float>(nat->cur_year_expense_array, EXPENSE_TYPE_COUNT);
-	r.read_array<float>(nat->last_year_expense_array, EXPENSE_TYPE_COUNT);
-	r.read<float>(&nat->cur_year_expense);
-	r.read<float>(&nat->last_year_expense);
-	r.read<float>(&nat->cur_year_cheat);
-	r.read<float>(&nat->last_year_cheat);
-	r.read<float>(&nat->cur_year_food_in);
-	r.read<float>(&nat->last_year_food_in);
-	r.read<float>(&nat->cur_year_food_out);
-	r.read<float>(&nat->last_year_food_out);
-	r.read<float>(&nat->cur_year_food_change);
-	r.read<float>(&nat->last_year_food_change);
-	r.read<float>(&nat->cur_year_reputation_change);
-	r.read<float>(&nat->last_year_reputation_change);
-
-	for (int n = 0; n < MAX_NATION; n++)
-		read_nation_relation(&r, &nat->relation_array[n]);
-
-	r.read_array<int8_t>(nat->relation_status_array, MAX_NATION);
-	r.read_array<int8_t>(nat->relation_passable_array, MAX_NATION);
-	r.read_array<int8_t>(nat->relation_should_attack_array, MAX_NATION);
-	r.read<int8_t>(&nat->is_allied_with_player);
-	r.read<int32_t>(&nat->total_population);
-	r.read<int32_t>(&nat->total_jobless_population);
-	r.read<int32_t>(&nat->total_unit_count);
-	r.read<int32_t>(&nat->total_human_count);
-	r.read<int32_t>(&nat->total_general_count);
-	r.read<int32_t>(&nat->total_weapon_count);
-	r.read<int32_t>(&nat->total_ship_count);
-	r.read<int32_t>(&nat->total_firm_count);
-	r.read<int32_t>(&nat->total_spy_count);
-	r.read<int32_t>(&nat->total_ship_combat_level);
-	r.read<int16_t>(&nat->largest_town_recno);
-	r.read<int16_t>(&nat->largest_town_pop);
-	r.read_array<int16_t>(nat->raw_count_array, MAX_RAW);
-	r.read_array<int16_t>(nat->last_unit_name_id_array, MAX_UNIT_TYPE);
-	r.read<int32_t>(&nat->population_rating);
-	r.read<int32_t>(&nat->military_rating);
-	r.read<int32_t>(&nat->economic_rating);
-   r.read<int32_t>(&nat->overall_rating);
-	r.read<int32_t>(&nat->enemy_soldier_killed);
-	r.read<int32_t>(&nat->own_soldier_killed);
-	r.read<int32_t>(&nat->enemy_civilian_killed);
-	r.read<int32_t>(&nat->own_civilian_killed);
-	r.read<int32_t>(&nat->enemy_weapon_destroyed);
-	r.read<int32_t>(&nat->own_weapon_destroyed);
-	r.read<int32_t>(&nat->enemy_ship_destroyed);
-	r.read<int32_t>(&nat->own_ship_destroyed);
-	r.read<int32_t>(&nat->enemy_firm_destroyed);
-	r.read<int32_t>(&nat->own_firm_destroyed);
-
-	/* Nation */
-	r.skip(29); /* action_array */
-
-	r.read<uint16_t>(&nat->last_action_id);
-	r.read(&nat->ai_town_array);
-	r.read(&nat->ai_base_array);
-	r.read(&nat->ai_mine_array);
-	r.read(&nat->ai_factory_array);
-	r.read(&nat->ai_camp_array);
-	r.read(&nat->ai_research_array);
-	r.read(&nat->ai_war_array);
-	r.read(&nat->ai_harbor_array);
-	r.read(&nat->ai_market_array);
-	r.read(&nat->ai_inn_array);
-	r.read(&nat->ai_general_array);
-	r.read(&nat->ai_caravan_array);
-	r.read(&nat->ai_ship_array);
-	r.read<int16_t>(&nat->ai_town_size);
-	r.read<int16_t>(&nat->ai_base_size);
-	r.read<int16_t>(&nat->ai_mine_size);
-	r.read<int16_t>(&nat->ai_factory_size);
-	r.read<int16_t>(&nat->ai_camp_size);
-	r.read<int16_t>(&nat->ai_research_size);
-	r.read<int16_t>(&nat->ai_war_size);
-	r.read<int16_t>(&nat->ai_harbor_size);
-	r.read<int16_t>(&nat->ai_market_size);
-	r.read<int16_t>(&nat->ai_inn_size);
-	r.read<int16_t>(&nat->ai_general_size);
-	r.read<int16_t>(&nat->ai_caravan_size);
-	r.read<int16_t>(&nat->ai_ship_size);
-	r.read<int16_t>(&nat->ai_town_count);
-	r.read<int16_t>(&nat->ai_base_count);
-	r.read<int16_t>(&nat->ai_mine_count);
-	r.read<int16_t>(&nat->ai_factory_count);
-	r.read<int16_t>(&nat->ai_camp_count);
-	r.read<int16_t>(&nat->ai_research_count);
-	r.read<int16_t>(&nat->ai_war_count);
-	r.read<int16_t>(&nat->ai_harbor_count);
-	r.read<int16_t>(&nat->ai_market_count);
-	r.read<int16_t>(&nat->ai_inn_count);
-	r.read<int16_t>(&nat->ai_general_count);
-	r.read<int16_t>(&nat->ai_caravan_count);
-	r.read<int16_t>(&nat->ai_ship_count);
-	r.read<int16_t>(&nat->ai_base_town_count);
-	r.read_array<int16_t>(nat->firm_should_close_array, MAX_FIRM_TYPE);
-	
-	for (int n = 0; n < MAX_AI_REGION; n++)
-		read_ai_region(&r, &nat->ai_region_array[n]);
-
-	r.read<int8_t>(&nat->ai_region_count);
-	r.read<int8_t>(&nat->pref_force_projection);
-	r.read<int8_t>(&nat->pref_military_development);
-	r.read<int8_t>(&nat->pref_economic_development);
-	r.read<int8_t>(&nat->pref_inc_pop_by_capture);
-	r.read<int8_t>(&nat->pref_inc_pop_by_growth);
-	r.read<int8_t>(&nat->pref_peacefulness);
-	r.read<int8_t>(&nat->pref_military_courage);
-	r.read<int8_t>(&nat->pref_territorial_cohesiveness);
-	r.read<int8_t>(&nat->pref_trading_tendency);
-	r.read<int8_t>(&nat->pref_allying_tendency);
-	r.read<int8_t>(&nat->pref_honesty);
-	r.read<int8_t>(&nat->pref_town_harmony);
-	r.read<int8_t>(&nat->pref_loyalty_concern);
-	r.read<int8_t>(&nat->pref_forgiveness);
-	r.read<int8_t>(&nat->pref_collect_tax);
-	r.read<int8_t>(&nat->pref_hire_unit);
-	r.read<int8_t>(&nat->pref_use_weapon);
-	r.read<int8_t>(&nat->pref_keep_general);
-	r.read<int8_t>(&nat->pref_keep_skilled_unit);
-	r.read<int8_t>(&nat->pref_diplomacy_retry);
-	r.read<int8_t>(&nat->pref_attack_monster);
-	r.read<int8_t>(&nat->pref_spy);
-	r.read<int8_t>(&nat->pref_counter_spy);
-	r.read<int8_t>(&nat->pref_food_reserve);
-	r.read<int8_t>(&nat->pref_cash_reserve);
-	r.read<int8_t>(&nat->pref_use_marine);
-	r.read<int8_t>(&nat->pref_unit_chase_distance);
-	r.read<int8_t>(&nat->pref_repair_concern);
-	r.read<int8_t>(&nat->pref_scout);
-	r.read<int16_t>(&nat->ai_capture_enemy_town_recno);
-	r.read<int32_t>(&nat->ai_capture_enemy_town_plan_date);
-	r.read<int32_t>(&nat->ai_capture_enemy_town_start_attack_date);
-	r.read<int8_t>(&nat->ai_capture_enemy_town_use_all_camp);
-	r.read<int32_t>(&nat->ai_last_defend_action_date);
-	r.read<int16_t>(&nat->ai_attack_target_x_loc);
-	r.read<int16_t>(&nat->ai_attack_target_y_loc);
-	r.read<int16_t>(&nat->ai_attack_target_nation_recno);
-
-	for (int n = 0; n < MAX_SUITABLE_ATTACK_CAMP; n++)
-		read_attack_camp(&r, &nat->attack_camp_array[n]);
-
-	r.read<int16_t>(&nat->attack_camp_count);
-	r.read<int16_t>(&nat->lead_attack_camp_recno);
+	visit_nation(&v, nat);
+	memset(&nat->action_array, 0, sizeof(nat->action_array)); /* XXX */
 
 	return r.good();
 }
