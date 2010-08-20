@@ -39,13 +39,17 @@ public:
    bool good() const;
    bool skip(size_t len);
 
-   template <typename T>
-   bool read(T *v)
+   template <typename FileT, typename MemT>
+   bool read(MemT *v)
    {
+      FileT val;
+
       if (!this->ok)
 	 return false;
 
-      if (!read_le(&this->is, v))
+      if (read_le(&this->is, &val))
+	 *v = val;
+      else
 	 this->ok = false;
 
       return this->ok;
@@ -56,7 +60,7 @@ public:
    {
       uint32_t p;
 
-      if (!this->read(&p))
+      if (!this->read<uint32_t>(&p))
 	 return false;
 
       if (p != 0)
@@ -67,12 +71,12 @@ public:
       return true;
    }
 
-   template <typename T>
-   bool read_array(T *array, size_t len)
+   template <typename FileT, typename MemT>
+   bool read_array(MemT *array, size_t len)
    {
       for (size_t n = 0; n < len; n++)
       {
-	 if (!this->read(&array[n]))
+	 if (!this->read<FileT>(&array[n]))
 	    break;
       }
 

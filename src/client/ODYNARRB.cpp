@@ -221,23 +221,21 @@ int DynArrayB::write_file(File* filePtr)
 int DynArrayB::read_file(File* filePtr)
 {
 	FileReader r;
-	uint16_t u16;
-	uint32_t u32;
 
 	if (!r.init(filePtr))
 		return 0;
 
-	r.read(&u16); /* record size */
+	r.skip(2); /* record size */
 
 	/* DynArray */
-   r.read(&this->ele_num);
-   r.read(&this->block_num);
-   r.read(&this->cur_pos);
-   r.read(&this->last_ele);
-   r.read(&this->ele_size);
-   r.read(&this->sort_offset);
-   r.read(&this->sort_type);
-	r.read(&u32); /* body_buf pointer */
+   r.read<int32_t>(&this->ele_num);
+   r.read<int32_t>(&this->block_num);
+   r.read<int32_t>(&this->cur_pos);
+   r.read<int32_t>(&this->last_ele);
+   r.read<int32_t>(&this->ele_size);
+   r.read<int32_t>(&this->sort_offset);
+   r.read<int8_t>(&this->sort_type);
+	r.skip(4); /* this->body_buf */
 
 	/* Not reading DynArrayB members */
 
