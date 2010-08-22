@@ -1406,3 +1406,19 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, 
 	return retFlag && retFlag2;
 }
 // ------ End of MouseSDL::is_key -------//
+
+
+// ------ Begin of MouseDInput::disp_count_start -------//
+void MouseSDL::disp_count_start()
+{
+	// unimplemented
+}
+// ------ End of MouseDInput::disp_count_start -------//
+
+
+// ------ Begin of MouseDInput::disp_count_end -------//
+void MouseSDL::disp_count_end()
+{
+	// unimplemented
+}
+// ------ End of MouseDInput::disp_count_end -------//

@@ -67,34 +67,12 @@ VgaCustomPalette::~VgaCustomPalette()
 
 MouseDispCount::MouseDispCount()
 {
-	// set cursor position
-	SetCursorPos( mouse.cur_x, mouse.cur_y);
-
-	// show cursor
-	mouse.hide();
-	// #### patch begin Gilbert 9/1 #######//
-	vga_front.temp_unlock();
-	// #### patch end Gilbert 9/1 #######//
-	ShowCursor(TRUE);
+	mouse.disp_count_start();
 }
 
 MouseDispCount::~MouseDispCount()
 {
-	// set cursor position
-	POINT winMousePos;
-	GetCursorPos(&winMousePos);
-	mouse.cur_x = winMousePos.x;
-	mouse.cur_y = winMousePos.y;
-
-	// hide cursor
-	ShowCursor(FALSE);
-	// #### patch begin Gilbert 9/1 #######//
-	vga_front.temp_restore_lock();
-	// #### patch end Gilbert 9/1 #######//
-	mouse.show();
-	int ev = mouse.get_event();
-	ev = mouse.get_event();
-
+	mouse.disp_count_end();
 }
 #endif //USE_DPLAY
 

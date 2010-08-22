@@ -1754,3 +1754,40 @@ int MouseDInput::is_key(unsigned scanCode, unsigned short skeyState, char *keySt
 	return retFlag && retFlag2;
 }
 // ------ End of MouseDInput::is_key -------//
+
+
+// ------ Begin of MouseDInput::disp_count_start -------//
+void MouseDInput::disp_count_start()
+{
+	// set cursor position
+	SetCursorPos(cur_x, cur_y);
+
+	// show cursor
+	hide();
+	// #### patch begin Gilbert 9/1 #######//
+	vga_front.temp_unlock();
+	// #### patch end Gilbert 9/1 #######//
+	ShowCursor(TRUE);
+}
+// ------ End of MouseDInput::disp_count_start -------//
+
+
+// ------ Begin of MouseDInput::disp_count_end -------//
+void MouseDInput::disp_count_end()
+{
+	// set cursor position
+	POINT winMousePos;
+	GetCursorPos(&winMousePos);
+	cur_x = winMousePos.x;
+	cur_y = winMousePos.y;
+
+	// hide cursor
+	ShowCursor(FALSE);
+	// #### patch begin Gilbert 9/1 #######//
+	vga_front.temp_restore_lock();
+	// #### patch end Gilbert 9/1 #######//
+	show();
+	int ev = get_event();
+	ev = get_event();
+}
+// ------ End of MouseDInput::disp_count_end -------//
