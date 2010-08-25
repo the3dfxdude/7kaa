@@ -37,20 +37,20 @@ public:
 	RemoteQueue(RemoteQueue &);
 	~RemoteQueue();
 
-	int	validate_queue(int start=0);
+	int	validate_queue(int start=0); // start = offset from buffer beginning in bytes
 };
 
 class RemoteQueueTraverse
 {
 public:
 	RemoteQueue &remote_queue;
-	int	offset;
+	int	offset; // offset measured in bytes, not messages
 
 public:
-	RemoteQueueTraverse( RemoteQueue &rq, int start=0 );
+	RemoteQueueTraverse( RemoteQueue &rq, int start=0 ); // offset = start
 
-	void	traverse_set_start(int=0);
-	int	traverse_finish();
+	void	traverse_set_start(int offset=0); // offset measured in bytes, not messages
+	bool	traverse_finish(); // checks if we've reached the end of queue
 	void	traverse_next();
 	RemoteMsg *get_remote_msg(short *msgLen=NULL);
 };

@@ -25,6 +25,7 @@
 #include <OREMOTEQ.h>
 #include <OREMOTE.h>
 
+
 // structure of queue_buf in RemoteQueue :
 // <1st message length (short), not including this 2 bytes> <1st message content>
 // <2nd message length> <2nd message content> ...
@@ -90,7 +91,7 @@ void RemoteQueueTraverse::traverse_set_start(int start)
 
 
 // ------- begin of function RemoteQueueTraverse::traverse_finish -------//
-int RemoteQueueTraverse::traverse_finish()
+bool RemoteQueueTraverse::traverse_finish()
 {
 	return offset >= remote_queue.queued_size;
 }
