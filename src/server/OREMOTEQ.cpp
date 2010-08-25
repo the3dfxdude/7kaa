@@ -51,61 +51,6 @@ RemoteQueue::~RemoteQueue()
 }
 // ------- end of function RemoteQueue::~RemoteQueue -------//
 
-/*
-//
-// try not to use RemoteQueue::traverse_set_start,
-// RemoteQueue::traverse_finish and RemoteQueue::traverse_next
-// use RemoteQueueTraverse::traverse_set_start instead
-// see RemoteQueue::validate to see how to use RemoteQueueTraverse
-//
-// ------- begin of function RemoteQueue::traverse_set_start -------//
-void RemoteQueue::traverse_set_start(int start)
-{
-	queue_ptr = queue_buf + start;
-}
-// ------- end of function RemoteQueue::traverse_set_start -------//
-
-
-// ------- begin of function RemoteQueue::traverse_finish -------//
-int RemoteQueue::traverse_finish()
-{
-	err_when( (unsigned)queue_ptr < (unsigned)queue_buf ); 
-	return queue_ptr - queue_buf >= queued_size;
-}
-// ------- end of function RemoteQueue::traverse_finish -------//
-
-
-// ------- begin of function RemoteQueue::traverse_next -------//
-// queue_ptr points to the message length
-void RemoteQueue::traverse_next()
-{
-	err_when( queue_ptr - queue_buf >= queued_size );
-	err_when( *(unsigned short *)queue_ptr >= 0x8000 );
-	queue_ptr += *(unsigned short *)queue_ptr + sizeof(unsigned short);	// skip the message length as well
-}
-// ------- end of function RemoteQueue::traverse_next -------//
-
-
-// ------- begin of function RemoteQueue::get_remote_msg -------//
-RemoteMsg *RemoteQueue::get_remote_msg(short *msgLen)
-{
-	if( traverse_finish() )
-	{
-		if(msgLen)
-			msgLen = 0;
-		return NULL;
-	}
-	else
-	{
-		char *ptr1 = queue_ptr + sizeof(short);
-		if(msgLen)
-			msgLen = (short *)queue_ptr;
-		return (RemoteMsg *)ptr1;
-	}
-}
-// ------- end of function RemoteQueue::get_remote_msg -------//
-*/
-
 // ------- begin of function RemoteQueue::validate_queue -------//
 int RemoteQueue::validate_queue(int start)
 {

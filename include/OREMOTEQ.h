@@ -37,13 +37,6 @@ public:
 	RemoteQueue(RemoteQueue &);
 	~RemoteQueue();
 
-	// try to create RemoteQueueTraverse for traversal
-	// instead of using these three functions
-	void	traverse_set_start(int=0);
-	int	traverse_finish();
-	void	traverse_next();
-	RemoteMsg *get_remote_msg(short *msgLen=NULL);
-
 	int	validate_queue(int start=0);
 };
 
@@ -63,3 +56,4 @@ public:
 };
 
 #endif
+
