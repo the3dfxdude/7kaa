@@ -127,21 +127,38 @@ public:
 namespace FileIOVisitor
 {
    template <typename FileT, typename MemT, typename Visitor>
-   static bool visit(Visitor *vis, MemT *val)
+   bool visit(Visitor *vis, MemT *val)
    {
       return vis->template visit<FileT, MemT>(val);
    }
 
    template <typename FileT, typename MemT, typename Visitor>
-   static bool visit_array(Visitor *vis, MemT *array, size_t len)
+   bool visit_array(Visitor *vis, MemT *array, size_t len)
    {
       return vis->template visit_array<FileT, MemT>(array, len);
    }
 
    template <typename T, typename Visitor>
-   static bool visit_pointer(Visitor *vis, T **ptr)
+   bool visit_pointer(Visitor *vis, T **ptr)
    {
       return vis->template visit(ptr);
+   }
+
+   template <typename T, typename VisitFunc>
+   bool write_with_record_size(File *file, T *obj, VisitFunc visit_obj,
+			       uint16_t rec_size)
+   {
+      FileWriter w;
+      FileWriterVisitor v;
+
+      if (!w.init(file))
+	 return 0;
+
+      w.write_record_size(rec_size);
+      v.init(&w);
+      visit_obj(&v, obj);
+
+      return w.good();
    }
 } /* namespace FileIOVisitor */
 

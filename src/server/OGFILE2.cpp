@@ -1238,17 +1238,9 @@ static void visit_config(Visitor *v, Config *cfg)
 //
 int Config::write_file(File* filePtr)
 {
-	FileWriter w;
-	FileWriterVisitor v;
-
-	if (!w.init(filePtr))
-		return 0;
-
-	w.write_record_size(144);
-	v.init(&w);
-	visit_config(&v, this);
-
-	return w.good();
+	return write_with_record_size(filePtr, this,
+											&visit_config<FileWriterVisitor>,
+											144);
 }
 //--------- End of function Config::write_file ---------------//
 
