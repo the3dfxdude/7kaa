@@ -35,7 +35,6 @@ public:
    ~FileReader();
    bool init(File *file);
    void deinit();
-   bool read(void *buf, size_t len);
    bool good() const;
    bool skip(size_t len);
 

@@ -18,9 +18,6 @@
  *
  */
 #include <file_reader.h>
-#include <dbglog.h>
-
-DBGLOG_DEFAULT_CHANNEL(FileReader);
 
 FileReader::FileReader()
 {
@@ -37,7 +34,7 @@ bool FileReader::init(File *file)
 {
    this->deinit();
 
-   if (!this->is.open (file, false))
+   if (!this->is.open(file, false))
       return false;
 
    this->file = file;
@@ -48,7 +45,6 @@ bool FileReader::init(File *file)
    if (this->file->file_type != File::FLAT)
       this->file->file_type = File::FLAT;
 
-   MSG("init() at 0x%lx\n", this->is.tell());
    return true;
 }
 
@@ -57,22 +53,9 @@ void FileReader::deinit()
    if (this->file == NULL)
       return;
 
-   MSG("deinit() at 0x%lx\n", this->is.tell());
-
    this->file->file_type = this->original_type;
    this->is.close();
    this->file = NULL;
-}
-
-bool FileReader::read(void *buf, size_t len)
-{
-   if (!this->ok)
-      return false;
-
-   if (this->is.read(buf, len) != len)
-      this->ok = false;
-
-   return this->ok;
 }
 
 bool FileReader::good() const
