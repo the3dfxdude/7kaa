@@ -21,6 +21,7 @@
 #define FILE_IO_VISITOR_H
 
 #include <file_reader.h>
+#include <file_writer.h>
 
 class FileReaderVisitor
 {
@@ -69,6 +70,57 @@ public:
    bool visit_array(MemT *array, size_t len)
    {
       return this->reader->read_array<FileT, MemT>(array, len);
+   }
+};
+
+
+class FileWriterVisitor
+{
+protected:
+   FileWriter *writer;
+
+public:
+   FileWriterVisitor()
+   {
+      this->writer = NULL;
+   }
+
+   ~FileWriterVisitor()
+   {
+      this->deinit();
+   }
+
+   void init(FileWriter *writer)
+   {
+      this->writer = writer;
+   }
+
+   void deinit()
+   {
+      this->writer = NULL;
+   }
+
+   bool skip(size_t len)
+   {
+      return this->writer->skip(len);
+   }
+
+   template <typename FileT, typename MemT>
+   bool visit(MemT *v)
+   {
+      return this->writer->write<FileT, MemT>(*v);
+   }
+
+   template <typename T>
+   bool visit(T **v)
+   {
+      return this->writer->write<T>(*v);
+   }
+
+   template <typename FileT, typename MemT>
+   bool visit_array(MemT *array, size_t len)
+   {
+      return this->writer->write_array<FileT, MemT>(array, len);
    }
 };
 
