@@ -42,7 +42,7 @@ bool read_le_integer(InputStream *is, T *valp)
 
    for (int n = 0; n < static_cast<int>(sizeof(T)); n++)
    {
-      if (!is->read(&c, 1))
+      if (is->read(&c, 1) != 1)
 	 return false;
 
       val |= static_cast<T>(c) << (8 * n);
@@ -62,4 +62,5 @@ bool read_le(InputStream *is, T *valp)
 template <> bool read_le<float>(InputStream *is, float *valp);
 template <> bool read_le<double>(InputStream *is, double *valp);
 
+/* vim: set ts=8 sw=3: */
 #endif
