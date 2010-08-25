@@ -25,6 +25,7 @@
 #define __OSYS_H
 
 #include <ALL.h>
+#include <stdint.h>
 
 //------ Define common data buffer size  ------//
 
@@ -99,14 +100,14 @@ public:
 	//------ frame related vars -----//
 
 	int 		day_frame_count;
-	DWORD		next_frame_time;		// next frame's time for maintaining a specific game speed
+	uint32_t	next_frame_time;		// next frame's time for maintaining a specific game speed
 
 	//----- multiplayer vars ----//
 
-	DWORD 	frame_count;  			// frame count, for is_sync_frame only
+	uint32_t 	frame_count;  			// frame count, for is_sync_frame only
 	char		is_sync_frame;			// whether sync should take place at the current frame (for handling one sync per n frames)
 	char		mp_save_flag;			// indicate a request to save game in multi-player game
-	DWORD		mp_save_frame;			// save game in which frame
+	uint32_t	mp_save_frame;			// save game in which frame
 
 	//---- continous key string -----//
 
@@ -116,7 +117,7 @@ public:
 
 	//-------- statistic --------//
 
-	DWORD		last_second_time;
+	uint32_t	last_second_time;
 	int		frames_in_this_second;
 	int	 	frames_per_second;   // the actual frames per second
 

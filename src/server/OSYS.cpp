@@ -84,6 +84,7 @@
 // ##### end Gilbert 23/10 ######//
 
 #include <dbglog.h>
+#include <stdint.h>
 
 DBGLOG_DEFAULT_CHANNEL(Sys);
 
@@ -681,7 +682,7 @@ void Sys::main_loop(int isLoadedGame)
          {
 #ifdef USE_DPLAY
             // packet structure : <player nation> <explored nation>
-            short *shortPtr = (short *)remote.new_send_queue_msg(MSG_NATION_CONTACT, 2*sizeof(short));
+            int16_t *shortPtr = (int16_t *)remote.new_send_queue_msg(MSG_NATION_CONTACT, 2*sizeof(int16_t));
             *shortPtr = nation_array.player_recno;
             shortPtr[1] = nationRecno;
 #endif
@@ -695,11 +696,11 @@ void Sys::main_loop(int isLoadedGame)
    // #### end Gilbert 23/10 #######//
 
    // ##### begin Gilbert 4/11 ######//
-   DWORD lastDispFrameTime = m.get_time();
+   uint32_t lastDispFrameTime = m.get_time();
    // ##### end Gilbert 4/11 ######//
 
 	// ##### patch begin Gilbert 17/11 #######//
-	DWORD firstUnreadyTime = 0;
+	uint32_t firstUnreadyTime = 0;
 	// ##### patch end Gilbert 17/11 #######//
 
    while( 1 )
@@ -721,7 +722,7 @@ void Sys::main_loop(int isLoadedGame)
          //--------------------------------//
 
          // ###### begin Gilbert 4/11 ######//
-         DWORD markTime = m.get_time();      // a time taken earlier than should_next_frame takes
+         uint32_t markTime = m.get_time();      // a time taken earlier than should_next_frame takes
          // ###### end Gilbert 4/11 ######//
 
 			// ##### patch begin Gilbert 17/11 #######//
@@ -795,7 +796,7 @@ void Sys::main_loop(int isLoadedGame)
 					firstUnreadyTime = m.get_time();
 				// ####### patch end Gilbert 17/11 ######//
 
-            if( config.frame_speed == 0 || markTime-lastDispFrameTime >= DWORD(1000/config.frame_speed) 
+            if( config.frame_speed == 0 || markTime-lastDispFrameTime >= uint32_t(1000/config.frame_speed)
 #ifdef AMPLUS
 					|| zoom_need_redraw || map_need_redraw
 #endif
@@ -1451,7 +1452,7 @@ int Sys::should_next_frame()
 
    //---- check if it's now the time for processing the next frame ----//
 
-   DWORD curTime = m.get_time();
+   uint32_t curTime = m.get_time();
 
    if( next_frame_time )      // if next_frame_time==0, it's the first frame of the game
    {
