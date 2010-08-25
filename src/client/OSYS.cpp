@@ -696,10 +696,14 @@ void Sys::main_loop(int isLoadedGame)
    // #### end Gilbert 23/10 #######//
 
    // ##### begin Gilbert 4/11 ######//
+   // time the screen was redrawn last time
+   // (despite the name, this time may differ from last frame's time)
    uint32_t lastDispFrameTime = m.get_time();
    // ##### end Gilbert 4/11 ######//
 
 	// ##### patch begin Gilbert 17/11 #######//
+	// used to determine, if there are players who are
+	// unable to send their frames for a too long time
 	uint32_t firstUnreadyTime = 0;
 	// ##### patch end Gilbert 17/11 #######//
 
@@ -722,7 +726,11 @@ void Sys::main_loop(int isLoadedGame)
          //--------------------------------//
 
          // ###### begin Gilbert 4/11 ######//
-         uint32_t markTime = m.get_time();      // a time taken earlier than should_next_frame takes
+         // Time taken at the beginning of new loop iteration. It's important,
+         // that it's taken _before_ 'should_next_frame'. This variable is
+         // further used to determine how many time passed since screen was
+         // redrawn last time.
+         uint32_t markTime = m.get_time();
          // ###### end Gilbert 4/11 ######//
 
 			// ##### patch begin Gilbert 17/11 #######//
@@ -755,7 +763,7 @@ void Sys::main_loop(int isLoadedGame)
                }
 #endif
 
-               process();
+               process(); // also calls 'disp_frame()'
 
 #ifdef USE_DPLAY
                if(remote.is_enable() )
@@ -796,20 +804,23 @@ void Sys::main_loop(int isLoadedGame)
 					firstUnreadyTime = m.get_time();
 				// ####### patch end Gilbert 17/11 ######//
 
+            // although it's not time for new frame, check
+            // if we still need to redraw the screen
             if( config.frame_speed == 0 || markTime-lastDispFrameTime >= uint32_t(1000/config.frame_speed)
 #ifdef AMPLUS
 					|| zoom_need_redraw || map_need_redraw
 #endif
 					)
             {
-               // on second condition, it should be happened when
-               // in multiplayer, where should_next_frame passed
-               // but is_mp_sync not passed
+               // second condition (markTime-lastDispFrameTime >= DWORD(1000/config.frame_speed) )
+               // may happen in multiplayer, where 'should_next_frame' would pass (what means it's time
+               // to process new frame according to config.frame_speed), but 'is_mp_sync' still failed.
                disp_frame();
                lastDispFrameTime = markTime;
 
 					// ####### patch begin Gilbert 17/11 ######//
-					// display player not ready
+					// If somebody is not ready for more than five seconds
+					// (may to happen in multiplayer), display info message
 					if( firstUnreadyTime && m.get_time() - firstUnreadyTime > 5000 )
 					{
 						int y = ZOOM_Y1 + 10;
