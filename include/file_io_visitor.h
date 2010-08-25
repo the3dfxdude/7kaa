@@ -20,7 +20,7 @@
 #ifndef FILE_IO_VISITOR_H
 #define FILE_IO_VISITOR_H
 
-#include "file_reader.h"
+#include <file_reader.h>
 
 class FileReaderVisitor
 {
@@ -71,6 +71,27 @@ public:
       return this->reader->read_array<FileT, MemT>(array, len);
    }
 };
+
+namespace FileIOVisitor
+{
+   template <typename FileT, typename MemT, typename Visitor>
+   static bool visit(Visitor *vis, MemT *val)
+   {
+      return vis->template visit<FileT, MemT>(val);
+   }
+
+   template <typename FileT, typename MemT, typename Visitor>
+   static bool visit_array(Visitor *vis, MemT *array, size_t len)
+   {
+      return vis->template visit_array<FileT, MemT>(array, len);
+   }
+
+   template <typename T, typename Visitor>
+   static bool visit_pointer(Visitor *vis, T **ptr)
+   {
+      return vis->template visit(ptr);
+   }
+} /* namespace FileIOVisitor */
 
 /* vim: set ts=8 sw=3: */
 #endif

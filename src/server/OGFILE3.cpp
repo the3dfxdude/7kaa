@@ -45,6 +45,8 @@
 
 #include <OGF_V1.h>
 
+using namespace FileIOVisitor;
+
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 //------- declare static functions -------//
@@ -242,24 +244,6 @@ int Unit::write_file(File* filePtr)
    return 1;
 }
 //----------- End of function Unit::write_file ---------//
-
-template <typename FileT, typename MemT, typename Visitor>
-static bool visit(Visitor *vis, MemT *val)
-{
-	return vis->template visit<FileT, MemT>(val);
-}
-
-template <typename FileT, typename MemT, typename Visitor>
-static bool visit_array(Visitor *vis, MemT *array, size_t len)
-{
-	return vis->template visit_array<FileT, MemT>(array, len);
-}
-
-template <typename T, typename Visitor>
-static bool visit_pointer(Visitor *vis, T **ptr)
-{
-	return vis->template visit(ptr);
-}
 
 template <typename Visitor>
 static void visit_sprite(Visitor *v, Sprite *s)
