@@ -42,6 +42,7 @@ file_reader.cpp
 file_util.cpp
 input_stream.cpp
 mem_input_stream.cpp
+output_stream.cpp
 );
 build_targets(\@targets, \@includes, \@defines);
 ## end compile ##
