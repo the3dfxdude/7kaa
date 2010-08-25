@@ -25,6 +25,7 @@
 #include <OREMOTEQ.h>
 #include <OREMOTE.h>
 #include <dbglog.h>
+#include <stdint.h>
 
 DBGLOG_DEFAULT_CHANNEL(Network);
 
@@ -109,27 +110,25 @@ void RemoteQueueTraverse::traverse_next()
 		return;
 	}
 
-	unsigned short msgLen = *(unsigned short *)(remote_queue.queue_buf + offset);
+	uint16_t msgLen = *(uint16_t *)(remote_queue.queue_buf + offset);
 
 	if (msgLen >= 0x8000) {
 		ERR("[RemoteQueueTraverse::traverse_next] invalid message length\n");
 		return;
 	}
 
-	offset +=  msgLen + sizeof(unsigned short);
+	offset +=  msgLen + sizeof(uint16_t);
 }
 // ------- end of function RemoteQueueTraverse::traverse_next -------//
 
 
 // ------- begin of function RemoteQueueTraverse::get_remote_msg -------//
-RemoteMsg *RemoteQueueTraverse::get_remote_msg(short *msgLen)
+RemoteMsg *RemoteQueueTraverse::get_remote_msg(uint16_t * msgLen)
 {
 	char *retPtr = remote_queue.queue_buf + offset;
-	if( msgLen )
-	{
-		*msgLen = *(unsigned short *)retPtr;
-	}
-	retPtr += sizeof(unsigned short);
+	if (msgLen) *msgLen = *(uint16_t *)retPtr;
+	retPtr += sizeof(uint16_t);
 	return (RemoteMsg *)retPtr;
 }
 // ------- end of function RemoteQueueTraverse::get_remote_msg -------//
+

@@ -26,6 +26,7 @@
 #define __OREMOTEQ_H
 
 #include <OVQUEUE.h>
+#include <stdint.h>
 
 struct RemoteMsg;
 
@@ -52,7 +53,7 @@ public:
 	void	traverse_set_start(int offset=0); // offset measured in bytes, not messages
 	bool	traverse_finish(); // checks if we've reached the end of queue
 	void	traverse_next();
-	RemoteMsg *get_remote_msg(short *msgLen=NULL);
+	RemoteMsg *get_remote_msg(uint16_t * msgLen = NULL);
 };
 
 #endif
