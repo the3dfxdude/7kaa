@@ -1150,14 +1150,6 @@ int Game::read_file(File* filePtr)
 
 //***//
 
-//-------- Start of function Config::write_file -------------//
-//
-int Config::write_file(File* filePtr)
-{
-	return filePtr->file_write( this, sizeof(Config) );
-}
-//--------- End of function Config::write_file ---------------//
-
 template <typename Visitor>
 static void visit_config(Visitor *v, Config *cfg)
 {
@@ -1241,6 +1233,24 @@ static void visit_config(Visitor *v, Config *cfg)
 	visit<int8_t>(v, &cfg->explore_mask_method);
 	visit<int8_t>(v, &cfg->fog_mask_method);
 }
+
+//-------- Start of function Config::write_file -------------//
+//
+int Config::write_file(File* filePtr)
+{
+	FileWriter w;
+	FileWriterVisitor v;
+
+	if (!w.init(filePtr))
+		return 0;
+
+	w.write_record_size(144);
+	v.init(&w);
+	visit_config(&v, this);
+
+	return w.good();
+}
+//--------- End of function Config::write_file ---------------//
 
 //-------- Start of function Config::read_file -------------//
 //
