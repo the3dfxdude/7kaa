@@ -24,10 +24,8 @@
 #include <ALL.h>
 #include <OREMOTEQ.h>
 #include <OREMOTE.h>
-#include <dbglog.h>
 #include <stdint.h>
 
-DBGLOG_DEFAULT_CHANNEL(Network);
 
 // structure of queue_buf in RemoteQueue :
 // <1st message length (short), not including this 2 bytes> <1st message content>
@@ -68,8 +66,7 @@ int RemoteQueue::validate_queue(int start)
 			if( remoteMsgPtr->id<FIRST_REMOTE_MSG_ID || remoteMsgPtr->id>LAST_REMOTE_MSG_ID )
 				return 0;
 		}
-
-		if (++loopCount > 200) ERR("[RemoteQueue::validate_queue] too many messages\n");
+		err_when( ++loopCount > 200 );
 	}
 
 	return 1;
@@ -105,18 +102,9 @@ bool RemoteQueueTraverse::traverse_finish()
 // ------- begin of function RemoteQueueTraverse::traverse_next -------//
 void RemoteQueueTraverse::traverse_next()
 {
-	if (traverse_finish()) {
-		ERR("[RemoteQueueTraverse::traverse_next] traverse out of bounds\n");
-		return;
-	}
-
+	err_when( traverse_finish() );
 	uint16_t msgLen = *(uint16_t *)(remote_queue.queue_buf + offset);
-
-	if (msgLen >= 0x8000) {
-		ERR("[RemoteQueueTraverse::traverse_next] invalid message length\n");
-		return;
-	}
-
+	err_when( msgLen >= 0x8000 );
 	offset +=  msgLen + sizeof(uint16_t);
 }
 // ------- end of function RemoteQueueTraverse::traverse_next -------//
