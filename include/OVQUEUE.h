@@ -28,26 +28,36 @@
 class VLenQueue
 {
 public:
-	char*	queue_buf;
-	int	queue_buf_size;
-	int	queued_size;
-	char* queue_ptr;
+
+	char * queue_buf;      // data ptr
+	int    queue_buf_size; // current buffer capacity
+	int    queued_size;    // bytes used
+	char * queue_ptr;      //
 
 public:
+
 	VLenQueue();
-	VLenQueue(int);
+	VLenQueue(int initial_capacity);
 	VLenQueue(VLenQueue &);
 	~VLenQueue();
 
 	VLenQueue& operator= (VLenQueue &);
 	void	clear();
-	char* reserve( int );
-	void	append_queue(VLenQueue &);
-	void	swap(VLenQueue &);
-	int	length();
+
+	// actually, this can be called 'resize' in terms of stl containers, except
+	// that it specifies _additional_ n elements (not total, like stl functions).
+	// additionally, it returns pointer to the _beginning_ of reserved space
+	char * reserve(int n);
+	void   append_queue(VLenQueue &);
+	void   swap(VLenQueue &);
+	int    length();
 
 private:
-	void	expand( int );
+
+	// actually, this can be called 'reserve' in terms of stl containers, except
+	// that it specifies _additional_ n elements (not total, like stl functions)
+	void   expand(int n);
 };
 
 #endif
+

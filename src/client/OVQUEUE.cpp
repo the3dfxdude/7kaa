@@ -33,10 +33,12 @@ VLenQueue::VLenQueue() : queue_buf(NULL), queue_buf_size(0), queued_size(0), que
 }
 
 
-VLenQueue::VLenQueue(int s) : queue_buf(mem_add(s)), queue_buf_size(s)
+VLenQueue::VLenQueue(int initial_capacity)
 {
+	queue_buf_size = initial_capacity;
 	queued_size = 0;
 	queue_ptr = NULL;
+	queue_buf = mem_add(initial_capacity);
 }
 
 
@@ -54,6 +56,11 @@ VLenQueue::~VLenQueue()
 {
 	if( queue_buf )
 		mem_del(queue_buf);
+
+	queue_buf = NULL;
+	queue_buf_size = 0;
+	queued_size = 0;
+	queue_ptr = NULL;
 }
 // -------- end of function VLenQueue::~VLenQueue ----------//
 
@@ -142,3 +149,4 @@ void VLenQueue::expand( int newSize)
 	}
 }
 // -------- end of function VLenQueue::expand ----------//
+
