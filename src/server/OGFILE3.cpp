@@ -243,31 +243,6 @@ int Unit::write_file(File* filePtr)
 }
 //----------- End of function Unit::write_file ---------//
 
-static void read_sprite(FileReader *r, Sprite *s)
-{
-	r->skip(4); /* virtual table pointer */
-
-	r->read<int16_t>(&s->sprite_id);
-	r->read<int16_t>(&s->sprite_recno);
-	r->read<int8_t>(&s->mobile_type);
-	r->read<uint8_t>(&s->cur_action);
-	r->read<uint8_t>(&s->cur_dir);
-	r->read<uint8_t>(&s->cur_frame);
-	r->read<uint8_t>(&s->cur_attack);
-	r->read<uint8_t>(&s->final_dir);
-	r->read<int8_t>(&s->turn_delay);
-	r->read<int8_t>(&s->guard_count);
-	r->read<uint8_t>(&s->remain_attack_delay);
-	r->read<uint8_t>(&s->remain_frames_per_step);
-	r->read<int16_t>(&s->cur_x);
-	r->read<int16_t>(&s->cur_y);
-	r->read<int16_t>(&s->go_x);
-	r->read<int16_t>(&s->go_y);
-	r->read<int16_t>(&s->next_x);
-	r->read<int16_t>(&s->next_y);
-	r->read(&s->sprite_info);
-}
-
 template <typename FileT, typename MemT, typename Visitor>
 static bool visit(Visitor *vis, MemT *val)
 {
@@ -286,98 +261,131 @@ static bool visit_pointer(Visitor *vis, T **ptr)
 	return vis->template visit(ptr);
 }
 
+template <typename Visitor>
+static void visit_sprite(Visitor *v, Sprite *s)
+{
+	v->skip(4); /* virtual table pointer */
+
+	visit<int16_t>(v, &s->sprite_id);
+	visit<int16_t>(v, &s->sprite_recno);
+	visit<int8_t>(v, &s->mobile_type);
+	visit<uint8_t>(v, &s->cur_action);
+	visit<uint8_t>(v, &s->cur_dir);
+	visit<uint8_t>(v, &s->cur_frame);
+	visit<uint8_t>(v, &s->cur_attack);
+	visit<uint8_t>(v, &s->final_dir);
+	visit<int8_t>(v, &s->turn_delay);
+	visit<int8_t>(v, &s->guard_count);
+	visit<uint8_t>(v, &s->remain_attack_delay);
+	visit<uint8_t>(v, &s->remain_frames_per_step);
+	visit<int16_t>(v, &s->cur_x);
+	visit<int16_t>(v, &s->cur_y);
+	visit<int16_t>(v, &s->go_x);
+	visit<int16_t>(v, &s->go_y);
+	visit<int16_t>(v, &s->next_x);
+	visit<int16_t>(v, &s->next_y);
+	visit_pointer(v, &s->sprite_info);
+}
+
+template <typename Visitor>
+static void visit_unit(Visitor *v, Unit *u)
+{
+	/* Sprite */
+	visit_sprite(v, u);
+
+	/* Unit */
+	visit<int8_t>(v, &u->unit_id);
+	visit<int8_t>(v, &u->rank_id);
+	visit<int8_t>(v, &u->race_id);
+	visit<int8_t>(v, &u->nation_recno);
+	visit<int8_t>(v, &u->ai_unit);
+	visit<uint16_t>(v, &u->name_id);
+	visit<uint32_t>(v, &u->unit_group_id);
+	visit<uint32_t>(v, &u->team_id);
+	visit<int8_t>(v, &u->selected_flag);
+	visit<int8_t>(v, &u->group_select_id);
+	visit<int8_t>(v, &u->waiting_term);
+	visit<int8_t>(v, &u->blocked_by_member);
+	visit<int8_t>(v, &u->swapping);
+	visit<int16_t>(v, &u->leader_unit_recno);
+	visit<int8_t>(v, &u->action_misc);
+	visit<int16_t>(v, &u->action_misc_para);
+	visit<int8_t>(v, &u->action_mode);
+	visit<int16_t>(v, &u->action_para);
+	visit<int16_t>(v, &u->action_x_loc);
+	visit<int16_t>(v, &u->action_y_loc);
+	visit<int8_t>(v, &u->action_mode2);
+	visit<int16_t>(v, &u->action_para2);
+	visit<int16_t>(v, &u->action_x_loc2);
+	visit<int16_t>(v, &u->action_y_loc2);
+	visit_array<int8_t>(v, u->blocked_edge, 4);
+	visit<uint8_t>(v, &u->attack_dir);
+	visit<int16_t>(v, &u->range_attack_x_loc);
+	visit<int16_t>(v, &u->range_attack_y_loc);
+	visit<int16_t>(v, &u->move_to_x_loc);
+	visit<int16_t>(v, &u->move_to_y_loc);
+	visit<int8_t>(v, &u->loyalty);
+	visit<int8_t>(v, &u->target_loyalty);
+	visit<float>(v, &u->hit_points);
+	visit<int16_t>(v, &u->max_hit_points);
+
+	visit<int8_t>(v, &u->skill.combat_level);
+	visit<int8_t>(v, &u->skill.skill_id);
+	visit<int8_t>(v, &u->skill.skill_level);
+	visit<uint8_t>(v, &u->skill.combat_level_minor);
+	visit<uint8_t>(v, &u->skill.skill_level_minor);
+	visit<uint8_t>(v, &u->skill.skill_potential);
+
+	visit<int8_t>(v, &u->unit_mode);
+	visit<int16_t>(v, &u->unit_mode_para);
+	visit<int16_t>(v, &u->spy_recno);
+	visit<int16_t>(v, &u->nation_contribution);
+	visit<int16_t>(v, &u->total_reward);
+	visit_pointer(v, &u->attack_info_array);
+	visit<int8_t>(v, &u->attack_count);
+	visit<int8_t>(v, &u->attack_range);
+	visit<int16_t>(v, &u->cur_power);
+	visit<int16_t>(v, &u->max_power);
+	visit_pointer(v, &u->result_node_array);
+	visit<int32_t>(v, &u->result_node_count);
+	visit<int16_t>(v, &u->result_node_recno);
+	visit<int16_t>(v, &u->result_path_dist);
+	visit_pointer(v, &u->way_point_array);
+	visit<int16_t>(v, &u->way_point_array_size);
+	visit<int16_t>(v, &u->way_point_count);
+	visit<uint16_t>(v, &u->ai_action_id);
+	visit<int8_t>(v, &u->original_action_mode);
+	visit<int16_t>(v, &u->original_action_para);
+	visit<int16_t>(v, &u->original_action_x_loc);
+	visit<int16_t>(v, &u->original_action_y_loc);
+	visit<int16_t>(v, &u->original_target_x_loc);
+	visit<int16_t>(v, &u->original_target_y_loc);
+	visit<int16_t>(v, &u->ai_original_target_x_loc);
+	visit<int16_t>(v, &u->ai_original_target_y_loc);
+	visit<int8_t>(v, &u->ai_no_suitable_action);
+	visit<int8_t>(v, &u->can_guard_flag);
+	visit<int8_t>(v, &u->can_attack_flag);
+	visit<int8_t>(v, &u->force_move_flag);
+	visit<int16_t>(v, &u->home_camp_firm_recno);
+	visit<int8_t>(v, &u->aggressive_mode);
+	visit<int8_t>(v, &u->seek_path_fail_count);
+	visit<int8_t>(v, &u->ignore_power_nation);
+	visit_pointer(v, &u->team_info);
+}
+
 //--------- Begin of function Unit::read_file ---------//
 //
 int Unit::read_file(File* filePtr)
 {
 	FileReader r;
+	FileReaderVisitor v;
 
 	if (!r.init(filePtr))
 		return 0;
 
-	r.skip(2); /* record size */
-
-	/* Sprite */
-	read_sprite(&r, this);
-
-	/* Unit */
-	r.read<int8_t>(&this->unit_id);
-	r.read<int8_t>(&this->rank_id);
-	r.read<int8_t>(&this->race_id);
-	r.read<int8_t>(&this->nation_recno);
-	r.read<int8_t>(&this->ai_unit);
-	r.read<uint16_t>(&this->name_id);
-	r.read<uint32_t>(&this->unit_group_id);
-	r.read<uint32_t>(&this->team_id);
-	r.read<int8_t>(&this->selected_flag);
-	r.read<int8_t>(&this->group_select_id);
-	r.read<int8_t>(&this->waiting_term);
-	r.read<int8_t>(&this->blocked_by_member);
-	r.read<int8_t>(&this->swapping);
-	r.read<int16_t>(&this->leader_unit_recno);
-	r.read<int8_t>(&this->action_misc);
-	r.read<int16_t>(&this->action_misc_para);
-	r.read<int8_t>(&this->action_mode);
-	r.read<int16_t>(&this->action_para);
-	r.read<int16_t>(&this->action_x_loc);
-	r.read<int16_t>(&this->action_y_loc);
-	r.read<int8_t>(&this->action_mode2);
-	r.read<int16_t>(&this->action_para2);
-	r.read<int16_t>(&this->action_x_loc2);
-	r.read<int16_t>(&this->action_y_loc2);
-	r.read_array<int8_t>(this->blocked_edge, 4);
-	r.read<uint8_t>(&this->attack_dir);
-	r.read<int16_t>(&this->range_attack_x_loc);
-	r.read<int16_t>(&this->range_attack_y_loc);
-	r.read<int16_t>(&this->move_to_x_loc);
-	r.read<int16_t>(&this->move_to_y_loc);
-	r.read<int8_t>(&this->loyalty);
-	r.read<int8_t>(&this->target_loyalty);
-	r.read<float>(&this->hit_points);
-	r.read<int16_t>(&this->max_hit_points);
-
-	r.read<int8_t>(&this->skill.combat_level);
-	r.read<int8_t>(&this->skill.skill_id);
-	r.read<int8_t>(&this->skill.skill_level);
-	r.read<uint8_t>(&this->skill.combat_level_minor);
-	r.read<uint8_t>(&this->skill.skill_level_minor);
-	r.read<uint8_t>(&this->skill.skill_potential);
-
-	r.read<int8_t>(&this->unit_mode);
-	r.read<int16_t>(&this->unit_mode_para);
-	r.read<int16_t>(&this->spy_recno);
-	r.read<int16_t>(&this->nation_contribution);
-	r.read<int16_t>(&this->total_reward);
-	r.read(&this->attack_info_array);
-	r.read<int8_t>(&this->attack_count);
-	r.read<int8_t>(&this->attack_range);
-	r.read<int16_t>(&this->cur_power);
-	r.read<int16_t>(&this->max_power);
-	r.read(&this->result_node_array);
-	r.read<int32_t>(&this->result_node_count);
-	r.read<int16_t>(&this->result_node_recno);
-	r.read<int16_t>(&this->result_path_dist);
-	r.read(&this->way_point_array);
-	r.read<int16_t>(&this->way_point_array_size);
-	r.read<int16_t>(&this->way_point_count);
-	r.read<uint16_t>(&this->ai_action_id);
-	r.read<int8_t>(&this->original_action_mode);
-	r.read<int16_t>(&this->original_action_para);
-	r.read<int16_t>(&this->original_action_x_loc);
-	r.read<int16_t>(&this->original_action_y_loc);
-	r.read<int16_t>(&this->original_target_x_loc);
-	r.read<int16_t>(&this->original_target_y_loc);
-	r.read<int16_t>(&this->ai_original_target_x_loc);
-	r.read<int16_t>(&this->ai_original_target_y_loc);
-	r.read<int8_t>(&this->ai_no_suitable_action);
-	r.read<int8_t>(&this->can_guard_flag);
-	r.read<int8_t>(&this->can_attack_flag);
-	r.read<int8_t>(&this->force_move_flag);
-	r.read<int16_t>(&this->home_camp_firm_recno);
-	r.read<int8_t>(&this->aggressive_mode);
-	r.read<int8_t>(&this->seek_path_fail_count);
-	r.read<int8_t>(&this->ignore_power_nation);
-	r.read(&this->team_info);
+	v.init(&r);
+	v.skip(2); /* record size */
+	visit_unit(&v, this);
 
 	if (!r.good())
 		return 0;
@@ -474,69 +482,79 @@ int Unit::read_derived_file(File* filePtr)
 }
 //----------- End of function Unit::read_derived_file ---------//
 
-static void read_trade_stop(FileReader *r, TradeStop *ts)
+template <typename Visitor>
+static void visit_trade_stop(Visitor *v, TradeStop *ts)
 {
-	r->read<int16_t>(&ts->firm_recno);
-	r->read<int16_t>(&ts->firm_loc_x1);
-	r->read<int16_t>(&ts->firm_loc_y1);
-	r->read<int8_t>(&ts->pick_up_type);
-	r->read_array<int8_t>(ts->pick_up_array, MAX_PICK_UP_GOODS);
+	visit<int16_t>(v, &ts->firm_recno);
+	visit<int16_t>(v, &ts->firm_loc_x1);
+	visit<int16_t>(v, &ts->firm_loc_y1);
+	visit<int8_t>(v, &ts->pick_up_type);
+	visit_array<int8_t>(v, ts->pick_up_array, MAX_PICK_UP_GOODS);
 }
 
-static void read_attack_info(FileReader *r, AttackInfo *ai)
+template <typename Visitor>
+static void visit_attack_info(Visitor *v, AttackInfo *ai)
 {
-	r->read<uint8_t>(&ai->combat_level);
-	r->read<uint8_t>(&ai->attack_delay);
-	r->read<uint8_t>(&ai->attack_range);
-	r->read<uint8_t>(&ai->attack_damage);
-   r->read<uint8_t>(&ai->pierce_damage);
-	r->read<int16_t>(&ai->bullet_out_frame);
-	r->read<int8_t>(&ai->bullet_speed);
-	r->read<int8_t>(&ai->bullet_radius);
-	r->read<int8_t>(&ai->bullet_sprite_id);
-	r->read<int8_t>(&ai->dll_bullet_sprite_id);
-	r->read<int8_t>(&ai->eqv_attack_next);
-	r->read<int16_t>(&ai->min_power);
-	r->read<int16_t>(&ai->consume_power);
-	r->read<int8_t>(&ai->fire_radius);
-	r->read<int16_t>(&ai->effect_id);
+	visit<uint8_t>(v, &ai->combat_level);
+	visit<uint8_t>(v, &ai->attack_delay);
+	visit<uint8_t>(v, &ai->attack_range);
+	visit<uint8_t>(v, &ai->attack_damage);
+   visit<uint8_t>(v, &ai->pierce_damage);
+	visit<int16_t>(v, &ai->bullet_out_frame);
+	visit<int8_t>(v, &ai->bullet_speed);
+	visit<int8_t>(v, &ai->bullet_radius);
+	visit<int8_t>(v, &ai->bullet_sprite_id);
+	visit<int8_t>(v, &ai->dll_bullet_sprite_id);
+	visit<int8_t>(v, &ai->eqv_attack_next);
+	visit<int16_t>(v, &ai->min_power);
+	visit<int16_t>(v, &ai->consume_power);
+	visit<int8_t>(v, &ai->fire_radius);
+	visit<int16_t>(v, &ai->effect_id);
+}
+
+template <typename Visitor>
+static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
+{
+	visit_sprite(v, &u->splash);
+	visit<int8_t>(v, &u->menu_mode);
+	visit<int8_t>(v, &u->extra_move_in_beach);
+	visit<int8_t>(v, &u->in_beach);
+	visit<int8_t>(v, &u->selected_unit_id);
+	visit_array<int16_t>(v, u->unit_recno_array, MAX_UNIT_IN_SHIP);
+	visit<int8_t>(v, &u->unit_count);
+	visit<int8_t>(v, &u->journey_status);
+	visit<int8_t>(v, &u->dest_stop_id);
+	visit<int8_t>(v, &u->stop_defined_num);
+	visit<int8_t>(v, &u->wait_count);
+	visit<int16_t>(v, &u->stop_x_loc);
+	visit<int16_t>(v, &u->stop_y_loc);
+	visit<int8_t>(v, &u->auto_mode);
+	visit<int16_t>(v, &u->cur_firm_recno);
+	visit<int16_t>(v, &u->carry_goods_capacity);
+
+	for (int n = 0; n < MAX_STOP_FOR_SHIP; n++)
+		visit_trade_stop(v, &u->stop_array[n]);
+
+	visit_array<int16_t>(v, u->raw_qty_array, MAX_RAW);
+	visit_array<int16_t>(v, u->product_raw_qty_array, MAX_PRODUCT);
+	visit_attack_info(v, &u->ship_attack_info);
+	visit<uint8_t>(v, &u->attack_mode_selected);
+	visit<int32_t>(v, &u->last_load_goods_date);
 }
 
 //--------- Begin of function UnitMarine::read_derived_file ---------//
 int UnitMarine::read_derived_file(File* filePtr)
 {
 	FileReader r;
+	FileReaderVisitor v;
 
 	if (!r.init(filePtr))
 		return 0;
 
-	r.skip(2); /* record size */
+	v.init(&r);
 
-	read_sprite(&r, &this->splash);
-	r.read<int8_t>(&this->menu_mode);
-	r.read<int8_t>(&this->extra_move_in_beach);
-	r.read<int8_t>(&this->in_beach);
-	r.read<int8_t>(&this->selected_unit_id);
-	r.read_array<int16_t>(this->unit_recno_array, MAX_UNIT_IN_SHIP);
-	r.read<int8_t>(&this->unit_count);
-	r.read<int8_t>(&this->journey_status);
-	r.read<int8_t>(&this->dest_stop_id);
-	r.read<int8_t>(&this->stop_defined_num);
-	r.read<int8_t>(&this->wait_count);
-	r.read<int16_t>(&this->stop_x_loc);
-	r.read<int16_t>(&this->stop_y_loc);
-	r.read<int8_t>(&this->auto_mode);
-	r.read<int16_t>(&this->cur_firm_recno);
-	r.read<int16_t>(&this->carry_goods_capacity);
-
-	for (int n = 0; n < MAX_STOP_FOR_SHIP; n++)
-		read_trade_stop(&r, &this->stop_array[n]);
-
-	r.read_array<int16_t>(this->raw_qty_array, MAX_RAW);
-	r.read_array<int16_t>(this->product_raw_qty_array, MAX_PRODUCT);
-	read_attack_info(&r, &this->ship_attack_info);
-	r.read<uint8_t>(&this->attack_mode_selected);
-	r.read<int32_t>(&this->last_load_goods_date);
+	v.skip(2); /* record size */
+	visit_unit_marine_derived(&v, this);
 
 	r.deinit();
 
@@ -694,35 +712,41 @@ int Bullet::write_file(File* filePtr)
 }
 //----------- End of function Bullet::write_file ---------//
 
+template <typename Visitor>
+static void visit_bullet(Visitor *v, Bullet *b)
+{
+	visit_sprite(v, b);
+	visit<int8_t>(v, &b->parent_type);
+	visit<int16_t>(v, &b->parent_recno);
+	visit<int8_t>(v, &b->target_mobile_type);
+	visit<float>(v, &b->attack_damage);
+	visit<int16_t>(v, &b->damage_radius);
+	visit<int16_t>(v, &b->nation_recno);
+	visit<int8_t>(v, &b->fire_radius);
+	visit<int16_t>(v, &b->origin_x);
+	visit<int16_t>(v, &b->origin_y);
+	visit<int16_t>(v, &b->target_x_loc);
+	visit<int16_t>(v, &b->target_y_loc);
+	visit<int8_t>(v, &b->cur_step);
+	visit<int8_t>(v, &b->total_step);
+}
 
 //--------- Begin of function Bullet::read_file ---------//
 //
 int Bullet::read_file(File* filePtr)
 {
 	FileReader r;
+	FileReaderVisitor v;
 
 	MSG("Bullet::read_file()\n");
 
 	if (!r.init(filePtr))
 		return 0;
 
-	r.skip(2); /* record size */
+	v.init(&r);
 
-	read_sprite(&r, this);
-
-	r.read<int8_t>(&this->parent_type);
-	r.read<int16_t>(&this->parent_recno);
-	r.read<int8_t>(&this->target_mobile_type);
-	r.read<float>(&this->attack_damage);
-	r.read<int16_t>(&this->damage_radius);
-	r.read<int16_t>(&this->nation_recno);
-	r.read<int8_t>(&this->fire_radius);
-	r.read<int16_t>(&this->origin_x);
-	r.read<int16_t>(&this->origin_y);
-	r.read<int16_t>(&this->target_x_loc);
-	r.read<int16_t>(&this->target_y_loc);
-	r.read<int8_t>(&this->cur_step);
-	r.read<int8_t>(&this->total_step);
+	v.skip(2); /* record size */
+	visit_bullet(&v, this);
 
 	r.deinit();
 
@@ -773,21 +797,28 @@ int Bullet::read_derived_file(File *filePtr)
 }
 //----------- End of function Bullet::read_derived_file ---------//
 
+template <typename Visitor>
+static void visit_projectile(Visitor *v, Projectile *p)
+{
+	visit<float>(v, &p->z_coff);
+	visit_sprite(v, &p->act_bullet);
+	visit_sprite(v, &p->bullet_shadow);
+}
 
 //----------- Begin of function Projectile::read_derived_file ---------//
 
 int Projectile::read_derived_file(File *filePtr)
 {
 	FileReader r;
+	FileReaderVisitor v;
 
 	if (!r.init(filePtr))
 		return 0;
 
-	r.skip(2); /* record size */
+	v.init(&r);
 
-	r.read<float>(&this->z_coff);
-	read_sprite(&r, &this->act_bullet);
-	read_sprite(&r, &this->bullet_shadow);
+	v.skip(2); /* record size */
+	visit_projectile(&v, this);
 
 	if (!r.good())
 		return 0;
@@ -866,6 +897,70 @@ int FirmArray::write_file(File* filePtr)
 }
 //--------- End of function FirmArray::write_file ---------------//
 
+template <typename Visitor>
+static void visit_firm(Visitor *v, Firm *f)
+{
+	v->skip(4); /* virtual table pointer */
+
+	visit<int8_t>(v, &f->firm_id);
+	visit<int16_t>(v, &f->firm_build_id);
+	visit<int16_t>(v, &f->firm_recno);
+	visit<int8_t>(v, &f->firm_ai);
+	visit<int8_t>(v, &f->ai_processed);
+	visit<int8_t>(v, &f->ai_status);
+	visit<int8_t>(v, &f->ai_link_checked);
+	visit<int8_t>(v, &f->ai_sell_flag);
+	visit<int8_t>(v, &f->race_id);
+	visit<int16_t>(v, &f->nation_recno);
+	visit<int16_t>(v, &f->closest_town_name_id);
+	visit<int16_t>(v, &f->firm_name_instance_id);
+	visit<int16_t>(v, &f->loc_x1);
+	visit<int16_t>(v, &f->loc_y1);
+	visit<int16_t>(v, &f->loc_x2);
+	visit<int16_t>(v, &f->loc_y2);
+	visit<int16_t>(v, &f->abs_x1);
+	visit<int16_t>(v, &f->abs_y1);
+	visit<int16_t>(v, &f->abs_x2);
+	visit<int16_t>(v, &f->abs_y2);
+	visit<int16_t>(v, &f->center_x);
+	visit<int16_t>(v, &f->center_y);
+	visit<uint8_t>(v, &f->region_id);
+	visit<int8_t>(v, &f->cur_frame);
+	visit<int8_t>(v, &f->remain_frame_delay);
+	visit<float>(v, &f->hit_points);
+	visit<float>(v, &f->max_hit_points);
+	visit<int8_t>(v, &f->under_construction);
+	visit<int8_t>(v, &f->firm_skill_id);
+	visit<int16_t>(v, &f->overseer_recno);
+	visit<int16_t>(v, &f->overseer_town_recno);
+	visit<int16_t>(v, &f->builder_recno);
+	visit<uint8_t>(v, &f->builder_region_id);
+	visit<float>(v, &f->productivity);
+	visit_pointer(v, &f->worker_array);
+	visit<int8_t>(v, &f->worker_count);
+	visit<int8_t>(v, &f->selected_worker_id);
+	visit<int8_t>(v, &f->player_spy_count);
+	visit<uint8_t>(v, &f->sabotage_level);
+	visit<int8_t>(v, &f->linked_firm_count);
+	visit<int8_t>(v, &f->linked_town_count);
+	visit_array<int16_t>(v, f->linked_firm_array, MAX_LINKED_FIRM_FIRM);
+	visit_array<int16_t>(v, f->linked_town_array, MAX_LINKED_FIRM_TOWN);
+
+	visit_array<int8_t>(v, f->linked_firm_enable_array,
+							  MAX_LINKED_FIRM_FIRM);
+
+	visit_array<int8_t>(v, f->linked_town_enable_array,
+							  MAX_LINKED_FIRM_TOWN);
+
+	visit<float>(v, &f->last_year_income);
+	visit<float>(v, &f->cur_year_income);
+	visit<int32_t>(v, &f->setup_date);
+	visit<int8_t>(v, &f->should_set_power);
+	visit<int32_t>(v, &f->last_attacked_date);
+	visit<int8_t>(v, &f->should_close_flag);
+	visit<int8_t>(v, &f->no_neighbor_space);
+	visit<int8_t>(v, &f->ai_should_build_factory_count);
+}
 
 //-------- Start of function FirmArray::read_file -------------//
 //
@@ -894,6 +989,7 @@ int FirmArray::read_file(File* filePtr)
       else
       {
 			FileReader r;
+			FileReaderVisitor v;
 
          //----- create firm object -----------//
 
@@ -903,62 +999,10 @@ int FirmArray::read_file(File* filePtr)
 			if (!r.init(filePtr))
 				return 0;
 
-			r.skip(2); /* record size */
-			r.skip(4); /* virtual table pointer */
+			v.init(&r);
 
-			r.read<int8_t>(&firmPtr->firm_id);
-			r.read<int16_t>(&firmPtr->firm_build_id);
-			r.read<int16_t>(&firmPtr->firm_recno);
-			r.read<int8_t>(&firmPtr->firm_ai);
-			r.read<int8_t>(&firmPtr->ai_processed);
-			r.read<int8_t>(&firmPtr->ai_status);
-			r.read<int8_t>(&firmPtr->ai_link_checked);
-			r.read<int8_t>(&firmPtr->ai_sell_flag);
-			r.read<int8_t>(&firmPtr->race_id);
-			r.read<int16_t>(&firmPtr->nation_recno);
-			r.read<int16_t>(&firmPtr->closest_town_name_id);
-			r.read<int16_t>(&firmPtr->firm_name_instance_id);
-			r.read<int16_t>(&firmPtr->loc_x1);
-			r.read<int16_t>(&firmPtr->loc_y1);
-			r.read<int16_t>(&firmPtr->loc_x2);
-			r.read<int16_t>(&firmPtr->loc_y2);
-			r.read<int16_t>(&firmPtr->abs_x1);
-			r.read<int16_t>(&firmPtr->abs_y1);
-			r.read<int16_t>(&firmPtr->abs_x2);
-			r.read<int16_t>(&firmPtr->abs_y2);
-			r.read<int16_t>(&firmPtr->center_x);
-			r.read<int16_t>(&firmPtr->center_y);
-			r.read<uint8_t>(&firmPtr->region_id);
-			r.read<int8_t>(&firmPtr->cur_frame);
-			r.read<int8_t>(&firmPtr->remain_frame_delay);
-			r.read<float>(&firmPtr->hit_points);
-			r.read<float>(&firmPtr->max_hit_points);
-			r.read<int8_t>(&firmPtr->under_construction);
-			r.read<int8_t>(&firmPtr->firm_skill_id);
-			r.read<int16_t>(&firmPtr->overseer_recno);
-			r.read<int16_t>(&firmPtr->overseer_town_recno);
-			r.read<int16_t>(&firmPtr->builder_recno);
-			r.read<uint8_t>(&firmPtr->builder_region_id);
-			r.read<float>(&firmPtr->productivity);
-			r.read(&firmPtr->worker_array);
-			r.read<int8_t>(&firmPtr->worker_count);
-			r.read<int8_t>(&firmPtr->selected_worker_id);
-			r.read<int8_t>(&firmPtr->player_spy_count);
-			r.read<uint8_t>(&firmPtr->sabotage_level);
-			r.read<int8_t>(&firmPtr->linked_firm_count);
-			r.read<int8_t>(&firmPtr->linked_town_count);
-			r.read_array<int16_t>(firmPtr->linked_firm_array, MAX_LINKED_FIRM_FIRM);
-			r.read_array<int16_t>(firmPtr->linked_town_array, MAX_LINKED_FIRM_TOWN);
-			r.read_array<int8_t>(firmPtr->linked_firm_enable_array, MAX_LINKED_FIRM_FIRM);
-			r.read_array<int8_t>(firmPtr->linked_town_enable_array, MAX_LINKED_FIRM_TOWN);
-			r.read<float>(&firmPtr->last_year_income);
-			r.read<float>(&firmPtr->cur_year_income);
-			r.read<int32_t>(&firmPtr->setup_date);
-			r.read<int8_t>(&firmPtr->should_set_power);
-			r.read<int32_t>(&firmPtr->last_attacked_date);
-			r.read<int8_t>(&firmPtr->should_close_flag);
-			r.read<int8_t>(&firmPtr->no_neighbor_space);
-			r.read<int8_t>(&firmPtr->ai_should_build_factory_count);
+			v.skip(2); /* record size */
+			visit_firm(&v, firmPtr);
 
 			if (!r.good())
 				return 0;
@@ -1277,52 +1321,61 @@ int NationArray::write_file(File* filePtr)
 }
 //--------- End of function NationArray::write_file -------------//
 
+template <typename Visitor>
+static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
+{
+	visit<int16_t>(v, &na->nation_count);
+	visit<int16_t>(v, &na->ai_nation_count);
+	visit<int32_t>(v, &na->last_del_nation_date);
+	visit<int32_t>(v, &na->last_new_nation_date);
+	visit<int32_t>(v, &na->max_nation_population);
+	visit<int32_t>(v, &na->all_nation_population);
+	visit<int16_t>(v, &na->independent_town_count);
+	visit_array<int16_t>(v, na->independent_town_count_race_array, VERSION_1_MAX_RACE);
+	visit<int32_t>(v, &na->max_nation_units);
+	visit<int32_t>(v, &na->max_nation_humans);
+	visit<int32_t>(v, &na->max_nation_generals);
+	visit<int32_t>(v, &na->max_nation_weapons);
+	visit<int32_t>(v, &na->max_nation_ships);
+	visit<int32_t>(v, &na->max_nation_spies);
+	visit<int32_t>(v, &na->max_nation_firms);
+	visit<int32_t>(v, &na->max_nation_tech_level);
+	visit<int32_t>(v, &na->max_population_rating);
+	visit<int32_t>(v, &na->max_military_rating);
+	visit<int32_t>(v, &na->max_economic_rating);
+	visit<int32_t>(v, &na->max_reputation);
+	visit<int32_t>(v, &na->max_kill_monster_score);
+	visit<int32_t>(v, &na->max_overall_rating);
+	visit<int16_t>(v, &na->max_population_nation_recno);
+	visit<int16_t>(v, &na->max_military_nation_recno);
+	visit<int16_t>(v, &na->max_economic_nation_recno);
+	visit<int16_t>(v, &na->max_reputation_nation_recno);
+	visit<int16_t>(v, &na->max_kill_monster_nation_recno);
+	visit<int16_t>(v, &na->max_overall_nation_recno);
+	visit<int32_t>(v, &na->last_alliance_id);
+	visit<int32_t>(v, &na->nation_peace_days);
+	visit<int16_t>(v, &na->player_recno);
+	visit_pointer(v, &na->player_ptr);
+	visit_array<int8_t>(v, na->nation_color_array, MAX_NATION+1);
+	visit_array<int8_t>(v, na->nation_power_color_array, MAX_NATION+2);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_array<int8_t>(v, na->human_name_array[n],
+								  NationArray::HUMAN_NAME_LEN+1);
+}
+
 static bool read_version_1_nation_array(File *file, Version_1_NationArray *na)
 {
 	FileReader r;
+	FileReaderVisitor v;
 
 	if (!r.init(file))
 		return false;
 
-	r.skip(2); /* record size */
+	v.init(&r);
 
-	r.read<int16_t>(&na->nation_count);
-	r.read<int16_t>(&na->ai_nation_count);
-	r.read<int32_t>(&na->last_del_nation_date);
-	r.read<int32_t>(&na->last_new_nation_date);
-	r.read<int32_t>(&na->max_nation_population);
-	r.read<int32_t>(&na->all_nation_population);
-	r.read<int16_t>(&na->independent_town_count);
-	r.read_array<int16_t>(na->independent_town_count_race_array, VERSION_1_MAX_RACE);
-	r.read<int32_t>(&na->max_nation_units);
-	r.read<int32_t>(&na->max_nation_humans);
-	r.read<int32_t>(&na->max_nation_generals);
-	r.read<int32_t>(&na->max_nation_weapons);
-	r.read<int32_t>(&na->max_nation_ships);
-	r.read<int32_t>(&na->max_nation_spies);
-	r.read<int32_t>(&na->max_nation_firms);
-	r.read<int32_t>(&na->max_nation_tech_level);
-	r.read<int32_t>(&na->max_population_rating);
-	r.read<int32_t>(&na->max_military_rating);
-	r.read<int32_t>(&na->max_economic_rating);
-	r.read<int32_t>(&na->max_reputation);
-	r.read<int32_t>(&na->max_kill_monster_score);
-	r.read<int32_t>(&na->max_overall_rating);
-	r.read<int16_t>(&na->max_population_nation_recno);
-	r.read<int16_t>(&na->max_military_nation_recno);
-	r.read<int16_t>(&na->max_economic_nation_recno);
-	r.read<int16_t>(&na->max_reputation_nation_recno);
-	r.read<int16_t>(&na->max_kill_monster_nation_recno);
-	r.read<int16_t>(&na->max_overall_nation_recno);
-	r.read<int32_t>(&na->last_alliance_id);
-	r.read<int32_t>(&na->nation_peace_days);
-	r.read<int16_t>(&na->player_recno);
-	r.read(&na->player_ptr);
-	r.read_array<int8_t>(na->nation_color_array, MAX_NATION+1);
-	r.read_array<int8_t>(na->nation_power_color_array, MAX_NATION+2);
-
-	for (int n = 0; n < MAX_NATION; n++)
-		r.read_array<int8_t>(na->human_name_array[n], NationArray::HUMAN_NAME_LEN+1);
+	v.skip(2); /* record size */
+	visit_version_1_nation_array(&v, na);
 
 	return r.good();
 }
@@ -1376,11 +1429,12 @@ static void visit_nation_array(Visitor *v, NationArray *na)
 static bool read_nation_array(File *file, NationArray *na)
 {
 	FileReader r;
-	FileReaderVisitor v(&r);
+	FileReaderVisitor v;
 
 	if (!r.init(file))
 		return false;
 
+	v.init(&r);
 	visit_nation_array(&v, na);
 
 	return r.good();
@@ -1758,11 +1812,12 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 {
 	FileReader r;
-	FileReaderVisitor v(&r);
+	FileReaderVisitor v;
 
 	if (!r.init(file))
 		return false;
 
+	v.init(&r);
 	visit_version_1_nation(&v, v1n);
 	memset(&v1n->action_array, 0, sizeof(v1n->action_array));
 
@@ -1963,11 +2018,12 @@ static bool visit_nation(Visitor *v, Nation *nat)
 static bool read_nation(File *file, Nation *nat)
 {
 	FileReader r;
-	FileReaderVisitor v(&r);
+	FileReaderVisitor v;
 
 	if (!r.init(file))
 		return false;
 
+	v.init(&r);
 	visit_nation(&v, nat);
 	memset(&nat->action_array, 0, sizeof(nat->action_array));
 
@@ -2148,25 +2204,29 @@ int Tornado::write_file(File* filePtr)
 }
 //----------- End of function Tornado::write_file ---------//
 
+template <typename Visitor>
+static void visit_tornado(Visitor *v, Tornado *t)
+{
+	visit_sprite(v, t);
+   visit<float>(v, &t->attack_damage);
+   visit<int16_t>(v, &t->life_time);
+   visit<int16_t>(v, &t->dmg_offset_x);
+   visit<int16_t>(v, &t->dmg_offset_y);
+}
 
 //--------- Begin of function Tornado::read_file ---------//
 //
 int Tornado::read_file(File* filePtr)
 {
 	FileReader r;
-
-	MSG("Tornado::read_file()\n");
+	FileReaderVisitor v;
 
 	if (!r.init(filePtr))
 		return 0;
 
-	r.skip(2); /* record size */
-
-	read_sprite(&r, this);
-   r.read<float>(&this->attack_damage);
-   r.read<int16_t>(&this->life_time);
-   r.read<int16_t>(&this->dmg_offset_x);
-   r.read<int16_t>(&this->dmg_offset_y);
+	v.init(&r);
+	v.skip(2); /* record size */
+	visit_tornado(&v, this);
 
 	if (!r.good())
 		return 0;
@@ -2307,19 +2367,22 @@ int RegionArray::write_file(File* filePtr)
 int RegionArray::read_file(File* filePtr)
 {
 	FileReader r;
+	FileReaderVisitor v;
 
 	if (!r.init(filePtr))
 		return 0;
 
-	r.skip(2); /* record size */
+	v.init(&r);
 
-	r.read<int32_t>(&this->init_flag);
-	r.read(&this->region_info_array);
-	r.read<int32_t>(&this->region_info_count);
-	r.read(&this->region_stat_array);
-	r.read<int32_t>(&this->region_stat_count);
-	r.read(&this->connect_bits);
-	r.read_array<uint8_t>(this->region_sorted_array, MAX_REGION);
+	v.skip(2); /* record size */
+
+	visit<int32_t>(&v, &this->init_flag);
+	visit_pointer(&v, &this->region_info_array);
+	visit<int32_t>(&v, &this->region_info_count);
+	visit_pointer(&v, &this->region_stat_array);
+	visit<int32_t>(&v, &this->region_stat_count);
+	visit_pointer(&v, &this->connect_bits);
+	visit_array<uint8_t>(&v, this->region_sorted_array, MAX_REGION);
 
 	if (!r.good())
 		return 0;

@@ -28,9 +28,24 @@ protected:
    FileReader *reader;
 
 public:
-   FileReaderVisitor(FileReader *fr)
+   FileReaderVisitor()
    {
-      this->reader = fr;
+      this->reader = NULL;
+   }
+
+   ~FileReaderVisitor()
+   {
+      this->deinit();
+   }
+
+   void init(FileReader *reader)
+   {
+      this->reader = reader;
+   }
+
+   void deinit()
+   {
+      this->reader = NULL;
    }
 
    bool skip(size_t len)
