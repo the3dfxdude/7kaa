@@ -114,7 +114,7 @@ public:
    template <typename T>
    bool visit(T **v)
    {
-      return this->writer->write<T>(*v);
+      return this->writer->write<T>(const_cast<const T *>(*v));
    }
 
    template <typename FileT, typename MemT>
