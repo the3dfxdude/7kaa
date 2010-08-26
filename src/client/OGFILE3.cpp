@@ -684,18 +684,6 @@ int BulletArray::read_file(File* filePtr)
 }
 //--------- End of function BulletArray::read_file ---------------//
 
-
-//--------- Begin of function Bullet::write_file ---------//
-//
-int Bullet::write_file(File* filePtr)
-{
-	if( !filePtr->file_write( this, sizeof(Bullet) ) )
-		return 0;
-
-	return 1;
-}
-//----------- End of function Bullet::write_file ---------//
-
 template <typename Visitor>
 static void visit_bullet(Visitor *v, Bullet *b)
 {
@@ -715,6 +703,15 @@ static void visit_bullet(Visitor *v, Bullet *b)
 	visit<int8_t>(v, &b->total_step);
 }
 
+//--------- Begin of function Bullet::write_file ---------//
+//
+int Bullet::write_file(File* filePtr)
+{
+	return write_with_record_size(filePtr, this,
+											&visit_bullet<FileWriterVisitor>, 57);
+}
+//----------- End of function Bullet::write_file ---------//
+
 //--------- Begin of function Bullet::read_file ---------//
 //
 int Bullet::read_file(File* filePtr)
@@ -727,9 +724,8 @@ int Bullet::read_file(File* filePtr)
 	if (!r.init(filePtr))
 		return 0;
 
+	r.check_record_size(57);
 	v.init(&r);
-
-	v.skip(2); /* record size */
 	visit_bullet(&v, this);
 
 	r.deinit();
