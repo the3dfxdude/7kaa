@@ -440,7 +440,7 @@ int Config::load(const char *filename)
 	int retFlag = 0;
 
 	// check file size is the same
-	if( configFile.file_size() == sizeof(Config) )
+	if( configFile.file_size() == 144 )
 	{
 		retFlag = read_file(&configFile);
 	}
