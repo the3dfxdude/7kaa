@@ -144,21 +144,40 @@ namespace FileIOVisitor
       return vis->template visit(ptr);
    }
 
-   template <typename T, typename VisitFunc>
-   bool write_with_record_size(File *file, T *obj, VisitFunc visit_obj,
+   template <typename T>
+   bool write_with_record_size(File *file, T *obj,
+			       void (*visit_obj)(FileWriterVisitor *v, T *obj),
 			       uint16_t rec_size)
    {
       FileWriter w;
       FileWriterVisitor v;
 
       if (!w.init(file))
-	 return 0;
+	 return false;
 
       w.write_record_size(rec_size);
       v.init(&w);
       visit_obj(&v, obj);
 
       return w.good();
+   }
+
+   template <typename T>
+   bool read_with_record_size(File *file, T *obj,
+			      void (*visit_obj)(FileReaderVisitor *v, T *obj),
+			      uint16_t expected_rec_size)
+   {
+      FileReader r;
+      FileReaderVisitor v;
+
+      if (!r.init(file))
+	 return false;
+
+      r.check_record_size(expected_rec_size);
+      v.init(&r);
+      visit_obj(&v, obj);
+
+      return r.good();
    }
 } /* namespace FileIOVisitor */
 

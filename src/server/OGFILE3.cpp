@@ -300,8 +300,7 @@ static void visit_unit(Visitor *v, Unit *u)
 //
 int Unit::write_file(File* filePtr)
 {
-	if (!write_with_record_size(filePtr, this,
-										 &visit_unit<FileWriterVisitor>, 169))
+	if (!write_with_record_size(filePtr, this, &visit_unit, 169))
 		return 0;
 
    //--------------- write memory data ----------------//
@@ -707,8 +706,7 @@ static void visit_bullet(Visitor *v, Bullet *b)
 //
 int Bullet::write_file(File* filePtr)
 {
-	return write_with_record_size(filePtr, this,
-											&visit_bullet<FileWriterVisitor>, 57);
+	return write_with_record_size(filePtr, this, &visit_bullet, 57);
 }
 //----------- End of function Bullet::write_file ---------//
 
@@ -716,19 +714,8 @@ int Bullet::write_file(File* filePtr)
 //
 int Bullet::read_file(File* filePtr)
 {
-	FileReader r;
-	FileReaderVisitor v;
-
-	MSG("Bullet::read_file()\n");
-
-	if (!r.init(filePtr))
+	if (!read_with_record_size(filePtr, this, &visit_bullet, 57))
 		return 0;
-
-	r.check_record_size(57);
-	v.init(&r);
-	visit_bullet(&v, this);
-
-	r.deinit();
 
    //------------ post-process the data read ----------//
 

@@ -1238,9 +1238,7 @@ static void visit_config(Visitor *v, Config *cfg)
 //
 int Config::write_file(File* filePtr)
 {
-	return write_with_record_size(filePtr, this,
-											&visit_config<FileWriterVisitor>,
-											144);
+	return write_with_record_size(filePtr, this, &visit_config, 144);
 }
 //--------- End of function Config::write_file ---------------//
 
