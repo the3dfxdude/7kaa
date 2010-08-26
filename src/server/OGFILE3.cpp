@@ -205,72 +205,6 @@ int UnitArray::read_file(File* filePtr)
 }
 //--------- End of function UnitArray::read_file ---------------//
 
-
-//--------- Begin of function Unit::write_file ---------//
-//
-// Write data in derived class.
-//
-// If the derived Unit don't have any special data,
-// just use Unit::write_file(), otherwise make its own derived copy of write_file()
-//
-int Unit::write_file(File* filePtr)
-{
-   if( !filePtr->file_write( this, sizeof(Unit) ) )
-		return 0;
-
-   //--------------- write memory data ----------------//
-
-	if( result_node_array )
-	{
-		if( !filePtr->file_write( result_node_array, sizeof(ResultNode) * result_node_count ) )
-			return 0;
-	}
-
-	//### begin alex 15/10 ###//
-	if(way_point_array)
-	{
-		err_when(way_point_array_size==0 || way_point_array_size<way_point_count);
-		if(!filePtr->file_write(way_point_array, sizeof(ResultNode)*way_point_array_size))
-			return 0;
-	}
-	//#### end alex 15/10 ####//
-
-	if( team_info )
-	{
-		if( !filePtr->file_write( team_info, sizeof(TeamInfo) ) )
-			return 0;
-   }
-
-   return 1;
-}
-//----------- End of function Unit::write_file ---------//
-
-template <typename Visitor>
-static void visit_sprite(Visitor *v, Sprite *s)
-{
-	v->skip(4); /* virtual table pointer */
-
-	visit<int16_t>(v, &s->sprite_id);
-	visit<int16_t>(v, &s->sprite_recno);
-	visit<int8_t>(v, &s->mobile_type);
-	visit<uint8_t>(v, &s->cur_action);
-	visit<uint8_t>(v, &s->cur_dir);
-	visit<uint8_t>(v, &s->cur_frame);
-	visit<uint8_t>(v, &s->cur_attack);
-	visit<uint8_t>(v, &s->final_dir);
-	visit<int8_t>(v, &s->turn_delay);
-	visit<int8_t>(v, &s->guard_count);
-	visit<uint8_t>(v, &s->remain_attack_delay);
-	visit<uint8_t>(v, &s->remain_frames_per_step);
-	visit<int16_t>(v, &s->cur_x);
-	visit<int16_t>(v, &s->cur_y);
-	visit<int16_t>(v, &s->go_x);
-	visit<int16_t>(v, &s->go_y);
-	visit<int16_t>(v, &s->next_x);
-	visit<int16_t>(v, &s->next_y);
-	visit_pointer(v, &s->sprite_info);
-}
-
 template <typename Visitor>
 static void visit_unit(Visitor *v, Unit *u)
 {
@@ -357,6 +291,72 @@ static void visit_unit(Visitor *v, Unit *u)
 	visit_pointer(v, &u->team_info);
 }
 
+//--------- Begin of function Unit::write_file ---------//
+//
+// Write data in derived class.
+//
+// If the derived Unit don't have any special data,
+// just use Unit::write_file(), otherwise make its own derived copy of write_file()
+//
+int Unit::write_file(File* filePtr)
+{
+	if (!write_with_record_size(filePtr, this,
+										 &visit_unit<FileWriterVisitor>, 169))
+		return 0;
+
+   //--------------- write memory data ----------------//
+
+	if( result_node_array )
+	{
+		if( !filePtr->file_write( result_node_array, sizeof(ResultNode) * result_node_count ) )
+			return 0;
+	}
+
+	//### begin alex 15/10 ###//
+	if(way_point_array)
+	{
+		err_when(way_point_array_size==0 || way_point_array_size<way_point_count);
+		if(!filePtr->file_write(way_point_array, sizeof(ResultNode)*way_point_array_size))
+			return 0;
+	}
+	//#### end alex 15/10 ####//
+
+	if( team_info )
+	{
+		if( !filePtr->file_write( team_info, sizeof(TeamInfo) ) )
+			return 0;
+   }
+
+   return 1;
+}
+//----------- End of function Unit::write_file ---------//
+
+template <typename Visitor>
+static void visit_sprite(Visitor *v, Sprite *s)
+{
+	v->skip(4); /* virtual table pointer */
+
+	visit<int16_t>(v, &s->sprite_id);
+	visit<int16_t>(v, &s->sprite_recno);
+	visit<int8_t>(v, &s->mobile_type);
+	visit<uint8_t>(v, &s->cur_action);
+	visit<uint8_t>(v, &s->cur_dir);
+	visit<uint8_t>(v, &s->cur_frame);
+	visit<uint8_t>(v, &s->cur_attack);
+	visit<uint8_t>(v, &s->final_dir);
+	visit<int8_t>(v, &s->turn_delay);
+	visit<int8_t>(v, &s->guard_count);
+	visit<uint8_t>(v, &s->remain_attack_delay);
+	visit<uint8_t>(v, &s->remain_frames_per_step);
+	visit<int16_t>(v, &s->cur_x);
+	visit<int16_t>(v, &s->cur_y);
+	visit<int16_t>(v, &s->go_x);
+	visit<int16_t>(v, &s->go_y);
+	visit<int16_t>(v, &s->next_x);
+	visit<int16_t>(v, &s->next_y);
+	visit_pointer(v, &s->sprite_info);
+}
+
 //--------- Begin of function Unit::read_file ---------//
 //
 int Unit::read_file(File* filePtr)
@@ -367,8 +367,8 @@ int Unit::read_file(File* filePtr)
 	if (!r.init(filePtr))
 		return 0;
 
+	r.check_record_size(169);
 	v.init(&r);
-	v.skip(2); /* record size */
 	visit_unit(&v, this);
 
 	if (!r.good())
