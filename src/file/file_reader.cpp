@@ -17,7 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#include <dbglog.h>
 #include <file_reader.h>
+
+DBGLOG_DEFAULT_CHANNEL(FileReader);
 
 FileReader::FileReader()
 {
@@ -72,6 +75,25 @@ bool FileReader::skip(size_t len)
       this->ok = false;
 
    return this->ok;
+}
+
+bool FileReader::check_record_size(uint16_t expected_size)
+{
+   uint16_t rec_size;
+
+   if (!this->read<uint16_t>(&rec_size))
+      return false;
+
+   if (rec_size != expected_size)
+   {
+      ERR("[FileReader] Bad record size %d in %s at 0x%lx, expecting %d.\n",
+	  rec_size, this->file->file_name, this->is.tell(), expected_size);
+
+      this->ok = false;
+      return false;
+   }
+
+   return true;
 }
 
 /* vim: set ts=8 sw=3: */

@@ -1263,8 +1263,8 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 	if (!r.init(filePtr))
 		return 0;
 
+	r.check_record_size(144);
 	v.init(&r);
-	v.skip(2); /* record size */
 	visit_config(&v, this);
 
 	if( keepSysSettings )
