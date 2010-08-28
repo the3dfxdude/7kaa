@@ -28,9 +28,6 @@
 
 #include <stdio.h>
 #include <ALL.h>
-#include <dbglog.h>
-
-DBGLOG_DEFAULT_CHANNEL(Mem);
 
 //--------- Define Constants -----------//
 
@@ -72,7 +69,7 @@ Mem::Mem()
    info_array = (MemInfo *)malloc(sizeof(MemInfo) * 100);
 
    if ( info_array == NULL )
-      ERR("[Mem::Mem] malloc failed\n");
+      err.mem();
 
    ptr_num  = 100 ;
    ptr_used = 0;
@@ -88,18 +85,23 @@ Mem::Mem()
 //
 char* Mem::add(unsigned memSize, const char* fileName, int fileLine)
 {
+	// ###### begin Gilbert 29/8 ######//
+	//err_when( memSize > 1000000 );		//**BUGHERE, for temporary debugging only
+	err_when( memSize > 0x800000 );
+	// ###### end Gilbert 29/8 ######//
+
    //----------- build up memory pointer table ---------//
 
    if ( ptr_used == ptr_num )
    {
       ptr_num += 100 ;
       if ( ptr_num > 10000 )
-         ERR("[Mem::add] too many pointers\n");
+         err.run( " Mem::add() - Too many pointers " );
 
       info_array = (MemInfo*) realloc( info_array, sizeof(MemInfo) * ptr_num ) ;
 
       if ( info_array == NULL )
-         ERR("[Mem::add] realloc failed\n");
+         err.mem();
    }
 
    //----------- actually allocate memory -------------//
@@ -110,7 +112,7 @@ char* Mem::add(unsigned memSize, const char* fileName, int fileLine)
 
    if ( allocPtr == NULL )
    {
-      ERR("[Mem::add] malloc failed\n");
+      err.mem();
       return NULL;
    }
    else
@@ -149,18 +151,20 @@ char* Mem::add(unsigned memSize, const char* fileName, int fileLine)
 //
 char* Mem::add_clear(unsigned memSize, const char* fileName, int fileLine)
 {
+	err_when( memSize > 1000000 );		//**BUGHERE, for temporary debugging only
+
 	//----------- build up memory pointer table ---------//
 
 	if ( ptr_used == ptr_num )
 	{
 		ptr_num += 100 ;
 		if ( ptr_num > 10000 )
-			ERR("[Mem::add_clear] too many pointers\n");
+			err.run( " Mem::add_clear() - Too many pointers " );
 
 		info_array = (MemInfo*) realloc( info_array, sizeof(MemInfo) * ptr_num ) ;
 
 		if ( info_array == NULL )
-			ERR("[Mem::add_clear] realloc failed\n");
+			err.mem();
 	}
 
 	//----------- actually allocate memory -------------//
@@ -171,7 +175,7 @@ char* Mem::add_clear(unsigned memSize, const char* fileName, int fileLine)
 
 	if ( allocPtr == NULL )
 	{
-		ERR("[Mem::add_clear] malloc failed\n");
+		err.mem();
 		return NULL;
 	}
 	else
@@ -268,6 +272,8 @@ char* Mem::resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize, co
 //
 char* Mem::resize(void *orgPtr, unsigned memSize, const char* fileName, int fileLine)
 {
+	err_when( memSize > 1000000 );		//**BUGHERE, for temporary debugging only
+
    if( orgPtr == NULL )
       return add( memSize, fileName, fileLine);
 
@@ -288,7 +294,7 @@ char* Mem::resize(void *orgPtr, unsigned memSize, const char* fileName, int file
             newPtr = (char*) realloc( (char*)orgPtr-CHK_VAL_SIZE, memSize+CHK_VAL_SIZE*2 );
 
             if( newPtr == NULL )
-               ERR("[Mem::resize] realloc failed\n");
+               err.mem();
 
             // set the POST_CHK_VAL again as the size of it has changed
 
@@ -303,7 +309,8 @@ char* Mem::resize(void *orgPtr, unsigned memSize, const char* fileName, int file
       }
    }
 
-   ERR("[Mem::resize] original memory pointer not found. file name : %s, line no. : %d\n", fileName, fileLine);
+   err.run( "Mem::resize - Original memory pointer not found.\n"
+            "File name : %s, line no. : %d \n", fileName, fileLine );
 
    return NULL;
 }
@@ -332,10 +339,10 @@ void Mem::del(void *freePtr, const char* fileName, int fileLine)
          //---- Check for Underwrite and Overwrite error ---//
 
          if( *((long*)truePtr) != PRE_CHK_VAL )
-            ERR("[Mem::del] memory underwritten, file name:%s, line no.:%d\n", fileName, fileLine);
+            err.run( "Mem::del - Memory Underwritten, File name:%s, line no.:%d\n", fileName, fileLine );
 
          if( *((long*)(truePtr+CHK_VAL_SIZE+info_array[i].size)) != POST_CHK_VAL )
-            ERR("[Mem::del] memory overwritten, file name:%s, line no.:%d\n", fileName, fileLine);
+            err.run( "Mem::del - Memory Overwritten, File name:%s, line no.:%d\n", fileName, fileLine );
 
          // fill the to be freed block with a value, which may
          // have chance to reveal some hiden bugs
@@ -352,7 +359,7 @@ void Mem::del(void *freePtr, const char* fileName, int fileLine)
       }
    }
 
-   ERR("[Mem::del] free value not found, file name:%s, line no.:%d\n", fileName, fileLine);
+   err.run( "Mem::del - Free value not found, File name:%s, line no.:%d\n", fileName, fileLine );
 }
 //----------- END OF FUNCTION Mem::del ---------------//
 
@@ -371,7 +378,7 @@ int Mem::get_mem_size(void *memPtr)
 			return info_array[i].size;
 	}
 
-	ERR("[Mem::get_mem_size] invalid pointer received\n");
+	err.run( "Error: Mem::get_mem_size()." );
 
 	return 0;
 }
@@ -388,8 +395,8 @@ Mem::~Mem()
 
       for ( i=0; i< ptr_used ; i++ )
 		{
-         ERR("[Mem::~Mem] memory not freed, file name : %s, line no. : %d\n",
-              info_array[i].file_name, info_array[i].file_line);
+         err.msg( "Memory not freed. File name : %s, line no. : %d \n",
+                  info_array[i].file_name, info_array[i].file_line );
 		}
    }
 
