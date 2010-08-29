@@ -21,6 +21,7 @@
 //Filename    : OFILE.CPP
 //Description : Object File
 
+#include <ALL.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <ctype.h>
@@ -53,8 +54,8 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 	char name[max_path];
 	int size = strlen(fileName);
 
-	if (size > max_path)
-		ERR("[File::file_open] file name is too long: %s\n", fileName);
+	if(strlen(fileName) > max_path)
+		err.run("File : file name is too long.");
 
 	if (file_handle != NULL)
 		file_close();
@@ -79,8 +80,7 @@ int File::file_open(const char* fileName, int handleError, int fileType)
         }
 	if (!file_handle)
 	{
-		ERR("[File::file_open] error opening file: %s\n", name);
-		return 0;
+		err.run("[File::file_open] error opening file: %s\n", name);
 	}
 
 	strcpy(file_name, name);
@@ -109,10 +109,11 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 //
 int File::file_create(const char* fileName, int handleError, int fileType)
 {
-	if (strlen(fileName) > max_path)
-		ERR("[File::file_create] file name is too long: %s\n", fileName);
+	if(strlen(fileName) > max_path)
+		err.run("File : file name is too long.");
 
 	strcpy(file_name, fileName);
+	// FIXME: this fileName handling is broken
 	for (int i = 0; i < strlen(fileName); i++)
 	{
 		file_name[i] = tolower(file_name[i]);
@@ -123,11 +124,12 @@ int File::file_create(const char* fileName, int handleError, int fileType)
 	file_type = (FileType)fileType;
 
 	file_handle = fopen(fileName, "wb+");
-	if (file_handle != NULL)
-		return 1;
+	if (!file_handle)
+	{
+		err.run("[File::file_create] error opening file: %s\n", fileName);
+	}
 
-	ERR("[File::file_create] error creating file: %s\n", file_name);
-	return 0;
+	return 1;
 }
 //---------- End of function File::file_create ----------//
 
@@ -165,11 +167,7 @@ File::~File()
 //
 int File::file_write(void* dataBuf, unsigned dataSize)
 {
-	if (file_handle == NULL)
-	{
-		ERR("[File::file_write] trying to write to uninitialized file: %s\n", file_name);
-		return 0;
-	}
+	err_when(!file_handle);
 
 	if (file_type == File::STRUCTURED)
 	{
@@ -194,12 +192,13 @@ int File::file_write(void* dataBuf, unsigned dataSize)
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			ERR("[File::file_write] error occured while writing file: %s\n", file_name);
+			err.run("[File::file_write] error occured while writing file: %s\n", file_name);
 		else
-			MSG("[File::file_write] error occured while writing file: %s\n", file_name);
+			ERR("[File::file_write] error occured while writing file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? 1 : 0;
+	return 1;
 }
 //---------- End of function File::file_write ----------//
 
@@ -215,11 +214,7 @@ int File::file_write(void* dataBuf, unsigned dataSize)
 //
 int File::file_read(void* dataBuf, unsigned dataSize)
 {
-	if (file_handle == NULL)
-	{
-		ERR("[File::file_read] trying to read from uninitialized file: %s\n", file_name);
-		return 0;
-	}
+	err_when(!file_handle);
 
 	unsigned bytesToRead = dataSize, recordSize = dataSize;
 
@@ -246,45 +241,40 @@ int File::file_read(void* dataBuf, unsigned dataSize)
 
 	if (ferror(file_handle))
 	{
+		// This used to prompt for a retry -- was this necessary?
 		if (handle_error)
-			ERR("[File::file_read] error occured while reading file: %s\n", file_name);
+			err.run("[File::file_read] error occured while reading file: %s\n", file_name);
 		else
-			MSG("[File::file_read] error occured while reading file: %s\n", file_name);
+			ERR("[File::file_read] error occured while reading file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? 1 : 0;
+	return 1;
 }
 //---------- End of function File::file_read ----------//
 
 
 int File::file_put_short(int16_t value)
 {
-	if (file_handle == NULL)
-	{
-		ERR("[File::file_put_short] trying to write to ininitialized file: %s\n", file_name);
-		return 0;
-	}
+	err_when(!file_handle);
 
 	fwrite(&value, 1, sizeof(int16_t), file_handle);
 
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			ERR("[File::file_put_short] error occured while writing file: %s\n", file_name);
+			err.run("[File::file_put_short] error occured while writing file: %s\n", file_name);
 		else
-			MSG("[File::file_put_short] error occured while writing file: %s\n", file_name);
+			ERR("[File::file_put_short] error occured while writing file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? 1 : 0;
+	return 1;
 }
 
 int16_t File::file_get_short()
 {
-    if (file_handle == NULL)
-    {
-        ERR("[File::file_get_short] trying to read from uninitialized file: %s\n", file_name);
-        return 0;
-    }
+    	err_when(!file_handle);
 
     int16_t value;
     fread(&value, 1, sizeof(int16_t), file_handle);
@@ -292,42 +282,36 @@ int16_t File::file_get_short()
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			ERR("[File::file_get_short] error occured while reading file: %s\n", file_name);
+			err.run("[File::file_get_short] error occured while reading file: %s\n", file_name);
 		else
-			MSG("[File::file_get_short] error occured while reading file: %s\n", file_name);
+			ERR("[File::file_get_short] error occured while reading file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? value : 0;
+	return value;
 }
 
 int File::file_put_unsigned_short(uint16_t value)
 {
-    if (file_handle == NULL)
-    {
-        ERR("[File::file_put_unsigned_short] trying to write to uninitialized file: %s\n", file_name);
-        return 0;
-    }
+    	err_when(!file_handle);
 
     fwrite(&value, 1, sizeof(uint16_t), file_handle);
 
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			ERR("[File::file_put_unsigned_short] error occured while writing file: %s\n", file_name);
+			err.run("[File::file_put_unsigned_short] error occured while writing file: %s\n", file_name);
 		else
-			MSG("[File::file_put_unsigned_short] error occured while writing file: %s\n", file_name);
+			ERR("[File::file_put_unsigned_short] error occured while writing file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? 1 : 0;
+	return 1;
 }
 
 uint16_t File::file_get_unsigned_short()
 {
-    if (file_handle == NULL)
-    {
-        ERR("[File::file_get_unsigned_short] trying to read from uninitialized file: %s\n", file_name);
-        return 0;
-    }
+    	err_when(!file_handle);
 
     uint16_t value;
     fread(&value, 1, sizeof(uint16_t), file_handle);
@@ -335,42 +319,36 @@ uint16_t File::file_get_unsigned_short()
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			ERR("[File::file_get_unsigned_short] error occured while reading file: %s\n", file_name);
+			err.run("[File::file_get_unsigned_short] error occured while reading file: %s\n", file_name);
 		else
-			MSG("[File::file_get_unsigned_short] error occured while reading file: %s\n", file_name);
+			ERR("[File::file_get_unsigned_short] error occured while reading file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? value : 0;
+	return value;
 }
 
 int File::file_put_long(int32_t value)
 {
-    if (file_handle == NULL)
-    {
-        ERR("[File::file_put_long] trying to write to uninitialized file: %s\n", file_name);
-        return 0;
-    }
+    	err_when(!file_handle);
 
     fwrite(&value, 1, sizeof(int32_t), file_handle);
 
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			ERR("[File::file_put_long] error occured while writing file: %s\n", file_name);
+			err.run("[File::file_put_long] error occured while writing file: %s\n", file_name);
 		else
-			MSG("[File::file_put_long] error occured while writing file: %s\n", file_name);
+			ERR("[File::file_put_long] error occured while writing file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? 1 : 0;
+	return 1;
 }
 
 int32_t File::file_get_long()
 {
-    if (file_handle == NULL)
-    {
-        ERR("[File::file_get_long] trying to read from uninitialized file: %s\n", file_name);
-        return 0;
-    }
+    	err_when(!file_handle);
 
     int32_t value;
     fread(&value, 1, sizeof(int32_t), file_handle);
@@ -378,12 +356,13 @@ int32_t File::file_get_long()
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			ERR("[File::file_get_long] error occured while reading file: %s\n", file_name);
+			err.run("[File::file_get_long] error occured while reading file: %s\n", file_name);
 		else
-			MSG("[File::file_get_long] error occured while reading file: %s\n", file_name);
+			ERR("[File::file_get_long] error occured while reading file: %s\n", file_name);
+		return 0;
 	}
 
-	return ferror(file_handle) == 0 ? value : 0;
+	return value;
 }
 
 //---------- Start of function File::file_seek ---------//
