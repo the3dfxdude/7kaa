@@ -76,8 +76,6 @@ void ResourceDb::init_imported(const char* resName, int cacheWholeFile, int useC
 {
    deinit();
 
-   if (!resName) ERR("[ResourceDb::init_imported] NULL filename received\n");
-
    read_all = cacheWholeFile;
 
    file_open( resName );
@@ -120,15 +118,13 @@ void ResourceDb::init_imported(const char* resName, int cacheWholeFile, int useC
 //
 char* ResourceDb::read_imported(long offset)
 {
-    if (!init_flag)
-        ERR("[ResourceDb::read_imported] trying to read before initialization\n");
+	err_when(!init_flag);
 
 	//-------- read from buffer ---------//
 	// ##### begin Gilbert 4/10 #######//
 	if( read_all )
 	{
-		if (offset < 0 || offset >= data_buf_size)
-            ERR("[ResourceDb::read_imported] invalid offset specified #1\n");
+		err_when(offset < 0 || offset >= data_buf_size);
 		return data_buf + offset + sizeof(int32_t);  // bypass the long parameters which is the size of the data
 	}
 	// ##### end Gilbert 4/10 #######//
@@ -136,15 +132,13 @@ char* ResourceDb::read_imported(long offset)
 	//---------- read from file ---------//
 
 	// ##### begin Gilbert 2/10 ######//
-	if (offset >= file_size())
-        ERR("[ResourceDb::read_imported] invalid offset specified #2\n");
+	err_when(offset >= file_size());
 	// ##### end Gilbert 2/10 ######//
 	file_seek( offset );
 
 	data_buf_size = file_get_long();
 
-	if (use_common_buf && data_buf_size > COMMON_DATA_BUF_SIZE)
-        ERR("[ResourceDb::read_imported] data too big for common buffer\n");
+	err_when(use_common_buf && data_buf_size > COMMON_DATA_BUF_SIZE);
 
    if( !use_common_buf )
 		data_buf = mem_resize( data_buf, data_buf_size );
