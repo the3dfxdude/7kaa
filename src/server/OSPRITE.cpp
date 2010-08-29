@@ -29,9 +29,6 @@
 #include <ONATION.h>
 #include <OSPRITE.h>
 #include <OCOLTBL.h>
-#include <dbglog.h>
-
-DBGLOG_DEFAULT_CHANNEL(Graphics);
 
 //----------- Define static class member variables -----------//
 
@@ -219,8 +216,7 @@ void Sprite::draw()
 	SpriteFrame* spriteFrame = cur_sprite_frame(&needMirror);
 	update_abs_pos(spriteFrame);
 
-    if (!sprite_info->res_bitmap.initialized())
-        ERR("[Sprite::draw] trying to read from uninitialized resource\n");
+	err_when( !sprite_info->res_bitmap.initialized() );
 
 	char* bitmapPtr = sprite_info->res_bitmap.read_imported(spriteFrame->bitmap_offset);
 
