@@ -24,12 +24,11 @@
 #ifndef __OFILE_H
 #define __OFILE_H
 
+#include <win32_compat.h>
 #include <stdio.h>
 #include <stdint.h>
 
 //--------------------------------------//
-
-const int max_path = 260;
 
 class File
 {
@@ -37,7 +36,7 @@ public:
 
 	enum  FileType { FLAT = 0, STRUCTURED = 1 };
 
-	char     file_name[max_path+1];
+	char     file_name[MAX_PATH+1];
 	FILE*    file_handle;
 	int      handle_error;
 	FileType file_type;
