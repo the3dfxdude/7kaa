@@ -104,7 +104,7 @@ public :
    void  jump(int);
    void  go(int);
    int   recno();
-   int   size();
+   int   size() const;
 
    int   is_start();
    int   is_end();
@@ -275,7 +275,7 @@ inline int DynArray::recno()
    return cur_pos;
 }
 
-inline int DynArray::size()
+inline int DynArray::size() const
 {
    return last_ele;
 }
