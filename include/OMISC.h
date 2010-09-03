@@ -47,7 +47,7 @@ public:
 
    int   str_cut(char*,char*,int,int=-1);
    int   str_chr(char*,char,int=1,int=-1);
-   int   str_str(char*,char*,int=1,int=-1);
+   int   str_str(const char *, const char *, int = 1, int = -1);
    int   str_cmp(char*,char*);
    int   str_cmpx(char*,char*);
    int   str_icmpx(char*,char*);

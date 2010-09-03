@@ -204,7 +204,7 @@ int Misc::str_chr( char* str, char chr, int spos, int epos )
 //          FAIL / NULL if not found
 //
 
-int Misc::str_str( char* str, char* fstr, int spos, int epos )
+int Misc::str_str(const char * str, const char * fstr, int spos, int epos)
 {
    int i,j,flen;
 
