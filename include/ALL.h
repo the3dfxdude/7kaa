@@ -24,25 +24,15 @@
 #ifndef __ALL_H
 #define __ALL_H
 
-#include <win32_compat.h>
-
 //--------- Include other headers -------//
 
-#ifndef __OMISC_H
+#include <win32_compat.h>
 #include <OMISC.h>
-#endif
-
-#ifndef __OSTR_H
 #include <OSTR.h>
-#endif
-
-#ifndef __OFILE_H
 #include <OFILE.h>
-#endif
-
-#ifndef __GAMEDEF_H
 #include <GAMEDEF.h>
-#endif
+#include <OERROR.h>
+
 
 //-------- Game Version -----------//
 #define SKVERSION "2.14.0"
@@ -80,47 +70,6 @@ public :
 char* mem_resize_keep_data(void*,unsigned,unsigned);    // called when DEBUG mode is off
 
 extern Mem mem;
-
-//------- Define Class Error ------------//
-
-typedef void (*ExtraHandler)();
-
-class Error
-{
-private:
-   ExtraHandler extra_handler;          // extra error handler
-
-public:
-   Error();
-
-   void internal(char*,const char*,int);
-   void mem();
-        void msg(const char*,...);
-   void run(const char*,...);
-
-   void set_extra_handler(ExtraHandler extraHandler) { extra_handler = extraHandler; }
-};
-
-extern Error err;
-
-//-------- error handling functions ----------//
-
-#ifdef DEBUG
-   #define err_when(cond)   if(cond) err.internal(NULL,__FILE__, __LINE__)
-   #define err_here()       err.internal(NULL,__FILE__, __LINE__)
-   #define err_if(cond)     if(cond)
-   #define err_else         else
-   #define err_now(msg)     err.run(msg)        // internal error
-
-   // always use err_if(cond) together with err_now(), so when debug is turn off, these two statement will turn off
-#else
-   #define err_when(cond)
-   #define err_here()
-   #define err_if(cond)
-   #define err_else
-   #define err_now(msg)
-#endif
-
 
 //------ memory allocation functions --------//
 
