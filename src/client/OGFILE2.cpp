@@ -1234,11 +1234,14 @@ static void visit_config(Visitor *v, Config *cfg)
 	visit<int8_t>(v, &cfg->fog_mask_method);
 }
 
+enum { CONFIG_RECORD_SIZE = 144 };
+
 //-------- Start of function Config::write_file -------------//
 //
 int Config::write_file(File* filePtr)
 {
-	return write_with_record_size(filePtr, this, &visit_config, 144);
+	return write_with_record_size(filePtr, this, &visit_config,
+											CONFIG_RECORD_SIZE);
 }
 //--------- End of function Config::write_file ---------------//
 
@@ -1261,7 +1264,7 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 	if (!r.init(filePtr))
 		return 0;
 
-	r.check_record_size(144);
+	r.check_record_size(CONFIG_RECORD_SIZE);
 	v.init(&r);
 	visit_config(&v, this);
 
