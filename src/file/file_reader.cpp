@@ -81,6 +81,9 @@ bool FileReader::check_record_size(uint16_t expected_size)
 {
    uint16_t rec_size;
 
+   if (this->original_type != File::STRUCTURED)
+      return true;
+
    if (!this->read<uint16_t>(&rec_size))
       return false;
 
