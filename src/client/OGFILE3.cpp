@@ -804,66 +804,6 @@ int Projectile::read_derived_file(File *filePtr)
 
 //*****//
 
-//-------- Start of function FirmArray::write_file -------------//
-//
-int FirmArray::write_file(File* filePtr)
-{
-   int  i;
-   Firm *firmPtr;
-
-   filePtr->file_put_short( size()  );  // no. of firms in firm_array
-   filePtr->file_put_short( process_recno );
-	filePtr->file_put_short( selected_recno );
-
-	filePtr->file_put_short( Firm::firm_menu_mode );
-	filePtr->file_put_short( Firm::action_spy_recno );
-	filePtr->file_put_short( Firm::bribe_result );
-	filePtr->file_put_short( Firm::assassinate_result );
-
-	for( i=1; i<=size() ; i++ )
-   {
-      firmPtr = (Firm*) get_ptr(i);
-
-      //----- write firmId or 0 if the firm is deleted -----//
-
-      if( !firmPtr )    // the firm is deleted
-		{
-         filePtr->file_put_short(0);
-      }
-      else
-      {
-         //--------- write firm_id -------------//
-
-         filePtr->file_put_short(firmPtr->firm_id);
-
-         //------ write data in base class --------//
-
-			if( !filePtr->file_write( firmPtr, sizeof(Firm) ) )
-            return 0;
-
-         //--------- write worker_array ---------//
-
-         if( firmPtr->worker_array )
-         {
-            if( !filePtr->file_write( firmPtr->worker_array, MAX_WORKER*sizeof(Worker) ) )
-               return 0;
-         }
-
-         //------ write data in derived class ------//
-
-         if( !firmPtr->write_derived_file(filePtr) )
-            return 0;
-      }
-   }
-
-   //------- write empty room array --------//
-
-	write_empty_room(filePtr);
-
-   return 1;
-}
-//--------- End of function FirmArray::write_file ---------------//
-
 template <typename Visitor>
 static void visit_firm(Visitor *v, Firm *f)
 {
@@ -929,6 +869,78 @@ static void visit_firm(Visitor *v, Firm *f)
 	visit<int8_t>(v, &f->ai_should_build_factory_count);
 }
 
+enum { FIRM_RECORD_SIZE = 254 };
+
+static bool read_firm(File *file, Firm *firm)
+{
+  return read_with_record_size(file, firm, &visit_firm, FIRM_RECORD_SIZE);
+}
+
+static bool write_firm(File *file, Firm *firm)
+{
+  return write_with_record_size(file, firm, &visit_firm, FIRM_RECORD_SIZE);
+}
+
+//-------- Start of function FirmArray::write_file -------------//
+//
+int FirmArray::write_file(File* filePtr)
+{
+   int  i;
+   Firm *firmPtr;
+
+   filePtr->file_put_short( size()  );  // no. of firms in firm_array
+   filePtr->file_put_short( process_recno );
+	filePtr->file_put_short( selected_recno );
+
+	filePtr->file_put_short( Firm::firm_menu_mode );
+	filePtr->file_put_short( Firm::action_spy_recno );
+	filePtr->file_put_short( Firm::bribe_result );
+	filePtr->file_put_short( Firm::assassinate_result );
+
+	for( i=1; i<=size() ; i++ )
+   {
+      firmPtr = (Firm*) get_ptr(i);
+
+      //----- write firmId or 0 if the firm is deleted -----//
+
+      if( !firmPtr )    // the firm is deleted
+		{
+         filePtr->file_put_short(0);
+      }
+      else
+      {
+         //--------- write firm_id -------------//
+
+         filePtr->file_put_short(firmPtr->firm_id);
+
+         //------ write data in base class --------//
+
+			if (!write_firm(filePtr, firmPtr))
+			  return 0;
+
+         //--------- write worker_array ---------//
+
+         if( firmPtr->worker_array )
+         {
+            if( !filePtr->file_write( firmPtr->worker_array, MAX_WORKER*sizeof(Worker) ) )
+               return 0;
+         }
+
+         //------ write data in derived class ------//
+
+         if( !firmPtr->write_derived_file(filePtr) )
+            return 0;
+      }
+   }
+
+   //------- write empty room array --------//
+
+	write_empty_room(filePtr);
+
+   return 1;
+}
+//--------- End of function FirmArray::write_file ---------------//
+
 //-------- Start of function FirmArray::read_file -------------//
 //
 int FirmArray::read_file(File* filePtr)
@@ -955,26 +967,13 @@ int FirmArray::read_file(File* filePtr)
       }
       else
       {
-			FileReader r;
-			FileReaderVisitor v;
-
          //----- create firm object -----------//
 
          firmRecno = create_firm( firmId );
          firmPtr   = firm_array[firmRecno];
 
-			if (!r.init(filePtr))
-				return 0;
-
-			v.init(&r);
-
-			v.skip(2); /* record size */
-			visit_firm(&v, firmPtr);
-
-			if (!r.good())
-				return 0;
-
-			r.deinit();
+			if (!read_firm(filePtr, firmPtr))
+			  return 0;
 
          //---- read data in base class -----//
 
