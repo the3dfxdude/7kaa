@@ -190,7 +190,7 @@ int GameFile::load_game(const char *base_path, char* fileName)
 
       strcpy( gameFileName, file_name );     // save the file name actually read, in case that the file names are different
 
-		ERR(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
 		if( !file.file_read(this, sizeof(GameFile)) )	// read the whole object from the saved game file
 		{
