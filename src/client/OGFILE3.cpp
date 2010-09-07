@@ -2122,18 +2122,6 @@ int TornadoArray::read_file(File* filePtr)
 }
 //--------- End of function TornadoArray::read_file ---------------//
 
-
-//--------- Begin of function Tornado::write_file ---------//
-//
-int Tornado::write_file(File* filePtr)
-{
-   if( !filePtr->file_write( this, sizeof(Tornado) ) )
-      return 0;
-
-   return 1;
-}
-//----------- End of function Tornado::write_file ---------//
-
 template <typename Visitor>
 static void visit_tornado(Visitor *v, Tornado *t)
 {
@@ -2144,24 +2132,24 @@ static void visit_tornado(Visitor *v, Tornado *t)
    visit<int16_t>(v, &t->dmg_offset_y);
 }
 
+enum { TORNADO_RECORD_SIZE = 44 };
+
+//--------- Begin of function Tornado::write_file ---------//
+//
+int Tornado::write_file(File* filePtr)
+{
+	return write_with_record_size(filePtr, this, &visit_tornado,
+											TORNADO_RECORD_SIZE);
+}
+//----------- End of function Tornado::write_file ---------//
+
 //--------- Begin of function Tornado::read_file ---------//
 //
 int Tornado::read_file(File* filePtr)
 {
-	FileReader r;
-	FileReaderVisitor v;
-
-	if (!r.init(filePtr))
+	if (!read_with_record_size(filePtr, this, &visit_tornado,
+										TORNADO_RECORD_SIZE))
 		return 0;
-
-	v.init(&r);
-	v.skip(2); /* record size */
-	visit_tornado(&v, this);
-
-	if (!r.good())
-		return 0;
-
-	r.deinit();
 
    //------------ post-process the data read ----------//
 
