@@ -26,7 +26,9 @@
 
 #include <ODYNARR.h>
 #include <dbglog.h>
-#include <file_reader.h>
+#include <file_io_visitor.h>
+
+using namespace FileIOVisitor;
 
 DBGLOG_DEFAULT_CHANNEL(DynArray);
 
@@ -472,7 +474,20 @@ void DynArray::quick_sort( int(*cmpFun)(const void*, const void*) )
 }
 //------------- End of function DynArray::quick_sort --------------//
 
+template <typename Visitor>
+static void visit_dyn_array(Visitor *v, DynArray *da)
+{
+   visit<int32_t>(v, &da->ele_num);
+   visit<int32_t>(v, &da->block_num);
+   visit<int32_t>(v, &da->cur_pos);
+   visit<int32_t>(v, &da->last_ele);
+   visit<int32_t>(v, &da->ele_size);
+   visit<int32_t>(v, &da->sort_offset);
+   visit<int8_t>(v, &da->sort_type);
+	v->skip(4); /* da->body_buf */
+}
 
+enum { DYN_ARRAY_RECORD_SIZE = 29 };
 
 //---------- Begin of function DynArray::write_file -------------//
 //
@@ -486,8 +501,9 @@ void DynArray::quick_sort( int(*cmpFun)(const void*, const void*) )
 //
 int DynArray::write_file(File* filePtr)
 {
-   if( !filePtr->file_write( this, sizeof(DynArray) ) )
-       return 0;
+	if (!write_with_record_size(filePtr, this, &visit_dyn_array,
+										 DYN_ARRAY_RECORD_SIZE))
+		return 0;
 
    if( last_ele > 0 )
    {
@@ -512,26 +528,9 @@ int DynArray::write_file(File* filePtr)
 //
 int DynArray::read_file(File* filePtr)
 {
-	FileReader r;
-
-	if (!r.init(filePtr))
+	if (!read_with_record_size(filePtr, this, &visit_dyn_array,
+										DYN_ARRAY_RECORD_SIZE))
 		return 0;
-
-	r.skip(2); /* record size */
-
-   r.read<int32_t>(&this->ele_num);
-   r.read<int32_t>(&this->block_num);
-   r.read<int32_t>(&this->cur_pos);
-   r.read<int32_t>(&this->last_ele);
-   r.read<int32_t>(&this->ele_size);
-   r.read<int32_t>(&this->sort_offset);
-   r.read<int8_t>(&this->sort_type);
-	r.skip(4); /* this->body_buf */
-
-	if (!r.good())
-		return 0;
-
-	r.deinit();
 
    this->body_buf = mem_resize(this->body_buf, this->ele_num*this->ele_size);
 
