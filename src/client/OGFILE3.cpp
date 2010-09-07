@@ -2246,6 +2246,8 @@ int SpyArray::read_file(File* filePtr)
 //
 int SnowGroundArray::write_file(File* filePtr)
 {
+	MSG(__FILE__":%d: file_write(this, ...);\n", __LINE__);
+
    if( !filePtr->file_write( this, sizeof(SnowGroundArray)) )
       return 0;
 
