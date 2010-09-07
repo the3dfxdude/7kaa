@@ -1283,7 +1283,8 @@ static void visit_nation_array(Visitor *v, NationArray *na)
 	visit_array<int8_t>(v, na->nation_power_color_array, MAX_NATION+2);
 
 	for (int n = 0; n < MAX_NATION; n++)
-		visit_array<int8_t>(v, na->human_name_array[n], NationArray::HUMAN_NAME_LEN+1);
+		visit_array<int8_t>(v, na->human_name_array[n],
+								  NationArray::HUMAN_NAME_LEN+1);
 }
 
 enum { NATION_ARRAY_RECORD_SIZE = 288 };
@@ -1294,19 +1295,14 @@ static bool read_nation_array(File *file, NationArray *na)
 										  NATION_ARRAY_RECORD_SIZE);
 }
 
-static bool write_nation_array(File *file, NationArray *na)
-{
-	return write_with_record_size(file, na, &visit_nation_array,
-											NATION_ARRAY_RECORD_SIZE);
-}
-
 //-------- Start of function NationArray::write_file -------------//
 //
 int NationArray::write_file(File* filePtr)
 {
 	//------ write info in NationArray ------//
 	
-	if (!write_nation_array(filePtr, this))
+	if (!write_with_record_size(filePtr, this, &visit_nation_array,
+										 NATION_ARRAY_RECORD_SIZE))
 		return 0;
 
    //---------- write Nations --------------//
@@ -1355,7 +1351,8 @@ static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
 	visit<int32_t>(v, &na->max_nation_population);
 	visit<int32_t>(v, &na->all_nation_population);
 	visit<int16_t>(v, &na->independent_town_count);
-	visit_array<int16_t>(v, na->independent_town_count_race_array, VERSION_1_MAX_RACE);
+	visit_array<int16_t>(v, na->independent_town_count_race_array,
+								VERSION_1_MAX_RACE);
 	visit<int32_t>(v, &na->max_nation_units);
 	visit<int32_t>(v, &na->max_nation_humans);
 	visit<int32_t>(v, &na->max_nation_generals);
@@ -1388,21 +1385,7 @@ static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
 								  NationArray::HUMAN_NAME_LEN+1);
 }
 
-static bool read_version_1_nation_array(File *file, Version_1_NationArray *na)
-{
-	FileReader r;
-	FileReaderVisitor v;
-
-	if (!r.init(file))
-		return false;
-
-	v.init(&r);
-
-	v.skip(2); /* record size */
-	visit_version_1_nation_array(&v, na);
-
-	return r.good();
-}
+enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
 
 //-------- Start of function NationArray::read_file -------------//
 //
@@ -1413,7 +1396,9 @@ int NationArray::read_file(File* filePtr)
 	if(!game_file_array.same_version)
 	{
 		Version_1_NationArray *oldNationArrayPtr = (Version_1_NationArray*) mem_add(sizeof(Version_1_NationArray));
-		if (!read_version_1_nation_array(filePtr, oldNationArrayPtr))
+		if (!read_with_record_size(filePtr, oldNationArrayPtr,
+											&visit_version_1_nation_array,
+											VERSION_1_NATION_ARRAY_RECORD_SIZE))
 		{
 			mem_del(oldNationArrayPtr);
 			return 0;
