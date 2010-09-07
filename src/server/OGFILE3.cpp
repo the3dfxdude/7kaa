@@ -772,25 +772,15 @@ static void visit_projectile(Visitor *v, Projectile *p)
 	visit_sprite(v, &p->bullet_shadow);
 }
 
+enum { PROJECTILE_RECORD_SIZE = 72 };
+
 //----------- Begin of function Projectile::read_derived_file ---------//
 
 int Projectile::read_derived_file(File *filePtr)
 {
-	FileReader r;
-	FileReaderVisitor v;
-
-	if (!r.init(filePtr))
+	if (!read_with_record_size(filePtr, this, &visit_projectile,
+										PROJECTILE_RECORD_SIZE))
 		return 0;
-
-	v.init(&r);
-
-	v.skip(2); /* record size */
-	visit_projectile(&v, this);
-
-	if (!r.good())
-		return 0;
-
-	r.deinit();
 
    //----------- post-process the data read ----------//
 	act_bullet.sprite_info = sprite_res[act_bullet.sprite_id];
