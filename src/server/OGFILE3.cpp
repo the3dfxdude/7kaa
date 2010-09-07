@@ -1482,51 +1482,6 @@ int NationArray::read_file(File* filePtr)
 }
 //--------- End of function NationArray::read_file ---------------//
 
-
-//--------- Begin of function Nation::write_file ---------//
-//
-int Nation::write_file(File* filePtr)
-{
-	if( !filePtr->file_write( this, sizeof(Nation) ) )
-		return 0;
-
-	//----------- write AI Action Array ------------//
-
-	action_array.write_file(filePtr);
-
-	//------ write AI info array ---------//
-
-	write_ai_info(filePtr, ai_town_array, ai_town_count, ai_town_size);
-
-	write_ai_info(filePtr, ai_base_array, ai_base_count, ai_base_size);
-	write_ai_info(filePtr, ai_mine_array, ai_mine_count, ai_mine_size);
-	write_ai_info(filePtr, ai_factory_array, ai_factory_count, ai_factory_size);
-	write_ai_info(filePtr, ai_market_array, ai_market_count, ai_market_size);
-	write_ai_info(filePtr, ai_inn_array, ai_inn_count, ai_inn_size);
-	write_ai_info(filePtr, ai_camp_array, ai_camp_count, ai_camp_size);
-	write_ai_info(filePtr, ai_research_array, ai_research_count, ai_research_size);
-	write_ai_info(filePtr, ai_war_array, ai_war_count, ai_war_size);
-	write_ai_info(filePtr, ai_harbor_array, ai_harbor_count, ai_harbor_size);
-
-	write_ai_info(filePtr, ai_caravan_array, ai_caravan_count, ai_caravan_size);
-	write_ai_info(filePtr, ai_ship_array, ai_ship_count, ai_ship_size);
-	write_ai_info(filePtr, ai_general_array, ai_general_count, ai_general_size);
-
-	return 1;
-}
-//----------- End of function Nation::write_file ---------//
-
-
-//--------- Begin of static function write_ai_info ---------//
-//
-static void write_ai_info(File* filePtr, short* aiInfoArray, short aiInfoCount, short aiInfoSize)
-{
-	filePtr->file_put_short( aiInfoCount );
-	filePtr->file_put_short( aiInfoSize  );
-	filePtr->file_write( aiInfoArray, sizeof(short) * aiInfoCount );
-}
-//----------- End of static function write_ai_info ---------//
-
 template <typename Visitor>
 static void visit_nation_relation(Visitor *v, NationRelation *nr)
 {
@@ -1580,7 +1535,6 @@ static void visit_ai_region(Visitor *v, AIRegion *reg)
 template <typename Visitor>
 static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 {
-	v->skip(2); /* record size */
 	v->skip(4); /* virtual table pointer */
 
 	/* NationBase */
@@ -1773,25 +1727,21 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 	visit<int16_t>(v, &v1n->lead_attack_camp_recno);
 }
 
+enum { VERSION_1_NATION_RECORD_SIZE = 2182 };
+
 static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 {
-	FileReader r;
-	FileReaderVisitor v;
-
-	if (!r.init(file))
+	if (!read_with_record_size(file, v1n, &visit_version_1_nation,
+										VERSION_1_NATION_RECORD_SIZE))
 		return false;
 
-	v.init(&r);
-	visit_version_1_nation(&v, v1n);
 	memset(&v1n->action_array, 0, sizeof(v1n->action_array));
-
-	return r.good();
+	return true;
 }
 
 template <typename Visitor>
-static bool visit_nation(Visitor *v, Nation *nat)
+static void visit_nation(Visitor *v, Nation *nat)
 {
-	v->skip(2); /* record size */
 	v->skip(4); /* virtual table pointer */
 
 	/* NationBase */
@@ -1979,19 +1929,60 @@ static bool visit_nation(Visitor *v, Nation *nat)
 	visit<int16_t>(v, &nat->lead_attack_camp_recno);
 }
 
+enum { NATION_RECORD_SIZE = 2202 };
+
+//--------- Begin of function Nation::write_file ---------//
+//
+int Nation::write_file(File* filePtr)
+{
+	if (!write_with_record_size(filePtr, this, &visit_nation,
+										 NATION_RECORD_SIZE))
+		return 0;
+
+	//----------- write AI Action Array ------------//
+
+	action_array.write_file(filePtr);
+
+	//------ write AI info array ---------//
+
+	write_ai_info(filePtr, ai_town_array, ai_town_count, ai_town_size);
+
+	write_ai_info(filePtr, ai_base_array, ai_base_count, ai_base_size);
+	write_ai_info(filePtr, ai_mine_array, ai_mine_count, ai_mine_size);
+	write_ai_info(filePtr, ai_factory_array, ai_factory_count, ai_factory_size);
+	write_ai_info(filePtr, ai_market_array, ai_market_count, ai_market_size);
+	write_ai_info(filePtr, ai_inn_array, ai_inn_count, ai_inn_size);
+	write_ai_info(filePtr, ai_camp_array, ai_camp_count, ai_camp_size);
+	write_ai_info(filePtr, ai_research_array, ai_research_count, ai_research_size);
+	write_ai_info(filePtr, ai_war_array, ai_war_count, ai_war_size);
+	write_ai_info(filePtr, ai_harbor_array, ai_harbor_count, ai_harbor_size);
+
+	write_ai_info(filePtr, ai_caravan_array, ai_caravan_count, ai_caravan_size);
+	write_ai_info(filePtr, ai_ship_array, ai_ship_count, ai_ship_size);
+	write_ai_info(filePtr, ai_general_array, ai_general_count, ai_general_size);
+
+	return 1;
+}
+//----------- End of function Nation::write_file ---------//
+
+
+//--------- Begin of static function write_ai_info ---------//
+//
+static void write_ai_info(File* filePtr, short* aiInfoArray, short aiInfoCount, short aiInfoSize)
+{
+	filePtr->file_put_short( aiInfoCount );
+	filePtr->file_put_short( aiInfoSize  );
+	filePtr->file_write( aiInfoArray, sizeof(short) * aiInfoCount );
+}
+//----------- End of static function write_ai_info ---------//
+
 static bool read_nation(File *file, Nation *nat)
 {
-	FileReader r;
-	FileReaderVisitor v;
-
-	if (!r.init(file))
+	if (!read_with_record_size(file, nat, &visit_nation, NATION_RECORD_SIZE))
 		return false;
 
-	v.init(&r);
-	visit_nation(&v, nat);
 	memset(&nat->action_array, 0, sizeof(nat->action_array));
-
-	return r.good();
+	return true;
 }
 
 //--------- Begin of function Nation::read_file ---------//
