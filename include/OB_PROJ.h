@@ -42,7 +42,7 @@ public:
 	char	display_layer();
 	void	draw();
 
-	// int	write_derived_file(File *);
+	int	write_derived_file(File *);
 	int	read_derived_file(File *);
 
 	//-------------- multiplayer checking codes ---------------//

@@ -702,11 +702,14 @@ static void visit_bullet(Visitor *v, Bullet *b)
 	visit<int8_t>(v, &b->total_step);
 }
 
+enum { BULLET_RECORD_SIZE = 57 };
+
 //--------- Begin of function Bullet::write_file ---------//
 //
 int Bullet::write_file(File* filePtr)
 {
-	return write_with_record_size(filePtr, this, &visit_bullet, 57);
+	return write_with_record_size(filePtr, this, &visit_bullet,
+											BULLET_RECORD_SIZE);
 }
 //----------- End of function Bullet::write_file ---------//
 
@@ -714,7 +717,8 @@ int Bullet::write_file(File* filePtr)
 //
 int Bullet::read_file(File* filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_bullet, 57))
+	if (!read_with_record_size(filePtr, this, &visit_bullet,
+										BULLET_RECORD_SIZE))
 		return 0;
 
    //------------ post-process the data read ----------//
@@ -775,6 +779,12 @@ static void visit_projectile(Visitor *v, Projectile *p)
 enum { PROJECTILE_RECORD_SIZE = 72 };
 
 //----------- Begin of function Projectile::read_derived_file ---------//
+
+int Projectile::write_derived_file(File *filePtr)
+{
+	return write_with_record_size(filePtr, this, &visit_projectile,
+											PROJECTILE_RECORD_SIZE);
+}
 
 int Projectile::read_derived_file(File *filePtr)
 {
