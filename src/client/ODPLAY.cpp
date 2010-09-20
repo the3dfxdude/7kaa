@@ -71,7 +71,7 @@ DPSessionDesc::DPSessionDesc(const DPSESSIONDESC2 &dpSessionDesc) : DPSESSIONDES
 }
 */
 
-DPSessionDesc::DPSessionDesc(const DPSessionDesc &dpSessionDesc) : DPSESSIONDESC2(dpSessionDesc)
+DPSessionDesc::DPSessionDesc(const DPSessionDesc &dpSessionDesc) //: DPSESSIONDESC2(dpSessionDesc)
 {
 	after_copy();
 }
@@ -128,7 +128,7 @@ DPSessionDesc *DPSessionDesc::before_use()
 
 
 // ------- begin of function MultiPlayerDP::MultiPlayerDP -------//
-MultiPlayerDP::MultiPlayerDP() : service_providers(sizeof(DPServiceProvider), 10 ),
+MultiPlayerDP::MultiPlayerDP() : //service_providers(sizeof(DPServiceProvider), 10 ),
 	current_sessions(sizeof(DPSessionDesc), 10 ), player_pool(sizeof(DPPlayer), 8 ),
 	recv_buffer(new char[MP_RECV_BUFFER_SIZE])
 {
@@ -162,7 +162,8 @@ void MultiPlayerDP::pre_init()
 // ------- begin of function MultiPlayerDP::pre_init -------//
 
 // ------- begin of function MultiPlayerDP::init -------//
-void MultiPlayerDP::init(GUID serviceProviderGUID)
+//void MultiPlayerDP::init(GUID serviceProviderGUID)
+void MultiPlayerDP::init(ProtocolType protocol_type)
 {
 	VgaFrontLock vlock;
 	if( !DirectPlayCreate( &serviceProviderGUID, &direct_play1, NULL) )
@@ -599,8 +600,7 @@ void MultiPlayerDP::disable_join_session()
 //
 // return TRUE if success
 //
-int MultiPlayerDP::create_player(char *friendlyName, char *formalName, 
-	LPVOID lpData, DWORD dataSize, DWORD flags)
+int MultiPlayerDP::create_player(char *friendlyName, char *formalName)
 {
 	if(!init_flag)
 		return FALSE;
@@ -681,7 +681,7 @@ DPPlayer *MultiPlayerDP::get_player(int i)
 //
 // search player by playerID
 //
-DPPlayer *MultiPlayerDP::search_player(DPID playerId)
+DPPlayer *MultiPlayerDP::search_player(uint32_t playerId)
 {
 	DPPlayer *player;
 	int i = 0;
@@ -737,7 +737,7 @@ int MultiPlayerDP::am_I_host()
 // so if a player is really lost, the system message from 
 // directPlay is received
 //
-int MultiPlayerDP::is_player_connecting(DPID playerId)
+int MultiPlayerDP::is_player_connecting(uint32_t playerId)
 {
 	for( int p = 1; p <= player_pool.size(); ++p)
 	{
@@ -828,7 +828,7 @@ int MultiPlayerDP::retrieve_private_data(DPID playerId, LPVOID lpData, LPDWORD l
 //
 // return TRUE on success
 //
-int MultiPlayerDP::send(DPID toId, LPVOID lpData, DWORD dataSize)
+int MultiPlayerDP::send(uint32_t toId, void * lpData, uint32_t dataSize)
 {
 	err_when(!init_flag);
 	HRESULT hr;
@@ -881,7 +881,7 @@ void MultiPlayerDP::begin_stream(DPID toId)
 //
 // return TRUE on success
 //
-int MultiPlayerDP::send_stream(DPID toId, LPVOID lpData, DWORD dataSize)
+int MultiPlayerDP::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
 {
 	err_when(!init_flag);
 	HRESULT hr;
@@ -948,7 +948,7 @@ int MultiPlayerDP::get_msg_count()
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
 //
-char *MultiPlayerDP::receive(LPDPID from, LPDPID to, LPDWORD dSize, int *sysMsgCount)
+char *MultiPlayerDP::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, int *sysMsgCount)
 {
 	err_when(!init_flag);
 	DPID fromId, toId;
