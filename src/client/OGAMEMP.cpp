@@ -489,7 +489,7 @@ void Game::multi_player_game(char *cmdLine)
 	mp_obj.pre_init();
 
 	// ###### begin Gilbert 13/2 #######//
-	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.init_flag) )
+	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
 	{	// not launched from lobby
 	// ###### end Gilbert 13/2 #######//
 
@@ -534,7 +534,7 @@ void Game::multi_player_game(char *cmdLine)
 	// ####### end Gilbert 13/2 ########//
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
-	if(!mp_obj.init_flag)
+	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
 		box.msg("Cannot initialize DirectPlay.");
@@ -668,7 +668,7 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	int choice, p;
 	mp_obj.pre_init();
 	// ###### begin Gilbert 13/2 #######//
-	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.init_flag) )
+	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
 	{	// not launched from lobby
 	// ###### end Gilbert 13/2 #######//
 
@@ -713,7 +713,7 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	// ####### end Gilbert 13/2 ########//
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
-	if(!mp_obj.init_flag)
+	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
 		box.msg("Cannot initialize DirectPlay.");
