@@ -26,6 +26,7 @@
 #include <OIMMPLAY.h>
 #include <CRC.h>
 #include <ALL.h>
+#include <stdint.h>
 
 #define DEBUG_LOG_LOCAL 1
 #include <OLOG.h>
@@ -209,7 +210,7 @@ void ErrorControl::yield()
 {
 	// -------- receive any frame from dplay -----------//
 	char *recvPtr;
-	DWORD recvLen;
+	uint32_t recvLen;
 	PID_TYPE from, to;
 
 	static int simError = 1;
