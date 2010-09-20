@@ -64,10 +64,12 @@ DPSessionDesc::DPSessionDesc()
 	lpszPasswordA = pass_word;
 }
 
+/*
 DPSessionDesc::DPSessionDesc(const DPSESSIONDESC2 &dpSessionDesc) : DPSESSIONDESC2(dpSessionDesc)
 {
 	after_copy();
 }
+*/
 
 DPSessionDesc::DPSessionDesc(const DPSessionDesc &dpSessionDesc) : DPSESSIONDESC2(dpSessionDesc)
 {
@@ -358,6 +360,7 @@ char *MultiPlayerDP::get_lobbied_name()
 //
 
 // called by DirectPlayEnumerate() for each DirectPlay Service Provider
+/*
 static BOOL FAR PASCAL directPlayEnumerateCallback( LPGUID lpSPGuid, LPTSTR lpszSPName,
 	DWORD dwMajorVersion, DWORD dwMinorVersion, LPVOID mpPtr)
 {
@@ -369,8 +372,9 @@ static BOOL FAR PASCAL directPlayEnumerateCallback( LPGUID lpSPGuid, LPTSTR lpsz
 	mpdpPtr->service_providers.linkin(&sp);
 	return TRUE;
 }
+*/
 
-
+/*
 void MultiPlayerDP::poll_service_providers()
 {
 	service_providers.zap();
@@ -379,6 +383,7 @@ void MultiPlayerDP::poll_service_providers()
 	VgaFrontLock vgaLock;
 	DirectPlayEnumerateA( directPlayEnumerateCallback, this );
 }
+*/
 // ----- end of function MultiPlayerDP::poll_service_providers -----//
 
 
@@ -387,12 +392,14 @@ void MultiPlayerDP::poll_service_providers()
 //
 // <int> i			i-th service provider (i start from 1)
 // return pointer to a DPServiceProvider, NULL if no more
+/*
 DPServiceProvider* MultiPlayerDP::get_service_provider(int i)
 {
 	if( i <= 0 || i > service_providers.size() )
 		return NULL;
 	return (DPServiceProvider *) service_providers.get(i);
 }
+*/
 // ----- end of function MultiPlayerDP::get_service_provder -----//
 
 
@@ -402,6 +409,7 @@ DPServiceProvider* MultiPlayerDP::get_service_provider(int i)
 // store all available sessions (TCPIP, IPX, modem, null modem ... )
 // into current_sessions
 //
+/*
 static BOOL FAR PASCAL EnumSessionsCallback( LPCDPSESSIONDESC2 lpSessionDesc,
 	LPDWORD timeOut, DWORD flags, LPVOID mpPtr)
 {
@@ -416,6 +424,7 @@ static BOOL FAR PASCAL EnumSessionsCallback( LPCDPSESSIONDESC2 lpSessionDesc,
 	}
 	return TRUE;
 }
+*/
 
 int MultiPlayerDP::poll_sessions()
 {
@@ -503,6 +512,7 @@ int MultiPlayerDP::create_session(char *sessionName, int maxPlayers)
 // <DPSessionDesc *>  pointer to a DPSessionDesc
 //
 // return TRUE if success
+/*
 int MultiPlayerDP::join_session(DPSessionDesc* sessionDesc)
 {
 	if( !init_flag)
@@ -523,6 +533,7 @@ int MultiPlayerDP::join_session(DPSessionDesc* sessionDesc)
 	}
 	return FALSE;
 }
+*/
 
 
 // join a session, by passing the index passed into get_session()
@@ -609,11 +620,13 @@ int MultiPlayerDP::create_player(char *friendlyName, char *formalName,
 // ------ begin of function MultiPlayerDP::destroy_player ------//
 // destroy player, (for remove from joining a session, before playing)
 //
+/*
 void MultiPlayerDP::destroy_player( DPID playerId )
 {
 	VgaFrontLock vgaLock;
 	direct_play3->DestroyPlayer(playerId);
 }
+*/
 // ------ end of function MultiPlayerDP::destroy_player ------//
 
 
@@ -621,6 +634,7 @@ void MultiPlayerDP::destroy_player( DPID playerId )
 // collect all players in the session into player_pool
 // get each player by calling get_player
 //
+/*
 static BOOL FAR PASCAL EnumPlayerCallback(DPID dpId, DWORD dwPlayerType,
 	LPCDPNAME lpName, DWORD dwFlags, LPVOID mpPtr)
 {
@@ -636,6 +650,7 @@ static BOOL FAR PASCAL EnumPlayerCallback(DPID dpId, DWORD dwPlayerType,
 	mpdpPtr->player_pool.linkin(&dpPlayer);
 	return TRUE;
 }
+*/
 
 void MultiPlayerDP::poll_players()
 {
@@ -679,6 +694,7 @@ DPPlayer *MultiPlayerDP::search_player(DPID playerId)
 //
 // search player by formal name, case insensitive
 //
+/*
 DPPlayer *MultiPlayerDP::search_player(char *name)
 {
 	DPPlayer *player;
@@ -688,23 +704,28 @@ DPPlayer *MultiPlayerDP::search_player(char *name)
 			return player;
 	return NULL;
 }
+*/
 // -------- end of function MultiPlayerDP::get_player -----//
 
 
 // ------- begin of function MultiPlayerDP::is_host --------//
+/*
 int MultiPlayerDP::is_host(DPID playerID)
 {
 	err_here();		// not supported
 	return 0;
 }
+*/
 // ------- end of function MultiPlayerDP::is_host --------//
 
 
 // ------- begin of function MultiPlayerDP::am_I_host --------//
+/*
 int MultiPlayerDP::am_I_host()
 {
 	return host_flag;
 }
+*/
 // ------- end of function MultiPlayerDP::am_I_host --------//
 
 
@@ -736,11 +757,13 @@ int MultiPlayerDP::is_player_connecting(DPID playerId)
 //
 // return TRUE on success
 //
+/*
 int MultiPlayerDP::update_public_data(DPID playerId, LPVOID lpData, DWORD dataSize)
 {
 	VgaFrontLock vgaLock;
 	return !direct_play3->SetPlayerData(playerId, lpData, dataSize, DPSET_REMOTE | DPSET_GUARANTEED);
 }
+*/
 // ----- end of function MultiPlayerDP::update_public_data ----//
 
 
@@ -753,11 +776,13 @@ int MultiPlayerDP::update_public_data(DPID playerId, LPVOID lpData, DWORD dataSi
 //
 // return TRUE on success, *lpDataSize is updated to the size of the data
 //
+/*
 int MultiPlayerDP::retrieve_public_data(DPID playerId, LPVOID lpData, LPDWORD lpDataSize)
 {
 	VgaFrontLock vgaLock;
 	return !direct_play3->GetPlayerData(playerId, lpData, lpDataSize, DPSET_REMOTE | DPSET_GUARANTEED);
 }
+*/
 // ----- end of function MultiPlayerDP::retrieve_public_data ----//
 
 
@@ -766,11 +791,13 @@ int MultiPlayerDP::retrieve_public_data(DPID playerId, LPVOID lpData, LPDWORD lp
 //
 // return TRUE on success
 //
+/*
 int MultiPlayerDP::update_private_data(DPID playerId, LPVOID lpData, DWORD dataSize)
 {
 	VgaFrontLock vgaLock;
 	return !direct_play3->SetPlayerData(playerId, lpData, dataSize, DPSET_LOCAL | DPSET_GUARANTEED);
 }
+*/
 // ----- end of function MultiPlayerDP::update_private_data ----//
 
 
@@ -783,11 +810,13 @@ int MultiPlayerDP::update_private_data(DPID playerId, LPVOID lpData, DWORD dataS
 //
 // return TRUE on success, *lpDataSize is updated to the size of the data
 //
+/*
 int MultiPlayerDP::retrieve_private_data(DPID playerId, LPVOID lpData, LPDWORD lpDataSize)
 {
 	VgaFrontLock vgaLock;
 	return !direct_play3->GetPlayerData(playerId, lpData, lpDataSize, DPSET_LOCAL | DPSET_GUARANTEED);
 }
+*/
 // ----- end of function MultiPlayerDP::retrieve_private_data ----//
 
 // --------- begin of function MultiPlayerDP::send ---------//
@@ -832,12 +861,14 @@ int MultiPlayerDP::send(DPID toId, LPVOID lpData, DWORD dataSize)
 //
 // note : call end_stream to finish begin_stream
 //
+/*
 void MultiPlayerDP::begin_stream(DPID toId)
 {
 	err_when(!init_flag);
 	VgaFrontLock vgaLock;
 	direct_play3->Send(my_player_id, toId, DPSEND_GUARANTEED | DPSEND_OPENSTREAM, NULL,0);
 }
+*/
 // ------- end of function MultiPlayerDP::begin_stream -----//
 
 
@@ -881,12 +912,14 @@ int MultiPlayerDP::send_stream(DPID toId, LPVOID lpData, DWORD dataSize)
 // ------- begin of function MultiPlayerDP::end_stream -----//
 // signal end of a lot of guaranteed messages being sent to this player
 //
+/*
 void MultiPlayerDP::end_stream(DPID toId)
 {
 	err_when(!init_flag);
 	VgaFrontLock vgaLock;
 	direct_play3->Send(my_player_id, toId, DPSEND_GUARANTEED | DPSEND_CLOSESTREAM, NULL,0);
 }
+*/
 // ------- end of function MultiPlayerDP::end_stream -----//
 
 
@@ -896,6 +929,7 @@ void MultiPlayerDP::end_stream(DPID toId)
 //
 // return -1 if fail
 //
+/*
 int MultiPlayerDP::get_msg_count()
 {
 	err_when(!init_flag);
@@ -905,6 +939,7 @@ int MultiPlayerDP::get_msg_count()
 		return -1;
 	return (int)count;
 }
+*/
 // ------- end of function MultiPlayerDP::get_msg_count ------//
 
 
@@ -963,6 +998,7 @@ char *MultiPlayerDP::receive(LPDPID from, LPDPID to, LPDWORD dSize, int *sysMsgC
 
 
 // ------- begin of function MultiPlayerDP::handle_system_msg ------//
+/*
 void MultiPlayerDP::handle_system_msg(LPVOID lpData, DWORD dSize)
 {
 	switch( ((DPMSG_GENERIC *)lpData)->dwType )
@@ -1027,6 +1063,7 @@ void MultiPlayerDP::handle_system_msg(LPVOID lpData, DWORD dSize)
 		break;
 	}
 }
+*/
 // ------- end of function MultiPlayerDP::handle_system_msg ------//
 
 
@@ -1038,17 +1075,20 @@ void MultiPlayerDP::handle_system_msg(LPVOID lpData, DWORD dSize)
 //
 // return TRUE on success
 //
+/*
 int MultiPlayerDP::send_lobby(LPVOID lpData, DWORD dataSize)
 {
 	err_when(!init_flag);
 	VgaFrontLock vgaLock;
 	return !direct_play_lobby->SendLobbyMessage(0, 0, lpData, dataSize);
 }
+*/
 // --------- end of function MultiPlayerDP::send_lobby ---------//
 
 
 // ------- begin of function MultiPlayerDP::receive_lobby ------//
 // return NULL if fails
+/*
 char *MultiPlayerDP::receive_lobby(LPDWORD dSize)
 {
 	err_when(!init_flag);
@@ -1088,10 +1128,12 @@ char *MultiPlayerDP::receive_lobby(LPDWORD dSize)
 	} while (retryFlag);
 	return recv_buffer;
 }
+*/
 // ------- end of function MultiPlayerDP::receive_lobby ------//
 
 
 // ------- begin of function MultiPlayerDP::handle_lobby_system_msg ------//
+/*
 void MultiPlayerDP::handle_lobby_system_msg(LPVOID lpData, DWORD dSize)
 {
 	switch( ((DPLMSG_GENERIC *)lpData)->dwType )
@@ -1121,17 +1163,18 @@ void MultiPlayerDP::handle_lobby_system_msg(LPVOID lpData, DWORD dSize)
 		break;
 	}
 }
+*/
 // ------- end of function MultiPlayerDP::handle_lobby_system_msg ------//
 
 
 // ------ Begin of function MultiPlayerDP::sort_sessions -------//
-
+/*
 static int sort_session_id(const void *a, const void *b)
 {
 	return memcmp( &((DPSessionDesc *)a)->guidInstance, &((DPSessionDesc *)b)->guidInstance,
 		sizeof(GUID) );
 }
-
+*/
 
 static int sort_session_name(const void *a, const void *b)
 {
