@@ -33,6 +33,7 @@
 #include <string.h>
 #include <OVGALOCK.h>
 #include <OBLOB.h>
+#include <stdint.h>
 //#include <winbase.h>
 
 
