@@ -493,7 +493,7 @@ void Game::multi_player_game(char *cmdLine)
 	{	// not launched from lobby
 	// ###### end Gilbert 13/2 #######//
 
-		mp_obj.poll_service_providers();
+		mp_obj.poll_supported_protocols();
 		choice = mp_select_service();
 		if( !choice )
 		{
@@ -504,52 +504,28 @@ void Game::multi_player_game(char *cmdLine)
 #ifdef IMAGICMP
 		mp_obj.init(mp_obj.get_service_provider(choice)->service_id());
 #else
+		ProtocolType selected_protocol;
 		switch(choice)
 		{
 		case 1:	// IPX
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "IPX") ||
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_IPX )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = IPX;
 			break;
 		case 2:	// TCP/IP
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "TCP/IP") || 
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_TCPIP )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = TCPIP;
 			break;
 		case 3:	// Modem
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "Modem") || 
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_MODEM )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = Modem;
 			break;
 		case 4:	// Serial
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "Serial") || 
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_SERIAL )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = Serial;
 			break;
+		default:
+			selected_protocol = None;
+		}
+
+		if (mp_obj.is_protocol_supported(selected_protocol))
+		{
+			mp_obj.init(selected_protocol);
 		}
 #endif
 
@@ -696,7 +672,7 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	{	// not launched from lobby
 	// ###### end Gilbert 13/2 #######//
 
-		mp_obj.poll_service_providers();
+		mp_obj.poll_supported_protocols();
 		choice = mp_select_service();
 		if( !choice )
 		{
@@ -707,52 +683,28 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	#ifdef IMAGICMP
 		mp_obj.init(mp_obj.get_service_provider(choice)->service_id());
 	#else
+		ProtocolType selected_protocol;
 		switch(choice)
 		{
 		case 1:	// IPX
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "IPX") ||
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_IPX )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = IPX;
 			break;
 		case 2:	// TCP/IP
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "TCP/IP") || 
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_TCPIP )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = TCPIP;
 			break;
 		case 3:	// Modem
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "Modem") || 
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_MODEM )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = Modem;
 			break;
 		case 4:	// Serial
-			for(p = 1; mp_obj.get_service_provider(p); ++p)
-			{
-				if( m.str_str(mp_obj.get_service_provider(p)->description, "Serial") || 
-					mp_obj.get_service_provider(p)->service_id() == DPSPGUID_SERIAL )
-				{
-					mp_obj.init(mp_obj.get_service_provider(p)->service_id());
-					break;
-				}
-			}
+			selected_protocol = Serial;
 			break;
+		default:
+			selected_protocol = None;
+		}
+
+		if (mp_obj.is_protocol_supported(selected_protocol))
+		{
+			mp_obj.init(selected_protocol);
 		}
 	#endif
 
