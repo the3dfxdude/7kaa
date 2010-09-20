@@ -933,6 +933,7 @@ int Game::mp_select_service()
 
 	while(1)
 	{
+		/*
 		MSG msg;
 		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
 		{
@@ -951,6 +952,8 @@ int Game::mp_select_service()
 			WaitMessage();
 			continue;
 		}
+		*/
+
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SVOPTION_ALL;
@@ -1136,6 +1139,7 @@ int Game::mp_select_mode(char *defSaveFileName)
 
 	while(1)
 	{
+		/*
 		MSG msg;
 		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
 		{
@@ -1154,6 +1158,7 @@ int Game::mp_select_mode(char *defSaveFileName)
 			WaitMessage();
 			continue;
 		}
+		*/
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SMOPTION_ALL;
@@ -1372,6 +1377,7 @@ int Game::mp_select_session()
 		int s;
 		int b;
 
+		/*
 		MSG msg;
 		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
 		{
@@ -1390,6 +1396,8 @@ int Game::mp_select_session()
 			WaitMessage();
 			continue;
 		}
+		*/
+
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SSOPTION_ALL;
@@ -2095,6 +2103,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
+		/*
 		MSG msg;
 		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
 		{
@@ -2113,6 +2122,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			WaitMessage();
 			continue;
 		}
+		*/
+
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;
@@ -3911,6 +3922,7 @@ int Game::mp_select_load_option(char *fileName)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
+		/*
 		MSG msg;
 		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
 		{
@@ -3929,6 +3941,8 @@ int Game::mp_select_load_option(char *fileName)
 			WaitMessage();
 			continue;
 		}
+		*/
+
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;
@@ -4888,3 +4902,4 @@ static void disp_scroll_bar_func(SlideVBar *scroll, int)
 		vga_front.d3_panel_up(scroll->scrn_x1, rectTop, scroll->scrn_x2, rectBottom,2,0);
 	}
 }
+
