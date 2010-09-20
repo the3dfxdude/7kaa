@@ -70,13 +70,13 @@ struct DPSessionDesc
 
 struct DPPlayer
 {
-	DPID	player_id;
+	uint32_t player_id;
 	char	friendly_name[MP_FRIENDLY_NAME_LEN+1];
 	char	formal_name[MP_FORMAL_NAME_LEN+1];
 	char	connecting;		// initially set to 1, 
 	                     // clear after DPSYS_DESTROYPLAYERORGROUP received from DirectPlay
 
-	DPID	pid()			{ return player_id; }
+	uint32_t pid()			{ return player_id; }
 	char *friendly_name_str() { return friendly_name; }
 	char *formal_name_str() { return formal_name; }
 };
