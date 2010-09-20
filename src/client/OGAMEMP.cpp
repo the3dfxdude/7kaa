@@ -1624,7 +1624,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		tempConfig.change_difficulty(tempConfig.difficulty_level);
 
 	PID_TYPE from, to;
-	DWORD recvLen;
+	uint32_t recvLen;
 	int sysMsgCount;
 	char *recvPtr;
 
@@ -3438,7 +3438,7 @@ int Game::mp_select_load_option(char *fileName)
 	Config &tempConfig = config;
 
 	PID_TYPE from, to;
-	DWORD recvLen;
+	uint32_t recvLen;
 	int sysMsgCount;
 	char *recvPtr;
 
