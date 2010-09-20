@@ -630,7 +630,7 @@ void Game::multi_player_game(char *cmdLine)
 	// find itself
 	for( p = 0; p < mpPlayerCount; ++p )
 	{
-		if( nationPara[p].dp_player_id == mp_obj.my_player_id )
+		if( nationPara[p].dp_player_id == mp_obj.get_my_player_id() )
 		{
 			ec_remote.init( &mp_obj, char(p+1) );
 			break;
@@ -641,7 +641,7 @@ void Game::multi_player_game(char *cmdLine)
 
 	for( p = 0; p < mpPlayerCount; ++p )
 	{
-		if( nationPara[p].dp_player_id != mp_obj.my_player_id )
+		if( nationPara[p].dp_player_id != mp_obj.get_my_player_id() )
 		{
 			ec_remote.set_dp_id(char(p+1), nationPara[p].dp_player_id );
 		}
@@ -658,7 +658,7 @@ void Game::multi_player_game(char *cmdLine)
 	// find nation_array.player_recno from nationPara
 	for( p = 0; p < mpPlayerCount; ++p )
 	{
-		if( nationPara[p].dp_player_id == mp_obj.my_player_id )
+		if( nationPara[p].dp_player_id == mp_obj.get_my_player_id() )
 		{
 			// remote.init_send_queue(1, nation_array.player_recno);	// but nation_array.player_recno is not set
 			remote.init_send_queue(1, nationPara[p].nation_recno);   // initialize the send queue for later sending
@@ -1717,7 +1717,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	for( p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
 	{
 		// host only identify himself
-		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.my_player_id )
+		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.get_my_player_id() )
 		{
 			regPlayerId[regPlayerCount] = mp_obj.get_player(p)->pid();
 			playerReadyFlag[regPlayerCount] = 0;
@@ -1738,12 +1738,12 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	// randomly select a race
 	if( remote.is_host )
 	{
-		tempConfig.race_id = char(mp_obj.my_player_id % MAX_RACE + 1);
+		tempConfig.race_id = char(mp_obj.get_my_player_id() % MAX_RACE + 1);
 		raceAssigned[tempConfig.race_id-1] = 1;
 
 		tempConfig.player_nation_color = 1;
 		colorAssigned[tempConfig.player_nation_color-1] = 1;
-		for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id; ++p );
+		for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id(); ++p );
 		if( p < regPlayerCount )
 		{
 			playerRace[p] = tempConfig.race_id;
@@ -1756,7 +1756,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		tempConfig.race_id = 0;
 		tempConfig.player_nation_color = 0;
 		// ask host for a race and color code
-		MpStructNewPlayer msgNewPlayer( mp_obj.my_player_id, 
+		MpStructNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), 
 			sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD );
 		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
 	}
@@ -2517,7 +2517,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					break;
 				case MPMSG_ACCEPT_NEW_PLAYER:
 					hostPlayerId = from;
-					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.my_player_id )
+					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.get_my_player_id() )
 					{
 						// search if this player has existed
 						for( p=0; p < regPlayerCount && regPlayerId[p] != ((MpStructAcceptNewPlayer *)recvPtr)->player_id; ++p );
@@ -2569,14 +2569,14 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					}
 					break;
 				case MPMSG_ACCEPT_RACE:
-					if( ((MpStructAcceptRace *)recvPtr)->request_player_id == mp_obj.my_player_id )
+					if( ((MpStructAcceptRace *)recvPtr)->request_player_id == mp_obj.get_my_player_id() )
 					{
 						tempConfig.race_id = char(((MpStructAcceptRace *)recvPtr)->race_id);
 						refreshFlag |= SGOPTION_RACE;
 					}
 					break;
 				case MPMSG_REFUSE_RACE:
-					if( ((MpStructRefuseRace *)recvPtr)->request_player_id == mp_obj.my_player_id )
+					if( ((MpStructRefuseRace *)recvPtr)->request_player_id == mp_obj.get_my_player_id() )
 					{
 						refreshFlag |= SGOPTION_RACE;
 						// sound effect here
@@ -2614,14 +2614,14 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					}
 					break;
 				case MPMSG_ACCEPT_COLOR:
-					if( ((MpStructAcceptColor *)recvPtr)->request_player_id == mp_obj.my_player_id )
+					if( ((MpStructAcceptColor *)recvPtr)->request_player_id == mp_obj.get_my_player_id() )
 					{
 						tempConfig.player_nation_color = char(((MpStructAcceptColor *)recvPtr)->color_scheme_id);
 						refreshFlag |= SGOPTION_COLOR;
 					}
 					break;
 				case MPMSG_REFUSE_COLOR:
-					if( ((MpStructRefuseColor *)recvPtr)->request_player_id == mp_obj.my_player_id )
+					if( ((MpStructRefuseColor *)recvPtr)->request_player_id == mp_obj.get_my_player_id() )
 					{
 						refreshFlag |= SGOPTION_COLOR;
 						// sound effect here
@@ -2663,7 +2663,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					break;
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
-					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.my_player_id )
+					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.get_my_player_id() )
 					{
 						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
 						return 0;
@@ -2686,7 +2686,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					if( remote.is_host )
 					{
 						int p;
-						for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id ; ++p );
+						for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id() ; ++p );
 						if( r <= MAX_RACE && p < regPlayerCount &&
 							(shareRace || raceAssigned[r-1] == 0 ) )		// more than one player can use the same race
 						{
@@ -2717,7 +2717,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						if( !colorAssigned[r-1] )
 						{
 							int p;
-							for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id; ++p );
+							for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id(); ++p );
 							if( r <= MAX_COLOR_SCHEME && !colorAssigned[r-1] && p < regPlayerCount )
 							{
 								// unmark current color
@@ -3114,20 +3114,20 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		if( readyButton.detect() )
 		{
 			mRefreshFlag |= MGOPTION_PLAYERS;
-			for(p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id; ++p);
+			for(p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id(); ++p);
 			if( p < regPlayerCount )
 			{
 				if( !selfReadyFlag ) 
 				{
 					playerReadyFlag[p] = selfReadyFlag = 1;
-					MpStructPlayerReady msgReady(mp_obj.my_player_id);
+					MpStructPlayerReady msgReady(mp_obj.get_my_player_id());
 					mp_obj.send_stream(BROADCAST_PID, &msgReady, sizeof(msgReady));
 				}
 				else
 				{
 					// else un-ready this player
 					playerReadyFlag[p] = selfReadyFlag = 0;
-					MpStructPlayerUnready msgUnready(mp_obj.my_player_id);
+					MpStructPlayerUnready msgUnready(mp_obj.get_my_player_id());
 					mp_obj.send_stream(BROADCAST_PID, &msgUnready, sizeof(msgUnready));
 				}
 			}
@@ -3358,7 +3358,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							msgNation->dp_player_id, msgNation->color_scheme, 
 							msgNation->race_id, msgNation->player_name);
 
-						if( msgNation->dp_player_id == mp_obj.my_player_id )
+						if( msgNation->dp_player_id == mp_obj.get_my_player_id() )
 							ownPlayerFound++;
 						*mpPlayerCount = ++playerCount;
 						offset += sizeof( MpStructNation );
@@ -3532,7 +3532,7 @@ int Game::mp_select_load_option(char *fileName)
 	for( p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
 	{
 		// host only identify himself
-		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.my_player_id )
+		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.get_my_player_id() )
 		{
 			regPlayerId[regPlayerCount] = mp_obj.get_player(p)->pid();
 			playerReadyFlag[regPlayerCount] = 0;
@@ -3554,7 +3554,7 @@ int Game::mp_select_load_option(char *fileName)
 	if( remote.is_host )
 	{
 		colorAssigned[tempConfig.player_nation_color-1] = 1;
-		for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id; ++p );
+		for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id(); ++p );
 		if( p < regPlayerCount )
 		{
 			playerColor[p] = tempConfig.player_nation_color;
@@ -3576,7 +3576,7 @@ int Game::mp_select_load_option(char *fileName)
 	else
 	{
 		memset( colorAssigned, 0, sizeof(colorAssigned) );		// assume all color are unassigned
-		MpStructLoadGameNewPlayer msgNewPlayer( mp_obj.my_player_id, ~nation_array, sys.frame_count,
+		MpStructLoadGameNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), ~nation_array, sys.frame_count,
 			m.get_random_seed(), sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD );
 		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
 	}
@@ -4300,7 +4300,7 @@ int Game::mp_select_load_option(char *fileName)
 					break;
 				case MPMSG_ACCEPT_NEW_PLAYER:
 					hostPlayerId = from;
-					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.my_player_id )
+					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.get_my_player_id() )
 					{
 						// search if this player has existed
 						for( p=0; p < regPlayerCount && regPlayerId[p] != ((MpStructAcceptNewPlayer *)recvPtr)->player_id; ++p );
@@ -4350,7 +4350,7 @@ int Game::mp_select_load_option(char *fileName)
 					break;
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
-					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.my_player_id )
+					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.get_my_player_id() )
 					{
 						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
 						return 0;
@@ -4408,20 +4408,20 @@ int Game::mp_select_load_option(char *fileName)
 		if( readyButton.detect() )
 		{
 			mRefreshFlag |= MGOPTION_PLAYERS;
-			for(p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.my_player_id; ++p);
+			for(p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id(); ++p);
 			if( p < regPlayerCount )
 			{
 				if( !selfReadyFlag ) 
 				{
 					playerReadyFlag[p] = selfReadyFlag = 1;
-					MpStructPlayerReady msgReady(mp_obj.my_player_id);
+					MpStructPlayerReady msgReady(mp_obj.get_my_player_id());
 					mp_obj.send_stream(BROADCAST_PID, &msgReady, sizeof(msgReady));
 				}
 				else
 				{
 					// else un-ready this player
 					playerReadyFlag[p] = selfReadyFlag = 0;
-					MpStructPlayerUnready msgUnready(mp_obj.my_player_id);
+					MpStructPlayerUnready msgUnready(mp_obj.get_my_player_id());
 					mp_obj.send_stream(BROADCAST_PID, &msgUnready, sizeof(msgUnready));
 				}
 			}
@@ -4721,7 +4721,7 @@ int Game::mp_select_load_option(char *fileName)
 							return 0;
 						}
 						nationPtr->player_id = msgNation->dp_player_id;
-						if( nationPtr->is_own() && msgNation->dp_player_id == mp_obj.my_player_id)
+						if( nationPtr->is_own() && msgNation->dp_player_id == mp_obj.get_my_player_id())
 						{
 							ownPlayerFound = 1;
 						}
