@@ -35,7 +35,9 @@
 #include <OBLOB.h>
 #include <stdint.h>
 //#include <winbase.h>
+#include <dbglog.h>
 
+DBGLOG_DEFAULT_CHANNEL(DPlay);
 
 // Define constant
 
@@ -61,8 +63,11 @@
 
 DPSessionDesc::DPSessionDesc()
 {
+	ERR("[DPSessionDesc::DPSessionDesc] calling unimplemented method\n");
+/*
 	lpszSessionNameA = session_name;
 	lpszPasswordA = pass_word;
+*/
 }
 
 /*
@@ -74,18 +79,26 @@ DPSessionDesc::DPSessionDesc(const DPSESSIONDESC2 &dpSessionDesc) : DPSESSIONDES
 
 DPSessionDesc::DPSessionDesc(const DPSessionDesc &dpSessionDesc) //: DPSESSIONDESC2(dpSessionDesc)
 {
-	after_copy();
+	ERR("[DPSessionDesc::DPSessionDesc(const DPSessionDesc &)] calling unimplemented method\n");
+//	after_copy();
 }
 
 DPSessionDesc& DPSessionDesc::operator= (const DPSessionDesc &src)
 {
+	ERR("[DPSessionDesc::operator=] calling unimplemented method\n");
+	return *this;
+/*
 	memcpy(this, &src, sizeof( DPSessionDesc ) );
 	after_copy();
 	return *this;
+*/
 }
 
 void DPSessionDesc::after_copy()
 {
+	ERR("[DPSessionDesc::after_copy] calling unimplemented method\n");
+
+	/*
 	if( lpszSessionNameA )
 	{
 		strcpy(session_name, lpszSessionNameA);
@@ -107,13 +120,18 @@ void DPSessionDesc::after_copy()
 		pass_word[0] = '\0';
 	}
 	lpszPasswordA = pass_word;
+	*/
 }
 
 DPSessionDesc *DPSessionDesc::before_use()
 {
+	ERR("[DPSessionDesc::before_use] calling unimplemented method\n");
+	return this;
+	/*
 	lpszSessionNameA = session_name;
 	lpszPasswordA = pass_word;
 	return this;
+	*/
 }
 
 
@@ -133,6 +151,9 @@ MultiPlayerDP::MultiPlayerDP() : //service_providers(sizeof(DPServiceProvider), 
 	current_sessions(sizeof(DPSessionDesc), 10 ), player_pool(sizeof(DPPlayer), 8 ),
 	recv_buffer(new char[MP_RECV_BUFFER_SIZE])
 {
+	ERR("[MultiPlayerDP::MultiPlayerDP] calling unimplemented method\n");
+
+	/*
 	init_flag = 0;
 	direct_play_lobby = NULL;
 	direct_play1 = NULL;
@@ -141,6 +162,7 @@ MultiPlayerDP::MultiPlayerDP() : //service_providers(sizeof(DPServiceProvider), 
 	host_flag = 0;
 	lobbied_flag = 0;
 	connection_string = NULL;
+	*/
 }
 // ------- end of function MultiPlayerDP::MultiPlayerDP -------//
 
@@ -148,8 +170,11 @@ MultiPlayerDP::MultiPlayerDP() : //service_providers(sizeof(DPServiceProvider), 
 // ------- begin of function MultiPlayerDP::~MultiPlayerDP -------//
 MultiPlayerDP::~MultiPlayerDP()
 {
+	ERR("[MultiPlayerDP::~MultiPlayerDP] calling unimplemented method\n");
+	/*
 	deinit();
 	delete[] recv_buffer;
+	*/
 }
 // ------- end of function MultiPlayerDP::~MultiPlayerDP -------//
 
@@ -157,8 +182,12 @@ MultiPlayerDP::~MultiPlayerDP()
 // ------- begin of function MultiPlayerDP::pre_init -------//
 void MultiPlayerDP::pre_init()
 {
+	ERR("[MultiPlayerDP::pre_init] calling unimplemented method\n");
+
+	/*
 	// nothing, for compatibilities with MultiPlayerIM
 	lobbied_flag = 0;
+	*/
 }
 // ------- begin of function MultiPlayerDP::pre_init -------//
 
@@ -166,6 +195,9 @@ void MultiPlayerDP::pre_init()
 //void MultiPlayerDP::init(GUID serviceProviderGUID)
 void MultiPlayerDP::init(ProtocolType protocol_type)
 {
+	ERR("[MultiPlayerDP::init()] calling unimplemented method\n");
+
+	/*
 	VgaFrontLock vlock;
 	if( !DirectPlayCreate( &serviceProviderGUID, &direct_play1, NULL) )
 	{
@@ -188,6 +220,7 @@ void MultiPlayerDP::init(ProtocolType protocol_type)
 	// ######## patch begin Gilbert 24/11 ######//
 	my_player_id = DPID_ALLPLAYERS;		// no player
 	// ######## patch end Gilbert 24/11 ######//
+	*/
 }
 // ------- end of function MultiPlayerDP::init -------//
 
@@ -195,6 +228,9 @@ void MultiPlayerDP::init(ProtocolType protocol_type)
 // ------- begin of function MultiPlayerDP::deinit -------//
 void MultiPlayerDP::deinit()
 {
+	ERR("[MultiPlayerDP::deinit] calling unimplemented method\n");	
+
+	/*
 	host_flag = 0;
 	lobbied_flag = 0;
 	if(init_flag)
@@ -236,6 +272,7 @@ void MultiPlayerDP::deinit()
 		mem_del(connection_string);
 		connection_string = NULL;
 	}
+	*/
 }
 // ------- end of function MultiPlayerDP::deinit -------//
 
@@ -243,6 +280,8 @@ void MultiPlayerDP::deinit()
 // ----- begin of function MultiPlayerDP::init_lobbied ------//
 void MultiPlayerDP::init_lobbied(int maxPlayers, char *)
 {
+	ERR("[MultiPlayerDP::init_lobbied] calling unimplemented method\n");
+	/*
 	HRESULT hr;
 	VgaFrontLock vlock;
 
@@ -325,6 +364,7 @@ void MultiPlayerDP::init_lobbied(int maxPlayers, char *)
 		if( hr != DPERR_NOTLOBBIED )
 			err.run("Cannot get connection string from lobby");
 	}
+	*/
 }
 // ----- end of function MultiPlayerDP::init_lobbied ------//
 
@@ -342,6 +382,10 @@ int MultiPlayerDP::is_lobbied()
 // ----- begin of function MultiPlayerDP::get_lobbied_name -----//
 char *MultiPlayerDP::get_lobbied_name()
 {
+	ERR("[MultiPlayerDP::get_lobbied_name] calling unimplemented method\n");
+	return NULL;
+
+	/*
 	err_when(!is_lobbied());
 
 	// ------ get connection setting ---------//
@@ -349,6 +393,7 @@ char *MultiPlayerDP::get_lobbied_name()
 		return connection_string->lpPlayerName->lpszShortNameA;
 	else
 		return NULL;
+	*/
 }
 // ----- end of function MultiPlayerDP::get_lobbied_name -----//
 
@@ -438,6 +483,10 @@ static BOOL FAR PASCAL EnumSessionsCallback( LPCDPSESSIONDESC2 lpSessionDesc,
 
 int MultiPlayerDP::poll_sessions()
 {
+	ERR("[MultiPlayerDP::poll_sessions] calling unimplemented method\n");
+	return FALSE;
+
+	/*
 	err_when(!init_flag);
 	current_sessions.zap();
 	DPSESSIONDESC2 sessionDesc;
@@ -452,6 +501,7 @@ int MultiPlayerDP::poll_sessions()
 	VgaCustomPalette vgaCPal(DIR_RES"PAL_WIN.RES");
 	return DP_OK == direct_play3->EnumSessions(&sessionDesc , 0, EnumSessionsCallback, this, 
 		DPENUMSESSIONS_AVAILABLE | DPENUMSESSIONS_ASYNC);
+	*/
 }
 // ----- end of function MultiPlayerDP::poll_sessions ------//
 
@@ -463,9 +513,13 @@ int MultiPlayerDP::poll_sessions()
 // return pointer to a session, NULL if no more
 DPSessionDesc *MultiPlayerDP::get_session(int i)
 {
+	ERR("[MultiPlayerDP::get_session] calling unimplemented method\n");
+	return NULL;
+	/*
 	if( i <= 0 || i > current_sessions.size() )
 		return NULL;
 	return ((DPSessionDesc *) current_sessions.get(i))->before_use();
+	*/
 }
 // ----- end of function MultiPlayerDP::get_session ------//
 
@@ -480,6 +534,10 @@ DPSessionDesc *MultiPlayerDP::get_session(int i)
 // return TRUE if success
 int MultiPlayerDP::create_session(char *sessionName, int maxPlayers)
 {
+	ERR("[MultiPlayerDP::create_session] calling unimplemented method\n");
+	return FALSE;
+
+	/*
 	if(!init_flag || maxPlayers < 1)
 		return FALSE;
 
@@ -511,7 +569,7 @@ int MultiPlayerDP::create_session(char *sessionName, int maxPlayers)
 		return TRUE;
 	}
 	return FALSE;
-
+	*/
 }
 // ----- end of function MultiPlayerDP::create_session ----//
 
@@ -554,6 +612,10 @@ int MultiPlayerDP::join_session(DPSessionDesc* sessionDesc)
 // currentSessionIndex start from 1
 int MultiPlayerDP::join_session(int currentSessionIndex)
 {
+	ERR("[MultiPlayerDP::join_session] calling unimplemented method\n");
+	return FALSE;
+
+	/*
 	if( !init_flag)
 		return FALSE;
 
@@ -571,22 +633,29 @@ int MultiPlayerDP::join_session(int currentSessionIndex)
 		return TRUE;
 	}
 	return FALSE;
+	*/
 }
 // ------ end of function MultiPlayerDP::join_session ------//
 
 // ------ begin of function MultiPlayerDP::close_session ------//
 void MultiPlayerDP::close_session()
 {
+	ERR("[MultiPlayerDP::close_session] calling unimplemented method\n");
+	/*
 	VgaFrontLock vgaLock;
 	if( init_flag)
 		direct_play3->Close();
 	host_flag = 0;
+	*/
 }
 // ------ end of function MultiPlayerDP::close_session ------//
 
 // ------ begin of function MultiPlayerDP::disable_join_session ------//
 void MultiPlayerDP::disable_join_session()
 {
+	ERR("[MultiPlayerDP::disable_join_session] calling unimplemented method\n");
+
+	/*
 	// called by host only!
 
 	err_when( !host_flag );
@@ -596,6 +665,7 @@ void MultiPlayerDP::disable_join_session()
 		VgaFrontLock vgaLock;
 		direct_play3->SetSessionDesc( &joined_session, 0 );
 	}
+	*/
 }
 // ------ end of function MultiPlayerDP::disable_join_session ------//
 
@@ -611,6 +681,10 @@ void MultiPlayerDP::disable_join_session()
 //
 int MultiPlayerDP::create_player(char *friendlyName, char *formalName)
 {
+	ERR("[MultiPlayerDP::create_player] calling unimplemented method\n");
+	return FALSE;
+
+	/*
 	if(!init_flag)
 		return FALSE;
 
@@ -622,6 +696,7 @@ int MultiPlayerDP::create_player(char *friendlyName, char *formalName)
 	VgaFrontLock vgaLock;
 	return !direct_play3->CreatePlayer(&my_player_id, &dpName, PLAYER_MESSAGE_HANDLE,
 		lpData, dataSize, flags);
+	*/
 }
 // ------ end of function MultiPlayerDP::create_player -----//
 
@@ -663,12 +738,16 @@ static BOOL FAR PASCAL EnumPlayerCallback(DPID dpId, DWORD dwPlayerType,
 
 void MultiPlayerDP::poll_players()
 {
+	ERR("[MultiPlayerDP::poll_players] calling unimplemented method\n");
+
+	/*
 	player_pool.zap();
 	VgaFrontLock vgaLock;
 //	direct_play3->EnumPlayers(NULL, EnumPlayerCallback, this, DPENUMPLAYERS_LOCAL );
 //	direct_play3->EnumPlayers(NULL, EnumPlayerCallback, this, DPENUMPLAYERS_REMOTE);
 	if(init_flag)
 		direct_play3->EnumPlayers(NULL, EnumPlayerCallback, this, 0 );
+	*/
 }
 // -------- end of function MultiPlayerDP::poll_players ------//
 
@@ -839,6 +918,10 @@ int MultiPlayerDP::retrieve_private_data(DPID playerId, LPVOID lpData, LPDWORD l
 //
 int MultiPlayerDP::send(uint32_t toId, void * lpData, uint32_t dataSize)
 {
+	ERR("[MultiPlayerDP::send] calling unimplemented method\n");
+	return FALSE;
+
+	/*
 	err_when(!init_flag);
 	HRESULT hr;
 	{
@@ -861,6 +944,7 @@ int MultiPlayerDP::send(uint32_t toId, void * lpData, uint32_t dataSize)
 	err_when(hr == DPERR_SENDTOOBIG);
 
 	return hr == DP_OK;
+	*/
 }
 // --------- end of function MultiPlayerDP::send ---------//
 
@@ -892,6 +976,10 @@ void MultiPlayerDP::begin_stream(DPID toId)
 //
 int MultiPlayerDP::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
 {
+	ERR("[MultiPlayerDP::send_stream] calling unimplemented method\n");
+	return FALSE;
+
+	/*
 	err_when(!init_flag);
 	HRESULT hr;
 	{
@@ -914,6 +1002,7 @@ int MultiPlayerDP::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
 	err_when(hr == DPERR_SENDTOOBIG);
 
 	return hr == DP_OK;
+	*/
 }
 // --------- end of function MultiPlayerDP::send_stream ---------//
 
@@ -959,6 +1048,10 @@ int MultiPlayerDP::get_msg_count()
 //
 char *MultiPlayerDP::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, int *sysMsgCount)
 {
+	ERR("[MultiPlayerDP::receive] calling unimplemented method\n");
+	return NULL;
+
+	/*
 	err_when(!init_flag);
 	DPID fromId, toId;
 	DWORD dataSize;
@@ -1002,6 +1095,7 @@ char *MultiPlayerDP::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, i
 		
 	} while (retryFlag);
 	return recv_buffer;
+	*/
 }
 // ------- end of function MultiPlayerDP::receive ------//
 
@@ -1194,11 +1288,13 @@ static int sort_session_name(const void *a, const void *b)
 // <int> sortType, 1=sort by GUID, 2=sort by session name
 void MultiPlayerDP::sort_sessions(int sortType )
 {
+	ERR("[MultiPlayerDP::sort_sessions] calling partially implemented method\n");
+
 	// BUGHERE : quick_sort is a DynArray function but current_sessions is DynArrayB
 	switch(sortType)
 	{
 	case 1:
-		current_sessions.quick_sort(sort_session_id);
+		//current_sessions.quick_sort(sort_session_id);
 		break;
 	case 2:
 		current_sessions.quick_sort(sort_session_name);
