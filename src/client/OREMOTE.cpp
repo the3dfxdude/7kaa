@@ -178,7 +178,7 @@ int Remote::number_of_opponent()
 	err_when(!connectivity_mode);
 
 	//return wsock_ptr->number_of_player;
-	return mp_ptr->player_pool.size()-1;
+	return mp_ptr->get_player_count()-1;
 }
 //--------- End of function Remote::number_of_opponent ----------//
 
@@ -190,7 +190,7 @@ DWORD Remote::self_player_id()
 	err_when(!connectivity_mode);
 
 	// return wsock_ptr->self_player_id;
-	return mp_ptr->my_player_id;
+	return mp_ptr->get_my_player_id();
 }
 //--------- End of function Remote::self_player_id ----------//
 
