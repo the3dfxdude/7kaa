@@ -94,7 +94,7 @@ struct DPPlayer
 
 class MultiPlayerDP
 {
-public:
+private:
 	int						init_flag;
 	int						lobbied_flag;
 	//DynArrayB				service_providers;		// array of DPServiceProvider
