@@ -120,6 +120,7 @@ public:
 	//void init(GUID serviceProviderGuid);
 	void init(ProtocolType);
 	void deinit();
+	bool is_initialized() const { return init_flag != 0; }
 
 	// ------- functions on DirectPlayLobby -------- //
 	void	init_lobbied(int maxPlayers, char *cmdLine);
@@ -154,6 +155,8 @@ public:
 	//int	is_host(DPID playerId);
 	//int	am_I_host();
 	int	is_player_connecting(uint32_t playerId);
+	int       get_player_count() const { return player_pool.size(); }
+	uint32_t  get_my_player_id() const { return my_player_id; }
 
 	// ------- functions on data management ------//
 	// remote data (public) : each player has one data to the public
@@ -185,3 +188,4 @@ extern MultiPlayerDP mp_dp;
 
 #endif	// IMAGICMP
 #endif	// __ODPLAY_H
+
