@@ -25,6 +25,16 @@
 #ifndef __MPTYPES_H
 #define __MPTYPES_H
 
+#include <stdint.h>
+
+#define PID_TYPE uint32_t
+#define BROADCAST_PID 0
+#define MultiPlayerType MultiPlayerDP
+#define mp_obj mp_dp
+#define SessionIdType uint32_t
+#define PlayerDesc DPPlayer
+
+/*
 #ifdef IMAGICMP
 	#define MultiPlayerType MultiPlayerIM
 	#define mp_obj mp_im
@@ -46,5 +56,7 @@
 	#define SessionIdType GUID
 	#define PlayerDesc DPPlayer
 #endif
+*/
 
 #endif
+
