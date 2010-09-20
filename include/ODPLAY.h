@@ -88,18 +88,18 @@ public:
 	int						lobbied_flag;
 	DynArrayB				service_providers;		// array of DPServiceProvider
 	DynArrayB				current_sessions;			// array of DPSessionDesc
-	LPDIRECTPLAY			direct_play1;
-	LPDIRECTPLAY3A			direct_play3;
-	LPDIRECTPLAYLOBBY2A	direct_play_lobby;
+	//LPDIRECTPLAY			direct_play1;
+	//LPDIRECTPLAY3A		direct_play3;
+	//LPDIRECTPLAYLOBBY2A	direct_play_lobby;
 	DPSessionDesc			joined_session;
-	DPLCONNECTION *		connection_string;		// only when lobbied
+	//DPLCONNECTION *		connection_string;		// only when lobbied
 
-	DPID						my_player_id;
+	uint32_t				my_player_id;
 	int						host_flag;
 	DynArrayB				player_pool;
 
 	char *					recv_buffer;
-	DWORD						recv_buffer_size;
+	uint32_t				recv_buffer_size;
 
 public:
 	MultiPlayerDP();
