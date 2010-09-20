@@ -42,6 +42,7 @@
 #define MP_FORMAL_NAME_LEN 64
 #define MP_RECV_BUFFER_SIZE 0x2000
 
+/*
 struct DPServiceProvider
 {
 	GUID guid;
@@ -49,6 +50,16 @@ struct DPServiceProvider
 
 	char *name_str() { return description; }
 	GUID service_id() { return guid; }
+};
+*/
+
+enum ProtocolType
+{
+	None = 0,
+	IPX = 1,
+	TCPIP = 2,
+	Modem = 4,
+	Serial = 8
 };
 
 struct DPSessionDesc
