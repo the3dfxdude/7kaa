@@ -26,20 +26,20 @@
 
 // #define INITGUID
 // #define INITGUID for dplay.h to define IID_IDirectPlay3A
-#include <dplay.h>
+//#include <dplay.h>
 // #undef INITGUID
 #include <ODPLAY.h>
 #include <ALL.h>
 #include <string.h>
 #include <OVGALOCK.h>
 #include <OBLOB.h>
-#include <winbase.h>
+//#include <winbase.h>
 
 
 // Define constant
 
-GUID GAME_GUID = 
-{ 0x12f70d44, 0x68be, 0x11d0, { 0xaa, 0xb6, 0x0, 0x0, 0xe9, 0xf9, 0xd, 0x5d } };
+//GUID GAME_GUID = 
+//{ 0x12f70d44, 0x68be, 0x11d0, { 0xaa, 0xb6, 0x0, 0x0, 0xe9, 0xf9, 0xd, 0x5d } };
 
 
 // To enable a lobby to launch a DirectPlay application, the application must add 
@@ -55,7 +55,7 @@ GUID GAME_GUID =
 // note that [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DirectPlay\Applications] 
 // folder may not exist after installed dx5
 
-HANDLE PLAYER_MESSAGE_HANDLE = NULL;	// ???
+//HANDLE PLAYER_MESSAGE_HANDLE = NULL;	// ???
 
 
 DPSessionDesc::DPSessionDesc()
@@ -1164,3 +1164,4 @@ void MultiPlayerDP::sort_sessions(int sortType )
 
 
 #endif
+
