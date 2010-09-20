@@ -21,9 +21,9 @@
 //Filename    : OREMOTE2.CPP
 //Description : Object Remote - part 2
 
-#include <windows.h>
-#include <windowsx.h>
-#include <mmsystem.h>
+//#include <windows.h>
+//#include <windowsx.h>
+//#include <mmsystem.h>
 
 #define DEBUG_LOG_LOCAL 1
 #include <ALL.h>

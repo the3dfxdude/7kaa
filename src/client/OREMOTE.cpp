@@ -21,9 +21,9 @@
 //Filename    : OREMOTE.CPP
 //Description : Object Remote
 
-#include <windows.h>
-#include <windowsx.h>
-#include <mmsystem.h>
+//#include <windows.h>
+//#include <windowsx.h>
+//#include <mmsystem.h>
 
 #include <ALL.h>
 #include <OBOX.h>
@@ -37,7 +37,7 @@
 #include <ONATION.h>
 #include <OREMOTE.h>
 #include <ODPLAY.h>
-#include <OIMMPLAY.h>
+//#include <OIMMPLAY.h>
 #include <OERRCTRL.h>
 
 //---------- Define static variables ----------//
