@@ -27,12 +27,12 @@
 
 #ifndef IMAGICMP
 
-#include <dplay.h>
-#include <dplobby.h>
+//#include <dplay.h>
+//#include <dplobby.h>
 #include <ODYNARRB.h>
 
-extern GUID GAME_GUID;
-extern HANDLE PLAYER_MESSAGE_HANDLE;
+//extern GUID GAME_GUID;
+//extern HANDLE PLAYER_MESSAGE_HANDLE;
 
 #define MP_SERVICE_PROVIDER_NAME_LEN 64
 #define MP_SESSION_NAME_LEN 64
