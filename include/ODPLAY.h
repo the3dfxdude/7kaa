@@ -145,16 +145,15 @@ public:
 	void	disable_join_session();		// so that new player cannot join
 
 	// -------- functions on player management -------//
-	int	create_player(char *friendlyName, char *formalName,
-		LPVOID lpData=NULL, DWORD dataSize=0, DWORD flags=0);
+	int	create_player(char *friendlyName, char *formalName);
 	//void	destroy_player( DPID playerId );
 	void	poll_players();
 	DPPlayer *get_player(int i);
-	DPPlayer *search_player(DPID player_id);
+	DPPlayer *search_player(uint32_t player_id);
 	//DPPlayer *search_player(char *name);
 	//int	is_host(DPID playerId);
 	//int	am_I_host();
-	int	is_player_connecting(DPID playerId);
+	int	is_player_connecting(uint32_t playerId);
 
 	// ------- functions on data management ------//
 	// remote data (public) : each player has one data to the public
@@ -165,12 +164,12 @@ public:
 	//int	retrieve_private_data(DPID, LPVOID, LPDWORD);
 
 	// ------- functions on message passing ------//
-	int	send(DPID toId, LPVOID lpData, DWORD dataSize);
+	int	send(uint32_t toId, void * lpData, uint32_t dataSize);
 	//void	begin_stream(DPID toID);
-	int	send_stream(DPID toId, LPVOID lpData, DWORD dataSize);
+	int	send_stream(uint32_t toId, void * lpData, uint32_t dataSize);
 	//void	end_stream(DPID toID);
 	//int	get_msg_count();
-	char *receive(LPDPID from, LPDPID to, LPDWORD recvLen, int *sysMsgCount=0);
+	char *receive(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 
 	void	before_receive()		{} // dummy function to compatible with IMMPLAY, call before receive
 	void	after_send()			{}	// dummy function to compatible with IMMPLAY, call after send
