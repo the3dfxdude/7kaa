@@ -30,6 +30,7 @@
 //#include <dplay.h>
 //#include <dplobby.h>
 #include <ODYNARRB.h>
+#include <stdint.h>
 
 //extern GUID GAME_GUID;
 //extern HANDLE PLAYER_MESSAGE_HANDLE;
@@ -50,20 +51,20 @@ struct DPServiceProvider
 	GUID service_id() { return guid; }
 };
 
-struct DPSessionDesc : public DPSESSIONDESC2
+struct DPSessionDesc
 {
 	char session_name[MP_SESSION_NAME_LEN+1];
 	char pass_word[MP_SESSION_NAME_LEN+1];
+	uint32_t id;
 
 	DPSessionDesc();
-	DPSessionDesc(const DPSESSIONDESC2 &);
 	DPSessionDesc(const DPSessionDesc &);
 	DPSessionDesc& operator= (const DPSessionDesc &);
 	void after_copy();
 	DPSessionDesc *before_use();
 
 	char *name_str() { return session_name; };
-	GUID session_id() { return guidInstance; }
+	uint32_t session_id() { return id; }
 };
 
 
