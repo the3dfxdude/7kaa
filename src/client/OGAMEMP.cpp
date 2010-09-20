@@ -869,7 +869,8 @@ int Game::mp_select_service()
 
 	ButtonCustom serviceButton[BUTTON_NUM];
 	int b;
-	for( b = 0; b < BUTTON_NUM && mp_obj.get_service_provider(b+1); ++b )
+//	for( b = 0; b < BUTTON_NUM && mp_obj.get_service_provider(b+1); ++b )
+	for( b = 0; b < BUTTON_NUM; ++b )
 	{
 		serviceButton[b].create(buttonX[b], buttonY[b], 
 			buttonX[b]+SERVICE_BUTTON_WIDTH-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
