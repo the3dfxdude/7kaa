@@ -97,7 +97,8 @@ class MultiPlayerDP
 public:
 	int						init_flag;
 	int						lobbied_flag;
-	DynArrayB				service_providers;		// array of DPServiceProvider
+	//DynArrayB				service_providers;		// array of DPServiceProvider
+	ProtocolType			supported_protocols;
 	DynArrayB				current_sessions;			// array of DPSessionDesc
 	//LPDIRECTPLAY			direct_play1;
 	//LPDIRECTPLAY3A		direct_play3;
@@ -116,7 +117,8 @@ public:
 	MultiPlayerDP();
 	~MultiPlayerDP();
 	void pre_init();
-	void init(GUID serviceProviderGuid);
+	//void init(GUID serviceProviderGuid);
+	void init(ProtocolType);
 	void deinit();
 
 	// ------- functions on DirectPlayLobby -------- //
@@ -127,8 +129,10 @@ public:
 	char *receive_lobby(LPDWORD recvLen);
 
 	// ------- functions on service provider ------ //
-	void	poll_service_providers();								// can be called before init
-	DPServiceProvider *get_service_provider(int i);		// can be called before init
+	//void	poll_service_providers();								// can be called before init
+	//DPServiceProvider *get_service_provider(int i);		// can be called before init
+	void   poll_supported_protocols(); // can be called before init
+	bool   is_protocol_supported(ProtocolType);
 
 	// ------- functions on session --------//
 	int	poll_sessions();
