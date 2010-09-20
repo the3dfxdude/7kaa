@@ -404,7 +404,15 @@ DPServiceProvider* MultiPlayerDP::get_service_provider(int i)
 */
 // ----- end of function MultiPlayerDP::get_service_provder -----//
 
+void MultiPlayerDP::poll_supported_protocols()
+{
+	supported_protocols = TCPIP;
+}
 
+bool MultiPlayerDP::is_protocol_supported(ProtocolType protocol)
+{
+	return (protocol & supported_protocols) != 0;
+}
 
 // ----- begin of function MultiPlayerDP::poll_sessions ------//
 //
