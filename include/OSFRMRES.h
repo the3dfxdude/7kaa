@@ -60,7 +60,7 @@ struct SpriteFrame
 {
 	char  offset_x, offset_y;
 	short width, height;
-	long  bitmap_offset;
+	uint32_t bitmap_offset;
 };
 
 //--------- Define class SpriteFrameRes --------//

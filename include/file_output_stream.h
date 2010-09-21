@@ -17,24 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef FILE_INPUT_STREAM_H
-#define FILE_INPUT_STREAM_H
+#ifndef FILE_OUTPUT_STREAM_H
+#define FILE_OUTPUT_STREAM_H
 
 #include <OFILE.h>
-#include <input_stream.h>
+#include <output_stream.h>
 
-class FileInputStream: public InputStream
+class FileOutputStream: public OutputStream
 {
 private:
    File *file;
-   bool own_file;
 
 public:
-   FileInputStream();
-   ~FileInputStream();
-   bool open(File *file, bool own_file = true);
-   bool open(const char *file_name);
-   long read(void *buffer, long length);
+   FileOutputStream();
+   ~FileOutputStream();
+   bool open(File *file);
+   long write(const void *data, long length);
    bool seek(long offset, int whence);
    long tell();
    void close();

@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010 Unavowed <unavowed@vexillium.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,37 +25,41 @@
 #include <OUNITRES.h>
 #include <OFIRMRES.h>
 
-#include <OUNIT.h>
 #include <OBULLET.h>
-#include <OSITE.h>
-#include <OTOWN.h>
-#include <ONATION.h>
 #include <OFIRM.h>
-#include <OTECHRES.h>
-#include <ORACERES.h>
-#include <OTOWNRES.h>
-#include <ORAWRES.h>
-#include <OGODRES.h>
-#include <OTALKRES.h>
-#include <OTORNADO.h>
-#include <OMONSRES.h>
-#include <OREBEL.h>
-#include <OSPY.h>
-#include <OSNOWG.h>
-#include <OSYS.h>
-#include <OREGION.h>
-#include <ONEWS.h>
-#include <OTUTOR.h>
-#include <OINFO.h>
-#include <OWEATHER.h>
-#include <OGAME.h>
-#include <OPOWER.h>
-#include <OWORLD.h>
-#include <OGFILE.h>
-#include <OROCK.h>
-// ##### begin Gilbert 2/10 #######//
 #include <OFIRMDIE.h>
-// ##### end Gilbert 2/10 #######//
+#include <OGAME.h>
+#include <OGFILE.h>
+#include <OGODRES.h>
+#include <OINFO.h>
+#include <OMONSRES.h>
+#include <ONATION.h>
+#include <ONEWS.h>
+#include <OPOWER.h>
+#include <ORACERES.h>
+#include <ORAWRES.h>
+#include <OREBEL.h>
+#include <OREGION.h>
+#include <OROCK.h>
+#include <OSITE.h>
+#include <OSNOWG.h>
+#include <OSPY.h>
+#include <OSYS.h>
+#include <OTALKRES.h>
+#include <OTECHRES.h>
+#include <OTORNADO.h>
+#include <OTOWN.h>
+#include <OTOWNRES.h>
+#include <OTUTOR.h>
+#include <OUNIT.h>
+#include <OWEATHER.h>
+#include <OWORLD.h>
+#include <dbglog.h>
+#include <file_io_visitor.h>
+
+using namespace FileIOVisitor;
+
+DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 
 //-------- Define constant ----------//
@@ -991,11 +996,55 @@ int TechRes::read_file(File* filePtr)
 
 //***//
 
+template <typename Visitor>
+static void visit_talk_msg(Visitor *v, TalkMsg *tm)
+{
+	visit<int16_t>(v, &tm->talk_id);
+	visit<int16_t>(v, &tm->talk_para1);
+	visit<int16_t>(v, &tm->talk_para2);
+	visit<int32_t>(v, &tm->date);
+	visit<int8_t>(v, &tm->from_nation_recno);
+	visit<int8_t>(v, &tm->to_nation_recno);
+	visit<int8_t>(v, &tm->reply_type);
+	visit<int32_t>(v, &tm->reply_date);
+	visit<int8_t>(v, &tm->relation_status);
+}
+
+template <typename Visitor>
+static void visit_talk_choice(Visitor *v, TalkChoice *tc)
+{
+	visit_pointer(v, &tc->str);
+	visit<int16_t>(v, &tc->para);
+}
+
+template <typename Visitor>
+static void visit_talk_res(Visitor *v, TalkRes *tr)
+{
+	visit<int8_t>(v, &tr->init_flag);
+	visit<int16_t>(v, &tr->reply_talk_msg_recno);
+	visit_talk_msg(v, &tr->cur_talk_msg);
+	visit_pointer(v, &tr->choice_question);
+	visit_pointer(v, &tr->choice_question_second_line);
+	visit<int16_t>(v, &tr->talk_choice_count);
+
+	for (int n = 0; n < MAX_TALK_CHOICE; n++)
+		visit_talk_choice(v, &tr->talk_choice_array[n]);
+
+	visit_array<int8_t>(v, tr->available_talk_id_array, MAX_TALK_TYPE);
+	visit<int16_t>(v, &tr->cur_choice_id);
+	visit<int8_t>(v, &tr->save_view_mode);
+	visit<int8_t>(v, &tr->msg_add_nation_color);
+	v->skip(39); /* &tr->talk_msg_array */
+}
+
+enum { TALK_RES_RECORD_SIZE = 214 };
+
 //-------- Start of function TalkRes::write_file -------------//
 //
 int TalkRes::write_file(File* filePtr)
 {
-	if( !filePtr->file_write( this, sizeof(TalkRes) ) )
+	if (!write_with_record_size(filePtr, this, &visit_talk_res,
+										 TALK_RES_RECORD_SIZE))
 		return 0;
 
 	if( !talk_msg_array.write_file(filePtr) )
@@ -1010,24 +1059,9 @@ int TalkRes::write_file(File* filePtr)
 //
 int TalkRes::read_file(File* filePtr)
 {
-	//------ save talk_msg_array --------//
-
-	char* tempArray = mem_add(sizeof(DynArrayB));
-
-	memcpy( tempArray, &talk_msg_array, sizeof(DynArrayB) );
-
-	//------ read in TalkRes --------//
-
-	if( !filePtr->file_read( this, sizeof(TalkRes) ) )
+	if (!read_with_record_size(filePtr, this, &visit_talk_res,
+										TALK_RES_RECORD_SIZE))
 		return 0;
-
-	//------ restore talk_msg_array --------//
-
-	memcpy( &talk_msg_array, tempArray, sizeof(DynArrayB) );
-
-	mem_del(tempArray);
-
-	//---- read in talk_msg_array ----//
 
 	if( !talk_msg_array.read_file(filePtr) )
 		return 0;
@@ -1136,25 +1170,115 @@ int Game::write_file(File* filePtr)
 //
 int Game::read_file(File* filePtr)
 {
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(Game) );
 }
 //--------- End of function Game::read_file ---------------//
 
 //***//
 
+template <typename Visitor>
+static void visit_config(Visitor *v, Config *cfg)
+{
+	visit<int16_t>(v, &cfg->difficulty_rating);
+	visit<int8_t>(v, &cfg->ai_nation_count);
+	visit<int16_t>(v, &cfg->start_up_cash);
+	visit<int16_t>(v, &cfg->ai_start_up_cash);
+	visit<int8_t>(v, &cfg->ai_aggressiveness);
+	visit<int16_t>(v, &cfg->start_up_independent_town);
+	visit<int16_t>(v, &cfg->start_up_raw_site);
+	visit<int8_t>(v, &cfg->difficulty_level);
+	visit<int8_t>(v, &cfg->explore_whole_map);
+	visit<int8_t>(v, &cfg->fog_of_war);
+	visit<int16_t>(v, &cfg->terrain_set);
+	visit<int16_t>(v, &cfg->latitude);
+	visit<int8_t>(v, &cfg->weather_effect);
+	visit<int8_t>(v, &cfg->land_mass);
+	visit<int8_t>(v, &cfg->new_independent_town_emerge);
+	visit<int8_t>(v, &cfg->independent_town_resistance);
+	visit<int8_t>(v, &cfg->random_event_frequency);
+	visit<int8_t>(v, &cfg->new_nation_emerge);
+	visit<int8_t>(v, &cfg->monster_type);
+	visit<int8_t>(v, &cfg->start_up_has_mine_nearby);
+	visit<int8_t>(v, &cfg->random_start_up);
+	visit<int8_t>(v, &cfg->goal_destroy_monster);
+	visit<int8_t>(v, &cfg->goal_population_flag);
+	visit<int8_t>(v, &cfg->goal_economic_score_flag);
+	visit<int8_t>(v, &cfg->goal_total_score_flag);
+	visit<int8_t>(v, &cfg->goal_year_limit_flag);
+	visit<int32_t>(v, &cfg->goal_population);
+	visit<int32_t>(v, &cfg->goal_economic_score);
+	visit<int32_t>(v, &cfg->goal_total_score);
+	visit<int32_t>(v, &cfg->goal_year_limit);
+	visit<int8_t>(v, &cfg->fire_spread_rate);
+	visit<int8_t>(v, &cfg->wind_spread_fire_rate);
+	visit<int8_t>(v, &cfg->fire_fade_rate);
+	visit<int8_t>(v, &cfg->fire_restore_prob);
+	visit<int8_t>(v, &cfg->rain_reduce_fire_rate);
+	visit<int8_t>(v, &cfg->fire_damage);
+	visit<int8_t>(v, &cfg->show_ai_info);
+	visit<int8_t>(v, &cfg->fast_build);
+	visit<int8_t>(v, &cfg->disable_ai_flag);
+	visit<int8_t>(v, &cfg->king_undie_flag);
+	visit<int8_t>(v, &cfg->race_id);
+	visit_array<int8_t>(v, cfg->player_name, Config::PLAYER_NAME_LEN+1);
+	visit<int8_t>(v, &cfg->player_nation_color);
+	visit<int8_t>(v, &cfg->expired_flag);
+	visit<int8_t>(v, &cfg->opaque_report);
+	visit<int8_t>(v, &cfg->disp_news_flag);
+	visit<int16_t>(v, &cfg->scroll_speed);
+	visit<int16_t>(v, &cfg->frame_speed);
+	visit<int8_t>(v, &cfg->help_mode);
+	visit<int8_t>(v, &cfg->disp_town_name);
+	visit<int8_t>(v, &cfg->disp_spy_sign);
+	visit<int8_t>(v, &cfg->show_all_unit_icon);
+	visit<int8_t>(v, &cfg->show_unit_path);
+	visit<int8_t>(v, &cfg->music_flag);
+	visit<int16_t>(v, &cfg->cd_music_volume);
+	visit<int16_t>(v, &cfg->wav_music_volume);
+	visit<int8_t>(v, &cfg->sound_effect_flag);
+	visit<int16_t>(v, &cfg->sound_effect_volume);
+	visit<int8_t>(v, &cfg->pan_control);
+	visit<int8_t>(v, &cfg->lightning_visual);
+	visit<int8_t>(v, &cfg->earthquake_visual);
+	visit<int8_t>(v, &cfg->rain_visual);
+	visit<int8_t>(v, &cfg->snow_visual);
+	visit<int8_t>(v, &cfg->snow_ground);
+	visit<int8_t>(v, &cfg->lightning_audio);
+	visit<int8_t>(v, &cfg->earthquake_audio);
+	visit<int8_t>(v, &cfg->rain_audio);
+	visit<int8_t>(v, &cfg->snow_audio);
+	visit<int8_t>(v, &cfg->wind_audio);
+	visit<int32_t>(v, &cfg->lightning_brightness);
+	visit<int32_t>(v, &cfg->cloud_darkness);
+	visit<int32_t>(v, &cfg->lightning_volume);
+	visit<int32_t>(v, &cfg->earthquake_volume);
+	visit<int32_t>(v, &cfg->rain_volume);
+	visit<int32_t>(v, &cfg->snow_volume);
+	visit<int32_t>(v, &cfg->wind_volume);
+	visit<int8_t>(v, &cfg->blacken_map);
+	visit<int8_t>(v, &cfg->explore_mask_method);
+	visit<int8_t>(v, &cfg->fog_mask_method);
+}
+
+enum { CONFIG_RECORD_SIZE = 144 };
+
 //-------- Start of function Config::write_file -------------//
 //
 int Config::write_file(File* filePtr)
 {
-	return filePtr->file_write( this, sizeof(Config) );
+	return write_with_record_size(filePtr, this, &visit_config,
+											CONFIG_RECORD_SIZE);
 }
 //--------- End of function Config::write_file ---------------//
-
 
 //-------- Start of function Config::read_file -------------//
 //
 int Config::read_file(File* filePtr, int keepSysSettings)
 {
+	FileReader r;
+	FileReaderVisitor v;
+
 	//--- these settings are not game dependent -----//
 
 	char  musicFlag 		 = music_flag;
@@ -1164,7 +1288,12 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 	short	soundEffectVol  = sound_effect_volume;
 	char	helpMode			 = help_mode;
 
-	int rc = filePtr->file_read( this, sizeof(Config) );
+	if (!r.init(filePtr))
+		return 0;
+
+	r.check_record_size(CONFIG_RECORD_SIZE);
+	v.init(&r);
+	visit_config(&v, this);
 
 	if( keepSysSettings )
 	{
@@ -1176,7 +1305,7 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 		help_mode			= helpMode;
 	}
 
-	return rc;
+	return r.good();
 }
 //--------- End of function Config::read_file ---------------//
 
@@ -1203,6 +1332,7 @@ int Info::read_file(File* filePtr)
 
 	//------- read the info data ----------//
 
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, readSize );
 }
 //--------- End of function Info::read_file ---------------//
@@ -1222,6 +1352,7 @@ int Power::write_file(File* filePtr)
 //
 int Power::read_file(File* filePtr)
 {
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(Power) );
 }
 //--------- End of function Power::read_file ---------------//
@@ -1281,6 +1412,7 @@ int Weather::write_file(File* filePtr)
 //
 int Weather::read_file(File* filePtr)
 {
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(Weather) );
 }
 //--------- End of function Weather::read_file ---------------//
@@ -1300,6 +1432,7 @@ int MagicWeather::write_file(File* filePtr)
 //
 int MagicWeather::read_file(File* filePtr)
 {
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 	return filePtr->file_read( this, sizeof(MagicWeather) );
 }
 //--------- End of function MagicWeahter::read_file ---------------//

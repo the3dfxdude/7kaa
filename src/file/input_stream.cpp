@@ -17,28 +17,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef FILE_INPUT_STREAM_H
-#define FILE_INPUT_STREAM_H
-
-#include <OFILE.h>
 #include <input_stream.h>
 
-class FileInputStream: public InputStream
+/*
+ * Reads a non-integer little-endian value of the same size as the integer
+ * type AliasT.
+ */
+template <typename T, typename AliasT>
+bool read_le_alias(InputStream *is, T *valp)
 {
-private:
-   File *file;
-   bool own_file;
+   union { T val; AliasT al; } u;
 
-public:
-   FileInputStream();
-   ~FileInputStream();
-   bool open(File *file, bool own_file = true);
-   bool open(const char *file_name);
-   long read(void *buffer, long length);
-   bool seek(long offset, int whence);
-   long tell();
-   void close();
-};
+   if (!read_le_integer<AliasT>(is, &u.al))
+      return false;
 
-/* vim: set ts=8 sw=3: */
-#endif
+   *valp = u.val;
+   return true;
+}
+
+template <>
+bool read_le<float>(InputStream *is, float *valp)
+{
+   return read_le_alias<float, uint32_t>(is, valp);
+}
+
+template <>
+bool read_le<double>(InputStream *is, double *valp)
+{
+   return read_le_alias<double, uint64_t>(is, valp);
+}

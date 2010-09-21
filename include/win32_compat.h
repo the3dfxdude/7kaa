@@ -25,15 +25,16 @@
 
 #ifdef NO_WINDOWS // !WINE && !WIN32
 
-#include <stdio.h>
 #include <ctype.h>
+#include <stdint.h>
+#include <stdio.h>
 
-typedef unsigned char BYTE;
-typedef unsigned char UCHAR;
-typedef unsigned short WORD;
-typedef int BOOL;
-typedef unsigned int UINT;
-typedef unsigned long DWORD;
+typedef uint8_t  BYTE;
+typedef uint8_t  UCHAR;
+typedef uint16_t WORD;
+typedef int32_t  BOOL;
+typedef uint32_t UINT;
+typedef uint32_t DWORD;
 
 #define TRUE 1
 #define FALSE 0

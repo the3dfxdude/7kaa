@@ -17,50 +17,47 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef INPUT_STREAM_H
-#define INPUT_STREAM_H
+#ifndef OUTPUT_STREAM_H
+#define OUTPUT_STREAM_H
 
 #include <stdint.h>
 #include <stdio.h>
 
-class InputStream
+class OutputStream
 {
 public:
-   virtual ~InputStream() {}
-   virtual long read(void *buffer, long length) = 0;
+   virtual ~OutputStream() {}
+   virtual long write(const void *data, long length) = 0;
    virtual bool seek(long offset, int whence) = 0;
    virtual long tell() = 0;
    virtual void close() = 0;
 };
 
-/* Reads a little-endian integer */
+/* Writes a little-endian integer */
 template <typename T>
-bool read_le_integer(InputStream *is, T *valp)
+bool write_le_integer(OutputStream *os, T val)
 {
-   T val = T();
    unsigned char c;
 
    for (int n = 0; n < static_cast<int>(sizeof(T)); n++)
    {
-      if (is->read(&c, 1) != 1)
+      c = val >> (8 * n);
+
+      if (os->write(&c, 1) != 1)
 	 return false;
-
-      val |= static_cast<T>(c) << (8 * n);
    }
-
-   *valp = val;
 
    return true;
 }
 
 template <typename T>
-bool read_le(InputStream *is, T *valp)
+bool write_le(OutputStream *os, T val)
 {
-   return read_le_integer<T>(is, valp);
+   return write_le_integer<T>(os, val);
 }
 
-template <> bool read_le<float>(InputStream *is, float *valp);
-template <> bool read_le<double>(InputStream *is, double *valp);
+template <> bool write_le<float>(OutputStream *os, float val);
+template <> bool write_le<double>(OutputStream *os, double val);
 
 /* vim: set ts=8 sw=3: */
 #endif

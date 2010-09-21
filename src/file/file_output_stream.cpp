@@ -17,32 +17,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#include <file_input_stream.h>
+#include <file_output_stream.h>
 #include <file_util.h>
 
-FileInputStream::FileInputStream()
+FileOutputStream::FileOutputStream()
 {
    this->file = NULL;
-   this->own_file = false;
 }
 
-FileInputStream::~FileInputStream()
+FileOutputStream::~FileOutputStream()
 {
    this->close();
 }
 
-long FileInputStream::read(void *buffer, long length)
+long FileOutputStream::write(const void *data, long length)
 {
    if (this->file == NULL)
       return 0;
 
-   if (!this->file->file_read(buffer, length))
+   if (!this->file->file_write(const_cast<void *>(data), length))
       return 0;
 
    return length;
 }
 
-bool FileInputStream::seek(long offset, int whence)
+bool FileOutputStream::seek(long offset, int whence)
 {
    if (this->file == NULL)
       return false;
@@ -50,7 +49,7 @@ bool FileInputStream::seek(long offset, int whence)
    return ::seek(this->file, offset, whence);
 }
 
-long FileInputStream::tell()
+long FileOutputStream::tell()
 {
    if (this->file == NULL)
       return -1;
@@ -58,34 +57,16 @@ long FileInputStream::tell()
    return this->file->file_pos();
 }
 
-bool FileInputStream::open(File *file, bool own_file)
+bool FileOutputStream::open(File *file)
 {
    this->close();
    this->file = file;
-   this->own_file = own_file;
    return (file != NULL);
 }
 
-bool FileInputStream::open(const char *file_name)
+void FileOutputStream::close()
 {
-   this->open(new File);
-
-   if (!this->file->file_open(file_name))
-   {
-      this->close();
-      return false;
-   }
-
-   return true;
-}
-
-void FileInputStream::close()
-{
-   if (this->own_file)
-      delete this->file;
-
    this->file = NULL;
-   this->own_file = false;
 }
 
 /* vim: set ts=8 sw=3: */

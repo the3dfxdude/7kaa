@@ -94,7 +94,7 @@ void WallRes::load_wall_info()
 	WallRec		*wallRec;
 	WallInfo		*wallInfo;
 	int			i;
-	long			bitmapOffset;
+	uint32_t		bitmapOffset;
 	
 	max_wall_id = 0;
 
@@ -127,7 +127,7 @@ void WallRes::load_wall_info()
 
 		wallInfo->draw_wall_id = m.atoi( wallRec->draw_wall, wallRec->WALL_ID_LEN);
 
-		memcpy( &bitmapOffset, wallRec->bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, wallRec->bitmap_ptr, sizeof(uint32_t) );
 		wallInfo->bitmap_ptr	= res_bitmap.read_imported(bitmapOffset);
 
 		if( wallInfo->wall_id > max_wall_id)

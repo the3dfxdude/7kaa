@@ -17,28 +17,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef FILE_INPUT_STREAM_H
-#define FILE_INPUT_STREAM_H
+#include <output_stream.h>
 
-#include <OFILE.h>
-#include <input_stream.h>
-
-class FileInputStream: public InputStream
+/*
+ * Writes a non-integer little-endian value of the same size as the integer
+ * type AliasT.
+ */
+template <typename T, typename AliasT>
+bool write_le_alias(OutputStream *os, T val)
 {
-private:
-   File *file;
-   bool own_file;
+   union { T val; AliasT al; } u;
+   u.val = val;
+   return write_le_integer<AliasT>(os, u.al);
+}
 
-public:
-   FileInputStream();
-   ~FileInputStream();
-   bool open(File *file, bool own_file = true);
-   bool open(const char *file_name);
-   long read(void *buffer, long length);
-   bool seek(long offset, int whence);
-   long tell();
-   void close();
-};
+template <>
+bool write_le<float>(OutputStream *os, float val)
+{
+   return write_le_alias<float, uint32_t>(os, val);
+}
 
-/* vim: set ts=8 sw=3: */
-#endif
+template <>
+bool write_le<double>(OutputStream *os, double val)
+{
+   return write_le_alias<double, uint64_t>(os, val);
+}

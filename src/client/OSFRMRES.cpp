@@ -88,7 +88,7 @@ void SpriteFrameRes::load_info()
 		spriteFrame->width  = m.atoi(frameRec->width , frameRec->WIDTH_LEN);
 		spriteFrame->height = m.atoi(frameRec->height, frameRec->HEIGHT_LEN);
 
-		memcpy( &spriteFrame->bitmap_offset, frameRec->bitmap_offset, sizeof(long) );
+		memcpy( &spriteFrame->bitmap_offset, frameRec->bitmap_offset, sizeof(uint32_t) );
 	}
 }
 //-------- End of function SpriteFrameRes::load_info ---------//

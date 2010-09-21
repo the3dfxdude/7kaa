@@ -25,6 +25,12 @@
 #include <string.h>
 
 #include <ODYNARR.h>
+#include <dbglog.h>
+#include <file_io_visitor.h>
+
+using namespace FileIOVisitor;
+
+DBGLOG_DEFAULT_CHANNEL(DynArray);
 
 //--------- BEGIN OF FUNCTION DynArray Constructor -------//
 //
@@ -468,7 +474,20 @@ void DynArray::quick_sort( int(*cmpFun)(const void*, const void*) )
 }
 //------------- End of function DynArray::quick_sort --------------//
 
+template <typename Visitor>
+static void visit_dyn_array(Visitor *v, DynArray *da)
+{
+   visit<int32_t>(v, &da->ele_num);
+   visit<int32_t>(v, &da->block_num);
+   visit<int32_t>(v, &da->cur_pos);
+   visit<int32_t>(v, &da->last_ele);
+   visit<int32_t>(v, &da->ele_size);
+   visit<int32_t>(v, &da->sort_offset);
+   visit<int8_t>(v, &da->sort_type);
+	v->skip(4); /* da->body_buf */
+}
 
+enum { DYN_ARRAY_RECORD_SIZE = 29 };
 
 //---------- Begin of function DynArray::write_file -------------//
 //
@@ -482,8 +501,9 @@ void DynArray::quick_sort( int(*cmpFun)(const void*, const void*) )
 //
 int DynArray::write_file(File* filePtr)
 {
-   if( !filePtr->file_write( this, sizeof(DynArray) ) )
-       return 0;
+	if (!write_with_record_size(filePtr, this, &visit_dyn_array,
+										 DYN_ARRAY_RECORD_SIZE))
+		return 0;
 
    if( last_ele > 0 )
    {
@@ -508,12 +528,11 @@ int DynArray::write_file(File* filePtr)
 //
 int DynArray::read_file(File* filePtr)
 {
-   char* bodyBuf = body_buf;     // preserve body_buf which has been allocated
+	if (!read_with_record_size(filePtr, this, &visit_dyn_array,
+										DYN_ARRAY_RECORD_SIZE))
+		return 0;
 
-   if( !filePtr->file_read( this, sizeof(DynArray) ) )
-      return 0;
-
-   body_buf = mem_resize( bodyBuf, ele_num*ele_size );
+   this->body_buf = mem_resize(this->body_buf, this->ele_num*this->ele_size);
 
 	if( last_ele > 0 )
 	{

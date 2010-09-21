@@ -94,7 +94,7 @@ void RaceRes::load_race_info()
 	RaceRec  *raceRec;
 	RaceInfo *raceInfo;
 	int      i, unitId;
-	long		bitmapOffset;
+	uint32_t	bitmapOffset;
 	Database *dbRace = game_set.open_db(RACE_DB);
 
 	race_count      = (short) dbRace->rec_count();
@@ -119,7 +119,7 @@ void RaceRes::load_race_info()
 		translate.multi_to_win(raceInfo->adjective, raceInfo->ADJECTIVE_LEN);
 #endif
 
-		memcpy( &bitmapOffset, raceRec->icon_bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, raceRec->icon_bitmap_ptr, sizeof(uint32_t) );
 
 		raceInfo->icon_bitmap_ptr = res_bitmap.read_imported(bitmapOffset);
 

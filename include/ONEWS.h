@@ -24,17 +24,11 @@
 #ifndef __ONEWS_H
 #define __ONEWS_H
 
-#ifndef __OBUTTON_H
+#include <stdint.h>
+
 #include <OBUTTON.h>
-#endif
-
-#ifndef __OVBROWSE_H
-#include <OVBROWSE.h>
-#endif
-
-#ifndef __ODYNARRB_H
 #include <ODYNARRB.h>
-#endif
+#include <OVBROWSE.h>
 
 //----- Maximum no. of news ---------//
 
@@ -109,7 +103,7 @@ public:
 	char  type;           // news type   // type may be > NEWS_TYPE_NUM, for indicating that the news has been displayed in the stock window, do display it on the newspaper again
 	char  news_type()     { return type%NEWS_TYPE_NUM; }
 
-	long  news_date;           	 // date of the news
+	int32_t news_date;    // date of the news
 
 	char  nation_color1;     // nation color, can't use nation_recno directly, because it may bankrupt one day
 	char  nation_color2;

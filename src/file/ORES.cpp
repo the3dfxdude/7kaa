@@ -78,11 +78,11 @@ void Resource::init(char* resName, int readAll, int useCommonBuf)
 
    //---------- Read in record index -------------//
 
-   index_buf = (long*) mem_add( (rec_count+1) * sizeof(long) );
+   index_buf = (uint32_t*) mem_add( (rec_count+1) * sizeof(uint32_t) );
 
    // rec_count+1 is the last index pointer for calculating last record size
 
-   file_read( index_buf, sizeof(long) * (rec_count+1) );
+   file_read( index_buf, sizeof(uint32_t) * (rec_count+1) );
 
    //---------- Read in record data -------------//
 

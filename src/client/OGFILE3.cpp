@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010 Unavowed <unavowed@vexillium.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,22 +25,29 @@
 #include <OUNIT.h>
 
 #include <OBULLET.h>
-#include <OU_MARI.h>
 #include <OB_PROJ.h>
-#include <OSITE.h>
-#include <OTOWN.h>
-#include <ONATION.h>
 #include <OFIRM.h>
-#include <OTORNADO.h>
+#include <OGFILE.h>
+#include <ONATION.h>
+#include <ONEWS.h>
 #include <OREBEL.h>
-#include <OSPY.h>
-#include <OSNOWG.h>
 #include <OREGION.h>
 #include <OREGIONS.h>
-#include <ONEWS.h>
-#include <OGFILE.h>
+#include <OSITE.h>
+#include <OSNOWG.h>
+#include <OSPY.h>
+#include <OTORNADO.h>
+#include <OTOWN.h>
+#include <OU_MARI.h>
+#include <dbglog.h>
+#include <file_io_visitor.h>
+#include <file_reader.h>
 
 #include <OGF_V1.h>
+
+using namespace FileIOVisitor;
+
+DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 //------- declare static functions -------//
 
@@ -197,6 +205,91 @@ int UnitArray::read_file(File* filePtr)
 }
 //--------- End of function UnitArray::read_file ---------------//
 
+template <typename Visitor>
+static void visit_unit(Visitor *v, Unit *u)
+{
+	/* Sprite */
+	visit_sprite(v, u);
+
+	/* Unit */
+	visit<int8_t>(v, &u->unit_id);
+	visit<int8_t>(v, &u->rank_id);
+	visit<int8_t>(v, &u->race_id);
+	visit<int8_t>(v, &u->nation_recno);
+	visit<int8_t>(v, &u->ai_unit);
+	visit<uint16_t>(v, &u->name_id);
+	visit<uint32_t>(v, &u->unit_group_id);
+	visit<uint32_t>(v, &u->team_id);
+	visit<int8_t>(v, &u->selected_flag);
+	visit<int8_t>(v, &u->group_select_id);
+	visit<int8_t>(v, &u->waiting_term);
+	visit<int8_t>(v, &u->blocked_by_member);
+	visit<int8_t>(v, &u->swapping);
+	visit<int16_t>(v, &u->leader_unit_recno);
+	visit<int8_t>(v, &u->action_misc);
+	visit<int16_t>(v, &u->action_misc_para);
+	visit<int8_t>(v, &u->action_mode);
+	visit<int16_t>(v, &u->action_para);
+	visit<int16_t>(v, &u->action_x_loc);
+	visit<int16_t>(v, &u->action_y_loc);
+	visit<int8_t>(v, &u->action_mode2);
+	visit<int16_t>(v, &u->action_para2);
+	visit<int16_t>(v, &u->action_x_loc2);
+	visit<int16_t>(v, &u->action_y_loc2);
+	visit_array<int8_t>(v, u->blocked_edge, 4);
+	visit<uint8_t>(v, &u->attack_dir);
+	visit<int16_t>(v, &u->range_attack_x_loc);
+	visit<int16_t>(v, &u->range_attack_y_loc);
+	visit<int16_t>(v, &u->move_to_x_loc);
+	visit<int16_t>(v, &u->move_to_y_loc);
+	visit<int8_t>(v, &u->loyalty);
+	visit<int8_t>(v, &u->target_loyalty);
+	visit<float>(v, &u->hit_points);
+	visit<int16_t>(v, &u->max_hit_points);
+
+	visit<int8_t>(v, &u->skill.combat_level);
+	visit<int8_t>(v, &u->skill.skill_id);
+	visit<int8_t>(v, &u->skill.skill_level);
+	visit<uint8_t>(v, &u->skill.combat_level_minor);
+	visit<uint8_t>(v, &u->skill.skill_level_minor);
+	visit<uint8_t>(v, &u->skill.skill_potential);
+
+	visit<int8_t>(v, &u->unit_mode);
+	visit<int16_t>(v, &u->unit_mode_para);
+	visit<int16_t>(v, &u->spy_recno);
+	visit<int16_t>(v, &u->nation_contribution);
+	visit<int16_t>(v, &u->total_reward);
+	visit_pointer(v, &u->attack_info_array);
+	visit<int8_t>(v, &u->attack_count);
+	visit<int8_t>(v, &u->attack_range);
+	visit<int16_t>(v, &u->cur_power);
+	visit<int16_t>(v, &u->max_power);
+	visit_pointer(v, &u->result_node_array);
+	visit<int32_t>(v, &u->result_node_count);
+	visit<int16_t>(v, &u->result_node_recno);
+	visit<int16_t>(v, &u->result_path_dist);
+	visit_pointer(v, &u->way_point_array);
+	visit<int16_t>(v, &u->way_point_array_size);
+	visit<int16_t>(v, &u->way_point_count);
+	visit<uint16_t>(v, &u->ai_action_id);
+	visit<int8_t>(v, &u->original_action_mode);
+	visit<int16_t>(v, &u->original_action_para);
+	visit<int16_t>(v, &u->original_action_x_loc);
+	visit<int16_t>(v, &u->original_action_y_loc);
+	visit<int16_t>(v, &u->original_target_x_loc);
+	visit<int16_t>(v, &u->original_target_y_loc);
+	visit<int16_t>(v, &u->ai_original_target_x_loc);
+	visit<int16_t>(v, &u->ai_original_target_y_loc);
+	visit<int8_t>(v, &u->ai_no_suitable_action);
+	visit<int8_t>(v, &u->can_guard_flag);
+	visit<int8_t>(v, &u->can_attack_flag);
+	visit<int8_t>(v, &u->force_move_flag);
+	visit<int16_t>(v, &u->home_camp_firm_recno);
+	visit<int8_t>(v, &u->aggressive_mode);
+	visit<int8_t>(v, &u->seek_path_fail_count);
+	visit<int8_t>(v, &u->ignore_power_nation);
+	visit_pointer(v, &u->team_info);
+}
 
 //--------- Begin of function Unit::write_file ---------//
 //
@@ -207,7 +300,7 @@ int UnitArray::read_file(File* filePtr)
 //
 int Unit::write_file(File* filePtr)
 {
-   if( !filePtr->file_write( this, sizeof(Unit) ) )
+	if (!write_with_record_size(filePtr, this, &visit_unit, 169))
 		return 0;
 
    //--------------- write memory data ----------------//
@@ -237,17 +330,50 @@ int Unit::write_file(File* filePtr)
 }
 //----------- End of function Unit::write_file ---------//
 
+template <typename Visitor>
+static void visit_sprite(Visitor *v, Sprite *s)
+{
+	v->skip(4); /* virtual table pointer */
+
+	visit<int16_t>(v, &s->sprite_id);
+	visit<int16_t>(v, &s->sprite_recno);
+	visit<int8_t>(v, &s->mobile_type);
+	visit<uint8_t>(v, &s->cur_action);
+	visit<uint8_t>(v, &s->cur_dir);
+	visit<uint8_t>(v, &s->cur_frame);
+	visit<uint8_t>(v, &s->cur_attack);
+	visit<uint8_t>(v, &s->final_dir);
+	visit<int8_t>(v, &s->turn_delay);
+	visit<int8_t>(v, &s->guard_count);
+	visit<uint8_t>(v, &s->remain_attack_delay);
+	visit<uint8_t>(v, &s->remain_frames_per_step);
+	visit<int16_t>(v, &s->cur_x);
+	visit<int16_t>(v, &s->cur_y);
+	visit<int16_t>(v, &s->go_x);
+	visit<int16_t>(v, &s->go_y);
+	visit<int16_t>(v, &s->next_x);
+	visit<int16_t>(v, &s->next_y);
+	visit_pointer(v, &s->sprite_info);
+}
 
 //--------- Begin of function Unit::read_file ---------//
 //
 int Unit::read_file(File* filePtr)
 {
-   char* vfPtr = *((char**)this);      // save the virtual function table pointer
+	FileReader r;
+	FileReaderVisitor v;
 
-   if( !filePtr->file_read( this, sizeof(Unit) ) )
-      return 0;
+	if (!r.init(filePtr))
+		return 0;
 
-   *((char**)this) = vfPtr;
+	r.check_record_size(169);
+	v.init(&r);
+	visit_unit(&v, this);
+
+	if (!r.good())
+		return 0;
+
+	r.deinit();
 
 	//--------------- read in memory data ----------------//
 
@@ -339,18 +465,81 @@ int Unit::read_derived_file(File* filePtr)
 }
 //----------- End of function Unit::read_derived_file ---------//
 
+template <typename Visitor>
+static void visit_trade_stop(Visitor *v, TradeStop *ts)
+{
+	visit<int16_t>(v, &ts->firm_recno);
+	visit<int16_t>(v, &ts->firm_loc_x1);
+	visit<int16_t>(v, &ts->firm_loc_y1);
+	visit<int8_t>(v, &ts->pick_up_type);
+	visit_array<int8_t>(v, ts->pick_up_array, MAX_PICK_UP_GOODS);
+}
+
+template <typename Visitor>
+static void visit_attack_info(Visitor *v, AttackInfo *ai)
+{
+	visit<uint8_t>(v, &ai->combat_level);
+	visit<uint8_t>(v, &ai->attack_delay);
+	visit<uint8_t>(v, &ai->attack_range);
+	visit<uint8_t>(v, &ai->attack_damage);
+   visit<uint8_t>(v, &ai->pierce_damage);
+	visit<int16_t>(v, &ai->bullet_out_frame);
+	visit<int8_t>(v, &ai->bullet_speed);
+	visit<int8_t>(v, &ai->bullet_radius);
+	visit<int8_t>(v, &ai->bullet_sprite_id);
+	visit<int8_t>(v, &ai->dll_bullet_sprite_id);
+	visit<int8_t>(v, &ai->eqv_attack_next);
+	visit<int16_t>(v, &ai->min_power);
+	visit<int16_t>(v, &ai->consume_power);
+	visit<int8_t>(v, &ai->fire_radius);
+	visit<int16_t>(v, &ai->effect_id);
+}
+
+template <typename Visitor>
+static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
+{
+	visit_sprite(v, &u->splash);
+	visit<int8_t>(v, &u->menu_mode);
+	visit<int8_t>(v, &u->extra_move_in_beach);
+	visit<int8_t>(v, &u->in_beach);
+	visit<int8_t>(v, &u->selected_unit_id);
+	visit_array<int16_t>(v, u->unit_recno_array, MAX_UNIT_IN_SHIP);
+	visit<int8_t>(v, &u->unit_count);
+	visit<int8_t>(v, &u->journey_status);
+	visit<int8_t>(v, &u->dest_stop_id);
+	visit<int8_t>(v, &u->stop_defined_num);
+	visit<int8_t>(v, &u->wait_count);
+	visit<int16_t>(v, &u->stop_x_loc);
+	visit<int16_t>(v, &u->stop_y_loc);
+	visit<int8_t>(v, &u->auto_mode);
+	visit<int16_t>(v, &u->cur_firm_recno);
+	visit<int16_t>(v, &u->carry_goods_capacity);
+
+	for (int n = 0; n < MAX_STOP_FOR_SHIP; n++)
+		visit_trade_stop(v, &u->stop_array[n]);
+
+	visit_array<int16_t>(v, u->raw_qty_array, MAX_RAW);
+	visit_array<int16_t>(v, u->product_raw_qty_array, MAX_PRODUCT);
+	visit_attack_info(v, &u->ship_attack_info);
+	visit<uint8_t>(v, &u->attack_mode_selected);
+	visit<int32_t>(v, &u->last_load_goods_date);
+}
+
 //--------- Begin of function UnitMarine::read_derived_file ---------//
 int UnitMarine::read_derived_file(File* filePtr)
 {
-	//---- backup virtual functions table pointer of splash ----//
-	char* splashVfPtr = *((char **)&splash);
+	FileReader r;
+	FileReaderVisitor v;
 
-	//--------- read file --------//
-	if( !Unit::read_derived_file(filePtr) )
+	if (!r.init(filePtr))
 		return 0;
 
-	// -------- restore virtual function table pointer -------//
-	*((char **)&splash) = splashVfPtr ;
+	v.init(&r);
+
+	v.skip(2); /* record size */
+	visit_unit_marine_derived(&v, this);
+
+	r.deinit();
 
 	// ------- post-process the data read --------//
 	splash.sprite_info = sprite_res[splash.sprite_id];
@@ -494,29 +683,43 @@ int BulletArray::read_file(File* filePtr)
 }
 //--------- End of function BulletArray::read_file ---------------//
 
+template <typename Visitor>
+static void visit_bullet(Visitor *v, Bullet *b)
+{
+	visit_sprite(v, b);
+	visit<int8_t>(v, &b->parent_type);
+	visit<int16_t>(v, &b->parent_recno);
+	visit<int8_t>(v, &b->target_mobile_type);
+	visit<float>(v, &b->attack_damage);
+	visit<int16_t>(v, &b->damage_radius);
+	visit<int16_t>(v, &b->nation_recno);
+	visit<int8_t>(v, &b->fire_radius);
+	visit<int16_t>(v, &b->origin_x);
+	visit<int16_t>(v, &b->origin_y);
+	visit<int16_t>(v, &b->target_x_loc);
+	visit<int16_t>(v, &b->target_y_loc);
+	visit<int8_t>(v, &b->cur_step);
+	visit<int8_t>(v, &b->total_step);
+}
+
+enum { BULLET_RECORD_SIZE = 57 };
 
 //--------- Begin of function Bullet::write_file ---------//
 //
 int Bullet::write_file(File* filePtr)
 {
-	if( !filePtr->file_write( this, sizeof(Bullet) ) )
-		return 0;
-
-	return 1;
+	return write_with_record_size(filePtr, this, &visit_bullet,
+											BULLET_RECORD_SIZE);
 }
 //----------- End of function Bullet::write_file ---------//
-
 
 //--------- Begin of function Bullet::read_file ---------//
 //
 int Bullet::read_file(File* filePtr)
 {
-	char* vfPtr = *((char**)this);      // save the virtual function table pointer
-
-	if( !filePtr->file_read( this, sizeof(Bullet) ) )
+	if (!read_with_record_size(filePtr, this, &visit_bullet,
+										BULLET_RECORD_SIZE))
 		return 0;
-
-	*((char**)this) = vfPtr;
 
    //------------ post-process the data read ----------//
 
@@ -565,22 +768,29 @@ int Bullet::read_derived_file(File *filePtr)
 }
 //----------- End of function Bullet::read_derived_file ---------//
 
+template <typename Visitor>
+static void visit_projectile(Visitor *v, Projectile *p)
+{
+	visit<float>(v, &p->z_coff);
+	visit_sprite(v, &p->act_bullet);
+	visit_sprite(v, &p->bullet_shadow);
+}
+
+enum { PROJECTILE_RECORD_SIZE = 72 };
 
 //----------- Begin of function Projectile::read_derived_file ---------//
 
+int Projectile::write_derived_file(File *filePtr)
+{
+	return write_with_record_size(filePtr, this, &visit_projectile,
+											PROJECTILE_RECORD_SIZE);
+}
+
 int Projectile::read_derived_file(File *filePtr)
 {
-	//--- backup virtual function table pointer of act_bullet and bullet_shadow ---//
-   char* actBulletVfPtr = *((char**)&act_bullet);
-   char* bulletShadowVfPtr = *((char**)&bullet_shadow);
-
-	//---------- read file ----------//
-	if( !Bullet::read_derived_file(filePtr) )
+	if (!read_with_record_size(filePtr, this, &visit_projectile,
+										PROJECTILE_RECORD_SIZE))
 		return 0;
-
-	//------ restore virtual function table pointer --------//
-	*((char**)&act_bullet) = actBulletVfPtr;
-	*((char**)&bullet_shadow) = bulletShadowVfPtr;
 
    //----------- post-process the data read ----------//
 	act_bullet.sprite_info = sprite_res[act_bullet.sprite_id];
@@ -593,6 +803,83 @@ int Projectile::read_derived_file(File *filePtr)
 //----------- End of function Projectile::read_derived_file ---------//
 
 //*****//
+
+template <typename Visitor>
+static void visit_firm(Visitor *v, Firm *f)
+{
+	v->skip(4); /* virtual table pointer */
+
+	visit<int8_t>(v, &f->firm_id);
+	visit<int16_t>(v, &f->firm_build_id);
+	visit<int16_t>(v, &f->firm_recno);
+	visit<int8_t>(v, &f->firm_ai);
+	visit<int8_t>(v, &f->ai_processed);
+	visit<int8_t>(v, &f->ai_status);
+	visit<int8_t>(v, &f->ai_link_checked);
+	visit<int8_t>(v, &f->ai_sell_flag);
+	visit<int8_t>(v, &f->race_id);
+	visit<int16_t>(v, &f->nation_recno);
+	visit<int16_t>(v, &f->closest_town_name_id);
+	visit<int16_t>(v, &f->firm_name_instance_id);
+	visit<int16_t>(v, &f->loc_x1);
+	visit<int16_t>(v, &f->loc_y1);
+	visit<int16_t>(v, &f->loc_x2);
+	visit<int16_t>(v, &f->loc_y2);
+	visit<int16_t>(v, &f->abs_x1);
+	visit<int16_t>(v, &f->abs_y1);
+	visit<int16_t>(v, &f->abs_x2);
+	visit<int16_t>(v, &f->abs_y2);
+	visit<int16_t>(v, &f->center_x);
+	visit<int16_t>(v, &f->center_y);
+	visit<uint8_t>(v, &f->region_id);
+	visit<int8_t>(v, &f->cur_frame);
+	visit<int8_t>(v, &f->remain_frame_delay);
+	visit<float>(v, &f->hit_points);
+	visit<float>(v, &f->max_hit_points);
+	visit<int8_t>(v, &f->under_construction);
+	visit<int8_t>(v, &f->firm_skill_id);
+	visit<int16_t>(v, &f->overseer_recno);
+	visit<int16_t>(v, &f->overseer_town_recno);
+	visit<int16_t>(v, &f->builder_recno);
+	visit<uint8_t>(v, &f->builder_region_id);
+	visit<float>(v, &f->productivity);
+	visit_pointer(v, &f->worker_array);
+	visit<int8_t>(v, &f->worker_count);
+	visit<int8_t>(v, &f->selected_worker_id);
+	visit<int8_t>(v, &f->player_spy_count);
+	visit<uint8_t>(v, &f->sabotage_level);
+	visit<int8_t>(v, &f->linked_firm_count);
+	visit<int8_t>(v, &f->linked_town_count);
+	visit_array<int16_t>(v, f->linked_firm_array, MAX_LINKED_FIRM_FIRM);
+	visit_array<int16_t>(v, f->linked_town_array, MAX_LINKED_FIRM_TOWN);
+
+	visit_array<int8_t>(v, f->linked_firm_enable_array,
+							  MAX_LINKED_FIRM_FIRM);
+
+	visit_array<int8_t>(v, f->linked_town_enable_array,
+							  MAX_LINKED_FIRM_TOWN);
+
+	visit<float>(v, &f->last_year_income);
+	visit<float>(v, &f->cur_year_income);
+	visit<int32_t>(v, &f->setup_date);
+	visit<int8_t>(v, &f->should_set_power);
+	visit<int32_t>(v, &f->last_attacked_date);
+	visit<int8_t>(v, &f->should_close_flag);
+	visit<int8_t>(v, &f->no_neighbor_space);
+	visit<int8_t>(v, &f->ai_should_build_factory_count);
+}
+
+enum { FIRM_RECORD_SIZE = 254 };
+
+static bool read_firm(File *file, Firm *firm)
+{
+	return read_with_record_size(file, firm, &visit_firm, FIRM_RECORD_SIZE);
+}
+
+static bool write_firm(File *file, Firm *firm)
+{
+	return write_with_record_size(file, firm, &visit_firm, FIRM_RECORD_SIZE);
+}
 
 //-------- Start of function FirmArray::write_file -------------//
 //
@@ -628,8 +915,8 @@ int FirmArray::write_file(File* filePtr)
 
          //------ write data in base class --------//
 
-			if( !filePtr->file_write( firmPtr, sizeof(Firm) ) )
-            return 0;
+			if (!write_firm(filePtr, firmPtr))
+			  return 0;
 
          //--------- write worker_array ---------//
 
@@ -654,13 +941,11 @@ int FirmArray::write_file(File* filePtr)
 }
 //--------- End of function FirmArray::write_file ---------------//
 
-
 //-------- Start of function FirmArray::read_file -------------//
 //
 int FirmArray::read_file(File* filePtr)
 {
 	Firm*   firmPtr;
-	char*   vfPtr;
 	int     i, firmId, firmRecno;
 
 	int firmCount      = filePtr->file_get_short();  // get no. of firms from file
@@ -687,21 +972,15 @@ int FirmArray::read_file(File* filePtr)
          firmRecno = create_firm( firmId );
          firmPtr   = firm_array[firmRecno];
 
+			if (!read_firm(filePtr, firmPtr))
+			  return 0;
+
          //---- read data in base class -----//
-
-         vfPtr = *((char**)firmPtr);      // save the virtual function table pointer
-
-         if( !filePtr->file_read( firmPtr, sizeof(Firm) ) )
-            return 0;
-
 
 			#ifdef AMPLUS
 				if(!game_file_array.same_version && firmPtr->firm_id > FIRM_BASE)
 					firmPtr->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
 			#endif
-
-
-         *((char**)firmPtr) = vfPtr;
 
          //--------- read worker_array ---------//
 
@@ -780,6 +1059,8 @@ int Firm::read_derived_file(File* filePtr)
 
    if( readSize > 0 )
    {
+		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+
       if( !filePtr->file_read( (char*) this + sizeof(Firm), readSize ) )
          return 0;
    }
@@ -961,14 +1242,68 @@ int TownArray::read_file(File* filePtr)
 //*****//
 
 
+template <typename Visitor>
+static void visit_nation_array(Visitor *v, NationArray *na)
+{
+	/* DynArray and DynArrayB skipped */
+
+	visit<int16_t>(v, &na->nation_count);
+	visit<int16_t>(v, &na->ai_nation_count);
+	visit<int32_t>(v, &na->last_del_nation_date);
+	visit<int32_t>(v, &na->last_new_nation_date);
+	visit<int32_t>(v, &na->max_nation_population);
+	visit<int32_t>(v, &na->all_nation_population);
+   visit<int16_t>(v, &na->independent_town_count);
+	visit_array<int16_t>(v, na->independent_town_count_race_array, MAX_RACE);
+	visit<int32_t>(v, &na->max_nation_units);
+	visit<int32_t>(v, &na->max_nation_humans);
+	visit<int32_t>(v, &na->max_nation_generals);
+	visit<int32_t>(v, &na->max_nation_weapons);
+	visit<int32_t>(v, &na->max_nation_ships);
+	visit<int32_t>(v, &na->max_nation_spies);
+	visit<int32_t>(v, &na->max_nation_firms);
+	visit<int32_t>(v, &na->max_nation_tech_level);
+	visit<int32_t>(v, &na->max_population_rating);
+	visit<int32_t>(v, &na->max_military_rating);
+	visit<int32_t>(v, &na->max_economic_rating);
+	visit<int32_t>(v, &na->max_reputation);
+	visit<int32_t>(v, &na->max_kill_monster_score);
+	visit<int32_t>(v, &na->max_overall_rating);
+	visit<int16_t>(v, &na->max_population_nation_recno);
+	visit<int16_t>(v, &na->max_military_nation_recno);
+	visit<int16_t>(v, &na->max_economic_nation_recno);
+	visit<int16_t>(v, &na->max_reputation_nation_recno);
+	visit<int16_t>(v, &na->max_kill_monster_nation_recno);
+	visit<int16_t>(v, &na->max_overall_nation_recno);
+	visit<int32_t>(v, &na->last_alliance_id);
+	visit<int32_t>(v, &na->nation_peace_days);
+	visit<int16_t>(v, &na->player_recno);
+	visit_pointer(v, &na->player_ptr);
+	visit_array<int8_t>(v, na->nation_color_array, MAX_NATION+1);
+	visit_array<int8_t>(v, na->nation_power_color_array, MAX_NATION+2);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_array<int8_t>(v, na->human_name_array[n],
+								  NationArray::HUMAN_NAME_LEN+1);
+}
+
+enum { NATION_ARRAY_RECORD_SIZE = 288 };
+
+static bool read_nation_array(File *file, NationArray *na)
+{
+	return read_with_record_size(file, na, &visit_nation_array,
+										  NATION_ARRAY_RECORD_SIZE);
+}
+
 //-------- Start of function NationArray::write_file -------------//
 //
 int NationArray::write_file(File* filePtr)
 {
 	//------ write info in NationArray ------//
-
-   if( !filePtr->file_write( (char*) this + sizeof(DynArrayB), sizeof(NationArray)-sizeof(DynArrayB) ) )
-      return 0;
+	
+	if (!write_with_record_size(filePtr, this, &visit_nation_array,
+										 NATION_ARRAY_RECORD_SIZE))
+		return 0;
 
    //---------- write Nations --------------//
 
@@ -1006,6 +1341,51 @@ int NationArray::write_file(File* filePtr)
 }
 //--------- End of function NationArray::write_file -------------//
 
+template <typename Visitor>
+static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
+{
+	visit<int16_t>(v, &na->nation_count);
+	visit<int16_t>(v, &na->ai_nation_count);
+	visit<int32_t>(v, &na->last_del_nation_date);
+	visit<int32_t>(v, &na->last_new_nation_date);
+	visit<int32_t>(v, &na->max_nation_population);
+	visit<int32_t>(v, &na->all_nation_population);
+	visit<int16_t>(v, &na->independent_town_count);
+	visit_array<int16_t>(v, na->independent_town_count_race_array,
+								VERSION_1_MAX_RACE);
+	visit<int32_t>(v, &na->max_nation_units);
+	visit<int32_t>(v, &na->max_nation_humans);
+	visit<int32_t>(v, &na->max_nation_generals);
+	visit<int32_t>(v, &na->max_nation_weapons);
+	visit<int32_t>(v, &na->max_nation_ships);
+	visit<int32_t>(v, &na->max_nation_spies);
+	visit<int32_t>(v, &na->max_nation_firms);
+	visit<int32_t>(v, &na->max_nation_tech_level);
+	visit<int32_t>(v, &na->max_population_rating);
+	visit<int32_t>(v, &na->max_military_rating);
+	visit<int32_t>(v, &na->max_economic_rating);
+	visit<int32_t>(v, &na->max_reputation);
+	visit<int32_t>(v, &na->max_kill_monster_score);
+	visit<int32_t>(v, &na->max_overall_rating);
+	visit<int16_t>(v, &na->max_population_nation_recno);
+	visit<int16_t>(v, &na->max_military_nation_recno);
+	visit<int16_t>(v, &na->max_economic_nation_recno);
+	visit<int16_t>(v, &na->max_reputation_nation_recno);
+	visit<int16_t>(v, &na->max_kill_monster_nation_recno);
+	visit<int16_t>(v, &na->max_overall_nation_recno);
+	visit<int32_t>(v, &na->last_alliance_id);
+	visit<int32_t>(v, &na->nation_peace_days);
+	visit<int16_t>(v, &na->player_recno);
+	visit_pointer(v, &na->player_ptr);
+	visit_array<int8_t>(v, na->nation_color_array, MAX_NATION+1);
+	visit_array<int8_t>(v, na->nation_power_color_array, MAX_NATION+2);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_array<int8_t>(v, na->human_name_array[n],
+								  NationArray::HUMAN_NAME_LEN+1);
+}
+
+enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
 
 //-------- Start of function NationArray::read_file -------------//
 //
@@ -1016,8 +1396,9 @@ int NationArray::read_file(File* filePtr)
 	if(!game_file_array.same_version)
 	{
 		Version_1_NationArray *oldNationArrayPtr = (Version_1_NationArray*) mem_add(sizeof(Version_1_NationArray));
-		//if( !filePtr->file_read( (char*) oldNationArrayPtr + sizeof(DynArrayB), sizeof(Version_1_NationArray)-sizeof(DynArrayB) ) )
-		if( !filePtr->file_read( (char*) oldNationArrayPtr, sizeof(Version_1_NationArray) ) )
+		if (!read_with_record_size(filePtr, oldNationArrayPtr,
+											&visit_version_1_nation_array,
+											VERSION_1_NATION_ARRAY_RECORD_SIZE))
 		{
 			mem_del(oldNationArrayPtr);
 			return 0;
@@ -1027,11 +1408,11 @@ int NationArray::read_file(File* filePtr)
 	}
 	else
 	{
-		if( !filePtr->file_read( (char*) this + sizeof(DynArrayB), sizeof(NationArray)-sizeof(DynArrayB) ) )
+		if (!read_nation_array(filePtr, this))
 			return 0;
 	}
 #else
-   if( !filePtr->file_read( (char*) this + sizeof(DynArrayB), sizeof(NationArray)-sizeof(DynArrayB) ) )
+	if (!read_nation_array(filePtr, this))
       return 0;
 #endif
 
@@ -1086,12 +1467,461 @@ int NationArray::read_file(File* filePtr)
 }
 //--------- End of function NationArray::read_file ---------------//
 
+template <typename Visitor>
+static void visit_nation_relation(Visitor *v, NationRelation *nr)
+{
+	visit<int8_t>(v, &nr->has_contact);
+	visit<int8_t>(v, &nr->should_attack);
+
+	visit<int8_t>(v, &nr->trade_treaty);
+
+	visit<int8_t>(v, &nr->status);
+
+	visit<int32_t>(v, &nr->last_change_status_date);
+
+	visit<int8_t>(v, &nr->ai_relation_level);
+	visit<int8_t>(v, &nr->ai_secret_attack);
+	visit<int8_t>(v, &nr->ai_demand_trade_treaty);
+
+	visit<float>(v, &nr->good_relation_duration_rating);
+	visit<int16_t>(v, &nr->started_war_on_us_count);
+
+	visit_array<float>(v, nr->cur_year_import, IMPORT_TYPE_COUNT);
+	visit_array<float>(v, nr->last_year_import, IMPORT_TYPE_COUNT);
+	visit_array<float>(v, nr->lifetime_import, IMPORT_TYPE_COUNT);
+
+	visit_array<int32_t>(v, nr->last_talk_reject_date_array, MAX_TALK_TYPE);
+
+	visit<int32_t>(v, &nr->last_military_aid_date);
+
+	visit<int32_t>(v, &nr->last_give_gift_date);
+	visit<int16_t>(v, &nr->total_given_gift_amount);
+
+	visit<int8_t>(v, &nr->contact_msg_flag);
+}
+
+template <typename Visitor>
+static void visit_attack_camp(Visitor *v, AttackCamp *ac)
+{
+	visit<int16_t>(v, &ac->firm_recno);
+	visit<int16_t>(v, &ac->combat_level);
+	visit<int16_t>(v, &ac->distance);
+	visit<int32_t>(v, &ac->patrol_date);
+}
+
+template <typename Visitor>
+static void visit_ai_region(Visitor *v, AIRegion *reg)
+{
+	visit<int8_t>(v, &reg->region_id);
+	visit<int8_t>(v, &reg->town_count);
+	visit<int8_t>(v, &reg->base_town_count);
+}
+
+template <typename Visitor>
+static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
+{
+	v->skip(4); /* virtual table pointer */
+
+	/* NationBase */
+	visit<int16_t>(v, &v1n->nation_recno);
+	visit<int8_t>(v, &v1n->nation_type);
+	visit<int8_t>(v, &v1n->race_id);
+	visit<int8_t>(v, &v1n->color_scheme_id);
+	visit<int8_t>(v, &v1n->nation_color);
+	visit<int16_t>(v, &v1n->king_unit_recno);
+	visit<int8_t>(v, &v1n->king_leadership);
+	visit<int32_t>(v, &v1n->nation_name_id);
+
+	visit_array<int8_t>(v, v1n->nation_name_str,
+							  Version_1_Nation::NATION_NAME_LEN+1);
+
+	visit<uint32_t>(v, &v1n->player_id);
+	visit<int8_t>(v, &v1n->next_frame_ready);
+	visit<int16_t>(v, &v1n->last_caravan_id);
+	visit<int16_t>(v, &v1n->nation_firm_count);
+	visit<int32_t>(v, &v1n->last_build_firm_date);
+	visit_array<int8_t>(v, v1n->know_base_array, VERSION_1_MAX_RACE);
+	visit_array<int8_t>(v, v1n->base_count_array, VERSION_1_MAX_RACE);
+	visit<int8_t>(v, &v1n->is_at_war_today);
+	visit<int8_t>(v, &v1n->is_at_war_yesterday);
+	visit<int32_t>(v, &v1n->last_war_date);
+	visit<int16_t>(v, &v1n->last_attacker_unit_recno);
+	visit<int32_t>(v, &v1n->last_independent_unit_join_date);
+	visit<int8_t>(v, &v1n->cheat_enabled_flag);
+	visit<float>(v, &v1n->cash);
+	visit<float>(v, &v1n->food);
+	visit<float>(v, &v1n->reputation);
+	visit<float>(v, &v1n->kill_monster_score);
+	visit<int16_t>(v, &v1n->auto_collect_tax_loyalty);
+	visit<int16_t>(v, &v1n->auto_grant_loyalty);
+	visit<float>(v, &v1n->cur_year_profit);
+	visit<float>(v, &v1n->last_year_profit);
+	visit<float>(v, &v1n->cur_year_fixed_income);
+	visit<float>(v, &v1n->last_year_fixed_income);
+	visit<float>(v, &v1n->cur_year_fixed_expense);
+	visit<float>(v, &v1n->last_year_fixed_expense);
+	visit_array<float>(v, v1n->cur_year_income_array, INCOME_TYPE_COUNT);
+	visit_array<float>(v, v1n->last_year_income_array, INCOME_TYPE_COUNT);
+	visit<float>(v, &v1n->cur_year_income);
+	visit<float>(v, &v1n->last_year_income);
+	visit_array<float>(v, v1n->cur_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit_array<float>(v, v1n->last_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit<float>(v, &v1n->cur_year_expense);
+	visit<float>(v, &v1n->last_year_expense);
+	visit<float>(v, &v1n->cur_year_cheat);
+	visit<float>(v, &v1n->last_year_cheat);
+	visit<float>(v, &v1n->cur_year_food_in);
+	visit<float>(v, &v1n->last_year_food_in);
+	visit<float>(v, &v1n->cur_year_food_out);
+	visit<float>(v, &v1n->last_year_food_out);
+	visit<float>(v, &v1n->cur_year_food_change);
+	visit<float>(v, &v1n->last_year_food_change);
+	visit<float>(v, &v1n->cur_year_reputation_change);
+	visit<float>(v, &v1n->last_year_reputation_change);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_nation_relation(v, &v1n->relation_array[n]);
+
+	visit_array<int8_t>(v, v1n->relation_status_array, MAX_NATION);
+	visit_array<int8_t>(v, v1n->relation_passable_array, MAX_NATION);
+
+	visit_array<int8_t>(v, v1n->relation_should_attack_array, MAX_NATION);
+	visit<int8_t>(v, &v1n->is_allied_with_player);
+	visit<int32_t>(v, &v1n->total_population);
+	visit<int32_t>(v, &v1n->total_jobless_population);
+	visit<int32_t>(v, &v1n->total_unit_count);
+	visit<int32_t>(v, &v1n->total_human_count);
+	visit<int32_t>(v, &v1n->total_general_count);
+	visit<int32_t>(v, &v1n->total_weapon_count);
+	visit<int32_t>(v, &v1n->total_ship_count);
+	visit<int32_t>(v, &v1n->total_firm_count);
+	visit<int32_t>(v, &v1n->total_spy_count);
+	visit<int32_t>(v, &v1n->total_ship_combat_level);
+	visit<int16_t>(v, &v1n->largest_town_recno);
+	visit<int16_t>(v, &v1n->largest_town_pop);
+	visit_array<int16_t>(v, v1n->raw_count_array, MAX_RAW);
+	visit_array<int16_t>(v, v1n->last_unit_name_id_array,
+								VERSION_1_MAX_UNIT_TYPE);
+	visit<int32_t>(v, &v1n->population_rating);
+	visit<int32_t>(v, &v1n->military_rating);
+	visit<int32_t>(v, &v1n->economic_rating);
+	visit<int32_t>(v, &v1n->overall_rating);
+	visit<int32_t>(v, &v1n->enemy_soldier_killed);
+	visit<int32_t>(v, &v1n->own_soldier_killed);
+	visit<int32_t>(v, &v1n->enemy_civilian_killed);
+	visit<int32_t>(v, &v1n->own_civilian_killed);
+	visit<int32_t>(v, &v1n->enemy_weapon_destroyed);
+	visit<int32_t>(v, &v1n->own_weapon_destroyed);
+	visit<int32_t>(v, &v1n->enemy_ship_destroyed);
+	visit<int32_t>(v, &v1n->own_ship_destroyed);
+	visit<int32_t>(v, &v1n->enemy_firm_destroyed);
+	visit<int32_t>(v, &v1n->own_firm_destroyed);
+
+	/* Nation */
+	v->skip(29); /* action_array */
+
+	visit<uint16_t>(v, &v1n->last_action_id);
+	visit_pointer(v, &v1n->ai_town_array);
+	visit_pointer(v, &v1n->ai_base_array);
+	visit_pointer(v, &v1n->ai_mine_array);
+	visit_pointer(v, &v1n->ai_factory_array);
+	visit_pointer(v, &v1n->ai_camp_array);
+	visit_pointer(v, &v1n->ai_research_array);
+	visit_pointer(v, &v1n->ai_war_array);
+	visit_pointer(v, &v1n->ai_harbor_array);
+	visit_pointer(v, &v1n->ai_market_array);
+	visit_pointer(v, &v1n->ai_inn_array);
+	visit_pointer(v, &v1n->ai_general_array);
+	visit_pointer(v, &v1n->ai_caravan_array);
+	visit_pointer(v, &v1n->ai_ship_array);
+	visit<int16_t>(v, &v1n->ai_town_size);
+	visit<int16_t>(v, &v1n->ai_base_size);
+	visit<int16_t>(v, &v1n->ai_mine_size);
+	visit<int16_t>(v, &v1n->ai_factory_size);
+	visit<int16_t>(v, &v1n->ai_camp_size);
+	visit<int16_t>(v, &v1n->ai_research_size);
+	visit<int16_t>(v, &v1n->ai_war_size);
+	visit<int16_t>(v, &v1n->ai_harbor_size);
+	visit<int16_t>(v, &v1n->ai_market_size);
+	visit<int16_t>(v, &v1n->ai_inn_size);
+	visit<int16_t>(v, &v1n->ai_general_size);
+	visit<int16_t>(v, &v1n->ai_caravan_size);
+	visit<int16_t>(v, &v1n->ai_ship_size);
+	visit<int16_t>(v, &v1n->ai_town_count);
+	visit<int16_t>(v, &v1n->ai_base_count);
+	visit<int16_t>(v, &v1n->ai_mine_count);
+	visit<int16_t>(v, &v1n->ai_factory_count);
+	visit<int16_t>(v, &v1n->ai_camp_count);
+	visit<int16_t>(v, &v1n->ai_research_count);
+	visit<int16_t>(v, &v1n->ai_war_count);
+	visit<int16_t>(v, &v1n->ai_harbor_count);
+	visit<int16_t>(v, &v1n->ai_market_count);
+	visit<int16_t>(v, &v1n->ai_inn_count);
+	visit<int16_t>(v, &v1n->ai_general_count);
+	visit<int16_t>(v, &v1n->ai_caravan_count);
+	visit<int16_t>(v, &v1n->ai_ship_count);
+	visit<int16_t>(v, &v1n->ai_base_town_count);
+	visit_array<int16_t>(v, v1n->firm_should_close_array, MAX_FIRM_TYPE);
+	
+	for (int n = 0; n < MAX_AI_REGION; n++)
+		visit_ai_region(v, &v1n->ai_region_array[n]);
+
+	visit<int8_t>(v, &v1n->ai_region_count);
+	visit<int8_t>(v, &v1n->pref_force_projection);
+	visit<int8_t>(v, &v1n->pref_military_development);
+	visit<int8_t>(v, &v1n->pref_economic_development);
+	visit<int8_t>(v, &v1n->pref_inc_pop_by_capture);
+	visit<int8_t>(v, &v1n->pref_inc_pop_by_growth);
+	visit<int8_t>(v, &v1n->pref_peacefulness);
+	visit<int8_t>(v, &v1n->pref_military_courage);
+	visit<int8_t>(v, &v1n->pref_territorial_cohesiveness);
+	visit<int8_t>(v, &v1n->pref_trading_tendency);
+	visit<int8_t>(v, &v1n->pref_allying_tendency);
+	visit<int8_t>(v, &v1n->pref_honesty);
+	visit<int8_t>(v, &v1n->pref_town_harmony);
+	visit<int8_t>(v, &v1n->pref_loyalty_concern);
+	visit<int8_t>(v, &v1n->pref_forgiveness);
+	visit<int8_t>(v, &v1n->pref_collect_tax);
+	visit<int8_t>(v, &v1n->pref_hire_unit);
+	visit<int8_t>(v, &v1n->pref_use_weapon);
+	visit<int8_t>(v, &v1n->pref_keep_general);
+	visit<int8_t>(v, &v1n->pref_keep_skilled_unit);
+	visit<int8_t>(v, &v1n->pref_diplomacy_retry);
+	visit<int8_t>(v, &v1n->pref_attack_monster);
+	visit<int8_t>(v, &v1n->pref_spy);
+	visit<int8_t>(v, &v1n->pref_counter_spy);
+	visit<int8_t>(v, &v1n->pref_food_reserve);
+	visit<int8_t>(v, &v1n->pref_cash_reserve);
+	visit<int8_t>(v, &v1n->pref_use_marine);
+	visit<int8_t>(v, &v1n->pref_unit_chase_distance);
+	visit<int8_t>(v, &v1n->pref_repair_concern);
+	visit<int8_t>(v, &v1n->pref_scout);
+	visit<int16_t>(v, &v1n->ai_capture_enemy_town_recno);
+	visit<int32_t>(v, &v1n->ai_capture_enemy_town_plan_date);
+	visit<int32_t>(v, &v1n->ai_capture_enemy_town_start_attack_date);
+	visit<int8_t>(v, &v1n->ai_capture_enemy_town_use_all_camp);
+	visit<int32_t>(v, &v1n->ai_last_defend_action_date);
+	visit<int16_t>(v, &v1n->ai_attack_target_x_loc);
+	visit<int16_t>(v, &v1n->ai_attack_target_y_loc);
+	visit<int16_t>(v, &v1n->ai_attack_target_nation_recno);
+
+	for (int n = 0; n < MAX_SUITABLE_ATTACK_CAMP; n++)
+		visit_attack_camp(v, &v1n->attack_camp_array[n]);
+
+	visit<int16_t>(v, &v1n->attack_camp_count);
+	visit<int16_t>(v, &v1n->lead_attack_camp_recno);
+}
+
+enum { VERSION_1_NATION_RECORD_SIZE = 2182 };
+
+static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
+{
+	if (!read_with_record_size(file, v1n, &visit_version_1_nation,
+										VERSION_1_NATION_RECORD_SIZE))
+		return false;
+
+	memset(&v1n->action_array, 0, sizeof(v1n->action_array));
+	return true;
+}
+
+template <typename Visitor>
+static void visit_nation(Visitor *v, Nation *nat)
+{
+	v->skip(4); /* virtual table pointer */
+
+	/* NationBase */
+	visit<int16_t>(v, &nat->nation_recno);
+	visit<int8_t>(v, &nat->nation_type);
+	visit<int8_t>(v, &nat->race_id);
+	visit<int8_t>(v, &nat->color_scheme_id);
+	visit<int8_t>(v, &nat->nation_color);
+	visit<int16_t>(v, &nat->king_unit_recno);
+	visit<int8_t>(v, &nat->king_leadership);
+	visit<int32_t>(v, &nat->nation_name_id);
+	visit_array<int8_t>(v, nat->nation_name_str, Nation::NATION_NAME_LEN+1);
+	visit<uint32_t>(v, &nat->player_id);
+	visit<int8_t>(v, &nat->next_frame_ready);
+	visit<int16_t>(v, &nat->last_caravan_id);
+	visit<int16_t>(v, &nat->nation_firm_count);
+	visit<int32_t>(v, &nat->last_build_firm_date);
+	visit_array<int8_t>(v, nat->know_base_array, MAX_RACE);
+	visit_array<int8_t>(v, nat->base_count_array, MAX_RACE);
+	visit<int8_t>(v, &nat->is_at_war_today);
+	visit<int8_t>(v, &nat->is_at_war_yesterday);
+	visit<int32_t>(v, &nat->last_war_date);
+	visit<int16_t>(v, &nat->last_attacker_unit_recno);
+	visit<int32_t>(v, &nat->last_independent_unit_join_date);
+	visit<int8_t>(v, &nat->cheat_enabled_flag);
+	visit<float>(v, &nat->cash);
+	visit<float>(v, &nat->food);
+	visit<float>(v, &nat->reputation);
+	visit<float>(v, &nat->kill_monster_score);
+	visit<int16_t>(v, &nat->auto_collect_tax_loyalty);
+	visit<int16_t>(v, &nat->auto_grant_loyalty);
+	visit<float>(v, &nat->cur_year_profit);
+	visit<float>(v, &nat->last_year_profit);
+	visit<float>(v, &nat->cur_year_fixed_income);
+	visit<float>(v, &nat->last_year_fixed_income);
+	visit<float>(v, &nat->cur_year_fixed_expense);
+	visit<float>(v, &nat->last_year_fixed_expense);
+	visit_array<float>(v, nat->cur_year_income_array, INCOME_TYPE_COUNT);
+	visit_array<float>(v, nat->last_year_income_array, INCOME_TYPE_COUNT);
+	visit<float>(v, &nat->cur_year_income);
+	visit<float>(v, &nat->last_year_income);
+	visit_array<float>(v, nat->cur_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit_array<float>(v, nat->last_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit<float>(v, &nat->cur_year_expense);
+	visit<float>(v, &nat->last_year_expense);
+	visit<float>(v, &nat->cur_year_cheat);
+	visit<float>(v, &nat->last_year_cheat);
+	visit<float>(v, &nat->cur_year_food_in);
+	visit<float>(v, &nat->last_year_food_in);
+	visit<float>(v, &nat->cur_year_food_out);
+	visit<float>(v, &nat->last_year_food_out);
+	visit<float>(v, &nat->cur_year_food_change);
+	visit<float>(v, &nat->last_year_food_change);
+	visit<float>(v, &nat->cur_year_reputation_change);
+	visit<float>(v, &nat->last_year_reputation_change);
+
+	for (int n = 0; n < MAX_NATION; n++)
+		visit_nation_relation(v, &nat->relation_array[n]);
+
+	visit_array<int8_t>(v, nat->relation_status_array, MAX_NATION);
+	visit_array<int8_t>(v, nat->relation_passable_array, MAX_NATION);
+	visit_array<int8_t>(v, nat->relation_should_attack_array, MAX_NATION);
+	visit<int8_t>(v, &nat->is_allied_with_player);
+	visit<int32_t>(v, &nat->total_population);
+	visit<int32_t>(v, &nat->total_jobless_population);
+	visit<int32_t>(v, &nat->total_unit_count);
+	visit<int32_t>(v, &nat->total_human_count);
+	visit<int32_t>(v, &nat->total_general_count);
+	visit<int32_t>(v, &nat->total_weapon_count);
+	visit<int32_t>(v, &nat->total_ship_count);
+	visit<int32_t>(v, &nat->total_firm_count);
+	visit<int32_t>(v, &nat->total_spy_count);
+	visit<int32_t>(v, &nat->total_ship_combat_level);
+	visit<int16_t>(v, &nat->largest_town_recno);
+	visit<int16_t>(v, &nat->largest_town_pop);
+	visit_array<int16_t>(v, nat->raw_count_array, MAX_RAW);
+	visit_array<int16_t>(v, nat->last_unit_name_id_array, MAX_UNIT_TYPE);
+	visit<int32_t>(v, &nat->population_rating);
+	visit<int32_t>(v, &nat->military_rating);
+	visit<int32_t>(v, &nat->economic_rating);
+   visit<int32_t>(v, &nat->overall_rating);
+	visit<int32_t>(v, &nat->enemy_soldier_killed);
+	visit<int32_t>(v, &nat->own_soldier_killed);
+	visit<int32_t>(v, &nat->enemy_civilian_killed);
+	visit<int32_t>(v, &nat->own_civilian_killed);
+	visit<int32_t>(v, &nat->enemy_weapon_destroyed);
+	visit<int32_t>(v, &nat->own_weapon_destroyed);
+	visit<int32_t>(v, &nat->enemy_ship_destroyed);
+	visit<int32_t>(v, &nat->own_ship_destroyed);
+	visit<int32_t>(v, &nat->enemy_firm_destroyed);
+	visit<int32_t>(v, &nat->own_firm_destroyed);
+
+	/* Nation */
+	v->skip(29); /* action_array */
+
+	visit<uint16_t>(v, &nat->last_action_id);
+	visit_pointer(v, &nat->ai_town_array);
+	visit_pointer(v, &nat->ai_base_array);
+	visit_pointer(v, &nat->ai_mine_array);
+	visit_pointer(v, &nat->ai_factory_array);
+	visit_pointer(v, &nat->ai_camp_array);
+	visit_pointer(v, &nat->ai_research_array);
+	visit_pointer(v, &nat->ai_war_array);
+	visit_pointer(v, &nat->ai_harbor_array);
+	visit_pointer(v, &nat->ai_market_array);
+	visit_pointer(v, &nat->ai_inn_array);
+	visit_pointer(v, &nat->ai_general_array);
+	visit_pointer(v, &nat->ai_caravan_array);
+	visit_pointer(v, &nat->ai_ship_array);
+	visit<int16_t>(v, &nat->ai_town_size);
+	visit<int16_t>(v, &nat->ai_base_size);
+	visit<int16_t>(v, &nat->ai_mine_size);
+	visit<int16_t>(v, &nat->ai_factory_size);
+	visit<int16_t>(v, &nat->ai_camp_size);
+	visit<int16_t>(v, &nat->ai_research_size);
+	visit<int16_t>(v, &nat->ai_war_size);
+	visit<int16_t>(v, &nat->ai_harbor_size);
+	visit<int16_t>(v, &nat->ai_market_size);
+	visit<int16_t>(v, &nat->ai_inn_size);
+	visit<int16_t>(v, &nat->ai_general_size);
+	visit<int16_t>(v, &nat->ai_caravan_size);
+	visit<int16_t>(v, &nat->ai_ship_size);
+	visit<int16_t>(v, &nat->ai_town_count);
+	visit<int16_t>(v, &nat->ai_base_count);
+	visit<int16_t>(v, &nat->ai_mine_count);
+	visit<int16_t>(v, &nat->ai_factory_count);
+	visit<int16_t>(v, &nat->ai_camp_count);
+	visit<int16_t>(v, &nat->ai_research_count);
+	visit<int16_t>(v, &nat->ai_war_count);
+	visit<int16_t>(v, &nat->ai_harbor_count);
+	visit<int16_t>(v, &nat->ai_market_count);
+	visit<int16_t>(v, &nat->ai_inn_count);
+	visit<int16_t>(v, &nat->ai_general_count);
+	visit<int16_t>(v, &nat->ai_caravan_count);
+	visit<int16_t>(v, &nat->ai_ship_count);
+	visit<int16_t>(v, &nat->ai_base_town_count);
+	visit_array<int16_t>(v, nat->firm_should_close_array, MAX_FIRM_TYPE);
+	
+	for (int n = 0; n < MAX_AI_REGION; n++)
+		visit_ai_region(v, &nat->ai_region_array[n]);
+
+	visit<int8_t>(v, &nat->ai_region_count);
+	visit<int8_t>(v, &nat->pref_force_projection);
+	visit<int8_t>(v, &nat->pref_military_development);
+	visit<int8_t>(v, &nat->pref_economic_development);
+	visit<int8_t>(v, &nat->pref_inc_pop_by_capture);
+	visit<int8_t>(v, &nat->pref_inc_pop_by_growth);
+	visit<int8_t>(v, &nat->pref_peacefulness);
+	visit<int8_t>(v, &nat->pref_military_courage);
+	visit<int8_t>(v, &nat->pref_territorial_cohesiveness);
+	visit<int8_t>(v, &nat->pref_trading_tendency);
+	visit<int8_t>(v, &nat->pref_allying_tendency);
+	visit<int8_t>(v, &nat->pref_honesty);
+	visit<int8_t>(v, &nat->pref_town_harmony);
+	visit<int8_t>(v, &nat->pref_loyalty_concern);
+	visit<int8_t>(v, &nat->pref_forgiveness);
+	visit<int8_t>(v, &nat->pref_collect_tax);
+	visit<int8_t>(v, &nat->pref_hire_unit);
+	visit<int8_t>(v, &nat->pref_use_weapon);
+	visit<int8_t>(v, &nat->pref_keep_general);
+	visit<int8_t>(v, &nat->pref_keep_skilled_unit);
+	visit<int8_t>(v, &nat->pref_diplomacy_retry);
+	visit<int8_t>(v, &nat->pref_attack_monster);
+	visit<int8_t>(v, &nat->pref_spy);
+	visit<int8_t>(v, &nat->pref_counter_spy);
+	visit<int8_t>(v, &nat->pref_food_reserve);
+	visit<int8_t>(v, &nat->pref_cash_reserve);
+	visit<int8_t>(v, &nat->pref_use_marine);
+	visit<int8_t>(v, &nat->pref_unit_chase_distance);
+	visit<int8_t>(v, &nat->pref_repair_concern);
+	visit<int8_t>(v, &nat->pref_scout);
+	visit<int16_t>(v, &nat->ai_capture_enemy_town_recno);
+	visit<int32_t>(v, &nat->ai_capture_enemy_town_plan_date);
+	visit<int32_t>(v, &nat->ai_capture_enemy_town_start_attack_date);
+	visit<int8_t>(v, &nat->ai_capture_enemy_town_use_all_camp);
+	visit<int32_t>(v, &nat->ai_last_defend_action_date);
+	visit<int16_t>(v, &nat->ai_attack_target_x_loc);
+	visit<int16_t>(v, &nat->ai_attack_target_y_loc);
+	visit<int16_t>(v, &nat->ai_attack_target_nation_recno);
+
+	for (int n = 0; n < MAX_SUITABLE_ATTACK_CAMP; n++)
+		visit_attack_camp(v, &nat->attack_camp_array[n]);
+
+	visit<int16_t>(v, &nat->attack_camp_count);
+	visit<int16_t>(v, &nat->lead_attack_camp_recno);
+}
+
+enum { NATION_RECORD_SIZE = 2202 };
 
 //--------- Begin of function Nation::write_file ---------//
 //
 int Nation::write_file(File* filePtr)
 {
-	if( !filePtr->file_write( this, sizeof(Nation) ) )
+	if (!write_with_record_size(filePtr, this, &visit_nation,
+										 NATION_RECORD_SIZE))
 		return 0;
 
 	//----------- write AI Action Array ------------//
@@ -1131,49 +1961,42 @@ static void write_ai_info(File* filePtr, short* aiInfoArray, short aiInfoCount, 
 }
 //----------- End of static function write_ai_info ---------//
 
+static bool read_nation(File *file, Nation *nat)
+{
+	if (!read_with_record_size(file, nat, &visit_nation, NATION_RECORD_SIZE))
+		return false;
+
+	memset(&nat->action_array, 0, sizeof(nat->action_array));
+	return true;
+}
 
 //--------- Begin of function Nation::read_file ---------//
 //
 int Nation::read_file(File* filePtr)
 {
-	char* vfPtr = *((char**)this);      // save the virtual function table pointer
-
-	//---- save the action_array first before loading in the whole Nation class ----//
-
-	char* saveActionArray = (char*) mem_add( sizeof(DynArray) );
-
-	memcpy( saveActionArray, &action_array, sizeof(DynArray) );
-
-	//--------------------------------------------------//
 #ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		Version_1_Nation *oldNationPtr = (Version_1_Nation*) mem_add(sizeof(Version_1_Nation));
-		if(!filePtr->file_read(oldNationPtr, sizeof(Version_1_Nation)))
+
+		if (!read_version_1_nation(filePtr, oldNationPtr))
 		{
 			mem_del(oldNationPtr);
 			return 0;
 		}
+
 		oldNationPtr->convert_to_version_2(this);
 		mem_del(oldNationPtr);
 	}
 	else
 	{
-		if( !filePtr->file_read( this, sizeof(Nation) ) )
+		if (!read_nation(filePtr, this))
 			return 0;
 	}
 #else
-	if( !filePtr->file_read( this, sizeof(Nation) ) )
+	if (!read_nation(filePtr, this))
 		return 0;
 #endif
-
-	*((char**)this) = vfPtr;
-
-	//---------- restore action_array  ------------//
- 
-	memcpy( &action_array, saveActionArray, sizeof(DynArray) );
-
-	mem_del( saveActionArray );
 
 	//-------------- read AI Action Array --------------//
 
@@ -1309,29 +2132,34 @@ int TornadoArray::read_file(File* filePtr)
 }
 //--------- End of function TornadoArray::read_file ---------------//
 
+template <typename Visitor>
+static void visit_tornado(Visitor *v, Tornado *t)
+{
+	visit_sprite(v, t);
+   visit<float>(v, &t->attack_damage);
+   visit<int16_t>(v, &t->life_time);
+   visit<int16_t>(v, &t->dmg_offset_x);
+   visit<int16_t>(v, &t->dmg_offset_y);
+}
+
+enum { TORNADO_RECORD_SIZE = 44 };
 
 //--------- Begin of function Tornado::write_file ---------//
 //
 int Tornado::write_file(File* filePtr)
 {
-   if( !filePtr->file_write( this, sizeof(Tornado) ) )
-      return 0;
-
-   return 1;
+	return write_with_record_size(filePtr, this, &visit_tornado,
+											TORNADO_RECORD_SIZE);
 }
 //----------- End of function Tornado::write_file ---------//
-
 
 //--------- Begin of function Tornado::read_file ---------//
 //
 int Tornado::read_file(File* filePtr)
 {
-   char* vfPtr = *((char**)this);      // save the virtual function table pointer
-
-   if( !filePtr->file_read( this, sizeof(Tornado) ) )
-      return 0;
-
-   *((char**)this) = vfPtr;
+	if (!read_with_record_size(filePtr, this, &visit_tornado,
+										TORNADO_RECORD_SIZE))
+		return 0;
 
    //------------ post-process the data read ----------//
 
@@ -1406,6 +2234,8 @@ int SpyArray::read_file(File* filePtr)
 //
 int SnowGroundArray::write_file(File* filePtr)
 {
+	MSG(__FILE__":%d: file_write(this, ...);\n", __LINE__);
+
    if( !filePtr->file_write( this, sizeof(SnowGroundArray)) )
       return 0;
 
@@ -1418,6 +2248,8 @@ int SnowGroundArray::write_file(File* filePtr)
 //
 int SnowGroundArray::read_file(File* filePtr)
 {
+	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
+
    if( !filePtr->file_read( this, sizeof(SnowGroundArray)) )
       return 0;
 
@@ -1427,12 +2259,27 @@ int SnowGroundArray::read_file(File* filePtr)
 
 //*****//
 
+template <typename Visitor>
+static void visit_region_array(Visitor *v, RegionArray *ra)
+{
+	visit<int32_t>(v, &ra->init_flag);
+	visit_pointer(v, &ra->region_info_array);
+	visit<int32_t>(v, &ra->region_info_count);
+	visit_pointer(v, &ra->region_stat_array);
+	visit<int32_t>(v, &ra->region_stat_count);
+	visit_pointer(v, &ra->connect_bits);
+	visit_array<uint8_t>(v, ra->region_sorted_array, MAX_REGION);
+}
+
+enum { REGION_ARRAY_RECORD_SIZE = 279 };
+
 //-------- Start of function RegionArray::write_file -------------//
 //
 int RegionArray::write_file(File* filePtr)
 {
-   if( !filePtr->file_write( this, sizeof(RegionArray)) )
-      return 0;
+	if (!write_with_record_size(filePtr, this, &visit_region_array,
+										 REGION_ARRAY_RECORD_SIZE))
+		return 0;
 
 	if( !filePtr->file_write( region_info_array, sizeof(RegionInfo)*region_info_count ) )
 		return 0;
@@ -1464,8 +2311,9 @@ int RegionArray::write_file(File* filePtr)
 //
 int RegionArray::read_file(File* filePtr)
 {
-   if( !filePtr->file_read( this, sizeof(RegionArray)) )
-      return 0;
+	if (!read_with_record_size(filePtr, this, &visit_region_array,
+										REGION_ARRAY_RECORD_SIZE))
+		return 0;
 
    if( region_info_count > 0 )
       region_info_array = (RegionInfo *) mem_add(sizeof(RegionInfo)*region_info_count);

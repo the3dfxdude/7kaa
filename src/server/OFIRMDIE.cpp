@@ -101,7 +101,7 @@ void FirmDieRes::load_bitmap_info()
 	FirmBitmapRec  *firmBitmapRec;
 	FirmDieBitmap	*firmBitmap;
 	int      		i;
-	long				bitmapOffset;
+	uint32_t			bitmapOffset;
 	Database 		*dbFirmBitmap = game_set.open_db(FIRM_BITMAP_DB);
 
 	firm_bitmap_count = (short) dbFirmBitmap->rec_count();
@@ -116,7 +116,7 @@ void FirmDieRes::load_bitmap_info()
 		firmBitmapRec = (FirmBitmapRec*) dbFirmBitmap->read(i+1);
 		firmBitmap    = firm_bitmap_array+i;
 
-		memcpy( &bitmapOffset, firmBitmapRec->bitmap_ptr, sizeof(long) );
+		memcpy( &bitmapOffset, firmBitmapRec->bitmap_ptr, sizeof(uint32_t) );
 
 		// BUGHERE : bitmap is not yet loaded into memory, fill them before draw()
 		firmBitmap->bitmap_ptr = NULL;

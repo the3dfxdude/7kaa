@@ -23,7 +23,12 @@
 
 #include <OINFO.h>
 #include <ODYNARRB.h>
+#include <dbglog.h>
+#include <file_io_visitor.h>
 
+using namespace FileIOVisitor;
+
+DBGLOG_DEFAULT_CHANNEL(DynArray);
 
 //----------------------------------------------------------//
 //
@@ -173,6 +178,23 @@ void DynArrayB::linkout(int delPos)
 }
 //------------ END OF FUNCTION DynArrayB::linkout ----------//
 
+template <typename Visitor>
+static void visit_dyn_array_b(Visitor *v, DynArrayB *dab)
+{
+	/* DynArray */
+   visit<int32_t>(v, &dab->ele_num);
+   visit<int32_t>(v, &dab->block_num);
+   visit<int32_t>(v, &dab->cur_pos);
+   visit<int32_t>(v, &dab->last_ele);
+   visit<int32_t>(v, &dab->ele_size);
+   visit<int32_t>(v, &dab->sort_offset);
+   visit<int8_t>(v, &dab->sort_type);
+	v->skip(4); /* dab->body_buf */
+
+	/* Not reading DynArrayB members */
+}
+
+enum { DYN_ARRAY_B_RECORD_SIZE = 29 };
 
 //---------- Begin of function DynArrayB::write_file -------------//
 //
@@ -186,8 +208,9 @@ void DynArrayB::linkout(int delPos)
 //
 int DynArrayB::write_file(File* filePtr)
 {
-	if( !filePtr->file_write( this, sizeof(DynArray) ) )
-		 return 0;
+	if (!write_with_record_size(filePtr, this, &visit_dyn_array_b,
+										 DYN_ARRAY_B_RECORD_SIZE))
+		return 0;
 
 	//---------- write body_buf ---------//
 
@@ -217,14 +240,13 @@ int DynArrayB::write_file(File* filePtr)
 //
 int DynArrayB::read_file(File* filePtr)
 {
-	char*	bodyBuf = body_buf;         // preserve body_buf which has been allocated
-
-	if( !filePtr->file_read( this, sizeof(DynArray) ) )
-      return 0;
+	if (!read_with_record_size(filePtr, this, &visit_dyn_array_b,
+										DYN_ARRAY_B_RECORD_SIZE))
+		return 0;
 
    //---------- read body_buf ---------//
 
-   body_buf = mem_resize( bodyBuf, ele_size*ele_num );
+   this->body_buf = mem_resize(this->body_buf, this->ele_num*this->ele_size);
 
    if( last_ele > 0 )
 	{
