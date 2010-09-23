@@ -33,10 +33,10 @@ foreach my $i (@ARGV) {
     $cfg{no_asm} = 1;
   } elsif ($i =~ /^--enable-asm$/) {
     $cfg{no_asm} = 0;
-  } elsif ($i =~ /^--disable-server$/) {
-    $cfg{build_server} = 0;
-  } elsif ($i =~ /^--enable-server$/) {
-    $cfg{build_server} = 1;
+#  } elsif ($i =~ /^--disable-server$/) {
+#    $cfg{build_server} = 0;
+#  } elsif ($i =~ /^--enable-server$/) {
+#    $cfg{build_server} = 1;
   } elsif ($i =~ /^--force-wine$/) {
     @wine_ver_req = (0, 0, 0);
   } elsif ($i =~ /^--enable-wine$/) {

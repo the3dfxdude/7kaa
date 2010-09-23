@@ -1,5 +1,6 @@
 my @obj_files;
 
+if (0) {
 ## defines ##
 @defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
@@ -311,6 +312,8 @@ unless ($disable_wine) {
 
 push (@obj_files, build_targets(\@targets, \@includes, \@defines));
 ## end compile ##
+
+}
 
 ## return built objects to caller ##
 @obj_files;
