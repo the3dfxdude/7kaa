@@ -90,7 +90,7 @@ private:
 public:
 	MultiPlayerDP();
 	~MultiPlayerDP();
-	void pre_init();
+
 	void init(ProtocolType);
 	void deinit();
 	bool is_initialized() const { return init_flag != 0; }
@@ -132,9 +132,6 @@ public:
 	int	send(uint32_t toId, void * lpData, uint32_t dataSize);
 	int	send_stream(uint32_t toId, void * lpData, uint32_t dataSize);
 	char *receive(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
-
-	void	before_receive()		{} // dummy function to compatible with IMMPLAY, call before receive
-	void	after_send()			{}	// dummy function to compatible with IMMPLAY, call after send
 };
 
 extern MultiPlayerDP mp_dp;
