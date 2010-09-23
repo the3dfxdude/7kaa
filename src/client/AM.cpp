@@ -323,12 +323,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//--------------------------------------//
 
-
-#ifdef IMAGICMP
-	static char lobbyLaunchCmdLine[] = "IM";
-#else
 	static char lobbyLaunchCmdLine[] = "-!lobby!";
-#endif
 
 #ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//
