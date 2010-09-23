@@ -58,20 +58,11 @@ DPSessionDesc& DPSessionDesc::operator= (const DPSessionDesc &src)
 // service; create_session or poll_sessions+join_session;
 // finally create_player.
 
-
-// ------- begin of function MultiPlayerDP::MultiPlayerDP -------//
 MultiPlayerDP::MultiPlayerDP() :
 	current_sessions(sizeof(DPSessionDesc), 10 ), player_pool(sizeof(DPPlayer), 8 ),
-	recv_buffer(new char[MP_RECV_BUFFER_SIZE])
+	recv_buffer(NULL)
 {
 	ERR("[MultiPlayerDP::MultiPlayerDP] calling unimplemented method\n");
-
-	/*
-	init_flag = 0;
-	recv_buffer_size = MP_RECV_BUFFER_SIZE;
-	host_flag = 0;
-	lobbied_flag = 0;
-	*/
 }
 // ------- end of function MultiPlayerDP::MultiPlayerDP -------//
 
@@ -80,10 +71,6 @@ MultiPlayerDP::MultiPlayerDP() :
 MultiPlayerDP::~MultiPlayerDP()
 {
 	ERR("[MultiPlayerDP::~MultiPlayerDP] calling unimplemented method\n");
-	/*
-	deinit();
-	delete[] recv_buffer;
-	*/
 }
 // ------- end of function MultiPlayerDP::~MultiPlayerDP -------//
 
@@ -153,11 +140,6 @@ DPSessionDesc *MultiPlayerDP::get_session(int i)
 {
 	ERR("[MultiPlayerDP::get_session] calling unimplemented method\n");
 	return NULL;
-	/*
-	if( i <= 0 || i > current_sessions.size() )
-		return NULL;
-	return ((DPSessionDesc *) current_sessions.get(i))->before_use();
-	*/
 }
 // ----- end of function MultiPlayerDP::get_session ------//
 
@@ -255,44 +237,6 @@ DPPlayer *MultiPlayerDP::search_player(uint32_t playerId)
 	return NULL;
 }
 
-//
-// search player by formal name, case insensitive
-//
-/*
-DPPlayer *MultiPlayerDP::search_player(char *name)
-{
-	DPPlayer *player;
-	int i = 0;
-	while( (player = get_player(++i)) != NULL )
-		if( strnicmp(player->formal_name, name, MP_FORMAL_NAME_LEN)== 0)
-			return player;
-	return NULL;
-}
-*/
-// -------- end of function MultiPlayerDP::get_player -----//
-
-
-// ------- begin of function MultiPlayerDP::is_host --------//
-/*
-int MultiPlayerDP::is_host(DPID playerID)
-{
-	err_here();		// not supported
-	return 0;
-}
-*/
-// ------- end of function MultiPlayerDP::is_host --------//
-
-
-// ------- begin of function MultiPlayerDP::am_I_host --------//
-/*
-int MultiPlayerDP::am_I_host()
-{
-	return host_flag;
-}
-*/
-// ------- end of function MultiPlayerDP::am_I_host --------//
-
-
 // ----- begin of function MultiPlayerDP::is_player_connecting ----//
 //
 // determine whether a player is lost
@@ -358,69 +302,6 @@ char *MultiPlayerDP::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, i
 	return NULL;
 }
 // ------- end of function MultiPlayerDP::receive ------//
-
-// --------- begin of function MultiPlayerDP::send_lobby ---------//
-// send message
-//
-// must not call it between IDirectDrawSurface2::Lock and IDirectDrawSurface2::Unlock,
-// or between IDirectDrawSurface2::GetDC and IDirectDrawSurface2::ReleaseDC
-//
-// return TRUE on success
-//
-/*
-int MultiPlayerDP::send_lobby(LPVOID lpData, DWORD dataSize)
-{
-	err_when(!init_flag);
-	VgaFrontLock vgaLock;
-	return !direct_play_lobby->SendLobbyMessage(0, 0, lpData, dataSize);
-}
-*/
-// --------- end of function MultiPlayerDP::send_lobby ---------//
-
-// ------- begin of function MultiPlayerDP::receive_lobby ------//
-// return NULL if fails
-/*
-char *MultiPlayerDP::receive_lobby(LPDWORD dSize)
-{
-	err_when(!init_flag);
-	DWORD dataSize, msgFlag;
-	int retryFlag;
-	HRESULT hr;
-
-	VgaFrontLock vgaLock;
-	do
-	{
-		retryFlag = 0;
-		dataSize = recv_buffer_size;
-		hr=direct_play_lobby->ReceiveLobbyMessage(0,0, &msgFlag, recv_buffer, &dataSize);
-		switch(hr)
-		{
-		case 0:
-			if(msgFlag == DPLAD_SYSTEM)
-			{
-				handle_lobby_system_msg(recv_buffer, dataSize);
-				retryFlag = 1;
-			}
-			else
-			{
-				*dSize = dataSize;
-			}
-			break;
-		case DPERR_BUFFERTOOSMALL:		// assume now dataSize > recv_buffer_size
-			delete[] recv_buffer;
-			recv_buffer_size = dataSize + 0x400;
-			recv_buffer = new char[recv_buffer_size];
-			retryFlag = 1;		// direct_play3->receive may not return the same message, so keep retrying
-			break;
-		default:
-			return NULL;
-		}
-		
-	} while (retryFlag);
-	return recv_buffer;
-}
-*/
-// ------- end of function MultiPlayerDP::receive_lobby ------//
 
 // ------ Begin of function MultiPlayerDP::sort_sessions -------//
 /*
