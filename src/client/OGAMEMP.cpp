@@ -485,7 +485,6 @@ void Game::multi_player_game(char *cmdLine)
 	info.init_random_seed(0);			// initialize the random seed
 
 	int choice, p;
-	mp_obj.pre_init();
 
 	// ###### begin Gilbert 13/2 #######//
 	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
@@ -661,7 +660,7 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 
 	int nationRecno;
 	int choice, p;
-	mp_obj.pre_init();
+
 	// ###### begin Gilbert 13/2 #######//
 	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
 	{	// not launched from lobby
@@ -2150,9 +2149,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			music.stop();
 
 		// --------- detect remote message -------//
-		mp_obj.before_receive();
 		recvPtr = mp_obj.receive(&from, &to, &recvLen, &sysMsgCount);
-		mp_obj.after_send();
 
 		if( sysMsgCount )
 		{
@@ -2983,8 +2980,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 		}
 
-		mp_obj.after_send();
-
 		// ####### begin Gilbert 24/10 #######//
 		vga_front.unlock_buf();
 		// ####### end Gilbert 24/10 #######//
@@ -2994,8 +2989,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
 	// ###### end Gilbert 24/10 #######//
-
-	mp_obj.after_send();
 
 	// ---------- final setup to start multiplayer game --------//
 
@@ -3091,7 +3084,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 
 			mp_obj.send_stream(BROADCAST_PID, setupString.queue_buf, setupString.length() );
-			mp_obj.after_send();
 		}
 		else
 		{
@@ -3222,7 +3214,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
 			mp_obj.send_stream( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
-			mp_obj.after_send();
 
 			// ------ wait for MPMSG_END_SETTING ----------//
 			// ---- to filter other all message until MP_MSG_END_SETTING ---//
@@ -3234,9 +3225,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				mp_obj.before_receive();
 				recvPtr = mp_obj.receive( &from, &to, &recvLen);
-				mp_obj.after_send();
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);
@@ -3946,9 +3935,7 @@ int Game::mp_select_load_option(char *fileName)
 			music.stop();
 
 		// --------- detect remote message -------//
-		mp_obj.before_receive();
 		recvPtr = mp_obj.receive(&from, &to, &recvLen, &sysMsgCount);
-		mp_obj.after_send();
 
 		if( sysMsgCount )
 		{
@@ -4282,8 +4269,6 @@ int Game::mp_select_load_option(char *fileName)
 			}
 		}
 
-		mp_obj.after_send();
-
 		// ####### begin Gilbert 24/10 #######//
 		vga_front.unlock_buf();
 		// ####### end Gilbert 24/10 #######//
@@ -4293,8 +4278,6 @@ int Game::mp_select_load_option(char *fileName)
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
 	// ###### end Gilbert 24/10 #######//
-
-	mp_obj.after_send();
 
 	// ---------- final setup to start multiplayer game --------//
 
@@ -4449,7 +4432,6 @@ int Game::mp_select_load_option(char *fileName)
 			}
 
 			mp_obj.send_stream( BROADCAST_PID, setupString.queue_buf, setupString.length() );
-			mp_obj.after_send();
 		}
 		else
 		{
@@ -4548,7 +4530,6 @@ int Game::mp_select_load_option(char *fileName)
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
 			mp_obj.send_stream( from, &mpEndSetting, sizeof(mpEndSetting) );
-			mp_obj.after_send();
 		}	
 
 		if( remote.sync_test_level == 0)
@@ -4561,7 +4542,6 @@ int Game::mp_select_load_option(char *fileName)
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
 			mp_obj.send_stream( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
-			mp_obj.after_send();
 
 			// ------ wait for MPMSG_END_SETTING ----------//
 			// ---- to filter other all message until MP_MSG_END_SETTING ---//
@@ -4573,9 +4553,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				mp_obj.before_receive();
 				recvPtr = mp_obj.receive( &from, &to, &recvLen);
-				mp_obj.after_send();
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);
