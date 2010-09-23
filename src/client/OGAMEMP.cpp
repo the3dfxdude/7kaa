@@ -868,27 +868,6 @@ int Game::mp_select_service()
 
 	while(1)
 	{
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
-
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SVOPTION_ALL;
@@ -1041,26 +1020,6 @@ int Game::mp_select_mode(char *defSaveFileName)
 
 	while(1)
 	{
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SMOPTION_ALL;
@@ -1251,27 +1210,6 @@ int Game::mp_select_session()
 	{
 		int s;
 		int b;
-
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
 
 		if( sys.need_redraw_flag )
 		{
@@ -1978,27 +1916,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
-
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;
@@ -3797,27 +3714,6 @@ int Game::mp_select_load_option(char *fileName)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
-
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;
