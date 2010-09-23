@@ -22,8 +22,6 @@
 // Description : MultiPlayerDP, multiplayer class using directPlay
 // Onwer       : Gilbert
 
-#ifndef IMAGICMP
-
 #include <ODPLAY.h>
 #include <ALL.h>
 #include <string.h>
@@ -471,7 +469,4 @@ void MultiPlayerDP::sort_sessions(int sortType )
 	}
 }
 // ------ End of function MultiPlayerDP::sort_sessions -------//
-
-
-#endif
 
