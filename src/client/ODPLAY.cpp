@@ -87,19 +87,6 @@ MultiPlayerDP::~MultiPlayerDP()
 }
 // ------- end of function MultiPlayerDP::~MultiPlayerDP -------//
 
-
-// ------- begin of function MultiPlayerDP::pre_init -------//
-void MultiPlayerDP::pre_init()
-{
-	ERR("[MultiPlayerDP::pre_init] calling unimplemented method\n");
-
-	/*
-	// nothing, for compatibilities with MultiPlayerIM
-	lobbied_flag = 0;
-	*/
-}
-// ------- begin of function MultiPlayerDP::pre_init -------//
-
 // ------- begin of function MultiPlayerDP::init -------//
 void MultiPlayerDP::init(ProtocolType protocol_type)
 {
