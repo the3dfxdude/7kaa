@@ -64,54 +64,38 @@ MultiPlayerDP::MultiPlayerDP() :
 {
 	ERR("[MultiPlayerDP::MultiPlayerDP] calling unimplemented method\n");
 }
-// ------- end of function MultiPlayerDP::MultiPlayerDP -------//
 
-
-// ------- begin of function MultiPlayerDP::~MultiPlayerDP -------//
 MultiPlayerDP::~MultiPlayerDP()
 {
 	ERR("[MultiPlayerDP::~MultiPlayerDP] calling unimplemented method\n");
 }
-// ------- end of function MultiPlayerDP::~MultiPlayerDP -------//
 
-// ------- begin of function MultiPlayerDP::init -------//
 void MultiPlayerDP::init(ProtocolType protocol_type)
 {
 	ERR("[MultiPlayerDP::init()] calling unimplemented method\n");
 }
-// ------- end of function MultiPlayerDP::init -------//
 
-
-// ------- begin of function MultiPlayerDP::deinit -------//
 void MultiPlayerDP::deinit()
 {
 	ERR("[MultiPlayerDP::deinit] calling unimplemented method\n");	
 }
-// ------- end of function MultiPlayerDP::deinit -------//
 
-
-// ----- begin of function MultiPlayerDP::init_lobbied ------//
 void MultiPlayerDP::init_lobbied(int maxPlayers, char *)
 {
 	ERR("[MultiPlayerDP::init_lobbied] calling unimplemented method\n");
 }
-// ----- end of function MultiPlayerDP::init_lobbied ------//
 
-// ----- begin of function MultiPlayerDP::is_lobbied -----//
 // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable
 int MultiPlayerDP::is_lobbied()
 {
 	return lobbied_flag;
 }
-// ----- end of function MultiPlayerDP::is_lobbied -----//
 
-// ----- begin of function MultiPlayerDP::get_lobbied_name -----//
 char *MultiPlayerDP::get_lobbied_name()
 {
 	ERR("[MultiPlayerDP::get_lobbied_name] calling unimplemented method\n");
 	return NULL;
 }
-// ----- end of function MultiPlayerDP::get_lobbied_name -----//
 
 void MultiPlayerDP::poll_supported_protocols()
 {
@@ -128,10 +112,7 @@ int MultiPlayerDP::poll_sessions()
 	ERR("[MultiPlayerDP::poll_sessions] calling unimplemented method\n");
 	return FALSE;
 }
-// ----- end of function MultiPlayerDP::poll_sessions ------//
 
-
-// ----- begin of function MultiPlayerDP::get_session ------//
 // return a session description
 //
 // <int> i			i-th session (i start from 1)
@@ -141,11 +122,7 @@ DPSessionDesc *MultiPlayerDP::get_session(int i)
 	ERR("[MultiPlayerDP::get_session] calling unimplemented method\n");
 	return NULL;
 }
-// ----- end of function MultiPlayerDP::get_session ------//
 
-
-// ----- begin of function MultiPlayerDP::create_session ----//
-//
 // create a new session
 //
 // <char *> sessionName      arbitary name to identify a session, input from user
@@ -157,7 +134,6 @@ int MultiPlayerDP::create_session(char *sessionName, int maxPlayers)
 	ERR("[MultiPlayerDP::create_session] calling unimplemented method\n");
 	return FALSE;
 }
-// ----- end of function MultiPlayerDP::create_session ----//
 
 // join a session, by passing the index passed into get_session()
 // note : do not call poll_sessions between get_session and join_session
@@ -170,30 +146,21 @@ int MultiPlayerDP::join_session(int currentSessionIndex)
 	ERR("[MultiPlayerDP::join_session] calling unimplemented method\n");
 	return FALSE;
 }
-// ------ end of function MultiPlayerDP::join_session ------//
 
-// ------ begin of function MultiPlayerDP::close_session ------//
 void MultiPlayerDP::close_session()
 {
 	ERR("[MultiPlayerDP::close_session] calling unimplemented method\n");
 }
-// ------ end of function MultiPlayerDP::close_session ------//
 
-// ------ begin of function MultiPlayerDP::disable_join_session ------//
 void MultiPlayerDP::disable_join_session()
 {
 	ERR("[MultiPlayerDP::disable_join_session] calling unimplemented method\n");
 }
-// ------ end of function MultiPlayerDP::disable_join_session ------//
 
-// ------ begin of function MultiPlayerDP::create_player ------//
 // create a local player
 //
 // <char *> friendlyName          short name of the player, best to be one word only
 // [char *] formalName            long name of the player, take friendlyName if NULL (default: NULL)
-// [void *] lpData, [DWORD] dataSize    pointer and size of any data sent the remote (default: NULL, 0)
-// [DWORD] flags                  not use reserved (default:0)
-//
 // return TRUE if success
 //
 int MultiPlayerDP::create_player(char *friendlyName, char *formalName)
@@ -201,32 +168,19 @@ int MultiPlayerDP::create_player(char *friendlyName, char *formalName)
 	ERR("[MultiPlayerDP::create_player] calling unimplemented method\n");
 	return FALSE;
 }
-// ------ end of function MultiPlayerDP::create_player -----//
 
 void MultiPlayerDP::poll_players()
 {
 	ERR("[MultiPlayerDP::poll_players] calling unimplemented method\n");
 }
-// -------- end of function MultiPlayerDP::poll_players ------//
 
-
-// -------- begin of function MultiPlayerDP::get_player -----//
-//
-// return the i-th player in the player_pool
-//
 DPPlayer *MultiPlayerDP::get_player(int i)
 {
 	if( i <= 0 || i > player_pool.size() )
 		return NULL;
 	return (DPPlayer *)player_pool.get(i);
 }
-// -------- end of function MultiPlayerDP::get_player -----//
 
-
-// -------- begin of function MultiPlayerDP::search_player -----//
-//
-// search player by playerID
-//
 DPPlayer *MultiPlayerDP::search_player(uint32_t playerId)
 {
 	DPPlayer *player;
@@ -237,8 +191,6 @@ DPPlayer *MultiPlayerDP::search_player(uint32_t playerId)
 	return NULL;
 }
 
-// ----- begin of function MultiPlayerDP::is_player_connecting ----//
-//
 // determine whether a player is lost
 //
 // MultiPlayerDP::received must be called (or remote.poll_msg) , 
@@ -257,14 +209,10 @@ int MultiPlayerDP::is_player_connecting(uint32_t playerId)
 	}
 	return 0;
 }
-// ----- end of function MultiPlayerDP::is_player_connecting ----//
 
-// --------- begin of function MultiPlayerDP::send ---------//
 // send message
 //
-// must not call it between IDirectDrawSurface2::Lock and IDirectDrawSurface2::Unlock,
-// or between IDirectDrawSurface2::GetDC and IDirectDrawSurface2::ReleaseDC
-// pass DPID_ALLPLAYERS as toId to all players
+// pass BROADCAST_PID as toId to all players
 //
 // return TRUE on success
 //
@@ -273,14 +221,10 @@ int MultiPlayerDP::send(uint32_t toId, void * lpData, uint32_t dataSize)
 	ERR("[MultiPlayerDP::send] calling unimplemented method\n");
 	return FALSE;
 }
-// --------- end of function MultiPlayerDP::send ---------//
 
-// --------- begin of function MultiPlayerDP::send_stream ---------//
 // send message
 //
-// must not call it between IDirectDrawSurface2::Lock and IDirectDrawSurface2::Unlock,
-// or between IDirectDrawSurface2::GetDC and IDirectDrawSurface2::ReleaseDC
-// pass DPID_ALLPLAYERS as toId to all players
+// pass BROADCAST_PID as toId to all players
 //
 // return TRUE on success
 //
@@ -289,9 +233,7 @@ int MultiPlayerDP::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
 	ERR("[MultiPlayerDP::send_stream] calling unimplemented method\n");
 	return FALSE;
 }
-// --------- end of function MultiPlayerDP::send_stream ---------//
 
-// ------- begin of function MultiPlayerDP::receive ------//
 // return NULL if fails
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
@@ -301,9 +243,7 @@ char *MultiPlayerDP::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, i
 	ERR("[MultiPlayerDP::receive] calling unimplemented method\n");
 	return NULL;
 }
-// ------- end of function MultiPlayerDP::receive ------//
 
-// ------ Begin of function MultiPlayerDP::sort_sessions -------//
 /*
 static int sort_session_id(const void *a, const void *b)
 {
@@ -336,5 +276,4 @@ void MultiPlayerDP::sort_sessions(int sortType )
 		err_here();
 	}
 }
-// ------ End of function MultiPlayerDP::sort_sessions -------//
 
