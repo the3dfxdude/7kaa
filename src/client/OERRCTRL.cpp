@@ -167,8 +167,6 @@ int ErrorControl::send(char ecPlayerId, void *dataPtr, long unsigned int dataLen
 		}
 	}
 
-	mp_ptr->after_send();
-
 	return 1;
 }
 
@@ -229,8 +227,6 @@ void ErrorControl::yield()
 			connecting_player_count--;
 		}
 	}
-
-	mp_ptr->before_receive();
 
 	while( (recvPtr = mp_ptr->receive(&from, &to, &recvLen, &sysMsgCount)) != NULL
 		|| sysMsgCount != 0)
@@ -505,8 +501,6 @@ void ErrorControl::yield()
 	// ------ retransmit any un-acked and time-out-ed frame -------//
 	clear_acked_frame();
 	re_transmit();
-
-	mp_ptr->after_send();	// re_transmit() will call after_send
 }
 
 
@@ -722,6 +716,4 @@ void ErrorControl::re_transmit(int promptFactor)
 			}
 		}
 	}
-
-	mp_ptr->after_send();
 }
