@@ -25,8 +25,6 @@
 #ifndef __ODPLAY_H
 #define __ODPLAY_H
 
-#ifndef IMAGICMP
-
 //#include <dplay.h>
 //#include <dplobby.h>
 #include <ODYNARRB.h>
@@ -186,6 +184,5 @@ extern MultiPlayerDP mp_dp;
 
 #include <MPTYPES.h>
 
-#endif	// IMAGICMP
 #endif	// __ODPLAY_H
 
