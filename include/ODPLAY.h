@@ -99,8 +99,6 @@ public:
 	void	init_lobbied(int maxPlayers, char *cmdLine);
 	int	is_lobbied();		// return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable
 	char *get_lobbied_name();			// return 0 if not available
-	//int	send_lobby(LPVOID lpData, DWORD dataSize);
-	//char *receive_lobby(LPDWORD recvLen);
 
 	// ------- functions on service provider ------ //
 	void   poll_supported_protocols(); // can be called before init
@@ -117,13 +115,9 @@ public:
 
 	// -------- functions on player management -------//
 	int	create_player(char *friendlyName, char *formalName);
-	//void	destroy_player( DPID playerId );
 	void	poll_players();
 	DPPlayer *get_player(int i);
 	DPPlayer *search_player(uint32_t player_id);
-	//DPPlayer *search_player(char *name);
-	//int	is_host(DPID playerId);
-	//int	am_I_host();
 	int	is_player_connecting(uint32_t playerId);
 	int       get_player_count() const { return player_pool.size(); }
 	uint32_t  get_my_player_id() const { return my_player_id; }
