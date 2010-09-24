@@ -22,9 +22,7 @@
 //Description: AI - capturing independent towns
 
 #include <ALL.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OCONFIG.h>
 #include <OUNIT.h>
 #include <OF_CAMP.h>

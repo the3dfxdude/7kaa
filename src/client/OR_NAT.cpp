@@ -38,9 +38,7 @@
 #include <ONATION.h>
 #include <OTALKRES.h>
 #include <OINFO.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 
 //------------- Define coordinations -----------//
 
@@ -349,21 +347,15 @@ static void disp_button()
 	{
 		if( i==NATION_REPORT_DEBUG )
 		{
-#ifdef USE_DPLAY
 			if( remote.is_enable() ||
 				 ( !sys.debug_session && !sys.testing_session ) )
-#else
-			if( !sys.debug_session && !sys.testing_session )
-#endif
 			{
 				continue;
 			}
 		}
 		else if( !sys.debug_session && i==NATION_REPORT_CHAT )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
-#endif
 				continue;
 		}
 
@@ -392,21 +384,15 @@ static int detect_button()
 	{
 		if( i==NATION_REPORT_DEBUG )
 		{
-#ifdef USE_DPLAY
 			if( remote.is_enable() ||
 				 ( !sys.debug_session && !sys.testing_session ) )
-#else
-			if( !sys.debug_session && !sys.testing_session )
-#endif
 			{
 				continue;
 			}
 		}
 		else if( !sys.debug_session && i==NATION_REPORT_CHAT )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
-#endif
 				continue;
 		}
 
@@ -1036,7 +1022,6 @@ static void detect_nation_chat()
 
 			if( keyCode == KEY_RETURN && info.player_chat_str[0] != '\0')
 			{
-#ifdef USE_DPLAY
 				if( remote.is_enable() )
 				{
 					// packet structure : <to nation recno> <from nation recno> <char[CHAT_STR_LEN+1]>
@@ -1058,7 +1043,6 @@ static void detect_nation_chat()
 
 					strcpy(2*sizeof(short)+(char *)shortPtr, info.player_chat_str);
 				}
-#endif
 
 				get_chat.clear();
 				break;

@@ -38,9 +38,7 @@
 #include <ONATION.h>
 #include <OTECHRES.h>
 #include <OF_RESE.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OSE.h>
 #include <OSERES.h>
 #include <OBUTTCUS.h>
@@ -441,7 +439,6 @@ void FirmResearch::start_research(int techId, char remoteAction)
 
 	err_when( !techInfo->can_research(nation_recno) );
 
-#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable())
 	{
 		// packet structure : <firm recno> <tech Id>
@@ -450,7 +447,6 @@ void FirmResearch::start_research(int techId, char remoteAction)
 		shortPtr[1] = (short) techId;
 		return;
 	}
-#endif
 
 	//---- if the firm currently is already researching something ---//
 

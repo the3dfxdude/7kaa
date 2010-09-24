@@ -42,9 +42,7 @@
 #include <OMUSIC.h>
 #include <OSLIDCUS.h>
 #include <OAUDIO.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OTUTOR.h>
 #include <OOPTMENU.h>
 
@@ -163,7 +161,6 @@ static void init_game_menu_option_flag()
 		game_menu_option_flag[4] = 0;		// disable retire
 	}
 
-#ifdef USE_DPLAY
 	if( remote.is_enable() )
 	{
 		// when in when in multi-player mode,
@@ -171,7 +168,6 @@ static void init_game_menu_option_flag()
 		game_menu_option_flag[3] = 0;		// disable training
 		game_menu_option_flag[4] = 0;		// disable retire
 	}
-#endif
 }
 // ------- End of static function init_game_menu_option_flag -----//
 
@@ -216,11 +212,7 @@ static int detect_game_option()
 	{
 		case 1:		// options
 			// game.in_game_option_menu();
-#ifdef USE_DPLAY
 			option_menu.enter(!remote.is_enable());
-#else
-			option_menu.enter(1);
-#endif
 			break;
 
 		case 2:		// save game
@@ -247,7 +239,6 @@ static int detect_game_option()
 			if( !nation_array.player_recno ||
 				 box.ask( "Do you really want to quit to the Main Menu?", "Yes", "No", 115, 350 ) )
 			{
-#ifdef USE_DPLAY
 				if( remote.is_enable() && nation_array.player_recno )
 				{
 					// BUGHERE : message will not be sent out
@@ -255,7 +246,6 @@ static int detect_game_option()
 					shortPtr[0] = nation_array.player_recno;
 					shortPtr[1] = 0;		// not retire
 				}
-#endif
 				sys.signal_exit_flag = 2;
 			}
 			break;
@@ -264,7 +254,6 @@ static int detect_game_option()
 			if( !nation_array.player_recno ||
 				 box.ask( "Do you really want to quit to Windows?", "Yes", "No", 130, 400 ) )
 			{
-#ifdef USE_DPLAY
 				if( remote.is_enable() && nation_array.player_recno )
 				{
 					// BUGHERE : message will not be sent out
@@ -272,7 +261,6 @@ static int detect_game_option()
 					shortPtr[0] = nation_array.player_recno;
 					shortPtr[1] = 1;		// retire
 				}
-#endif
 				sys.signal_exit_flag = 1;
 			}
 			break;

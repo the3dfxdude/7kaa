@@ -25,9 +25,7 @@
 #include <vga_util.h>
 #include <OVGALOCK.h>
 #include <ODATE.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OBOX.h>
 #include <OCONFIG.h>
 #include <OSTR.h>
@@ -195,11 +193,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 
 	#ifndef DEMO		// cannot continue to stay in the game in the demo version
 
-#ifdef USE_DPLAY
 	if( !retireFlag && !remote.is_enable() )		// can't stay in the game in a multiplayer game
-#else
-	if( !retireFlag )
-#endif
 	{
 		vga_front.bar( 0, 0, VGA_WIDTH-1, VGA_HEIGHT-1, V_BLACK );		// clear the screen
 

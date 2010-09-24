@@ -102,9 +102,7 @@
 
 
 #include <OUNIT.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OU_MARI.h>
 #include <ONATIONA.h>
 #include <OCONFIG.h>
@@ -118,7 +116,6 @@ static int		mp_selected_ship_count = 0;
 //--------- Begin of function UnitArray::mp_mark_selected_caravan ---------//
 void UnitArray::mp_mark_selected_caravan()
 {
-#ifdef USE_DPLAY
 	//---------- send remote messages for selected caravan and ship ------------//
 	if(remote.is_enable())
 	{
@@ -151,7 +148,6 @@ void UnitArray::mp_mark_selected_caravan()
 
 		mp_reset_selected_caravan_count();
 	}
-#endif
 }
 //----------- End of function UnitArray::mp_mark_selected_caravan -----------//
 
@@ -211,7 +207,6 @@ int UnitArray::mp_is_selected_caravan(short unitRecno)
 //--------- Begin of function UnitArray::mp_mark_selected_ship ---------//
 void UnitArray::mp_mark_selected_ship()
 {
-#ifdef USE_DPLAY
 	//---------- send remote messages for selected ship ------------//
 	if(remote.is_enable())
 	{
@@ -251,7 +246,6 @@ void UnitArray::mp_mark_selected_ship()
 
 		mp_reset_selected_ship_count();
 	}
-#endif
 }
 //----------- End of function UnitArray::mp_mark_selected_ship -----------//
 

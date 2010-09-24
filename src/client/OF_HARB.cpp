@@ -40,9 +40,7 @@
 #include <OGAME.h>
 #include <ONATION.h>
 #include <OF_HARB.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OBUTTCUS.h>
 #include <OSE.h>
 #include <OSERES.h>
@@ -390,17 +388,13 @@ void FirmHarbor::detect_main_menu()
 	{
 		if(button_cancel_build.detect())
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
-#endif
 				cancel_build_unit();
-#ifdef USE_DPLAY
 			else
 			{
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_HARBOR_SKIP_SHIP, sizeof(short));
 				shortPtr[0] = firm_recno;
 			}
-#endif
 		}
 	}
 }
@@ -849,7 +843,6 @@ void FirmHarbor::detect_build_menu()
 		{
 			if( rc==1 )		// left button
 			{
-#ifdef USE_DPLAY
 				if( remote.is_enable() )
 				{
 					// packet structure : <firm recno> <unit Id>
@@ -858,7 +851,6 @@ void FirmHarbor::detect_build_menu()
 					shortPtr[1] = unitId;
 				}
 				else
-#endif
 					add_queue(unitId);
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_ON");
@@ -866,7 +858,6 @@ void FirmHarbor::detect_build_menu()
 			}
 			else 				// right button - remove queue
 			{
-#ifdef USE_DPLAY
 				if( remote.is_enable() )
 				{
 					// packet structure : <firm recno> <unit Id>
@@ -875,7 +866,6 @@ void FirmHarbor::detect_build_menu()
 					shortPtr[1] = -unitId;
 				}
 				else
-#endif
 					remove_queue(unitId);
 
 				// ##### begin Gilbert 25/9 ######//
@@ -937,7 +927,6 @@ void FirmHarbor::build_ship(int unitId, char)
 //
 void FirmHarbor::sail_ship(int unitRecno, char remoteAction)
 {
-#ifdef USE_DPLAY
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <firm recno> <browseRecno>
@@ -946,7 +935,6 @@ void FirmHarbor::sail_ship(int unitRecno, char remoteAction)
 		shortPtr[1] = unitRecno;
 		return;
 	}
-#endif
 
 	//----- get the browse recno of the ship in the harbor's ship_recno_array[] ----//
 

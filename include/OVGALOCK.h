@@ -34,7 +34,6 @@ public:
 	void	re_unlock();
 };
 
-#ifdef USE_DPLAY
 class VgaCustomPalette
 {
 private:
@@ -58,6 +57,6 @@ public:
 	MouseDispCount();
 	~MouseDispCount();
 };
-#endif //USE_DPLAY
 
 #endif
+

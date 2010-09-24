@@ -43,9 +43,7 @@
 #include <OTERRAIN.h>
 #include <OWORLD.h>
 #include <OF_CAMP.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OSERES.h>
 #include <OSE.h>
 
@@ -453,7 +451,6 @@ void FirmCamp::detect_info()
 
 	if( rc==2 )
 	{
-#ifdef USE_DPLAY
 		if(remote.is_enable())
 		{
 			// packet structure : <firm recno>
@@ -461,7 +458,6 @@ void FirmCamp::detect_info()
 			shortPtr[0] = firm_recno;
 		}
 		else
-#endif
 		{
 			assign_overseer(0);		// the overseer quits the camp
 		}
@@ -471,7 +467,6 @@ void FirmCamp::detect_info()
 
 	if( button_patrol.detect() )
 	{
-#ifdef USE_DPLAY
 		if(remote.is_enable())
 		{
 			// packet structure : <firm recno>
@@ -479,7 +474,6 @@ void FirmCamp::detect_info()
 			shortPtr[0] = firm_recno;
 		}
 		else
-#endif
 		{
 			patrol();
 		}
@@ -503,13 +497,10 @@ void FirmCamp::detect_info()
 		se_ctrl.immediate_sound( !defense_flag?(char*)"TURN_ON":(char*)"TURN_OFF");
 		// ##### end Gilbert 25/9 ######//
 
-#ifdef USE_DPLAY
 		if( !remote.is_enable() )
 		{
-#endif
 			// update RemoteMsg::toggle_camp_patrol()
 			defense_flag = !defense_flag;
-#ifdef USE_DPLAY
 		}
 		else
 		{
@@ -518,7 +509,6 @@ void FirmCamp::detect_info()
 			shortPtr[0] = firm_recno;
 			shortPtr[1] = !defense_flag;
 		}
-#endif
 
 		button_defense.update_bitmap( defense_flag ? (char*)"DEFENSE1" : (char*)"DEFENSE0" );
 	}

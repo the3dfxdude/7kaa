@@ -81,7 +81,7 @@ void Game::main_menu()
 //	main_option_flag[0] = 1;
 
 	// ###### begin Gilbert 25/9 #######//
-#if (defined(DISABLE_MULTI_PLAYER) || !defined(USE_DPLAY))
+#ifdef DISABLE_MULTI_PLAYER
 	// disable multiplayer game, Game::multi_player_menu is disabled
 	main_option_flag[1] = 0;
 #endif
@@ -296,7 +296,7 @@ void Game::run_main_menu_option(int optionId)
 
 	if( optionId==2 )
 	{
-#if (!defined(DISABLE_MULTI_PLAYER) && defined(USE_DPLAY))
+#ifndef DISABLE_MULTI_PLAYER
 		game_mode = GAME_MULTI_PLAYER;
 		multi_player_menu(NULL);
 		// multi_player_game();
@@ -815,11 +815,9 @@ void Game::multi_player_menu(char *cmdLine)
 				switch(i+1)
 				{
 					case 2:
-#ifdef USE_DPLAY
 						// ####### begin Gilbert 13/2 #######//
 						multi_player_game(cmdLine);
 						// ####### end Gilbert 13/2 #######//
-#endif
 						break;
 
 					case 3:
@@ -831,10 +829,8 @@ void Game::multi_player_menu(char *cmdLine)
 							{
 								err_when( !loadedRecno );
 								// ####### begin Gilbert 13/2 #######//
-#ifdef USE_DPLAY
 								load_mp_game(game_file_array[loadedRecno]->file_name, cmdLine);
 								// ####### begin Gilbert 13/2 #######//
-#endif
 							}
 							{
 								char signalExitFlagBackup = sys.signal_exit_flag;

@@ -27,9 +27,7 @@
 #include <WALLTILE.h>
 #include <OWALLRES.h>
 #include <OTOWN.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <ONATIONA.h>
 
 #define WALL_GROWTH_RATE 6
@@ -1045,7 +1043,6 @@ void World::build_wall_tile(int xLoc, int yLoc, short nationRecno, char remoteAc
 	Location *locPtr = get_loc(xLoc, yLoc);
 	if( can_build_wall(xLoc, yLoc, nationRecno))
 	{
-#ifdef USE_DPLAY
 		if( !remoteAction && remote.is_enable() )
 		{
 			// packet structure : <nation recno> <xLoc> <yLoc>
@@ -1055,7 +1052,6 @@ void World::build_wall_tile(int xLoc, int yLoc, short nationRecno, char remoteAc
 			shortPtr[2] = yLoc;
 		}
 		else
-#endif
 		{
 			locPtr->set_wall(TOWER_CON1,nationRecno, 1);
 			locPtr->set_fire_src(-50);
@@ -1065,7 +1061,6 @@ void World::build_wall_tile(int xLoc, int yLoc, short nationRecno, char remoteAc
 	else if( locPtr->is_wall_destructing() && 
 		can_destruct_wall(xLoc, yLoc, nationRecno))
 	{
-#ifdef USE_DPLAY
 		if( !remoteAction && remote.is_enable() )
 		{
 			// packet structure : <nation recno> <xLoc> <yLoc>
@@ -1075,7 +1070,6 @@ void World::build_wall_tile(int xLoc, int yLoc, short nationRecno, char remoteAc
 			shortPtr[2] = yLoc;
 		}
 		else
-#endif
 		{
 			locPtr->set_wall_creating();
 //			nation_array[nationRecno]->add_expense( (float)
@@ -1100,7 +1094,6 @@ void World::destruct_wall_tile(int xLoc, int yLoc, short nationRecno, char remot
 
 	if( locPtr->is_wall_creating() && can_destruct_wall(xLoc, yLoc, nationRecno) )
 	{
-#ifdef USE_DPLAY
 		if( !remoteAction && remote.is_enable() )
 		{
 			// packet structure : <nation recno> <xLoc> <yLoc>
@@ -1110,7 +1103,6 @@ void World::destruct_wall_tile(int xLoc, int yLoc, short nationRecno, char remot
 			shortPtr[2] = yLoc;
 		}
 		else
-#endif
 		{
 			locPtr->set_wall_destructing();
 //			nation_array[nationRecno]->add_expense( (float) DESTRUCT_WALL_COST );

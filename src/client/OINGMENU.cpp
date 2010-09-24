@@ -30,9 +30,7 @@
 #include <KEY.h>
 #include <OPOWER.h>
 #include <OBOX.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OTUTOR.h>
 #include <ONATIONA.h>
 #include <OWORLDMT.h>
@@ -103,7 +101,6 @@ void InGameMenu::enter(char untilExitFlag)
       game_menu_option_flag[4] = 0;    // disable retire
    }
 
-#ifdef USE_DPLAY
    if( remote.is_enable() )
    {
       // when in when in multi-player mode,
@@ -111,7 +108,6 @@ void InGameMenu::enter(char untilExitFlag)
       game_menu_option_flag[3] = 0;    // disable training
       game_menu_option_flag[4] = 0;    // disable retire
    }
-#endif
 
    mouse_cursor.set_icon(CURSOR_NORMAL);
 
@@ -234,11 +230,7 @@ int InGameMenu::detect()
    switch(i)
    {
       case 1:     // options
-#ifdef USE_DPLAY
          option_menu.enter(!remote.is_enable());
-#else
-         option_menu.enter(1);
-#endif
          break;
 
       case 2:     // save game
@@ -258,7 +250,6 @@ int InGameMenu::detect()
          {
             if( box.ask("Do you really want to retire?", "Yes", "No", 175, 320) )
             {
-#ifdef USE_DPLAY
                if( remote.is_enable() )
                {
                   // BUGHERE : message will not be sent out
@@ -266,7 +257,6 @@ int InGameMenu::detect()
                   shortPtr[0] = nation_array.player_recno;
                   shortPtr[1] = 1;     // retire
                }
-#endif
                game.game_end(0, 0, 0, 1);          // 1 - retire
             }
          }
@@ -285,7 +275,6 @@ int InGameMenu::detect()
          if( !nation_array.player_recno ||
              box.ask( "Do you really want to quit to the Main Menu?", "Yes", "No", boxX1, 350 ) )
          {
-#ifdef USE_DPLAY
             if( remote.is_enable() && nation_array.player_recno )
             {
                // BUGHERE : message will not be sent out
@@ -293,7 +282,6 @@ int InGameMenu::detect()
                shortPtr[0] = nation_array.player_recno;
                shortPtr[1] = 0;     // not retire
             }
-#endif
             sys.signal_exit_flag = 2;
          }
          break;
@@ -303,7 +291,6 @@ int InGameMenu::detect()
          if( !nation_array.player_recno ||
              box.ask( "Do you really want to quit to Windows?", "Yes", "No", 130, 400 ) )
          {
-#ifdef USE_DPLAY
             if( remote.is_enable() && nation_array.player_recno )
             {
                // BUGHERE : message will not be sent out
@@ -311,7 +298,6 @@ int InGameMenu::detect()
                shortPtr[0] = nation_array.player_recno;
                shortPtr[1] = 1;     // retire
             }
-#endif
             sys.signal_exit_flag = 1;
          }
          break;

@@ -36,9 +36,7 @@
 #include <OSYS.h>
 #include <ONATION.h>
 #include <OF_WAR.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OIMGRES.h>
 #include <OSE.h>
 #include <OSERES.h>
@@ -195,17 +193,13 @@ void FirmWar::detect_main_menu()
 	{
 		if(button_cancel_build.detect())
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
-#endif
 				cancel_build_unit();
-#ifdef USE_DPLAY
 			else
 			{
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_SKIP_WEAPON, sizeof(short) );
 				shortPtr[0] = firm_recno;
 			}
-#endif
 		}
 	}
 
@@ -324,7 +318,6 @@ void FirmWar::detect_build_menu()
 		{
 			if( rc==1 )		// left button
 			{
-#ifdef USE_DPLAY
 				if( remote.is_enable() )
 				{
 					// packet structure : <firm recno> <unit Id>
@@ -333,7 +326,6 @@ void FirmWar::detect_build_menu()
 					shortPtr[1] = unitId;
 				}
 				else
-#endif
 					add_queue(unitId);
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_ON");
@@ -341,7 +333,6 @@ void FirmWar::detect_build_menu()
 			}
 			else 				// right button - remove queue
 			{
-#ifdef USE_DPLAY
 				if( remote.is_enable() )
 				{
 					// packet structure : <firm recno> <unit Id>
@@ -350,7 +341,6 @@ void FirmWar::detect_build_menu()
 					shortPtr[1] = unitId;
 				}
 				else
-#endif
 					remove_queue(unitId);
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_OFF");

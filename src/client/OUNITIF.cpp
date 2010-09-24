@@ -40,9 +40,7 @@
 #include <ONATION.h>
 #include <OWORLD.h>
 #include <OU_VEHI.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OSE.h>
 #include <OSERES.h>
 #include <OBUTTCUS.h>
@@ -551,13 +549,10 @@ void Unit::detect_button()
 	{
 		if( race_id && button_succeed_king.detect() )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				(~nation_array)->succeed_king(sprite_recno);
 				info.disp();
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -566,7 +561,6 @@ void Unit::detect_button()
 				*shortPtr = sprite_recno;
 				shortPtr[1] = nation_array.player_recno;
 			}
-#endif
 		}
 
 		return;
@@ -613,12 +607,9 @@ void Unit::detect_button()
 	{
 		if( button_promote.detect() )
 		{
-#ifdef USE_DPLAY
 			if(!remote.is_enable() )
 			{
-#endif
 				set_rank(RANK_GENERAL);
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -627,7 +618,6 @@ void Unit::detect_button()
 				*shortPtr = sprite_recno;
 				shortPtr[1] = RANK_GENERAL;
 			}
-#endif
 
 			se_ctrl.immediate_sound("TURN_ON");
 		}
@@ -636,12 +626,9 @@ void Unit::detect_button()
 	{
 		if( button_demote.detect() )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				set_rank(RANK_SOLDIER);
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -650,7 +637,6 @@ void Unit::detect_button()
 				*shortPtr = sprite_recno;
 				shortPtr[1] = RANK_SOLDIER;
 			}
-#endif
 
 			se_ctrl.immediate_sound("TURN_OFF");
 		}
@@ -729,12 +715,9 @@ static void group_change_aggressive_mode()
 
 		if( unitPtr->selected_flag && unitPtr->is_own() )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				unitPtr->aggressive_mode = newAggressiveMode;
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -743,7 +726,6 @@ static void group_change_aggressive_mode()
 				*shortPtr = i;
 				shortPtr[1] = newAggressiveMode;
 			}
-#endif
 		}
 	}
 
@@ -800,11 +782,8 @@ static void group_reward()
 
 		if( unitPtr->selected_flag && unitPtr->is_own() )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
-#endif
 				unitPtr->reward(nation_array.player_recno);
-#ifdef USE_DPLAY
 			else
 			{
 				// packet structure : <unit no> + <rewarding nation recno>
@@ -812,7 +791,6 @@ static void group_reward()
 				*shortPtr = i;
 				shortPtr[1] = nation_array.player_recno;
 			}
-#endif
 		}
 	}
 
@@ -842,12 +820,9 @@ static void group_change_spy_notify_flag()
 
 		if( unitPtr->selected_flag && unitPtr->is_own_spy() )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				spy_array[unitPtr->spy_recno]->notify_cloaked_nation_flag = newNotifyFlag;
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -856,7 +831,6 @@ static void group_change_spy_notify_flag()
 				*shortPtr = unitPtr->spy_recno;
 				shortPtr[1] = newNotifyFlag;
 			}
-#endif
 		}
 	}
 
@@ -891,12 +865,9 @@ static void group_drop_spy_identity()
 
 		if( unitPtr->selected_flag && unitPtr->is_own_spy() )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				spy_array[unitPtr->spy_recno]->drop_spy_identity();
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -904,7 +875,6 @@ static void group_drop_spy_identity()
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_DROP_IDENTITY, sizeof(short));
 				shortPtr[0] = unitPtr->spy_recno;
 			}
-#endif
 		}
 	}
 
