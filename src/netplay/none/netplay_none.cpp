@@ -18,8 +18,8 @@
  *
  */
 
-// Filename    : ODPLAY.CPP
-// Description : MultiPlayerDP, multiplayer class using directPlay
+// Filename    : netplay_none.cpp
+// Description : MultiPlayerNone, stub multiplayer class
 // Onwer       : Gilbert
 
 #include <netplay.h>
@@ -30,26 +30,26 @@
 #include <stdint.h>
 #include <dbglog.h>
 
-DBGLOG_DEFAULT_CHANNEL(DPlay);
+DBGLOG_DEFAULT_CHANNEL(NetPlay);
 
-DPSessionDesc::DPSessionDesc()
+NoneSessionDesc::NoneSessionDesc()
 {
-	ERR("[DPSessionDesc::DPSessionDesc] calling unimplemented method\n");
+	ERR("[NoneSessionDesc::NoneSessionDesc] calling unimplemented method\n");
 }
 
-DPSessionDesc::DPSessionDesc(const DPSessionDesc &dpSessionDesc) //: DPSESSIONDESC2(dpSessionDesc)
+NoneSessionDesc::NoneSessionDesc(const NoneSessionDesc &NoneSessionDesc) //: NoneSessionDesc2(NoneSessionDesc)
 {
-	ERR("[DPSessionDesc::DPSessionDesc(const DPSessionDesc &)] calling unimplemented method\n");
+	ERR("[NoneSessionDesc::NoneSessionDesc(const NoneSessionDesc &)] calling unimplemented method\n");
 }
 
-DPSessionDesc& DPSessionDesc::operator= (const DPSessionDesc &src)
+NoneSessionDesc& NoneSessionDesc::operator= (const NoneSessionDesc &src)
 {
-	ERR("[DPSessionDesc::operator=] calling unimplemented method\n");
+	ERR("[NoneSessionDesc::operator=] calling unimplemented method\n");
 	return *this;
 }
 
 // to start a multiplayer game, first check if it is called from a
-// lobbied (MultiPlayerDP::is_lobbied)
+// lobbied (MultiPlayerNone::is_lobbied)
 
 // if it is a lobbied, call init_lobbied before create_player
 
@@ -58,58 +58,58 @@ DPSessionDesc& DPSessionDesc::operator= (const DPSessionDesc &src)
 // service; create_session or poll_sessions+join_session;
 // finally create_player.
 
-MultiPlayerDP::MultiPlayerDP() :
-	current_sessions(sizeof(DPSessionDesc), 10 ), player_pool(sizeof(DPPlayer), 8 ),
+MultiPlayerNone::MultiPlayerNone() :
+	current_sessions(sizeof(NoneSessionDesc), 10 ), player_pool(sizeof(NonePlayer), 8 ),
 	recv_buffer(NULL)
 {
-	ERR("[MultiPlayerDP::MultiPlayerDP] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::MultiPlayerNone] calling unimplemented method\n");
 }
 
-MultiPlayerDP::~MultiPlayerDP()
+MultiPlayerNone::~MultiPlayerNone()
 {
-	ERR("[MultiPlayerDP::~MultiPlayerDP] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::~MultiPlayerNone] calling unimplemented method\n");
 }
 
-void MultiPlayerDP::init(ProtocolType protocol_type)
+void MultiPlayerNone::init(ProtocolType protocol_type)
 {
-	ERR("[MultiPlayerDP::init()] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::init()] calling unimplemented method\n");
 }
 
-void MultiPlayerDP::deinit()
+void MultiPlayerNone::deinit()
 {
-	ERR("[MultiPlayerDP::deinit] calling unimplemented method\n");	
+	ERR("[MultiPlayerNone::deinit] calling unimplemented method\n");	
 }
 
-void MultiPlayerDP::init_lobbied(int maxPlayers, char *)
+void MultiPlayerNone::init_lobbied(int maxPlayers, char *)
 {
-	ERR("[MultiPlayerDP::init_lobbied] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::init_lobbied] calling unimplemented method\n");
 }
 
 // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable
-int MultiPlayerDP::is_lobbied()
+int MultiPlayerNone::is_lobbied()
 {
 	return lobbied_flag;
 }
 
-char *MultiPlayerDP::get_lobbied_name()
+char *MultiPlayerNone::get_lobbied_name()
 {
-	ERR("[MultiPlayerDP::get_lobbied_name] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::get_lobbied_name] calling unimplemented method\n");
 	return NULL;
 }
 
-void MultiPlayerDP::poll_supported_protocols()
+void MultiPlayerNone::poll_supported_protocols()
 {
 	supported_protocols = TCPIP;
 }
 
-bool MultiPlayerDP::is_protocol_supported(ProtocolType protocol)
+bool MultiPlayerNone::is_protocol_supported(ProtocolType protocol)
 {
 	return (protocol & supported_protocols) != 0;
 }
 
-int MultiPlayerDP::poll_sessions()
+int MultiPlayerNone::poll_sessions()
 {
-	ERR("[MultiPlayerDP::poll_sessions] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::poll_sessions] calling unimplemented method\n");
 	return FALSE;
 }
 
@@ -117,9 +117,9 @@ int MultiPlayerDP::poll_sessions()
 //
 // <int> i			i-th session (i start from 1)
 // return pointer to a session, NULL if no more
-DPSessionDesc *MultiPlayerDP::get_session(int i)
+NoneSessionDesc *MultiPlayerNone::get_session(int i)
 {
-	ERR("[MultiPlayerDP::get_session] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::get_session] calling unimplemented method\n");
 	return NULL;
 }
 
@@ -129,9 +129,9 @@ DPSessionDesc *MultiPlayerDP::get_session(int i)
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return TRUE if success
-int MultiPlayerDP::create_session(char *sessionName, int maxPlayers)
+int MultiPlayerNone::create_session(char *sessionName, int maxPlayers)
 {
-	ERR("[MultiPlayerDP::create_session] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::create_session] calling unimplemented method\n");
 	return FALSE;
 }
 
@@ -141,20 +141,20 @@ int MultiPlayerDP::create_session(char *sessionName, int maxPlayers)
 // <int> currentSessionIndex       the index passed into get_session()
 //
 // currentSessionIndex start from 1
-int MultiPlayerDP::join_session(int currentSessionIndex)
+int MultiPlayerNone::join_session(int currentSessionIndex)
 {
-	ERR("[MultiPlayerDP::join_session] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::join_session] calling unimplemented method\n");
 	return FALSE;
 }
 
-void MultiPlayerDP::close_session()
+void MultiPlayerNone::close_session()
 {
-	ERR("[MultiPlayerDP::close_session] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::close_session] calling unimplemented method\n");
 }
 
-void MultiPlayerDP::disable_join_session()
+void MultiPlayerNone::disable_join_session()
 {
-	ERR("[MultiPlayerDP::disable_join_session] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::disable_join_session] calling unimplemented method\n");
 }
 
 // create a local player
@@ -163,27 +163,27 @@ void MultiPlayerDP::disable_join_session()
 // [char *] formalName            long name of the player, take friendlyName if NULL (default: NULL)
 // return TRUE if success
 //
-int MultiPlayerDP::create_player(char *friendlyName, char *formalName)
+int MultiPlayerNone::create_player(char *friendlyName, char *formalName)
 {
-	ERR("[MultiPlayerDP::create_player] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::create_player] calling unimplemented method\n");
 	return FALSE;
 }
 
-void MultiPlayerDP::poll_players()
+void MultiPlayerNone::poll_players()
 {
-	ERR("[MultiPlayerDP::poll_players] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::poll_players] calling unimplemented method\n");
 }
 
-DPPlayer *MultiPlayerDP::get_player(int i)
+NonePlayer *MultiPlayerNone::get_player(int i)
 {
 	if( i <= 0 || i > player_pool.size() )
 		return NULL;
-	return (DPPlayer *)player_pool.get(i);
+	return (NonePlayer *)player_pool.get(i);
 }
 
-DPPlayer *MultiPlayerDP::search_player(uint32_t playerId)
+NonePlayer *MultiPlayerNone::search_player(uint32_t playerId)
 {
-	DPPlayer *player;
+	NonePlayer *player;
 	int i = 0;
 	while( (player = get_player(++i)) != NULL )
 		if( player->player_id == playerId )
@@ -193,18 +193,18 @@ DPPlayer *MultiPlayerDP::search_player(uint32_t playerId)
 
 // determine whether a player is lost
 //
-// MultiPlayerDP::received must be called (or remote.poll_msg) , 
+// MultiPlayerNone::received must be called (or remote.poll_msg) , 
 // so if a player is really lost, the system message from 
 // directPlay is received
 //
-int MultiPlayerDP::is_player_connecting(uint32_t playerId)
+int MultiPlayerNone::is_player_connecting(uint32_t playerId)
 {
 	for( int p = 1; p <= player_pool.size(); ++p)
 	{
-		DPPlayer *dpPlayer = (DPPlayer *) player_pool.get(p);
-		if( dpPlayer->player_id == playerId )
+		NonePlayer * nonePlayer = (NonePlayer *) player_pool.get(p);
+		if( nonePlayer->player_id == playerId )
 		{
-			return dpPlayer->connecting;
+			return nonePlayer->connecting;
 		}
 	}
 	return 0;
@@ -216,9 +216,9 @@ int MultiPlayerDP::is_player_connecting(uint32_t playerId)
 //
 // return TRUE on success
 //
-int MultiPlayerDP::send(uint32_t toId, void * lpData, uint32_t dataSize)
+int MultiPlayerNone::send(uint32_t toId, void * lpData, uint32_t dataSize)
 {
-	ERR("[MultiPlayerDP::send] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::send] calling unimplemented method\n");
 	return FALSE;
 }
 
@@ -228,9 +228,9 @@ int MultiPlayerDP::send(uint32_t toId, void * lpData, uint32_t dataSize)
 //
 // return TRUE on success
 //
-int MultiPlayerDP::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
+int MultiPlayerNone::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
 {
-	ERR("[MultiPlayerDP::send_stream] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::send_stream] calling unimplemented method\n");
 	return FALSE;
 }
 
@@ -238,30 +238,30 @@ int MultiPlayerDP::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
 //
-char *MultiPlayerDP::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, int *sysMsgCount)
+char *MultiPlayerNone::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, int *sysMsgCount)
 {
-	ERR("[MultiPlayerDP::receive] calling unimplemented method\n");
+	ERR("[MultiPlayerNone::receive] calling unimplemented method\n");
 	return NULL;
 }
 
 /*
 static int sort_session_id(const void *a, const void *b)
 {
-	return memcmp( &((DPSessionDesc *)a)->guidInstance, &((DPSessionDesc *)b)->guidInstance,
+	return memcmp( &((NoneSessionDesc *)a)->guidInstance, &((NoneSessionDesc *)b)->guidInstance,
 		sizeof(GUID) );
 }
 */
 
 static int sort_session_name(const void *a, const void *b)
 {
-	return strcmp( ((DPSessionDesc *)a)->name_str(), ((DPSessionDesc *)b)->name_str() );
+	return strcmp( ((NoneSessionDesc *)a)->name_str(), ((NoneSessionDesc *)b)->name_str() );
 }
 
 // sort current_sessions
 // <int> sortType, 1=sort by GUID, 2=sort by session name
-void MultiPlayerDP::sort_sessions(int sortType )
+void MultiPlayerNone::sort_sessions(int sortType )
 {
-	ERR("[MultiPlayerDP::sort_sessions] calling partially implemented method\n");
+	ERR("[MultiPlayerNone::sort_sessions] calling partially implemented method\n");
 
 	// BUGHERE : quick_sort is a DynArray function but current_sessions is DynArrayB
 	switch(sortType)
