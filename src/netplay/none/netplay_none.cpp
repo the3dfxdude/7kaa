@@ -22,7 +22,7 @@
 // Description : MultiPlayerDP, multiplayer class using directPlay
 // Onwer       : Gilbert
 
-#include <ODPLAY.h>
+#include <netplay.h>
 #include <ALL.h>
 #include <string.h>
 #include <OVGALOCK.h>

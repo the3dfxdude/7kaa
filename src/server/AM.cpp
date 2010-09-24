@@ -87,7 +87,7 @@
 #include <OREGION.h>
 #include <OWARPT.h>
 #ifdef USE_DPLAY
-#include <ODPLAY.h>
+#include <netplay.h>
 #include <OERRCTRL.h>
 #endif
 #include <OMUSIC.h>

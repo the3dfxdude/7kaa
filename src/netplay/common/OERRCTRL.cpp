@@ -22,7 +22,7 @@
 // Descrition : Error control
 
 #include <OERRCTRL.h>
-#include <ODPLAY.h>
+#include <netplay.h>
 #include <CRC.h>
 #include <ALL.h>
 #include <stdint.h>

@@ -36,7 +36,7 @@
 #include <OPOWER.h>
 #include <ONATION.h>
 #include <OREMOTE.h>
-#include <ODPLAY.h>
+#include <netplay.h>
 #include <OERRCTRL.h>
 
 //---------- Define static variables ----------//
