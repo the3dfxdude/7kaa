@@ -95,7 +95,6 @@
 #include <OWARPT.h>
 #ifdef USE_DPLAY
 #include <ODPLAY.h>
-#include <OIMMPLAY.h>
 #include <OERRCTRL.h>
 #endif
 #include <OMUSIC.h>
@@ -323,12 +322,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//--------------------------------------//
 
-
-#ifdef IMAGICMP
-	static char lobbyLaunchCmdLine[] = "IM";
-#else
 	static char lobbyLaunchCmdLine[] = "-!lobby!";
-#endif
 
 #ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//

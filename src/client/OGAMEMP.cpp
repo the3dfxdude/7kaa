@@ -35,7 +35,6 @@
 #include <OBATTLE.h>
 #include <OGAME.h>
 #include <ODPLAY.h>
-#include <OIMMPLAY.h>
 #include <OERRCTRL.h>
 #include <OGFILE.h>
 #include <OCONFIG.h>
@@ -486,7 +485,6 @@ void Game::multi_player_game(char *cmdLine)
 	info.init_random_seed(0);			// initialize the random seed
 
 	int choice, p;
-	mp_obj.pre_init();
 
 	// ###### begin Gilbert 13/2 #######//
 	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
@@ -501,9 +499,6 @@ void Game::multi_player_game(char *cmdLine)
 			return;
 		}
 
-#ifdef IMAGICMP
-		mp_obj.init(mp_obj.get_service_provider(choice)->service_id());
-#else
 		ProtocolType selected_protocol;
 		switch(choice)
 		{
@@ -527,7 +522,6 @@ void Game::multi_player_game(char *cmdLine)
 		{
 			mp_obj.init(selected_protocol);
 		}
-#endif
 
 	// ####### begin Gilbert 13/2 ########//
 	}
@@ -666,7 +660,7 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 
 	int nationRecno;
 	int choice, p;
-	mp_obj.pre_init();
+
 	// ###### begin Gilbert 13/2 #######//
 	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
 	{	// not launched from lobby
@@ -680,9 +674,6 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 			return;
 		}
 
-	#ifdef IMAGICMP
-		mp_obj.init(mp_obj.get_service_provider(choice)->service_id());
-	#else
 		ProtocolType selected_protocol;
 		switch(choice)
 		{
@@ -706,7 +697,6 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 		{
 			mp_obj.init(selected_protocol);
 		}
-	#endif
 
 	// ####### begin Gilbert 13/2 ########//
 	}
@@ -843,20 +833,11 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 // 
 int Game::mp_select_service()
 {
-#ifdef IMAGICMP
-	enum { BUTTON_NUM = 5 };
-	static short buttonX[BUTTON_NUM] = { 171, 171, 171, 171, 171 };
-	static short buttonY[BUTTON_NUM] = {  57, 125, 193, 261, 329 };
-	#define SERVICE_BUTTON_WIDTH 459
-	#define SERVICE_BUTTON_HEIGHT 67
-	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
-#else
 	enum { BUTTON_NUM = 4 };
 	static short buttonX[BUTTON_NUM] = { 206, 412, 206, 412 };
 	static short buttonY[BUTTON_NUM] = { 94, 94, 254, 254 };
 	#define SERVICE_BUTTON_WIDTH SERVICE_OPTION_X_SPACE
 	#define SERVICE_BUTTON_HEIGHT SERVICE_OPTION_HEIGHT
-#endif
 
 #define SVOPTION_PAGE        0x00000001
 #define SVOPTION_ALL         0x0fffffff
@@ -886,27 +867,6 @@ int Game::mp_select_service()
 
 	while(1)
 	{
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
-
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SVOPTION_ALL;
@@ -925,12 +885,6 @@ int Game::mp_select_service()
 				//--------- display interface screen -------//
 
 				image_menu.put_to_buf( &vga_back, "MPG-PG1" );
-#ifdef IMAGICMP
-				// protection : image_menu.put_to_buf( &vga_back, "MPG-PG1");
-				// ensure the user has the release version (I_MENU.RES)
-				// image_menu2.put_to_buf( &vga_back, "MPG-PG1") get the real one
-				image_menu2.put_to_buf( &vga_back, "MPG-PG1");
-#endif
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
@@ -938,24 +892,6 @@ int Game::mp_select_service()
 				returnButton.paint();
 				for( b = 0; b < buttonCount; ++b )
 				{
-#ifdef IMAGICMP
-					int y = buttonY[b]+DESC_TOP_MARGIN;
-					// write service name to back buffer
-					char useBack = vga.use_back_buf;
-					vga.use_back();
-					font_bible.center_put(buttonX[b], y, 
-						buttonX[b]+SERVICE_BUTTON_WIDTH-1, y+font_bible.max_font_height-1,
-						mp_obj.get_service_provider(b+1)->name_str());
-					y += font_bible.max_font_height;
-					if( mp_obj.get_service_provider(b+1)->name_str_long() )
-					{
-						font_san.put_paragraph(buttonX[b]+DESC_MARGIN, y,
-							buttonX[b]+SERVICE_BUTTON_WIDTH-DESC_MARGIN-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
-							mp_obj.get_service_provider(b+1)->name_str_long());
-					}
-					if( !useBack )
-						vga.use_front();
-#endif
 					serviceButton[b].paint();
 				}
 			}
@@ -1011,20 +947,11 @@ int Game::mp_select_service()
 // return 0 = cancel, 1 = create, 2 = join
 int Game::mp_select_mode(char *defSaveFileName)
 {
-#ifdef IMAGICMP
-	enum { BUTTON_NUM = 5 };
-	static short buttonX[BUTTON_NUM] = { 171, 171, 171, 171, 171 };
-	static short buttonY[BUTTON_NUM] = {  57, 125, 193, 261, 329 };
-	#define SERVICE_BUTTON_WIDTH 459
-	#define SERVICE_BUTTON_HEIGHT 67
-	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
-#else
 	enum { BUTTON_NUM = 4 };
 	static short buttonX[BUTTON_NUM] = { 206, 412, 206, 412 };
 	static short buttonY[BUTTON_NUM] = { 94, 94, 254, 254 };
 	#define SERVICE_BUTTON_WIDTH SERVICE_OPTION_X_SPACE
 	#define SERVICE_BUTTON_HEIGHT SERVICE_OPTION_HEIGHT
-#endif
 
 #define SMOPTION_GETA(n)   (1 << n)
 #define SMOPTION_GETA_ALL  0x0000000f
@@ -1092,26 +1019,6 @@ int Game::mp_select_mode(char *defSaveFileName)
 
 	while(1)
 	{
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SMOPTION_ALL;
@@ -1130,36 +1037,9 @@ int Game::mp_select_mode(char *defSaveFileName)
 				//--------- display interface screen -------//
 
 				image_menu.put_to_buf( &vga_back, "MPG-PG1" );
-#ifdef IMAGICMP
-				// protection : image_menu.put_to_buf( &vga_back, "MPG-PG1");
-				// ensure the user has the release version (I_MENU.RES)
-				// image_menu2.put_to_buf( &vga_back, "MPG-PG1") get the real one
-				image_menu2.put_to_buf( &vga_back, "MPG-PG1");
-#endif
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
-#ifdef IMAGICMP
-				int b = 0;
-				for( b = 0; mp_obj.get_service_provider(b+1); ++b )
-				{
-					int y = buttonY[b]+DESC_TOP_MARGIN;
-					// write service name to back buffer
-					char useBack = vga.use_back_buf;
-					vga.use_back();
-					font_bible.center_put(buttonX[b], y, 
-						buttonX[b]+SERVICE_BUTTON_WIDTH-1, y+font_bible.max_font_height-1,
-						mp_obj.get_service_provider(b+1)->name_str());
-					y += font_bible.max_font_height;
-					if( mp_obj.get_service_provider(b+1)->name_str_long() )
-					{
-						font_san.put_paragraph(buttonX[b]+DESC_MARGIN, y,
-							buttonX[b]+SERVICE_BUTTON_WIDTH-DESC_MARGIN-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
-							mp_obj.get_service_provider(b+1)->name_str_long());
-					}
-					if( !useBack )
-						vga.use_front();
-				}
-#endif
+
 				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
 				if( createButton.enable_flag )
@@ -1329,27 +1209,6 @@ int Game::mp_select_session()
 	{
 		int s;
 		int b;
-
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
 
 		if( sys.need_redraw_flag )
 		{
@@ -2056,27 +1915,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
-
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;
@@ -2311,9 +2149,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			music.stop();
 
 		// --------- detect remote message -------//
-		mp_obj.before_receive();
 		recvPtr = mp_obj.receive(&from, &to, &recvLen, &sysMsgCount);
-		mp_obj.after_send();
 
 		if( sysMsgCount )
 		{
@@ -3144,8 +2980,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 		}
 
-		mp_obj.after_send();
-
 		// ####### begin Gilbert 24/10 #######//
 		vga_front.unlock_buf();
 		// ####### end Gilbert 24/10 #######//
@@ -3155,8 +2989,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
 	// ###### end Gilbert 24/10 #######//
-
-	mp_obj.after_send();
 
 	// ---------- final setup to start multiplayer game --------//
 
@@ -3252,7 +3084,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 
 			mp_obj.send_stream(BROADCAST_PID, setupString.queue_buf, setupString.length() );
-			mp_obj.after_send();
 		}
 		else
 		{
@@ -3383,7 +3214,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
 			mp_obj.send_stream( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
-			mp_obj.after_send();
 
 			// ------ wait for MPMSG_END_SETTING ----------//
 			// ---- to filter other all message until MP_MSG_END_SETTING ---//
@@ -3395,9 +3225,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				mp_obj.before_receive();
 				recvPtr = mp_obj.receive( &from, &to, &recvLen);
-				mp_obj.after_send();
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);
@@ -3875,27 +3703,6 @@ int Game::mp_select_load_option(char *fileName)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
-		/*
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
-			continue;
-		}
-		*/
-
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;
@@ -4128,9 +3935,7 @@ int Game::mp_select_load_option(char *fileName)
 			music.stop();
 
 		// --------- detect remote message -------//
-		mp_obj.before_receive();
 		recvPtr = mp_obj.receive(&from, &to, &recvLen, &sysMsgCount);
-		mp_obj.after_send();
 
 		if( sysMsgCount )
 		{
@@ -4464,8 +4269,6 @@ int Game::mp_select_load_option(char *fileName)
 			}
 		}
 
-		mp_obj.after_send();
-
 		// ####### begin Gilbert 24/10 #######//
 		vga_front.unlock_buf();
 		// ####### end Gilbert 24/10 #######//
@@ -4475,8 +4278,6 @@ int Game::mp_select_load_option(char *fileName)
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
 	// ###### end Gilbert 24/10 #######//
-
-	mp_obj.after_send();
 
 	// ---------- final setup to start multiplayer game --------//
 
@@ -4631,7 +4432,6 @@ int Game::mp_select_load_option(char *fileName)
 			}
 
 			mp_obj.send_stream( BROADCAST_PID, setupString.queue_buf, setupString.length() );
-			mp_obj.after_send();
 		}
 		else
 		{
@@ -4730,7 +4530,6 @@ int Game::mp_select_load_option(char *fileName)
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
 			mp_obj.send_stream( from, &mpEndSetting, sizeof(mpEndSetting) );
-			mp_obj.after_send();
 		}	
 
 		if( remote.sync_test_level == 0)
@@ -4743,7 +4542,6 @@ int Game::mp_select_load_option(char *fileName)
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
 			mp_obj.send_stream( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
-			mp_obj.after_send();
 
 			// ------ wait for MPMSG_END_SETTING ----------//
 			// ---- to filter other all message until MP_MSG_END_SETTING ---//
@@ -4755,9 +4553,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				mp_obj.before_receive();
 				recvPtr = mp_obj.receive( &from, &to, &recvLen);
-				mp_obj.after_send();
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);
