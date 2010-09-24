@@ -42,6 +42,15 @@ if (defined($video_backend)) {
 push(@video, include_targets('video/common/targets.pl'));
 ## Done building the video backend ##
 
+## Build the netplay backend ##
+if (defined($netplay_backend)) {
+  if ($netplay_backend =~ /none/i) {
+    @netplay = include_targets('netplay/none/targets.pl');
+  }
+}
+push(@netplay, include_targets('netplay/common/targets.pl'));
+## Done building the netplay backend ##
+
 ## Build the input backend ##
 if (defined($input_backend)) {
   if ($input_backend =~ /sdl/i) {
@@ -73,7 +82,7 @@ unless ($disable_wine) {
   $client_exe_name .= '.exe';
 }
 link_exe ($client_exe_name,
-          [@common_objs, @audio, @input, @video, @imgfun, @client_objs],
+          [@common_objs, @audio, @input, @video, @netplay, @imgfun, @client_objs],
           \@libs,
           \@lib_dirs);
 ## end build game client ##
@@ -86,7 +95,7 @@ if ($build_server) {
   }
   @server_objs = include_targets('server/targets.pl');
   link_exe ($server_exe_name,
-            [@common_objs, @audio, @input, @video, @imgfun, @server_objs],
+            [@common_objs, @audio, @input, @video, @netplay, @imgfun, @server_objs],
             \@libs,
             \@lib_dirs);
 }
