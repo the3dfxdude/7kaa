@@ -22,9 +22,7 @@
 //Description: UnitMarine - functions for loading/unloading goods, trading
 
 #include <ALL.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OU_CARA.h>
 #include <OU_MARI.h>
 #include <OF_HARB.h>
@@ -47,7 +45,6 @@ static char		firm_selected_array[MAX_LINKED_FIRM_FIRM];
 //--------- Begin of function UnitMarine::del_stop ---------//
 void UnitMarine::del_stop(int stopId, char remoteAction)
 {
-#ifdef USE_DPLAY
 	// ####### begin Gilbert 30/7 #######//
 	if(!remoteAction && remote.is_enable())
 	{
@@ -61,7 +58,6 @@ void UnitMarine::del_stop(int stopId, char remoteAction)
 
 	if(remote.is_enable() && stop_array[stopId-1].firm_recno==0)
 		return;
-#endif
 
 	stop_array[stopId-1].firm_recno = 0;
 	stop_defined_num--;
@@ -69,11 +65,7 @@ void UnitMarine::del_stop(int stopId, char remoteAction)
 
 	if(unit_array.selected_recno==sprite_recno)
 	{
-#ifdef USE_DPLAY
 		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
-#else
-		if(nation_recno==nation_array.player_recno || config.show_ai_info)
-#endif
 			info.disp();
 	}
 }

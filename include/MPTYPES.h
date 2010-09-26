@@ -27,12 +27,16 @@
 
 #include <stdint.h>
 
-#define PID_TYPE uint32_t
-#define BROADCAST_PID 0
-#define MultiPlayerType MultiPlayerDP
-#define mp_obj mp_dp
-#define SessionIdType uint32_t
-#define PlayerDesc DPPlayer
+#if defined(USE_NONETPLAY)
+	#define PID_TYPE uint32_t
+	#define BROADCAST_PID 0
+	#define MultiPlayerType MultiPlayerNone
+	#define mp_obj mp_none
+	#define SessionIdType uint32_t
+	#define PlayerDesc NonePlayer
+#else
+	#error "A netplay backend must be specified."
+#endif
 
 #endif
 

@@ -37,9 +37,7 @@
 #include <ONEWS.h>
 #include <OBULLET.h>
 #include <OREBEL.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OSPY.h>
 #include <OINFO.h>
 #include <OGAME.h>
@@ -431,11 +429,7 @@ void Sys::detect_button()
 	{
 		// ##### begin Gilbert 5/11 #######//
 		// game.in_game_menu();
-#ifdef USE_DPLAY
 		in_game_menu.enter(!remote.is_enable());
-#else
-		in_game_menu.enter(1);
-#endif
 		// ##### end Gilbert 5/11 #######//
 		return;
 	}
@@ -605,11 +599,7 @@ void Sys::disp_frame()
 
 		//---------- display help ----------//
 
-#ifdef USE_DPLAY
 		if( !remote.is_enable() )		// help is only available in a single player game as it has to pause the game
-#else
-		if( 1 )		// help is only available in a single player game as it has to pause the game
-#endif
 			help.disp();
 	}
 	// ####### end Glbert 24/10 #######//
@@ -839,11 +829,7 @@ void Sys::update_view()
 void Sys::detect_view()
 {
 	int enableAction;			// some action is not enabled, when paused.
-#ifdef USE_DPLAY
 	enableAction = config.frame_speed > 0 || !remote.is_enable();	// AMPLUS allows action when paused in single player
-#else  // !USE_DPLAY -- single player or new multiplayer
-	enableAction = 1;
-#endif
 
 	if( enableAction )
 		info.detect();

@@ -53,7 +53,6 @@ void VgaFrontLock::re_unlock()
 }
 
 
-#ifdef USE_DPLAY
 VgaCustomPalette::VgaCustomPalette(char *fileName)
 {
 	vga.set_custom_palette(fileName);
@@ -74,5 +73,4 @@ MouseDispCount::~MouseDispCount()
 {
 	mouse.disp_count_end();
 }
-#endif //USE_DPLAY
 

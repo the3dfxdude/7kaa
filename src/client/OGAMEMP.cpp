@@ -34,7 +34,7 @@
 #include <OREMOTE.h>
 #include <OBATTLE.h>
 #include <OGAME.h>
-#include <ODPLAY.h>
+#include <netplay.h>
 #include <OERRCTRL.h>
 #include <OGFILE.h>
 #include <OCONFIG.h>

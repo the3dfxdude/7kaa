@@ -40,9 +40,7 @@
 #include <OWORLD.h>
 #include <OUNIT.h>
 #include <OFIRM.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 
 //------------- Define coordinations -----------//
 
@@ -324,17 +322,14 @@ void Firm::detect_spy_menu()
 
 		if( button_spy_mobilize.detect() )
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				if( spyPtr->mobilize_firm_spy() )
 				{
 					spyPtr->notify_cloaked_nation_flag = 0;		// reset it so the player can control it
 					info.disp();
 					return;
 				}
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -342,7 +337,6 @@ void Firm::detect_spy_menu()
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_LEAVE_FIRM, sizeof(short) );
 				*shortPtr = spyPtr->spy_recno;
 			}
-#endif
 		}
 
 		//------ reward spy ---------//
@@ -356,13 +350,10 @@ void Firm::detect_spy_menu()
 
 		else if( button_spy_action.detect() )		// set action mode
 		{
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				spyPtr->set_next_action_mode();
 				disp_spy_menu( INFO_UPDATE );
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -370,7 +361,6 @@ void Firm::detect_spy_menu()
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_CYCLE_ACTION, sizeof(short) );
 				*shortPtr = spyPtr->spy_recno;
 			}
-#endif
 		}
 
 		//------ capture firm ---------//
@@ -383,12 +373,9 @@ void Firm::detect_spy_menu()
 			{
 				Spy* capturerSpy = spy_array[spyRecno];
 
-#ifdef USE_DPLAY
 				if( !remote.is_enable() )
 				{
-#endif
 					capturerSpy->capture_firm();
-#ifdef USE_DPLAY
 				}
 				else
 				{
@@ -396,7 +383,6 @@ void Firm::detect_spy_menu()
 					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_CAPTURE_FIRM, sizeof(short) );
 					*shortPtr = capturerSpy->spy_recno;
 				}
-#endif
 			}
 		}
 
@@ -636,12 +622,9 @@ void Firm::detect_spy_button()
 	if( button_capture.detect() && can_worker_capture(nation_array.player_recno) )
 	{
 		// ##### begin Gilbert 24/6 ##########//
-#ifdef USE_DPLAY
 		if( !remote.is_enable() )
 		{
-#endif
 			capture_firm(nation_array.player_recno);               // update RemoteMsg::firm_capture
-#ifdef USE_DPLAY
 		}
 		else
 		{
@@ -650,7 +633,6 @@ void Firm::detect_spy_button()
 			*shortPtr = firm_recno;
 			shortPtr[1] = nation_array.player_recno;
 		}
-#endif
 		// ##### end Gilbert 24/6 ##########//
 	}
 }

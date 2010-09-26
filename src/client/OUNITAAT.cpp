@@ -25,9 +25,7 @@
 #include <OVGA.h>
 #include <OSYS.h>
 #include <OSTR.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OWORLD.h>
 #include <ONATION.h>
 #include <OFIRM.h>
@@ -299,7 +297,7 @@ void UnitArray::attack(int targetXLoc, int targetYLoc, int divided, short* selec
 		if( nation_array[attackUnit->nation_recno]->get_relation(targetNationRecno)->should_attack==0 )
 			return;
 	}
-#ifdef USE_DPLAY
+
 	//-------- if it's a multiplayer game --------//
 	if( !remoteAction && remote.is_enable() )
 	{
@@ -314,7 +312,6 @@ void UnitArray::attack(int targetXLoc, int targetYLoc, int divided, short* selec
 		memcpy( shortPtr+5, selectedUnitArray, sizeof(short) * selectedCount );
 	}
 	else
-#endif
 	{
 		if(!divided)
 		{

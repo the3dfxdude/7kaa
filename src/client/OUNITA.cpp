@@ -26,9 +26,7 @@
 #include <OSYS.h>
 #include <OSTR.h>
 #include <OSPY.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <ONATION.h>
 #include <OREBEL.h>
 #include <OGODRES.h>
@@ -624,7 +622,6 @@ void UnitArray::update_selected_trade_unit_info()
 
 	Unit *unitPtr;
 	UnitMarine *marinePtr;
-#ifdef USE_DPLAY
 	if(remote.is_enable())
 	{
 		for(int i=size(); i>0; --i)
@@ -654,9 +651,6 @@ void UnitArray::update_selected_trade_unit_info()
 		}
 	}
 	else if(selected_recno && !is_deleted(selected_recno))
-#else
-	if(selected_recno && !is_deleted(selected_recno))
-#endif
 	{
 		unitPtr = (Unit*)get_ptr(selected_recno);
 		if(unitPtr->nation_recno==playerNationRecno || config.show_ai_info)
@@ -693,7 +687,6 @@ void UnitArray::return_camp(int remoteAction, short *selectedUnitArray, int sele
 
 	if( !selectedUnitArray )
 	{
-#ifdef USE_DPLAY
 		if( !remoteAction && remote.is_enable() )
 		{
 			selectedCount = 0;
@@ -745,7 +738,6 @@ void UnitArray::return_camp(int remoteAction, short *selectedUnitArray, int sele
 			return;
 		}
 		else
-#endif
 		{
 			for( int i=unit_array.size() ; i>0 ; i-- )
 			{
@@ -766,7 +758,6 @@ void UnitArray::return_camp(int remoteAction, short *selectedUnitArray, int sele
 	}
 	else
 	{
-#ifdef USE_DPLAY
 		if( !remoteAction && remote.is_enable() )
 		{
 			if( selectedCount > 0)
@@ -780,7 +771,6 @@ void UnitArray::return_camp(int remoteAction, short *selectedUnitArray, int sele
 			return;
 		}
 		else
-#endif
 		{
 			for( int j = selectedCount-1; j >= 0; j--)
 			{

@@ -43,9 +43,7 @@
 #include <OTOWN.h>
 #include <OWORLD.h>
 #include <OF_BASE.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OSERES.h>
 #include <OSE.h>
 
@@ -270,7 +268,6 @@ void FirmBase::detect_info()
 
 	if( rc==2 )
 	{
-#ifdef USE_DPLAY
 		if(remote.is_enable())
 		{
 			// packet structure : <firm recno>
@@ -278,7 +275,6 @@ void FirmBase::detect_info()
 			shortPtr[0] = firm_recno;
 		}
 		else
-#endif
 		{
 			assign_overseer(0);		// the overseer quits the camp
 		}
@@ -288,7 +284,6 @@ void FirmBase::detect_info()
 
 	if( button_invoke.detect() )
 	{
-#ifdef USE_DPLAY
 		if(remote.is_enable())
 		{
 			// ##### begin Gilbert 14/10 #######//
@@ -298,7 +293,6 @@ void FirmBase::detect_info()
 			// ##### end Gilbert 14/10 #######//
 		}
 		else
-#endif
 		{
 			invoke_god();
 		}

@@ -39,9 +39,7 @@
 #include <OPOWER.h>
 #include <OWALLRES.h>
 #include <OSERES.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 
 //-------------- Define constant -----------------//
 
@@ -791,13 +789,10 @@ int Power::detect_action()
 
 			if( mouse.click_count(RIGHT_BUTTON) > 1 )
 			{
-#ifdef USE_DPLAY
 				if( !remote.is_enable() )
 				{
-#endif
 					for( int j=0 ; j<nationSelectedCount ; j++ )
 						unit_array[ nationSelectedArray[j] ]->force_move_flag = 1;
-#ifdef USE_DPLAY
 				}
 				else
 				{
@@ -808,7 +803,6 @@ int Power::detect_action()
 					for( int j=0 ; j<nationSelectedCount ; j++, shortPtr++ )
 						*shortPtr = nationSelectedArray[j];
 				}
-#endif
 			}
 
 			//--------- move to now -----------//

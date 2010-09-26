@@ -14,6 +14,7 @@ my %cfg = (
   build_server => 0,
   audio_backend => "OpenAL",
   video_backend => "sdl",
+  netplay_backend => "none",
   input_backend => "sdl",
   disable_wine => 1,
   enable_multilib => 0

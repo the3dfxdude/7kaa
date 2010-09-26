@@ -41,9 +41,7 @@
 #include <OTORNADO.h>
 #include <OU_VEHI.h>
 #include <OSERES.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <ONEWS.h>
 
 
@@ -572,12 +570,9 @@ void World::explore(int xLoc1, int yLoc1, int xLoc2, int yLoc2)
 
 						if( !relation->has_contact )
 						{
-#ifdef USE_DPLAY
 							if( !remote.is_enable() )
 							{
-#endif
 								(~nation_array)->establish_contact(firmPtr->nation_recno);
-#ifdef USE_DPLAY
 							}
 							else
 							{
@@ -590,7 +585,6 @@ void World::explore(int xLoc1, int yLoc1, int xLoc2, int yLoc2)
 									relation->contact_msg_flag = 1;
 								}
 							}
-#endif
 						}
 					}
 				}
@@ -605,12 +599,9 @@ void World::explore(int xLoc1, int yLoc1, int xLoc2, int yLoc2)
 
 						if( !relation->has_contact )
 						{
-#ifdef USE_DPLAY
 							if( !remote.is_enable() )
 							{
-#endif
 								(~nation_array)->establish_contact(townPtr->nation_recno);
-#ifdef USE_DPLAY
 							}
 							else
 							{
@@ -623,7 +614,6 @@ void World::explore(int xLoc1, int yLoc1, int xLoc2, int yLoc2)
 									relation->contact_msg_flag = 1;
 								}
 							}
-#endif
 						}
 					}
 				}

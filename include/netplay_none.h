@@ -22,8 +22,8 @@
 // Description : Header file of MultiPlayerDP (DirectPlay)
 // Owner       : Gilbert
 
-#ifndef __ODPLAY_H
-#define __ODPLAY_H
+#ifndef __netplay_none_h__
+#define __netplay_none_h__
 
 #include <ODYNARRB.h>
 #include <stdint.h>
@@ -44,22 +44,22 @@ enum ProtocolType
 	Serial = 8
 };
 
-struct DPSessionDesc
+struct NoneSessionDesc
 {
 	char session_name[MP_SESSION_NAME_LEN+1];
 	char pass_word[MP_SESSION_NAME_LEN+1];
 	uint32_t id;
 
-	DPSessionDesc();
-	DPSessionDesc(const DPSessionDesc &);
-	DPSessionDesc& operator= (const DPSessionDesc &);
+	NoneSessionDesc();
+	NoneSessionDesc(const NoneSessionDesc &);
+	NoneSessionDesc& operator= (const NoneSessionDesc &);
 
 	char *name_str() { return session_name; };
 	uint32_t session_id() { return id; }
 };
 
 
-struct DPPlayer
+struct NonePlayer
 {
 	uint32_t player_id;
 	char	friendly_name[MP_FRIENDLY_NAME_LEN+1];
@@ -71,14 +71,14 @@ struct DPPlayer
 	char *formal_name_str() { return formal_name; }
 };
 
-class MultiPlayerDP
+class MultiPlayerNone
 {
 private:
 	int						init_flag;
 	int						lobbied_flag;
 	ProtocolType			supported_protocols;
 	DynArrayB				current_sessions;
-	DPSessionDesc			joined_session;
+	NoneSessionDesc			joined_session;
 
 	uint32_t				my_player_id;
 	int						host_flag;
@@ -88,8 +88,8 @@ private:
 	uint32_t				recv_buffer_size;
 
 public:
-	MultiPlayerDP();
-	~MultiPlayerDP();
+	MultiPlayerNone();
+	~MultiPlayerNone();
 
 	void init(ProtocolType);
 	void deinit();
@@ -107,7 +107,7 @@ public:
 	// ------- functions on session --------//
 	int	poll_sessions();
 	void	sort_sessions(int sortType);
-	DPSessionDesc *get_session(int i);
+	NoneSessionDesc *get_session(int i);
 	int	create_session(char *sessionName, int maxPlayers);
 	int	join_session(int currentSessionIndex );
 	void	close_session();
@@ -116,8 +116,8 @@ public:
 	// -------- functions on player management -------//
 	int	create_player(char *friendlyName, char *formalName);
 	void	poll_players();
-	DPPlayer *get_player(int i);
-	DPPlayer *search_player(uint32_t player_id);
+	NonePlayer *get_player(int i);
+	NonePlayer *search_player(uint32_t player_id);
 	int	is_player_connecting(uint32_t playerId);
 	int       get_player_count() const { return player_pool.size(); }
 	uint32_t  get_my_player_id() const { return my_player_id; }
@@ -128,9 +128,9 @@ public:
 	char *receive(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 };
 
-extern MultiPlayerDP mp_dp;
+extern MultiPlayerNone mp_none;
 
 #include <MPTYPES.h>
 
-#endif	// __ODPLAY_H
+#endif
 

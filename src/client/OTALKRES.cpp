@@ -31,9 +31,7 @@
 #include <ONEWS.h>
 #include <ONATION.h>
 #include <OTALKRES.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 // #### begin Gilbert 9/10 ######//
 #include <OSE.h>
 // #### end Gilbert 9/10 ######//
@@ -733,7 +731,6 @@ int TalkRes::ai_send_talk_msg(int toNationRecno, int fromNationRecno, int talkId
 //
 void TalkRes::send_talk_msg(TalkMsg* talkMsgPtr, char remoteAction)
 {
-#ifdef USE_DPLAY
 	//-------- send multiplayer -----------//
 
 	if( !remoteAction && remote.is_enable() )
@@ -744,7 +741,6 @@ void TalkRes::send_talk_msg(TalkMsg* talkMsgPtr, char remoteAction)
 		memcpy( dataPtr, talkMsgPtr, sizeof(TalkMsg) );
 		return;
 	}
-#endif
 
 	//------ the TalkMsg::reply_type ------//
 
@@ -844,7 +840,6 @@ void TalkRes::send_talk_msg_now(TalkMsg* talkMsgPtr)
 //
 void TalkRes::reply_talk_msg(int talkMsgRecno, char replyType, char remoteAction)
 {
-#ifdef USE_DPLAY
 	//-------- send multiplayer -----------//
 
 	if( !remoteAction && remote.is_enable() )
@@ -856,7 +851,6 @@ void TalkRes::reply_talk_msg(int talkMsgRecno, char replyType, char remoteAction
 		charPtr[sizeof(int)+sizeof(char)] = 0;
 		return;
 	}
-#endif
 
 	//-------------------------------------//
 

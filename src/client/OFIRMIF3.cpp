@@ -34,9 +34,7 @@
 #include <ONATION.h>
 #include <OSPY.h>
 #include <OFIRM.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 
 //---------- Define constant ------------//
 
@@ -169,13 +167,10 @@ void Firm::detect_bribe_menu()
 			//--------- bribe now ---------//
 
 			// ####### begin Gilbert 13/10 #######//
-#ifdef USE_DPLAY
 			if( !remote.is_enable() )
 			{
-#endif
 				spy_bribe(bribe_amount_array[i], action_spy_recno, selected_worker_id);
 				action_spy_recno = 0;
-#ifdef USE_DPLAY
 			}
 			else
 			{
@@ -186,7 +181,6 @@ void Firm::detect_bribe_menu()
 				shortPtr[2] = selected_worker_id;
 				shortPtr[3] = bribe_amount_array[i];
 			}
-#endif
 			// ####### end Gilbert 13/10 #######//
 		}
 

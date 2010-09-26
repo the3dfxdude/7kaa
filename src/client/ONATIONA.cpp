@@ -31,9 +31,7 @@
 #include <ORACERES.h>
 #include <OSPY.h>
 #include <ONATIONA.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OLOG.h>
 
 //### begin alex 22/9 ###//
@@ -174,13 +172,8 @@ int NationArray::new_nation(NewNationPara& nationPara)
 	Nation* nationPtr   = nation_array[nationRecno];
 
 	err_when( nationRecno != nationPara.nation_recno );
-#ifdef USE_DPLAY
 	err_when( !remote.is_enable() );
-#else
-	err_when( 1 );
-#endif
 
-#ifdef USE_DPLAY
 	char nationType = 
 		nationPara.dp_player_id == remote.self_player_id() ? NATION_OWN : NATION_REMOTE;
 
@@ -213,7 +206,6 @@ int NationArray::new_nation(NewNationPara& nationPara)
 
 	update_statistic();
 
-#endif
 	return nationRecno;
 }
 //----------- End of function NationArray::new_nation ---------//

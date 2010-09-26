@@ -49,9 +49,7 @@
 #include <OSPREUSE.h>
 #include <OSPY.h>
 #include <OSYS.h>
-#ifdef USE_DPLAY
 #include <OREMOTE.h>
-#endif
 #include <OTECHRES.h>
 #include <OTALKRES.h>
 #include <OGODRES.h>
@@ -68,9 +66,7 @@
 #include <OANLINE.h>
 #include <OSE.h>
 #include <OLOG.h>
-#ifdef USE_DPLAY
 #include <OERRCTRL.h>
-#endif
 #include <OMUSIC.h>
 #include <OLZW.h>
 #include <OLONGLOG.h>
@@ -625,34 +621,28 @@ void Sys::main_loop(int isLoadedGame)
          nation_array[i]->next_frame_ready = 0;
    }
 
-#ifdef USE_DPLAY
    remote.packet_send_count    = 0;
    remote.packet_receive_count = 0;
-#endif
 
    last_frame_time = m.get_time()+60000;     // plus 60 seconds buffer for game loading/starting time
    //frame_count     = 1;
    is_sync_frame   = 0;
 
    //----------------------------------------------//
-#ifdef USE_DPLAY
    mp_clear_request_save();
    remote.enable_poll_msg();
    remote.enable_process_queue();
    remote_send_success_flag = 1;
-#endif
 
 #ifdef DEBUG
    char longLogSuffix = 'A';
-#ifdef USE_DPLAY
    if( remote.is_enable() )
    {
       if(long_log)
          delete long_log;
       long_log = new LongLog(longLogSuffix);
    }
-#endif // USE_DPLAY
-#endif // DEBUG
+#endif
 
    //-*********** syn game test ***********-//
    #ifdef DEBUG
@@ -680,12 +670,10 @@ void Sys::main_loop(int isLoadedGame)
          NationRelation *relation = (~nation_array)->get_relation(nationRecno);
          if( relation->contact_msg_flag && !relation->has_contact)
          {
-#ifdef USE_DPLAY
             // packet structure : <player nation> <explored nation>
             int16_t *shortPtr = (int16_t *)remote.new_send_queue_msg(MSG_NATION_CONTACT, 2*sizeof(int16_t));
             *shortPtr = nation_array.player_recno;
             shortPtr[1] = nationRecno;
-#endif
          }
       }
    }
@@ -739,7 +727,6 @@ void Sys::main_loop(int isLoadedGame)
 
          if( config.frame_speed>0 )              // 0-frozen
          {
-#ifdef USE_DPLAY
             if( remote.is_enable() )      // && is_sync_frame )
             {
                remote.poll_msg();
@@ -748,7 +735,6 @@ void Sys::main_loop(int isLoadedGame)
                m.lock_seed();
             }
             else
-#endif
                rc = should_next_frame();
 
             if( rc )
@@ -756,7 +742,7 @@ void Sys::main_loop(int isLoadedGame)
                LOG_BEGIN;
                m.unlock_seed();
 
-#if (defined(DEBUG) && defined(USE_DPLAY))
+#ifdef DEBUG
                if( remote.is_enable() )
                {
                   long_log->printf("begin process frame %d\n", frame_count);
@@ -765,13 +751,10 @@ void Sys::main_loop(int isLoadedGame)
 
                process(); // also calls 'disp_frame()'
 
-#ifdef USE_DPLAY
                if(remote.is_enable() )
                   m.lock_seed();    // such that random seed is unchanged outside sys::process()
-#endif
                LOG_END;
 
-#ifdef USE_DPLAY
                // -------- compare objects' crc --------- //
 					// ###### patch begin Gilbert 20/1 ######//
 					if( remote.is_enable() && (remote.sync_test_level & 2) &&(frame_count % (remote.get_process_frame_delay()+3)) == 0)
@@ -781,7 +764,6 @@ void Sys::main_loop(int isLoadedGame)
                   crc_store.send_all();
                }
 					// ###### patch end Gilbert 20/1 ######//
-#endif
 
             }
          }
@@ -848,7 +830,7 @@ void Sys::main_loop(int isLoadedGame)
          if( config.frame_speed == 0 || day_frame_count == 0)
             music.yield();
 
-#if (defined(DEBUG) && defined(USE_DPLAY))
+#ifdef DEBUG
          if( rc && remote.is_enable() && day_frame_count == 0 )
          {
             if( long_log)
@@ -885,7 +867,6 @@ void Sys::main_loop(int isLoadedGame)
 
          //------ detect save game triggered by remote player ------//
 
-#ifdef USE_DPLAY
          if( mp_save_flag && mp_save_frame == frame_count )
          {
             mp_clear_request_save();            // clear request first before save game
@@ -904,7 +885,6 @@ void Sys::main_loop(int isLoadedGame)
                // ####### end Gilbert 24/10 ######//
             }
          }
-#endif
 
          vga_front.unlock_buf();
 
@@ -924,7 +904,7 @@ void Sys::main_loop(int isLoadedGame)
 
    vga_front.lock_buf();
 
-#if (defined(DEBUG) && defined(USE_DPLAY))
+#ifdef DEBUG
    if(remote.is_enable())
    {
       if(long_log)
@@ -934,11 +914,9 @@ void Sys::main_loop(int isLoadedGame)
 #endif
 
    music.stop();
-#ifdef USE_DPLAY
    remote.disable_process_queue();
    remote.disable_poll_msg();
    mp_clear_request_save();
-#endif
 }
 //--------- End of function Sys::main_loop --------//
 
@@ -952,12 +930,8 @@ void Sys::auto_save()
 
    //---------- single player auto save ----------//
 
-#ifdef USE_DPLAY
    if( !remote.is_enable() &&          // no auto save in a multiplayer game
        info.game_month%2==0 && info.game_day==1 && day_frame_count==0)
-#else
-   if(info.game_month%2==0 && info.game_day==1 && day_frame_count==0)
-#endif
    {
       #ifdef DEBUG2
       if(1)
@@ -1013,7 +987,6 @@ void Sys::auto_save()
       //-*********** syn game test ***********-//
    }
 
-#ifdef USE_DPLAY
    // --------- multiplayer autosave game --------//
 
 	// ###### patch begin Gilbert 23/1 #######//
@@ -1033,7 +1006,6 @@ void Sys::auto_save()
 
       game_file.save_game( "AUTO.SVM" );
    }
-#endif
 }
 //-------- End of function Sys::auto_save --------//
 
@@ -1136,7 +1108,6 @@ void Sys::yield()
 
    audio.yield();
 
-#ifdef USE_DPLAY
    if( remote.is_enable() )
    {
       //yield_wsock_msg();
@@ -1171,7 +1142,6 @@ void Sys::yield()
          font_san.disp( ZOOM_X1, 4, str, ZOOM_X1+300);
       }
    }
-#endif
 
    isYielding=0;
 }
@@ -1206,7 +1176,6 @@ void Sys::yield_wsock_msg()
 //
 int Sys::is_mp_sync(int *unreadyPlayerFlag)
 {
-#ifdef USE_DPLAY
    #define RESEND_TIME_OUT            2000    // if the other machines still aren't ready after 2 seconds, send the notification again
    #define RESEND_AGAIN_TIME_OUT      1000    // keep resending if no responses
    #define CONNECTION_LOST_TIME_OUT  20000    // ask for connection lost handling aftering waiting for 5 seconds.
@@ -1440,8 +1409,6 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
    last_frame_time  = m.get_time();
    last_resend_time = 0;
 
-#endif // USE_DPLAY
-
    return 1;
 }
 //---------- End of function Sys::is_mp_sync --------//
@@ -1509,11 +1476,7 @@ void Sys::process_key(unsigned scanCode, unsigned skeyState)
       }
       else
       {
-#ifdef USE_DPLAY
          if( nation_array.player_recno && !remote.is_enable() )      // not allowed in multiplayer mode
-#else
-         if( nation_array.player_recno )
-#endif
          {
             if( (~nation_array)->cheat_enabled_flag )
             {
@@ -1629,11 +1592,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       case 'o':
          // ##### begin Gilbert 5/11 #######//
          // game.in_game_option_menu();
-#ifdef USE_DPLAY
          option_menu.enter(!remote.is_enable());
-#else
-         option_menu.enter(1);
-#endif
          // ##### end Gilbert 5/11 #######//
          break;
 
@@ -1774,11 +1733,7 @@ void Sys::detect_function_key(unsigned scanCode, unsigned skeyState)
       case KEY_F10:
          // ##### begin Gilbert 5/11 ######//
          //game.in_game_menu();
-#ifdef USE_DPLAY
          in_game_menu.enter(!remote.is_enable());
-#else
-         in_game_menu.enter(1);
-#endif
          // ##### end Gilbert 5/11 ######//
          break;
 
@@ -1801,10 +1756,8 @@ void Sys::detect_function_key(unsigned scanCode, unsigned skeyState)
 //
 void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
 {
-#ifdef USE_DPLAY
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return;
-#endif
 
    int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_CHAR_KEY );
 
@@ -1944,10 +1897,8 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
 //
 void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
 {
-#ifdef USE_DPLAY
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return;
-#endif
 
    int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_UNIQUE_KEY );
 
@@ -2100,10 +2051,8 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
 
 static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
 {
-#ifdef USE_DPLAY
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return 0;
-#endif
 
    int keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_IS_CTRL);
 
@@ -2535,7 +2484,6 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
 {
    //--------- if multiplayer, update remote players setting -------//
 
-#ifdef USE_DPLAY
    if( remote.is_enable() && !remoteCall )
    {
       RemoteMsg *remoteMsg = remote.new_msg(MSG_SET_SPEED, sizeof(short));
@@ -2544,7 +2492,6 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
 
       remote.send_free_msg( remoteMsg );     // send out the message and free it after finishing sending
    }
-#endif
 
    //---------- set the speed now ----------//
 
@@ -2618,12 +2565,10 @@ void Sys::capture_screen()
 //
 void Sys::load_game()
 {
-#ifdef USE_DPLAY
    //--- load game not enabled in multiplayer game ---//
 
    if( remote.is_enable() )
       return;
-#endif
 
    signal_exit_flag=1;     // for deinit functions to recognize that this is an end game deinitialization instead of a normal deinitialization
 
@@ -2673,14 +2618,12 @@ void Sys::save_game()
    if( nation_array.player_recno==0 )     // cannot save game when the player's kingdom has been destroyed
       return;
 
-#ifdef USE_DPLAY
    if( remote.is_enable() )
    {
       DWORD *dwordPtr = (DWORD *)remote.new_send_queue_msg( MSG_REQUEST_SAVE, sizeof(DWORD) );
       *dwordPtr = remote.next_send_frame(nation_array.player_recno, sys.frame_count+remote.process_frame_delay)+2;
       return;
    }
-#endif
 
    game_file_array.init("*.SAV");                  // reload any save game file
    game_file_array.menu(-2);               // save screen area to back buffer
