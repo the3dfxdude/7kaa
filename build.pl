@@ -111,7 +111,6 @@ sub get_cxx_cmd {
   defined($debug) and $debug and push (@cc_opts, "-g");
   defined($enable_multilib) and $enable_multilib and push (@cc_opts, "-m32");
   push (@cc_opts, map { "-D$_" } @{$_[1]});
-  push (@cc_opts, "-DUSE_NONETPLAY");
   push (@cc_opts, map { "-I$_" } @{$_[0]});
   return "@cc_opts";
 }
