@@ -91,6 +91,56 @@ if ($cfg{platform} =~ /^linux/) {
     }
   }
 
+  if ($cfg{video_backend} =~ /^sdl$/i || $cfg{input_backend} =~ /^sdl$/i) {
+    # search for SDL files
+    print "Checking for SDL: ";
+    my $sdl_config = which("sdl-config");
+    if (!defined($sdl_config)) {
+      print "not found\n";
+      print "SDL library and development files are required.\n";
+      exit 1;
+    }
+    print "found\n";
+  }
+
+  if ($cfg{audio_backend} =~ /^openal$/i) {
+    # search for OpenAL files
+    print "Checking for OpenAL: ";
+
+    open (my $prgfile, ">nnnnnnn.c") or die "Couldn't write file: $!";
+    my $program = <<EOF;
+#include <stdlib.h>
+#include <AL/al.h>
+#include <AL/alc.h>
+int main()
+{
+ALCdevice *al_device = alcOpenDevice(NULL);
+return 0;
+}
+EOF
+    print $prgfile $program;
+    close ($prgfile);
+
+    open (my $cc, "gcc nnnnnnn.c -o nnnnnnn -lopenal 2>&1 |") or die "Couldn't open pipe: $!";
+    my @lines;
+    while (1) {
+      my $line = <$cc>;
+      defined($line) or last;
+      push (@lines, $line);
+    }
+    $ret = close($cc);
+
+    unlink "nnnnnnn";
+    unlink "nnnnnnn.c";
+    if (!$ret) {
+      # error during compilation
+      print "not found\n";
+      print join("\n", @lines);
+      exit 1;
+    }
+    print "found\n";
+  }
+
 } elsif ($cfg{platform} =~ /^win32$/) {
 
   # wine and windows are equivalent, and this is required on windows
