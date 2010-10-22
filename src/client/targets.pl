@@ -40,7 +40,7 @@ if (defined($netplay_backend)) {
   if ($netplay_backend =~ /sdl_net/i) {
     push (@defines, 'USE_SDLNET');
   } elsif ($netplay_backend =~ /none/i) {
-    push (@defines, 'USE_NONETPLAY');
+    push (@defines, 'USE_NONETPLAY', 'DISABLE_MULTI_PLAYER');
   }
 }
 ## end compiler flags ##
