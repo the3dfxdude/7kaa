@@ -296,14 +296,12 @@ void OpenALAudio::deinit_wav()
 //
 int OpenALAudio::init_mid()
 {
-   WARN_UNIMPLEMENTED("init_mid");
    this->mid_init_flag = 0;
    return this->mid_init_flag;
 }
 
 void OpenALAudio::deinit_mid()
 {
-   WARN_UNIMPLEMENTED("deinit_mid");
 }
 
 // Initialize the audio CD player
@@ -313,14 +311,12 @@ void OpenALAudio::deinit_mid()
 //
 int OpenALAudio::init_cd()
 {
-   WARN_UNIMPLEMENTED("init_cd");
    this->cd_init_flag = 0;
    return this->cd_init_flag;
 }
 
 void OpenALAudio::deinit_cd()
 {
-   WARN_UNIMPLEMENTED("deinit_cd");
 }
 
 // Play a midi mid from the mid resource file

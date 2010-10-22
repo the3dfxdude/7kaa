@@ -34,7 +34,7 @@ DBGLOG_DEFAULT_CHANNEL(NetPlay);
 
 NoneSessionDesc::NoneSessionDesc()
 {
-	ERR("[NoneSessionDesc::NoneSessionDesc] calling unimplemented method\n");
+	MSG("[NoneSessionDesc::NoneSessionDesc] calling unimplemented method\n");
 }
 
 NoneSessionDesc::NoneSessionDesc(const NoneSessionDesc &NoneSessionDesc) //: NoneSessionDesc2(NoneSessionDesc)
@@ -62,12 +62,12 @@ MultiPlayerNone::MultiPlayerNone() :
 	current_sessions(sizeof(NoneSessionDesc), 10 ), player_pool(sizeof(NonePlayer), 8 ),
 	recv_buffer(NULL)
 {
-	ERR("[MultiPlayerNone::MultiPlayerNone] calling unimplemented method\n");
+	MSG("[MultiPlayerNone::MultiPlayerNone] calling unimplemented method\n");
 }
 
 MultiPlayerNone::~MultiPlayerNone()
 {
-	ERR("[MultiPlayerNone::~MultiPlayerNone] calling unimplemented method\n");
+	MSG("[MultiPlayerNone::~MultiPlayerNone] calling unimplemented method\n");
 }
 
 void MultiPlayerNone::init(ProtocolType protocol_type)
