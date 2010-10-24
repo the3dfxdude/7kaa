@@ -62,6 +62,12 @@ sub clean_build_files {
   foreach my $i (@files) {
     delete_file($i) or return 0;
   }
+  @files = <7kaa*>;
+  foreach my $i (@files) {
+    if (-f $i && -x $i) {
+      delete_file($i) or return 0;
+    }
+  }
 
   return 1;
 }
