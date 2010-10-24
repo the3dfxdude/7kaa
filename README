@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.14.0
+Release version 2.14.1
 Project website: www.7kfans.com
 
 This is the release of the Seven Kingdoms: Ancient Adversaries source
@@ -9,20 +9,19 @@ code as authorized by Enlight by the 7kfans project.  The game is
 provided under the terms of the GPL.  See the file "COPYING" for the
 details of the license.
 
-This release brings SDL and OpenAL support. The whole 2.14.xx series
-should be considered BETA, and even sometimes ALPHA, in terms of
-quality.
+Changes in this release:
+ * Initial x86_64 support in Linux.
+ * DirectPlay code has been removed.
 
-This version of the game deprecates the I*Magic network library and
-DirectPlay.  Building the game will disable the network option by
-default.  Renable it at your own risk.
+The whole 2.14.xx series should be considered BETA, and even sometimes
+ALPHA, in terms of quality.
 
 
 Building the game
 ---------
 
 General Requirements
-* GCC 3.0 or later
+* GCC 4.xx or later
 * Perl (checked with 5.10.1)
 
 Linux
@@ -30,11 +29,15 @@ Linux
 * OpenAL
 
 
-We do not (yet?) provide the typical Makefile setup.  To build
-execute:
-./configure.pl
+We do not provide the typical Makefile setup. Building in Windows and
+Linux may be done in a shell, provided you have GCC (Mingw tested on
+Windows) and Perl installed. You will also need the development files
+to SDL and OpenAL installed. Once you have met the requirements to 
+compiling, build the game by executing the following commands:
+in a shell:
+perl configure.pl
 Followed by:
-./build.pl
+perl build.pl
 
 If GNU Parallel is installed, jobs will automatically execute
 in parallel.
@@ -49,9 +52,9 @@ You can download the game data if you do not already have the game
 installed. You can find the game data from the 7kfans sourceforge
 page at http://sourceforge.net/projects/skfans/
 
-Copy the executable files "7kaa.exe*" from the build directory to
-your installed game directory.  Run 7kaa.exe to start the game
-instead of the classic enlight version called 7k.exe.  You may
+Copy the executable file "7kaa*" from the src directory to your
+installed game directory.  Run the executable to start the game
+instead of the classic Enlight version called 7k.exe.  You may
 create a short-cut now.
 
 
