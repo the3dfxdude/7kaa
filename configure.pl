@@ -74,7 +74,11 @@ unless ($cfg{no_asm} || check_jwasm_version()) {
 $cfg{jwasm_args} = "-q " . get_jwasm_bin_format($cfg{platform});
 
 # compiler setup
-unless (check_gcc_version()) {
+unless (check_gcc_version('gcc')) {
+  print "GCC " . join('.', @gcc_ver_req) . " is required.\n";
+  exit 1;
+}
+unless (check_gcc_version('g++')) {
   print "GCC " . join('.', @gcc_ver_req) . " is required.\n";
   exit 1;
 }
@@ -269,10 +273,11 @@ sub detect_wine_prefix {
   return $wine_prefix;
 }
 
+# check_gcc_version($executable_name)
 sub check_gcc_version {
-  print "Detecting gcc version: ";
-  my $gcc_version = `gcc --version`;
-  my @ver = $gcc_version =~ /^gcc \(.*\) (\d+)\.(\d+)\.(\d+)/;
+  print "Checking for $_[0]: ";
+  my $gcc_version = `$_[0] --version`;
+  my @ver = $gcc_version =~ /^\Q$_[0]\E\s+\(.*\)\s+(\d+)\.(\d+)\.(\d+)/;
   unless (@ver == 3) {
     print "not found\n";
     return undef;
