@@ -79,7 +79,7 @@ MultiPlayerSDL::MultiPlayerSDL() :
 {
 	init_flag = 0;
 	lobbied_flag = 0;
-	supported_protocols = None;
+	supported_protocols = TCPIP;
 	my_player_id = 0;
 	host_flag = 0;
 	recv_buffer = new char[MP_RECV_BUFFER_SIZE];
@@ -100,7 +100,7 @@ MultiPlayerSDL::~MultiPlayerSDL()
 
 void MultiPlayerSDL::init(ProtocolType protocol_type)
 {
-	init_flag = 1;
+	init_flag = 0;
 	lobbied_flag = 0;
 	my_player_id = 0;
 	host_flag = 0;
@@ -120,8 +120,11 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	sock_set = SDLNet_AllocSocketSet(1);
 	if (!sock_set) {
 		ERR("[MultiPlayerSDL::init] SDLNet_AllocSocketSet: %s\n", SDLNet_GetError());
+		SDLNet_Quit();
 		return;
 	}
+
+	init_flag = 1;
 }
 
 void MultiPlayerSDL::deinit()
@@ -148,9 +151,22 @@ void MultiPlayerSDL::deinit()
 	sock_set = NULL;
 }
 
-void MultiPlayerSDL::init_lobbied(int maxPlayers, char *)
+void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 {
-	ERR("[MultiPlayerSDL::init_lobbied] calling unimplemented method\n");
+	ERR("[MultiPlayerSDL::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
+	if (cmdLine) {
+		SDLSessionDesc session;
+
+		strncpy(session.session_name, cmdLine, MP_SESSION_NAME_LEN-1);
+		session.pass_word[0] = 0;
+
+		current_sessions.linkin(&session);
+
+		lobbied_flag = 2;
+	} else {
+		// hosting doesn't work yet
+		lobbied_flag = 1;
+	}
 }
 
 // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable
@@ -184,8 +200,9 @@ int MultiPlayerSDL::poll_sessions()
 	// for now, there is no need to search for additional sessions if we already got one
 	if (current_sessions.size() > 0) return TRUE;
 
+// skip the following code... it is a start for implementing a lobby game list, but it can't work right now
+#if 0
 	// establish connection with server
-
 	if (SDLNet_ResolveHost(&ip_address, "localhost", GAME_PORT) == -1) {
 		ERR("[MultiPlayerSDL::poll_sessions] failed to resolve hostname: %s\n", SDLNet_GetError());
 		return FALSE;
@@ -224,6 +241,7 @@ int MultiPlayerSDL::poll_sessions()
 
 	SDLNet_TCP_Close(data_sock);
 	data_sock = NULL;
+#endif
 
 	return TRUE;
 }
@@ -285,17 +303,22 @@ int MultiPlayerSDL::create_session(char *sessionName, int maxPlayers)
 // currentSessionIndex start from 1
 int MultiPlayerSDL::join_session(int i)
 {
-	if (SDLNet_ResolveHost(&ip_address, "localhost", GAME_PORT) == -1) {
-		ERR("[MultiPlayerSDL::poll_sessions] failed to resolve hostname: %s\n", SDLNet_GetError());
+	SDLSessionDesc *session = (SDLSessionDesc *)current_sessions.get(i);
+	if (!session)
+		return FALSE;
+
+	// establish connection with server
+	if (SDLNet_ResolveHost(&ip_address, session->session_name, GAME_PORT) == -1) {
+		ERR("[MultiPlayerSDL::join_sessions] failed to resolve hostname: %s\n", SDLNet_GetError());
 		return FALSE;
 	}
 
 	data_sock = SDLNet_TCP_Open(&ip_address);
 	if (!data_sock) {
-		ERR("[MultiPlayerSDL::poll_sessions] failed to connect to server: %s\n", SDLNet_GetError());
+		ERR("[MultiPlayerSDL::join_sessions] failed to connect to server: %s\n", SDLNet_GetError());
 		return FALSE;
 	} else {
-		MSG("[MultiPlayerSDL::poll_sessions] successfully connected to server\n");
+		MSG("[MultiPlayerSDL::join_sessions] successfully connected to server\n");
 	}
 
 	int total = SDLNet_TCP_AddSocket(sock_set, data_sock);
@@ -305,9 +328,8 @@ int MultiPlayerSDL::join_session(int i)
 
 	// TODO: request information from host
 
-	joined_session = *((SDLSessionDesc *)current_sessions.get(i));
+	joined_session = *session;
 
-	host_flag = 0;
 	return TRUE;
 }
 

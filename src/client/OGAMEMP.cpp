@@ -485,11 +485,10 @@ void Game::multi_player_game(char *cmdLine)
 	info.init_random_seed(0);			// initialize the random seed
 
 	int choice, p;
+	ProtocolType selected_protocol = TCPIP;
 
-	// ###### begin Gilbert 13/2 #######//
-	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
-	{	// not launched from lobby
-	// ###### end Gilbert 13/2 #######//
+	if (!cmdLine) {
+		// not launched from lobby
 
 		mp_obj.poll_supported_protocols();
 		choice = mp_select_service();
@@ -499,7 +498,6 @@ void Game::multi_player_game(char *cmdLine)
 			return;
 		}
 
-		ProtocolType selected_protocol;
 		switch(choice)
 		{
 		case 1:	// IPX
@@ -517,15 +515,13 @@ void Game::multi_player_game(char *cmdLine)
 		default:
 			selected_protocol = None;
 		}
-
-		if (mp_obj.is_protocol_supported(selected_protocol))
-		{
-			mp_obj.init(selected_protocol);
-		}
-
-	// ####### begin Gilbert 13/2 ########//
 	}
-	// ####### end Gilbert 13/2 ########//
+
+	if (mp_obj.is_protocol_supported(selected_protocol))
+		mp_obj.init(selected_protocol);
+
+	if (cmdLine)
+		mp_obj.init_lobbied(MAX_NATION, cmdLine);
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
@@ -660,11 +656,10 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 
 	int nationRecno;
 	int choice, p;
+	ProtocolType selected_protocol = TCPIP;
 
-	// ###### begin Gilbert 13/2 #######//
-	if( !cmdLine || (mp_obj.init_lobbied(MAX_NATION, cmdLine), !mp_obj.is_initialized()) )
-	{	// not launched from lobby
-	// ###### end Gilbert 13/2 #######//
+	if (!cmdLine) {
+		// not launched from lobby
 
 		mp_obj.poll_supported_protocols();
 		choice = mp_select_service();
@@ -674,7 +669,6 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 			return;
 		}
 
-		ProtocolType selected_protocol;
 		switch(choice)
 		{
 		case 1:	// IPX
@@ -692,15 +686,13 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 		default:
 			selected_protocol = None;
 		}
-
-		if (mp_obj.is_protocol_supported(selected_protocol))
-		{
-			mp_obj.init(selected_protocol);
-		}
-
-	// ####### begin Gilbert 13/2 ########//
 	}
-	// ####### end Gilbert 13/2 ########//
+
+	if (mp_obj.is_protocol_supported(selected_protocol))
+		mp_obj.init(selected_protocol);
+
+	if (cmdLine)
+		mp_obj.init_lobbied(MAX_NATION, cmdLine);
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())

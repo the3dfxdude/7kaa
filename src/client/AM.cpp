@@ -105,6 +105,7 @@
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
 // ###### end Gilbert 23/10 #######//
+#include <dbglog.h>
 
 //------- define game version constant --------//
 
@@ -276,6 +277,8 @@ unsigned long last_unit_assign_profile_time = 0L;
 unsigned long unit_assign_profile_time = 0L;
 #endif
 
+DBGLOG_DEFAULT_CHANNEL(am);
+
 //------- Define static functions --------//
 
 static void extra_error_handler();
@@ -292,7 +295,7 @@ static void extra_error_handler();
 //          will cause major slowdown.
 //
 #ifdef NO_WINDOWS
-int main()
+int main(int argc, char **argv)
 #else
 int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 						  LPSTR lpCmdLine, int nCmdShow)
@@ -310,7 +313,24 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//--------------------------------------//
 
+#ifndef NO_WINDOWS
 	static char lobbyLaunchCmdLine[] = "-!lobby!";
+#else
+	const char *lobbyLaunchCmdLine = "-join";
+	int join_flag = 0;
+
+	for (int i = 0; i < argc; i++) {
+		if (!strcmp(argv[i], lobbyLaunchCmdLine)) {
+			join_flag = i+1;
+			break;
+		}
+	}
+
+	if (join_flag && argc <= join_flag) {
+		ERR("The -join switch requires a hostname parameter.\n");
+		return 1;
+	}
+#endif
 
 #ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//
@@ -318,6 +338,8 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	sys.set_game_dir();
 #ifndef NO_WINDOWS
 	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )	// skip if launch from lobby
+#else
+	if (!join_flag)
 #endif
 	{
 		String movieFileStr;
@@ -361,6 +383,8 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #else
 #ifndef NO_WINDOWS
 	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )
+#else
+	if (!join_flag)
 #endif // !NO_WINDOWS
 	   game.main_menu();
 #ifndef NO_WINDOWS
@@ -368,6 +392,9 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	else
 		game.multi_player_menu(lpCmdLine);		// if detect launched from lobby
 #endif // DISABLE_MULTI_PLAYER
+#else
+	else
+		game.multi_player_menu(argv[join_flag]);
 #endif // !NO_WINDOWS
 #endif
 
