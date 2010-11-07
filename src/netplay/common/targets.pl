@@ -28,6 +28,8 @@ if (defined($video_backend)) {
 if (defined($netplay_backend)) {
   if ($netplay_backend =~ /none/i) {
     push (@defines, 'USE_NONETPLAY');
+  } elsif ($netplay_backend =~ /sdl_net/i) {
+    push (@defines, 'USE_SDLNET');
   }
 }
 if (defined($input_backend)) {
