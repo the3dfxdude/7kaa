@@ -65,7 +65,7 @@ int VgaSDL::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, SDL_HWSURFACE|SDL_HWPALETTE|SDL_FULLSCREEN);
+   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, SDL_HWSURFACE|SDL_HWPALETTE);
    if (!front)
    {
       SDL_Quit();
