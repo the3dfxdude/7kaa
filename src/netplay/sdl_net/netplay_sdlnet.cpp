@@ -265,6 +265,8 @@ SDLSessionDesc *MultiPlayerSDL::get_session(int i)
 // return TRUE if success
 int MultiPlayerSDL::create_session(char *sessionName, int maxPlayers)
 {
+	IPaddress ip_address;
+
 	// TODO: add additional checks
 
 	err_when(!init_flag);
@@ -303,6 +305,8 @@ int MultiPlayerSDL::create_session(char *sessionName, int maxPlayers)
 // currentSessionIndex start from 1
 int MultiPlayerSDL::join_session(int i)
 {
+	IPaddress ip_address;
+
 	SDLSessionDesc *session = (SDLSessionDesc *)current_sessions.get(i);
 	if (!session)
 		return FALSE;

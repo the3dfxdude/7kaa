@@ -86,7 +86,6 @@ private:
 	char *            recv_buffer;
 	uint32_t          recv_buffer_size;
 
-	IPaddress         ip_address;
 	TCPsocket         data_sock;
 	TCPsocket         listen_sock; // used by server
 	SDLNet_SocketSet  sock_set;
