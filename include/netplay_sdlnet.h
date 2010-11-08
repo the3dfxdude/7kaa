@@ -81,6 +81,7 @@ private:
 
 	uint32_t          my_player_id;
 	int               host_flag;
+	int               allowing_connections;
 	DynArrayB         player_pool;
 
 	char *            recv_buffer;

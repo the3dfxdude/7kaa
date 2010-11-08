@@ -82,6 +82,7 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	supported_protocols = TCPIP;
 	my_player_id = 0;
 	host_flag = 0;
+	allowing_connections = 0;
 	recv_buffer = new char[MP_RECV_BUFFER_SIZE];
 	recv_buffer_size = MP_RECV_BUFFER_SIZE;
 	data_sock = NULL;
@@ -145,6 +146,7 @@ void MultiPlayerSDL::deinit()
 	lobbied_flag = 0;
 	my_player_id = 0;
 	host_flag = 0;
+	allowing_connections = 0;
 	data_sock = NULL;
 	listen_sock = NULL;
 	sock_set = NULL;
@@ -292,6 +294,7 @@ int MultiPlayerSDL::create_session(char *sessionName, int maxPlayers)
 	strcpy(joined_session.pass_word, spass);
 
 	host_flag = 1;
+	allowing_connections = 1;
 
 	return TRUE;
 }
@@ -343,25 +346,28 @@ void MultiPlayerSDL::close_session()
 
 void MultiPlayerSDL::disable_join_session()
 {
-	ERR("[MultiPlayerSDL::disable_join_session] calling unimplemented method\n");
+	allowing_connections = 0;
 }
 
 void MultiPlayerSDL::accept_connections()
 {
-	MSG("[MultiPlayerSDL::accept_connections]\n");
+	TCPsocket connecting;
 
 	// accept_connections shouldn't be used by clients
 	if (!host_flag) return;
-	// already accepted
-	if (!listen_sock || data_sock) return;
 
-	data_sock = SDLNet_TCP_Accept(listen_sock);
-	if (!data_sock) {
-		MSG("[MultiPlayerSDL::accept_connections] no clients yet\n");
+	connecting = SDLNet_TCP_Accept(listen_sock);
+	if (!connecting) {
 		return;
-	} else {
-		MSG("[MultiPlayerSDL::accept_connections] client accepted\n");
 	}
+	if (!allowing_connections) {
+		SDLNet_TCP_Close(connecting);
+		return;
+	}
+
+	MSG("[MultiPlayerSDL::accept_connections] client accepted\n");
+
+	data_sock = connecting;
 
 	int total = SDLNet_TCP_AddSocket(sock_set, data_sock);
 	if (total == -1) {
@@ -494,6 +500,9 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 //
 char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
 {
+	// have game host accept connections during game setup
+	accept_connections();
+
 	// TODO: rename sysMsgCount to playerLost and update the logic
 	//       (because sysMsgCount is only used to determine playerLost event)
 	if (sysMsgCount) *sysMsgCount = 0;
