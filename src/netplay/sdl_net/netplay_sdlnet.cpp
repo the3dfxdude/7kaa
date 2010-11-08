@@ -174,9 +174,10 @@ int MultiPlayerSDL::is_lobbied()
 	return lobbied_flag;
 }
 
+// get_lobbied_name() is used to get the player's name when the game is
+// launched to the lobby -- this probably won't ever be needed.
 char *MultiPlayerSDL::get_lobbied_name()
 {
-	ERR("[MultiPlayerSDL::get_lobbied_name] calling unimplemented method\n");
 	return NULL;
 }
 
@@ -337,7 +338,7 @@ int MultiPlayerSDL::join_session(int i)
 
 void MultiPlayerSDL::close_session()
 {
-	ERR("[MultiPlayerSDL::close_session] calling unimplemented method\n");
+	// unused
 }
 
 void MultiPlayerSDL::disable_join_session()
