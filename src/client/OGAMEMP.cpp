@@ -2141,7 +2141,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			music.stop();
 
 		// --------- detect remote message -------//
-		recvPtr = mp_obj.receive(&from, &to, &recvLen, &sysMsgCount);
+		recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
 
 		if( sysMsgCount )
 		{
@@ -3217,7 +3217,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				recvPtr = mp_obj.receive( &from, &to, &recvLen);
+				recvPtr = mp_obj.receive_stream( &from, &to, &recvLen);
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);
@@ -3927,7 +3927,7 @@ int Game::mp_select_load_option(char *fileName)
 			music.stop();
 
 		// --------- detect remote message -------//
-		recvPtr = mp_obj.receive(&from, &to, &recvLen, &sysMsgCount);
+		recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
 
 		if( sysMsgCount )
 		{
@@ -4545,7 +4545,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				recvPtr = mp_obj.receive( &from, &to, &recvLen);
+				recvPtr = mp_obj.receive_stream( &from, &to, &recvLen);
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);

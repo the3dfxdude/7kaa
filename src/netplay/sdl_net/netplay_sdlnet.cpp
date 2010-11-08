@@ -442,7 +442,7 @@ int MultiPlayerSDL::is_player_connecting(uint32_t playerId)
 	return 0;
 }
 
-// send message
+// send udp message
 //
 // pass BROADCAST_PID as toId to all players
 //
@@ -450,11 +450,11 @@ int MultiPlayerSDL::is_player_connecting(uint32_t playerId)
 //
 int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 {
-	ERR("[MultiPlayerSDL::send] unimplemented\n");
+	err_now("unimplemented");
 	return FALSE;
 }
 
-// send message
+// send tcp message
 //
 // pass BROADCAST_PID as toId to all players
 //
@@ -494,11 +494,25 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 	return TRUE;
 }
 
+// receive udp message
+//
 // return NULL if fails
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
 //
 char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
+{
+	err_now("unimplemented");
+	return FALSE;
+}
+
+// receive tcp message
+//
+// return NULL if fails
+// sysMsgCount records how many system messages have been handled
+// notice : *sysMsgCount may be != 0, but return NULL
+//
+char *MultiPlayerSDL::receive_stream(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
 {
 	// have game host accept connections during game setup
 	accept_connections();
