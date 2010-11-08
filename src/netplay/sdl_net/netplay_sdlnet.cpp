@@ -366,41 +366,27 @@ void MultiPlayerSDL::accept_connections()
 	}
 }
 
-// create a local player
+// creates the local player
 //
-// <char *> friendlyName          short name of the player, best to be one word only
-// [char *] formalName            long name of the player, take friendlyName if NULL (default: NULL)
+// <char *> friendlyName          name of the player
+// [char *] formalName            obsolete
 // return TRUE if success
+//
+// NOTE: If not the host, an id is assigned later by the host.
 //
 int MultiPlayerSDL::create_player(char *friendlyName, char *formalName)
 {
-	MSG("[MultiPlayerSDL::create_player]\n");
-	//SDLPlayer player;
+	SDLPlayer player;
 
-	// if we are hosting the game, we are allowed to pick any player id
-	if (host_flag)
-	{
-		//player.player_id = 456;
-		my_player_id = 456;
-	}
-	else
-	{
-		// TODO: id and player name should be sync'ed with server
-		my_player_id = 654;
-	}
+	if (my_player_id)
+		return TRUE;
 
-	// player names are now hardcoded in poll_players
+	my_player_id = player.id;
 
-	/*
-	strcpy(player.friendly_name, friendlyName);
-	if (formalName)
-		strcpy(player.formal_name, formalName);
-	else
-		strcpy(player.formal_name, friendlyName);
-
-	player.friendly_name[MP_FRIENDLY_NAME_LEN] = '\0';
-	player.formal_name[MP_FORMAL_NAME_LEN] = '\0';
-	*/
+	player.id = my_player_id;
+	strncpy(player.name, friendlyName, MP_FRIENDLY_NAME_LEN-1);
+	player.connecting = 0;
+	player_pool.linkin(&player);
 
 	return TRUE;
 }
@@ -408,73 +394,7 @@ int MultiPlayerSDL::create_player(char *friendlyName, char *formalName)
 void MultiPlayerSDL::poll_players()
 {
 	// TODO: player pool should be kept and sync'ed via server
-
-	MSG("[MultiPlayerSDL::poll_players]\n");
-	if (player_pool.size() >= 2) {
-		MSG("[MultiPlayerSDL::poll_players] already polled\n");
-		return;
-	}
-
-	SDLPlayer player;
-	player.connecting = 1;
-
-	// add our own player to the pool, if not yet
-	if (player_pool.size() == 0)
-	{
-		if (host_flag)
-		{
-			player.player_id = 456;
-
-			char friendlyName[] = "mayan";
-			char formalName[] = "mayan";
-			strcpy(player.friendly_name, friendlyName);
-			strcpy(player.formal_name, formalName);
-			player.friendly_name[MP_FRIENDLY_NAME_LEN] = '\0';
-			player.formal_name[MP_FORMAL_NAME_LEN] = '\0';
-		}
-		else
-		{
-			player.player_id = 654;
-
-			char friendlyName[] = "norman";
-			char formalName[] = "norman";
-			strcpy(player.friendly_name, friendlyName);
-			strcpy(player.formal_name, formalName);
-			player.friendly_name[MP_FRIENDLY_NAME_LEN] = '\0';
-			player.formal_name[MP_FORMAL_NAME_LEN] = '\0';
-		}
-
-		player_pool.linkin(&player);
-	}
-
-	// add remote player to the pool (if connections is established), if not yet
-	if (data_sock)
-	{
-		if (!host_flag)
-		{
-			player.player_id = 456;
-
-			char friendlyName[] = "mayan";
-			char formalName[] = "mayan";
-			strcpy(player.friendly_name, friendlyName);
-			strcpy(player.formal_name, formalName);
-			player.friendly_name[MP_FRIENDLY_NAME_LEN] = '\0';
-			player.formal_name[MP_FORMAL_NAME_LEN] = '\0';
-		}
-		else
-		{
-			player.player_id = 654;
-
-			char friendlyName[] = "norman";
-			char formalName[] = "norman";
-			strcpy(player.friendly_name, friendlyName);
-			strcpy(player.formal_name, formalName);
-			player.friendly_name[MP_FRIENDLY_NAME_LEN] = '\0';
-			player.formal_name[MP_FORMAL_NAME_LEN] = '\0';
-		}
-
-		player_pool.linkin(&player);
-	}
+	ERR("[MultiPlayerSDL::poll_players] unimplemented\n");
 }
 
 SDLPlayer *MultiPlayerSDL::get_player(int i)
@@ -489,7 +409,7 @@ SDLPlayer *MultiPlayerSDL::search_player(uint32_t playerId)
 	SDLPlayer *player;
 	int i = 0;
 	while( (player = get_player(++i)) != NULL )
-		if( player->player_id == playerId )
+		if( player->id == playerId )
 			return player;
 	return NULL;
 }
@@ -505,7 +425,7 @@ int MultiPlayerSDL::is_player_connecting(uint32_t playerId)
 	for( int p = 1; p <= player_pool.size(); ++p)
 	{
 		SDLPlayer * nonePlayer = (SDLPlayer *) player_pool.get(p);
-		if( nonePlayer->player_id == playerId )
+		if( nonePlayer->id == playerId )
 		{
 			return nonePlayer->connecting;
 		}
