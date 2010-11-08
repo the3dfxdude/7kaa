@@ -143,7 +143,6 @@ void MultiPlayerSDL::deinit()
 
 	init_flag = 0;
 	lobbied_flag = 0;
-	supported_protocols = None;
 	my_player_id = 0;
 	host_flag = 0;
 	data_sock = NULL;
@@ -183,7 +182,6 @@ char *MultiPlayerSDL::get_lobbied_name()
 
 void MultiPlayerSDL::poll_supported_protocols()
 {
-	supported_protocols = TCPIP;
 }
 
 bool MultiPlayerSDL::is_protocol_supported(ProtocolType protocol)
