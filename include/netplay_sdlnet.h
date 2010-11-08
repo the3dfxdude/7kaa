@@ -128,8 +128,8 @@ public:
 	uint32_t    get_my_player_id() const { return my_player_id; }
 
 	// ------- functions on message passing ------//
-	int    send(uint32_t toId, void * data, uint32_t size);
-	int    send_stream(uint32_t toId, void * data, uint32_t size);
+	int    send(uint32_t to, void * data, uint32_t msg_size);
+	int    send_stream(uint32_t to, void * data, uint32_t msg_size);
 	char * receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
 
 private:

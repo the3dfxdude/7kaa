@@ -442,38 +442,10 @@ int MultiPlayerSDL::is_player_connecting(uint32_t playerId)
 //
 // return TRUE on success
 //
-int MultiPlayerSDL::send(uint32_t target_id, void * data, uint32_t msg_size)
+int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 {
-	// TODO: send only if remote player joined the _session_
-
-	if (!data_sock) {
-		MSG("[MultiPlayerSDL::send] no connection established\n");
-		return FALSE;
-	}
-
-	int bytes_sent = 0;
-
-	// message structure:
-	//
-	// uint32_t msg_size;  // message _data_ size
-	// uint32_t target_id; // receiver id
-	// byte[]   data;      // byte array of size msg_size
-
-	const int send_buf_size = sizeof(msg_size) + sizeof(target_id);
-	char send_buf[send_buf_size];
-
-	SDLNet_Write32(msg_size, send_buf);
-	SDLNet_Write32(target_id, send_buf + sizeof(msg_size));
-
-	bytes_sent += SDLNet_TCP_Send(data_sock, send_buf, send_buf_size);
-	bytes_sent += SDLNet_TCP_Send(data_sock, data, msg_size);
-	if (bytes_sent != send_buf_size + msg_size) {
-		ERR("[MultiPlayerSDL::send] error while sending data\n");
-		return FALSE;
-	}
-
-	MSG("[MultiPlayerSDL::send] bytes sent: %d to %d\n", (int)bytes_sent, (int)target_id);
-	return TRUE;
+	ERR("[MultiPlayerSDL::send] unimplemented\n");
+	return FALSE;
 }
 
 // send message
@@ -482,11 +454,38 @@ int MultiPlayerSDL::send(uint32_t target_id, void * data, uint32_t msg_size)
 //
 // return TRUE on success
 //
-int MultiPlayerSDL::send_stream(uint32_t toId, void * lpData, uint32_t dataSize)
+int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
-	// original code used send_stream for guaranteed delivery;
-	// we can implement it via 'send' because it uses TCP anyway
-	return send(toId, lpData, dataSize);
+	// TODO: send only if remote player joined the _session_
+
+	if (!data_sock) {
+		MSG("[MultiPlayerSDL::send_stream] no connection established\n");
+		return FALSE;
+	}
+
+	int bytes_sent = 0;
+
+	// message structure:
+	//
+	// uint32_t msg_size;  // message _data_ size
+	// uint32_t to;        // receiver id
+	// byte[]   data;      // byte array of size msg_size
+
+	const int send_buf_size = sizeof(msg_size) + sizeof(to);
+	char send_buf[send_buf_size];
+
+	SDLNet_Write32(msg_size, send_buf);
+	SDLNet_Write32(to, send_buf + sizeof(msg_size));
+
+	bytes_sent += SDLNet_TCP_Send(data_sock, send_buf, send_buf_size);
+	bytes_sent += SDLNet_TCP_Send(data_sock, data, msg_size);
+	if (bytes_sent != send_buf_size + msg_size) {
+		ERR("[MultiPlayerSDL::send_stream] error while sending data\n");
+		return FALSE;
+	}
+
+	MSG("[MultiPlayerSDL::send_stream] bytes sent: %d to %d\n", (int)bytes_sent, (int)to);
+	return TRUE;
 }
 
 // return NULL if fails
