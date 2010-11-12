@@ -387,16 +387,16 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (!join_flag)
 #endif // !NO_WINDOWS
 	   game.main_menu();
-#ifndef NO_WINDOWS
 #ifndef DISABLE_MULTI_PLAYER
+#ifndef NO_WINDOWS
 	else
 		game.multi_player_menu(lpCmdLine);		// if detect launched from lobby
-#endif // DISABLE_MULTI_PLAYER
 #else
 	else
 		game.multi_player_menu(argv[join_flag]);
 #endif // !NO_WINDOWS
-#endif
+#endif // DISABLE_MULTI_PLAYER
+#endif // !DEMO
 
    sys.deinit();
 

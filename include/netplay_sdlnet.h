@@ -80,9 +80,13 @@ private:
 	SDLSessionDesc    joined_session;
 
 	uint32_t          my_player_id;
+	char              my_name[MP_FRIENDLY_NAME_LEN+1];
+
 	int               host_flag;
 	int               allowing_connections;
-	DynArrayB         player_pool;
+	int               max_players;
+
+	SDLPlayer         player_pool[MAX_NATION];
 
 	char *            recv_buffer;
 	uint32_t          recv_buffer_size;
@@ -112,20 +116,20 @@ public:
 	// ------- functions on session --------//
 	int    poll_sessions();
 	void   sort_sessions(int sortType);
-	int    create_session(char * sessionName, int maxPlayers);
-	int    join_session(int i);
+	int    create_session(char *sessionName, char *playerName, int maxPlayers);
+	int    join_session(int i, char *playerName);
 	void   close_session();
 	void   disable_join_session();
 	void   accept_connections();
 	SDLSessionDesc * get_session(int i);
 
 	// -------- functions on player management -------//
-	int         create_player(char * friendlyName, char * formalName);
+	uint32_t    create_player(char *name);
 	void        poll_players();
 	SDLPlayer * get_player(int i);
 	SDLPlayer * search_player(uint32_t playerId);
 	int         is_player_connecting(uint32_t playerId);
-	int         get_player_count() const { return player_pool.size(); }
+	int         get_player_count();
 	uint32_t    get_my_player_id() const { return my_player_id; }
 
 	// ------- functions on message passing ------//

@@ -536,9 +536,8 @@ void Game::multi_player_game(char *cmdLine)
 	switch( mp_select_mode(NULL) )
 	{
 	case 1:		// create game
-		// BUGHERE : enter session name here and player name here
-		if( mp_obj.create_session(config.player_name, MAX_NATION) 
-			&& mp_obj.create_player(config.player_name, config.player_name) )
+		// BUGHERE : enter session name here
+		if (mp_obj.create_session(config.player_name, config.player_name, MAX_NATION))
 		{
 			remote.init(&mp_obj);
 			remote.create_game();
@@ -552,8 +551,7 @@ void Game::multi_player_game(char *cmdLine)
 	case 2:		// join game
 		if( (choice = mp_select_session()) )
 		{
-			if( mp_obj.join_session(choice) 
-				&& mp_obj.create_player(config.player_name, config.player_name) )
+			if (mp_obj.join_session(choice, config.player_name))
 			{
 				remote.init(&mp_obj);
 				remote.connect_game();
@@ -721,9 +719,8 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	switch( mp_select_mode(fileName) )
 	{
 	case 1:		// create game
-		// BUGHERE : enter session name here and player name here
-		if( mp_obj.create_session(config.player_name, gamePlayerCount)	// player name as session name
-			&& mp_obj.create_player(config.player_name, config.player_name) )
+		// BUGHERE : enter session name here
+		if (mp_obj.create_session(config.player_name, config.player_name, gamePlayerCount))
 		{
 			remote.init(&mp_obj);
 			remote.create_game();
@@ -737,8 +734,7 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	case 2:		// join game
 		if( (choice = mp_select_session()) )
 		{
-			// BUGHERE : enter session name here and player name here
-			if( mp_obj.join_session(choice) && mp_obj.create_player(config.player_name, config.player_name) )
+			if( mp_obj.join_session(choice, config.player_name))
 			{
 				// count required player
 				gamePlayerCount = 0;

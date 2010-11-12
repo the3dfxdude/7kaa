@@ -66,16 +66,14 @@ SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
 // to start a multiplayer game, first check if it is called from a
 // lobbied (MultiPlayerSDL::is_lobbied)
 
-// if it is a lobbied, call init_lobbied before create_player
+// if it is a lobbied, call init_lobbied
 
 // if not, call poll_service_provider; display them and let
 // user to select, call init and pass the guid of the selected
 // service; create_session or poll_sessions+join_session;
-// finally create_player.
 
 MultiPlayerSDL::MultiPlayerSDL() :
-	current_sessions(sizeof(SDLSessionDesc), 10 ),
-	player_pool(sizeof(SDLPlayer), 8 )
+	current_sessions(sizeof(SDLSessionDesc), 10 )
 {
 	init_flag = 0;
 	lobbied_flag = 0;
@@ -105,6 +103,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	lobbied_flag = 0;
 	my_player_id = 0;
 	host_flag = 0;
+	max_players = 0;
 
 	if (!is_protocol_supported(protocol_type)) {
 		ERR("[MultiPlayerSDL::init] trying to init unsupported protocol\n");
@@ -124,6 +123,9 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		SDLNet_Quit();
 		return;
 	}
+
+	for (int i = 0; i < MAX_NATION; i++)
+		player_pool[i].id = 0;
 
 	init_flag = 1;
 }
@@ -261,16 +263,15 @@ SDLSessionDesc *MultiPlayerSDL::get_session(int i)
 // create a new session
 //
 // <char *> sessionName      arbitary name to identify a session, input from user
+// <char *> playerName       name to identify the local player's name in this session
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return TRUE if success
-int MultiPlayerSDL::create_session(char *sessionName, int maxPlayers)
+int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxPlayers)
 {
 	IPaddress ip_address;
 
-	// TODO: add additional checks
-
-	err_when(!init_flag);
+	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION);
 
 	// open socket for listening
 
@@ -294,7 +295,13 @@ int MultiPlayerSDL::create_session(char *sessionName, int maxPlayers)
 	strcpy(joined_session.pass_word, spass);
 
 	host_flag = 1;
+	max_players = maxPlayers;
 	allowing_connections = 1;
+
+	// Add hosts machine's player to the pool now
+	my_player_id = create_player(playerName);
+	err_when(!my_player_id);
+	strncpy(my_name, playerName, MP_FRIENDLY_NAME_LEN);
 
 	return TRUE;
 }
@@ -305,7 +312,7 @@ int MultiPlayerSDL::create_session(char *sessionName, int maxPlayers)
 // <int> currentSessionIndex       the index passed into get_session()
 //
 // currentSessionIndex start from 1
-int MultiPlayerSDL::join_session(int i)
+int MultiPlayerSDL::join_session(int i, char *playerName)
 {
 	IPaddress ip_address;
 
@@ -375,29 +382,35 @@ void MultiPlayerSDL::accept_connections()
 	}
 }
 
-// creates the local player
+// create_player(char *name)
 //
-// <char *> friendlyName          name of the player
-// [char *] formalName            obsolete
-// return TRUE if success
+// Creates a player to add to the pool
 //
-// NOTE: If not the host, an id is assigned later by the host.
+// <char *> name          name of the player
 //
-int MultiPlayerSDL::create_player(char *friendlyName, char *formalName)
+// This is only called by the host upon connection from a client. The host
+// chooses the player's id.
+//
+// Returns the new player's id when there is room for a new player, and zero when
+// there there is no room and the player was not added.
+//
+uint32_t MultiPlayerSDL::create_player(char *name)
 {
-	SDLPlayer player;
+	int i;
 
-	if (my_player_id)
-		return TRUE;
+	// search for an empty slot
+	for (i = 0; i < max_players; i++)
+		if (!player_pool[i].id)
+			break;
+	if (i >= max_players)
+		return 0;
 
-	my_player_id = player.id;
+	// add to the pool
+	player_pool[i].id = i+1;
+	strncpy(player_pool[i].name, name, MP_FRIENDLY_NAME_LEN);
+	player_pool[i].connecting = 1;
 
-	player.id = my_player_id;
-	strncpy(player.name, friendlyName, MP_FRIENDLY_NAME_LEN-1);
-	player.connecting = 0;
-	player_pool.linkin(&player);
-
-	return TRUE;
+	return player_pool[i].id;
 }
 
 void MultiPlayerSDL::poll_players()
@@ -408,19 +421,16 @@ void MultiPlayerSDL::poll_players()
 
 SDLPlayer *MultiPlayerSDL::get_player(int i)
 {
-	if( i <= 0 || i > player_pool.size() )
+	if (i < 1 || i > max_players || player_pool[i].id != i)
 		return NULL;
-	return (SDLPlayer *)player_pool.get(i);
+	return &player_pool[i-1];
 }
 
 SDLPlayer *MultiPlayerSDL::search_player(uint32_t playerId)
 {
-	SDLPlayer *player;
-	int i = 0;
-	while( (player = get_player(++i)) != NULL )
-		if( player->id == playerId )
-			return player;
-	return NULL;
+	if (playerId < 1 || playerId > max_players || player_pool[playerId-1].id != playerId)
+		return NULL;
+	return &player_pool[playerId-1];
 }
 
 // determine whether a player is lost
@@ -431,15 +441,18 @@ SDLPlayer *MultiPlayerSDL::search_player(uint32_t playerId)
 //
 int MultiPlayerSDL::is_player_connecting(uint32_t playerId)
 {
-	for( int p = 1; p <= player_pool.size(); ++p)
-	{
-		SDLPlayer * nonePlayer = (SDLPlayer *) player_pool.get(p);
-		if( nonePlayer->id == playerId )
-		{
-			return nonePlayer->connecting;
-		}
-	}
-	return 0;
+	if (playerId < 1 || playerId > max_players || player_pool[playerId-1].id != playerId)
+		return 0;
+	return player_pool[playerId-1].connecting;
+}
+
+int MultiPlayerSDL::get_player_count()
+{
+	int count = 0;
+	for (int i = 0; i < max_players; i++)
+		if (player_pool[i].id == i+1 && player_pool[i].connecting)
+			count++;
+	return count;
 }
 
 // send udp message

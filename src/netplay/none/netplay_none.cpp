@@ -129,7 +129,7 @@ NoneSessionDesc *MultiPlayerNone::get_session(int i)
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return TRUE if success
-int MultiPlayerNone::create_session(char *sessionName, int maxPlayers)
+int MultiPlayerNone::create_session(char *sessionName, char *playerName, int maxPlayers)
 {
 	ERR("[MultiPlayerNone::create_session] calling unimplemented method\n");
 	return FALSE;
@@ -141,7 +141,7 @@ int MultiPlayerNone::create_session(char *sessionName, int maxPlayers)
 // <int> currentSessionIndex       the index passed into get_session()
 //
 // currentSessionIndex start from 1
-int MultiPlayerNone::join_session(int currentSessionIndex)
+int MultiPlayerNone::join_session(int currentSessionIndex, char *playerName)
 {
 	ERR("[MultiPlayerNone::join_session] calling unimplemented method\n");
 	return FALSE;
@@ -163,7 +163,7 @@ void MultiPlayerNone::disable_join_session()
 // [char *] formalName            long name of the player, take friendlyName if NULL (default: NULL)
 // return TRUE if success
 //
-int MultiPlayerNone::create_player(char *friendlyName, char *formalName)
+uint32_t MultiPlayerNone::create_player(char *name)
 {
 	ERR("[MultiPlayerNone::create_player] calling unimplemented method\n");
 	return FALSE;
@@ -241,6 +241,16 @@ int MultiPlayerNone::send_stream(uint32_t toId, void * lpData, uint32_t dataSize
 char *MultiPlayerNone::receive(uint32_t * from, uint32_t * to, uint32_t * dSize, int *sysMsgCount)
 {
 	ERR("[MultiPlayerNone::receive] calling unimplemented method\n");
+	return NULL;
+}
+
+// return NULL if fails
+// sysMsgCount records how many system messages have been handled
+// notice : *sysMsgCount may be != 0, but return NULL
+//
+char *MultiPlayerNone::receive_stream(uint32_t * from, uint32_t * to, uint32_t * dSize, int *sysMsgCount)
+{
+	ERR("[MultiPlayerNone::receive_stream] calling unimplemented method\n");
 	return NULL;
 }
 
