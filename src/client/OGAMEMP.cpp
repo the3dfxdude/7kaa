@@ -551,18 +551,16 @@ void Game::multi_player_game(char *cmdLine)
 	case 2:		// join game
 		if( (choice = mp_select_session()) )
 		{
-			if (mp_obj.join_session(choice, config.player_name))
-			{
-				remote.init(&mp_obj);
-				remote.connect_game();
-			}
-			else
+			if (!mp_join_session(choice, config.player_name))
 			{
 				// can't join session
-				// BUGHERE : display error message here
 				mp_obj.deinit();
+				box.msg("Unable to connect");
 				return;
 			}
+
+			remote.init(&mp_obj);
+			remote.connect_game();
 		}
 		else
 		{
@@ -734,24 +732,23 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	case 2:		// join game
 		if( (choice = mp_select_session()) )
 		{
-			if( mp_obj.join_session(choice, config.player_name))
-			{
-				// count required player
-				gamePlayerCount = 0;
-				for(nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)
-					if( !nation_array.is_deleted(nationRecno) && !nation_array[nationRecno]->is_ai() )
-						++gamePlayerCount;
 
-				remote.init(&mp_obj);
-				remote.connect_game();
-			}
-			else
+			if (!mp_join_session(choice, config.player_name))
 			{
 				// can't join session
-				// BUGHERE : display error message here
 				mp_obj.deinit();
+				box.msg("Unable to connect");
 				return;
 			}
+
+			// count required player
+			gamePlayerCount = 0;
+			for (nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)
+				if (!nation_array.is_deleted(nationRecno) && !nation_array[nationRecno]->is_ai())
+					++gamePlayerCount;
+
+			remote.init(&mp_obj);
+			remote.connect_game();
 		}
 		else
 		{
@@ -1410,6 +1407,69 @@ int Game::mp_select_session()
 	return choice;
 }
 //-------- End of function Game::mp_select_session --------//
+
+
+// The purpose of this function is to negotiate the data between host and clients
+// DirectPlay used to do, that is necessary to move onto the game option/chat screen.
+// This also give the user the ability to back out in case this doesn't work.
+int Game::mp_join_session(int session_id, char *player_name)
+{
+	Button buttonCancel;
+	int width;
+	int tried_connection = 0;
+	int connected = 0;
+	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+ 
+	box.tell("Attempting to connect");
+
+	width = box.box_x2 - box.box_x1 + 1;
+	buttonCancel.create_text(box.box_x1 + width / 2 + 2,
+				 box.box_y2 - box_button_margin,
+				 (char*)"Cancel");
+
+	buttonCancel.paint();
+
+	vga_front.unlock_buf();
+	while (1) {
+		if (!tried_connection) {
+			tried_connection = 0;
+
+			// NOTE: If this function causes too much delay, put it in a thread
+			connected = mp_obj.join_session(session_id, player_name);
+		}
+		if (!connected)
+			break;
+
+		vga_front.lock_buf();
+
+		sys.yield();
+		mouse.get_event();
+
+		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
+		    mouse.any_click(1))     // detect right button only when the button is "Cancel"
+		{
+			mouse.get_event();
+			break;
+		}
+
+		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
+
+		if (config.music_flag) {
+			if (!music.is_playing())
+				music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
+		}
+		else
+			music.stop();
+
+		vga_front.unlock_buf();
+	}
+	if (!vga_front.buf_locked)
+		vga_front.lock_buf();
+
+	box.close();
+
+	return 0;
+}
 
 
 // define bit flag for refreshFlag
