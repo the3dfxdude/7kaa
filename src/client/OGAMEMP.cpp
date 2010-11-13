@@ -1432,7 +1432,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	vga_front.unlock_buf();
 	while (1) {
 		if (!tried_connection) {
-			tried_connection = 0;
+			tried_connection = 1;
 
 			// NOTE: If this function causes too much delay, put it in a thread
 			connected = mp_obj.join_session(session_id, player_name);
