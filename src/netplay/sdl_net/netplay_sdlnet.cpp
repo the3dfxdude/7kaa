@@ -300,9 +300,10 @@ int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxP
 	allowing_connections = 1;
 
 	// Add hosts machine's player to the pool now
-	my_player_id = create_player(playerName);
-	err_when(!my_player_id);
-	strncpy(my_name, playerName, MP_FRIENDLY_NAME_LEN);
+	if (!add_player(playerName, 1)) {
+		return FALSE;
+	}
+	my_player_id = 1;
 
 	return TRUE;
 }
@@ -383,8 +384,6 @@ void MultiPlayerSDL::accept_connections()
 	}
 }
 
-// create_player(char *name)
-//
 // Creates a player to add to the pool
 //
 // <char *> name          name of the player
@@ -412,6 +411,27 @@ uint32_t MultiPlayerSDL::create_player(char *name)
 	player_pool[i].connecting = 1;
 
 	return player_pool[i].id;
+}
+
+// Adds a player already created by the host to the pool
+//
+// <char *>   name        name of the player
+// <uint32_t> id          id provided by the game host
+//
+// Returns 0 if the player cannot be added, and 1 if the player was added.
+//
+int MultiPlayerSDL::add_player(char *name, uint32_t id)
+{
+	if (player_pool[id-1].id)
+		// if this happens, we got problems
+		return 0;
+
+	// add to the pool
+	player_pool[id-1].id = id;
+	strncpy(player_pool[id-1].name, name, MP_FRIENDLY_NAME_LEN);
+	player_pool[id-1].connecting = 1;
+
+	return 1;
 }
 
 void MultiPlayerSDL::poll_players()

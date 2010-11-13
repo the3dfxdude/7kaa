@@ -125,6 +125,7 @@ public:
 
 	// -------- functions on player management -------//
 	uint32_t    create_player(char *name);
+	int         add_player(char *name, uint32_t id);
 	void        poll_players();
 	SDLPlayer * get_player(int i);
 	SDLPlayer * search_player(uint32_t playerId);

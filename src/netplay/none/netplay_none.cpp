@@ -169,6 +169,11 @@ uint32_t MultiPlayerNone::create_player(char *name)
 	return FALSE;
 }
 
+int MultiPlayerNone::add_player(char *name, uint32_t id)
+{
+        return 0;
+}
+
 void MultiPlayerNone::poll_players()
 {
 	ERR("[MultiPlayerNone::poll_players] calling unimplemented method\n");
