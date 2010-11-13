@@ -372,6 +372,9 @@ void MultiPlayerSDL::accept_connections()
 		SDLNet_TCP_Close(connecting);
 		return;
 	}
+	if (!create_player()) {
+		return;
+	}
 
 	MSG("[MultiPlayerSDL::accept_connections] client accepted\n");
 
@@ -384,17 +387,15 @@ void MultiPlayerSDL::accept_connections()
 	}
 }
 
-// Creates a player to add to the pool
-//
-// <char *> name          name of the player
+// Create a player and add to the pool.
 //
 // This is only called by the host upon connection from a client. The host
 // chooses the player's id.
 //
-// Returns the new player's id when there is room for a new player, and zero when
-// there there is no room and the player was not added.
+// Returns the id of the player added to the pool, and 0 if the player
+// wasn't added to the pool.
 //
-uint32_t MultiPlayerSDL::create_player(char *name)
+uint32_t MultiPlayerSDL::create_player()
 {
 	int i;
 
@@ -407,7 +408,7 @@ uint32_t MultiPlayerSDL::create_player(char *name)
 
 	// add to the pool
 	player_pool[i].id = i+1;
-	strncpy(player_pool[i].name, name, MP_FRIENDLY_NAME_LEN);
+	strcpy(player_pool[i].name, "?anonymous?");
 	player_pool[i].connecting = 1;
 
 	return player_pool[i].id;

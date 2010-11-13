@@ -163,7 +163,7 @@ void MultiPlayerNone::disable_join_session()
 // [char *] formalName            long name of the player, take friendlyName if NULL (default: NULL)
 // return TRUE if success
 //
-uint32_t MultiPlayerNone::create_player(char *name)
+uint32_t MultiPlayerNone::create_player()
 {
 	ERR("[MultiPlayerNone::create_player] calling unimplemented method\n");
 	return FALSE;

@@ -124,7 +124,6 @@ public:
 	SDLSessionDesc * get_session(int i);
 
 	// -------- functions on player management -------//
-	uint32_t    create_player(char *name);
 	int         add_player(char *name, uint32_t id);
 	void        poll_players();
 	SDLPlayer * get_player(int i);
@@ -140,6 +139,7 @@ public:
 	char * receive_stream(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
 
 private:
+	uint32_t    create_player();
 
 	char * receive_raw(uint32_t * from, uint32_t * to, uint32_t * size);
 	void   process_sys_msg(uint32_t size, char * data);
