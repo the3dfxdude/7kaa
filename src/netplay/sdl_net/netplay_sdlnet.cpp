@@ -83,7 +83,7 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	allowing_connections = 0;
 	recv_buffer = new char[MP_RECV_BUFFER_SIZE];
 	recv_buffer_size = MP_RECV_BUFFER_SIZE;
-	data_sock = NULL;
+	host_sock = NULL;
 	listen_sock = NULL;
 	sock_set = NULL;
 }
@@ -132,14 +132,32 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 
 void MultiPlayerSDL::deinit()
 {
-	if (data_sock) {
-		if (SDLNet_TCP_DelSocket(sock_set, data_sock) == -1)
-			ERR("[MultiPlayerSDL::deinit] SDLNet_DelSocket: %s\n", SDLNet_GetError());
-		SDLNet_TCP_Close(data_sock);
-	}
+	int i;
 
-	if (listen_sock)
-		SDLNet_TCP_Close(listen_sock);
+	if (host_flag) {
+		// disconnect all clients
+		for (i = 0; i < max_players; i++) {
+			if (player_pool[i].id && player_pool[i].connecting) {
+				SDLNet_TCP_DelSocket(sock_set, player_pool[i].socket);
+				SDLNet_TCP_Close(player_pool[i].socket);
+				player_pool[i].id = 0;
+				player_pool[i].connecting = 0;
+			}
+		}
+		if (listen_sock) {
+			SDLNet_TCP_Close(listen_sock);
+			listen_sock = NULL;
+		}
+
+		host_flag = 0;
+		allowing_connections = 0;
+	} else {
+		if (host_sock) {
+			SDLNet_TCP_DelSocket(sock_set, host_sock);
+			SDLNet_TCP_Close(host_sock);
+			host_sock = NULL;
+		}
+	}
 
 	SDLNet_FreeSocketSet(sock_set);
 	SDLNet_Quit();
@@ -147,10 +165,6 @@ void MultiPlayerSDL::deinit()
 	init_flag = 0;
 	lobbied_flag = 0;
 	my_player_id = 0;
-	host_flag = 0;
-	allowing_connections = 0;
-	data_sock = NULL;
-	listen_sock = NULL;
 	sock_set = NULL;
 }
 
@@ -328,15 +342,15 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 		return FALSE;
 	}
 
-	data_sock = SDLNet_TCP_Open(&ip_address);
-	if (!data_sock) {
+	host_sock = SDLNet_TCP_Open(&ip_address);
+	if (!host_sock) {
 		MSG("[MultiPlayerSDL::join_session] failed to connect to server: %s\n", SDLNet_GetError());
 		return FALSE;
 	} else {
 		MSG("[MultiPlayerSDL::join_session] successfully connected to server\n");
 	}
 
-	int total = SDLNet_TCP_AddSocket(sock_set, data_sock);
+	int total = SDLNet_TCP_AddSocket(sock_set, host_sock);
 	if (total == -1) {
 		ERR("[MultiPlayerSDL::join_session] SDLNet_AddSocket: %s\n", SDLNet_GetError());
 		err_now("socket error");
@@ -349,7 +363,6 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 
 void MultiPlayerSDL::close_session()
 {
-	// unused
 }
 
 void MultiPlayerSDL::disable_join_session()
@@ -360,6 +373,7 @@ void MultiPlayerSDL::disable_join_session()
 void MultiPlayerSDL::accept_connections()
 {
 	TCPsocket connecting;
+	uint32_t player_id;
 
 	// accept_connections shouldn't be used by clients
 	if (!host_flag) return;
@@ -372,15 +386,18 @@ void MultiPlayerSDL::accept_connections()
 		SDLNet_TCP_Close(connecting);
 		return;
 	}
-	if (!create_player()) {
+	player_id = create_player();
+	if (!player_id) {
+		MSG("[MultiPlayerSDL::accept_connections] no room to accept new clients.\n");
+		SDLNet_TCP_Close(connecting);
 		return;
 	}
 
 	MSG("[MultiPlayerSDL::accept_connections] client accepted\n");
 
-	data_sock = connecting;
+	player_pool[player_id-1].socket = connecting;
 
-	int total = SDLNet_TCP_AddSocket(sock_set, data_sock);
+	int total = SDLNet_TCP_AddSocket(sock_set, connecting);
 	if (total == -1) {
 		ERR("[MultiPlayerSDL::accept_connections] SDLNet_AddSocket: %s\n", SDLNet_GetError());
 		err_now("socket error");
@@ -499,7 +516,7 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
 	// TODO: send only if remote player joined the _session_
 
-	if (!data_sock) {
+	if (!host_sock) {
 		MSG("[MultiPlayerSDL::send_stream] no connection established\n");
 		return FALSE;
 	}
@@ -518,8 +535,8 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 	SDLNet_Write32(msg_size, send_buf);
 	SDLNet_Write32(to, send_buf + sizeof(msg_size));
 
-	bytes_sent += SDLNet_TCP_Send(data_sock, send_buf, send_buf_size);
-	bytes_sent += SDLNet_TCP_Send(data_sock, data, msg_size);
+	bytes_sent += SDLNet_TCP_Send(host_sock, send_buf, send_buf_size);
+	bytes_sent += SDLNet_TCP_Send(host_sock, data, msg_size);
 	if (bytes_sent != send_buf_size + msg_size) {
 		ERR("[MultiPlayerSDL::send_stream] error while sending data\n");
 		return FALSE;
@@ -586,7 +603,7 @@ char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * si
 	if (host_flag) remote_str = client_str;
 	else remote_str = server_str;
 
-	if (!data_sock) return NULL;
+	if (!host_sock) return NULL;
 
 	int status = SDLNet_CheckSockets(sock_set, 1);
 	if (status == -1) {
@@ -604,16 +621,16 @@ char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * si
 
 	// try to receive message header
 
-	status = SDLNet_TCP_Recv(data_sock, ptr, header_size);
+	status = SDLNet_TCP_Recv(host_sock, ptr, header_size);
 	if (status <= 0)
 	{
 		// seems like remote machine has unexpectedly closed the connection
 		MSG("[MultiPlayerSDL::receive] connection lost\n");
 
-		if (SDLNet_TCP_DelSocket(sock_set, data_sock) == -1)
+		if (SDLNet_TCP_DelSocket(sock_set, host_sock) == -1)
 			ERR("[MultiPlayerSDL::receive] SDLNet_DelSocket: %s\n", SDLNet_GetError());
-		SDLNet_TCP_Close(data_sock);
-		data_sock = NULL;
+		SDLNet_TCP_Close(host_sock);
+		host_sock = NULL;
 
 		// TODO: check, if the player had joined the game _session_;
 		//       in that case set player.connecting = 0
@@ -638,7 +655,7 @@ char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * si
 	bytes_received = 0;
 	while (bytes_received < msg_size)
 	{
-		int count = SDLNet_TCP_Recv(data_sock, ptr, msg_size - bytes_received);
+		int count = SDLNet_TCP_Recv(host_sock, ptr, msg_size - bytes_received);
 
 		if (count <= 0) {
 			ERR("[MultiPlayerSDL::receive] corrupted message data from %s\n", remote_str);
@@ -689,6 +706,7 @@ void MultiPlayerSDL::process_sys_msg(uint32_t size, char * ptr)
 
 void MultiPlayerSDL::send_session_info_request()
 {
+#if 0
 	// TODO: add additional checks
 
 	uint32_t message_size = sizeof(uint32_t);
@@ -716,6 +734,7 @@ void MultiPlayerSDL::send_session_info_request()
 	} else {
 		MSG("[MultiPlayerSDL::send_session_info_request] query sent\n");
 	}
+#endif
 }
 
 void MultiPlayerSDL::process_session_info_request()
@@ -725,6 +744,7 @@ void MultiPlayerSDL::process_session_info_request()
 
 void MultiPlayerSDL::send_session_info_reply()
 {
+#if 0
 	// TODO: add additional checks
 
 	MSG("[MultiPlayerSDL::process_session_info_request]\n");
@@ -767,6 +787,7 @@ void MultiPlayerSDL::send_session_info_reply()
 	} else {
 		MSG("[MultiPlayerSDL::process_session_info_request] reply sent, size: %d\n", (int)bytes_sent);
 	}
+#endif
 }
 
 void MultiPlayerSDL::process_session_info_reply(char * ptr)
