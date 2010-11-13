@@ -156,7 +156,7 @@ void MultiPlayerSDL::deinit()
 
 void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 {
-	ERR("[MultiPlayerSDL::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
+	MSG("[MultiPlayerSDL::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
 	if (cmdLine) {
 		SDLSessionDesc session;
 
@@ -168,6 +168,7 @@ void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 		lobbied_flag = 2;
 	} else {
 		// hosting doesn't work yet
+		err_now("multiplayer host auto create not implemented");
 		lobbied_flag = 1;
 	}
 }
@@ -322,24 +323,23 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 
 	// establish connection with server
 	if (SDLNet_ResolveHost(&ip_address, session->session_name, GAME_PORT) == -1) {
-		ERR("[MultiPlayerSDL::join_sessions] failed to resolve hostname: %s\n", SDLNet_GetError());
+		MSG("[MultiPlayerSDL::join_session] failed to resolve hostname: %s\n", SDLNet_GetError());
 		return FALSE;
 	}
 
 	data_sock = SDLNet_TCP_Open(&ip_address);
 	if (!data_sock) {
-		ERR("[MultiPlayerSDL::join_sessions] failed to connect to server: %s\n", SDLNet_GetError());
+		MSG("[MultiPlayerSDL::join_session] failed to connect to server: %s\n", SDLNet_GetError());
 		return FALSE;
 	} else {
-		MSG("[MultiPlayerSDL::join_sessions] successfully connected to server\n");
+		MSG("[MultiPlayerSDL::join_session] successfully connected to server\n");
 	}
 
 	int total = SDLNet_TCP_AddSocket(sock_set, data_sock);
 	if (total == -1) {
 		ERR("[MultiPlayerSDL::join_session] SDLNet_AddSocket: %s\n", SDLNet_GetError());
+		err_now("socket error");
 	}
-
-	// TODO: request information from host
 
 	joined_session = *session;
 
@@ -379,6 +379,7 @@ void MultiPlayerSDL::accept_connections()
 	int total = SDLNet_TCP_AddSocket(sock_set, data_sock);
 	if (total == -1) {
 		ERR("[MultiPlayerSDL::accept_connections] SDLNet_AddSocket: %s\n", SDLNet_GetError());
+		err_now("socket error");
 	}
 }
 
@@ -778,7 +779,7 @@ static int sort_session_name(const void *a, const void *b)
 
 // sort current_sessions
 // <int> sortType, 1=sort by GUID, 2=sort by session name
-void MultiPlayerSDL::sort_sessions(int sortType )
+void MultiPlayerSDL::sort_sessions(int sortType)
 {
 	ERR("[MultiPlayerSDL::sort_sessions] calling partially implemented method\n");
 
