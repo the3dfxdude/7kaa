@@ -117,7 +117,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		return;
 	}
 
-	sock_set = SDLNet_AllocSocketSet(1);
+	sock_set = SDLNet_AllocSocketSet(MAX_NATION);
 	if (!sock_set) {
 		ERR("[MultiPlayerSDL::init] SDLNet_AllocSocketSet: %s\n", SDLNet_GetError());
 		SDLNet_Quit();
