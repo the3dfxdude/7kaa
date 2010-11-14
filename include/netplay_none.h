@@ -115,6 +115,7 @@ public:
 
 	// -------- functions on player management -------//
 	int         add_player(char *name, uint32_t id);
+	void        delete_player(uint32_t id);
 	void	poll_players();
 	NonePlayer *get_player(int i);
 	NonePlayer *search_player(uint32_t player_id);
@@ -127,9 +128,6 @@ public:
 	int	send_stream(uint32_t toId, void * lpData, uint32_t dataSize);
 	char *receive(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 	char *receive_stream(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
-
-private:
-	uint32_t    create_player();
 };
 
 extern MultiPlayerNone mp_none;

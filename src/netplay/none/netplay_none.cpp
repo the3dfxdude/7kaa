@@ -157,21 +157,13 @@ void MultiPlayerNone::disable_join_session()
 	ERR("[MultiPlayerNone::disable_join_session] calling unimplemented method\n");
 }
 
-// create a local player
-//
-// <char *> friendlyName          short name of the player, best to be one word only
-// [char *] formalName            long name of the player, take friendlyName if NULL (default: NULL)
-// return TRUE if success
-//
-uint32_t MultiPlayerNone::create_player()
-{
-	ERR("[MultiPlayerNone::create_player] calling unimplemented method\n");
-	return FALSE;
-}
-
 int MultiPlayerNone::add_player(char *name, uint32_t id)
 {
         return 0;
+}
+
+void MultiPlayerNone::delete_player(uint32_t id)
+{
 }
 
 void MultiPlayerNone::poll_players()

@@ -124,8 +124,11 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		return;
 	}
 
-	for (int i = 0; i < MAX_NATION; i++)
+	for (int i = 0; i < MAX_NATION; i++) {
 		player_pool[i].id = 0;
+		player_pool[i].connecting = 0;
+		player_pool[i].socket = NULL;
+	}
 
 	init_flag = 1;
 }
@@ -137,12 +140,7 @@ void MultiPlayerSDL::deinit()
 	if (host_flag) {
 		// disconnect all clients
 		for (i = 0; i < max_players; i++) {
-			if (player_pool[i].id && player_pool[i].connecting) {
-				SDLNet_TCP_DelSocket(sock_set, player_pool[i].socket);
-				SDLNet_TCP_Close(player_pool[i].socket);
-				player_pool[i].id = 0;
-				player_pool[i].connecting = 0;
-			}
+			delete_player(i+1);
 		}
 		if (listen_sock) {
 			SDLNet_TCP_Close(listen_sock);
@@ -386,7 +384,7 @@ void MultiPlayerSDL::accept_connections()
 		SDLNet_TCP_Close(connecting);
 		return;
 	}
-	player_id = create_player();
+	player_id = create_player(connecting);
 	if (!player_id) {
 		MSG("[MultiPlayerSDL::accept_connections] no room to accept new clients.\n");
 		SDLNet_TCP_Close(connecting);
@@ -394,14 +392,6 @@ void MultiPlayerSDL::accept_connections()
 	}
 
 	MSG("[MultiPlayerSDL::accept_connections] client accepted\n");
-
-	player_pool[player_id-1].socket = connecting;
-
-	int total = SDLNet_TCP_AddSocket(sock_set, connecting);
-	if (total == -1) {
-		ERR("[MultiPlayerSDL::accept_connections] SDLNet_AddSocket: %s\n", SDLNet_GetError());
-		err_now("socket error");
-	}
 }
 
 // Create a player and add to the pool.
@@ -409,10 +399,10 @@ void MultiPlayerSDL::accept_connections()
 // This is only called by the host upon connection from a client. The host
 // chooses the player's id.
 //
-// Returns the id of the player added to the pool, and 0 if the player
+// Returns 1 if the player was added to the pool, and 0 if the player
 // wasn't added to the pool.
 //
-uint32_t MultiPlayerSDL::create_player()
+int MultiPlayerSDL::create_player(TCPsocket socket)
 {
 	int i;
 
@@ -427,8 +417,15 @@ uint32_t MultiPlayerSDL::create_player()
 	player_pool[i].id = i+1;
 	strcpy(player_pool[i].name, "?anonymous?");
 	player_pool[i].connecting = 1;
+	player_pool[i].socket = socket;
 
-	return player_pool[i].id;
+	int total = SDLNet_TCP_AddSocket(sock_set, socket);
+	if (total == -1) {
+		ERR("[MultiPlayerSDL::accept_connections] SDLNet_AddSocket: %s\n", SDLNet_GetError());
+		err_now("socket error");
+	}
+
+	return 1;
 }
 
 // Adds a player already created by the host to the pool
@@ -448,8 +445,26 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 	player_pool[id-1].id = id;
 	strncpy(player_pool[id-1].name, name, MP_FRIENDLY_NAME_LEN);
 	player_pool[id-1].connecting = 1;
+	player_pool[id-1].socket = NULL;
 
 	return 1;
+}
+
+// Deletes a player from the pool
+//
+// <uint32_t> id          id provided by the game host
+//
+void MultiPlayerSDL::delete_player(uint32_t id)
+{
+	if (player_pool[id-1].id && player_pool[id-1].connecting) {
+		if (player_pool[id-1].socket) {
+			SDLNet_TCP_DelSocket(sock_set, player_pool[id-1].socket);
+			SDLNet_TCP_Close(player_pool[id-1].socket);
+			player_pool[id-1].socket = NULL;
+		}
+		player_pool[id-1].id = 0;
+		player_pool[id-1].connecting = 0;
+	}
 }
 
 void MultiPlayerSDL::poll_players()

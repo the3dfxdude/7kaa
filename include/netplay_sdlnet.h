@@ -126,6 +126,7 @@ public:
 
 	// -------- functions on player management -------//
 	int         add_player(char *name, uint32_t id);
+	void        delete_player(uint32_t id);
 	void        poll_players();
 	SDLPlayer * get_player(int i);
 	SDLPlayer * search_player(uint32_t playerId);
@@ -140,7 +141,7 @@ public:
 	char * receive_stream(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
 
 private:
-	uint32_t    create_player();
+	int create_player(TCPsocket socket);
 
 	char * receive_raw(uint32_t * from, uint32_t * to, uint32_t * size);
 	void   process_sys_msg(uint32_t size, char * data);
