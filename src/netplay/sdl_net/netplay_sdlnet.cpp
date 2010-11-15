@@ -531,19 +531,20 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
 	TCPsocket dest;
 
-	if (to == BROADCAST_PID) {
-		int i;
-		for (i = 0; i < max_players; i++)
-			if (player_pool[i].socket)
-				send_stream(i+1, data, msg_size);
-		return TRUE;
-	}
 	if (to > max_players) {
 		ERR("[MultiPlayerSDL::send_stream] invalid player id: %d\n", to);
 		return FALSE;
 	}
 
 	if (host_flag) {
+		if (to == BROADCAST_PID) {
+			int i;
+			for (i = 0; i < max_players; i++)
+				if (player_pool[i].socket)
+					send_stream(i+1, data, msg_size);
+			return TRUE;
+		}
+
 		if (!player_pool[to-1].socket) {
 			MSG("[MultiPlayerSDL::send_stream] player %d is not connected\n", to);
 			return FALSE;
