@@ -529,11 +529,33 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 //
 int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
-	// TODO: send only if remote player joined the _session_
+	TCPsocket dest;
 
-	if (!host_sock) {
-		MSG("[MultiPlayerSDL::send_stream] no connection established\n");
+	if (to == BROADCAST_PID) {
+		int i;
+		for (i = 0; i < max_players; i++)
+			if (player_pool[i].socket)
+				send_stream(i+1, data, msg_size);
+		return TRUE;
+	}
+	if (to > max_players) {
+		ERR("[MultiPlayerSDL::send_stream] invalid player id: %d\n", to);
 		return FALSE;
+	}
+
+	if (host_flag) {
+		if (!player_pool[to-1].socket) {
+			MSG("[MultiPlayerSDL::send_stream] player %d is not connected\n", to);
+			return FALSE;
+		}
+		dest = player_pool[to-1].socket;
+	} else {
+		// clients forward through the host
+		if (!host_sock) {
+			MSG("[MultiPlayerSDL::send_stream] not connected to game host\n");
+			return FALSE;
+		}
+		dest = host_sock;
 	}
 
 	int bytes_sent = 0;
@@ -550,10 +572,10 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 	SDLNet_Write32(msg_size, send_buf);
 	SDLNet_Write32(to, send_buf + sizeof(msg_size));
 
-	bytes_sent += SDLNet_TCP_Send(host_sock, send_buf, send_buf_size);
-	bytes_sent += SDLNet_TCP_Send(host_sock, data, msg_size);
+	bytes_sent += SDLNet_TCP_Send(dest, send_buf, send_buf_size);
+	bytes_sent += SDLNet_TCP_Send(dest, data, msg_size);
 	if (bytes_sent != send_buf_size + msg_size) {
-		ERR("[MultiPlayerSDL::send_stream] error while sending data\n");
+		ERR("[MultiPlayerSDL::send_stream] error while sending data to player %d\n", to);
 		return FALSE;
 	}
 
