@@ -1,4 +1,5 @@
 my @defines;
+my @includes;
 
 ## compiler flags ##
 @defines = qw( AMPLUS USE_NONETPLAY );
@@ -21,7 +22,16 @@ if (defined($audio_backend)) {
 ## end compiler flags ##
 
 ## include paths ##
-my @includes = qw( ../../../include );
+@includes = qw( ../../../include );
+
+if (!$disable_wine && defined($wine_prefix)) {
+  push (@includes, "$wine_prefix/include/wine/windows",
+                   "$wine_prefix/include/wine/msvcrt");
+}
+
+if (defined($dxsdk_path)) {
+  push (@includes, "$dxsdk_path/include");
+}
 ## end include paths ##
 
 my @targets = qw(
