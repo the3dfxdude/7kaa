@@ -310,6 +310,7 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	}
 
 	host_recv_buf = new char[MP_RECV_BUFFER_SIZE];
+	max_players = MAX_NATION;
 
 	joined_session = *session;
 
