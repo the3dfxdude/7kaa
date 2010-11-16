@@ -667,6 +667,7 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	*to = target_id;
 	*size = msg_size;
 	*from = player_index+1;
+	if (sysMsgCount) *sysMsgCount = 0;
 
 	MSG("[MultiPlayerSDL::receive] received %d bytes from %d\n", msg_size, *from);
 
