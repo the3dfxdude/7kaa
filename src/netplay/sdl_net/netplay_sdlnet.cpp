@@ -565,115 +565,100 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
 //
-char *MultiPlayerSDL::receive_stream(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
+// This function has deficiencies... Only one message from one socket may be
+// processed at a time. So a round robin is used to make sure that one client
+// high in the list can't hog the connection.
+//
+// TODO: rename sysMsgCount to playerLost and update the logic
+//       (because sysMsgCount is only used to determine playerLost event)
+//
+// Note: When a disconnection does occur, the socket is closed by a later
+// event handler
+//
+char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, int *sysMsgCount)
 {
-	// have game host accept connections during game setup
-	accept_connections();
-
-	// TODO: rename sysMsgCount to playerLost and update the logic
-	//       (because sysMsgCount is only used to determine playerLost event)
-	if (sysMsgCount) *sysMsgCount = 0;
-
+	static int round_robin = 0; // used to poll clients fairly
+	TCPsocket socket = NULL;
+	char *recv_buf = NULL;
 	uint32_t msg_size;
 	uint32_t source_id;
 	uint32_t target_id;
+	int ready;
+	int player_index;
+	const int header_size = sizeof(msg_size) + sizeof(target_id);
 
-	char * data = receive_raw(&source_id, &target_id, &msg_size);
+	err_when(!from || !to || !size);
 
-	return NULL;
-}
+	// have game host accept connections during game setup
+	accept_connections();
 
-char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * size)
-{
-	//disabled for now
-	return NULL;
-
-#if 0
-	// used for logging
-	static char client_str[] = "client";
-	static char server_str[] = "server";
-	char * remote_str = NULL;
-
-	if (host_flag) remote_str = client_str;
-	else remote_str = server_str;
-
-	if (!host_sock) return NULL;
-
-	int status = SDLNet_CheckSockets(sock_set, 1);
-	if (status == -1) {
-		ERR("[MultiPlayerSDL::receive] SDL_net error: %s\n", SDLNet_GetError());
+	ready = SDLNet_CheckSockets(sock_set, 0);
+	if (!ready)
 		return NULL;
-	} else if (status == 0) {
-		return NULL; // no data to receive
-	}
 
-	uint32_t msg_size; // msg data size (without size itself and player id)
-	uint32_t target_id;
-	uint32_t bytes_received; // bytes already received
-	int header_size = sizeof(msg_size) + sizeof(target_id);
-	char * ptr = recv_buffer; // current buffer read pointer
-
-	// try to receive message header
-
-	status = SDLNet_TCP_Recv(host_sock, ptr, header_size);
-	if (status <= 0)
-	{
-		// seems like remote machine has unexpectedly closed the connection
-		MSG("[MultiPlayerSDL::receive] connection lost\n");
-
-		if (SDLNet_TCP_DelSocket(sock_set, host_sock) == -1)
-			ERR("[MultiPlayerSDL::receive] SDLNet_DelSocket: %s\n", SDLNet_GetError());
-		SDLNet_TCP_Close(host_sock);
-		host_sock = NULL;
-
-		// TODO: check, if the player had joined the game _session_;
-		//       in that case set player.connecting = 0
-
-		return NULL;
-	}
-	else if (status != header_size)
-	{
-		ERR("[MultiPlayerSDL::receive] corrupted message header received\n");
-		return NULL;
-	}
-
-	msg_size = SDLNet_Read32(ptr);
-	ptr += sizeof(msg_size);
-	target_id = SDLNet_Read32(ptr);
-	ptr += sizeof(target_id);
-
-	// receive message contents
-
-	MSG("[MultiPlayerSDL::receive_raw] receiving message data, size: %d\n", (int)msg_size);
-
-	bytes_received = 0;
-	while (bytes_received < msg_size)
-	{
-		int count = SDLNet_TCP_Recv(host_sock, ptr, msg_size - bytes_received);
-
-		if (count <= 0) {
-			ERR("[MultiPlayerSDL::receive] corrupted message data from %s\n", remote_str);
-			return NULL;
+	// find out who to receive from
+	if (host_flag) {
+		int count = 0;
+		while (count++ < max_players) {
+			if (player_pool[round_robin].socket &&
+			    SDLNet_SocketReady(player_pool[round_robin].socket)) {
+				socket = player_pool[round_robin].socket;
+				recv_buf = player_pool[round_robin].recv_buf;
+				player_index = round_robin;
+				break;
+			}
+			round_robin++;
+			if (round_robin >= max_players)
+				round_robin = 0;
 		}
+	} else if (host_sock) {
+		socket = host_sock;
+		recv_buf = host_recv_buf;
+		player_index = 0;
+	}
+	if (!socket)
+		return NULL;
 
-		bytes_received += count;
-		ptr += count;
-
-		if (ptr > recv_buffer + MP_RECV_BUFFER_SIZE)
-			ERR("[MultiPlayerSDL::receive] overflow while receiving data from %s\n", remote_str);
-		// TODO: extend buffer to fit the message
+	// read the message header
+	ready = SDLNet_TCP_Recv(socket, recv_buf, header_size);
+	if (ready <= 0) {
+		player_pool[player_index].connecting = 0;
+		if (sysMsgCount) *sysMsgCount = 1;
+		return NULL;
+	} else if (ready < header_size) {
+		err_now("unhandled non-blocking operation?");
 	}
 
-	MSG("[MultiPlayerSDL::receive] received: %d\n", bytes_received);
+	msg_size = SDLNet_Read32(recv_buf);
+	target_id = SDLNet_Read32(recv_buf + sizeof(msg_size));
 
+	// we will impose a size limitation to avoid an expensive resizing
+        // of the buffer
+	if (msg_size > MP_RECV_BUFFER_SIZE) {
+		MSG("[MultiPlayerSDL::receive] player %d wants to send %d bytes, rejected\n", player_index+1, msg_size);
+		player_pool[player_index].connecting = 0;
+		if (sysMsgCount) *sysMsgCount = 1;
+		return NULL;
+	}
+
+	// read in the data
+	ready = SDLNet_TCP_Recv(socket, recv_buf, msg_size);
+	if (ready <= 0) {
+		player_pool[player_index].connecting = 0;
+		if (sysMsgCount) *sysMsgCount = 1;
+		return NULL;
+	} else if (ready < msg_size) {
+		err_now("unhandled non-blocking operation?");
+	}
+
+	// finish the message
 	*to = target_id;
 	*size = msg_size;
-	// TODO: use SDLNet_TCP_GetPeerAddress instead of hardcoding id values
-	if (host_flag) *from = 654;
-	else *from = 456;
+	*from = player_index+1;
 
-	return recv_buffer + header_size;
-#endif
+	MSG("[MultiPlayerSDL::receive] received %d bytes from %d\n", msg_size, *from);
+
+	return recv_buf;
 }
 
 /*

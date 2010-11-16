@@ -142,8 +142,6 @@ public:
 
 private:
 	int create_player(TCPsocket socket);
-
-	char * receive_raw(uint32_t * from, uint32_t * to, uint32_t * size);
 };
 
 extern MultiPlayerSDL mp_sdl;
