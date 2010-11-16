@@ -144,13 +144,6 @@ private:
 	int create_player(TCPsocket socket);
 
 	char * receive_raw(uint32_t * from, uint32_t * to, uint32_t * size);
-	void   process_sys_msg(uint32_t size, char * data);
-
-	// sys message processing
-	void send_session_info_request();
-	void process_session_info_request();
-	void send_session_info_reply();
-	void process_session_info_reply(char * data);
 };
 
 extern MultiPlayerSDL mp_sdl;

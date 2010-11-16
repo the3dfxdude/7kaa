@@ -33,7 +33,6 @@
 
 DBGLOG_DEFAULT_CHANNEL(NetPlay);
 
-const uint32_t SYS_MSG_PID = 0xFF00FF00;
 const Uint16 GAME_PORT = 1234;
 
 enum {
@@ -210,53 +209,10 @@ int MultiPlayerSDL::poll_sessions()
 {
 	err_when(!init_flag);
 
+	MSG("[MultiPlayerSDL::poll_sessions] unimplemented\n");
+
 	// poll_sessions should be called only by client
 	if (host_flag) return FALSE;
-	// for now, there is no need to search for additional sessions if we already got one
-	if (current_sessions.size() > 0) return TRUE;
-
-// skip the following code... it is a start for implementing a lobby game list, but it can't work right now
-#if 0
-	// establish connection with server
-	if (SDLNet_ResolveHost(&ip_address, "localhost", GAME_PORT) == -1) {
-		ERR("[MultiPlayerSDL::poll_sessions] failed to resolve hostname: %s\n", SDLNet_GetError());
-		return FALSE;
-	}
-
-	data_sock = SDLNet_TCP_Open(&ip_address);
-	if (!data_sock) {
-		ERR("[MultiPlayerSDL::poll_sessions] failed to connect to server: %s\n", SDLNet_GetError());
-		return FALSE;
-	}
-
-	int total = SDLNet_TCP_AddSocket(sock_set, data_sock);
-	if (total == -1) {
-		ERR("[MultiPlayerSDL::poll_sessions] SDLNet_AddSocket: %s\n", SDLNet_GetError());
-	}
-
-	// request session info from server
-
-	send_session_info_request();
-
-	// receive reply from server
-
-	MSG("[MultiPlayerSDL::poll_sessions] waiting for reply ...\n");
-	uint32_t tmp1, tmp2, tmp3;
-
-	// skip unrelated messages, if any
-	while (current_sessions.size() == 0) {
-		// 'receive' will automatically process reply and add session to array
-		receive(&tmp1, &tmp2, &tmp3);
-	}
-
-	MSG("[MultiPlayerSDL::poll_sessions] reply received\n");
-
-	if (SDLNet_TCP_DelSocket(sock_set, data_sock) == -1)
-		ERR("[MultiPlayerSDL::poll_sessions] SDLNet_DelSocket: %s\n", SDLNet_GetError());
-
-	SDLNet_TCP_Close(data_sock);
-	data_sock = NULL;
-#endif
 
 	return TRUE;
 }
@@ -624,18 +580,7 @@ char *MultiPlayerSDL::receive_stream(uint32_t * from, uint32_t * to, uint32_t * 
 
 	char * data = receive_raw(&source_id, &target_id, &msg_size);
 
-	if (target_id == SYS_MSG_PID)
-	{
-		process_sys_msg(msg_size, data);
-		return NULL;
-	}
-	else
-	{
-		*from = source_id;
-		*to = target_id;
-		*size = msg_size;
-		return data;
-	}
+	return NULL;
 }
 
 char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * size)
@@ -729,131 +674,6 @@ char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * si
 
 	return recv_buffer + header_size;
 #endif
-}
-
-void MultiPlayerSDL::process_sys_msg(uint32_t size, char * ptr)
-{
-	MSG("[MultiPlayerSDL::process_sys_msg] processing system msg\n");
-
-	uint32_t command = SDLNet_Read32(ptr);
-	ptr += sizeof(command);
-
-	MSG("[MultiPlayerSDL::process_sys_msg] command: %d\n", (int)command);
-
-	switch (command)
-	{
-		case CMD_SESSION_INFO_REQUEST:
-			process_session_info_request();
-			break;
-		case CMD_SESSION_INFO_REPLY:
-			process_session_info_reply(ptr);
-			break;
-		default:
-			ERR("[MultiPlayerSDL::process_sys_msg] unknown command\n");
-			break;
-	}
-}
-
-void MultiPlayerSDL::send_session_info_request()
-{
-#if 0
-	// TODO: add additional checks
-
-	uint32_t message_size = sizeof(uint32_t);
-	uint32_t receiver_id  = SYS_MSG_PID;
-	uint32_t command_id   = CMD_SESSION_INFO_REQUEST;
-
-	const int send_buf_size = sizeof(message_size) +
-	                          sizeof(receiver_id) +
-	                          sizeof(command_id);
-
-	char send_buf[send_buf_size];
-	char * ptr = send_buf;
-
-	SDLNet_Write32(message_size, ptr);
-	ptr += sizeof(message_size);
-	SDLNet_Write32(receiver_id, ptr);
-	ptr += sizeof(receiver_id);
-	SDLNet_Write32(command_id, ptr);
-
-	int bytes_sent = SDLNet_TCP_Send(data_sock, send_buf, send_buf_size);
-	if (bytes_sent != send_buf_size) {
-		ERR("[MultiPlayerSDL::send_session_info_request] error while requesting session info: %s\n",
-			SDLNet_GetError());
-		//return FALSE;
-	} else {
-		MSG("[MultiPlayerSDL::send_session_info_request] query sent\n");
-	}
-#endif
-}
-
-void MultiPlayerSDL::process_session_info_request()
-{
-	send_session_info_reply();
-}
-
-void MultiPlayerSDL::send_session_info_reply()
-{
-#if 0
-	// TODO: add additional checks
-
-	MSG("[MultiPlayerSDL::process_session_info_request]\n");
-
-	uint32_t receiver_id  = SYS_MSG_PID;
-	uint32_t command_id   = CMD_SESSION_INFO_REPLY;
-	uint32_t message_size = 0;
-	message_size += sizeof(command_id);
-	message_size += sizeof(joined_session.id);
-	message_size += MP_SESSION_NAME_LEN;
-	message_size += MP_PASSWORD_LEN;
-
-	const int send_buf_size = sizeof(message_size) +
-	                          sizeof(receiver_id) +
-	                          sizeof(command_id) +
-	                          sizeof(joined_session.id) +
-	                          MP_SESSION_NAME_LEN +
-	                          MP_PASSWORD_LEN;
-
-	char send_buf[send_buf_size];
-	char * ptr = send_buf;
-
-	SDLNet_Write32(message_size, ptr);
-	ptr += sizeof(message_size);
-	SDLNet_Write32(receiver_id, ptr);
-	ptr += sizeof(receiver_id);
-	SDLNet_Write32(command_id, ptr);
-	ptr += sizeof(command_id);
-	SDLNet_Write32(joined_session.id, ptr);
-	ptr += sizeof(joined_session.id);
-	memcpy(ptr, joined_session.session_name, MP_SESSION_NAME_LEN);
-	ptr += MP_SESSION_NAME_LEN;
-	memcpy(ptr, joined_session.pass_word, MP_PASSWORD_LEN);
-
-	int bytes_sent = SDLNet_TCP_Send(data_sock, send_buf, send_buf_size);
-
-	if (bytes_sent != send_buf_size) {
-		ERR("[MultiPlayerSDL::process_session_info_request] error while sending session info: %s\n",
-			SDLNet_GetError());
-	} else {
-		MSG("[MultiPlayerSDL::process_session_info_request] reply sent, size: %d\n", (int)bytes_sent);
-	}
-#endif
-}
-
-void MultiPlayerSDL::process_session_info_reply(char * ptr)
-{
-	SDLSessionDesc session;
-
-	session.id = SDLNet_Read32(ptr);
-	ptr += sizeof(session.id);
-	memcpy(session.session_name, ptr, MP_SESSION_NAME_LEN);
-	ptr += MP_SESSION_NAME_LEN;
-	memcpy(session.pass_word, ptr, MP_PASSWORD_LEN);
-
-	session.session_name[MP_SESSION_NAME_LEN] = '\0';
-	session.pass_word[MP_PASSWORD_LEN] = '\0';
-
-	current_sessions.linkin(&session);
 }
 
 /*
