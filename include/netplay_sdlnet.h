@@ -65,6 +65,7 @@ struct SDLPlayer
 	char     name[MP_FRIENDLY_NAME_LEN+1];
 	char	connecting;		// initially set to 1, clear after player disconnected
 	TCPsocket socket;
+	char *recv_buf;
 
 	uint32_t pid() { return id; }
 	char     *friendly_name_str() { return name; }
@@ -89,8 +90,7 @@ private:
 
 	SDLPlayer         player_pool[MAX_NATION];
 
-	char *            recv_buffer;
-	uint32_t          recv_buffer_size;
+	char *            host_recv_buf;
 
 	TCPsocket         host_sock; // used by client to talk to game host
 	TCPsocket         listen_sock; // used by server

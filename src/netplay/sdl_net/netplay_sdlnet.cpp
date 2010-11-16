@@ -81,8 +81,6 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	my_player_id = 0;
 	host_flag = 0;
 	allowing_connections = 0;
-	recv_buffer = new char[MP_RECV_BUFFER_SIZE];
-	recv_buffer_size = MP_RECV_BUFFER_SIZE;
 	host_sock = NULL;
 	listen_sock = NULL;
 	sock_set = NULL;
@@ -91,10 +89,6 @@ MultiPlayerSDL::MultiPlayerSDL() :
 MultiPlayerSDL::~MultiPlayerSDL()
 {
 	deinit();
-	if (recv_buffer) {
-		delete [] recv_buffer;
-		recv_buffer = NULL;
-	}
 }
 
 void MultiPlayerSDL::init(ProtocolType protocol_type)
@@ -128,6 +122,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		player_pool[i].id = 0;
 		player_pool[i].connecting = 0;
 		player_pool[i].socket = NULL;
+		player_pool[i].recv_buf = NULL;
 	}
 
 	init_flag = 1;
@@ -154,6 +149,10 @@ void MultiPlayerSDL::deinit()
 			SDLNet_TCP_DelSocket(sock_set, host_sock);
 			SDLNet_TCP_Close(host_sock);
 			host_sock = NULL;
+		}
+		if (host_recv_buf) {
+			delete [] host_recv_buf;
+			host_recv_buf = NULL;
 		}
 	}
 
@@ -354,6 +353,8 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 		err_now("socket error");
 	}
 
+	host_recv_buf = new char[MP_RECV_BUFFER_SIZE];
+
 	joined_session = *session;
 
 	return TRUE;
@@ -418,6 +419,7 @@ int MultiPlayerSDL::create_player(TCPsocket socket)
 	strcpy(player_pool[i].name, "?anonymous?");
 	player_pool[i].connecting = 1;
 	player_pool[i].socket = socket;
+	player_pool[i].recv_buf = new char[MP_RECV_BUFFER_SIZE];
 
 	int total = SDLNet_TCP_AddSocket(sock_set, socket);
 	if (total == -1) {
@@ -445,7 +447,8 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 	player_pool[id-1].id = id;
 	strncpy(player_pool[id-1].name, name, MP_FRIENDLY_NAME_LEN);
 	player_pool[id-1].connecting = 1;
-	player_pool[id-1].socket = NULL;
+	player_pool[id-1].socket = NULL; // not used by a client
+	player_pool[id-1].recv_buf = NULL; // not used by a client
 
 	return 1;
 }
@@ -456,11 +459,15 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 //
 void MultiPlayerSDL::delete_player(uint32_t id)
 {
-	if (player_pool[id-1].id && player_pool[id-1].connecting) {
+	if (player_pool[id-1].id) {
 		if (player_pool[id-1].socket) {
 			SDLNet_TCP_DelSocket(sock_set, player_pool[id-1].socket);
 			SDLNet_TCP_Close(player_pool[id-1].socket);
 			player_pool[id-1].socket = NULL;
+		}
+		if (player_pool[id-1].recv_buf) {
+			delete [] player_pool[id-1].recv_buf;
+			player_pool[id-1].recv_buf = NULL;
 		}
 		player_pool[id-1].id = 0;
 		player_pool[id-1].connecting = 0;
@@ -633,6 +640,10 @@ char *MultiPlayerSDL::receive_stream(uint32_t * from, uint32_t * to, uint32_t * 
 
 char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * size)
 {
+	//disabled for now
+	return NULL;
+
+#if 0
 	// used for logging
 	static char client_str[] = "client";
 	static char server_str[] = "server";
@@ -717,6 +728,7 @@ char * MultiPlayerSDL::receive_raw(uint32_t * from, uint32_t * to, uint32_t * si
 	else *from = 456;
 
 	return recv_buffer + header_size;
+#endif
 }
 
 void MultiPlayerSDL::process_sys_msg(uint32_t size, char * ptr)
