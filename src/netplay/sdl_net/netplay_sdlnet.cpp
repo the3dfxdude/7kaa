@@ -409,6 +409,17 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 	return 1;
 }
 
+void MultiPlayerSDL::set_my_id(uint32_t id)
+{
+	MSG("[MultiPlayerSDL::set_my_id] setting my_player_id to %d\n", id);
+	my_player_id = id;
+}
+
+void MultiPlayerSDL::set_player_name(uint32_t id, char *name)
+{
+	strncpy(player_pool[id-1].name, name, MP_FRIENDLY_NAME_LEN);
+}
+
 // Deletes a player from the pool
 //
 // <uint32_t> id          id provided by the game host
