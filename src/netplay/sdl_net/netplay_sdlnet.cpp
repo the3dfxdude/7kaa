@@ -450,7 +450,7 @@ void MultiPlayerSDL::poll_players()
 
 SDLPlayer *MultiPlayerSDL::get_player(int i)
 {
-	if (i < 1 || i > max_players || player_pool[i].id != i)
+	if (i < 1 || i > max_players || player_pool[i-1].id != i)
 		return NULL;
 	return &player_pool[i-1];
 }
