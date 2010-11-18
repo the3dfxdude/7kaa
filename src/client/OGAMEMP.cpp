@@ -1473,7 +1473,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 						break;
 					// the ack contains my player's id, and the host's name
 					mp_obj.add_player(config.player_name, to); // add myself
-					mp_obj.set_my_id(to); // register my id
+					mp_obj.set_my_player_id(to); // register my id
 					mp_obj.set_player_name(1, ack->player_name); // host's name
 					finished = 1;
 					break;

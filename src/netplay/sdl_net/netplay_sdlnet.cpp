@@ -35,11 +35,6 @@ DBGLOG_DEFAULT_CHANNEL(NetPlay);
 
 const Uint16 GAME_PORT = 1234;
 
-enum {
-	CMD_SESSION_INFO_REQUEST = 0xCD000001,
-	CMD_SESSION_INFO_REPLY
-};
-
 SDLSessionDesc::SDLSessionDesc()
 {
 	id = 0;
@@ -410,9 +405,9 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 	return 1;
 }
 
-void MultiPlayerSDL::set_my_id(uint32_t id)
+void MultiPlayerSDL::set_my_player_id(uint32_t id)
 {
-	MSG("[MultiPlayerSDL::set_my_id] setting my_player_id to %d\n", id);
+	MSG("[MultiPlayerSDL::set_my_player_id] setting my_player_id to %d\n", id);
 	my_player_id = id;
 }
 

@@ -126,7 +126,7 @@ public:
 
 	// -------- functions on player management -------//
 	int         add_player(char *name, uint32_t id);
-	void        set_my_id(uint32_t id);
+	void        set_my_player_id(uint32_t id);
 	void        set_player_name(uint32_t id, char *name);
 	void        delete_player(uint32_t id);
 	void        poll_players();

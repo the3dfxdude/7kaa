@@ -162,6 +162,14 @@ int MultiPlayerNone::add_player(char *name, uint32_t id)
         return 0;
 }
 
+void MultiPlayerNone::set_my_player_id(uint32_t id)
+{
+}
+
+void MultiPlayerNone::set_player_name(uint32_t id, char *name)
+{
+}
+
 void MultiPlayerNone::delete_player(uint32_t id)
 {
 }
