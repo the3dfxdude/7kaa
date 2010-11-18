@@ -2247,6 +2247,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			{
 				if( !mp_obj.is_player_connecting(regPlayerId[q]) )
 				{
+					mp_obj.delete_player(regPlayerId[q]);
+
 					mRefreshFlag |= MGOPTION_PLAYERS;
 
 					memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
@@ -4047,6 +4049,8 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				if( !mp_obj.is_player_connecting(regPlayerId[q]) )
 				{
+					mp_obj.delete_player(regPlayerId[q]);
+
 					mRefreshFlag |= MGOPTION_PLAYERS;
 
 					memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
