@@ -104,6 +104,7 @@ enum
 {
 	MPMSG_START_GAME = 0x1f5a0001,
 	MPMSG_ABORT_GAME,
+	MPMSG_COOKIE,
 	MPMSG_RANDOM_SEED,			// see MpStructSeed
 	MPMSG_RANDOM_SEED_STR,
 	MPMSG_DECLARE_NATION,		// see MpStructNation
@@ -140,6 +141,19 @@ struct MpStructBase
 {
 	DWORD msg_id;
 	MpStructBase(DWORD msgId) : msg_id(msgId) {}
+};
+
+const char *cookie_word = "ASDF";
+const int cookie_size = 4;
+struct MpStructCookie : public MpStructBase
+{
+	char cookie[cookie_size];
+	char player_name[MP_FRIENDLY_NAME_LEN+1];
+	MpStructCookie(char *name) : MpStructBase(MPMSG_COOKIE)
+	{
+		memcpy(cookie, cookie_word, cookie_size);
+		strcpy(player_name, name);
+	}
 };
 
 struct MpStructSeed : public MpStructBase
@@ -1418,6 +1432,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	int width;
 	int tried_connection = 0;
 	int connected = 0;
+	int finished = 0;
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
  
 	box.tell("Attempting to connect");
@@ -1436,9 +1451,35 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 			// NOTE: If this function causes too much delay, put it in a thread
 			connected = mp_obj.join_session(session_id, player_name);
+			if (!connected)
+				break;
+
+			mp_obj.add_player("", 1);
+
+			MpStructCookie cookie(config.player_name);
+			mp_obj.send_stream(1, &cookie, sizeof(cookie));
+		} else if (connected) {
+			PID_TYPE from, to;
+			uint32_t recvLen;
+			int sysMsgCount;
+			char *recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
+			if (sysMsgCount)
+				break;
+			if (recvPtr) {
+				MpStructCookie *ack = (MpStructCookie *)recvPtr;
+
+				if (ack->msg_id == MPMSG_COOKIE) {
+					if (memcmp(ack->cookie, cookie_word, cookie_size))
+						break;
+					// the ack contains my player's id, and the host's name
+					mp_obj.add_player(config.player_name, to); // add myself
+					mp_obj.set_my_id(to); // register my id
+					mp_obj.set_player_name(1, ack->player_name); // host's name
+					finished = 1;
+					break;
+				}
+			}
 		}
-		if (!connected)
-			break;
 
 		vga_front.lock_buf();
 
@@ -1468,7 +1509,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 	box.close();
 
-	return 0;
+	return finished;
 }
 
 
@@ -2243,6 +2284,20 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				{
 				case MPMSG_ABORT_GAME:
 					return 0;
+				case MPMSG_COOKIE:
+					if (remote.is_host)
+					{
+						MpStructCookie *cookie = (MpStructCookie *)recvPtr;
+						if (memcmp(cookie->cookie, cookie_word, cookie_size)) {
+							mp_obj.delete_player(from);
+						} else {
+							mp_obj.set_player_name(from, cookie->player_name);
+
+							MpStructCookie ack(config.player_name);
+							mp_obj.send_stream(from, &ack, sizeof(MpStructCookie));
+						}
+					}
+					break;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
 					refreshFlag |= SGOPTION_ALL_OPTIONS;
