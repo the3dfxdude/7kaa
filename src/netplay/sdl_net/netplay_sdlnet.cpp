@@ -77,6 +77,7 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	allowing_connections = 0;
 	host_sock = NULL;
 	listen_sock = NULL;
+	peer_sock = NULL;
 	sock_set = NULL;
 }
 
@@ -148,6 +149,11 @@ void MultiPlayerSDL::deinit()
 			delete [] host_recv_buf;
 			host_recv_buf = NULL;
 		}
+	}
+
+	if (peer_sock) {
+		SDLNet_UDP_Close(peer_sock);
+		peer_sock = NULL;
 	}
 
 	SDLNet_FreeSocketSet(sock_set);
@@ -251,6 +257,14 @@ int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxP
 		MSG("[MultiPlayerSDL::create_session] waiting for clients on port: %d\n", (int)GAME_PORT);
 	}
 
+	peer_sock = SDLNet_UDP_Open(GAME_PORT);
+	if (!peer_sock) {
+		ERR("[MultiPlayerSDL::create_session] unable to open peer socket: %s\n", SDLNet_GetError());
+		SDLNet_TCP_Close(listen_sock);
+		listen_sock = NULL;
+		return FALSE;
+	}
+
 	joined_session.id = 789;
 	char sname[] = "SDL_net test game";
 	char spass[] = "p@ssw0rd";
@@ -302,6 +316,14 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	if (total == -1) {
 		ERR("[MultiPlayerSDL::join_session] SDLNet_AddSocket: %s\n", SDLNet_GetError());
 		err_now("socket error");
+	}
+
+	peer_sock = SDLNet_UDP_Open(0);
+	if (!peer_sock) {
+		ERR("[MultiPlayerSDL::join_session] unable to open peer socket: %s\n", SDLNet_GetError());
+		SDLNet_TCP_Close(host_sock);
+		host_sock = NULL;
+		return FALSE;
 	}
 
 	host_recv_buf = new char[MP_RECV_BUFFER_SIZE];

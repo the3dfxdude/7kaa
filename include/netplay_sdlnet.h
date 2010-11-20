@@ -94,6 +94,7 @@ private:
 
 	TCPsocket         host_sock; // used by client to talk to game host
 	TCPsocket         listen_sock; // used by server
+	UDPsocket         peer_sock; // peer-to-peer communication
 	SDLNet_SocketSet  sock_set;
 
 public:
