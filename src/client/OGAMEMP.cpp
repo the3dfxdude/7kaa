@@ -219,15 +219,23 @@ struct MpStructConfig : public MpStructBase
 struct MpStructNewPlayer : public MpStructBase
 {
 	PID_TYPE player_id;
+	char player_name[MP_FRIENDLY_NAME_LEN+1];
 	short player_balance;	// 2 for CD-ROM version, -1 for non CD-ROM version
-	MpStructNewPlayer(PID_TYPE p, short bal) : MpStructBase(MPMSG_NEW_PLAYER), player_id(p),
-		player_balance(bal) {}
+	MpStructNewPlayer(PID_TYPE p, short bal, char *name) : MpStructBase(MPMSG_NEW_PLAYER), player_id(p),
+		player_balance(bal)
+	{
+		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
+	}
 };
 
 struct MpStructAcceptNewPlayer : public MpStructBase
 {
 	PID_TYPE player_id;
-	MpStructAcceptNewPlayer(PID_TYPE p) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p) {}
+	char player_name[MP_FRIENDLY_NAME_LEN+1];
+	MpStructAcceptNewPlayer(PID_TYPE p, char *name) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p)
+	{
+		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
+	}
 };
 
 struct MpStructRefuseNewPlayer : public MpStructBase
@@ -301,13 +309,15 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 	DWORD frame_count;			// detail to test save game from the same game
 	long	random_seed;
 	short player_balance;
+	char player_name[MP_FRIENDLY_NAME_LEN+1];
 
-	MpStructLoadGameNewPlayer(PID_TYPE p, Nation *n, DWORD frame, long seed, short bal) : 
+	MpStructLoadGameNewPlayer(PID_TYPE p, Nation *n, DWORD frame, long seed, short bal, char *name) : 
 		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER), player_id(p),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
 		race_id(n->race_id), frame_count(frame), random_seed(seed), player_balance(bal) 
-		{
-		}
+	{
+		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
+	}
 };
 
 struct MpStructChatMsg : public MpStructBase
@@ -1454,8 +1464,6 @@ int Game::mp_join_session(int session_id, char *player_name)
 			if (!connected)
 				break;
 
-			mp_obj.add_player("", 1);
-
 			MpStructCookie cookie(config.player_name);
 			mp_obj.send_stream(1, &cookie, sizeof(cookie));
 		} else if (connected) {
@@ -1474,7 +1482,6 @@ int Game::mp_join_session(int session_id, char *player_name)
 					// the ack contains my player's id, and the host's name
 					mp_obj.add_player(config.player_name, to); // add myself
 					mp_obj.set_my_player_id(to); // register my id
-					mp_obj.set_player_name(1, ack->player_name); // host's name
 					finished = 1;
 					break;
 				}
@@ -1612,22 +1619,15 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	int regPlayerCount = 0;
 	int selfReadyFlag = 0;
 	int shareRace = 1;		// host only, 0= exclusive race of each player
-
-	mp_obj.poll_players();
 	int p;
-	for( p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
-	{
-		// host only identify himself
-		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.get_my_player_id() )
-		{
-			regPlayerId[regPlayerCount] = mp_obj.get_player(p)->pid();
-			playerReadyFlag[regPlayerCount] = 0;
-			playerColor[regPlayerCount] = 0;
-			playerRace[regPlayerCount] = 0;
-			playerBalance[regPlayerCount] = 0;
-			++regPlayerCount;
-		}
-	}
+
+	// add local player to player registry
+	regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
+	playerReadyFlag[regPlayerCount] = 0;
+	playerColor[regPlayerCount] = 0;
+	playerRace[regPlayerCount] = 0;
+	playerBalance[regPlayerCount] = 0;
+	++regPlayerCount;
 
 	int i;
 	long refreshFlag = SGOPTION_ALL;
@@ -1658,7 +1658,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		tempConfig.player_nation_color = 0;
 		// ask host for a race and color code
 		MpStructNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), 
-			sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD );
+			sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD,
+			config.player_name );
 		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
 	}
 
@@ -2293,8 +2294,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						if (memcmp(cookie->cookie, cookie_word, cookie_size)) {
 							mp_obj.delete_player(from);
 						} else {
-							mp_obj.set_player_name(from, cookie->player_name);
-
 							MpStructCookie ack(config.player_name);
 							mp_obj.send_stream(from, &ack, sizeof(MpStructCookie));
 						}
@@ -2321,12 +2320,24 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						if( regPlayerCount < MAX_NATION )
 						{
 							MpStructNewPlayer *newPlayerMsg = (MpStructNewPlayer *)recvPtr;
+
+							mp_obj.set_player_name(from, newPlayerMsg->player_name);
+
 							regPlayerId[regPlayerCount] = newPlayerMsg->player_id;
 							playerReadyFlag[regPlayerCount] = 0;
 
 							// send accept new player to all player
-							MpStructAcceptNewPlayer msgAccept(from);
+							MpStructAcceptNewPlayer msgAccept(from, newPlayerMsg->player_name);
 							mp_obj.send_stream( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
+
+							// send player list
+						        for (int i = 1; i <= MAX_NATION; i++) {
+								PlayerDesc *desc = mp_obj.get_player(i);
+								if (desc && desc->pid() != from) {
+									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
+									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
+								}
+							}
 
 							// assign initial race
 							int c = m.get_time() % MAX_RACE;
@@ -2413,15 +2424,15 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					hostPlayerId = from;
 					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.get_my_player_id() )
 					{
+						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
+						mp_obj.add_player(newb->player_name, newb->player_id);
+
 						// search if this player has existed
-						for( p=0; p < regPlayerCount && regPlayerId[p] != ((MpStructAcceptNewPlayer *)recvPtr)->player_id; ++p );
-						regPlayerId[p] = ((MpStructAcceptNewPlayer *)recvPtr)->player_id;
+						for (p = 0; p < regPlayerCount && regPlayerId[p] != newb->player_id; ++p);
+						regPlayerId[p] = newb->player_id;
 						playerReadyFlag[p] = 0;
-						if( p >= regPlayerCount )
-						{
-							regPlayerCount++;		// now regPlayerCount == p
-							err_when( p != regPlayerCount );
-						}
+						if( p == regPlayerCount )
+							regPlayerCount++;
 						mRefreshFlag |= MGOPTION_PLAYERS;
 					}
 					break;
@@ -3412,22 +3423,15 @@ int Game::mp_select_load_option(char *fileName)
 	int selfReadyFlag = 0;
 	int maxPlayer;
 	int shareRace = 1;		// host only, 0= exclusive race of each player
-
-	mp_obj.poll_players();
 	int p;
-	for( p = 1; p <= MAX_NATION && mp_obj.get_player(p); ++p )
-	{
-		// host only identify himself
-		if( !remote.is_host || mp_obj.get_player(p)->pid() == mp_obj.get_my_player_id() )
-		{
-			regPlayerId[regPlayerCount] = mp_obj.get_player(p)->pid();
-			playerReadyFlag[regPlayerCount] = 0;
-			playerColor[regPlayerCount] = 0;
-			playerRace[regPlayerCount] = 0;
-			playerBalance[regPlayerCount] = 0;
-			++regPlayerCount;
-		}
-	}
+
+	// add local player to player registry
+	regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
+	playerReadyFlag[regPlayerCount] = 0;
+	playerColor[regPlayerCount] = 0;
+	playerRace[regPlayerCount] = 0;
+	playerBalance[regPlayerCount] = 0;
+	++regPlayerCount;
 
 	err_when( tempConfig.race_id != (~nation_array)->race_id );
 	err_when( tempConfig.player_nation_color != (~nation_array)->color_scheme_id );
@@ -3463,7 +3467,8 @@ int Game::mp_select_load_option(char *fileName)
 	{
 		memset( colorAssigned, 0, sizeof(colorAssigned) );		// assume all color are unassigned
 		MpStructLoadGameNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), ~nation_array, sys.frame_count,
-			m.get_random_seed(), sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD );
+			m.get_random_seed(), sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD,
+			config.player_name );
 		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
 	}
 
@@ -4122,6 +4127,8 @@ int Game::mp_select_load_option(char *fileName)
 							&& newPlayerMsg->frame_count == sys.frame_count
 							&& newPlayerMsg->random_seed == m.get_random_seed() )
 						{
+							mp_obj.set_player_name(from, newPlayerMsg->player_name);
+
 							regPlayerId[regPlayerCount] = newPlayerMsg->player_id;
 							playerReadyFlag[regPlayerCount] = 0;
 							raceAssigned[newPlayerMsg->race_id]++;
@@ -4130,8 +4137,17 @@ int Game::mp_select_load_option(char *fileName)
 							playerColor[regPlayerCount] = newPlayerMsg->color_scheme_id;
 
 							// send accept new player to all player
-							MpStructAcceptNewPlayer msgAccept(from);
+							MpStructAcceptNewPlayer msgAccept(from, newPlayerMsg->player_name);
 							mp_obj.send_stream( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
+
+							// send player list
+						        for (int i = 1; i <= MAX_NATION; i++) {
+								PlayerDesc *desc = mp_obj.get_player(i);
+								if (desc && desc->pid() != from) {
+									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
+									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
+								}
+							}
 
 							// send ready flag
 							for( int c = 0; c < regPlayerCount; ++c)
@@ -4167,15 +4183,15 @@ int Game::mp_select_load_option(char *fileName)
 					hostPlayerId = from;
 					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.get_my_player_id() )
 					{
+						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
+						mp_obj.add_player(newb->player_name, newb->player_id);
+
 						// search if this player has existed
-						for( p=0; p < regPlayerCount && regPlayerId[p] != ((MpStructAcceptNewPlayer *)recvPtr)->player_id; ++p );
-						regPlayerId[p] = ((MpStructAcceptNewPlayer *)recvPtr)->player_id;
+						for (p = 0; p < regPlayerCount && regPlayerId[p] != newb->player_id; ++p);
+						regPlayerId[p] = newb->player_id;
 						playerReadyFlag[p] = 0;
 						if( p >= regPlayerCount )
-						{
-							regPlayerCount++;		// now regPlayerCount == p
-							err_when( p != regPlayerCount );
-						}
+							regPlayerCount++;
 						mRefreshFlag |= MGOPTION_PLAYERS;
 					}
 					break;
