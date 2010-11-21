@@ -134,7 +134,8 @@ enum
 	MPMSG_TEST_LATENCY_SEND,
 	MPMSG_TEST_LATENCY_ECHO,
 	MPMSG_SET_PROCESS_FRAME_DELAY,
-	MPMSG_COOKIE
+	MPMSG_COOKIE,
+	MPMSG_PLAYER_DISCONNECT
 };
 
 struct MpStructBase
@@ -371,6 +372,13 @@ struct MpStructCookie : public MpStructBase
 	{
 		memcpy(cookie, cookie_word, cookie_size);
 	}
+};
+
+struct MpStructPlayerDisconnect : public MpStructBase
+{
+	PID_TYPE lost_player_id;
+	MpStructPlayerDisconnect(PID_TYPE lost_player) : MpStructBase(MPMSG_PLAYER_DISCONNECT),
+		lost_player_id(lost_player) {}
 };
 
 //--------- Define static functions ------------//
@@ -2248,6 +2256,12 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				{
 					mp_obj.delete_player(regPlayerId[q]);
 
+					if (remote.is_host) {
+						// inform clients of player disconnection
+						MpStructPlayerDisconnect msgDisconnect(regPlayerId[q]);
+						mp_obj.send_stream(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+					}
+
 					mRefreshFlag |= MGOPTION_PLAYERS;
 
 					memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
@@ -2270,6 +2284,10 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					--q;
 				}
 			}
+
+			// handle when the host is disconnecting
+			if (!remote.is_host)
+				return 0;
 		}
 
 		if( recvPtr )
@@ -2570,6 +2588,35 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					{
 						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
 						return 0;
+					}
+					break;
+				case MPMSG_PLAYER_DISCONNECT:
+					if (!remote.is_host) {
+						int q;
+						mp_obj.delete_player(((MpStructPlayerDisconnect*)recvPtr)->lost_player_id);
+
+						for (q = 0; q < regPlayerCount && ((MpStructPlayerDisconnect*)recvPtr)->lost_player_id != regPlayerId[q]; ++q);
+						if (q < regPlayerCount) {
+							mRefreshFlag |= MGOPTION_PLAYERS;
+
+							memmove(regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]));
+							regPlayerId[MAX_NATION-1] = 0;
+							memmove(playerReadyFlag+q, playerReadyFlag+q+1, (MAX_NATION-1-q)*sizeof(playerReadyFlag[0]));
+							playerReadyFlag[MAX_NATION-1] = 0;
+							short freeColor = playerColor[q];
+							memmove(playerColor+q, playerColor+q+1, (MAX_NATION-1-q)*sizeof(playerColor[0]));
+							playerColor[MAX_NATION-1] = 0;
+							if (freeColor > 0 && freeColor <= MAX_COLOR_SCHEME)
+								colorAssigned[freeColor-1] = 0;
+							short freeRace = playerRace[q];
+							memmove(playerRace+q, playerRace+q+1, (MAX_NATION-1-q)*sizeof(playerRace[0]));
+							playerRace[MAX_NATION-1] = 0;
+							if(freeRace > 0 && freeRace <= MAX_RACE)
+								raceAssigned[freeRace-1]--;
+							memmove(playerBalance+q, playerBalance+q+1, (MAX_NATION-1-q)*sizeof(playerBalance[0]));
+							playerBalance[MAX_NATION-1] = 0;
+							--regPlayerCount;
+						}
 					}
 					break;
 				default:		// if the game is started, any other thing is received
@@ -4054,6 +4101,12 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					mp_obj.delete_player(regPlayerId[q]);
 
+					if (remote.is_host) {
+						// inform clients of player disconnection
+						MpStructPlayerDisconnect msgDisconnect(regPlayerId[q]);
+						mp_obj.send_stream(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+					}
+
 					mRefreshFlag |= MGOPTION_PLAYERS;
 
 					memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
@@ -4076,6 +4129,10 @@ int Game::mp_select_load_option(char *fileName)
 					--q;
 				}
 			}
+
+			// handle when the host is disconnecting
+			if (!remote.is_host)
+				return 0;
 		}
 
 		if( recvPtr )
@@ -4233,6 +4290,35 @@ int Game::mp_select_load_option(char *fileName)
 					{
 						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
 						return 0;
+					}
+					break;
+				case MPMSG_PLAYER_DISCONNECT:
+					if (!remote.is_host) {
+						int q;
+						mp_obj.delete_player(((MpStructPlayerDisconnect*)recvPtr)->lost_player_id);
+
+						for (q = 0; q < regPlayerCount && ((MpStructPlayerDisconnect*)recvPtr)->lost_player_id != regPlayerId[q]; ++q);
+						if (q < regPlayerCount) {
+							mRefreshFlag |= MGOPTION_PLAYERS;
+
+							memmove(regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]));
+							regPlayerId[MAX_NATION-1] = 0;
+							memmove(playerReadyFlag+q, playerReadyFlag+q+1, (MAX_NATION-1-q)*sizeof(playerReadyFlag[0]));
+							playerReadyFlag[MAX_NATION-1] = 0;
+							short freeColor = playerColor[q];
+							memmove(playerColor+q, playerColor+q+1, (MAX_NATION-1-q)*sizeof(playerColor[0]));
+							playerColor[MAX_NATION-1] = 0;
+							if (freeColor > 0 && freeColor <= MAX_COLOR_SCHEME)
+								colorAssigned[freeColor-1] = 0;
+							short freeRace = playerRace[q];
+							memmove(playerRace+q, playerRace+q+1, (MAX_NATION-1-q)*sizeof(playerRace[0]));
+							playerRace[MAX_NATION-1] = 0;
+							if(freeRace > 0 && freeRace <= MAX_RACE)
+								raceAssigned[freeRace-1]--;
+							memmove(playerBalance+q, playerBalance+q+1, (MAX_NATION-1-q)*sizeof(playerBalance[0]));
+							playerBalance[MAX_NATION-1] = 0;
+							--regPlayerCount;
+						}
 					}
 					break;
 				default:		// if the game is started, any other thing is received
