@@ -104,7 +104,6 @@ enum
 {
 	MPMSG_START_GAME = 0x1f5a0001,
 	MPMSG_ABORT_GAME,
-	MPMSG_COOKIE,
 	MPMSG_RANDOM_SEED,			// see MpStructSeed
 	MPMSG_RANDOM_SEED_STR,
 	MPMSG_DECLARE_NATION,		// see MpStructNation
@@ -135,25 +134,13 @@ enum
 	MPMSG_TEST_LATENCY_SEND,
 	MPMSG_TEST_LATENCY_ECHO,
 	MPMSG_SET_PROCESS_FRAME_DELAY,
+	MPMSG_COOKIE
 };
 
 struct MpStructBase
 {
 	DWORD msg_id;
 	MpStructBase(DWORD msgId) : msg_id(msgId) {}
-};
-
-const char *cookie_word = "ASDF";
-const int cookie_size = 4;
-struct MpStructCookie : public MpStructBase
-{
-	char cookie[cookie_size];
-	char player_name[MP_FRIENDLY_NAME_LEN+1];
-	MpStructCookie(char *name) : MpStructBase(MPMSG_COOKIE)
-	{
-		memcpy(cookie, cookie_word, cookie_size);
-		strcpy(player_name, name);
-	}
 };
 
 struct MpStructSeed : public MpStructBase
@@ -372,6 +359,17 @@ struct MpStructProcessFrameDelay : public MpStructBase
 	MpStructProcessFrameDelay(int newFrameDelay) : MpStructBase(MPMSG_SET_PROCESS_FRAME_DELAY),
 		common_process_frame_delay(newFrameDelay)
 	{
+	}
+};
+
+const char *cookie_word = "ASDF";
+const int cookie_size = 4;
+struct MpStructCookie : public MpStructBase
+{
+	char cookie[cookie_size];
+	MpStructCookie() : MpStructBase(MPMSG_COOKIE)
+	{
+		memcpy(cookie, cookie_word, cookie_size);
 	}
 };
 
@@ -1464,7 +1462,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 			if (!connected)
 				break;
 
-			MpStructCookie cookie(config.player_name);
+			MpStructCookie cookie;
 			mp_obj.send_stream(1, &cookie, sizeof(cookie));
 		} else if (connected) {
 			PID_TYPE from, to;
@@ -2294,7 +2292,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						if (memcmp(cookie->cookie, cookie_word, cookie_size)) {
 							mp_obj.delete_player(from);
 						} else {
-							MpStructCookie ack(config.player_name);
+							MpStructCookie ack;
 							mp_obj.send_stream(from, &ack, sizeof(MpStructCookie));
 						}
 					}
