@@ -2286,8 +2286,10 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 
 			// handle when the host is disconnecting
-			if (!remote.is_host)
+			if (!remote.is_host) {
+				box.msg("The game host has disconnected.");
 				return 0;
+			}
 		}
 
 		if( recvPtr )
@@ -2302,6 +2304,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
+					box.msg("The game host has aborted the game.");
 					return 0;
 				case MPMSG_COOKIE:
 					if (remote.is_host)
@@ -4131,8 +4134,10 @@ int Game::mp_select_load_option(char *fileName)
 			}
 
 			// handle when the host is disconnecting
-			if (!remote.is_host)
+			if (!remote.is_host) {
+				box.msg("The game host has disconnected.");
 				return 0;
+			}
 		}
 
 		if( recvPtr )
@@ -4147,6 +4152,7 @@ int Game::mp_select_load_option(char *fileName)
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
+					box.msg("The game host has aborted the game.");
 					return 0;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
