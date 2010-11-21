@@ -143,6 +143,11 @@ public:
 	char * receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
 	char * receive_stream(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
 
+	// ------- functions for peer discovery ------//
+	void send_discovery(void);
+	void receive_discovery(void);
+	void set_peer_socket(void *data);
+
 private:
 	int create_player(TCPsocket socket);
 };

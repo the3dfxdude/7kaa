@@ -691,6 +691,18 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	return recv_buf;
 }
 
+void MultiPlayerSDL::send_discovery()
+{
+}
+
+void MultiPlayerSDL::receive_discovery()
+{
+}
+
+void MultiPlayerSDL::set_peer_socket(void *data)
+{
+}
+
 /*
 static int sort_session_id(const void *a, const void *b)
 {
