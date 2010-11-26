@@ -91,7 +91,7 @@ private:
 
 	SDLPlayer         player_pool[MAX_NATION];
 
-	char *            host_recv_buf;
+	char *            recv_buf;
 
 	TCPsocket         host_sock; // used by client to talk to game host
 	TCPsocket         listen_sock; // used by server
