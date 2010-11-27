@@ -70,6 +70,7 @@ struct SDLPlayer
 
 	uint32_t pid() { return id; }
 	char     *friendly_name_str() { return name; }
+	int get_address(void **addr) { *addr = &address; return sizeof(IPaddress); }
 };
 
 class MultiPlayerSDL
@@ -149,8 +150,8 @@ public:
 
 	// ------- functions for peer discovery ------//
 	void send_discovery(void);
-	void receive_discovery(void);
-	void set_peer_socket(void *data);
+	int receive_discovery(uint32_t *who, void **address);
+	void set_peer_address(uint32_t who, void *address);
 
 private:
 	int create_player(TCPsocket socket);

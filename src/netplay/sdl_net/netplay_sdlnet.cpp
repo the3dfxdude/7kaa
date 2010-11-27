@@ -774,8 +774,16 @@ void MultiPlayerSDL::send_discovery()
 	}
 }
 
-void MultiPlayerSDL::receive_discovery()
+// receive_discovery -- Allows a game host to recognize the udp address of a peer.
+// Hopefully this will allow NAT transversal too.
+//
+// returns zero if there are no new connections
+// returns len, which is the size of IPaddress, sets the pointer to address, and
+// who this is coming from.
+int MultiPlayerSDL::receive_discovery(uint32_t *who, void **address)
 {
+	int ret = 0;
+
 	// Only receive udp discovery packets if we are listening by tcp server
 	if (listen_sock) {
 		uint32_t from, to, size;
@@ -788,6 +796,9 @@ void MultiPlayerSDL::receive_discovery()
 		if (!ptr && discovery) {
 			MSG("[MultiPlayerSDL::receive_discovery] Received discovery from %d\n", discovery);
 			memcpy(&player_pool[discovery-1].address, &discovery_address, sizeof(IPaddress));
+			ret = sizeof(IPaddress);
+			*who = discovery;
+			*address = &discovery_address;
 		}
 		if ((!ptr && discovery) || ptr) {
 			char *ack = "ACK";
@@ -795,10 +806,22 @@ void MultiPlayerSDL::receive_discovery()
 			this->send(to, ack, 3);
 		}
 	}
+
+	return ret;
 }
 
-void MultiPlayerSDL::set_peer_socket(void *data)
+void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)
 {
+	IPaddress *a = (IPaddress *)address;
+
+	err_when(who < 1 || who > max_players);
+
+	if (player_pool[who-1].id != who || !player_pool[who-1].connecting)
+		return;
+
+	memcpy(&player_pool[who-1].address, a, sizeof(IPaddress));
+
+	MSG("[MultiPlayerSDL::set_peer_address] set address for %d\n", who);
 }
 
 /*
