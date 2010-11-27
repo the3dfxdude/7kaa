@@ -98,6 +98,9 @@ private:
 	UDPsocket         peer_sock; // peer-to-peer communication
 	SDLNet_SocketSet  sock_set;
 
+	uint32_t discovery;
+	IPaddress discovery_address;
+
 public:
 
 	MultiPlayerSDL();

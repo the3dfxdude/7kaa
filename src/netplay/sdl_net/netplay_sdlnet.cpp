@@ -121,6 +121,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		player_pool[i].connecting = 0;
 		player_pool[i].socket = NULL;
 		player_pool[i].recv_buf = NULL;
+		memset(&player_pool[i].address, 0, sizeof(player_pool[i].address));
 	}
 
 	recv_buf = new char[MP_RECV_BUFFER_SIZE];
@@ -462,6 +463,7 @@ void MultiPlayerSDL::delete_player(uint32_t id)
 		}
 		player_pool[id-1].id = 0;
 		player_pool[id-1].connecting = 0;
+		memset(&player_pool[id-1].address, 0, sizeof(player_pool[id-1].address));
 	}
 }
 
@@ -627,6 +629,7 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
 {
 	if (sysMsgCount) *sysMsgCount = 0;
+	*from = max_players;
 
 	if (peer_sock) {
 		UDPpacket packet;
@@ -637,11 +640,21 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 
 		ret = SDLNet_UDP_Recv(peer_sock, &packet);
 		if (ret > 0) {
-			*from = 0;
+			int i;
+			for (i = 0; i < max_players; i++) {
+				if (player_pool[i].connecting &&
+				    !memcmp(&player_pool[i].address, &packet.address, sizeof(IPaddress)))
+					break;
+			}
+			*from = i < max_players ? i+1 : 0;
 			*to = my_player_id;
 			*size = packet.len;
-			MSG("[MultiPlayerSDL::receive] received %d bytes\n", packet.len);
-			return recv_buf;
+			MSG("[MultiPlayerSDL::receive] received %d bytes from player %d\n", *size, *from);
+			if (!*from) {
+				discovery = *(uint32_t *)packet.data;
+				memcpy(&discovery_address, &packet.address, sizeof(IPaddress));
+			}
+			return *from ? recv_buf : NULL;
 		} else if (ret < 0) {
 			ERR("[MultiPlayerSDL::receive] could not receive: %s\n", SDLNet_GetError());
 		}
@@ -757,8 +770,7 @@ void MultiPlayerSDL::send_discovery()
 {
 	// Only send udp discovery packets if we are connected by tcp to the game host
 	if (host_sock) {
-		char *msg = "discovery";
-		this->send(1, msg, 10);
+		this->send(1, &my_player_id, sizeof(my_player_id));
 	}
 }
 
@@ -768,10 +780,15 @@ void MultiPlayerSDL::receive_discovery()
 	if (listen_sock) {
 		uint32_t from, to, size;
 		int sysMsg;
-		char *ptr = this->receive(&from, &to, &size, &sysMsg);
-		if (!ptr)
-			return;
-		MSG("[MultiPlayerSDL::receive_discovery] Received discovery from %d\n", from);
+		char *ptr;
+
+		discovery = 0;
+
+		ptr = this->receive(&from, &to, &size, &sysMsg);
+		if (!ptr && discovery) {
+			MSG("[MultiPlayerSDL::receive_discovery] Received discovery from %d\n", discovery);
+			memcpy(&player_pool[discovery-1].address, &discovery_address, sizeof(IPaddress));
+		}
 	}
 }
 
