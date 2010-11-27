@@ -547,7 +547,7 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 		memcpy(&packet.address, &player_pool[to-1].address, sizeof(IPaddress));
 
 		if (!SDLNet_UDP_Send(peer_sock, packet.channel, &packet)) {
-			ERR("[MultiPlayerSDL::send] error while sending data to player %d: status %d\n", to, packet.status);
+			ERR("[MultiPlayerSDL::send] error while sending data to player %d\n", to);
 			return FALSE;
 		}
 		MSG("[MultiPlayerSDL::send] sent %d bytes to player %d\n", packet.status, to);
