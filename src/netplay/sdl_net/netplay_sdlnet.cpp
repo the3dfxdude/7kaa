@@ -789,6 +789,11 @@ void MultiPlayerSDL::receive_discovery()
 			MSG("[MultiPlayerSDL::receive_discovery] Received discovery from %d\n", discovery);
 			memcpy(&player_pool[discovery-1].address, &discovery_address, sizeof(IPaddress));
 		}
+		if ((!ptr && discovery) || ptr) {
+			char *ack = "ACK";
+			to = ptr ? from : discovery;
+			this->send(to, ack, 3);
+		}
 	}
 }
 
