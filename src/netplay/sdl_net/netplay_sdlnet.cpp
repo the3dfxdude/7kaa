@@ -333,7 +333,8 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	max_players = MAX_NATION;
 
 	// register the host now, even though his name is not known yet
-	memcpy(&player_pool[0].address, &ip_address, sizeof(IPaddress));
+	player_pool[0].address.host = ip_address.host;
+	player_pool[0].address.port = ip_address.port;
 	player_pool[0].connecting = 1;
 
 	joined_session = *session;
@@ -544,7 +545,8 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 		packet.channel = -1;
 		packet.data = (Uint8 *)data;
 		packet.len = msg_size;
-		memcpy(&packet.address, &player_pool[to-1].address, sizeof(IPaddress));
+		packet.address.host = player_pool[to-1].address.host;
+		packet.address.port = player_pool[to-1].address.port;
 
 		if (!SDLNet_UDP_Send(peer_sock, packet.channel, &packet)) {
 			ERR("[MultiPlayerSDL::send] error while sending data to player %d\n", to);
@@ -643,7 +645,8 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 			int i;
 			for (i = 0; i < max_players; i++) {
 				if (player_pool[i].connecting &&
-				    !memcmp(&player_pool[i].address, &packet.address, sizeof(IPaddress)))
+				    player_pool[i].address.host == packet.address.host &&
+				    player_pool[i].address.port == packet.address.port)
 					break;
 			}
 			*from = i < max_players ? i+1 : 0;
@@ -652,7 +655,8 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 			MSG("[MultiPlayerSDL::receive] received %d bytes from player %d\n", *size, *from);
 			if (!*from) {
 				discovery = *(uint32_t *)packet.data;
-				memcpy(&discovery_address, &packet.address, sizeof(IPaddress));
+				discovery_address.host = packet.address.host;
+				discovery_address.port = packet.address.port;
 			}
 			return *from ? recv_buf : NULL;
 		} else if (ret < 0) {
@@ -795,7 +799,8 @@ int MultiPlayerSDL::receive_discovery(uint32_t *who, void **address)
 		ptr = this->receive(&from, &to, &size, &sysMsg);
 		if (!ptr && discovery) {
 			MSG("[MultiPlayerSDL::receive_discovery] Received discovery from %d\n", discovery);
-			memcpy(&player_pool[discovery-1].address, &discovery_address, sizeof(IPaddress));
+			player_pool[discovery-1].address.host = discovery_address.host;
+			player_pool[discovery-1].address.port = discovery_address.port;
 			ret = sizeof(IPaddress);
 			*who = discovery;
 			*address = &discovery_address;
@@ -818,13 +823,8 @@ int MultiPlayerSDL::receive_discovery_ack()
 		int sysMsg;
 		char *ptr;
 
-		discovery = 0;
-
 		ptr = this->receive(&from, &to, &size, &sysMsg);
-		if (!ptr && discovery && !memcmp(recv_buf, "ACK", 3)) {
-			// recopy the host's address since this is what the
-			// system actually uses
-			memcpy(&player_pool[0].address, &discovery_address, sizeof(IPaddress));
+		if (ptr && from == 1 && !memcmp(recv_buf, "ACK", 3)) {
 			MSG("[MultiPlayerSDL::receive_discovery_ack] received ack\n");
 			return 1;
 		}
@@ -841,7 +841,8 @@ void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)
 	if (player_pool[who-1].id != who || !player_pool[who-1].connecting)
 		return;
 
-	memcpy(&player_pool[who-1].address, a, sizeof(IPaddress));
+	player_pool[who-1].address.host = a->host;
+	player_pool[who-1].address.port = a->port;
 
 	MSG("[MultiPlayerSDL::set_peer_address] set address for %d\n", who);
 }
