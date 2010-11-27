@@ -283,7 +283,7 @@ int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxP
 	if (!add_player(playerName, 1)) {
 		return FALSE;
 	}
-	my_player_id = 1;
+	set_my_player_id(1);
 
 	return TRUE;
 }
@@ -437,8 +437,16 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 
 void MultiPlayerSDL::set_my_player_id(uint32_t id)
 {
-	MSG("[MultiPlayerSDL::set_my_player_id] setting my_player_id to %d\n", id);
+	IPaddress *local;
+
+	err_when(!id || id > max_players);
+
 	my_player_id = id;
+
+	local = SDLNet_UDP_GetPeerAddress(peer_sock, -1);
+	SDLNet_ResolveHost(&player_pool[my_player_id-1].address, "127.0.0.1", local->port);
+
+	MSG("[MultiPlayerSDL::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1].address.host, player_pool[my_player_id-1].address.port);
 }
 
 void MultiPlayerSDL::set_player_name(uint32_t id, char *name)
@@ -518,14 +526,12 @@ int MultiPlayerSDL::get_player_count()
 //
 int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 {
+	err_when(to > max_players);
+
 	if (!peer_sock)
 		return FALSE;
-
-	if (to > max_players) {
-		ERR("[MultiPlayerSDL::send] invalid player id: %d\n", to);
+	if (to && to == my_player_id)
 		return FALSE;
-	}
-
 	if (msg_size > MP_UDP_MAX_PACKET_SIZE) {
 		ERR("[MultiPlayerSDL::send] message exceeds maximum size\n");
 		return FALSE;
@@ -534,7 +540,7 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 	if (to == BROADCAST_PID) {
 		int i;
 		for (i = 0; i < max_players; i++)
-			if (player_pool[i].connecting)
+			if (player_pool[i].connecting && i+1 != my_player_id)
 				this->send(i+1, data, msg_size);
 		return TRUE;
 	}
@@ -569,16 +575,16 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
 	TCPsocket dest;
 
-	if (to > max_players) {
-		ERR("[MultiPlayerSDL::send_stream] invalid player id: %d\n", to);
+	err_when(to > max_players);
+
+	if (to && to == my_player_id)
 		return FALSE;
-	}
 
 	if (host_flag) {
 		if (to == BROADCAST_PID) {
 			int i;
 			for (i = 0; i < max_players; i++)
-				if (player_pool[i].socket)
+				if (player_pool[i].socket && i+1 != my_player_id)
 					send_stream(i+1, data, msg_size);
 			return TRUE;
 		}
@@ -838,7 +844,7 @@ void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)
 
 	err_when(who < 1 || who > max_players);
 
-	if (player_pool[who-1].id != who || !player_pool[who-1].connecting)
+	if (player_pool[who-1].id != who || !player_pool[who-1].connecting || who == my_player_id)
 		return;
 
 	player_pool[who-1].address.host = a->host;
