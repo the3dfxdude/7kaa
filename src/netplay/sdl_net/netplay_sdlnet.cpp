@@ -801,13 +801,35 @@ int MultiPlayerSDL::receive_discovery(uint32_t *who, void **address)
 			*address = &discovery_address;
 		}
 		if ((!ptr && discovery) || ptr) {
-			char *ack = "ACK";
+			char *ack = (char *)"ACK";
 			to = ptr ? from : discovery;
 			this->send(to, ack, 3);
 		}
 	}
 
 	return ret;
+}
+
+int MultiPlayerSDL::receive_discovery_ack()
+{
+	// Only receive the discovery ack by a client
+	if (host_sock) {
+		uint32_t from, to, size;
+		int sysMsg;
+		char *ptr;
+
+		discovery = 0;
+
+		ptr = this->receive(&from, &to, &size, &sysMsg);
+		if (!ptr && discovery && !memcmp(recv_buf, "ACK", 3)) {
+			// recopy the host's address since this is what the
+			// system actually uses
+			memcpy(&player_pool[0].address, &discovery_address, sizeof(IPaddress));
+			MSG("[MultiPlayerSDL::receive_discovery_ack] received ack\n");
+			return 1;
+		}
+	}
+	return 0;
 }
 
 void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)

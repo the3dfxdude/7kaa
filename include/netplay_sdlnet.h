@@ -151,6 +151,7 @@ public:
 	// ------- functions for peer discovery ------//
 	void send_discovery(void);
 	int receive_discovery(uint32_t *who, void **address);
+	int receive_discovery_ack(void);
 	void set_peer_address(uint32_t who, void *address);
 
 private:
