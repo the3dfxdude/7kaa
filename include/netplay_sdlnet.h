@@ -66,7 +66,6 @@ struct SDLPlayer
 	char	connecting;		// initially set to 1, clear after player disconnected
 	TCPsocket socket;
 	IPaddress address;
-	char *recv_buf;
 
 	uint32_t pid() { return id; }
 	char     *friendly_name_str() { return name; }

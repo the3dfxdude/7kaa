@@ -120,7 +120,6 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		player_pool[i].id = 0;
 		player_pool[i].connecting = 0;
 		player_pool[i].socket = NULL;
-		player_pool[i].recv_buf = NULL;
 		memset(&player_pool[i].address, 0, sizeof(player_pool[i].address));
 	}
 
@@ -401,7 +400,6 @@ int MultiPlayerSDL::create_player(TCPsocket socket)
 	strcpy(player_pool[i].name, "?anonymous?");
 	player_pool[i].connecting = 1;
 	player_pool[i].socket = socket;
-	player_pool[i].recv_buf = new char[MP_RECV_BUFFER_SIZE];
 
 	int total = SDLNet_TCP_AddSocket(sock_set, socket);
 	if (total == -1) {
@@ -430,7 +428,6 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 	strncpy(player_pool[id-1].name, name, MP_FRIENDLY_NAME_LEN);
 	player_pool[id-1].connecting = 1;
 	player_pool[id-1].socket = NULL; // not used by a client
-	player_pool[id-1].recv_buf = NULL; // not used by a client
 
 	return 1;
 }
@@ -465,10 +462,6 @@ void MultiPlayerSDL::delete_player(uint32_t id)
 			SDLNet_TCP_DelSocket(sock_set, player_pool[id-1].socket);
 			SDLNet_TCP_Close(player_pool[id-1].socket);
 			player_pool[id-1].socket = NULL;
-		}
-		if (player_pool[id-1].recv_buf) {
-			delete [] player_pool[id-1].recv_buf;
-			player_pool[id-1].recv_buf = NULL;
 		}
 		player_pool[id-1].id = 0;
 		player_pool[id-1].connecting = 0;
@@ -690,7 +683,6 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 {
 	static int round_robin = 0; // used to poll clients fairly
 	TCPsocket socket = NULL;
-	char *recv_buf_ptr = NULL;
 	uint32_t msg_size;
 	uint32_t source_id;
 	uint32_t target_id;
@@ -698,7 +690,7 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	int player_index;
 	const int header_size = sizeof(msg_size) + sizeof(target_id);
 
-	err_when(!from || !to || !size);
+	err_when(!from || !to || !size || !recv_buf);
 
 	// have game host accept connections during game setup
 	accept_connections();
@@ -716,7 +708,6 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 			if (player_pool[round_robin].socket &&
 			    SDLNet_SocketReady(player_pool[round_robin].socket)) {
 				socket = player_pool[round_robin].socket;
-				recv_buf_ptr = player_pool[round_robin].recv_buf;
 				player_index = round_robin;
 				break;
 			}
@@ -726,14 +717,13 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 		}
 	} else if (host_sock) {
 		socket = host_sock;
-		recv_buf_ptr = recv_buf;
 		player_index = 0;
 	}
-	if (!socket || !recv_buf_ptr)
+	if (!socket)
 		return NULL;
 
 	// read the message header
-	ready = SDLNet_TCP_Recv(socket, recv_buf_ptr, header_size);
+	ready = SDLNet_TCP_Recv(socket, recv_buf, header_size);
 	if (ready <= 0) {
 		player_pool[player_index].connecting = 0;
 		if (sysMsgCount) *sysMsgCount = 1;
@@ -742,8 +732,8 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 		err_now("unhandled non-blocking operation?");
 	}
 
-	msg_size = SDLNet_Read32(recv_buf_ptr);
-	target_id = SDLNet_Read32(recv_buf_ptr + sizeof(msg_size));
+	msg_size = SDLNet_Read32(recv_buf);
+	target_id = SDLNet_Read32(recv_buf + sizeof(msg_size));
 
 	// we will impose a size limitation to avoid an expensive resizing
 	// of the buffer
@@ -755,7 +745,7 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	}
 
 	// read in the data
-	ready = SDLNet_TCP_Recv(socket, recv_buf_ptr, msg_size);
+	ready = SDLNet_TCP_Recv(socket, recv_buf, msg_size);
 	if (ready <= 0) {
 		player_pool[player_index].connecting = 0;
 		if (sysMsgCount) *sysMsgCount = 1;
@@ -771,7 +761,7 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 
 	MSG("[MultiPlayerSDL::receive_stream] received %d bytes from %d\n", msg_size, *from);
 
-	return recv_buf_ptr;
+	return recv_buf;
 }
 
 void MultiPlayerSDL::send_discovery()
