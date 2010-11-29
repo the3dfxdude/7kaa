@@ -135,7 +135,8 @@ enum
 	MPMSG_TEST_LATENCY_ECHO,
 	MPMSG_SET_PROCESS_FRAME_DELAY,
 	MPMSG_COOKIE,
-	MPMSG_PLAYER_DISCONNECT
+	MPMSG_PLAYER_DISCONNECT,
+	MPMSG_NEW_PEER_ADDRESS
 };
 
 struct MpStructBase
@@ -379,6 +380,17 @@ struct MpStructPlayerDisconnect : public MpStructBase
 	PID_TYPE lost_player_id;
 	MpStructPlayerDisconnect(PID_TYPE lost_player) : MpStructBase(MPMSG_PLAYER_DISCONNECT),
 		lost_player_id(lost_player) {}
+};
+
+struct MpStructNewPeerAddress : public MpStructBase
+{
+	PID_TYPE player_id;
+	char address[100];
+	MpStructNewPeerAddress(PID_TYPE id, int len, void *addr) : MpStructBase(MPMSG_NEW_PEER_ADDRESS),
+		player_id(id)
+	{
+		memcpy(address, addr, len);
+	}
 };
 
 //--------- Define static functions ------------//
@@ -1448,6 +1460,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	int width;
 	int tried_connection = 0;
 	int connected = 0;
+	int got_cookie = 0;
 	int finished = 0;
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
  
@@ -1473,21 +1486,28 @@ int Game::mp_join_session(int session_id, char *player_name)
 			MpStructCookie cookie;
 			mp_obj.send_stream(1, &cookie, sizeof(cookie));
 		} else if (connected) {
-			PID_TYPE from, to;
-			uint32_t recvLen;
-			int sysMsgCount;
-			char *recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
-			if (sysMsgCount)
-				break;
-			if (recvPtr) {
-				MpStructCookie *ack = (MpStructCookie *)recvPtr;
+			if (!got_cookie) {
+				PID_TYPE from, to;
+				uint32_t recvLen;
+				int sysMsgCount;
+				char *recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
+				if (sysMsgCount)
+					break;
+				if (recvPtr) {
+					MpStructCookie *ack = (MpStructCookie *)recvPtr;
 
-				if (ack->msg_id == MPMSG_COOKIE) {
-					if (memcmp(ack->cookie, cookie_word, cookie_size))
-						break;
-					// the ack contains my player's id, and the host's name
-					mp_obj.add_player(config.player_name, to); // add myself
-					mp_obj.set_my_player_id(to); // register my id
+					if (ack->msg_id == MPMSG_COOKIE) {
+						if (memcmp(ack->cookie, cookie_word, cookie_size))
+							break;
+						// the ack contains my player's id, and the host's name
+						mp_obj.add_player(config.player_name, to); // add myself
+						mp_obj.set_my_player_id(to); // register my id
+						got_cookie = 1;
+					}
+				}
+			} else {
+				mp_obj.send_discovery();
+				if (mp_obj.receive_discovery_ack()) {
 					finished = 1;
 					break;
 				}
@@ -2355,6 +2375,13 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 								if (desc && desc->pid() != from) {
 									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
 									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
+									if (i != 1) {
+										void *addr;
+										int len;
+										len = desc->get_address(&addr);
+										MpStructNewPeerAddress msgPeer(i, len, addr);
+										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
+									}
 								}
 							}
 
@@ -2622,9 +2649,26 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						}
 					}
 					break;
+				case MPMSG_NEW_PEER_ADDRESS:
+					if (!remote.is_host) {
+						MpStructNewPeerAddress *msg = (MpStructNewPeerAddress *)recvPtr;
+						mp_obj.set_peer_address(msg->player_id, &msg->address);
+					}
+					break;
 				default:		// if the game is started, any other thing is received
 					return 0;
 				}
+			}
+		}
+
+		// handle peer discovery
+		if (remote.is_host) {
+			void *address;
+			uint32_t who;
+			int len = mp_obj.receive_discovery(&who, &address);
+			if (len) {
+				MpStructNewPeerAddress msgPeer(who, len, address);
+				mp_obj.send_stream(hostPlayerId, &msgPeer, sizeof(msgPeer));
 			}
 		}
 
@@ -4207,6 +4251,13 @@ int Game::mp_select_load_option(char *fileName)
 								if (desc && desc->pid() != from) {
 									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
 									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
+									if (i != 1) {
+										void *addr;
+										int len;
+										len = desc->get_address(&addr);
+										MpStructNewPeerAddress msgPeer(i, len, addr);
+										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
+									}
 								}
 							}
 
@@ -4327,9 +4378,26 @@ int Game::mp_select_load_option(char *fileName)
 						}
 					}
 					break;
+				case MPMSG_NEW_PEER_ADDRESS:
+					if (!remote.is_host) {
+						MpStructNewPeerAddress *msg = (MpStructNewPeerAddress *)recvPtr;
+						mp_obj.set_peer_address(msg->player_id, &msg->address);
+					}
+					break;
 				default:		// if the game is started, any other thing is received
 					return 0;
 				}
+			}
+		}
+
+		// handle peer discovery
+		if (remote.is_host) {
+			void *address;
+			uint32_t who;
+			int len = mp_obj.receive_discovery(&who, &address);
+			if (len) {
+				MpStructNewPeerAddress msgPeer(who, len, address);
+				mp_obj.send_stream(hostPlayerId, &msgPeer, sizeof(msgPeer));
 			}
 		}
 
