@@ -478,8 +478,6 @@ void MultiPlayerSDL::delete_player(uint32_t id)
 
 void MultiPlayerSDL::poll_players()
 {
-	// TODO: player pool should be kept and sync'ed via server
-	ERR("[MultiPlayerSDL::poll_players] unimplemented\n");
 }
 
 SDLPlayer *MultiPlayerSDL::get_player(int i)
