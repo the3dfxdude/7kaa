@@ -23,7 +23,6 @@ Description : calculate 8-bit CRC
 Converted to C++
 */
 
-#include <ALL.h>
 #include <CRC.h>
 
 #define DIVISOR	0x14B //101001011b
@@ -40,37 +39,51 @@ Converted to C++
 
 CRC_TYPE IMGcall crc8(unsigned char * dataBuf, int dataLen)
 {
-	int crc = 0;
+	int ax = 0;
 	if (dataLen > 0)
 	{
-		int ax;
 		// non last byte
 		for (ax = *dataBuf++; dataLen > 1; --dataLen)
 		{
 			ax <<= 8;
 			ax |= *dataBuf++;
-			if ( ax & 0x8000 ) crc ^= DIVISOR << 7;
-			if ( ax & 0x4000 ) crc ^= DIVISOR << 6;
-			if ( ax & 0x2000 ) crc ^= DIVISOR << 5;
-			if ( ax & 0x1000 ) crc ^= DIVISOR << 4;
-			if ( ax & 0x0800 ) crc ^= DIVISOR << 3;
-			if ( ax & 0x0400 ) crc ^= DIVISOR << 2;
-			if ( ax & 0x0200 ) crc ^= DIVISOR << 1;
-			if ( ax & 0x0100 ) crc ^= DIVISOR;
+			if ( ax & 0x8000 )
+				ax ^= DIVISOR << 7;
+			if ( ax & 0x4000 )
+				ax ^= DIVISOR << 6;
+			if ( ax & 0x2000 )
+				ax ^= DIVISOR << 5;
+			if ( ax & 0x1000 )
+				ax ^= DIVISOR << 4;
+			if ( ax & 0x0800 )
+				ax ^= DIVISOR << 3;
+			if ( ax & 0x0400 )
+				ax ^= DIVISOR << 2;
+			if ( ax & 0x0200 )
+				ax ^= DIVISOR << 1;
+			if ( ax & 0x0100 )
+				ax ^= DIVISOR;
 		}
 		// last byte
 		ax <<= 8;
-		if ( ax & 0x8000 ) crc ^= DIVISOR << 7;
-		if ( ax & 0x4000 ) crc ^= DIVISOR << 6;
-		if ( ax & 0x2000 ) crc ^= DIVISOR << 5;
-		if ( ax & 0x1000 ) crc ^= DIVISOR << 4;
-		if ( ax & 0x0800 ) crc ^= DIVISOR << 3;
-		if ( ax & 0x0400 ) crc ^= DIVISOR << 2;
-		if ( ax & 0x0200 ) crc ^= DIVISOR << 1;
-		if ( ax & 0x0100 ) crc ^= DIVISOR;
-		crc &= 0xff;
+		if ( ax & 0x8000 )
+			ax ^= DIVISOR << 7;
+		if ( ax & 0x4000 )
+			ax ^= DIVISOR << 6;
+		if ( ax & 0x2000 )
+			ax ^= DIVISOR << 5;
+		if ( ax & 0x1000 )
+			ax ^= DIVISOR << 4;
+		if ( ax & 0x0800 )
+			ax ^= DIVISOR << 3;
+		if ( ax & 0x0400 )
+			ax ^= DIVISOR << 2;
+		if ( ax & 0x0200 )
+			ax ^= DIVISOR << 1;
+		if ( ax & 0x0100 )
+			ax ^= DIVISOR;
 	}
-	return crc;
+	return ax;
 }
 
 //----------- END OF FUNCTION crc8 ----------//
