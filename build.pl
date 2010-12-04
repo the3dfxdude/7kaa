@@ -11,7 +11,7 @@ is_file_newer("${top_dir}configure.pl", $opts_file) and die "Build options out o
 
 require $opts_file;
 
-my $parallel = (-x "${top_dir}parallel") ? "${top_dir}parallel" : which('parallel');
+my $parallel = test_parallel();
 
 my $targets_script = defined($ARGV[0]) ? $ARGV[0] : 'targets.pl';
 unless (-f $targets_script) {
@@ -21,6 +21,27 @@ unless (-f $targets_script) {
 do $targets_script;
 
 1;
+
+# test_parallel()
+# Some systems have a conflicting parallel command. Run this to make sure
+# we got the right one.
+sub test_parallel {
+  my $parallel_exe = (-x "${top_dir}parallel") ? "${top_dir}parallel" : which('parallel');
+
+  my $manager;
+  my $found_token = 0;
+  if (!open($manager, "$parallel_exe -H 2 echo {} ::: hi |")) {
+    return undef;
+  }
+  my $line = <$manager>;
+  chomp $line;
+  $line eq "hi" and $found_token = 1;
+  if (!close($manager) || !$found_token) {
+    return undef;
+  }
+  print "build.pl: parallel detected at $parallel_exe\n";
+  return $parallel_exe;
+}
 
 # which($exe_name)
 # Perl version to avoid using the system command that does not always exist.
