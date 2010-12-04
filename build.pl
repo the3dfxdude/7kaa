@@ -283,7 +283,7 @@ sub build_targets {
       }
 
       my $manager;
-      if (!open($manager, "|-", "$parallel -u -H 1 --verbose '$cmd'")) {
+      if (!open($manager, "|-", "$parallel -H 2 --verbose '$cmd'")) {
         print "build.pl: couldn't start the parallel build mananger.";
         exit 1;
       }
