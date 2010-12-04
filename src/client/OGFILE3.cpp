@@ -525,21 +525,14 @@ static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
 	visit<int32_t>(v, &u->last_load_goods_date);
 }
 
+enum { UNIT_MARINE_DERIVED_RECORD_SIZE = 145 };
+
 //--------- Begin of function UnitMarine::read_derived_file ---------//
 int UnitMarine::read_derived_file(File* filePtr)
 {
-	FileReader r;
-	FileReaderVisitor v;
-
-	if (!r.init(filePtr))
+	if (!read_with_record_size(filePtr, this, &visit_unit_marine_derived,
+										UNIT_MARINE_DERIVED_RECORD_SIZE))
 		return 0;
-
-	v.init(&r);
-
-	v.skip(2); /* record size */
-	visit_unit_marine_derived(&v, this);
-
-	r.deinit();
 
 	// ------- post-process the data read --------//
 	splash.sprite_info = sprite_res[splash.sprite_id];
@@ -548,6 +541,12 @@ int UnitMarine::read_derived_file(File* filePtr)
 	return 1;
 }
 //--------- End of function UnitMarine::read_derived_file ---------//
+
+int UnitMarine::write_derived_file(File *filePtr)
+{
+	return write_with_record_size(filePtr, this, &visit_unit_marine_derived,
+											UNIT_MARINE_DERIVED_RECORD_SIZE);
+}
 
 
 //*****//
@@ -2388,5 +2387,4 @@ int NewsArray::read_file(File* filePtr)
    return DynArray::read_file(filePtr);
 }
 //--------- End of function NewsArray::read_file ---------------//
-
-
+/* vim:set ts=3 sw=3: */

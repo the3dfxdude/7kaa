@@ -176,6 +176,7 @@ public:
 	int	can_resign();
 
 	int   read_derived_file(File *);
+	int   write_derived_file(File *);
 	virtual void fix_attack_info();         // set attack_info_array appropriately
 
 	//------- ai functions --------//
