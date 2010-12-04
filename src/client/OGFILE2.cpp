@@ -1066,6 +1066,10 @@ int TalkRes::read_file(File* filePtr)
 	if( !talk_msg_array.read_file(filePtr) )
 		return 0;
 
+	this->choice_question = NULL;
+	this->choice_question_second_line = NULL;
+	this->talk_choice_count = 0;
+
 	return 1;
 }
 //--------- End of function TalkRes::read_file ---------------//
@@ -1576,3 +1580,4 @@ int SeekPath::read_file(File* filePtr)
 }
 //--------- End of function SeekPath::read_file ---------------//
 //#### end alex 23/9 ####//
+/* vim:set sw=3 ts=3: */
