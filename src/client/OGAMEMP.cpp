@@ -2607,6 +2607,10 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						messageList.linkout(1);
 					messageList.linkin(recvPtr);
 					mRefreshFlag |= MGOPTION_IN_MESSAGE;
+					if (remote.is_host) {
+						// forward message to everyone
+						mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructChatMsg));
+					}
 					break;
 				// ###### patch begin Gilbert 22/1 ######//
 				case MPMSG_SEND_SYNC_TEST_LEVEL:
@@ -3176,6 +3180,13 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			mRefreshFlag |= MGOPTION_OUT_MESSAGE;
 			if(keyCode == KEY_RETURN && strlen(typingMsg.content) > 0)
 			{
+				if (remote.is_host) {
+					// A host can be guarenteed to receive a message right now
+					while (messageList.size() >= 4)
+						messageList.linkout(1);
+					messageList.linkin(&typingMsg);
+					mRefreshFlag |= MGOPTION_IN_MESSAGE;
+				}
 				// send message
 				mp_obj.send_stream(BROADCAST_PID, &typingMsg, sizeof(typingMsg) );
 
@@ -4336,6 +4347,10 @@ int Game::mp_select_load_option(char *fileName)
 						messageList.linkout(1);
 					messageList.linkin(recvPtr);
 					mRefreshFlag |= MGOPTION_IN_MESSAGE;
+					if (remote.is_host) {
+						// forward message to everyone
+						mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructChatMsg));
+					}
 					break;
 				// ###### patch begin Gilbert 22/1 ######//
 				case MPMSG_SEND_SYNC_TEST_LEVEL:
@@ -4538,6 +4553,13 @@ int Game::mp_select_load_option(char *fileName)
 			mRefreshFlag |= MGOPTION_OUT_MESSAGE;
 			if(keyCode == KEY_RETURN && strlen(typingMsg.content) > 0)
 			{
+				if (remote.is_host) {
+					// A host can be guarenteed to receive a message right now
+					while (messageList.size() >= 4)
+						messageList.linkout(1);
+					messageList.linkin(&typingMsg);
+					mRefreshFlag |= MGOPTION_IN_MESSAGE;
+				}
 				// send message
 				mp_obj.send_stream(BROADCAST_PID, &typingMsg, sizeof(typingMsg) );
 
