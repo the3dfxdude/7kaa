@@ -457,6 +457,7 @@ void MultiPlayerSDL::set_player_name(uint32_t id, char *name)
 //
 void MultiPlayerSDL::delete_player(uint32_t id)
 {
+	err_when(id < 1 || id > max_players);
 	if (player_pool[id-1].id) {
 		if (player_pool[id-1].socket) {
 			SDLNet_TCP_DelSocket(sock_set, player_pool[id-1].socket);
