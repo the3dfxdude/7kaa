@@ -832,7 +832,7 @@ void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)
 
 	err_when(who < 1 || who > max_players);
 
-	if (player_pool[who-1].id != who || !player_pool[who-1].connecting || who == my_player_id)
+	if (who == my_player_id)
 		return;
 
 	player_pool[who-1].address.host = a->host;
