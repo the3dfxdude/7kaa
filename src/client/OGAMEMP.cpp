@@ -2682,7 +2682,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			int len = mp_obj.receive_discovery(&who, &address);
 			if (len) {
 				MpStructNewPeerAddress msgPeer(who, len, address);
-				mp_obj.send_stream(hostPlayerId, &msgPeer, sizeof(msgPeer));
+				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));
 			}
 		}
 
@@ -4434,7 +4434,7 @@ int Game::mp_select_load_option(char *fileName)
 			int len = mp_obj.receive_discovery(&who, &address);
 			if (len) {
 				MpStructNewPeerAddress msgPeer(who, len, address);
-				mp_obj.send_stream(hostPlayerId, &msgPeer, sizeof(msgPeer));
+				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));
 			}
 		}
 
