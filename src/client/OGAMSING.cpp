@@ -97,6 +97,8 @@ static int	select_option();
 //
 void Game::single_player_game(int noAI)
 {
+	sys.is_mp_game = 0;
+
 	if( !select_option() )
 		return;
 
@@ -521,11 +523,6 @@ static int select_option()
 			}
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-			continue;
-		}
-		else if( sys.paused_flag || !sys.active_flag )
-		{
-			WaitMessage();
 			continue;
 		}
 #endif

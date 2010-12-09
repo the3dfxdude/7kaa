@@ -74,8 +74,6 @@ int VgaSDL::init()
 
    SDL_WM_SetCaption(WIN_TITLE, WIN_TITLE);
 
-   sys.active_flag = 1;
-
    return 1;
 }
 //-------- End of function VgaSDL::init ----------//
@@ -295,12 +293,12 @@ void VgaSDL::handle_messages()
 
       switch (event.type) {
       case SDL_ACTIVEEVENT:
-         sys.active_flag = event.active.gain;
-         if (sys.active_flag) 
+         if (event.active.gain) 
          {
             sys.need_redraw_flag = 1;
-            sys.unpause();
-         } else {
+            if (!sys.is_mp_game)
+               sys.unpause();
+         } else if (!sys.is_mp_game) {
             sys.pause();
          }
          break;

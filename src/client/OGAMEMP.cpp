@@ -523,6 +523,8 @@ static void ingame_disconnect_handler(DWORD playerId)
 void Game::multi_player_game(char *cmdLine)
 // ###### end Gilbert 13/2 #######//
 {
+	sys.is_mp_game = 1;
+
 	sub_game_mode = 0;
 	info.init_random_seed(0);			// initialize the random seed
 

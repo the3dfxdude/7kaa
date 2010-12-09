@@ -112,6 +112,8 @@ Sys::Sys()
    common_data_buf = mem_add( COMMON_DATA_BUF_SIZE );
 
    view_mode = MODE_NORMAL;         // the animation mode
+
+   is_mp_game = 0;
 }
 //----------- End of function Sys::Sys -----------//
 
@@ -697,7 +699,7 @@ void Sys::main_loop(int isLoadedGame)
 
    while( 1 )
    {
-      if ( !paused_flag && active_flag )
+      if (!paused_flag)
       {
          // #### begin Gilbert 31/10 ######//
          int rc = 0;
@@ -1017,6 +1019,7 @@ void Sys::pause()
    if( paused_flag )
       return;
 
+   // TODO: The following should occur from an activation event
    vga.flag_redraw();
 
    paused_flag = TRUE;
@@ -1031,35 +1034,10 @@ void Sys::unpause()
    if( !paused_flag )
       return;
 
-   // ####### begin Gilbert 3/11 #######//
-   //if( GetForegroundWindow() != main_hwnd )
-     // return;
-   // ####### end Gilbert 3/11 #######//
-
-   if( !restore() )
-   {
-      //-----------------------------------------------------//
-      //  we are unable to restore, this can happen when
-      //  the screen resolution or bitdepth has changed
-      //  we just reload all the art again and re-create
-      //  the front and back buffers.  this is a little
-      //  overkill we could handle a screen res change by
-      //  just recreating the front and back buffers we dont
-      //  need to redo the art, but this is way easier.
-      //-----------------------------------------------------//
-
-      if (init_directx())
-      {
-         if( !restore() )     // if still not successful, quit
-            return;
-      }
-   }
-
    // ####### begin Gilbert 31/10 #######//
+   // TODO: The following should occur from an activation event
    mouse.update_skey_state();       // update ctrl/shift/alt key state after switch task
    // ####### end Gilbert 31/10 #######//
-
-   //---- restore the saved screen before killing the focus ----//
 
    paused_flag = FALSE;
 }
@@ -1067,6 +1045,8 @@ void Sys::unpause()
 
 
 //-------- Begin of function Sys::restore --------//
+//
+// TODO: This should be moved into Vga, as well as various bits of init_directx()
 //
 int Sys::restore()
 {
