@@ -636,7 +636,7 @@ void Sys::main_loop(int isLoadedGame)
    remote.enable_process_queue();
    remote_send_success_flag = 1;
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
    char longLogSuffix = 'A';
    if( remote.is_enable() )
    {
@@ -744,7 +744,7 @@ void Sys::main_loop(int isLoadedGame)
                LOG_BEGIN;
                m.unlock_seed();
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
                if( remote.is_enable() )
                {
                   long_log->printf("begin process frame %d\n", frame_count);
@@ -832,7 +832,7 @@ void Sys::main_loop(int isLoadedGame)
          if( config.frame_speed == 0 || day_frame_count == 0)
             music.yield();
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
          if( rc && remote.is_enable() && day_frame_count == 0 )
          {
             if( long_log)
@@ -906,7 +906,7 @@ void Sys::main_loop(int isLoadedGame)
 
    vga_front.lock_buf();
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
    if(remote.is_enable())
    {
       if(long_log)

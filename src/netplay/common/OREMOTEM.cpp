@@ -213,7 +213,7 @@ void RemoteMsg::queue_header()
 //
 void RemoteMsg::queue_trailer()
 {
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 	long_log->printf("Queue trailer of nation %d\n", *(short *)data_buf);
 #endif
 }
@@ -448,7 +448,7 @@ void RemoteMsg::tell_random_seed()
 	{
 		if( lastRemoteSeed != remoteSeed )
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 //			delete long_log;
 //			long_log = NULL;
 #endif
@@ -474,7 +474,7 @@ void RemoteMsg::request_save_game()
 {
 	err_when( id != MSG_REQUEST_SAVE );
 	// message struct : <DWORD> frame when the game should save
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 	long_log->printf("Request save on %d\n", *(DWORD*)data_buf);
 #endif
 	sys.mp_request_save( *(DWORD*)data_buf);
@@ -499,7 +499,7 @@ void RemoteMsg::unit_stop()
 
 	if(shortPtr[0] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("stop units : ");
 		for(int i = 0; i < shortPtr[0]; ++i)
 		{
@@ -533,7 +533,7 @@ void RemoteMsg::unit_move()
 
 	if( shortPtr[2] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("move to (%d,%d), units : ", shortPtr[0], shortPtr[1]);
 		for(int i = 0; i < shortPtr[2]; ++i)
 		{
@@ -561,7 +561,7 @@ void RemoteMsg::unit_set_force_move()
 	if( shortPtr[0] > 0)
 	{
 		int i;
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("set force move to , units : ");
 		for(i = 0; i < shortPtr[0]; ++i)
 		{
@@ -603,7 +603,7 @@ void RemoteMsg::unit_attack()
 
 	if( shortPtr[3] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("attack (%d,%d), units : ", shortPtr[0], shortPtr[1]);
 		for(int i = 0; i < shortPtr[3]; ++i)
 		{
@@ -641,7 +641,7 @@ void RemoteMsg::unit_assign()
 
 	if( shortPtr[2] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("assign to (%d,%d), units : ", shortPtr[0], shortPtr[1]);
 		for(int i = 0; i < shortPtr[2]; ++i)
 		{
@@ -757,7 +757,7 @@ void RemoteMsg::unit_build_firm()
 
 	if( unitCount > 0 )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("unit %d build firm %d at (%d,%d)\n", shortPtr[0], shortPtr[3], shortPtr[1], shortPtr[2]);
 #endif
 		unit_array[*shortPtr]->build_firm( shortPtr[1], shortPtr[2],
@@ -778,7 +778,7 @@ void RemoteMsg::unit_burn()
 
 	if( unitCount > 0 )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("unit %d burn at (%d,%d)\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 		unit_array[*shortPtr]->burn(shortPtr[1], shortPtr[2], COMMAND_REMOTE);
@@ -797,7 +797,7 @@ void RemoteMsg::units_settle()
 
 	if( shortPtr[2] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("settle at (%d,%d), units : ", shortPtr[0], shortPtr[1]);
 		for(int i = 0; i < shortPtr[2]; ++i)
 		{
@@ -842,7 +842,7 @@ void RemoteMsg::unit_set_rank()
 	//	unit_array[*shortPtr]->set_rank(shortPtr[1]);
 	if( unitCount > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("unit %d promote/demote to %d\n", shortPtr[0], shortPtr[1]);
 #endif
 		switch(unit_array[*shortPtr]->rank_id)
@@ -870,7 +870,7 @@ void RemoteMsg::unit_dismount()
 
 	if( unitCount > 0 )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("unit %d dismount\n", shortPtr[0]);
 #endif
 		UnitVehicle *uv = (UnitVehicle *) unit_array[*shortPtr];
@@ -893,7 +893,7 @@ void RemoteMsg::unit_reward()
 
 	if( unitCount > 0 )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("nation %d rewards unit %d\n", shortPtr[1], shortPtr[0]);
 #endif
 		unit_array[*shortPtr]->reward(shortPtr[1]);
@@ -944,7 +944,7 @@ void RemoteMsg::unit_resign()
 	if( unitCount > 0 && unit_array[*shortPtr]->is_nation(shortPtr[1])
 		&& unit_array[*shortPtr]->can_resign() )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("nation %d resigns unit %d\n", shortPtr[1], shortPtr[0]);
 #endif
 		unit_array[*shortPtr]->resign(COMMAND_REMOTE);
@@ -964,7 +964,7 @@ void RemoteMsg::units_assign_to_ship()
 
 	if( shortPtr[3] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("assign to ship at (%d,%d), units : ", shortPtr[0], shortPtr[1]);
 		for(int i = 0; i < shortPtr[3]; ++i)
 		{
@@ -991,7 +991,7 @@ void RemoteMsg::units_ship_to_beach()
 
 	if( shortPtr[2] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("move ships to beach at (%d,%d), units : ", shortPtr[0], shortPtr[1]);
 		for(int i = 0; i < shortPtr[2]; ++i)
 		{
@@ -1020,7 +1020,7 @@ void RemoteMsg::unit_succeed_king()
 	if( unitCount > 0 && !nation_array.is_deleted(shortPtr[1]) && 
 		unit_array[*shortPtr]->nation_recno == shortPtr[1] )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("unit %d succeed nation %d\n", shortPtr[0], shortPtr[1]);
 #endif
 		nation_array[shortPtr[1]]->succeed_king(*shortPtr);
@@ -1041,7 +1041,7 @@ void RemoteMsg::units_return_camp()
 
 	if( *shortPtr > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("return to camp, units : ");
 		for(int i = 0; i < *shortPtr; ++i)
 		{
@@ -1075,7 +1075,7 @@ void RemoteMsg::caravan_change_goods()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("caravan %d change goods row %d, %d\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 			caravanPtr = (UnitCaravan *)unitPtr;
@@ -1109,7 +1109,7 @@ void RemoteMsg::caravan_set_stop()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("caravan %d set stop %d at (%d,%d)\n", shortPtr[0], shortPtr[1], shortPtr[2], shortPtr[3]);
 #endif
 			caravanPtr = (UnitCaravan *)unitPtr;
@@ -1141,7 +1141,7 @@ void RemoteMsg::caravan_del_stop()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("caravan %d delete stop %d, %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			caravanPtr = (UnitCaravan *)unitPtr;
@@ -1174,7 +1174,7 @@ void RemoteMsg::ship_unload_unit()
 			if( shortPtr[1] <= shipPtr->unit_count )
 			{
 				// check if the unit is a ship
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 				long_log->printf("ship %d unload unit %d\n", shortPtr[0], shortPtr[1]);
 #endif
 				shipPtr->unload_unit(shortPtr[1], COMMAND_REMOTE);
@@ -1207,7 +1207,7 @@ void RemoteMsg::ship_unload_all_units()
 			&& unitPtr->sprite_info->sprite_sub_type == 'M')
 		{
 			// check if the unit is a ship
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("ship %d unload all units\n", shortPtr[0]);
 #endif
 			UnitMarine *shipPtr = (UnitMarine *)unitPtr;
@@ -1243,7 +1243,7 @@ void RemoteMsg::ship_change_goods()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("ship %d change goods, row %d, %d\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 			shipPtr = (UnitMarine *)unitPtr;
@@ -1276,7 +1276,7 @@ void RemoteMsg::ship_set_stop()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("ship %d set stop %d at (%d,%d)\n", shortPtr[0], shortPtr[1], shortPtr[2], shortPtr[3]);
 #endif
 			shipPtr = (UnitMarine *)unitPtr;
@@ -1306,7 +1306,7 @@ void RemoteMsg::ship_del_stop()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("ship %d delete stop %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			shipPtr = (UnitMarine *)unitPtr;
@@ -1336,7 +1336,7 @@ void RemoteMsg::ship_change_mode()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("ship %d changes mode %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			shipPtr = (UnitMarine *)unitPtr;
@@ -1361,7 +1361,7 @@ void RemoteMsg::change_spy_nation()
 
 	if( unitCount > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("unit %d changes nation %d\n", shortPtr[0], shortPtr[1]);
 #endif
 		unit_array[*shortPtr]->spy_change_nation(shortPtr[1], COMMAND_REMOTE);
@@ -1391,7 +1391,7 @@ void RemoteMsg::notify_cloaked_nation()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("unit %d notify cloaked nation %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			spy_array[unit_array[*shortPtr]->spy_recno]->notify_cloaked_nation_flag
@@ -1419,7 +1419,7 @@ void RemoteMsg::unit_change_aggressive_mode()
 
 	if( unitCount > 0 )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("unit %d %s aggressive mode\n", shortPtr[0], shortPtr[1] ? "set" : "clear");
 #endif
 		unit_array[*shortPtr]->aggressive_mode = (char) shortPtr[1];
@@ -1456,7 +1456,7 @@ void RemoteMsg::spy_assassinate()
 	short *shortPtr = (short *)data_buf;
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d assassinate unit %d", shortPtr[0], shortPtr[1]);
 #endif
 		spy_array[*shortPtr]->assassinate( shortPtr[1], COMMAND_REMOTE );
@@ -1477,7 +1477,7 @@ void RemoteMsg::firm_sell()
 
 	if( validate_firm(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("sell firm %d\n", shortPtr[0]);
 #endif
 		firm_array[*shortPtr]->sell_firm(COMMAND_REMOTE);
@@ -1494,7 +1494,7 @@ void RemoteMsg::firm_cancel()
 
 	if( validate_firm(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d cancel construction\n", shortPtr[0]);
 #endif
 		firm_array[*shortPtr]->cancel_construction(COMMAND_REMOTE);
@@ -1512,7 +1512,7 @@ void RemoteMsg::firm_destruct()
 
 	if( validate_firm(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("destruct firm %d\n", shortPtr[0]);
 #endif
 		firm_array[*shortPtr]->destruct_firm(COMMAND_REMOTE);
@@ -1562,7 +1562,7 @@ void RemoteMsg::mobilize_worker()
 
 	if( validate_firm(*shortPtr) && shortPtr[1] <= firm_array[*shortPtr]->worker_count)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d mobilize worker %d\n", shortPtr[0], shortPtr[1]);
 #endif
 		firm_array[*shortPtr]->mobilize_worker(shortPtr[1],COMMAND_REMOTE);
@@ -1580,7 +1580,7 @@ void RemoteMsg::mobilize_overseer()
 
 	if( validate_firm(*shortPtr) && firm_array[*shortPtr]->overseer_recno )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d mobilize overseer\n", shortPtr[0]);
 #endif
 		firm_array[*shortPtr]->assign_overseer(0);
@@ -1598,7 +1598,7 @@ void RemoteMsg::mobilize_builder()
 
 	if( validate_firm(*shortPtr) && firm_array[*shortPtr]->builder_recno )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d mobilize builder\n", shortPtr[0]);
 #endif
 		firm_array[*shortPtr]->set_builder(0);
@@ -1623,7 +1623,7 @@ void RemoteMsg::firm_toggle_link_firm()
 			&& (linkedFirmRecno = firmPtr->linked_firm_array[shortPtr[1]-1])
 			&& validate_firm(linkedFirmRecno, 1) )
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("firm %d %s firm link %d\n", shortPtr[0], 
 				shortPtr[2] ? "set":"clear", shortPtr[1]);
 #endif
@@ -1651,7 +1651,7 @@ void RemoteMsg::firm_toggle_link_town()
 			&& (linkedTownRecno = firmPtr->linked_town_array[shortPtr[1]-1])
 			&& validate_town(linkedTownRecno, 1) )
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("firm %d %s town link %d\n", shortPtr[0], 
 				shortPtr[2] ? "set":"clear", shortPtr[1]);
 #endif
@@ -1683,7 +1683,7 @@ void RemoteMsg::firm_pull_town_people()
 
 	if( validate_firm(*shortPtr) && validate_town(shortPtr[1]) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d %s pull race %d from town %d\n", shortPtr[0], 
 			shortPtr[3] ? "forcely" : "", shortPtr[2], shortPtr[1]);
 #endif
@@ -1702,7 +1702,7 @@ void RemoteMsg::firm_set_worker_home()
 
 	if( validate_firm(*shortPtr) && validate_town(shortPtr[1]) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d workder %d migrate to town %d\n", shortPtr[0], shortPtr[2], shortPtr[1]);
 #endif
 		firm_array[*shortPtr]->set_worker_home_town(shortPtr[1], COMMAND_REMOTE, shortPtr[2]);
@@ -1726,7 +1726,7 @@ void RemoteMsg::firm_bribe()
 			shortPtr[2] >= 1 && shortPtr[2] <= firm_array[*shortPtr]->worker_count) )
 	// ###### end Gilbert 10/11 #######//
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d, spy %d briber worker %d\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 		firm_array[*shortPtr]->spy_bribe(shortPtr[3], shortPtr[1], shortPtr[2]);
@@ -1744,7 +1744,7 @@ void RemoteMsg::firm_capture()
 
 	if( validate_firm(*shortPtr, 1) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d, capture by nation %d\n", shortPtr[0], shortPtr[1]);
 #endif
 		firm_array[*shortPtr]->capture_firm(shortPtr[1]);
@@ -1764,7 +1764,7 @@ void RemoteMsg::camp_patrol()
 		{
 			if(camp->overseer_recno || camp->worker_count > 0)
 			{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 				long_log->printf("camp %d patrols\n", *(short *)data_buf);
 #endif
 				camp->patrol();
@@ -1790,7 +1790,7 @@ void RemoteMsg::toggle_camp_patrol()
 		FirmCamp *camp = firm_array[*shortPtr]->cast_to_FirmCamp();
 		if(camp)
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("camp %d %s patrol flag\n", shortPtr[0],
 				shortPtr[1] ? "set":"clear");
 #endif
@@ -1821,7 +1821,7 @@ void RemoteMsg::firm_reward()
 		if( shortPtr[1] == 0 && firmPtr->overseer_recno ||
 			shortPtr[1] >= 1 && shortPtr[1] <= firmPtr->worker_count )
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("firm %d reward worker %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			firmPtr->reward(shortPtr[1], COMMAND_REMOTE);
@@ -1843,7 +1843,7 @@ void RemoteMsg::inn_hire()
 		FirmInn *inn = firm_array[*shortPtr]->cast_to_FirmInn();
 		if(inn)
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("inn %d hire %d, by nation %d\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 			inn->hire(shortPtr[1]);
@@ -1878,7 +1878,7 @@ void RemoteMsg::market_scrap()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("market %d scrap good row %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			MarketGoods* marketGoods = firmMarket->market_goods_array + shortPtr[1];
@@ -1919,7 +1919,7 @@ void RemoteMsg::market_hire_caravan()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("market %d hire caravan\n", shortPtr[0]);
 #endif
 			market->hire_caravan(COMMAND_REMOTE);
@@ -1944,7 +1944,7 @@ void RemoteMsg::research_start()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("tower of science %d start research tech %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			research->start_research(shortPtr[1], COMMAND_REMOTE);
@@ -1970,7 +1970,7 @@ void RemoteMsg::build_weapon()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("war factory %d start building unit id %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			warFactory->add_queue(shortPtr[1]);
@@ -1996,7 +1996,7 @@ void RemoteMsg::cancel_weapon()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("war factory %d cancel building unit id %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			warFactory->remove_queue(shortPtr[1]);
@@ -2022,7 +2022,7 @@ void RemoteMsg::skip_build_weapon()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("war factory %d skip weapon building\n", shortPtr[0]);
 #endif
 			warFactory->cancel_build_unit();
@@ -2047,7 +2047,7 @@ void RemoteMsg::build_ship()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("harbor %d start building unit id %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			// harbor->build_ship(shortPtr[1], COMMAND_REMOTE);
@@ -2081,7 +2081,7 @@ void RemoteMsg::sail_ship()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("ship %d depart from harbor %d\n", shortPtr[1], shortPtr[0]);
 #endif
 			harbor->sail_ship(shortPtr[1], COMMAND_REMOTE);
@@ -2107,7 +2107,7 @@ void RemoteMsg::skip_build_ship()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("harbr %d skip ship building\n", shortPtr[0]);
 #endif
 			harbor->cancel_build_unit();
@@ -2135,7 +2135,7 @@ void RemoteMsg::factory_change_product()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("factory %d change product to %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			factory->product_raw_id = shortPtr[1];
@@ -2167,7 +2167,7 @@ void	RemoteMsg::base_mobilize_prayer()
 		}
 		else
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("seat of power %d mobilize prayer\n", shortPtr[0]);
 #endif
 			base->resign_prayer();
@@ -2193,7 +2193,7 @@ void RemoteMsg::invoke_god()
 			// ##### begin Gilbert 10/11 ########//
 			if( base->can_invoke() )
 			{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 				long_log->printf("seat of power %d invoke god\n", shortPtr[0]);
 #endif
 				base->invoke_god();
@@ -2212,7 +2212,7 @@ void RemoteMsg::town_recruit()
 	short *shortPtr = (short *)data_buf;
 	if( validate_town(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("town %d train skill %d of race %d\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 		if( shortPtr[2] > 0 )
@@ -2246,7 +2246,7 @@ void RemoteMsg::town_skip_recruit()
 	short *shortPtr = (short *)data_buf;
 	if( validate_town(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("town %d skip unit training\n", shortPtr[0]);
 #endif
 		town_array[*shortPtr]->cancel_train_unit();
@@ -2267,7 +2267,7 @@ void RemoteMsg::town_migrate()
 
 	if( validate_town(*shortPtr) && validate_town(shortPtr[1]) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("town %d race %d migrate to town %d\n", shortPtr[0], shortPtr[2], shortPtr[1]);
 #endif
 		town_array[*shortPtr]->migrate_to(shortPtr[1], COMMAND_REMOTE, shortPtr[2]);
@@ -2286,7 +2286,7 @@ void RemoteMsg::town_collect_tax()
 
 	if( validate_town(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("town %d collect tax\n", shortPtr[0]);
 #endif
 		town_array[*shortPtr]->collect_tax(COMMAND_REMOTE);
@@ -2306,7 +2306,7 @@ void RemoteMsg::town_reward()
 
 	if( validate_town(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("town %d reward\n", shortPtr[0]);
 #endif
 		town_array[*shortPtr]->reward(COMMAND_REMOTE);
@@ -2325,7 +2325,7 @@ void RemoteMsg::town_toggle_link_firm()
 
 	if( validate_town(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("town %d %s firm link %d\n", shortPtr[0], 
 			shortPtr[2] ? "set" : "clear", shortPtr[1]);
 #endif
@@ -2370,7 +2370,7 @@ void RemoteMsg::town_toggle_link_town()
 			&& (linkedTownRecno = townPtr->linked_town_array[shortPtr[1]-1])
 			&& validate_town(linkedTownRecno, 1) )
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("town %d %s town link %d\n", shortPtr[0], 
 				shortPtr[2] ? "set" : "clear", shortPtr[1]);
 #endif
@@ -2394,7 +2394,7 @@ void RemoteMsg::town_auto_tax()
 	{
 		if( validate_town(*shortPtr) )
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("town %d auto collect tax at loyal %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			town_array[*shortPtr]->set_auto_collect_tax_loyalty(shortPtr[1]);
@@ -2406,7 +2406,7 @@ void RemoteMsg::town_auto_tax()
 	{
 		short nationRecno = -*shortPtr;
 		err_when( !nationRecno );
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("nation %d auto collect tax at loyal %d\n", nationRecno, shortPtr[1]);
 #endif
 		if( !nation_array.is_deleted(nationRecno) )
@@ -2442,7 +2442,7 @@ void RemoteMsg::town_auto_grant()
 	{
 		if( validate_town(*shortPtr) )
 		{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("town %d auto grant at loyal %d\n", shortPtr[0], shortPtr[1]);
 #endif
 			town_array[*shortPtr]->set_auto_grant_loyalty(shortPtr[1]);
@@ -2454,7 +2454,7 @@ void RemoteMsg::town_auto_grant()
 	{
 		short nationRecno = -*shortPtr;
 		err_when( !nationRecno );
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 			long_log->printf("nation %d auto grant at loyal %d\n", nationRecno, shortPtr[1]);
 #endif
 		if( !nation_array.is_deleted(nationRecno) )
@@ -2502,7 +2502,7 @@ void RemoteMsg::wall_build()
 
 	if( !nation_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("nation %d build wall at (%d,%d)\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 		world.build_wall_tile( shortPtr[1], shortPtr[2], shortPtr[0], COMMAND_REMOTE);
@@ -2520,7 +2520,7 @@ void RemoteMsg::wall_destruct()
 
 	if( !nation_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("nation %d destruct wall at (%d,%d)\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
 		world.destruct_wall_tile( shortPtr[1], shortPtr[2], shortPtr[0], COMMAND_REMOTE);
@@ -2538,7 +2538,7 @@ void RemoteMsg::spy_cycle_action()
 
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d change action\n", shortPtr[0]);
 #endif
 		spy_array[*shortPtr]->set_next_action_mode();
@@ -2555,7 +2555,7 @@ void RemoteMsg::spy_leave_town()
 
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d leave town\n", shortPtr[0]);
 #endif
 		//##### trevor 10/10 #####//
@@ -2581,7 +2581,7 @@ void RemoteMsg::spy_leave_firm()
 
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d leave firm\n", shortPtr[0]);
 #endif
 		//##### trevor 10/10 #####//
@@ -2607,7 +2607,7 @@ void RemoteMsg::spy_capture_firm()
 
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d capture firm\n", shortPtr[0]);
 #endif
 		spy_array[*shortPtr]->capture_firm();
@@ -2626,7 +2626,7 @@ void RemoteMsg::spy_drop_identity()
 
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d drop identity\n", shortPtr[0]);
 #endif
 		spy_array[*shortPtr]->drop_spy_identity();
@@ -2645,7 +2645,7 @@ void RemoteMsg::spy_reward()
 
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d reward\n", shortPtr[0]);
 #endif
 		spy_array[*shortPtr]->reward(COMMAND_REMOTE);
@@ -2664,7 +2664,7 @@ void RemoteMsg::spy_exposed()
 
 	if( !spy_array.is_deleted(*shortPtr) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d set exposed\n", shortPtr[0]);
 #endif
 		spy_array[*shortPtr]->set_exposed(COMMAND_REMOTE);
@@ -2679,7 +2679,7 @@ void RemoteMsg::send_talk_msg()
 	err_when( id != MSG_SEND_TALK_MSG);
 	// packet structure : <talkMsg>
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 	TalkMsg *talkMsg = (TalkMsg *)data_buf;
 	long_log->printf("talk message from %d to %d, id %d, para1=%d, para2=%d\n",
 		talkMsg->from_nation_recno, talkMsg->to_nation_recno,
@@ -2702,7 +2702,7 @@ void RemoteMsg::reply_talk_msg()
 
 	if( !talk_res.is_talk_msg_deleted(talkMsgRecno) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("reply talk message %d, %d\n", talkMsgRecno, data_buf[sizeof(int)]);
 #endif
 		talk_res.reply_talk_msg( talkMsgRecno, data_buf[sizeof(int)], COMMAND_REMOTE);
@@ -2724,7 +2724,7 @@ void RemoteMsg::nation_contact()
 	if( !nation_array.is_deleted(*shortPtr) && !nation_array.is_deleted(shortPtr[1]) )
 	{
 		//####### begin trevor 30/8 #######//
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("nation %d discover nation %d\n", shortPtr[0], shortPtr[1]);
 #endif
 		nation_array[shortPtr[0]]->establish_contact(shortPtr[1]);
@@ -2744,7 +2744,7 @@ void RemoteMsg::nation_set_should_attack()
 	err_when( *shortPtr != remote.nation_processing );
 	if( !nation_array.is_deleted(*shortPtr) && !nation_array.is_deleted(shortPtr[1]) )
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("nation %d %s instruct attack nation %d\n", shortPtr[0],
 			shortPtr[2] ? "set":"clear", shortPtr[1]);
 #endif
@@ -2822,7 +2822,7 @@ void RemoteMsg::chat()
 	int toNationRecno   = shortPtr[0];
    int fromNationRecno = shortPtr[1];
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 	long_log->printf("nation %d send chat message to %d\n", 
 		shortPtr[1],	shortPtr[0]);
 #endif
@@ -2870,7 +2870,7 @@ void RemoteMsg::unit_add_way_point()
 
 	if( shortPtr[2] > 0)
 	{
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("add way point at (%d,%d)\n", shortPtr[0], shortPtr[1]);
 		for(int i = 0; i < shortPtr[2]; ++i)
 		{
@@ -2901,7 +2901,7 @@ void RemoteMsg::god_cast()
 	{
 		Unit *unitPtr = unit_array[*shortPtr];
 		err_when(unit_res[unitPtr->unit_id]->unit_class != UNIT_CLASS_GOD);
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
 		long_log->printf("god %d cast power %d at(%d,%d)\n", shortPtr[0], shortPtr[3],
 			shortPtr[1], shortPtr[2]);
 #endif
