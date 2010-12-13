@@ -198,7 +198,9 @@ int ErrorControl::is_player_valid(char ecPlayerId)
 
 void ErrorControl::set_player_lost(char ecPlayerId)
 {
+	mp_ptr->delete_player(dp_id[ecPlayerId-1]);
 	dp_id[ecPlayerId-1] = 0;
+	connecting_player_count--;
 
 	clear_acked_frame();		// some send_queue message may be waiting this player's ack
 }
@@ -224,7 +226,6 @@ void ErrorControl::yield()
 		if( dp_id[p-1] && !mp_ptr->is_player_connecting(dp_id[p-1]) )
 		{
 			set_player_lost(p);
-			connecting_player_count--;
 		}
 	}
 
@@ -240,7 +241,6 @@ void ErrorControl::yield()
 				if( dp_id[p-1] && !mp_ptr->is_player_connecting(dp_id[p-1]) )
 				{
 					set_player_lost(p);
-					connecting_player_count--;
 				}
 			}
 		}

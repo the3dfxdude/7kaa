@@ -1313,41 +1313,14 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
       DEBUG_LOG("a nation not ready");
       DEBUG_LOG(nationRecno);
 
-      if( m.get_time() >= last_frame_time+RESEND_TIME_OUT )
+      if (m.get_time() >= last_frame_time + CONNECTION_LOST_TIME_OUT)
       {
          //---- if it has been time out for too long, carry out connection lost handling ---//
-
-         if( // m.get_time() >= last_frame_time+CONNECTION_LOST_TIME_OUT ||
-            !ec_remote.is_player_valid(nationRecno))
-         {
-            DEBUG_LOG( "Connection Lost" );
-            // ###### begin Gilbert 24/10 ######//
-            // box.msg( "Connection Lost!" );         //**BUGHERE, should have a function to set all units, structures of this nation to AI
-            news_array.multi_connection_lost(nationRecno);
-            // may allow save game here, ask user whether to save the game
-            // ###### end Gilbert 24/10 ######//
-				nationPtr->nation_type = NATION_AI;    // let computer take over the nation
-				nation_array.ai_nation_count++;
-			}
-
-         //------- re-send the message -------//
-
-         /* re-send is now done by ec_remote
-         else if( m.get_time() >= last_resend_time + RESEND_AGAIN_TIME_OUT )     // resent once per half second
-         {
-            DEBUG_LOG( "send retransmit request" );
-            RemoteMsg* remoteMsg = remote.new_msg(MSG_REQUEST_RESEND, sizeof(int) + sizeof(DWORD) );
-
-            DWORD* dwordPtr = (DWORD*) remoteMsg->data_buf;
-
-            dwordPtr[0] = (~nation_array)->player_id;          // send to us
-            dwordPtr[1] = frame_count;                         // request it to send us queue of this frame
-
-            remote.send_free_msg( remoteMsg, nation_array[nationRecno]->player_id );      // send to that nationRecno only
-
-            last_resend_time = m.get_time();
-         }
-         */
+         ec_remote.set_player_lost(nationRecno);
+         DEBUG_LOG("Connection Lost");
+         news_array.multi_connection_lost(nationRecno);
+         nationPtr->nation_type = NATION_AI;    // let computer take over the nation
+         nation_array.ai_nation_count++;
       }
 
       return 0;
