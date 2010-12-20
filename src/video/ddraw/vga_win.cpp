@@ -130,23 +130,39 @@ static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
          break;
 
       case WM_ACTIVATEAPP:
-         // ####### begin Gilbert 3/11 #######//
-         // sys.active_flag = (BOOL)wParam && GetForegroundWindow() == hWnd && !IsIconic(hWnd);
-         sys.active_flag = (BOOL)wParam && !IsIconic(hWnd);
-         // ####### end Gilbert 3/11 #######//
-
          //--------------------------------------------------------------//
          // while we were not-active something bad happened that caused us
          // to pause, like a surface restore failing or we got a palette
          // changed, now that we are active try to fix things
          //--------------------------------------------------------------//
 
-         if( sys.active_flag )
+         if ((BOOL)wParam && !IsIconic(hWnd))
          {
-            sys.unpause();
+            if (!sys.is_mp_game) {
+               if (!sys.restore())
+               {
+                  //-----------------------------------------------------//
+                  //  we are unable to restore, this can happen when
+                  //  the screen resolution or bitdepth has changed
+                  //  we just reload all the art again and re-create
+                  //  the front and back buffers.  this is a little
+                  //  overkill we could handle a screen res change by
+                  //  just recreating the front and back buffers we dont
+                  //  need to redo the art, but this is way easier.
+                  //-----------------------------------------------------//
+
+                  if (sys.init_directx())
+                  {
+                     if (!sys.restore())     // if still not successful, quit
+                        return;
+                  }
+               }
+
+               sys.unpause();
+            }
             sys.need_redraw_flag = 1;      // for Sys::disp_frame to redraw the screen
          }
-         else
+         else if (!sys.is_mp_game)
             sys.pause();
          break;
 

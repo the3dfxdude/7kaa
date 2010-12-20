@@ -34,6 +34,13 @@
 	#define mp_obj mp_none
 	#define SessionIdType uint32_t
 	#define PlayerDesc NonePlayer
+#elif defined(USE_SDLNET)
+	#define PID_TYPE uint32_t
+	#define BROADCAST_PID 0
+	#define MultiPlayerType MultiPlayerSDL
+	#define mp_obj mp_sdl
+	#define SessionIdType uint32_t
+	#define PlayerDesc SDLPlayer
 #else
 	#error "A netplay backend must be specified."
 #endif

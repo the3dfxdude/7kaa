@@ -108,13 +108,16 @@ public:
 	int	poll_sessions();
 	void	sort_sessions(int sortType);
 	NoneSessionDesc *get_session(int i);
-	int	create_session(char *sessionName, int maxPlayers);
-	int	join_session(int currentSessionIndex );
+	int    create_session(char *sessionName, char *playerName, int maxPlayers);
+	int    join_session(int i, char *playerName);
 	void	close_session();
 	void	disable_join_session();		// so that new player cannot join
 
 	// -------- functions on player management -------//
-	int	create_player(char *friendlyName, char *formalName);
+	int         add_player(char *name, uint32_t id);
+	void        set_my_player_id(uint32_t id);
+	void        set_player_name(uint32_t id, char *name);
+	void        delete_player(uint32_t id);
 	void	poll_players();
 	NonePlayer *get_player(int i);
 	NonePlayer *search_player(uint32_t player_id);
@@ -126,6 +129,13 @@ public:
 	int	send(uint32_t toId, void * lpData, uint32_t dataSize);
 	int	send_stream(uint32_t toId, void * lpData, uint32_t dataSize);
 	char *receive(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
+	char *receive_stream(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
+
+	// ------- functions for peer discovery ------//
+	void send_discovery(void);
+	void receive_discovery(void);
+	void set_peer_socket(void *data);
+
 };
 
 extern MultiPlayerNone mp_none;

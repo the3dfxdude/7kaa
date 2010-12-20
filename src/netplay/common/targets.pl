@@ -1,3 +1,6 @@
+my @defines;
+my @includes;
+
 ## compiler flags ##
 @defines = qw( AMPLUS );
 if (defined($debug) && $debug) {
@@ -28,6 +31,8 @@ if (defined($video_backend)) {
 if (defined($netplay_backend)) {
   if ($netplay_backend =~ /none/i) {
     push (@defines, 'USE_NONETPLAY');
+  } elsif ($netplay_backend =~ /sdl_net/i) {
+    push (@defines, 'USE_SDLNET');
   }
 }
 if (defined($input_backend)) {
@@ -43,6 +48,15 @@ if (defined($input_backend)) {
 
 ## include paths ##
 @includes = qw( ../../../include );
+
+if (!$disable_wine && defined($wine_prefix)) {
+  push (@includes, "$wine_prefix/include/wine/windows",
+                   "$wine_prefix/include/wine/msvcrt");
+}
+
+if (defined($dxsdk_path)) {
+  push (@includes, "$dxsdk_path/include");
+}
 ## include paths ##
 
 @targets = qw(

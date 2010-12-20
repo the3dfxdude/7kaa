@@ -52,6 +52,8 @@ foreach my $i (@ARGV) {
     $cfg{audio_backend} = $1;
   } elsif ($i =~ /^--enable-multilib$/) {
     $cfg{enable_multilib} = 1;
+  } elsif ($i =~ /^--enable-sdlnet$/) {
+    $cfg{netplay_backend} = "sdl_net",
   } elsif ($i =~ /^--help$/) {
     print "Call configure.pl with any of the following options:\n";
     print "--disable-debug: Do not compile in extra debugging code\n";

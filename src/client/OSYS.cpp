@@ -112,6 +112,8 @@ Sys::Sys()
    common_data_buf = mem_add( COMMON_DATA_BUF_SIZE );
 
    view_mode = MODE_NORMAL;         // the animation mode
+
+   is_mp_game = 0;
 }
 //----------- End of function Sys::Sys -----------//
 
@@ -634,7 +636,7 @@ void Sys::main_loop(int isLoadedGame)
    remote.enable_process_queue();
    remote_send_success_flag = 1;
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
    char longLogSuffix = 'A';
    if( remote.is_enable() )
    {
@@ -697,7 +699,7 @@ void Sys::main_loop(int isLoadedGame)
 
    while( 1 )
    {
-      if ( !paused_flag && active_flag )
+      if (!paused_flag)
       {
          // #### begin Gilbert 31/10 ######//
          int rc = 0;
@@ -742,7 +744,7 @@ void Sys::main_loop(int isLoadedGame)
                LOG_BEGIN;
                m.unlock_seed();
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
                if( remote.is_enable() )
                {
                   long_log->printf("begin process frame %d\n", frame_count);
@@ -830,7 +832,7 @@ void Sys::main_loop(int isLoadedGame)
          if( config.frame_speed == 0 || day_frame_count == 0)
             music.yield();
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
          if( rc && remote.is_enable() && day_frame_count == 0 )
          {
             if( long_log)
@@ -904,7 +906,7 @@ void Sys::main_loop(int isLoadedGame)
 
    vga_front.lock_buf();
 
-#ifdef DEBUG
+#ifdef DEBUG_LONG_LOG
    if(remote.is_enable())
    {
       if(long_log)
@@ -1017,6 +1019,7 @@ void Sys::pause()
    if( paused_flag )
       return;
 
+   // TODO: The following should occur from an activation event
    vga.flag_redraw();
 
    paused_flag = TRUE;
@@ -1031,35 +1034,10 @@ void Sys::unpause()
    if( !paused_flag )
       return;
 
-   // ####### begin Gilbert 3/11 #######//
-   //if( GetForegroundWindow() != main_hwnd )
-     // return;
-   // ####### end Gilbert 3/11 #######//
-
-   if( !restore() )
-   {
-      //-----------------------------------------------------//
-      //  we are unable to restore, this can happen when
-      //  the screen resolution or bitdepth has changed
-      //  we just reload all the art again and re-create
-      //  the front and back buffers.  this is a little
-      //  overkill we could handle a screen res change by
-      //  just recreating the front and back buffers we dont
-      //  need to redo the art, but this is way easier.
-      //-----------------------------------------------------//
-
-      if (init_directx())
-      {
-         if( !restore() )     // if still not successful, quit
-            return;
-      }
-   }
-
    // ####### begin Gilbert 31/10 #######//
+   // TODO: The following should occur from an activation event
    mouse.update_skey_state();       // update ctrl/shift/alt key state after switch task
    // ####### end Gilbert 31/10 #######//
-
-   //---- restore the saved screen before killing the focus ----//
 
    paused_flag = FALSE;
 }
@@ -1067,6 +1045,8 @@ void Sys::unpause()
 
 
 //-------- Begin of function Sys::restore --------//
+//
+// TODO: This should be moved into Vga, as well as various bits of init_directx()
 //
 int Sys::restore()
 {
@@ -1333,41 +1313,14 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
       DEBUG_LOG("a nation not ready");
       DEBUG_LOG(nationRecno);
 
-      if( m.get_time() >= last_frame_time+RESEND_TIME_OUT )
+      if (m.get_time() >= last_frame_time + CONNECTION_LOST_TIME_OUT)
       {
          //---- if it has been time out for too long, carry out connection lost handling ---//
-
-         if( // m.get_time() >= last_frame_time+CONNECTION_LOST_TIME_OUT ||
-            !ec_remote.is_player_valid(nationRecno))
-         {
-            DEBUG_LOG( "Connection Lost" );
-            // ###### begin Gilbert 24/10 ######//
-            // box.msg( "Connection Lost!" );         //**BUGHERE, should have a function to set all units, structures of this nation to AI
-            news_array.multi_connection_lost(nationRecno);
-            // may allow save game here, ask user whether to save the game
-            // ###### end Gilbert 24/10 ######//
-				nationPtr->nation_type = NATION_AI;    // let computer take over the nation
-				nation_array.ai_nation_count++;
-			}
-
-         //------- re-send the message -------//
-
-         /* re-send is now done by ec_remote
-         else if( m.get_time() >= last_resend_time + RESEND_AGAIN_TIME_OUT )     // resent once per half second
-         {
-            DEBUG_LOG( "send retransmit request" );
-            RemoteMsg* remoteMsg = remote.new_msg(MSG_REQUEST_RESEND, sizeof(int) + sizeof(DWORD) );
-
-            DWORD* dwordPtr = (DWORD*) remoteMsg->data_buf;
-
-            dwordPtr[0] = (~nation_array)->player_id;          // send to us
-            dwordPtr[1] = frame_count;                         // request it to send us queue of this frame
-
-            remote.send_free_msg( remoteMsg, nation_array[nationRecno]->player_id );      // send to that nationRecno only
-
-            last_resend_time = m.get_time();
-         }
-         */
+         ec_remote.set_player_lost(nationRecno);
+         DEBUG_LOG("Connection Lost");
+         news_array.multi_connection_lost(nationRecno);
+         nationPtr->nation_type = NATION_AI;    // let computer take over the nation
+         nation_array.ai_nation_count++;
       }
 
       return 0;

@@ -147,6 +147,7 @@ private:
 	//------- multiplayer game functions -------//
 
 	int 			mp_select_mode(char *saveGameName);
+	int			mp_join_session(int session_id, char *player_name);
 	int			mp_select_option(NewNationPara*, int*);
 	int			mp_select_service();
 	int			mp_select_session();

@@ -1,8 +1,7 @@
 my @defines;
-my @includes;
 
 ## compiler flags ##
-@defines = qw( AMPLUS USE_NONETPLAY );
+@defines = qw( AMPLUS USE_SDLNET );
 if (defined($debug) && $debug) {
   push (@defines, "DEBUG");
 }
@@ -22,20 +21,11 @@ if (defined($audio_backend)) {
 ## end compiler flags ##
 
 ## include paths ##
-@includes = qw( ../../../include );
-
-if (!$disable_wine && defined($wine_prefix)) {
-  push (@includes, "$wine_prefix/include/wine/windows",
-                   "$wine_prefix/include/wine/msvcrt");
-}
-
-if (defined($dxsdk_path)) {
-  push (@includes, "$dxsdk_path/include");
-}
+my @includes = qw( ../../../include );
 ## end include paths ##
 
 my @targets = qw(
-netplay_none.cpp
+netplay_sdlnet.cpp
 );
 
 build_targets(\@targets, \@includes, \@defines);

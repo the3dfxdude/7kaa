@@ -46,6 +46,9 @@ push(@video, include_targets('video/common/targets.pl'));
 if (defined($netplay_backend)) {
   if ($netplay_backend =~ /none/i) {
     @netplay = include_targets('netplay/none/targets.pl');
+  } elsif ($netplay_backend =~ /sdl_net/i) {
+    @netplay = include_targets('netplay/sdl_net/targets.pl');
+    push (@libs, "SDL_net");
   }
 }
 push(@netplay, include_targets('netplay/common/targets.pl'));

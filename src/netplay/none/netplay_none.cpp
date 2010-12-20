@@ -129,7 +129,7 @@ NoneSessionDesc *MultiPlayerNone::get_session(int i)
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return TRUE if success
-int MultiPlayerNone::create_session(char *sessionName, int maxPlayers)
+int MultiPlayerNone::create_session(char *sessionName, char *playerName, int maxPlayers)
 {
 	ERR("[MultiPlayerNone::create_session] calling unimplemented method\n");
 	return FALSE;
@@ -141,7 +141,7 @@ int MultiPlayerNone::create_session(char *sessionName, int maxPlayers)
 // <int> currentSessionIndex       the index passed into get_session()
 //
 // currentSessionIndex start from 1
-int MultiPlayerNone::join_session(int currentSessionIndex)
+int MultiPlayerNone::join_session(int currentSessionIndex, char *playerName)
 {
 	ERR("[MultiPlayerNone::join_session] calling unimplemented method\n");
 	return FALSE;
@@ -157,16 +157,21 @@ void MultiPlayerNone::disable_join_session()
 	ERR("[MultiPlayerNone::disable_join_session] calling unimplemented method\n");
 }
 
-// create a local player
-//
-// <char *> friendlyName          short name of the player, best to be one word only
-// [char *] formalName            long name of the player, take friendlyName if NULL (default: NULL)
-// return TRUE if success
-//
-int MultiPlayerNone::create_player(char *friendlyName, char *formalName)
+int MultiPlayerNone::add_player(char *name, uint32_t id)
 {
-	ERR("[MultiPlayerNone::create_player] calling unimplemented method\n");
-	return FALSE;
+        return 0;
+}
+
+void MultiPlayerNone::set_my_player_id(uint32_t id)
+{
+}
+
+void MultiPlayerNone::set_player_name(uint32_t id, char *name)
+{
+}
+
+void MultiPlayerNone::delete_player(uint32_t id)
+{
 }
 
 void MultiPlayerNone::poll_players()
@@ -242,6 +247,28 @@ char *MultiPlayerNone::receive(uint32_t * from, uint32_t * to, uint32_t * dSize,
 {
 	ERR("[MultiPlayerNone::receive] calling unimplemented method\n");
 	return NULL;
+}
+
+// return NULL if fails
+// sysMsgCount records how many system messages have been handled
+// notice : *sysMsgCount may be != 0, but return NULL
+//
+char *MultiPlayerNone::receive_stream(uint32_t * from, uint32_t * to, uint32_t * dSize, int *sysMsgCount)
+{
+	ERR("[MultiPlayerNone::receive_stream] calling unimplemented method\n");
+	return NULL;
+}
+
+void MultiPlayerNone::send_discovery()
+{
+}
+
+void MultiPlayerNone::receive_discovery()
+{
+}
+
+void MultiPlayerNone::set_peer_socket(void *data)
+{
 }
 
 /*

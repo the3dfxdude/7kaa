@@ -84,7 +84,6 @@ class Sys
 public:
 	char		game_version;			// VERSION_???
 
-	char     active_flag;    		// we are the active app.
 	char     paused_flag;    		// whether the game is paused
 	char		sys_flag;
 	char		init_flag;
@@ -104,6 +103,7 @@ public:
 
 	//----- multiplayer vars ----//
 
+	char		is_mp_game;
 	uint32_t 	frame_count;  			// frame count, for is_sync_frame only
 	char		is_sync_frame;			// whether sync should take place at the current frame (for handling one sync per n frames)
 	char		mp_save_flag;			// indicate a request to save game in multi-player game

@@ -23,6 +23,8 @@
 
 #if defined(USE_NONETPLAY)
 	#include <netplay_none.h>
+#elif defined(USE_SDLNET)
+	#include <netplay_sdlnet.h>
 #else
 	#error "A netplay backend must be specified."
 #endif
