@@ -792,7 +792,7 @@ int MultiPlayerSDL::receive_discovery(uint32_t *who, void **address)
 		discovery = 0;
 
 		ptr = this->receive(&from, &to, &size, &sysMsg);
-		if (!ptr && discovery && discovery < max_players) {
+		if (!ptr && discovery && discovery <= max_players) {
 			MSG("[MultiPlayerSDL::receive_discovery] Received discovery from %d\n", discovery);
 			player_pool[discovery-1].address.host = discovery_address.host;
 			player_pool[discovery-1].address.port = discovery_address.port;
