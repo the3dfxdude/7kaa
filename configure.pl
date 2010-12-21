@@ -292,9 +292,10 @@ sub detect_wine_prefix {
 sub check_gcc_version {
   print "Checking for $_[0]: ";
   my $gcc_version = `$_[0] --version`;
-  my @ver = $gcc_version =~ /^\Q$_[0]\E\s+\(.*\)\s+(\d+)\.(\d+)\.(\d+)/;
+  my @ver = $gcc_version =~ /^\Q$_[0]\E\s+\(.*\)\s+(\d+)\.(\d+)/;
+  $ver[2] = 0;
   unless (@ver == 3) {
-    print "not found\n";
+    print "couldn't read gcc version correctly\n";
     return undef;
   }
   print join('.', @ver);
