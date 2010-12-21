@@ -107,13 +107,42 @@ if ($cfg{platform} =~ /^linux/) {
       exit 1;
     }
     print "found\n";
+
+    if ($cfg{netplay_backend} =~ /^sdl_net$/i) {
+      my $sdl_libs = `$sdl_config --libs`;
+      chomp $sdl_libs;
+      my $sdl_cflags = `$sdl_config --cflags`;
+      chomp $sdl_cflags;
+
+      # test for SDL_net (requires SDL)
+      print "Checking for SDL_net: ";
+
+      my $program = <<EOF;
+#include <SDL.h>
+#include <SDL/SDL_net.h>
+int main()
+{
+SDL_version compile_version;
+const SDL_version *linked_version;
+SDL_NET_VERSION(&compile_version)
+linked_version = SDLNet_Linked_Version();
+return 0;
+}
+EOF
+
+      if (!compile_test($program, "$sdl_libs $sdl_cflags -lSDL_net")) {
+        # fall back to none
+        $cfg{netplay_backend} = "none";
+        print "Disabling network backend!\n";
+      }
+    }
+
   }
 
   if ($cfg{audio_backend} =~ /^openal$/i) {
     # search for OpenAL files
     print "Checking for OpenAL: ";
 
-    open (my $prgfile, ">nnnnnnn.c") or die "Couldn't write file: $!";
     my $program = <<EOF;
 #include <stdlib.h>
 #include <AL/al.h>
@@ -124,27 +153,11 @@ ALCdevice *al_device = alcOpenDevice(NULL);
 return 0;
 }
 EOF
-    print $prgfile $program;
-    close ($prgfile);
-
-    open (my $cc, "gcc nnnnnnn.c -o nnnnnnn -lopenal 2>&1 |") or die "Couldn't open pipe: $!";
-    my @lines;
-    while (1) {
-      my $line = <$cc>;
-      defined($line) or last;
-      push (@lines, $line);
+    if (!compile_test($program, "-lopenal")) {
+      # fall back to none
+      $cfg{audio_backend} = "none";
+      print "Disabling audio backend!\n";
     }
-    $ret = close($cc);
-
-    unlink "nnnnnnn";
-    unlink "nnnnnnn.c";
-    if (!$ret) {
-      # error during compilation
-      print "not found\n";
-      print join("\n", @lines);
-      exit 1;
-    }
-    print "found\n";
   }
 
 } elsif ($cfg{platform} =~ /^win32$/) {
@@ -311,6 +324,38 @@ sub check_jwasm_version {
 
   print " failed\n";
   return 0;
+}
+
+# compile_test($program, $cc_opts)
+sub compile_test {
+  open (my $prgfile, ">nnnnnnn.c") or die "Couldn't write file: $!";
+  print $prgfile $_[0];
+  close ($prgfile);
+
+  my $cc;
+  my $cmd = "gcc nnnnnnn.c -o nnnnnnn $_[1] 2>&1 |";
+  if (!open ($cc, $cmd)) {
+    print "failed (couldn't open pipe: $!)\n";
+    return 0;
+  }
+  my @lines;
+  while (1) {
+    my $line = <$cc>;
+    defined($line) or last;
+    push (@lines, $line);
+  }
+  $ret = close($cc);
+
+  unlink "nnnnnnn";
+  unlink "nnnnnnn.c";
+  if (!$ret) {
+    # error during compilation
+    print "not found\n";
+    print join("\n", @lines);
+    return 0;
+  }
+  print "found\n";
+  return 1;
 }
 
 sub write_config {
