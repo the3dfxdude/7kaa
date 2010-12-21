@@ -123,7 +123,7 @@ public:
 	// ###### end Gilbert 24/10 #######//
 
 	// ###### begin Gilbert 13/2 #######//
-	void 			multi_player_menu(char *cmdLine);
+	void 			multi_player_menu(int lobbied, char *game_host);
 	// ###### end Gilbert 13/2 #######//
 
 	int 			write_file(File* filePtr);
@@ -138,9 +138,9 @@ private:
 //	void 			multi_player_menu();
 
 	void			single_player_game(int);
-	void			multi_player_game(char *cmdLine);
+	void			multi_player_game(int lobbied, char *game_host);
 	void			test_game();
-	void			load_mp_game(char *saveFileName, char *cmdLine);
+	void			load_mp_game(char *saveFileName, int lobbied, char *game_host);
 	void			view_encyclopedia();
 	void			view_credits();
 

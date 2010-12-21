@@ -182,7 +182,6 @@ void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 		lobbied_flag = 2;
 	} else {
 		// hosting doesn't work yet
-		err_now("multiplayer host auto create not implemented");
 		lobbied_flag = 1;
 	}
 }

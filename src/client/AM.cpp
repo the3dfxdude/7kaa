@@ -316,19 +316,24 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #ifndef NO_WINDOWS
 	static char lobbyLaunchCmdLine[] = "-!lobby!";
 #else
-	const char *lobbyLaunchCmdLine = "-join";
-	int join_flag = 0;
+	const char *lobbyJoinCmdLine = "-join";
+	const char *lobbyHostCmdLine = "-host";
+	char *join_host = NULL;
+	int lobbied = 0;
 
 	for (int i = 0; i < argc; i++) {
-		if (!strcmp(argv[i], lobbyLaunchCmdLine)) {
-			join_flag = i+1;
+		if (!strcmp(argv[i], lobbyJoinCmdLine)) {
+			if (i >= argc - 1) {
+				ERR("The -join switch requires a hostname parameter.\n");
+				return 1;
+			}
+			lobbied = 1;
+			join_host = argv[i+1];
+			break;
+		} else if (!strcmp(argv[i], lobbyHostCmdLine)) {
+			lobbied = 1;
 			break;
 		}
-	}
-
-	if (join_flag && argc <= join_flag) {
-		ERR("The -join switch requires a hostname parameter.\n");
-		return 1;
 	}
 #endif
 
@@ -339,7 +344,7 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #ifndef NO_WINDOWS
 	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )	// skip if launch from lobby
 #else
-	if (!join_flag)
+	if (!lobbied)
 #endif
 	{
 		String movieFileStr;
@@ -384,16 +389,16 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #ifndef NO_WINDOWS
 	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )
 #else
-	if (!join_flag)
+	if (!lobbied)
 #endif // !NO_WINDOWS
 	   game.main_menu();
 #ifndef DISABLE_MULTI_PLAYER
 #ifndef NO_WINDOWS
 	else
-		game.multi_player_menu(lpCmdLine);		// if detect launched from lobby
+		game.multi_player_menu(0, lpCmdLine);		// if detect launched from lobby
 #else
 	else
-		game.multi_player_menu(argv[join_flag]);
+		game.multi_player_menu(lobbied, join_host);
 #endif // !NO_WINDOWS
 #endif // DISABLE_MULTI_PLAYER
 #endif // !DEMO

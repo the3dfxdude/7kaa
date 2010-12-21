@@ -520,7 +520,7 @@ static void ingame_disconnect_handler(DWORD playerId)
 // --------- Begin of static function multi_player_game ----------//
 // avoid creating local variable in this function
 // ###### begin Gilbert 13/2 #######//
-void Game::multi_player_game(char *cmdLine)
+void Game::multi_player_game(int lobbied, char *game_host)
 // ###### end Gilbert 13/2 #######//
 {
 	sys.is_mp_game = 1;
@@ -531,7 +531,7 @@ void Game::multi_player_game(char *cmdLine)
 	int choice, p;
 	ProtocolType selected_protocol = TCPIP;
 
-	if (!cmdLine) {
+	if (!lobbied) {
 		// not launched from lobby
 
 		mp_obj.poll_supported_protocols();
@@ -564,8 +564,8 @@ void Game::multi_player_game(char *cmdLine)
 	if (mp_obj.is_protocol_supported(selected_protocol))
 		mp_obj.init(selected_protocol);
 
-	if (cmdLine)
-		mp_obj.init_lobbied(MAX_NATION, cmdLine);
+	if (lobbied)
+		mp_obj.init_lobbied(MAX_NATION, game_host);
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
@@ -690,7 +690,7 @@ void Game::multi_player_game(char *cmdLine)
 
 // --------- Begin of static function load_mp_game ----------//
 // avoid creating local variable in this function
-void Game::load_mp_game(char *fileName, char *cmdLine)
+void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 {
 	sub_game_mode = 1;
 
@@ -698,7 +698,7 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	int choice, p;
 	ProtocolType selected_protocol = TCPIP;
 
-	if (!cmdLine) {
+	if (!lobbied) {
 		// not launched from lobby
 
 		mp_obj.poll_supported_protocols();
@@ -731,8 +731,8 @@ void Game::load_mp_game(char *fileName, char *cmdLine)
 	if (mp_obj.is_protocol_supported(selected_protocol))
 		mp_obj.init(selected_protocol);
 
-	if (cmdLine)
-		mp_obj.init_lobbied(MAX_NATION, cmdLine);
+	if (lobbied)
+		mp_obj.init_lobbied(MAX_NATION, game_host);
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())

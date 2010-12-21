@@ -298,7 +298,7 @@ void Game::run_main_menu_option(int optionId)
 	{
 #ifndef DISABLE_MULTI_PLAYER
 		game_mode = GAME_MULTI_PLAYER;
-		multi_player_menu(NULL);
+		multi_player_menu(0, NULL);
 		// multi_player_game();
 #endif
 	}
@@ -643,7 +643,7 @@ void Game::test_game()
 //---------- Begin of function Game::multi_player_menu ----------//
 //
 // ####### begin Gilbert 13/2 ########//
-void Game::multi_player_menu(char *cmdLine)
+void Game::multi_player_menu(int lobbied, char *game_host)
 // ####### end Gilbert 13/2 ########//
 {
 	enum { MULTI_PLAYER_OPTION_COUNT = 5 };
@@ -816,7 +816,7 @@ void Game::multi_player_menu(char *cmdLine)
 				{
 					case 2:
 						// ####### begin Gilbert 13/2 #######//
-						multi_player_game(cmdLine);
+						multi_player_game(lobbied, game_host);
 						// ####### end Gilbert 13/2 #######//
 						break;
 
@@ -829,7 +829,7 @@ void Game::multi_player_menu(char *cmdLine)
 							{
 								err_when( !loadedRecno );
 								// ####### begin Gilbert 13/2 #######//
-								load_mp_game(game_file_array[loadedRecno]->file_name, cmdLine);
+								load_mp_game(game_file_array[loadedRecno]->file_name, lobbied, game_host);
 								// ####### begin Gilbert 13/2 #######//
 							}
 							{
