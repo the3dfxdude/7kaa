@@ -1677,7 +1677,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		{
 			playerRace[p] = tempConfig.race_id;
 			playerColor[p] = tempConfig.player_nation_color;
-			playerBalance[p] = sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD;
+			playerBalance[p] = PLAYER_RATIO_CDROM;
 		}
 	}
 	else
@@ -1686,7 +1686,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		tempConfig.player_nation_color = 0;
 		// ask host for a race and color code
 		MpStructNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), 
-			sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD,
+			PLAYER_RATIO_CDROM,
 			config.player_name );
 		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
 	}
@@ -3565,7 +3565,7 @@ int Game::mp_select_load_option(char *fileName)
 		if( p < regPlayerCount )
 		{
 			playerColor[p] = tempConfig.player_nation_color;
-			playerBalance[p] = sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD;
+			playerBalance[p] = PLAYER_RATIO_CDROM;
 		}
 
 		// initialize other colorAssigned, only free for those of the remote players
@@ -3584,7 +3584,8 @@ int Game::mp_select_load_option(char *fileName)
 	{
 		memset( colorAssigned, 0, sizeof(colorAssigned) );		// assume all color are unassigned
 		MpStructLoadGameNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), ~nation_array, sys.frame_count,
-			m.get_random_seed(), sys.cdrom_drive ? PLAYER_RATIO_CDROM : PLAYER_RATIO_NOCD,
+			m.get_random_seed(),
+			PLAYER_RATIO_CDROM,
 			config.player_name );
 		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
 	}
