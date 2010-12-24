@@ -692,6 +692,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 // avoid creating local variable in this function
 void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 {
+	sys.is_mp_game = 1;
 	sub_game_mode = 1;
 
 	int nationRecno;
