@@ -162,6 +162,7 @@ void MultiPlayerSDL::deinit()
 	SDLNet_FreeSocketSet(sock_set);
 	SDLNet_Quit();
 
+	current_sessions.zap();
 	init_flag = 0;
 	lobbied_flag = 0;
 	my_player_id = 0;

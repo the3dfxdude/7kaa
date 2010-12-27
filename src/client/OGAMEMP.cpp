@@ -593,23 +593,32 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		}
 		break;
 	case 2:		// join game
-		if( (choice = mp_select_session()) )
 		{
-			if (!mp_join_session(choice, config.player_name))
+			char join_address[100];
+			strcpy(join_address, "localhost");
+			if (!lobbied && mp_get_address(join_address, 100))
 			{
-				// can't join session
-				mp_obj.deinit();
-				box.msg("Unable to connect");
-				return;
+				mp_obj.init_lobbied(MAX_NATION, join_address);
 			}
 
-			remote.init(&mp_obj);
-			remote.connect_game();
-		}
-		else
-		{
-			mp_obj.deinit();
-			return;
+			if (choice = mp_select_session())
+			{
+				if (!mp_join_session(choice, config.player_name))
+				{
+					// can't join session
+					mp_obj.deinit();
+					box.msg("Unable to connect");
+					return;
+				}
+
+				remote.init(&mp_obj);
+				remote.connect_game();
+			}
+			else
+			{
+				mp_obj.deinit();
+				return;
+			}
 		}
 		break;
 	default:			// cancel
@@ -775,30 +784,38 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		}
 		break;
 	case 2:		// join game
-		if( (choice = mp_select_session()) )
 		{
-
-			if (!mp_join_session(choice, config.player_name))
+			char join_address[100];
+			strcpy(join_address, "localhost");
+			if (!lobbied && mp_get_address(join_address, 100))
 			{
-				// can't join session
-				mp_obj.deinit();
-				box.msg("Unable to connect");
-				return;
+				mp_obj.init_lobbied(MAX_NATION, join_address);
 			}
 
-			// count required player
-			gamePlayerCount = 0;
-			for (nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)
-				if (!nation_array.is_deleted(nationRecno) && !nation_array[nationRecno]->is_ai())
-					++gamePlayerCount;
+			if (choice = mp_select_session())
+			{
+				if (!mp_join_session(choice, config.player_name))
+				{
+					// can't join session
+					mp_obj.deinit();
+					box.msg("Unable to connect");
+					return;
+				}
 
-			remote.init(&mp_obj);
-			remote.connect_game();
-		}
-		else
-		{
-			mp_obj.deinit();
-			return;
+				// count required player
+				gamePlayerCount = 0;
+				for (nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)
+					if (!nation_array.is_deleted(nationRecno) && !nation_array[nationRecno]->is_ai())
+						++gamePlayerCount;
+
+				remote.init(&mp_obj);
+				remote.connect_game();
+			}
+			else
+			{
+				mp_obj.deinit();
+				return;
+			}
 		}
 		break;
 	default:			// cancel
@@ -1155,6 +1172,98 @@ int Game::mp_select_mode(char *defSaveFileName)
 	return rc;
 }
 //-------- End of function Game::mp_select_mode --------//
+
+
+// Display a box to ask for a host address. The pointer to name will be used
+// to initialize the field, and when the box is closed, it is filled with the
+// final address, up to name_len, including the terminating null. The return
+// is 1 when ok is pressed, and 0 when cancel is pressed.
+int Game::mp_get_address(char *name, int name_len)
+{
+	const char *buttonDes1 = "Ok";
+	const char *buttonDes2 = "Cancel";
+	const char *tell_string = "Enter the game's address:";
+	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+	const int box_x1 = 250;
+	const int box_y1 = 200;
+	const int box_x2 = 550;
+	const int box_y2 = 275;
+	const int box_side_margin = 10;
+	const int box_top_margin = 5;
+	int width, buttonWidth1, ret;
+	Button buttonOk, buttonCancel;
+	GetA input_box;
+
+	ret = 0;
+
+	width = box_x2 - box_x1 + 1;
+	buttonWidth1 = 20 + font_san.text_width(buttonDes1);
+
+	vga_back.d3_panel_up(box_x1, box_y1, box_x2, box_y2, 2, 1);
+	vga_front.d3_panel_up(box_x1, box_y1, box_x2, box_y2, 2, 1);
+
+	font_san.put_paragraph(box_x1 + box_side_margin,
+			       box_y1 + box_top_margin,
+			       box_x2 - box_side_margin,
+			       box_y2 - box_top_margin,
+			       tell_string,
+			       2);
+
+	buttonOk.create_text(box_x1 + width / 2 - buttonWidth1,
+			     box_y2 - box_button_margin,
+			     buttonDes1);
+
+	buttonCancel.create_text(box_x1 + width / 2 + 2,
+				 box_y2 - box_button_margin,
+				 buttonDes2);
+
+	input_box.init(box_x1 + box_side_margin,
+		       box_y1 + box_top_margin + font_san.text_height() + 2,
+		       box_x2 - box_side_margin,
+		       name,
+		       name_len,
+		       &font_san,
+		       0,
+		       0);
+
+	vga_front.unlock_buf();
+	while (1) {
+		vga_front.lock_buf();
+
+		buttonOk.paint();
+		buttonCancel.paint();
+		input_box.paint();
+
+		sys.yield();
+		mouse.get_event();
+
+		input_box.detect();
+
+		if (buttonOk.detect(buttonOk.str_buf[0], KEY_RETURN)) {
+			ret = 1;
+			break;
+		}
+
+		if (buttonCancel.detect() ||
+		    mouse.any_click(1)) {
+			mouse.get_event();
+			break;
+		}
+
+		sys.blt_virtual_buf();
+
+		if (config.music_flag && !music.is_playing())
+			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
+                else
+                        music.stop();
+
+		vga_front.unlock_buf();
+	}
+	if (!vga_front.buf_locked)
+		vga_front.lock_buf();
+
+	return ret;
+}
 
 
 //-------- Begin of function Game::mp_select_session --------//
