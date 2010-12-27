@@ -588,6 +588,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		}
 		else
 		{
+			box.msg("Cannot create the game.");
 			mp_obj.deinit();
 			return;
 		}
@@ -779,6 +780,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		}
 		else
 		{
+			box.msg("Cannot create the game.");
 			mp_obj.deinit();
 			return;
 		}
