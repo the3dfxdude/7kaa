@@ -859,12 +859,12 @@ static int sort_session_name(const void *a, const void *b)
 // <int> sortType, 1=sort by GUID, 2=sort by session name
 void MultiPlayerSDL::sort_sessions(int sortType)
 {
-	ERR("[MultiPlayerSDL::sort_sessions] calling partially implemented method\n");
 
 	// BUGHERE : quick_sort is a DynArray function but current_sessions is DynArrayB
 	switch(sortType)
 	{
 	case 1:
+		ERR("[MultiPlayerSDL::sort_sessions] sorting by GUID is not supported\n");
 		//current_sessions.quick_sort(sort_session_id);
 		break;
 	case 2:
