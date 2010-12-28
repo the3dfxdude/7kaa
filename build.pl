@@ -26,7 +26,10 @@ do $targets_script;
 # Some systems have a conflicting parallel command. Run this to make sure
 # we got the right one.
 sub test_parallel {
-  my $parallel_exe = (-x "${top_dir}parallel") ? "${top_dir}parallel" : which('parallel');
+  my $parallel_exe = which('parallel');
+  if (! -x $parallel_exe) {
+    return undef;
+  }
 
   my $manager;
   my $found_token = 0;
