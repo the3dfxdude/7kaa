@@ -247,12 +247,12 @@ sub detect_platform {
       print "linux32\n";
       return "linux32";
     }
-  } elsif ($^O eq 'MSWin32') {
+  } elsif ($^O eq 'MSWin32' || $^O eq 'msys') {
     print "win32\n";
     return "win32";
   } else {
-    print '$^O (unsupported)\n';
-    die;
+    print "$^O (unsupported)\n";
+    exit 1;
   }
 }
 
