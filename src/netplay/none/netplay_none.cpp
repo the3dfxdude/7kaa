@@ -263,11 +263,17 @@ void MultiPlayerNone::send_discovery()
 {
 }
 
-void MultiPlayerNone::receive_discovery()
+int MultiPlayerNone::receive_discovery(uint32_t *who, void **address)
 {
+	return 0;
 }
 
-void MultiPlayerNone::set_peer_socket(void *data)
+int MultiPlayerNone::receive_discovery_ack()
+{
+	return 0;
+}
+
+void MultiPlayerNone::set_peer_address(uint32_t who, void *address)
 {
 }
 

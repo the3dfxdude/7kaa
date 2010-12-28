@@ -69,6 +69,7 @@ struct NonePlayer
 	uint32_t pid()			{ return player_id; }
 	char *friendly_name_str() { return friendly_name; }
 	char *formal_name_str() { return formal_name; }
+	int get_address(void **addr) { *addr = NULL; return 0; }
 };
 
 class MultiPlayerNone
@@ -133,8 +134,9 @@ public:
 
 	// ------- functions for peer discovery ------//
 	void send_discovery(void);
-	void receive_discovery(void);
-	void set_peer_socket(void *data);
+	int receive_discovery(uint32_t *who, void **address);
+	int receive_discovery_ack(void);
+	void set_peer_address(uint32_t who, void *address);
 
 };
 
