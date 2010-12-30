@@ -23,7 +23,7 @@
 
 #include <ALL.h>
 
-#ifndef NO_WINDOWS
+#ifdef WIN32
 #include <initguid.h>
 #endif
 
@@ -284,8 +284,6 @@ DBGLOG_DEFAULT_CHANNEL(am);
 static void extra_error_handler();
 
 //---------- Begin of function WinMain ----------//
-//¹ç
-// WinMain - initialization, message loop
 //
 // Compilation constants:
 //
@@ -294,12 +292,7 @@ static void extra_error_handler();
 // DEBUG3 - debugging some functions (e.g. Location::get_loc()) which
 //          will cause major slowdown.
 //
-#ifdef NO_WINDOWS
 int main(int argc, char **argv)
-#else
-int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
-						  LPSTR lpCmdLine, int nCmdShow)
-#endif
 {
 	sys.set_config_dir();
 
@@ -309,13 +302,10 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	{
 		new_config_dat_flag = 1;
 		config.init();
-   }
+	}
 
 	//--------------------------------------//
 
-#ifndef NO_WINDOWS
-	static char lobbyLaunchCmdLine[] = "-!lobby!";
-#else
 	const char *lobbyJoinCmdLine = "-join";
 	const char *lobbyHostCmdLine = "-host";
 	char *join_host = NULL;
@@ -335,17 +325,12 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 		}
 	}
-#endif
 
 #ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//
 
 	sys.set_game_dir();
-#ifndef NO_WINDOWS
-	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )	// skip if launch from lobby
-#else
 	if (!lobbied)
-#endif
 	{
 		String movieFileStr;
 		movieFileStr = DIR_MOVIE;
@@ -377,35 +362,21 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 #endif // ENABLE_INTRO_VIDEO
 
-   if( !sys.init() )
-      return FALSE;
+	if( !sys.init() )
+		return FALSE;
 
-   err.set_extra_handler( extra_error_handler );   // set extra error handler, save the game when a error happens
+	err.set_extra_handler( extra_error_handler );   // set extra error handler, save the game when a error happens
 
-#ifdef DEMO
-	game.demo_disp_logo();
-   game.main_menu();
-#else
-#ifndef NO_WINDOWS
-	if( strstr(lpCmdLine, lobbyLaunchCmdLine) == NULL )
-#else
 	if (!lobbied)
-#endif // !NO_WINDOWS
-	   game.main_menu();
+		game.main_menu();
 #ifndef DISABLE_MULTI_PLAYER
-#ifndef NO_WINDOWS
-	else
-		game.multi_player_menu(0, lpCmdLine);		// if detect launched from lobby
-#else
 	else
 		game.multi_player_menu(lobbied, join_host);
-#endif // !NO_WINDOWS
 #endif // DISABLE_MULTI_PLAYER
-#endif // !DEMO
 
-   sys.deinit();
+	sys.deinit();
 
-   return 1;
+	return 1;
 }
 //---------- End of function WinMain ----------//
 
@@ -414,11 +385,11 @@ int PASCAL WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 static void extra_error_handler()
 {
-   if( game.game_mode != GAME_SINGLE_PLAYER )
-      return;
+	if( game.game_mode != GAME_SINGLE_PLAYER )
+		return;
 
 	game_file_array.save_new_game("ERROR.SAV");  // save a new game immediately without prompting menu
 
-   box.msg( "Error encountered. The game has been saved to ERROR.SAV" );
+	box.msg( "Error encountered. The game has been saved to ERROR.SAV" );
 }
 //----------- End of function extra_error_handler -------------//
