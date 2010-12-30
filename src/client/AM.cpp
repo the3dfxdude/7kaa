@@ -283,7 +283,7 @@ DBGLOG_DEFAULT_CHANNEL(am);
 
 static void extra_error_handler();
 
-//---------- Begin of function WinMain ----------//
+//---------- Begin of function main ----------//
 //
 // Compilation constants:
 //
@@ -292,8 +292,24 @@ static void extra_error_handler();
 // DEBUG3 - debugging some functions (e.g. Location::get_loc()) which
 //          will cause major slowdown.
 //
+// Command line paramters:
+// -join <named or ip address>
+//   Begin the program by attempting to connect to the specified address.
+// -host
+//   Begin the program by hosting a multiplayer match
+// -name <player name>
+//   Set the name you wish to be known as.
+//
+// You cannot specify -join or -host more than once.
+//
 int main(int argc, char **argv)
 {
+	const char *lobbyJoinCmdLine = "-join";
+	const char *lobbyHostCmdLine = "-host";
+	const char *lobbyNameCmdLine = "-name";
+	char *join_host = NULL;
+	int lobbied = 0;
+
 	sys.set_config_dir();
 
 	//try to read from CONFIG.DAT, moved to AM.CPP
@@ -304,25 +320,35 @@ int main(int argc, char **argv)
 		config.init();
 	}
 
-	//--------------------------------------//
-
-	const char *lobbyJoinCmdLine = "-join";
-	const char *lobbyHostCmdLine = "-host";
-	char *join_host = NULL;
-	int lobbied = 0;
+	//----- read command line arguments -----//
 
 	for (int i = 0; i < argc; i++) {
 		if (!strcmp(argv[i], lobbyJoinCmdLine)) {
+			if (lobbied) {
+				ERR("You cannot specify multiple -host or -join options.\n");
+				return 1;
+			}
 			if (i >= argc - 1) {
-				ERR("The -join switch requires a hostname parameter.\n");
+				ERR("The %s switch requires a hostname parameter.\n", lobbyJoinCmdLine);
 				return 1;
 			}
 			lobbied = 1;
 			join_host = argv[i+1];
-			break;
+			i++;
 		} else if (!strcmp(argv[i], lobbyHostCmdLine)) {
+			if (lobbied) {
+				ERR("You cannot specify multiple -host or -join options.\n");
+				return 1;
+			}
 			lobbied = 1;
-			break;
+		} else if (!strcmp(argv[i], lobbyNameCmdLine)) {
+			if (i >= argc - 1) {
+				ERR("The %s switch requires a hostname parameter.\n", lobbyNameCmdLine);
+				return 1;
+			}
+			strncpy(config.player_name, argv[i+1], config.PLAYER_NAME_LEN);
+			config.player_name[config.PLAYER_NAME_LEN] = 0;
+			i++;
 		}
 	}
 
@@ -378,7 +404,7 @@ int main(int argc, char **argv)
 
 	return 1;
 }
-//---------- End of function WinMain ----------//
+//---------- End of function main ----------//
 
 
 //------- Begin of function extra_error_handler -----------//
