@@ -1,5 +1,6 @@
 ## libraries to link ##
 my @libs;
+my @linker_opts;
 unless ($disable_wine) {
   push (@libs, 'ole32','msvcrt','winmm');
 }
@@ -30,7 +31,16 @@ if (defined($audio_backend)) {
 ## Build the video backend ##
 if (defined($video_backend)) {
   if ($video_backend =~ /sdl/i) {
-    push (@libs, 'SDL');
+    if ($platform =~ /^linux/) {
+      my $flags;
+      $flags = `sdl-config --libs`;
+      chomp $flags;
+      push (@linker_opts, $flags);
+    } elsif ($platform =~ /^win32/) {
+      # sdl-config is a bash script...which technically works on windows
+      # but right now I want to look for better options and hardcode this
+      push (@linker_opts, '-lmingw32 -lSDLmain -lSDL -mwindows');
+    }
     @video = include_targets('video/sdl/targets.pl');
   } elsif ($video_backend =~ /ddraw/i) {
     push (@libs, 'gdi32', 'ddraw');
@@ -87,7 +97,8 @@ unless ($disable_wine) {
 link_exe ($client_exe_name,
           [@common_objs, @audio, @input, @video, @netplay, @imgfun, @client_objs],
           \@libs,
-          \@lib_dirs);
+          \@lib_dirs,
+          \@linker_opts);
 ## end build game client ##
 
 ## build game server ##
@@ -100,6 +111,7 @@ if ($build_server) {
   link_exe ($server_exe_name,
             [@common_objs, @audio, @input, @video, @netplay, @imgfun, @server_objs],
             \@libs,
-            \@lib_dirs);
+            \@lib_dirs,
+            \@linker_opts);
 }
 ## end build game server ##

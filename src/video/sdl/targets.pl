@@ -1,4 +1,5 @@
 my @defines;
+my @cc_opts;
 
 ## compiler flags ##
 @defines = qw( AMPLUS USE_SDL );
@@ -18,6 +19,16 @@ if (defined($audio_backend)) {
 if ($disable_wine) {
   push (@defines, "NO_WINDOWS");
 }
+if ($platform =~ /^linux/) {
+  my $flags;
+  $flags = `sdl-config --cflags`;
+  chomp $flags;
+  push (@cc_opts, $flags);
+} elsif ($platform =~ /^win32/) {
+  # sdl-config is a bash script...which technically works on windows
+  # but right now I want to look for better options and hardcode this
+  push (@cc_opts, '-D_GNU_SOURCE=1 -Dmain=SDL_main');
+}
 ## end compiler flags ##
 
 ## include paths ##
@@ -34,4 +45,4 @@ vga_sdl.cpp
 surface_sdl.cpp
 );
 
-build_targets(\@targets, \@includes, \@defines);
+build_targets(\@targets, \@includes, \@defines, \@cc_opts);

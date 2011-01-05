@@ -1,4 +1,5 @@
 my @obj_files;
+my @cc_opts;
 
 ## compiler flags ##
 @defines = qw( AMPLUS );
@@ -20,6 +21,16 @@ if (defined($audio_backend)) {
 }
 if (defined($video_backend)) {
   if ($video_backend =~ /sdl/i) {
+    if ($platform =~ /^linux/) {
+      my $flags;
+      $flags = `sdl-config --cflags`;
+      chomp $flags;
+      push (@cc_opts, $flags);
+    } elsif ($platform =~ /^win32/) {
+      # sdl-config is a bash script...which technically works on windows
+      # but right now I want to look for better options and hardcode this
+      push (@cc_opts, '-D_GNU_SOURCE=1 -Dmain=SDL_main');
+    }
     push (@defines, 'USE_SDL');
   } elsif ($video_backend =~ /ddraw/i) {
     push (@defines, 'USE_DDRAW');
@@ -319,6 +330,6 @@ unless ($disable_wine) {
   push (@targets, 'ico.rc');
 }
 
-push (@obj_files, build_targets(\@targets, \@includes, \@defines));
+push (@obj_files, build_targets(\@targets, \@includes, \@defines, \@cc_opts));
 
 @obj_files;

@@ -125,7 +125,7 @@ sub get_asm_cmd {
   return "jwasm $jwasm_args -zt1";
 }
 
-# get_cxx_cmd(\@includes, \@defines)
+# get_cxx_cmd(\@includes, \@defines, \@other_opts)
 sub get_cxx_cmd {
   my @cc_opts = ('g++', '-c');
   # OWORLD currently miscompiles at -O2 on gcc 4.3.3.
@@ -136,6 +136,7 @@ sub get_cxx_cmd {
   defined($enable_multilib) and $enable_multilib and push (@cc_opts, "-m32");
   push (@cc_opts, map { "-D$_" } @{$_[1]});
   push (@cc_opts, map { "-I$_" } @{$_[0]});
+  push (@cc_opts, @{$_[2]});
   return "@cc_opts";
 }
 
@@ -144,7 +145,7 @@ sub get_wrc_cmd {
 }
 
 sub link_exe {
-  my ($exe, $obj_files, $libs, $lib_dirs) = @_;
+  my ($exe, $obj_files, $libs, $lib_dirs, $other_opts) = @_;
   defined($exe) or return 1; # No exe targets here
 
   my $flag = 0;
@@ -185,6 +186,7 @@ sub link_exe {
               "@$obj_files " .
               join(' ', map { "-l$_" } @$libs) . ' ' .
               join(' ', map { "-L$_" } @$lib_dirs) . ' ' .
+              join(' ', @$other_opts) . ' ' .
               "-o $exe";
     print $cmd,"\n";
     if (system $cmd) {
@@ -249,7 +251,7 @@ sub break_extension {
   return ($name, $extension);
 }
 
-# build_targets(\@files_to_build, \@includes, \@defines)
+# build_targets(\@files_to_build, \@includes, \@defines, \@other_opts)
 #
 # Usage: Called from target script.  An array of files
 # that are to be built is passed.
@@ -293,7 +295,7 @@ sub build_targets {
 
       # get the command to build this type of file
       if ($i eq 'cpp') {
-        my $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
+        my $cxx_cmd = get_cxx_cmd($_[1], $_[2], $_[3]);
         $cmd = "$cxx_cmd {}.cpp -o {}.o";
       } elsif ($i eq 'asm') {
         my $asm_cmd = get_asm_cmd();
@@ -325,7 +327,7 @@ sub build_targets {
         my $cmd;
         # get the command to build this type of file
         if ($i eq 'cpp') {
-          my $cxx_cmd = get_cxx_cmd($_[1], $_[2]);
+          my $cxx_cmd = get_cxx_cmd($_[1], $_[2], $_[3]);
           $cmd = "$cxx_cmd $j.cpp -o $j.o";
         } elsif ($i eq 'asm') {
           my $asm_cmd = get_asm_cmd();
