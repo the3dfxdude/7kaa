@@ -1169,7 +1169,7 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short
 	case SDLK_COLON: priChar = shiftChar = capitalChar = ':'; break;
 	case SDLK_UNDERSCORE: priChar = shiftChar = capitalChar = '_'; break;
 	default:
-		ERR("unhandled key %x\n", scanCode);
+		MSG("unhandled key %x\n", scanCode);
 	}
 
 	// check flags
