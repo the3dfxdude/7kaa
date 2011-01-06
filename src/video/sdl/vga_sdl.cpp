@@ -321,9 +321,19 @@ void VgaSDL::flag_redraw()
 
 
 //-------- Begin of function VgaSDL::toggle_full_screen --------//
+//
+// The previous front surface is freed by SDL_SetVideoMode.
 void VgaSDL::toggle_full_screen()
 {
-   SDL_WM_ToggleFullScreen(front);
+   static uint32_t flags = SDL_HWSURFACE|SDL_HWPALETTE;
+   flags ^= SDL_FULLSCREEN;
+   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, flags);
+   if (!front)
+   {
+      ERR("Lost video surface!");
+   }
+   SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
+   sys.need_redraw_flag = 1;
 }
 //-------- End of function VgaSDL::toggle_full_screen ----------//
 
