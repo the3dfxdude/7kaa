@@ -727,6 +727,8 @@ void MouseSDL::poll_event()
 	SDL_Event event;
 	int moveFlag;
 
+	moveFlag = 0;
+
 	while (SDL_PeepEvents(&event,
 			1,
 			SDL_GETEVENT,
@@ -823,7 +825,6 @@ void MouseSDL::poll_event()
 void MouseSDL::update_skey_state()
 {
 	int modstate = SDL_GetModState();
-	SDL_GetMouseState(&cur_x, &cur_y);
 
 	skey_state = 0;
 	if (modstate & KMOD_LSHIFT)
