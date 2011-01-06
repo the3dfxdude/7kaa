@@ -35,7 +35,7 @@
 
 
 //-------- Game Version -----------//
-#define SKVERSION "2.14.1"
+#define SKVERSION "2.14.2"
 
 
 //-------- Define macro functions -------//

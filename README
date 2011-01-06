@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.14.1
+Release version 2.14.2
 Project website: www.7kfans.com
 
 This is the release of the Seven Kingdoms: Ancient Adversaries source
@@ -10,11 +10,15 @@ provided under the terms of the GPL.  See the file "COPYING" for the
 details of the license.
 
 Changes in this release:
- * Initial x86_64 support in Linux.
- * DirectPlay code has been removed.
+ * New network support using SDL_net, directly replacing DirectPlay.
+ * Fixed saved games with marine units on x86_64.
+ * Fixed the diplomacy menu in the Plague scenario.
+ * Added multiplayer connection progress dialogs.
+ * Added command line switches for future external lobby support.
+ * Fixed fullscreen toggle on Windows.
+ * Fixed the jumpy mouse.
 
-The whole 2.14.xx series should be considered BETA, and even sometimes
-ALPHA, in terms of quality.
+Thanks to all who made this release possible.
 
 
 Building the game
@@ -22,10 +26,9 @@ Building the game
 
 General Requirements
 * GCC 4.xx or later
-* Perl (checked with 5.10.1)
-
-Linux
+* Perl 5.8? or later (checked with 5.10.1)
 * SDL 1.2
+* SDL_net
 * OpenAL
 
 
