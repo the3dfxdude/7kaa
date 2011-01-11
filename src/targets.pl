@@ -39,7 +39,7 @@ if (defined($video_backend)) {
     } elsif ($platform =~ /^win32/) {
       # sdl-config is a bash script...which technically works on windows
       # but right now I want to look for better options and hardcode this
-      push (@linker_opts, '-lmingw32 -lSDLmain -lSDL -mwindows');
+      push (@linker_opts, '-lmingw32 -lSDLmain -lSDL -mwindows -static-libstdc++ -static-libgcc');
     }
     @video = include_targets('video/sdl/targets.pl');
   } elsif ($video_backend =~ /ddraw/i) {
