@@ -1241,12 +1241,12 @@ int Game::mp_get_address(char *name, int name_len)
 
 		input_box.detect();
 
-		if (buttonOk.detect(buttonOk.str_buf[0], KEY_RETURN)) {
+		if (buttonOk.detect(KEY_RETURN)) {
 			ret = 1;
 			break;
 		}
 
-		if (buttonCancel.detect() ||
+		if (buttonCancel.detect(KEY_ESC) ||
 		    mouse.any_click(1)) {
 			mouse.get_event();
 			break;
