@@ -53,7 +53,7 @@ public:
         int    init_back(VgaBuf*, DWORD =0, DWORD =0);
 	void   deinit();
 
-	char   is_inited()  { return NULL; }
+	char   is_inited()  { return front != NULL; }
 
 	int    init_pal(const char* fileName);
 	void   refresh_palette();
