@@ -306,6 +306,9 @@ void VgaSDL::handle_messages()
       case SDL_QUIT:
          sys.signal_exit_flag = 1;
          break;
+      case SDL_VIDEOEXPOSE:
+         sys.need_redraw_flag = 1;
+         break;
       default:
          ERR("unhandled event %d\n", event.type);
          break;
