@@ -81,7 +81,8 @@ int VgaSDL::init()
 
 //-------- Begin of function VgaBuf::init_front ----------//
 //
-// Create a direct draw front buffer.
+// Inform the front buffer of the actual surface.  This function retains
+// compatibility with old direct draw code.
 //
 int VgaSDL::init_front(VgaBuf *b)
 {
@@ -332,7 +333,7 @@ void VgaSDL::toggle_full_screen()
    {
       ERR("Lost video surface!");
    }
-   SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
+   init_front(active_buf);
    sys.need_redraw_flag = 1;
 }
 //-------- End of function VgaSDL::toggle_full_screen ----------//
