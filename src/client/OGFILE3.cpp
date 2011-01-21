@@ -170,6 +170,8 @@ int UnitArray::read_file(File* filePtr)
 
          if( !unitPtr->read_derived_file( filePtr ) )
             return 0;
+
+			unitPtr->fix_attack_info();
       }
    }
 
@@ -456,10 +458,6 @@ int Unit::read_derived_file(File* filePtr)
       if( !filePtr->file_read( (char*) this + sizeof(Unit), readSize ) )
          return 0;
 	}
-
-	// ###### begin Gilbert 13/8 #######//
-	fix_attack_info();
-	// ###### end Gilbert 13/8 #######//
 
    return 1;
 }
