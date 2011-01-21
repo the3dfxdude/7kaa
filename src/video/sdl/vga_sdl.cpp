@@ -87,7 +87,7 @@ int VgaSDL::init()
 int VgaSDL::init_front(VgaBuf *b)
 {
    b->init(new SurfaceSDL(front), 1);
-   SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
+   refresh_palette();
    return 1;
 }
 //-------- End of function VgaBuf::init_front ----------//
