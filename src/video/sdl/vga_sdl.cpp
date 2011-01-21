@@ -331,7 +331,14 @@ void VgaSDL::toggle_full_screen()
    front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, flags);
    if (!front)
    {
-      ERR("Lost video surface!");
+      // Try to restore the previous mode.
+      flags ^= SDL_FULLSCREEN;
+      front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, flags);
+      if (!front)
+      {
+         ERR("Lost video surface!");
+         return;
+      }
    }
    init_front(active_buf);
    sys.need_redraw_flag = 1;
