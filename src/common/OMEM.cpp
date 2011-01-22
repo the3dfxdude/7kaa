@@ -28,6 +28,9 @@
 
 #include <stdio.h>
 #include <ALL.h>
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Mem);
 
 //--------- Define Constants -----------//
 
@@ -389,15 +392,11 @@ int Mem::get_mem_size(void *memPtr)
 
 Mem::~Mem()
 {
-   if ( ptr_used > 0 )
+   if (ptr_used > 0)
    {
-      int i;
-
-      for ( i=0; i< ptr_used ; i++ )
-		{
-         err.msg( "Memory not freed. File name : %s, line no. : %d \n",
-                  info_array[i].file_name, info_array[i].file_line );
-		}
+      for (int i = 0; i < ptr_used; i++)
+         ERR("Memory not freed. File name : %s, line no. : %d \n",
+             info_array[i].file_name, info_array[i].file_line);
    }
 
    free(info_array);
