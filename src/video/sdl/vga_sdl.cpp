@@ -127,6 +127,7 @@ void VgaSDL::deinit()
 {
    if (vga_color_table) delete vga_color_table;
    SDL_Quit();
+   front = NULL;
 }
 //-------- End of function VgaSDL::deinit ----------//
 
