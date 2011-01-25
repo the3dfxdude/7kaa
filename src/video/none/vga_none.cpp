@@ -168,3 +168,8 @@ void VgaNone::flag_redraw()
 }
 //-------- End of function VgaNone::flag_redraw ----------//
 
+//-------- Begin of function VgaNone::toggle_full_screen --------//
+void VgaNone::toggle_full_screen()
+{
+}
+//-------- End of function VgaNone::toggle_full_screen ----------//
