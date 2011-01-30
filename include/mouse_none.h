@@ -198,6 +198,10 @@ public:
 	static int is_key(unsigned keyCode, unsigned short skeyState, unsigned short charValue, unsigned flags = 0 );
 	static int is_key(unsigned keyCode, unsigned short skeyState, char *keyStr, unsigned flags = 0 );
 	// see omouse2.h for flags
+
+        void disp_count_start();
+        void disp_count_end();
+
 };
 //---------- End of define class ---------------//
 

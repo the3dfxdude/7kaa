@@ -390,3 +390,18 @@ int MouseNone::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr,
    return 0;
 }
 // ------ End of MouseNone::is_key -------//
+
+
+// ------ Begin of MouseNone::disp_count_start -------//
+void MouseNone::disp_count_start()
+{
+}
+// ------ End of MouseNone::disp_count_start -------//
+
+
+// ------ Begin of MouseNone::disp_count_end -------//
+void MouseNone::disp_count_end()
+{
+}
+// ------ End of MouseNone::disp_count_end -------//
+
