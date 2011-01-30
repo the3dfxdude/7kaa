@@ -100,7 +100,7 @@ int VgaSDL::init_front(VgaBuf *b)
 // [DWORD] w      : width of the surface [default 0 : VGA_WIDTH]
 // [DWORD] h      : height of the surface [default 0 : VGA_HEIGHT]
 //
-int VgaSDL::init_back( VgaBuf *b, DWORD w, DWORD h )
+int VgaSDL::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 {
    SDL_Surface *surface = SDL_CreateRGBSurface(SDL_SWSURFACE,
                                                VGA_WIDTH,

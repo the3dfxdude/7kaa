@@ -215,7 +215,7 @@ int VgaDDraw::init_front(VgaBuf *b)
 // [DWORD] w      : width of the surface [default 0 : VGA_WIDTH]
 // [DWORD] h      : height of the surface [default 0 : VGA_HEIGHT]
 //
-int VgaDDraw::init_back( VgaBuf *b, DWORD w, DWORD h )
+int VgaDDraw::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 {
    DDSURFACEDESC       ddsd;
    Surface             *surface;

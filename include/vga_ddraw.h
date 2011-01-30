@@ -54,7 +54,7 @@ public:
 
 	int    init();
         int    init_front(VgaBuf*);
-        int    init_back(VgaBuf*, DWORD =0, DWORD =0);
+	int    init_back(VgaBuf*, unsigned long =0, unsigned long =0);
 	void   deinit();
 
 	char   is_inited()  { return dd_obj!=NULL; }
