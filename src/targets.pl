@@ -43,7 +43,7 @@ if (defined($video_backend)) {
     }
     @video = include_targets('video/sdl/targets.pl');
   } elsif ($video_backend =~ /ddraw/i) {
-    push (@libs, 'gdi32', 'ddraw');
+    push (@libs, 'gdi32', 'ddraw', 'dxguid');
     @video = include_targets('video/ddraw/targets.pl');
   } elsif ($video_backend =~ /none/i) {
     @video = include_targets('video/none/targets.pl');
