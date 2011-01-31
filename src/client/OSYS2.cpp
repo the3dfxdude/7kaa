@@ -120,14 +120,6 @@ void Sys::detect()
 //
 void Sys::process()
 {
-	//---- if any of the DirectDraw buffers is lost, restore it ----//
-
-	if( vga_front.is_buf_lost() || vga_back.is_buf_lost() )
-	{
-		if (!restore())
-			pause();
-	}
-
 	//------- update frame count and is_sync_frame --------//
 
 	frame_count++;

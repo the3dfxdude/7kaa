@@ -605,3 +605,17 @@ Surface* VgaDDraw::create_surface(LPDDSURFACEDESC ddsd)
    return new Surface(dd_buf);
 }
 //--------- End of function VgaDDraw::create_surface -----------//
+
+
+//-------- Begin of function VgaDDraw::restore --------//
+int VgaDDraw::restore()
+{
+   if (!vga_front.restore_buf() ||
+       !vga_back.restore_buf() ||
+       (sys.debug_session && !vga_true_front.restore_buf()))
+      return 0;
+
+   return 1;
+}
+//--------- End of function VgaDDraw::restore ---------//
+

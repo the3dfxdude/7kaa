@@ -995,33 +995,6 @@ void Sys::unpause()
 //--------- End of function Sys::unpause ---------//
 
 
-//-------- Begin of function Sys::restore --------//
-//
-// TODO: This should be moved into Vga, as well as various bits of init_directx()
-//
-int Sys::restore()
-{
-   if( !vga_front.restore_buf() )
-      return 0;
-
-   if( !vga_back.restore_buf() )
-      return 0;
-
-   if( sys.debug_session )
-   {
-      if( !vga_true_front.restore_buf() )
-         return 0;
-   }
-   // ####### begin Gilbert 16/9 ########//
-   //else
-   // vga_front.lock_buf();
-   // ####### end Gilbert 16/9 ########//
-
-   return 1;
-}
-//--------- End of function Sys::restore ---------//
-
-
 //-------- Begin of function Sys::yield --------//
 //
 void Sys::yield()

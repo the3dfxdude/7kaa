@@ -224,8 +224,6 @@ private:
 	void 		blt_next_frame();
 	void		disp_frames_per_second();
 
-	BOOL		restore();
-
 	void		process_key(unsigned scanCode, unsigned skeyState);
 
 	void		detect_letter_key(unsigned scanCode, unsigned skeyState);

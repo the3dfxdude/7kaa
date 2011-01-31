@@ -21,8 +21,10 @@
 
 #include <OSYS.h>
 #include <OVGA.h>
-
 #include <RESOURCE.h>
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Vga);
 
 //------- Define static functions -----------//
 
@@ -197,13 +199,22 @@ static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
 void VgaDDraw::handle_messages()
 {
    static int lastTick;
+   MSG msg;
 
    int tick = GetTickCount();
    if (lastTick == tick)
       return;
    lastTick = tick;
 
-   MSG msg;
+   //---- if any of the DirectDraw buffers are lost; restore ----//
+   if ((vga_front.is_buf_lost() ||
+        vga_back.is_buf_lost() ||
+        (sys.debug_session && vga_true_front.is_buf_lost())) &&
+       !VgaDDraw::restore())
+   {
+      ERR("Lost buffers!\n");
+   }
+
    while (PeekMessage(&msg, main_hwnd, 0, 0, PM_NOREMOVE))
    {
       BOOL r;

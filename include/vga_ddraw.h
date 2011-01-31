@@ -68,6 +68,7 @@ public:
 	// DDraw private
 	Surface* create_surface(LPDDSURFACEDESC ddsd);
 	void refresh_palette();
+	int restore();
 
 private:
 	int    init_dd();
