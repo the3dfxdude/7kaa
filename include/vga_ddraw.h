@@ -67,6 +67,7 @@ public:
 
 	// DDraw private
 	Surface* create_surface(LPDDSURFACEDESC ddsd);
+	void refresh_palette();
 
 private:
 	int    init_dd();
@@ -77,7 +78,6 @@ private:
 	int    init_pal(const char* fileName);
 	int    set_mode();
 	void   activate_pal(VgaBuf*);
-	void   refresh_palette();
 	void   release_pal();
 	int    create_window();
 	void   destroy_window();
