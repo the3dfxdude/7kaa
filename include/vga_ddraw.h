@@ -35,6 +35,9 @@ class ColorTable;
 
 class VgaDDraw : public VgaBase
 {
+private:
+	int init_flag;
+
 public:
 	LPDIRECTDRAW2        dd_obj;
 	LPDIRECTDRAWPALETTE  dd_pal;
@@ -55,7 +58,7 @@ public:
 	int    init();
 	void   deinit();
 
-	char   is_inited()  { return dd_obj!=NULL; }
+	char   is_inited()  { return init_flag; }
 
 	int    set_custom_palette(char*);
 	void   free_custom_palette();

@@ -61,6 +61,8 @@ VgaDDraw::VgaDDraw()
    // window related
    main_hwnd = NULL;
    app_hinstance = NULL;
+
+   init_flag = 0;
 }
 //-------- End of function VgaDDraw::Vga ----------//
 
@@ -148,6 +150,8 @@ int VgaDDraw::init()
 
    vga_front.lock_buf();
    vga_back.lock_buf();
+
+   init_flag = 1;
 
    return 1;
 }
@@ -341,6 +345,8 @@ void VgaDDraw::deinit()
    }
 
    destroy_window();
+
+   init_flag = 0;
 }
 //-------- End of function VgaDDraw::deinit ----------//
 
@@ -610,6 +616,9 @@ Surface* VgaDDraw::create_surface(LPDDSURFACEDESC ddsd)
 //-------- Begin of function VgaDDraw::restore --------//
 int VgaDDraw::restore()
 {
+   if (!init_flag)
+      return 1;
+
    if (!vga_front.restore_buf() ||
        !vga_back.restore_buf() ||
        (sys.debug_session && !vga_true_front.restore_buf()))

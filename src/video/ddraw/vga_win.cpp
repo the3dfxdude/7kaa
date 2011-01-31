@@ -138,31 +138,28 @@ static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
          // changed, now that we are active try to fix things
          //--------------------------------------------------------------//
 
+         // check if we are restoring or minimizing
          if ((BOOL)wParam && !IsIconic(hWnd))
          {
-            if (!sys.is_mp_game) {
-               if (!sys.restore())
-               {
-                  //-----------------------------------------------------//
-                  //  we are unable to restore, this can happen when
-                  //  the screen resolution or bitdepth has changed
-                  //  we just reload all the art again and re-create
-                  //  the front and back buffers.  this is a little
-                  //  overkill we could handle a screen res change by
-                  //  just recreating the front and back buffers we dont
-                  //  need to redo the art, but this is way easier.
-                  //-----------------------------------------------------//
+            //-----------------------------------------------------//
+            //  if we are unable to restore, this can happen when
+            //  the screen resolution or bitdepth has changed
+            //  we just reload all the art again and re-create
+            //  the front and back buffers.  this is a little
+            //  overkill we could handle a screen res change by
+            //  just recreating the front and back buffers we dont
+            //  need to redo the art, but this is way easier.
+            //-----------------------------------------------------//
 
-                  if (sys.init_directx())
-                  {
-                     if (!sys.restore())     // if still not successful, quit
-                        return;
-                  }
-               }
-
-               sys.unpause();
+            // attempt to restore window
+            if (vga.restore() || (vga.init() && vga.restore())) {
+               sys.need_redraw_flag = 1; // for Sys::disp_frame to redraw the screen
+               if (!sys.is_mp_game)
+                  sys.unpause();
+            } else {
+               // The screen wasn't restored. The game is not usable.
+               ERR("Lost buffers in main_win_proc!\n");
             }
-            sys.need_redraw_flag = 1;      // for Sys::disp_frame to redraw the screen
          }
          else if (!sys.is_mp_game)
             sys.pause();
