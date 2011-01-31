@@ -132,6 +132,23 @@ int VgaDDraw::init()
    if( !set_mode() )
       return 0;
 
+   VgaDDraw::init_pal(DIR_RES"PAL_STD.RES");
+
+   // Create the front and back buffers
+   if (sys.debug_session) {
+      VgaDDraw::init_back(&vga_front);
+      vga_front.is_front = 1; // set it to 1, overriding the setting in init_back()
+      VgaDDraw::init_front(&vga_true_front);
+      VgaDDraw::activate_pal(&vga_true_front);
+   } else {
+      VgaDDraw::init_front(&vga_front);
+      VgaDDraw::activate_pal(&vga_front);
+   }
+   VgaDDraw::init_back(&vga_back);
+
+   vga_front.lock_buf();
+   vga_back.lock_buf();
+
    return 1;
 }
 //-------- End of function VgaDDraw::init ----------//
@@ -304,6 +321,11 @@ int VgaDDraw::set_mode()
 
 void VgaDDraw::deinit()
 {
+   vga_back.deinit();
+   if (sys.debug_session)
+      vga_true_front.deinit();
+   vga_front.deinit();
+
    release_pal();
 
    if( dd_obj )

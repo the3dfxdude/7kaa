@@ -56,69 +56,12 @@ int VgaNone::init()
 //-------- End of function VgaNone::init ----------//
 
 
-//-------- Begin of function VgaBuf::init_front ----------//
-//
-// Create a direct draw front buffer.
-//
-int VgaNone::init_front(VgaBuf *b)
-{
-   return 1;
-}
-//-------- End of function VgaBuf::init_front ----------//
-
-
-//-------- Begin of function VgaBuf::init_back ----------//
-//
-// Create a direct draw back buffer.
-//
-// [DWORD] w      : width of the surface [default 0 : VGA_WIDTH]
-// [DWORD] h      : height of the surface [default 0 : VGA_HEIGHT]
-//
-int VgaNone::init_back( VgaBuf *b, unsigned long w, unsigned long h )
-{
-   return 1;
-}
-//-------- End of function VgaBuf::init_back ----------//
-
-
 //-------- Begin of function VgaNone::deinit ----------//
 
 void VgaNone::deinit()
 {
 }
 //-------- End of function VgaNone::deinit ----------//
-
-
-//--------- Start of function VgaNone::init_pal ----------//
-//
-// Loads the default game palette specified by fileName. Creates the ddraw
-// palette.
-//
-int VgaNone::init_pal(const char* fileName)
-{
-   return 1;
-}
-//----------- End of function VgaNone::init_pal ----------//
-
-//--------- Start of function VgaNone::refresh_palette ----------//
-//
-// When the system changes the palette, this function will set
-// the palette back to the correct entries.
-//
-void VgaNone::refresh_palette()
-{
-}
-//----------- End of function VgaNone::refresh_palette ----------//
-
-
-//-------- Begin of function VgaNone::activate_pal ----------//
-//
-// we are getting the palette focus, select our palette
-//
-void VgaNone::activate_pal(VgaBuf* vgaBufPtr)
-{
-}
-//--------- End of function VgaNone::activate_pal ----------//
 
 
 //-------- Begin of function VgaNone::set_custom_palette ----------//

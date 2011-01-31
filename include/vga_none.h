@@ -18,8 +18,8 @@
  *
  */
 
-//Filename    : vga_sdl.h
-//Description : Header file for class OVGA (SDL version)
+//Filename    : vga_none.h
+//Description : Header file for class OVGA (Empty version)
 
 #ifndef __VGA_NONE_H
 #define __VGA_NONE_H
@@ -42,16 +42,10 @@ public:
 	~VgaNone();
 
 	int    init();
-        int    init_front(VgaBuf*);
-        int    init_back(VgaBuf*, unsigned long =0, unsigned long =0);
 	void   deinit();
 
 	char   is_inited()  { return 0; }
 
-	int    init_pal(const char* fileName);
-	void   refresh_palette();
-
-	void   activate_pal(VgaBuf*);
 	int    set_custom_palette(char*);
 	void   free_custom_palette();
 	void   adjust_brightness(int changeValue);
@@ -59,9 +53,6 @@ public:
 	void   handle_messages();
 	void   flag_redraw();
 	void   toggle_full_screen();
-
-	// DDraw private
-	//Surface* create_surface(LPDDSURFACEDESC ddsd);
 };
 
 typedef VgaNone Vga;

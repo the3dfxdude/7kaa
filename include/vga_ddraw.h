@@ -53,16 +53,10 @@ public:
 	~VgaDDraw();
 
 	int    init();
-        int    init_front(VgaBuf*);
-	int    init_back(VgaBuf*, unsigned long =0, unsigned long =0);
 	void   deinit();
 
 	char   is_inited()  { return dd_obj!=NULL; }
 
-	int    init_pal(const char* fileName);
-	void   refresh_palette();
-
-	void   activate_pal(VgaBuf*);
 	int    set_custom_palette(char*);
 	void   free_custom_palette();
 	void   adjust_brightness(int changeValue);
@@ -76,9 +70,14 @@ public:
 
 private:
 	int    init_dd();
+	int    init_front(VgaBuf*);
+	int    init_back(VgaBuf*, unsigned long =0, unsigned long =0);
 	void   init_gray_remap_table();
         void   init_color_table();
+	int    init_pal(const char* fileName);
 	int    set_mode();
+	void   activate_pal(VgaBuf*);
+	void   refresh_palette();
 	void   release_pal();
 	int    create_window();
 	void   destroy_window();

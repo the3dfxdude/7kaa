@@ -74,6 +74,23 @@ int VgaSDL::init()
 
    SDL_WM_SetCaption(WIN_TITLE, WIN_TITLE);
 
+   init_pal(DIR_RES"PAL_STD.RES");
+
+   // Create the front and back buffers
+   if (sys.debug_session) {
+      init_back(&vga_front);
+      vga_front.is_front = 1; // set it to 1, overriding the setting in init_back()
+      init_front(&vga_true_front);
+      activate_pal(&vga_true_front);
+   } else {
+      init_front(&vga_front);
+      activate_pal(&vga_front);
+   }
+   init_back(&vga_back);
+
+   vga_front.lock_buf();
+   vga_back.lock_buf();
+
    return 1;
 }
 //-------- End of function VgaSDL::init ----------//
@@ -125,6 +142,11 @@ int VgaSDL::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 
 void VgaSDL::deinit()
 {
+   vga_back.deinit();
+   if (sys.debug_session)
+      vga_true_front.deinit();
+   vga_front.deinit();
+
    if (vga_color_table) delete vga_color_table;
    SDL_Quit();
    front = NULL;

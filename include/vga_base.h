@@ -62,16 +62,10 @@ public:
 	~VgaBase() {};
  
 	virtual int    init() =0;
-	virtual int    init_front(VgaBuf*) =0;
-	virtual int    init_back(VgaBuf*, unsigned long =0, unsigned long =0) =0;
 	virtual void   deinit() =0;
 
 	virtual char   is_inited() =0;
 
-	virtual int    init_pal(const char* fileName) =0;
-	virtual void   refresh_palette() =0;
-
-	virtual void   activate_pal(VgaBuf*) =0;
 	virtual int    set_custom_palette(char*) =0;
 	virtual void   free_custom_palette() =0;
 	virtual void   adjust_brightness(int changeValue) =0;
