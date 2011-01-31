@@ -740,8 +740,15 @@ void MouseSDL::poll_event()
 
 		switch (event.type) {
 		case SDL_MOUSEMOTION:
+		// SDL already accelerates relative mouse motions.
+		// Disable to let the user control speed outside of game.
+#ifdef MOUSE_RELATIVE
 			cur_x += micky_to_displacement(event.motion.xrel);
 			cur_y += micky_to_displacement(event.motion.yrel);
+#else
+			cur_x = event.motion.x;
+			cur_y = event.motion.y;
+#endif
 			if(cur_x < bound_x1)
 				cur_x = bound_x1;
 			if(cur_x > bound_x2)
