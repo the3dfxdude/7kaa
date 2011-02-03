@@ -17,12 +17,12 @@ AC_PROG_CC
 AC_PROG_RANLIB
 AC_PROG_LN_S
 
-# Checks for libraries.
-
 # Checks for header files.
 dnl AC_CHECK_HEADERS([])
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_CANONICAL_HOST
+
 AC_TYPE_INT16_T
 AC_TYPE_INT32_T
 AC_TYPE_INT8_T
@@ -42,10 +42,12 @@ audio_backend=openal # openal dsound
 input_backend=sdl    # sdl dinput none
 video_backend=sdl    # sdl ddraw none
 net_backend=sdlnet   # sdlnet none
+use_windows=no
 
 # Set in argument handlers:
 # enable_debug=yes
 # with_directx=no
+# with_wine=no
 
 # Configuration options
 
@@ -55,17 +57,32 @@ AC_ARG_ENABLE([debug],
 )
 
 AC_ARG_WITH([directx],
-  AS_HELP_STRING([--with-directx], [use DirectX or Wine instead of SDL]),
+  AS_HELP_STRING([--with-directx], [use DirectX instead of SDL]),
   [], [with_directx=no]
+)
+
+AC_ARG_WITH([wine],
+  AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
+  [], [with_wine=no]
 )
 
 
 # Select which backends to build
 
+AS_IF([test "$with_wine" = yes], [
+  with_directx=yes
+])
+
 AS_IF([test "$with_directx" = yes], [
   audio_backend=dsound
   input_backend=dinput
   video_backend=ddraw
+])
+
+AS_IF([test "$audio_backend" = dsound \
+       || test "$input_backend" = dinput \
+       || test "$video_backend" = ddraw], [
+  use_windows=yes
 ])
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
@@ -78,6 +95,20 @@ AM_CONDITIONAL([NET_SDLNET],   [test "$net_backend" = sdlnet])
 AM_CONDITIONAL([VIDEO_DDRAW],  [test "$video_backend" = ddraw])
 AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
+
+
+# Wine set-up
+
+AS_IF([test "$with_wine" = yes], [
+  winecxx=$(which wineg++)
+  AS_IF([test -z "$winecxx"], [
+    AC_ERROR([wineg++ not found])
+  ])
+  wine_prefix=$(echo "$winecxx" | sed 's/\/\?bin\/wineg++$//')
+  CXX="wineg++"
+  CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/msvcrt\""
+  CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/windows\""
+])
 
 
 # Library dependencies
@@ -109,12 +140,31 @@ AS_IF([test "$net_backend" = sdlnet], [
   ])
 ])
 
+AS_IF([test "$video_backend" = ddraw], [
+  LIBS="-lgdi32 -lddraw -ldxguid $LIBS"
+])
+
+AS_IF([test "$audio_backend" = dsound], [
+  LIBS="-ldsound $LIBS"
+])
+
+AS_IF([test "$input_backend" = dinput], [
+  LIBS="-ldinput $LIBS"
+])
+
+AS_IF([test "$use_windows" = yes], [
+  LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
+  LDFLAGS="-mno-cygwin $LDFLAGS"
+
+  AS_IF([test "$enable_debug" = no], [
+    LDFLAGS="$LDFLAGS -mwindows"
+  ])
+])
+
 
 # Defines
 
-AS_IF([test "$input_backend" != dinput \
-       && test "$audio_backend" != dsound \
-       && test "$video_backend" != ddraw], [
+AS_IF([test "$use_windows" != yes], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
 ])
 
@@ -124,7 +174,7 @@ case "$video_backend" in
 	      [Define to 1 if using DirectDraw as the video backend])
     ;;
   sdl)
-    AC_DEFINE([USE_SDL], [1], [Define to 1 if using SDL as the video backend])
+    # Define later
     ;;
   none)
     AC_DEFINE([USE_NOVIDEO], [1],
@@ -151,10 +201,47 @@ case "$audio_backend" in
     ;;
 esac
 
-AS_IF([test "$net_backend" = sdlnet], [
-  AC_DEFINE([USE_SDLNET], [1], [
-    Define to 1 if using SDL_net as the netplay backend
-  ])
+case "$input_backend" in
+  dinput)
+    AC_DEFINE([USE_DINPUT], [1], [
+      Define to 1 if using Direct Input as the input backend
+    ])
+    ;;
+  none)
+    AC_DEFINE([USE_NOINPUT], [1], [
+      Define to 1 if building without input support
+    ])
+    ;;
+  sdl)
+    # Define later
+    ;;
+  *)
+    AC_ERROR([Unknown input backend: $input_backend])
+    ;;
+esac
+
+case "$net_backend" in
+  none)
+    AC_DEFINE([USE_NONETPLAY], [1], [
+      Define to 1 if building without network support
+    ])
+    AC_DEFINE([DISABLE_MULTIPLAYER], [1], [
+      Define to 1 to disable multiplayer
+    ])
+    ;;
+  sdlnet)
+    AC_DEFINE([USE_SDLNET], [1], [
+      Define to 1 if using SDL_net as the network backend
+    ])
+    ;;
+  *)
+    AC_ERROR([Unknown network backend: $net_backend])
+    ;;
+esac
+
+AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
+  AC_DEFINE([USE_SDL], [1],
+	    [Define to 1 if using SDL as the video/input backend])
 ])
 
 AS_IF([test "$enable_debug" = yes], [
@@ -169,9 +256,8 @@ AC_DEFINE([AMPLUS], [1], [
   Define to 1 if building Ancient Adversaries features
 ])
 
-COMMON_CXXFLAGS="-include \"\$(top_builddir)/include/config.h\""
-
-CXXFLAGS="$CXXFLAGS $COMMON_CXXFLAGS"
+CXXFLAGS="$CXXFLAGS -I\"\$(top_srcdir)/include\""
+CXXFLAGS="$CXXFLAGS -include \"\$(top_builddir)/include/config.h\""
 
 AC_CONFIG_FILES([
   Makefile
