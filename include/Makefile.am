@@ -1,4 +1,4 @@
-noinst_INCLUDES = \
+noinst_HEADERS = \
 	ALL.h \
 	COLCODE.h \
 	COLOR.h \
