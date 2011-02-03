@@ -169,7 +169,7 @@ AC_DEFINE([AMPLUS], [1], [
   Define to 1 if building Ancient Adversaries features
 ])
 
-COMMON_CXXFLAGS="-include \"\$(top_srcdir)/include/config.h\""
+COMMON_CXXFLAGS="-include \"\$(top_builddir)/include/config.h\""
 
 CXXFLAGS="$CXXFLAGS $COMMON_CXXFLAGS"
 
