@@ -2,7 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([7kaa], [2.14.3], [skfans-devel@lists.sourceforge.net])
+AC_INIT([7kaa], [2.14.3], [skfans-devel@lists.sourceforge.net], [],
+	[http://7kfans.com/])
 AC_CONFIG_SRCDIR([src/client/AM.cpp])
 AC_CONFIG_HEADERS([include/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -14,6 +15,7 @@ ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
+AC_PROG_LN_S
 
 # Checks for libraries.
 
@@ -33,54 +35,138 @@ AC_TYPE_UINT8_T
 # Checks for library functions.
 dnl AC_CHECK_FUNCS([])
 
-use_openal=yes
 
-AM_CONDITIONAL([AUDIO_OPENAL], [test "$use_openal" = yes])
-AM_CONDITIONAL([AUDIO_DSOUND], [false])
-AM_CONDITIONAL([INPUT_DINPUT], [false])
-AM_CONDITIONAL([INPUT_NONE], [false])
-AM_CONDITIONAL([INPUT_SDL], [true])
-AM_CONDITIONAL([NET_NONE], [false])
-AM_CONDITIONAL([NET_SDLNET], [true])
-AM_CONDITIONAL([VIDEO_DDRAW], [false])
-AM_CONDITIONAL([VIDEO_NONE], [false])
-AM_CONDITIONAL([VIDEO_SDL], [true])
+# Configuration variables
 
-AS_IF([test "$use_openal" = yes], [
+audio_backend=openal # openal dsound
+input_backend=sdl    # sdl dinput none
+video_backend=sdl    # sdl ddraw none
+net_backend=sdlnet   # sdlnet none
+
+# Set in argument handlers:
+# enable_debug=yes
+# with_directx=no
+
+# Configuration options
+
+AC_ARG_ENABLE([debug],
+  AS_HELP_STRING([--disable-debug], [disable debugging features]),
+  [], [enable_debug=yes]
+)
+
+AC_ARG_WITH([directx],
+  AS_HELP_STRING([--with-directx], [use DirectX or Wine instead of SDL]),
+  [], [with_directx=no]
+)
+
+
+# Select which backends to build
+
+AS_IF([test "$with_directx" = yes], [
+  audio_backend=dsound
+  input_backend=dinput
+  video_backend=ddraw
+])
+
+AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
+AM_CONDITIONAL([AUDIO_DSOUND], [test "$audio_backend" = dsound])
+AM_CONDITIONAL([INPUT_DINPUT], [test "$input_backend" = dinput])
+AM_CONDITIONAL([INPUT_NONE],   [test "$input_backend" = none])
+AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
+AM_CONDITIONAL([NET_NONE],     [test "$net_backend" = none])
+AM_CONDITIONAL([NET_SDLNET],   [test "$net_backend" = sdlnet])
+AM_CONDITIONAL([VIDEO_DDRAW],  [test "$video_backend" = ddraw])
+AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
+AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
+
+
+# Library dependencies
+
+AS_IF([test "$audio_backend" = openal], [
   AM_PATH_OPENAL([], [
     AC_ERROR([OpenAL not found])
   ])
 
   AC_SUBST([OPENAL_CFLAGS])
-  AC_SUBST([OPENAL_LIBS])
 
-  LIBS="$LIBS $OPENAL_LIBS"
+  LIBS="$OPENAL_LIBS $LIBS"
 ])
 
-use_windows_headers=no
+AS_IF([test "$input_backend" = sdl \
+       || test "$video_backend" = sdl \
+       || test "$net_backend" = sdlnet], [
+  AM_PATH_SDL([], [], [
+    AC_ERROR([SDL not found])
+  ])
 
-AS_IF([test "$use_windows_headers" = no], [
+  LIBS="$SDL_LIBS $LIBS"
+  AC_SUBST([SDL_CFLAGS])
+])
+
+AS_IF([test "$net_backend" = sdlnet], [
+  AC_CHECK_LIB([SDL_net], [SDLNet_Init], [], [
+    AC_ERROR([SDL_net not found])
+  ])
+])
+
+
+# Defines
+
+AS_IF([test "$input_backend" != dinput \
+       && test "$audio_backend" != dsound \
+       && test "$video_backend" != ddraw], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
+])
+
+case "$video_backend" in
+  ddraw)
+    AC_DEFINE([USE_DDRAW], [1],
+	      [Define to 1 if using DirectDraw as the video backend])
+    ;;
+  sdl)
+    AC_DEFINE([USE_SDL], [1], [Define to 1 if using SDL as the video backend])
+    ;;
+  none)
+    AC_DEFINE([USE_NOVIDEO], [1],
+	      [Define to 1 if building without a graphical display])
+    ;;
+  *)
+    AC_ERROR([Unknown video backend: $video_backend])
+    ;;
+esac
+
+case "$audio_backend" in
+  dsound)
+    AC_DEFINE([USE_DSOUND], [1], [
+      Define to 1 if using DirectSound as the audio backend
+    ])
+    ;;
+  openal)
+    AC_DEFINE([USE_OPENAL], [1], [
+      Define to 1 if using OpenAL as the audio backend
+    ])
+    ;;
+  *)
+    AC_ERROR([Unknown audio backend: $audio_backend])
+    ;;
+esac
+
+AS_IF([test "$net_backend" = sdlnet], [
+  AC_DEFINE([USE_SDLNET], [1], [
+    Define to 1 if using SDL_net as the netplay backend
+  ])
+])
+
+AS_IF([test "$enable_debug" = yes], [
+  AC_DEFINE([DEBUG], [1], [Define to 1 if building with debugging features])
 ])
 
 AC_DEFINE([NO_ASM], [1], [
   Define to 1 if not using assembly routines or if NO_WINDOWS is defined
 ])
 
-AC_DEFINE([USE_SDL], [1], [Define to 1 if using SDL as the video backend])
-
-AS_IF([test "$use_openal" = yes], [
-  AC_DEFINE([USE_OPENAL], [1], [
-    Define to 1 if using OpenAL as the audio backend
-  ])
-])
-
-AC_DEFINE([USE_SDLNET], [1], [
-  Define to 1 if using SDL_net as the netplay backend
-])
-
 AC_DEFINE([AMPLUS], [1], [
-  Define to 1 if building Ancient Adversaries
+  Define to 1 if building Ancient Adversaries features
 ])
 
 COMMON_CXXFLAGS="-include \"\$(top_srcdir)/include/config.h\""
@@ -116,3 +202,10 @@ AC_CONFIG_FILES([
 ])
 
 AC_OUTPUT
+echo
+AC_MSG_NOTICE([audio backend: $audio_backend])
+AC_MSG_NOTICE([video backend: $video_backend])
+AC_MSG_NOTICE([input backend: $input_backend])
+AC_MSG_NOTICE([net backend:   $net_backend])
+echo
+AC_MSG_NOTICE([debugging features: $enable_debug])

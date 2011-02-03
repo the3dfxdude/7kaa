@@ -1,5 +1,5 @@
-noinst_LIBRARIES = libclient.a
-libclient_a_SOURCES = \
+bin_PROGRAMS = 7kaa
+7kaa_SOURCES = \
 	AM.cpp \
 	OAI_ACT.cpp \
 	OAI_ACT2.cpp \
@@ -244,5 +244,58 @@ libclient_a_SOURCES = \
 	OW_ROCK.cpp \
 	OW_SOUND.cpp \
 	OW_WALL.cpp
+
+7kaa_LDADD =
+
+
+if AUDIO_OPENAL
+7kaa_LDADD += ../audio/openal/libaudio_openal.a
+endif
+
+if AUDIO_DSOUND
+7kaa_LDADD += ../audio/dsound/libaudio_dsound.a
+endif
+
+
+if INPUT_DINPUT
+7kaa_LDADD += ../input/dinput/libinput_dinput.a
+endif
+
+if INPUT_NONE
+7kaa_LDADD += ../input/none/libinput_none.a
+endif
+
+if INPUT_SDL
+7kaa_LDADD += ../input/sdl/libinput_sdl.a
+endif
+
+
+if NET_NONE
+7kaa_LDADD += ../netplay/none/libnetplay_none.a
+endif
+
+if NET_SDLNET
+7kaa_LDADD += ../netplay/sdl_net/libnetplay_sdlnet.a
+endif
+
+
+if VIDEO_DDRAW
+7kaa_LDADD += ../video/ddraw/libvideo_ddraw.a
+endif
+
+if VIDEO_NONE
+7kaa_LDADD += ../video/none/libvideo_none.a
+endif
+
+if VIDEO_SDL
+7kaa_LDADD += ../video/sdl/libvideo_sdl.a
+endif
+
+7kaa_LDADD += \
+	../common/libcommon.a \
+	../file/libfile.a \
+	../video/common/libvideo_common.a \
+	../imgfun/libimgfun.a \
+	../netplay/common/libnetplay_common.a
 
 EXTRA_DIST = 7k.ico ico.rc
