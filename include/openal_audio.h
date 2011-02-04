@@ -23,8 +23,8 @@
 
 #include <map>
 
-#include <AL/al.h>
-#include <AL/alc.h>
+#include OPENAL_AL_H
+#include OPENAL_ALC_H
 
 #include <audio_base.h>
 #include <audio_stream.h>
