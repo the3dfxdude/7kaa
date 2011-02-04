@@ -27,7 +27,7 @@
 #include <OCOLTBL.h>
 #include <vga_base.h>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #define VGA_PALETTE_SIZE 256
 

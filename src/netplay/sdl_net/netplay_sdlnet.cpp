@@ -29,7 +29,6 @@
 #include <OBLOB.h>
 #include <stdint.h>
 #include <dbglog.h>
-#include <SDL/SDL_net.h>
 
 DBGLOG_DEFAULT_CHANNEL(NetPlay);
 

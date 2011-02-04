@@ -25,7 +25,7 @@
 #define __SURFACE_SDL_H
 
 #include <stdlib.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 class SurfaceSDL
 {
