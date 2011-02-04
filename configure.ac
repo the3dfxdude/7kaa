@@ -165,6 +165,18 @@ AS_IF([test "$use_windows" = yes], [
 
 # Defines
 
+# Ensure the prefix is set
+test "x$prefix" = xNONE && prefix=$ac_default_prefix
+
+pkgdatadir='${datadir}/${PACKAGE_TARNAME}'
+
+while echo "$pkgdatadir" | grep -q '\(^\|[^\\]\)\$'; do
+  eval pkgdatadir="$pkgdatadir"
+done
+
+AC_DEFINE_UNQUOTED([PACKAGE_DATA_PATH], ["$pkgdatadir"],
+		   [Define to the path to the game data])
+
 AS_IF([test "$use_windows" != yes], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
 ])
