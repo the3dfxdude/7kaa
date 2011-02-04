@@ -118,8 +118,8 @@ AS_IF([test "$audio_backend" = openal], [
     AC_ERROR([OpenAL not found])
   ])
 
-  AC_SUBST([OPENAL_CFLAGS])
-
+  dnl AC_SUBST([OPENAL_CFLAGS])
+  CXXFLAGS="$CXXFLAGS $OPENAL_CFLAGS"
   LIBS="$OPENAL_LIBS $LIBS"
 ])
 
@@ -130,8 +130,9 @@ AS_IF([test "$input_backend" = sdl \
     AC_ERROR([SDL not found])
   ])
 
+  dnl AC_SUBST([SDL_CFLAGS])
+  CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
   LIBS="$SDL_LIBS $LIBS"
-  AC_SUBST([SDL_CFLAGS])
 ])
 
 AS_IF([test "$net_backend" = sdlnet], [
