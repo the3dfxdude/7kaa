@@ -84,6 +84,11 @@ AS_IF([test "$audio_backend" = dsound \
        || test "$video_backend" = ddraw], [
   use_windows=yes
 ])
+case "$host" in
+  *-mingw*)
+    use_windows=yes
+    ;;
+esac
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([AUDIO_DSOUND], [test "$audio_backend" = dsound])
@@ -104,7 +109,9 @@ AS_IF([test "$with_wine" = yes], [
   AS_IF([test -z "$winecxx"], [
     AC_ERROR([wineg++ not found])
   ])
-  wine_prefix=$(echo "$winecxx" | sed 's/\/\?bin\/wineg++$//')
+  AC_MSG_CHECKING([the wine prefix])
+  wine_prefix=$(echo "$winecxx" | sed 's/\/bin\/wineg++$//')
+  AC_MSG_RESULT([$wine_prefix])
   CXX="wineg++"
   CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/msvcrt\""
   CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/windows\""
