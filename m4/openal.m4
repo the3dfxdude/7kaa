@@ -1,4 +1,4 @@
-# Configure headers/flags for OpenAL
+# Configure headers/flags for OpenAL; version 2
 # Unavowed <unavowed@vexillium.org>
 
 dnl AM_PATH_OPENAL([ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
@@ -11,12 +11,12 @@ AC_DEFUN([AM_PATH_OPENAL], [
   OPENAL_LIBS=
 
   # First check for headers
-  for header in "AL/al.h" "OpenAL/al.h"; do
+  AS_FOR([], [header], ["AL/al.h" "OpenAL/al.h"], [
     AC_CHECK_HEADER([$header], [
       ac_cv_openal_al_h="$header"
       break
     ])
-  done
+  ])
   AS_IF([test -n "$ac_cv_openal_al_h"], [
     ac_cv_openal_alc_h=$(echo "$ac_cv_openal_al_h" | sed 's/al\.h$/alc.h/')
     AC_DEFINE_UNQUOTED([OPENAL_AL_H], [<$ac_cv_openal_al_h>],
@@ -28,9 +28,9 @@ AC_DEFUN([AM_PATH_OPENAL], [
   # Then check for libs
   ac_cv_openal_al_libs=
   AS_IF([test -n "$ac_cv_openal_al_h" && test -n "$ac_cv_openal_alc_h"], [
-    OLD_LIBS="$LIBS"
-    for lib in "-framework OpenAL" "-lopenal" "-lopenal32"; do
-      LIBS="$OLD_LIBS $lib"
+    ac_save_LIBS="$LIBS"
+    AS_FOR([], [lib], ["-framework OpenAL" "-lopenal" "-lopenal32"], [
+      LIBS="$lib $ac_save_LIBS"
       AC_MSG_CHECKING([for alGenSources in $lib])
       AC_TRY_LINK([#include OPENAL_AL_H], [alGenSources (1, 0);], [
 	ac_cv_openal_al_libs="$lib"
@@ -39,9 +39,9 @@ AC_DEFUN([AM_PATH_OPENAL], [
       ], [
 	AC_MSG_RESULT([no])
       ])
-    done
+    ])
 
-    LIBS="$OLD_LIBS"
+    LIBS="$ac_save_LIBS"
     OPENAL_LIBS="$ac_cv_openal_al_libs"
   ])
 
