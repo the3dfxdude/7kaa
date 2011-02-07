@@ -124,7 +124,6 @@ AS_IF([test "$audio_backend" = openal], [
     AC_ERROR([OpenAL not found])
   ])
 
-  dnl AC_SUBST([OPENAL_CFLAGS])
   CXXFLAGS="$CXXFLAGS $OPENAL_CFLAGS"
   LIBS="$OPENAL_LIBS $LIBS"
 ])
@@ -136,13 +135,34 @@ AS_IF([test "$input_backend" = sdl \
     AC_ERROR([SDL not found])
   ])
 
-  dnl AC_SUBST([SDL_CFLAGS])
   CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
   LIBS="$SDL_LIBS $LIBS"
 ])
 
+dnl SEARCH_LIB_FLAGS(FUNCTION, LIB-FLAGS,
+dnl		     [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
+AC_DEFUN([SEARCH_LIB_FLAGS], [
+  ac_save_LIBS="$LIBS"
+  ac_check_libs_found=no
+  AS_FOR([], [ac_lib], [$2], [
+    LIBS="$ac_lib $ac_save_LIBS"
+    AC_MSG_CHECKING([for $1 in $ac_lib])
+    AC_LINK_IFELSE([AC_LANG_CALL([], [$1])], [
+      AC_MSG_RESULT([yes])
+      ac_check_libs_found=yes
+      $3
+      break
+    ], [
+      AC_MSG_RESULT([no])
+    ])
+  ])
+  AS_IF([test "$ac_check_libs_found" = no], [
+    $4
+  ])
+])
+
 AS_IF([test "$net_backend" = sdlnet], [
-  AC_CHECK_LIB([SDL_net], [SDLNet_Init], [], [
+  SEARCH_LIB_FLAGS([SDLNet_Init], ["-lSDL_net -lwsock32" -lSDL_net], [], [
     AC_ERROR([SDL_net not found])
   ])
 ])
