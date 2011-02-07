@@ -84,11 +84,10 @@ AS_IF([test "$audio_backend" = dsound \
        || test "$video_backend" = ddraw], [
   use_windows=yes
 ])
-case "$host" in
-  *-mingw*)
+AS_CASE(["$host"],
+  [*-mingw*], [
     use_windows=yes
-    ;;
-esac
+])
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([AUDIO_DSOUND], [test "$audio_backend" = dsound])
@@ -188,76 +187,68 @@ AS_IF([test "$use_windows" != yes], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
 ])
 
-case "$video_backend" in
-  ddraw)
+AS_CASE(["$video_backend"],
+  [ddraw], [
     AC_DEFINE([USE_DDRAW], [1],
 	      [Define to 1 if using DirectDraw as the video backend])
-    ;;
-  sdl)
+  ],
+  [sdl], [
     # Define later
-    ;;
-  none)
+  ],
+  [none], [
     AC_DEFINE([USE_NOVIDEO], [1],
 	      [Define to 1 if building without a graphical display])
-    ;;
-  *)
+  ], [
     AC_ERROR([Unknown video backend: $video_backend])
-    ;;
-esac
+])
 
-case "$audio_backend" in
-  dsound)
+AS_CASE(["$audio_backend"],
+  [dsound], [
     AC_DEFINE([USE_DSOUND], [1], [
       Define to 1 if using DirectSound as the audio backend
     ])
-    ;;
-  openal)
+  ],
+  [openal], [
     AC_DEFINE([USE_OPENAL], [1], [
       Define to 1 if using OpenAL as the audio backend
     ])
-    ;;
-  *)
+  ], [
     AC_ERROR([Unknown audio backend: $audio_backend])
-    ;;
-esac
+])
 
-case "$input_backend" in
-  dinput)
+AS_CASE(["$input_backend"],
+  [dinput], [
     AC_DEFINE([USE_DINPUT], [1], [
       Define to 1 if using Direct Input as the input backend
     ])
-    ;;
-  none)
+  ],
+  [none], [
     AC_DEFINE([USE_NOINPUT], [1], [
       Define to 1 if building without input support
     ])
-    ;;
-  sdl)
+  ],
+  [sdl], [
     # Define later
-    ;;
-  *)
+  ], [
     AC_ERROR([Unknown input backend: $input_backend])
-    ;;
-esac
+])
 
-case "$net_backend" in
-  none)
+AS_CASE(["$net_backend"],
+  [none], [
     AC_DEFINE([USE_NONETPLAY], [1], [
       Define to 1 if building without network support
     ])
     AC_DEFINE([DISABLE_MULTIPLAYER], [1], [
       Define to 1 to disable multiplayer
     ])
-    ;;
-  sdlnet)
+  ],
+  [sdlnet], [
     AC_DEFINE([USE_SDLNET], [1], [
       Define to 1 if using SDL_net as the network backend
     ])
-    ;;
-  *)
+  ], [
     AC_ERROR([Unknown network backend: $net_backend])
-    ;;
-esac
+])
 
 AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
   AC_DEFINE([USE_SDL], [1],
