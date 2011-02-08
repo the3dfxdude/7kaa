@@ -88,6 +88,7 @@ use_mingw=no
 # enable_debug=yes
 # with_directx=no
 # with_wine=no
+# enable_dynamic_support_libs=no
 
 # Configuration options
 
@@ -104,6 +105,12 @@ AC_ARG_WITH([directx],
 AC_ARG_WITH([wine],
   AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
   [], [with_wine=no]
+)
+
+AC_ARG_ENABLE([dynamic-support-libs],
+  AS_HELP_STRING([--enable-dynamic-suppport-libs],
+		 [do not link statically with libgcc and libstdc++ on Windows]),
+  [], [enable_dynamic_support_libs=no]
 )
 
 
@@ -200,11 +207,16 @@ AS_IF([test "$input_backend" = dinput], [
 
 AS_IF([test "$use_windows" = yes], [
   LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
-  LIBS="$LIBS -static-libstdc++ -static-libgcc"
   LDFLAGS="-mno-cygwin $LDFLAGS"
 
   AS_IF([test "$enable_debug" = no], [
     LDFLAGS="$LDFLAGS -mwindows"
+  ])
+])
+
+AS_IF([test "$use_mingw" = yes], [
+  AS_IF([test "$enable_dynamic_support_libs" = no], [
+    LIBS="$LIBS -static-libstdc++ -static-libgcc"
   ])
 ])
 
