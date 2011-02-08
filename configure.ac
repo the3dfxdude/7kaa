@@ -11,6 +11,45 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign])
 ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
+dnl Utility definitions
+
+dnl SEARCH_LIB_FLAGS(FUNCTION, LIB-FLAGS,
+dnl		     [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
+AC_DEFUN([SEARCH_LIB_FLAGS], [
+  ac_save_LIBS="$LIBS"
+  ac_check_libs_found=no
+  AS_FOR([], [ac_lib], [$2], [
+    LIBS="$ac_lib $ac_save_LIBS"
+    AC_MSG_CHECKING([for $1 in $ac_lib])
+    AC_LINK_IFELSE([AC_LANG_CALL([], [$1])], [
+      AC_MSG_RESULT([yes])
+      ac_check_libs_found=yes
+      $3
+      break
+    ], [
+      AC_MSG_RESULT([no])
+    ])
+  ])
+  AS_IF([test "$ac_check_libs_found" = no], [
+    $4
+  ])
+])
+
+dnl EVAL_SHELL_VAR(NAME)
+dnl Recursively does "eval NAME=$NAME" until $NAME stays the same
+AC_DEFUN([EVAL_SHELL_VAR], [
+  AS_VAR_PUSHDEF([prev], [ac_previous_$1])
+  AS_VAR_SET([prev], [$$1])
+  while true; do
+    eval $1=$$1
+    AS_VAR_IF([prev], [$$1], [
+      break
+    ])
+    AS_VAR_SET([prev], [$$1])
+  done
+  AS_VAR_POPDEF([prev])
+])
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
@@ -139,28 +178,6 @@ AS_IF([test "$input_backend" = sdl \
   LIBS="$SDL_LIBS $LIBS"
 ])
 
-dnl SEARCH_LIB_FLAGS(FUNCTION, LIB-FLAGS,
-dnl		     [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
-AC_DEFUN([SEARCH_LIB_FLAGS], [
-  ac_save_LIBS="$LIBS"
-  ac_check_libs_found=no
-  AS_FOR([], [ac_lib], [$2], [
-    LIBS="$ac_lib $ac_save_LIBS"
-    AC_MSG_CHECKING([for $1 in $ac_lib])
-    AC_LINK_IFELSE([AC_LANG_CALL([], [$1])], [
-      AC_MSG_RESULT([yes])
-      ac_check_libs_found=yes
-      $3
-      break
-    ], [
-      AC_MSG_RESULT([no])
-    ])
-  ])
-  AS_IF([test "$ac_check_libs_found" = no], [
-    $4
-  ])
-])
-
 AS_IF([test "$net_backend" = sdlnet], [
   SEARCH_LIB_FLAGS([SDLNet_Init], ["-lSDL_net -lwsock32" -lSDL_net], [], [
     AC_ERROR([SDL_net not found])
@@ -181,6 +198,7 @@ AS_IF([test "$input_backend" = dinput], [
 
 AS_IF([test "$use_windows" = yes], [
   LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
+  LIBS="$LIBS -static-libstdc++ -static-libgcc"
   LDFLAGS="-mno-cygwin $LDFLAGS"
 
   AS_IF([test "$enable_debug" = no], [
@@ -194,14 +212,12 @@ AS_IF([test "$use_windows" = yes], [
 # Ensure the prefix is set
 test "x$prefix" = xNONE && prefix=$ac_default_prefix
 
-pkgdatadir='${datadir}/${PACKAGE_TARNAME}'
-
-while echo "$pkgdatadir" | grep -q '\(^\|[^\\]\)\$'; do
-  eval pkgdatadir="$pkgdatadir"
-done
-
-AC_DEFINE_UNQUOTED([PACKAGE_DATA_PATH], ["$pkgdatadir"],
-		   [Define to the path to the game data])
+AS_IF([test "$use_windows" != yes], [
+  pkgdatadir='${datadir}/${PACKAGE_TARNAME}'
+  EVAL_SHELL_VAR([pkgdatadir])
+  AC_DEFINE_UNQUOTED([PACKAGE_DATA_PATH], ["$pkgdatadir"],
+		     [Define to the path to the game data])
+])
 
 AS_IF([test "$use_windows" != yes], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
