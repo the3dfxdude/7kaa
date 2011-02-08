@@ -82,6 +82,7 @@ input_backend=sdl    # sdl dinput none
 video_backend=sdl    # sdl ddraw none
 net_backend=sdlnet   # sdlnet none
 use_windows=no
+use_mingw=no
 
 # Set in argument handlers:
 # enable_debug=yes
@@ -126,6 +127,7 @@ AS_IF([test "$audio_backend" = dsound \
 AS_CASE(["$host"],
   [*-mingw*], [
     use_windows=yes
+    use_mingw=yes
 ])
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
@@ -212,7 +214,7 @@ AS_IF([test "$use_windows" = yes], [
 # Ensure the prefix is set
 test "x$prefix" = xNONE && prefix=$ac_default_prefix
 
-AS_IF([test "$use_windows" != yes], [
+AS_IF([test "$use_mingw" != yes], [
   pkgdatadir='${datadir}/${PACKAGE_TARNAME}'
   EVAL_SHELL_VAR([pkgdatadir])
   AC_DEFINE_UNQUOTED([PACKAGE_DATA_PATH], ["$pkgdatadir"],
