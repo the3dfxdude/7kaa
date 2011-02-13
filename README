@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.14.2
+Release version 2.14.3-test
 Project website: www.7kfans.com
 
 This is the release of the Seven Kingdoms: Ancient Adversaries source
@@ -26,27 +26,10 @@ Building the game
 
 General Requirements
 * GCC 4.xx or later
-* Perl 5.8? or later (checked with 5.10.1)
 * SDL 1.2
 * SDL_net
 * OpenAL
-
-
-We do not provide the typical Makefile setup. Building in Windows and
-Linux may be done in a shell, provided you have GCC (Mingw tested on
-Windows) and Perl installed. You will also need the development files
-to SDL and OpenAL installed. Once you have met the requirements to 
-compiling, build the game by executing the following commands:
-in a shell:
-perl configure.pl
-Followed by:
-perl build.pl
-
-If GNU Parallel is installed, jobs will automatically execute
-in parallel.
-
-If platform detection does not work for you, or you have build
-failures, please contact us.
+* Autoconf (using git snapshot)
 
 
 Running
@@ -55,9 +38,8 @@ You can download the game data if you do not already have the game
 installed. You can find the game data from the 7kfans sourceforge
 page at http://sourceforge.net/projects/skfans/
 
-Copy the executable file "7kaa*" from the src directory to your
+Copy the executable file "7kaa*" from the src/client directory to your
 installed game directory.  Run the executable to start the game
-instead of the classic Enlight version called 7k.exe.  You may
-create a short-cut now.
+instead of the classic Enlight version called 7k.exe.
 
 
