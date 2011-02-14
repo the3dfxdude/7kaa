@@ -152,14 +152,20 @@ void UnitCaravan::market_unload_goods()
 
 
 //--------- Begin of function UnitCaravan::market_unload_goods_in_empty_slot ---------//
-// return 0 if no goods for further checking
-// return 1 if unload goods successfully
+//
+// This function searches for possible new product or raw material to unload
+// to a provided empty market slot. It will favor refined product first, then
+// raw material.
+//
+// return 0 if no goods are unloaded and there are no other goods to unload
+// to a different slot
+// return 1 if goods are unloaded or there are other goods to unload to a
+// different slot
 //
 int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int position)
 {
+	int more_to_unload = 0;
 	MarketGoods* marketGoods = curMarket->market_goods_array + position;
-	MarketGoods *checkGoods;
-	int	productExistInOtherSlot, rawExistInOtherSlot;
 
 	//-------------------------------------------------//
 	// unload product and then raw
@@ -167,8 +173,15 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 	int processed, j;
 	for(processed=0, j=0; j<MAX_PRODUCT; j++)
 	{
+		MarketGoods *checkGoods;
+		int productExistInOtherSlot;
+
 		if(processed_product_raw_qty_array[j] || !product_raw_qty_array[j])
 			continue; // this product is processed or no stock in the caravan
+
+		// this can be unloaded, but check if it can be
+		// unloaded into an already provided market slot
+		// for this product type
 
 		checkGoods = curMarket->market_goods_array;
 		productExistInOtherSlot = 0;
@@ -182,7 +195,13 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 		}
 
 		if(productExistInOtherSlot)
+		{
+			more_to_unload++;
 			continue;
+		}
+
+		// this does not exist in a market slot, so unload
+		// in this empty one
 
 		#ifdef DEBUG
 			MarketGoods *debugGoods = curMarket->market_goods_array;
@@ -208,8 +227,14 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 	{
 		for(j=0; j<MAX_PRODUCT; j++)
 		{
+			MarketGoods *checkGoods;
+			int rawExistInOtherSlot;
 			if(processed_raw_qty_array[j] || !raw_qty_array[j])
 				continue; // this product is processed or no stock in the caravan
+
+			// this can be unloaded, but check if it can be
+			// unloaded into an already provided market slot
+			// for this product type
 
 			checkGoods = curMarket->market_goods_array;
 			rawExistInOtherSlot = 0;
@@ -223,7 +248,13 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 			}
 
 			if(rawExistInOtherSlot)
+			{
+				more_to_unload++;
 				continue;
+			}
+
+			// this does not exist in a market slot, so unload
+			// in this empty one
 
 			#ifdef DEBUG
 				MarketGoods *debugGoods = curMarket->market_goods_array;
@@ -244,15 +275,12 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 			processed++;
 			break;
 		}
-
-		if(!processed && !productExistInOtherSlot && !rawExistInOtherSlot)
-			return 0;	// no goods for further processsing
 	}
 
 	if( unit_array.selected_recno == sprite_recno )
 		info.disp();
 
-	return 1;
+	return (processed || more_to_unload);
 }
 //----------- End of function UnitCaravan::market_unload_goods_in_empty_slot -----------//
 
