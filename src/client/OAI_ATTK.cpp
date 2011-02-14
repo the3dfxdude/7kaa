@@ -815,12 +815,14 @@ int Nation::think_secret_attack()
 
 	int     curRating=0, bestRating=0, bestNationRecno=0;
 	int     ourMilitary = military_rank_rating();
-	int     relationStatus, tradeRating;
+	int     relationStatus;
 	Nation* nationPtr;
 	NationRelation* nationRelation;
 
 	for( int i=1 ; i<=nation_array.size() ; i++ )
 	{
+		int tradeRating;
+
 		if( nation_array.is_deleted(i) || nation_recno == i )
 			continue;
 
@@ -828,6 +830,9 @@ int Nation::think_secret_attack()
 
 		nationRelation = get_relation(i);
 		relationStatus = nationRelation->status;
+
+		tradeRating = trade_rating(i)/2 +        // existing trade
+			      ai_trade_with_rating(i)/2; // possible trade
 
 		//---- if the secret attack flag is not enabled yet ----//
 
@@ -849,9 +854,6 @@ int Nation::think_secret_attack()
 			}
 
 			//---- don't attack if we have a big trade volume with the nation ---//
-
-			tradeRating = trade_rating(i)/2 +      		// existing trade
-							  ai_trade_with_rating(i)/2;		// possible trade
 
 			if( tradeRating > (50-pref_trading_tendency/2) )	// 0 to 50, 0 if trade tendency is 100, it is 0
 			{
