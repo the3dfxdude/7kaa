@@ -813,15 +813,16 @@ int Nation::think_secret_attack()
 
 	//---------------------------------------------//
 
-	int     curRating=0, bestRating=0, bestNationRecno=0;
+	int bestRating = 0;
+	int bestNationRecno = 0;
 	int     ourMilitary = military_rank_rating();
-	int     relationStatus;
 	Nation* nationPtr;
-	NationRelation* nationRelation;
 
 	for( int i=1 ; i<=nation_array.size() ; i++ )
 	{
 		int tradeRating;
+		int curRating;
+		NationRelation *nationRelation;
 
 		if( nation_array.is_deleted(i) || nation_recno == i )
 			continue;
@@ -829,7 +830,6 @@ int Nation::think_secret_attack()
 		nationPtr = nation_array[i];
 
 		nationRelation = get_relation(i);
-		relationStatus = nationRelation->status;
 
 		tradeRating = trade_rating(i)/2 +        // existing trade
 			      ai_trade_with_rating(i)/2; // possible trade
@@ -838,6 +838,8 @@ int Nation::think_secret_attack()
 
 		if( !nationRelation->ai_secret_attack )
 		{
+			int relationStatus = nationRelation->status;
+
 			//---- if we have a friendly treaty with this nation ----//
 
 			if( relationStatus == NATION_FRIENDLY )
