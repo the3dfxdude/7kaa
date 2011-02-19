@@ -73,9 +73,10 @@ public:
 	void use_front() { use_back_buf=0; active_buf = &vga_front; }
 	void use_back()  { use_back_buf=1; active_buf = &vga_back;  }
 
-        virtual void handle_messages() =0;
-        virtual void flag_redraw() =0;
-
+	virtual void handle_messages() =0;
+	virtual void flag_redraw() =0;
+	virtual int is_full_screen() =0;
+	virtual void toggle_full_screen() =0;
 };
 
 //--------------------------------------------//

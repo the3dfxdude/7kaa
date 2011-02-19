@@ -799,9 +799,43 @@ void MouseSDL::poll_event()
 			}
 			break;
 		case SDL_KEYDOWN:
-			update_skey_state();
-			add_key_event(event.key.keysym.sym, m.get_time());
+		{
+			int bypass = 0;
+			int mod = event.key.keysym.mod &
+					(KMOD_CTRL|KMOD_SHIFT|KMOD_ALT);
+			if (mod == KMOD_LALT || mod == KMOD_RALT) {
+				if (event.key.keysym.sym == SDLK_RETURN) {
+					bypass = 1;
+					sys.toggle_full_screen_flag = 1;
+					sys.need_redraw_flag = 1;
+				} else if (event.key.keysym.sym == SDLK_F4) {
+					bypass = 1;
+					sys.signal_exit_flag = 1;
+				} else if (event.key.keysym.sym == SDLK_TAB) {
+					bypass = 1;
+					SDL_WM_IconifyWindow();
+				}
+			} else if (mod == KMOD_LCTRL || mod == KMOD_RCTRL) {
+				if (event.key.keysym.sym == SDLK_g &&
+						!vga.is_full_screen()) {
+					static int grabbed = 0;
+					bypass = 1;
+					if (!grabbed) {
+						SDL_WM_GrabInput(SDL_GRAB_ON);
+						grabbed = 1;
+					} else {
+						SDL_WM_GrabInput(SDL_GRAB_OFF);
+						grabbed = 0;
+					}
+				}
+			}
+			if (!bypass) {
+				update_skey_state();
+				add_key_event(event.key.keysym.sym,
+					      m.get_time());
+			}
 			break;
+		}
 		case SDL_KEYUP:
 			update_skey_state();
 			break;

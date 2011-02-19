@@ -114,6 +114,7 @@ Sys::Sys()
    view_mode = MODE_NORMAL;         // the animation mode
 
    is_mp_game = 0;
+   toggle_full_screen_flag = 0;
 }
 //----------- End of function Sys::Sys -----------//
 
@@ -1008,6 +1009,12 @@ void Sys::yield()
 
    vga.handle_messages();
 
+   if (toggle_full_screen_flag)
+   {
+      toggle_full_screen_flag = 0;
+      vga.toggle_full_screen();
+   }
+
    mouse.poll_event();
 
    audio.yield();
@@ -1410,9 +1417,6 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          case '6': case '7': case '8': case '9':
             groupId = keyCode-'0';
             group_select.select_grouped_units(groupId);
-            break;
-         case '\r':
-            vga.toggle_full_screen();
             break;
       }
    }

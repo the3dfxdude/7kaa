@@ -45,6 +45,7 @@ VgaSDL::VgaSDL()
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
    custom_pal = NULL;
    vga_color_table = NULL;
+   video_mode_flags = SDL_HWSURFACE|SDL_HWPALETTE;
 }
 //-------- End of function VgaSDL::VgaSDL ----------//
 
@@ -150,6 +151,7 @@ void VgaSDL::deinit()
    if (vga_color_table) delete vga_color_table;
    SDL_Quit();
    front = NULL;
+   video_mode_flags = SDL_HWSURFACE|SDL_HWPALETTE;
 }
 //-------- End of function VgaSDL::deinit ----------//
 
@@ -347,19 +349,26 @@ void VgaSDL::flag_redraw()
 //-------- End of function VgaSDL::flag_redraw ----------//
 
 
+//-------- Begin of function VgaSDL::is_full_screen --------//
+//
+int VgaSDL::is_full_screen()
+{
+   return video_mode_flags & SDL_FULLSCREEN;
+}
+//-------- End of function VgaSDL::is_full_screen ----------//
+
 //-------- Begin of function VgaSDL::toggle_full_screen --------//
 //
 // The previous front surface is freed by SDL_SetVideoMode.
 void VgaSDL::toggle_full_screen()
 {
-   static uint32_t flags = SDL_HWSURFACE|SDL_HWPALETTE;
-   flags ^= SDL_FULLSCREEN;
-   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, flags);
+   video_mode_flags ^= SDL_FULLSCREEN;
+   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, video_mode_flags);
    if (!front)
    {
       // Try to restore the previous mode.
-      flags ^= SDL_FULLSCREEN;
-      front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, flags);
+      video_mode_flags ^= SDL_FULLSCREEN;
+      front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, video_mode_flags);
       if (!front)
       {
          ERR("Lost video surface!");

@@ -111,6 +111,14 @@ void VgaNone::flag_redraw()
 }
 //-------- End of function VgaNone::flag_redraw ----------//
 
+//-------- Begin of function VgaNone::is_full_screen --------//
+//
+int VgaNone::is_full_screen()
+{
+   return 0;
+}
+//-------- End of function VgaNone::is_full_screen ----------/
+
 //-------- Begin of function VgaNone::toggle_full_screen --------//
 void VgaNone::toggle_full_screen()
 {

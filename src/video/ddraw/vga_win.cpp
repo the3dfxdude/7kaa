@@ -237,6 +237,15 @@ void VgaDDraw::flag_redraw()
 //-------- End of function VgaDDraw::flag_redraw ----------//
 
 
+//-------- Begin of function VgaDDraw::is_full_screen --------//
+//
+int VgaDDraw::is_full_screen()
+{
+   return 0;
+}
+//-------- End of function VgaDDraw::is_full_screen ----------//
+
+
 //-------- Begin of function VgaDDraw::toggle_full_screen --------//
 void VgaDDraw::toggle_full_screen()
 {
