@@ -85,7 +85,7 @@ void Misc::delay(float wait)
 // <int>    = MAX. no. of characters in the dest. string.
 //            ( destStr should be allocated as destStr[destLen+1] )
 //
-void Misc::str_shorten(char* destStr, char* srcStr, int destLen)
+void Misc::str_shorten(char* destStr, const char* srcStr, int destLen)
 {
    strncpy( destStr, srcStr, destLen );
 
@@ -138,7 +138,7 @@ void Misc::str_shorten(char* destStr, char* srcStr, int destLen)
 // <int>    = the no. of characters to copied.        (default:to the end of the string)
 //
 
-int Misc::str_cut(char* dstr, char* sstr, int schar, int charnum )
+int Misc::str_cut(char* dstr, const char* sstr, int schar, int charnum )
 {
    int si,di,forever;
 
@@ -170,7 +170,7 @@ int Misc::str_cut(char* dstr, char* sstr, int schar, int charnum )
 //          FAIL / NULL if not found
 //
 
-int Misc::str_chr( char* str, char chr, int spos, int epos )
+int Misc::str_chr( const char* str, char chr, int spos, int epos )
 {
    int i;
 
@@ -549,7 +549,7 @@ int Misc::valid_char( char ch )
 //     "ABCDE"    <> "ABCDEF"
 //     "ABCDE"    <> "ABCDE "
 
-int Misc::str_cmp( char* str1, char* str2 )
+int Misc::str_cmp( const char* str1, const char* str2 )
 {
    err_when( !str1 || !str2 );
 
@@ -577,7 +577,7 @@ int Misc::str_cmp( char* str1, char* str2 )
 //     "ABCDE"    <> "ABCDEF"
 //     "ABCDE"    <> "ABCDE "
 //
-int Misc::str_cmpx( char* str1, char* str2 )
+int Misc::str_cmpx( const char* str1, const char* str2 )
 {
    err_when( !str1 || !str2 );
 
@@ -605,7 +605,7 @@ int Misc::str_cmpx( char* str1, char* str2 )
 //     "ABCDE"    <> "ABCDEF"
 //     "ABCDE"    <> "ABCDE "
 
-int Misc::str_icmpx( char* str1, char* str2 )
+int Misc::str_icmpx( const char* str1, const char* str2 )
 {
    err_when( !str1 || !str2 );
 
@@ -1241,7 +1241,7 @@ int Misc::mkpath(char *abs_path)
 // <char*> srcFileName = the source file name
 // <char*> newExt      = the new extension.
 //
-void Misc::change_file_ext(char* desFileName, char* srcFileName, const char* newExt)
+void Misc::change_file_ext(char* desFileName, const char* srcFileName, const char* newExt)
 {
    int nameLen = m.str_chr(srcFileName, '.');	// include the '.' in the nameLen
 
@@ -1260,7 +1260,7 @@ void Misc::change_file_ext(char* desFileName, char* srcFileName, const char* new
 // <char*> desFileName = the destination buffer to be written
 // <char*> srcFileName = the source file name
 //
-void Misc::extract_file_name(char* desFileName, char* srcFileName)
+void Misc::extract_file_name(char* desFileName, const char* srcFileName)
 {
 	int i;
 	for( i=strlen(srcFileName) ; i>=0 ; i-- )
