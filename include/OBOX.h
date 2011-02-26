@@ -57,7 +57,7 @@ public:
 	int  ask(const char*, const char* =NULL, const char* =NULL, int= -1, int= -1);
 	void msg(const char* msgStr, int enableTimeOut=1, int x1= -1, int y1= -1);
 	void print(char*, ... );
-   void tell(char*,int= -1, int= -1);
+	void tell(const char*,int= -1, int= -1);
 
    // lower level box control functions
 
