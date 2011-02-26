@@ -29,7 +29,7 @@
 
 // value of full intensity, 255 for 24-bit color, 64 for 18-bit color
 #define MAX_COLOUR 255
-#define M_PI 3.14159265359L
+#define PI 3.14159265359L
 #define NEAREST_COLOR 8
 
 BYTE ColorTable::identity_table[MAX_COLOUR_TABLE_SIZE] =
@@ -689,8 +689,8 @@ int ColorTable::color_dist_hsv(RGBColor c1, RGBColor c2)
 	HSVColor hsv1(rgb2hsv(c1));
 	HSVColor hsv2(rgb2hsv(c2));;
 
-	double dx = hsv2.saturation * cos(hsv2.hue * M_PI / 3.0) - hsv1.saturation * cos(hsv1.hue * M_PI / 3.0);
-	double dy = hsv2.saturation * sin(hsv2.hue * M_PI / 3.0) - hsv1.saturation * sin(hsv1.hue * M_PI / 3.0);
+	double dx = hsv2.saturation * cos(hsv2.hue * PI / 3.0) - hsv1.saturation * cos(hsv1.hue * PI / 3.0);
+	double dy = hsv2.saturation * sin(hsv2.hue * PI / 3.0) - hsv1.saturation * sin(hsv1.hue * PI / 3.0);
 	double dv = hsv2.brightness - hsv1.brightness;
 
 	return int(10000 * ( dx*dx + dy*dy + dv*dv ));
