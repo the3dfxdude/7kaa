@@ -222,7 +222,7 @@ void CrcStore::send_all()
 int CrcStore::compare_remote(DWORD remoteMsgId, char *dataPtr)
 {
 	VLenQueue *vq = NULL;
-	char *arrayName;
+	const char *arrayName;
 
 	switch(remoteMsgId)
 	{
