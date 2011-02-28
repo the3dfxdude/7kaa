@@ -62,6 +62,7 @@ public:
 	void   flag_redraw();
 	int    is_full_screen();
 	void   toggle_full_screen();
+	void   flip();
 
 private:
 	int    init_front(VgaBuf*);

@@ -1054,6 +1054,8 @@ void Sys::yield()
       }
    }
 
+   vga.flip();
+
    isYielding=0;
 }
 //--------- End of function Sys::yield ---------//

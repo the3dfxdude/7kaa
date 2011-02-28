@@ -54,7 +54,7 @@ SurfaceSDL::~SurfaceSDL()
 //
 int SurfaceSDL::lock_buf()
 {
-	return !SDL_LockSurface(surface);
+	return 1;
 }
 //------------- End of function SurfaceSDL::lock_buf --------------//
 
@@ -65,8 +65,6 @@ int SurfaceSDL::lock_buf()
 //
 int SurfaceSDL::unlock_buf()
 {
-	SDL_UnlockSurface(surface);
-	SDL_UpdateRect(surface, 0, 0, 0, 0);
 	return 1;
 }
 //--------------- End of function SurfaceSDL::unlock_buf --------------//
@@ -107,10 +105,10 @@ int SurfaceSDL::restore_buf()
 //
 // Blit entire source surface to local destination surface.
 //
+// Only called when sys.debug_session is used.
+//
 void SurfaceSDL::blt_virtual_buf( SurfaceSDL *source )
 {
-	SDL_BlitSurface(source->surface, NULL, surface, NULL);
-	SDL_UpdateRect(surface, 0, 0, 0, 0);
 }
 //--------- End of function SurfaceSDL::blt_virtual_buf ---------//
 
@@ -128,3 +126,11 @@ int SurfaceSDL::write_bmp_file(char* fileName)
 	return !SDL_SaveBMP(surface, fileName);
 }
 //------------ End of function SurfaceSDL::write_bmp_file --------------//
+
+
+//------------ Begin of function SurfaceSDL::get_surface --------------//
+SDL_Surface *SurfaceSDL::get_surface()
+{
+        return surface;
+}
+//------------ End of function SurfaceSDL::get_surface --------------//

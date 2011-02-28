@@ -124,3 +124,9 @@ void VgaNone::toggle_full_screen()
 {
 }
 //-------- End of function VgaNone::toggle_full_screen ----------//
+
+//-------- Beginning of function VgaNone::flip ----------//
+void VgaNone::flip()
+{
+}
+//-------- End of function VgaNone::flip ----------//

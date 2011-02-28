@@ -628,3 +628,9 @@ int VgaDDraw::restore()
 }
 //--------- End of function VgaDDraw::restore ---------//
 
+
+//-------- Beginning of function VgaDDraw::flip ----------//
+void VgaDDraw::flip()
+{
+}
+//-------- End of function VgaDDraw::flip ----------//

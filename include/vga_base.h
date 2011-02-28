@@ -77,6 +77,7 @@ public:
 	virtual void flag_redraw() =0;
 	virtual int is_full_screen() =0;
 	virtual void toggle_full_screen() =0;
+	virtual void flip() =0;
 };
 
 //--------------------------------------------//

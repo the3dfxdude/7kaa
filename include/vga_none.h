@@ -54,6 +54,7 @@ public:
 	void   flag_redraw();
 	int    is_full_screen();
 	void   toggle_full_screen();
+	void   flip();
 };
 
 typedef VgaNone Vga;

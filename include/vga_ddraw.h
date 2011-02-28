@@ -86,6 +86,7 @@ private:
 	void   release_pal();
 	int    create_window();
 	void   destroy_window();
+	void   flip();
 };
 
 typedef VgaDDraw Vga;

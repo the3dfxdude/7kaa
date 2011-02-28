@@ -66,7 +66,7 @@ int VgaSDL::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, SDL_HWSURFACE|SDL_HWPALETTE);
+   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, 0, SDL_HWSURFACE|SDL_HWPALETTE|SDL_DOUBLEBUF);
    if (!front)
    {
       SDL_Quit();
@@ -78,13 +78,12 @@ int VgaSDL::init()
    init_pal(DIR_RES"PAL_STD.RES");
 
    // Create the front and back buffers
+   init_back(&vga_front);
+   vga_front.is_front = 1; // set it to 1, overriding the setting in init_back()
    if (sys.debug_session) {
-      init_back(&vga_front);
-      vga_front.is_front = 1; // set it to 1, overriding the setting in init_back()
-      init_front(&vga_true_front);
+      init_back(&vga_true_front);
       activate_pal(&vga_true_front);
    } else {
-      init_front(&vga_front);
       activate_pal(&vga_front);
    }
    init_back(&vga_back);
@@ -381,3 +380,17 @@ void VgaSDL::toggle_full_screen()
 //-------- End of function VgaSDL::toggle_full_screen ----------//
 
 
+//-------- Beginning of function VgaSDL::flip ----------//
+void VgaSDL::flip()
+{
+   static Uint32 ticks = 0;
+   Uint32 cur_ticks = SDL_GetTicks();
+   if (cur_ticks > ticks + 34 || cur_ticks < ticks) {
+      SurfaceSDL *tmp = vga_front.get_buf();
+      SDL_Surface *src = tmp->get_surface();
+      ticks = cur_ticks;
+      SDL_BlitSurface(src, NULL, front, NULL);
+      SDL_Flip(front);
+   }
+}
+//-------- End of function VgaSDL::flip ----------//
