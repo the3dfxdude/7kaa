@@ -194,10 +194,12 @@ int VgaSDL::init_pal(const char* fileName)
 //
 void VgaSDL::refresh_palette()
 {
+   SurfaceSDL *tmp = vga_front.get_buf();
+   SDL_Surface *surface = tmp->get_surface();
    if (custom_pal)
-      SDL_SetColors(front, custom_pal, 0, VGA_PALETTE_SIZE);
+      SDL_SetPalette(surface, SDL_LOGPAL, custom_pal, 0, VGA_PALETTE_SIZE);
    else
-      SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
+      SDL_SetPalette(surface, SDL_LOGPAL, game_pal, 0, VGA_PALETTE_SIZE);
 }
 //----------- End of function VgaSDL::refresh_palette ----------//
 
@@ -276,6 +278,8 @@ void VgaSDL::adjust_brightness(int changeValue)
    int          i;
    int          newRed, newGreen, newBlue;
    SDL_Color palBuf[VGA_PALETTE_SIZE];
+   SurfaceSDL *tmp = vga_front.get_buf();
+   SDL_Surface *surface = tmp->get_surface();
 
    //------------ change palette now -------------//
 
@@ -294,7 +298,7 @@ void VgaSDL::adjust_brightness(int changeValue)
 
    vga_front.temp_unlock();
 
-   SDL_SetColors(front, palBuf, 0, VGA_PALETTE_SIZE);
+   SDL_SetPalette(surface, SDL_LOGPAL, palBuf, 0, VGA_PALETTE_SIZE);
 
    vga_front.temp_restore_lock();
 }
