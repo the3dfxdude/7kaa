@@ -45,7 +45,7 @@ VgaSDL::VgaSDL()
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
    custom_pal = NULL;
    vga_color_table = NULL;
-   video_mode_flags = SDL_HWSURFACE|SDL_HWPALETTE;
+   video_mode_flags = SDL_HWSURFACE|SDL_HWPALETTE|SDL_DOUBLEBUF;
 }
 //-------- End of function VgaSDL::VgaSDL ----------//
 
@@ -66,7 +66,7 @@ int VgaSDL::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, 0, SDL_HWSURFACE|SDL_HWPALETTE|SDL_DOUBLEBUF);
+   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, video_mode_flags);
    if (!front)
    {
       SDL_Quit();
