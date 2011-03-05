@@ -2311,16 +2311,40 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 
    //------- determine the speed to set of the key pressed -------//
 
-   if( keyCode >= '0' && keyCode <= '8' )
+   static int speed = config.frame_speed;  // Default speed.
+   static bool isPaused = false;
+
+   if( keyCode >= '1' && keyCode <= '8' )
    {
-      set_speed( (keyCode-'0') * 3 );
+      isPaused = false;
+      speed = (keyCode-'0') * 3;
+      set_speed( speed );
       return 1;
    }
 
    else if( keyCode == '9' )
    {
-      set_speed( 99 );           // highest possible speed
+      isPaused = false;
+      speed = 99;                // highest possible speed
+      set_speed( speed );
       return 1;
+   }
+
+   else if( keyCode == ' ' || keyCode == '0' )
+   {
+      if ( isPaused )
+      {
+         isPaused = false;
+         set_speed( speed );
+         return 1;
+      }
+
+      else
+      {
+         isPaused = true;
+         set_speed ( 0 );
+         return 1;
+      }
    }
 
    return 0;
