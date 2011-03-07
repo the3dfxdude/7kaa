@@ -130,7 +130,6 @@ int VgaSDL::init_back(VgaBuf *b, unsigned long w, unsigned long h)
    }
 
    SurfaceSDL *wrapper = new SurfaceSDL(surface);
-   SDL_SetPalette(surface, SDL_LOGPAL, game_pal, 0, VGA_PALETTE_SIZE);
    b->init(wrapper, 0);
    return 1;
 }
@@ -188,15 +187,18 @@ int VgaSDL::init_pal(const char* fileName)
 
 //--------- Start of function VgaSDL::refresh_palette ----------//
 //
-// When the system changes the palette, this function will set
-// the palette back to the correct entries.
+// Update front buffers with the current palette.
 //
 void VgaSDL::refresh_palette()
 {
-   if (custom_pal)
+   SurfaceSDL *fake_front = vga_front.get_buf();
+   if (custom_pal) {
+      fake_front->activate_pal(custom_pal, 0, VGA_PALETTE_SIZE);
       SDL_SetColors(front, custom_pal, 0, VGA_PALETTE_SIZE);
-   else
+   } else {
+      fake_front->activate_pal(game_pal, 0, VGA_PALETTE_SIZE);
       SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
+   }
 }
 //----------- End of function VgaSDL::refresh_palette ----------//
 
@@ -374,7 +376,7 @@ void VgaSDL::toggle_full_screen()
          return;
       }
    }
-   init_front(active_buf);
+   refresh_palette();
    sys.need_redraw_flag = 1;
 }
 //-------- End of function VgaSDL::toggle_full_screen ----------//
