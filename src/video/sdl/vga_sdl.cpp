@@ -325,8 +325,13 @@ void VgaSDL::handle_messages()
 
             // update ctrl/shift/alt key state
             mouse.update_skey_state();
-         } else if (!sys.is_mp_game) {
-            sys.pause();
+            SDL_ShowCursor(SDL_DISABLE);
+         } else {
+            if (!sys.is_mp_game)
+              sys.pause();
+            // turn the system cursor back on to get around a fullscreen
+            // mouse grabbed problem on windows
+            SDL_ShowCursor(SDL_ENABLE);
          }
          break;
       case SDL_QUIT:
