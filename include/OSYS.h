@@ -84,7 +84,6 @@ class Sys
 public:
 	char		game_version;			// VERSION_???
 
-	char     paused_flag;    		// whether the game is paused
 	char		sys_flag;
 	char		init_flag;
 	char		signal_exit_flag;

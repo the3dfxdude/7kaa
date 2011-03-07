@@ -156,6 +156,9 @@ static long FAR PASCAL main_win_proc(HWND hWnd, UINT message, WPARAM wParam, LPA
                sys.need_redraw_flag = 1; // for Sys::disp_frame to redraw the screen
                if (!sys.is_mp_game)
                   sys.unpause();
+
+               // update ctrl/shift/alt key state
+               mouse.update_skey_state();
             } else {
                // The screen wasn't restored. The game is not usable.
                ERR("Lost buffers in main_win_proc!\n");

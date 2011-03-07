@@ -651,8 +651,6 @@ void Sys::main_loop(int isLoadedGame)
 
    while( 1 )
    {
-      if (!paused_flag)
-      {
          // #### begin Gilbert 31/10 ######//
          int rc = 0;
          // #### end Gilbert 31/10 ######//
@@ -844,11 +842,6 @@ void Sys::main_loop(int isLoadedGame)
 
          if( sys.signal_exit_flag )
             break;
-      }
-      else
-      {
-         vga.handle_messages();
-      }
    }
 
    // #### begin Gilbert 23/10 #######//
@@ -966,32 +959,28 @@ void Sys::auto_save()
 
 //-------- Begin of function Sys::pause --------//
 //
+// If the game is running, pause the game.
+//
 void Sys::pause()
 {
-   if( paused_flag )
-      return;
-
-   // TODO: The following should occur from an activation event
-   vga.flag_redraw();
-
-   paused_flag = TRUE;
+   if( config.frame_speed )
+   {
+      set_speed( 0 );
+   }
 }
 //--------- End of function Sys::pause ---------//
 
 
 //-------- Begin of function Sys::unpause --------//
 //
+// If the game is not running, unpause the game.
+//
 void Sys::unpause()
 {
-   if( !paused_flag )
-      return;
-
-   // ####### begin Gilbert 31/10 #######//
-   // TODO: The following should occur from an activation event
-   mouse.update_skey_state();       // update ctrl/shift/alt key state after switch task
-   // ####### end Gilbert 31/10 #######//
-
-   paused_flag = FALSE;
+   if( !config.frame_speed )
+   {
+      set_speed( 0 );
+   }
 }
 //--------- End of function Sys::unpause ---------//
 
@@ -2311,40 +2300,23 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 
    //------- determine the speed to set of the key pressed -------//
 
-   static int speed = config.frame_speed;  // Default speed.
-   static bool isPaused = false;
-
    if( keyCode >= '1' && keyCode <= '8' )
    {
-      isPaused = false;
-      speed = (keyCode-'0') * 3;
-      set_speed( speed );
+      set_speed( (keyCode-'0') * 3 );
       return 1;
    }
 
    else if( keyCode == '9' )
    {
-      isPaused = false;
-      speed = 99;                // highest possible speed
-      set_speed( speed );
+      set_speed( 99 ); // highest possible speed
       return 1;
    }
 
    else if( keyCode == ' ' || keyCode == '0' )
    {
-      if ( isPaused )
-      {
-         isPaused = false;
-         set_speed( speed );
-         return 1;
-      }
-
-      else
-      {
-         isPaused = true;
-         set_speed ( 0 );
-         return 1;
-      }
+      // toggle pausing
+      set_speed( 0 );
+      return 1;
    }
 
    return 0;
@@ -2387,25 +2359,45 @@ int Sys::detect_key_str(int keyStrId, const char* keyStr)
 
 //-------- Begin of function Sys::set_speed --------//
 //
+// Set the speed if frameSpeed is greater than zero, and
+// toggle the last speed if it is zero.
+//
 void Sys::set_speed(int frameSpeed, int remoteCall)
 {
+   static int last_speed = 0;
+   short requested_speed;
+
+   if( frameSpeed > 0 )
+   {
+      // set the game speed
+      requested_speed = frameSpeed;
+      last_speed = 0;
+   } else {
+      // toggle last game speed
+      requested_speed = last_speed;
+      last_speed = config.frame_speed;
+   }
+
    //--------- if multiplayer, update remote players setting -------//
 
    if( remote.is_enable() && !remoteCall )
    {
       RemoteMsg *remoteMsg = remote.new_msg(MSG_SET_SPEED, sizeof(short));
 
-      *((short*)remoteMsg->data_buf) = frameSpeed;
+      *((short*)remoteMsg->data_buf) = requested_speed;
 
       remote.send_free_msg( remoteMsg );     // send out the message and free it after finishing sending
    }
 
    //---------- set the speed now ----------//
 
-   if( config.frame_speed==0 )                   // if it's currently frozen, set last_frame_time to avoid incorrect timeout
+   if( config.frame_speed==0 )
+   {
+      // if it's currently frozen, set last_frame_time to avoid incorrect timeout
       last_frame_time = m.get_time();
+   }
 
-   config.frame_speed = frameSpeed;
+   config.frame_speed = requested_speed;
 }
 //--------- End of function Sys::set_speed ---------//
 

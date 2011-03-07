@@ -320,6 +320,9 @@ void VgaSDL::handle_messages()
             sys.need_redraw_flag = 1;
             if (!sys.is_mp_game)
                sys.unpause();
+
+            // update ctrl/shift/alt key state
+            mouse.update_skey_state();
          } else if (!sys.is_mp_game) {
             sys.pause();
          }
