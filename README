@@ -1,22 +1,23 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.14.3-test
+Release version 2.14.3
 Project website: www.7kfans.com
 
-This is the release of the Seven Kingdoms: Ancient Adversaries source
-code as authorized by Enlight by the 7kfans project.  The game is
-provided under the terms of the GPL.  See the file "COPYING" for the
-details of the license.
+This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
+Enlight Software which granted the ability to license the game under a
+free and open source license in 2009. See the file "COPYING" for the
+details of the license. We are indebted to Enlight for making the 7kfans
+project possible and giving a new chance to build a community for fans
+of the game.
 
 Changes in this release:
- * New network support using SDL_net, directly replacing DirectPlay.
- * Fixed saved games with marine units on x86_64.
- * Fixed the diplomacy menu in the Plague scenario.
- * Added multiplayer connection progress dialogs.
- * Added command line switches for future external lobby support.
- * Fixed fullscreen toggle on Windows.
- * Fixed the jumpy mouse.
+ * Autoconf support is now the build system.
+ * Fix crashes regarding the full screen toggle.
+ * Fix issues with some uninitialized variables.
+ * Fix for the address dialog.
+ * Spacebar and 0 now toggle pausing.
+ * Speed up drawing on Linux.
 
 Thanks to all who made this release possible.
 
@@ -29,7 +30,7 @@ General Requirements
 * SDL 1.2
 * SDL_net
 * OpenAL
-* Autoconf (using git snapshot)
+* Autoconf (when using git snapshot)
 
 
 Running
