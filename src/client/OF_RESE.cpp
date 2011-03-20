@@ -68,6 +68,7 @@ static int added_count;			// no. of buttons in button_research_array
 //---------- Declare static functions ---------//
 
 static void i_disp_research_button(ButtonCustom *, int);
+static void set_all_research(int techId);
 
 //--------- Begin of function FirmResearch::FirmResearch ---------//
 //
@@ -199,6 +200,32 @@ void FirmResearch::detect_main_menu()
 //----------- End of function FirmResearch::detect_main_menu -----------//
 
 
+/** \brief Make all Towers of Science research the same tech.
+ *
+ *  \param[in] techId Technology to research.
+ *
+ *  \note This function is only used by human players (via the Tower of Science
+ *  research interface).
+ */
+void set_all_research(int techId)
+{
+	for( int i=firm_array.size() ; i>0 ; i-- )
+	{
+		if( firm_array.is_deleted(i) )
+			continue;
+
+		Firm* firmPtr = firm_array[i];
+
+		if( firmPtr->nation_recno == nation_array.player_recno &&
+			firmPtr->firm_id == FIRM_RESEARCH &&
+			!firm_array.is_deleted(i) )
+		{
+			(dynamic_cast<FirmResearch*>(firmPtr))->start_research(techId, COMMAND_PLAYER);
+		}
+	}
+}
+
+
 //--------- Begin of function FirmResearch::disp_research_menu ---------//
 //
 void FirmResearch::disp_research_menu(int refreshFlag)
@@ -239,12 +266,20 @@ void FirmResearch::detect_research_menu()
 	int i;
 	for( i = 0; i < added_count; ++i )
 	{
-		if(button_research_array[i].detect() )
+		int rc = button_research_array[i].detect(0, 0, 1, 0);
+		if( rc )
 		{
 			int techId = button_research_array[i].custom_para.value;
 			if( tech_res[techId]->can_research(nation_recno) )
 			{
-				start_research(techId, COMMAND_PLAYER);
+				if ( rc == 1 )  // Left click.
+				{
+					start_research(techId, COMMAND_PLAYER);
+				}
+				else if ( rc == 2 )  // Right click.
+				{
+					set_all_research(techId);
+				}
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_ON");
 				// ##### end Gilbert 25/9 ######//
