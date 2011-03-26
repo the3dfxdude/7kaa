@@ -23,8 +23,9 @@
  * converted to C++
  */
 
+#include <cstring>
+#include <stdint.h>
 
-#include <ALL.h>		// for memset
 #include <IMGFUN.h>
 
 // ------------ Define constant ------------
@@ -71,6 +72,7 @@
 
 void IMGfogRemap16x16(char* imageBuf, int pitch, int x, int y, char**colorTableArray, unsigned char a, unsigned char b, unsigned char c, unsigned char d)
 {
+	uint8_t *buf = reinterpret_cast<uint8_t *>(imageBuf);
 	int c1 = 16*a;		// C1(0)
 	int c2 = 16*b;		// C2(0)
 	int bxy;			// B uses fixed point 24.8 arithmetic
@@ -83,9 +85,9 @@ void IMGfogRemap16x16(char* imageBuf, int pitch, int x, int y, char**colorTableA
 		C2subC1 = c2-c1;
 		for (int i=0; i<16; ++i, bxy+=C2subC1)
 		{
-			remap = bxy / 256 / 8		// bxy >> 11, 256 for fix point, 8 for visibility levels
-				- (MAX_VISIBILITY-1);	// there are -10 < x < 10 entries in the colorTableArray
-			imageBuf[ dest + i ] = colorTableArray[ remap ][ ((unsigned char*)imageBuf)[dest+i] ];
+			remap = bxy / 256 / 8     // bxy >> 11, 256 for fix point, 8 for visibility levels
+			        - MAX_VISIBILITY;
+			buf[dest + i] = colorTableArray[remap][buf[dest + i]];
 		}
 	}
 }
@@ -164,7 +166,7 @@ void decideBarRemap(char*imageBuf, int pitch, int x, int y, char**colorTableArra
 		else
 		{
 			// visibility < 0 : darker, so subtract MAX_VISIBILITY
-			IMGbarRemap16x16( imageBuf, pitch, x, y, colorTableArray[cornera_lvl-(MAX_VISIBILITY-1)] );
+			IMGbarRemap16x16( imageBuf, pitch, x, y, colorTableArray[cornera_lvl-MAX_VISIBILITY] );
 		}
 	}
 	else
