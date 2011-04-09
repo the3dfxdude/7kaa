@@ -141,7 +141,7 @@ namespace FileIOVisitor
    template <typename T, typename Visitor>
    bool visit_pointer(Visitor *vis, T **ptr)
    {
-      return vis->template visit(ptr);
+      return vis->visit(ptr);
    }
 
    template <typename T>
