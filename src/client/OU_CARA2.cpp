@@ -42,7 +42,7 @@ void UnitCaravan::process_ai()
 {
 	//-- Think about removing stops whose owner nation is at war with us. --//
 
-	if( info.game_date%30 == sprite_recno%30 );
+	if( info.game_date%30 == sprite_recno%30 )
 	{
 		if( think_del_stop() )
 			return;
