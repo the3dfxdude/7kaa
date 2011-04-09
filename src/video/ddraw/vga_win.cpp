@@ -21,6 +21,7 @@
 
 #include <OSYS.h>
 #include <OVGA.h>
+#include <OMOUSE.h>
 #include <RESOURCE.h>
 #include <dbglog.h>
 
