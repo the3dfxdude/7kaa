@@ -225,6 +225,7 @@ int VgaDDraw::init_front(VgaBuf *b)
    }
 
    b->init(surface, 1);
+   return 1;
 }
 //-------- End of function VgaBuf::init_front ----------//
 
@@ -260,6 +261,7 @@ int VgaDDraw::init_back(VgaBuf *b, unsigned long w, unsigned long h)
    }
 
    b->init(surface, 0);
+   return 1;
 }
 //-------- End of function VgaBuf::init_back ----------//
 
