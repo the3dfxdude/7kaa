@@ -73,6 +73,7 @@ public:
 	Surface* create_surface(LPDDSURFACEDESC ddsd);
 	void refresh_palette();
 	int restore();
+	void   flip();
 
 private:
 	int    init_dd();
@@ -86,7 +87,6 @@ private:
 	void   release_pal();
 	int    create_window();
 	void   destroy_window();
-	void   flip();
 };
 
 typedef VgaDDraw Vga;
