@@ -347,7 +347,7 @@ void SeekPathReuse::seek_path_join_offset()
 
 	if(endNode->node_x==vir_dest_x && endNode->node_y==vir_dest_y)
 	{
-		if(connectResultNodePtr!=NULL);
+		if(connectResultNodePtr!=NULL)
 			mem_del(connectResultNodePtr);
 		return; // already the destination location
 	}
