@@ -1043,7 +1043,7 @@ enum { TALK_RES_RECORD_SIZE = 214 };
 //
 int TalkRes::write_file(File* filePtr)
 {
-	if (!write_with_record_size(filePtr, this, &visit_talk_res,
+	if (!write_with_record_size(filePtr, this, &visit_talk_res<FileWriterVisitor>,
 										 TALK_RES_RECORD_SIZE))
 		return 0;
 
@@ -1059,7 +1059,7 @@ int TalkRes::write_file(File* filePtr)
 //
 int TalkRes::read_file(File* filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_talk_res,
+	if (!read_with_record_size(filePtr, this, &visit_talk_res<FileReaderVisitor>,
 										TALK_RES_RECORD_SIZE))
 		return 0;
 
@@ -1271,7 +1271,7 @@ enum { CONFIG_RECORD_SIZE = 144 };
 //
 int Config::write_file(File* filePtr)
 {
-	return write_with_record_size(filePtr, this, &visit_config,
+	return write_with_record_size(filePtr, this, &visit_config<FileWriterVisitor>,
 											CONFIG_RECORD_SIZE);
 }
 //--------- End of function Config::write_file ---------------//

@@ -501,7 +501,7 @@ enum { DYN_ARRAY_RECORD_SIZE = 29 };
 //
 int DynArray::write_file(File* filePtr)
 {
-	if (!write_with_record_size(filePtr, this, &visit_dyn_array,
+	if (!write_with_record_size(filePtr, this, &visit_dyn_array<FileWriterVisitor>,
 										 DYN_ARRAY_RECORD_SIZE))
 		return 0;
 
@@ -528,7 +528,7 @@ int DynArray::write_file(File* filePtr)
 //
 int DynArray::read_file(File* filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_dyn_array,
+	if (!read_with_record_size(filePtr, this, &visit_dyn_array<FileReaderVisitor>,
 										DYN_ARRAY_RECORD_SIZE))
 		return 0;
 
