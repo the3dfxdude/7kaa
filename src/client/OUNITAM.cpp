@@ -1109,7 +1109,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 		if(x<rec_width)
 		{
 			//================== left edge =================//
-			sqrtValue = (int)sqrt(selectedCount);
+			sqrtValue = (int)sqrt((float)selectedCount);
 			if(sqrtValue*sqrtValue != selectedCount)
 				sqrtValue++;
 			if(mobileType!=UNIT_LAND)
@@ -1142,7 +1142,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 			//----------- top right corner -----------//
 			if(y<rec_height)
 			{
-				sqrtValue = (int)sqrt(selectedCount);
+				sqrtValue = (int)sqrt((float)selectedCount);
 				if(sqrtValue*sqrtValue != selectedCount)
 					sqrtValue++;
 				if(mobileType!=UNIT_LAND)
@@ -1171,7 +1171,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 		else if(y<rec_height)
 		{
 			//================= top edge ===============//
-			sqrtValue = (int)sqrt(selectedCount);
+			sqrtValue = (int)sqrt((float)selectedCount);
 			if(sqrtValue*sqrtValue != selectedCount)
 				sqrtValue++;
 			if(mobileType!=UNIT_LAND)
@@ -1216,7 +1216,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 			//------------- top left corner --------------//
 			if(y<0)
 			{
-				sqrtValue = (int)sqrt(selectedCount);
+				sqrtValue = (int)sqrt((float)selectedCount);
 				if(sqrtValue*sqrtValue != selectedCount)
 					sqrtValue++;
 				if(mobileType!=UNIT_LAND)
@@ -1234,7 +1234,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 			//------------- just left edge ------------------//
 			else
 			{
-				sqrtValue = (int)sqrt(selectedCount);
+				sqrtValue = (int)sqrt((float)selectedCount);
 				if(sqrtValue*sqrtValue != selectedCount)
 					sqrtValue++;
 				if(mobileType!=UNIT_LAND)
@@ -1249,7 +1249,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 			//------------- top right corner ------------------//
 			if(y<0)
 			{
-				sqrtValue = (int)sqrt(selectedCount);
+				sqrtValue = (int)sqrt((float)selectedCount);
 				if(sqrtValue*sqrtValue != selectedCount)
 					sqrtValue++;
 				if(mobileType!=UNIT_LAND)
@@ -1268,7 +1268,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 			//------------- just right edge ------------------//
 			else
 			{
-				sqrtValue = (int)sqrt(selectedCount);
+				sqrtValue = (int)sqrt((float)selectedCount);
 				if(sqrtValue*sqrtValue != selectedCount)
 					sqrtValue++;
 				if(mobileType!=UNIT_LAND)
@@ -1290,7 +1290,7 @@ void UnitArray::determine_position_to_construct_table(int selectedCount, int des
 		//================= top edge ================//
 		else if(y<0)
 		{
-			sqrtValue = (int)sqrt(selectedCount);
+			sqrtValue = (int)sqrt((float)selectedCount);
 			if(sqrtValue*sqrtValue != selectedCount)
 				sqrtValue++;
 
