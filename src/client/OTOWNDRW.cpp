@@ -309,12 +309,19 @@ int Town::draw_detect_link_line(int actionDetect)
 
 			if( actionDetect )
 			{
-				if( world.zoom_matrix->detect_bitmap_clip( townX-11, townY-11, bitmapPtr ) )
+				int detectClick = world.zoom_matrix->detect_bitmap_clip( townX-11, townY-11, bitmapPtr );
+				if( detectClick )
 				{
 					mouse.reset_click();		// reset queued mouse click for fast single clicking
 
+					// Migrate 1 person on left click and 10 people on right click
 					err_when(town_array[townRecno]->population>MAX_TOWN_POPULATION);
-					migrate_to(townRecno, COMMAND_PLAYER);
+					for (int cnt = 1; cnt <= (detectClick == 1 ? 1 : 10); cnt++)
+					{
+						if (cnt > 1 && !can_migrate(townRecno))
+							break;
+						migrate_to(townRecno, COMMAND_PLAYER);
+					}
 					// ###### begin Gilbert 25/9 #######//
 					se_ctrl.immediate_sound("PULL_MAN");
 					// ###### end Gilbert 25/9 #######//
