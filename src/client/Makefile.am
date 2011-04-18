@@ -157,7 +157,6 @@ bin_PROGRAMS = 7kaa
 	OSNOWRES.cpp \
 	OSPATH.cpp \
 	OSPATHBT.cpp \
-	OSPATHS2.cpp \
 	OSPREDBG.cpp \
 	OSPREOFF.cpp \
 	OSPRESMO.cpp \

@@ -114,7 +114,6 @@ noinst_HEADERS = \
 	OSNOWG.h \
 	OSNOWRES.h \
 	OSPATH.h \
-	OSPATHS2.h \
 	OSPINNER.h \
 	OSPREUSE.h \
 	OSPRITE.h \

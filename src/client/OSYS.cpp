@@ -45,7 +45,6 @@
 #include <OUNIT.h>
 #include <OSITE.h>
 #include <OSPATH.h>
-#include <OSPATHS2.h>
 #include <OSPREUSE.h>
 #include <OSPY.h>
 #include <OSYS.h>
@@ -292,7 +291,6 @@ int Sys::init_objects()
 	#endif
 
    seek_path.init(MAX_BACKGROUND_NODE);
-   seek_path_s2.init(1);//seek_path_s2.init(MAX_BACKGROUND_NODE);
    seek_path_reuse.init(MAX_BACKGROUND_NODE);
    group_select.init();
 
@@ -359,7 +357,6 @@ void Sys::deinit_objects()
    image_tutorial.deinit();
 
    seek_path.deinit();
-   seek_path_s2.deinit();
    seek_path_reuse.deinit();
    group_select.deinit();
 
