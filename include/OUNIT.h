@@ -32,10 +32,6 @@
 #include <OSPATH.h>
 #endif
 
-//#ifndef __OSPATHS2_H
-//#include <OSPATHS2.h>
-//#endif
-
 #ifndef __OUNITRES_H
 #include <OUNITRES.h>
 #endif

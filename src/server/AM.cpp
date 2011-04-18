@@ -56,7 +56,6 @@
 #include <OREBEL.h>
 #include <OREMOTE.h>
 #include <OSPATH.h>
-#include <OSPATHS2.h>
 #include <OSITE.h>
 #include <OSPREUSE.h>
 #include <OSPY.h>
@@ -129,7 +128,6 @@ MultiPlayerType	mp_obj;
 Sys               sys;
 Translate         translate;        // constructor only memset()
 SeekPath          seek_path;
-SeekPathS2        seek_path_s2;
 SeekPathReuse     seek_path_reuse;
 Flame             flame[FLAME_GROW_STEP];
 Remote            remote;
