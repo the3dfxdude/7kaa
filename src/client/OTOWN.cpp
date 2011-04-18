@@ -1199,7 +1199,7 @@ void Town::update_target_loyalty()
 		//------- calculate the target loyalty -------//
 
 		targetLoyalty = race_harmony(i+1)/3 +				// 0 to 33
-							 (int)nationPtr->reputation/4;	// -25 to +25
+							 (int)nationPtr->reputation/4 +	// -25 to +25
 							 (quality_of_life-50)/3;				// -17 to +17
 
 		//---- employment help increase loyalty ----//
