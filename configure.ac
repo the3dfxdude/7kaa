@@ -124,6 +124,7 @@ AS_IF([test "$with_directx" = yes], [
   audio_backend=dsound
   input_backend=dinput
   video_backend=ddraw
+  net_backend=none
 ])
 
 AS_IF([test "$audio_backend" = dsound \
