@@ -961,7 +961,7 @@ int FirmCamp::think_assign_better_overseer2(int targetTownRecno, int raceId)
 //
 int FirmCamp::ai_capture_enemy_town(Town* targetTown, int defenseCombatLevel)
 {
-	int useAllCamp;
+	int useAllCamp = 0;
 
 	Nation* ownNation = nation_array[nation_recno];
 	Nation* targetNation = nation_array[targetTown->nation_recno];
