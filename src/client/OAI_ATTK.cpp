@@ -85,12 +85,12 @@ int Nation::ai_attack_target(int targetXLoc, int targetYLoc, int targetCombatLev
 
 	if( defenseMode )		// only for defense mode, for attack mission, we should plan and organize it better
 	{
-		int originalTargetCombatLevel;
+		int originalTargetCombatLevel = targetCombatLevel;
 
 		targetCombatLevel = ai_attack_order_nearby_mobile(targetXLoc, targetYLoc, targetCombatLevel);
 
 		if( targetCombatLevel < 0 )		// the mobile force alone can finish all the enemies
-			return originalTargetCombatLevel;
+			return originalTargetCombatLevel - targetCombatLevel;
 	}
 
 	//--- try to send troop with maxTargetCombatLevel, and don't send troop if available combat level < minTargetCombatLevel ---//
