@@ -90,6 +90,7 @@ public:
 	char		need_redraw_flag;    // set to 1 if task switched back. After redraw, clear it
 	char		toggle_full_screen_flag;
 	char		cheat_enabled_flag;
+	char		user_pause_flag;
 
 	char 		view_mode;				// the view mode can be MODE_???
 

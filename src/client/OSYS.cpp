@@ -111,9 +111,11 @@ Sys::Sys()
    common_data_buf = mem_add( COMMON_DATA_BUF_SIZE );
 
    view_mode = MODE_NORMAL;         // the animation mode
+   sys_flag = SYS_PREGAME;
 
    is_mp_game = 0;
    toggle_full_screen_flag = 0;
+   user_pause_flag = 0;
 }
 //----------- End of function Sys::Sys -----------//
 
@@ -453,6 +455,7 @@ void Sys::run(int isLoadedGame)
    //----- sys::disp_frame() will redraw everything when this flag is set to 1 ----//
 
    sys.need_redraw_flag = 1;
+   user_pause_flag = 0;
 
    option_menu.active_flag = 0;
    in_game_menu.active_flag = 0;
@@ -467,6 +470,8 @@ void Sys::run(int isLoadedGame)
    //-----------------------------------------//
 
    m.unlock_seed();
+
+   sys_flag = SYS_PREGAME;
 }
 //--------- End of function Sys::run --------//
 
@@ -956,11 +961,12 @@ void Sys::auto_save()
 
 //-------- Begin of function Sys::pause --------//
 //
-// If the game is running, pause the game.
+// If the game is running, pause the game. For the window manager to pause
+// the game when focus is lost.
 //
 void Sys::pause()
 {
-   if( config.frame_speed )
+   if( config.frame_speed && sys_flag == SYS_RUN )
    {
       set_speed( 0 );
    }
@@ -970,11 +976,13 @@ void Sys::pause()
 
 //-------- Begin of function Sys::unpause --------//
 //
-// If the game is not running, unpause the game.
+// If the game is not running, unpause the game. For the window manager to
+// unpause the game when focus is gained. Will not unpause if the user actually
+// paused the game first.
 //
 void Sys::unpause()
 {
-   if( !config.frame_speed )
+   if( !config.frame_speed && sys_flag == SYS_RUN && !user_pause_flag )
    {
       set_speed( 0 );
    }
@@ -2300,12 +2308,14 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
    if( keyCode >= '1' && keyCode <= '8' )
    {
       set_speed( (keyCode-'0') * 3 );
+      user_pause_flag = 0;
       return 1;
    }
 
    else if( keyCode == '9' )
    {
       set_speed( 99 ); // highest possible speed
+      user_pause_flag = 0;
       return 1;
    }
 
@@ -2313,6 +2323,7 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
    {
       // toggle pausing
       set_speed( 0 );
+      user_pause_flag = !config.frame_speed;
       return 1;
    }
 
