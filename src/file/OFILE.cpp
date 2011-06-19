@@ -28,6 +28,7 @@
 #include <string.h>
 #include <dbglog.h>
 #include <OFILE.h>
+#include <errno.h>
 
 DBGLOG_DEFAULT_CHANNEL(File);
 
@@ -80,10 +81,12 @@ int File::file_open(const char* fileName, int handleError, int fileType)
         }
 	if (!file_handle)
 	{
-		err.run("[File::file_open] error opening file: %s\n", name);
+		err.run("[File::file_open] error opening file %s: %s\n", name, strerror(errno));
 	}
 
 	strcpy(file_name, name);
+
+	MSG("[File::file_open] opened %s\n", file_name);
 	return 1;
 }
 //---------- End of function File::file_open ----------//
@@ -126,9 +129,10 @@ int File::file_create(const char* fileName, int handleError, int fileType)
 	file_handle = fopen(fileName, "wb+");
 	if (!file_handle)
 	{
-		err.run("[File::file_create] error opening file: %s\n", fileName);
+		err.run("[File::file_create] couldn't create %s: %s\n", fileName, strerror(errno));
 	}
 
+	MSG("[File::file_create] created %s\n", file_name);
 	return 1;
 }
 //---------- End of function File::file_create ----------//
@@ -139,8 +143,12 @@ void File::file_close()
 {
 	if (file_handle != NULL)
 	{
+		MSG("[File::file_close] closing %s\n", file_name);
 		file_name[0] = '\0';
-		fclose(file_handle);
+		if (fclose(file_handle))
+		{
+			MSG("Error closing file descriptor: %s\n", strerror(errno));	
+		}
 		file_handle = NULL;
 	}
 }
