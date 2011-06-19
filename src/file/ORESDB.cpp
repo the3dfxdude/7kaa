@@ -26,9 +26,6 @@
 #include <OSYS.h>
 #include <ODB.h>
 #include <ORESDB.h>
-#include <dbglog.h>
-
-DBGLOG_DEFAULT_CHANNEL(FileIO);
 
 //-------------------------------------------------------//
 //

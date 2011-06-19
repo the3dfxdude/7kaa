@@ -29,7 +29,7 @@
 #include <dbglog.h>
 #include <OFILE.h>
 
-DBGLOG_DEFAULT_CHANNEL(FileIO);
+DBGLOG_DEFAULT_CHANNEL(File);
 
 //-------- Begin of function File::file_open ----------//
 //
