@@ -1256,8 +1256,8 @@ int Game::mp_get_address(char *name, int name_len)
 
 		if (config.music_flag && !music.is_playing())
 			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
-                else
-                        music.stop();
+		else if (!config.music_flag && music.is_playing())
+			music.stop();
 
 		vga_front.unlock_buf();
 	}
@@ -1642,11 +1642,10 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
 
-		if (config.music_flag) {
-			if (!music.is_playing())
-				music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
-		}
-		else
+
+		if (config.music_flag && !music.is_playing())
+			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
+		else if (!config.music_flag && music.is_playing())
 			music.stop();
 
 		vga_front.unlock_buf();
