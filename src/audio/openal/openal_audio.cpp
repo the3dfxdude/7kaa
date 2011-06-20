@@ -1078,4 +1078,10 @@ void OpenALAudio::StreamContext::stop()
       alSourceUnqueueBuffers(this->source, 1, &buf);
       alDeleteBuffers(1, &buf);
    }
+
+   if (this->stream)
+   {
+      delete this->stream;
+      this->stream = NULL;
+   }
 }
