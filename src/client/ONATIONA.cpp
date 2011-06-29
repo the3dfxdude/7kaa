@@ -913,7 +913,7 @@ char* NationArray::get_human_name(int nationNameId, int firstWordOnly)
 		for( i=0 ; i<HUMAN_NAME_LEN && humanName[i] && humanName[i]!=' ' ; i++ )
 			humanNameOneWord[i] = humanName[i];
 
-		humanNameOneWord[i] = NULL;
+		humanNameOneWord[i] = '\0';
 
 		return humanNameOneWord;
 	}
@@ -932,7 +932,7 @@ void NationArray::set_human_name(int nationRecno, char* nameStr)
 	err_when( nationRecno < 1 || nationRecno > MAX_NATION );
 
 	strncpy( human_name_array[nationRecno-1], nameStr, HUMAN_NAME_LEN );
-	human_name_array[nationRecno-1][HUMAN_NAME_LEN] = NULL;
+	human_name_array[nationRecno-1][HUMAN_NAME_LEN] = '\0';
 }
 //--------- End of function NationArray::set_human_name ---------//
 

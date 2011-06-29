@@ -34,19 +34,19 @@ static char work_buf[MAX_STR_LEN+1];
 
 String::String()
 {
-   str_buf[0] = NULL;
+   str_buf[0] = '\0';
 }
 
 String::String( char *s )
 {
    strncpy(str_buf, s, MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
 }
 
 String::String( const char *s )
 {
    strncpy(str_buf, s, MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
 }
 
 String::String( String& s )
@@ -66,7 +66,7 @@ String::String( String& s )
 //
 char* String::substr(int pos, int len)
 {
-  work_buf[0] = NULL;
+  work_buf[0] = '\0';
 
   int strLen = strlen(str_buf);
 
@@ -82,7 +82,7 @@ char* String::substr(int pos, int len)
   }
 
   strncpy( work_buf, str_buf+pos, len );
-  work_buf[len] = NULL;
+  work_buf[len] = '\0';
 
   return work_buf;
 }
@@ -145,7 +145,7 @@ String& String::operator=(String& s)
 String& String::operator=(char *s)
 {
    strncpy(str_buf, s, MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
 
    return *this;
 }
@@ -153,7 +153,7 @@ String& String::operator=(char *s)
 String& String::operator=(const char *s)
 {
    strncpy(str_buf, s, MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
 
    return *this;
 }
@@ -161,7 +161,7 @@ String& String::operator=(const char *s)
 String& String::operator=(long value)
 {
    strncpy(str_buf, m.format(value), MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
 
    return *this;
 }
@@ -173,28 +173,28 @@ String& String::operator=(long value)
 String& String::operator+=(String& s)
 {
    strncat( str_buf, s.str_buf, MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
    return *this;
 }
 
 String& String::operator+=(char *s)
 {
    strncat( str_buf, s, MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
    return *this;
 }
 
 String& String::operator+=(const char *s)
 {
    strncat( str_buf, s, MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
    return *this;
 }
 
 String& String::operator+=(long value)
 {
    strncat( str_buf, m.format(value), MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = NULL;
+   str_buf[MAX_STR_LEN] = '\0';
    return *this;
 }
 
@@ -210,7 +210,7 @@ String& String::operator*=(int n)
   for(int i=1; i<n; i++)
      strncat(str_buf, work_buf, MAX_STR_LEN);
 
-  str_buf[MAX_STR_LEN] = NULL;
+  str_buf[MAX_STR_LEN] = '\0';
 
   return *this;
 }

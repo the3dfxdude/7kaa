@@ -160,7 +160,7 @@ void Help::load(char* helpFileName)
 		if( tokenStr[0] >= 'A' && tokenStr[0] <= 'Z' )
 		{
 			strncpy( iptr->help_code, tokenStr, iptr->HELP_CODE_LEN );
-			iptr->help_code[iptr->HELP_CODE_LEN] = NULL;
+			iptr->help_code[iptr->HELP_CODE_LEN] = '\0';
 		}
 
 		//------ if it's a help area position ------//
@@ -282,8 +282,8 @@ void Help::disp()
 
 	if( !should_disp() )
 	{
-		help_code[0] = NULL;	// reset it everytime after displaying, if the mouse is still on the button, help_code will be set again.
-		custom_help_title[0] = NULL;
+		help_code[0] = '\0';	// reset it everytime after displaying, if the mouse is still on the button, help_code will be set again.
+		custom_help_title[0] = '\0';
 		return;
 	}
 
@@ -307,7 +307,7 @@ void Help::disp()
 			}
 		}
 
-		help_code[0] = NULL;		// reset it everytime after displaying, if the mouse is still on the button, help_code will be set again.
+		help_code[0] = '\0';		// reset it everytime after displaying, if the mouse is still on the button, help_code will be set again.
 	}
 
 	//-------- custom help ---------//
@@ -315,7 +315,7 @@ void Help::disp()
 	else if( custom_help_title[0] )
 	{
 		disp_help(help_x, help_y, custom_help_title, custom_help_detail);
-		custom_help_title[0] = NULL;
+		custom_help_title[0] = '\0';
 	}
 
 	//-------- other interface help ---------//
@@ -559,16 +559,16 @@ void Help::set_custom_help(int x1, int y1, int x2, int y2, char* helpTitle, char
 	help_y = (y1+y2)/2;
 
 	strncpy( custom_help_title, helpTitle, CUSTOM_HELP_TITLE_LEN );
-	custom_help_title[CUSTOM_HELP_TITLE_LEN] = NULL;
+	custom_help_title[CUSTOM_HELP_TITLE_LEN] = '\0';
 
 	if( helpDetail )
 	{
 		strncpy( custom_help_detail, helpDetail, CUSTOM_HELP_DETAIL_LEN );
-		custom_help_detail[CUSTOM_HELP_DETAIL_LEN] = NULL;
+		custom_help_detail[CUSTOM_HELP_DETAIL_LEN] = '\0';
 	}
 	else
 	{
-		custom_help_detail[0] = NULL;
+		custom_help_detail[0] = '\0';
 	}
 }
 //---------- End of function Help::set_custom_help ---------//

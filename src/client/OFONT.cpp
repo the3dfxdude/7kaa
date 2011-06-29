@@ -800,7 +800,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 				line_count++;
 			}
 
-			if( *textPtr == NULL )     // all paragraph has been printed
+			if( *textPtr == '\0' )     // all paragraph has been printed
 				break;
 
 			wordPtr = textPtr;
@@ -810,7 +810,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 
 		//------------ process spacing -------------//
 
-		if( *textPtr == ' ' || *textPtr == '\n' || *textPtr == NULL )    // not space
+		if( *textPtr == ' ' || *textPtr == '\n' || *textPtr == '\0' )    // not space
 			newWord = 1;
 		else
 		{

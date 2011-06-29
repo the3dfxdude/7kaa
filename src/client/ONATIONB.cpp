@@ -538,26 +538,26 @@ char* NationBase::nation_name()
 
 #if(defined(SPANISH))
 	strncpy( nation_name_str, "Reino de ", NATION_NAME_LEN );
-	nation_name_str[NATION_NAME_LEN]=NULL;
+	nation_name_str[NATION_NAME_LEN]='\0';
 
 	strncat( nation_name_str, king_name(1), NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]=NULL;
+	nation_name_str[NATION_NAME_LEN]='\0';
 #elif(defined(FRENCH))
 	strncpy( nation_name_str, "Royaume de ", NATION_NAME_LEN );
-	nation_name_str[NATION_NAME_LEN]=NULL;
+	nation_name_str[NATION_NAME_LEN]='\0';
 
 	strncat( nation_name_str, king_name(1), NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]=NULL;
+	nation_name_str[NATION_NAME_LEN]='\0';
 #else
 	// German and US
 	strncpy( nation_name_str, king_name(1), NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]=NULL;
+	nation_name_str[NATION_NAME_LEN]='\0';
 
 	strncat( nation_name_str, "'s ", NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]=NULL;
+	nation_name_str[NATION_NAME_LEN]='\0';
 
 	strncat( nation_name_str, translate.process("Kingdom"), NATION_NAME_LEN );
-	nation_name_str[NATION_NAME_LEN]=NULL;
+	nation_name_str[NATION_NAME_LEN]='\0';
 #endif
 
 	return nation_name_str;		// each name needs to have its own var as multiple nation names will be displayed at the same time in diplomatic talk choices

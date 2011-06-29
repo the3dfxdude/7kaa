@@ -109,13 +109,13 @@ void Translate::init()
    {
       if( *textPtr == '|' )
       {
-			*textPtr = NULL;	// Nullify the sentence
+			*textPtr = '\0';	// Nullify the sentence
 			translate_table[recNo-1].to_text_ptr = textPtr+1;
       }
 
       if( *textPtr == '~' )
       {
-			*textPtr = NULL;	// Nullify the sentence
+			*textPtr = '\0';	// Nullify the sentence
 
 			recNo++;
 

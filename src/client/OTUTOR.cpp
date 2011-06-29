@@ -267,11 +267,11 @@ void Tutor::load(int tutorId)
 			tokenStr = fileTxt.get_token(1);
 
 			strncpy( tutorTextBlock->button_code, tokenStr, tutorTextBlock->BUTTON_CODE_LEN );
-			tutorTextBlock->button_code[tutorTextBlock->BUTTON_CODE_LEN] = NULL;
+			tutorTextBlock->button_code[tutorTextBlock->BUTTON_CODE_LEN] = '\0';
 		}
 		else
 		{
-			tutorTextBlock->button_code[0] = NULL;
+			tutorTextBlock->button_code[0] = '\0';
 		}
 
 		//------- read in the tutorial text -------//

@@ -168,7 +168,7 @@ char* FileTxt::locate_word(char* wordPtr)
       {
          for( ; *data_ptr == *wordPtr && *wordPtr ; data_ptr++, wordPtr++ );
 
-         if( *wordPtr == NULL )
+         if( *wordPtr == '\0' )
          {
             next_token();
             return data_ptr;
@@ -231,7 +231,7 @@ char* FileTxt::get_token(int advancePointer)
 
    //................................//
 
-   *tokenPtr = NULL;
+   *tokenPtr = '\0';
 
    next_token();
 
@@ -275,7 +275,7 @@ void FileTxt::read_line(char* textBuf, int bufLen)
    for( i=0 ; *data_ptr!=CHAR_RETURN && *data_ptr!=CHAR_EOF && i<bufLen ; i++ )
       *textBuf++ = *data_ptr++;
 
-   *textBuf=NULL;
+   *textBuf='\0';
 
    next_line();
 }
@@ -343,7 +343,7 @@ int FileTxt::read_paragraph(char* textPtr, int bufLen)
 			break;
 	}
 
-   *textPtr++ = NULL;
+   *textPtr++ = '\0';
    textReadLen++;
 
    err_when( data_ptr-data_buf > file_length );

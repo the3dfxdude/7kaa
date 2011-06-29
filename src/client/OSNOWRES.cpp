@@ -227,7 +227,7 @@ int SnowRes::rand_root(unsigned rand)
 	{
 		return root_info_array[rand % root_count]->snow_map_id;
 	}
-	return NULL;
+	return 0;
 }
 // ------- End of function SnowRes::rand_root ------//
 

@@ -137,7 +137,7 @@ void DynArrayB::linkin(void* ent)
    if ( ent )
       memcpy(body_buf+(cur_pos-1)*ele_size, ent, ele_size );
    else
-      *(body_buf+(cur_pos-1)*ele_size) = NULL;
+      *(body_buf+(cur_pos-1)*ele_size) = '\0';
 }
 //---------- END OF FUNCTION DynArrayB::linkin ------------//
 

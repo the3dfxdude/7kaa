@@ -109,7 +109,7 @@ GameFileArray::GameFileArray() : DynArray( sizeof(GameFile), 10 )
 		demo_format = 1;
 	#endif
 
-	last_file_name[0] = NULL;
+	last_file_name[0] = '\0';
 	has_read_hall_of_fame = 0;
 
 	memset( hall_fame_array, 0, sizeof(HallFame)*HALL_FAME_NUM );

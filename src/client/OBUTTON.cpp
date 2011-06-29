@@ -42,7 +42,7 @@ Button::Button()
 	button_key   = 0;    // set by set_key()
 	use_texture_flag  = 0;
 
-	help_code[0] = NULL;
+	help_code[0] = '\0';
 
 	font_ptr = &font_san;
 }
@@ -55,7 +55,7 @@ void Button::set_help_code(const char* helpCode)
 {
 	strncpy( help_code, helpCode, HELP_CODE_LEN );
 
-	help_code[HELP_CODE_LEN] = NULL;
+	help_code[HELP_CODE_LEN] = '\0';
 }
 //--------- End of function Button::set_help_code --------//
 
@@ -188,7 +188,7 @@ void Button::create(int buttonType, int pX1, int pY1, int pX2, int pY2,
 			strLen = STR_BUF_LEN;
 
 		memcpy( str_buf, bodyPtr, strLen );
-		str_buf[strLen] = NULL;
+		str_buf[strLen] = '\0';
 	}
 	else
 		body_ptr = bodyPtr;
@@ -210,7 +210,7 @@ void Button::set_body(void* bodyPtr)
          strLen = STR_BUF_LEN;
 
       memcpy( str_buf, bodyPtr, strLen );
-      str_buf[strLen] = NULL;
+      str_buf[strLen] = '\0';
    }
    else
       body_ptr = bodyPtr;

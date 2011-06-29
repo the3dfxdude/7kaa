@@ -940,7 +940,7 @@ void NewsArray::chat_msg(int fromNationRecno, char* chatStr)
 		chatInfo->from_nation_recno = fromNationRecno;
 
 		strncpy( chatInfo->chat_str, chatStr, CHAT_STR_LEN );
-		chatInfo->chat_str[CHAT_STR_LEN] = NULL;
+		chatInfo->chat_str[CHAT_STR_LEN] = '\0';
 	}
 
 	//----------------------------------------------//
@@ -1191,4 +1191,5 @@ int News::is_loc_valid()
 	return rc;
 }
 //------- End of function News::is_loc_valid -------//
+
 
