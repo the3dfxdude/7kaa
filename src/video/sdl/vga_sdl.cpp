@@ -63,6 +63,8 @@ VgaSDL::~VgaSDL()
 
 int VgaSDL::init()
 {
+   SDL_Surface *icon;
+
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
@@ -73,6 +75,14 @@ int VgaSDL::init()
       return 0;
    }
 
+   icon = SDL_LoadBMP(DEFAULT_DIR_IMAGE "7k_icon.bmp");
+   if (icon)
+   {
+      Uint32 colorkey;
+      colorkey = SDL_MapRGB(icon->format, 0, 0, 0);
+      SDL_SetColorKey(icon, SDL_SRCCOLORKEY, colorkey);
+      SDL_WM_SetIcon(icon, NULL);
+   }
    SDL_WM_SetCaption(WIN_TITLE, WIN_TITLE);
 
    init_pal(DIR_RES"PAL_STD.RES");
