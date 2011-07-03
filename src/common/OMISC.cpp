@@ -1195,6 +1195,12 @@ int misc_mkdir(char *path)
 #ifdef NO_WINDOWS
    return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
 #else // WINDOWS
+   if (!path[2] && path[1] == ':' && isalpha(path[0]))
+   {
+      // don't try to make a drive letter path
+      // this actually works on windows, but not on Wine
+      return 1;
+   }
    return !CreateDirectory(path, NULL) ?
        GetLastError() == ERROR_ALREADY_EXISTS : 1;
 #endif
