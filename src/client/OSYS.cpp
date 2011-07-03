@@ -80,6 +80,12 @@
 
 #include <dbglog.h>
 #include <stdint.h>
+#ifndef NO_WINDOWS
+#include <direct.h>
+#define chdir _chdir
+#else
+#include <unistd.h>
+#endif
 
 DBGLOG_DEFAULT_CHANNEL(Sys);
 
@@ -153,8 +159,9 @@ int Sys::init()
 
 //	debug_session       = m.is_file_exist("DEBUG.SYS");
 
-   set_config_dir(); // where saves, config.dat, and hall of fame are kept
-	set_game_dir();      // set game directories names and game version
+   // set game directory paths and game version
+   if (!set_config_dir() || !set_game_dir())
+      return FALSE;
 
    //------- initialize more stuff ---------//
 
@@ -2571,12 +2578,52 @@ void Sys::mp_clear_request_save()
 // --------- end of function Sys::mp_clear_request_save ----------//
 
 
+//-------- Begin of function Sys::chdir_to_game_dir ----------//
+//
+// Returns true if we have successfully switched to the game data dir.
+//
+int Sys::chdir_to_game_dir()
+{
+   const char *env_data_path;
+   const char *test_file;
+
+   // test current directory
+   test_file = DEFAULT_DIR_IMAGE "HALLFAME.ICN";
+   if (m.is_file_exist(test_file))
+      return 1;
+
+   // test environment variable SKDATA for the path
+   env_data_path = getenv("SKDATA");
+   if (env_data_path)
+   {
+      chdir(env_data_path);
+      if (m.is_file_exist(test_file))
+         return 1;
+   }
+
+   // test compile time path
+#ifdef PACKAGE_DATA_PATH
+   chdir(PACKAGE_DATA_PATH);
+   if (m.is_file_exist(test_file))
+      return 1;
+#endif
+
+   ERR("Unable to locate the game data.\n");
+
+   return 0;
+}
+//----------- End of function Sys::chdir_to_game_dir ----------//
+
+
 //-------- Begin of function Sys::set_game_dir ----------//
 //
-// Set all game directories.
+// Set all game directories. Return true on success.
 //
-void Sys::set_game_dir()
+int Sys::set_game_dir()
 {
+   if (!chdir_to_game_dir())
+      return 0;
+
    strcpy(dir_image, DEFAULT_DIR_IMAGE);
    strcpy(dir_encyc, DEFAULT_DIR_ENCYC);
    strcpy(dir_encyc2, DEFAULT_DIR_ENCYC2);
@@ -2589,6 +2636,8 @@ void Sys::set_game_dir()
    //-------- set game version ---------//
 
    game_version = VERSION_FULL;
+
+   return 1;
 }
 //----------- End of function Sys::set_game_dir ----------//
 

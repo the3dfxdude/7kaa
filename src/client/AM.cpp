@@ -370,7 +370,9 @@ int main(int argc, char **argv)
 #ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//
 
-	sys.set_game_dir();
+	if (!sys.set_game_dir())
+		return 1;
+
 	if (!lobbied)
 	{
 		String movieFileStr;

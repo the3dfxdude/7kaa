@@ -191,7 +191,8 @@ public:
 	//---- for setting game directories ----//
 
 	int 		set_config_dir();
-	void 		set_game_dir();
+	int		chdir_to_game_dir();
+	int		set_game_dir();
 
 	//-------- for load/save games --------//
 
