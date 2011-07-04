@@ -323,6 +323,7 @@ CXXFLAGS="$CXXFLAGS -include \"\$(top_builddir)/include/config.h\""
 
 AC_CONFIG_FILES([
   Makefile
+  data/Makefile
   include/Makefile
   src/Makefile
   src/audio/Makefile
