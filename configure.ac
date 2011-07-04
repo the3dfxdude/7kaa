@@ -85,7 +85,7 @@ use_windows=no
 use_mingw=no
 
 # Set in argument handlers:
-# enable_debug=yes
+# enable_debug=no
 # with_directx=no
 # with_wine=no
 # enable_dynamic_support_libs=no
@@ -93,8 +93,8 @@ use_mingw=no
 # Configuration options
 
 AC_ARG_ENABLE([debug],
-  AS_HELP_STRING([--disable-debug], [disable debugging features]),
-  [], [enable_debug=yes]
+  AS_HELP_STRING([--enable-debug], [enable debugging features]),
+  [], [enable_debug=no]
 )
 
 AC_ARG_WITH([directx],
