@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010,2011 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  *
  */
 
-// Filename    : netplay_none.cpp
+// Filename    : netplay_sdlnet.cpp
 // Description : MultiPlayerSDL, SDL_net based multiplayer class
 // Onwer       : Gilbert
 
@@ -30,7 +31,7 @@
 #include <stdint.h>
 #include <dbglog.h>
 
-DBGLOG_DEFAULT_CHANNEL(NetPlay);
+DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
 #define MP_UDP_MAX_PACKET_SIZE 500
 

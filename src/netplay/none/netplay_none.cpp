@@ -30,7 +30,7 @@
 #include <stdint.h>
 #include <dbglog.h>
 
-DBGLOG_DEFAULT_CHANNEL(NetPlay);
+DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
 NoneSessionDesc::NoneSessionDesc()
 {
