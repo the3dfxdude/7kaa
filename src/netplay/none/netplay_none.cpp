@@ -80,9 +80,10 @@ void MultiPlayerNone::deinit()
 	ERR("[MultiPlayerNone::deinit] calling unimplemented method\n");	
 }
 
-void MultiPlayerNone::init_lobbied(int maxPlayers, char *)
+int MultiPlayerNone::init_lobbied(int maxPlayers, char *)
 {
 	ERR("[MultiPlayerNone::init_lobbied] calling unimplemented method\n");
+	return 1;
 }
 
 // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable

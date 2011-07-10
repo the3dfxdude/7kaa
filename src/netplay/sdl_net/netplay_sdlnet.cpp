@@ -183,7 +183,8 @@ void MultiPlayerSDL::deinit()
 
 // init_lobbied
 // Reads the command line and sets lobby mode if the command line is correct.
-void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
+// Returns non-zero on success.
+int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 {
 	MSG("[MultiPlayerSDL::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
 	if (cmdLine) {
@@ -194,7 +195,7 @@ void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 		if (SDLNet_ResolveHost(&session->address, cmdLine, GAME_PORT) == -1) {
 			MSG("failed to resolve hostname: %s\n", SDLNet_GetError());
 			delete session;
-			return;
+			return 0;
 		}
 
 		current_sessions.linkin(session);
@@ -204,6 +205,7 @@ void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 		// hosting doesn't work yet
 		lobbied_flag = 1;
 	}
+	return 1;
 }
 
 // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable

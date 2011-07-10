@@ -120,7 +120,7 @@ public:
 	bool   is_initialized() const { return init_flag != 0; }
 
 	// ------- functions on lobby -------- //
-	void   init_lobbied(int maxPlayers, char * cmdLine);
+	int    init_lobbied(int maxPlayers, char * cmdLine);
 	int    is_lobbied(); // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable
 	char * get_lobbied_name(); // return 0 if not available
 

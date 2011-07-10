@@ -564,8 +564,10 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	if (mp_obj.is_protocol_supported(selected_protocol))
 		mp_obj.init(selected_protocol);
 
-	if (lobbied)
-		mp_obj.init_lobbied(MAX_NATION, game_host);
+	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
+	{
+		box.msg("Unable to connect from lobby.");
+	}
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
@@ -597,9 +599,11 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		{
 			char join_address[100];
 			strcpy(join_address, "localhost");
-			if (!lobbied && mp_get_address(join_address, 100))
+			if (!lobbied &&
+			    mp_get_address(join_address, 100) &&
+			    !mp_obj.init_lobbied(MAX_NATION, join_address))
 			{
-				mp_obj.init_lobbied(MAX_NATION, join_address);
+				box.msg("Unable to connect");
 			}
 
 			if (choice = mp_select_session())
@@ -742,8 +746,10 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if (mp_obj.is_protocol_supported(selected_protocol))
 		mp_obj.init(selected_protocol);
 
-	if (lobbied)
-		mp_obj.init_lobbied(MAX_NATION, game_host);
+	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
+	{
+		box.msg("Unable to connect from lobby.");
+	}
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
