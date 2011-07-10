@@ -241,23 +241,26 @@ int MultiPlayerSDL::poll_sessions()
 	session_count = 0;
 
 	while (1) {
-		SDLSessionDesc *n;
-		SDLSessionDesc *p;
+		SDLSessionDesc *desc;
+		SDLSessionPacket *p;
 
 		ret = SDLNet_UDP_Recv(game_sock, &packet);
 		if (ret <= 0)
 			break;
 
-		n = new SDLSessionDesc();
-		p = (SDLSessionDesc *)recv_buf;
+		if (packet.len != sizeof(SDLSessionPacket))
+			break;
 
-		strncpy(n->session_name, p->session_name, MP_SESSION_NAME_LEN);
-		n->session_name[MP_SESSION_NAME_LEN] = 0;
-		n->pass_word[0] = p->pass_word[0];
-		n->id = session_count++;
-		current_sessions.linkin(n);
+		desc = new SDLSessionDesc();
+		p = (SDLSessionPacket *)recv_buf;
 
-		MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", n->session_name);
+		strncpy(desc->session_name, p->name, MP_SESSION_NAME_LEN-1);
+		desc->session_name[MP_SESSION_NAME_LEN] = 0;
+		desc->pass_word[0] = p->password;
+		desc->id = session_count++;
+		current_sessions.linkin(desc);
+
+		MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
 	}
 
 	return 1;
@@ -409,30 +412,26 @@ void MultiPlayerSDL::accept_connections()
 	if (game_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
 		// send the session beacon
 		UDPpacket packet;
-		SDLSessionDesc *p;
+		SDLSessionPacket p;
 
 		ticks = cur_ticks;
 
-		p = new SDLSessionDesc();
-
-		strcpy(p->session_name, joined_session.session_name);
+		strncpy(p.name, joined_session.session_name, MP_SESSION_NAME_LEN-1);
 #if 0
 		if (joined_session.pass_word[0]) {
-			p->pass_word[0] = 1;
+			p.password = 1;
 		else
 #endif
-			p->pass_word[0] = 0;
+			p.password = 0;
 		
 
 		packet.channel = -1;
-		packet.data = (Uint8 *)p;
-		packet.len = sizeof(SDLSessionDesc);
+		packet.data = (Uint8 *)&p;
+		packet.len = sizeof(SDLSessionPacket);
 		packet.address.host = lan_broadcast_address.host;
 		packet.address.port = lan_broadcast_address.port;
 
 		SDLNet_UDP_Send(game_sock, packet.channel, &packet);
-
-		delete p;
 	}
 
 	connecting = SDLNet_TCP_Accept(listen_sock);

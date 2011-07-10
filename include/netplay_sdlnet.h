@@ -44,6 +44,12 @@ enum ProtocolType
 	Serial = 8
 };
 
+struct SDLSessionPacket
+{
+	char name[MP_SESSION_NAME_LEN+1];
+	char password;
+};
+
 struct SDLSessionDesc
 {
 	char session_name[MP_SESSION_NAME_LEN+1];
