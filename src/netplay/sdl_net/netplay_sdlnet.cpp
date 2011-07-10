@@ -412,11 +412,8 @@ void MultiPlayerSDL::accept_connections()
 	// accept_connections shouldn't be used by clients
 	if (!host_flag) return;
 
-	if (!game_sock) {
-		game_sock = SDLNet_UDP_Open(UDP_GAME_PORT);
-	}
 	cur_ticks = SDL_GetTicks();
-	if (game_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
+	if (peer_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
 		// send the session beacon
 		UDPpacket packet;
 		SDLSessionPacket p;
@@ -438,7 +435,7 @@ void MultiPlayerSDL::accept_connections()
 		packet.address.host = lan_broadcast_address.host;
 		packet.address.port = lan_broadcast_address.port;
 
-		SDLNet_UDP_Send(game_sock, packet.channel, &packet);
+		SDLNet_UDP_Send(peer_sock, packet.channel, &packet);
 	}
 
 	connecting = SDLNet_TCP_Accept(listen_sock);
