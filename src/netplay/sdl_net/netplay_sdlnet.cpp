@@ -43,6 +43,7 @@ SDLSessionDesc::SDLSessionDesc()
 	id = 0;
 	session_name[0] = '\0';
 	pass_word[0] = '\0';
+	memset(&address, 0, sizeof(IPaddress));
 }
 
 SDLSessionDesc::SDLSessionDesc(const SDLSessionDesc &src)
@@ -50,6 +51,7 @@ SDLSessionDesc::SDLSessionDesc(const SDLSessionDesc &src)
 	id = src.id;
 	strcpy(session_name, src.session_name);
 	strcpy(pass_word, src.pass_word);
+	memcpy(&address, &src.address, sizeof(IPaddress));
 }
 
 SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
@@ -57,6 +59,7 @@ SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
 	id = src.id;
 	strcpy(session_name, src.session_name);
 	strcpy(pass_word, src.pass_word);
+	memcpy(&address, &src.address, sizeof(IPaddress));
 	return *this;
 }
 
@@ -178,16 +181,23 @@ void MultiPlayerSDL::deinit()
 	sock_set = NULL;
 }
 
+// init_lobbied
+// Reads the command line and sets lobby mode if the command line is correct.
 void MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 {
 	MSG("[MultiPlayerSDL::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
 	if (cmdLine) {
-		SDLSessionDesc session;
+		SDLSessionDesc *session = new SDLSessionDesc();
 
-		strncpy(session.session_name, cmdLine, MP_SESSION_NAME_LEN-1);
-		session.pass_word[0] = 0;
+		strcpy(session->session_name, "Lobbied Game");
+		session->pass_word[0] = 0;
+		if (SDLNet_ResolveHost(&session->address, cmdLine, GAME_PORT) == -1) {
+			MSG("failed to resolve hostname: %s\n", SDLNet_GetError());
+			delete session;
+			return;
+		}
 
-		current_sessions.linkin(&session);
+		current_sessions.linkin(session);
 
 		lobbied_flag = 2;
 	} else {
@@ -257,6 +267,8 @@ int MultiPlayerSDL::poll_sessions()
 		strncpy(desc->session_name, p->name, MP_SESSION_NAME_LEN-1);
 		desc->session_name[MP_SESSION_NAME_LEN] = 0;
 		desc->pass_word[0] = p->password;
+		desc->address.host = packet.address.host;
+		desc->address.port = packet.address.port;
 		desc->id = session_count++;
 		current_sessions.linkin(desc);
 
@@ -340,19 +352,12 @@ int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxP
 // currentSessionIndex start from 1
 int MultiPlayerSDL::join_session(int i, char *playerName)
 {
-	IPaddress ip_address;
-
 	SDLSessionDesc *session = (SDLSessionDesc *)current_sessions.get(i);
 	if (!session)
 		return FALSE;
 
 	// establish connection with server
-	if (SDLNet_ResolveHost(&ip_address, session->session_name, GAME_PORT) == -1) {
-		MSG("[MultiPlayerSDL::join_session] failed to resolve hostname: %s\n", SDLNet_GetError());
-		return FALSE;
-	}
-
-	host_sock = SDLNet_TCP_Open(&ip_address);
+	host_sock = SDLNet_TCP_Open(&session->address);
 	if (!host_sock) {
 		MSG("[MultiPlayerSDL::join_session] failed to connect to server: %s\n", SDLNet_GetError());
 		return FALSE;
@@ -377,8 +382,8 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	max_players = MAX_NATION;
 
 	// register the host now, even though his name is not known yet
-	player_pool[0].address.host = ip_address.host;
-	player_pool[0].address.port = ip_address.port;
+	player_pool[0].address.host = session->address.host;
+	player_pool[0].address.port = session->address.port;
 	player_pool[0].connecting = 1;
 
 	joined_session = *session;

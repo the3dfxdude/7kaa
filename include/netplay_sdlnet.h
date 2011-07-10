@@ -55,6 +55,7 @@ struct SDLSessionDesc
 	char session_name[MP_SESSION_NAME_LEN+1];
 	char pass_word[MP_SESSION_NAME_LEN+1];
 	uint32_t id;
+	IPaddress address;
 
 	SDLSessionDesc();
 	SDLSessionDesc(const SDLSessionDesc &);
