@@ -36,6 +36,7 @@ DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 #define MP_UDP_MAX_PACKET_SIZE 500
 
 const Uint16 GAME_PORT = 1234;
+const Uint16 UDP_GAME_PORT = 19255;
 
 SDLSessionDesc::SDLSessionDesc()
 {
@@ -80,6 +81,7 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	host_sock = NULL;
 	listen_sock = NULL;
 	peer_sock = NULL;
+	game_sock = NULL;
 	sock_set = NULL;
 	recv_buf = NULL;
 }
@@ -115,6 +117,8 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		SDLNet_Quit();
 		return;
 	}
+
+	SDLNet_ResolveHost(&lan_broadcast_address, "255.255.255.255", UDP_GAME_PORT);
 
 	for (int i = 0; i < MAX_NATION; i++) {
 		player_pool[i].id = 0;
@@ -157,6 +161,11 @@ void MultiPlayerSDL::deinit()
 	if (peer_sock) {
 		SDLNet_UDP_Close(peer_sock);
 		peer_sock = NULL;
+	}
+
+	if (game_sock) {
+		SDLNet_UDP_Close(game_sock);
+		game_sock = NULL;
 	}
 
 	SDLNet_FreeSocketSet(sock_set);
@@ -211,14 +220,47 @@ bool MultiPlayerSDL::is_protocol_supported(ProtocolType protocol)
 
 int MultiPlayerSDL::poll_sessions()
 {
+	UDPpacket packet;
+	int ret;
+	int session_count;
+
 	err_when(!init_flag);
 
-	MSG("[MultiPlayerSDL::poll_sessions] unimplemented\n");
+	if (!game_sock) {
+		game_sock = SDLNet_UDP_Open(UDP_GAME_PORT);
+	}
+	if (!game_sock) {
+		ERR("unable to open session list socket: %s\n", SDLNet_GetError());
+		return 0;
+	}
 
-	// poll_sessions should be called only by client
-	if (host_flag) return FALSE;
+	current_sessions.zap();
 
-	return TRUE;
+	packet.data = (Uint8 *)recv_buf;
+	packet.maxlen = MP_UDP_MAX_PACKET_SIZE;
+	session_count = 0;
+
+	while (1) {
+		SDLSessionDesc *n;
+		SDLSessionDesc *p;
+
+		ret = SDLNet_UDP_Recv(game_sock, &packet);
+		if (ret <= 0)
+			break;
+
+		n = new SDLSessionDesc();
+		p = (SDLSessionDesc *)recv_buf;
+
+		strncpy(n->session_name, p->session_name, MP_SESSION_NAME_LEN);
+		n->session_name[MP_SESSION_NAME_LEN] = 0;
+		n->pass_word[0] = p->pass_word[0];
+		n->id = session_count++;
+		current_sessions.linkin(n);
+
+		MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", n->session_name);
+	}
+
+	return 1;
 }
 
 // return a session description
@@ -352,11 +394,46 @@ void MultiPlayerSDL::disable_join_session()
 
 void MultiPlayerSDL::accept_connections()
 {
+	static Uint32 ticks = 0;
 	TCPsocket connecting;
 	uint32_t player_id;
+	Uint32 cur_ticks;
 
 	// accept_connections shouldn't be used by clients
 	if (!host_flag) return;
+
+	if (!game_sock) {
+		game_sock = SDLNet_UDP_Open(UDP_GAME_PORT);
+	}
+	cur_ticks = SDL_GetTicks();
+	if (game_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
+		// send the session beacon
+		UDPpacket packet;
+		SDLSessionDesc *p;
+
+		ticks = cur_ticks;
+
+		p = new SDLSessionDesc();
+
+		strcpy(p->session_name, joined_session.session_name);
+#if 0
+		if (joined_session.pass_word[0]) {
+			p->pass_word[0] = 1;
+		else
+#endif
+			p->pass_word[0] = 0;
+		
+
+		packet.channel = -1;
+		packet.data = (Uint8 *)p;
+		packet.len = sizeof(SDLSessionDesc);
+		packet.address.host = lan_broadcast_address.host;
+		packet.address.port = lan_broadcast_address.port;
+
+		SDLNet_UDP_Send(game_sock, packet.channel, &packet);
+
+		delete p;
+	}
 
 	connecting = SDLNet_TCP_Accept(listen_sock);
 	if (!connecting) {

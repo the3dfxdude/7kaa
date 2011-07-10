@@ -1404,8 +1404,8 @@ int Game::mp_select_session()
 					break;
 				}
 
-				// limit the pollTime between 1 sec to 10 sec
-				pollTime = m.get_time() - pollTime + 1000;
+				// limit the pollTime between 5 sec to 10 sec
+				pollTime = m.get_time() - pollTime + 5000;
 				if( pollTime > 10000 )
 					pollTime = 10000;
 

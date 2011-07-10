@@ -96,10 +96,12 @@ private:
 	TCPsocket         host_sock; // used by client to talk to game host
 	TCPsocket         listen_sock; // used by server
 	UDPsocket         peer_sock; // peer-to-peer communication
+	UDPsocket         game_sock;
 	SDLNet_SocketSet  sock_set;
 
 	uint32_t discovery;
 	IPaddress discovery_address;
+	IPaddress lan_broadcast_address;
 
 public:
 
