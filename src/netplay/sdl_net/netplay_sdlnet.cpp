@@ -230,6 +230,23 @@ bool MultiPlayerSDL::is_protocol_supported(ProtocolType protocol)
 	return (protocol & supported_protocols) != 0;
 }
 
+int MultiPlayerSDL::check_duplicates(IPaddress *address)
+{
+	int i;
+	for (i = 0; i < current_sessions.size(); i++)
+	{
+		SDLSessionDesc *desc;
+
+		desc = (SDLSessionDesc *)current_sessions.get(i+1);
+		if (!desc)
+			return 0;
+		if (desc->address.host == address->host &&
+		    desc->address.port == address->port)
+			return 1;
+	}
+	return 0;
+}
+
 int MultiPlayerSDL::poll_sessions()
 {
 	UDPpacket packet;
@@ -262,6 +279,9 @@ int MultiPlayerSDL::poll_sessions()
 
 		if (packet.len != sizeof(SDLSessionPacket))
 			break;
+
+		if (check_duplicates(&packet.address))
+			continue;
 
 		desc = new SDLSessionDesc();
 		p = (SDLSessionPacket *)recv_buf;

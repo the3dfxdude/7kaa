@@ -164,6 +164,7 @@ public:
 
 private:
 	int create_player(TCPsocket socket);
+	int check_duplicates(IPaddress *address);
 };
 
 extern MultiPlayerSDL mp_sdl;
