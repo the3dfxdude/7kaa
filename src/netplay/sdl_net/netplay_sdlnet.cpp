@@ -327,11 +327,9 @@ int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxP
 		return FALSE;
 	}
 
-	joined_session.id = 789;
-	char sname[] = "SDL_net test game";
-	char spass[] = "p@ssw0rd";
-	strcpy(joined_session.session_name, sname);
-	strcpy(joined_session.pass_word, spass);
+	joined_session.id = 0;
+	strcpy(joined_session.session_name, sessionName);
+	joined_session.pass_word[0] = 0;
 
 	host_flag = 1;
 	max_players = maxPlayers;

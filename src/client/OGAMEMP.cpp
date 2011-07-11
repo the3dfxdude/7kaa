@@ -568,12 +568,21 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	switch( mp_select_mode(NULL) )
 	{
 	case 1:		// create game
-		// BUGHERE : enter session name here
-		if (!mp_obj.create_session(config.player_name, config.player_name, MAX_NATION))
 		{
-			box.msg("Cannot create the game.");
-			mp_obj.deinit();
-			return;
+			char game_name[MP_SESSION_NAME_LEN+1];
+			strncpy(game_name, config.player_name, MP_SESSION_NAME_LEN);
+			game_name[MP_SESSION_NAME_LEN] = 0;
+			if (!input_box("Enter the of the game:", game_name, MP_SESSION_NAME_LEN+1))
+			{
+				mp_obj.deinit();
+				return;
+			}
+			if (!mp_obj.create_session(game_name, config.player_name, MAX_NATION))
+			{
+				box.msg("Cannot create the game.");
+				mp_obj.deinit();
+				return;
+			}
 		}
 
 		remote.init(&mp_obj);
