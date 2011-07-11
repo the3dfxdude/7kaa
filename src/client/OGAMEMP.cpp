@@ -528,41 +528,27 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	sub_game_mode = 0;
 	info.init_random_seed(0);			// initialize the random seed
 
-	int choice, p;
+	int service_mode, p;
 	ProtocolType selected_protocol = TCPIP;
 
 	if (!lobbied) {
 		// not launched from lobby
 
-		mp_obj.poll_supported_protocols();
-		choice = mp_select_service();
-		if( !choice )
+		service_mode = mp_select_service();
+		if (!service_mode)
 		{
 			mp_obj.deinit();
 			return;
 		}
 
-		switch(choice)
-		{
-		case 1:	// IPX
-			selected_protocol = IPX;
-			break;
-		case 2:	// TCP/IP
-			selected_protocol = TCPIP;
-			break;
-		case 3:	// Modem
-			selected_protocol = Modem;
-			break;
-		case 4:	// Serial
-			selected_protocol = Serial;
-			break;
-		default:
-			selected_protocol = None;
-		}
+	}
+	else
+	{
+		service_mode = 2;
 	}
 
-	if (mp_obj.is_protocol_supported(selected_protocol))
-		mp_obj.init(selected_protocol);
+	if (mp_obj.is_protocol_supported(TCPIP))
+		mp_obj.init(TCPIP);
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
@@ -583,47 +569,58 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		// BUGHERE : enter session name here
-		if (mp_obj.create_session(config.player_name, config.player_name, MAX_NATION))
-		{
-			remote.init(&mp_obj);
-			remote.create_game();
-		}
-		else
+		if (!mp_obj.create_session(config.player_name, config.player_name, MAX_NATION))
 		{
 			box.msg("Cannot create the game.");
 			mp_obj.deinit();
 			return;
 		}
+
+		remote.init(&mp_obj);
+		remote.create_game();
 		break;
 	case 2:		// join game
 		{
 			char join_address[100];
-			strcpy(join_address, "localhost");
-			if (!lobbied &&
-			    mp_get_address(join_address, 100) &&
-			    !mp_obj.init_lobbied(MAX_NATION, join_address))
+			int choice;
+
+			choice = lobbied;
+			if (service_mode == 1)
 			{
+				// Join by LAN game list
+				choice = mp_select_session();
+			}
+			else if (service_mode == 2)
+			{
+				// Join by direct IP address
+				strcpy(join_address, "localhost");
+				if (!lobbied &&
+				    mp_get_address(join_address, 100) &&
+				    mp_obj.init_lobbied(MAX_NATION, join_address))
+				{
+					choice = 1;
+				}
+			}
+			else
+			{
+				box.msg("Service not supported");
+			}
+
+
+			if (choice && !mp_join_session(choice, config.player_name))
+			{
+				choice = 0;
 				box.msg("Unable to connect");
 			}
 
-			if (choice = mp_select_session())
-			{
-				if (!mp_join_session(choice, config.player_name))
-				{
-					// can't join session
-					mp_obj.deinit();
-					box.msg("Unable to connect");
-					return;
-				}
-
-				remote.init(&mp_obj);
-				remote.connect_game();
-			}
-			else
+			if (!choice)
 			{
 				mp_obj.deinit();
 				return;
 			}
+
+			remote.init(&mp_obj);
+			remote.connect_game();
 		}
 		break;
 	default:			// cancel
