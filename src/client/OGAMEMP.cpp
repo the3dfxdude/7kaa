@@ -595,7 +595,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 				// Join by direct IP address
 				strcpy(join_address, "localhost");
 				if (!lobbied &&
-				    mp_get_address(join_address, 100) &&
+				    input_box("Enter the game's address:", join_address, 100) &&
 				    mp_obj.init_lobbied(MAX_NATION, join_address))
 				{
 					choice = 1;
@@ -792,7 +792,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		{
 			char join_address[100];
 			strcpy(join_address, "localhost");
-			if (!lobbied && mp_get_address(join_address, 100))
+			if (!lobbied && input_box("Enter the game's address:", join_address, 100))
 			{
 				mp_obj.init_lobbied(MAX_NATION, join_address);
 			}
@@ -1179,15 +1179,13 @@ int Game::mp_select_mode(char *defSaveFileName)
 //-------- End of function Game::mp_select_mode --------//
 
 
-// Display a box to ask for a host address. The pointer to name will be used
-// to initialize the field, and when the box is closed, it is filled with the
-// final address, up to name_len, including the terminating null. The return
-// is 1 when ok is pressed, and 0 when cancel is pressed.
-int Game::mp_get_address(char *name, int name_len)
+// Display a box to input a string. The pointer to name will be used
+// to initialize the field. The user may edit the box as appropriate.
+// The return is 1 when ok is pressed, and 0 when cancel is pressed.
+int Game::input_box(const char *tell_string, char *buf, int len)
 {
 	const char *buttonDes1 = "Ok";
 	const char *buttonDes2 = "Cancel";
-	const char *tell_string = "Enter the game's address:";
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
 	const int box_x1 = 250;
 	const int box_y1 = 200;
@@ -1225,8 +1223,8 @@ int Game::mp_get_address(char *name, int name_len)
 	input_box.init(box_x1 + box_side_margin,
 		       box_y1 + box_top_margin + font_san.text_height() + 2,
 		       box_x2 - box_side_margin,
-		       name,
-		       name_len,
+		       buf,
+		       len,
 		       &font_san,
 		       0,
 		       0);

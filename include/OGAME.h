@@ -144,10 +144,11 @@ private:
 	void			view_encyclopedia();
 	void			view_credits();
 
+	int			input_box(const char *tell_string, char *name, int name_len);
+
 	//------- multiplayer game functions -------//
 
 	int 			mp_select_mode(char *saveGameName);
-	int			mp_get_address(char *name, int name_len);
 	int			mp_join_session(int session_id, char *player_name);
 	int			mp_select_option(NewNationPara*, int*);
 	int			mp_select_service();
