@@ -529,9 +529,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	info.init_random_seed(0);			// initialize the random seed
 
 	int service_mode, p;
-	ProtocolType selected_protocol = TCPIP;
 
-	if (!lobbied) {
+	if (!lobbied)
+	{
 		// not launched from lobby
 
 		service_mode = mp_select_service();
@@ -723,9 +723,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 	int nationRecno;
 	int service_mode, p;
-	ProtocolType selected_protocol = TCPIP;
 
-	if (!lobbied) {
+	if (!lobbied)
+	{
 		// not launched from lobby
 
 		service_mode = mp_select_service();
