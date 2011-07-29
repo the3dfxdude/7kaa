@@ -564,6 +564,12 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		return;
 	}
 
+	if (service_mode == 3)
+	{
+		// internet game list provider
+		mp_obj.set_remote_session_provider("www.7kfans.com");
+	}
+
 	// create game or join game
 	switch( mp_select_mode(NULL) )
 	{
@@ -594,7 +600,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			int choice;
 
 			choice = lobbied;
-			if (service_mode == 1)
+			if (service_mode == 1 || service_mode == 3)
 			{
 				// Join by LAN game list
 				choice = mp_select_session();

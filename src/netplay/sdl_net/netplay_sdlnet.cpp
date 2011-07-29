@@ -247,6 +247,12 @@ int MultiPlayerSDL::check_duplicates(IPaddress *address)
 	return 0;
 }
 
+int MultiPlayerSDL::set_remote_session_provider(const char *server)
+{
+	use_remote_session_provider = !SDLNet_ResolveHost(&lan_broadcast_address, server, UDP_GAME_PORT);
+	return use_remote_session_provider;
+}
+
 int MultiPlayerSDL::poll_sessions()
 {
 	UDPpacket packet;
@@ -295,6 +301,19 @@ int MultiPlayerSDL::poll_sessions()
 		current_sessions.linkin(desc);
 
 		MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
+	}
+
+	if (use_remote_session_provider)
+	{
+		const char *req_mesg = "REQ";
+		UDPpacket request;
+
+		request.data = (Uint8 *)req_mesg;
+		request.maxlen = 3;
+		request.address.host = remote_session_provider_address.host;
+		request.address.port = remote_session_provider_address.port;
+
+		SDLNet_UDP_Send(game_sock, -1, &request);
 	}
 
 	return 1;
@@ -454,6 +473,11 @@ void MultiPlayerSDL::accept_connections()
 		packet.address.port = lan_broadcast_address.port;
 
 		SDLNet_UDP_Send(peer_sock, packet.channel, &packet);
+
+		if (use_remote_session_provider)
+		{
+			SDLNet_UDP_Send(peer_sock, -1, &packet);
+		}
 	}
 
 	connecting = SDLNet_TCP_Accept(listen_sock);

@@ -108,6 +108,11 @@ bool MultiPlayerNone::is_protocol_supported(ProtocolType protocol)
 	return (protocol & supported_protocols) != 0;
 }
 
+int MultiPlayerNone::set_remote_session_provider(const char *server)
+{
+	return 0;
+}
+
 int MultiPlayerNone::poll_sessions()
 {
 	ERR("[MultiPlayerNone::poll_sessions] calling unimplemented method\n");

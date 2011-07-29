@@ -109,6 +109,9 @@ private:
 	uint32_t discovery;
 	IPaddress discovery_address;
 	IPaddress lan_broadcast_address;
+	IPaddress remote_session_provider_address;
+
+	int use_remote_session_provider;
 
 public:
 
@@ -129,6 +132,7 @@ public:
 	bool   is_protocol_supported(ProtocolType);
 
 	// ------- functions on session --------//
+	int    set_remote_session_provider(const char *server);
 	int    poll_sessions();
 	void   sort_sessions(int sortType);
 	int    create_session(char *sessionName, char *playerName, int maxPlayers);
