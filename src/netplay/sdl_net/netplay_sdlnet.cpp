@@ -40,7 +40,8 @@ const Uint16 UDP_GAME_PORT = 19255;
 
 enum
 {
-        MPMSG_GAME_BEACON = 0x1f4a0001,
+	MPMSG_GAME_BEACON = 0x1f4a0001,
+	MPMSG_REQ_GAME_LIST,
 };
 
 #pragma pack(1)
@@ -54,6 +55,11 @@ struct MsgGameBeacon
 	uint32_t msg_id;
         char name[MP_SESSION_NAME_LEN];
         char password;
+};
+
+struct MsgRequestGameList
+{
+	uint32_t msg_id;
 };
 #pragma pack()
 
@@ -338,11 +344,13 @@ int MultiPlayerSDL::poll_sessions()
 
 	if (use_remote_session_provider)
 	{
-		const char *req_mesg = "REQ";
+		struct MsgRequestGameList m;
 		UDPpacket request;
 
-		request.data = (Uint8 *)req_mesg;
-		request.maxlen = 3;
+		m.msg_id = MPMSG_REQ_GAME_LIST;
+
+		request.data = (Uint8 *)&m;
+		request.maxlen = sizeof(struct MsgRequestGameList);
 		request.address.host = remote_session_provider_address.host;
 		request.address.port = remote_session_provider_address.port;
 
