@@ -722,41 +722,27 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	sub_game_mode = 1;
 
 	int nationRecno;
-	int choice, p;
+	int service_mode, p;
 	ProtocolType selected_protocol = TCPIP;
 
 	if (!lobbied) {
 		// not launched from lobby
 
-		mp_obj.poll_supported_protocols();
-		choice = mp_select_service();
-		if( !choice )
+		service_mode = mp_select_service();
+		if (!service_mode)
 		{
 			mp_obj.deinit();
 			return;
 		}
 
-		switch(choice)
-		{
-		case 1:	// IPX
-			selected_protocol = IPX;
-			break;
-		case 2:	// TCP/IP
-			selected_protocol = TCPIP;
-			break;
-		case 3:	// Modem
-			selected_protocol = Modem;
-			break;
-		case 4:	// Serial
-			selected_protocol = Serial;
-			break;
-		default:
-			selected_protocol = None;
-		}
+	}
+	else
+	{
+		service_mode = 2;
 	}
 
-	if (mp_obj.is_protocol_supported(selected_protocol))
-		mp_obj.init(selected_protocol);
+	if (mp_obj.is_protocol_supported(TCPIP))
+		mp_obj.init(TCPIP);
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
@@ -770,6 +756,12 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		box.msg("Cannot initialize DirectPlay.");
 		mp_obj.deinit();
 		return;
+	}
+
+	if (service_mode == 3)
+	{
+		// internet game list provider
+		mp_obj.set_remote_session_provider("www.7kfans.com");
 	}
 
 	// load game
@@ -790,52 +782,73 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	switch( mp_select_mode(fileName) )
 	{
 	case 1:		// create game
-		// BUGHERE : enter session name here
-		if (mp_obj.create_session(config.player_name, config.player_name, gamePlayerCount))
 		{
-			remote.init(&mp_obj);
-			remote.create_game();
-		}
-		else
-		{
-			box.msg("Cannot create the game.");
-			mp_obj.deinit();
-			return;
-		}
-		break;
-	case 2:		// join game
-		{
-			char join_address[100];
-			strcpy(join_address, "localhost");
-			if (!lobbied && input_box("Enter the game's address:", join_address, 100))
-			{
-				mp_obj.init_lobbied(MAX_NATION, join_address);
-			}
-
-			if (choice = mp_select_session())
-			{
-				if (!mp_join_session(choice, config.player_name))
-				{
-					// can't join session
-					mp_obj.deinit();
-					box.msg("Unable to connect");
-					return;
-				}
-
-				// count required player
-				gamePlayerCount = 0;
-				for (nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)
-					if (!nation_array.is_deleted(nationRecno) && !nation_array[nationRecno]->is_ai())
-						++gamePlayerCount;
-
-				remote.init(&mp_obj);
-				remote.connect_game();
-			}
-			else
+			char game_name[MP_SESSION_NAME_LEN+1];
+			strncpy(game_name, config.player_name, MP_SESSION_NAME_LEN);
+			game_name[MP_SESSION_NAME_LEN] = 0;
+			if (!input_box("Enter the of the game:", game_name, MP_SESSION_NAME_LEN+1))
 			{
 				mp_obj.deinit();
 				return;
 			}
+			if (!mp_obj.create_session(game_name, config.player_name, gamePlayerCount))
+			{
+				box.msg("Cannot create the game.");
+				mp_obj.deinit();
+				return;
+			}
+		}
+
+		remote.init(&mp_obj);
+		remote.create_game();
+		break;
+	case 2:		// join game
+		{
+			char join_address[100];
+			int choice;
+
+			choice = lobbied;
+			if (service_mode == 1 || service_mode == 3)
+			{
+				// Join by LAN game list
+				choice = mp_select_session();
+			}
+			else if (service_mode == 2)
+			{
+				// Join by direct IP address
+				strcpy(join_address, "localhost");
+				if (!lobbied &&
+				    input_box("Enter the game's address:", join_address, 100) &&
+				    mp_obj.init_lobbied(gamePlayerCount, join_address))
+				{
+					choice = 1;
+				}
+			}
+			else
+			{
+				box.msg("Service not supported");
+			}
+
+			if (choice && !mp_join_session(choice, config.player_name))
+			{
+				choice = 0;
+				box.msg("Unable to connect");
+			}
+
+			if (!choice)
+			{
+				mp_obj.deinit();
+				return;
+			}
+
+			// count required player
+			gamePlayerCount = 0;
+			for (nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)
+				if (!nation_array.is_deleted(nationRecno) && !nation_array[nationRecno]->is_ai())
+					++gamePlayerCount;
+
+			remote.init(&mp_obj);
+			remote.connect_game();
 		}
 		break;
 	default:			// cancel
