@@ -44,12 +44,6 @@ enum ProtocolType
 	Serial = 8
 };
 
-struct SDLSessionPacket
-{
-	char name[MP_SESSION_NAME_LEN+1];
-	char password;
-};
-
 struct SDLSessionDesc
 {
 	char session_name[MP_SESSION_NAME_LEN+1];
@@ -169,6 +163,7 @@ public:
 private:
 	int create_player(TCPsocket socket);
 	int check_duplicates(IPaddress *address);
+	void msg_game_beacon(UDPpacket *p);
 };
 
 extern MultiPlayerSDL mp_sdl;

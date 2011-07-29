@@ -38,6 +38,26 @@ DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 const Uint16 GAME_PORT = 1234;
 const Uint16 UDP_GAME_PORT = 19255;
 
+enum
+{
+        MPMSG_GAME_BEACON = 0x1f4a0001,
+};
+
+#pragma pack(1)
+struct MsgHeader
+{
+	uint32_t msg_id;
+};
+
+struct MsgGameBeacon
+{
+	uint32_t msg_id;
+        char name[MP_SESSION_NAME_LEN];
+        char password;
+};
+#pragma pack()
+
+
 SDLSessionDesc::SDLSessionDesc()
 {
 	id = 0;
@@ -253,11 +273,35 @@ int MultiPlayerSDL::set_remote_session_provider(const char *server)
 	return use_remote_session_provider;
 }
 
+void MultiPlayerSDL::msg_game_beacon(UDPpacket *p)
+{
+	MsgGameBeacon *m;
+	SDLSessionDesc *desc;
+
+	if (p->len != sizeof(struct MsgGameBeacon))
+		return;
+
+	if (check_duplicates(&p->address))
+		return;
+
+	m = (MsgGameBeacon *)p->data;
+	desc = new SDLSessionDesc();
+
+	strncpy(desc->session_name, m->name, MP_SESSION_NAME_LEN);
+	desc->session_name[MP_SESSION_NAME_LEN] = 0;
+	desc->pass_word[0] = m->password;
+	desc->address.host = p->address.host;
+	desc->address.port = p->address.port;
+	desc->id = current_sessions.size();
+	current_sessions.linkin(desc);
+
+	MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
+}
+
 int MultiPlayerSDL::poll_sessions()
 {
 	UDPpacket packet;
 	int ret;
-	int session_count;
 
 	err_when(!init_flag);
 
@@ -273,34 +317,23 @@ int MultiPlayerSDL::poll_sessions()
 
 	packet.data = (Uint8 *)recv_buf;
 	packet.maxlen = MP_UDP_MAX_PACKET_SIZE;
-	session_count = 0;
 
 	while (1) {
-		SDLSessionDesc *desc;
-		SDLSessionPacket *p;
+		struct MsgHeader *p;
+
+		p = (struct MsgHeader *)recv_buf;
 
 		ret = SDLNet_UDP_Recv(game_sock, &packet);
 		if (ret <= 0)
 			break;
 
-		if (packet.len != sizeof(SDLSessionPacket))
+		switch (p->msg_id)
+		{
+		case MPMSG_GAME_BEACON:
+			msg_game_beacon(&packet);
 			break;
+		}
 
-		if (check_duplicates(&packet.address))
-			continue;
-
-		desc = new SDLSessionDesc();
-		p = (SDLSessionPacket *)recv_buf;
-
-		strncpy(desc->session_name, p->name, MP_SESSION_NAME_LEN-1);
-		desc->session_name[MP_SESSION_NAME_LEN] = 0;
-		desc->pass_word[0] = p->password;
-		desc->address.host = packet.address.host;
-		desc->address.port = packet.address.port;
-		desc->id = session_count++;
-		current_sessions.linkin(desc);
-
-		MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
 	}
 
 	if (use_remote_session_provider)
@@ -453,11 +486,12 @@ void MultiPlayerSDL::accept_connections()
 	if (peer_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
 		// send the session beacon
 		UDPpacket packet;
-		SDLSessionPacket p;
+		struct MsgGameBeacon p;
 
 		ticks = cur_ticks;
 
-		strncpy(p.name, joined_session.session_name, MP_SESSION_NAME_LEN-1);
+		p.msg_id = MPMSG_GAME_BEACON;
+		strncpy(p.name, joined_session.session_name, MP_SESSION_NAME_LEN);
 #if 0
 		if (joined_session.pass_word[0]) {
 			p.password = 1;
@@ -468,7 +502,7 @@ void MultiPlayerSDL::accept_connections()
 
 		packet.channel = -1;
 		packet.data = (Uint8 *)&p;
-		packet.len = sizeof(SDLSessionPacket);
+		packet.len = sizeof(struct MsgGameBeacon);
 		packet.address.host = lan_broadcast_address.host;
 		packet.address.port = lan_broadcast_address.port;
 
