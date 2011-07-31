@@ -164,6 +164,7 @@ private:
 	int create_player(TCPsocket socket);
 	int check_duplicates(IPaddress *address);
 	void msg_game_beacon(UDPpacket *p);
+	int msg_game_list(UDPpacket *p, int last_ack);
 };
 
 extern MultiPlayerSDL mp_sdl;

@@ -33,7 +33,8 @@
 
 DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
-#define MP_UDP_MAX_PACKET_SIZE 500
+#define MP_UDP_MAX_PACKET_SIZE 800
+#define MP_GAME_LIST_SIZE 10
 
 const Uint16 GAME_PORT = 1234;
 const Uint16 UDP_GAME_PORT = 19255;
@@ -42,6 +43,7 @@ enum
 {
 	MPMSG_GAME_BEACON = 0x1f4a0001,
 	MPMSG_REQ_GAME_LIST,
+	MPMSG_GAME_LIST,
 };
 
 #pragma pack(1)
@@ -61,6 +63,22 @@ struct MsgRequestGameList
 {
 	uint32_t msg_id;
 	uint32_t ack;
+};
+
+struct remote_game
+{
+        char name[MP_SESSION_NAME_LEN];
+        char password;
+        unsigned long host;
+        unsigned short port;
+};
+
+struct MsgGameList
+{
+        uint32_t msg_id;
+        uint32_t page;
+        uint32_t total_pages;
+        struct remote_game list[MP_GAME_LIST_SIZE];
 };
 #pragma pack()
 
@@ -305,6 +323,57 @@ void MultiPlayerSDL::msg_game_beacon(UDPpacket *p)
 	MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
 }
 
+// returns the next ack
+int MultiPlayerSDL::msg_game_list(UDPpacket *p, int last_ack)
+{
+	MsgGameList *m;
+	SDLSessionDesc *desc;
+	int i;
+
+	if (p->len != sizeof(struct MsgGameList)) {
+		return last_ack;
+	}
+
+	// only allow this message from a trusted provider
+	if (p->address.host != remote_session_provider_address.host ||
+		p->address.port != remote_session_provider_address.port) {
+		return last_ack;
+	}
+
+	m = (MsgGameList *)p->data;
+
+	for (i = 0; i < MP_GAME_LIST_SIZE; i++) {
+		IPaddress addy;
+
+		if (!m->list[i].host) {
+			continue;
+		}
+
+		addy.host = m->list[i].host;
+		addy.port = m->list[i].port;
+		if (check_duplicates(&addy)) {
+			continue;
+		}
+
+		desc = new SDLSessionDesc();
+
+		strncpy(desc->session_name, m->list[i].name, MP_SESSION_NAME_LEN);
+		desc->session_name[MP_SESSION_NAME_LEN] = 0;
+		desc->pass_word[0] = m->list[i].password;
+		desc->address.host = addy.host;
+		desc->address.port = addy.port;
+		desc->id = current_sessions.size();
+		current_sessions.linkin(desc);
+
+		MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
+	}
+
+	if (m->total_pages >= last_ack)
+		return 1;
+
+	return last_ack++;
+}
+
 int MultiPlayerSDL::poll_sessions()
 {
 	static int ack_num = 1;
@@ -329,6 +398,7 @@ int MultiPlayerSDL::poll_sessions()
 
 	while (1) {
 		struct MsgHeader *p;
+		int ack;
 
 		p = (struct MsgHeader *)recv_buf;
 
@@ -341,6 +411,15 @@ int MultiPlayerSDL::poll_sessions()
 		case MPMSG_GAME_BEACON:
 			msg_game_beacon(&packet);
 			break;
+		case MPMSG_GAME_LIST:
+			ack = msg_game_list(&packet, ack_num);
+			if (ack != ack_num) {
+				attempts = 0;
+				ack_num = ack;
+			}
+			break;
+		default:
+			MSG("received unhandled message %u\n", p->msg_id);
 		}
 
 	}
