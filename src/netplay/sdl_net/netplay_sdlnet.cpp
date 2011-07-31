@@ -60,6 +60,7 @@ struct MsgGameBeacon
 struct MsgRequestGameList
 {
 	uint32_t msg_id;
+	uint32_t ack;
 };
 #pragma pack()
 
@@ -306,6 +307,8 @@ void MultiPlayerSDL::msg_game_beacon(UDPpacket *p)
 
 int MultiPlayerSDL::poll_sessions()
 {
+	static int ack_num = 1;
+	static int attempts = 0;
 	UDPpacket packet;
 	int ret;
 
@@ -347,7 +350,12 @@ int MultiPlayerSDL::poll_sessions()
 		struct MsgRequestGameList m;
 		UDPpacket request;
 
+ 		if (attempts > 10)
+			ack_num = 1;
+		attempts++;
+
 		m.msg_id = MPMSG_REQ_GAME_LIST;
+		m.ack = ack_num;
 
 		request.channel = -1;
 		request.data = (Uint8 *)&m;
