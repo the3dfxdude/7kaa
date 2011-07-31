@@ -275,7 +275,7 @@ int MultiPlayerSDL::check_duplicates(IPaddress *address)
 
 int MultiPlayerSDL::set_remote_session_provider(const char *server)
 {
-	use_remote_session_provider = !SDLNet_ResolveHost(&lan_broadcast_address, server, UDP_GAME_PORT);
+	use_remote_session_provider = !SDLNet_ResolveHost(&remote_session_provider_address, server, UDP_GAME_PORT);
 	return use_remote_session_provider;
 }
 
@@ -349,8 +349,9 @@ int MultiPlayerSDL::poll_sessions()
 
 		m.msg_id = MPMSG_REQ_GAME_LIST;
 
+		request.channel = -1;
 		request.data = (Uint8 *)&m;
-		request.maxlen = sizeof(struct MsgRequestGameList);
+		request.len = sizeof(struct MsgRequestGameList);
 		request.address.host = remote_session_provider_address.host;
 		request.address.port = remote_session_provider_address.port;
 
@@ -518,6 +519,8 @@ void MultiPlayerSDL::accept_connections()
 
 		if (use_remote_session_provider)
 		{
+			packet.address.host = remote_session_provider_address.host;
+			packet.address.port = remote_session_provider_address.port;
 			SDLNet_UDP_Send(peer_sock, -1, &packet);
 		}
 	}
