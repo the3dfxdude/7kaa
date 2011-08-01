@@ -104,6 +104,7 @@ public:
 	// ------- functions on service provider ------ //
 	void   poll_supported_protocols(); // can be called before init
 	bool   is_protocol_supported(ProtocolType);
+	int    is_update_available();
 
 	// ------- functions on session --------//
 	int	poll_sessions();

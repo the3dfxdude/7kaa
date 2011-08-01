@@ -106,6 +106,7 @@ private:
 	IPaddress remote_session_provider_address;
 
 	int use_remote_session_provider;
+	int update_available;
 
 public:
 
@@ -124,6 +125,7 @@ public:
 	// ------- functions on network protocols ------ //
 	void   poll_supported_protocols(); // can be called before init
 	bool   is_protocol_supported(ProtocolType);
+	int    is_update_available();
 
 	// ------- functions on session --------//
 	int    set_remote_session_provider(const char *server);
@@ -165,6 +167,7 @@ private:
 	int check_duplicates(IPaddress *address);
 	void msg_game_beacon(UDPpacket *p);
 	int msg_game_list(UDPpacket *p, int last_ack);
+	void msg_version_nak(UDPpacket *p);
 };
 
 extern MultiPlayerSDL mp_sdl;

@@ -103,6 +103,11 @@ void MultiPlayerNone::poll_supported_protocols()
 	supported_protocols = TCPIP;
 }
 
+int MultiPlayerNone::is_update_available()
+{
+	return -1;
+}
+
 bool MultiPlayerNone::is_protocol_supported(ProtocolType protocol)
 {
 	return (protocol & supported_protocols) != 0;

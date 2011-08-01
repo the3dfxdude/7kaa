@@ -36,6 +36,9 @@
 
 //-------- Game Version -----------//
 #define SKVERSION "2.14.3"
+#define SKVERMAJ 2
+#define SKVERMED 14
+#define SKVERMIN 3
 
 
 //-------- Define macro functions -------//

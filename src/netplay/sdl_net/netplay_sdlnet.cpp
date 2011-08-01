@@ -44,6 +44,8 @@ enum
 	MPMSG_GAME_BEACON = 0x1f4a0001,
 	MPMSG_REQ_GAME_LIST,
 	MPMSG_GAME_LIST,
+	MPMSG_VERSION_ACK,
+	MPMSG_VERSION_NAK,
 };
 
 #pragma pack(1)
@@ -79,6 +81,19 @@ struct MsgGameList
         uint32_t page;
         uint32_t total_pages;
         struct remote_game list[MP_GAME_LIST_SIZE];
+};
+
+struct MsgVersionAck
+{
+	uint32_t msg_id;
+};
+
+struct MsgVersionNak
+{
+	uint32_t msg_id;
+	uint32_t major;
+	uint32_t medium;
+	uint32_t minor;
 };
 #pragma pack()
 
@@ -146,6 +161,8 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	my_player_id = 0;
 	host_flag = 0;
 	max_players = 0;
+	use_remote_session_provider = 0;
+	update_available = -1;
 
 	if (!is_protocol_supported(protocol_type)) {
 		ERR("[MultiPlayerSDL::init] trying to init unsupported protocol\n");
@@ -275,6 +292,11 @@ bool MultiPlayerSDL::is_protocol_supported(ProtocolType protocol)
 	return (protocol & supported_protocols) != 0;
 }
 
+int MultiPlayerSDL::is_update_available()
+{
+	return update_available;
+}
+
 int MultiPlayerSDL::check_duplicates(IPaddress *address)
 {
 	int i;
@@ -374,6 +396,42 @@ int MultiPlayerSDL::msg_game_list(UDPpacket *p, int last_ack)
 	return last_ack++;
 }
 
+void MultiPlayerSDL::msg_version_nak(UDPpacket *p)
+{
+	MsgVersionNak *m;
+
+	if (update_available > -1)
+		return;
+
+	if (p->len != sizeof(struct MsgVersionNak))
+		return;
+
+	// only allow this message from a trusted provider
+	if (p->address.host != remote_session_provider_address.host ||
+		p->address.port != remote_session_provider_address.port)
+		return;
+
+	m = (MsgVersionNak *)p->data;
+
+	if (m->major > SKVERMAJ)
+	{
+		update_available = 1;
+		return;
+	}
+	if (m->medium > SKVERMED)
+	{
+		update_available = 1;
+		return;
+	}
+	if (m->minor > SKVERMIN)
+	{
+		update_available = 1;
+		return;
+	}
+
+	update_available = 0;
+}
+
 int MultiPlayerSDL::poll_sessions()
 {
 	static int ack_num = 1;
@@ -418,6 +476,9 @@ int MultiPlayerSDL::poll_sessions()
 				ack_num = ack;
 			}
 			break;
+		case MPMSG_VERSION_NAK:
+			msg_version_nak(&packet);
+			break;
 		default:
 			MSG("received unhandled message %u\n", p->msg_id);
 		}
@@ -443,6 +504,17 @@ int MultiPlayerSDL::poll_sessions()
 		request.address.port = remote_session_provider_address.port;
 
 		SDLNet_UDP_Send(game_sock, -1, &request);
+
+		if (update_available < 0)
+		{
+			struct MsgVersionAck n;
+
+			n.msg_id = MPMSG_VERSION_ACK;
+			request.data = (Uint8 *)&n;
+			request.len = sizeof(struct MsgVersionAck);
+
+			SDLNet_UDP_Send(game_sock, -1, &request);
+		}
 	}
 
 	return 1;
