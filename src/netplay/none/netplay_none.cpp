@@ -140,7 +140,7 @@ NoneSessionDesc *MultiPlayerNone::get_session(int i)
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return TRUE if success
-int MultiPlayerNone::create_session(char *sessionName, char *playerName, int maxPlayers)
+int MultiPlayerNone::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
 	ERR("[MultiPlayerNone::create_session] calling unimplemented method\n");
 	return FALSE;

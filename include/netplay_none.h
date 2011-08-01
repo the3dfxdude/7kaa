@@ -110,7 +110,7 @@ public:
 	int	poll_sessions();
 	void	sort_sessions(int sortType);
 	NoneSessionDesc *get_session(int i);
-	int    create_session(char *sessionName, char *playerName, int maxPlayers);
+	int    create_session(char *sessionName, char *password, char *playerName, int maxPlayers);
 	int    join_session(int i, char *playerName);
 	int    udp_join_session(char *password);
 	void	close_session();

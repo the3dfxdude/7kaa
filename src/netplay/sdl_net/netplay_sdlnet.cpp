@@ -552,7 +552,7 @@ SDLSessionDesc *MultiPlayerSDL::get_session(int i)
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return TRUE if success
-int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxPlayers)
+int MultiPlayerSDL::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
 	IPaddress ip_address;
 
@@ -583,7 +583,7 @@ int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxP
 
 	joined_session.id = 0;
 	strcpy(joined_session.session_name, sessionName);
-	joined_session.password[0] = 0;
+	strcpy(joined_session.password, password);
 
 	host_flag = 1;
 	max_players = maxPlayers;
