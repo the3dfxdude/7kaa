@@ -585,7 +585,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 				return;
 			}
 			password[0] = 0;
-			input_box("Set the game password:", password, MP_SESSION_NAME_LEN+1);
+			input_box("Set the game's password:", password, MP_SESSION_NAME_LEN+1);
 			if (!mp_obj.create_session(game_name, password, config.player_name, MAX_NATION))
 			{
 				box.msg("Cannot create the game.");
@@ -796,7 +796,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 				return;
 			}
 			password[0] = 0;
-			input_box("Set the game password:", password, MP_SESSION_NAME_LEN+1);
+			input_box("Set the game's password:", password, MP_SESSION_NAME_LEN+1);
 			if (!mp_obj.create_session(game_name, password, config.player_name, gamePlayerCount))
 			{
 				box.msg("Cannot create the game.");
@@ -1623,7 +1623,9 @@ int Game::mp_join_session(int session_id, char *player_name)
 	char password[MP_SESSION_NAME_LEN+1];
  
 	memset(password, 0, sizeof(password));
-	// check whether the session needs a password
+	if (mp_obj.get_session(session_id)->password[0] &&
+			!input_box("Enter the game's password:", password, MP_SESSION_NAME_LEN+1))
+		return 0;
 
 	box.tell("Attempting to connect");
 
