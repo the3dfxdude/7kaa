@@ -1656,12 +1656,11 @@ int Game::mp_join_session(int session_id, char *player_name)
 						got_cookie = 1;
 					}
 				}
-			} else {
-				mp_obj.send_discovery();
-				if (mp_obj.receive_discovery_ack()) {
-					finished = 1;
-					break;
-				}
+			}
+			else if (mp_obj.udp_join_session())
+			{
+				finished = 1;
+				break;
 			}
 		}
 

@@ -1091,12 +1091,26 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	return recv_buf;
 }
 
-void MultiPlayerSDL::send_discovery()
+// intended only for clients
+// returns true when the udp session is established
+// returns false when the udp session is not yet established (try again later)
+int MultiPlayerSDL::udp_join_session()
 {
-	// Only send udp discovery packets if we are connected by tcp to the game host
-	if (host_sock) {
-		this->send(1, &my_player_id, sizeof(my_player_id));
+	uint32_t from, to, size;
+	int sysMsg;
+	char *ptr;
+
+	// send the connection message
+	this->send(1, &my_player_id, sizeof(my_player_id));
+
+	// check for ack
+	ptr = this->receive(&from, &to, &size, &sysMsg);
+	if (ptr && from == 1 && !memcmp(recv_buf, "ACK", 3)) {
+		MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
+		return 1;
 	}
+
+	return 0;
 }
 
 // receive_discovery -- Allows a game host to recognize the udp address of a peer.
@@ -1134,23 +1148,6 @@ int MultiPlayerSDL::receive_discovery(uint32_t *who, void **address)
 	}
 
 	return ret;
-}
-
-int MultiPlayerSDL::receive_discovery_ack()
-{
-	// Only receive the discovery ack by a client
-	if (host_sock) {
-		uint32_t from, to, size;
-		int sysMsg;
-		char *ptr;
-
-		ptr = this->receive(&from, &to, &size, &sysMsg);
-		if (ptr && from == 1 && !memcmp(recv_buf, "ACK", 3)) {
-			MSG("[MultiPlayerSDL::receive_discovery_ack] received ack\n");
-			return 1;
-		}
-	}
-	return 0;
 }
 
 void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)

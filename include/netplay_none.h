@@ -112,6 +112,7 @@ public:
 	NoneSessionDesc *get_session(int i);
 	int    create_session(char *sessionName, char *playerName, int maxPlayers);
 	int    join_session(int i, char *playerName);
+	int    udp_join_session();
 	void	close_session();
 	void	disable_join_session();		// so that new player cannot join
 
@@ -134,9 +135,7 @@ public:
 	char *receive_stream(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 
 	// ------- functions for peer discovery ------//
-	void send_discovery(void);
 	int receive_discovery(uint32_t *who, void **address);
-	int receive_discovery_ack(void);
 	void set_peer_address(uint32_t who, void *address);
 
 };

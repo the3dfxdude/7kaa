@@ -270,16 +270,12 @@ char *MultiPlayerNone::receive_stream(uint32_t * from, uint32_t * to, uint32_t *
 	return NULL;
 }
 
-void MultiPlayerNone::send_discovery()
-{
-}
-
-int MultiPlayerNone::receive_discovery(uint32_t *who, void **address)
+int MultiPlayerNone::udp_join_session()
 {
 	return 0;
 }
 
-int MultiPlayerNone::receive_discovery_ack()
+int MultiPlayerNone::receive_discovery(uint32_t *who, void **address)
 {
 	return 0;
 }
