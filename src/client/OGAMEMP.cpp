@@ -2826,7 +2826,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		if (remote.is_host) {
 			void *address;
 			uint32_t who;
-			int len = mp_obj.receive_discovery(&who, &address);
+			int len = mp_obj.udp_accept_connections(&who, &address);
 			if (len) {
 				MpStructNewPeerAddress msgPeer(who, len, address);
 				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));
@@ -4579,7 +4579,7 @@ int Game::mp_select_load_option(char *fileName)
 		if (remote.is_host) {
 			void *address;
 			uint32_t who;
-			int len = mp_obj.receive_discovery(&who, &address);
+			int len = mp_obj.udp_accept_connections(&who, &address);
 			if (len) {
 				MpStructNewPeerAddress msgPeer(who, len, address);
 				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));

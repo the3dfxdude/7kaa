@@ -137,6 +137,7 @@ public:
 	void   close_session();
 	void   disable_join_session();
 	void   accept_connections();
+	int    udp_accept_connections(uint32_t *who, void **address);
 	SDLSessionDesc * get_session(int i);
 
 	// -------- functions on player management -------//
@@ -150,16 +151,13 @@ public:
 	int         is_player_connecting(uint32_t playerId);
 	int         get_player_count();
 	uint32_t    get_my_player_id() const { return my_player_id; }
+	void        set_peer_address(uint32_t who, void *address);
 
 	// ------- functions on message passing ------//
 	int    send(uint32_t to, void * data, uint32_t msg_size);
 	int    send_stream(uint32_t to, void * data, uint32_t msg_size);
 	char * receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
 	char * receive_stream(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
-
-	// ------- functions for peer discovery ------//
-	int receive_discovery(uint32_t *who, void **address);
-	void set_peer_address(uint32_t who, void *address);
 
 private:
 	int create_player(TCPsocket socket);

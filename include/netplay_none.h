@@ -115,6 +115,8 @@ public:
 	int    udp_join_session();
 	void	close_session();
 	void	disable_join_session();		// so that new player cannot join
+	void   accept_connections();
+	int    udp_accept_connections(uint32_t *who, void **address);
 
 	// -------- functions on player management -------//
 	int         add_player(char *name, uint32_t id);
@@ -127,16 +129,13 @@ public:
 	int	is_player_connecting(uint32_t playerId);
 	int       get_player_count() const { return player_pool.size(); }
 	uint32_t  get_my_player_id() const { return my_player_id; }
+	void      set_peer_address(uint32_t who, void *address);
 
 	// ------- functions on message passing ------//
 	int	send(uint32_t toId, void * lpData, uint32_t dataSize);
 	int	send_stream(uint32_t toId, void * lpData, uint32_t dataSize);
 	char *receive(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 	char *receive_stream(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
-
-	// ------- functions for peer discovery ------//
-	int receive_discovery(uint32_t *who, void **address);
-	void set_peer_address(uint32_t who, void *address);
 
 };
 

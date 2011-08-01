@@ -275,7 +275,7 @@ int MultiPlayerNone::udp_join_session()
 	return 0;
 }
 
-int MultiPlayerNone::receive_discovery(uint32_t *who, void **address)
+int MultiPlayerNone::udp_accept_connections(uint32_t *who, void **address)
 {
 	return 0;
 }

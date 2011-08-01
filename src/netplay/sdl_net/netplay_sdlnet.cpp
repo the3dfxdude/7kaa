@@ -1113,13 +1113,13 @@ int MultiPlayerSDL::udp_join_session()
 	return 0;
 }
 
-// receive_discovery -- Allows a game host to recognize the udp address of a peer.
+// Allows a game host to recognize the udp address of a peer.
 // Hopefully this will allow NAT transversal too.
 //
 // returns zero if there are no new connections
-// returns len, which is the size of IPaddress, sets the pointer to address, and
-// who this is coming from.
-int MultiPlayerSDL::receive_discovery(uint32_t *who, void **address)
+// returns len, which is the size of IPaddress, sets the pointer to address,
+// and who this is coming from.
+int MultiPlayerSDL::udp_accept_connections(uint32_t *who, void **address)
 {
 	int ret = 0;
 
