@@ -116,7 +116,7 @@ SDLSessionDesc::SDLSessionDesc()
 {
 	id = 0;
 	session_name[0] = '\0';
-	pass_word[0] = '\0';
+	password[0] = '\0';
 	memset(&address, 0, sizeof(IPaddress));
 }
 
@@ -124,7 +124,7 @@ SDLSessionDesc::SDLSessionDesc(const SDLSessionDesc &src)
 {
 	id = src.id;
 	strcpy(session_name, src.session_name);
-	strcpy(pass_word, src.pass_word);
+	strcpy(password, src.password);
 	memcpy(&address, &src.address, sizeof(IPaddress));
 }
 
@@ -132,7 +132,7 @@ SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
 {
 	id = src.id;
 	strcpy(session_name, src.session_name);
-	strcpy(pass_word, src.pass_word);
+	strcpy(password, src.password);
 	memcpy(&address, &src.address, sizeof(IPaddress));
 	return *this;
 }
@@ -267,7 +267,7 @@ int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 		SDLSessionDesc *session = new SDLSessionDesc();
 
 		strcpy(session->session_name, "Lobbied Game");
-		session->pass_word[0] = 0;
+		session->password[0] = 0;
 		if (SDLNet_ResolveHost(&session->address, cmdLine, GAME_PORT) == -1) {
 			MSG("failed to resolve hostname: %s\n", SDLNet_GetError());
 			delete session;
@@ -350,7 +350,7 @@ void MultiPlayerSDL::msg_game_beacon(UDPpacket *p)
 
 	strncpy(desc->session_name, m->name, MP_SESSION_NAME_LEN);
 	desc->session_name[MP_SESSION_NAME_LEN] = 0;
-	desc->pass_word[0] = m->password;
+	desc->password[0] = m->password;
 	desc->address.host = p->address.host;
 	desc->address.port = p->address.port;
 	desc->id = current_sessions.size();
@@ -395,7 +395,7 @@ int MultiPlayerSDL::msg_game_list(UDPpacket *p, int last_ack)
 
 		strncpy(desc->session_name, m->list[i].name, MP_SESSION_NAME_LEN);
 		desc->session_name[MP_SESSION_NAME_LEN] = 0;
-		desc->pass_word[0] = m->list[i].password;
+		desc->password[0] = m->list[i].password;
 		desc->address.host = addy.host;
 		desc->address.port = addy.port;
 		desc->id = current_sessions.size();
@@ -583,7 +583,7 @@ int MultiPlayerSDL::create_session(char *sessionName, char *playerName, int maxP
 
 	joined_session.id = 0;
 	strcpy(joined_session.session_name, sessionName);
-	joined_session.pass_word[0] = 0;
+	joined_session.password[0] = 0;
 
 	host_flag = 1;
 	max_players = maxPlayers;
@@ -674,11 +674,9 @@ void MultiPlayerSDL::accept_connections()
 
 		p.msg_id = MPMSG_GAME_BEACON;
 		strncpy(p.name, joined_session.session_name, MP_SESSION_NAME_LEN);
-#if 0
-		if (joined_session.pass_word[0]) {
+		if (joined_session.password[0])
 			p.password = 1;
 		else
-#endif
 			p.password = 0;
 		
 
@@ -1188,7 +1186,7 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, void **address)
 	// check the password
 	strncpy(password, m->password, MP_SESSION_NAME_LEN);
 	password[MP_SESSION_NAME_LEN] = 0;
-	if (strcmp(joined_session.pass_word, password) != 0)
+	if (strcmp(joined_session.password, password) != 0)
 		return 0;
 
 	// add the new player
