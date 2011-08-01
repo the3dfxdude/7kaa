@@ -267,7 +267,7 @@ int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 		SDLSessionDesc *session = new SDLSessionDesc();
 
 		strcpy(session->session_name, "Lobbied Game");
-		session->password[0] = 0;
+		session->password[0] = 1;
 		if (SDLNet_ResolveHost(&session->address, cmdLine, GAME_PORT) == -1) {
 			MSG("failed to resolve hostname: %s\n", SDLNet_GetError());
 			delete session;
