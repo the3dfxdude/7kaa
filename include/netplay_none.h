@@ -112,7 +112,7 @@ public:
 	NoneSessionDesc *get_session(int i);
 	int    create_session(char *sessionName, char *playerName, int maxPlayers);
 	int    join_session(int i, char *playerName);
-	int    udp_join_session();
+	int    udp_join_session(char *password);
 	void	close_session();
 	void	disable_join_session();		// so that new player cannot join
 	void   accept_connections();

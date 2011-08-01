@@ -1614,7 +1614,11 @@ int Game::mp_join_session(int session_id, char *player_name)
 	int got_cookie = 0;
 	int finished = 0;
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+	char password[MP_SESSION_NAME_LEN+1];
  
+	memset(password, 0, sizeof(password));
+	// check whether the session needs a password
+
 	box.tell("Attempting to connect");
 
 	width = box.box_x2 - box.box_x1 + 1;
@@ -1657,7 +1661,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 					}
 				}
 			}
-			else if (mp_obj.udp_join_session())
+			else if (mp_obj.udp_join_session(password))
 			{
 				finished = 1;
 				break;

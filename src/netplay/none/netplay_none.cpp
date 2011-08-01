@@ -270,7 +270,7 @@ char *MultiPlayerNone::receive_stream(uint32_t * from, uint32_t * to, uint32_t *
 	return NULL;
 }
 
-int MultiPlayerNone::udp_join_session()
+int MultiPlayerNone::udp_join_session(char *password)
 {
 	return 0;
 }

@@ -46,6 +46,8 @@ enum
 	MPMSG_GAME_LIST,
 	MPMSG_VERSION_ACK,
 	MPMSG_VERSION_NAK,
+	MPMSG_CONNECT,
+	MPMSG_CONNECT_ACK,
 };
 
 #pragma pack(1)
@@ -94,6 +96,18 @@ struct MsgVersionNak
 	uint32_t major;
 	uint32_t medium;
 	uint32_t minor;
+};
+
+struct MsgConnect
+{
+	uint32_t msg_id;
+	uint32_t player_id;
+        char password[MP_SESSION_NAME_LEN];
+};
+
+struct MsgConnectAck
+{
+	uint32_t msg_id;
 };
 #pragma pack()
 
@@ -1094,23 +1108,52 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 // intended only for clients
 // returns true when the udp session is established
 // returns false when the udp session is not yet established (try again later)
-int MultiPlayerSDL::udp_join_session()
+int MultiPlayerSDL::udp_join_session(char *password)
 {
-	uint32_t from, to, size;
-	int sysMsg;
-	char *ptr;
+	UDPpacket packet;
+	struct MsgConnect m;
+	struct MsgConnectAck *a;
+	IPaddress *addr;
+	int ret;
+
+	addr = &player_pool[0].address;
+
+	if (!peer_sock || !addr->host)
+		return 0;
+
+	packet.channel = -1;
+	packet.data = (Uint8 *)&m;
+	packet.len = sizeof(struct MsgConnect);
+	packet.address.host = addr->host;
+	packet.address.port = addr->port;
+
+	m.msg_id = MPMSG_CONNECT;
+	m.player_id = my_player_id;
+	strncpy(m.password, password, MP_SESSION_NAME_LEN);
 
 	// send the connection message
-	this->send(1, &my_player_id, sizeof(my_player_id));
+	SDLNet_UDP_Send(peer_sock, -1, &packet);
+
+
+	a = (struct MsgConnectAck *)recv_buf;
+
+	packet.data = (Uint8 *)recv_buf;
+	packet.maxlen = MP_UDP_MAX_PACKET_SIZE;
 
 	// check for ack
-	ptr = this->receive(&from, &to, &size, &sysMsg);
-	if (ptr && from == 1 && !memcmp(recv_buf, "ACK", 3)) {
-		MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
-		return 1;
-	}
+	ret = SDLNet_UDP_Recv(peer_sock, &packet);
+	if (ret <= 0)
+		return 0;
 
-	return 0;
+	// check if this really is an ack
+	if (packet.address.host != addr->host ||
+			packet.address.port != addr->port ||
+			packet.len != sizeof(struct MsgConnectAck) ||
+			a->msg_id != MPMSG_CONNECT_ACK)
+		return 0;
+
+	MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
+	return 1;
 }
 
 // Allows a game host to recognize the udp address of a peer.
@@ -1121,33 +1164,56 @@ int MultiPlayerSDL::udp_join_session()
 // and who this is coming from.
 int MultiPlayerSDL::udp_accept_connections(uint32_t *who, void **address)
 {
-	int ret = 0;
+	UDPpacket p;
+	struct MsgConnect *m;
+	struct MsgConnectAck a;
+	char password[MP_SESSION_NAME_LEN+1];
+	int i;
+	int ret;
 
-	// Only receive udp discovery packets if we are listening by tcp server
-	if (listen_sock) {
-		uint32_t from, to, size;
-		int sysMsg;
-		char *ptr;
+	m = (struct MsgConnect *)recv_buf;
 
-		discovery = 0;
+	p.channel = -1;
+	p.data = (Uint8 *)recv_buf;
+	p.maxlen = MP_UDP_MAX_PACKET_SIZE;
 
-		ptr = this->receive(&from, &to, &size, &sysMsg);
-		if (!ptr && discovery && discovery <= max_players) {
-			MSG("[MultiPlayerSDL::receive_discovery] Received discovery from %d\n", discovery);
-			player_pool[discovery-1].address.host = discovery_address.host;
-			player_pool[discovery-1].address.port = discovery_address.port;
-			ret = sizeof(IPaddress);
-			*who = discovery;
-			*address = &discovery_address;
-		}
-		if ((!ptr && discovery) || ptr) {
-			char *ack = (char *)"ACK";
-			to = ptr ? from : discovery;
-			this->send(to, ack, 3);
-		}
-	}
+	if (!listen_sock || !peer_sock)
+		return 0;
 
-	return ret;
+	ret = SDLNet_UDP_Recv(peer_sock, &p);
+	if (ret <= 0)
+		return 0;
+
+	// check if this is really a connect message
+	if (p.len != sizeof(MsgConnect) ||
+			m->msg_id != MPMSG_CONNECT ||
+			m->player_id >= max_players)
+		return 0;
+
+	// check the password
+	strncpy(password, m->password, MP_SESSION_NAME_LEN);
+	password[MP_SESSION_NAME_LEN] = 0;
+	if (strcmp(joined_session.pass_word, password) != 0)
+		return 0;
+
+	// add the new player
+	player_pool[m->player_id-1].address.host = p.address.host;
+	player_pool[m->player_id-1].address.port = p.address.port;
+
+	*who = m->player_id;
+	*address = &p.address;
+
+	a.msg_id = MPMSG_CONNECT_ACK;
+
+	p.data = (Uint8 *)&a;
+	p.len = sizeof(struct MsgConnectAck);
+
+	// send the connection ack message
+	SDLNet_UDP_Send(peer_sock, -1, &p);
+
+	MSG("[MultiPlayerSDL::udp_accept_connections] player %d connected by udp\n", m->player_id);
+
+	return sizeof(IPaddress);
 }
 
 void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)
