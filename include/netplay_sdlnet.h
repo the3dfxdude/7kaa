@@ -100,8 +100,6 @@ private:
 	UDPsocket         game_sock;
 	SDLNet_SocketSet  sock_set;
 
-	uint32_t discovery;
-	IPaddress discovery_address;
 	IPaddress lan_broadcast_address;
 	IPaddress remote_session_provider_address;
 

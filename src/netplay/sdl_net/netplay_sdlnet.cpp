@@ -991,11 +991,6 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 			*to = my_player_id;
 			*size = packet.len;
 			MSG("[MultiPlayerSDL::receive] received %d bytes from player %d\n", *size, *from);
-			if (!*from) {
-				discovery = *(uint32_t *)packet.data;
-				discovery_address.host = packet.address.host;
-				discovery_address.port = packet.address.port;
-			}
 			return *from ? recv_buf : NULL;
 		} else if (ret < 0) {
 			ERR("[MultiPlayerSDL::receive] could not receive: %s\n", SDLNet_GetError());
