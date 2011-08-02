@@ -80,8 +80,8 @@ struct remote_game
 {
         char name[MP_SESSION_NAME_LEN];
         char password;
-        unsigned long host;
-        unsigned short port;
+        uint32_t host;
+        uint16_t port;
 };
 
 struct MsgGameList
