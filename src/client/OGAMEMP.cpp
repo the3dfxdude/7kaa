@@ -572,7 +572,8 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 	if (service_mode == 4)
 	{
-		mp_get_leader_board();
+		if (!mp_get_leader_board())
+			box.msg("Unable to retrieve leader board");
 		mp_obj.deinit();
 		return;
 	}
@@ -777,7 +778,8 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 	if (service_mode == 4)
 	{
-		mp_get_leader_board();
+		if (!mp_get_leader_board())
+			box.msg("Unable to retrieve leader board");
 		mp_obj.deinit();
 		return;
 	}
@@ -1461,6 +1463,7 @@ int Game::mp_select_session()
 				if( !mp_obj.poll_sessions() )
 				{
 					// return fail if poll_sessions fails or cancel the dialogue box
+					box.msg("Unable to poll sessions.\n");
 					choice = 0;
 					break;
 				}
@@ -1732,11 +1735,12 @@ int Game::mp_join_session(int session_id, char *player_name)
 	return finished;
 }
 
-void Game::mp_get_leader_board()
+int Game::mp_get_leader_board()
 {
 	Button buttonCancel;
 	int width;
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+	int ret;
 
 	box.tell("Retrieving leaderboard");
 
@@ -1753,8 +1757,13 @@ void Game::mp_get_leader_board()
 	{
 		vga_front.lock_buf();
 
-		if (mp_obj.show_leader_board())
+		ret = mp_obj.show_leader_board();
+		if (ret)
+		{
+			ret = ret == 1;
 			break;
+		}
+			
 
 		sys.yield();
 		mouse.get_event();
@@ -1779,6 +1788,8 @@ void Game::mp_get_leader_board()
 		vga_front.lock_buf();
 
 	box.close();
+
+	return ret;
 }
 
 // define bit flag for refreshFlag
