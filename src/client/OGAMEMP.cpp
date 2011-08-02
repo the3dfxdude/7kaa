@@ -996,6 +996,16 @@ int Game::mp_select_service()
 				{
 					serviceButton[b].paint();
 				}
+
+				// TODO: Properly change these buttons
+				vga_front.d3_panel_up(buttonX[0], buttonY[0], buttonX[0] + SERVICE_BUTTON_WIDTH, buttonY[0] + SERVICE_BUTTON_HEIGHT, 0);
+				font_san.put(buttonX[0] + 10, buttonY[0] + 10, "Local Area Network", 0, VGA_WIDTH);
+				vga_front.d3_panel_up(buttonX[1], buttonY[1], buttonX[1] + SERVICE_BUTTON_WIDTH, buttonY[1] + SERVICE_BUTTON_HEIGHT, 0);
+				font_san.put(buttonX[1] + 10, buttonY[1] + 10, "Enter IP Address", 0, VGA_WIDTH);
+				vga_front.d3_panel_up(buttonX[2], buttonY[2], buttonX[2] + SERVICE_BUTTON_WIDTH, buttonY[2] + SERVICE_BUTTON_HEIGHT, 0);
+				font_san.put(buttonX[2] + 10, buttonY[2] + 10, "www.7kfans.com", 0, VGA_WIDTH);
+				vga_front.d3_panel_up(buttonX[3], buttonY[3], buttonX[3] + SERVICE_BUTTON_WIDTH, buttonY[3] + SERVICE_BUTTON_HEIGHT, 0);
+				font_san.put(buttonX[3] + 10, buttonY[3] + 10, "7kfans Leader Board", 0, VGA_WIDTH);
 			}
 
 			refreshFlag = 0;
