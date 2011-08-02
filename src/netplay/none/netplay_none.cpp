@@ -317,3 +317,8 @@ void MultiPlayerNone::sort_sessions(int sortType )
 	}
 }
 
+
+int MultiPlayerNone::show_leader_board()
+{
+	return 1;
+}

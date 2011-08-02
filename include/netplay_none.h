@@ -137,6 +137,7 @@ public:
 	char *receive(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 	char *receive_stream(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 
+	int show_leader_board();
 };
 
 extern MultiPlayerNone mp_none;

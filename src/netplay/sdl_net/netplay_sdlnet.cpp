@@ -30,11 +30,16 @@
 #include <OBLOB.h>
 #include <stdint.h>
 #include <dbglog.h>
+#include <vga_util.h>
+#include <OFONT.h>
+#include <OMOUSE.h>
 
 DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
 #define MP_UDP_MAX_PACKET_SIZE 800
 #define MP_GAME_LIST_SIZE 10
+#define MP_LADDER_LIST_SIZE 6
+#define PLAYER_NAME_LEN 20
 
 const Uint16 GAME_PORT = 1234;
 const Uint16 UDP_GAME_PORT = 19255;
@@ -48,6 +53,8 @@ enum
 	MPMSG_VERSION_NAK,
 	MPMSG_CONNECT,
 	MPMSG_CONNECT_ACK,
+	MPMSG_REQ_LADDER,
+	MPMSG_LADDER,
 };
 
 #pragma pack(1)
@@ -108,6 +115,25 @@ struct MsgConnect
 struct MsgConnectAck
 {
 	uint32_t msg_id;
+};
+
+struct MsgRequestLadder
+{
+	uint32_t msg_id;
+};
+
+struct ladder_entry
+{
+	char name[PLAYER_NAME_LEN];
+	uint16_t wins;
+	uint16_t losses;
+	int32_t score;
+};
+
+struct MsgLadder
+{
+	uint32_t msg_id;
+	struct ladder_entry list[MP_LADDER_LIST_SIZE];
 };
 #pragma pack()
 
@@ -1257,3 +1283,90 @@ void MultiPlayerSDL::sort_sessions(int sortType)
 	}
 }
 
+int MultiPlayerSDL::show_leader_board()
+{
+	struct MsgRequestLadder m;
+	struct MsgLadder *a;
+	UDPpacket packet;
+	int ret, i, x, y;
+
+	if (!game_sock)
+		game_sock = SDLNet_UDP_Open(UDP_GAME_PORT);
+	if (!game_sock)
+	{
+		ERR("unable to open session list socket: %s\n", SDLNet_GetError());
+		return -1;
+	}
+
+	m.msg_id = MPMSG_REQ_LADDER;
+
+	packet.channel = -1;
+	packet.data = (Uint8 *)&m;
+	packet.len = sizeof(struct MsgRequestLadder);
+	packet.address.host = remote_session_provider_address.host;
+	packet.address.port = remote_session_provider_address.port;
+
+	SDLNet_UDP_Send(game_sock, -1, &packet);
+
+	a = (struct MsgLadder *)recv_buf;
+	packet.data = (Uint8 *)recv_buf;
+	packet.maxlen = MP_UDP_MAX_PACKET_SIZE;
+
+	ret = SDLNet_UDP_Recv(game_sock, &packet);
+	if (ret <= 0)
+		return 0;
+
+	if (packet.len != sizeof(struct MsgLadder) ||
+		packet.address.host != remote_session_provider_address.host ||
+		packet.address.port != remote_session_provider_address.port ||
+		a->msg_id != MPMSG_LADDER)
+			return 0;
+
+	vga_util.disp_image_file("HALLFAME");
+
+	y = 116;
+	for (i = 0; i < MP_LADDER_LIST_SIZE; i++, y += 76)
+	{
+		String str;
+		char name[PLAYER_NAME_LEN+1];
+		int pos, y2;
+
+		strncpy(name, a->list[i].name, PLAYER_NAME_LEN);
+		name[PLAYER_NAME_LEN] = 0;
+
+		if (!name[0])
+			continue;
+
+		x = 120;
+		y2 = y + 17;
+		pos = i + 1;
+		str = pos;
+		str += ".";
+		font_std.put(x, y, str);
+
+		x += 16;
+
+		font_std.put(x, y, name);
+
+		str = "Wins : ";
+		str += a->list[i].wins;
+
+		font_std.put(x, y2, str);
+
+		str = "Losses : ";
+		str += a->list[i].losses;
+
+		font_std.put(x + 110, y2, str);
+
+		str = "Score : ";
+		str += a->list[i].score;
+
+		font_std.put(x + 260, y2, str);
+	}
+
+	mouse.wait_press(60);
+
+	vga_util.finish_disp_image_file();
+
+	return 1;
+}

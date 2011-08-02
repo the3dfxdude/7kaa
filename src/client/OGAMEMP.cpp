@@ -564,10 +564,17 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		return;
 	}
 
-	if (service_mode == 3)
+	if (service_mode == 3 || service_mode == 4)
 	{
 		// internet game list provider
 		mp_obj.set_remote_session_provider("www.7kfans.com");
+	}
+
+	if (service_mode == 4)
+	{
+		mp_get_leader_board();
+		mp_obj.deinit();
+		return;
 	}
 
 	// create game or join game
@@ -762,10 +769,17 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		return;
 	}
 
-	if (service_mode == 3)
+	if (service_mode == 3 || service_mode == 4)
 	{
 		// internet game list provider
 		mp_obj.set_remote_session_provider("www.7kfans.com");
+	}
+
+	if (service_mode == 4)
+	{
+		mp_get_leader_board();
+		mp_obj.deinit();
+		return;
 	}
 
 	// load game
@@ -1708,6 +1722,54 @@ int Game::mp_join_session(int session_id, char *player_name)
 	return finished;
 }
 
+void Game::mp_get_leader_board()
+{
+	Button buttonCancel;
+	int width;
+	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+
+	box.tell("Retrieving leaderboard");
+
+	width = box.box_x2 - box.box_x1 + 1;
+	buttonCancel.create_text(box.box_x1 + width / 2 + 2,
+				 box.box_y2 - box_button_margin,
+				 (char*)"Cancel");
+
+	buttonCancel.paint();
+
+	vga_front.unlock_buf();
+
+	while (1)
+	{
+		vga_front.lock_buf();
+
+		if (mp_obj.show_leader_board())
+			break;
+
+		sys.yield();
+		mouse.get_event();
+
+		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
+		    mouse.any_click(1))     // detect right button only when the button is "Cancel"
+		{
+			mouse.get_event();
+			break;
+		}
+
+		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
+
+		if (config.music_flag && !music.is_playing())
+			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
+		else if (!config.music_flag && music.is_playing())
+			music.stop();
+
+		vga_front.unlock_buf();
+	}
+	if (!vga_front.buf_locked)
+		vga_front.lock_buf();
+
+	box.close();
+}
 
 // define bit flag for refreshFlag
 #define SGOPTION_PAGE           0x40000000
