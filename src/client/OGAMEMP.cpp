@@ -4468,6 +4468,18 @@ int Game::mp_select_load_option(char *fileName)
 				case MPMSG_ABORT_GAME:
 					box.msg("The game host has aborted the game.");
 					return 0;
+				case MPMSG_COOKIE:
+					if (remote.is_host)
+					{
+						MpStructCookie *cookie = (MpStructCookie *)recvPtr;
+						if (memcmp(cookie->cookie, cookie_word, cookie_size)) {
+							mp_obj.delete_player(from);
+						} else {
+							MpStructCookie ack;
+							mp_obj.send_stream(from, &ack, sizeof(MpStructCookie));
+						}
+					}
+					break;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
 					refreshFlag |= SGOPTION_ALL_OPTIONS;
