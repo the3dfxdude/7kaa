@@ -1206,7 +1206,8 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, void **address)
 	// check if this is really a connect message
 	if (p.len != sizeof(MsgConnect) ||
 			m->msg_id != MPMSG_CONNECT ||
-			m->player_id >= max_players)
+			m->player_id > max_players ||
+			m->player_id < 1)
 		return 0;
 
 	// check the password
