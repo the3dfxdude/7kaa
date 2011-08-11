@@ -69,7 +69,7 @@ struct NonePlayer
 	uint32_t pid()			{ return player_id; }
 	char *friendly_name_str() { return friendly_name; }
 	char *formal_name_str() { return formal_name; }
-	int get_address(void **addr) { *addr = NULL; return 0; }
+	int get_address(struct inet_address *addr) { return 0; }
 };
 
 class MultiPlayerNone
@@ -116,7 +116,7 @@ public:
 	void	close_session();
 	void	disable_join_session();		// so that new player cannot join
 	void   accept_connections();
-	int    udp_accept_connections(uint32_t *who, void **address);
+	int    udp_accept_connections(uint32_t *who, struct inet_address *address);
 
 	// -------- functions on player management -------//
 	int         add_player(char *name, uint32_t id);
@@ -129,7 +129,7 @@ public:
 	int	is_player_connecting(uint32_t playerId);
 	int       get_player_count() const { return player_pool.size(); }
 	uint32_t  get_my_player_id() const { return my_player_id; }
-	void      set_peer_address(uint32_t who, void *address);
+	void      set_peer_address(uint32_t who, struct inet_address *address);
 
 	// ------- functions on message passing ------//
 	int	send(uint32_t toId, void * lpData, uint32_t dataSize);

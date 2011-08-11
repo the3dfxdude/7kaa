@@ -21,6 +21,13 @@
 #ifndef __netplay_h__
 #define __netplay_h__
 
+#include <stdint.h>
+
+struct inet_address {
+	uint32_t host;
+	uint16_t port;
+};
+
 #if defined(USE_NONETPLAY)
 	#include <netplay_none.h>
 #elif defined(USE_SDLNET)

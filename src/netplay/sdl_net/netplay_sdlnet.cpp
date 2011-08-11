@@ -1181,7 +1181,7 @@ int MultiPlayerSDL::udp_join_session(char *password)
 // returns zero if there are no new connections
 // returns len, which is the size of IPaddress, sets the pointer to address,
 // and who this is coming from.
-int MultiPlayerSDL::udp_accept_connections(uint32_t *who, void **address)
+int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *address)
 {
 	UDPpacket p;
 	struct MsgConnect *m;
@@ -1221,7 +1221,8 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, void **address)
 	player_pool[m->player_id-1].address.port = p.address.port;
 
 	*who = m->player_id;
-	*address = &p.address;
+	address->host = p.address.host;
+	address->port = p.address.port;
 
 	a.msg_id = MPMSG_CONNECT_ACK;
 
@@ -1233,20 +1234,18 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, void **address)
 
 	MSG("[MultiPlayerSDL::udp_accept_connections] player %d connected by udp\n", m->player_id);
 
-	return sizeof(IPaddress);
+	return sizeof(struct inet_address);
 }
 
-void MultiPlayerSDL::set_peer_address(uint32_t who, void *address)
+void MultiPlayerSDL::set_peer_address(uint32_t who, struct inet_address *address)
 {
-	IPaddress *a = (IPaddress *)address;
-
 	err_when(who < 1 || who > max_players);
 
 	if (who == my_player_id)
 		return;
 
-	player_pool[who-1].address.host = a->host;
-	player_pool[who-1].address.port = a->port;
+	player_pool[who-1].address.host = address->host;
+	player_pool[who-1].address.port = address->port;
 
 	MSG("[MultiPlayerSDL::set_peer_address] set address for %d\n", who);
 }

@@ -275,12 +275,12 @@ int MultiPlayerNone::udp_join_session(char *password)
 	return 0;
 }
 
-int MultiPlayerNone::udp_accept_connections(uint32_t *who, void **address)
+int MultiPlayerNone::udp_accept_connections(uint32_t *who, struct inet_address *address)
 {
 	return 0;
 }
 
-void MultiPlayerNone::set_peer_address(uint32_t who, void *address)
+void MultiPlayerNone::set_peer_address(uint32_t who, struct inet_address *address)
 {
 }
 

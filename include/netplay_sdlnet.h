@@ -70,7 +70,7 @@ struct SDLPlayer
 
 	uint32_t pid() { return id; }
 	char     *friendly_name_str() { return name; }
-	int get_address(void **addr) { *addr = &address; return sizeof(IPaddress); }
+	int get_address(struct inet_address *addr) { addr->host = address.host; addr->port = address.port; return sizeof(struct inet_address); }
 };
 
 class MultiPlayerSDL
@@ -135,7 +135,7 @@ public:
 	void   close_session();
 	void   disable_join_session();
 	void   accept_connections();
-	int    udp_accept_connections(uint32_t *who, void **address);
+	int    udp_accept_connections(uint32_t *who, struct inet_address *address);
 	SDLSessionDesc * get_session(int i);
 
 	// -------- functions on player management -------//
@@ -149,7 +149,7 @@ public:
 	int         is_player_connecting(uint32_t playerId);
 	int         get_player_count();
 	uint32_t    get_my_player_id() const { return my_player_id; }
-	void        set_peer_address(uint32_t who, void *address);
+	void        set_peer_address(uint32_t who, struct inet_address *address);
 
 	// ------- functions on message passing ------//
 	int    send(uint32_t to, void * data, uint32_t msg_size);

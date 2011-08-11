@@ -385,11 +385,13 @@ struct MpStructPlayerDisconnect : public MpStructBase
 struct MpStructNewPeerAddress : public MpStructBase
 {
 	PID_TYPE player_id;
-	char address[100];
-	MpStructNewPeerAddress(PID_TYPE id, int len, void *addr) : MpStructBase(MPMSG_NEW_PEER_ADDRESS),
+	uint32_t host;
+	uint16_t port;
+	MpStructNewPeerAddress(PID_TYPE id, struct inet_address *addr) : MpStructBase(MPMSG_NEW_PEER_ADDRESS),
 		player_id(id)
 	{
-		memcpy(address, addr, len);
+		host = addr->host;
+		port = addr->port;
 	}
 };
 
@@ -2622,10 +2624,10 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
 									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
 									if (i != 1) {
-										void *addr;
+										struct inet_address addr;
 										int len;
 										len = desc->get_address(&addr);
-										MpStructNewPeerAddress msgPeer(i, len, addr);
+										MpStructNewPeerAddress msgPeer(i, &addr);
 										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
 									}
 								}
@@ -2909,8 +2911,11 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					break;
 				case MPMSG_NEW_PEER_ADDRESS:
 					if (!remote.is_host) {
+						struct inet_address address;
 						MpStructNewPeerAddress *msg = (MpStructNewPeerAddress *)recvPtr;
-						mp_obj.set_peer_address(msg->player_id, &msg->address);
+						address.host = msg->host;
+						address.port = msg->port;
+						mp_obj.set_peer_address(msg->player_id, &address);
 					}
 					break;
 				default:		// if the game is started, any other thing is received
@@ -2921,11 +2926,11 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 		// handle peer discovery
 		if (remote.is_host) {
-			void *address;
+			struct inet_address address;
 			uint32_t who;
 			int len = mp_obj.udp_accept_connections(&who, &address);
 			if (len) {
-				MpStructNewPeerAddress msgPeer(who, len, address);
+				MpStructNewPeerAddress msgPeer(who, &address);
 				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));
 			}
 		}
@@ -4534,10 +4539,10 @@ int Game::mp_select_load_option(char *fileName)
 									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
 									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
 									if (i != 1) {
-										void *addr;
+										struct inet_address addr;
 										int len;
 										len = desc->get_address(&addr);
-										MpStructNewPeerAddress msgPeer(i, len, addr);
+										MpStructNewPeerAddress msgPeer(i, &addr);
 										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
 									}
 								}
@@ -4674,8 +4679,11 @@ int Game::mp_select_load_option(char *fileName)
 					break;
 				case MPMSG_NEW_PEER_ADDRESS:
 					if (!remote.is_host) {
+						struct inet_address address;
 						MpStructNewPeerAddress *msg = (MpStructNewPeerAddress *)recvPtr;
-						mp_obj.set_peer_address(msg->player_id, &msg->address);
+						address.host = msg->host;
+						address.port = msg->port;
+						mp_obj.set_peer_address(msg->player_id, &address);
 					}
 					break;
 				default:		// if the game is started, any other thing is received
@@ -4686,11 +4694,11 @@ int Game::mp_select_load_option(char *fileName)
 
 		// handle peer discovery
 		if (remote.is_host) {
-			void *address;
+			struct inet_address address;
 			uint32_t who;
 			int len = mp_obj.udp_accept_connections(&who, &address);
 			if (len) {
-				MpStructNewPeerAddress msgPeer(who, len, address);
+				MpStructNewPeerAddress msgPeer(who, &address);
 				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));
 			}
 		}
