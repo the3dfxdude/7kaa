@@ -338,6 +338,8 @@ AC_CONFIG_FILES([
   src/input/dinput/Makefile
   src/input/none/Makefile
   src/input/sdl/Makefile
+  src/multiplayer/Makefile
+  src/multiplayer/sdlnet/Makefile
   src/netplay/Makefile
   src/netplay/common/Makefile
   src/netplay/none/Makefile

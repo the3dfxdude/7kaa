@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2011 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,44 @@
  *
  */
 
-#ifndef __netplay_h__
-#define __netplay_h__
+// Filename    : network_sdlnet.cpp
+// Description : SDLNet implementation for Network
 
-#if defined(USE_NONETPLAY)
-	#include <netplay_none.h>
-#elif defined(USE_SDLNET)
-	#include <netplay_sdlnet.h>
-#else
-	#error "A netplay backend must be specified."
-#endif
+#include <dbglog.h>
+#include <network_sdlnet.h>
 
-#endif	// __netplay_h__
+DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
+NetworkSDLNet::NetworkSDLNet()
+{
+	initialized = 0;
+}
+
+NetworkSDLNet::~NetworkSDLNet()
+{
+	deinit();
+}
+
+int NetworkSDLNet::init()
+{
+	if (initialized)
+	{
+		return 1;
+	}
+
+	if (SDLNet_Init() == -1)
+	{
+		ERR("Unable to init SDLNet: %s\n", SDLNet_GetError());
+		return 0;
+	}
+
+	initialized = 1;
+
+	return 1;
+}
+
+void NetworkSDLNet::deinit()
+{
+	SDLNet_Quit();
+	initialized = 0;
+}

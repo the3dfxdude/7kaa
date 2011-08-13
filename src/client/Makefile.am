@@ -274,7 +274,8 @@ if NET_NONE
 endif
 
 if NET_SDLNET
-7kaa_LDADD += ../netplay/sdl_net/libnetplay_sdlnet.a
+7kaa_LDADD += ../netplay/sdl_net/libnetplay_sdlnet.a \
+	../multiplayer/sdlnet/libsdlnet.a
 endif
 
 

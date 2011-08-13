@@ -28,6 +28,7 @@
 #include <ODYNARRB.h>
 #include <stdint.h>
 #include <SDL_net.h>
+#include <network.h>
 
 #define MP_SERVICE_PROVIDER_NAME_LEN 64
 #define MP_SESSION_NAME_LEN 64
@@ -82,6 +83,7 @@ private:
 	ProtocolType      supported_protocols;
 	DynArrayB         current_sessions;
 	SDLSessionDesc    joined_session;
+	NetworkSDLNet     *network;
 
 	uint32_t          my_player_id;
 	char              my_name[MP_FRIENDLY_NAME_LEN+1];

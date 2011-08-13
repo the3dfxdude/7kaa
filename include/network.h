@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2011 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,16 @@
  *
  */
 
-#ifndef __netplay_h__
-#define __netplay_h__
+// Filename    : network.h
+// Description : The Network class used by MultiPlayer
 
-#if defined(USE_NONETPLAY)
-	#include <netplay_none.h>
-#elif defined(USE_SDLNET)
-	#include <netplay_sdlnet.h>
-#else
-	#error "A netplay backend must be specified."
+#ifndef _NETWORK_H
+#define _NETWORK_H
+
+#include <network_base.h>
+
+#ifdef USE_SDLNET
+#include <network_sdlnet.h>
 #endif
 
-#endif	// __netplay_h__
-
+#endif // _NETWORK_H

@@ -196,30 +196,33 @@ MultiPlayerSDL::~MultiPlayerSDL()
 
 void MultiPlayerSDL::init(ProtocolType protocol_type)
 {
-	init_flag = 0;
+	if (init_flag)
+		return;
+
 	lobbied_flag = 0;
 	my_player_id = 0;
 	host_flag = 0;
 	max_players = 0;
 	use_remote_session_provider = 0;
 	update_available = -1;
+	network = new NetworkSDLNet();
 
 	if (!is_protocol_supported(protocol_type)) {
 		ERR("[MultiPlayerSDL::init] trying to init unsupported protocol\n");
 		return;
 	}
 
-	// TODO: add SDL initialization if required
-
-	if (SDLNet_Init() == -1) {
-		ERR("[MultiPlayerSDL::init] unable to init SDL_net: %s\n", SDLNet_GetError());
+	if (!network->init())
+	{
+		ERR("Could not init the network subsystem.\n");
 		return;
 	}
 
 	sock_set = SDLNet_AllocSocketSet(MAX_NATION);
 	if (!sock_set) {
 		ERR("[MultiPlayerSDL::init] SDLNet_AllocSocketSet: %s\n", SDLNet_GetError());
-		SDLNet_Quit();
+		network->deinit();
+		network = NULL;
 		return;
 	}
 
@@ -274,7 +277,9 @@ void MultiPlayerSDL::deinit()
 	}
 
 	SDLNet_FreeSocketSet(sock_set);
-	SDLNet_Quit();
+
+	delete network;
+	network = NULL;
 
 	current_sessions.zap();
 	init_flag = 0;
