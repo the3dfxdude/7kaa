@@ -98,8 +98,8 @@ private:
 
 	TCPsocket         host_sock; // used by client to talk to game host
 	TCPsocket         listen_sock; // used by server
-	UDPsocket         peer_sock; // peer-to-peer communication
-	UDPsocket         game_sock;
+	int               peer_sock; // peer-to-peer communication
+	int               game_sock;
 	SDLNet_SocketSet  sock_set;
 
 	struct inet_address lan_broadcast_address;

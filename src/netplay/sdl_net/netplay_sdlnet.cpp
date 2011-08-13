@@ -183,8 +183,6 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	allowing_connections = 0;
 	host_sock = NULL;
 	listen_sock = NULL;
-	peer_sock = NULL;
-	game_sock = NULL;
 	sock_set = NULL;
 	recv_buf = NULL;
 }
@@ -206,6 +204,8 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	use_remote_session_provider = 0;
 	update_available = -1;
 	network = new NetworkSDLNet();
+	peer_sock = 0;
+	game_sock = 0;
 
 	if (!is_protocol_supported(protocol_type)) {
 		ERR("[MultiPlayerSDL::init] trying to init unsupported protocol\n");
@@ -264,16 +264,6 @@ void MultiPlayerSDL::deinit()
 	if (recv_buf) {
 		delete [] recv_buf;
 		recv_buf = NULL;
-	}
-
-	if (peer_sock) {
-		SDLNet_UDP_Close(peer_sock);
-		peer_sock = NULL;
-	}
-
-	if (game_sock) {
-		SDLNet_UDP_Close(game_sock);
-		game_sock = NULL;
 	}
 
 	SDLNet_FreeSocketSet(sock_set);
@@ -491,12 +481,11 @@ int MultiPlayerSDL::poll_sessions()
 
 	err_when(!init_flag);
 
-	if (!game_sock) {
-		game_sock = SDLNet_UDP_Open(UDP_GAME_PORT);
-	}
-	if (!game_sock) {
-		ERR("unable to open session list socket: %s\n", SDLNet_GetError());
-		return 0;
+	if (!game_sock)
+	{
+		game_sock = network->udp_open(UDP_GAME_PORT);
+		if (!game_sock)
+			return 0;
 	}
 
 	current_sessions.zap();
@@ -510,7 +499,7 @@ int MultiPlayerSDL::poll_sessions()
 
 		p = (struct MsgHeader *)recv_buf;
 
-		ret = SDLNet_UDP_Recv(game_sock, &packet);
+		ret = SDLNet_UDP_Recv(network->get_udp_socket(game_sock), &packet);
 		if (ret <= 0)
 			break;
 
@@ -553,7 +542,7 @@ int MultiPlayerSDL::poll_sessions()
 		request.address.host = remote_session_provider_address.host;
 		request.address.port = remote_session_provider_address.port;
 
-		SDLNet_UDP_Send(game_sock, -1, &request);
+		SDLNet_UDP_Send(network->get_udp_socket(game_sock), -1, &request);
 
 		if (update_available < 0)
 		{
@@ -563,7 +552,7 @@ int MultiPlayerSDL::poll_sessions()
 			request.data = (Uint8 *)&n;
 			request.len = sizeof(struct MsgVersionAck);
 
-			SDLNet_UDP_Send(game_sock, -1, &request);
+			SDLNet_UDP_Send(network->get_udp_socket(game_sock), -1, &request);
 		}
 	}
 
@@ -613,9 +602,9 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 		MSG("[MultiPlayerSDL::create_session] waiting for clients on port: %d\n", (int)GAME_PORT);
 	}
 
-	peer_sock = SDLNet_UDP_Open(GAME_PORT);
-	if (!peer_sock) {
-		ERR("[MultiPlayerSDL::create_session] unable to open peer socket: %s\n", SDLNet_GetError());
+	peer_sock = network->udp_open(GAME_PORT);
+	if (!peer_sock)
+	{
 		SDLNet_TCP_Close(listen_sock);
 		listen_sock = NULL;
 		return FALSE;
@@ -670,9 +659,9 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 		err_now("socket error");
 	}
 
-	peer_sock = SDLNet_UDP_Open(0);
-	if (!peer_sock) {
-		ERR("[MultiPlayerSDL::join_session] unable to open peer socket: %s\n", SDLNet_GetError());
+	peer_sock = network->udp_open(0);
+	if (!peer_sock)
+	{
 		SDLNet_TCP_Close(host_sock);
 		host_sock = NULL;
 		return FALSE;
@@ -731,13 +720,13 @@ void MultiPlayerSDL::accept_connections()
 		packet.address.host = lan_broadcast_address.host;
 		packet.address.port = lan_broadcast_address.port;
 
-		SDLNet_UDP_Send(peer_sock, packet.channel, &packet);
+		SDLNet_UDP_Send(network->get_udp_socket(peer_sock), packet.channel, &packet);
 
 		if (use_remote_session_provider)
 		{
 			packet.address.host = remote_session_provider_address.host;
 			packet.address.port = remote_session_provider_address.port;
-			SDLNet_UDP_Send(peer_sock, -1, &packet);
+			SDLNet_UDP_Send(network->get_udp_socket(peer_sock), -1, &packet);
 		}
 	}
 
@@ -823,7 +812,7 @@ void MultiPlayerSDL::set_my_player_id(uint32_t id)
 
 	my_player_id = id;
 
-	local = SDLNet_UDP_GetPeerAddress(peer_sock, -1);
+	local = SDLNet_UDP_GetPeerAddress(network->get_udp_socket(peer_sock), -1);
 	network->resolve_host(&player_pool[my_player_id-1].address, "127.0.0.1", local->port);
 
 	MSG("[MultiPlayerSDL::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1].address.host, player_pool[my_player_id-1].address.port);
@@ -929,7 +918,7 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 		packet.address.host = player_pool[to-1].address.host;
 		packet.address.port = player_pool[to-1].address.port;
 
-		if (!SDLNet_UDP_Send(peer_sock, packet.channel, &packet)) {
+		if (!SDLNet_UDP_Send(network->get_udp_socket(peer_sock), packet.channel, &packet)) {
 			ERR("[MultiPlayerSDL::send] error while sending data to player %d\n", to);
 			return FALSE;
 		}
@@ -1021,7 +1010,7 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 		packet.data = (Uint8 *)recv_buf;
 		packet.maxlen = MP_UDP_MAX_PACKET_SIZE;
 
-		ret = SDLNet_UDP_Recv(peer_sock, &packet);
+		ret = SDLNet_UDP_Recv(network->get_udp_socket(peer_sock), &packet);
 		if (ret > 0) {
 			int i;
 			for (i = 0; i < max_players; i++) {
@@ -1170,7 +1159,7 @@ int MultiPlayerSDL::udp_join_session(char *password)
 	strncpy(m.password, password, MP_SESSION_NAME_LEN);
 
 	// send the connection message
-	SDLNet_UDP_Send(peer_sock, -1, &packet);
+	SDLNet_UDP_Send(network->get_udp_socket(peer_sock), -1, &packet);
 
 
 	a = (struct MsgConnectAck *)recv_buf;
@@ -1179,7 +1168,7 @@ int MultiPlayerSDL::udp_join_session(char *password)
 	packet.maxlen = MP_UDP_MAX_PACKET_SIZE;
 
 	// check for ack
-	ret = SDLNet_UDP_Recv(peer_sock, &packet);
+	ret = SDLNet_UDP_Recv(network->get_udp_socket(peer_sock), &packet);
 	if (ret <= 0)
 		return 0;
 
@@ -1217,7 +1206,7 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *a
 	if (!listen_sock || !peer_sock)
 		return 0;
 
-	ret = SDLNet_UDP_Recv(peer_sock, &p);
+	ret = SDLNet_UDP_Recv(network->get_udp_socket(peer_sock), &p);
 	if (ret <= 0)
 		return 0;
 
@@ -1248,7 +1237,7 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *a
 	p.len = sizeof(struct MsgConnectAck);
 
 	// send the connection ack message
-	SDLNet_UDP_Send(peer_sock, -1, &p);
+	SDLNet_UDP_Send(network->get_udp_socket(peer_sock), -1, &p);
 
 	MSG("[MultiPlayerSDL::udp_accept_connections] player %d connected by udp\n", m->player_id);
 
@@ -1309,11 +1298,10 @@ int MultiPlayerSDL::show_leader_board()
 	int ret, i, x, y;
 
 	if (!game_sock)
-		game_sock = SDLNet_UDP_Open(UDP_GAME_PORT);
-	if (!game_sock)
 	{
-		ERR("unable to open session list socket: %s\n", SDLNet_GetError());
-		return -1;
+		game_sock = network->udp_open(UDP_GAME_PORT);
+		if (!game_sock)
+			return -1;
 	}
 
 	m.msg_id = MPMSG_REQ_LADDER;
@@ -1324,13 +1312,13 @@ int MultiPlayerSDL::show_leader_board()
 	packet.address.host = remote_session_provider_address.host;
 	packet.address.port = remote_session_provider_address.port;
 
-	SDLNet_UDP_Send(game_sock, -1, &packet);
+	SDLNet_UDP_Send(network->get_udp_socket(game_sock), -1, &packet);
 
 	a = (struct MsgLadder *)recv_buf;
 	packet.data = (Uint8 *)recv_buf;
 	packet.maxlen = MP_UDP_MAX_PACKET_SIZE;
 
-	ret = SDLNet_UDP_Recv(game_sock, &packet);
+	ret = SDLNet_UDP_Recv(network->get_udp_socket(game_sock), &packet);
 	if (ret <= 0)
 		return 0;
 

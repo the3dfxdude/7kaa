@@ -26,10 +26,14 @@
 
 #include <SDL_net.h>
 
+#define MAX_UDP_SOCKETS 5
+
 class NetworkSDLNet
 {
 private:
 	int initialized;
+
+	UDPsocket udp_socket_list[MAX_UDP_SOCKETS];
 
 public:
 	NetworkSDLNet();
@@ -39,6 +43,10 @@ public:
 	void deinit();
 
 	int resolve_host(struct inet_address *ip, const char *name, uint16_t port);
+
+	int udp_open(uint16_t port);
+	void udp_close(int sock);
+	UDPsocket get_udp_socket(int sock);
 };
 
 #endif // _NETWORK_SDLNET_H

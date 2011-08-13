@@ -49,6 +49,11 @@ int NetworkSDLNet::init()
 		return 0;
 	}
 
+	for (int i = 0; i < MAX_UDP_SOCKETS; i++)
+	{
+		udp_socket_list[i] = NULL;
+	}
+
 	initialized = 1;
 
 	return 1;
@@ -56,6 +61,11 @@ int NetworkSDLNet::init()
 
 void NetworkSDLNet::deinit()
 {
+	int i;
+	for (i = 0; i < MAX_UDP_SOCKETS; i++)
+		if (udp_socket_list[i])
+			SDLNet_UDP_Close(udp_socket_list[i]);
+
 	SDLNet_Quit();
 	initialized = 0;
 }
@@ -77,4 +87,49 @@ int NetworkSDLNet::resolve_host(struct inet_address *ip, const char *name, uint1
 	}
 
 	return !r;
+}
+
+int NetworkSDLNet::udp_open(uint16_t port)
+{
+	int i;
+
+	for (i = 0; i < MAX_UDP_SOCKETS; i++)
+		if (!udp_socket_list[i])
+			break;
+	if (i >= MAX_UDP_SOCKETS)
+		return 0;
+
+	udp_socket_list[i] = SDLNet_UDP_Open(port);
+
+	if (!udp_socket_list[i])
+	{
+		MSG("Unable to open udp port %u.\n", port);
+		return 0;
+	}
+	return i+1;
+}
+
+void NetworkSDLNet::udp_close(int sock)
+{
+	int s;
+
+	s = sock - 1;
+
+	if (s > 1 || s >= MAX_UDP_SOCKETS || !udp_socket_list[s])
+		return;
+
+	SDLNet_UDP_Close(udp_socket_list[s]);
+	udp_socket_list[s] = NULL;
+}
+
+UDPsocket NetworkSDLNet::get_udp_socket(int sock)
+{
+	int s;
+
+	s = sock - 1;
+
+	if (s > 1 || s >= MAX_UDP_SOCKETS || !udp_socket_list[s])
+		return NULL;
+
+	return udp_socket_list[s];
 }
