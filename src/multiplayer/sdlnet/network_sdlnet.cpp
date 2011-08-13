@@ -22,7 +22,7 @@
 // Description : SDLNet implementation for Network
 
 #include <dbglog.h>
-#include <network_sdlnet.h>
+#include <network.h>
 
 DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
@@ -58,4 +58,23 @@ void NetworkSDLNet::deinit()
 {
 	SDLNet_Quit();
 	initialized = 0;
+}
+
+int NetworkSDLNet::resolve_host(struct inet_address *ip, const char *name, uint16_t port)
+{
+	IPaddress a;
+	int r;
+
+	r = SDLNet_ResolveHost(&a, name, port);
+	if (!r)
+	{
+		ip->host = a.host;
+		ip->port = a.port;
+	}
+	else
+	{
+		MSG("Couldn't resolve host '%s' port %u: %s\n", name, port, SDLNet_GetError());
+	}
+
+	return !r;
 }

@@ -143,7 +143,7 @@ SDLSessionDesc::SDLSessionDesc()
 	id = 0;
 	session_name[0] = '\0';
 	password[0] = '\0';
-	memset(&address, 0, sizeof(IPaddress));
+	memset(&address, 0, sizeof(struct inet_address));
 }
 
 SDLSessionDesc::SDLSessionDesc(const SDLSessionDesc &src)
@@ -151,7 +151,7 @@ SDLSessionDesc::SDLSessionDesc(const SDLSessionDesc &src)
 	id = src.id;
 	strcpy(session_name, src.session_name);
 	strcpy(password, src.password);
-	memcpy(&address, &src.address, sizeof(IPaddress));
+	memcpy(&address, &src.address, sizeof(struct inet_address));
 }
 
 SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
@@ -159,7 +159,7 @@ SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
 	id = src.id;
 	strcpy(session_name, src.session_name);
 	strcpy(password, src.password);
-	memcpy(&address, &src.address, sizeof(IPaddress));
+	memcpy(&address, &src.address, sizeof(struct inet_address));
 	return *this;
 }
 
@@ -226,7 +226,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		return;
 	}
 
-	SDLNet_ResolveHost(&lan_broadcast_address, "255.255.255.255", UDP_GAME_PORT);
+	network->resolve_host(&lan_broadcast_address, "255.255.255.255", UDP_GAME_PORT);
 
 	for (int i = 0; i < MAX_NATION; i++) {
 		player_pool[i].id = 0;
@@ -299,8 +299,8 @@ int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 
 		strcpy(session->session_name, "Lobbied Game");
 		session->password[0] = 1;
-		if (SDLNet_ResolveHost(&session->address, cmdLine, GAME_PORT) == -1) {
-			MSG("failed to resolve hostname: %s\n", SDLNet_GetError());
+		if (!network->resolve_host(&session->address, cmdLine, GAME_PORT))
+		{
 			delete session;
 			return 0;
 		}
@@ -342,7 +342,7 @@ int MultiPlayerSDL::is_update_available()
 	return update_available;
 }
 
-int MultiPlayerSDL::check_duplicates(IPaddress *address)
+int MultiPlayerSDL::check_duplicates(struct inet_address *address)
 {
 	int i;
 	for (i = 0; i < current_sessions.size(); i++)
@@ -361,7 +361,7 @@ int MultiPlayerSDL::check_duplicates(IPaddress *address)
 
 int MultiPlayerSDL::set_remote_session_provider(const char *server)
 {
-	use_remote_session_provider = !SDLNet_ResolveHost(&remote_session_provider_address, server, UDP_GAME_PORT);
+	use_remote_session_provider = network->resolve_host(&remote_session_provider_address, server, UDP_GAME_PORT);
 	return use_remote_session_provider;
 }
 
@@ -369,11 +369,16 @@ void MultiPlayerSDL::msg_game_beacon(UDPpacket *p)
 {
 	MsgGameBeacon *m;
 	SDLSessionDesc *desc;
+	struct inet_address ip;
 
 	if (p->len != sizeof(struct MsgGameBeacon))
 		return;
 
-	if (check_duplicates(&p->address))
+	// TODO convert until separation complete
+	ip.host = p->address.host;
+	ip.port = p->address.port;
+
+	if (check_duplicates(&ip))
 		return;
 
 	m = (MsgGameBeacon *)p->data;
@@ -410,7 +415,7 @@ int MultiPlayerSDL::msg_game_list(UDPpacket *p, int last_ack)
 	m = (MsgGameList *)p->data;
 
 	for (i = 0; i < MP_GAME_LIST_SIZE; i++) {
-		IPaddress addy;
+		struct inet_address addy;
 
 		if (!m->list[i].host) {
 			continue;
@@ -585,18 +590,22 @@ SDLSessionDesc *MultiPlayerSDL::get_session(int i)
 // return TRUE if success
 int MultiPlayerSDL::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
-	IPaddress ip_address;
+	struct inet_address ip_address;
+	IPaddress ip;
 
 	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION);
 
 	// open socket for listening
 
-	if (SDLNet_ResolveHost(&ip_address, NULL, GAME_PORT) == -1) {
-		ERR("[MultiPlayerSDL::create_session] failed to resolve hostname: %s\n", SDLNet_GetError());
+	if (!network->resolve_host(&ip_address, NULL, GAME_PORT))
+	{
 		return FALSE;
 	}
+	// TODO convert until separation complete
+	ip.host = ip_address.host;
+	ip.port = ip_address.port;
 
-	listen_sock = SDLNet_TCP_Open(&ip_address);
+	listen_sock = SDLNet_TCP_Open(&ip);
 	if (!listen_sock) {
 		ERR("[MultiPlayerSDL::create_session] failed to start listening: %s\n", SDLNet_GetError());
 		return FALSE;
@@ -637,12 +646,17 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 // currentSessionIndex start from 1
 int MultiPlayerSDL::join_session(int i, char *playerName)
 {
+	IPaddress ip;
 	SDLSessionDesc *session = (SDLSessionDesc *)current_sessions.get(i);
 	if (!session)
 		return FALSE;
 
+	// TODO convert until separation complete
+	ip.host = session->address.host;
+	ip.port = session->address.port;
+
 	// establish connection with server
-	host_sock = SDLNet_TCP_Open(&session->address);
+	host_sock = SDLNet_TCP_Open(&ip);
 	if (!host_sock) {
 		MSG("[MultiPlayerSDL::join_session] failed to connect to server: %s\n", SDLNet_GetError());
 		return FALSE;
@@ -810,7 +824,7 @@ void MultiPlayerSDL::set_my_player_id(uint32_t id)
 	my_player_id = id;
 
 	local = SDLNet_UDP_GetPeerAddress(peer_sock, -1);
-	SDLNet_ResolveHost(&player_pool[my_player_id-1].address, "127.0.0.1", local->port);
+	network->resolve_host(&player_pool[my_player_id-1].address, "127.0.0.1", local->port);
 
 	MSG("[MultiPlayerSDL::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1].address.host, player_pool[my_player_id-1].address.port);
 }
@@ -1137,7 +1151,7 @@ int MultiPlayerSDL::udp_join_session(char *password)
 	UDPpacket packet;
 	struct MsgConnect m;
 	struct MsgConnectAck *a;
-	IPaddress *addr;
+	struct inet_address *addr;
 	int ret;
 
 	addr = &player_pool[0].address;
@@ -1184,8 +1198,7 @@ int MultiPlayerSDL::udp_join_session(char *password)
 // Hopefully this will allow NAT transversal too.
 //
 // returns zero if there are no new connections
-// returns len, which is the size of IPaddress, sets the pointer to address,
-// and who this is coming from.
+// returns len, which is the size of struct inet_address
 int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *address)
 {
 	UDPpacket p;

@@ -50,7 +50,7 @@ struct SDLSessionDesc
 	char session_name[MP_SESSION_NAME_LEN+1];
 	char password[MP_SESSION_NAME_LEN+1];
 	uint32_t id;
-	IPaddress address;
+	struct inet_address address;
 
 	SDLSessionDesc();
 	SDLSessionDesc(const SDLSessionDesc &);
@@ -67,7 +67,7 @@ struct SDLPlayer
 	char     name[MP_FRIENDLY_NAME_LEN+1];
 	char	connecting;		// initially set to 1, clear after player disconnected
 	TCPsocket socket;
-	IPaddress address;
+	struct inet_address address;
 
 	uint32_t pid() { return id; }
 	char     *friendly_name_str() { return name; }
@@ -102,8 +102,8 @@ private:
 	UDPsocket         game_sock;
 	SDLNet_SocketSet  sock_set;
 
-	IPaddress lan_broadcast_address;
-	IPaddress remote_session_provider_address;
+	struct inet_address lan_broadcast_address;
+	struct inet_address remote_session_provider_address;
 
 	int use_remote_session_provider;
 	int update_available;
@@ -163,7 +163,7 @@ public:
 
 private:
 	int create_player(TCPsocket socket);
-	int check_duplicates(IPaddress *address);
+	int check_duplicates(struct inet_address *address);
 	void msg_game_beacon(UDPpacket *p);
 	int msg_game_list(UDPpacket *p, int last_ack);
 	void msg_version_nak(UDPpacket *p);

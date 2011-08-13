@@ -37,6 +37,8 @@ public:
 
 	int init();
 	void deinit();
+
+	int resolve_host(struct inet_address *ip, const char *name, uint16_t port);
 };
 
 #endif // _NETWORK_SDLNET_H
