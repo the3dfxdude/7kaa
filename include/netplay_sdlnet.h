@@ -164,9 +164,9 @@ public:
 private:
 	int create_player(TCPsocket socket);
 	int check_duplicates(struct inet_address *address);
-	void msg_game_beacon(UDPpacket *p);
-	int msg_game_list(UDPpacket *p, int last_ack);
-	void msg_version_nak(UDPpacket *p);
+	void msg_game_beacon(struct net_msg *p);
+	int msg_game_list(struct net_msg *p, int last_ack);
+	void msg_version_nak(struct net_msg *p);
 };
 
 extern MultiPlayerSDL mp_sdl;

@@ -47,6 +47,9 @@ public:
 	int udp_open(uint16_t port);
 	void udp_close(int sock);
 	UDPsocket get_udp_socket(int sock);
+
+	int send(int sock, struct net_msg *p);
+	int recv(int sock, struct net_msg *p);
 };
 
 #endif // _NETWORK_SDLNET_H

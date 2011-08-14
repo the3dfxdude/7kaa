@@ -26,9 +26,17 @@
 
 #include <stdint.h>
 
-struct inet_address {
+struct inet_address
+{
         uint32_t host;
         uint16_t port;
 };
 
-#endif // _MP_NETWORK_BASE_H
+struct net_msg
+{
+	uint8_t *data;
+	uint32_t len;
+	struct inet_address address;
+};
+
+#endif // _NETWORK_BASE_H

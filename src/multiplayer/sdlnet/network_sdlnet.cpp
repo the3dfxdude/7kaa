@@ -133,3 +133,59 @@ UDPsocket NetworkSDLNet::get_udp_socket(int sock)
 
 	return udp_socket_list[s];
 }
+
+int NetworkSDLNet::send(int sock, struct net_msg *p)
+{
+	int s;
+	UDPpacket u;
+
+	s = sock - 1;
+
+	if (s < 0 || s >= MAX_UDP_SOCKETS || !udp_socket_list[s])
+		return 0;
+
+	u.channel = -1;
+	u.data = p->data;
+	u.len = p->len;
+	u.address.host = p->address.host;
+	u.address.port = p->address.port;
+	
+	if (!SDLNet_UDP_Send(udp_socket_list[s], -1, &u))
+	{
+		MSG("Couldn't send to %x %u\n", p->address.host, p->address.port);
+		return 0;
+	}
+	return 1;
+}
+
+
+int NetworkSDLNet::recv(int sock, struct net_msg *p)
+{
+	int s;
+	int r;
+	UDPpacket u;
+
+	s = sock - 1;
+
+	if (s < 0 || s >= MAX_UDP_SOCKETS || !udp_socket_list[s])
+		return 0;
+
+	u.channel = -1;
+	u.data = p->data;
+	u.maxlen = p->len;
+
+	r = SDLNet_UDP_Recv(udp_socket_list[s], &u);
+	if (r == -1)
+	{
+		MSG("Couldn't receive on socket.\n");
+		return 0;
+	}
+	if (!r)
+		return 0;
+
+	p->len = u.len;
+	p->address.host = u.address.host;
+	p->address.port = u.address.port;
+
+	return u.len;
+}
