@@ -32,6 +32,16 @@ struct inet_address
         uint16_t port;
 };
 
+struct packet_header
+{
+	uint16_t type;
+	uint16_t size;
+	uint16_t window;
+	uint16_t window_ack;
+	uint32_t sequence;
+	uint32_t sequence_ack;
+};
+
 struct net_msg
 {
 	uint8_t *data;
