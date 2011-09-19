@@ -37,105 +37,9 @@
 DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
 #define MP_UDP_MAX_PACKET_SIZE 800
-#define MP_GAME_LIST_SIZE 10
-#define MP_LADDER_LIST_SIZE 6
-#define PLAYER_NAME_LEN 20
 
 const Uint16 GAME_PORT = 1234;
 const Uint16 UDP_GAME_PORT = 19255;
-
-enum
-{
-	MPMSG_GAME_BEACON = 0x1f4a0001,
-	MPMSG_REQ_GAME_LIST,
-	MPMSG_GAME_LIST,
-	MPMSG_VERSION_ACK,
-	MPMSG_VERSION_NAK,
-	MPMSG_CONNECT,
-	MPMSG_CONNECT_ACK,
-	MPMSG_REQ_LADDER,
-	MPMSG_LADDER,
-};
-
-#pragma pack(1)
-struct MsgHeader
-{
-	uint32_t msg_id;
-};
-
-struct MsgGameBeacon
-{
-	uint32_t msg_id;
-        char name[MP_SESSION_NAME_LEN];
-        char password;
-};
-
-struct MsgRequestGameList
-{
-	uint32_t msg_id;
-	uint32_t ack;
-};
-
-struct remote_game
-{
-        char name[MP_SESSION_NAME_LEN];
-        char password;
-        uint32_t host;
-        uint16_t port;
-};
-
-struct MsgGameList
-{
-        uint32_t msg_id;
-        uint32_t page;
-        uint32_t total_pages;
-        struct remote_game list[MP_GAME_LIST_SIZE];
-};
-
-struct MsgVersionAck
-{
-	uint32_t msg_id;
-};
-
-struct MsgVersionNak
-{
-	uint32_t msg_id;
-	uint32_t major;
-	uint32_t medium;
-	uint32_t minor;
-};
-
-struct MsgConnect
-{
-	uint32_t msg_id;
-	uint32_t player_id;
-        char password[MP_SESSION_NAME_LEN];
-};
-
-struct MsgConnectAck
-{
-	uint32_t msg_id;
-};
-
-struct MsgRequestLadder
-{
-	uint32_t msg_id;
-};
-
-struct ladder_entry
-{
-	char name[PLAYER_NAME_LEN];
-	uint16_t wins;
-	uint16_t losses;
-	int32_t score;
-};
-
-struct MsgLadder
-{
-	uint32_t msg_id;
-	struct ladder_entry list[MP_LADDER_LIST_SIZE];
-};
-#pragma pack()
 
 
 SDLSessionDesc::SDLSessionDesc()
@@ -355,30 +259,20 @@ int MultiPlayerSDL::set_remote_session_provider(const char *server)
 	return use_remote_session_provider;
 }
 
-void MultiPlayerSDL::msg_game_beacon(struct net_msg *p)
+void MultiPlayerSDL::msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr)
 {
-	MsgGameBeacon *m;
 	SDLSessionDesc *desc;
-	struct inet_address ip;
 
-	if (p->len != sizeof(struct MsgGameBeacon))
+	if (check_duplicates(addr))
 		return;
 
-	// TODO convert until separation complete
-	ip.host = p->address.host;
-	ip.port = p->address.port;
-
-	if (check_duplicates(&ip))
-		return;
-
-	m = (MsgGameBeacon *)p->data;
 	desc = new SDLSessionDesc();
 
 	strncpy(desc->session_name, m->name, MP_SESSION_NAME_LEN);
 	desc->session_name[MP_SESSION_NAME_LEN] = 0;
 	desc->password[0] = m->password;
-	desc->address.host = p->address.host;
-	desc->address.port = p->address.port;
+	desc->address.host = addr->host;
+	desc->address.port = addr->port;
 	desc->id = current_sessions.size();
 	current_sessions.linkin(desc);
 
@@ -386,23 +280,16 @@ void MultiPlayerSDL::msg_game_beacon(struct net_msg *p)
 }
 
 // returns the next ack
-int MultiPlayerSDL::msg_game_list(struct net_msg *p, int last_ack)
+int MultiPlayerSDL::msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr)
 {
-	MsgGameList *m;
 	SDLSessionDesc *desc;
 	int i;
 
-	if (p->len != sizeof(struct MsgGameList)) {
-		return last_ack;
-	}
-
 	// only allow this message from a trusted provider
-	if (p->address.host != remote_session_provider_address.host ||
-		p->address.port != remote_session_provider_address.port) {
+	if (addr->host != remote_session_provider_address.host ||
+		addr->port != remote_session_provider_address.port) {
 		return last_ack;
 	}
-
-	m = (MsgGameList *)p->data;
 
 	for (i = 0; i < MP_GAME_LIST_SIZE; i++) {
 		struct inet_address addy;
@@ -436,22 +323,15 @@ int MultiPlayerSDL::msg_game_list(struct net_msg *p, int last_ack)
 	return last_ack++;
 }
 
-void MultiPlayerSDL::msg_version_nak(struct net_msg *p)
+void MultiPlayerSDL::msg_version_nak(MsgVersionNak *m, struct inet_address *addr)
 {
-	MsgVersionNak *m;
-
 	if (update_available > -1)
 		return;
 
-	if (p->len != sizeof(struct MsgVersionNak))
-		return;
-
 	// only allow this message from a trusted provider
-	if (p->address.host != remote_session_provider_address.host ||
-		p->address.port != remote_session_provider_address.port)
+	if (addr->host != remote_session_provider_address.host ||
+		addr->port != remote_session_provider_address.port)
 		return;
-
-	m = (MsgVersionNak *)p->data;
 
 	if (m->major > SKVERMAJ)
 	{
@@ -476,7 +356,7 @@ int MultiPlayerSDL::poll_sessions()
 {
 	static int ack_num = 1;
 	static int attempts = 0;
-	struct net_msg packet;
+	struct packet_header *h;
 	int ret;
 
 	err_when(!init_flag);
@@ -490,33 +370,34 @@ int MultiPlayerSDL::poll_sessions()
 
 	current_sessions.zap();
 
-	packet.data = (uint8_t *)recv_buf;
-	packet.len = MP_UDP_MAX_PACKET_SIZE;
+	h = (struct packet_header *)recv_buf;
+	h->size = MP_UDP_MAX_PACKET_SIZE;
 
 	while (1) {
+		struct inet_address addr;
 		struct MsgHeader *p;
 		int ack;
 
-		p = (struct MsgHeader *)recv_buf;
+		p = (struct MsgHeader *)(recv_buf+sizeof(struct packet_header));
 
-		ret = network->recv(game_sock, &packet);
+		ret = network->recv(game_sock, h, &addr);
 		if (ret <= 0)
 			break;
 
 		switch (p->msg_id)
 		{
 		case MPMSG_GAME_BEACON:
-			msg_game_beacon(&packet);
+			msg_game_beacon((MsgGameBeacon *)p, &addr);
 			break;
 		case MPMSG_GAME_LIST:
-			ack = msg_game_list(&packet, ack_num);
+			ack = msg_game_list((MsgGameList *)p, ack_num, &addr);
 			if (ack != ack_num) {
 				attempts = 0;
 				ack_num = ack;
 			}
 			break;
 		case MPMSG_VERSION_NAK:
-			msg_version_nak(&packet);
+			msg_version_nak((MsgVersionNak *)p, &addr);
 			break;
 		default:
 			MSG("received unhandled message %u\n", p->msg_id);
@@ -527,7 +408,6 @@ int MultiPlayerSDL::poll_sessions()
 	if (use_remote_session_provider)
 	{
 		struct MsgRequestGameList m;
-		struct net_msg request;
 
  		if (attempts > 10)
 			ack_num = 1;
@@ -536,22 +416,15 @@ int MultiPlayerSDL::poll_sessions()
 		m.msg_id = MPMSG_REQ_GAME_LIST;
 		m.ack = ack_num;
 
-		request.data = (uint8_t *)&m;
-		request.len = sizeof(struct MsgRequestGameList);
-		request.address.host = remote_session_provider_address.host;
-		request.address.port = remote_session_provider_address.port;
-
-		network->send(game_sock, &request);
+		send_nonseq_msg(game_sock, (char *)&m, sizeof(struct MsgRequestGameList), &remote_session_provider_address);
 
 		if (update_available < 0)
 		{
 			struct MsgVersionAck n;
 
 			n.msg_id = MPMSG_VERSION_ACK;
-			request.data = (uint8_t *)&n;
-			request.len = sizeof(struct MsgVersionAck);
 
-			network->send(game_sock, &request);
+			send_nonseq_msg(game_sock, (char *)&n, sizeof(struct MsgVersionAck), &remote_session_provider_address);
 		}
 	}
 
@@ -700,7 +573,6 @@ void MultiPlayerSDL::accept_connections()
 	cur_ticks = SDL_GetTicks();
 	if (peer_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
 		// send the session beacon
-		struct net_msg packet;
 		struct MsgGameBeacon p;
 
 		ticks = cur_ticks;
@@ -713,18 +585,11 @@ void MultiPlayerSDL::accept_connections()
 			p.password = 0;
 		
 
-		packet.data = (uint8_t *)&p;
-		packet.len = sizeof(struct MsgGameBeacon);
-		packet.address.host = lan_broadcast_address.host;
-		packet.address.port = lan_broadcast_address.port;
-
-		network->send(peer_sock, &packet);
+		send_nonseq_msg(peer_sock, (char *)&p, sizeof(struct MsgGameBeacon), &lan_broadcast_address);
 
 		if (use_remote_session_provider)
 		{
-			packet.address.host = remote_session_provider_address.host;
-			packet.address.port = remote_session_provider_address.port;
-			network->send(peer_sock, &packet);
+			send_nonseq_msg(peer_sock, (char *)&p, sizeof(struct MsgGameBeacon), &remote_session_provider_address);
 		}
 	}
 
@@ -880,6 +745,40 @@ int MultiPlayerSDL::get_player_count()
 	return count;
 }
 
+int MultiPlayerSDL::send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to)
+{
+	char send_buf[MP_UDP_MAX_PACKET_SIZE];
+	struct packet_header *h;
+	char *msg_buf;
+	int total;
+
+	total = msg_size + sizeof(struct packet_header);
+	if (total > MP_UDP_MAX_PACKET_SIZE)
+	{
+		ERR("message exceeds maximum size\n");
+		return 0;
+	}
+
+	h = (struct packet_header *)send_buf;
+	msg_buf = send_buf + sizeof(struct packet_header);
+
+	h->type = PACKET_NONSEQ;
+	h->size = total;
+	h->window = 0;
+	h->sequence = 0;
+	h->window_ack = 0;
+	h->sequence_ack = 0;
+
+	memcpy(msg_buf, msg, msg_size);
+
+	if (!network->send(sock, h, to))
+	{
+		return 0;
+	}
+
+	return 1;
+}
+
 // send udp message
 //
 // pass BROADCAST_PID as toId to all players
@@ -909,19 +808,12 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 
 	if (player_pool[to-1].connecting)
 	{
-		struct net_msg packet;
-
-		packet.data = (uint8_t *)data;
-		packet.len = msg_size;
-		packet.address.host = player_pool[to-1].address.host;
-		packet.address.port = player_pool[to-1].address.port;
-
-		if (!network->send(peer_sock, &packet))
+		if (!send_nonseq_msg(peer_sock, (char *)data, msg_size, &player_pool[to-1].address))
 		{
 			ERR("[MultiPlayerSDL::send] error while sending data to player %d\n", to);
 			return FALSE;
 		}
-		MSG("[MultiPlayerSDL::send] sent %d bytes to player %d\n", packet.len, to);
+		MSG("[MultiPlayerSDL::send] sent %d bytes to player %d\n", msg_size, to);
 		return TRUE;
 	}
 
@@ -1003,26 +895,27 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 	*from = max_players;
 
 	if (peer_sock) {
-		struct net_msg packet;
+		struct inet_address addr;
+		struct packet_header *h;
 		int ret;
 
-		packet.data = (uint8_t *)recv_buf;
-		packet.len = MP_UDP_MAX_PACKET_SIZE;
+		h = (struct packet_header *)recv_buf;
+		h->size = MP_UDP_MAX_PACKET_SIZE;
 
-		ret = network->recv(peer_sock, &packet);
+		ret = network->recv(peer_sock, h, &addr);
 		if (ret > 0) {
 			int i;
 			for (i = 0; i < max_players; i++) {
 				if (player_pool[i].connecting &&
-				    player_pool[i].address.host == packet.address.host &&
-				    player_pool[i].address.port == packet.address.port)
+				    player_pool[i].address.host == addr.host &&
+				    player_pool[i].address.port == addr.port)
 					break;
 			}
 			*from = i < max_players ? i+1 : 0;
 			*to = my_player_id;
-			*size = packet.len;
+			*size = h->size - sizeof(struct packet_header);
 			MSG("[MultiPlayerSDL::receive] received %d bytes from player %d\n", *size, *from);
-			return *from ? recv_buf : NULL;
+			return *from ? recv_buf + sizeof(struct packet_header) : NULL;
 		} else if (ret < 0) {
 			ERR("[MultiPlayerSDL::receive] could not receive: %s\n", SDLNet_GetError());
 		}
@@ -1136,7 +1029,8 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 // returns false when the udp session is not yet established (try again later)
 int MultiPlayerSDL::udp_join_session(char *password)
 {
-	struct net_msg packet;
+	struct inet_address joining;
+	struct packet_header *h;
 	struct MsgConnect m;
 	struct MsgConnectAck *a;
 	struct inet_address *addr;
@@ -1147,33 +1041,28 @@ int MultiPlayerSDL::udp_join_session(char *password)
 	if (!peer_sock || !addr->host)
 		return 0;
 
-	packet.data = (uint8_t *)&m;
-	packet.len = sizeof(struct MsgConnect);
-	packet.address.host = addr->host;
-	packet.address.port = addr->port;
-
 	m.msg_id = MPMSG_CONNECT;
 	m.player_id = my_player_id;
 	strncpy(m.password, password, MP_SESSION_NAME_LEN);
 
 	// send the connection message
-	network->send(peer_sock, &packet);
+	send_nonseq_msg(peer_sock, (char *)&m, sizeof(struct MsgConnect), addr);
 
 
-	a = (struct MsgConnectAck *)recv_buf;
+	h = (struct packet_header *)recv_buf;
+	a = (struct MsgConnectAck *)(recv_buf + sizeof(struct packet_header));
 
-	packet.data = (uint8_t *)recv_buf;
-	packet.len = MP_UDP_MAX_PACKET_SIZE;
+	h->size = MP_UDP_MAX_PACKET_SIZE;
 
 	// check for ack
-	ret = network->recv(peer_sock, &packet);
+	ret = network->recv(peer_sock, h, &joining);
 	if (ret <= 0)
 		return 0;
 
 	// check if this really is an ack
-	if (packet.address.host != addr->host ||
-			packet.address.port != addr->port ||
-			packet.len != sizeof(struct MsgConnectAck) ||
+	if (joining.host != addr->host ||
+			joining.port != addr->port ||
+			h->size != sizeof(struct MsgConnectAck) + sizeof(struct packet_header) ||
 			a->msg_id != MPMSG_CONNECT_ACK)
 		return 0;
 
@@ -1188,27 +1077,27 @@ int MultiPlayerSDL::udp_join_session(char *password)
 // returns len, which is the size of struct inet_address
 int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *address)
 {
-	struct net_msg p;
+	struct packet_header *h;
 	struct MsgConnect *m;
 	struct MsgConnectAck a;
 	char password[MP_SESSION_NAME_LEN+1];
 	int i;
 	int ret;
 
-	m = (struct MsgConnect *)recv_buf;
+	h = (struct packet_header *)recv_buf;
+	m = (struct MsgConnect *)(recv_buf + sizeof(struct packet_header));
 
-	p.data = (uint8_t *)recv_buf;
-	p.len = MP_UDP_MAX_PACKET_SIZE;
+	h->size = MP_UDP_MAX_PACKET_SIZE;
 
 	if (!listen_sock || !peer_sock)
 		return 0;
 
-	ret = network->recv(peer_sock, &p);
+	ret = network->recv(peer_sock, h, address);
 	if (ret <= 0)
 		return 0;
 
 	// check if this is really a connect message
-	if (ret != sizeof(MsgConnect) ||
+	if (h->size != sizeof(struct MsgConnect) + sizeof(struct packet_header) ||
 			m->msg_id != MPMSG_CONNECT ||
 			m->player_id > max_players ||
 			m->player_id < 1)
@@ -1221,20 +1110,15 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *a
 		return 0;
 
 	// add the new player
-	player_pool[m->player_id-1].address.host = p.address.host;
-	player_pool[m->player_id-1].address.port = p.address.port;
+	player_pool[m->player_id-1].address.host = address->host;
+	player_pool[m->player_id-1].address.port = address->port;
 
 	*who = m->player_id;
-	address->host = p.address.host;
-	address->port = p.address.port;
 
 	a.msg_id = MPMSG_CONNECT_ACK;
 
-	p.data = (uint8_t *)&a;
-	p.len = sizeof(struct MsgConnectAck);
-
 	// send the connection ack message
-	network->send(peer_sock, &p);
+	send_nonseq_msg(peer_sock, (char *)&a, sizeof(struct MsgConnectAck), address);
 
 	MSG("[MultiPlayerSDL::udp_accept_connections] player %d connected by udp\n", m->player_id);
 
@@ -1291,7 +1175,8 @@ int MultiPlayerSDL::show_leader_board()
 {
 	struct MsgRequestLadder m;
 	struct MsgLadder *a;
-	struct net_msg packet;
+	struct inet_address addr;
+	struct packet_header *h;
 	int ret, i, x, y;
 
 	if (!game_sock)
@@ -1303,24 +1188,19 @@ int MultiPlayerSDL::show_leader_board()
 
 	m.msg_id = MPMSG_REQ_LADDER;
 
-	packet.data = (uint8_t *)&m;
-	packet.len = sizeof(struct MsgRequestLadder);
-	packet.address.host = remote_session_provider_address.host;
-	packet.address.port = remote_session_provider_address.port;
+	send_nonseq_msg(game_sock, (char *)&m, sizeof(struct MsgRequestLadder), &remote_session_provider_address);
 
-	network->send(game_sock, &packet);
+	h = (struct packet_header *)recv_buf;
+	a = (struct MsgLadder *)(recv_buf + sizeof(struct packet_header));
+	h->size = MP_UDP_MAX_PACKET_SIZE;
 
-	a = (struct MsgLadder *)recv_buf;
-	packet.data = (uint8_t *)recv_buf;
-	packet.len = MP_UDP_MAX_PACKET_SIZE;
-
-	ret = network->recv(game_sock, &packet);
+	ret = network->recv(game_sock, h, &addr);
 	if (ret <= 0)
 		return 0;
 
-	if (packet.len != sizeof(struct MsgLadder) ||
-		packet.address.host != remote_session_provider_address.host ||
-		packet.address.port != remote_session_provider_address.port ||
+	if (h->size != sizeof(struct MsgLadder) + sizeof(struct packet_header) ||
+		addr.host != remote_session_provider_address.host ||
+		addr.port != remote_session_provider_address.port ||
 		a->msg_id != MPMSG_LADDER)
 			return 0;
 
@@ -1330,11 +1210,11 @@ int MultiPlayerSDL::show_leader_board()
 	for (i = 0; i < MP_LADDER_LIST_SIZE; i++, y += 76)
 	{
 		String str;
-		char name[PLAYER_NAME_LEN+1];
+		char name[MP_PLAYER_NAME_LEN+1];
 		int pos, y2;
 
-		strncpy(name, a->list[i].name, PLAYER_NAME_LEN);
-		name[PLAYER_NAME_LEN] = 0;
+		strncpy(name, a->list[i].name, MP_PLAYER_NAME_LEN);
+		name[MP_PLAYER_NAME_LEN] = 0;
 
 		if (!name[0])
 			continue;

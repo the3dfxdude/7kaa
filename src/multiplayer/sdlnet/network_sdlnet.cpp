@@ -134,7 +134,7 @@ UDPsocket NetworkSDLNet::get_udp_socket(int sock)
 	return udp_socket_list[s];
 }
 
-int NetworkSDLNet::send(int sock, struct net_msg *p)
+int NetworkSDLNet::send(int sock, struct packet_header *p, struct inet_address *to)
 {
 	int s;
 	UDPpacket u;
@@ -145,21 +145,21 @@ int NetworkSDLNet::send(int sock, struct net_msg *p)
 		return 0;
 
 	u.channel = -1;
-	u.data = p->data;
-	u.len = p->len;
-	u.address.host = p->address.host;
-	u.address.port = p->address.port;
+	u.data = (Uint8 *)p;
+	u.len = p->size;
+	u.address.host = to->host;
+	u.address.port = to->port;
 	
 	if (!SDLNet_UDP_Send(udp_socket_list[s], -1, &u))
 	{
-		MSG("Couldn't send to %x %u\n", p->address.host, p->address.port);
+		MSG("Couldn't send to %x %u\n", to->host, to->port);
 		return 0;
 	}
 	return 1;
 }
 
 
-int NetworkSDLNet::recv(int sock, struct net_msg *p)
+int NetworkSDLNet::recv(int sock, struct packet_header *p, struct inet_address *from)
 {
 	int s;
 	int r;
@@ -171,8 +171,8 @@ int NetworkSDLNet::recv(int sock, struct net_msg *p)
 		return 0;
 
 	u.channel = -1;
-	u.data = p->data;
-	u.maxlen = p->len;
+	u.data = (Uint8 *)p;
+	u.maxlen = p->size;
 
 	r = SDLNet_UDP_Recv(udp_socket_list[s], &u);
 	if (r == -1)
@@ -182,10 +182,11 @@ int NetworkSDLNet::recv(int sock, struct net_msg *p)
 	}
 	if (!r)
 		return 0;
+	if (u.len != p->size)
+		return 0;
 
-	p->len = u.len;
-	p->address.host = u.address.host;
-	p->address.port = u.address.port;
+	from->host = u.address.host;
+	from->port = u.address.port;
 
 	return u.len;
 }

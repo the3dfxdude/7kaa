@@ -35,6 +35,103 @@
 #define MP_PASSWORD_LEN 32
 #define MP_FRIENDLY_NAME_LEN 64
 #define MP_RECV_BUFFER_SIZE 0x2000
+#define MP_GAME_LIST_SIZE 10
+#define MP_LADDER_LIST_SIZE 6
+// NOTE: MP_PLAYER_NAME_LEN must match PLAYER_NAME_LEN in OCONFIG.h
+#define MP_PLAYER_NAME_LEN 20
+
+enum
+{
+	MPMSG_GAME_BEACON = 0x1f4a0001,
+	MPMSG_REQ_GAME_LIST,
+	MPMSG_GAME_LIST,
+	MPMSG_VERSION_ACK,
+	MPMSG_VERSION_NAK,
+	MPMSG_CONNECT,
+	MPMSG_CONNECT_ACK,
+	MPMSG_REQ_LADDER,
+	MPMSG_LADDER,
+};
+
+#pragma pack(1)
+struct MsgHeader
+{
+	uint32_t msg_id;
+};
+
+struct MsgGameBeacon
+{
+	uint32_t msg_id;
+	char name[MP_SESSION_NAME_LEN];
+	char password;
+};
+
+struct MsgRequestGameList
+{
+	uint32_t msg_id;
+	uint32_t ack;
+};
+
+struct remote_game
+{
+	char name[MP_SESSION_NAME_LEN];
+	char password;
+	uint32_t host;
+	uint16_t port;
+};
+
+struct MsgGameList
+{
+	uint32_t msg_id;
+	uint32_t page;
+	uint32_t total_pages;
+	struct remote_game list[MP_GAME_LIST_SIZE];
+};
+
+struct MsgVersionAck
+{
+	uint32_t msg_id;
+};
+
+struct MsgVersionNak
+{
+	uint32_t msg_id;
+	uint32_t major;
+	uint32_t medium;
+	uint32_t minor;
+};
+
+struct MsgConnect
+{
+	uint32_t msg_id;
+	uint32_t player_id;
+	char password[MP_SESSION_NAME_LEN];
+};
+
+struct MsgConnectAck
+{
+	uint32_t msg_id;
+};
+
+struct MsgRequestLadder
+{
+	uint32_t msg_id;
+};
+
+struct ladder_entry
+{
+	char name[MP_PLAYER_NAME_LEN];
+	uint16_t wins;
+	uint16_t losses;
+	int32_t score;
+};
+
+struct MsgLadder
+{
+	uint32_t msg_id;
+	struct ladder_entry list[MP_LADDER_LIST_SIZE];
+};
+#pragma pack()
 
 enum ProtocolType
 {
@@ -162,11 +259,13 @@ public:
 	int show_leader_board();
 
 private:
+	int send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to);
+
 	int create_player(TCPsocket socket);
 	int check_duplicates(struct inet_address *address);
-	void msg_game_beacon(struct net_msg *p);
-	int msg_game_list(struct net_msg *p, int last_ack);
-	void msg_version_nak(struct net_msg *p);
+	void msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr);
+	int msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr);
+	void msg_version_nak(MsgVersionNak *p, struct inet_address *addr);
 };
 
 extern MultiPlayerSDL mp_sdl;

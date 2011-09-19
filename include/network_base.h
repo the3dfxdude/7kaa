@@ -32,6 +32,13 @@ struct inet_address
         uint16_t port;
 };
 
+enum
+{
+	PACKET_NONSEQ = 0x1f01,
+	PACKET_STREAM,
+	PACKET_SYSTEM,
+};
+
 struct packet_header
 {
 	uint16_t type;
@@ -40,13 +47,6 @@ struct packet_header
 	uint16_t window_ack;
 	uint32_t sequence;
 	uint32_t sequence_ack;
-};
-
-struct net_msg
-{
-	uint8_t *data;
-	uint32_t len;
-	struct inet_address address;
 };
 
 #endif // _NETWORK_BASE_H
