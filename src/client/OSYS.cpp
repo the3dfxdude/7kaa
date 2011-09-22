@@ -686,6 +686,10 @@ void Sys::main_loop(int isLoadedGame)
 			int unreadyPlayerFlag = 0;
 			// ##### patch end Gilbert 17/11 #######//
 
+	//------- play sound effect ------//
+
+	se_ctrl.flush();
+
          if( config.frame_speed>0 )              // 0-frozen
          {
             if( remote.is_enable() )      // && is_sync_frame )

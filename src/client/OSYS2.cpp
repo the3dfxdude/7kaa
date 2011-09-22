@@ -125,10 +125,6 @@ void Sys::process()
 	frame_count++;
 	is_sync_frame = frame_count%3==0;	// check if sychronization should take place at this frame (for handling one sync per n frames)
 
-	//------- play sound effect ------//
-
-	se_ctrl.flush();
-
 	//--------- process objects -----------//
 
 	LOG_MSG(m.get_random_seed());
