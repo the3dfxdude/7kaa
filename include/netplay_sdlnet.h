@@ -260,6 +260,7 @@ public:
 
 private:
 	int send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to);
+	int send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to);
 
 	int create_player(TCPsocket socket);
 	int check_duplicates(struct inet_address *address);

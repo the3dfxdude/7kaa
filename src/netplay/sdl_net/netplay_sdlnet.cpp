@@ -779,6 +779,40 @@ int MultiPlayerSDL::send_nonseq_msg(int sock, char *msg, int msg_size, struct in
 	return 1;
 }
 
+int MultiPlayerSDL::send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to)
+{
+	char send_buf[MP_UDP_MAX_PACKET_SIZE];
+	struct packet_header *h;
+	char *msg_buf;
+	int total;
+
+	total = msg_size + sizeof(struct packet_header);
+	if (total > MP_UDP_MAX_PACKET_SIZE)
+	{
+		ERR("message exceeds maximum size\n");
+		return 0;
+	}
+
+	h = (struct packet_header *)send_buf;
+	msg_buf = send_buf + sizeof(struct packet_header);
+
+	h->type = PACKET_SYSTEM;
+	h->size = total;
+	h->window = 0;
+	h->sequence = 0;
+	h->window_ack = 0;
+	h->sequence_ack = 0;
+
+	memcpy(msg_buf, msg, msg_size);
+
+	if (!network->send(sock, h, to))
+	{
+		return 0;
+	}
+
+	return 1;
+}
+
 // send udp message
 //
 // pass BROADCAST_PID as toId to all players
@@ -1046,7 +1080,7 @@ int MultiPlayerSDL::udp_join_session(char *password)
 	strncpy(m.password, password, MP_SESSION_NAME_LEN);
 
 	// send the connection message
-	send_nonseq_msg(peer_sock, (char *)&m, sizeof(struct MsgConnect), addr);
+	send_system_msg(peer_sock, (char *)&m, sizeof(struct MsgConnect), addr);
 
 
 	h = (struct packet_header *)recv_buf;
@@ -1118,7 +1152,7 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *a
 	a.msg_id = MPMSG_CONNECT_ACK;
 
 	// send the connection ack message
-	send_nonseq_msg(peer_sock, (char *)&a, sizeof(struct MsgConnectAck), address);
+	send_system_msg(peer_sock, (char *)&a, sizeof(struct MsgConnectAck), address);
 
 	MSG("[MultiPlayerSDL::udp_accept_connections] player %d connected by udp\n", m->player_id);
 
