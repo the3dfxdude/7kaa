@@ -110,6 +110,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	network = new NetworkSDLNet();
 	peer_sock = 0;
 	game_sock = 0;
+	status = MP_STATUS_IDLE;
 
 	if (!is_protocol_supported(protocol_type)) {
 		ERR("[MultiPlayerSDL::init] trying to init unsupported protocol\n");
@@ -180,6 +181,7 @@ void MultiPlayerSDL::deinit()
 	lobbied_flag = 0;
 	my_player_id = 0;
 	sock_set = NULL;
+	status = MP_STATUS_IDLE;
 }
 
 // init_lobbied
@@ -1075,6 +1077,8 @@ int MultiPlayerSDL::udp_join_session(char *password)
 	if (!peer_sock || !addr->host)
 		return 0;
 
+	status = MP_STATUS_CONNECTING;
+
 	m.msg_id = MPMSG_CONNECT;
 	m.player_id = my_player_id;
 	strncpy(m.password, password, MP_SESSION_NAME_LEN);
@@ -1099,6 +1103,8 @@ int MultiPlayerSDL::udp_join_session(char *password)
 			h->size != sizeof(struct MsgConnectAck) + sizeof(struct packet_header) ||
 			a->msg_id != MPMSG_CONNECT_ACK)
 		return 0;
+
+	status = MP_STATUS_PREGAME;
 
 	MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
 	return 1;

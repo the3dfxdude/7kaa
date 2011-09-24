@@ -40,6 +40,13 @@
 // NOTE: MP_PLAYER_NAME_LEN must match PLAYER_NAME_LEN in OCONFIG.h
 #define MP_PLAYER_NAME_LEN 20
 
+#define MP_STATUS_IDLE 0
+#define MP_STATUS_CONNECTING 1
+#define MP_STATUS_PREGAME 2
+#define MP_STATUS_INGAME 3
+#define MP_STATUS_REQ_GAME_LIST 4
+#define MP_STATUS_REQ_LADDER 5
+
 enum
 {
 	MPMSG_GAME_BEACON = 0x1f4a0001,
@@ -177,6 +184,8 @@ private:
 
 	int               init_flag;
 	int               lobbied_flag;
+	int               status;
+
 	ProtocolType      supported_protocols;
 	DynArrayB         current_sessions;
 	SDLSessionDesc    joined_session;
