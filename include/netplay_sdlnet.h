@@ -58,6 +58,7 @@ enum
 	MPMSG_CONNECT_ACK,
 	MPMSG_REQ_LADDER,
 	MPMSG_LADDER,
+	MPMSG_NEW_PEER_ADDRESS,
 };
 
 #pragma pack(1)
@@ -137,6 +138,14 @@ struct MsgLadder
 {
 	uint32_t msg_id;
 	struct ladder_entry list[MP_LADDER_LIST_SIZE];
+};
+
+struct MsgNewPeerAddress
+{
+	uint32_t msg_id;
+	uint32_t player_id;
+	uint32_t host;
+	uint16_t port;
 };
 #pragma pack()
 
@@ -244,7 +253,6 @@ public:
 	void   close_session();
 	void   disable_join_session();
 	void   accept_connections();
-	int    udp_accept_connections(uint32_t *who, struct inet_address *address);
 	SDLSessionDesc * get_session(int i);
 
 	// -------- functions on player management -------//
@@ -278,6 +286,8 @@ private:
 	void msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr);
 	int msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr);
 	void msg_version_nak(MsgVersionNak *p, struct inet_address *addr);
+
+	void udp_accept_connections();
 
 	void yield_connecting();
 	void yield_pregame();

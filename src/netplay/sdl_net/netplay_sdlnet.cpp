@@ -503,6 +503,8 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 	}
 	set_my_player_id(1);
 
+	status = MP_STATUS_PREGAME;
+
 	return TRUE;
 }
 
@@ -1089,14 +1091,16 @@ int MultiPlayerSDL::udp_join_session(char *password)
 //
 // returns zero if there are no new connections
 // returns len, which is the size of struct inet_address
-int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *address)
+void MultiPlayerSDL::udp_accept_connections()
 {
+	struct inet_address address;
 	struct packet_header *h;
 	struct MsgConnect *m;
 	struct MsgConnectAck a;
 	char password[MP_SESSION_NAME_LEN+1];
 	int i;
 	int ret;
+	MsgNewPeerAddress msg;
 
 	h = (struct packet_header *)recv_buf;
 	m = (struct MsgConnect *)(recv_buf + sizeof(struct packet_header));
@@ -1104,39 +1108,42 @@ int MultiPlayerSDL::udp_accept_connections(uint32_t *who, struct inet_address *a
 	h->size = MP_UDP_MAX_PACKET_SIZE;
 
 	if (!listen_sock || !peer_sock)
-		return 0;
+		return;
 
-	ret = network->recv(peer_sock, h, address);
+	ret = network->recv(peer_sock, h, &address);
 	if (ret <= 0)
-		return 0;
+		return;
 
 	// check if this is really a connect message
 	if (h->size != sizeof(struct MsgConnect) + sizeof(struct packet_header) ||
 			m->msg_id != MPMSG_CONNECT ||
 			m->player_id > max_players ||
 			m->player_id < 1)
-		return 0;
+		return;
 
 	// check the password
 	strncpy(password, m->password, MP_SESSION_NAME_LEN);
 	password[MP_SESSION_NAME_LEN] = 0;
 	if (strcmp(joined_session.password, password) != 0)
-		return 0;
+		return;
 
 	// add the new player
-	player_pool[m->player_id-1].address.host = address->host;
-	player_pool[m->player_id-1].address.port = address->port;
-
-	*who = m->player_id;
+	player_pool[m->player_id-1].address.host = address.host;
+	player_pool[m->player_id-1].address.port = address.port;
 
 	a.msg_id = MPMSG_CONNECT_ACK;
 
 	// send the connection ack message
-	send_system_msg(peer_sock, (char *)&a, sizeof(struct MsgConnectAck), address);
+	send_system_msg(peer_sock, (char *)&a, sizeof(struct MsgConnectAck), &address);
+
+	// tell all peers
+	msg.msg_id = MPMSG_NEW_PEER_ADDRESS;
+	msg.player_id = m->player_id;
+	msg.host = address.host;
+	msg.port = address.port;
+	send_stream(BROADCAST_PID, &msg, sizeof(msg));
 
 	MSG("[MultiPlayerSDL::udp_accept_connections] player %d connected by udp\n", m->player_id);
-
-	return sizeof(struct inet_address);
 }
 
 void MultiPlayerSDL::set_peer_address(uint32_t who, struct inet_address *address)
@@ -1309,7 +1316,10 @@ void MultiPlayerSDL::yield_connecting()
 
 void MultiPlayerSDL::yield_pregame()
 {
-
+	if (host_flag)
+	{
+		udp_accept_connections();
+	}
 }
 
 void MultiPlayerSDL::yield()

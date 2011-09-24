@@ -118,7 +118,6 @@ public:
 	void	close_session();
 	void	disable_join_session();		// so that new player cannot join
 	void   accept_connections();
-	int    udp_accept_connections(uint32_t *who, struct inet_address *address);
 
 	// -------- functions on player management -------//
 	int         add_player(char *name, uint32_t id);

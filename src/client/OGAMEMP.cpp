@@ -136,7 +136,6 @@ enum
 	MPMSG_SET_PROCESS_FRAME_DELAY,
 	MPMSG_COOKIE,
 	MPMSG_PLAYER_DISCONNECT,
-	MPMSG_NEW_PEER_ADDRESS
 };
 
 struct MpStructBase
@@ -380,19 +379,6 @@ struct MpStructPlayerDisconnect : public MpStructBase
 	PID_TYPE lost_player_id;
 	MpStructPlayerDisconnect(PID_TYPE lost_player) : MpStructBase(MPMSG_PLAYER_DISCONNECT),
 		lost_player_id(lost_player) {}
-};
-
-struct MpStructNewPeerAddress : public MpStructBase
-{
-	PID_TYPE player_id;
-	uint32_t host;
-	uint16_t port;
-	MpStructNewPeerAddress(PID_TYPE id, struct inet_address *addr) : MpStructBase(MPMSG_NEW_PEER_ADDRESS),
-		player_id(id)
-	{
-		host = addr->host;
-		port = addr->port;
-	}
 };
 
 //--------- Define static functions ------------//
@@ -2293,6 +2279,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		vga_front.lock_buf();
 		// ####### end Gilbert 23/10 #######//
 
+		mp_obj.yield();
 		sys.yield();
 		mouse.get_event();
 
@@ -2631,7 +2618,11 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 										struct inet_address addr;
 										int len;
 										len = desc->get_address(&addr);
-										MpStructNewPeerAddress msgPeer(i, &addr);
+										MsgNewPeerAddress msgPeer;
+										msgPeer.msg_id = MPMSG_NEW_PEER_ADDRESS;
+										msgPeer.player_id = i;
+										msgPeer.host = addr.host;
+										msgPeer.port = addr.port;
 										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
 									}
 								}
@@ -2916,7 +2907,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				case MPMSG_NEW_PEER_ADDRESS:
 					if (!remote.is_host) {
 						struct inet_address address;
-						MpStructNewPeerAddress *msg = (MpStructNewPeerAddress *)recvPtr;
+						MsgNewPeerAddress *msg = (MsgNewPeerAddress *)recvPtr;
 						address.host = msg->host;
 						address.port = msg->port;
 						mp_obj.set_peer_address(msg->player_id, &address);
@@ -2925,17 +2916,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				default:		// if the game is started, any other thing is received
 					return 0;
 				}
-			}
-		}
-
-		// handle peer discovery
-		if (remote.is_host) {
-			struct inet_address address;
-			uint32_t who;
-			int len = mp_obj.udp_accept_connections(&who, &address);
-			if (len) {
-				MpStructNewPeerAddress msgPeer(who, &address);
-				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));
 			}
 		}
 
@@ -4194,6 +4174,7 @@ int Game::mp_select_load_option(char *fileName)
 		vga_front.lock_buf();
 		// ####### begin Gilbert 24/10 ########//
 
+		mp_obj.yield();
 		sys.yield();
 		mouse.get_event();
 
@@ -4546,7 +4527,11 @@ int Game::mp_select_load_option(char *fileName)
 										struct inet_address addr;
 										int len;
 										len = desc->get_address(&addr);
-										MpStructNewPeerAddress msgPeer(i, &addr);
+										MsgNewPeerAddress msgPeer;
+										msgPeer.msg_id = MPMSG_NEW_PEER_ADDRESS;
+										msgPeer.player_id = i;
+										msgPeer.host = addr.host;
+										msgPeer.port = addr.port;
 										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
 									}
 								}
@@ -4684,7 +4669,7 @@ int Game::mp_select_load_option(char *fileName)
 				case MPMSG_NEW_PEER_ADDRESS:
 					if (!remote.is_host) {
 						struct inet_address address;
-						MpStructNewPeerAddress *msg = (MpStructNewPeerAddress *)recvPtr;
+						MsgNewPeerAddress *msg = (MsgNewPeerAddress *)recvPtr;
 						address.host = msg->host;
 						address.port = msg->port;
 						mp_obj.set_peer_address(msg->player_id, &address);
@@ -4693,17 +4678,6 @@ int Game::mp_select_load_option(char *fileName)
 				default:		// if the game is started, any other thing is received
 					return 0;
 				}
-			}
-		}
-
-		// handle peer discovery
-		if (remote.is_host) {
-			struct inet_address address;
-			uint32_t who;
-			int len = mp_obj.udp_accept_connections(&who, &address);
-			if (len) {
-				MpStructNewPeerAddress msgPeer(who, &address);
-				mp_obj.send_stream(BROADCAST_PID, &msgPeer, sizeof(msgPeer));
 			}
 		}
 
