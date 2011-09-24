@@ -280,6 +280,7 @@ private:
 	void msg_version_nak(MsgVersionNak *p, struct inet_address *addr);
 
 	void yield_connecting();
+	void yield_pregame();
 };
 
 extern MultiPlayerSDL mp_sdl;

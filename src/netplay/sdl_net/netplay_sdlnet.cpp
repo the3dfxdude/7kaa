@@ -1307,12 +1307,20 @@ void MultiPlayerSDL::yield_connecting()
 	MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
 }
 
+void MultiPlayerSDL::yield_pregame()
+{
+
+}
+
 void MultiPlayerSDL::yield()
 {
 	switch (status)
 	{
 	case MP_STATUS_CONNECTING:
 		yield_connecting();
+		break;
+	case MP_STATUS_PREGAME:
+		yield_pregame();
 		break;
 	}
 }
