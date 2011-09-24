@@ -106,6 +106,7 @@ public:
 	void   poll_supported_protocols(); // can be called before init
 	bool   is_protocol_supported(ProtocolType);
 	int    is_update_available();
+	int    is_pregame();
 
 	// ------- functions on session --------//
 	int	poll_sessions();
@@ -139,6 +140,7 @@ public:
 	char *receive_stream(uint32_t * from, uint32_t * to, uint32_t * recvLen, int *sysMsgCount=0);
 
 	int show_leader_board();
+	void yield();
 };
 
 extern MultiPlayerNone mp_none;

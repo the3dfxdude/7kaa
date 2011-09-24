@@ -232,6 +232,7 @@ public:
 	void   poll_supported_protocols(); // can be called before init
 	bool   is_protocol_supported(ProtocolType);
 	int    is_update_available();
+	int    is_pregame();
 
 	// ------- functions on session --------//
 	int    set_remote_session_provider(const char *server);
@@ -266,6 +267,7 @@ public:
 	char * receive_stream(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount=0);
 
 	int show_leader_board();
+	void yield();
 
 private:
 	int send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to);
@@ -276,6 +278,8 @@ private:
 	void msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr);
 	int msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr);
 	void msg_version_nak(MsgVersionNak *p, struct inet_address *addr);
+
+	void yield_connecting();
 };
 
 extern MultiPlayerSDL mp_sdl;

@@ -238,6 +238,11 @@ int MultiPlayerSDL::is_update_available()
 	return update_available;
 }
 
+int MultiPlayerSDL::is_pregame()
+{
+	return status == MP_STATUS_PREGAME;
+}
+
 int MultiPlayerSDL::check_duplicates(struct inet_address *address)
 {
 	int i;
@@ -1065,48 +1070,17 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 // returns false when the udp session is not yet established (try again later)
 int MultiPlayerSDL::udp_join_session(char *password)
 {
-	struct inet_address joining;
-	struct packet_header *h;
-	struct MsgConnect m;
-	struct MsgConnectAck *a;
 	struct inet_address *addr;
-	int ret;
 
 	addr = &player_pool[0].address;
 
 	if (!peer_sock || !addr->host)
 		return 0;
 
+	strncpy(joined_session.password, password, MP_SESSION_NAME_LEN);
+
 	status = MP_STATUS_CONNECTING;
 
-	m.msg_id = MPMSG_CONNECT;
-	m.player_id = my_player_id;
-	strncpy(m.password, password, MP_SESSION_NAME_LEN);
-
-	// send the connection message
-	send_system_msg(peer_sock, (char *)&m, sizeof(struct MsgConnect), addr);
-
-
-	h = (struct packet_header *)recv_buf;
-	a = (struct MsgConnectAck *)(recv_buf + sizeof(struct packet_header));
-
-	h->size = MP_UDP_MAX_PACKET_SIZE;
-
-	// check for ack
-	ret = network->recv(peer_sock, h, &joining);
-	if (ret <= 0)
-		return 0;
-
-	// check if this really is an ack
-	if (joining.host != addr->host ||
-			joining.port != addr->port ||
-			h->size != sizeof(struct MsgConnectAck) + sizeof(struct packet_header) ||
-			a->msg_id != MPMSG_CONNECT_ACK)
-		return 0;
-
-	status = MP_STATUS_PREGAME;
-
-	MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
 	return 1;
 }
 
@@ -1291,4 +1265,54 @@ int MultiPlayerSDL::show_leader_board()
 	vga_util.finish_disp_image_file();
 
 	return 1;
+}
+
+void MultiPlayerSDL::yield_connecting()
+{
+	struct inet_address joining;
+	struct packet_header *h;
+	struct MsgConnect m;
+	struct MsgConnectAck *a;
+	struct inet_address *addr;
+	int ret;
+
+	addr = &player_pool[0].address;
+	m.msg_id = MPMSG_CONNECT;
+	m.player_id = my_player_id;
+	strncpy(m.password, joined_session.password, MP_SESSION_NAME_LEN);
+
+	// send the connection message
+	send_system_msg(peer_sock, (char *)&m, sizeof(struct MsgConnect), addr);
+
+
+	h = (struct packet_header *)recv_buf;
+	a = (struct MsgConnectAck *)(recv_buf + sizeof(struct packet_header));
+
+	h->size = MP_UDP_MAX_PACKET_SIZE;
+
+	// check for ack
+	ret = network->recv(peer_sock, h, &joining);
+	if (ret <= 0)
+		return;
+
+	// check if this really is an ack
+	if (joining.host != addr->host ||
+			joining.port != addr->port ||
+			h->size != sizeof(struct MsgConnectAck) + sizeof(struct packet_header) ||
+			a->msg_id != MPMSG_CONNECT_ACK)
+		return;
+
+	status = MP_STATUS_PREGAME;
+
+	MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
+}
+
+void MultiPlayerSDL::yield()
+{
+	switch (status)
+	{
+	case MP_STATUS_CONNECTING:
+		yield_connecting();
+		break;
+	}
 }

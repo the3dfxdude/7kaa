@@ -108,6 +108,11 @@ int MultiPlayerNone::is_update_available()
 	return -1;
 }
 
+int MultiPlayerNone::is_pregame()
+{
+	return 0;
+}
+
 bool MultiPlayerNone::is_protocol_supported(ProtocolType protocol)
 {
 	return (protocol & supported_protocols) != 0;
@@ -321,4 +326,9 @@ void MultiPlayerNone::sort_sessions(int sortType )
 int MultiPlayerNone::show_leader_board()
 {
 	return 1;
+}
+
+void MultiPlayerNone::yield()
+{
+
 }

@@ -1677,6 +1677,9 @@ int Game::mp_join_session(int session_id, char *player_name)
 			if (!connected)
 				break;
 
+			if (!mp_obj.udp_join_session(password))
+				break;
+
 			MpStructCookie cookie;
 			mp_obj.send_stream(1, &cookie, sizeof(cookie));
 		} else if (connected) {
@@ -1700,7 +1703,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 					}
 				}
 			}
-			else if (mp_obj.udp_join_session(password))
+			else if (mp_obj.is_pregame())
 			{
 				finished = 1;
 				break;
@@ -1709,6 +1712,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 		vga_front.lock_buf();
 
+		mp_obj.yield();
 		sys.yield();
 		mouse.get_event();
 
