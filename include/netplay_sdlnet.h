@@ -207,7 +207,7 @@ private:
 	int               allowing_connections;
 	int               max_players;
 
-	SDLPlayer         player_pool[MAX_NATION];
+	SDLPlayer         *player_pool[MAX_NATION];
 
 	char *            recv_buf;
 

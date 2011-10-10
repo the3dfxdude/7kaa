@@ -134,10 +134,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	network->resolve_host(&lan_broadcast_address, "255.255.255.255", UDP_GAME_PORT);
 
 	for (int i = 0; i < MAX_NATION; i++) {
-		player_pool[i].id = 0;
-		player_pool[i].connecting = 0;
-		player_pool[i].socket = NULL;
-		memset(&player_pool[i].address, 0, sizeof(player_pool[i].address));
+		player_pool[i] = NULL;
 	}
 
 	recv_buf = new char[MP_RECV_BUFFER_SIZE];
@@ -551,9 +548,11 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	max_players = MAX_NATION;
 
 	// register the host now, even though his name is not known yet
-	player_pool[0].address.host = session->address.host;
-	player_pool[0].address.port = session->address.port;
-	player_pool[0].connecting = 1;
+	player_pool[0] = new SDLPlayer();
+	player_pool[0]->id = 0;
+	player_pool[0]->address.host = session->address.host;
+	player_pool[0]->address.port = session->address.port;
+	player_pool[0]->connecting = 1;
 
 	joined_session = *session;
 
@@ -634,16 +633,17 @@ int MultiPlayerSDL::create_player(TCPsocket socket)
 
 	// search for an empty slot
 	for (i = 0; i < max_players; i++)
-		if (!player_pool[i].id)
+		if (!player_pool[i])
 			break;
 	if (i >= max_players)
 		return 0;
 
 	// add to the pool
-	player_pool[i].id = i+1;
-	strcpy(player_pool[i].name, "?anonymous?");
-	player_pool[i].connecting = 1;
-	player_pool[i].socket = socket;
+	player_pool[i] = new SDLPlayer();
+	player_pool[i]->id = i+1;
+	strcpy(player_pool[i]->name, "?anonymous?");
+	player_pool[i]->connecting = 1;
+	player_pool[i]->socket = socket;
 
 	int total = SDLNet_TCP_AddSocket(sock_set, socket);
 	if (total == -1) {
@@ -663,15 +663,15 @@ int MultiPlayerSDL::create_player(TCPsocket socket)
 //
 int MultiPlayerSDL::add_player(char *name, uint32_t id)
 {
-	if (player_pool[id-1].id)
-		// if this happens, we got problems
-		return 0;
+	if (!player_pool[id-1]) {
+		player_pool[id-1] = new SDLPlayer();
+	}
 
 	// add to the pool
-	player_pool[id-1].id = id;
-	strncpy(player_pool[id-1].name, name, MP_FRIENDLY_NAME_LEN);
-	player_pool[id-1].connecting = 1;
-	player_pool[id-1].socket = NULL; // not used by a client
+	player_pool[id-1]->id = id;
+	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
+	player_pool[id-1]->connecting = 1;
+	player_pool[id-1]->socket = NULL; // not used by a client
 
 	return 1;
 }
@@ -680,19 +680,20 @@ void MultiPlayerSDL::set_my_player_id(uint32_t id)
 {
 	IPaddress *local;
 
-	err_when(!id || id > max_players);
+	err_when(!id || id > max_players || !player_pool[my_player_id-1]);
 
 	my_player_id = id;
 
 	local = SDLNet_UDP_GetPeerAddress(network->get_udp_socket(peer_sock), -1);
-	network->resolve_host(&player_pool[my_player_id-1].address, "127.0.0.1", local->port);
+	network->resolve_host(&player_pool[my_player_id-1]->address, "127.0.0.1", local->port);
 
-	MSG("[MultiPlayerSDL::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1].address.host, player_pool[my_player_id-1].address.port);
+	MSG("[MultiPlayerSDL::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1]->address.host, player_pool[my_player_id-1]->address.port);
 }
 
 void MultiPlayerSDL::set_player_name(uint32_t id, char *name)
 {
-	strncpy(player_pool[id-1].name, name, MP_FRIENDLY_NAME_LEN);
+	err_when(!player_pool[id-1]);
+	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
 }
 
 // Deletes a player from the pool
@@ -702,15 +703,13 @@ void MultiPlayerSDL::set_player_name(uint32_t id, char *name)
 void MultiPlayerSDL::delete_player(uint32_t id)
 {
 	err_when(id < 1 || id > max_players);
-	if (player_pool[id-1].id) {
-		if (player_pool[id-1].socket) {
-			SDLNet_TCP_DelSocket(sock_set, player_pool[id-1].socket);
-			SDLNet_TCP_Close(player_pool[id-1].socket);
-			player_pool[id-1].socket = NULL;
+	if (player_pool[id-1]) {
+		if (player_pool[id-1]->socket) {
+			SDLNet_TCP_DelSocket(sock_set, player_pool[id-1]->socket);
+			SDLNet_TCP_Close(player_pool[id-1]->socket);
 		}
-		player_pool[id-1].id = 0;
-		player_pool[id-1].connecting = 0;
-		memset(&player_pool[id-1].address, 0, sizeof(player_pool[id-1].address));
+		delete player_pool[id-1];
+		player_pool[id-1] = NULL;
 	}
 }
 
@@ -720,16 +719,16 @@ void MultiPlayerSDL::poll_players()
 
 SDLPlayer *MultiPlayerSDL::get_player(int i)
 {
-	if (i < 1 || i > max_players || player_pool[i-1].id != i)
+	if (i < 1 || i > max_players)
 		return NULL;
-	return &player_pool[i-1];
+	return player_pool[i-1];
 }
 
 SDLPlayer *MultiPlayerSDL::search_player(uint32_t playerId)
 {
-	if (playerId < 1 || playerId > max_players || player_pool[playerId-1].id != playerId)
+	if (playerId < 1 || playerId > max_players)
 		return NULL;
-	return &player_pool[playerId-1];
+	return player_pool[playerId-1];
 }
 
 // determine whether a player is lost
@@ -740,16 +739,16 @@ SDLPlayer *MultiPlayerSDL::search_player(uint32_t playerId)
 //
 int MultiPlayerSDL::is_player_connecting(uint32_t playerId)
 {
-	if (playerId < 1 || playerId > max_players || player_pool[playerId-1].id != playerId)
+	if (playerId < 1 || playerId > max_players || !player_pool[playerId-1])
 		return 0;
-	return player_pool[playerId-1].connecting;
+	return player_pool[playerId-1]->connecting;
 }
 
 int MultiPlayerSDL::get_player_count()
 {
 	int count = 0;
 	for (int i = 0; i < max_players; i++)
-		if (player_pool[i].id == i+1 && player_pool[i].connecting)
+		if (player_pool[i] && player_pool[i]->connecting)
 			count++;
 	return count;
 }
@@ -844,14 +843,16 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 	if (to == BROADCAST_PID) {
 		int i;
 		for (i = 0; i < max_players; i++)
-			if (player_pool[i].connecting && i+1 != my_player_id)
+			if (player_pool[i] &&
+				player_pool[i]->connecting &&
+				i+1 != my_player_id)
 				this->send(i+1, data, msg_size);
 		return TRUE;
 	}
 
-	if (player_pool[to-1].connecting)
+	if (player_pool[to-1] && player_pool[to-1]->connecting)
 	{
-		if (!send_nonseq_msg(peer_sock, (char *)data, msg_size, &player_pool[to-1].address))
+		if (!send_nonseq_msg(peer_sock, (char *)data, msg_size, &player_pool[to-1]->address))
 		{
 			ERR("[MultiPlayerSDL::send] error while sending data to player %d\n", to);
 			return FALSE;
@@ -882,16 +883,18 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 		if (to == BROADCAST_PID) {
 			int i;
 			for (i = 0; i < max_players; i++)
-				if (player_pool[i].socket && i+1 != my_player_id)
+				if (player_pool[i] &&
+					player_pool[i]->socket &&
+					i+1 != my_player_id)
 					send_stream(i+1, data, msg_size);
 			return TRUE;
 		}
 
-		if (!player_pool[to-1].socket) {
+		if (!player_pool[to-1] || !player_pool[to-1]->socket) {
 			MSG("[MultiPlayerSDL::send_stream] player %d is not connected\n", to);
 			return FALSE;
 		}
-		dest = player_pool[to-1].socket;
+		dest = player_pool[to-1]->socket;
 	} else {
 		// clients forward through the host
 		if (!host_sock) {
@@ -949,9 +952,10 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 		if (ret > 0) {
 			int i;
 			for (i = 0; i < max_players; i++) {
-				if (player_pool[i].connecting &&
-				    player_pool[i].address.host == addr.host &&
-				    player_pool[i].address.port == addr.port)
+				if (player_pool[i] &&
+				    player_pool[i]->connecting &&
+				    player_pool[i]->address.host == addr.host &&
+				    player_pool[i]->address.port == addr.port)
 					break;
 			}
 			*from = i < max_players ? i+1 : 0;
@@ -1008,9 +1012,10 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	if (host_flag) {
 		int count = 0;
 		while (count++ < max_players) {
-			if (player_pool[round_robin].socket &&
-			    SDLNet_SocketReady(player_pool[round_robin].socket)) {
-				socket = player_pool[round_robin].socket;
+			if (player_pool[round_robin] &&
+			    player_pool[round_robin]->socket &&
+			    SDLNet_SocketReady(player_pool[round_robin]->socket)) {
+				socket = player_pool[round_robin]->socket;
 				player_index = round_robin;
 				break;
 			}
@@ -1028,7 +1033,8 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	// read the message header
 	ready = SDLNet_TCP_Recv(socket, recv_buf, header_size);
 	if (ready <= 0) {
-		player_pool[player_index].connecting = 0;
+		delete player_pool[player_index];
+		player_pool[player_index] = NULL;
 		if (sysMsgCount) *sysMsgCount = 1;
 		return NULL;
 	} else if (ready < header_size) {
@@ -1042,7 +1048,8 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	// of the buffer
 	if (msg_size > MP_RECV_BUFFER_SIZE) {
 		MSG("[MultiPlayerSDL::receive_stream] player %d wants to send %d bytes, rejected\n", player_index+1, msg_size);
-		player_pool[player_index].connecting = 0;
+		delete player_pool[player_index];
+		player_pool[player_index] = NULL;
 		if (sysMsgCount) *sysMsgCount = 1;
 		return NULL;
 	}
@@ -1050,7 +1057,8 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 	// read in the data
 	ready = SDLNet_TCP_Recv(socket, recv_buf, msg_size);
 	if (ready <= 0) {
-		player_pool[player_index].connecting = 0;
+		delete player_pool[player_index];
+		player_pool[player_index] = NULL;
 		if (sysMsgCount) *sysMsgCount = 1;
 		return NULL;
 	} else if (ready < msg_size) {
@@ -1074,7 +1082,10 @@ int MultiPlayerSDL::udp_join_session(char *password)
 {
 	struct inet_address *addr;
 
-	addr = &player_pool[0].address;
+	if (!player_pool[0])
+		return 0;
+
+	addr = &player_pool[0]->address;
 
 	if (!peer_sock || !addr->host)
 		return 0;
@@ -1128,8 +1139,11 @@ void MultiPlayerSDL::udp_accept_connections()
 		return;
 
 	// add the new player
-	player_pool[m->player_id-1].address.host = address.host;
-	player_pool[m->player_id-1].address.port = address.port;
+	if (!player_pool[m->player_id-1])
+		// Not connected by TCP
+		return;
+	player_pool[m->player_id-1]->address.host = address.host;
+	player_pool[m->player_id-1]->address.port = address.port;
 
 	a.msg_id = MPMSG_CONNECT_ACK;
 
@@ -1152,9 +1166,11 @@ void MultiPlayerSDL::set_peer_address(uint32_t who, struct inet_address *address
 
 	if (who == my_player_id)
 		return;
+	if (!player_pool[who-1])
+		return;
 
-	player_pool[who-1].address.host = address->host;
-	player_pool[who-1].address.port = address->port;
+	player_pool[who-1]->address.host = address->host;
+	player_pool[who-1]->address.port = address->port;
 
 	MSG("[MultiPlayerSDL::set_peer_address] set address for %d\n", who);
 }
@@ -1283,7 +1299,7 @@ void MultiPlayerSDL::yield_connecting()
 	struct inet_address *addr;
 	int ret;
 
-	addr = &player_pool[0].address;
+	addr = &player_pool[0]->address;
 	m.msg_id = MPMSG_CONNECT;
 	m.player_id = my_player_id;
 	strncpy(m.password, joined_session.password, MP_SESSION_NAME_LEN);
