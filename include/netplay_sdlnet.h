@@ -157,16 +157,16 @@ enum ProtocolType
 	Serial = 8
 };
 
-struct SDLSessionDesc
+struct SessionDesc
 {
 	char session_name[MP_SESSION_NAME_LEN+1];
 	char password[MP_SESSION_NAME_LEN+1];
 	uint32_t id;
 	struct inet_address address;
 
-	SDLSessionDesc();
-	SDLSessionDesc(const SDLSessionDesc &);
-	SDLSessionDesc& operator= (const SDLSessionDesc &);
+	SessionDesc();
+	SessionDesc(const SessionDesc &);
+	SessionDesc& operator= (const SessionDesc &);
 
 	char *name_str() { return session_name; };
 	uint32_t session_id() { return id; }
@@ -195,7 +195,7 @@ private:
 
 	ProtocolType      supported_protocols;
 	DynArrayB         current_sessions;
-	SDLSessionDesc    joined_session;
+	SessionDesc       joined_session;
 	NetworkSDLNet     *network;
 
 	uint32_t          my_player_id;
@@ -248,7 +248,7 @@ public:
 	void   close_session();
 	void   disable_join_session();
 	void   accept_connections();
-	SDLSessionDesc * get_session(int i);
+	SessionDesc* get_session(int i);
 
 	// -------- functions on player management -------//
 	int         add_player(char *name, uint32_t id);

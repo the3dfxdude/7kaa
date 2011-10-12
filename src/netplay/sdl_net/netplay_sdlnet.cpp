@@ -41,7 +41,7 @@ DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 const uint16_t UDP_GAME_PORT = 19255;
 
 
-SDLSessionDesc::SDLSessionDesc()
+SessionDesc::SessionDesc()
 {
 	id = 0;
 	session_name[0] = '\0';
@@ -49,7 +49,7 @@ SDLSessionDesc::SDLSessionDesc()
 	memset(&address, 0, sizeof(struct inet_address));
 }
 
-SDLSessionDesc::SDLSessionDesc(const SDLSessionDesc &src)
+SessionDesc::SessionDesc(const SessionDesc &src)
 {
 	id = src.id;
 	strcpy(session_name, src.session_name);
@@ -57,7 +57,7 @@ SDLSessionDesc::SDLSessionDesc(const SDLSessionDesc &src)
 	memcpy(&address, &src.address, sizeof(struct inet_address));
 }
 
-SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
+SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 {
 	id = src.id;
 	strcpy(session_name, src.session_name);
@@ -76,7 +76,7 @@ SDLSessionDesc& SDLSessionDesc::operator= (const SDLSessionDesc &src)
 // service; create_session or poll_sessions+join_session;
 
 MultiPlayerSDL::MultiPlayerSDL() :
-	current_sessions(sizeof(SDLSessionDesc), 10 )
+	current_sessions(sizeof(SessionDesc), 10 )
 {
 	init_flag = 0;
 	lobbied_flag = 0;
@@ -165,7 +165,7 @@ int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 {
 	MSG("[MultiPlayerSDL::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
 	if (cmdLine) {
-		SDLSessionDesc *session = new SDLSessionDesc();
+		SessionDesc *session = new SessionDesc();
 
 		strcpy(session->session_name, "Lobbied Game");
 		session->password[0] = 1;
@@ -222,9 +222,9 @@ int MultiPlayerSDL::check_duplicates(struct inet_address *address)
 	int i;
 	for (i = 0; i < current_sessions.size(); i++)
 	{
-		SDLSessionDesc *desc;
+		SessionDesc *desc;
 
-		desc = (SDLSessionDesc *)current_sessions.get(i+1);
+		desc = (SessionDesc *)current_sessions.get(i+1);
 		if (!desc)
 			return 0;
 		if (desc->address.host == address->host &&
@@ -242,12 +242,12 @@ int MultiPlayerSDL::set_remote_session_provider(const char *server)
 
 void MultiPlayerSDL::msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr)
 {
-	SDLSessionDesc *desc;
+	SessionDesc *desc;
 
 	if (check_duplicates(addr))
 		return;
 
-	desc = new SDLSessionDesc();
+	desc = new SessionDesc();
 
 	strncpy(desc->session_name, m->name, MP_SESSION_NAME_LEN);
 	desc->session_name[MP_SESSION_NAME_LEN] = 0;
@@ -263,7 +263,7 @@ void MultiPlayerSDL::msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr
 // returns the next ack
 int MultiPlayerSDL::msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr)
 {
-	SDLSessionDesc *desc;
+	SessionDesc *desc;
 	int i;
 
 	// only allow this message from a trusted provider
@@ -285,7 +285,7 @@ int MultiPlayerSDL::msg_game_list(MsgGameList *m, int last_ack, struct inet_addr
 			continue;
 		}
 
-		desc = new SDLSessionDesc();
+		desc = new SessionDesc();
 
 		strncpy(desc->session_name, m->list[i].name, MP_SESSION_NAME_LEN);
 		desc->session_name[MP_SESSION_NAME_LEN] = 0;
@@ -416,11 +416,11 @@ int MultiPlayerSDL::poll_sessions()
 //
 // <int> i			i-th session (i start from 1)
 // return pointer to a session, NULL if no more
-SDLSessionDesc *MultiPlayerSDL::get_session(int i)
+SessionDesc *MultiPlayerSDL::get_session(int i)
 {
 	if( i <= 0 || i > current_sessions.size() )
 		return NULL;
-	return (SDLSessionDesc *)current_sessions.get(i);
+	return (SessionDesc *)current_sessions.get(i);
 }
 
 // create a new session
@@ -481,7 +481,7 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 int MultiPlayerSDL::join_session(int i, char *playerName)
 {
 	IPaddress ip;
-	SDLSessionDesc *session = (SDLSessionDesc *)current_sessions.get(i);
+	SessionDesc *session = (SessionDesc *)current_sessions.get(i);
 	if (!session)
 		return FALSE;
 
@@ -975,14 +975,14 @@ void MultiPlayerSDL::set_peer_address(uint32_t who, struct inet_address *address
 /*
 static int sort_session_id(const void *a, const void *b)
 {
-	return memcmp( &((SDLSessionDesc *)a)->guidInstance, &((SDLSessionDesc *)b)->guidInstance,
+	return memcmp( &((SessionDesc *)a)->guidInstance, &((SessionDesc *)b)->guidInstance,
 		sizeof(GUID) );
 }
 */
 
 static int sort_session_name(const void *a, const void *b)
 {
-	return strcmp( ((SDLSessionDesc *)a)->name_str(), ((SDLSessionDesc *)b)->name_str() );
+	return strcmp( ((SessionDesc *)a)->name_str(), ((SessionDesc *)b)->name_str() );
 }
 
 // sort current_sessions
