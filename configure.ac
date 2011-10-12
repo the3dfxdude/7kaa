@@ -97,6 +97,11 @@ AC_ARG_ENABLE([debug],
   [], [enable_debug=no]
 )
 
+AC_ARG_ENABLE([network],
+  AS_HELP_STRING([--disable-network], [disable network support]),
+  [], [enable_network=yes]
+)
+
 AC_ARG_WITH([directx],
   AS_HELP_STRING([--with-directx], [use DirectX instead of SDL]),
   [], [with_directx=no]
@@ -124,6 +129,10 @@ AS_IF([test "$with_directx" = yes], [
   audio_backend=dsound
   input_backend=dinput
   video_backend=ddraw
+  net_backend=none
+])
+
+AS_IF([test "$enable_network" = no], [
   net_backend=none
 ])
 
@@ -340,6 +349,7 @@ AC_CONFIG_FILES([
   src/input/sdl/Makefile
   src/multiplayer/Makefile
   src/multiplayer/sdlnet/Makefile
+  src/multiplayer/none/Makefile
   src/netplay/Makefile
   src/netplay/common/Makefile
   src/netplay/none/Makefile

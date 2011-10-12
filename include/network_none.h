@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2011 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,32 @@
  *
  */
 
-#ifndef __netplay_h__
-#define __netplay_h__
+// Filename    : network_sdlnet.h
+// Description : SDLNet implementation for Network
 
-#include <netplay_sdlnet.h>
+#ifndef _NETWORK_NONE_H
+#define _NETWORK_NONE_H
 
-#endif	// __netplay_h__
+class NetworkNone
+{
+private:
 
+public:
+	NetworkNone();
+	~NetworkNone();
+
+	int init();
+	void deinit();
+
+	int resolve_host(struct inet_address *ip, const char *name, uint16_t port);
+
+	int udp_open(uint16_t port);
+	void udp_close(int sock);
+
+	int send(int sock, struct packet_header *p, struct inet_address *to);
+	int recv(int sock, struct packet_header *p, struct inet_address *from);
+};
+
+#define Network NetworkNone
+
+#endif // _NETWORK_NONE_H

@@ -269,13 +269,14 @@ if INPUT_SDL
 endif
 
 
+7kaa_LDADD += ../netplay/sdl_net/libmultiplayer.a
+
 if NET_NONE
-7kaa_LDADD += ../netplay/none/libnetplay_none.a
+7kaa_LDADD += ../multiplayer/none/libnetwork_none.a
 endif
 
 if NET_SDLNET
-7kaa_LDADD += ../netplay/sdl_net/libnetplay_sdlnet.a \
-	../multiplayer/sdlnet/libsdlnet.a
+7kaa_LDADD += ../multiplayer/sdlnet/libnetwork_sdlnet.a
 endif
 
 

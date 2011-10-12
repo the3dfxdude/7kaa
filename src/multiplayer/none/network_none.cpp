@@ -18,18 +18,53 @@
  *
  */
 
-// Filename    : network.h
-// Description : The Network class used by MultiPlayer
+// Filename    : network_none.cpp
+// Description : Dummy implementation for Network
 
-#ifndef _NETWORK_H
-#define _NETWORK_H
+#include <dbglog.h>
+#include <network.h>
 
-#include <network_base.h>
+DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
-#ifdef USE_SDLNET
-#include <network_sdlnet.h>
-#else
-#include <network_none.h>
-#endif
+NetworkNone::NetworkNone()
+{
+}
 
-#endif // _NETWORK_H
+NetworkNone::~NetworkNone()
+{
+	deinit();
+}
+
+int NetworkNone::init()
+{
+	return 0;
+}
+
+void NetworkNone::deinit()
+{
+}
+
+int NetworkNone::resolve_host(struct inet_address *ip, const char *name, uint16_t port)
+{
+	return 0;
+}
+
+int NetworkNone::udp_open(uint16_t port)
+{
+	return 0;
+}
+
+void NetworkNone::udp_close(int sock)
+{
+}
+
+int NetworkNone::send(int sock, struct packet_header *p, struct inet_address *to)
+{
+	return 0;
+}
+
+
+int NetworkNone::recv(int sock, struct packet_header *p, struct inet_address *from)
+{
+	return 0;
+}

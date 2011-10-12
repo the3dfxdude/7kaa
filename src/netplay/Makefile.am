@@ -1,9 +1,1 @@
-SUBDIRS = common
-
-if NET_NONE
-  SUBDIRS += none
-endif
-
-if NET_SDLNET
-  SUBDIRS += sdl_net
-endif
+SUBDIRS = common sdl_net
