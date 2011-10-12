@@ -1,1 +1,1 @@
-SUBDIRS = common sdl_net
+SUBDIRS = common

@@ -345,11 +345,11 @@ AC_CONFIG_FILES([
   src/input/none/Makefile
   src/input/sdl/Makefile
   src/multiplayer/Makefile
+  src/multiplayer/common/Makefile
   src/multiplayer/sdlnet/Makefile
   src/multiplayer/none/Makefile
   src/netplay/Makefile
   src/netplay/common/Makefile
-  src/netplay/sdl_net/Makefile
   src/server/Makefile
   src/video/Makefile
   src/video/common/Makefile
