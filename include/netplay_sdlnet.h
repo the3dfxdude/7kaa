@@ -179,7 +179,6 @@ struct SDLPlayer
 	uint32_t id;
 	char     name[MP_FRIENDLY_NAME_LEN+1];
 	char	connecting;		// initially set to 1, clear after player disconnected
-	TCPsocket socket;
 	struct inet_address address;
 
 	uint32_t pid() { return id; }
@@ -211,11 +210,8 @@ private:
 
 	char *            recv_buf;
 
-	TCPsocket         host_sock; // used by client to talk to game host
-	TCPsocket         listen_sock; // used by server
 	int               peer_sock; // peer-to-peer communication
 	int               game_sock;
-	SDLNet_SocketSet  sock_set;
 
 	struct inet_address lan_broadcast_address;
 	struct inet_address remote_session_provider_address;

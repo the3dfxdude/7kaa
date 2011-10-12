@@ -85,9 +85,6 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	my_player_id = 0;
 	host_flag = 0;
 	allowing_connections = 0;
-	host_sock = NULL;
-	listen_sock = NULL;
-	sock_set = NULL;
 	recv_buf = NULL;
 }
 
@@ -123,14 +120,6 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 		return;
 	}
 
-	sock_set = SDLNet_AllocSocketSet(MAX_NATION);
-	if (!sock_set) {
-		ERR("[MultiPlayerSDL::init] SDLNet_AllocSocketSet: %s\n", SDLNet_GetError());
-		network->deinit();
-		network = NULL;
-		return;
-	}
-
 	network->resolve_host(&lan_broadcast_address, "255.255.255.255", UDP_GAME_PORT);
 
 	for (int i = 0; i < MAX_NATION; i++) {
@@ -151,24 +140,14 @@ void MultiPlayerSDL::deinit()
 		for (i = 0; i < max_players; i++) {
 			delete_player(i+1);
 		}
-		if (listen_sock) {
-			SDLNet_TCP_Close(listen_sock);
-			listen_sock = NULL;
-		}
 
 		host_flag = 0;
 		allowing_connections = 0;
-	} else if (host_sock) {
-		SDLNet_TCP_DelSocket(sock_set, host_sock);
-		SDLNet_TCP_Close(host_sock);
-		host_sock = NULL;
 	}
 	if (recv_buf) {
 		delete [] recv_buf;
 		recv_buf = NULL;
 	}
-
-	SDLNet_FreeSocketSet(sock_set);
 
 	delete network;
 	network = NULL;
@@ -177,7 +156,6 @@ void MultiPlayerSDL::deinit()
 	init_flag = 0;
 	lobbied_flag = 0;
 	my_player_id = 0;
-	sock_set = NULL;
 	status = MP_STATUS_IDLE;
 }
 
@@ -470,19 +448,9 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 	ip.host = ip_address.host;
 	ip.port = ip_address.port;
 
-	listen_sock = SDLNet_TCP_Open(&ip);
-	if (!listen_sock) {
-		ERR("[MultiPlayerSDL::create_session] failed to start listening: %s\n", SDLNet_GetError());
-		return FALSE;
-	} else {
-		MSG("[MultiPlayerSDL::create_session] waiting for clients on port: %d\n", (int)GAME_PORT);
-	}
-
 	peer_sock = network->udp_open(GAME_PORT);
 	if (!peer_sock)
 	{
-		SDLNet_TCP_Close(listen_sock);
-		listen_sock = NULL;
 		return FALSE;
 	}
 
@@ -522,26 +490,12 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	ip.host = session->address.host;
 	ip.port = session->address.port;
 
+	return FALSE; // TCP removal
+
 	// establish connection with server
-	host_sock = SDLNet_TCP_Open(&ip);
-	if (!host_sock) {
-		MSG("[MultiPlayerSDL::join_session] failed to connect to server: %s\n", SDLNet_GetError());
-		return FALSE;
-	} else {
-		MSG("[MultiPlayerSDL::join_session] successfully connected to server\n");
-	}
-
-	int total = SDLNet_TCP_AddSocket(sock_set, host_sock);
-	if (total == -1) {
-		ERR("[MultiPlayerSDL::join_session] SDLNet_AddSocket: %s\n", SDLNet_GetError());
-		err_now("socket error");
-	}
-
 	peer_sock = network->udp_open(0);
 	if (!peer_sock)
 	{
-		SDLNet_TCP_Close(host_sock);
-		host_sock = NULL;
 		return FALSE;
 	}
 
@@ -571,7 +525,6 @@ void MultiPlayerSDL::disable_join_session()
 void MultiPlayerSDL::accept_connections()
 {
 	static Uint32 ticks = 0;
-	TCPsocket connecting;
 	uint32_t player_id;
 	Uint32 cur_ticks;
 
@@ -600,23 +553,6 @@ void MultiPlayerSDL::accept_connections()
 			send_nonseq_msg(peer_sock, (char *)&p, sizeof(struct MsgGameBeacon), &remote_session_provider_address);
 		}
 	}
-
-	connecting = SDLNet_TCP_Accept(listen_sock);
-	if (!connecting) {
-		return;
-	}
-	if (!allowing_connections) {
-		SDLNet_TCP_Close(connecting);
-		return;
-	}
-	player_id = create_player(connecting);
-	if (!player_id) {
-		MSG("[MultiPlayerSDL::accept_connections] no room to accept new clients.\n");
-		SDLNet_TCP_Close(connecting);
-		return;
-	}
-
-	MSG("[MultiPlayerSDL::accept_connections] client accepted\n");
 }
 
 // Create a player and add to the pool.
@@ -643,13 +579,6 @@ int MultiPlayerSDL::create_player(TCPsocket socket)
 	player_pool[i]->id = i+1;
 	strcpy(player_pool[i]->name, "?anonymous?");
 	player_pool[i]->connecting = 1;
-	player_pool[i]->socket = socket;
-
-	int total = SDLNet_TCP_AddSocket(sock_set, socket);
-	if (total == -1) {
-		ERR("[MultiPlayerSDL::accept_connections] SDLNet_AddSocket: %s\n", SDLNet_GetError());
-		err_now("socket error");
-	}
 
 	return 1;
 }
@@ -671,7 +600,6 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 	player_pool[id-1]->id = id;
 	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
 	player_pool[id-1]->connecting = 1;
-	player_pool[id-1]->socket = NULL; // not used by a client
 
 	return 1;
 }
@@ -704,10 +632,6 @@ void MultiPlayerSDL::delete_player(uint32_t id)
 {
 	err_when(id < 1 || id > max_players);
 	if (player_pool[id-1]) {
-		if (player_pool[id-1]->socket) {
-			SDLNet_TCP_DelSocket(sock_set, player_pool[id-1]->socket);
-			SDLNet_TCP_Close(player_pool[id-1]->socket);
-		}
 		delete player_pool[id-1];
 		player_pool[id-1] = NULL;
 	}
@@ -872,60 +796,11 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 //
 int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
-	TCPsocket dest;
-
 	err_when(to > max_players);
 
 	if (to && to == my_player_id)
 		return FALSE;
 
-	if (host_flag) {
-		if (to == BROADCAST_PID) {
-			int i;
-			for (i = 0; i < max_players; i++)
-				if (player_pool[i] &&
-					player_pool[i]->socket &&
-					i+1 != my_player_id)
-					send_stream(i+1, data, msg_size);
-			return TRUE;
-		}
-
-		if (!player_pool[to-1] || !player_pool[to-1]->socket) {
-			MSG("[MultiPlayerSDL::send_stream] player %d is not connected\n", to);
-			return FALSE;
-		}
-		dest = player_pool[to-1]->socket;
-	} else {
-		// clients forward through the host
-		if (!host_sock) {
-			MSG("[MultiPlayerSDL::send_stream] not connected to game host\n");
-			return FALSE;
-		}
-		dest = host_sock;
-	}
-
-	int bytes_sent = 0;
-
-	// message structure:
-	//
-	// uint32_t msg_size;  // message _data_ size
-	// uint32_t to;        // receiver id
-	// byte[]   data;      // byte array of size msg_size
-
-	const int send_buf_size = sizeof(msg_size) + sizeof(to);
-	char send_buf[send_buf_size];
-
-	SDLNet_Write32(msg_size, send_buf);
-	SDLNet_Write32(to, send_buf + sizeof(msg_size));
-
-	bytes_sent += SDLNet_TCP_Send(dest, send_buf, send_buf_size);
-	bytes_sent += SDLNet_TCP_Send(dest, data, msg_size);
-	if (bytes_sent != send_buf_size + msg_size) {
-		ERR("[MultiPlayerSDL::send_stream] error while sending data to player %d\n", to);
-		return FALSE;
-	}
-
-	MSG("[MultiPlayerSDL::send_stream] bytes sent: %d to %d\n", (int)bytes_sent, (int)to);
 	return TRUE;
 }
 
@@ -988,15 +863,6 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 //
 char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, int *sysMsgCount)
 {
-	static int round_robin = 0; // used to poll clients fairly
-	TCPsocket socket = NULL;
-	uint32_t msg_size;
-	uint32_t source_id;
-	uint32_t target_id;
-	int ready;
-	int player_index;
-	const int header_size = sizeof(msg_size) + sizeof(target_id);
-
 	err_when(!from || !to || !size || !recv_buf);
 
 	// have game host accept connections during game setup
@@ -1004,75 +870,7 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 
 	if (sysMsgCount) *sysMsgCount = 0;
 
-	ready = SDLNet_CheckSockets(sock_set, 0);
-	if (!ready)
-		return NULL;
-
-	// find out who to receive from
-	if (host_flag) {
-		int count = 0;
-		while (count++ < max_players) {
-			if (player_pool[round_robin] &&
-			    player_pool[round_robin]->socket &&
-			    SDLNet_SocketReady(player_pool[round_robin]->socket)) {
-				socket = player_pool[round_robin]->socket;
-				player_index = round_robin;
-				break;
-			}
-			round_robin++;
-			if (round_robin >= max_players)
-				round_robin = 0;
-		}
-	} else if (host_sock) {
-		socket = host_sock;
-		player_index = 0;
-	}
-	if (!socket)
-		return NULL;
-
-	// read the message header
-	ready = SDLNet_TCP_Recv(socket, recv_buf, header_size);
-	if (ready <= 0) {
-		delete player_pool[player_index];
-		player_pool[player_index] = NULL;
-		if (sysMsgCount) *sysMsgCount = 1;
-		return NULL;
-	} else if (ready < header_size) {
-		err_now("unhandled non-blocking operation?");
-	}
-
-	msg_size = SDLNet_Read32(recv_buf);
-	target_id = SDLNet_Read32(recv_buf + sizeof(msg_size));
-
-	// we will impose a size limitation to avoid an expensive resizing
-	// of the buffer
-	if (msg_size > MP_RECV_BUFFER_SIZE) {
-		MSG("[MultiPlayerSDL::receive_stream] player %d wants to send %d bytes, rejected\n", player_index+1, msg_size);
-		delete player_pool[player_index];
-		player_pool[player_index] = NULL;
-		if (sysMsgCount) *sysMsgCount = 1;
-		return NULL;
-	}
-
-	// read in the data
-	ready = SDLNet_TCP_Recv(socket, recv_buf, msg_size);
-	if (ready <= 0) {
-		delete player_pool[player_index];
-		player_pool[player_index] = NULL;
-		if (sysMsgCount) *sysMsgCount = 1;
-		return NULL;
-	} else if (ready < msg_size) {
-		err_now("unhandled non-blocking operation?");
-	}
-
-	// finish the message
-	*to = target_id;
-	*size = msg_size;
-	*from = player_index+1;
-
-	MSG("[MultiPlayerSDL::receive_stream] received %d bytes from %d\n", msg_size, *from);
-
-	return recv_buf;
+	return NULL;
 }
 
 // intended only for clients
@@ -1118,7 +916,7 @@ void MultiPlayerSDL::udp_accept_connections()
 
 	h->size = MP_UDP_MAX_PACKET_SIZE;
 
-	if (!listen_sock || !peer_sock)
+	if (!peer_sock)
 		return;
 
 	ret = network->recv(peer_sock, h, &address);
