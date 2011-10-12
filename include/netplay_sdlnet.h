@@ -27,7 +27,6 @@
 
 #include <ODYNARRB.h>
 #include <stdint.h>
-#include <SDL_net.h>
 #include <network.h>
 
 #define MP_SERVICE_PROVIDER_NAME_LEN 64

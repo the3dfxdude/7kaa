@@ -38,8 +38,7 @@ DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
 #define MP_UDP_MAX_PACKET_SIZE 800
 
-const Uint16 GAME_PORT = 1234;
-const Uint16 UDP_GAME_PORT = 19255;
+const uint16_t UDP_GAME_PORT = 19255;
 
 
 SDLSessionDesc::SDLSessionDesc()
@@ -170,7 +169,7 @@ int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 
 		strcpy(session->session_name, "Lobbied Game");
 		session->password[0] = 1;
-		if (!network->resolve_host(&session->address, cmdLine, GAME_PORT))
+		if (!network->resolve_host(&session->address, cmdLine, UDP_GAME_PORT))
 		{
 			delete session;
 			return 0;
@@ -440,7 +439,7 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 
 	// open socket for listening
 
-	if (!network->resolve_host(&ip_address, NULL, GAME_PORT))
+	if (!network->resolve_host(&ip_address, NULL, UDP_GAME_PORT))
 	{
 		return FALSE;
 	}
@@ -448,7 +447,7 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 	ip.host = ip_address.host;
 	ip.port = ip_address.port;
 
-	peer_sock = network->udp_open(GAME_PORT);
+	peer_sock = network->udp_open(UDP_GAME_PORT);
 	if (!peer_sock)
 	{
 		return FALSE;
