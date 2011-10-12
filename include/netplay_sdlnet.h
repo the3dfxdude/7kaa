@@ -288,7 +288,7 @@ private:
 	void yield_pregame();
 };
 
-extern MultiPlayerSDL mp_sdl;
+extern MultiPlayerSDL mp_obj;
 
 #include <MPTYPES.h>
 

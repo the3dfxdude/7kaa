@@ -38,7 +38,6 @@
 	#define PID_TYPE uint32_t
 	#define BROADCAST_PID 0
 	#define MultiPlayerType MultiPlayerSDL
-	#define mp_obj mp_sdl
 	#define SessionIdType uint32_t
 #else
 	#error "A netplay backend must be specified."
