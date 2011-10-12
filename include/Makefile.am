@@ -173,7 +173,6 @@ noinst_HEADERS = \
 	mouse_none.h \
 	mouse_sdl.h \
 	netplay.h \
-	netplay_none.h \
 	netplay_sdlnet.h \
 	openal_audio.h \
 	output_stream.h \

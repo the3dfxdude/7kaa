@@ -295,9 +295,6 @@ AS_CASE(["$input_backend"],
 
 AS_CASE(["$net_backend"],
   [none], [
-    AC_DEFINE([USE_NONETPLAY], [1], [
-      Define to 1 if building without network support
-    ])
     AC_DEFINE([DISABLE_MULTIPLAYER], [1], [
       Define to 1 to disable multiplayer
     ])
@@ -352,7 +349,6 @@ AC_CONFIG_FILES([
   src/multiplayer/none/Makefile
   src/netplay/Makefile
   src/netplay/common/Makefile
-  src/netplay/none/Makefile
   src/netplay/sdl_net/Makefile
   src/server/Makefile
   src/video/Makefile
