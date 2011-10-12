@@ -432,7 +432,6 @@ SessionDesc *MultiPlayer::get_session(int i)
 int MultiPlayer::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
 	struct inet_address ip_address;
-	IPaddress ip;
 
 	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION);
 
@@ -442,9 +441,6 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	{
 		return FALSE;
 	}
-	// TODO convert until separation complete
-	ip.host = ip_address.host;
-	ip.port = ip_address.port;
 
 	peer_sock = network->udp_open(UDP_GAME_PORT);
 	if (!peer_sock)
@@ -479,14 +475,9 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 // currentSessionIndex start from 1
 int MultiPlayer::join_session(int i, char *playerName)
 {
-	IPaddress ip;
 	SessionDesc *session = (SessionDesc *)current_sessions.get(i);
 	if (!session)
 		return FALSE;
-
-	// TODO convert until separation complete
-	ip.host = session->address.host;
-	ip.port = session->address.port;
 
 	return FALSE; // TCP removal
 
