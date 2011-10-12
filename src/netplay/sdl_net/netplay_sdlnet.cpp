@@ -501,7 +501,7 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	max_players = MAX_NATION;
 
 	// register the host now, even though his name is not known yet
-	player_pool[0] = new SDLPlayer();
+	player_pool[0] = new PlayerDesc();
 	player_pool[0]->id = 0;
 	player_pool[0]->address.host = session->address.host;
 	player_pool[0]->address.port = session->address.port;
@@ -574,7 +574,7 @@ int MultiPlayerSDL::create_player()
 		return 0;
 
 	// add to the pool
-	player_pool[i] = new SDLPlayer();
+	player_pool[i] = new PlayerDesc();
 	player_pool[i]->id = i+1;
 	strcpy(player_pool[i]->name, "?anonymous?");
 	player_pool[i]->connecting = 1;
@@ -592,7 +592,7 @@ int MultiPlayerSDL::create_player()
 int MultiPlayerSDL::add_player(char *name, uint32_t id)
 {
 	if (!player_pool[id-1]) {
-		player_pool[id-1] = new SDLPlayer();
+		player_pool[id-1] = new PlayerDesc();
 	}
 
 	// add to the pool
@@ -640,14 +640,14 @@ void MultiPlayerSDL::poll_players()
 {
 }
 
-SDLPlayer *MultiPlayerSDL::get_player(int i)
+PlayerDesc *MultiPlayerSDL::get_player(int i)
 {
 	if (i < 1 || i > max_players)
 		return NULL;
 	return player_pool[i-1];
 }
 
-SDLPlayer *MultiPlayerSDL::search_player(uint32_t playerId)
+PlayerDesc *MultiPlayerSDL::search_player(uint32_t playerId)
 {
 	if (playerId < 1 || playerId > max_players)
 		return NULL;

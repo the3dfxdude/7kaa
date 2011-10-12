@@ -173,7 +173,7 @@ struct SDLSessionDesc
 };
 
 
-struct SDLPlayer
+struct PlayerDesc
 {
 	uint32_t id;
 	char     name[MP_FRIENDLY_NAME_LEN+1];
@@ -205,7 +205,7 @@ private:
 	int               allowing_connections;
 	int               max_players;
 
-	SDLPlayer         *player_pool[MAX_NATION];
+	PlayerDesc        *player_pool[MAX_NATION];
 
 	char *            recv_buf;
 
@@ -256,8 +256,8 @@ public:
 	void        set_player_name(uint32_t id, char *name);
 	void        delete_player(uint32_t id);
 	void        poll_players();
-	SDLPlayer * get_player(int i);
-	SDLPlayer * search_player(uint32_t playerId);
+	PlayerDesc* get_player(int i);
+	PlayerDesc* search_player(uint32_t playerId);
 	int         is_player_connecting(uint32_t playerId);
 	int         get_player_count();
 	uint32_t    get_my_player_id() const { return my_player_id; }
