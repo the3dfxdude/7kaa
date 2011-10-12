@@ -523,14 +523,14 @@ void MultiPlayerSDL::disable_join_session()
 
 void MultiPlayerSDL::accept_connections()
 {
-	static Uint32 ticks = 0;
+	static uint32_t ticks = 0;
 	uint32_t player_id;
-	Uint32 cur_ticks;
+	uint32_t cur_ticks;
 
 	// accept_connections shouldn't be used by clients
 	if (!host_flag) return;
 
-	cur_ticks = SDL_GetTicks();
+	cur_ticks = m.get_time();
 	if (peer_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
 		// send the session beacon
 		struct MsgGameBeacon p;
