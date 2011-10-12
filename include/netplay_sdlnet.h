@@ -276,7 +276,7 @@ private:
 	int send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to);
 	int send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to);
 
-	int create_player(TCPsocket socket);
+	int create_player();
 	int check_duplicates(struct inet_address *address);
 	void msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr);
 	int msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr);

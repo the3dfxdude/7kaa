@@ -562,7 +562,7 @@ void MultiPlayerSDL::accept_connections()
 // Returns 1 if the player was added to the pool, and 0 if the player
 // wasn't added to the pool.
 //
-int MultiPlayerSDL::create_player(TCPsocket socket)
+int MultiPlayerSDL::create_player()
 {
 	int i;
 
