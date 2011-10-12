@@ -174,6 +174,10 @@ noinst_HEADERS = \
 	mouse_sdl.h \
 	netplay.h \
 	netplay_sdlnet.h \
+	network.h \
+	network_base.h \
+	network_none.h \
+	network_sdlnet.h \
 	openal_audio.h \
 	output_stream.h \
 	surface.h \
