@@ -52,4 +52,6 @@ public:
 	int recv(int sock, struct packet_header *p, struct inet_address *from);
 };
 
+#define Network NetworkSDLNet
+
 #endif // _NETWORK_SDLNET_H

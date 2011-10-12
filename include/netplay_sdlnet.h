@@ -196,7 +196,7 @@ private:
 	ProtocolType      supported_protocols;
 	DynArrayB         current_sessions;
 	SessionDesc       joined_session;
-	NetworkSDLNet     *network;
+	Network           *network;
 
 	uint32_t          my_player_id;
 	char              my_name[MP_FRIENDLY_NAME_LEN+1];
