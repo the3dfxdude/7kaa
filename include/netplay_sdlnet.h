@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2010,2011 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +20,7 @@
  */
 
 // Filename    : ODPLAY.H
-// Description : Header file of MultiPlayerDP (DirectPlay)
-// Owner       : Gilbert
+// Description : Multiplayer game support.
 
 #ifndef __netplay_sdlnet_h__
 #define __netplay_sdlnet_h__
@@ -185,7 +185,7 @@ struct PlayerDesc
 	int get_address(struct inet_address *addr) { addr->host = address.host; addr->port = address.port; return sizeof(struct inet_address); }
 };
 
-class MultiPlayerSDL
+class MultiPlayer
 {
 private:
 
@@ -220,8 +220,8 @@ private:
 
 public:
 
-	MultiPlayerSDL();
-	~MultiPlayerSDL();
+	MultiPlayer();
+	~MultiPlayer();
 
 	void   init(ProtocolType);
 	void   deinit();
@@ -288,7 +288,7 @@ private:
 	void yield_pregame();
 };
 
-extern MultiPlayerSDL mp_obj;
+extern MultiPlayer mp_obj;
 
 #include <MPTYPES.h>
 

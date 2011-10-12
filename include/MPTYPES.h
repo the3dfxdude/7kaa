@@ -37,7 +37,7 @@
 #elif defined(USE_SDLNET)
 	#define PID_TYPE uint32_t
 	#define BROADCAST_PID 0
-	#define MultiPlayerType MultiPlayerSDL
+	#define MultiPlayerType MultiPlayer
 	#define SessionIdType uint32_t
 #else
 	#error "A netplay backend must be specified."

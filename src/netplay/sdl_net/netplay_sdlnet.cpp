@@ -20,8 +20,7 @@
  */
 
 // Filename    : netplay_sdlnet.cpp
-// Description : MultiPlayerSDL, SDL_net based multiplayer class
-// Onwer       : Gilbert
+// Description : Multiplayer game support.
 
 #include <netplay.h>
 #include <ALL.h>
@@ -67,7 +66,7 @@ SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 }
 
 // to start a multiplayer game, first check if it is called from a
-// lobbied (MultiPlayerSDL::is_lobbied)
+// lobbied (MultiPlayer::is_lobbied)
 
 // if it is a lobbied, call init_lobbied
 
@@ -75,7 +74,7 @@ SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 // user to select, call init and pass the guid of the selected
 // service; create_session or poll_sessions+join_session;
 
-MultiPlayerSDL::MultiPlayerSDL() :
+MultiPlayer::MultiPlayer() :
 	current_sessions(sizeof(SessionDesc), 10 )
 {
 	init_flag = 0;
@@ -87,12 +86,12 @@ MultiPlayerSDL::MultiPlayerSDL() :
 	recv_buf = NULL;
 }
 
-MultiPlayerSDL::~MultiPlayerSDL()
+MultiPlayer::~MultiPlayer()
 {
 	deinit();
 }
 
-void MultiPlayerSDL::init(ProtocolType protocol_type)
+void MultiPlayer::init(ProtocolType protocol_type)
 {
 	if (init_flag)
 		return;
@@ -109,7 +108,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	status = MP_STATUS_IDLE;
 
 	if (!is_protocol_supported(protocol_type)) {
-		ERR("[MultiPlayerSDL::init] trying to init unsupported protocol\n");
+		ERR("[MultiPlayer::init] trying to init unsupported protocol\n");
 		return;
 	}
 
@@ -130,7 +129,7 @@ void MultiPlayerSDL::init(ProtocolType protocol_type)
 	init_flag = 1;
 }
 
-void MultiPlayerSDL::deinit()
+void MultiPlayer::deinit()
 {
 	int i;
 
@@ -161,9 +160,9 @@ void MultiPlayerSDL::deinit()
 // init_lobbied
 // Reads the command line and sets lobby mode if the command line is correct.
 // Returns non-zero on success.
-int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
+int MultiPlayer::init_lobbied(int maxPlayers, char *cmdLine)
 {
-	MSG("[MultiPlayerSDL::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
+	MSG("[MultiPlayer::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
 	if (cmdLine) {
 		SessionDesc *session = new SessionDesc();
 
@@ -186,38 +185,38 @@ int MultiPlayerSDL::init_lobbied(int maxPlayers, char *cmdLine)
 }
 
 // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable
-int MultiPlayerSDL::is_lobbied()
+int MultiPlayer::is_lobbied()
 {
 	return lobbied_flag;
 }
 
 // get_lobbied_name() is used to get the player's name when the game is
 // launched to the lobby -- this probably won't ever be needed.
-char *MultiPlayerSDL::get_lobbied_name()
+char *MultiPlayer::get_lobbied_name()
 {
 	return NULL;
 }
 
-void MultiPlayerSDL::poll_supported_protocols()
+void MultiPlayer::poll_supported_protocols()
 {
 }
 
-bool MultiPlayerSDL::is_protocol_supported(ProtocolType protocol)
+bool MultiPlayer::is_protocol_supported(ProtocolType protocol)
 {
 	return (protocol & supported_protocols) != 0;
 }
 
-int MultiPlayerSDL::is_update_available()
+int MultiPlayer::is_update_available()
 {
 	return update_available;
 }
 
-int MultiPlayerSDL::is_pregame()
+int MultiPlayer::is_pregame()
 {
 	return status == MP_STATUS_PREGAME;
 }
 
-int MultiPlayerSDL::check_duplicates(struct inet_address *address)
+int MultiPlayer::check_duplicates(struct inet_address *address)
 {
 	int i;
 	for (i = 0; i < current_sessions.size(); i++)
@@ -234,13 +233,13 @@ int MultiPlayerSDL::check_duplicates(struct inet_address *address)
 	return 0;
 }
 
-int MultiPlayerSDL::set_remote_session_provider(const char *server)
+int MultiPlayer::set_remote_session_provider(const char *server)
 {
 	use_remote_session_provider = network->resolve_host(&remote_session_provider_address, server, UDP_GAME_PORT);
 	return use_remote_session_provider;
 }
 
-void MultiPlayerSDL::msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr)
+void MultiPlayer::msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr)
 {
 	SessionDesc *desc;
 
@@ -257,11 +256,11 @@ void MultiPlayerSDL::msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr
 	desc->id = current_sessions.size();
 	current_sessions.linkin(desc);
 
-	MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
+	MSG("[MultiPlayer::poll_sessions] got beacon for game '%s'\n", desc->session_name);
 }
 
 // returns the next ack
-int MultiPlayerSDL::msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr)
+int MultiPlayer::msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr)
 {
 	SessionDesc *desc;
 	int i;
@@ -295,7 +294,7 @@ int MultiPlayerSDL::msg_game_list(MsgGameList *m, int last_ack, struct inet_addr
 		desc->id = current_sessions.size();
 		current_sessions.linkin(desc);
 
-		MSG("[MultiPlayerSDL::poll_sessions] got beacon for game '%s'\n", desc->session_name);
+		MSG("[MultiPlayer::poll_sessions] got beacon for game '%s'\n", desc->session_name);
 	}
 
 	if (m->total_pages >= last_ack)
@@ -304,7 +303,7 @@ int MultiPlayerSDL::msg_game_list(MsgGameList *m, int last_ack, struct inet_addr
 	return last_ack++;
 }
 
-void MultiPlayerSDL::msg_version_nak(MsgVersionNak *m, struct inet_address *addr)
+void MultiPlayer::msg_version_nak(MsgVersionNak *m, struct inet_address *addr)
 {
 	if (update_available > -1)
 		return;
@@ -333,7 +332,7 @@ void MultiPlayerSDL::msg_version_nak(MsgVersionNak *m, struct inet_address *addr
 	update_available = 0;
 }
 
-int MultiPlayerSDL::poll_sessions()
+int MultiPlayer::poll_sessions()
 {
 	static int ack_num = 1;
 	static int attempts = 0;
@@ -416,7 +415,7 @@ int MultiPlayerSDL::poll_sessions()
 //
 // <int> i			i-th session (i start from 1)
 // return pointer to a session, NULL if no more
-SessionDesc *MultiPlayerSDL::get_session(int i)
+SessionDesc *MultiPlayer::get_session(int i)
 {
 	if( i <= 0 || i > current_sessions.size() )
 		return NULL;
@@ -430,7 +429,7 @@ SessionDesc *MultiPlayerSDL::get_session(int i)
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return TRUE if success
-int MultiPlayerSDL::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
+int MultiPlayer::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
 	struct inet_address ip_address;
 	IPaddress ip;
@@ -478,7 +477,7 @@ int MultiPlayerSDL::create_session(char *sessionName, char *password, char *play
 // <int> currentSessionIndex       the index passed into get_session()
 //
 // currentSessionIndex start from 1
-int MultiPlayerSDL::join_session(int i, char *playerName)
+int MultiPlayer::join_session(int i, char *playerName)
 {
 	IPaddress ip;
 	SessionDesc *session = (SessionDesc *)current_sessions.get(i);
@@ -512,16 +511,16 @@ int MultiPlayerSDL::join_session(int i, char *playerName)
 	return TRUE;
 }
 
-void MultiPlayerSDL::close_session()
+void MultiPlayer::close_session()
 {
 }
 
-void MultiPlayerSDL::disable_join_session()
+void MultiPlayer::disable_join_session()
 {
 	allowing_connections = 0;
 }
 
-void MultiPlayerSDL::accept_connections()
+void MultiPlayer::accept_connections()
 {
 	static uint32_t ticks = 0;
 	uint32_t player_id;
@@ -562,7 +561,7 @@ void MultiPlayerSDL::accept_connections()
 // Returns 1 if the player was added to the pool, and 0 if the player
 // wasn't added to the pool.
 //
-int MultiPlayerSDL::create_player()
+int MultiPlayer::create_player()
 {
 	int i;
 
@@ -589,7 +588,7 @@ int MultiPlayerSDL::create_player()
 //
 // Returns 0 if the player cannot be added, and 1 if the player was added.
 //
-int MultiPlayerSDL::add_player(char *name, uint32_t id)
+int MultiPlayer::add_player(char *name, uint32_t id)
 {
 	if (!player_pool[id-1]) {
 		player_pool[id-1] = new PlayerDesc();
@@ -603,7 +602,7 @@ int MultiPlayerSDL::add_player(char *name, uint32_t id)
 	return 1;
 }
 
-void MultiPlayerSDL::set_my_player_id(uint32_t id)
+void MultiPlayer::set_my_player_id(uint32_t id)
 {
 	IPaddress *local;
 
@@ -614,10 +613,10 @@ void MultiPlayerSDL::set_my_player_id(uint32_t id)
 	local = SDLNet_UDP_GetPeerAddress(network->get_udp_socket(peer_sock), -1);
 	network->resolve_host(&player_pool[my_player_id-1]->address, "127.0.0.1", local->port);
 
-	MSG("[MultiPlayerSDL::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1]->address.host, player_pool[my_player_id-1]->address.port);
+	MSG("[MultiPlayer::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1]->address.host, player_pool[my_player_id-1]->address.port);
 }
 
-void MultiPlayerSDL::set_player_name(uint32_t id, char *name)
+void MultiPlayer::set_player_name(uint32_t id, char *name)
 {
 	err_when(!player_pool[id-1]);
 	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
@@ -627,7 +626,7 @@ void MultiPlayerSDL::set_player_name(uint32_t id, char *name)
 //
 // <uint32_t> id          id provided by the game host
 //
-void MultiPlayerSDL::delete_player(uint32_t id)
+void MultiPlayer::delete_player(uint32_t id)
 {
 	err_when(id < 1 || id > max_players);
 	if (player_pool[id-1]) {
@@ -636,18 +635,18 @@ void MultiPlayerSDL::delete_player(uint32_t id)
 	}
 }
 
-void MultiPlayerSDL::poll_players()
+void MultiPlayer::poll_players()
 {
 }
 
-PlayerDesc *MultiPlayerSDL::get_player(int i)
+PlayerDesc *MultiPlayer::get_player(int i)
 {
 	if (i < 1 || i > max_players)
 		return NULL;
 	return player_pool[i-1];
 }
 
-PlayerDesc *MultiPlayerSDL::search_player(uint32_t playerId)
+PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 {
 	if (playerId < 1 || playerId > max_players)
 		return NULL;
@@ -656,18 +655,18 @@ PlayerDesc *MultiPlayerSDL::search_player(uint32_t playerId)
 
 // determine whether a player is lost
 //
-// MultiPlayerSDL::received must be called (or remote.poll_msg) , 
+// MultiPlayer::received must be called (or remote.poll_msg) , 
 // so if a player is really lost, the system message from 
 // directPlay is received
 //
-int MultiPlayerSDL::is_player_connecting(uint32_t playerId)
+int MultiPlayer::is_player_connecting(uint32_t playerId)
 {
 	if (playerId < 1 || playerId > max_players || !player_pool[playerId-1])
 		return 0;
 	return player_pool[playerId-1]->connecting;
 }
 
-int MultiPlayerSDL::get_player_count()
+int MultiPlayer::get_player_count()
 {
 	int count = 0;
 	for (int i = 0; i < max_players; i++)
@@ -676,7 +675,7 @@ int MultiPlayerSDL::get_player_count()
 	return count;
 }
 
-int MultiPlayerSDL::send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to)
+int MultiPlayer::send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to)
 {
 	char send_buf[MP_UDP_MAX_PACKET_SIZE];
 	struct packet_header *h;
@@ -710,7 +709,7 @@ int MultiPlayerSDL::send_nonseq_msg(int sock, char *msg, int msg_size, struct in
 	return 1;
 }
 
-int MultiPlayerSDL::send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to)
+int MultiPlayer::send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to)
 {
 	char send_buf[MP_UDP_MAX_PACKET_SIZE];
 	struct packet_header *h;
@@ -750,7 +749,7 @@ int MultiPlayerSDL::send_system_msg(int sock, char *msg, int msg_size, struct in
 //
 // return TRUE on success
 //
-int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
+int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 {
 	err_when(to > max_players);
 
@@ -759,7 +758,7 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 	if (to && to == my_player_id)
 		return FALSE;
 	if (msg_size > MP_UDP_MAX_PACKET_SIZE) {
-		ERR("[MultiPlayerSDL::send] message exceeds maximum size\n");
+		ERR("[MultiPlayer::send] message exceeds maximum size\n");
 		return FALSE;
 	}
 
@@ -777,10 +776,10 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 	{
 		if (!send_nonseq_msg(peer_sock, (char *)data, msg_size, &player_pool[to-1]->address))
 		{
-			ERR("[MultiPlayerSDL::send] error while sending data to player %d\n", to);
+			ERR("[MultiPlayer::send] error while sending data to player %d\n", to);
 			return FALSE;
 		}
-		MSG("[MultiPlayerSDL::send] sent %d bytes to player %d\n", msg_size, to);
+		MSG("[MultiPlayer::send] sent %d bytes to player %d\n", msg_size, to);
 		return TRUE;
 	}
 
@@ -793,7 +792,7 @@ int MultiPlayerSDL::send(uint32_t to, void * data, uint32_t msg_size)
 //
 // return TRUE on success
 //
-int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
+int MultiPlayer::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
 	err_when(to > max_players);
 
@@ -809,7 +808,7 @@ int MultiPlayerSDL::send_stream(uint32_t to, void * data, uint32_t msg_size)
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
 //
-char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
+char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
 {
 	if (sysMsgCount) *sysMsgCount = 0;
 	*from = max_players;
@@ -835,10 +834,10 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 			*from = i < max_players ? i+1 : 0;
 			*to = my_player_id;
 			*size = h->size - sizeof(struct packet_header);
-			MSG("[MultiPlayerSDL::receive] received %d bytes from player %d\n", *size, *from);
+			MSG("[MultiPlayer::receive] received %d bytes from player %d\n", *size, *from);
 			return *from ? recv_buf + sizeof(struct packet_header) : NULL;
 		} else if (ret < 0) {
-			ERR("[MultiPlayerSDL::receive] could not receive: %s\n", SDLNet_GetError());
+			ERR("[MultiPlayer::receive] could not receive: %s\n", SDLNet_GetError());
 		}
 	}
 	return NULL;
@@ -860,7 +859,7 @@ char *MultiPlayerSDL::receive(uint32_t * from, uint32_t * to, uint32_t * size, i
 // Note: When a disconnection does occur, the socket is closed by a later
 // event handler
 //
-char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, int *sysMsgCount)
+char *MultiPlayer::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, int *sysMsgCount)
 {
 	err_when(!from || !to || !size || !recv_buf);
 
@@ -875,7 +874,7 @@ char *MultiPlayerSDL::receive_stream(uint32_t *from, uint32_t *to, uint32_t *siz
 // intended only for clients
 // returns true when the udp session is established
 // returns false when the udp session is not yet established (try again later)
-int MultiPlayerSDL::udp_join_session(char *password)
+int MultiPlayer::udp_join_session(char *password)
 {
 	struct inet_address *addr;
 
@@ -899,7 +898,7 @@ int MultiPlayerSDL::udp_join_session(char *password)
 //
 // returns zero if there are no new connections
 // returns len, which is the size of struct inet_address
-void MultiPlayerSDL::udp_accept_connections()
+void MultiPlayer::udp_accept_connections()
 {
 	struct inet_address address;
 	struct packet_header *h;
@@ -954,10 +953,10 @@ void MultiPlayerSDL::udp_accept_connections()
 	msg.port = address.port;
 	send_stream(BROADCAST_PID, &msg, sizeof(msg));
 
-	MSG("[MultiPlayerSDL::udp_accept_connections] player %d connected by udp\n", m->player_id);
+	MSG("[MultiPlayer::udp_accept_connections] player %d connected by udp\n", m->player_id);
 }
 
-void MultiPlayerSDL::set_peer_address(uint32_t who, struct inet_address *address)
+void MultiPlayer::set_peer_address(uint32_t who, struct inet_address *address)
 {
 	err_when(who < 1 || who > max_players);
 
@@ -969,7 +968,7 @@ void MultiPlayerSDL::set_peer_address(uint32_t who, struct inet_address *address
 	player_pool[who-1]->address.host = address->host;
 	player_pool[who-1]->address.port = address->port;
 
-	MSG("[MultiPlayerSDL::set_peer_address] set address for %d\n", who);
+	MSG("[MultiPlayer::set_peer_address] set address for %d\n", who);
 }
 
 /*
@@ -987,14 +986,14 @@ static int sort_session_name(const void *a, const void *b)
 
 // sort current_sessions
 // <int> sortType, 1=sort by GUID, 2=sort by session name
-void MultiPlayerSDL::sort_sessions(int sortType)
+void MultiPlayer::sort_sessions(int sortType)
 {
 
 	// BUGHERE : quick_sort is a DynArray function but current_sessions is DynArrayB
 	switch(sortType)
 	{
 	case 1:
-		ERR("[MultiPlayerSDL::sort_sessions] sorting by GUID is not supported\n");
+		ERR("[MultiPlayer::sort_sessions] sorting by GUID is not supported\n");
 		//current_sessions.quick_sort(sort_session_id);
 		break;
 	case 2:
@@ -1005,7 +1004,7 @@ void MultiPlayerSDL::sort_sessions(int sortType)
 	}
 }
 
-int MultiPlayerSDL::show_leader_board()
+int MultiPlayer::show_leader_board()
 {
 	struct MsgRequestLadder m;
 	struct MsgLadder *a;
@@ -1087,7 +1086,7 @@ int MultiPlayerSDL::show_leader_board()
 	return 1;
 }
 
-void MultiPlayerSDL::yield_connecting()
+void MultiPlayer::yield_connecting()
 {
 	struct inet_address joining;
 	struct packet_header *h;
@@ -1124,10 +1123,10 @@ void MultiPlayerSDL::yield_connecting()
 
 	status = MP_STATUS_PREGAME;
 
-	MSG("[MultiPlayerSDL::udp_join_session] udp connection established\n");
+	MSG("[MultiPlayer::udp_join_session] udp connection established\n");
 }
 
-void MultiPlayerSDL::yield_pregame()
+void MultiPlayer::yield_pregame()
 {
 	if (host_flag)
 	{
@@ -1135,7 +1134,7 @@ void MultiPlayerSDL::yield_pregame()
 	}
 }
 
-void MultiPlayerSDL::yield()
+void MultiPlayer::yield()
 {
 	switch (status)
 	{
