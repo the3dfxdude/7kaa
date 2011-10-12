@@ -102,7 +102,7 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	max_players = 0;
 	use_remote_session_provider = 0;
 	update_available = -1;
-	network = new NetworkSDLNet();
+	network = new Network();
 	peer_sock = 0;
 	game_sock = 0;
 	status = MP_STATUS_IDLE;
@@ -604,16 +604,9 @@ int MultiPlayer::add_player(char *name, uint32_t id)
 
 void MultiPlayer::set_my_player_id(uint32_t id)
 {
-	IPaddress *local;
-
 	err_when(!id || id > max_players || !player_pool[my_player_id-1]);
 
 	my_player_id = id;
-
-	local = SDLNet_UDP_GetPeerAddress(network->get_udp_socket(peer_sock), -1);
-	network->resolve_host(&player_pool[my_player_id-1]->address, "127.0.0.1", local->port);
-
-	MSG("[MultiPlayer::set_my_player_id] set my_player_id to %d with address %x %x\n", id, player_pool[my_player_id-1]->address.host, player_pool[my_player_id-1]->address.port);
 }
 
 void MultiPlayer::set_player_name(uint32_t id, char *name)
@@ -836,8 +829,6 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 			*size = h->size - sizeof(struct packet_header);
 			MSG("[MultiPlayer::receive] received %d bytes from player %d\n", *size, *from);
 			return *from ? recv_buf + sizeof(struct packet_header) : NULL;
-		} else if (ret < 0) {
-			ERR("[MultiPlayer::receive] could not receive: %s\n", SDLNet_GetError());
 		}
 	}
 	return NULL;
