@@ -46,7 +46,6 @@ public:
 
 	int udp_open(uint16_t port);
 	void udp_close(int sock);
-	UDPsocket get_udp_socket(int sock);
 
 	int send(int sock, struct packet_header *p, struct inet_address *to);
 	int recv(int sock, struct packet_header *p, struct inet_address *from);

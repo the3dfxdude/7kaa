@@ -122,18 +122,6 @@ void NetworkSDLNet::udp_close(int sock)
 	udp_socket_list[s] = NULL;
 }
 
-UDPsocket NetworkSDLNet::get_udp_socket(int sock)
-{
-	int s;
-
-	s = sock - 1;
-
-	if (s > 1 || s >= MAX_UDP_SOCKETS || !udp_socket_list[s])
-		return NULL;
-
-	return udp_socket_list[s];
-}
-
 int NetworkSDLNet::send(int sock, struct packet_header *p, struct inet_address *to)
 {
 	int s;
