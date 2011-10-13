@@ -579,10 +579,10 @@ void MultiPlayer::send_game_beacon()
 // This is only called by the host upon connection from a client. The host
 // chooses the player's id.
 //
-// Returns 1 if the player was added to the pool, and 0 if the player
+// Returns id if the player was added to the pool, and 0 if the player
 // wasn't added to the pool.
 //
-int MultiPlayer::create_player()
+int MultiPlayer::create_player(char *name, struct inet_address *address)
 {
 	int i;
 
@@ -596,10 +596,13 @@ int MultiPlayer::create_player()
 	// add to the pool
 	player_pool[i] = new PlayerDesc();
 	player_pool[i]->id = i+1;
-	strcpy(player_pool[i]->name, "?anonymous?");
+	strncpy(player_pool[i]->name, name, MP_FRIENDLY_NAME_LEN);
+	player_pool[i]->name[MP_FRIENDLY_NAME_LEN] = 0;
 	player_pool[i]->connecting = 1;
+	player_pool[i]->address.host = address->host;
+	player_pool[i]->address.port = address->port;
 
-	return 1;
+	return player_pool[i]->id;
 }
 
 // Adds a player already created by the host to the pool
@@ -880,11 +883,6 @@ char *MultiPlayer::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, 
 	return NULL;
 }
 
-// Allows a game host to recognize the udp address of a peer.
-// Hopefully this will allow NAT transversal too.
-//
-// returns zero if there are no new connections
-// returns len, which is the size of struct inet_address
 void MultiPlayer::udp_accept_connections()
 {
 	struct inet_address address;
@@ -893,6 +891,7 @@ void MultiPlayer::udp_accept_connections()
 	struct MsgConnectAck a;
 	char password[MP_SESSION_NAME_LEN+1];
 	int i;
+	int id;
 	int ret;
 	MsgNewPeerAddress msg;
 
@@ -910,9 +909,7 @@ void MultiPlayer::udp_accept_connections()
 
 	// check if this is really a connect message
 	if (h->size != sizeof(struct MsgConnect) + sizeof(struct packet_header) ||
-			m->msg_id != MPMSG_CONNECT ||
-			m->player_id > max_players ||
-			m->player_id < 1)
+			m->msg_id != MPMSG_CONNECT)
 		return;
 
 	// check the password
@@ -921,13 +918,12 @@ void MultiPlayer::udp_accept_connections()
 	if (strcmp(joined_session.password, password) != 0)
 		return;
 
-	// add the new player
-	if (!player_pool[m->player_id-1])
-		// Not connected by TCP
+	// allow connection if we can create the player
+	id = create_player("?anonymous?", &address);
+	if (!id)
 		return;
-	player_pool[m->player_id-1]->address.host = address.host;
-	player_pool[m->player_id-1]->address.port = address.port;
 
+	// respond to the player
 	a.msg_id = MPMSG_CONNECT_ACK;
 
 	// send the connection ack message
@@ -935,12 +931,12 @@ void MultiPlayer::udp_accept_connections()
 
 	// tell all peers
 	msg.msg_id = MPMSG_NEW_PEER_ADDRESS;
-	msg.player_id = m->player_id;
+	msg.player_id = id;
 	msg.host = address.host;
 	msg.port = address.port;
 	send_stream(BROADCAST_PID, &msg, sizeof(msg));
 
-	MSG("[MultiPlayer::udp_accept_connections] player %d connected by udp\n", m->player_id);
+	MSG("Player %d connected.\n", id);
 }
 
 void MultiPlayer::set_peer_address(uint32_t who, struct inet_address *address)
