@@ -210,6 +210,7 @@ private:
 	char *            recv_buf;
 
 	int               game_sock;
+	int               standard_port;
 
 	struct inet_address lan_broadcast_address;
 	struct inet_address remote_session_provider_address;
@@ -272,6 +273,9 @@ public:
 	void yield();
 
 private:
+	int open_port();
+	int open_standard_port(int fallback);
+
 	int send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to);
 	int send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to);
 

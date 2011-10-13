@@ -104,6 +104,7 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	update_available = -1;
 	network = new Network();
 	game_sock = 0;
+	standard_port = 0;
 	status = MP_STATUS_IDLE;
 
 	if (!is_protocol_supported(protocol_type)) {
@@ -213,6 +214,47 @@ int MultiPlayer::is_update_available()
 int MultiPlayer::is_pregame()
 {
 	return status == MP_STATUS_PREGAME;
+}
+
+// open game socket on any port
+int MultiPlayer::open_port()
+{
+	if (game_sock)
+	{
+		return 1;
+	}
+	standard_port = 0;
+	game_sock = network->udp_open(0);
+	return game_sock != 0;
+}
+
+// open game socket on the standard port
+// Fallback will allow whether you can fallback on random port if the standard
+// port is not available. If the standard port is already open, the we don't
+// need to do anything. If a non standard port is open, then we close that,
+// and open a new socket. The standard port number is defined by UDP_GAME_PORT.
+// returns 1 on success, 0 on failure
+int MultiPlayer::open_standard_port(int fallback)
+{
+	if (game_sock)
+	{
+		if (standard_port)
+		{
+			return 1;
+		}
+		network->udp_close(game_sock);
+	}
+	game_sock = network->udp_open(UDP_GAME_PORT);
+	if (!game_sock)
+	{
+		if (fallback)
+		{
+			return open_port();
+		}
+		return 0;
+	}
+	standard_port = 1;
+	return 1;
 }
 
 int MultiPlayer::check_duplicates(struct inet_address *address)
@@ -340,11 +382,10 @@ int MultiPlayer::poll_sessions()
 
 	err_when(!init_flag);
 
-	if (!game_sock)
+	if (!open_standard_port(0))
 	{
-		game_sock = network->udp_open(UDP_GAME_PORT);
-		if (!game_sock)
-			return 0;
+		MSG("Cannot open port %d, unable to scan lan.\n", UDP_GAME_PORT);
+		return 0;
 	}
 
 	current_sessions.zap();
@@ -430,20 +471,12 @@ SessionDesc *MultiPlayer::get_session(int i)
 // return 1 if success
 int MultiPlayer::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
-	struct inet_address ip_address;
-
 	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION);
 
 	// open socket for listening
-
-	if (!network->resolve_host(&ip_address, NULL, UDP_GAME_PORT))
+	if (!open_standard_port(1))
 	{
-		return 0;
-	}
-
-	game_sock = network->udp_open(UDP_GAME_PORT);
-	if (!game_sock)
-	{
+		MSG("Unable to get the game socket.\n");
 		return 0;
 	}
 
@@ -478,14 +511,15 @@ int MultiPlayer::join_session(int i, char *playerName)
 	if (!session)
 		return 0;
 
+	if (!open_port())
+	{
+		MSG("Unable to get the game socket.\n");
+		return 0;
+	}
+
 	return 0; // TCP removal
 
 	// establish connection with server
-	game_sock = network->udp_open(0);
-	if (!game_sock)
-	{
-		return 0;
-	}
 
 	max_players = MAX_NATION;
 
@@ -993,11 +1027,10 @@ int MultiPlayer::show_leader_board()
 	struct packet_header *h;
 	int ret, i, x, y;
 
-	if (!game_sock)
+	if (!open_port())
 	{
-		game_sock = network->udp_open(UDP_GAME_PORT);
-		if (!game_sock)
-			return -1;
+		MSG("Unable to get the game socket.\n");
+		return -1;
 	}
 
 	m.msg_id = MPMSG_REQ_LADDER;
