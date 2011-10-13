@@ -363,17 +363,6 @@ struct MpStructProcessFrameDelay : public MpStructBase
 	}
 };
 
-const char *cookie_word = "ASDF";
-const int cookie_size = 4;
-struct MpStructCookie : public MpStructBase
-{
-	char cookie[cookie_size];
-	MpStructCookie() : MpStructBase(MPMSG_COOKIE)
-	{
-		memcpy(cookie, cookie_word, cookie_size);
-	}
-};
-
 struct MpStructPlayerDisconnect : public MpStructBase
 {
 	PID_TYPE lost_player_id;
@@ -1634,7 +1623,6 @@ int Game::mp_join_session(int session_id, char *player_name)
 	int width;
 	int tried_connection = 0;
 	int connected = 0;
-	int got_cookie = 0;
 	int finished = 0;
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
 	char password[MP_SESSION_NAME_LEN+1];
@@ -1662,35 +1650,9 @@ int Game::mp_join_session(int session_id, char *player_name)
 			connected = mp_obj.join_session(session_id, password, player_name);
 			if (!connected)
 				break;
-
-			MpStructCookie cookie;
-			mp_obj.send_stream(1, &cookie, sizeof(cookie));
-		} else if (connected) {
-			if (!got_cookie) {
-				PID_TYPE from, to;
-				uint32_t recvLen;
-				int sysMsgCount;
-				char *recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
-				if (sysMsgCount)
-					break;
-				if (recvPtr) {
-					MpStructCookie *ack = (MpStructCookie *)recvPtr;
-
-					if (ack->msg_id == MPMSG_COOKIE) {
-						if (memcmp(ack->cookie, cookie_word, cookie_size))
-							break;
-						// the ack contains my player's id, and the host's name
-						mp_obj.add_player(config.player_name, to); // add myself
-						mp_obj.set_my_player_id(to); // register my id
-						got_cookie = 1;
-					}
-				}
-			}
-			else if (mp_obj.is_pregame())
-			{
-				finished = 1;
-				break;
-			}
+		} else if (connected && mp_obj.is_pregame()) {
+			finished = 1;
+			break;
 		}
 
 		vga_front.lock_buf();
@@ -2562,18 +2524,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				case MPMSG_ABORT_GAME:
 					box.msg("The game host has aborted the game.");
 					return 0;
-				case MPMSG_COOKIE:
-					if (remote.is_host)
-					{
-						MpStructCookie *cookie = (MpStructCookie *)recvPtr;
-						if (memcmp(cookie->cookie, cookie_word, cookie_size)) {
-							mp_obj.delete_player(from);
-						} else {
-							MpStructCookie ack;
-							mp_obj.send_stream(from, &ack, sizeof(MpStructCookie));
-						}
-					}
-					break;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
 					refreshFlag |= SGOPTION_ALL_OPTIONS;
@@ -4455,18 +4405,6 @@ int Game::mp_select_load_option(char *fileName)
 				case MPMSG_ABORT_GAME:
 					box.msg("The game host has aborted the game.");
 					return 0;
-				case MPMSG_COOKIE:
-					if (remote.is_host)
-					{
-						MpStructCookie *cookie = (MpStructCookie *)recvPtr;
-						if (memcmp(cookie->cookie, cookie_word, cookie_size)) {
-							mp_obj.delete_player(from);
-						} else {
-							MpStructCookie ack;
-							mp_obj.send_stream(from, &ack, sizeof(MpStructCookie));
-						}
-					}
-					break;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
 					refreshFlag |= SGOPTION_ALL_OPTIONS;
