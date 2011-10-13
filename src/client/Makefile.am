@@ -296,7 +296,6 @@ endif
 	../common/libcommon.a \
 	../file/libfile.a \
 	../video/common/libvideo_common.a \
-	../imgfun/libimgfun.a \
-	../netplay/common/libnetplay_common.a
+	../imgfun/libimgfun.a
 
 EXTRA_DIST = 7k.ico ico.rc
