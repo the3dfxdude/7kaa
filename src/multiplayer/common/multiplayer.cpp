@@ -670,6 +670,25 @@ PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 	return player_pool[playerId-1];
 }
 
+int MultiPlayer::get_player_id(struct inet_address *address)
+{
+	int i;
+	for (i = 0; i < max_players; i++)
+	{
+		if (player_pool[i] &&
+			player_pool[i]->address.host == address->host &&
+			player_pool[i]->address.port == address->port)
+		{
+			break;
+		}
+	}
+	if (i >= max_players)
+	{
+		return 0;
+	}
+	return i+1;
+}
+
 // determine whether a player is lost
 //
 // MultiPlayer::received must be called (or remote.poll_msg) , 
@@ -840,15 +859,7 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 
 		ret = network->recv(game_sock, h, &addr);
 		if (ret > 0) {
-			int i;
-			for (i = 0; i < max_players; i++) {
-				if (player_pool[i] &&
-				    player_pool[i]->connecting &&
-				    player_pool[i]->address.host == addr.host &&
-				    player_pool[i]->address.port == addr.port)
-					break;
-			}
-			*from = i < max_players ? i+1 : 0;
+			*from = get_player_id(&addr);
 			*to = my_player_id;
 			*size = h->size - sizeof(struct packet_header);
 			MSG("[MultiPlayer::receive] received %d bytes from player %d\n", *size, *from);
@@ -918,10 +929,18 @@ void MultiPlayer::udp_accept_connections()
 	if (strcmp(joined_session.password, password) != 0)
 		return;
 
-	// allow connection if we can create the player
-	id = create_player("?anonymous?", &address);
+	// check who this is
+	id = get_player_id(&address);
 	if (!id)
-		return;
+	{
+		// allow connection if we can create the player
+		id = create_player("?anonymous?", &address);
+		if (!id)
+		{
+			return;
+		}
+		MSG("Player %d connected.\n", id);
+	}
 
 	// respond to the player
 	a.msg_id = MPMSG_CONNECT_ACK;
@@ -935,8 +954,6 @@ void MultiPlayer::udp_accept_connections()
 	msg.host = address.host;
 	msg.port = address.port;
 	send_stream(BROADCAST_PID, &msg, sizeof(msg));
-
-	MSG("Player %d connected.\n", id);
 }
 
 void MultiPlayer::set_peer_address(uint32_t who, struct inet_address *address)

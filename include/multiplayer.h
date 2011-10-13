@@ -278,6 +278,7 @@ private:
 	int send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to);
 
 	int create_player(char *name, struct inet_address *address);
+	int get_player_id(struct inet_address *address);
 	int check_duplicates(struct inet_address *address);
 	void msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr);
 	int msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr);
