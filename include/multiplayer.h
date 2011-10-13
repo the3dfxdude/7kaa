@@ -19,11 +19,11 @@
  *
  */
 
-// Filename    : ODPLAY.H
+// Filename    : multiplayer.h
 // Description : Multiplayer game support.
 
-#ifndef __netplay_sdlnet_h__
-#define __netplay_sdlnet_h__
+#ifndef __MULTIPLAYER_H
+#define __MULTIPLAYER_H
 
 #include <ODYNARRB.h>
 #include <stdint.h>
@@ -292,5 +292,5 @@ extern MultiPlayer mp_obj;
 
 #include <MPTYPES.h>
 
-#endif
+#endif // __MULTIPLAYER_H
 
