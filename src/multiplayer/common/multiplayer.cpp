@@ -103,7 +103,6 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	use_remote_session_provider = 0;
 	update_available = -1;
 	network = new Network();
-	peer_sock = 0;
 	game_sock = 0;
 	status = MP_STATUS_IDLE;
 
@@ -442,8 +441,8 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 		return 0;
 	}
 
-	peer_sock = network->udp_open(UDP_GAME_PORT);
-	if (!peer_sock)
+	game_sock = network->udp_open(UDP_GAME_PORT);
+	if (!game_sock)
 	{
 		return 0;
 	}
@@ -482,8 +481,8 @@ int MultiPlayer::join_session(int i, char *playerName)
 	return 0; // TCP removal
 
 	// establish connection with server
-	peer_sock = network->udp_open(0);
-	if (!peer_sock)
+	game_sock = network->udp_open(0);
+	if (!game_sock)
 	{
 		return 0;
 	}
@@ -521,7 +520,7 @@ void MultiPlayer::accept_connections()
 	if (!host_flag) return;
 
 	cur_ticks = m.get_time();
-	if (peer_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
+	if (game_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
 		// send the session beacon
 		struct MsgGameBeacon p;
 
@@ -535,11 +534,11 @@ void MultiPlayer::accept_connections()
 			p.password = 0;
 		
 
-		send_nonseq_msg(peer_sock, (char *)&p, sizeof(struct MsgGameBeacon), &lan_broadcast_address);
+		send_nonseq_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &lan_broadcast_address);
 
 		if (use_remote_session_provider)
 		{
-			send_nonseq_msg(peer_sock, (char *)&p, sizeof(struct MsgGameBeacon), &remote_session_provider_address);
+			send_nonseq_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &remote_session_provider_address);
 		}
 	}
 }
@@ -737,7 +736,7 @@ int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 {
 	err_when(to > max_players);
 
-	if (!peer_sock)
+	if (!game_sock)
 		return 0;
 	if (to && to == my_player_id)
 		return 0;
@@ -758,7 +757,7 @@ int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 
 	if (player_pool[to-1] && player_pool[to-1]->connecting)
 	{
-		if (!send_nonseq_msg(peer_sock, (char *)data, msg_size, &player_pool[to-1]->address))
+		if (!send_nonseq_msg(game_sock, (char *)data, msg_size, &player_pool[to-1]->address))
 		{
 			ERR("[MultiPlayer::send] error while sending data to player %d\n", to);
 			return 0;
@@ -797,7 +796,7 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 	if (sysMsgCount) *sysMsgCount = 0;
 	*from = max_players;
 
-	if (peer_sock) {
+	if (game_sock) {
 		struct inet_address addr;
 		struct packet_header *h;
 		int ret;
@@ -805,7 +804,7 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 		h = (struct packet_header *)recv_buf;
 		h->size = MP_UDP_MAX_PACKET_SIZE;
 
-		ret = network->recv(peer_sock, h, &addr);
+		ret = network->recv(game_sock, h, &addr);
 		if (ret > 0) {
 			int i;
 			for (i = 0; i < max_players; i++) {
@@ -865,7 +864,7 @@ int MultiPlayer::udp_join_session(char *password)
 
 	addr = &player_pool[0]->address;
 
-	if (!peer_sock || !addr->host)
+	if (!game_sock || !addr->host)
 		return 0;
 
 	strncpy(joined_session.password, password, MP_SESSION_NAME_LEN);
@@ -896,10 +895,10 @@ void MultiPlayer::udp_accept_connections()
 
 	h->size = MP_UDP_MAX_PACKET_SIZE;
 
-	if (!peer_sock)
+	if (!game_sock)
 		return;
 
-	ret = network->recv(peer_sock, h, &address);
+	ret = network->recv(game_sock, h, &address);
 	if (ret <= 0)
 		return;
 
@@ -926,7 +925,7 @@ void MultiPlayer::udp_accept_connections()
 	a.msg_id = MPMSG_CONNECT_ACK;
 
 	// send the connection ack message
-	send_system_msg(peer_sock, (char *)&a, sizeof(struct MsgConnectAck), &address);
+	send_system_msg(game_sock, (char *)&a, sizeof(struct MsgConnectAck), &address);
 
 	// tell all peers
 	msg.msg_id = MPMSG_NEW_PEER_ADDRESS;
@@ -1083,7 +1082,7 @@ void MultiPlayer::yield_connecting()
 	strncpy(m.password, joined_session.password, MP_SESSION_NAME_LEN);
 
 	// send the connection message
-	send_system_msg(peer_sock, (char *)&m, sizeof(struct MsgConnect), addr);
+	send_system_msg(game_sock, (char *)&m, sizeof(struct MsgConnect), addr);
 
 
 	h = (struct packet_header *)recv_buf;
@@ -1092,7 +1091,7 @@ void MultiPlayer::yield_connecting()
 	h->size = MP_UDP_MAX_PACKET_SIZE;
 
 	// check for ack
-	ret = network->recv(peer_sock, h, &joining);
+	ret = network->recv(game_sock, h, &joining);
 	if (ret <= 0)
 		return;
 

@@ -209,7 +209,6 @@ private:
 
 	char *            recv_buf;
 
-	int               peer_sock; // peer-to-peer communication
 	int               game_sock;
 
 	struct inet_address lan_broadcast_address;
