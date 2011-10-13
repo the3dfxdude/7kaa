@@ -1659,11 +1659,8 @@ int Game::mp_join_session(int session_id, char *player_name)
 			tried_connection = 1;
 
 			// NOTE: If this function causes too much delay, put it in a thread
-			connected = mp_obj.join_session(session_id, player_name);
+			connected = mp_obj.join_session(session_id, password, player_name);
 			if (!connected)
-				break;
-
-			if (!mp_obj.udp_join_session(password))
 				break;
 
 			MpStructCookie cookie;

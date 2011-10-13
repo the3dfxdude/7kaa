@@ -243,8 +243,7 @@ public:
 	int    poll_sessions();
 	void   sort_sessions(int sortType);
 	int    create_session(char *sessionName, char *password, char *playerName, int maxPlayers);
-	int    join_session(int i, char *playerName);
-	int    udp_join_session(char *password);
+	int    join_session(int i, char *password, char *playerName);
 	void   close_session();
 	void   disable_join_session();
 	void   accept_connections();

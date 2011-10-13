@@ -499,13 +499,14 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	return 1;
 }
 
-// join a session, by passing the index passed into get_session()
+// join a session
 // note : do not call poll_sessions between get_session and join_session
 //
-// <int> currentSessionIndex       the index passed into get_session()
+// <int> i -- the index from get_session()
+// <char *> playerName -- the name the player will be known by
+// <char *> password -- allows entering password for the session
 //
-// currentSessionIndex start from 1
-int MultiPlayer::join_session(int i, char *playerName)
+int MultiPlayer::join_session(int i, char *password, char *playerName)
 {
 	SessionDesc *session = (SessionDesc *)current_sessions.get(i);
 	if (!session)
@@ -517,10 +518,6 @@ int MultiPlayer::join_session(int i, char *playerName)
 		return 0;
 	}
 
-	return 0; // TCP removal
-
-	// establish connection with server
-
 	max_players = MAX_NATION;
 
 	// register the host now, even though his name is not known yet
@@ -531,6 +528,9 @@ int MultiPlayer::join_session(int i, char *playerName)
 	player_pool[0]->connecting = 1;
 
 	joined_session = *session;
+	strncpy(joined_session.password, password, MP_SESSION_NAME_LEN);
+
+	status = MP_STATUS_CONNECTING;
 
 	return 1;
 }
@@ -884,28 +884,6 @@ char *MultiPlayer::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, 
 	if (sysMsgCount) *sysMsgCount = 0;
 
 	return NULL;
-}
-
-// intended only for clients
-// returns true when the udp session is established
-// returns false when the udp session is not yet established (try again later)
-int MultiPlayer::udp_join_session(char *password)
-{
-	struct inet_address *addr;
-
-	if (!player_pool[0])
-		return 0;
-
-	addr = &player_pool[0]->address;
-
-	if (!game_sock || !addr->host)
-		return 0;
-
-	strncpy(joined_session.password, password, MP_SESSION_NAME_LEN);
-
-	status = MP_STATUS_CONNECTING;
-
-	return 1;
 }
 
 // Allows a game host to recognize the udp address of a peer.
