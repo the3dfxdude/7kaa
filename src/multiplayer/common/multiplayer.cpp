@@ -428,7 +428,7 @@ SessionDesc *MultiPlayer::get_session(int i)
 // <char *> playerName       name to identify the local player's name in this session
 // <int>    maxPlayers       maximum no. of players in a session
 //
-// return TRUE if success
+// return 1 if success
 int MultiPlayer::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
 	struct inet_address ip_address;
@@ -439,13 +439,13 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 
 	if (!network->resolve_host(&ip_address, NULL, UDP_GAME_PORT))
 	{
-		return FALSE;
+		return 0;
 	}
 
 	peer_sock = network->udp_open(UDP_GAME_PORT);
 	if (!peer_sock)
 	{
-		return FALSE;
+		return 0;
 	}
 
 	joined_session.id = 0;
@@ -458,13 +458,13 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 
 	// Add hosts machine's player to the pool now
 	if (!add_player(playerName, 1)) {
-		return FALSE;
+		return 0;
 	}
 	set_my_player_id(1);
 
 	status = MP_STATUS_PREGAME;
 
-	return TRUE;
+	return 1;
 }
 
 // join a session, by passing the index passed into get_session()
@@ -477,15 +477,15 @@ int MultiPlayer::join_session(int i, char *playerName)
 {
 	SessionDesc *session = (SessionDesc *)current_sessions.get(i);
 	if (!session)
-		return FALSE;
+		return 0;
 
-	return FALSE; // TCP removal
+	return 0; // TCP removal
 
 	// establish connection with server
 	peer_sock = network->udp_open(0);
 	if (!peer_sock)
 	{
-		return FALSE;
+		return 0;
 	}
 
 	max_players = MAX_NATION;
@@ -499,7 +499,7 @@ int MultiPlayer::join_session(int i, char *playerName)
 
 	joined_session = *session;
 
-	return TRUE;
+	return 1;
 }
 
 void MultiPlayer::close_session()
@@ -731,19 +731,19 @@ int MultiPlayer::send_system_msg(int sock, char *msg, int msg_size, struct inet_
 //
 // pass BROADCAST_PID as toId to all players
 //
-// return TRUE on success
+// return 1 on success
 //
 int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 {
 	err_when(to > max_players);
 
 	if (!peer_sock)
-		return FALSE;
+		return 0;
 	if (to && to == my_player_id)
-		return FALSE;
+		return 0;
 	if (msg_size > MP_UDP_MAX_PACKET_SIZE) {
 		ERR("[MultiPlayer::send] message exceeds maximum size\n");
-		return FALSE;
+		return 0;
 	}
 
 	if (to == BROADCAST_PID) {
@@ -753,7 +753,7 @@ int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 				player_pool[i]->connecting &&
 				i+1 != my_player_id)
 				this->send(i+1, data, msg_size);
-		return TRUE;
+		return 1;
 	}
 
 	if (player_pool[to-1] && player_pool[to-1]->connecting)
@@ -761,29 +761,29 @@ int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 		if (!send_nonseq_msg(peer_sock, (char *)data, msg_size, &player_pool[to-1]->address))
 		{
 			ERR("[MultiPlayer::send] error while sending data to player %d\n", to);
-			return FALSE;
+			return 0;
 		}
 		MSG("[MultiPlayer::send] sent %d bytes to player %d\n", msg_size, to);
-		return TRUE;
+		return 1;
 	}
 
-	return FALSE;
+	return 0;
 }
 
 // send tcp message
 //
 // pass BROADCAST_PID as toId to all players
 //
-// return TRUE on success
+// return 1 on success
 //
 int MultiPlayer::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
 	err_when(to > max_players);
 
 	if (to && to == my_player_id)
-		return FALSE;
+		return 0;
 
-	return TRUE;
+	return 1;
 }
 
 // receive udp message
