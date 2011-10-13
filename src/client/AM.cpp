@@ -90,7 +90,7 @@
 #include <OEXPMASK.h>
 #include <OREGION.h>
 #include <OWARPT.h>
-#include <netplay.h>
+#include <multiplayer.h>
 #include <OERRCTRL.h>
 #include <OMUSIC.h>
 #include <OLOG.h>

@@ -172,8 +172,7 @@ noinst_HEADERS = \
 	mouse_dinput.h \
 	mouse_none.h \
 	mouse_sdl.h \
-	netplay.h \
-	netplay_sdlnet.h \
+	multiplayer.h \
 	network.h \
 	network_base.h \
 	network_none.h \

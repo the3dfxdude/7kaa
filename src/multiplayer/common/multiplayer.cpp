@@ -19,10 +19,10 @@
  *
  */
 
-// Filename    : netplay_sdlnet.cpp
+// Filename    : multiplayer.cpp
 // Description : Multiplayer game support.
 
-#include <netplay.h>
+#include <multiplayer.h>
 #include <ALL.h>
 #include <string.h>
 #include <OVGALOCK.h>
