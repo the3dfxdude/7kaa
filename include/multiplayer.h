@@ -246,7 +246,6 @@ public:
 	int    join_session(int i, char *password, char *playerName);
 	void   close_session();
 	void   disable_join_session();
-	void   accept_connections();
 	SessionDesc* get_session(int i);
 
 	// -------- functions on player management -------//
@@ -285,6 +284,7 @@ private:
 	void msg_version_nak(MsgVersionNak *p, struct inet_address *addr);
 
 	void udp_accept_connections();
+	void send_game_beacon();
 
 	void yield_connecting();
 	void yield_pregame();

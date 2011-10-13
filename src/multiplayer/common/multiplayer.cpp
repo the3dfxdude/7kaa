@@ -544,14 +544,11 @@ void MultiPlayer::disable_join_session()
 	allowing_connections = 0;
 }
 
-void MultiPlayer::accept_connections()
+void MultiPlayer::send_game_beacon()
 {
 	static uint32_t ticks = 0;
 	uint32_t player_id;
 	uint32_t cur_ticks;
-
-	// accept_connections shouldn't be used by clients
-	if (!host_flag) return;
 
 	cur_ticks = m.get_time();
 	if (game_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
@@ -878,9 +875,6 @@ char *MultiPlayer::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, 
 {
 	err_when(!from || !to || !size || !recv_buf);
 
-	// have game host accept connections during game setup
-	accept_connections();
-
 	if (sysMsgCount) *sysMsgCount = 0;
 
 	return NULL;
@@ -1123,6 +1117,7 @@ void MultiPlayer::yield_pregame()
 	if (host_flag)
 	{
 		udp_accept_connections();
+		send_game_beacon();
 	}
 }
 
