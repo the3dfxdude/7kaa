@@ -894,29 +894,15 @@ char *MultiPlayer::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, 
 	return NULL;
 }
 
-void MultiPlayer::udp_accept_connections()
+void MultiPlayer::udp_accept_connections(struct packet_header *h, struct inet_address *address)
 {
-	struct inet_address address;
-	struct packet_header *h;
 	struct MsgConnect *m;
 	struct MsgConnectAck a;
 	char password[MP_SESSION_NAME_LEN+1];
-	int i;
 	int id;
-	int ret;
 	MsgNewPeerAddress msg;
 
-	h = (struct packet_header *)recv_buf;
-	m = (struct MsgConnect *)(recv_buf + sizeof(struct packet_header));
-
-	h->size = MP_UDP_MAX_PACKET_SIZE;
-
-	if (!game_sock)
-		return;
-
-	ret = network->recv(game_sock, h, &address);
-	if (ret <= 0)
-		return;
+	m = (struct MsgConnect *)((char *)h + sizeof(struct packet_header));
 
 	// check if this is really a connect message
 	if (h->size != sizeof(struct MsgConnect) + sizeof(struct packet_header) ||
@@ -929,30 +915,25 @@ void MultiPlayer::udp_accept_connections()
 	if (strcmp(joined_session.password, password) != 0)
 		return;
 
-	// check who this is
-	id = get_player_id(&address);
+	// allow connection if we can create the player
+	id = create_player("?anonymous?", address);
 	if (!id)
 	{
-		// allow connection if we can create the player
-		id = create_player("?anonymous?", &address);
-		if (!id)
-		{
-			return;
-		}
-		MSG("Player %d connected.\n", id);
+		return;
 	}
+	MSG("Player %d connected.\n", id);
 
 	// respond to the player
 	a.msg_id = MPMSG_CONNECT_ACK;
 
 	// send the connection ack message
-	send_system_msg(game_sock, (char *)&a, sizeof(struct MsgConnectAck), &address);
+	send_system_msg(game_sock, (char *)&a, sizeof(struct MsgConnectAck), address);
 
 	// tell all peers
 	msg.msg_id = MPMSG_NEW_PEER_ADDRESS;
 	msg.player_id = id;
-	msg.host = address.host;
-	msg.port = address.port;
+	msg.host = address->host;
+	msg.port = address->port;
 	send_stream(BROADCAST_PID, &msg, sizeof(msg));
 }
 
@@ -1085,6 +1066,46 @@ int MultiPlayer::show_leader_board()
 	return 1;
 }
 
+void MultiPlayer::yield_recv()
+{
+	uint32_t ticks;
+	uint32_t cur_ticks;
+	struct inet_address sender;
+	struct packet_header *h;
+	int ret;
+
+	h = (struct packet_header *)recv_buf;
+
+	ticks = m.get_time();
+	cur_ticks = ticks;
+
+	while (cur_ticks < ticks + 50) {
+		int player_id;
+
+		h->size = MP_UDP_MAX_PACKET_SIZE;
+
+		ret = network->recv(game_sock, h, &sender);
+		if (ret <= 0)
+			return;
+
+		player_id = get_player_id(&sender);
+		if (!player_id && status == MP_STATUS_PREGAME) {
+			if (host_flag)
+				udp_accept_connections(h, &sender);
+			continue;
+		}
+
+		switch (h->type) {
+		case PACKET_NONSEQ:
+			break;
+		case PACKET_STREAM:
+			break;
+		case PACKET_SYSTEM:
+			break;
+		}
+	}
+}
+
 void MultiPlayer::yield_connecting()
 {
 	struct inet_address joining;
@@ -1127,9 +1148,9 @@ void MultiPlayer::yield_connecting()
 
 void MultiPlayer::yield_pregame()
 {
+	yield_recv();
 	if (host_flag)
 	{
-		udp_accept_connections();
 		send_game_beacon();
 	}
 }

@@ -284,9 +284,10 @@ private:
 	int msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr);
 	void msg_version_nak(MsgVersionNak *p, struct inet_address *addr);
 
-	void udp_accept_connections();
+	void udp_accept_connections(struct packet_header *h, struct inet_address *address);
 	void send_game_beacon();
 
+	void yield_recv();
 	void yield_connecting();
 	void yield_pregame();
 };
