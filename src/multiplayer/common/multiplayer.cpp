@@ -830,12 +830,7 @@ int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 //
 int MultiPlayer::send_stream(uint32_t to, void * data, uint32_t msg_size)
 {
-	err_when(to > max_players);
-
-	if (to && to == my_player_id)
-		return 0;
-
-	return 1;
+	return send(to, data, msg_size);
 }
 
 // receive udp message
@@ -875,23 +870,9 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
 //
-// This function has deficiencies... Only one message from one socket may be
-// processed at a time. So a round robin is used to make sure that one client
-// high in the list can't hog the connection.
-//
-// TODO: rename sysMsgCount to playerLost and update the logic
-//       (because sysMsgCount is only used to determine playerLost event)
-//
-// Note: When a disconnection does occur, the socket is closed by a later
-// event handler
-//
 char *MultiPlayer::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, int *sysMsgCount)
 {
-	err_when(!from || !to || !size || !recv_buf);
-
-	if (sysMsgCount) *sysMsgCount = 0;
-
-	return NULL;
+	return receive(from, to, size, sysMsgCount);
 }
 
 void MultiPlayer::udp_accept_connections(struct packet_header *h, struct inet_address *address)
