@@ -28,6 +28,7 @@
 #include <ODYNARRB.h>
 #include <stdint.h>
 #include <network.h>
+#include <queue>
 
 #define MP_SERVICE_PROVIDER_NAME_LEN 64
 #define MP_SESSION_NAME_LEN 64
@@ -58,6 +59,14 @@ enum
 	MPMSG_REQ_LADDER,
 	MPMSG_LADDER,
 	MPMSG_NEW_PEER_ADDRESS,
+};
+
+struct mp_msg
+{
+	uint32_t player_id;
+	uint16_t size;
+	struct packet_header header;
+	char *data;
 };
 
 #pragma pack(1)
@@ -208,6 +217,7 @@ private:
 	PlayerDesc        *player_pool[MAX_NATION];
 
 	char *            recv_buf;
+	std::queue<struct mp_msg *> recv_queue;
 
 	int               game_sock;
 	int               standard_port;

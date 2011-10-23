@@ -844,6 +844,24 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 	if (sysMsgCount) *sysMsgCount = 0;
 	*from = max_players;
 
+	if (!recv_queue.empty())
+	{
+		struct mp_msg *msg;
+
+		msg = recv_queue.front();
+		recv_queue.pop();
+
+		memcpy(recv_buf, msg->data, msg->size);
+		*from = msg->player_id;
+		*to = my_player_id;
+		*size = msg->size;
+
+		delete msg->data;
+		delete msg;
+
+		return recv_buf;
+	}
+
 	if (game_sock) {
 		struct inet_address addr;
 		struct packet_header *h;
@@ -1062,6 +1080,9 @@ void MultiPlayer::yield_recv()
 
 	while (cur_ticks < ticks + 50) {
 		int player_id;
+		struct mp_msg *msg;
+		int msg_size;
+		char *buf_copy;
 
 		h->size = MP_UDP_MAX_PACKET_SIZE;
 
@@ -1076,10 +1097,23 @@ void MultiPlayer::yield_recv()
 			continue;
 		}
 
+		msg_size = h->size - sizeof(struct packet_header);
+		if (msg_size <= 0 || msg_size >= MP_UDP_MAX_PACKET_SIZE)
+			continue;
+
+
 		switch (h->type) {
-		case PACKET_NONSEQ:
-			break;
 		case PACKET_STREAM:
+		case PACKET_NONSEQ:
+			msg = new struct mp_msg;
+			buf_copy = new char[msg_size];
+
+			msg->player_id = player_id;
+			memcpy(&msg->header, h, sizeof(struct packet_header));
+			msg->size = msg_size;
+			msg->data = buf_copy;
+			memcpy(buf_copy, (char *)h+sizeof(struct packet_header), msg_size);
+			recv_queue.push(msg);
 			break;
 		case PACKET_SYSTEM:
 			break;
