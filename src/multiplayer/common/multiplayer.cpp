@@ -729,7 +729,7 @@ int MultiPlayer::send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_
 	msg_buf = send_buf + sizeof(struct packet_header);
 
 	h->type = PACKET_NONSEQ;
-	h->size = total;
+	h->size = msg_size;
 	h->window = 0;
 	h->sequence = 0;
 	h->window_ack = 0;
@@ -763,7 +763,7 @@ int MultiPlayer::send_system_msg(int sock, char *msg, int msg_size, struct inet_
 	msg_buf = send_buf + sizeof(struct packet_header);
 
 	h->type = PACKET_SYSTEM;
-	h->size = total;
+	h->size = msg_size;
 	h->window = 0;
 	h->sequence = 0;
 	h->window_ack = 0;
@@ -859,6 +859,8 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 		delete msg->data;
 		delete msg;
 
+		MSG("Received %d bytes from player %d\n", *size, *from);
+
 		return recv_buf;
 	}
 
@@ -874,7 +876,7 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 		if (ret > 0) {
 			*from = get_player_id(&addr);
 			*to = my_player_id;
-			*size = h->size - sizeof(struct packet_header);
+			*size = h->size;
 			MSG("[MultiPlayer::receive] received %d bytes from player %d\n", *size, *from);
 			return *from ? recv_buf + sizeof(struct packet_header) : NULL;
 		}
@@ -904,7 +906,7 @@ void MultiPlayer::udp_accept_connections(struct packet_header *h, struct inet_ad
 	m = (struct MsgConnect *)((char *)h + sizeof(struct packet_header));
 
 	// check if this is really a connect message
-	if (h->size != sizeof(struct MsgConnect) + sizeof(struct packet_header) ||
+	if (h->size != sizeof(struct MsgConnect) ||
 			m->msg_id != MPMSG_CONNECT)
 		return;
 
@@ -1010,7 +1012,7 @@ int MultiPlayer::show_leader_board()
 	if (ret <= 0)
 		return 0;
 
-	if (h->size != sizeof(struct MsgLadder) + sizeof(struct packet_header) ||
+	if (h->size != sizeof(struct MsgLadder) ||
 		addr.host != remote_session_provider_address.host ||
 		addr.port != remote_session_provider_address.port ||
 		a->msg_id != MPMSG_LADDER)
@@ -1081,7 +1083,6 @@ void MultiPlayer::yield_recv()
 	while (cur_ticks < ticks + 50) {
 		int player_id;
 		struct mp_msg *msg;
-		int msg_size;
 		char *buf_copy;
 
 		h->size = MP_UDP_MAX_PACKET_SIZE;
@@ -1097,8 +1098,7 @@ void MultiPlayer::yield_recv()
 			continue;
 		}
 
-		msg_size = h->size - sizeof(struct packet_header);
-		if (msg_size <= 0 || msg_size >= MP_UDP_MAX_PACKET_SIZE)
+		if (h->size <= 0 || h->size >= MP_UDP_MAX_PACKET_SIZE)
 			continue;
 
 
@@ -1106,13 +1106,13 @@ void MultiPlayer::yield_recv()
 		case PACKET_STREAM:
 		case PACKET_NONSEQ:
 			msg = new struct mp_msg;
-			buf_copy = new char[msg_size];
+			buf_copy = new char[h->size];
 
 			msg->player_id = player_id;
 			memcpy(&msg->header, h, sizeof(struct packet_header));
-			msg->size = msg_size;
+			msg->size = h->size;
 			msg->data = buf_copy;
-			memcpy(buf_copy, (char *)h+sizeof(struct packet_header), msg_size);
+			memcpy(buf_copy, (char *)h+sizeof(struct packet_header), h->size);
 			recv_queue.push(msg);
 			break;
 		case PACKET_SYSTEM:
@@ -1152,7 +1152,7 @@ void MultiPlayer::yield_connecting()
 	// check if this really is an ack
 	if (joining.host != addr->host ||
 			joining.port != addr->port ||
-			h->size != sizeof(struct MsgConnectAck) + sizeof(struct packet_header) ||
+			h->size != sizeof(struct MsgConnectAck) ||
 			a->msg_id != MPMSG_CONNECT_ACK)
 		return;
 

@@ -134,7 +134,7 @@ int NetworkSDLNet::send(int sock, struct packet_header *p, struct inet_address *
 
 	u.channel = -1;
 	u.data = (Uint8 *)p;
-	u.len = p->size;
+	u.len = p->size + sizeof(struct packet_header);
 	u.address.host = to->host;
 	u.address.port = to->port;
 	
@@ -170,7 +170,7 @@ int NetworkSDLNet::recv(int sock, struct packet_header *p, struct inet_address *
 	}
 	if (!r)
 		return 0;
-	if (u.len != p->size)
+	if (u.len != p->size + sizeof(struct packet_header))
 		return 0;
 
 	from->host = u.address.host;
