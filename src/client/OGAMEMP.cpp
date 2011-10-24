@@ -3405,8 +3405,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	{
 		retFlag = 0;
 
-		if( remote.is_host )
-			mp_obj.disable_join_session();
+		mp_obj.game_starting();
 
 		// mp_obj.poll_players();
 		nation_array.init();
@@ -4788,8 +4787,7 @@ int Game::mp_select_load_option(char *fileName)
 	{
 		retFlag = 0;
 
-		if( remote.is_host )
-			mp_obj.disable_join_session();
+		mp_obj.game_starting();
 
 		// mp_obj.poll_players();
 			

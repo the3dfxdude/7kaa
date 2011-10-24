@@ -543,9 +543,10 @@ void MultiPlayer::close_session()
 {
 }
 
-void MultiPlayer::disable_join_session()
+void MultiPlayer::game_starting()
 {
 	allowing_connections = 0;
+	status = MP_STATUS_INGAME;
 }
 
 void MultiPlayer::send_game_beacon()
@@ -868,6 +869,11 @@ char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int 
 		return recv_buf;
 	}
 
+	if (status != MP_STATUS_INGAME)
+	{
+		return NULL;
+	}
+
 	if (game_sock) {
 		struct inet_address addr;
 		struct packet_header *h;
@@ -1183,6 +1189,8 @@ void MultiPlayer::yield()
 		break;
 	case MP_STATUS_PREGAME:
 		yield_pregame();
+		break;
+	case MP_STATUS_INGAME:
 		break;
 	}
 }

@@ -247,6 +247,7 @@ public:
 	bool   is_protocol_supported(ProtocolType);
 	int    is_update_available();
 	int    is_pregame();
+	void   game_starting();
 
 	// ------- functions on session --------//
 	int    set_remote_session_provider(const char *server);
@@ -255,7 +256,6 @@ public:
 	int    create_session(char *sessionName, char *password, char *playerName, int maxPlayers);
 	int    join_session(int i, char *password, char *playerName);
 	void   close_session();
-	void   disable_join_session();
 	SessionDesc* get_session(int i);
 
 	// -------- functions on player management -------//
