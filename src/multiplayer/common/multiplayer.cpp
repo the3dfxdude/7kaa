@@ -474,7 +474,11 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION);
 
 	// open socket for listening
+#ifdef HOST_ANY_PORT
+	if (!open_port())
+#else
 	if (!open_standard_port(1))
+#endif
 	{
 		MSG("Unable to get the game socket.\n");
 		return 0;
