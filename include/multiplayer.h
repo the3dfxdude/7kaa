@@ -121,12 +121,14 @@ struct MsgConnect
 {
 	uint32_t msg_id;
 	uint32_t player_id;
+	char name[MP_SESSION_NAME_LEN];
 	char password[MP_SESSION_NAME_LEN];
 };
 
 struct MsgConnectAck
 {
 	uint32_t msg_id;
+	uint32_t your_id;
 };
 
 struct MsgRequestLadder
@@ -208,7 +210,7 @@ private:
 	Network           *network;
 
 	uint32_t          my_player_id;
-	char              my_name[MP_FRIENDLY_NAME_LEN+1];
+	PlayerDesc        *my_player;
 
 	int               host_flag;
 	int               allowing_connections;

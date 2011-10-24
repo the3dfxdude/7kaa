@@ -98,6 +98,7 @@ void MultiPlayer::init(ProtocolType protocol_type)
 
 	lobbied_flag = 0;
 	my_player_id = 0;
+	my_player = NULL;
 	host_flag = 0;
 	max_players = 0;
 	use_remote_session_provider = 0;
@@ -142,9 +143,17 @@ void MultiPlayer::deinit()
 		host_flag = 0;
 		allowing_connections = 0;
 	}
+
 	if (recv_buf) {
 		delete [] recv_buf;
 		recv_buf = NULL;
+	}
+
+	my_player_id = 0;
+	if (my_player)
+	{
+		delete my_player;
+		my_player = NULL;
 	}
 
 	delete network;
@@ -153,7 +162,6 @@ void MultiPlayer::deinit()
 	current_sessions.zap();
 	init_flag = 0;
 	lobbied_flag = 0;
-	my_player_id = 0;
 	status = MP_STATUS_IDLE;
 }
 
@@ -531,8 +539,15 @@ int MultiPlayer::join_session(int i, char *password, char *playerName)
 	player_pool[0]->address.port = session->address.port;
 	player_pool[0]->connecting = 1;
 
+	// Create user's player, but don't insert into the player pool now
+	my_player = new PlayerDesc();
+	strncpy(my_player->name, playerName, MP_SESSION_NAME_LEN);
+	my_player->name[MP_SESSION_NAME_LEN] = 0;
+	my_player->connecting = 1;
+
 	joined_session = *session;
 	strncpy(joined_session.password, password, MP_SESSION_NAME_LEN);
+	joined_session.password[MP_SESSION_NAME_LEN] = 0;
 
 	status = MP_STATUS_CONNECTING;
 
@@ -652,6 +667,10 @@ void MultiPlayer::delete_player(uint32_t id)
 {
 	err_when(id < 1 || id > max_players);
 	if (player_pool[id-1]) {
+		if (player_pool[id-1]->id == my_player_id && my_player)
+		{
+			my_player = NULL;
+		}
 		delete player_pool[id-1];
 		player_pool[id-1] = NULL;
 	}
@@ -910,6 +929,7 @@ void MultiPlayer::udp_accept_connections(struct packet_header *h, struct inet_ad
 	struct MsgConnect *m;
 	struct MsgConnectAck a;
 	char password[MP_SESSION_NAME_LEN+1];
+	char player_name[MP_SESSION_NAME_LEN+1];
 	int id;
 	MsgNewPeerAddress msg;
 
@@ -926,16 +946,20 @@ void MultiPlayer::udp_accept_connections(struct packet_header *h, struct inet_ad
 	if (strcmp(joined_session.password, password) != 0)
 		return;
 
+	strncpy(player_name, m->name, MP_SESSION_NAME_LEN);
+	player_name[MP_SESSION_NAME_LEN] = 0;
+
 	// allow connection if we can create the player
-	id = create_player("?anonymous?", address);
+	id = create_player(player_name, address);
 	if (!id)
 	{
 		return;
 	}
-	MSG("Player %d connected.\n", id);
+	MSG("Player %d, %s, connected.\n", id, player_name);
 
 	// respond to the player
 	a.msg_id = MPMSG_CONNECT_ACK;
+	a.your_id = id;
 
 	// send the connection ack message
 	send_system_msg(game_sock, (char *)&a, sizeof(struct MsgConnectAck), address);
@@ -1143,6 +1167,7 @@ void MultiPlayer::yield_connecting()
 	addr = &player_pool[0]->address;
 	m.msg_id = MPMSG_CONNECT;
 	m.player_id = my_player_id;
+	strncpy(m.name, my_player->name, MP_SESSION_NAME_LEN);
 	strncpy(m.password, joined_session.password, MP_SESSION_NAME_LEN);
 
 	// send the connection message
@@ -1165,6 +1190,11 @@ void MultiPlayer::yield_connecting()
 			h->size != sizeof(struct MsgConnectAck) ||
 			a->msg_id != MPMSG_CONNECT_ACK)
 		return;
+
+	// Insert player into player pool
+	my_player_id = a->your_id;
+	err_when(player_pool[my_player_id-1]);
+	player_pool[my_player_id-1] = my_player;
 
 	status = MP_STATUS_PREGAME;
 
