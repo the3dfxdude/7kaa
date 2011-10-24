@@ -569,11 +569,11 @@ void MultiPlayer::send_game_beacon()
 			p.password = 0;
 		
 
-		send_nonseq_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &lan_broadcast_address);
+		send_system_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &lan_broadcast_address);
 
 		if (use_remote_session_provider)
 		{
-			send_nonseq_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &remote_session_provider_address);
+			send_system_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &remote_session_provider_address);
 		}
 	}
 }
