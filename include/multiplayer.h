@@ -25,6 +25,7 @@
 #ifndef __MULTIPLAYER_H
 #define __MULTIPLAYER_H
 
+#include <MPTYPES.h>
 #include <ODYNARRB.h>
 #include <stdint.h>
 #include <network.h>
@@ -305,8 +306,6 @@ private:
 };
 
 extern MultiPlayer mp_obj;
-
-#include <MPTYPES.h>
 
 #endif // __MULTIPLAYER_H
 

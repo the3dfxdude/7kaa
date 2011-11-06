@@ -29,7 +29,6 @@
 
 #define PID_TYPE uint32_t
 #define BROADCAST_PID 0
-#define MultiPlayerType MultiPlayer
 #define SessionIdType uint32_t
 
 #endif

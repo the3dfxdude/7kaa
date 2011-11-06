@@ -90,7 +90,7 @@ Remote::~Remote()
 //									 REMOTE_WSOCK_TCPIP, REMOTE_WSOCK_IPX,
 //									 REMOTE_MODEM, REMOTE_NULL_MODEM
 //
-void Remote::init(MultiPlayerType *mp)
+void Remote::init(MultiPlayer *mp)
 {
 	if( connectivity_mode )
 		deinit();

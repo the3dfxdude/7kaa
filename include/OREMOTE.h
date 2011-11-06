@@ -320,7 +320,7 @@ public:
 
 //----------- Define class Remote -----------//
 
-class MultiPlayerType;
+class MultiPlayer;
 
 class Remote
 {
@@ -346,7 +346,7 @@ public:
 	int				connectivity_mode;
 	int				poll_msg_flag;
 	//	Wsock*			wsock_ptr;
-	MultiPlayerType*	mp_ptr;
+	MultiPlayer *mp_ptr;
 
 	//--------- send queue -----------//
 
@@ -408,7 +408,7 @@ public:
 	Remote();
 	~Remote();
 
-	void			init(MultiPlayerType *);
+	void			init(MultiPlayer *mp);
 	void			deinit();
 
 	void			init_start_mp();

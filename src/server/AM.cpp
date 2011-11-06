@@ -124,7 +124,7 @@ VgaUtil           vga_util;
 VgaBuf            vga_front, vga_back, vga_true_front;
 Audio             audio;
 Music             music;
-MultiPlayerType	mp_obj;
+MultiPlayer       mp_obj;
 Sys               sys;
 Translate         translate;        // constructor only memset()
 SeekPath          seek_path;

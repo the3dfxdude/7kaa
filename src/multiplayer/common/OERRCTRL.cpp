@@ -39,7 +39,7 @@ const int TIME_OUT = 2000;		// 2 sec
 const int CONNECT_LOST_TIME = 20000;	// 20 sec
 static String debugStr;
 
-void ErrorControl::init(MultiPlayerType *mp, char ecPlayerId )
+void ErrorControl::init(MultiPlayer *mp, char ecPlayerId)
 {
 	// ---------- initialize dp_id array ---------- //
 	memset(dp_id, 0, sizeof(dp_id) );

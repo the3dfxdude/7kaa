@@ -42,7 +42,7 @@ struct EcMsgHeader
 	}
 };
 
-class MultiPlayerType;
+class MultiPlayer;
 
 class ErrorControl
 {
@@ -57,7 +57,7 @@ class ErrorControl
 	// MAX_RECV_QUEUE > MAX_QUEUE/2 * MAX_PLAYER
 
 private:
-	MultiPlayerType *mp_ptr;
+	MultiPlayer *mp_ptr;
 	int	connecting_player_count;				// no. of peers
 	char	self_ec_player_id;
 
@@ -116,7 +116,7 @@ private:
 	int	need_re_send(char frameId, int promptFactor);
 
 public:
-	void	init(MultiPlayerType *, char ecPlayerId );
+	void	init(MultiPlayer *mp, char ecPlayerId);
 	void	deinit();
 	void	set_dp_id(char ecPlayerId, unsigned long dpPlayerId );
 	char	get_ec_player_id( unsigned long dpPlayerId );
