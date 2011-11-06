@@ -19,27 +19,26 @@
  *
  */
 
-// Filename    : player_desc.h
-// Description : MultiPlayer's PlayerDesc class
+// Filename    : player_desc.cpp
+// Description : PlayerDesc tracks the connection of human opponents during
+//               multiplayer games.
 
-#ifndef __PLAYER_DESC_H
-#define __PLAYER_DESC_H
+#include <player_desc.h>
 
-#include <MPTYPES.h>
-#include <network.h>
-
-class PlayerDesc
+uint32_t PlayerDesc::pid()
 {
-public:
-	uint32_t id;
-	char name[MP_FRIENDLY_NAME_LEN+1];
-	char connecting;
-	struct inet_address address;
+	return id;
+}
 
-	uint32_t pid();
-	char *friendly_name_str();
-	int get_address(struct inet_address *addr);
-};
+char *PlayerDesc::friendly_name_str()
+{
+	return name;
+}
 
-#endif // __PLAYER_DESC_H
+int PlayerDesc::get_address(struct inet_address *addr)
+{
+	addr->host = address.host;
+	addr->port = address.port;
+	return sizeof(struct inet_address);
+}
 
