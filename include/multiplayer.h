@@ -26,6 +26,7 @@
 #define __MULTIPLAYER_H
 
 #include <MPTYPES.h>
+#include <player_desc.h>
 #include <ODYNARRB.h>
 #include <stdint.h>
 #include <network.h>
@@ -181,18 +182,6 @@ struct SessionDesc
 	uint32_t session_id() { return id; }
 };
 
-
-struct PlayerDesc
-{
-	uint32_t id;
-	char     name[MP_FRIENDLY_NAME_LEN+1];
-	char	connecting;		// initially set to 1, clear after player disconnected
-	struct inet_address address;
-
-	uint32_t pid() { return id; }
-	char     *friendly_name_str() { return name; }
-	int get_address(struct inet_address *addr) { addr->host = address.host; addr->port = address.port; return sizeof(struct inet_address); }
-};
 
 class MultiPlayer
 {

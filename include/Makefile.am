@@ -179,6 +179,7 @@ noinst_HEADERS = \
 	network_sdlnet.h \
 	openal_audio.h \
 	output_stream.h \
+	player_desc.h \
 	surface.h \
 	surface_base.h \
 	surface_ddraw.h \
