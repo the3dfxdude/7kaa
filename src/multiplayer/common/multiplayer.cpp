@@ -533,17 +533,10 @@ int MultiPlayer::join_session(int i, char *password, char *playerName)
 	max_players = MAX_NATION;
 
 	// register the host now, even though his name is not known yet
-	player_pool[0] = new PlayerDesc();
-	player_pool[0]->id = 0;
-	player_pool[0]->address.host = session->address.host;
-	player_pool[0]->address.port = session->address.port;
-	player_pool[0]->connecting = 1;
+	player_pool[0] = new PlayerDesc(0, "", &session->address);
 
 	// Create user's player, but don't insert into the player pool now
-	my_player = new PlayerDesc();
-	strncpy(my_player->name, playerName, MP_SESSION_NAME_LEN);
-	my_player->name[MP_SESSION_NAME_LEN] = 0;
-	my_player->connecting = 1;
+	my_player = new PlayerDesc(playerName);
 
 	joined_session = *session;
 	strncpy(joined_session.password, password, MP_SESSION_NAME_LEN);
@@ -614,13 +607,7 @@ int MultiPlayer::create_player(char *name, struct inet_address *address)
 		return 0;
 
 	// add to the pool
-	player_pool[i] = new PlayerDesc();
-	player_pool[i]->id = i+1;
-	strncpy(player_pool[i]->name, name, MP_FRIENDLY_NAME_LEN);
-	player_pool[i]->name[MP_FRIENDLY_NAME_LEN] = 0;
-	player_pool[i]->connecting = 1;
-	player_pool[i]->address.host = address->host;
-	player_pool[i]->address.port = address->port;
+	player_pool[i] = new PlayerDesc(i+1, name, address);
 
 	return player_pool[i]->id;
 }
@@ -641,7 +628,6 @@ int MultiPlayer::add_player(char *name, uint32_t id)
 	// add to the pool
 	player_pool[id-1]->id = id;
 	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
-	player_pool[id-1]->connecting = 1;
 
 	return 1;
 }

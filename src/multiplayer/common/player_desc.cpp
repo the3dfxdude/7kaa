@@ -25,6 +25,35 @@
 
 #include <player_desc.h>
 
+PlayerDesc::PlayerDesc()
+{
+	id = 0;
+	name[0] = 0;
+	address.host = 0;
+	address.port = 0;
+	connecting = 1;
+}
+
+PlayerDesc::PlayerDesc(const char *name)
+{
+	this->id = 0;
+	strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
+	this->name[MP_FRIENDLY_NAME_LEN] = 0;
+	address.host = 0;
+	address.port = 0;
+	connecting = 1;
+}
+
+PlayerDesc::PlayerDesc(uint32_t id, const char *name, struct inet_address *addr)
+{
+	this->id = id;
+	strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
+	this->name[MP_FRIENDLY_NAME_LEN] = 0;
+	address.host = addr->host;
+	address.port = addr->port;
+	connecting = 1;
+}
+
 uint32_t PlayerDesc::pid()
 {
 	return id;

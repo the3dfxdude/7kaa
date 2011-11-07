@@ -36,6 +36,10 @@ public:
 	char connecting;
 	struct inet_address address;
 
+	PlayerDesc();
+	PlayerDesc(const char *name);
+	PlayerDesc(uint32_t id, const char *name, struct inet_address *addr);
+
 	uint32_t pid();
 	char *friendly_name_str();
 	int get_address(struct inet_address *addr);
