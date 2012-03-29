@@ -784,7 +784,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			char password[MP_SESSION_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_SESSION_NAME_LEN);
 			game_name[MP_SESSION_NAME_LEN] = 0;
-			if (!input_box("Enter the of the game:", game_name, MP_SESSION_NAME_LEN+1))
+			if (!input_box("Enter the name of the game:", game_name, MP_SESSION_NAME_LEN+1))
 			{
 				mp_obj.deinit();
 				return;
