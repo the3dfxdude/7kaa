@@ -797,6 +797,9 @@ int MultiPlayer::send_system_msg(int sock, char *msg, int msg_size, struct inet_
 //
 int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 {
+	int start;
+	int end;
+
 	err_when(to > max_players);
 
 	if (!game_sock)
@@ -808,25 +811,30 @@ int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
 		return 0;
 	}
 
-	if (to == BROADCAST_PID) {
-		int i;
-		for (i = 0; i < max_players; i++)
-			if (player_pool[i] &&
-				player_pool[i]->connecting &&
-				i+1 != my_player_id)
-				this->send(i+1, data, msg_size);
-		return 1;
+	if (to == BROADCAST_PID)
+	{
+		start = 0;
+		end = max_players;
+	} else {
+		start = to - 1;
+		end = to;
 	}
 
-	if (player_pool[to-1] && player_pool[to-1]->connecting)
+	for (int i = start; i < end; i++)
 	{
-		if (!send_nonseq_msg(game_sock, (char *)data, msg_size, &player_pool[to-1]->address))
+		if (i == my_player_id - 1)
+			continue;
+
+		if (player_pool[i] && player_pool[i]->connecting)
 		{
-			ERR("[MultiPlayer::send] error while sending data to player %d\n", to);
-			return 0;
+			if (!send_nonseq_msg(game_sock, (char *)data, msg_size, &player_pool[i]->address))
+			{
+				ERR("[MultiPlayer::send] error while sending data to player %d\n", i);
+				return 0;
+			}
+			MSG("[MultiPlayer::send] sent %d bytes to player %d\n", msg_size, i);
+			return 1;
 		}
-		MSG("[MultiPlayer::send] sent %d bytes to player %d\n", msg_size, to);
-		return 1;
 	}
 
 	return 0;
