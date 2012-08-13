@@ -403,7 +403,6 @@ void UnitGod::think_maya_god()
 }
 //------- End of function UnitGod::think_maya_god --------//
 
-#ifdef AMPLUS
 //------- Begin of function UnitGod::think_egyptian_god --------//
 void UnitGod::think_egyptian_god()
 {
@@ -641,4 +640,3 @@ void UnitGod::think_zulu_god()
 	}
 }
 //------- End of function UnitGod::think_zulu_god --------//
-#endif

@@ -45,7 +45,6 @@
 
 //------------- Define constant ------------//
 
-#ifdef AMPLUS
 	#define BUILD_BUTTON_WIDTH 	201
 	#define BUILD_BUTTON_HEIGHT 	46
 	#define COUNT_BUTTON_OFFSET_X	156
@@ -56,18 +55,6 @@
 	#define BUILD_UNIT_ICON_OFFSET_Y 4
 	#define BUILD_UNIT_NAME_OFFSET_X 60
 	#define BUILD_UNIT_NAME_OFFSET_Y 12
-#else
-	#define BUILD_BUTTON_WIDTH 	201
-	#define BUILD_BUTTON_HEIGHT 	56
-	#define COUNT_BUTTON_OFFSET_X	156
-	#define COUNT_BUTTON_OFFSET_Y 12
-	#define COUNT_BUTTON_WIDTH		32
-	#define COUNT_BUTTON_HEIGHT	32
-	#define BUILD_UNIT_ICON_OFFSET_X 6
-	#define BUILD_UNIT_ICON_OFFSET_Y 8
-	#define BUILD_UNIT_NAME_OFFSET_X 60
-	#define BUILD_UNIT_NAME_OFFSET_Y 18
-#endif
 
 //---------- Define constant ------------//
 

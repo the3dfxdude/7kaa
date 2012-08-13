@@ -249,24 +249,9 @@ static int select_option()
 		#else
 			#define Y_SHIFT 0
 		#endif
-#ifdef AMPLUS
 		terrainGroup[i].create(168+i*BASIC_OPTION_X_SPACE, offsetY+258+Y_SHIFT, 
 			168+(i+1)*BASIC_OPTION_X_SPACE-1, offsetY+258+Y_SHIFT+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&terrainGroup, i+1), 0, 0);
-#else
-		// BUGHERE : terrain_set 2 is disable, exchange the position of button 1 and 2
-		int k = i;
-		switch(i)
-		{
-		case 1: k = 2; break;
-		case 2: k = 1; break;
-		}
-		terrainGroup[i].create(205+k*BASIC_OPTION_X_SPACE, offsetY+258+Y_SHIFT, 
-			205+(k+1)*BASIC_OPTION_X_SPACE-1, offsetY+258+Y_SHIFT+BASIC_OPTION_HEIGHT-1,
-			disp_virtual_button, ButtonCustomPara(&terrainGroup, i+1), 0, 0);
-		if( i == 1 )
-			terrainGroup[i].enable_flag = 0;
-#endif
 		#undef Y_SHIFT
 	}
 
@@ -1063,12 +1048,6 @@ static int select_option()
 	{
 		info.init_random_seed( atol(mapIdStr) );
 		tempConfig.difficulty_rating = tempConfig.single_player_difficulty();
-
-		// BUGHERE : terrain_set 2 is not available
-#ifndef AMPLUS
-		if( tempConfig.terrain_set == 2 )
-      	tempConfig.terrain_set = 1;
-#endif
 
 		config = tempConfig;
 	}

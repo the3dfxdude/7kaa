@@ -42,13 +42,8 @@
 
 
 
-#ifdef AMPLUS
 enum { GAME_MENU_WIDTH  = 350,
        GAME_MENU_HEIGHT = 400  };
-#else
-enum { GAME_MENU_WIDTH  = 350,
-       GAME_MENU_HEIGHT = 386  };
-#endif
 
 enum { GAME_MENU_X1 = ZOOM_X1 + ( (ZOOM_X2-ZOOM_X1+1) - GAME_MENU_WIDTH ) / 2,
        GAME_MENU_Y1 = ZOOM_Y1 + ( (ZOOM_Y2-ZOOM_Y1+1) - GAME_MENU_HEIGHT ) / 2 };
@@ -56,8 +51,6 @@ enum { GAME_MENU_X1 = ZOOM_X1 + ( (ZOOM_X2-ZOOM_X1+1) - GAME_MENU_WIDTH ) / 2,
 enum { GAME_OPTION_WIDTH  = 170,
        GAME_OPTION_HEIGHT = 34   };
 
-// ####### begin Gilbert 29/10 #########//
-#ifdef AMPLUS
 enum { GAME_OPTION_X1 = GAME_MENU_X1+90,
        GAME_OPTION_Y1 = GAME_MENU_Y1+93  };
 
@@ -65,16 +58,6 @@ enum { MAP_ID_X1 = GAME_MENU_X1 + 18,
        MAP_ID_Y1 = GAME_MENU_Y1 + 362,
        MAP_ID_X2 = GAME_MENU_X1 + 330,
        MAP_ID_Y2 = GAME_MENU_Y1 + 382 };
-#else
-enum { GAME_OPTION_X1 = GAME_MENU_X1+90,
-       GAME_OPTION_Y1 = GAME_MENU_Y1+76  };
-
-enum { MAP_ID_X1 = GAME_MENU_X1 + 18,
-       MAP_ID_Y1 = GAME_MENU_Y1 + 350,
-       MAP_ID_X2 = GAME_MENU_X1 + 330,
-       MAP_ID_Y2 = GAME_MENU_Y1 + 373 };
-#endif
-// ####### end Gilbert 29/10 #########//
 
 unsigned InGameMenu::menu_hot_key[GAME_OPTION_COUNT] = {'o','s','l', 0,0,0,0,KEY_ESC };
 

@@ -100,13 +100,8 @@
 
 //------- define game version constant --------//
 
-#ifdef AMPLUS
-	const char *GAME_VERSION_STR = SKVERSION;
-	const int GAME_VERSION = 212;	// Version 2.00, don't change it unless the format of save game files has been changed
-#else
-	const char *GAME_VERSION_STR = "1.11";
-	const int GAME_VERSION = 111;	// Version 1.00, don't change it unless the format of save game files has been changed
-#endif
+const char *GAME_VERSION_STR = SKVERSION;
+const int GAME_VERSION = 212;	// Version 2.00, don't change it unless the format of save game files has been changed
 
 //-------- System class ----------//
 
@@ -158,12 +153,8 @@ ImageRes          image_icon, image_interface, image_menu,
 ImageRes          image_encyc;
 ImageRes				image_tpict;
 ImageRes				image_tutorial;
-#ifdef AMPLUS
 ImageRes				image_menu_plus;
 ImageRes&			image_menu2 = image_menu_plus;
-#else
-ImageRes&			image_menu2 = image_menu;
-#endif
 SpriteRes         sprite_res;
 SpriteFrameRes    sprite_frame_res;
 UnitRes           unit_res;

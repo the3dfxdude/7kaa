@@ -304,12 +304,9 @@ int Town::think_independent_unit_join_nation()
 	int	 bestRating=independent_unit_join_nation_min_rating;
 	Nation *nationPtr;
 
-	// ###### patch begin Gilbert 16/3 ########//
-// #ifdef AMPLUS
 	if( region_array[region_id]->region_stat_id == 0)
 		return 0;
-// #endif
-	// ###### patch end Gilbert 16/3 ########//
+
 	RegionStat* regionStat = region_array.get_region_stat(region_id);
 
 	for( i=nation_array.size() ; i>0 ; i-- )

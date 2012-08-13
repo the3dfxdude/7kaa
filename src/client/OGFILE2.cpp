@@ -185,9 +185,6 @@ int GameFile::read_file(File* filePtr)
 
 	int originalRandomSeed = m.get_random_seed();
 
-	//### begin alex 5/3 ###//
-#ifdef AMPLUS
-//	game_file_array.load_file_game_version = filePtr->file_get_short();
 	game_file_array.load_file_game_version = filePtr->file_get_short();
 
 	// compare if same demo format or not
@@ -204,15 +201,6 @@ int GameFile::read_file(File* filePtr)
 //	game_file_array.same_version = (game_file_array.load_file_game_version/100==
 //												(game_file_array.demo_format ? -(GAME_VERSION/100) : GAME_VERSION/100));
 	game_file_array.same_version = ( game_file_array.load_file_game_version/100==GAME_VERSION/100 );
-#else
-	// ###### patch begin Gilbert 20/1 ########//
-	// compare major version
-	//if( filePtr->file_get_short() != (game_file_array.demo_format ? -GAME_VERSION : GAME_VERSION) )
-	if( filePtr->file_get_short()/100 != (game_file_array.demo_format ? -(GAME_VERSION/100) : GAME_VERSION/100) )
-		return -1;
-	// ###### patch end Gilbert 20/1 ########//
-#endif
-	//#### end alex 5/3 ####//
 
 	//------------------------------------------------//
 	//
@@ -786,15 +774,10 @@ int RaceRes::read_file(File* filePtr)
 
 	for( int i=1 ; i<=race_res.race_count ; i++, raceInfo++ )
 	{
-		#ifdef AMPLUS
 		raceInfo->town_name_used_count = (!game_file_array.same_version && i>VERSION_1_MAX_RACE) ?
 													0 : filePtr->file_get_short();
-		#else
-			raceInfo->town_name_used_count = filePtr->file_get_short();
-		#endif
 	}
 
-#ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		memset(name_used_array, 0, sizeof(name_used_array[0]) * name_count);
@@ -802,9 +785,6 @@ int RaceRes::read_file(File* filePtr)
 	}
 	else
 		return filePtr->file_read( name_used_array, sizeof(name_used_array[0]) * name_count );
-#else
-	return filePtr->file_read( name_used_array, sizeof(name_used_array[0]) * name_count );
-#endif
 }
 //--------- End of function RaceRes::read_file ---------------//
 
@@ -845,7 +825,6 @@ int UnitRes::read_file(File* filePtr)
 
 	for( int i=1 ; i<=unit_res.unit_info_count ; i++, unitInfo++ )
 	{
-		#ifdef AMPLUS
 			if(!game_file_array.same_version && i > VERSION_1_UNITRES_UNIT_INFO_COUNT)
 			{
 				memset(unitInfo->nation_tech_level_array, 0, sizeof(unitInfo->nation_tech_level_array));
@@ -853,7 +832,6 @@ int UnitRes::read_file(File* filePtr)
 				memset(unitInfo->nation_general_count_array, 0, sizeof(unitInfo->nation_general_count_array));
 				continue;
 			}
-		#endif
 
 		if( !filePtr->file_read( unitInfo->nation_tech_level_array, sizeof(unitInfo->nation_tech_level_array) ) )
 			return 0;
@@ -928,7 +906,6 @@ int TownRes::write_file(File* filePtr)
 //
 int TownRes::read_file(File* filePtr)
 {
-#ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		memset(town_name_used_array, 0, sizeof(town_name_used_array));
@@ -936,9 +913,6 @@ int TownRes::read_file(File* filePtr)
 	}
 	else
 		return filePtr->file_read( town_name_used_array, sizeof(town_name_used_array[0]) * town_name_count );
-#else
-	return filePtr->file_read( town_name_used_array, sizeof(town_name_used_array[0]) * town_name_count );
-#endif
 }
 //--------- End of function TownRes::read_file ---------------//
 
@@ -966,7 +940,6 @@ int TechRes::read_file(File* filePtr)
 	if( !filePtr->file_read( tech_class_array, tech_class_count * sizeof(TechClass) ) )
 		return 0;
 
-#ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		if(!filePtr->file_read( tech_info_array, VERSION_1_TECH_COUNT * sizeof(TechInfo) ) )
@@ -985,10 +958,6 @@ int TechRes::read_file(File* filePtr)
 		if( !filePtr->file_read( tech_info_array, tech_count * sizeof(TechInfo) ) )
 			return 0;
 	}
-#else
-	if( !filePtr->file_read( tech_info_array, tech_count * sizeof(TechInfo) ) )
-		return 0;
-#endif
 
 	return 1;
 }
@@ -1126,7 +1095,6 @@ int GodRes::write_file(File* filePtr)
 //
 int GodRes::read_file(File* filePtr)
 {
-#ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		memset(god_info_array, 0, sizeof(god_info_array));
@@ -1134,9 +1102,6 @@ int GodRes::read_file(File* filePtr)
 	}
 	else
 		return filePtr->file_read( god_info_array, sizeof(GodInfo) * god_count );
-#else
-	return filePtr->file_read( god_info_array, sizeof(GodInfo) * god_count );
-#endif
 }
 //--------- End of function GodRes::read_file ---------------//
 

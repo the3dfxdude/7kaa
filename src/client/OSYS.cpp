@@ -293,11 +293,9 @@ int Sys::init_objects()
    image_spict.init(DIR_RES"I_SPICT.RES",1,0);
    image_tutorial.init(DIR_RES"TUT_PICT.RES",0,0);
 
-	#ifdef AMPLUS
 		#ifndef DEMO         // do not load these in the demo verison
 			image_menu_plus.init(DIR_RES"I_MENU2.RES",0,0);       // 0-don't read into the buffer, don't use common buffer
 		#endif
-	#endif
 
    seek_path.init(MAX_BACKGROUND_NODE);
    seek_path_reuse.init(MAX_BACKGROUND_NODE);
@@ -754,9 +752,7 @@ void Sys::main_loop(int isLoadedGame)
             // although it's not time for new frame, check
             // if we still need to redraw the screen
             if( config.frame_speed == 0 || markTime-lastDispFrameTime >= uint32_t(1000/config.frame_speed)
-#ifdef AMPLUS
 					|| zoom_need_redraw || map_need_redraw
-#endif
 					)
             {
                // second condition (markTime-lastDispFrameTime >= DWORD(1000/config.frame_speed) )

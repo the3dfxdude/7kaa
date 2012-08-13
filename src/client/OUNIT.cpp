@@ -1860,10 +1860,8 @@ void Unit::set_combat_level(int combatLevel)
    if( combatLevel >= unitInfo->guard_combat_level)
    {
       can_guard_flag = sprite_info->can_guard_flag;
-#ifdef AMPLUS
 		if( unit_id == UNIT_ZULU )
 			can_guard_flag |= 4;			// shield during attack delay
-#endif
    }
    else
    {
@@ -2517,9 +2515,7 @@ void Unit::fix_attack_info()
       switch( unit_id )
       {
       case UNIT_BALLISTA:
-#ifdef AMPLUS
-		case UNIT_F_BALLISTA:
-#endif
+      case UNIT_F_BALLISTA:
          attack_count = 2;
          break;
       case UNIT_EXPLOSIVE_CART:

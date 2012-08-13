@@ -162,13 +162,8 @@ void TalkMsg::process_accepted_reply()
 			break;
 
 		case TALK_REQUEST_DECLARE_WAR:
-#ifdef AMPLUS
 			if( fromNation->get_relation_status(talk_para1) == NATION_HOSTILE )	// the requesting nation must be at war with the enemy
 			{
-#else
-			{
-				err_when( fromNation->get_relation_status(talk_para1) != NATION_HOSTILE );		// the requesting nation must be at war with the enemy
-#endif
 
 				//-- if we are currently allied or friendly with the nation, we need to terminate the friendly/alliance treaty first --//
 

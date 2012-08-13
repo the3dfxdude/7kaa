@@ -974,10 +974,8 @@ int FirmArray::read_file(File* filePtr)
 
          //---- read data in base class -----//
 
-			#ifdef AMPLUS
-				if(!game_file_array.same_version && firmPtr->firm_id > FIRM_BASE)
-					firmPtr->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
-			#endif
+			if(!game_file_array.same_version && firmPtr->firm_id > FIRM_BASE)
+				firmPtr->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
 
          //--------- read worker_array ---------//
 
@@ -1160,7 +1158,6 @@ int TownArray::read_file(File* filePtr)
 	int townCount = filePtr->file_get_short();  // get no. of towns from file
 	selected_recno = filePtr->file_get_short();
 
-#ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		memset(race_wander_pop_array, 0, sizeof(race_wander_pop_array));
@@ -1168,9 +1165,6 @@ int TownArray::read_file(File* filePtr)
 	}
 	else
 		filePtr->file_read( race_wander_pop_array, sizeof(race_wander_pop_array) );
-#else
-	filePtr->file_read( race_wander_pop_array, sizeof(race_wander_pop_array) );
-#endif
 
 	Town::if_town_recno = filePtr->file_get_short();
 
@@ -1186,7 +1180,6 @@ int TownArray::read_file(File* filePtr)
 		{
 			townPtr = town_array.create_town();
 
-			#ifdef AMPLUS
 				if(!game_file_array.same_version)
 				{
 					Version_1_Town *oldTown = (Version_1_Town*) mem_add(sizeof(Version_1_Town));
@@ -1204,10 +1197,6 @@ int TownArray::read_file(File* filePtr)
 					if( !filePtr->file_read( townPtr, sizeof(Town) ) )
 						return 0;
 				}
-			#else
-				if( !filePtr->file_read( townPtr, sizeof(Town) ) )
-					return 0;
-			#endif
 
 			#ifdef DEBUG
 				townPtr->verify_slot_object_id_array();		// for debugging only
@@ -1389,7 +1378,6 @@ enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
 int NationArray::read_file(File* filePtr)
 {
    //------ read info in NationArray ------//
-#ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		Version_1_NationArray *oldNationArrayPtr = (Version_1_NationArray*) mem_add(sizeof(Version_1_NationArray));
@@ -1408,10 +1396,6 @@ int NationArray::read_file(File* filePtr)
 		if (!read_nation_array(filePtr, this))
 			return 0;
 	}
-#else
-	if (!read_nation_array(filePtr, this))
-      return 0;
-#endif
 
    //---------- read Nations --------------//
 
@@ -1971,7 +1955,6 @@ static bool read_nation(File *file, Nation *nat)
 //
 int Nation::read_file(File* filePtr)
 {
-#ifdef AMPLUS
 	if(!game_file_array.same_version)
 	{
 		Version_1_Nation *oldNationPtr = (Version_1_Nation*) mem_add(sizeof(Version_1_Nation));
@@ -1990,10 +1973,6 @@ int Nation::read_file(File* filePtr)
 		if (!read_nation(filePtr, this))
 			return 0;
 	}
-#else
-	if (!read_nation(filePtr, this))
-		return 0;
-#endif
 
 	//-------------- read AI Action Array --------------//
 

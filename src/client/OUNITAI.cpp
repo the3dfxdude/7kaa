@@ -736,11 +736,9 @@ int Unit::think_normal_human_action()
 	if( !hasTownInRegion )
 	{
 
-//#ifdef AMPLUS
 		// --- if region is too small don't consider this area, stay in the island forever --//
 		if( region_array[regionId]->region_stat_id == 0 )
 			return 0;
-//#endif
 
 		//-- if we also don't have any existing camps in this region --//
 

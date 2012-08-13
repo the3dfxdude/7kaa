@@ -910,13 +910,9 @@ int Nation::think_against_mine_monopoly()
 
 	int baseRegionId = town_array[largest_town_recno]->region_id;
 
-	// ##### patch begin Gilbert 16/3 ########//
-//#ifdef AMPLUS
 	// no region stat (region is too small), don't care
 	if( !region_array[baseRegionId]->region_stat_id )
 		return 0;
-//#endif
-	// ##### end begin Gilbert 16/3 ########//
 
 	RegionStat* regionStat = region_array.get_region_stat(baseRegionId);
 

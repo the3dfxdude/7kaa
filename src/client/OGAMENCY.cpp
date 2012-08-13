@@ -36,11 +36,7 @@
 
 #define ENCYC_CLASS_COUNT	7
 #define FRYHTAN_MAX_PAGE 3
-#ifdef AMPLUS
-	#define SUB_CLASS_BUTTON_MAX 10
-#else
-	#define SUB_CLASS_BUTTON_MAX 8
-#endif
+#define SUB_CLASS_BUTTON_MAX 10
 
 enum
 {
@@ -58,25 +54,13 @@ const int SLIDE_MODE_TIME = 10000;			// 10 seconds
 
 // static int sub_class_count_array[ENCYC_CLASS_COUNT] = { 7, 5, 4, 8, 7, 7, 1 };
 static int sub_class_count_array[ENCYC_CLASS_COUNT] = 
-#ifdef AMPLUS
 	{ 10, 6, 4, 8, 10, 10, 17 };
-#else
-	{ 7, 5, 4, 8, 7, 7, 17 };
-#endif
 
 static const char *race_name[] =
-#ifdef AMPLUS
 	{ "CHINESE", "EGYPTIAN", "GREEK", "JAPANESE", "MAYA", "INDIAN", "NORMAN", "PERSIAN", "VIKING", "ZULU" };
-#else
-	{ "CHINESE", "GREEK", "JAPANESE", "MAYA", "NORMAN", "PERSIAN", "VIKING" };
-#endif
 
 static const char *weapon_name[] =
-#ifdef AMPLUS
 	{ "CATAPULT", "BALLISTA", "CANNON", "EXPCART", "FLAMETHR", "F_BALLIS" };
-#else
-	{ "CATAPULT", "BALLISTA", "CANNON", "EXPCART", "FLAMETHR" };
-#endif
 
 static const char *ship_name[] =
 {
@@ -99,11 +83,7 @@ static const char *firm_name[] =
 };
 
 static const char *god_name[] =
-#ifdef AMPLUS
 	{ "CHINESE", "GREEK", "PERSIAN", "NORMAN", "JAPANESE", "MAYA", "VIKING", "EGYPTIAN", "ZULU", "INDIAN" };
-#else
-	{ "CHINESE", "GREEK", "JAPANESE", "MAYA", "NORMAN", "PERSIAN", "VIKING" };
-#endif
 
 static const char *monster_name[] =
 {
@@ -225,11 +205,7 @@ void Game::view_encyclopedia()
 		}
 		else
 		{
-#ifdef AMPLUS
 			// two buttons at the bottom are for switching page
-#else
-			// (one)two buttons next to the buttons of that page (pictButtonCount) are for switching page
-#endif
 			// if in monster class, find out which page 
 			int monsterSubClass;
 			for( monsterSubClass = 1; monsterSubClass <= FRYHTAN_MAX_PAGE &&
@@ -239,13 +215,9 @@ void Game::view_encyclopedia()
 
 			int pictButtonCount = monster_page_index[monsterSubClass] - 
 				monster_page_index[monsterSubClass-1];
-#ifdef AMPLUS
+
 			int nextPageButton = SUB_CLASS_BUTTON_MAX-1;
 			int prevPageButton = SUB_CLASS_BUTTON_MAX;
-#else
-			int nextPageButton = pictButtonCount+1;
-			int prevPageButton = pictButtonCount+2;
-#endif
 
 			// translate selSubClass from i-th button to new value of sub_class_count_array[main_class_id-1]
 			if( (selSubClass = detect_sub_class_button(pictButtonCount)) > 0)
@@ -344,13 +316,8 @@ void Game::view_encyclopedia()
 
 static int detect_main_class_button()
 {
-#ifdef AMPLUS
 	enum { BUTTON_X = 14, BUTTON_Y = 14, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 28 };
 	enum { BUTTON_Y_SPACING = 30 };
-#else
-	enum { BUTTON_X = 14, BUTTON_Y = 14, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 31 };
-	enum { BUTTON_Y_SPACING = 34 };
-#endif
 
 	for( int c=1 ; c<=ENCYC_CLASS_COUNT ; c++ )
 	{
@@ -379,13 +346,8 @@ static int detect_main_class_button()
 
 static int detect_sub_class_button(int n, int firstButton)
 {
-#ifdef AMPLUS
 	enum { BUTTON_X = 14, BUTTON_Y = 236, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 28 };
 	enum { BUTTON_Y_SPACING = 31, MAX_BUTTON = 10 };
-#else
-	enum { BUTTON_X = 14, BUTTON_Y = 266, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 31 };
-	enum { BUTTON_Y_SPACING = 35, MAX_BUTTON = 8 };
-#endif
 
 	for( int c=firstButton ; c<=n && c<=SUB_CLASS_BUTTON_MAX ; c++ )
 	{
@@ -416,15 +378,8 @@ static int detect_sub_class_button(int n, int firstButton)
 //
 static void disp_class_buttons()
 {
-	// ###### begin Gilbert 22/9 #######//
-#ifdef AMPLUS
 	enum { BUTTON_X=14, BUTTON_WIDTH=146, CLASS_BUTTON_Y=14, CLASS_BUTTON_Y_SPACING=30, 
 		SUBCLASS_BUTTON_Y=236, SUBCLASS_TOP_BORDER=3, BUTTON_Y_SPACING=31 };
-#else
-	enum { BUTTON_X=14, BUTTON_WIDTH=146, CLASS_BUTTON_Y=14, CLASS_BUTTON_Y_SPACING=34, 
-		SUBCLASS_BUTTON_Y=266, SUBCLASS_TOP_BORDER=4, BUTTON_Y_SPACING=35 };
-#endif
-	// ###### end Gilbert 22/9 #######//
 
 	int subClassId = sub_class_id_array[main_class_id-1];
 
@@ -478,12 +433,10 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 	char palname[64];
 	filename[0] = '\0';
 
-#ifdef AMPLUS
 	// alternative path
 	char filename2[64];
 	char palname2[64];
 	filename2[0] = '\0';
-#endif
 
 	switch( selClass )
 	{
@@ -494,7 +447,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
 			strcat( filename, std_extension );
-#ifdef AMPLUS
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
@@ -504,7 +456,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 				strcat( palname2, pal_extension);
 				strcat( filename2, std_extension );
 			}
-#endif
 			break;
 
 		case ENCYC_WEAPONS:
@@ -514,7 +465,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
 			strcat( filename, std_extension );
-#ifdef AMPLUS
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
@@ -524,7 +474,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 				strcat( palname2, pal_extension);
 				strcat( filename2, std_extension );
 			}
-#endif
 			break;
 
 		case ENCYC_SHIPS:
@@ -534,7 +483,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
 			strcat( filename, std_extension );
-#ifdef AMPLUS
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
@@ -544,7 +492,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 				strcat( palname2, pal_extension);
 				strcat( filename2, std_extension );
 			}
-#endif
 			break;
 
 		case ENCYC_STRUCTURES:
@@ -554,7 +501,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
 			strcat( filename, std_extension );
-#ifdef AMPLUS
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
@@ -564,7 +510,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 				strcat( palname2, pal_extension);
 				strcat( filename2, std_extension );
 			}
-#endif
 			break;
 
 		case ENCYC_PALACE:
@@ -574,7 +519,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
 			strcat( filename, std_extension );
-#ifdef AMPLUS
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
@@ -584,7 +528,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 				strcat( palname2, pal_extension);
 				strcat( filename2, std_extension );
 			}
-#endif
 			break;
 
 		case ENCYC_GOD:
@@ -594,7 +537,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
 			strcat( filename, std_extension );
-#ifdef AMPLUS
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
@@ -604,7 +546,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 				strcat( palname2, pal_extension);
 				strcat( filename2, std_extension );
 			}
-#endif
 			break;
 
 		case ENCYC_FRYHTANS:
@@ -614,7 +555,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
 			strcat( filename, std_extension );
-#ifdef AMPLUS
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
@@ -624,7 +564,6 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 				strcat( palname2, pal_extension);
 				strcat( filename2, std_extension );
 			}
-#endif
 			break;
 
 		default:
@@ -636,10 +575,8 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 	char *palNamePtr = NULL;
 
 	if( 
-#ifdef AMPLUS
 		// search DIR_ENCYC2 first
 		filename2[0] && m.is_file_exist(filename2) && pictFile.file_open(filename2,0) && (palNamePtr = palname2) ||
-#endif
 		filename[0] && m.is_file_exist(filename) && pictFile.file_open(filename,0) && (palNamePtr = palname) )
 	{
 		vga_back.put_large_bitmap(174, 12, &pictFile);

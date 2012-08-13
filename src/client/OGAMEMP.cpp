@@ -1315,15 +1315,12 @@ int Game::mp_select_session()
 #define SSOPTION_PAGE           0x00000010
 #define SSOPTION_POLL_SESSION   0x00000001
 #define SSOPTION_DISP_SESSION   0x00000002
-#ifdef AMPLUS
 #define SSOPTION_SCROLL_BAR     0x00000004
-#endif
 #define SSOPTION_ALL            0x7fffffff
 
 	enum { JOIN_BUTTON_X = 320, JOIN_BUTTON_Y = 538 };
 	enum { CANCEL_BUTTON_X = 520, CANCEL_BUTTON_Y = 538 };
 
-#ifdef AMPLUS
 	enum { SESSION_BUTTON_X1 = 30, SESSION_BUTTON_Y1 = 160 };
 	enum { SESSION_BUTTON_Y_SPACING = 44, MAX_BUTTON = 8 };
 	enum { SESSION_BUTTON_X2 = 754,
@@ -1332,14 +1329,6 @@ int Game::mp_select_session()
 		SESSION_BUTTON_Y2 = SESSION_BUTTON_Y1 + MAX_BUTTON * SESSION_BUTTON_Y_SPACING-1};
 
 	enum { SCROLL_X1=757, SCROLL_Y1 = 176, SCROLL_X2 = 770, SCROLL_Y2 = 493 };
-#else
-	enum { SESSION_BUTTON_X1 = 108, SESSION_BUTTON_Y1 = 125 };
-	enum { SESSION_BUTTON_Y_SPACING = BASIC_OPTION_HEIGHT, MAX_BUTTON = 6 };
-	enum { SESSION_BUTTON_X2 = SESSION_BUTTON_X1 + BASIC_OPTION_X_SPACE-1,
-		SESSION_DESC_Y1 = SESSION_BUTTON_Y1+10,
-		SESSION_DESC_X1 = SESSION_BUTTON_X2 + 8, SESSION_DESC_X2 = 600,
-		SESSION_BUTTON_Y2 = SESSION_BUTTON_Y1 + MAX_BUTTON * SESSION_BUTTON_Y_SPACING-1};
-#endif
 
 	// ####### begin Gilbert 13/2 ########//
 	if( mp_obj.is_lobbied() == 2 )		// join session, but selected in lobby
@@ -1363,7 +1352,6 @@ int Game::mp_select_session()
 	Button3D cancelButton;
 	cancelButton.create(CANCEL_BUTTON_X, CANCEL_BUTTON_Y, "CANCEL-U", "CANCEL-D", 1, 0);
 
-#ifdef AMPLUS
 	SlideVBar scrollBar;
 
 	scrollBar.init_scroll(SCROLL_X1, SCROLL_Y1, SCROLL_X2, SCROLL_Y2,
@@ -1379,9 +1367,6 @@ int Game::mp_select_session()
 	Blob browseArea[MAX_BUTTON];
 
 	#define BASE_SESSION scrollBar.view_recno
-#else
-	#define BASE_SESSION 1
-#endif
 
 	unsigned long pollTime = 1000;
 	vga_front.unlock_buf();
@@ -1408,14 +1393,11 @@ int Game::mp_select_session()
 			{
 				// --------- display interface screen -------//
 				image_menu.put_to_buf( &vga_back, "MPG-PG2" );
-#ifdef AMPLUS
 				image_menu2.put_to_buf( &vga_back, "MPG-PG2" );
-#endif
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
-#ifdef AMPLUS
 				scrollBar.paint();
 				scrollUp.paint();
 				scrollDown.paint();
@@ -1429,7 +1411,6 @@ int Game::mp_select_session()
 						SESSION_BUTTON_X2, (b+1)*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1-1,
 						browseArea[b].ptr);
 				}
-#endif
 				joinButton.paint();
 				cancelButton.paint();
 			}
@@ -1452,10 +1433,8 @@ int Game::mp_select_session()
 
 				refreshTime = m.get_time();
 
-#ifdef AMPLUS
 				// ------- sort by name ---------//
 				mp_obj.sort_sessions(2);		// sort by session name
-#endif
 
 				// ------- update choice ---------- //
 				choice = 0;
@@ -1471,29 +1450,22 @@ int Game::mp_select_session()
 
 				//------- update scroll bar --------//
 				// BUGHERE : error if empty
-#ifdef AMPLUS
 				scrollBar.set(1, s-1, scrollBar.view_recno);
 				refreshFlag |= SSOPTION_SCROLL_BAR;
-#endif
 				refreshFlag |= SSOPTION_DISP_SESSION;
 			}
 
 			if( refreshFlag & SSOPTION_DISP_SESSION )
 			{
-#ifndef AMPLUS
-				vga_util.blt_buf(SESSION_BUTTON_X1, SESSION_BUTTON_Y1, SESSION_DESC_X2, SESSION_BUTTON_Y2, 0);
-#endif
 				for( b = 0, s = BASE_SESSION; b < MAX_BUTTON; ++b, ++s )
 				{
 
-#ifdef AMPLUS
 					vga_back.put_bitmap(
 						SESSION_BUTTON_X1, b*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1,
 						browseArea[(s-1)%MAX_BUTTON].ptr);
 					vga_util.blt_buf(
 						SESSION_BUTTON_X1, b*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1,
 						SESSION_BUTTON_X2, (b+1)*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1-1, 0);
-#endif
 
 					if( mp_obj.get_session(s) )
 					{
@@ -1506,9 +1478,6 @@ int Game::mp_select_session()
 						{
 							vga_front.adjust_brightness( SESSION_BUTTON_X1, SESSION_BUTTON_Y1 + b*SESSION_BUTTON_Y_SPACING,
 								SESSION_BUTTON_X2, SESSION_BUTTON_Y1 + (b+1)*SESSION_BUTTON_Y_SPACING-1, -2);
-#ifndef AMPLUS
-							image_interface.put_front(SESSION_BUTTON_X1, SESSION_BUTTON_Y1 + b*SESSION_BUTTON_Y_SPACING, "BAS_DOWN" );
-#endif
 						}
 					}
 				}
@@ -1522,12 +1491,10 @@ int Game::mp_select_session()
 				}
 			}
 
-#ifdef AMPLUS
 			if( refreshFlag & SSOPTION_SCROLL_BAR )
 			{
 				scrollBar.paint();
 			}
-#endif
 
 			refreshFlag = 0;
 		}
@@ -1542,7 +1509,6 @@ int Game::mp_select_session()
 		else
 			music.stop();
 
-#ifdef AMPLUS
 		int scrollRc = scrollBar.detect();
 		if( scrollRc )
 		{
@@ -1557,7 +1523,6 @@ int Game::mp_select_session()
 				refreshFlag |= SSOPTION_DISP_SESSION;
 		}
 		else
-#endif
 		{
 			for( b = 0, s = BASE_SESSION; b < MAX_BUTTON && mp_obj.get_session(s) ; ++b, ++s )
 			{
@@ -1574,7 +1539,6 @@ int Game::mp_select_session()
 				}
 			}
 
-#ifdef AMPLUS
 			if( scrollUp.detect() )
 			{
 				int oldValue = scrollBar.view_recno;
@@ -1588,7 +1552,6 @@ int Game::mp_select_session()
 				if( oldValue != scrollBar.set_view_recno(oldValue+1) )
 					refreshFlag |= SSOPTION_DISP_SESSION | SSOPTION_SCROLL_BAR;
 			}
-#endif
 
 			if( choice > 0 && joinButton.detect() )
 				break;
@@ -1956,7 +1919,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 	// --------- initialize terrain_set button group -------//
 
-	// ##### begin Gilbert 25/10 #######//
 	ButtonCustomGroup terrainGroup(3);
 	for( i = 0; i < 3; ++i )
 	{
@@ -1965,26 +1927,11 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		#else
 			#define Y_SHIFT 0
 		#endif
-#ifdef AMPLUS
 		terrainGroup[i].create(166+i*BASIC_OPTION_X_SPACE, offsetY+248+Y_SHIFT, 
 			166+(i+1)*BASIC_OPTION_X_SPACE-1, offsetY+248+Y_SHIFT+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&terrainGroup, i+1), 0, 0);
-#else
-		int k = i;
-		switch(i)
-		{
-		case 1: k = 2; break;
-		case 2: k = 1; break;
-		}
-		terrainGroup[i].create(205+k*BASIC_OPTION_X_SPACE, offsetY+248+Y_SHIFT, 
-			205+(k+1)*BASIC_OPTION_X_SPACE-1, offsetY+248+Y_SHIFT+BASIC_OPTION_HEIGHT-1,
-			disp_virtual_button, ButtonCustomPara(&terrainGroup, i+1), 0, 0);
-		if( i == 1 )
-			terrainGroup[i].enable_flag = 0;
-#endif
 		#undef Y_SHIFT
 	}
-	// ##### end Gilbert 25/10 #######//
 
 	// --------- initialize land_mass button group -------//
 
@@ -3443,10 +3390,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 
 			// BUGHERE : terrain_set 2 is not available
-#ifndef AMPLUS
-			if( tempConfig.terrain_set == 2)
-				tempConfig.terrain_set = 1;
-#endif
 
 			config = tempConfig;		// nation_array.new_nation reads setting from config
 
@@ -3476,13 +3419,11 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 			// ---- force set to the lowest frame delay -------//
 
-#ifdef AMPLUS
 			remote.set_process_frame_delay(FORCE_MAX_FRAME_DELAY);
 			{
 				MpStructProcessFrameDelay msgFrameDelay(remote.get_process_frame_delay());
 				memcpy( setupString.reserve(sizeof(msgFrameDelay)), &msgFrameDelay, sizeof(msgFrameDelay));
 			}
-#endif
 
 			// -------- send sync test level ----------//
 
@@ -3533,10 +3474,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					tempConfig.change_game_setting( ((MpStructConfig *) recvPtr)->game_config );
 					offset += sizeof( MpStructConfig );
 					++recvConfig;
-#ifndef AMPLUS
-					if( tempConfig.terrain_set == 2)
-						tempConfig.terrain_set = 1;
-#endif
 					config = tempConfig;		// nation_array.new_nation reads setting from config
 					break;
 
@@ -3839,7 +3776,6 @@ int Game::mp_select_load_option(char *fileName)
 
 	// --------- initialize terrain_set button group -------//
 
-	// ####### begin Gilbert 25/10 #######//
 	ButtonCustomGroup terrainGroup(3);
 	for( i = 0; i < 3; ++i )
 	{
@@ -3848,26 +3784,11 @@ int Game::mp_select_load_option(char *fileName)
 		#else
 			#define Y_SHIFT 0
 		#endif
-#ifdef AMPLUS
 		terrainGroup[i].create(166+i*BASIC_OPTION_X_SPACE, offsetY+248+Y_SHIFT, 
 			166+(i+1)*BASIC_OPTION_X_SPACE-1, offsetY+248+Y_SHIFT+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&terrainGroup, i+1), 0, 0);
-#else
-		int k = i;
-		switch(i)
-		{
-		case 1: k = 2; break;
-		case 2: k = 1; break;
-		}
-		terrainGroup[i].create(205+k*BASIC_OPTION_X_SPACE, offsetY+248+Y_SHIFT, 
-			205+(k+1)*BASIC_OPTION_X_SPACE-1, offsetY+248+Y_SHIFT+BASIC_OPTION_HEIGHT-1,
-			disp_virtual_button, ButtonCustomPara(&terrainGroup, i+1), 0, 0);
-		if( i == 1 )
-			terrainGroup[i].enable_flag = 0;
-#endif
 		#undef Y_SHIFT
 	}
-	// ####### end Gilbert 25/10 #######//
 
 	// --------- initialize land_mass button group -------//
 
@@ -4917,13 +4838,11 @@ int Game::mp_select_load_option(char *fileName)
 
 			// ---- force set to the lowest frame delay -------//
 
-#ifdef AMPLUS
 			remote.set_process_frame_delay(FORCE_MAX_FRAME_DELAY);
 			{
 				MpStructProcessFrameDelay msgFrameDelay(remote.get_process_frame_delay());
 				memcpy( setupString.reserve(sizeof(msgFrameDelay)), &msgFrameDelay, sizeof(msgFrameDelay));
 			}
-#endif
 
 			// -------- send sync test level ----------//
 

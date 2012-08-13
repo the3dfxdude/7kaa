@@ -159,14 +159,6 @@ void Sys::process()
 	LOG_MSG("end world.process()");
 	LOG_MSG(m.get_random_seed());
 
-#ifndef AMPLUS
-	// AMPLUS version moved to disp_frame
-	LOG_MSG("begin anim_line.inc_phase()");
-	anim_line.inc_phase();
-	LOG_MSG("end anim_line.inc_phase()");
-	LOG_MSG(m.get_random_seed());
-#endif
-
 	LOG_MSG("begin tornado_array.process()");
 	tornado_array.process();
 	LOG_MSG("begin tornado_array.process()");
@@ -592,9 +584,7 @@ void Sys::disp_frame()
 	}
 	// ####### end Glbert 24/10 #######//
 
-#ifdef AMPLUS
 	anim_line.inc_phase();		// originally in Sys::process()
-#endif
 
 	need_redraw_flag = 0;
 }
@@ -817,7 +807,7 @@ void Sys::update_view()
 void Sys::detect_view()
 {
 	int enableAction;			// some action is not enabled, when paused.
-	enableAction = config.frame_speed > 0 || !remote.is_enable();	// AMPLUS allows action when paused in single player
+	enableAction = config.frame_speed > 0 || !remote.is_enable();	// allow action when paused in single player
 
 	if( enableAction )
 		info.detect();

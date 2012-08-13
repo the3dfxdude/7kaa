@@ -869,11 +869,7 @@ void ZoomMatrix::draw_build_marker()
 	int pixelColor;
 
 	if( validAction )
-#ifdef AMPLUS
 		pixelColor = anim_line.get_series_color_array(-1)[2];
-#else
-		pixelColor = V_WHITE;
-#endif
 	else
 		pixelColor = V_BLACK;
 

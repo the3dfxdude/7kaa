@@ -58,14 +58,10 @@ int Nation::ai_settle_to_region(int destXLoc, int destYLoc, int seaActionId)
 
 		//--- only send units from this region if we have a harbor in that region ---//
 
-		// ###### patch begin Gilbert 16/3 #######//
 		// region_stat_id of a region may be zero
 		if( 
-//#ifdef AMPLUS
 			region_array[townPtr->region_id]->region_stat_id == 0 || 
-//#endif
 			region_array.get_region_stat(townPtr->region_id)->harbor_nation_count_array[nation_recno-1] == 0 )
-		// ###### patch end Gilbert 16/3 #######//
 			continue;
 
 		curRating  = world.distance_rating(destXLoc, destYLoc, townPtr->center_x, townPtr->center_y);
@@ -178,14 +174,10 @@ int Nation::ai_patrol_to_region(int destXLoc, int destYLoc, int seaActionId)
 
 		//--- only send units from this region if we have a harbor in that region ---//
 
-		// ####### patch begin Gilbert 16/3 ########//
 		if( 
-//#ifdef AMPLUS
 			region_array[firmCamp->region_id]->region_stat_id == 0 ||
-//#endif
 			region_array.get_region_stat(firmCamp->region_id)->harbor_nation_count_array[nation_recno-1] == 0 )
 			continue;
-		// ####### patch end Gilbert 16/3 ########//
 
 		curRating  = world.distance_rating(destXLoc, destYLoc, firmCamp->center_x, firmCamp->center_y);
 
@@ -345,12 +337,8 @@ int Nation::ai_build_camp_town_next_to(int xLoc1, int yLoc1, int xLoc2, int yLoc
 
 	int regionId = world.get_region_id(xLoc1, yLoc1);
 
-	// ##### patch begin Gilbert 16/3 #######//
-	//#ifdef AMPLUS
 	if( region_array[regionId]->region_stat_id == 0)
 		return 0;
-	//#endif
-	// ##### patch end Gilbert 16/3 #######//
 
 	if( region_array.get_region_stat(regionId)->camp_nation_count_array[nation_recno-1] == 0 )
 	{

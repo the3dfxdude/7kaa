@@ -21,8 +21,6 @@
 // Filename    : OGF_V1.CPP
 // Description : Old Class structures for save game conversion
 
-#ifdef AMPLUS
-
 #include <OGF_V1.h>
 #include <OTOWN.h>
 #include <ONATIONA.h>
@@ -387,4 +385,3 @@ void Version_1_Nation::convert_to_version_2(Nation *nationPtr)
 //---------------- end of function Version_1_Nation::convert_to_version_2() -----------------//
 
 
-#endif

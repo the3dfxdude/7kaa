@@ -192,12 +192,8 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 
 	//------- enable/disable sound effects -------//
 
-#ifdef AMPLUS
 	int songId = (~nation_array)->race_id <= 7 ? (~nation_array)->race_id+1 : music.random_bgm_track();
 	music.play(songId, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
-#else
-	music.play((~nation_array)->race_id +1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
-#endif
 
 	mouse_cursor.restore_icon(oldCursor);
 
@@ -625,12 +621,8 @@ void Battle::run_loaded()
 			kingRace = (~nation_array)->race_id;
 	}
 
-#ifdef AMPLUS
 	int songId = kingRace <= 7 ? kingRace+1 : music.random_bgm_track();
 	music.play(songId, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
-#else
-	music.play( kingRace+1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
-#endif
 
 	//--- give the control to the system main loop, start the game now ---//
 
