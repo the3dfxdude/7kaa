@@ -21,8 +21,6 @@
 #ifndef __OGF_V1_H
 #define __OGF_V1_H
 
-#ifdef AMPLUS
-
 #ifndef __OTOWN_H
 #include <OTOWN.h>
 #endif
@@ -420,5 +418,4 @@ class Version_1_Nation : public Version_1_NationBase
 };
 #pragma pack()
 
-#endif	// AMPLUS
 #endif

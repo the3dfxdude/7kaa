@@ -37,11 +37,9 @@ enum { RACE_NORMAN=1,
 		 RACE_PERSIAN,
 		 RACE_CHINESE,
 		 RACE_JAPANESE,
-#ifdef AMPLUS
 		 RACE_EGYPTIAN,
 		 RACE_INDIAN,
 		 RACE_ZULU,
-#endif
 	  };
 
 //--------- Define constant -----------//

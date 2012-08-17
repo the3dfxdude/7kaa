@@ -37,7 +37,6 @@
 #endif
 
 
-#ifdef AMPLUS
 //------------ Define constant for game version == 1xx -----------------//
 #define	VERSION_1_MAX_RACE						7
 #define	VERSION_1_MAX_UNIT_TYPE					37
@@ -46,7 +45,6 @@
 #define	VERSION_1_TOWNRES_TOWN_NAME_COUNT	367
 #define	VERSION_1_GODRES_GOD_COUNT				7
 #define	VERSION_1_TECH_COUNT						7
-#endif
 
 
 //-------- Define struct HallFame ----------//
@@ -128,12 +126,8 @@ public:
    char     has_read_hall_of_fame;
    char     last_file_name[MAX_PATH+1];
 
-	//### begin alex 5/3 ###//
-#ifdef AMPLUS
 	short		load_file_game_version;	// game version of load file
 	char		same_version;				// true if major version of the load game is same as that of the program
-#endif
-	//#### end alex 5/3 ####//
 
 	HallFame hall_fame_array[HALL_FAME_NUM];
 

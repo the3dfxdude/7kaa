@@ -75,7 +75,6 @@ enum { UNIT_NORMAN=1,
 		 UNIT_LIZARDMAN,
 		 UNIT_MAN,
 		 UNIT_HEADLESS,
-#ifdef AMPLUS
 		 UNIT_EGYPTIAN,
 		 UNIT_INDIAN,
 		 UNIT_ZULU,
@@ -83,16 +82,11 @@ enum { UNIT_NORMAN=1,
 		 UNIT_INDIAN_GOD,
 		 UNIT_ZULU_GOD,
 		 UNIT_F_BALLISTA,
-#endif
 		 UNIT_LAST					// keep this line after the last unit
 	  };
 
 enum { MAX_UNIT_TYPE = UNIT_LAST-1,
-#ifdef AMPLUS
 		 MAX_WEAPON_TYPE = 6,		// no. of types of weapons
-#else
-		 MAX_WEAPON_TYPE = 5,		// no. of types of weapons
-#endif
 		 MAX_SHIP_TYPE = 4, 			// no. of types of ships
 	  };
 

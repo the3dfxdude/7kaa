@@ -58,9 +58,7 @@ public:
 extern ImageRes image_icon, image_interface, image_menu, image_button, image_spict;
 extern ImageRes image_encyc, image_tpict, image_tutorial;
 
-#ifdef AMPLUS
 extern ImageRes image_menu_plus;
-#endif
 extern ImageRes& image_menu2;
 //--------------------------------------------//
 

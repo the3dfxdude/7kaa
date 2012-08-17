@@ -47,12 +47,8 @@ class MultiPlayer;
 class ErrorControl
 {
 	enum { FIRST_SEND, RE_SEND, ACKNOW, NEGACK };
-#ifdef AMPLUS
 //	enum { MAX_PLAYER = MAX_NATION, MAX_QUEUE = 12, MAX_RECV_QUEUE = 48 };
 	enum { MAX_PLAYER = MAX_NATION, MAX_QUEUE = 18, MAX_RECV_QUEUE = 72 };
-#else
-	enum { MAX_PLAYER = MAX_NATION, MAX_QUEUE = 8, MAX_RECV_QUEUE = 32 };
-#endif
 	// MAX_QUEUE/2 > Remote::MAX_PROCESS_FRAME_DELAY
 	// MAX_RECV_QUEUE > MAX_QUEUE/2 * MAX_PLAYER
 

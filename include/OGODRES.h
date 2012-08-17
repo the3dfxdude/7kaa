@@ -34,11 +34,7 @@
 
 //------------ Define god id. -------------//
 
-#ifdef AMPLUS
 enum { MAX_GOD=10 };
-#else
-enum { MAX_GOD=7 };
-#endif
 
 enum { GOD_NORMAN=1,
 		 GOD_MAYA,
@@ -47,11 +43,9 @@ enum { GOD_NORMAN=1,
 		 GOD_PERSIAN,
 		 GOD_CHINESE,
 		 GOD_JAPANESE,
-#ifdef AMPLUS
 		 GOD_EGYPTIAN,
 		 GOD_INDIAN,
 		 GOD_ZULU,
-#endif
 	  };
 
 //------------ Define struct GodRec ---------------//

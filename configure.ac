@@ -320,10 +320,6 @@ AC_DEFINE([NO_ASM], [1], [
   Define to 1 if not using assembly routines or if NO_WINDOWS is defined
 ])
 
-AC_DEFINE([AMPLUS], [1], [
-  Define to 1 if building Ancient Adversaries features
-])
-
 CXXFLAGS="$CXXFLAGS -I\"\$(top_srcdir)/include\""
 CXXFLAGS="$CXXFLAGS -include \"\$(top_builddir)/include/config.h\""
 

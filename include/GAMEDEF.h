@@ -77,9 +77,7 @@ extern const int GAME_VERSION;
 #define DIR_SOUND       DEFAULT_DIR_SOUND
 #define DIR_IMAGE       sys.dir_image
 #define DIR_ENCYC       sys.dir_encyc
-#ifdef AMPLUS
-	#define DIR_ENCYC2	sys.dir_encyc2
-#endif
+#define DIR_ENCYC2	sys.dir_encyc2
 #define DIR_MUSIC       sys.dir_music
 #define DIR_MOVIE       sys.dir_movie
 #define DIR_TUTORIAL		sys.dir_tutorial
@@ -114,11 +112,7 @@ enum { COMMAND_PLAYER=0, COMMAND_REMOTE=1, COMMAND_AI, COMMAND_AUTO };
 
 //-------- Define maximum game constant ---------//
 
-#ifdef AMPLUS
-	#define MAX_RACE                  10
-#else
-	#define MAX_RACE                  7
-#endif
+#define MAX_RACE                  10
 
 #define MAX_COLOR_SCHEME             7    // Maximum no. of color schemes
 

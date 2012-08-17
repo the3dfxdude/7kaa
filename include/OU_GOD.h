@@ -71,20 +71,16 @@ private:
 	void persian_cast_power(int unitRecno, int divider);
 	void japanese_cast_power(int unitRecno, int divider);
 	void maya_cast_power(int unitRecno, int divider);
-#ifdef AMPLUS
 	void egyptian_cast_power(int unitRecno, int divider);
 	void indian_cast_power(int unitRecno, int divider);
 	void zulu_cast_power(int unitRecno, int divider);
-#endif
 
 	void persian_cast_power(Worker* workerPtr, int nationRecno, int divider);
 	void japanese_cast_power(Worker* workerPtr, int nationRecno, int divider);
 	void maya_cast_power(Worker* workerPtr, int nationRecno, int divider);
-#ifdef AMPLUS
 	void egyptian_cast_power(Worker *workerPtr, int nationRecno, int divider);
 	void indian_cast_power(Worker *workerPtr, int nationRecno, int divider);
 	void zulu_cast_power(Worker *workerPtr, int nationRecno, int divider);
-#endif
 
 	//--------- AI functions ----------//
 
@@ -98,11 +94,9 @@ private:
 	void think_japanese_god();
 	int  think_god_attack_target(int& targetXLoc, int& targetYLoc);
 
-#ifdef AMPLUS
 	void think_egyptian_god();
 	void think_indian_god();
 	void think_zulu_god();
-#endif
 };
 #pragma pack()
 

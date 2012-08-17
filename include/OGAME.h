@@ -72,9 +72,7 @@ struct ScenInfo
 
 	char* 	file_name;
 	char  	scen_name[SCEN_NAME_LEN+1];
-//#ifdef AMPLUS
 	char		dir_id;			// real path look from DIR_SCENARIO_PATH(dir_id)
-//#endif
 	short		goal_difficulty;
 	short 	goal_score_bonus;
 };
