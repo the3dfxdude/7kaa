@@ -270,9 +270,9 @@ int InGameMenu::detect()
          break;
       }
 
-      case 7:     // quit to Windows
+      case 7:     // quit to Windows/Linux
          if( !nation_array.player_recno ||
-             box.ask( "Do you really want to quit to Windows?", "Yes", "No", 130, 400 ) )
+             box.ask( "Do you really want to quit to " OS_NAME "?", "Yes", "No", 130, 400 ) )
          {
             if( remote.is_enable() && nation_array.player_recno )
             {
