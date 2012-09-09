@@ -634,7 +634,7 @@ int MultiPlayer::add_player(char *name, uint32_t id)
 
 void MultiPlayer::set_my_player_id(uint32_t id)
 {
-	err_when(!id || id > max_players || !player_pool[my_player_id-1]);
+	err_when(!id || id > max_players || !player_pool[id-1]);
 
 	my_player_id = id;
 }
