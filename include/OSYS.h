@@ -38,12 +38,6 @@ enum { COMMON_DATA_BUF_SIZE = 64*1024 };			// keep a 64K common buffer for all t
 #define MAX_SCENARIO_PATH 2
 
 
-#ifdef NO_WINDOWS
-	#define OS_NAME	"Linux"
-#else
-	#define OS_NAME "Windows"
-#endif
-
 //------------ sys_flag --------------//
 
 enum { SYS_PREGAME=0, SYS_RUN };
