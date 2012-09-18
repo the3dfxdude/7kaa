@@ -362,7 +362,7 @@ void TerrainRes::load_info()
 		// ######## end Gilbert 12/2 #######//
 
 		terrainInfo->secondary_type = terrain_code(terrainRec->secondary_type);
-		terrainInfo->pattern_id = m.atoi(terrainRec->pattern_id, terrainRec->PATTERN_ID_LEN);
+		terrainInfo->pattern_id = misc.atoi(terrainRec->pattern_id, terrainRec->PATTERN_ID_LEN);
 
 		//------ set alternative_count ---------//
 
@@ -483,12 +483,12 @@ int TerrainRes::scan(int nwType, int nwSubType, int neType, int neSubType,
 				if( includeExtra )
 				{
 					err_when(terrainInfo->alternative_count_with_extra < 0);
-					return terrainId + m.random(terrainInfo->alternative_count_with_extra+1);
+					return terrainId + misc.random(terrainInfo->alternative_count_with_extra+1);
 				}
 				else
 				{
 					err_when(terrainInfo->alternative_count_without_extra < 0);
-					return terrainId + m.random(terrainInfo->alternative_count_without_extra+1);
+					return terrainId + misc.random(terrainInfo->alternative_count_without_extra+1);
 				}
 			}
 		}
@@ -551,12 +551,12 @@ int TerrainRes::scan(int primaryType, int secondaryType,	int patternId,
 				if( includeExtra )
 				{
 					err_when(terrainInfo->alternative_count_with_extra < 0);
-					return terrainId + m.random(terrainInfo->alternative_count_with_extra+1);
+					return terrainId + misc.random(terrainInfo->alternative_count_with_extra+1);
 				}
 				else
 				{
 					err_when(terrainInfo->alternative_count_without_extra < 0);
-					return terrainId + m.random(terrainInfo->alternative_count_without_extra+1);
+					return terrainId + misc.random(terrainInfo->alternative_count_without_extra+1);
 				}
 			}
 		}
@@ -593,12 +593,12 @@ int TerrainRes::scan(int primaryType, int secondaryType,	int patternId,
 					if( includeExtra )
 					{
 						err_when(terrainInfo->alternative_count_with_extra < 0);
-						return terrainId + m.random(terrainInfo->alternative_count_with_extra+1);
+						return terrainId + misc.random(terrainInfo->alternative_count_with_extra+1);
 					}
 					else
 					{
 						err_when(terrainInfo->alternative_count_without_extra < 0);
-						return terrainId + m.random(terrainInfo->alternative_count_without_extra+1);
+						return terrainId + misc.random(terrainInfo->alternative_count_without_extra+1);
 					}
 				}
 			}
@@ -679,14 +679,14 @@ void TerrainRes::load_sub_info()
 		terrainSubRec  = (TerrainSubRec*) dbTerrain->read(i+1);
 		terrainSubInfo = ter_sub_array+i;
 
-		terrainSubInfo->sub_no = m.atoi(terrainSubRec->sub_no, terrainSubRec->SUB_NO_LEN);
-		terrainSubInfo->step_id = m.atoi(terrainSubRec->step_id, terrainSubRec->STEP_ID_LEN);
-		terrainSubInfo->old_pattern_id = m.atoi(terrainSubRec->old_pattern_id, terrainSubRec->PATTERN_ID_LEN);
-		terrainSubInfo->new_pattern_id = m.atoi(terrainSubRec->new_pattern_id, terrainSubRec->PATTERN_ID_LEN);
+		terrainSubInfo->sub_no = misc.atoi(terrainSubRec->sub_no, terrainSubRec->SUB_NO_LEN);
+		terrainSubInfo->step_id = misc.atoi(terrainSubRec->step_id, terrainSubRec->STEP_ID_LEN);
+		terrainSubInfo->old_pattern_id = misc.atoi(terrainSubRec->old_pattern_id, terrainSubRec->PATTERN_ID_LEN);
+		terrainSubInfo->new_pattern_id = misc.atoi(terrainSubRec->new_pattern_id, terrainSubRec->PATTERN_ID_LEN);
 
 		// sec_adj is useful when a pure type is changing to boundary type.
 		// eg. a GG square can be changed to SG or GS sqare
-		terrainSubInfo->sec_adj = m.atoi(terrainSubRec->sec_adj, terrainSubRec->SEC_ADJ_LEN);
+		terrainSubInfo->sec_adj = misc.atoi(terrainSubRec->sec_adj, terrainSubRec->SEC_ADJ_LEN);
 		switch(terrainSubRec->post_move[0])
 		{
 		case 'N':
@@ -839,7 +839,7 @@ void TerrainRes::load_anim_info()
 				{
 					j = scan( terrain_code(lastAnimRec.average_type),
 						terrain_code(lastAnimRec.secondary_type),
-						m.atoi(lastAnimRec.pattern_id, lastAnimRec.PATTERN_ID_LEN), 1,0,special);
+						misc.atoi(lastAnimRec.pattern_id, lastAnimRec.PATTERN_ID_LEN), 1,0,special);
 					if( j > 0)
 					{
 						k = terrain_info_array[j-1].alternative_count_with_extra;
@@ -870,7 +870,7 @@ void TerrainRes::load_anim_info()
 			memset(animFrameBitmap, 0, sizeof(animFrameBitmap));
 		}
 		animFrameCount++;
-		animFrameBitmap[m.atoi(terrainAnimRec.frame_no, terrainAnimRec.FRAME_NO_LEN)-1]
+		animFrameBitmap[misc.atoi(terrainAnimRec.frame_no, terrainAnimRec.FRAME_NO_LEN)-1]
 			= bitmapPtr;
 	}
 
@@ -899,7 +899,7 @@ void TerrainRes::load_anim_info()
 		{
 			j = scan( terrain_code(lastAnimRec.average_type),
 				terrain_code(lastAnimRec.secondary_type),
-				m.atoi(lastAnimRec.pattern_id, lastAnimRec.PATTERN_ID_LEN), 1,0,special);
+				misc.atoi(lastAnimRec.pattern_id, lastAnimRec.PATTERN_ID_LEN), 1,0,special);
 			if( j > 0)
 			{
 				k = terrain_info_array[j-1].alternative_count_with_extra;

@@ -110,7 +110,7 @@ void FirmResearch::think_new_research()
 			curRating = 100 + techInfo->is_nation_researching(nation_recno)*20;
 
 			if( curRating > bestRating ||
-				 ( curRating==bestRating && m.random(2)==0 ) )
+				 ( curRating==bestRating && misc.random(2)==0 ) )
 			{
 				bestTechId = techId;
 				bestRating = curRating;

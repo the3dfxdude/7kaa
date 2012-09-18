@@ -161,7 +161,7 @@ int ButtonCustom::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, 
    //----- paint the button with pressed shape ------//
 
 	#define PRESSED_TIMEOUT_SECONDS  1      // 1 seconds
-	DWORD timeOutTime = m.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+	DWORD timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
 
 	if( elastic_flag )
 	{
@@ -173,7 +173,7 @@ int ButtonCustom::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, 
 			sys.yield();
 			mouse.get_event();
 
-			if( m.get_time() >= timeOutTime )
+			if( misc.get_time() >= timeOutTime )
 				break;
 		}
 
@@ -194,7 +194,7 @@ int ButtonCustom::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, 
 			sys.yield();
 			mouse.get_event();
 
-			if( m.get_time() >= timeOutTime )
+			if( misc.get_time() >= timeOutTime )
 				break;
 		}
 	}

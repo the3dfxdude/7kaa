@@ -1607,7 +1607,7 @@ void Unit::go_cast_power(int castXLoc, int castYLoc, char castPowerType, char re
 	stop();	// new order
 
 	//------------- do searching if neccessary -------------//
-	if(m.points_distance(next_x_loc(), next_y_loc(), castXLoc, castYLoc)>DO_CAST_POWER_RANGE)
+	if(misc.points_distance(next_x_loc(), next_y_loc(), castXLoc, castYLoc)>DO_CAST_POWER_RANGE)
 		search(castXLoc, castYLoc, 1);
 
 	//----------- set action to build the firm -----------//
@@ -1640,7 +1640,7 @@ void Unit::process_go_cast_power()
 		//----------------------------------------------------------------------------------------//
 		// Checking condition to do casting power, Or resume action
 		//----------------------------------------------------------------------------------------//
-		if(m.points_distance(cur_x_loc(), cur_y_loc(), action_x_loc2, action_y_loc2)<=DO_CAST_POWER_RANGE)
+		if(misc.points_distance(cur_x_loc(), cur_y_loc(), action_x_loc2, action_y_loc2)<=DO_CAST_POWER_RANGE)
 		{
 			if( next_x_loc() != action_x_loc2 ||
 				next_y_loc() != action_y_loc2 )

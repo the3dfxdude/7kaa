@@ -752,9 +752,9 @@ int SeekPath::seek(int sx,int sy,int dx,int dy, DWORD groupId, char mobileType,
 				pathNum = (numOfPath>area) ? (numOfPath-1)%area + 1 : numOfPath;
 
 				if(search_mode==SEARCH_MODE_TO_TOWN)
-					m.cal_move_around_a_point(pathNum, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, xShift, yShift);
+					misc.cal_move_around_a_point(pathNum, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, xShift, yShift);
 				else
-					m.cal_move_around_a_point(pathNum, search_firm_info->loc_width, search_firm_info->loc_height, xShift, yShift);
+					misc.cal_move_around_a_point(pathNum, search_firm_info->loc_width, search_firm_info->loc_height, xShift, yShift);
 
 				final_dest_x += xShift;
 				final_dest_y += yShift;
@@ -2694,9 +2694,9 @@ int SeekPath::seek2(int sx, int sy, int dx, int dy, short miscNo, short numOfPat
 
 				pathNum = (numOfPath>area) ? (numOfPath-1)%area + 1 : numOfPath;
 				if(search_mode==SEARCH_MODE_TO_TOWN)
-					m.cal_move_around_a_point(pathNum, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, xShift, yShift);
+					misc.cal_move_around_a_point(pathNum, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, xShift, yShift);
 				else
-					m.cal_move_around_a_point(pathNum, search_firm_info->loc_width, search_firm_info->loc_height, xShift, yShift);
+					misc.cal_move_around_a_point(pathNum, search_firm_info->loc_width, search_firm_info->loc_height, xShift, yShift);
 
 				final_dest_x += xShift;
 				final_dest_y += yShift;

@@ -92,7 +92,7 @@ void SpriteRes::load_sprite_info()
 		spriteRec  = (SpriteRec*) dbSprite->read(i+1);
 		spriteInfo = sprite_info_array+i;
 
-		m.rtrim_fld( spriteInfo->sprite_code, spriteRec->sprite_code, spriteRec->CODE_LEN );
+		misc.rtrim_fld( spriteInfo->sprite_code, spriteRec->sprite_code, spriteRec->CODE_LEN );
 
 		spriteInfo->sprite_type = spriteRec->sprite_type;
 
@@ -107,23 +107,23 @@ void SpriteRes::load_sprite_info()
 		if( spriteRec->need_turning != ' ' )
 			spriteInfo->need_turning = spriteRec->need_turning-'0';
 
-		spriteInfo->turn_resolution = m.atoi(spriteRec->turn_resolution, spriteRec->TURN_RES_LEN);
-		spriteInfo->loc_width  = m.atoi(spriteRec->loc_width , spriteRec->SPRITE_PARA_LEN);
-		spriteInfo->loc_height = m.atoi(spriteRec->loc_height, spriteRec->SPRITE_PARA_LEN);
+		spriteInfo->turn_resolution = misc.atoi(spriteRec->turn_resolution, spriteRec->TURN_RES_LEN);
+		spriteInfo->loc_width = misc.atoi(spriteRec->loc_width, spriteRec->SPRITE_PARA_LEN);
+		spriteInfo->loc_height = misc.atoi(spriteRec->loc_height, spriteRec->SPRITE_PARA_LEN);
 
-		spriteInfo->speed      		 = m.atoi(spriteRec->speed     		, spriteRec->SPRITE_PARA_LEN);
-		spriteInfo->max_speed       = m.atoi(spriteRec->speed          , spriteRec->SPRITE_PARA_LEN);
+		spriteInfo->speed = misc.atoi(spriteRec->speed, spriteRec->SPRITE_PARA_LEN);
+		spriteInfo->max_speed = misc.atoi(spriteRec->speed, spriteRec->SPRITE_PARA_LEN);
 		//### begin alex 2/6 ###//
 		/*#ifdef DEBUG2
 			spriteInfo->speed *=2;
 			spriteInfo->max_speed *=2;
 		#endif*/
 		//#### end alex 2/6 ####//
-		spriteInfo->frames_per_step = m.atoi(spriteRec->frames_per_step, spriteRec->SPRITE_PARA_LEN);
+		spriteInfo->frames_per_step = misc.atoi(spriteRec->frames_per_step, spriteRec->SPRITE_PARA_LEN);
 
-		spriteInfo->max_rain_slowdown = m.atoi(spriteRec->max_rain_slowdown, spriteRec->SPRITE_PARA_LEN);
-		spriteInfo->max_snow_slowdown = m.atoi(spriteRec->max_snow_slowdown, spriteRec->SPRITE_PARA_LEN);
-		spriteInfo->lightning_damage = m.atoi(spriteRec->lightning_damage, spriteRec->DAMAGE_LEN);
+		spriteInfo->max_rain_slowdown = misc.atoi(spriteRec->max_rain_slowdown, spriteRec->SPRITE_PARA_LEN);
+		spriteInfo->max_snow_slowdown = misc.atoi(spriteRec->max_snow_slowdown, spriteRec->SPRITE_PARA_LEN);
+		spriteInfo->lightning_damage = misc.atoi(spriteRec->lightning_damage, spriteRec->DAMAGE_LEN);
 		// ###### begin Gilbert 21/8 ########//
 		if( spriteRec->remap_bitmap_flag == '\0' 
 			|| spriteRec->remap_bitmap_flag == ' '
@@ -133,8 +133,8 @@ void SpriteRes::load_sprite_info()
 			spriteInfo->remap_bitmap_flag = 1;
 		// ###### end Gilbert 21/8 ########//
 
-		first_dir_recno_array[i] = m.atoi(spriteRec->first_move_recno, spriteRec->RECNO_LEN);
-		dir_count_array[i] 		 = m.atoi(spriteRec->move_count      , spriteRec->COUNT_LEN);
+		first_dir_recno_array[i] = misc.atoi(spriteRec->first_move_recno, spriteRec->RECNO_LEN);
+		dir_count_array[i] = misc.atoi(spriteRec->move_count, spriteRec->COUNT_LEN);
 	}
 
 	//------- read in sprite action info ---------//
@@ -149,7 +149,7 @@ void SpriteRes::load_sprite_info()
 		{
 			spriteActionRec = (SpriteActionRec*) dbSpriteMove->read(actionRecno);
 
-			dirId = m.atoi(spriteActionRec->dir_id, spriteActionRec->DIR_ID_LEN);
+			dirId = misc.atoi(spriteActionRec->dir_id, spriteActionRec->DIR_ID_LEN);
 
 			//--------- move motion --------//
 
@@ -157,8 +157,8 @@ void SpriteRes::load_sprite_info()
 			{
 				spriteMove = spriteInfo->move_array+dirId;
 
-				spriteMove->first_frame_recno = m.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
-				spriteMove->frame_count 		= m.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
+				spriteMove->first_frame_recno = misc.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
+				spriteMove->frame_count = misc.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
 
 				//--- the first movement frame is the default stop frame ---//
 
@@ -177,24 +177,24 @@ void SpriteRes::load_sprite_info()
 
 				spriteAttack = spriteInfo->attack_array[spriteActionRec->action[1]-'1'] + dirId;
 
-				spriteAttack->first_frame_recno = m.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
-				spriteAttack->frame_count 		  = m.atoi(spriteActionRec->frame_count	   , spriteActionRec->COUNT_LEN);
+				spriteAttack->first_frame_recno = misc.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
+				spriteAttack->frame_count = misc.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
 			}
 
 			//--------- stop bitmap ---------//
 
 			else if( spriteActionRec->action[0] == 'S' )
 			{
-				spriteInfo->stop_array[dirId].frame_recno = m.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
-				spriteInfo->stop_array[dirId].frame_count = m.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
+				spriteInfo->stop_array[dirId].frame_recno = misc.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
+				spriteInfo->stop_array[dirId].frame_count = misc.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
 			}
 
 			//-------- dying motion ---------//
 
 			else if( spriteActionRec->action[0] == 'D' )
 			{
-				spriteInfo->die.first_frame_recno = m.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
-				spriteInfo->die.frame_count 		  = m.atoi(spriteActionRec->frame_count	  , spriteActionRec->COUNT_LEN);
+				spriteInfo->die.first_frame_recno = misc.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
+				spriteInfo->die.frame_count = misc.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
 			}
 
 			//--------- guarding motion --------//
@@ -205,8 +205,8 @@ void SpriteRes::load_sprite_info()
 				{
 					// moving guard
 					SpriteGuardMove *spriteGuardMove = spriteInfo->guard_move_array+dirId;
-					spriteGuardMove->first_frame_recno = m.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
-					spriteGuardMove->frame_count 		= m.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
+					spriteGuardMove->first_frame_recno = misc.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
+					spriteGuardMove->frame_count = misc.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
 
 					// set can_guard_flag
 					spriteInfo->can_guard_flag |= 2;
@@ -215,8 +215,8 @@ void SpriteRes::load_sprite_info()
 				{
 					// standing guard
 					SpriteGuardStop *spriteGuardStop = spriteInfo->guard_stop_array+dirId;
-					spriteGuardStop->first_frame_recno = m.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
-					spriteGuardStop->frame_count 		= m.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
+					spriteGuardStop->first_frame_recno = misc.atoi(spriteActionRec->first_frame_recno, spriteActionRec->RECNO_LEN);
+					spriteGuardStop->frame_count = misc.atoi(spriteActionRec->frame_count, spriteActionRec->COUNT_LEN);
 
 					// set can_guard_flag
 					spriteInfo->can_guard_flag |= 1;
@@ -251,17 +251,17 @@ void SpriteRes::load_sub_sprite_info()
 		SubSpriteRec *subSpriteRec = (SubSpriteRec *) dbSubSprite->read(i+1);
 		SubSpriteInfo *subSpriteInfo = sub_sprite_info_array+i;
 
-		subSpriteInfo->sprite_id = m.atoi(subSpriteRec->sub_sprite_id, subSpriteRec->RECNO_LEN);
+		subSpriteInfo->sprite_id = misc.atoi(subSpriteRec->sub_sprite_id, subSpriteRec->RECNO_LEN);
 		err_when( subSpriteInfo->sprite_id > sprite_info_count );
 		subSpriteInfo->sprite_info = sprite_info_array + subSpriteInfo->sprite_id -1;
-		subSpriteInfo->offset_x = m.atoi(subSpriteRec->offset_x, subSpriteRec->OFFSET_LEN);
-		subSpriteInfo->offset_y = m.atoi(subSpriteRec->offset_y, subSpriteRec->OFFSET_LEN);
+		subSpriteInfo->offset_x = misc.atoi(subSpriteRec->offset_x, subSpriteRec->OFFSET_LEN);
+		subSpriteInfo->offset_y = misc.atoi(subSpriteRec->offset_y, subSpriteRec->OFFSET_LEN);
 
 		// set link from parent
 		// assume SUB_SPR database is sorted by sprite_name and sub_no
 
-		int subNo = m.atoi(subSpriteRec->sub_no, subSpriteRec->SUB_NO_LEN);
-		SpriteInfo *parentSprite = sprite_res[m.atoi(subSpriteRec->sprite_id, subSpriteRec->RECNO_LEN)];
+		int subNo = misc.atoi(subSpriteRec->sub_no, subSpriteRec->SUB_NO_LEN);
+		SpriteInfo *parentSprite = sprite_res[misc.atoi(subSpriteRec->sprite_id, subSpriteRec->RECNO_LEN)];
 
 		if( subNo == 1)
 			parentSprite->sub_sprite_info = subSpriteInfo;

@@ -74,7 +74,7 @@ void FirmMonster::init_derived()
 
 	//-- these vars must be initialized here instead of in FirmMonster::FirmMonster() for random seed sync during load game --//
 
-	monster_aggressiveness = 20 + m.random(50);		// 20 to 70
+	monster_aggressiveness = 20 + misc.random(50);		// 20 to 70
 }
 //----------- End of function FirmMonster::init_derived -----------//
 
@@ -86,7 +86,7 @@ FirmMonster::~FirmMonster()
 	if( sys.signal_exit_flag )
 		return;
 
-	int goldAmount = 800 * (monster_res[monster_id]->level*30 + m.random(50)) / 100;
+	int goldAmount = 800 * (monster_res[monster_id]->level*30 + misc.random(50)) / 100;
 
 	site_array.add_site( center_x, center_y, SITE_GOLD_COIN, goldAmount );
 	site_array.ai_get_site_object();		// ask AI units to get the gold coins
@@ -209,7 +209,7 @@ void FirmMonster::next_day()
 
 	if( config.monster_type == OPTION_MONSTER_OFFENSIVE )
 	{
-		if( info.game_date%30 == firm_recno%30 && m.random(3)==0 )
+		if( info.game_date%30 == firm_recno%30 && misc.random(3)==0 )
 			recruit_general();
 /*
 		if( info.game_date%90 == firm_recno%90 )
@@ -219,7 +219,7 @@ void FirmMonster::next_day()
 
 		if( info.game_date > info.game_start_date + 1000 &&	// only start attacking 3 years after the game starts so the human can build up things
 			 info.game_date%30 == firm_recno%30 &&
-			 m.random( firm_res[FIRM_MONSTER]->total_firm_count*6 )==0 )		// it will expand slower when there are already a lot of the monster structures on the map
+			 misc.random( firm_res[FIRM_MONSTER]->total_firm_count*6 )==0 )		// it will expand slower when there are already a lot of the monster structures on the map
 		{
 			think_attack_human();
 		}
@@ -227,7 +227,7 @@ void FirmMonster::next_day()
 		//--------- think expansion ---------//
 
 		if( info.game_date%180 == firm_recno%180 &&
-			 m.random( firm_res[FIRM_MONSTER]->total_firm_count*10 )==0 )		// it will expand slower when there are already a lot of the monster structures on the map
+			 misc.random( firm_res[FIRM_MONSTER]->total_firm_count*10 )==0 )		// it will expand slower when there are already a lot of the monster structures on the map
 		{
 			think_expansion();
 		}
@@ -349,7 +349,7 @@ void FirmMonster::add_general(int generalUnitRecno)
 
 			err_when( waiting_soldier_count > MAX_WAITING_SOLDIER );
 
-			m.del_array_rec(waiting_soldier_array, waiting_soldier_count, sizeof(waiting_soldier_array[0]), i+1);
+			misc.del_array_rec(waiting_soldier_array, waiting_soldier_count, sizeof(waiting_soldier_array[0]), i+1);
 			waiting_soldier_count--;
 		}
 	}
@@ -409,7 +409,7 @@ int FirmMonster::recruit_general(int soldierCount)
 
 	MonsterInFirm* monsterInFirm = monster_general_array+monster_general_count;
 
-	int combatLevel = 40 + m.random(30);		// 40 to 70
+	int combatLevel = 40 + misc.random(30);		// 40 to 70
 
 	monsterInFirm->monster_id 	  = monster_king.monster_id;
 	monsterInFirm->set_combat_level(combatLevel);
@@ -420,7 +420,7 @@ int FirmMonster::recruit_general(int soldierCount)
 	if( soldierCount >= 0 )
 		monsterInFirm->soldier_count = soldierCount;
 	else
-		monsterInFirm->soldier_count = m.random(MAX_SOLDIER_PER_GENERAL/2)+1;
+		monsterInFirm->soldier_count = misc.random(MAX_SOLDIER_PER_GENERAL/2)+1;
 
 	monster_general_count++;
 
@@ -440,7 +440,7 @@ void FirmMonster::recruit_soldier()
 	for( int i=0 ; i<monster_general_count ; i++, monsterInFirm++ )
 	{
 		if( monsterInFirm->soldier_count < MAX_SOLDIER_PER_GENERAL &&
-			 m.random(3) > 0 )		// 2/3 chance of recruiting a soldier
+			 misc.random(3) > 0 )		// 2/3 chance of recruiting a soldier
 		{
 			monsterInFirm->soldier_count++;
 		}
@@ -503,7 +503,7 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 		{
 			//--- the combat level of its soldiers ranges from 25% to 50% of the combat level of the general ---//
 
-			int soldierCombatLevel = monsterInFirm->combat_level/MONSTER_SOLDIER_COMBAT_LEVEL_DIVIDER + m.random(monsterInFirm->combat_level/MONSTER_SOLDIER_COMBAT_LEVEL_DIVIDER);
+			int soldierCombatLevel = monsterInFirm->combat_level/MONSTER_SOLDIER_COMBAT_LEVEL_DIVIDER + misc.random(monsterInFirm->combat_level/MONSTER_SOLDIER_COMBAT_LEVEL_DIVIDER);
 
 			int unitRecno = mobilize_monster( monsterInFirm->soldier_monster_id, RANK_SOLDIER, soldierCombatLevel );
 
@@ -526,7 +526,7 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 
 	err_when( monster_general_count > MAX_MONSTER_GENERAL_IN_FIRM );
 
-	m.del_array_rec(monster_general_array, monster_general_count, sizeof(MonsterInFirm), generalId);
+	misc.del_array_rec(monster_general_array, monster_general_count, sizeof(MonsterInFirm), generalId);
 
 	monster_general_count--;
 
@@ -627,7 +627,7 @@ void FirmMonster::being_attacked(int attackerUnitRecno)
 
 	if( monster_general_count > 0 )
 	{
-		int mobilizedCount = mobilize_general( m.random(monster_general_count)+1 );
+		int mobilizedCount = mobilize_general( misc.random(monster_general_count)+1 );
 
 		if(mobilizedCount)
 		{
@@ -833,7 +833,7 @@ void FirmMonster::validate_patrol_unit()
 		{
 			err_when( patrol_unit_count > MAX_SOLDIER_PER_GENERAL+1 );
 
-			m.del_array_rec( patrol_unit_array, patrol_unit_count, sizeof(patrol_unit_array[0]), i );
+			misc.del_array_rec( patrol_unit_array, patrol_unit_count, sizeof(patrol_unit_array[0]), i );
 
 			err_when( patrol_unit_count==0 );		// it's already 0
 
@@ -893,7 +893,7 @@ int FirmMonster::think_attack_neighbor()
 
 	for(i=firmInfo->loc_width*firmInfo->loc_height+1; i<=scanLimit; i++)
 	{
-		m.cal_move_around_a_point(i, scanLocWidth, scanLocHeight, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, scanLocWidth, scanLocHeight, xOffset, yOffset);
 
 		xLoc = center_x + xOffset;
 		yLoc = center_y + yOffset;
@@ -938,7 +938,7 @@ int FirmMonster::think_attack_neighbor()
 	//------- attack the civilian now --------//
 	current_monster_action_mode = MONSTER_ACTION_ATTACK;
 
-	mobilize_general( m.random(monster_general_count)+1 );
+	mobilize_general( misc.random(monster_general_count)+1 );
 
 	if( patrol_unit_count > 0 )
 	{
@@ -1051,7 +1051,7 @@ int FirmMonster::think_attack_human()
 	{
 		//----- randomly pick a firm ------//
 
-		firmRecno = m.random(firm_array.size()) + 1;
+		firmRecno = misc.random(firm_array.size()) + 1;
 
 		if( firm_array.is_deleted(firmRecno) )
 			continue;
@@ -1068,7 +1068,7 @@ int FirmMonster::think_attack_human()
 
 		//----- randomly pick a town ------//
 
-		townRecno = m.random(town_array.size()) + 1;
+		townRecno = misc.random(town_array.size()) + 1;
 
 		if( town_array.is_deleted(townRecno) )
 			continue;
@@ -1091,7 +1091,7 @@ int FirmMonster::think_attack_human()
 
 	current_monster_action_mode = MONSTER_ACTION_ATTACK;
 
-	mobilize_general( m.random(monster_general_count)+1 );
+	mobilize_general( misc.random(monster_general_count)+1 );
 
 	if( patrol_unit_count > 0 )
 	{

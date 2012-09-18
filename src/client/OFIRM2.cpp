@@ -109,7 +109,7 @@ void Firm::kill_worker(int workerId)
 	err_when( worker_count > MAX_WORKER );
 	err_when( selected_worker_id > worker_count );
 
-	m.del_array_rec(worker_array, worker_count, sizeof(Worker), workerId);
+	misc.del_array_rec(worker_array, worker_count, sizeof(Worker), workerId);
 
 	if( selected_worker_id > workerId || selected_worker_id == worker_count )
 		selected_worker_id--;

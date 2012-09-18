@@ -145,7 +145,7 @@ void FirmCamp::reset_attack_camp(int firmRecno)
 		{
 			if( nationPtr->attack_camp_array[i].firm_recno == firmRecno )
 			{
-				m.del_array_rec(nationPtr->attack_camp_array, nationPtr->attack_camp_count, sizeof(AttackCamp), i+1 );
+				misc.del_array_rec(nationPtr->attack_camp_array, nationPtr->attack_camp_count, sizeof(AttackCamp), i+1 );
 				nationPtr->attack_camp_count--;
 				break;
 			}
@@ -281,7 +281,7 @@ void FirmCamp::validate_patrol_unit()
 		{
 			err_when( patrol_unit_count > 9 );
 
-			m.del_array_rec( patrol_unit_array, patrol_unit_count, sizeof(patrol_unit_array[0]), i );
+			misc.del_array_rec( patrol_unit_array, patrol_unit_count, sizeof(patrol_unit_array[0]), i );
 
 			err_when( patrol_unit_count==0 );		// it's already 0
 			patrol_unit_count--;

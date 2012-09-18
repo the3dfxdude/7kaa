@@ -306,7 +306,7 @@ void UnitMarine::del_unit(int unitRecno)
 		{
 			err_when( unit_count > MAX_UNIT_IN_SHIP );
 
-			m.del_array_rec(unit_recno_array, unit_count, sizeof(unit_recno_array[0]), i+1);
+			misc.del_array_rec(unit_recno_array, unit_count, sizeof(unit_recno_array[0]), i+1);
 			return;
 		}
 	}
@@ -382,7 +382,7 @@ void UnitMarine::unload_unit(int unitSeqId, char remoteAction)
 	{
 		err_when( unit_count+1 > MAX_UNIT_IN_SHIP );
 
-		m.del_array_rec(unit_recno_array, unit_count+1, sizeof(unit_recno_array[0]), unitSeqId);
+		misc.del_array_rec(unit_recno_array, unit_count+1, sizeof(unit_recno_array[0]), unitSeqId);
 	}
 }
 //----------- End of function UnitMarine::unload_unit -----------//
@@ -441,7 +441,7 @@ int UnitMarine::unloading_unit(int isAll, int unitSeqId)
 	{
 		err_when(debugCount++ > 4*long(MAX_WORLD_X_LOC*MAX_WORLD_Y_LOC));
 
-		m.cal_move_around_a_point(i, MAX_WORLD_X_LOC, MAX_WORLD_Y_LOC, xShift, yShift);
+		misc.cal_move_around_a_point(i, MAX_WORLD_X_LOC, MAX_WORLD_Y_LOC, xShift, yShift);
 		checkXLoc = curXLoc+xShift;
 		checkYLoc = curYLoc+yShift;
 		if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)
@@ -527,7 +527,7 @@ int UnitMarine::is_on_coast()
 
 	for(int i=2; i<=9; i++) // checking for the surrouding location
 	{
-		m.cal_move_around_a_point(i, 3, 3, xShift, yShift);
+		misc.cal_move_around_a_point(i, 3, 3, xShift, yShift);
 
 		checkXLoc = curXLoc + xShift;
 		checkYLoc = curYLoc + yShift;

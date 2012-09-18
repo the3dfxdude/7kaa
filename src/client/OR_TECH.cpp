@@ -280,7 +280,7 @@ static void put_tech_rec(int recNo, int x, int y, int refreshFlag)
 	font_san.put( x+28 , y, techInfo->tech_des() );
 
 	if( curLevel > 0 )
-		font_san.put( x+180, y, m.roman_number(curLevel) );
+		font_san.put( x+180, y, misc.roman_number(curLevel) );
 
 	//----- if the nation is researching this technology -----//
 
@@ -290,7 +290,7 @@ static void put_tech_rec(int recNo, int x, int y, int refreshFlag)
 	{
 		err_when( curLevel >= techInfo->max_tech_level );
 
-		font_san.put( x+260, y, m.roman_number(curLevel+1) );
+		font_san.put( x+260, y, misc.roman_number(curLevel+1) );
 		font_san.put( x+480, y, isResearching );		//isResearching tells the no. of towers of science researching this technology
 
 		//----- display the research progress bar -----//

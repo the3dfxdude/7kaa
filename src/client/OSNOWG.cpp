@@ -45,7 +45,7 @@ void SnowGround::init(short absX, short absY, int snowMapId)
 {
 	abs_x = absX;
 	abs_y = absY;
-	snow_map_id = snowMapId ? snowMapId : snow_res.rand_root(m.random(1000));
+	snow_map_id = snowMapId ? snowMapId : snow_res.rand_root(misc.random(1000));
 	minor_hp = 0;
 	SnowInfo *snowInfo = snow_res[snow_map_id];
 	abs_x1 = abs_x + snowInfo->offset_x;
@@ -63,7 +63,7 @@ void SnowGround::grow(int rate)
 	if( minor_hp > 100)
 	{
 		minor_hp -= 100;
-		snow_map_id = snow_res[snow_map_id]->rand_next(m.random(1000));
+		snow_map_id = snow_res[snow_map_id]->rand_next(misc.random(1000));
 		SnowInfo *snowInfo = snow_res[snow_map_id];
 		abs_x1 = abs_x + snowInfo->offset_x;
 		abs_x1 = abs_y + snowInfo->offset_y;
@@ -88,7 +88,7 @@ int SnowGround::dying(int rate)
 		else
 		{
 			minor_hp += 100;
-			snow_map_id = snow_res[snow_map_id]->rand_prev(m.random(1000));
+			snow_map_id = snow_res[snow_map_id]->rand_prev(misc.random(1000));
 			SnowInfo *snowInfo = snow_res[snow_map_id];
 			abs_x1 = abs_x + snowInfo->offset_x;
 			abs_x1 = abs_y + snowInfo->offset_y;

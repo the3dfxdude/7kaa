@@ -96,8 +96,8 @@ void GameSet::load_set_header()
       setRec  = (SetRec*) set_db.read(1);	// the header database only contains one record
       setInfo = set_info_array+i-1;
 
-      m.rtrim_fld( setInfo->code, setRec->code, setRec->CODE_LEN );
-      m.rtrim_fld( setInfo->des , setRec->des , setRec->DES_LEN  );
+      misc.rtrim_fld( setInfo->code, setRec->code, setRec->CODE_LEN );
+      misc.rtrim_fld( setInfo->des , setRec->des , setRec->DES_LEN  );
 	}
 }
 //----------- End of GameSet::load_set_header -------------//

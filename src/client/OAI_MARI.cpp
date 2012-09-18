@@ -49,7 +49,7 @@ void Nation::think_marine()
 
 	//------ think about sea attack enemies -------//
 
-	if( m.random(3)==0 )				// 33% chance
+	if( misc.random(3)==0 )				// 33% chance
 	{
 		if( think_sea_attack_enemy() )
 			return;
@@ -172,7 +172,7 @@ int Nation::ai_build_harbor(int landRegionId, int seaRegionId)
 	//---- randomly pick a base town of this nation ----//
 
 	Town* townPtr;
-	int 	townSeq = m.random(ai_town_count);
+	int 	townSeq = misc.random(ai_town_count);
 
 	int i;
 	for( i=0 ; i<ai_town_count ; i++ )
@@ -200,7 +200,7 @@ int Nation::ai_build_harbor(int landRegionId, int seaRegionId)
 
 	for( i=2 ; i<MAX_WORLD_X_LOC*MAX_WORLD_Y_LOC ; i++ )
 	{
-		m.cal_move_around_a_point(i, MAX_WORLD_X_LOC, MAX_WORLD_Y_LOC, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, MAX_WORLD_X_LOC, MAX_WORLD_Y_LOC, xOffset, yOffset);
 
 		xLoc = homeXLoc + xOffset;
 		yLoc = homeYLoc + yOffset;
@@ -274,7 +274,7 @@ int Nation::closest_enemy_firm_distance(int firmId, int xLoc, int yLoc)
 			continue;
 		}
 
-		curDistance = m.points_distance(firmPtr->center_x, firmPtr->center_y, xLoc, yLoc);
+		curDistance = misc.points_distance(firmPtr->center_x, firmPtr->center_y, xLoc, yLoc);
 
 		if( curDistance < minDistance )
 			minDistance = curDistance;
@@ -525,7 +525,7 @@ int Nation::ai_is_sea_travel_safe()
 	//--- compare the no. of ships of ours and those of the human players ---//
 
 	int ourBattleShipCount = nationShipCountArray[nation_recno-1];
-	int nationRecno = m.random(nation_array.size())+1;
+	int nationRecno = misc.random(nation_array.size())+1;
 
 	for( i=nation_array.size() ; i>0 ; i-- )
 	{
@@ -630,7 +630,7 @@ int Nation::think_sea_attack_enemy()
 	//-----------------------------------------//
 
 	int 	totalFirm = firm_array.size();
-	int 	firmRecno = m.random(totalFirm)+1;
+	int 	firmRecno = misc.random(totalFirm)+1;
 	Firm* firmPtr;
 
 	for( int i=0 ; i<totalFirm ; i++ )

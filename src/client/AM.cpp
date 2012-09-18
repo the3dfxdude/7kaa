@@ -120,7 +120,7 @@
 Error             err;              // constructor only call set_new_handler()d
 Mouse             mouse;
 MouseCursor       mouse_cursor;
-Misc              m, m2;
+Misc              misc, misc2;
 DateInfo          date;
 Vga               vga;
 VgaUtil           vga_util;
@@ -373,7 +373,7 @@ int main(int argc, char **argv)
 		video.set_skip_on_fail();
 
 		// ###### begin Gilbert 29/10 #####//
-		if( !m.is_file_exist("SKIPAVI.SYS") && m.is_file_exist(movieFileStr) )
+		if( !misc.is_file_exist("SKIPAVI.SYS") && misc.is_file_exist(movieFileStr) )
 		// ###### end Gilbert 29/10 #####//
 		{
 			//---------- play the movie now ---------//

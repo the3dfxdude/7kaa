@@ -904,7 +904,7 @@ int Unit::detect_surround_target()
 	
 	for(int i=2; i<=CHECK_SIZE; ++i)
 	{
-		m.cal_move_around_a_point(i, DIMENSION, DIMENSION, xShift, yShift);
+		misc.cal_move_around_a_point(i, DIMENSION, DIMENSION, xShift, yShift);
       checkXLoc = curXLoc+xShift;
       checkYLoc = curYLoc+yShift;
       if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)

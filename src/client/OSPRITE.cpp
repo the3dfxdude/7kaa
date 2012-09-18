@@ -70,7 +70,7 @@ void Sprite::init(short spriteId, short startXLoc, short startYLoc)
 	cur_attack = 0;
 
 	cur_action = SPRITE_IDLE;
-	cur_dir 	  = m.random(MAX_SPRITE_DIR_TYPE);	// facing any of the eight directions
+	cur_dir 	  = misc.random(MAX_SPRITE_DIR_TYPE);	// facing any of the eight directions
 	cur_frame  = 1;
 	final_dir  = cur_dir;
 

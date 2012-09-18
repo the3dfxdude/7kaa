@@ -100,8 +100,8 @@ void Remote::init(MultiPlayer *mp)
 	mp_ptr = mp;
 
 	// ###### patch begin Gilbert 22/1 #######//
-	sync_test_level = (m.is_file_exist("SYNC1.SYS") ? 1 : 0)
-		| (m.is_file_exist("SYNC2.SYS") ? 2 : 0);
+	sync_test_level = (misc.is_file_exist("SYNC1.SYS") ? 1 : 0)
+		| (misc.is_file_exist("SYNC2.SYS") ? 2 : 0);
 		// 0=disable, bit0= random seed, bit1=crc
 	// ###### patch end Gilbert 22/1 #######//
 

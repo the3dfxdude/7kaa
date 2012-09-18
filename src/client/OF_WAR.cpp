@@ -397,7 +397,7 @@ void FirmWar::disp_build_button(int y, int unitId, int buttonUp)
 		if( techLevel > 1 )
 		{
 			str += " ";
-			str += m.roman_number(techLevel);
+			str += misc.roman_number(techLevel);
 		}
 	}
 	
@@ -461,7 +461,7 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 			if( techLevel > 1 )
 			{
 				str += " ";
-				str += m.roman_number(techLevel);
+				str += misc.roman_number(techLevel);
 			}
 		}
 		
@@ -505,7 +505,7 @@ void FirmWar::disp_queue_button(int y, int unitId, int buttonUp)
 		y++;
 	}
 
-	font_san.center_put( x, y, x+COUNT_BUTTON_WIDTH-1 , y+COUNT_BUTTON_HEIGHT-1, m.format(queuedCount) );
+	font_san.center_put( x, y, x+COUNT_BUTTON_WIDTH-1 , y+COUNT_BUTTON_HEIGHT-1, misc.format(queuedCount) );
 }
 //--------- End of function FirmWar::disp_queue_button ---------//
 */
@@ -553,7 +553,7 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 	if( warFactory->build_unit_id == unitId)
 		queuedCount++;
 
-	font_mid.center_put( x1+3, y1+3, x2-3, y2-3, m.format(queuedCount), 1);
+	font_mid.center_put( x1+3, y1+3, x2-3, y2-3, misc.format(queuedCount), 1);
 }
 //--------- End of static function i_disp_queue_button ---------//
 
@@ -582,7 +582,7 @@ void FirmWar::remove_queue(int unitId)
 		{
 			err_when( build_queue_count > MAX_BUILD_QUEUE );
 
-			m.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), i+1 );
+			misc.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), i+1 );
 
 			build_queue_count--;
 			return;
@@ -639,7 +639,7 @@ void FirmWar::disp_war_info(int dispY1, int refreshFlag)
 			if( techLevel > 1 )
 			{
 				str += " ";
-				str += m.roman_number(techLevel);
+				str += misc.roman_number(techLevel);
 			}
 		}
 
@@ -716,7 +716,7 @@ void FirmWar::process_queue()
 
 	err_when( build_queue_count > MAX_BUILD_QUEUE );
 
-	m.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), 1 );
+	misc.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), 1 );
 
 	build_queue_count--;
 

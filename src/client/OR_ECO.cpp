@@ -165,7 +165,7 @@ static void disp_total()
 	int y=INCOME_BROWSE_Y2-16;
 
 	font_san.put( x, y, "Total Yearly Income" );
-	font_san.put( x+370, y, m.format( (int) totalIncome, 2 ) );
+	font_san.put( x+370, y, misc.format( (int) totalIncome, 2 ) );
 
 	//---------- display total expense ----------//
 
@@ -175,7 +175,7 @@ static void disp_total()
 	y=EXPENSE_BROWSE_Y2-16;
 
 	font_san.put( x, y, "Total Yearly Expenses" );
-	font_san.put( x+370, y, m.format( (int) totalExpense, 2 ) );
+	font_san.put( x+370, y, misc.format( (int) totalExpense, 2 ) );
 
 	//----------- display the balance --------//
 
@@ -184,7 +184,7 @@ static void disp_total()
 	vga_back.d3_panel_up(EXPENSE_BROWSE_X1, EXPENSE_BROWSE_Y2+4, EXPENSE_BROWSE_X2, ZOOM_Y2-6 );
 
 	font_san.put( x, y, "Yearly Balance" );
-	font_san.put( x+370, y, m.format( (int)(totalIncome-totalExpense), 2 ) );
+	font_san.put( x+370, y, misc.format( (int)(totalIncome-totalExpense), 2 ) );
 }
 //----------- End of static function disp_total -----------//
 
@@ -215,7 +215,7 @@ static void put_income_rec(int recNo, int x, int y, int refreshFlag)
 	Nation* nationPtr = nation_array[info.viewing_nation_recno];
 
 	font_san.put( x    , y, income_des_array[recNo-1] );
-	font_san.put( x+370, y, m.format( (int) nationPtr->income_365days(recNo-1), 2 ) );
+	font_san.put( x+370, y, misc.format( (int) nationPtr->income_365days(recNo-1), 2 ) );
 }
 //----------- End of static function put_income_rec -----------//
 
@@ -254,7 +254,7 @@ static void put_expense_rec(int recNo, int x, int y, int refreshFlag)
 	Nation* nationPtr = nation_array[info.viewing_nation_recno];
 
 	font_san.put( x    , y, expense_des_array[recNo-1] );
-	font_san.put( x+370, y, m.format( (int) nationPtr->expense_365days(recNo-1), 2 ) );
+	font_san.put( x+370, y, misc.format( (int) nationPtr->expense_365days(recNo-1), 2 ) );
 }
 //----------- End of static function put_expense_rec -----------//
 

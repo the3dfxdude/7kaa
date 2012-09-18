@@ -64,7 +64,7 @@ void Translate::init()
 {
    //---- read the whole file into the buf --------//
 
-   if( !m.is_file_exist(TRANSLATE_FILE_NAME) )
+   if( !misc.is_file_exist(TRANSLATE_FILE_NAME) )
       return;
 
 	File fileTranslate;

@@ -430,7 +430,7 @@ int DSoundAudio::play_wav(char* wavName, const DsVolume &dsVolume)
 	str += wavName;
 	str += ".WAV";
 
-	if( m.is_file_exist(str) )
+	if( misc.is_file_exist(str) )
 		return play_long_wav(str);
 	else
 		return 0;
@@ -1405,7 +1405,7 @@ void DSoundAudio::fade_out_loop_wav(int ch, int fadeRate)
 	if(lp_loop_ch_dsb[chanNum])
 	{
 		loopwav_fade_rate[chanNum] = fadeRate;
-		loopwav_fade_time[chanNum] = m.get_time();
+		loopwav_fade_time[chanNum] = misc.get_time();
 	}
 }
 //------- End of function DSoundAudio::fade_out_loop_wav -------//
@@ -1666,7 +1666,7 @@ void	DSoundAudio::yield()
 			// set volume if fading
 			if( loopwav_fade_rate[i] )
 			{
-				DWORD nextFadeTime = m.get_time();
+				DWORD nextFadeTime = misc.get_time();
 				LONG	volume;
 				if( DS_OK == (hr = lpDsb->GetVolume(&volume)) )
 				{

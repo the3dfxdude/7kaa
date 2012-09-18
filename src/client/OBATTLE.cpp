@@ -77,7 +77,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	mouse_cursor.set_icon(CURSOR_WAITING);
 
 #ifdef DEBUG
-	debug_sim_game_type = (m.is_file_exist("sim.sys")) ? 2 : 0;
+	debug_sim_game_type = (misc.is_file_exist("sim.sys")) ? 2 : 0;
 	if(debug_sim_game_type)
 	{
 		run_sim();
@@ -94,7 +94,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	//----------- save the current seed for generating map -----------//
 	#ifdef DEBUG2
 		File seedFile;
-		char *chPtr = m.format(m.get_random_seed());
+		char *chPtr = misc.format(misc.get_random_seed());
 		seedFile.file_create("mapseed.rs");
 		seedFile.file_write(chPtr, strlen(chPtr));
 		seedFile.file_close();
@@ -106,9 +106,9 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 
 	if( !mpGame )
 	{
-		// if config.race_id == 0, select a random race, but don't call m.random
+		// if config.race_id == 0, select a random race, but don't call misc.random
 		int nationRecno = nation_array.new_nation( NATION_OWN,
-								config.race_id ? config.race_id : 1+m.get_time() % MAX_RACE,
+								config.race_id ? config.race_id : 1+misc.get_time() % MAX_RACE,
 								config.player_nation_color );
 
 		nation_array.set_human_name( nationRecno, config.player_name );
@@ -230,9 +230,9 @@ void Battle::run_sim()
 
 	//------- create player nation --------//
 
-	// if config.race_id == 0, select a random race, but don't call m.random
+	// if config.race_id == 0, select a random race, but don't call misc.random
 	nation_array.new_nation( NATION_OWN,
-		config.race_id ? config.race_id : 1+m.get_time() % MAX_RACE,
+		config.race_id ? config.race_id : 1+misc.get_time() % MAX_RACE,
 		config.player_nation_color );
 
 	//--------- create ai nations --------//
@@ -368,7 +368,7 @@ void Battle::create_ai_nation(int aiNationCount)
 		err_when( nation_array.size() == MAX_NATION );
 
 		if( config.random_start_up )
-			raceId = m.random(MAX_RACE)+1;
+			raceId = misc.random(MAX_RACE)+1;
 		else
 			raceId = nation_array.random_unused_race();
 
@@ -469,12 +469,12 @@ void Battle::create_pregame_object()
 
 			for( int i=0 ; i<createCount ; i++ )
 			{
-				if( m.random(2)==0 )
+				if( misc.random(2)==0 )
 					unitId = race_res[nationPtr->race_id]->basic_unit_id;
 				else
-					unitId = race_res[ m.random(MAX_RACE)+1 ]->basic_unit_id;
+					unitId = race_res[ misc.random(MAX_RACE)+1 ]->basic_unit_id;
 
-				if( m.random(3)==0 )
+				if( misc.random(3)==0 )
 					rankId = RANK_GENERAL;
 				else
 					rankId = RANK_SOLDIER;
@@ -740,7 +740,7 @@ int Battle::create_town(int nationRecno, int raceId, int& xLoc, int& yLoc)
 		int initPop;
 
 		if( config.random_start_up )
-			initPop = 25 + m.random(26);		// 25 to 50
+			initPop = 25 + misc.random(26);		// 25 to 50
 		else
 			initPop = 40;
 
@@ -755,7 +755,7 @@ int Battle::create_town(int nationRecno, int raceId, int& xLoc, int& yLoc)
 		if( nationRecno )
 			mixedRaceCount = 1;
 		else
-			mixedRaceCount= m.random(3)+1;		// 1 to 3 mixed races
+			mixedRaceCount= misc.random(3)+1;		// 1 to 3 mixed races
 
 		int curPop, totalPop=0, townResistance;
 
@@ -768,7 +768,7 @@ int Battle::create_town(int nationRecno, int raceId, int& xLoc, int& yLoc)
 
 			if( i==0 )
 			{
-				curPop = 15/mixedRaceCount + m.random(15/mixedRaceCount);
+				curPop = 15/mixedRaceCount + misc.random(15/mixedRaceCount);
 				if(curPop>=MAX_TOWN_POPULATION)
 					curPop = MAX_TOWN_POPULATION;
 
@@ -778,12 +778,12 @@ int Battle::create_town(int nationRecno, int raceId, int& xLoc, int& yLoc)
 			}
 			else
 			{
-				curPop = 10/mixedRaceCount + m.random(10/mixedRaceCount);
+				curPop = 10/mixedRaceCount + misc.random(10/mixedRaceCount);
 				if(curPop>=MAX_TOWN_POPULATION-totalPop)
 					curPop = MAX_TOWN_POPULATION-totalPop;
 
 				err_when(curPop==0);
-				townPtr->init_pop( m.random(MAX_RACE)+1, curPop, townResistance, 0, 1 );
+				townPtr->init_pop( misc.random(MAX_RACE)+1, curPop, townResistance, 0, 1 );
 				totalPop += curPop;
 			}
 		}
@@ -826,7 +826,7 @@ int Battle::create_unit(int townRecno, int unitId, int rankId)
 
 	//---------- create the unit --------//
 
-	int unitLoyalty = 80 + m.random(20);
+	int unitLoyalty = 80 + misc.random(20);
 
 	int unitRecno = unit_array.add_unit( unitId, townPtr->nation_recno, rankId, unitLoyalty, xLoc, yLoc );
 
@@ -847,38 +847,38 @@ int Battle::create_unit(int townRecno, int unitId, int rankId)
 
 		case RANK_GENERAL:
 			unitPtr->skill.set_skill(SKILL_LEADING);
-			unitPtr->skill.skill_level = 40 + m.random(50);		// 40 to 90
-			unitPtr->set_combat_level(30 + m.random(70));		// 30 to 100
+			unitPtr->skill.skill_level = 40 + misc.random(50);		// 40 to 90
+			unitPtr->set_combat_level(30 + misc.random(70));		// 30 to 100
 			break;
 
 		case RANK_SOLDIER:
 		{
-			int skillId = m.random(MAX_TRAINABLE_SKILL)+1;
+			int skillId = misc.random(MAX_TRAINABLE_SKILL)+1;
 			int spyFlag = 0;
 
 			if( skillId == SKILL_SPYING )
 			{
 				spyFlag = 1;
 
-				unitPtr->set_combat_level(10+m.random(10));
+				unitPtr->set_combat_level(10+misc.random(10));
 			}
 			else
 			{
 				unitPtr->skill.skill_id 	= skillId;
-				unitPtr->skill.skill_level = 30+m.random(70);
+				unitPtr->skill.skill_level = 30+misc.random(70);
 
 				if( skillId == SKILL_LEADING )
-					unitPtr->set_combat_level(30+m.random(70));
+					unitPtr->set_combat_level(30+misc.random(70));
 				else
-					unitPtr->set_combat_level(10+m.random(10));
+					unitPtr->set_combat_level(10+misc.random(10));
 
-				if( m.random(5)==0 )
+				if( misc.random(5)==0 )
 					spyFlag = 1;
 			}
 
 			if( spyFlag )
 			{
-				int spySkill = 20 + m.random(80);		// 20 to 100
+				int spySkill = 20 + misc.random(80);		// 20 to 100
 				unitPtr->spy_recno = spy_array.add_spy(unitRecno, spySkill);
 			}
 

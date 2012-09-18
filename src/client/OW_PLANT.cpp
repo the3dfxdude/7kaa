@@ -40,14 +40,14 @@ static short opt_temp[3] = { 32, 25, 28 };		// tropical,temperate and both
 //------------ Define inline function -------//
 inline int rand_inner_x()
 {
-	// can use m.random(ZOOM_LOC_WIDTH) instead
-	// return (ZOOM_LOC_WIDTH *3)/8 + m.random(ZOOM_LOC_WIDTH/4);
-	return ZOOM_LOC_WIDTH / 4 + m.random(ZOOM_LOC_WIDTH/2);
+	// can use misc.random(ZOOM_LOC_WIDTH) instead
+	// return (ZOOM_LOC_WIDTH *3)/8 + misc.random(ZOOM_LOC_WIDTH/4);
+	return ZOOM_LOC_WIDTH / 4 + misc.random(ZOOM_LOC_WIDTH/2);
 }
 
 inline int rand_inner_y()
 {
-	return (ZOOM_LOC_HEIGHT * 3) / 8 + m.random(ZOOM_LOC_HEIGHT/4);
+	return (ZOOM_LOC_HEIGHT * 3) / 8 + misc.random(ZOOM_LOC_HEIGHT/4);
 }
 
 //----------- Begin of function World::plant_ops -----------//
@@ -69,8 +69,8 @@ void World::plant_ops()
 void World::plant_grow(int pGrow, int scanDensity)
 {
 	// scan part of the map for plant
-	int yBase = m.random(scanDensity);
-	int xBase = m.random(scanDensity);
+	int yBase = misc.random(scanDensity);
+	int xBase = misc.random(scanDensity);
 	for( int y = yBase; y < max_y_loc; y += scanDensity)
 		for( int x = xBase; x < max_x_loc; x += scanDensity)
 		{
@@ -78,7 +78,7 @@ void World::plant_grow(int pGrow, int scanDensity)
 			short bitmapId, basePlantId;
 
 			// is a plant and is not at maximum grade
-			if( l->is_plant() && m.random(100) < pGrow &&
+			if( l->is_plant() && misc.random(100) < pGrow &&
 				(basePlantId = plant_res.plant_recno(bitmapId = l->plant_id())) != 0 &&
 				bitmapId - plant_res[basePlantId]->first_bitmap < plant_res[basePlantId]->bitmap_count -1)
 			{
@@ -106,8 +106,8 @@ void World::plant_reprod(int pReprod, int scanDensity)
 	short t = weather.temp_c();
 
 	// scan the map for plant
-	int yBase = m.random(scanDensity);
-	int xBase = m.random(scanDensity);
+	int yBase = misc.random(scanDensity);
+	int xBase = misc.random(scanDensity);
 	for( int y = yBase; y < max_y_loc; y += scanDensity)
 	{
 		for( int x = xBase; x < max_x_loc; x += scanDensity)
@@ -125,7 +125,7 @@ void World::plant_reprod(int pReprod, int scanDensity)
 				short tempEffect = 5 - abs( oTemp - t);
 				tempEffect = tempEffect > 0 ? tempEffect : 0;
 
-				if( m.random(100) < tempEffect * pReprod)
+				if(misc.random(100) < tempEffect * pReprod)
 				{
 					// produce the same plant but grade 1,
 					char trial = 2;
@@ -133,7 +133,7 @@ void World::plant_reprod(int pReprod, int scanDensity)
 					while( trial --)
 					{
 						newl = NULL;
-						switch(m.random(8))
+						switch(misc.random(8))
 						{
 						case 0:		// north square
 							if( y > 0)
@@ -211,15 +211,15 @@ void World::plant_spread(int pSpread)
 	if( 5 * plant_count < 4 * plant_limit )
 		pSpread += pSpread;
 
-	if(m.random(1000) >= pSpread )
+	if(misc.random(1000) >= pSpread)
 		return;
 
 	// ------- determine temperature
 	short t = weather.temp_c();
 
 	// ------- randomly select a place to seed plant
-	int y = 1+m.random(max_y_loc-2);
-	int x = 1+m.random(max_x_loc-2);
+	int y = 1+misc.random(max_y_loc-2);
+	int x = 1+misc.random(max_x_loc-2);
 
 	Location *l = get_loc(x,y);
 	int build_flag = TRUE;
@@ -244,7 +244,7 @@ void World::plant_spread(int pSpread)
 		{
 			for( char j=0; j < 3; ++j)
 			{
-				if( m.random(5) > abs(t- opt_temp[j]) )
+				if( misc.random(5) > abs(t- opt_temp[j]) )
 				{
 					climateZone = j+1;
 					plantBitmap = plant_res.scan( climateZone, teraType, 0);
@@ -275,8 +275,8 @@ void World::plant_spread(int pSpread)
 //
 void World::plant_death(int scanDensity)
 {
-	int yBase = m.random(scanDensity);
-	int xBase = m.random(scanDensity);
+	int yBase = misc.random(scanDensity);
+	int xBase = misc.random(scanDensity);
 	for( int y = yBase; y < max_y_loc; y += scanDensity)
 	{
 		for( int x = xBase; x < max_x_loc; x += scanDensity)
@@ -356,7 +356,7 @@ void World::plant_death(int scanDensity)
 				}
 
 				// may remove plant if more than two third of the space is occupied
-				if( m.random(totalSpace) + 2*totalSpace/3 <= neighbour )
+				if( misc.random(totalSpace) + 2*totalSpace/3 <= neighbour )
 				{
 					locPtr = get_loc(x,y);
 					get_loc(x,y)->remove_plant();
@@ -387,8 +387,8 @@ void World::plant_init()
 	for(trial = 50; trial > 0; --trial)
 		{
 		// ------- randomly select a place to seed plant
-		int y = 1+m.random(max_y_loc-2);
-		int x = 1+m.random(max_x_loc-2);
+		int y = 1+misc.random(max_y_loc-2);
+		int x = 1+misc.random(max_x_loc-2);
 
 		Location *l = get_loc(x,y);
 		int build_flag = TRUE;
@@ -415,7 +415,7 @@ void World::plant_init()
 			}
 			if( plantArray[0] )
 			{
-				plant_spray(plantArray, 6+m.random(4), x, y);
+				plant_spray(plantArray, 6+misc.random(4), x, y);
 			}
 		}
 	}
@@ -438,8 +438,8 @@ void World::plant_spray(short *plantArray, char strength, short x, short y)
 
 	//---------- if the space is empty put a plant on it ----------//
 	Location *newl = get_loc(x, y);
-	short basePlantId = plantArray[m.random(PLANT_ARRAY_SIZE)];
-	short plantSize = m.random(plant_res[basePlantId]->bitmap_count);
+	short basePlantId = plantArray[misc.random(PLANT_ARRAY_SIZE)];
+	short plantSize = misc.random(plant_res[basePlantId]->bitmap_count);
 	if( plantSize > strength)
 		plantSize = strength;
 
@@ -492,7 +492,7 @@ void World::plant_spray(short *plantArray, char strength, short x, short y)
 		char trial = 3;
 		while( trial--)
 		{
-			switch(m.random(8))
+			switch(misc.random(8))
 			{
 			case 0:		// north square
 				if( y > 0)

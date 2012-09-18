@@ -105,7 +105,7 @@ void Unit::search_or_wait()
 				hasFree = 0;
 		}
 
-		m.cal_move_around_a_point(i, DIMENSION, DIMENSION, xShift, yShift);
+		misc.cal_move_around_a_point(i, DIMENSION, DIMENSION, xShift, yShift);
 		checkXLoc = curXLoc+xShift;
 		checkYLoc = curYLoc+yShift;
 		if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)
@@ -417,7 +417,7 @@ void Unit::handle_blocked_same_target_attack(Unit* unitPtr, Unit* targetPtr)
 
 		general_defend_mode_detect_target();
 	}
-	else if(m.points_distance(next_x_loc(), next_y_loc(), action_x_loc, action_y_loc)<ATTACK_DETECT_DISTANCE)
+	else if(misc.points_distance(next_x_loc(), next_y_loc(), action_x_loc, action_y_loc)<ATTACK_DETECT_DISTANCE)
 	{
 		//------------------------------------------------------------------------//
 		// if the target is within the detect range, stop the unit's action to detect

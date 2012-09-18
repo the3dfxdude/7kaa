@@ -77,7 +77,7 @@ void UnitMarine::update_stop_list()
 {
 	//------------- used to debug for multiplayer game ------------------//
 	#ifdef DEBUG
-		m.random(100);
+		misc.random(100);
 	#endif
 
 	//-------------------------------------------------------//
@@ -248,7 +248,7 @@ void UnitMarine::update_stop_list()
 		else
 		{
 			firmPtr = firm_array[nodePtr->firm_recno];
-			dist = m.points_distance(xLoc, yLoc, firmPtr->center_x, firmPtr->center_y);
+			dist = misc.points_distance(xLoc, yLoc, firmPtr->center_x, firmPtr->center_y);
 
 			if(dist<minDist)
 			{
@@ -616,14 +616,14 @@ int UnitMarine::appear_in_firm_surround(int& xLoc, int& yLoc, Firm* firmPtr)
 	int smallestCount = firmWidth * firmHeight + 1;
 	int largestCount = (firmWidth+2) * (firmHeight+2);
 	int countLimit = largestCount - smallestCount;
-	int count = m.random(countLimit)+smallestCount;
+	int count = misc.random(countLimit)+smallestCount;
 	int checkXLoc, checkYLoc, xOffset, yOffset, found=0;
 	Location *locPtr;
 
 	//-----------------------------------------------------------------//
 	for(int i=0; i<countLimit; i++)
 	{
-		m.cal_move_around_a_point(count, firmWidth, firmHeight, xOffset, yOffset);
+		misc.cal_move_around_a_point(count, firmWidth, firmHeight, xOffset, yOffset);
 		checkXLoc = firmPtr->loc_x1 + xOffset;
 		checkYLoc = firmPtr->loc_y1 + yOffset;
 

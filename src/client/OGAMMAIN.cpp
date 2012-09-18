@@ -323,7 +323,7 @@ void Game::run_main_menu_option(int optionId)
 	// ####### begin Gilbert 2/9 #######//
 	if( optionId==5 )
 	{
-		if( m.is_file_exist("TESTING2.SYS") )
+		if( misc.is_file_exist("TESTING2.SYS") )
 		{
 			game_mode = GAME_TEST;          // testing game instead
 			test_game();

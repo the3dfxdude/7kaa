@@ -455,7 +455,7 @@ int Firm::get_closest_town_name_id()
 
 		townPtr = town_array[i];
 
-		townDistance = m.points_distance( townPtr->center_x, townPtr->center_y,
+		townDistance = misc.points_distance( townPtr->center_x, townPtr->center_y,
 							center_x, center_y );
 
 		if( townDistance < minTownDistance )
@@ -1092,7 +1092,7 @@ int Firm::assign_settle(int raceId, int unitLoyalty, int isOverseer)
 	if( world.locate_space( xLoc, yLoc, loc_x2, loc_y2, STD_TOWN_LOC_WIDTH,
 									STD_TOWN_LOC_HEIGHT, UNIT_LAND, region_id, 1 ) )		// the town must be in the same region as this firm.
    {
-      if( m.points_distance( center_x, center_y, xLoc+(STD_TOWN_LOC_WIDTH-1)/2,
+      if( misc.points_distance( center_x, center_y, xLoc+(STD_TOWN_LOC_WIDTH-1)/2,
           yLoc+(STD_TOWN_LOC_HEIGHT-1)/2 ) <= EFFECTIVE_FIRM_TOWN_DISTANCE )
       {
 			int townRecno = town_array.add_town( nation_recno, raceId, xLoc, yLoc );
@@ -1136,7 +1136,7 @@ int Firm::find_settle_town()
 		if( townPtr->nation_recno != nation_recno )
 			continue;
 
-		townDistance = m.points_distance( townPtr->center_x, townPtr->center_y, center_x, center_y );
+		townDistance = misc.points_distance( townPtr->center_x, townPtr->center_y, center_x, center_y );
 
 		if( townDistance < minDistance )
 		{
@@ -2039,7 +2039,7 @@ int Firm::pull_town_people(int townRecno, char remoteAction, int raceId, int for
 	//---- if doesn't specific a race, randomly pick one ----//
 
 	if( !raceId )
-		raceId = m.random(MAX_RACE)+1;
+		raceId = misc.random(MAX_RACE)+1;
 
 	//----------- scan the races -----------//
 
@@ -2066,12 +2066,12 @@ int Firm::pull_town_people(int townRecno, char remoteAction, int raceId, int for
 
 				if( townPtr->nation_recno )
 				{
-					if( m.random( (100-(int)townPtr->race_loyalty_array[raceId-1])/10 ) > 0 )
+					if( misc.random( (100-(int)townPtr->race_loyalty_array[raceId-1])/10 ) > 0 )
 						return 0;
 				}
 				else
 				{
-					if( m.random( (100-(int)townPtr->race_resistance_array[raceId-1][nation_recno-1])/10 ) > 0 )
+					if( misc.random( (100-(int)townPtr->race_resistance_array[raceId-1][nation_recno-1])/10 ) > 0 )
 						return 0;
 				}
 			}
@@ -2132,9 +2132,9 @@ int Firm::pull_town_people(int townRecno, char remoteAction, int raceId, int for
 
 			int spyCount = townPtr->race_spy_count_array[raceId-1];
 
-			if( spyCount >= m.random(recruitableCount)+1 )	
+			if( spyCount >= misc.random(recruitableCount)+1 )
 			{
-				int spyRecno = spy_array.find_town_spy(townRecno, raceId, m.random(spyCount)+1 );		// the 3rd parameter is which spy to recruit
+				int spyRecno = spy_array.find_town_spy(townRecno, raceId, misc.random(spyCount)+1 );		// the 3rd parameter is which spy to recruit
 
 				err_when( !spyRecno );
 
@@ -2193,9 +2193,9 @@ void Firm::process_independent_town_worker()
 //
 void Worker::init_potential()
 {
-	if( m.random(10)==0 )		// 1 out of 10 has a higher than normal potential in this skill
+	if( misc.random(10)==0 )		// 1 out of 10 has a higher than normal potential in this skill
 	{
-		skill_potential = 50+m.random(51);	 // 50 to 100 potential
+		skill_potential = 50+misc.random(51);	 // 50 to 100 potential
 	}
 }
 //----------- End of function Worker::init_potential ---------//
@@ -2293,7 +2293,7 @@ void Firm::update_worker()
 
 			//-------- increase level minor now --------//
 
-			levelMinor = workerPtr->skill_level_minor + incValue * (75+m.random(50)) / 100;     // with random factors, resulting in 75% to 125% of the original
+			levelMinor = workerPtr->skill_level_minor + incValue * (75+misc.random(50)) / 100;     // with random factors, resulting in 75% to 125% of the original
 
 			int loopCount=0;
 
@@ -2674,7 +2674,7 @@ int Firm::resign_worker(int workerId)
 	err_when( worker_count > MAX_WORKER );
 	err_when( selected_worker_id > worker_count );
 
-	m.del_array_rec(worker_array, worker_count, sizeof(Worker), workerId);
+	misc.del_array_rec(worker_array, worker_count, sizeof(Worker), workerId);
 
 	if( selected_worker_id > workerId || selected_worker_id == worker_count )
 		selected_worker_id--;
@@ -2701,7 +2701,7 @@ void Firm::think_worker_migrate()
 		return;
 
 	int   townPtrCount = town_array.size();
-	int   townRecno = m.random(townPtrCount)+1;
+	int   townRecno = misc.random(townPtrCount)+1;
 	int   firmXLoc = center_x, firmYLoc = center_y;
 	int   i, j, raceId, workerId;
 	Town  *townPtr, *workerTownPtr;
@@ -2756,7 +2756,7 @@ void Firm::think_worker_migrate()
 
 		//---- scan all workers, see if any of them want to worker_migrate ----//
 
-		workerId=m.random(worker_count)+1;
+		workerId=misc.random(worker_count)+1;
 
 		for(j=0 ; j<worker_count ; j++ )
 		{
@@ -2829,7 +2829,7 @@ void Firm::worker_migrate(int workerId, int destTownRecno, int newLoyalty)
 	Town* destTown		 = town_array[destTownRecno];
 
    err_when( !raceId );
-   err_when( m.points_distance( center_x, center_y, destTown->center_x,
+   err_when( misc.points_distance( center_x, center_y, destTown->center_x,
 				 destTown->center_y ) > EFFECTIVE_FIRM_TOWN_DISTANCE );
 
 	//------------- add news --------------//
@@ -3017,7 +3017,7 @@ void Firm::setup_link()
 
 		//---------- check if the firm is close enough to this firm -------//
 
-		if( m.points_distance( firmPtr->center_x, firmPtr->center_y,
+		if( misc.points_distance( firmPtr->center_x, firmPtr->center_y,
 			 center_x, center_y ) > EFFECTIVE_FIRM_FIRM_DISTANCE )
 		{
 			continue;
@@ -3103,7 +3103,7 @@ void Firm::setup_link()
 
       //------ check if the town is close enough to this firm -------//
 
-      if( m.points_distance( townPtr->center_x, townPtr->center_y,
+      if( misc.points_distance( townPtr->center_x, townPtr->center_y,
 			 center_x, center_y ) > EFFECTIVE_FIRM_TOWN_DISTANCE )
       {
          continue;
@@ -3225,8 +3225,8 @@ void Firm::release_firm_link(int releaseFirmRecno)
 		{
 			err_when( linked_firm_count > MAX_LINKED_FIRM_FIRM );
 
-			m.del_array_rec( linked_firm_array, linked_firm_count, sizeof(linked_firm_array[0]), i+1 );
-         m.del_array_rec( linked_firm_enable_array, linked_firm_count, sizeof(linked_firm_enable_array[0]), i+1 );
+			misc.del_array_rec( linked_firm_array, linked_firm_count, sizeof(linked_firm_array[0]), i+1 );
+         misc.del_array_rec( linked_firm_enable_array, linked_firm_count, sizeof(linked_firm_enable_array[0]), i+1 );
          linked_firm_count--;
          return;
       }
@@ -3254,8 +3254,8 @@ void Firm::release_town_link(int releaseTownRecno)
 		{
 			err_when( linked_town_count > MAX_LINKED_FIRM_TOWN );
 
-			m.del_array_rec( linked_town_array, linked_town_count, sizeof(linked_town_array[0]), i+1 );
-			m.del_array_rec( linked_town_enable_array, linked_town_count, sizeof(linked_town_enable_array[0]), i+1 );
+			misc.del_array_rec( linked_town_array, linked_town_count, sizeof(linked_town_array[0]), i+1 );
+			misc.del_array_rec( linked_town_enable_array, linked_town_count, sizeof(linked_town_enable_array[0]), i+1 );
          linked_town_count--;
          return;
       }

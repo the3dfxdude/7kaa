@@ -581,7 +581,7 @@ int FirmMarket::think_export_product()
 		if( townPtr->no_neighbor_space )		// if there is no space in the neighbor area for building a new firm.
 			continue;
 
-		if( m.points_distance( center_x, center_y, townPtr->center_x, center_y ) > MAX_WORLD_X_LOC/4 )		// don't consider if it is too far away
+		if( misc.points_distance( center_x, center_y, townPtr->center_x, center_y ) > MAX_WORLD_X_LOC/4 )		// don't consider if it is too far away
 			continue;
 
 		if( townPtr->town_recno &&
@@ -750,7 +750,7 @@ int FirmMarket::think_mft_specific_product(int rawId)
 		NationRelation* nationRelation = nationPtr->get_relation(firmPtr->nation_recno);
 
 		curRating  = stockLevel
-						 - 100 * m.points_distance( center_x, center_y,
+						 - 100 * misc.points_distance( center_x, center_y,
 							firmPtr->center_x, firmPtr->center_y ) / MAX_WORLD_X_LOC;
 
 		if( firmPtr->nation_recno == nation_recno )

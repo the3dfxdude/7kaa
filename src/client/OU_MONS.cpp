@@ -106,7 +106,7 @@ void UnitMonster::process_ai()
 	{
 		random_attack();		// randomly attacking targets
 /*
-		switch(m.random(2))
+		switch(misc.random(2))
 		{
 			case 0:
 				random_attack();		// randomly attacking targets
@@ -164,7 +164,7 @@ void UnitMonster::die()
 
 		if( rank_id == RANK_GENERAL )
 		{
-			int goldAmount = 2 * max_hit_points * monsterInfo->level * (100+m.random(30)) / 100;
+			int goldAmount = 2 * max_hit_points * monsterInfo->level * (100+misc.random(30)) / 100;
 
 			site_array.add_site( xLoc, yLoc, SITE_GOLD_COIN, goldAmount );
 			site_array.ai_get_site_object();		// ask AI units to get the gold coins
@@ -204,7 +204,7 @@ void UnitMonster::king_leave_scroll()
 	int i;
 	for( i=2 ; i<SCROLL_SCAN_RANGE*SCROLL_SCAN_RANGE ; i++ )
 	{
-		m.cal_move_around_a_point(i, SCROLL_SCAN_RANGE, SCROLL_SCAN_RANGE, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, SCROLL_SCAN_RANGE, SCROLL_SCAN_RANGE, xOffset, yOffset);
 
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;
@@ -240,7 +240,7 @@ void UnitMonster::king_leave_scroll()
 	}
 
 	if( !bestRaceId )
-		bestRaceId = m.random(MAX_RACE)+1;		// if there is no human units nearby (perhaps just using weapons)
+		bestRaceId = misc.random(MAX_RACE)+1;		// if there is no human units nearby (perhaps just using weapons)
 
 	//------ locate for space to add the scroll -------//
 
@@ -248,7 +248,7 @@ void UnitMonster::king_leave_scroll()
 
 	for( i=1 ; i<ADD_SITE_RANGE*ADD_SITE_RANGE ; i++ )
 	{
-		m.cal_move_around_a_point(i, ADD_SITE_RANGE, ADD_SITE_RANGE, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, ADD_SITE_RANGE, ADD_SITE_RANGE, xOffset, yOffset);
 
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;
@@ -291,7 +291,7 @@ int UnitMonster::random_attack()
 
 	for( int i=2 ; i<ATTACK_SCAN_RANGE*ATTACK_SCAN_RANGE ; i++ )
 	{
-		m.cal_move_around_a_point(i, ATTACK_SCAN_RANGE, ATTACK_SCAN_RANGE, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, ATTACK_SCAN_RANGE, ATTACK_SCAN_RANGE, xOffset, yOffset);
 
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;
@@ -368,7 +368,7 @@ int UnitMonster::assign_to_firm()
 	int	curXLoc = next_x_loc(), curYLoc = next_y_loc();
 	BYTE	regionId = world.get_region_id(curXLoc, curYLoc);
 
-	int firmRecno = m.random(firm_array.size())+1;
+	int firmRecno = misc.random(firm_array.size())+1;
 
 	for( i=0 ; i<firmCount ; i++ )
 	{
@@ -423,7 +423,7 @@ void UnitMonster::group_order_monster(int destXLoc, int destYLoc, int actionType
 
 	for( int i=1 ; i<GROUP_ACTION_RANGE*GROUP_ACTION_RANGE ; i++ )
 	{
-		m.cal_move_around_a_point(i, GROUP_ACTION_RANGE, GROUP_ACTION_RANGE, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, GROUP_ACTION_RANGE, GROUP_ACTION_RANGE, xOffset, yOffset);
 
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;

@@ -98,8 +98,8 @@ void VgaDDraw::destroy_window()
    {
       ShowWindow(sys.main_hwnd, SW_MINIMIZE );
 
-      unsigned curTime = m.get_time();
-      while( m.get_time() < curTime + 4000 );
+      unsigned curTime = misc.get_time();
+      while( misc.get_time() < curTime + 4000 );
    }
 */
    //---------------------------------------//

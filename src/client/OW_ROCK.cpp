@@ -90,8 +90,8 @@ void World::gen_rocks(int nGrouped, int nLarge, int nSmall)
 		// generate grouped rocks
 		if( nGrouped > 0 )
 		{
-			short x = (GAP+SMALL_ROCK_SIZE)+m.random( max_x_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
-			short y = (GAP+SMALL_ROCK_SIZE)+m.random( max_y_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
+			short x = (GAP+SMALL_ROCK_SIZE)+misc.random( max_x_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
+			short y = (GAP+SMALL_ROCK_SIZE)+misc.random( max_y_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
 			short x2 = x + LARGE_ROCK_SIZE -1;
 			short y2 = y + LARGE_ROCK_SIZE -1;
 
@@ -112,11 +112,11 @@ void World::gen_rocks(int nGrouped, int nLarge, int nSmall)
 					add_rock(rockRecno, x, y);
 
 					// add other smaller rock
-					for(int subTrial = m.random(14); subTrial > 0 ; --subTrial )
+					for(int subTrial = misc.random(14); subTrial > 0 ; --subTrial)
 					{
 						// sx from x-SMALL_ROCK_SIZE to x+4-1+SMALL_ROCK_SIZE
-						short sx = x - SMALL_ROCK_SIZE - GAP + m.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
-						short sy = y - SMALL_ROCK_SIZE - GAP + m.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
+						short sx = x - SMALL_ROCK_SIZE - GAP + misc.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
+						short sy = y - SMALL_ROCK_SIZE - GAP + misc.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
 						short sx2 = sx + SMALL_ROCK_SIZE-1;
 						short sy2 = sy + SMALL_ROCK_SIZE-1;
 
@@ -146,8 +146,8 @@ void World::gen_rocks(int nGrouped, int nLarge, int nSmall)
 		// generate stand-alone large rock
 		if( nLarge > 0 )
 		{
-			short x = m.random( max_x_loc - HUGE_ROCK_SIZE);
-			short y = m.random( max_y_loc - HUGE_ROCK_SIZE);
+			short x = misc.random( max_x_loc - HUGE_ROCK_SIZE);
+			short y = misc.random( max_y_loc - HUGE_ROCK_SIZE);
 			short x2 = x + HUGE_ROCK_SIZE -1;
 			short y2 = y + HUGE_ROCK_SIZE -1;
 
@@ -174,8 +174,8 @@ void World::gen_rocks(int nGrouped, int nLarge, int nSmall)
 		// generate stand-alone small rock
 		if( nSmall > 0)
 		{
-			short x = m.random( max_x_loc - SMALL_ROCK_SIZE);
-			short y = m.random( max_y_loc - SMALL_ROCK_SIZE);
+			short x = misc.random( max_x_loc - SMALL_ROCK_SIZE);
+			short y = misc.random( max_y_loc - SMALL_ROCK_SIZE);
 			short x2 = x + SMALL_ROCK_SIZE -1;
 			short y2 = y + SMALL_ROCK_SIZE -1;
 
@@ -273,8 +273,8 @@ void World::gen_dirt(int nGrouped, int nLarge, int nSmall)
 		// generate grouped dirt
 		if( nGrouped > 0 )
 		{
-			short x = (GAP+SMALL_ROCK_SIZE)+m.random( max_x_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
-			short y = (GAP+SMALL_ROCK_SIZE)+m.random( max_y_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
+			short x = (GAP+SMALL_ROCK_SIZE)+misc.random( max_x_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
+			short y = (GAP+SMALL_ROCK_SIZE)+misc.random( max_y_loc - LARGE_ROCK_SIZE +1 - 2*(GAP+SMALL_ROCK_SIZE));
 			short x2 = x + LARGE_ROCK_SIZE -1;
 			short y2 = y + LARGE_ROCK_SIZE -1;
 
@@ -295,11 +295,11 @@ void World::gen_dirt(int nGrouped, int nLarge, int nSmall)
 					add_dirt(rockRecno, x, y);
 
 					// add other smaller rock
-					for(int subTrial = m.random(14); subTrial > 0 ; --subTrial )
+					for(int subTrial = misc.random(14); subTrial > 0 ; --subTrial)
 					{
 						// sx from x-SMALL_ROCK_SIZE to x+4-1+SMALL_ROCK_SIZE
-						short sx = x - SMALL_ROCK_SIZE - GAP + m.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
-						short sy = y - SMALL_ROCK_SIZE - GAP + m.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
+						short sx = x - SMALL_ROCK_SIZE - GAP + misc.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
+						short sy = y - SMALL_ROCK_SIZE - GAP + misc.random( LARGE_ROCK_SIZE + SMALL_ROCK_SIZE + 2*GAP);
 						short sx2 = sx + SMALL_ROCK_SIZE-1;
 						short sy2 = sy + SMALL_ROCK_SIZE-1;
 
@@ -329,8 +329,8 @@ void World::gen_dirt(int nGrouped, int nLarge, int nSmall)
 		// generate stand-alone large dirt
 		if( nLarge > 0 )
 		{
-			short x = m.random( max_x_loc - HUGE_ROCK_SIZE);
-			short y = m.random( max_y_loc - HUGE_ROCK_SIZE);
+			short x = misc.random( max_x_loc - HUGE_ROCK_SIZE);
+			short y = misc.random( max_y_loc - HUGE_ROCK_SIZE);
 			short x2 = x + HUGE_ROCK_SIZE -1;
 			short y2 = y + HUGE_ROCK_SIZE -1;
 
@@ -357,8 +357,8 @@ void World::gen_dirt(int nGrouped, int nLarge, int nSmall)
 		// generate stand-alone small dirt
 		if( nSmall > 0 )
 		{
-			short x = m.random( max_x_loc - SMALL_ROCK_SIZE);
-			short y = m.random( max_y_loc - SMALL_ROCK_SIZE);
+			short x = misc.random( max_x_loc - SMALL_ROCK_SIZE);
+			short y = misc.random( max_y_loc - SMALL_ROCK_SIZE);
 			short x2 = x + SMALL_ROCK_SIZE -1;
 			short y2 = y + SMALL_ROCK_SIZE -1;
 

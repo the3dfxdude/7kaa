@@ -456,7 +456,7 @@ void TalkMsg::request_buy_food()
 		str  = "El ";
 		str +=  from_nation_name();
 		str += " ofrece ";
-		str += m.format(talk_para2,2);
+		str += misc.format(talk_para2,2);
 		str += " por 10 unidades de alimento.";
 
 		return;
@@ -620,7 +620,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 			str  = "Ofreces al ";
 			str += to_nation_name();
 			str += " ";
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += " de ";
 			str += tributeStr;
 			str += ".";
@@ -630,7 +630,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 			str  = "El ";
 			str += from_nation_name();
 			str += " te ofrece ";
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += " de ";
 			str += tributeStr;
 			str += ".";
@@ -650,7 +650,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 
 			str += tributeStr;
 			str += " de ";
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += ".";
 		}
 		else
@@ -660,7 +660,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 			else
 				str = "Rechazas los ";
 
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += " de ";
 			str += tributeStr;
 			str += " del ";
@@ -730,7 +730,7 @@ void TalkMsg::demand_tribute(int isAid)
 			else
 				str = "Exiges ";
 
-			str += m.format(talk_para1,2);
+			str += misc.format(talk_para1,2);
 			str += " de ";
 			str += aidStr;
 			str += " al ";
@@ -747,7 +747,7 @@ void TalkMsg::demand_tribute(int isAid)
 			else
 				str += " exige ";
 
-			str += m.format(talk_para1,2);
+			str += misc.format(talk_para1,2);
 			str += " de ";
 			str += aidStr;
 			str += " a tu Reino.";
@@ -787,7 +787,7 @@ void TalkMsg::demand_tribute(int isAid)
 			str += " ";
 		}
 
-		str += m.format(talk_para1,2);
+		str += misc.format(talk_para1,2);
 		str += " de ";
 		str += aidStr;
 		str += ".";
@@ -843,7 +843,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions 
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 
 			str += " al ";
@@ -860,7 +860,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 			str += ".";
 		}
@@ -882,7 +882,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 
 			str += ".";
@@ -900,7 +900,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 
 			str += " del ";

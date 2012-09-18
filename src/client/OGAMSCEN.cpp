@@ -76,7 +76,7 @@ int Game::select_run_scenario()
 					scenInfoArray[scenInfoSize].dir_id    = dirId;
 
 					{
-						m.change_file_ext( txtFileName, gameDir[i]->name, "SCT" );
+						misc.change_file_ext( txtFileName, gameDir[i]->name, "SCT" );
 
 						String str;
 						str  = DIR_SCENARIO_PATH(dirId);
@@ -138,7 +138,7 @@ int Game::run_scenario(ScenInfo* scenInfo)
 	str  = DIR_SCENARIO_PATH(scenInfo->dir_id);
 	str += scenInfo->file_name;
 
-	if( m.is_file_exist(str) )
+	if( misc.is_file_exist(str) )
 	{
 		// ###### begin Gilbert 1/11 #########//
 		// save the name in the config

@@ -117,7 +117,7 @@ int Nation::think_monster_target(int& targetCombatLevel)
 		if( mobileCombatLevel == -1 )		// do not attack this town because a battle is already going on
 			continue;
 
-		curRating = 3 * m.points_distance( largestTown->center_x, largestTown->center_y,
+		curRating = 3 * misc.points_distance( largestTown->center_x, largestTown->center_y,
 													  firmPtr->center_x, firmPtr->center_y );
 
 		combatLevel = mobileCombatLevel +

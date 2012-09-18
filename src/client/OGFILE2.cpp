@@ -183,7 +183,7 @@ int GameFile::read_file(File* filePtr)
 
 	//----- check version no. first ------//
 
-	int originalRandomSeed = m.get_random_seed();
+	int originalRandomSeed = misc.get_random_seed();
 
 	game_file_array.load_file_game_version = filePtr->file_get_short();
 
@@ -231,9 +231,9 @@ int GameFile::read_file(File* filePtr)
 
 	//-------------------------------------//
 
-	err_when( originalRandomSeed != m.get_random_seed() );
+	err_when( originalRandomSeed != misc.get_random_seed() );
 
-	m.set_random_seed(loaded_random_seed);
+	misc.set_random_seed(loaded_random_seed);
 
 	return 1;
 }
@@ -1334,7 +1334,7 @@ int Sys::write_file(File* filePtr)
 {
 	//---- write the current random seed first ----//
 
-	if( !filePtr->file_put_long(m.get_random_seed()) )
+	if( !filePtr->file_put_long(misc.get_random_seed()) )
 		return 0;
 
 	//---------- write some Sys data -----------//

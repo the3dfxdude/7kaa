@@ -380,7 +380,7 @@ void Spy::process_firm_action()
 
 			if( unitPtr->race_id == race_id )
 			{
-				if( m.random(10 - spy_skill/10 + unitPtr->skill.skill_level/10)==0  // a commander with a higher leadership skill will be less influenced by the spy's dissents
+				if( misc.random(10 - spy_skill/10 + unitPtr->skill.skill_level/10)==0  // a commander with a higher leadership skill will be less influenced by the spy's dissents
 					 && unitPtr->loyalty>0 )
 				{
 					unitPtr->change_loyalty( -1 );
@@ -413,7 +413,7 @@ void Spy::process_firm_action()
 			{
 				if( !workerPtr->spy_recno )		// the loyalty of the spy himself does not change
 				{
-					if( m.random(10-spy_skill/10)==0 && workerPtr->worker_loyalty>0 )
+					if( misc.random(10-spy_skill/10)==0 && workerPtr->worker_loyalty>0 )
 						workerPtr->worker_loyalty--;
 				}
 			}
@@ -936,7 +936,7 @@ int Spy::capture_firm()
 				if( race_res.is_same_race(workerPtr->race_id, race_id) )
 					obeyChance += 50;
 
-				obeyFlag = m.random(100) < obeyChance; 		// if obeyChance >= 100, all units will object the overseer
+				obeyFlag = misc.random(100) < obeyChance; 		// if obeyChance >= 100, all units will object the overseer
 
 				//--- if the worker obey, update its loyalty ---//
 
@@ -1425,7 +1425,7 @@ int Spy::get_assassinate_rating(int targetUnitRecno, int& attackRating, int& def
 
 	//-------- if the assassination succeeds -------//
 
-	defenseRating += 30 + m.random(30);
+	defenseRating += 30 + misc.random(30);
 
 	return 1;
 }

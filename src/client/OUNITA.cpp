@@ -468,9 +468,9 @@ void UnitArray::draw_dot()
 void UnitArray::draw_profile()
 {
 #ifdef DEBUG
-	static unsigned long lastDrawTime = m.get_time();
+	static unsigned long lastDrawTime = misc.get_time();
 
-	if(m.get_time() >= lastDrawTime + 1000)
+	if(misc.get_time() >= lastDrawTime + 1000)
 	{
 		//--------- update unit process profile ---------//
 		last_unit_ai_profile_time = unit_ai_profile_time;
@@ -500,7 +500,7 @@ void UnitArray::draw_profile()
 		last_unit_assign_profile_time = unit_assign_profile_time;
 		unit_assign_profile_time = 0L;
 
-		lastDrawTime = m.get_time();
+		lastDrawTime = misc.get_time();
 	}
 
 	//------------ draw unit process profile -------------//
@@ -586,13 +586,13 @@ void UnitArray::process()
 			#endif
 			{
 				#ifdef DEBUG
-				unsigned long profileAiStartTime = m.get_time();
+				unsigned long profileAiStartTime = misc.get_time();
 				#endif
 				
 				unitPtr->process_ai();
 
 				#ifdef DEBUG
-				unit_ai_profile_time += m.get_time() - profileAiStartTime;
+				unit_ai_profile_time += misc.get_time() - profileAiStartTime;
 				#endif
 			}
 

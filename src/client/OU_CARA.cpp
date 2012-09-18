@@ -407,12 +407,12 @@ void UnitCaravan::set_stop_pick_up(int stopId, int newPickUpType, int remoteActi
 			OutputDebugString(mess);*/
 			//-*******************************************************-//
 
-			m.set_random_seed(stopId + newPickUpType*(m.random(4)+1)*10 + sprite_recno*100*m.random(100) +
-									m.get_random_seed());
+			misc.set_random_seed(stopId + newPickUpType*(misc.random(4)+1)*10 + sprite_recno*100*misc.random(100) +
+									misc.get_random_seed());
 
 			//-*******************************************************-//
 			/*//char mess[255];
-			sprintf(mess, "Change Seed : %d\r\n", m.random_seed);
+			sprintf(mess, "Change Seed : %d\r\n", misc.random_seed);
 			OutputDebugString(mess);*/
 			//-*******************************************************-//
 			#endif
@@ -692,7 +692,7 @@ void UnitCaravan::update_stop_list()
 
 	//------------- used to debug for multiplayer game ------------------//
 	#ifdef DEBUG
-		m.random(100);
+		misc.random(100);
 	#endif
 
 	//-------------------------------------------------------//
@@ -868,7 +868,7 @@ void UnitCaravan::update_stop_list()
 		else
 		{
 			firmPtr = firm_array[nodePtr->firm_recno];
-			dist = m.points_distance(xLoc, yLoc, firmPtr->center_x, firmPtr->center_y);
+			dist = misc.points_distance(xLoc, yLoc, firmPtr->center_x, firmPtr->center_y);
 
 			if(dist<minDist)
 			{

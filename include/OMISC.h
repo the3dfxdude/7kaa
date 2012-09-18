@@ -126,7 +126,7 @@ private:
 	void	construct_move_around_table();
 };
 
-extern Misc m, m2;      // two instance for separate random_seed
+extern Misc misc, misc2;      // two instance for separate random_seed
 
 //---------- End of define class ---------------//
 

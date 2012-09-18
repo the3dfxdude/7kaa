@@ -1062,7 +1062,7 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 				{
 					if(++k>countLimit)
 						k = 1;
-					m.cal_move_around_a_point(k, TRY_SIZE, TRY_SIZE, xShift, yShift);
+					misc.cal_move_around_a_point(k, TRY_SIZE, TRY_SIZE, xShift, yShift);
 					checkXLoc = landX+xShift;
 					checkYLoc = landY+yShift;
 					if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)
@@ -1152,7 +1152,7 @@ void UnitArray::ship_to_beach(int destX, int destY, int divided, short* selected
 		{
 			for(found=0; j<=CHECK_SEA_SIZE; j++, totalCheck++)
 			{
-				m.cal_move_around_a_point(j, CHECK_SEA_DIMENSION, CHECK_SEA_DIMENSION, xShift, yShift);
+				misc.cal_move_around_a_point(j, CHECK_SEA_DIMENSION, CHECK_SEA_DIMENSION, xShift, yShift);
 
 				if(j>=CHECK_SEA_SIZE)
 					j = 1;
@@ -1182,7 +1182,7 @@ void UnitArray::ship_to_beach(int destX, int destY, int divided, short* selected
 				//--------------------------------------------------------------------//
 				for(k=2; k<=9; k++)
 				{
-					m.cal_move_around_a_point(k, 3, 3, xShift, yShift);
+					misc.cal_move_around_a_point(k, 3, 3, xShift, yShift);
 					checkXLoc = seaX+xShift;
 					checkYLoc = seaY+yShift;
 					if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)

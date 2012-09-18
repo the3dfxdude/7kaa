@@ -226,7 +226,7 @@ void News::migrate()
 	if( short_para4 == 1 )
 		str = "Un";
 	else
-		str = m.format(short_para4);
+		str = misc.format(short_para4);
 
 	str += " ";
 	if( short_para5 )
@@ -790,7 +790,7 @@ void News::monster_gold_acquired()
 	//----------------------------------------------//
 
 	str  = "Has recuperado ";
-	str += m.format(short_para1,2);
+	str += misc.format(short_para1,2);
 	str += " del tesoro de los Fryhtans.";
 }
 //------- End of function News::monster_gold_acquired -----//
@@ -1170,7 +1170,7 @@ void News::tech_researched()
 	if( tech_res[short_para1]->max_tech_level > 1 )		// if the tech has more than one level
 	{
 		str += " Marca ";
-		str += m.roman_number(short_para2);
+		str += misc.roman_number(short_para2);
 	}
 
 	str += ".";
@@ -1418,7 +1418,7 @@ void News::weapon_ship_worn_out()
 	if( short_para2 )
 	{
 		str += " ";
-		str += m.roman_number(short_para2);
+		str += misc.roman_number(short_para2);
 	}
 
 	str += ", se ha desmoronado por falta de fondos de mantenimiento.";

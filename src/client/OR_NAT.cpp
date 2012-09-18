@@ -316,7 +316,7 @@ static void put_nation_rec(int recNo, int x, int y, int refreshFlag)
 	nationPtr->disp_nation_color(x, y+1);
 
 	font_san.put( x+20 , y, nationPtr->nation_name(), 0, x+215 );
-	font_san.put( x+220, y, m.format((int) nationPtr->reputation) );
+	font_san.put( x+220, y, misc.format((int) nationPtr->reputation) );
 
 	//------- display relation parameters --------//
 
@@ -325,12 +325,12 @@ static void put_nation_rec(int recNo, int x, int y, int refreshFlag)
 		font_san.put( x+272, y, nationRelation->status_str() );
 		font_san.put( x+355, y, nationRelation->should_attack ? (char*)"Yes" : (char*)"No" );
 		font_san.put( x+412, y, nationRelation->trade_treaty ? (char*)"Yes" : (char*)"No" );
-		font_san.put( x+465, y, m.format( (int) viewingNation->total_year_trade(nationRecno),2) );
+		font_san.put( x+465, y, misc.format( (int) viewingNation->total_year_trade(nationRecno),2) );
 
 		if( config.show_ai_info )
 		{
-			font_san.put( x+510, y, m.format(nationPtr->get_relation(info.viewing_nation_recno)->ai_relation_level) );
-			font_san.put( x+180, y, m.format( (int) nationPtr->get_relation(info.viewing_nation_recno)->good_relation_duration_rating) );
+			font_san.put( x+510, y, misc.format(nationPtr->get_relation(info.viewing_nation_recno)->ai_relation_level) );
+			font_san.put( x+180, y, misc.format( (int) nationPtr->get_relation(info.viewing_nation_recno)->good_relation_duration_rating) );
 		}
 	}
 }
@@ -643,10 +643,10 @@ static void disp_nation_info()
 			{
 				font_san.put( x1+330, y, "Trade Treaty" );
 #if(defined(FRENCH))
-				font_san.put( x1+460, y, m.format((int)nationPtr->total_year_trade(i),2) );
+				font_san.put( x1+460, y, misc.format((int)nationPtr->total_year_trade(i),2) );
 #else
 				// German and US
-				font_san.put( x1+450, y, m.format((int)nationPtr->total_year_trade(i),2) );
+				font_san.put( x1+450, y, misc.format((int)nationPtr->total_year_trade(i),2) );
 #endif
 			}
 

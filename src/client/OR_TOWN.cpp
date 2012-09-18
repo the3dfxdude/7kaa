@@ -266,8 +266,8 @@ static void disp_total()
 
 	font_san.put( x	 , y, "Total" );
 	font_san.put( x+265, y, total_firm_count );
-	font_san.put( x+370, y, m.format(total_firm_cost,2) );
-	font_san.put( x+470, y, m.format(total_firm_income,2) );
+	font_san.put( x+370, y, misc.format(total_firm_cost,2) );
+	font_san.put( x+470, y, misc.format(total_firm_income,2) );
 }
 //----------- End of static function disp_total -----------//
 
@@ -457,10 +457,10 @@ static void put_firm_rec(int recNo, int x, int y, int refreshFlag)
 	int firmCount = firmInfo->nation_firm_count_array[info.viewing_nation_recno-1];
 
 	font_san.put( x    , y, firmInfo->name );
-	font_san.put( x+155, y, m.format(firmInfo->year_cost,2) );
+	font_san.put( x+155, y, misc.format(firmInfo->year_cost,2) );
 	font_san.put( x+265, y, firmCount );
-	font_san.put( x+370, y, m.format(firmInfo->year_cost*firmCount,2) );
-	font_san.put( x+470, y, m.format(firm_income_array[firmId-1], 2) );
+	font_san.put( x+370, y, misc.format(firmInfo->year_cost*firmCount,2) );
+	font_san.put( x+470, y, misc.format(firm_income_array[firmId-1], 2) );
 }
 //----------- End of static function put_firm_rec -----------//
 

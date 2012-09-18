@@ -79,7 +79,7 @@ void Sys::sp_load_seed_file()
 		}
 		else // load from user action
 		{
-			if(m.get_random_seed() != firstSeed)
+			if(misc.get_random_seed() != firstSeed)
 				return; // seed file don't match the save game
 		}
 	}
@@ -107,7 +107,7 @@ void Sys::sp_load_seed_file()
 //-------- Begin of function Sys::sp_record_match_seed --------//
 void Sys::sp_record_match_seed()
 {
-	match_seed = m.get_random_seed();
+	match_seed = misc.get_random_seed();
 }
 //--------- End of function Sys::sp_record_match_seed ---------//
 
@@ -115,7 +115,7 @@ void Sys::sp_record_match_seed()
 //-------- Begin of function Sys::sp_record_seed --------//
 void Sys::sp_record_seed()
 {
-	random_seed_backup_table[random_seed_backup_pos] = m.get_random_seed();
+	random_seed_backup_table[random_seed_backup_pos] = misc.get_random_seed();
 	random_seed_backup_pos++;
 }
 //--------- End of function Sys::sp_record_seed ---------//
@@ -170,7 +170,7 @@ void Sys::sp_compare_seed()
 
 	long	gameSeed, saveSeed;
 	
-	gameSeed = m.get_random_seed();
+	gameSeed = misc.get_random_seed();
 	saveSeed = random_seed_backup_table[random_seed_backup_pos];
 
 	if(random_seed_backup_pos>130)
@@ -188,7 +188,7 @@ void Sys::sp_compare_seed()
 		if(debug_seed_status_flag==DEBUG_SYN_AUTO_LOAD)
 			//debug_seed_status_flag = DENUG_SYN_AUTO_SAVE;
 			// DIK_LBRACKET = 0x1A
-			mouse.add_key_event(0x1A, m.get_time()); // save seed for comparison
+			mouse.add_key_event(0x1A, misc.get_time()); // save seed for comparison
 		else
 			debug_seed_status_flag = NO_DEBUG_SYN;
 	}

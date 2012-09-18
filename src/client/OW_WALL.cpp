@@ -958,7 +958,7 @@ void World::form_world_wall()
 	if(! init_build_wall_seq )
 	{
 		init_build_wall_seq = 1;
-		DWORD seed = m.get_random_seed();
+		DWORD seed = misc.get_random_seed();
 		// ------ initialize with linear sequence----- //
 		for( y = 0; y < SPACING; ++y)
 		{
@@ -969,12 +969,12 @@ void World::form_world_wall()
 			}
 		}
 
-		m.set_random_seed(176682233); // hard code
+		misc.set_random_seed(176682233); // hard code
 		
 		//------- shuffle randomly ----------//
 		for(int t = SPACING * SPACING -1; t >= 0; --t)
 		{
-			int u = m.random(SPACING * SPACING);
+			int u = misc.random(SPACING * SPACING);
 
 			// ----- swap build_wall_x/y_seq[t] with [u]
 			char tmp;
@@ -986,7 +986,7 @@ void World::form_world_wall()
 			build_wall_y_seq[u] = tmp;
 		}
 		next_build_wall_seq = 0;
-		m.set_random_seed(seed);
+		misc.set_random_seed(seed);
 	}
 
 	for(int trial = 7; trial > 0 ; --trial)

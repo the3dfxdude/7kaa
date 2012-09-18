@@ -81,7 +81,7 @@ int FirmInn::think_del()
 
 		if( townPtr->nation_recno == nation_recno )
 		{
-			if( m.points_distance( townPtr->center_x, townPtr->center_y,
+			if( misc.points_distance( townPtr->center_x, townPtr->center_y,
 				 center_x, center_y ) <= EFFECTIVE_FIRM_TOWN_DISTANCE )
 			{
 				return 0;

@@ -468,7 +468,7 @@ void TalkMsg::request_buy_food()
 		str  = "Le ";
 		str += from_nation_name();
 		str += " vous offre ";
-		str += m.format(talk_para2,2);
+		str += misc.format(talk_para2,2);
 		str += " pour 10 unités de nourriture.";
 
 		return;
@@ -649,7 +649,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 			str += " ";
 			str += tributeStr;
 			str += " de ";
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += " au ";
 			str += to_nation_name();
 			str += ".";
@@ -665,7 +665,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 			str += " ";
 			str += tributeStr;
 			str += " de ";
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += ".";
 		}
 	}
@@ -683,7 +683,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 
 			str += tributeStr;
 			str += " de ";
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += ".";
 		}
 		else
@@ -696,7 +696,7 @@ void TalkMsg::give_tribute(char* tributeStr)
 			str += " ";
 			str += tributeStr;
 			str += " de ";
-			str += m.format(talk_para1, 2);
+			str += misc.format(talk_para1, 2);
 			str += " de la part du ";
 			str += from_nation_name();
 			str += ".";
@@ -763,7 +763,7 @@ void TalkMsg::demand_tribute(int isAid)
 				str = "Vous demandez une aide de ";
 			else
 				str = "Vous exigez un tribut de ";
-			str += m.format(talk_para1,2);
+			str += misc.format(talk_para1,2);
 			str += " de la part du ";
 			str += to_nation_name();
 			str += ".";
@@ -778,7 +778,7 @@ void TalkMsg::demand_tribute(int isAid)
 			else
 				str += " exige un tribut de ";
 
-			str += m.format(talk_para1,2);
+			str += misc.format(talk_para1,2);
 			str += " de votre part.";
 		}
 	}
@@ -798,7 +798,7 @@ void TalkMsg::demand_tribute(int isAid)
 				str += " de vous donner une aide de ";
 			else
 				str += " de vous payer un tribut de ";
-			str += m.format(talk_para1,2);
+			str += misc.format(talk_para1,2);
 			str += ".";
 		}
 		else
@@ -812,7 +812,7 @@ void TalkMsg::demand_tribute(int isAid)
 				str += " de donner une adie de ";
 			else
 				str += " de payer un tribut de ";
-			str += m.format(talk_para1,2);
+			str += misc.format(talk_para1,2);
 			str += " au ";
 			str += from_nation_name();
 			str += ".";
@@ -869,7 +869,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions 
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 
 			str += " au ";
@@ -886,7 +886,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 
 			str += ".";
@@ -910,7 +910,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 
 			str += ".";
@@ -928,7 +928,7 @@ void TalkMsg::give_tech()
 			if( talk_para2 )		// Ships do not have different versions
 			{
 				str += " ";
-				str += m.roman_number(talk_para2);
+				str += misc.roman_number(talk_para2);
 			}
 			str += ".";
 		}

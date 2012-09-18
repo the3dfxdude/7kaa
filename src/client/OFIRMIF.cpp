@@ -633,7 +633,7 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 		String str;
 
 		if( workerPtr->race_id )
-			str = m.format(workerPtr->skill_level, 1);
+			str = misc.format(workerPtr->skill_level, 1);
 		else
 			str = "N/A";
 
@@ -647,7 +647,7 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 		if( firm_id == FIRM_CAMP )
 		{
 			if( workerPtr->race_id )
-				str = m.format(workerPtr->combat_level, 1);
+				str = misc.format(workerPtr->combat_level, 1);
 			else
 				str = "N/A";
 

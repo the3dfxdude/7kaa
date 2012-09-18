@@ -103,17 +103,17 @@ void MonsterRes::load_monster_info()
 
       monsterInfo->monster_id = i+1;
 
-      m.rtrim_fld( monsterInfo->name, monsterRec->name, monsterRec->NAME_LEN );
+      misc.rtrim_fld( monsterInfo->name, monsterRec->name, monsterRec->NAME_LEN );
 #if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
 		translate.multi_to_win(monsterInfo->name, monsterInfo->NAME_LEN);
 #endif
 
-		monsterInfo->unit_id      = m.atoi(monsterRec->unit_id     , monsterRec->UNIT_ID_LEN);
+		monsterInfo->unit_id      = misc.atoi(monsterRec->unit_id     , monsterRec->UNIT_ID_LEN);
 		monsterInfo->level        = monsterRec->level - '0';
 
 		err_when( monsterInfo->level < 1 || monsterInfo->level > MAX_MONSTER_LEVEL );
 
-		m.rtrim_fld( monsterInfo->firm_build_code, monsterRec->firm_build_code, monsterRec->FIRM_BUILD_CODE_LEN );
+		misc.rtrim_fld( monsterInfo->firm_build_code, monsterRec->firm_build_code, monsterRec->FIRM_BUILD_CODE_LEN );
 
 		//---- set the monster_id in UnitInfo ----//
 
@@ -151,7 +151,7 @@ void MonsterRes::init_active_monster()
 	{
 		err_when( ++loopCount > 1000 );
 
-		monsterId = m.random(monster_count)+1;
+		monsterId = misc.random(monster_count)+1;
 
 		//--- check if this monster id. is already in the active monster array ---//
 
@@ -197,7 +197,7 @@ void MonsterRes::generate(int generateCount)
 
 	for( int i=0 ; i<generateCount ; i++ )
 	{
-		monsterId = active_monster_array[m.random(MAX_ACTIVE_MONSTER)];
+		monsterId = active_monster_array[misc.random(MAX_ACTIVE_MONSTER)];
 
 		monster_res[monsterId]->create_firm_monster();
 	}
@@ -237,7 +237,7 @@ int MonsterInfo::create_firm_monster()
 
       Town* townPtr = town_array[townRecno];
 
-      if( m.points_distance(xLoc, yLoc, townPtr->center_x,
+      if( misc.points_distance(xLoc, yLoc, townPtr->center_x,
           townPtr->center_y) < MIN_MONSTER_CIVILIAN_DISTANCE )
       {
          return 0;
@@ -251,7 +251,7 @@ int MonsterInfo::create_firm_monster()
 
       Firm* firmPtr = firm_array[firmRecno];
 
-      if( m.points_distance(xLoc, yLoc, firmPtr->center_x,
+      if( misc.points_distance(xLoc, yLoc, firmPtr->center_x,
           firmPtr->center_y) < MIN_MONSTER_CIVILIAN_DISTANCE )
       {
          return 0;
@@ -291,9 +291,9 @@ int MonsterInfo::build_firm_monster(int xLoc, int yLoc, int fullHitPoints)
 
    //-------- create monster generals ---------//
 
-	int generalCount = m.random(2)+1;      // 1 to 3 generals in a monster firm
+	int generalCount = misc.random(2)+1;      // 1 to 3 generals in a monster firm
 
-	if( m.random(5)==0 )		// 20% chance of having 3 generals.
+	if( misc.random(5)==0 )		// 20% chance of having 3 generals.
 		generalCount=3;
 
    for( int i=0 ; i<generalCount ; i++ )

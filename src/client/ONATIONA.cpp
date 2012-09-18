@@ -315,7 +315,7 @@ void NationArray::process()
 		{
 			//### begin alex 22/9 ###//
 			#ifdef DEBUG
-			unsigned long profileStartTime = m.get_time();
+			unsigned long profileStartTime = misc.get_time();
 			#endif
 			//#### end alex 22/9 ####//
 
@@ -324,12 +324,12 @@ void NationArray::process()
 			LOG_MSG("begin next_day");
 			nationPtr->next_day();
 			LOG_MSG("end next_day");
-			LOG_MSG(m.get_random_seed());
+			LOG_MSG(misc.get_random_seed());
 			// ###### end Gilbert 6/9 ######//
 
 			//### begin alex 22/9 ###//
 			#ifdef DEBUG
-			nation_profile_time += m.get_time() - profileStartTime;
+			nation_profile_time += misc.get_time() - profileStartTime;
 			#endif
 			//#### end alex 22/9 ####//
 
@@ -340,16 +340,16 @@ void NationArray::process()
 			if( nationPtr->nation_type == NATION_AI )
 			{
 				#ifdef DEBUG
-				unsigned long profileAiStartTime = m.get_time();
+				unsigned long profileAiStartTime = misc.get_time();
 				#endif
 
 				LOG_MSG( "begin process_ai");
 				nationPtr->process_ai();
 				LOG_MSG( "end process_ai");
-				LOG_MSG( m.get_random_seed());
+				LOG_MSG(misc.get_random_seed());
 
 				#ifdef DEBUG
-				nation_profile_time += m.get_time() - profileStartTime;
+				nation_profile_time += misc.get_time() - profileStartTime;
 				#endif
 			}
 			// ###### end Gilbert 6/9 ######//
@@ -379,7 +379,7 @@ void NationArray::next_month()
 		{
 			LOG_MSG(i);
 			nationPtr->next_month();
-			LOG_MSG(m.get_random_seed() );
+			LOG_MSG(misc.get_random_seed());
 		}
 	}
 	LOG_MSG("end NationArray::next_month");
@@ -409,7 +409,7 @@ void NationArray::next_year()
 		{
 			LOG_MSG(i);
 			nationPtr->next_year();
-			LOG_MSG(m.get_random_seed() );
+			LOG_MSG(misc.get_random_seed());
 		}
 	}
 	LOG_MSG("end NationArray::next_year");
@@ -445,7 +445,7 @@ int NationArray::random_unused_race()
 
 	//----- pick a race randomly from the unused list -----//
 
-	int pickedInstance = m.random(MAX_RACE-usedCount)+1;
+	int pickedInstance = misc.random(MAX_RACE-usedCount)+1;
 	int usedId=0;
 
 	for( i=0 ; i<MAX_RACE ; i++ )
@@ -493,7 +493,7 @@ int NationArray::random_unused_color()
 
 	//----- pick a race randomly from the unused list -----//
 
-	int pickedInstance = m.random(MAX_COLOR_SCHEME-usedCount)+1;
+	int pickedInstance = misc.random(MAX_COLOR_SCHEME-usedCount)+1;
 	int usedId=0;
 
 	for( i=0 ; i<MAX_COLOR_SCHEME ; i++ )
@@ -1001,15 +1001,15 @@ Nation* NationArray::operator~()
 void NationArray::draw_profile()
 {
 #ifdef DEBUG
-	static unsigned long lastDrawTime = m.get_time();
+	static unsigned long lastDrawTime = misc.get_time();
 
-	if(m.get_time() >= lastDrawTime + 1000)
+	if(misc.get_time() >= lastDrawTime + 1000)
 	{
 		last_nation_ai_profile_time = nation_ai_profile_time;
 		nation_ai_profile_time = 0L;
 		last_nation_profile_time = nation_profile_time;
 		nation_profile_time = 0L;
-		lastDrawTime = m.get_time();
+		lastDrawTime = misc.get_time();
 	}
 
 	String str;

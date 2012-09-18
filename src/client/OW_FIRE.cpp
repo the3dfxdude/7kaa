@@ -285,7 +285,7 @@ void World::spread_fire(Weather &w)
 				
 				// ---------- restore flammability ------------
 				if( flammability >= -30 && flammability < 50 &&
-					m.random(100) < RESTORE_RATE)
+					misc.random(100) < RESTORE_RATE)
 					flammability++;
 			}
 

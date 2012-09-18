@@ -563,7 +563,7 @@ void MultiPlayer::send_game_beacon()
 	uint32_t player_id;
 	uint32_t cur_ticks;
 
-	cur_ticks = m.get_time();
+	cur_ticks = misc.get_time();
 	if (game_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
 		// send the session beacon
 		struct MsgGameBeacon p;
@@ -1105,7 +1105,7 @@ void MultiPlayer::yield_recv()
 
 	h = (struct packet_header *)recv_buf;
 
-	ticks = m.get_time();
+	ticks = misc.get_time();
 	cur_ticks = ticks;
 
 	while (cur_ticks < ticks + 50) {

@@ -639,7 +639,7 @@ void ZoomMatrix::draw_weather_effects()
 	//                99 - 1             (rest states)
 	// see world.process
 
-	unsigned long mRandom = m.get_random_seed();
+	unsigned long mRandom = misc.get_random_seed();
 	if( world.lightning_signal >= 105 && world.lightning_signal <= 108)
 	{
 		if( !init_lightning )
@@ -673,7 +673,7 @@ void ZoomMatrix::draw_weather_effects()
 	short snowScale = weather.snow_scale();
 	if( snowScale > 0 && init_snow == 0)
 	{
-		long backupSeed = m.get_random_seed();
+		long backupSeed = misc.get_random_seed();
 
 		// start of snow
 		snow.set_bound(ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2);

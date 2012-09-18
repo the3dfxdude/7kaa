@@ -105,7 +105,7 @@ int RebelArray::create_rebel(int unitRecno, int hostileNationRecno, int actionMo
 	// group without creating a new one.
 	//------------------------------------------//
 
-	int 	 rebelRecno = m.random(rebel_array.size())+1;
+	int 	 rebelRecno = misc.random(rebel_array.size())+1;
 	Rebel* rebelPtr;
 
 	for( int i=size() ; i>=1 ; i-- )
@@ -605,7 +605,7 @@ void Rebel::think_new_action()
 
 	int rc;
 
-	switch( m.random(4) )
+	switch( misc.random(4) )
 	{
 		case 0:
 			rc = think_settle_new();
@@ -684,7 +684,7 @@ int Rebel::think_settle_to()
 	Unit* leaderUnit = unit_array[leader_unit_recno];
 	int   curRegionId = world.get_region_id(leaderUnit->cur_x_loc(), leaderUnit->cur_y_loc());
 
-	townRecno = m.random(town_array.size())+1;
+	townRecno = misc.random(town_array.size())+1;
 
 	for( i=1 ; i<=town_array.size() ; i++ )
 	{
@@ -736,7 +736,7 @@ int Rebel::think_capture_attack_town()
 
 	for( int i=town_array.size() ; i>0 ; i-- )
 	{
-		townRecno = m.random(town_array.size())+1;
+		townRecno = misc.random(town_array.size())+1;
 
 		if( town_array.is_deleted(townRecno) )
 			continue;
@@ -749,7 +749,7 @@ int Rebel::think_capture_attack_town()
 		if( world.get_region_id(townPtr->loc_x1, townPtr->loc_y1) != curRegionId )
 			continue;
 
-		townDistance = m.points_distance( leaderXLoc, leaderYLoc,
+		townDistance = misc.points_distance( leaderXLoc, leaderYLoc,
 							townPtr->center_x, townPtr->center_y );
 
 		if( townDistance < closestTownDistance )
@@ -789,7 +789,7 @@ int Rebel::think_attack_firm()
 
 	for( int i=firm_array.size() ; i>0 ; i-- )
 	{
-		firmRecno = m.random(firm_array.size())+1;
+		firmRecno = misc.random(firm_array.size())+1;
 
 		if( firm_array.is_deleted(firmRecno) )
 			continue;
@@ -802,7 +802,7 @@ int Rebel::think_attack_firm()
 		if( world.get_region_id(firmPtr->loc_x1, firmPtr->loc_y1) != curRegionId )
 			continue;
 
-		firmDistance = m.points_distance( leaderXLoc, leaderYLoc,
+		firmDistance = misc.points_distance( leaderXLoc, leaderYLoc,
 							firmPtr->center_x, firmPtr->center_y );
 
 		if( firmDistance < closestFirmDistance )
@@ -927,14 +927,14 @@ void Rebel::think_town_action()
 
 	//----- neutralize to an independent town -----//
 
-	if( m.random(10)==0 )
+	if( misc.random(10)==0 )
 	{
 		turn_indepedent();
 	}
 
 	//---------- form a nation ---------//
 
-	else if( m.random(10)==0 )
+	else if( misc.random(10)==0 )
 	{
 		if( town_array[town_recno]->population >= 20 &&
 			 nation_array.can_form_new_ai_nation() )

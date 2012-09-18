@@ -140,7 +140,7 @@ void Info::init()
 
 	//----------------------------------//
 
-	start_play_time = m.get_time();	// the time player start playing the game
+	start_play_time = misc.get_time();	// the time player start playing the game
 	total_play_time = 0;             // total time the player has played in all saved games
 
 	// these will be updated during loading game and saving game
@@ -185,7 +185,7 @@ void Info::init_random_seed(int randomSeed)
 		random_seed = randomSeed;
 	}
 
-	m.set_random_seed(random_seed);
+	misc.set_random_seed(random_seed);
 
 	//------ write random seed --------//
 
@@ -195,7 +195,7 @@ void Info::init_random_seed(int randomSeed)
 
 		fileMapSeed.file_create( "MAP.RS" );
 
-		String str(m.format(random_seed,1));
+		String str(misc.format(random_seed,1));
 
 		fileMapSeed.file_write(str, str.len());
 	}
@@ -431,12 +431,12 @@ void Info::disp_heading()
 
 	if( nationPtr->reputation >= 0 )
 	{
-		str = m.format( (int)nationPtr->reputation, 4 );			// format type 4 - no thousand separators
+		str = misc.format( (int)nationPtr->reputation, 4 );			// format type 4 - no thousand separators
 	}
 	else
 	{
 		str  = "-";
-		str += m.format( (int)-nationPtr->reputation, 4 );		// format type 4 - no thousand separators
+		str += misc.format( (int)-nationPtr->reputation, 4 );		// format type 4 - no thousand separators
 	}
 
 	int reputationChange = (int) nationPtr->reputation_change_365days();
@@ -556,7 +556,7 @@ void Info::process_viewing_spy()
 		/*
 			//--- on average, a spy will get caught in 5 to 15 days when viewing the secret of its enemy ---//
 
-			if( m2.random(5+spyPtr->spy_skill/5) )		// use m2 to avoid multiplayer sync problem
+			if( misc2.random(5+spyPtr->spy_skill/5) ) // use m2 to avoid multiplayer sync problem
 			{
 				spyPtr->set_exposed(COMMAND_PLAYER);
 				isValid = 0;
@@ -729,7 +729,7 @@ int Info::disp_loyalty(int x, int y, int x2, int curLoyalty, int targetLoyalty, 
 	if( x != x2 )		// if x==x2, don't display the field name.
 	{
 		font_san.field( x, y, "Loyalty", x2, curLoyalty, 1, INFO_X2-2, refreshFlag);
-		endX = x2 + 4 + font_san.text_width( m.format(curLoyalty) );
+		endX = x2 + 4 + font_san.text_width( misc.format(curLoyalty) );
 	}
 	else
 	{
@@ -741,7 +741,7 @@ int Info::disp_loyalty(int x, int y, int x2, int curLoyalty, int targetLoyalty, 
 
 	if( curLoyalty != targetLoyalty )		// only increase, no decrease. Decrease are caused by events. Increases are made gradually
 	{
-		int tx = x2+6+font_san.text_width( m.format(curLoyalty) );
+		int tx = x2+6+font_san.text_width( misc.format(curLoyalty) );
 
 		if( targetLoyalty > curLoyalty )
 			image_icon.put_front( tx, y+2, "ARROWUP" );

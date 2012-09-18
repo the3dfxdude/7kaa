@@ -71,7 +71,7 @@ int Directory::read(const char *fileSpec, int sortName)
 
    while(findHandle!=INVALID_HANDLE_VALUE)
    {
-      m.extract_file_name( fileInfo.name, findData.cFileName );		// get the file name only from a full path string 
+      misc.extract_file_name( fileInfo.name, findData.cFileName ); // get the file name only from a full path string
 
       fileInfo.size = findData.nFileSizeLow;
       fileInfo.time = findData.ftLastWriteTime; 

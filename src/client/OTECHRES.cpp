@@ -107,7 +107,7 @@ void TechRes::load_tech_class()
 		techClass    = tech_class_array+i;
 
 		techClass->class_id   = i+1;
-		techClass->icon_index = res_bitmap.get_index( m.nullify(techClassRec->icon_name, techClassRec->ICON_NAME_LEN) );
+		techClass->icon_index = res_bitmap.get_index( misc.nullify(techClassRec->icon_name, techClassRec->ICON_NAME_LEN) );
 
 		err_when( !techClass->icon_index );
 	}
@@ -143,21 +143,21 @@ void TechRes::load_tech_info()
 		techInfo = tech_info_array+i;
 
 		techInfo->tech_id			 = i+1;
-		techInfo->class_id  		 = m.atoi( techRec->class_id		 , techRec->ID_LEN );
+		techInfo->class_id = misc.atoi( techRec->class_id, techRec->ID_LEN );
 
-		techInfo->max_tech_level = m.atoi( techRec->max_tech_level, techRec->MAX_TECH_LEVEL_LEN );
-		techInfo->complex_level  = m.atoi( techRec->complex_level , techRec->COMPLEX_LEVEL_LEN );
+		techInfo->max_tech_level = misc.atoi( techRec->max_tech_level, techRec->MAX_TECH_LEVEL_LEN );
+		techInfo->complex_level = misc.atoi( techRec->complex_level, techRec->COMPLEX_LEVEL_LEN );
 
-		techInfo->unit_id   		 = m.atoi( techRec->unit_id		 , techRec->ID_LEN );
-		techInfo->firm_id   		 = m.atoi( techRec->firm_id		 , techRec->ID_LEN );
-		techInfo->parent_unit_id = m.atoi( techRec->parent_unit_id, techRec->ID_LEN );
-		techInfo->parent_firm_id = m.atoi( techRec->parent_firm_id, techRec->ID_LEN );
-		techInfo->parent_level   = techRec->parent_level - '0';
+		techInfo->unit_id = misc.atoi( techRec->unit_id, techRec->ID_LEN );
+		techInfo->firm_id = misc.atoi( techRec->firm_id, techRec->ID_LEN );
+		techInfo->parent_unit_id = misc.atoi( techRec->parent_unit_id, techRec->ID_LEN );
+		techInfo->parent_firm_id = misc.atoi( techRec->parent_firm_id, techRec->ID_LEN );
+		techInfo->parent_level = techRec->parent_level - '0';
 
 		if( techInfo->parent_unit_id || techInfo->parent_firm_id )
 			err_when( techInfo->parent_level<1 || techInfo->parent_level>9 );
 
-		techInfo->icon_index = res_bitmap.get_index( m.nullify(techRec->icon_name, techRec->ICON_NAME_LEN) );
+		techInfo->icon_index = res_bitmap.get_index( misc.nullify(techRec->icon_name, techRec->ICON_NAME_LEN) );
 
 		if( techClassId != techInfo->class_id )
 		{

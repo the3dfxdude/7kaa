@@ -146,18 +146,18 @@ int Sys::init()
    //------- initialize basic vars --------//
 
 	#ifdef BETA
-		debug_session       = m.is_file_exist("DEBUG.SYS");
-		testing_session     = m.is_file_exist("TESTING.SYS");
-		scenario_cheat_flag = m.is_file_exist("CHEAT.SYS");
+		debug_session       = misc.is_file_exist("DEBUG.SYS");
+		testing_session     = misc.is_file_exist("TESTING.SYS");
+		scenario_cheat_flag = misc.is_file_exist("CHEAT.SYS");
 	#endif
 
 	#ifdef DEBUG
-		debug_session       = m.is_file_exist("DEBUG.SYS");
-		testing_session     = m.is_file_exist("TESTING.SYS");
-		scenario_cheat_flag = m.is_file_exist("CHEAT.SYS");
+		debug_session       = misc.is_file_exist("DEBUG.SYS");
+		testing_session     = misc.is_file_exist("TESTING.SYS");
+		scenario_cheat_flag = misc.is_file_exist("CHEAT.SYS");
 	#endif
 
-//	debug_session       = m.is_file_exist("DEBUG.SYS");
+//	debug_session       = misc.is_file_exist("DEBUG.SYS");
 
    // set game directory paths and game version
    if (!set_config_dir() || !set_game_dir())
@@ -413,7 +413,7 @@ int Sys::set_config_dir()
    MSG("Game config dir path: %s\n", dir_config);
 
    // create the config directory
-   if (!m.mkpath(dir_config))
+   if (!misc.mkpath(dir_config))
    {
       ERR("Unable to acquire a usable game config dir.\n");
       dir_config[0] = 0;
@@ -435,7 +435,7 @@ void Sys::run(int isLoadedGame)
    //-*********** simulate aat ************-//
    #ifdef DEBUG
       //--------- enable only when simulation    -------//
-      debug_sim_game_type = (m.is_file_exist("sim.sys")) ? 2 : 0;
+      debug_sim_game_type = (misc.is_file_exist("sim.sys")) ? 2 : 0;
    #endif
    //-*********** simulate aat ************-//
 
@@ -474,7 +474,7 @@ void Sys::run(int isLoadedGame)
 
    //-----------------------------------------//
 
-   m.unlock_seed();
+   misc.unlock_seed();
 
    sys_flag = SYS_PREGAME;
 }
@@ -486,7 +486,7 @@ void Sys::run(int isLoadedGame)
 static void test_lzw()
 {
    // test lzw compress
-   if( m.is_file_exist("NORMAL.SAV"))
+   if( misc.is_file_exist("NORMAL.SAV"))
    {
       File f,g;
       Lzw lzw_c, lzw_d;    // one for compress, the other for decompress
@@ -585,7 +585,7 @@ void Sys::main_loop(int isLoadedGame)
    remote.packet_send_count    = 0;
    remote.packet_receive_count = 0;
 
-   last_frame_time = m.get_time()+60000;     // plus 60 seconds buffer for game loading/starting time
+   last_frame_time = misc.get_time()+60000;     // plus 60 seconds buffer for game loading/starting time
    //frame_count     = 1;
    is_sync_frame   = 0;
 
@@ -647,7 +647,7 @@ void Sys::main_loop(int isLoadedGame)
    // ##### begin Gilbert 4/11 ######//
    // time the screen was redrawn last time
    // (despite the name, this time may differ from last frame's time)
-   uint32_t lastDispFrameTime = m.get_time();
+   uint32_t lastDispFrameTime = misc.get_time();
    // ##### end Gilbert 4/11 ######//
 
 	// ##### patch begin Gilbert 17/11 #######//
@@ -677,7 +677,7 @@ void Sys::main_loop(int isLoadedGame)
          // that it's taken _before_ 'should_next_frame'. This variable is
          // further used to determine how many time passed since screen was
          // redrawn last time.
-         uint32_t markTime = m.get_time();
+         uint32_t markTime = misc.get_time();
          // ###### end Gilbert 4/11 ######//
 
 			// ##### patch begin Gilbert 17/11 #######//
@@ -693,9 +693,9 @@ void Sys::main_loop(int isLoadedGame)
             if( remote.is_enable() )      // && is_sync_frame )
             {
                remote.poll_msg();
-               m.unlock_seed();
+               misc.unlock_seed();
                rc = is_mp_sync(&unreadyPlayerFlag);         // if all players are synchronized
-               m.lock_seed();
+               misc.lock_seed();
             }
             else
                rc = should_next_frame();
@@ -703,7 +703,7 @@ void Sys::main_loop(int isLoadedGame)
             if( rc )
             {
                LOG_BEGIN;
-               m.unlock_seed();
+               misc.unlock_seed();
 
 #ifdef DEBUG_LONG_LOG
                if( remote.is_enable() )
@@ -715,7 +715,7 @@ void Sys::main_loop(int isLoadedGame)
                process(); // also calls 'disp_frame()'
 
                if(remote.is_enable() )
-                  m.lock_seed();    // such that random seed is unchanged outside sys::process()
+                  misc.lock_seed();    // such that random seed is unchanged outside sys::process()
                LOG_END;
 
                // -------- compare objects' crc --------- //
@@ -735,7 +735,7 @@ void Sys::main_loop(int isLoadedGame)
          // ------- display graduately, keep on displaying --------- //
          if( rc )
          {
-            lastDispFrameTime = m.get_time();
+            lastDispFrameTime = misc.get_time();
 				// ####### patch begin Gilbert 17/11 ######//
 				// reset firstUnreadyTime
 				firstUnreadyTime = 0;
@@ -746,7 +746,7 @@ void Sys::main_loop(int isLoadedGame)
 				// ####### patch begin Gilbert 17/11 ######//
 				// set firstUnreadyTime, begin of a delay
 				if( !firstUnreadyTime )
-					firstUnreadyTime = m.get_time();
+					firstUnreadyTime = misc.get_time();
 				// ####### patch end Gilbert 17/11 ######//
 
             // although it's not time for new frame, check
@@ -764,7 +764,7 @@ void Sys::main_loop(int isLoadedGame)
 					// ####### patch begin Gilbert 17/11 ######//
 					// If somebody is not ready for more than five seconds
 					// (may to happen in multiplayer), display info message
-					if( firstUnreadyTime && m.get_time() - firstUnreadyTime > 5000 )
+					if( firstUnreadyTime && misc.get_time() - firstUnreadyTime > 5000 )
 					{
 						int y = ZOOM_Y1 + 10;
 						int x = ZOOM_X1 + 10;
@@ -913,9 +913,9 @@ void Sys::auto_save()
       {
          //--- rename the existing AUTO.SAV to AUTO2.SAV and save a new game ---//
 
-         if( m.is_file_exist( "AUTO.SAV" ) )
+         if( misc.is_file_exist( "AUTO.SAV" ) )
          {
-            if( m.is_file_exist( "AUTO2.SAV" ) )      // if there is already an AUTO2.SAV, delete it
+            if( misc.is_file_exist( "AUTO2.SAV" ) )      // if there is already an AUTO2.SAV, delete it
                remove( "AUTO2.SAV" );
 
             rename( "AUTO.SAV", "AUTO2.SAV" );
@@ -933,7 +933,7 @@ void Sys::auto_save()
 
             debug_seed_status_flag = NO_DEBUG_SYN;
             // DIK_BACKSLASH = 0x2B
-            mouse.add_key_event(0x2B, m.get_time()); // load file for comparison
+            mouse.add_key_event(0x2B, misc.get_time()); // load file for comparison
          }
 
          //debug_seed_status_flag = 2;
@@ -952,9 +952,9 @@ void Sys::auto_save()
    {
       //--- rename the existing AUTO.SVM to AUTO2.SVM and save a new game ---//
 
-      if( m.is_file_exist( "AUTO.SVM" ) )
+      if( misc.is_file_exist( "AUTO.SVM" ) )
       {
-         if( m.is_file_exist( "AUTO2.SVM" ) )      // if there is already an AUTO2.SVM, delete it
+         if( misc.is_file_exist( "AUTO2.SVM" ) )      // if there is already an AUTO2.SVM, delete it
             remove( "AUTO2.SVM" );
 
          rename( "AUTO.SVM", "AUTO2.SVM" );
@@ -1150,7 +1150,7 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
 /*
       unsigned long* longPtr = (unsigned long*) remote.new_send_queue_msg(MSG_TELL_SEND_TIME, sizeof(unsigned long));
 
-      longPtr[0] = m.get_time();
+      longPtr[0] = misc.get_time();
 */
       //---------- send out all messages in the queue ---------//
 
@@ -1164,7 +1164,7 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
          char *p = (char *)remote.new_send_queue_msg(MSG_TELL_RANDOM_SEED, sizeof(short)+sizeof(long));
          *(short *)p = nation_array.player_recno;
          p += sizeof(short);
-         *(long *)p = m.get_random_seed();
+         *(long *)p = misc.get_random_seed();
       }
       else
       {
@@ -1191,7 +1191,7 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
          char *p = (char *)remote.new_send_queue_msg(MSG_TELL_RANDOM_SEED, sizeof(short)+sizeof(long));
          *(short *)p = nation_array.player_recno;
          p += sizeof(short);
-         *(long *)p = m.get_random_seed();
+         *(long *)p = misc.get_random_seed();
       }
       else
       {
@@ -1247,7 +1247,7 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
       DEBUG_LOG("a nation not ready");
       DEBUG_LOG(nationRecno);
 
-      if (m.get_time() >= last_frame_time + CONNECTION_LOST_TIME_OUT)
+      if (misc.get_time() >= last_frame_time + CONNECTION_LOST_TIME_OUT)
       {
          //---- if it has been time out for too long, carry out connection lost handling ---//
          ec_remote.set_player_lost(nationRecno);
@@ -1293,7 +1293,7 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
 
    //-------- record this frame's time -------//
 
-   last_frame_time  = m.get_time();
+   last_frame_time  = misc.get_time();
    last_resend_time = 0;
 
    return 1;
@@ -1317,7 +1317,7 @@ int Sys::should_next_frame()
 
    //---- check if it's now the time for processing the next frame ----//
 
-   uint32_t curTime = m.get_time();
+   uint32_t curTime = misc.get_time();
 
    if( next_frame_time )      // if next_frame_time==0, it's the first frame of the game
    {
@@ -1426,7 +1426,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
 
    if( (keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_UNIQUE_KEY)) )
    {
-      keyCode = m.lower(keyCode);
+      keyCode = misc.lower(keyCode);
 
       switch(keyCode)
       {
@@ -1648,7 +1648,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
    if( !keyCode )    // since all keys concern are printable
       return;
 
-   keyCode = m.lower(keyCode);
+   keyCode = misc.lower(keyCode);
 
    switch( keyCode )
    {
@@ -1689,7 +1689,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
                   }
                }
             #else
-               townPtr->init_pop( m.random(MAX_RACE)+1, 10, 100 );
+               townPtr->init_pop( misc.random(MAX_RACE)+1, 10, 100 );
             #endif
             townPtr->auto_set_layout();
          }
@@ -1789,7 +1789,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
    if( !keyCode )    // since all keys concern are printable
       return;
 
-   keyCode = m.lower(keyCode);
+   keyCode = misc.lower(keyCode);
 
    switch( keyCode )
    {
@@ -1900,7 +1900,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
          break;
 
       case '[':
-         if(m.is_file_exist("SYN.SYS"))
+         if(misc.is_file_exist("SYN.SYS"))
          {
             debug_seed_status_flag = DEBUG_SYN_AUTO_SAVE;
             sp_seed_pos_reset();
@@ -1914,7 +1914,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
       case ']':
          if(debug_seed_status_flag==NO_DEBUG_SYN)
          {
-            if(m.is_file_exist("SYN.SYS"))
+            if(misc.is_file_exist("SYN.SYS"))
             {
                debug_seed_status_flag = DEBUG_SYN_LOAD_AND_COMPARE_ONCE;
                game_file.load_game("syn.sav");
@@ -2121,8 +2121,8 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
             }
             else if(locPtr->can_build_site(1) && !locPtr->is_power_off()) // add site
             {
-               i = MAX_RAW_RESERVE_QTY * (50 + m.random(50)) / 100;
-               site_array.add_site(curXLoc, curYLoc, SITE_RAW, m.random(MAX_RAW)+1, i);
+               i = MAX_RAW_RESERVE_QTY * (50 + misc.random(50)) / 100;
+               site_array.add_site(curXLoc, curYLoc, SITE_RAW, misc.random(MAX_RAW)+1, i);
                //box.msg( "Site added." );
                keyProcessed++;
             }
@@ -2409,7 +2409,7 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
    if( config.frame_speed==0 )
    {
       // if it's currently frozen, set last_frame_time to avoid incorrect timeout
-      last_frame_time = m.get_time();
+      last_frame_time = misc.get_time();
    }
 
    config.frame_speed = requested_speed;
@@ -2434,7 +2434,7 @@ void Sys::capture_screen()
       str += i;
       str += ".BMP";
 
-      if( !m.is_file_exist(str) )
+      if( !misc.is_file_exist(str) )
          break;
    }
 
@@ -2589,7 +2589,7 @@ int Sys::chdir_to_game_dir()
 
    // test current directory
    test_file = DEFAULT_DIR_IMAGE "HALLFAME.ICN";
-   if (m.is_file_exist(test_file))
+   if (misc.is_file_exist(test_file))
       return 1;
 
    // test environment variable SKDATA for the path
@@ -2597,14 +2597,14 @@ int Sys::chdir_to_game_dir()
    if (env_data_path)
    {
       chdir(env_data_path);
-      if (m.is_file_exist(test_file))
+      if (misc.is_file_exist(test_file))
          return 1;
    }
 
    // test compile time path
 #ifdef PACKAGE_DATA_PATH
    chdir(PACKAGE_DATA_PATH);
-   if (m.is_file_exist(test_file))
+   if (misc.is_file_exist(test_file))
       return 1;
 #endif
 

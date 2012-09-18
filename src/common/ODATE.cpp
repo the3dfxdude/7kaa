@@ -101,8 +101,8 @@ long DateInfo::julian( int year, int month, int day )
 //
 long DateInfo::julian( char *dateStr )
 {
-   return julian( m.atoi( dateStr,4 ), m.atoi( dateStr+4,2 ),
-                  m.atoi( dateStr+6,2 ) );
+   return julian( misc.atoi( dateStr,4 ), misc.atoi( dateStr+4,2 ),
+                  misc.atoi( dateStr+6,2 ) );
 }
 //---------- End of function DateInfo::julian ----------//
 

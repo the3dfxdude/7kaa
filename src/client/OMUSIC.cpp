@@ -176,7 +176,7 @@ int Music::play(int songId, int playType)
 		{
 			String waveFileStr(DIR_MUSIC);
 			waveFileStr += music_file[songId-1];
-			if( !DIR_MUSIC[0] || !m.is_file_exist(waveFileStr) || !audio.wav_init_flag )
+			if( !DIR_MUSIC[0] || !misc.is_file_exist(waveFileStr) || !audio.wav_init_flag )
 				return 0;
 			if( playType & MUSIC_PLAY_LOOPED )
 			{
@@ -241,7 +241,7 @@ int Music::max_song()
 // -------- begin of function Music::random_bgm_track --------//
 int Music::random_bgm_track(int excludeSong)
 {
-	int s = LOW_RANDOM_SONG + m.get_time() % (HIGH_RANDOM_SONG - LOW_RANDOM_SONG + 1);
+	int s = LOW_RANDOM_SONG + misc.get_time() % (HIGH_RANDOM_SONG - LOW_RANDOM_SONG + 1);
 	if( s == excludeSong )
 	{
 		// avoid selecting excludeSong if possible

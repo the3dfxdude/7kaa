@@ -120,12 +120,12 @@ void TownRes::load_town_layout()
 		townLayoutRec = (TownLayoutRec*) dbTownLayout->read(i+1);
 		townLayout    = town_layout_array+i;
 
-		townLayout->first_slot_recno = m.atoi(townLayoutRec->first_slot, TownLayoutRec::FIRST_SLOT_LEN);
-		townLayout->slot_count	  	  = m.atoi(townLayoutRec->slot_count, TownLayoutRec::SLOT_COUNT_LEN);
+		townLayout->first_slot_recno = misc.atoi(townLayoutRec->first_slot, TownLayoutRec::FIRST_SLOT_LEN);
+		townLayout->slot_count = misc.atoi(townLayoutRec->slot_count, TownLayoutRec::SLOT_COUNT_LEN);
 
 		// ###### begin Gilbert 9/9 ########//
-		// townLayout->ground_bitmap_ptr = image_spict.get_ptr( m.nullify(townLayoutRec->ground_name, TownLayoutRec::GROUND_NAME_LEN) );
-		townLayout->ground_bitmap_ptr = image_tpict.get_ptr( m.nullify(townLayoutRec->ground_name, TownLayoutRec::GROUND_NAME_LEN) );
+		// townLayout->ground_bitmap_ptr = image_spict.get_ptr( misc.nullify(townLayoutRec->ground_name, TownLayoutRec::GROUND_NAME_LEN) );
+		townLayout->ground_bitmap_ptr = image_tpict.get_ptr( misc.nullify(townLayoutRec->ground_name, TownLayoutRec::GROUND_NAME_LEN) );
 		// ###### end Gilbert 9/9 ########//
 
 		err_if( townLayout->slot_count > MAX_TOWN_LAYOUT_SLOT )
@@ -168,11 +168,11 @@ void TownRes::load_town_slot()
 		townSlotRec = (TownSlotRec*) dbTownSlot->read(i+1);
 		townSlot    = town_slot_array+i;
 
-		townSlot->base_x = m.atoi(townSlotRec->base_x, TownSlotRec::POS_LEN);
-		townSlot->base_y = m.atoi(townSlotRec->base_y, TownSlotRec::POS_LEN);
+		townSlot->base_x = misc.atoi(townSlotRec->base_x, TownSlotRec::POS_LEN);
+		townSlot->base_y = misc.atoi(townSlotRec->base_y, TownSlotRec::POS_LEN);
 
-		townSlot->build_type	 = m.atoi(townSlotRec->type_id, TownSlotRec::TYPE_ID_LEN);
-		townSlot->build_code  = m.atoi(townSlotRec->build_code, TownSlotRec::BUILD_CODE_LEN);
+		townSlot->build_type = misc.atoi(townSlotRec->type_id, TownSlotRec::TYPE_ID_LEN);
+		townSlot->build_code = misc.atoi(townSlotRec->build_code, TownSlotRec::BUILD_CODE_LEN);
 
 		err_when( townSlot->build_type == TOWN_OBJECT_FARM &&	
 				  (townSlot->build_code < 1 || townSlot->build_code > 9) ); 
@@ -204,8 +204,8 @@ void TownRes::load_town_build_type()
 		buildTypeRec = (TownBuildTypeRec*) dbTownBuildType->read(i+1);
 		buildType    = town_build_type_array+i;
 
-		buildType->first_build_recno = m.atoi(buildTypeRec->first_build, TownBuildTypeRec::FIRST_BUILD_LEN);
-		buildType->build_count	  	  = m.atoi(buildTypeRec->build_count, TownBuildTypeRec::BUILD_COUNT_LEN);
+		buildType->first_build_recno = misc.atoi(buildTypeRec->first_build, TownBuildTypeRec::FIRST_BUILD_LEN);
+		buildType->build_count = misc.atoi(buildTypeRec->build_count, TownBuildTypeRec::BUILD_COUNT_LEN);
 	}
 }
 //--------- End of function TownRes::load_town_build_type ---------//
@@ -237,9 +237,9 @@ void TownRes::load_town_build()
 		townBuildRec = (TownBuildRec*) dbTownBuild->read(i+1);
 		townBuild    = town_build_array+i;
 
-		townBuild->build_type  = m.atoi(townBuildRec->type_id, TownBuildRec::TYPE_ID_LEN);
-		townBuild->build_code  = m.atoi(townBuildRec->build_code, TownBuildRec::BUILD_CODE_LEN);
-		townBuild->race_id     = m.atoi(townBuildRec->race_id, TownBuildRec::RACE_ID_LEN);
+		townBuild->build_type = misc.atoi(townBuildRec->type_id, TownBuildRec::TYPE_ID_LEN);
+		townBuild->build_code = misc.atoi(townBuildRec->build_code, TownBuildRec::BUILD_CODE_LEN);
+		townBuild->race_id = misc.atoi(townBuildRec->race_id, TownBuildRec::RACE_ID_LEN);
 
 		memcpy( &bitmapOffset, townBuildRec->bitmap_ptr, sizeof(uint32_t) );
 
@@ -279,7 +279,7 @@ void TownRes::load_town_name()
 		townNameRec = (TownNameRec*) dbTownName->read(i);
 		townName    = town_name_array+i-1;
 
-		m.rtrim_fld( townName->name, townNameRec->name, townNameRec->NAME_LEN );
+		misc.rtrim_fld( townName->name, townNameRec->name, townNameRec->NAME_LEN );
 
 		if( townName->name[0]=='@' )		// next race
 		{
@@ -357,7 +357,7 @@ int TownRes::scan_build(int slotId, int raceId)
 
 	if( matchCount > 0 )
 	{
-		int buildId = scanIdArray[m.random(matchCount)];
+		int buildId = scanIdArray[misc.random(matchCount)];
 
 		#ifdef DEBUG
 			town_res.get_build( buildId );		// get_build() will error if buildId is not valid
@@ -448,7 +448,7 @@ int TownRes::get_new_name_id(int raceId)
 
 	if( raceInfo->town_name_used_count == raceInfo->town_name_count )
 	{
-		int nameId = m.random(raceInfo->town_name_count)+1;		// this is the id. of one race only
+		int nameId = misc.random(raceInfo->town_name_count)+1;		// this is the id. of one race only
 
 		for( int i=raceInfo->town_name_count ; i>0 ; i-- )
 		{

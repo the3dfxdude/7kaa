@@ -374,7 +374,7 @@ void UnitMarine::select_attack_weapon()
 		}
 	}
 
-//	button_select_attack.paint_text( INFO_X2-50, INFO_Y1+180, INFO_X2-5, INFO_Y1+200, m.format(attack_mode_selected));
+//	button_select_attack.paint_text( INFO_X2-50, INFO_Y1+180, INFO_X2-5, INFO_Y1+200, misc.format(attack_mode_selected));
 }
 //----------- End of function UnitMarine::select_attack_weapon -----------//
 
@@ -863,11 +863,11 @@ void UnitMarine::set_stop_pick_up(int stopId, int newPickUpType, int remoteActio
 			OutputDebugString(mess);*/
 			//-*******************************************************-//
 
-			m.set_random_seed(stopId + newPickUpType*(m.random(4)+1)*10 + sprite_recno*100*m.random(100));
+			misc.set_random_seed(stopId + newPickUpType*(misc.random(4)+1)*10 + sprite_recno*100*misc.random(100));
 
 			//-*******************************************************-//
 			/*//char mess[255];
-			sprintf(mess, "Change Seed : %d\r\n", m.random_seed);
+			sprintf(mess, "Change Seed : %d\r\n", misc.random_seed);
 			OutputDebugString(mess);*/
 			//-*******************************************************-//
 			#endif

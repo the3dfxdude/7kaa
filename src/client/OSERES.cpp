@@ -81,7 +81,7 @@ SERes::~SERes()
 void SERes::init1()
 {
 	deinit();
-	seed = m.get_time();
+	seed = misc.get_time();
 	load_info();
 	sort_info();
 	build_index();
@@ -151,12 +151,12 @@ void SERes::load_info()
 
 		// ------- copy subject ---------//
 		seInfo->subject_type = seRec->subject_type;
-		seInfo->subject_id = m.atoi(seRec->subject_id, seRec->RECNO_LEN);
+		seInfo->subject_id = misc.atoi(seRec->subject_id, seRec->RECNO_LEN);
 
 		// -------- copy verb ---------//
 		memcpy( seInfo->action, seRec->action, seRec->VERB_LEN );
 		seInfo->action[seInfo->VERB_LEN] = '\0';
-		m.rtrim( seInfo->action );
+		misc.rtrim( seInfo->action );
 
 		// --------- copy object ---------//
 		if( seRec->object_type == ' ' || seRec->object_type == '\0')
@@ -173,19 +173,19 @@ void SERes::load_info()
 		{
 			seInfo->object_type = seRec->object_type;
 			if( seRec->object_id[0] != '*' )
-				seInfo->object_id = m.atoi(seRec->object_id, seRec->RECNO_LEN);
+				seInfo->object_id = misc.atoi(seRec->object_id, seRec->RECNO_LEN);
 			else
 				seInfo->object_id = -1;		// all of the objectType
 		}
 		
 		// -------- copy out frame ---------//
-		seInfo->out_frame = m.atoi(seRec->out_frame, seRec->OUT_FRAME_LEN);
+		seInfo->out_frame = misc.atoi(seRec->out_frame, seRec->OUT_FRAME_LEN);
 		err_when(seInfo->out_frame <= 0);
 
 		// -------- copy file name --------//
 		memcpy(seInfo->file_name, seRec->file_name, seRec->FILE_NAME_LEN);
 		seInfo->file_name[seInfo->FILE_NAME_LEN] = '\0';
-		m.rtrim(seInfo->file_name);
+		misc.rtrim(seInfo->file_name);
 		seInfo->effect_id = 0;
 	}
 }
@@ -470,7 +470,7 @@ void SERes::far_sound(short xLoc, short yLoc, short frame,
 // --------- begin of function SERes::mark_select_object_time ----------//
 int SERes::mark_select_object_time()		// return false if this sound should be skipped due to too frequent
 {
-	unsigned long t = m.get_time();
+	unsigned long t = misc.get_time();
 	if( t - last_select_time >= select_sound_length )
 	{
 		last_select_time = t;
@@ -484,7 +484,7 @@ int SERes::mark_select_object_time()		// return false if this sound should be sk
 // --------- begin of function SERes::mark_select_object_time ----------//
 int SERes::mark_command_time()		// return false if this sound should be skipped due to too frequent
 {
-	unsigned long t = m.get_time();
+	unsigned long t = misc.get_time();
 //	if( t - last_command_time >= select_sound_length )
 //	{
 //		last_command_time = t;

@@ -552,7 +552,7 @@ static int select_option()
 						#define Y_SHIFT 0
 					#endif
 					font_san.center_put(564, offsetY+154+Y_SHIFT, 564+25, offsetY+154+Y_SHIFT+21,
-						m.format(tempConfig.ai_nation_count), 1);
+						misc.format(tempConfig.ai_nation_count), 1);
 					aiNationInc.paint();
 					aiNationDec.paint();
 					#undef Y_SHIFT
@@ -606,7 +606,7 @@ static int select_option()
 				if( refreshFlag & SGOPTION_RAW )
 				{
 					font_san.center_put(337, offsetY+105, 337+25, offsetY+105+21,
-						m.format(tempConfig.start_up_raw_site), 1);
+						misc.format(tempConfig.start_up_raw_site), 1);
 					rawSiteInc.paint();
 					rawSiteDec.paint();
 				}
@@ -645,7 +645,7 @@ static int select_option()
 				{
 					enoughPeopleButton.paint(tempConfig.goal_population_flag);
 					font_san.center_put( 456, offsetY+211, 456+67, offsetY+211+21,
-						m.format(tempConfig.goal_population) ,1);
+						misc.format(tempConfig.goal_population) ,1);
 					peopleInc.paint();
 					peopleDec.paint();
 				}
@@ -653,7 +653,7 @@ static int select_option()
 				{
 					enoughIncomeButton.paint(tempConfig.goal_economic_score_flag);
 					font_san.center_put( 456, offsetY+243, 456+67, offsetY+243+21,
-						m.format(tempConfig.goal_economic_score), 1);
+						misc.format(tempConfig.goal_economic_score), 1);
 					incomeInc.paint();
 					incomeDec.paint();
 				}
@@ -661,7 +661,7 @@ static int select_option()
 				{
 					enoughScoreButton.paint(tempConfig.goal_total_score_flag);
 					font_san.center_put( 456, offsetY+275, 456+67, offsetY+275+21,
-						m.format(tempConfig.goal_total_score), 1);
+						misc.format(tempConfig.goal_total_score), 1);
 					scoreInc.paint();
 					scoreDec.paint();
 				}
@@ -669,7 +669,7 @@ static int select_option()
 				{
 					timeLimitButton.paint(tempConfig.goal_year_limit_flag);
 					font_san.center_put( 456, offsetY+307, 456+33, offsetY+307+21,
-						m.format(tempConfig.goal_year_limit), 1);
+						misc.format(tempConfig.goal_year_limit), 1);
 					yearInc.paint();
 					yearDec.paint();
 				}
@@ -679,7 +679,7 @@ static int select_option()
 			if( refreshFlag & SGOPTION_DIFFICULTY )
 			{
 				font_san.center_put( 718, offsetY+74, 780, offsetY+108,
-					m.format(tempConfig.single_player_difficulty()), 1 );
+					misc.format(tempConfig.single_player_difficulty()), 1 );
 			}
 
 			// -------- repaint button -------//

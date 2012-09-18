@@ -312,11 +312,11 @@ int ScrollBar::detect()
 
    if( topRecNo != top_rec_no )
    {
-		if( m.get_time() >= next_press_time )  // prevent too fast scrolling
+		if( misc.get_time() >= next_press_time )  // prevent too fast scrolling
 		{
 			refresh(topRecNo,1);
 
-			next_press_time = m.get_time() + PRESS_INT_TIME;
+			next_press_time = misc.get_time() + PRESS_INT_TIME;
 
 			return topRecNo;
 		}

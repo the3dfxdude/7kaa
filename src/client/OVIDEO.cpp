@@ -87,9 +87,9 @@ void Video::play(char* aviFileName, DWORD waitTime)
 
 	//-------- wait still after playing the movie ------//
 
-	DWORD curTime = m.get_time();
+	DWORD curTime = misc.get_time();
 
-	while( m.get_time() < curTime+waitTime );
+	while( misc.get_time() < curTime+waitTime );
 
 	//------------ close the MCI ---------------//
 

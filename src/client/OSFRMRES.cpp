@@ -82,11 +82,11 @@ void SpriteFrameRes::load_info()
 		frameRec  = (SpriteFrameRec*) dbSpriteFrame->read(i+1);
 		spriteFrame = sprite_frame_array+i;
 
-		spriteFrame->offset_x = m.atoi(frameRec->offset_x, frameRec->OFFSET_LEN);
-		spriteFrame->offset_y = m.atoi(frameRec->offset_y, frameRec->OFFSET_LEN);
+		spriteFrame->offset_x = misc.atoi(frameRec->offset_x, frameRec->OFFSET_LEN);
+		spriteFrame->offset_y = misc.atoi(frameRec->offset_y, frameRec->OFFSET_LEN);
 
-		spriteFrame->width  = m.atoi(frameRec->width , frameRec->WIDTH_LEN);
-		spriteFrame->height = m.atoi(frameRec->height, frameRec->HEIGHT_LEN);
+		spriteFrame->width  = misc.atoi(frameRec->width , frameRec->WIDTH_LEN);
+		spriteFrame->height = misc.atoi(frameRec->height, frameRec->HEIGHT_LEN);
 
 		memcpy( &spriteFrame->bitmap_offset, frameRec->bitmap_offset, sizeof(uint32_t) );
 	}

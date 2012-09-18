@@ -503,7 +503,7 @@ static void put_unit_rec(int recNo, int x, int y, int refreshFlag)
 	y+=3;
 
 	font_san.put( x   , y, str );
-	font_san.put( x+320, y, m.format(unitCount,1) );
+	font_san.put( x+320, y, misc.format(unitCount,1) );
 }
 //----------- End of static function put_unit_rec -----------//
 

@@ -199,13 +199,13 @@ void TownArray::process()
 				#endif
 				{
 					#ifdef DEBUG
-					unsigned long profileStartTime = m.get_time();
+					unsigned long profileStartTime = misc.get_time();
 					#endif
 
 					townPtr->process_ai();
 
 					#ifdef DEBUG
-					town_profile_time += m.get_time() - profileStartTime;
+					town_profile_time += misc.get_time() - profileStartTime;
 					#endif
 				}
 			}
@@ -217,13 +217,13 @@ void TownArray::process()
 
 			//### begin alex 20/9 ###//
 			#ifdef DEBUG
-			unsigned long profileStartTime = m.get_time();
+			unsigned long profileStartTime = misc.get_time();
 			#endif
 
 			townPtr->next_day();
 
 			#ifdef DEBUG
-			town_profile_time += m.get_time() - profileStartTime;
+			town_profile_time += misc.get_time() - profileStartTime;
 			#endif
 			//#### end alex 20/9 ####//
 		}
@@ -248,7 +248,7 @@ void TownArray::process()
 //
 void TownArray::think_new_independent_town()
 {
-	if( m.random(3) != 0 )		// 1/3 chance
+	if( misc.random(3) != 0 )		// 1/3 chance
 		return;
 
 	//---- count the number of independent towns ----//
@@ -282,12 +282,12 @@ void TownArray::think_new_independent_town()
 
 	for( i=0 ; i<MAX_RACE ; i++ )
 	{
-		race_wander_pop_array[i] += 2+m.random(5);
+		race_wander_pop_array[i] += 2+misc.random(5);
 	}
 
 	//----- check if there are enough wanderers to set up a new town ---//
 
-	int raceId = m.random(MAX_RACE)+1;
+	int raceId = misc.random(MAX_RACE)+1;
 
 	for( i=0 ; i<MAX_RACE ; i++ )
 	{
@@ -311,7 +311,7 @@ void TownArray::think_new_independent_town()
 	//--------------- create town ---------------//
 
 	int townRecno  = town_array.add_town(0, raceId, xLoc, yLoc);
-	int maxTownPop = 20 + m.random(10);
+	int maxTownPop = 20 + misc.random(10);
 	int addPop, townResistance;
 	int loopCount=0;
 
@@ -337,7 +337,7 @@ void TownArray::think_new_independent_town()
 
 		//---- next race to be added to the independent town ----//
 
-		raceId = m.random(MAX_RACE)+1;
+		raceId = misc.random(MAX_RACE)+1;
 
 		for( i=0 ; i<MAX_RACE ; i++ )
 		{
@@ -371,20 +371,20 @@ int TownArray::independent_town_resistance()
 	switch(config.independent_town_resistance)
 	{
 		case OPTION_LOW:
-			return 40 + m.random(20);
+			return 40 + misc.random(20);
 			break;
 
 		case OPTION_MODERATE:
-			return 50 + m.random(30);
+			return 50 + misc.random(30);
 			break;
 
 		case OPTION_HIGH:
-			return 60 + m.random(40);
+			return 60 + misc.random(40);
 			break;
 
 		default:
 			err_here();
-			return 60 + m.random(40);
+			return 60 + misc.random(40);
 	}
 }
 //----- End of function TownArray::independent_town_resistance ------//
@@ -414,8 +414,8 @@ int TownArray::think_town_loc(int maxTries, int& xLoc, int& yLoc)
 
    for( i=0 ; i<maxTries ; i++ )
 	{
-		xLoc = m.random(MAX_WORLD_X_LOC-BUILD_TOWN_LOC_WIDTH);
-		yLoc = 2+m.random(MAX_WORLD_Y_LOC-BUILD_TOWN_LOC_HEIGHT-2);		// do not build on the upper most location as the flag will go beyond the view area
+		xLoc = misc.random(MAX_WORLD_X_LOC-BUILD_TOWN_LOC_WIDTH);
+		yLoc = 2+misc.random(MAX_WORLD_Y_LOC-BUILD_TOWN_LOC_HEIGHT-2);		// do not build on the upper most location as the flag will go beyond the view area
 
 		canBuildFlag=1;
 
@@ -447,7 +447,7 @@ int TownArray::think_town_loc(int maxTries, int& xLoc, int& yLoc)
 
 			townPtr = town_array[townRecno];
 
-			if( m.points_distance(xLoc+1, yLoc+1, townPtr->center_x,		// xLoc+1 and yLoc+1 to take the center location of the town
+			if( misc.points_distance(xLoc+1, yLoc+1, townPtr->center_x,		// xLoc+1 and yLoc+1 to take the center location of the town
 				 townPtr->center_y) < MIN_INTER_TOWN_DISTANCE )
 			{
 				break;
@@ -466,7 +466,7 @@ int TownArray::think_town_loc(int maxTries, int& xLoc, int& yLoc)
 
 			firmPtr = firm_array[firmRecno];
 
-			if( m.points_distance(xLoc+1, yLoc+1, firmPtr->center_x,
+			if( misc.points_distance(xLoc+1, yLoc+1, firmPtr->center_x,
 				 firmPtr->center_y) < MONSTER_ATTACK_NEIGHBOR_RANGE )
 			{
 				break;
@@ -585,16 +585,16 @@ void TownArray::draw_dot()
 void TownArray::draw_profile()
 {
 #ifdef DEBUG
-	static unsigned long lastDrawTime = m.get_time();
+	static unsigned long lastDrawTime = misc.get_time();
 
 	//### begin alex 20/9 ###//
-	if(m.get_time() >= lastDrawTime + 1000)
+	if(misc.get_time() >= lastDrawTime + 1000)
 	{
 		last_town_ai_profile_time = town_ai_profile_time;
 		town_ai_profile_time = 0L;
 		last_town_profile_time = town_profile_time;
 		town_profile_time = 0L;
-		lastDrawTime = m.get_time();
+		lastDrawTime = misc.get_time();
 	}
 
 	String str;
@@ -636,7 +636,7 @@ int TownArray::find_nearest_town(int xLoc, int yLoc, int nationRecno)
 
 		townPtr = town_array[i];
 
-		curDistance = m.points_distance( xLoc, yLoc, townPtr->center_x, townPtr->center_y );
+		curDistance = misc.points_distance( xLoc, yLoc, townPtr->center_x, townPtr->center_y );
 
 		if( nationRecno && townPtr->nation_recno != nationRecno )
 			continue;

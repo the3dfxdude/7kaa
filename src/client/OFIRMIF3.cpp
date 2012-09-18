@@ -241,11 +241,11 @@ static void disp_bribe_button(int y, int bribeAmount, int buttonUp)
 		String str;
 
 		#ifdef GERMAN
-			str  = m.format(bribeAmount,2);
+			str  = misc.format(bribeAmount,2);
 			str += " anbieten";
 		#else
 			str  = translate.process("Offer ");
-			str += m.format(bribeAmount,2);
+			str += misc.format(bribeAmount,2);
 		#endif
 
 		font_san.center_put( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1, str );
@@ -317,7 +317,7 @@ int Firm::spy_bribe(int bribeAmount, short briberSpyRecno, short workerId)
 
 	//------ if the bribe succeeds ------//
 
-	if( succeedChance > 0 && m.random(100) < succeedChance )
+	if( succeedChance > 0 && misc.random(100) < succeedChance )
 	{
 		int spyRecno = spy_array.add_spy();		// add a new Spy record
 

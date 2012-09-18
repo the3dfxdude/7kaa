@@ -431,7 +431,7 @@ int SECtrl::search_effect_id(char *effectName, int len)
 	err_when(len >= 16);
 	memcpy(tmpStr, effectName, len);
 	tmpStr[len] = '\0';
-	m.rtrim(tmpStr);
+	misc.rtrim(tmpStr);
 
 	int idx = res_wave.get_index(tmpStr);
 	if( idx )

@@ -768,7 +768,7 @@ int Unit::searching(int destXLoc, int destYLoc, int preserveAction, short search
 
 	int seekResult;
 	#ifdef DEBUG
-		unsigned long seekPathStartTime = m.get_time();
+		unsigned long seekPathStartTime = misc.get_time();
 	#endif
 	/*switch(sprite_info->loc_width)
 	{
@@ -791,7 +791,7 @@ int Unit::searching(int destXLoc, int destYLoc, int preserveAction, short search
 						result_node_array = seek_path_reuse.get_result(result_node_count, result_path_dist);
 					}
 	#ifdef DEBUG
-		seek_path_profile_time = m.get_time() - seekPathStartTime;
+		seek_path_profile_time = misc.get_time() - seekPathStartTime;
 	#endif
 	/*				break;
 
@@ -1476,7 +1476,7 @@ void Unit::pre_process()
 		case ACTION_ATTACK_UNIT:
 
 			#ifdef DEBUG
-				startTime = m.get_time();
+				startTime = misc.get_time();
 			#endif
 
 			//------------------------------------------------------------------//
@@ -1507,7 +1507,7 @@ void Unit::pre_process()
 			process_attack_unit();
 
 			#ifdef DEBUG
-				unit_attack_profile_time += m.get_time() - startTime;
+				unit_attack_profile_time += misc.get_time() - startTime;
 			#endif
 			break;
 
@@ -1527,11 +1527,11 @@ void Unit::pre_process()
 		case ACTION_ASSIGN_TO_TOWN:
 		case ACTION_ASSIGN_TO_VEHICLE:
 			#ifdef DEBUG
-				startTime = m.get_time();
+				startTime = misc.get_time();
 			#endif
 			process_assign();
 			#ifdef DEBUG
-				unit_assign_profile_time += m.get_time() - startTime;
+				unit_assign_profile_time += misc.get_time() - startTime;
 			#endif
 			break;
 
@@ -1566,7 +1566,7 @@ void Unit::pre_process()
 	#ifdef DEBUG
 		// do not read data member
 		LOG_MSG( " end Unit::pre_process()" );
-		LOG_MSG( m.get_random_seed() );
+		LOG_MSG( misc.get_random_seed() );
 	#endif
 	// ###### end Gilbert 20/6 ########//
 
@@ -1940,7 +1940,7 @@ void Unit::set_next(int newNextX, int newNextY, int para, int blockedChecked)
 					ResultNode *curNode = result_node_array + result_node_recno -1;
 					ResultNode *nextNode;
 
-					dist = m.points_distance(curXLoc, curYLoc, curNode->node_x, curNode->node_y);
+					dist = misc.points_distance(curXLoc, curYLoc, curNode->node_x, curNode->node_y);
 					if(result_node_recno>1)
 						count += dist;
 					else
@@ -1948,7 +1948,7 @@ void Unit::set_next(int newNextX, int newNextY, int para, int blockedChecked)
 
 					for(ii=result_node_recno, nextNode=curNode+1; ii<result_node_count; ii++, curNode++, nextNode++)
 					{
-						dist = m.points_distance(nextNode->node_x, nextNode->node_y, curNode->node_x, curNode->node_y);
+						dist = misc.points_distance(nextNode->node_x, nextNode->node_y, curNode->node_x, curNode->node_y);
 						count += dist;
 					}
 
@@ -2199,12 +2199,12 @@ void Unit::handle_blocked_by_idle_unit(Unit *unitPtr)
 	int checkXLoc, checkYLoc;
 	Location *locPtr;
 
-	int xSign = m.random(2) ? 1 : -1;
-	int ySign = m.random(2) ? 1 : -1;
+	int xSign = misc.random(2) ? 1 : -1;
+	int ySign = misc.random(2) ? 1 : -1;
 	
 	for(int i=2; i<=TEST_LIMIT; i++)
 	{
-		m.cal_move_around_a_point(i, TEST_DIMENSION, TEST_DIMENSION, xShift, yShift);
+		misc.cal_move_around_a_point(i, TEST_DIMENSION, TEST_DIMENSION, xShift, yShift);
 		xShift *= xSign;
 		yShift *= ySign;
 		
@@ -2260,7 +2260,7 @@ void Unit::handle_blocked_by_idle_unit(Unit *unitPtr)
 
 		for(i=startCount; i<=endCount; i++)
 		{
-			m.cal_move_around_a_point(i, TEST_DIMENSION, TEST_DIMENSION, xShift, yShift);
+			misc.cal_move_around_a_point(i, TEST_DIMENSION, TEST_DIMENSION, xShift, yShift);
 			if(notLandUnit)
 			{
 				checkXLoc = unitXLoc + xShift*2;

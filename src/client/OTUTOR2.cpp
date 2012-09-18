@@ -305,7 +305,7 @@ int Tutor::select_tutor(int actionMode)
 						if( rec >= 1 && rec <= tutor_count )
 						{
 							int textX = font_bible.put(browseSlotX1+TEXT_OFFSET_X,
-								browseSlotY1+TEXT_OFFSET_Y, m.format(rec), 0, browseSlotX2 );
+								browseSlotY1+TEXT_OFFSET_Y, misc.format(rec), 0, browseSlotX2 );
 							textX = font_bible.put(textX, browseSlotY1+TEXT_OFFSET_Y,
 								". ", 0, browseSlotX2 );
 							textX = font_bible.put(textX, browseSlotY1+TEXT_OFFSET_Y,

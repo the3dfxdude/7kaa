@@ -36,16 +36,16 @@
 void World::process_ambient_sound()
 {
 	int temp = weather.temp_c();
-	if( weather.rain_scale() == 0 && temp >= 15 && m.random(temp) >= 12)
+	if(weather.rain_scale() == 0 && temp >= 15 && misc.random(temp) >= 12)
 	{
-		int bird = m.random(MAX_BIRD) + 1;
+		int bird = misc.random(MAX_BIRD) + 1;
 		char sndFile[] = "BIRDS00";
 		err_when( bird > 99 );
 		sndFile[5] = (bird / 10) + '0';
 		sndFile[6] = (bird % 10) + '0';
 
-		int xLoc = m.random(max_x_loc) - (zoom_matrix->top_x_loc + zoom_matrix->disp_x_loc/2);
-		int yLoc = m.random(max_y_loc) - (zoom_matrix->top_y_loc + zoom_matrix->disp_y_loc/2);
+		int xLoc = misc.random(max_x_loc) - (zoom_matrix->top_x_loc + zoom_matrix->disp_x_loc/2);
+		int yLoc = misc.random(max_y_loc) - (zoom_matrix->top_y_loc + zoom_matrix->disp_y_loc/2);
 		PosVolume p(PosVolume(xLoc, yLoc));
 		RelVolume relVolume(p, 200, MAX_MAP_WIDTH);
 		if( relVolume.rel_vol < 80)

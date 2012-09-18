@@ -192,35 +192,35 @@ void Nation::deinit_all_ai_info()
 //--------- Begin of function Nation::init_personalty --------//
 void Nation::init_personalty()
 {
-	pref_force_projection     = m.random(101);
-	pref_military_development = m.random(101);
+	pref_force_projection     = misc.random(101);
+	pref_military_development = misc.random(101);
 	pref_economic_development = 100-pref_military_development;
-   pref_inc_pop_by_capture   = m.random(101);
+	pref_inc_pop_by_capture   = misc.random(101);
 	pref_inc_pop_by_growth    = 100-pref_inc_pop_by_capture;
-   pref_peacefulness         = m.random(101);
-	pref_military_courage     = m.random(101);
-   pref_territorial_cohesiveness = m.random(101);
-   pref_trading_tendency     = m.random(101);
-   pref_allying_tendency     = m.random(101);
-   pref_honesty              = m.random(101);
-   pref_town_harmony         = m.random(101);
-   pref_loyalty_concern      = m.random(101);
-   pref_forgiveness          = m.random(101);
-   pref_collect_tax          = m.random(101);
-	pref_hire_unit            = m.random(101);
-   pref_use_weapon           = m.random(101);
-   pref_keep_general         = m.random(101);
-   pref_keep_skilled_unit    = m.random(101);
-   pref_diplomacy_retry      = m.random(101);
-   pref_attack_monster       = m.random(101);
-   pref_spy                  = m.random(101);
-	pref_counter_spy          = m.random(101);
-   pref_cash_reserve         = m.random(101);
-   pref_food_reserve         = m.random(101);
-	pref_use_marine           = m.random(101);
-	pref_unit_chase_distance  = 15+m.random(15);
-	pref_repair_concern       = m.random(101);
-	pref_scout					  = m.random(101);
+	pref_peacefulness         = misc.random(101);
+	pref_military_courage     = misc.random(101);
+	pref_territorial_cohesiveness = misc.random(101);
+	pref_trading_tendency     = misc.random(101);
+	pref_allying_tendency     = misc.random(101);
+	pref_honesty              = misc.random(101);
+	pref_town_harmony         = misc.random(101);
+	pref_loyalty_concern      = misc.random(101);
+	pref_forgiveness          = misc.random(101);
+	pref_collect_tax          = misc.random(101);
+	pref_hire_unit            = misc.random(101);
+	pref_use_weapon           = misc.random(101);
+	pref_keep_general         = misc.random(101);
+	pref_keep_skilled_unit    = misc.random(101);
+	pref_diplomacy_retry      = misc.random(101);
+	pref_attack_monster       = misc.random(101);
+	pref_spy                  = misc.random(101);
+	pref_counter_spy          = misc.random(101);
+	pref_cash_reserve         = misc.random(101);
+	pref_food_reserve         = misc.random(101);
+	pref_use_marine           = misc.random(101);
+	pref_unit_chase_distance  = 15+misc.random(15);
+	pref_repair_concern       = misc.random(101);
+	pref_scout		  = misc.random(101);
 }
 //---------- End of function Nation::init_personalty --------//
 
@@ -269,7 +269,7 @@ void Nation::process_ai()
 		LOG_MSG("begin process_action(0,ACTION_AI_PROCESS_TALK_MSG)");
 		process_action(0, ACTION_AI_PROCESS_TALK_MSG);
 		LOG_MSG("end process_action(0,ACTION_AI_PROCESS_TALK_MSG)");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		if( nation_array.is_deleted(nationRecno) )		// the nation can have surrendered 
 			return;
@@ -285,7 +285,7 @@ void Nation::process_ai()
 		LOG_MSG("begin process_action()");
 		process_action();
 		LOG_MSG("end process_action()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		if( nation_array.is_deleted(nationRecno) )		// the nation can have surrendered 
 			return;
@@ -306,7 +306,7 @@ void Nation::process_ai()
 	if( game.game_mode == GAME_TUTORIAL )
 	{
 		if( cash < 100 )
-			add_cheat( (float)200+m.random(500) );
+			add_cheat( (float)200+misc.random(500) );
 
 		if( food < 100 )
 			food += 1000;
@@ -458,7 +458,7 @@ void Nation::process_ai_main()
 	}
 
 	LOG_MSG(debugStr);
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 }
 //---------- End of function Nation::process_ai_main --------//
 
@@ -660,7 +660,7 @@ void Nation::ai_improve_relation()
 		//--- decrease the started_war_on_us_count once per year, gradually forgiving other nations' wrong doing ---//
 
 		if( nationRelation->started_war_on_us_count > 0
-			 && m.random(5-pref_forgiveness/20) > 0 )
+			 && misc.random(5-pref_forgiveness/20) > 0 )
 		{
 			nationRelation->started_war_on_us_count--;
 		}

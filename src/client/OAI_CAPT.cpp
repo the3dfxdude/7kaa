@@ -174,7 +174,7 @@ int Nation::think_capture_independent()
 			{
 				Town* ownTown = town_array[ ai_town_array[j] ];
 
-				int townDistance = m.points_distance(targetTown->center_x, targetTown->center_y, 
+				int townDistance = misc.points_distance(targetTown->center_x, targetTown->center_y,
 										 ownTown->center_x, ownTown->center_y);
 
 				if( info.game_date-info.game_start_date >

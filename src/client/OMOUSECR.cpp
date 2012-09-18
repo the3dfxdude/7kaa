@@ -159,8 +159,8 @@ void MouseCursor::load_cursor_info()
 
 		cursorInfo->bitmap_ptr = res_bitmap.read_imported(bitmapOffset);
 
-		cursorInfo->hot_spot_x = m.atoi( cursorRec->hot_spot_x, cursorRec->HOT_SPOT_LEN );
-		cursorInfo->hot_spot_y = m.atoi( cursorRec->hot_spot_y, cursorRec->HOT_SPOT_LEN );
+		cursorInfo->hot_spot_x = misc.atoi( cursorRec->hot_spot_x, cursorRec->HOT_SPOT_LEN );
+		cursorInfo->hot_spot_y = misc.atoi( cursorRec->hot_spot_y, cursorRec->HOT_SPOT_LEN );
 	}
 }
 //--------- End of function MouseCursor::load_cursor_info ---------//

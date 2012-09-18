@@ -64,7 +64,7 @@ void Tornado::init(short startX, short startY, short lifeTime)
 //----------- Begin of function Tornado::pre_process ----------//
 void Tornado::pre_process()
 {
-	double angle = m.random(32) / 16.0 * PI;
+	double angle = misc.random(32) / 16.0 * PI;
 	dmg_offset_x = short(DAMAGE_POINT_RADIUS * sin(angle));
 	dmg_offset_y = short(DAMAGE_POINT_RADIUS * cos(angle));
 	if( --life_time <= 0)
@@ -83,7 +83,7 @@ void Tornado::process_move()
 	if( speed > 10)
 		speed = 10;
 
-	double windDir = weather.wind_direct_rad() + (m.random(31)-15)*PI/180.0;
+	double windDir = weather.wind_direct_rad() + (misc.random(31)-15)*PI/180.0;
 	cur_x += short(speed * sin(windDir));
 	cur_y -= short(speed * cos(windDir));
 	if( ++cur_frame > cur_sprite_move()->frame_count )

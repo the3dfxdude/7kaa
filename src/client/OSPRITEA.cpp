@@ -229,13 +229,13 @@ void SpriteArray::process()
 		err_when(!spritePtr->sprite_info->need_turning && spritePtr->cur_dir!=spritePtr->final_dir);
 
 		#ifdef DEBUG
-			unsigned long profileStartTime = m.get_time();
+			unsigned long profileStartTime = misc.get_time();
 		#endif
 
 		spritePtr->pre_process();		// it's actually calling Unit::pre_process() and other derived Unit classes
 
 		#ifdef DEBUG
-			unit_profile_time += m.get_time() - profileStartTime;
+			unit_profile_time += misc.get_time() - profileStartTime;
 		#endif
 
 		//-----------------------------------------------------//
@@ -259,18 +259,18 @@ void SpriteArray::process()
 		#endif
 
 		#ifdef DEBUG
-			profileStartTime = m.get_time();
+			profileStartTime = misc.get_time();
 		#endif
 
 		switch(spritePtr->cur_action)
 		{
 			case SPRITE_IDLE:
 				#ifdef DEBUG
-					startTime = m.get_time();
+					startTime = misc.get_time();
 				#endif
 				spritePtr->process_idle();
 				#ifdef DEBUG
-					sprite_idle_profile_time += m.get_time() - startTime;
+					sprite_idle_profile_time += misc.get_time() - startTime;
 				#endif
 				break;
 
@@ -281,31 +281,31 @@ void SpriteArray::process()
 
 			case SPRITE_MOVE:
 				#ifdef DEBUG
-					startTime = m.get_time();
+					startTime = misc.get_time();
 				#endif
 				spritePtr->process_move();
 				#ifdef DEBUG
-					sprite_move_profile_time += m.get_time() - startTime;
+					sprite_move_profile_time += misc.get_time() - startTime;
 				#endif
 				break;
 
 			case SPRITE_WAIT:
 				#ifdef DEBUG
-					startTime = m.get_time();
+					startTime = misc.get_time();
 				#endif
 				spritePtr->process_wait();
 				#ifdef DEBUG
-					sprite_wait_profile_time += m.get_time() - startTime;
+					sprite_wait_profile_time += misc.get_time() - startTime;
 				#endif
 				break;
 
 			case SPRITE_ATTACK:
 				#ifdef DEBUG
-					startTime = m.get_time();
+					startTime = misc.get_time();
 				#endif
 				spritePtr->process_attack();
 				#ifdef DEBUG
-					sprite_attack_profile_time += m.get_time() - startTime;
+					sprite_attack_profile_time += misc.get_time() - startTime;
 				#endif
 				break;
 
@@ -327,7 +327,7 @@ void SpriteArray::process()
 		}
 
 		#ifdef DEBUG
-			sprite_array_profile_time += m.get_time() - profileStartTime;
+			sprite_array_profile_time += misc.get_time() - profileStartTime;
 		#endif
 
 		//----- can use other reasonable value to replace MIN_BACKGROUND_NODE_USED_UP ----//
@@ -357,7 +357,7 @@ void SpriteArray::process()
 
 	#ifdef DEBUG
 	if(this==&unit_array || this==&bullet_array || this==&tornado_array)
-		m.set_random_seed(m.get_random_seed() + restart_recno);
+		misc.set_random_seed(misc.get_random_seed() + restart_recno);
 	#endif
 }
 //----------- End of function SpriteArray::process -----------//

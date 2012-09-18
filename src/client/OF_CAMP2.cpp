@@ -199,7 +199,7 @@ void FirmCamp::process_ai_capturing()
 
 		err_when( patrol_unit_count<=0 );
 
-		unitArray[0] = patrol_unit_array[ m.random(patrol_unit_count) ];
+		unitArray[0] = patrol_unit_array[ misc.random(patrol_unit_count) ];
 
 		err_when( unit_array.is_deleted(unitArray[0]) );
 
@@ -239,7 +239,7 @@ void FirmCamp::ai_attack_town_defender(Unit* attackerUnit)
 	//---- if there are still town defenders out there ---//
 
 	int unitCount = unit_array.size();
-	int unitRecno = m.random(unitCount)+1;		// scan randomly
+	int unitRecno = misc.random(unitCount)+1;		// scan randomly
 	short unitArray[1];
 	Unit* targetUnit;
 
@@ -334,7 +334,7 @@ void FirmCamp::think_recruit()
 			if( firmCamp->should_close_flag && 
 				 (firmCamp->overseer_recno || firmCamp->worker_count>0) )
 			{
-				curRating = 100 - m.points_distance( center_x, center_y,
+				curRating = 100 - misc.points_distance( center_x, center_y,
 								firmCamp->center_x, firmCamp->center_y );
 
 				if( curRating > bestRating )
@@ -658,7 +658,7 @@ void FirmCamp::think_capture()
 
 	//--- try using spies if there are defense forces and the nation likes to use spies ---//
 
-	if( defenseCombatLevel > 0 ) 		// && ownNation->pref_spy >= 50 && m.random(3)==0 )		// 1/3 chance of using spies here, otherwise only use spies when we are not strong enough to take over the village by force
+	if( defenseCombatLevel > 0 ) 		// && ownNation->pref_spy >= 50 && misc.random(3)==0 )		// 1/3 chance of using spies here, otherwise only use spies when we are not strong enough to take over the village by force
 	{
 		if( targetTown->nation_recno==0 )		// if the camp is trying to capture an independent town, the leadership and race id. of the overseer matters.
 		{
@@ -1260,7 +1260,7 @@ int FirmCamp::think_attack_nearby_enemy()
 
 					enemyCombatLevel += (int) unitPtr->hit_points;
 
-					if( enemyXLoc == -1 || m.random(5)==0 )
+					if( enemyXLoc == -1 || misc.random(5)==0 )
 					{
 						enemyXLoc = xLoc;
 						enemyYLoc = yLoc;

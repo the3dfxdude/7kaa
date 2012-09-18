@@ -58,7 +58,7 @@ void Town::think_independent_town()
 	{
 		LOG_MSG(" Town::think_independent_set_link");
 		think_independent_set_link();
-		LOG_MSG(m.get_random_seed() );
+		LOG_MSG(misc.get_random_seed());
 	}
 
 	//---- think about independent units join existing nations ----//
@@ -67,7 +67,7 @@ void Town::think_independent_town()
 	{
 		LOG_MSG(" Town::think_independent_unit_join_nation");
 		think_independent_unit_join_nation();
-		LOG_MSG(m.get_random_seed() );
+		LOG_MSG(misc.get_random_seed());
 	}
 
 	//----- think about form a new nation -----//
@@ -76,11 +76,11 @@ void Town::think_independent_town()
 	{
 		LOG_MSG(" Town::think_independent_form_new_nation");
 		think_independent_form_new_nation();
-		LOG_MSG(m.get_random_seed() );
+		LOG_MSG(misc.get_random_seed());
 	}
 
 	LOG_MSG("end Town::think_independent_town");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 }
 //-------- End of function Town::think_independent_town ---------//
 
@@ -129,7 +129,7 @@ void Town::think_independent_set_link()
 //
 int Town::think_independent_form_new_nation()
 {
-	if( m.random(10) > 0 )		// 1/10 chance to set up a new nation. 
+	if( misc.random(10) > 0 )		// 1/10 chance to set up a new nation.
 		return 0;
 
 	//-------- check if the town is big enough -------//
@@ -205,9 +205,9 @@ int Town::form_new_nation()
 	Unit* kingUnit = unit_array[kingUnitRecno];
 
 	kingUnit->skill.skill_id = SKILL_LEADING;
-	kingUnit->skill.skill_level = 50+m.random(51);
+	kingUnit->skill.skill_level = 50+misc.random(51);
 
-	kingUnit->set_combat_level(70+m.random(31));
+	kingUnit->set_combat_level(70+misc.random(31));
 
 	nation_array[nationRecno]->set_king(kingUnitRecno, 1);		// 1-this is the first king of the nation
 
@@ -222,7 +222,7 @@ int Town::form_new_nation()
 	//------ increase the loyalty of the town -----//
 
 	for( i=0 ; i<MAX_RACE ; i++ )
-		race_loyalty_array[i] = (float) 70 + m.random(20);			// 70 to 90 initial loyalty 
+		race_loyalty_array[i] = (float) 70 + misc.random(20);			// 70 to 90 initial loyalty
 
 	//--------- add news ----------//
 
@@ -233,22 +233,22 @@ int Town::form_new_nation()
 	int mobileCount;
 	Nation* nationPtr = nation_array[nationRecno];
 
-	switch( m.random(10) )
+	switch( misc.random(10) )
 	{
 		case 1:		// knowledge of weapon in the beginning.
-			tech_res[ m.random(tech_res.tech_count)+1 ]->set_nation_tech_level(nationRecno, 1);
+			tech_res[ misc.random(tech_res.tech_count)+1 ]->set_nation_tech_level(nationRecno, 1);
 			break;
 
 		case 2:		// random additional cash
-			nationPtr->cash += m.random(5000);
+			nationPtr->cash += misc.random(5000);
 			break;
 
 		case 3:		// random additional food
-			nationPtr->food += m.random(5000);
+			nationPtr->food += misc.random(5000);
 			break;
 
 		case 4:		// random additional skilled units
-			mobileCount = m.random(5)+1;
+			mobileCount = misc.random(5)+1;
 
 			for( i=0 ; i<mobileCount && recruitable_race_pop(raceId,0)>0 ; i++ )		// 0-don't recruit spies
 			{
@@ -260,7 +260,7 @@ int Town::form_new_nation()
 
 					//------- randomly set a skill -------//
 
-					int skillId = m.random(MAX_TRAINABLE_SKILL)+1;
+					int skillId = misc.random(MAX_TRAINABLE_SKILL)+1;
 					int loopCount=0;		// no spying skill
 
 					while( skillId==SKILL_SPYING )		// no spy skill as skill_id can't be set as SKILL_SPY, for spies, spy_recno must be set instead
@@ -272,8 +272,8 @@ int Town::form_new_nation()
 					}
 
 					unitPtr->skill.skill_id    = skillId;
-					unitPtr->skill.skill_level = 50 + m.random(50);
-					unitPtr->set_combat_level( 50 + m.random(50) );
+					unitPtr->skill.skill_level = 50 + misc.random(50);
+					unitPtr->set_combat_level( 50 + misc.random(50) );
 				}
 				else
 					break;
@@ -366,7 +366,7 @@ int Town::think_independent_unit_join_nation()
 
 	//--- set a new value to independent_unit_join_nation_min_rating ---//
 
-	independent_unit_join_nation_min_rating = bestRating + 100 + m.random(30);		// reset it to a higher rating
+	independent_unit_join_nation_min_rating = bestRating + 100 + misc.random(30);		// reset it to a higher rating
 
 	if( independent_unit_join_nation_min_rating < 100 )
 		independent_unit_join_nation_min_rating = 100;
@@ -396,17 +396,17 @@ int Town::independent_unit_join_nation(int raceId, int toNationRecno)
 
 	int skillId, skillLevel, combatLevel;
 
-	switch( m.random(3) )
+	switch( misc.random(3) )
 	{
 		case 0:		// leaders
 			skillId = SKILL_LEADING;
 
-			if( m.random(3)==0 )
-				skillLevel = m.random(100);
+			if( misc.random(3)==0 )
+				skillLevel = misc.random(100);
 			else
-				skillLevel = m.random(50);
+				skillLevel = misc.random(50);
 
-			combatLevel = skillLevel + m.random(40) - 20;
+			combatLevel = skillLevel + misc.random(40) - 20;
          combatLevel = MIN(combatLevel, 100);
 			combatLevel = MAX(combatLevel, 10);
 			break;
@@ -414,11 +414,11 @@ int Town::independent_unit_join_nation(int raceId, int toNationRecno)
 		case 1:		// peasants
 			skillId = 0;
 			skillLevel = 0;
-			combatLevel = 10 + m.random(10);
+			combatLevel = 10 + misc.random(10);
 			break;
 
 		case 2:		// skilled units
-			skillId = m.random(MAX_TRAINABLE_SKILL)+1;
+			skillId = misc.random(MAX_TRAINABLE_SKILL)+1;
 			{
 				int loopCount=0;		// no spying skill
 
@@ -430,8 +430,8 @@ int Town::independent_unit_join_nation(int raceId, int toNationRecno)
 					err_when( ++loopCount > 100 );
 				}
 			}
-			skillLevel = 10+m.random(80);
-			combatLevel = 10+m.random(30);
+			skillLevel = 10+misc.random(80);
+			combatLevel = 10+misc.random(30);
 			break;
 	}
 

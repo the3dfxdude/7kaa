@@ -602,7 +602,7 @@ int SpyArray::catch_spy(int spyPlace, int spyPlacePara)
 
 			escapeChance = MAX( spyPtr->spy_skill/10, escapeChance );
 
-			if( m.random(escapeChance) == 0 )
+			if( misc.random(escapeChance) == 0 )
 			{
 				spyPtr->get_killed(); 		// only catch one spy per calling
 				return 1;

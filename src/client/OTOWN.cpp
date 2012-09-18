@@ -96,7 +96,7 @@ void Town::init(int nationRecno, int raceId, int xLoc, int yLoc)
 	ai_town = !nation_recno || nation_array[nation_recno]->nation_type == NATION_AI;    // nation_recno==0 for independent towns
 	ai_link_checked = 1;			// check the linked towns and firms connected only if ai_link_checked==0
 
-	independent_unit_join_nation_min_rating = 100 + m.random(150);		// the minimum rating a nation must have in order for an independent unit to join it
+	independent_unit_join_nation_min_rating = 100 + misc.random(150);		// the minimum rating a nation must have in order for an independent unit to join it
 
 	setup_date = info.game_date;
 
@@ -108,7 +108,7 @@ void Town::init(int nationRecno, int raceId, int xLoc, int yLoc)
 		{
 			for( int j=0 ; j<MAX_NATION ; j++ )
 			{
-				race_resistance_array[i][j] = (float) 60 + m.random(40);
+				race_resistance_array[i][j] = (float) 60 + misc.random(40);
 				race_target_resistance_array[i][j] = -1;
 			}
 		}
@@ -122,13 +122,13 @@ void Town::init(int nationRecno, int raceId, int xLoc, int yLoc)
 				break;
 
 			case OPTION_MODERATE:
-				town_combat_level = 10 + m.random(20);
+				town_combat_level = 10 + misc.random(20);
 				break;
 
 			case OPTION_HIGH:
-				town_combat_level = 10 + m.random(30);
-				if( m.random(5)==0 )
-					town_combat_level += m.random(30);
+				town_combat_level = 10 + misc.random(30);
+				if( misc.random(5)==0 )
+					town_combat_level += misc.random(30);
 				break;
 
 			default:
@@ -367,7 +367,7 @@ void Town::next_day()
 	{
 		LOG_MSG(" population_grow");
 		population_grow();
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 	}
 
 	err_when(population>MAX_TOWN_POPULATION);
@@ -376,7 +376,7 @@ void Town::next_day()
 
 	LOG_MSG(" update_camp_link");
 	update_camp_link();
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	//------ update target loyalty/resistance -------//
 
@@ -392,7 +392,7 @@ void Town::next_day()
 			LOG_MSG(" update_target_resistance");
 			update_target_resistance();		// update resistance for independent towns
 		}
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 	}
 
 	//------ update loyalty/resistance -------//
@@ -409,7 +409,7 @@ void Town::next_day()
 			LOG_MSG(" update_target_resistance");
 			update_resistance();
 		}
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		if( town_array.is_deleted(townRecno) )
 			return;
@@ -419,7 +419,7 @@ void Town::next_day()
 
 	LOG_MSG(" think_migrate");
 	think_migrate();
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	if( town_array.is_deleted(townRecno) )
 		return;
@@ -430,7 +430,7 @@ void Town::next_day()
 	{
 		LOG_MSG(" think_rebel");
 		think_rebel();
-		LOG_MSG(m.get_random_seed() );
+		LOG_MSG(misc.get_random_seed() );
 
 		if( town_array.is_deleted(townRecno) )
 			return;
@@ -443,7 +443,7 @@ void Town::next_day()
 	{
 		LOG_MSG(" think_surrender");
 		think_surrender();		// for nation town only, independent town surrender is handled in update_resistance()
-		LOG_MSG(m.get_random_seed() );
+		LOG_MSG(misc.get_random_seed() );
 
 		if( town_array.is_deleted(townRecno) )
 			return;
@@ -465,13 +465,13 @@ void Town::next_day()
 		{
 			LOG_MSG(" process_train");
 			process_train();
-			LOG_MSG(m.get_random_seed() );
+			LOG_MSG(misc.get_random_seed() );
 		}
 		else
 		{
 			LOG_MSG(" process_queue");
 			process_queue();
-			LOG_MSG(m.get_random_seed() );
+			LOG_MSG(misc.get_random_seed() );
 		}
 
 		if( town_array.is_deleted(townRecno) )	// when the last peasant in the town is trained, the town disappear
@@ -485,7 +485,7 @@ void Town::next_day()
 	{
 		LOG_MSG(" process_food");
 		process_food();
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		if( town_array.is_deleted(townRecno) )
 			return;
@@ -497,7 +497,7 @@ void Town::next_day()
 	{
 		LOG_MSG(" process_auto");
 		process_auto();
-		LOG_MSG(m.get_random_seed() );
+		LOG_MSG(misc.get_random_seed() );
 
 		if( town_array.is_deleted(townRecno) )
 			return;
@@ -517,7 +517,7 @@ void Town::next_day()
 	if( info.game_date%30 == town_recno%30 )
 		spy_array.catch_spy(SPY_TOWN, town_recno);
 
-	LOG_MSG(m.get_random_seed() );
+	LOG_MSG(misc.get_random_seed() );
 
 	if( town_array.is_deleted(townRecno) )
 		return;
@@ -542,7 +542,7 @@ void Town::next_day()
 		if( nation_recno==0 || nation_array[nation_recno]->find_best_firm_loc(FIRM_INN, loc_x1, loc_y1, buildXLoc, buildYLoc) )		// whether it's FIRM_INN or not really doesn't matter, just any firm type will do
 			no_neighbor_space = 0;
 
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 	}
 
 	//------ decrease penalties -----//
@@ -1877,7 +1877,7 @@ void Town::think_rebel()
 		if( population==1 )		// if only one peasant left, break, so not all peasants will rebel 
 			break;
 
-		raceRebelCount = (int) (race_pop_array[i]-race_spy_count_array[i]) * (30+m.random(30)) / 100;		// 30% - 60% of the unit will rebel.
+		raceRebelCount = (int) (race_pop_array[i]-race_spy_count_array[i]) * (30+misc.random(30)) / 100;		// 30% - 60% of the unit will rebel.
 		err_when(raceRebelCount+1 > MAX_TOWN_POPULATION); // plus 1 for the leader, cannot excess MAX_TOWN_POPULATION, consider the case these units settle immediately
 
 		for( j=0 ; j<raceRebelCount ; j++ )		// no. of rebel units of this race
@@ -2013,8 +2013,8 @@ int Town::create_rebel_unit(int raceId, int isLeader)
 
 	if( isLeader )
 	{
-		int combatLevel 	  = 10 + population*2 + m.random(10);		// the higher the population is, the higher the combat level will be
-		int leadershipLevel = 10 + population   + m.random(10);		// the higher the population is, the higher the combat level will be
+		int combatLevel 	  = 10 + population*2 + misc.random(10);		// the higher the population is, the higher the combat level will be
+		int leadershipLevel = 10 + population   + misc.random(10);		// the higher the population is, the higher the combat level will be
 
 		unitPtr->set_combat_level( MIN(combatLevel, 100) );
 
@@ -2166,11 +2166,11 @@ void Town::think_migrate()
 		if( townPtr->population>=MAX_TOWN_POPULATION )
 			continue;
 
-		townDistance = m.points_distance(center_x, center_y, townPtr->center_x, townPtr->center_y);
+		townDistance = misc.points_distance(center_x, center_y, townPtr->center_x, townPtr->center_y);
 
 		//---- scan all jobless population, see if any of them want to migrate ----//
 
-		raceId = m.random(MAX_RACE)+1;
+		raceId = misc.random(MAX_RACE)+1;
 
 		for( j=0 ; j<MAX_RACE ; j++ )
 		{
@@ -2292,7 +2292,7 @@ int Town::think_migrate_one(Town* targetTown, int raceId, int townDistance)
 
 		if( townDistance > EFFECTIVE_TOWN_TOWN_DISTANCE )
 		{
-			if( m.random(2)==0 )
+			if( misc.random(2)==0 )
 			{
 				dec_pop(raceId, 0);
 				return 1;
@@ -2431,7 +2431,7 @@ int Town::can_migrate(int destTownRecno, int migrateNow, int raceId)
 
 			//---- if the target town is within the effective range of this firm ----//
 
-			if( m.points_distance( destTown->center_x, destTown->center_y,
+			if( misc.points_distance( destTown->center_x, destTown->center_y,
 				 firmPtr->center_x, firmPtr->center_y ) > EFFECTIVE_FIRM_TOWN_DISTANCE )
 			{
 				continue;
@@ -2484,7 +2484,7 @@ void Town::move_pop(Town* destTown, int raceId, int hasJob)
 
 		if( race_spy_count_array[raceId-1] == jobless_race_pop_array[raceId-1] )
 		{
-			int spySeqId = m.random( race_spy_count_array[raceId-1] ) + 1;		// randomly pick one of the spies
+			int spySeqId = misc.random( race_spy_count_array[raceId-1] ) + 1;		// randomly pick one of the spies
 
 			int spyRecno = spy_array.find_town_spy(town_recno, raceId, spySeqId);
 
@@ -2602,7 +2602,7 @@ void Town::being_attacked(int attackerUnitRecno, float attackDamage)
 
 	// only call out defender when the attacking unit is within the effective defending distance
 
-	if( m.points_distance( attackerUnit->cur_x_loc(), attackerUnit->cur_y_loc(),
+	if( misc.points_distance( attackerUnit->cur_x_loc(), attackerUnit->cur_y_loc(),
 		 center_x, center_y ) <= EFFECTIVE_DEFEND_TOWN_DISTANCE )
 	{
 		int loopCount=0;
@@ -2766,7 +2766,7 @@ int Town::mobilize_defender(int attackerNationRecno)
 
 	//------- pick a race to mobilize randomly --------//
 
-	int randomPersonId = m.random(population)+1;
+	int randomPersonId = misc.random(population)+1;
 	int popSum=0, raceId=0;
 
 	int i;
@@ -2865,7 +2865,7 @@ int Town::mobilize_defender(int attackerNationRecno)
 
 	unitPtr->skill.skill_level = (char) loyaltyDec;	// if the unit is a town defender, this var is temporary used for storing the loyalty that will be added back to the town if the defender returns to the town
 
-	int combatLevel = town_combat_level + m.random(20) - 10;		// -10 to +10 random difference
+	int combatLevel = town_combat_level + misc.random(20) - 10;		// -10 to +10 random difference
 
 	combatLevel = MIN(combatLevel, 100);
 	combatLevel = MAX(combatLevel, 10);
@@ -2932,9 +2932,9 @@ void Town::kill_town_people(int raceId, int attackerNationRecno)
 
 	//------ the killed unit can be a spy -----//
 
-	if( m.random(recruitable_race_pop(raceId,1)) < race_spy_count_array[raceId-1] )
+	if( misc.random(recruitable_race_pop(raceId,1)) < race_spy_count_array[raceId-1] )
 	{
-		int spyRecno = spy_array.find_town_spy(town_recno, raceId, m.random(race_spy_count_array[raceId-1])+1 );
+		int spyRecno = spy_array.find_town_spy(town_recno, raceId, misc.random(race_spy_count_array[raceId-1])+1 );
 
 		spy_array.del_spy(spyRecno);
 	}
@@ -3207,7 +3207,7 @@ void Town::setup_link()
 
 		//---------- check if the firm is close enough to this firm -------//
 
-		if( m.points_distance( firmPtr->center_x, firmPtr->center_y,
+		if( misc.points_distance( firmPtr->center_x, firmPtr->center_y,
 			 center_x, center_y ) > EFFECTIVE_FIRM_TOWN_DISTANCE )
 		{
 			continue;
@@ -3284,7 +3284,7 @@ void Town::setup_link()
 
 		//------ check if the town is close enough to this firm -------//
 
-		if( m.points_distance( townPtr->center_x, townPtr->center_y,
+		if( misc.points_distance( townPtr->center_x, townPtr->center_y,
 			 center_x, center_y ) > EFFECTIVE_TOWN_TOWN_DISTANCE )
 		{
 			continue;
@@ -3389,8 +3389,8 @@ void Town::release_firm_link(int releaseFirmRecno)
       {
 			err_when( linked_firm_count > MAX_LINKED_FIRM_TOWN );
 
-			m.del_array_rec( linked_firm_array		  , linked_firm_count, sizeof(linked_firm_array[0]), i+1 );
-			m.del_array_rec( linked_firm_enable_array, linked_firm_count, sizeof(linked_firm_enable_array[0]), i+1 );
+			misc.del_array_rec( linked_firm_array		  , linked_firm_count, sizeof(linked_firm_array[0]), i+1 );
+			misc.del_array_rec( linked_firm_enable_array, linked_firm_count, sizeof(linked_firm_enable_array[0]), i+1 );
 			linked_firm_count--;
 			return;
 		}
@@ -3417,8 +3417,8 @@ void Town::release_town_link(int releaseTownRecno)
 		{
 			err_when( linked_town_count > MAX_LINKED_TOWN_TOWN );
 
-			m.del_array_rec( linked_town_array		  , linked_town_count, sizeof(linked_town_array[0]), i+1 );
-			m.del_array_rec( linked_town_enable_array, linked_town_count, sizeof(linked_town_enable_array[0]), i+1 );
+			misc.del_array_rec( linked_town_array		  , linked_town_count, sizeof(linked_town_array[0]), i+1 );
+			misc.del_array_rec( linked_town_enable_array, linked_town_count, sizeof(linked_town_enable_array[0]), i+1 );
 			linked_town_count--;
 			return;
 		}
@@ -3708,7 +3708,7 @@ void Town::auto_set_layout()
 
 	//--- assign the first house to each race, each present race will at least have one house ---//
 
-	int firstRaceId = m.random(MAX_RACE)+1;		// random match
+	int firstRaceId = misc.random(MAX_RACE)+1;		// random match
 	int raceId = firstRaceId;
 
 	for( i=0 ; i<townLayout->slot_count ; i++ )
@@ -3788,7 +3788,7 @@ label_distribute_house:
 
 			case TOWN_OBJECT_HOUSE:
 				if( !slot_object_id_array[i] )
-					slot_object_id_array[i] = town_res.scan_build( townLayout->first_slot_recno+i, m.random(MAX_RACE)+1 );
+					slot_object_id_array[i] = town_res.scan_build( townLayout->first_slot_recno+i, misc.random(MAX_RACE)+1 );
 				break;
 		}
 	}
@@ -3861,7 +3861,7 @@ int Town::think_layout_id()
 
 	//------- return the result layout id -------//
 
-	return layoutId2 + m.random(layoutId-layoutId2+1);
+	return layoutId2 + misc.random(layoutId-layoutId2+1);
 }
 //---------- End of function Town::think_layout_id --------//
 
@@ -4025,7 +4025,7 @@ int Town::pick_random_race(int pickNonRecruitableAlso, int pickSpyFlag)
 	if( totalPop==0 )
 		return 0;
 
-	int randomPersonId = m.random(totalPop)+1;
+	int randomPersonId = misc.random(totalPop)+1;
 	int popSum=0;
 
 	for( int i=0 ; i<MAX_RACE ; i++ )
@@ -4474,7 +4474,7 @@ int Town::closest_own_camp()
 			continue;
 		}
 
-		curDistance = m.points_distance( center_x, center_y,
+		curDistance = misc.points_distance( center_x, center_y,
 						  firmPtr->center_x, firmPtr->center_y );
 
 		if( curDistance < minDistance )

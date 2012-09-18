@@ -105,7 +105,7 @@ void Unit::assign_to_ship(int destX, int destY, short shipRecno, int miscNo)
 			UCHAR regionId = locPtr->region_id;
 			for(int i=2; i<=9; i++)
 			{
-				m.cal_move_around_a_point(i, 3, 3, xShift, yShift);
+				misc.cal_move_around_a_point(i, 3, 3, xShift, yShift);
 				checkXLoc = shipXLoc+xShift;
 				checkYLoc = shipYLoc+yShift;
 				if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)
@@ -136,7 +136,7 @@ void Unit::assign_to_ship(int destX, int destY, short shipRecno, int miscNo)
 	else
 	{
 		//------------ offset location is given, move there directly ----------//
-		m.cal_move_around_a_point(miscNo, MAX_WORLD_X_LOC, MAX_WORLD_Y_LOC, xShift, yShift);
+		misc.cal_move_around_a_point(miscNo, MAX_WORLD_X_LOC, MAX_WORLD_Y_LOC, xShift, yShift);
 		resultXLoc = destX+xShift;
 		resultYLoc = destY+yShift;
 		err_when(resultXLoc<0 || resultXLoc>=MAX_WORLD_X_LOC || resultYLoc<0 || resultYLoc>=MAX_WORLD_Y_LOC);
@@ -511,7 +511,7 @@ int Unit::ship_to_beach_path_edit(int& resultXLoc, int& resultYLoc, UCHAR region
 		Location *locPtr;
 		for(int i=2; i<=9; ++i)
 		{
-			m.cal_move_around_a_point(i, 3, 3, xShift, yShift);
+			misc.cal_move_around_a_point(i, 3, 3, xShift, yShift);
 			checkXLoc = curXLoc + xShift;
 			checkYLoc = curYLoc + yShift;
 			if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)
@@ -624,7 +624,7 @@ void Unit::ship_leave_beach(int shipOldXLoc, int shipOldYLoc)
 	//------------- find a location to leave the beach ------------//
 	for(int i=2; i<=9; i++)
 	{
-		m.cal_move_around_a_point(i, 3, 3, xShift, yShift);
+		misc.cal_move_around_a_point(i, 3, 3, xShift, yShift);
 		checkXLoc = curXLoc + xShift;
 		checkYLoc = curYLoc + yShift;
 

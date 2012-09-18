@@ -526,7 +526,7 @@ char* Info::get_rank_pos_str(int rankType, int nationRecno)
 			rankPos++;
 	}
 
-	return m.num_th(rankPos);
+	return misc.num_th(rankPos);
 }
 //----------- End of function Info::get_rank_pos_str -----------//
 

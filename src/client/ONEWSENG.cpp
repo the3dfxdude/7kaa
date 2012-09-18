@@ -213,7 +213,7 @@ void News::migrate()
 	if( short_para4 == 1 )
 		str = "A";
 	else
-		str = m.format(short_para4);
+		str = misc.format(short_para4);
 
 	str += " ";
 	str += race_res[short_para3]->name;
@@ -689,7 +689,7 @@ void News::monster_gold_acquired()
 	//----------------------------------------------//
 
 	str  = "You have recovered ";
-	str += m.format(short_para1,2);
+	str += misc.format(short_para1,2);
 	str += " worth of treasure from the Fryhtans.";
 }
 //------- End of function News::monster_gold_acquired -----//
@@ -1014,7 +1014,7 @@ void News::tech_researched()
 	if( tech_res[short_para1]->max_tech_level > 1 )		// if the tech has more than one level
 	{
 		str += " Mark ";
-		str += m.roman_number(short_para2);
+		str += misc.roman_number(short_para2);
 	}
 
 	str += " research.";
@@ -1242,7 +1242,7 @@ void News::weapon_ship_worn_out()
 	if( short_para2 )
 	{
 		str += " ";
-		str += m.roman_number(short_para2);
+		str += misc.roman_number(short_para2);
 	}
 
 	str += " of yours has broken down due to the lack of maintenance funds.";

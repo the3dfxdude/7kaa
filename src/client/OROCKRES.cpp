@@ -155,10 +155,10 @@ void RockRes::load_info()
 		rockRec  = (RockRec*) dbRock->read(i+1);
 		rockInfo = rock_info_array+i;
 
-		m.rtrim_fld( rockInfo->rock_name, rockRec->rock_id, rockRec->ROCKID_LEN );
+		misc.rtrim_fld( rockInfo->rock_name, rockRec->rock_id, rockRec->ROCKID_LEN );
 		rockInfo->rock_type   	 	  = rockRec->rock_type;
-		rockInfo->loc_width          = m.atoi(rockRec->loc_width, rockRec->LOC_LEN);
-		rockInfo->loc_height         = m.atoi(rockRec->loc_height, rockRec->LOC_LEN);
+		rockInfo->loc_width          = misc.atoi(rockRec->loc_width, rockRec->LOC_LEN);
+		rockInfo->loc_height         = misc.atoi(rockRec->loc_height, rockRec->LOC_LEN);
 		// ###### begin Gilbert 2/5 ##########//
 		if( rockRec->terrain_1 == 0 || rockRec->terrain_1 == ' ')
 			rockInfo->terrain_1 = 0;
@@ -169,9 +169,9 @@ void RockRes::load_info()
 		else
 			rockInfo->terrain_2       = TerrainRes::terrain_code(rockRec->terrain_2);
 		// ###### end Gilbert 2/5 ##########//
-		rockInfo->first_anim_recno   = m.atoi(rockRec->first_anim_recno, rockRec->RECNO_LEN);
+		rockInfo->first_anim_recno   = misc.atoi(rockRec->first_anim_recno, rockRec->RECNO_LEN);
 		if(rockInfo->first_anim_recno)
-			rockInfo->max_frame          = m.atoi(rockRec->max_frame, rockRec->MAX_FRAME_LEN);
+			rockInfo->max_frame          = misc.atoi(rockRec->max_frame, rockRec->MAX_FRAME_LEN);
 		else
 			rockInfo->max_frame          = 1;			// unanimated, rock anim recno must be -1
 
@@ -211,9 +211,9 @@ void RockRes::load_bitmap_info()
 		rockBitmapRec  = (RockBitmapRec*) dbRock->read(i+1);
 		rockBitmapInfo = rock_bitmap_array+i;
 
-		rockBitmapInfo->loc_x = m.atoi(rockBitmapRec->loc_x, rockBitmapRec->LOC_LEN);
-		rockBitmapInfo->loc_y = m.atoi(rockBitmapRec->loc_y, rockBitmapRec->LOC_LEN);
-		rockBitmapInfo->frame = m.atoi(rockBitmapRec->frame, rockBitmapRec->FRAME_NO_LEN);
+		rockBitmapInfo->loc_x = misc.atoi(rockBitmapRec->loc_x, rockBitmapRec->LOC_LEN);
+		rockBitmapInfo->loc_y = misc.atoi(rockBitmapRec->loc_y, rockBitmapRec->LOC_LEN);
+		rockBitmapInfo->frame = misc.atoi(rockBitmapRec->frame, rockBitmapRec->FRAME_NO_LEN);
 
 		uint32_t bitmapOffset;
 		memcpy( &bitmapOffset, rockBitmapRec->bitmap_ptr, sizeof(uint32_t) );
@@ -253,10 +253,10 @@ void RockRes::load_block_info()
 		rockBlockRec  = (RockBlockRec*) dbRock->read(i+1);
 		rockBlockInfo = rock_block_array+i;
 
-		rockBlockInfo->loc_x          = m.atoi(rockBlockRec->loc_x, rockBlockRec->LOC_LEN);
-		rockBlockInfo->loc_y          = m.atoi(rockBlockRec->loc_y, rockBlockRec->LOC_LEN);
-		rockBlockInfo->rock_recno     = m.atoi(rockBlockRec->rock_recno, rockBlockRec->RECNO_LEN);
-		rockBlockInfo->first_bitmap   = m.atoi(rockBlockRec->first_bitmap, rockBlockRec->RECNO_LEN);
+		rockBlockInfo->loc_x          = misc.atoi(rockBlockRec->loc_x, rockBlockRec->LOC_LEN);
+		rockBlockInfo->loc_y          = misc.atoi(rockBlockRec->loc_y, rockBlockRec->LOC_LEN);
+		rockBlockInfo->rock_recno     = misc.atoi(rockBlockRec->rock_recno, rockBlockRec->RECNO_LEN);
+		rockBlockInfo->first_bitmap   = misc.atoi(rockBlockRec->first_bitmap, rockBlockRec->RECNO_LEN);
 
 		// ------- validate rock_recno --------//
 		err_when( rockBlockInfo->rock_recno <= 0 || rockBlockInfo->rock_recno > rock_info_count);
@@ -325,16 +325,16 @@ void RockRes::load_anim_info()
 		rockAnimRec  = (RockAnimRec*) dbRock->read(i+1);
 		rockAnimInfo = rock_anim_array+i;
 
-		rockAnimInfo->frame   	 = m.atoi(rockAnimRec->frame, rockAnimRec->FRAME_NO_LEN);
-		rockAnimInfo->delay      = m.atoi(rockAnimRec->delay, rockAnimRec->DELAY_LEN);
-		rockAnimInfo->next_frame = m.atoi(rockAnimRec->next_frame, rockAnimRec->FRAME_NO_LEN);
-		rockAnimInfo->alt_next   = m.atoi(rockAnimRec->alt_next, rockAnimRec->FRAME_NO_LEN);
+		rockAnimInfo->frame   	 = misc.atoi(rockAnimRec->frame, rockAnimRec->FRAME_NO_LEN);
+		rockAnimInfo->delay      = misc.atoi(rockAnimRec->delay, rockAnimRec->DELAY_LEN);
+		rockAnimInfo->next_frame = misc.atoi(rockAnimRec->next_frame, rockAnimRec->FRAME_NO_LEN);
+		rockAnimInfo->alt_next   = misc.atoi(rockAnimRec->alt_next, rockAnimRec->FRAME_NO_LEN);
 		if( rockAnimInfo->alt_next == 0)
 			rockAnimInfo->alt_next = rockAnimInfo->next_frame;
 
 #ifdef DEBUG
 		char rockName[rockAnimRec->ROCKID_LEN+1];
-		m.rtrim_fld( rockName, rockAnimRec->rock_id, rockAnimRec->ROCKID_LEN );
+		misc.rtrim_fld( rockName, rockAnimRec->rock_id, rockAnimRec->ROCKID_LEN );
 		// temporary set init_flag =1;
 		init_flag = 1;
 		short rockId = locate(rockName);
@@ -428,7 +428,7 @@ short RockRes::get_bitmap_recno(short rockBlockRecno, char curFrame)
 // <short> rockRecno     rock recno
 // <char> curFrame       the current frame no.
 // <long> path           a random number, related to the probability of choosing alt_next
-//                       eg. choose_next(..,.., m.random(x)); prob of using alt_next is 1/x
+//                       eg. choose_next(..,.., misc.random(x)); prob of using alt_next is 1/x
 // return next frame no.
 char RockRes::choose_next(short rockRecno, char curFrame, long path)
 {
@@ -539,7 +539,7 @@ short RockRes::search(const char *rockTypes, short minWidth, short maxWidth, sho
 				rockRecno = i;
 				break;
 			}
-			else if( m.random(findCount) == 0)
+			else if( misc.random(findCount) == 0)
 			{
 				rockRecno = i;
 			}

@@ -1250,7 +1250,7 @@ int Misc::mkpath(char *abs_path)
 //
 void Misc::change_file_ext(char* desFileName, const char* srcFileName, const char* newExt)
 {
-   int nameLen = m.str_chr(srcFileName, '.');	// include the '.' in the nameLen
+   int nameLen = misc.str_chr(srcFileName, '.');	// include the '.' in the nameLen
 
    err_when( nameLen<1 || nameLen>9 || strlen(newExt)>3 );
 

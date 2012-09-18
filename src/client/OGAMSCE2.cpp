@@ -220,8 +220,8 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 			refreshFlag = TUOPTION_ALL;
 #endif
 			scenFileName = scenInfoArray[browseRecno-1].file_name;
-			m.change_file_ext( pictName, scenFileName, "SCP" );
-			m.change_file_ext( textName, scenFileName, "SCT" );
+			misc.change_file_ext( pictName, scenFileName, "SCP" );
+			misc.change_file_ext( textName, scenFileName, "SCT" );
 			pathName = DIR_SCENARIO_PATH(scenInfoArray[browseRecno-1].dir_id);
 			err_when( ! *pathName );
 			if( refreshFlag & TUOPTION_PAGE )
@@ -279,7 +279,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 				str = pathName;
 				str += pictName;
 
-				if( browseRecno && m.is_file_exist(str) )
+				if( browseRecno && misc.is_file_exist(str) )
 				{
 					File pictFile;
 					pictFile.file_open(str);
@@ -303,7 +303,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 				str = pathName;
 				str += textName;
 
-				if( browseRecno && m.is_file_exist(str) )
+				if( browseRecno && misc.is_file_exist(str) )
 				{
 					File textFile;
 					int dataSize;
@@ -387,7 +387,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 						if( rec >= 1 && rec <= scenCount )
 						{
 							int textX = font_bible.put(browseSlotX1+TEXT_OFFSET_X,
-								browseSlotY1+TEXT_OFFSET_Y, m.format(rec), 0, browseSlotX2 );
+								browseSlotY1+TEXT_OFFSET_Y, misc.format(rec), 0, browseSlotX2 );
 
 							//----- display the scenario name -----//
 

@@ -548,7 +548,7 @@ int Unit::defense_follow_target()
 		if(targetSpriteInfo->speed > sprite_info->speed)
 			returnFactor -= 5;
 
-		if(m.random(returnFactor)==0) // return to camp if true
+		if(misc.random(returnFactor)==0) // return to camp if true
 			abortAction++;
 		else
 			return 1;

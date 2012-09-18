@@ -107,12 +107,12 @@ void RawRes::load_all_info()
 		rawRec  = (RawRec*) dbRaw->read(i+1);
 		rawInfo = raw_info_array+i;
 
-		m.rtrim_fld( rawInfo->name, rawRec->name, rawRec->NAME_LEN );
+		misc.rtrim_fld( rawInfo->name, rawRec->name, rawRec->NAME_LEN );
 #if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
 		translate.multi_to_win(rawInfo->name, rawInfo->NAME_LEN);
 #endif
 		rawInfo->raw_id    = i+1;
-		rawInfo->tera_type = m.atoi( rawRec->tera_type, rawRec->TERA_TYPE_LEN );
+		rawInfo->tera_type = misc.atoi( rawRec->tera_type, rawRec->TERA_TYPE_LEN );
 	}
 }
 //--------- End of function RawRes::load_all_info ---------//

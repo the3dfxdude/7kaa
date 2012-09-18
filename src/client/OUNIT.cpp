@@ -207,9 +207,9 @@ void Unit::init(int unitId, int nationRecno, int rankId, int unitLoyalty, int st
 
 	//--------- init skill potential ---------//
 
-	if( m.random(10)==0 )		// 1 out of 10 has a higher than normal potential in this skill
+	if( misc.random(10)==0 )		// 1 out of 10 has a higher than normal potential in this skill
 	{
-		skill.skill_potential = 50+m.random(51);	 // 50 to 100 potential
+		skill.skill_potential = 50+misc.random(51);	 // 50 to 100 potential
 	}
 
 	//------ initialize the base Sprite class -------//
@@ -774,7 +774,7 @@ char* Unit::unit_name(int withTitle)
       if( unitInfo->unit_class == UNIT_CLASS_WEAPON && get_weapon_version() > 1 )
 		{
 			str += " ";
-			str += m.roman_number(get_weapon_version());
+			str += misc.roman_number(get_weapon_version());
 		}
 
 		if( unitInfo->unit_class != UNIT_CLASS_GOD )		// God doesn't have any series no.
@@ -1095,7 +1095,7 @@ void Unit::update_loyalty()
    if( spy_recno )      // a spy's loyalty is always >= 70
    {
       if( loyalty < 70 )
-         loyalty = 70+m.random(20);    // initialize it to be a number between 70 and 90
+         loyalty = 70+misc.random(20);    // initialize it to be a number between 70 and 90
 
       target_loyalty = loyalty;
       return;
@@ -1427,7 +1427,7 @@ int Unit::betray(int newNationRecno)
 	{
 		Nation* nationPtr = nation_array[nation_recno];
 
-		loyalty = UNIT_BETRAY_LOYALTY + m.random(5);
+		loyalty = UNIT_BETRAY_LOYALTY + misc.random(5);
 
 		if( nationPtr->reputation > 0 )
 			change_loyalty( (int) nationPtr->reputation );
@@ -2001,7 +2001,7 @@ void Unit::set_rank(int rankId)
       if( skill.skill_id != SKILL_LEADING )
       {
          skill.skill_id = SKILL_LEADING;
-			skill.skill_level = 10 + m.random(40);
+			skill.skill_level = 10 + misc.random(40);
       }
    }
 
@@ -2405,7 +2405,7 @@ void Unit::del_team_member(int unitRecno)
 		{
 			err_when( team_info->member_count > MAX_TEAM_MEMBER );
 
-			m.del_array_rec( team_info->member_unit_array, team_info->member_count,
+			misc.del_array_rec( team_info->member_unit_array, team_info->member_count,
 								  sizeof( team_info->member_unit_array[0] ), i+1 );
 
          team_info->member_count--;
@@ -2448,7 +2448,7 @@ void Unit::validate_team()
 		{
 			err_when( team_info->member_count > MAX_TEAM_MEMBER );
 
-			m.del_array_rec( team_info->member_unit_array, team_info->member_count,
+			misc.del_array_rec( team_info->member_unit_array, team_info->member_count,
 								  sizeof( team_info->member_unit_array[0] ), i+1 );
 
 			team_info->member_count--;
@@ -2664,7 +2664,7 @@ void Unit::add_way_point(short x, short y)
 		{
 			if(nodePtr->node_x == x && nodePtr->node_y == y) // remove this node
 			{
-				m.del_array_rec(way_point_array, way_point_count, sizeof(ResultNode), i+1); // remove 1st node
+				misc.del_array_rec(way_point_array, way_point_count, sizeof(ResultNode), i+1); // remove 1st node
 				way_point_count--;
 				return; // there should be one and only one node with the same value
 			}
@@ -2726,7 +2726,7 @@ void Unit::process_way_point()
 		ResultNode *nodePtr = way_point_array+1;
 		destX = nodePtr->node_x;
 		destY = nodePtr->node_y;
-		m.del_array_rec(way_point_array, way_point_count, sizeof(ResultNode), 1); // remove 1st node
+		misc.del_array_rec(way_point_array, way_point_count, sizeof(ResultNode), 1); // remove 1st node
 		way_point_count--;
 	}
 	else // only one unprocessed node
@@ -2734,7 +2734,7 @@ void Unit::process_way_point()
 		ResultNode *nodePtr = way_point_array;
 		destX = nodePtr->node_x;
 		destY = nodePtr->node_y;
-		//m.del_array_rec(way_point_array, way_point_count, sizeof(ResultNode), 1); // remove 1st node
+		//misc.del_array_rec(way_point_array, way_point_count, sizeof(ResultNode), 1); // remove 1st node
 		//way_point_count--;
 	}
 	move_to(destX, destY);

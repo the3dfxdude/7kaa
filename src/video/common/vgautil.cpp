@@ -84,7 +84,7 @@ void VgaUtil::disp_image_file(const char* fileName, int x1, int y1)
 		str += fileName;
 		str += ".COL";
 
-		err_when( !m.is_file_exist(str) );
+		err_when( !misc.is_file_exist(str) );
 
 		VgaFrontLock vgaLock;
 		vga.set_custom_palette(str);

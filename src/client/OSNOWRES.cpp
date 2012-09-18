@@ -161,11 +161,11 @@ void SnowRes::load_info()
 		memcpy( &bitmapOffset, snowRec->bitmap_ptr, sizeof(uint32_t) );
 		snowInfo->bitmap_ptr	= res_bitmap.read_imported(bitmapOffset);
 		if( snowRec->offset_x[0] != '\0' && snowRec->offset_x[0] != ' ')
-			snowInfo->offset_x = (short) m.atoi(snowRec->offset_x, snowRec->OFFSET_LEN);
+			snowInfo->offset_x = (short) misc.atoi(snowRec->offset_x, snowRec->OFFSET_LEN);
 		else
 			snowInfo->offset_x = -(snowInfo->bitmap_width() / 2);
 		if( snowRec->offset_y[0] != '\0' && snowRec->offset_y[0] != ' ')
-			snowInfo->offset_y = (short) m.atoi(snowRec->offset_y, snowRec->OFFSET_LEN);
+			snowInfo->offset_y = (short) misc.atoi(snowRec->offset_y, snowRec->OFFSET_LEN);
 		else
 			snowInfo->offset_y = -(snowInfo->bitmap_height() / 2);
 
@@ -174,27 +174,27 @@ void SnowRes::load_info()
 
 		if( snowRec->next_file1[0] != '\0' && snowRec->next_file1[0] != ' ')
 		{
-			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + m.atoi( snowRec->next_ptr1, snowRec->RECNO_LEN) -1;
+			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + misc.atoi( snowRec->next_ptr1, snowRec->RECNO_LEN) -1;
 		}
 		if( snowRec->next_file2[0] != '\0' && snowRec->next_file2[0] != ' ')
 		{
-			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + m.atoi( snowRec->next_ptr2, snowRec->RECNO_LEN) -1;
+			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + misc.atoi( snowRec->next_ptr2, snowRec->RECNO_LEN) -1;
 		}
 		if( snowRec->next_file3[0] != '\0' && snowRec->next_file3[0] != ' ')
 		{
-			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + m.atoi( snowRec->next_ptr3, snowRec->RECNO_LEN) -1;
+			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + misc.atoi( snowRec->next_ptr3, snowRec->RECNO_LEN) -1;
 		}
 		if( snowRec->next_file4[0] != '\0' && snowRec->next_file4[0] != ' ')
 		{
-			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + m.atoi( snowRec->next_ptr4, snowRec->RECNO_LEN) -1;
+			snowInfo->next_file[snowInfo->next_count++] = snow_info_array + misc.atoi( snowRec->next_ptr4, snowRec->RECNO_LEN) -1;
 		}
 		if( snowRec->prev_file1[0] != '\0' && snowRec->prev_file1[0] != ' ')
 		{
-			snowInfo->prev_file[snowInfo->prev_count++] = snow_info_array + m.atoi( snowRec->prev_ptr1, snowRec->RECNO_LEN) -1;
+			snowInfo->prev_file[snowInfo->prev_count++] = snow_info_array + misc.atoi( snowRec->prev_ptr1, snowRec->RECNO_LEN) -1;
 		}
 		if( snowRec->prev_file2[0] != '\0' && snowRec->prev_file2[0] != ' ')
 		{
-			snowInfo->prev_file[snowInfo->prev_count++] = snow_info_array + m.atoi( snowRec->prev_ptr2, snowRec->RECNO_LEN) -1;
+			snowInfo->prev_file[snowInfo->prev_count++] = snow_info_array + misc.atoi( snowRec->prev_ptr2, snowRec->RECNO_LEN) -1;
 		}
 
 		if(snowInfo->is_root())

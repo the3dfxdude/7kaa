@@ -218,7 +218,7 @@ int Nation::ai_sea_travel3(ActionNode* actionNode)
 		{
 			err_when( unitCount > MAX_UNIT_IN_SHIP );
 
-			m.del_array_rec( unitRecnoArray, unitCount, sizeof(unitRecnoArray[0]), i+1 );
+			misc.del_array_rec( unitRecnoArray, unitCount, sizeof(unitRecnoArray[0]), i+1 );
 			unitCount--;
 		}
 	}

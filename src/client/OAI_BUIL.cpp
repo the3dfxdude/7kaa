@@ -83,7 +83,7 @@ int Nation::think_build_mine()
 		{
 			Town* townPtr = town_array[ ai_town_array[i] ];
 
-			int rawDistance = m.points_distance(xLoc, yLoc, townPtr->center_x, townPtr->center_y);
+			int rawDistance = misc.points_distance(xLoc, yLoc, townPtr->center_x, townPtr->center_y);
 
 			if( info.game_date-info.game_start_date >
 				 rawDistance * (5-config.ai_aggressiveness) / 5 )		// 3 to 5 / 5

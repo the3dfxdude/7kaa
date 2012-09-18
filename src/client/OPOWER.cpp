@@ -1135,7 +1135,7 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 							
 							unitPtr->update_abs_pos();
 
-							if( m.is_touch( absSelX1, absSelY1, absSelX2, absSelY2,
+							if( misc.is_touch( absSelX1, absSelY1, absSelX2, absSelY2,
 								 unitPtr->abs_x1, unitPtr->abs_y1,
 								 unitPtr->abs_x2, unitPtr->abs_y2 ) )
 							{
@@ -1176,7 +1176,7 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 						
 						unitPtr->update_abs_pos();
 
-						if( m.is_touch( absSelX1, absSelY1, absSelX2, absSelY2,
+						if( misc.is_touch( absSelX1, absSelY1, absSelX2, absSelY2,
 							 unitPtr->abs_x1, unitPtr->abs_y1,
 							 unitPtr->abs_x2, unitPtr->abs_y2 ) )
 						{
@@ -1739,7 +1739,7 @@ int Power::choose_cursor(int scrnX, int scrnY,
 							Firm *pFirm = firm_array[pointingObjectRecno];
 							int centerX = (pFirm->loc_x1 + pFirm->loc_x2 +1)*ZOOM_LOC_WIDTH/2 - World::view_top_x;
 							int centerY = (pFirm->loc_y1 + pFirm->loc_y2 +1)*ZOOM_LOC_HEIGHT/2 - World::view_top_y;
-							if(m.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
+							if(misc.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
 								&& townPtr->can_toggle_firm_link(pointingObjectRecno) )
 							{
 								return CURSOR_ON_LINK;
@@ -1753,7 +1753,7 @@ int Power::choose_cursor(int scrnX, int scrnY,
 							Town *pTown = town_array[pointingObjectRecno];
 							int centerX = (pTown->loc_x1 + pTown->loc_x2 +1)*ZOOM_LOC_WIDTH/2 - World::view_top_x;
 							int centerY = (pTown->loc_y1 + pTown->loc_y2 +1)*ZOOM_LOC_HEIGHT/2 - World::view_top_y;
-							if(m.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
+							if(misc.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
 								&& townPtr->can_migrate(pointingObjectRecno) )
 							{
 								return CURSOR_ON_LINK;
@@ -1768,7 +1768,7 @@ int Power::choose_cursor(int scrnX, int scrnY,
 							Firm *pFirm = firm_array[pointingObjectRecno];
 							int centerX = (pFirm->loc_x1 + pFirm->loc_x2 +1)*ZOOM_LOC_WIDTH/2 - World::view_top_x;
 							int centerY = (pFirm->loc_y1 + pFirm->loc_y2 +1)*ZOOM_LOC_HEIGHT/2 - World::view_top_y;
-							if(m.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
+							if(misc.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
 								&& townPtr->can_toggle_firm_link(pointingObjectRecno) )
 							{
 								return CURSOR_ON_LINK;
@@ -1821,7 +1821,7 @@ int Power::choose_cursor(int scrnX, int scrnY,
 							Town *pTown = town_array[pointingObjectRecno];
 							int centerX = (pTown->loc_x1 + pTown->loc_x2 +1)*ZOOM_LOC_WIDTH/2 - World::view_top_x;
 							int centerY = (pTown->loc_y1 + pTown->loc_y2 +1)*ZOOM_LOC_HEIGHT/2 - World::view_top_y;
-							if(m.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
+							if(misc.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
 								&& firmPtr->can_toggle_town_link() )
 							{
 								return CURSOR_ON_LINK;
@@ -1834,7 +1834,7 @@ int Power::choose_cursor(int scrnX, int scrnY,
 							Firm *pFirm = firm_array[pointingObjectRecno];
 							int centerX = (pFirm->loc_x1 + pFirm->loc_x2 +1)*ZOOM_LOC_WIDTH/2 - World::view_top_x;
 							int centerY = (pFirm->loc_y1 + pFirm->loc_y2 +1)*ZOOM_LOC_HEIGHT/2 - World::view_top_y;
-							if(m.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
+							if(misc.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
 								&& firmPtr->can_toggle_firm_link(pointingObjectRecno) )
 							{
 								return CURSOR_ON_LINK;
@@ -1848,7 +1848,7 @@ int Power::choose_cursor(int scrnX, int scrnY,
 							Town *pTown = town_array[pointingObjectRecno];
 							int centerX = (pTown->loc_x1 + pTown->loc_x2 +1)*ZOOM_LOC_WIDTH/2 - World::view_top_x;
 							int centerY = (pTown->loc_y1 + pTown->loc_y2 +1)*ZOOM_LOC_HEIGHT/2 - World::view_top_y;
-							if(m.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
+							if(misc.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
 								&& firmPtr->can_toggle_town_link() )
 							{
 								return CURSOR_ON_LINK;
@@ -1860,7 +1860,7 @@ int Power::choose_cursor(int scrnX, int scrnY,
 							Firm *pFirm = firm_array[pointingObjectRecno];
 							int centerX = (pFirm->loc_x1 + pFirm->loc_x2 +1)*ZOOM_LOC_WIDTH/2 - World::view_top_x;
 							int centerY = (pFirm->loc_y1 + pFirm->loc_y2 +1)*ZOOM_LOC_HEIGHT/2 - World::view_top_y;
-							if(m.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
+							if(misc.points_distance( mouse.cur_x, mouse.cur_y, centerX+ZOOM_X1, centerY+ZOOM_Y1) <= 11
 								&& firmPtr->can_toggle_firm_link(pointingObjectRecno) )
 							{
 								return CURSOR_ON_LINK;

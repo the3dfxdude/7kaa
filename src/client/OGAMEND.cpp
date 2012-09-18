@@ -391,7 +391,7 @@ static void disp_stat()
 	put_stat( y+=20, "Total Gaming Time", info.play_time_str() );
 
 	put_stat( y+=30, "Final Population", nationPtr->all_population() );
-	put_stat( y+=20, "Final Treasure"  , m.format((int)nationPtr->cash,2) );
+	put_stat( y+=20, "Final Treasure"  , misc.format((int)nationPtr->cash,2) );
 
 	put_stat( y+=30, "Enemy Soldiers Dispatched", nationPtr->enemy_soldier_killed );
 	put_stat( y+=20, "King's Soldiers Martyred"  , nationPtr->own_soldier_killed );
@@ -426,7 +426,7 @@ static void put_stat(int y, const char* desStr, const char* dispStr)
 static void put_stat(int y, const char* desStr, int dispValue)
 {
 	font_bible.put( 140, y, desStr );
-	font_bible.put( 570, y, m.format(dispValue) );
+	font_bible.put( 570, y, misc.format(dispValue) );
 }
 //----------- End of static function put_stat -----------//
 

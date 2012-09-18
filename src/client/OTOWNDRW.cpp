@@ -153,7 +153,7 @@ int Town::is_in_zoom_win()
 	int x2=x1+world.zoom_matrix->disp_x_loc-1;
 	int y2=y1+world.zoom_matrix->disp_y_loc-1;
 
-	return m.is_touch( x1, y1, x2, y2, loc_x1, loc_y1, loc_x2, loc_y2 );
+	return misc.is_touch( x1, y1, x2, y2, loc_x1, loc_y1, loc_x2, loc_y2 );
 }
 //--------- End of function Town::is_in_zoom_win -----------//
 

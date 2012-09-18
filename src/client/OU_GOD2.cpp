@@ -112,8 +112,8 @@ void UnitGod::think_chinese_dragon()
 
 void UnitGod::think_phoenix()
 {
-	int xLoc = m.random(MAX_WORLD_X_LOC);
-	int yLoc = m.random(MAX_WORLD_Y_LOC);
+	int xLoc = misc.random(MAX_WORLD_X_LOC);
+	int yLoc = misc.random(MAX_WORLD_Y_LOC);
 
 	move_to( xLoc, yLoc );
 }
@@ -204,7 +204,7 @@ void UnitGod::think_japanese_god()
 
 	//------ think firm target --------//
 
-	if( m.random(2)==0 )
+	if( misc.random(2)==0 )
 	{
 		for( int i=firm_array.size() ; i>0 ; i-- )
 		{
@@ -288,7 +288,7 @@ int UnitGod::think_god_attack_target(int& targetXLoc, int& targetYLoc)
 	Nation* 	ownNation = nation_array[nation_recno];
 	int		curXLoc=next_x_loc(), curYLoc=next_y_loc();
 	int   	totalFirm = firm_array.size();
-	int   	firmRecno = m.random(totalFirm)+1;
+	int   	firmRecno = misc.random(totalFirm)+1;
 
 	int i;
 	for( i=totalFirm ; i>0 ; i-- )
@@ -546,7 +546,7 @@ void UnitGod::think_indian_god()
 					unitPtr->loyalty <= 80 && unitPtr->target_loyalty < 30)
 				&& ownNation->get_relation(unitPtr->nation_recno)->status == NATION_HOSTILE )
 			{
-				int cost = m.points_distance(next_x_loc(), next_y_loc(), unitPtr->next_x_loc(), unitPtr->next_y_loc());
+				int cost = misc.points_distance(next_x_loc(), next_y_loc(), unitPtr->next_x_loc(), unitPtr->next_y_loc());
 				if( cost < bestUnitCost )
 				{
 					bestUnitCost = cost;
@@ -558,20 +558,20 @@ void UnitGod::think_indian_god()
 
 		if( bestUnitCost < 100 )
 		{
-			if( m.points_distance(next_x_loc(), next_y_loc(), xLoc, yLoc) <= god_res[god_id]->cast_power_range )
+			if( misc.points_distance(next_x_loc(), next_y_loc(), xLoc, yLoc) <= god_res[god_id]->cast_power_range )
 				go_cast_power(xLoc, yLoc, 1, COMMAND_AI);		// 1 - cast power type
 			else
 				move_to( xLoc, yLoc );
 		}
-		else if( m.random(4) == 0 )
+		else if( misc.random(4) == 0 )
 		{
 			// move to a near random location
-			xLoc = next_x_loc() + m.random(100) - 50;
+			xLoc = next_x_loc() + misc.random(100) - 50;
 			if( xLoc < 0 )
 				xLoc = 0;
 			if( xLoc >= MAX_WORLD_X_LOC)
 				xLoc = MAX_WORLD_X_LOC-1;
-			yLoc = next_y_loc() + m.random(100) - 50;
+			yLoc = next_y_loc() + misc.random(100) - 50;
 			if( yLoc < 0 )
 				yLoc = 0;
 			if( yLoc >= MAX_WORLD_Y_LOC)

@@ -326,7 +326,7 @@ int SiteArray::create_raw_site(int regionId, int townRecno)
 
 	//----- pick a raw material type -----//
 
-	int rawId = m.random(MAX_RAW)+1;
+	int rawId = misc.random(MAX_RAW)+1;
 
 	for( i=0 ; i<MAX_RAW ; i++ )
 	{
@@ -381,7 +381,7 @@ int SiteArray::create_raw_site(int regionId, int townRecno)
 	if( world.locate_space_random(locX1, locY1, locX2, locY2,
 		 5, 5, maxTries, regionId, 1) )     	// 5,5 are the size of the raw site, it must be large enough for a mine to build and 1 location for the edges. The last para 1 = site building mode
 	{
-		int reserveQty = MAX_RAW_RESERVE_QTY * (50 + m.random(50)) / 100;
+		int reserveQty = MAX_RAW_RESERVE_QTY * (50 + misc.random(50)) / 100;
 
 		add_site( locX1+2, locY1+2, SITE_RAW, rawId, reserveQty );		// xLoc+1 & yLoc+1 as the located size is 3x3, the raw site is at the center of it
 
@@ -419,7 +419,7 @@ int SiteArray::scan_site(int xLoc, int yLoc, int siteType)
 
 		if( siteType==0 || sitePtr->site_type==siteType )
 		{
-			siteDis = m.points_distance( xLoc, yLoc, sitePtr->map_x_loc, sitePtr->map_y_loc );
+			siteDis = misc.points_distance( xLoc, yLoc, sitePtr->map_x_loc, sitePtr->map_y_loc );
 
 			if( siteDis < minDis )
 			{
@@ -564,7 +564,7 @@ int Site::ai_get_site_object()
 
 	for( int i=2 ; i<NOTIFY_GET_RANGE*NOTIFY_GET_RANGE ; i++ )
 	{
-		m.cal_move_around_a_point(i, NOTIFY_GET_RANGE, NOTIFY_GET_RANGE, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, NOTIFY_GET_RANGE, NOTIFY_GET_RANGE, xOffset, yOffset);
 
 		xLoc = map_x_loc + xOffset;
 		yLoc = map_y_loc + yOffset;

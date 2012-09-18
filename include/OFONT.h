@@ -119,7 +119,7 @@ public:
 	int  put(int,int,const char*,char=0,int= -1);
 
 	int  put(int x, int y, int value, char clearBack=0, int x2= -1)
-		  { return put( x, y, m.format(value), clearBack, x2 ); }
+		  { return put( x, y, misc.format(value), clearBack, x2 ); }
 
 	void put_char(int,int,unsigned short);
 	void right_put(int,int,char*);

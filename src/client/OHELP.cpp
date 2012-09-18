@@ -467,7 +467,7 @@ int Help::should_disp()
 	if( last_mouse_x==mouse.cur_x && last_mouse_y==mouse.cur_y &&
 		 !mouse.left_press && !mouse.right_press && !mouse.any_click(2) )
 	{
-		if( m.get_time() >= mouse_still_time + HELP_INACTIVE_TIME * 1000 )
+		if( misc.get_time() >= mouse_still_time + HELP_INACTIVE_TIME * 1000 )
 		{
 			return 1;
 		}
@@ -476,7 +476,7 @@ int Help::should_disp()
 	{
 		last_mouse_x = mouse.cur_x;
 		last_mouse_y = mouse.cur_y;
-		mouse_still_time = m.get_time();
+		mouse_still_time = misc.get_time();
 	}
 
 	return 0;

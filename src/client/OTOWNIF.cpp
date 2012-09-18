@@ -467,7 +467,7 @@ void Town::disp_auto_loyalty()
 		vga_front.rect( button_tax.x1+8, button_tax.y1+10, button_tax.x2-12, button_tax.y2-15, 1, V_BLACK );
 
 		font_mid.center_put( button_tax.x1+8, button_tax.y1+10, button_tax.x2-12, button_tax.y2-15,
-									m.format(auto_collect_tax_loyalty) );
+									misc.format(auto_collect_tax_loyalty) );
 	}
 
 	if( auto_grant_loyalty )
@@ -476,7 +476,7 @@ void Town::disp_auto_loyalty()
 		vga_front.rect( button_grant.x1+8, button_grant.y1+10, button_grant.x2-12, button_grant.y2-15, 1, V_BLACK );
 
 		font_mid.center_put( button_grant.x1+8, button_grant.y1+10, button_grant.x2-12, button_grant.y2-15,
-									m.format(auto_grant_loyalty) );
+									misc.format(auto_grant_loyalty) );
 	}
 }
 //----------- End of function Town::disp_auto_loyalty -----------//
@@ -820,7 +820,7 @@ static void put_race_rec(int recNo, int x, int y, int refreshFlag)
 
 	if( dispArrow )
 	{
-		x = x2-font_mid.text_width( m.format(targetLoyalty) ) - 8;
+		x = x2-font_mid.text_width( misc.format(targetLoyalty) ) - 8;
 
 		if( (int) targetLoyalty > (int) curLoyalty )
 			image_icon.put_join( x+1, y+9, "ARROWUP" );
@@ -959,7 +959,7 @@ void Town::disp_queue_button(int y, int skillId, int buttonUp)
 		y++;
 	}
 
-	font_san.center_put(x, y, x+COUNT_BUTTON_WIDTH-1 , y+COUNT_BUTTON_HEIGHT-1, m.format(trainCount));
+	font_san.center_put(x, y, x+COUNT_BUTTON_WIDTH-1 , y+COUNT_BUTTON_HEIGHT-1, misc.format(trainCount));
 }
 //----------- End of function Town::disp_queue_button -----------//
 */
@@ -1017,7 +1017,7 @@ static void i_disp_queue_skill_button(ButtonCustom *button, int repaintBody)
 		// ##### end Gilbert 10/10 #######//
 	}
 
-	font_mid.center_put( x1+3, y1+3, x2-3, y2-3, m.format(queuedCount), 1);
+	font_mid.center_put( x1+3, y1+3, x2-3, y2-3, misc.format(queuedCount), 1);
 }
 //--------- End of static function i_disp_queue_skill_button ---------//
 // ######### end Gilbert 13/9 #########//
@@ -1140,7 +1140,7 @@ void Town::disp_auto_menu(int modeCollectTax)
 	int i, loyaltyLevel, y=INFO_Y1+114;
 
 	for( i=0, loyaltyLevel=30 ; i<BUTTON_LOYALTY_COUNT ; loyaltyLevel+=10, i++, y+=20 )
-		button_loyalty_array[i].paint_text( INFO_X1, y, INFO_X2, y+18, m.format(loyaltyLevel), 0, loyaltyLevel==curAutoLoyalty );
+		button_loyalty_array[i].paint_text( INFO_X1, y, INFO_X2, y+18, misc.format(loyaltyLevel), 0, loyaltyLevel==curAutoLoyalty );
 
 	button_loyalty_disabled.paint_text( INFO_X1, y, INFO_X2, y+18, "Disabled", 0, curAutoLoyalty==0 );
 	y+=20;
@@ -1605,7 +1605,7 @@ int Town::recruit(int trainSkillId, int raceId, char remoteAction)
 
 	//--- if there are spies in this town, chances are that they will be mobilized ---//
 
-	int shouldTrainSpy = race_spy_count_array[raceId-1] >= m.random(recruitableCount)+1;		// 1-allow recruiting spies
+	int shouldTrainSpy = race_spy_count_array[raceId-1] >= misc.random(recruitableCount)+1;		// 1-allow recruiting spies
 
 	//---- if we are trying to train an enemy to our spy, then... -----//
 
@@ -1643,7 +1643,7 @@ int Town::recruit(int trainSkillId, int raceId, char remoteAction)
 	if( shouldTrainSpy )
 	{
 		int  spyCount = spy_array.size();
-		int  spyRecno = m.random(spyCount)+1;
+		int  spyRecno = misc.random(spyCount)+1;
 		Spy* spyPtr;
 
 		//-----------------------------------------------------//
@@ -1978,8 +1978,8 @@ void Town::remove_queue(char skillId)
 		{
 			err_when(train_queue_count > MAX_TRAIN_QUEUE);
 
-			m.del_array_rec(train_queue_skill_array, train_queue_count, sizeof(train_queue_skill_array[0]), i+1);
-			m.del_array_rec(train_queue_race_array, train_queue_count, sizeof(train_queue_race_array[0]), i+1);
+			misc.del_array_rec(train_queue_skill_array, train_queue_count, sizeof(train_queue_skill_array[0]), i+1);
+			misc.del_array_rec(train_queue_race_array, train_queue_count, sizeof(train_queue_race_array[0]), i+1);
 			train_queue_count--;
 			return;
 		}

@@ -119,19 +119,19 @@ void HillRes::load_hill_block_info()
 		hillBlockRec  = (HillBlockRec*) dbHill->read(i+1);
 		hillBlockInfo = hill_block_info_array+i;
 		hillBlockInfo->block_id = i + 1;
-		hillBlockInfo->pattern_id = (char) m.atoi( hillBlockRec->pattern_id, hillBlockRec->PATTERN_ID_LEN);
+		hillBlockInfo->pattern_id = (char) misc.atoi( hillBlockRec->pattern_id, hillBlockRec->PATTERN_ID_LEN);
 		if( hillBlockInfo->pattern_id > max_pattern_id)
 			max_pattern_id = hillBlockInfo->pattern_id;
-		hillBlockInfo->sub_pattern_id = (char) m.atoi(hillBlockRec->sub_pattern_id, hillBlockRec->SUB_PATTERN_ID_LEN);
+		hillBlockInfo->sub_pattern_id = (char) misc.atoi(hillBlockRec->sub_pattern_id, hillBlockRec->SUB_PATTERN_ID_LEN);
 		hillBlockInfo->special_flag = hillBlockRec->special_flag;
 		if( hillBlockRec->special_flag == ' ')
 			hillBlockInfo->special_flag = 0;
 		hillBlockInfo->layer = hillBlockRec->layer - '0';
 
-		hillBlockInfo->priority = (char) m.atoi( hillBlockRec->priority, hillBlockRec->PRIORITY_LEN);
+		hillBlockInfo->priority = (char) misc.atoi( hillBlockRec->priority, hillBlockRec->PRIORITY_LEN);
 		hillBlockInfo->bitmap_type = hillBlockRec->bitmap_type;
-		hillBlockInfo->offset_x = m.atoi(hillBlockRec->offset_x, hillBlockRec->OFFSET_LEN);
-		hillBlockInfo->offset_y = m.atoi(hillBlockRec->offset_y, hillBlockRec->OFFSET_LEN);
+		hillBlockInfo->offset_x = misc.atoi(hillBlockRec->offset_x, hillBlockRec->OFFSET_LEN);
+		hillBlockInfo->offset_y = misc.atoi(hillBlockRec->offset_y, hillBlockRec->OFFSET_LEN);
 
 		memcpy( &bitmapOffset, hillBlockRec->bitmap_ptr, sizeof(uint32_t) );
 		hillBlockInfo->bitmap_ptr = res_bitmap.read_imported(bitmapOffset);
@@ -240,7 +240,7 @@ short HillRes::scan(char patternId, char searchPriority, char specialFlag, char 
 		{
 			if( findFirst)
 				return j;
-			if( m.random(++foundCount) == 0)
+			if( misc.random(++foundCount) == 0)
 			{
 				foundBlockId = j;
 			}

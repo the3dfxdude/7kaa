@@ -88,7 +88,7 @@ void World::generate_map()
 	Plasma heightMap;
 	memset( loc_matrix , 0, sizeof(Location) * MAX_WORLD_X_LOC * MAX_WORLD_Y_LOC );
 	heightMap.init(max_x_loc, max_y_loc);
-	heightMap.generate( m.random(2), 5, m.rand() );
+	heightMap.generate( misc.random(2), 5, misc.rand() );
 
 	curGenMapSteps++;			// 1
 	if( dispProgress )
@@ -312,7 +312,7 @@ void World::generate_map()
 
 	do
 	{
-		locPtr = zoom_matrix->get_loc(m.random(MAX_MAP_WIDTH), m.random(MAX_MAP_HEIGHT));
+		locPtr = zoom_matrix->get_loc(misc.random(MAX_MAP_WIDTH), misc.random(MAX_MAP_HEIGHT));
 		if( locPtr->flammability > 0)
 		{
 			locPtr->fire_level = 80;

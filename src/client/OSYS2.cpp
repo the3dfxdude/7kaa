@@ -127,62 +127,62 @@ void Sys::process()
 
 	//--------- process objects -----------//
 
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 	LOG_MSG("begin unit_array.process()");
 	unit_array.process();
 	seek_path.reset_total_node_avail();	// reset node for seek_path
 	LOG_MSG("end unit_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin firm_array.process()");
 	firm_array.process();
 	LOG_MSG("end firm_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin town_array.process()");
 	town_array.process();
 	LOG_MSG("end town_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin nation_array.process()");
 	nation_array.process();
 	LOG_MSG("end nation_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin bullet_array.process()");
 	bullet_array.process();
 	LOG_MSG("end bullet_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin world.process()");
 	world.process();
 	LOG_MSG("end world.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin tornado_array.process()");
 	tornado_array.process();
 	LOG_MSG("begin tornado_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin snow_ground_array.process()");
 	snow_ground_array.process();
 	LOG_MSG("end snow_ground_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin rock_array.process()");
 	rock_array.process();
 	LOG_MSG("end rock_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin dirt_array.process()");
 	dirt_array.process();
 	LOG_MSG("end dirt_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin effect_array.process()");
 	effect_array.process();
 	LOG_MSG("end effect_array.process()");
-	LOG_MSG(m.get_random_seed());
+	LOG_MSG(misc.get_random_seed());
 
 	LOG_MSG("begin war_point_array.process()");
 	war_point_array.process();
@@ -199,48 +199,48 @@ void Sys::process()
 		LOG_MSG("begin info.next_day()");
 		info.next_day();
 		LOG_MSG("end info.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin world.next_day()");
 		world.next_day();
 		LOG_MSG("end world.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin site_array.next_day()");
 		site_array.next_day();
 		LOG_MSG("end site_array.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin rebel_array.next_day()");
 		rebel_array.next_day();
 		LOG_MSG("end rebel_array.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin spy_array.next_day()");
 		spy_array.next_day();
 		LOG_MSG("end spy_array.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin sprite_res.update_speed()");
 		if( config.weather_effect)
 			sprite_res.update_speed();
 		LOG_MSG("end sprite_res.update_speed()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin raw_res.next_day()");
 		raw_res.next_day();
 		LOG_MSG("end raw_res.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin talk_res.next_day()");
 		talk_res.next_day();
 		LOG_MSG("end talk_res.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		LOG_MSG("begin region_array.next_day()");
 		region_array.next_day();
 		LOG_MSG("end region_array.next_day()");
-		LOG_MSG(m.get_random_seed());
+		LOG_MSG(misc.get_random_seed());
 
 		day_frame_count = 0;
 	}
@@ -253,11 +253,11 @@ void Sys::process()
 	//------ display the current frame ------//
 
 	LOG_MSG("begin sys.disp_frame");
-	m.lock_seed();
+	misc.lock_seed();
 	disp_frame();
-	m.unlock_seed();
+	misc.unlock_seed();
 	LOG_MSG("end sys.disp_frame");
-	LOG_MSG(m.get_random_seed() );
+	LOG_MSG(misc.get_random_seed() );
 
 	//### begin alex 12/9 ###//
 	//--------- send message for selected trading unit in multiplayer game -------//
@@ -305,8 +305,8 @@ void Sys::process()
 	#ifdef DEBUG
 		if(debug_sim_game_type==2)
 		{
-			//if(m.random(20)==0)
-			if(m.random(50)==0)
+			//if(misc.random(20)==0)
+			if(misc.random(50)==0)
 			{
 				#define MAX_ATTACKER	30
 				int arraySize = unit_array.size();
@@ -318,8 +318,8 @@ void Sys::process()
 				short attackerCount = 0;
 				
 				//----------- select attackers -----------//
-				//for(i=m.random(arraySize)+1, j=1; j<=arraySize; j++, i++)
-				for(i=int(m.get_random_seed()%arraySize)+1, j=1; j<=arraySize; j++, i++)
+				//for(i=misc.random(arraySize)+1, j=1; j<=arraySize; j++, i++)
+				for(i=int(misc.get_random_seed()%arraySize)+1, j=1; j<=arraySize; j++, i++)
 				{
 					if(i>arraySize)
 						i = 1;
@@ -342,7 +342,7 @@ void Sys::process()
 					err_when(i!=unitPtr->sprite_recno);
 					err_when(i>arraySize);
 
-					if(m.random(4)==0)
+					if(misc.random(4)==0)
 						attackerArray[attackerCount++] = i;
 
 					if(attackerCount>=MAX_ATTACKER/2)
@@ -352,10 +352,10 @@ void Sys::process()
 				//--------- selecet victim ----------//
 				//if(day_frame_count==9 && frame_count==6082)
 				//	int debug  =0;
-				if(m.random(10))
+				if(misc.random(10))
 				{
-					//for(i2=m.random(arraySize)+1, j2=1; j2<=arraySize; j2++, i2++)
-					for(i2=int(m.get_random_seed()%arraySize)+1, j2=1; j2<=arraySize; j2++, i2++)
+					//for(i2=misc.random(arraySize)+1, j2=1; j2<=arraySize; j2++, i2++)
+					for(i2=int(misc.get_random_seed()%arraySize)+1, j2=1; j2<=arraySize; j2++, i2++)
 					{
 						if(i2>arraySize)
 							i2 = 1;
@@ -376,7 +376,7 @@ void Sys::process()
 					}
 				}
 				else
-					unit_array.move_to(m.random(MAX_WORLD_X_LOC), m.random(MAX_WORLD_Y_LOC), 0, attackerArray, attackerCount, 1);
+					unit_array.move_to(misc.random(MAX_WORLD_X_LOC), misc.random(MAX_WORLD_Y_LOC), 0, attackerArray, attackerCount, 1);
 			}
 		}
 	#endif
@@ -490,7 +490,7 @@ void Sys::set_view_mode(int viewMode, int viewingNationRecno, int viewingSpyRecn
 
 			if( escapeChance > 0 )
 			{
-				if( m2.random( escapeChance/15 )==0  )		// use m2 instead of m to maintain mulitplayer sync
+				if( misc2.random( escapeChance/15 )==0  )		// use m2 instead of m to maintain mulitplayer sync
 					killFlag = 1;
 			}
 
@@ -986,7 +986,7 @@ void Sys::disp_zoom()
 
 	if( zoom_need_redraw )		// requested by other modules to redraw the pre-drawn zoom background
 	{
-		long backupSeed = m.get_random_seed();
+		long backupSeed = misc.get_random_seed();
 		
 		world.zoom_matrix->draw();
 		zoom_need_redraw = 0;
@@ -1062,7 +1062,7 @@ void Sys::disp_frames_per_second()
 
 	//------- get the curren system time ---------//
 
-	DWORD curTime = m.get_time();		// in millisecond
+	DWORD curTime = misc.get_time();		// in millisecond
 
 	//----------- first time calling -------------//
 

@@ -479,7 +479,7 @@ void Remote::process_receive_queue()
 #endif                  
 						remoteMsgPtr->process_msg();
 						LOG_MSG("end process remote message");
-						LOG_MSG(m.get_random_seed());
+						LOG_MSG(misc.get_random_seed());
 					}
 				}
 			}

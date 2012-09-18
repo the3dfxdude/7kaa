@@ -104,7 +104,7 @@ int Unit::think_resume_original_action()
 
 	Unit* targetUnit = unit_array[action_para2];
 
-	int curDistance = m.points_distance( targetUnit->next_x_loc(), targetUnit->next_y_loc(),
+	int curDistance = misc.points_distance( targetUnit->next_x_loc(), targetUnit->next_y_loc(),
 							original_target_x_loc, original_target_y_loc );
 
 	if( curDistance > AUTO_GUARD_CHASE_ATTACK_DISTANCE )
@@ -140,7 +140,7 @@ int Unit::think_change_attack_target()
 
 	for( int i=2 ; i<attackScanRange*attackScanRange ; i++ )
 	{
-		m.cal_move_around_a_point(i, attackScanRange, attackScanRange, xOffset, yOffset);
+		misc.cal_move_around_a_point(i, attackScanRange, attackScanRange, xOffset, yOffset);
 
 		xLoc = curXLoc + xOffset;
 		yLoc = curYLoc + yOffset;

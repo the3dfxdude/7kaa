@@ -166,7 +166,7 @@ void MouseSDL::hide_area(int x1, int y1, int x2, int y2)
 	int curX = cur_x - mouse_cursor.hot_spot_x;
 	int curY = cur_y - mouse_cursor.hot_spot_y;
 
-	if( m.is_touch( x1, y1, x2, y2, curX, curY,
+	if( misc.is_touch( x1, y1, x2, y2, curX, curY,
 						 curX+mouse_cursor.icon_width-1,
 						 curY+mouse_cursor.icon_height-1 ) )
 	{
@@ -218,7 +218,7 @@ void MouseSDL::show_area()
 	int curX = cur_x - mouse_cursor.hot_spot_x;
 	int curY = cur_y - mouse_cursor.hot_spot_y;
 
-	if( m.is_touch( mouse_cursor.hide_x1, mouse_cursor.hide_y1,
+	if( misc.is_touch( mouse_cursor.hide_x1, mouse_cursor.hide_y1,
 						 mouse_cursor.hide_x2, mouse_cursor.hide_y2,
 						 curX, curY, curX+mouse_cursor.icon_width-1,
 						 curY+mouse_cursor.icon_height-1 ) )
@@ -762,7 +762,7 @@ void MouseSDL::poll_event()
 		case SDL_MOUSEBUTTONDOWN:
 			ev.x = cur_x;
 			ev.y = cur_y;
-			ev.time = m.get_time(); //mouseMsg->dwTimeStamp;
+			ev.time = misc.get_time(); //mouseMsg->dwTimeStamp;
 			ev.scan_code = 0;
 			ev.skey_state = skey_state;
 
@@ -781,7 +781,7 @@ void MouseSDL::poll_event()
 		case SDL_MOUSEBUTTONUP:
 			ev.x = cur_x;
 			ev.y = cur_y;
-			ev.time = m.get_time(); //mouseMsg->dwTimeStamp;
+			ev.time = misc.get_time(); //mouseMsg->dwTimeStamp;
 			ev.scan_code = 0;
 			ev.skey_state = skey_state;
 
@@ -832,7 +832,7 @@ void MouseSDL::poll_event()
 			if (!bypass) {
 				update_skey_state();
 				add_key_event(event.key.keysym.sym,
-					      m.get_time());
+					      misc.get_time());
 			}
 			break;
 		}
@@ -915,7 +915,7 @@ int MouseSDL::wait_press(int timeOutSecond)
 	}
 
 	int rc=0;
-	unsigned int timeOutTime = m.get_time() + timeOutSecond*1000;
+	unsigned int timeOutTime = misc.get_time() + timeOutSecond*1000;
 
 	while(1)
 	{
@@ -937,7 +937,7 @@ int MouseSDL::wait_press(int timeOutSecond)
 			break;
 		}
 
-		if( timeOutSecond && m.get_time() > timeOutTime )
+		if( timeOutSecond && misc.get_time() > timeOutTime )
 			break;
 	}
 

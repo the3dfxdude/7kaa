@@ -131,8 +131,8 @@ void Unit::process_idle()
    {
 		if(!is_guarding() && race_id )     // only these units can move
 		{
-			if(!m.random(150))             // change direction randomly
-				set_dir(m.random(8));
+			if(!misc.random(150))             // change direction randomly
+				set_dir(misc.random(8));
 		}
 	}
 	else
@@ -149,17 +149,17 @@ void Unit::process_idle()
 		unit_group_id = 1;
 		if(cur_action==SPRITE_IDLE)
 		{
-			if(m.random(50))
+			if(misc.random(50))
 				return;
 		}
 		else if(cur_action!=SPRITE_READY_TO_MOVE)
 		{
-			if(m.random(30)==0)
+			if(misc.random(30)==0)
 				return;
 		}
 
-		int xOffset = m.random(30)*(m.random(2) ? 1 : -1);
-		int yOffset = m.random(30)*(m.random(2) ? 1 : -1);
+		int xOffset = misc.random(30)*(misc.random(2) ? 1 : -1);
+		int yOffset = misc.random(30)*(misc.random(2) ? 1 : -1);
 		int curXLoc = next_x_loc();
 		int curYLoc = next_y_loc();
 		int destXLoc = curXLoc+xOffset;
@@ -225,8 +225,8 @@ void Unit::process_idle()
 			//int curYLoc = next_y_loc();
 			//int destXLoc, destYLoc;
 
-			if(m.random(30))
-				move_to(m.random(MAX_WORLD_X_LOC), m.random(MAX_WORLD_Y_LOC));
+			if(misc.random(30))
+				move_to(misc.random(MAX_WORLD_X_LOC), misc.random(MAX_WORLD_Y_LOC));
 
 			Nation *nationPtr = nation_array[nation_recno];
 			if(nationPtr->cash<2000)
@@ -278,12 +278,12 @@ void Unit::process_idle()
 
 	if( unitInfo->unit_class == UNIT_CLASS_MONSTER )
 	{
-		if(m.random(500)==0)
+		if(misc.random(500)==0)
 		{
 			#define WANDER_DIST 20
 
-			int xOffset = m.random(WANDER_DIST)-WANDER_DIST/2;
-			int yOffset = m.random(WANDER_DIST)-WANDER_DIST/2;
+			int xOffset = misc.random(WANDER_DIST)-WANDER_DIST/2;
+			int yOffset = misc.random(WANDER_DIST)-WANDER_DIST/2;
 			int destX = next_x_loc()+xOffset;
 			int destY = next_y_loc()+yOffset;
 
@@ -675,7 +675,7 @@ int Unit::idle_detect_attack(int startLoc, int dimensionInput, char defenseMode)
 	err_when(incAmount<1 || incAmount>100000);
    for(; i<=countLimit; i+=incAmount) // 1 is the self location
    {
-      m.cal_move_around_a_point(i, dimension, dimension, xOffset, yOffset);
+      misc.cal_move_around_a_point(i, dimension, dimension, xOffset, yOffset);
       checkXLoc = move_to_x_loc+xOffset;
       checkYLoc = move_to_y_loc+yOffset;
       if(checkXLoc<0 || checkXLoc>=MAX_WORLD_X_LOC || checkYLoc<0 || checkYLoc>=MAX_WORLD_Y_LOC)
@@ -1217,7 +1217,7 @@ void Unit::idle_detect_helper_attack(short unitRecno)
 		if(targetUnit->nation_recno==nation_recno)
 			return;
 
-		if(m.points_distance(next_x_loc(), next_y_loc(), targetUnit->next_x_loc(), targetUnit->next_y_loc())<HELP_DISTANCE)
+		if(misc.points_distance(next_x_loc(), next_y_loc(), targetUnit->next_x_loc(), targetUnit->next_y_loc())<HELP_DISTANCE)
 		{
 			if(idle_detect_unit_checking(actionPara))
 			{

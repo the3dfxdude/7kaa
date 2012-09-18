@@ -157,7 +157,7 @@ void Game::view_encyclopedia()
 	for( int i=0 ; i<ENCYC_CLASS_COUNT ; i++ )
 		sub_class_id_array[i] = 1;
 
-	unsigned long nextDisplayTime = m.get_time() + START_SLIDE_MODE_TIME;
+	unsigned long nextDisplayTime = misc.get_time() + START_SLIDE_MODE_TIME;
 
 	//------- display the default picture ----//
 
@@ -257,7 +257,7 @@ void Game::view_encyclopedia()
 			disp_class_buttons();
 			disp_picture(main_class_id, selSubClass);
 
-			nextDisplayTime = m.get_time() + START_SLIDE_MODE_TIME;
+			nextDisplayTime = misc.get_time() + START_SLIDE_MODE_TIME;
 		}
 
 		//------ detect the "Return" button -------//
@@ -272,7 +272,7 @@ void Game::view_encyclopedia()
 
 		//----------- auto slide show -------------//
 
-		if( m.get_time() > nextDisplayTime )
+		if( misc.get_time() > nextDisplayTime )
 		{
 			//--- display next pictures ---//
 
@@ -287,7 +287,7 @@ void Game::view_encyclopedia()
 			disp_class_buttons();
 
 			if( disp_picture(main_class_id, sub_class_id_array[main_class_id-1]) )
-				nextDisplayTime = m.get_time() + SLIDE_MODE_TIME;
+				nextDisplayTime = misc.get_time() + SLIDE_MODE_TIME;
 		}
 	}
 
@@ -576,15 +576,15 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 	if( 
 		// search DIR_ENCYC2 first
-		filename2[0] && m.is_file_exist(filename2) && pictFile.file_open(filename2,0) && (palNamePtr = palname2) ||
-		filename[0] && m.is_file_exist(filename) && pictFile.file_open(filename,0) && (palNamePtr = palname) )
+		filename2[0] && misc.is_file_exist(filename2) && pictFile.file_open(filename2,0) && (palNamePtr = palname2) ||
+		filename[0] && misc.is_file_exist(filename) && pictFile.file_open(filename,0) && (palNamePtr = palname) )
 	{
 		vga_back.put_large_bitmap(174, 12, &pictFile);
 
 		if( !firstDisp )
 			vga_front.bar(174,12,787,587, 0x00);		// wipe the picture screen
 
-		if( palNamePtr && m.is_file_exist(palNamePtr) )
+		if( palNamePtr && misc.is_file_exist(palNamePtr) )
 		{
 			VgaFrontLock vgaLock;
 			vga.set_custom_palette(palNamePtr);

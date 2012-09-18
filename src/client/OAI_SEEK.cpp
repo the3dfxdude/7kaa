@@ -126,7 +126,7 @@ int Nation::seek_mine(short& xLoc, short& yLoc, short& refXLoc, short& refYLoc)
 			if(siteLocPtr->region_id!=locPtr->region_id)
 				continue; // not on the same territory
 
-			dist = m.points_distance(sitePtr->map_x_loc, sitePtr->map_y_loc, townPtr->center_x, townPtr->center_y);
+			dist = misc.points_distance(sitePtr->map_x_loc, sitePtr->map_y_loc, townPtr->center_x, townPtr->center_y);
 
 			//-------------------------------------------------------------------------//
 			// check whether a mine is already connected to this town, if so, use it

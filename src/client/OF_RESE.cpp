@@ -355,7 +355,7 @@ void i_disp_research_button(ButtonCustom *button, int repaintBody)
 	if( researchVersion > 1 )
 	{
 		str += " ";
-		str += m.roman_number(researchVersion);
+		str += misc.roman_number(researchVersion);
 	}
 
 	font_bible.put( x1+TECH_LARGE_ICON_WIDTH+12, y1+14, str );
@@ -407,7 +407,7 @@ void FirmResearch::disp_research_info(int dispY1, int refreshFlag)
 		if( researchVersion > 1 )
 		{
 			str += " ";
-			str += m.roman_number(researchVersion);
+			str += misc.roman_number(researchVersion);
 		}
 
 		font_san.put( x, y+4, str);

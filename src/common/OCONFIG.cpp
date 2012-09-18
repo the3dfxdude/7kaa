@@ -398,7 +398,7 @@ int Config::save(const char *filename)
 	char full_path[MAX_PATH+1];
 	File configFile;
 
-	if(!m.path_cat(full_path, sys.dir_config, filename, MAX_PATH))
+	if(!misc.path_cat(full_path, sys.dir_config, filename, MAX_PATH))
 	{
 		ERR("Path too long to the config file.\n");
 		return 0;
@@ -427,14 +427,14 @@ int Config::load(const char *filename)
 	char full_path[MAX_PATH+1];
 	File configFile;
 
-        if(!m.path_cat(full_path, sys.dir_config, filename, MAX_PATH))
+        if(!misc.path_cat(full_path, sys.dir_config, filename, MAX_PATH))
         {
                 ERR("Path too long to the config file.\n");
                 return 0;
         }
         MSG("Loading config: %s\n", full_path);
 
-	if( !m.is_file_exist(full_path) || !configFile.file_open(full_path) )
+	if( !misc.is_file_exist(full_path) || !configFile.file_open(full_path) )
 		return 0;
 
 	int retFlag = 0;

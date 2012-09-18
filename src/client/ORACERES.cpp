@@ -111,9 +111,9 @@ void RaceRes::load_race_info()
 
 		raceInfo->race_id = i+1;
 
-		m.rtrim_fld( raceInfo->code, raceRec->code, raceRec->CODE_LEN );
-		m.rtrim_fld( raceInfo->name, raceRec->name, raceRec->NAME_LEN );
-		m.rtrim_fld( raceInfo->adjective, raceRec->adjective, raceRec->ADJECTIVE_LEN );
+		misc.rtrim_fld( raceInfo->code, raceRec->code, raceRec->CODE_LEN );
+		misc.rtrim_fld( raceInfo->name, raceRec->name, raceRec->NAME_LEN );
+		misc.rtrim_fld( raceInfo->adjective, raceRec->adjective, raceRec->ADJECTIVE_LEN );
 #if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
 		translate.multi_to_win(raceInfo->name, raceInfo->NAME_LEN);
 		translate.multi_to_win(raceInfo->adjective, raceInfo->ADJECTIVE_LEN);
@@ -168,7 +168,7 @@ void RaceRes::load_name()
 		raceNameRec = (RaceNameRec*) dbRaceName->read(i);
 		raceName    = name_array+i-1;
 
-		m.rtrim_fld( raceName->name, raceNameRec->name, raceNameRec->NAME_LEN );
+		misc.rtrim_fld( raceName->name, raceNameRec->name, raceNameRec->NAME_LEN );
 		// translate for all language
 		translate.multi_to_win(raceName->name, raceName->NAME_LEN);
 
@@ -189,7 +189,7 @@ void RaceRes::load_name()
 
 			for( j=1 ; j<=MAX_RACE ; j++ )
 			{
-				if( strcmp( race_res[j]->code, m.nullify(raceName->name+2, RaceInfo::CODE_LEN) )==0 )
+				if( strcmp( race_res[j]->code, misc.nullify(raceName->name+2, RaceInfo::CODE_LEN) )==0 )
 				{
 					raceId = j;
 					break;
@@ -250,7 +250,7 @@ WORD RaceInfo::get_new_name_id()
 	//---------- get the first name ----------//
 
 	int i;
-	int firstNameId = m.random(first_name_count)+1;
+	int firstNameId = misc.random(first_name_count)+1;
 
 	for( i=1 ; i<=first_name_count ; i++ )
 	{
@@ -280,7 +280,7 @@ WORD RaceInfo::get_new_name_id()
 	}
 	else		// this race has last names
 	{
-		lastNameId = m.random(last_name_count)+1;
+		lastNameId = misc.random(last_name_count)+1;
 
 		for( i=1 ; i<=last_name_count ; i++ )
 		{
@@ -425,7 +425,7 @@ const char* RaceInfo::get_name(WORD nameId, int nameType)
 				if( str.len() > 0 )
 					str += " ";
 
-				str += m.roman_number(lastNameId);
+				str += misc.roman_number(lastNameId);
 			}
 		}
 		else

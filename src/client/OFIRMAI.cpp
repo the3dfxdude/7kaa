@@ -490,7 +490,7 @@ int Firm::think_capture()
 			continue;
 		}
 
-		curDistance = m.points_distance(center_x, center_y,
+		curDistance = misc.points_distance(center_x, center_y,
 						  firmPtr->center_x, firmPtr->center_y );
 
 		//--- only attack camps within 15 location distance to this firm ---//
@@ -504,7 +504,7 @@ int Firm::think_capture()
 
 	if( bestTarget )
 	{
-		int useAllCamp = nationPtr->pref_military_courage > 60 || m.random(3)==0;
+		int useAllCamp = nationPtr->pref_military_courage > 60 || misc.random(3)==0;
 
 		nationPtr->ai_attack_target( bestTarget->loc_x1, bestTarget->loc_y1,
 			((FirmCamp*)bestTarget)->total_combat_level(), 0, 0, 0, 0, useAllCamp );

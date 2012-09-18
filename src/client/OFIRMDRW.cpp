@@ -531,7 +531,7 @@ void Firm::draw_selected()
 
 	//------------ draw the square frame now ------------//
 
-	if( m.is_touch( x1, y1, x2, y2, ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2 ) )
+	if( misc.is_touch( x1, y1, x2, y2, ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2 ) )
 	{
 		//------- Only draw_selected the portion within the zoom window area ----//
 

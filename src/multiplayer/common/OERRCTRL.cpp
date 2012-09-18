@@ -606,16 +606,16 @@ void ErrorControl::clear_ack(char frameId)
 
 void ErrorControl::mark_send_time(char frameId, long unsigned int duration)
 {
-	send_time[frameId] = m.get_time();
+	send_time[frameId] = misc.get_time();
 	re_send_after[frameId] = duration;
 }
 
 // larger the promptFactor, earlier to re-send
 int ErrorControl::need_re_send(char frameId, int promptFactor)
 {
-	return ((m.get_time() - send_time[frameId]) * promptFactor) >= re_send_after[frameId];
-	// do not use m.get_time() >= re_send_after[frameId] + send_time[frameId]
-	// assume m.get_time() may count again from zero
+	return ((misc.get_time() - send_time[frameId]) * promptFactor) >= re_send_after[frameId];
+	// do not use misc.get_time() >= re_send_after[frameId] + send_time[frameId]
+	// assume misc.get_time() may count again from zero
 }
 
 

@@ -114,18 +114,18 @@ void WallRes::load_wall_info()
 		wallRec  = (WallRec*) dbWall->read(i+1);
 		wallInfo = wall_info_array+i;
 
-		wallInfo->wall_id = m.atoi( wallRec->wall_id, wallRec->WALL_ID_LEN);
+		wallInfo->wall_id = misc.atoi(wallRec->wall_id, wallRec->WALL_ID_LEN);
 		wallInfo->flags = 0;
 		if( wallRec->gate_flag == 'Y' || wallRec->gate_flag == 'y')
 			wallInfo->set_gate();
 		if( wallRec->trans_flag == 'Y' || wallRec->trans_flag == 'y')
 			wallInfo->set_trans();
-		wallInfo->offset_x = m.atoi( wallRec->offset_x, wallRec->OFFSET_LEN);
-		wallInfo->offset_y = m.atoi( wallRec->offset_y, wallRec->OFFSET_LEN);
-		wallInfo->loc_off_x = m.atoi( wallRec->loc_off_x, wallRec->LOC_OFF_LEN);
-		wallInfo->loc_off_y = m.atoi( wallRec->loc_off_y, wallRec->LOC_OFF_LEN);
+		wallInfo->offset_x = misc.atoi(wallRec->offset_x, wallRec->OFFSET_LEN);
+		wallInfo->offset_y = misc.atoi(wallRec->offset_y, wallRec->OFFSET_LEN);
+		wallInfo->loc_off_x = misc.atoi(wallRec->loc_off_x, wallRec->LOC_OFF_LEN);
+		wallInfo->loc_off_y = misc.atoi(wallRec->loc_off_y, wallRec->LOC_OFF_LEN);
 
-		wallInfo->draw_wall_id = m.atoi( wallRec->draw_wall, wallRec->WALL_ID_LEN);
+		wallInfo->draw_wall_id = misc.atoi(wallRec->draw_wall, wallRec->WALL_ID_LEN);
 
 		memcpy( &bitmapOffset, wallRec->bitmap_ptr, sizeof(uint32_t) );
 		wallInfo->bitmap_ptr	= res_bitmap.read_imported(bitmapOffset);
@@ -167,7 +167,7 @@ void WallRes::draw_selected()
 
 	//------------ draw the square frame now ------------//
 
-	if( m.is_touch( x, y, x, x, ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2 ) )
+	if( misc.is_touch( x, y, x, x, ZOOM_X1, ZOOM_Y1, ZOOM_X2, ZOOM_Y2 ) )
 	{
 		vga_back.rect( x, y, x+ZOOM_LOC_WIDTH-1, y+ZOOM_LOC_HEIGHT-1, 1, OWN_SELECT_FRAME_COLOR );
 	}

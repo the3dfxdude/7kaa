@@ -153,42 +153,42 @@ void UnitRes::load_info()
 		unitRec  = (UnitRec*) dbUnit->read(i+1);
 		unitInfo = unit_info_array+i;
 
-		m.rtrim_fld( unitInfo->name, unitRec->name, unitRec->NAME_LEN );
+		misc.rtrim_fld( unitInfo->name, unitRec->name, unitRec->NAME_LEN );
 #if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
 		translate.multi_to_win(unitInfo->name, unitInfo->NAME_LEN);
 #endif
 
 		unitInfo->unit_id 	   = i+1;
-		unitInfo->sprite_id	   = m.atoi(unitRec->sprite_id, unitRec->SPRITE_ID_LEN);
-		unitInfo->dll_sprite_id	= m.atoi(unitRec->dll_sprite_id, unitRec->SPRITE_ID_LEN);
-		unitInfo->race_id   	   = m.atoi(unitRec->race_id  , unitRec->RACE_ID_LEN);
+		unitInfo->sprite_id = misc.atoi(unitRec->sprite_id, unitRec->SPRITE_ID_LEN);
+		unitInfo->dll_sprite_id	= misc.atoi(unitRec->dll_sprite_id, unitRec->SPRITE_ID_LEN);
+		unitInfo->race_id = misc.atoi(unitRec->race_id, unitRec->RACE_ID_LEN);
 
 		unitInfo->unit_class 	= unitRec->unit_class[0];
 		unitInfo->mobile_type   = unitRec->mobile_type;
 
-		unitInfo->visual_range  = m.atoi(unitRec->visual_range, unitRec->UNIT_PARA_LEN);
-		unitInfo->visual_extend = m.atoi(unitRec->visual_extend , unitRec->UNIT_PARA_LEN);
-		unitInfo->shealth       = m.atoi(unitRec->shealth       , unitRec->UNIT_PARA_LEN);
-		unitInfo->hit_points    = m.atoi(unitRec->hit_points  , unitRec->UNIT_PARA_LEN);
-		unitInfo->armor         = m.atoi(unitRec->armor       , unitRec->UNIT_PARA_LEN);
+		unitInfo->visual_range = misc.atoi(unitRec->visual_range, unitRec->UNIT_PARA_LEN);
+		unitInfo->visual_extend = misc.atoi(unitRec->visual_extend, unitRec->UNIT_PARA_LEN);
+		unitInfo->shealth = misc.atoi(unitRec->shealth, unitRec->UNIT_PARA_LEN);
+		unitInfo->hit_points = misc.atoi(unitRec->hit_points, unitRec->UNIT_PARA_LEN);
+		unitInfo->armor = misc.atoi(unitRec->armor, unitRec->UNIT_PARA_LEN);
 
-		unitInfo->build_days    = m.atoi(unitRec->build_days, unitRec->BUILD_DAYS_LEN);
-		unitInfo->year_cost     = m.atoi(unitRec->year_cost, unitRec->YEAR_COST_LEN);
+		unitInfo->build_days = misc.atoi(unitRec->build_days, unitRec->BUILD_DAYS_LEN);
+		unitInfo->year_cost = misc.atoi(unitRec->year_cost, unitRec->YEAR_COST_LEN);
 		unitInfo->build_cost    = unitInfo->year_cost;
 
 		if( unitInfo->unit_class == UNIT_CLASS_WEAPON )
 			unitInfo->weapon_power = unitRec->weapon_power-'0';
 
-		unitInfo->carry_unit_capacity  = m.atoi(unitRec->carry_unit_capacity, unitRec->CARRY_CAPACITY_LEN);
-		unitInfo->carry_goods_capacity = m.atoi(unitRec->carry_goods_capacity, unitRec->CARRY_CAPACITY_LEN);
-		unitInfo->free_weapon_count 	 = m.atoi(unitRec->free_weapon_count, unitRec->FREE_WEAPON_COUNT_LEN);
+		unitInfo->carry_unit_capacity = misc.atoi(unitRec->carry_unit_capacity, unitRec->CARRY_CAPACITY_LEN);
+		unitInfo->carry_goods_capacity = misc.atoi(unitRec->carry_goods_capacity, unitRec->CARRY_CAPACITY_LEN);
+		unitInfo->free_weapon_count 	 = misc.atoi(unitRec->free_weapon_count, unitRec->FREE_WEAPON_COUNT_LEN);
 
-		unitInfo->vehicle_id 	  = m.atoi(unitRec->vehicle_id	  , unitRec->SPRITE_ID_LEN);
-		unitInfo->vehicle_unit_id = m.atoi(unitRec->vehicle_unit_id, unitRec->SPRITE_ID_LEN);
+		unitInfo->vehicle_id = misc.atoi(unitRec->vehicle_id, unitRec->SPRITE_ID_LEN);
+		unitInfo->vehicle_unit_id = misc.atoi(unitRec->vehicle_unit_id, unitRec->SPRITE_ID_LEN);
 
-		unitInfo->transform_unit_id 	   = m.atoi(unitRec->transform_unit_id	    , unitRec->SPRITE_ID_LEN);
-		unitInfo->transform_combat_level = m.atoi(unitRec->transform_combat_level, unitRec->UNIT_PARA_LEN);
-		unitInfo->guard_combat_level     = m.atoi(unitRec->guard_combat_level, unitRec->UNIT_PARA_LEN);
+		unitInfo->transform_unit_id = misc.atoi(unitRec->transform_unit_id, unitRec->SPRITE_ID_LEN);
+		unitInfo->transform_combat_level = misc.atoi(unitRec->transform_combat_level, unitRec->UNIT_PARA_LEN);
+		unitInfo->guard_combat_level = misc.atoi(unitRec->guard_combat_level, unitRec->UNIT_PARA_LEN);
 
 		memcpy( &bitmapOffset, unitRec->large_icon_ptr, sizeof(uint32_t) );
 		unitInfo->soldier_icon_ptr = res_large_icon.read_imported(bitmapOffset);
@@ -238,9 +238,9 @@ void UnitRes::load_info()
 		}
 		// ###### end Gilbert 17/10 ######//
 
-		unitInfo->first_attack = m.atoi(unitRec->first_attack, unitRec->UNIT_PARA_LEN);
-		unitInfo->attack_count = m.atoi(unitRec->attack_count, unitRec->UNIT_PARA_LEN);
-		unitInfo->die_effect_id = m.atoi(unitRec->die_effect_id, unitRec->UNIT_PARA_LEN);
+		unitInfo->first_attack = misc.atoi(unitRec->first_attack, unitRec->UNIT_PARA_LEN);
+		unitInfo->attack_count = misc.atoi(unitRec->attack_count, unitRec->UNIT_PARA_LEN);
+		unitInfo->die_effect_id = misc.atoi(unitRec->die_effect_id, unitRec->UNIT_PARA_LEN);
 
 		if( unitRec->all_know=='1' )
 			memset( unitInfo->nation_tech_level_array, 1, sizeof(unitInfo->nation_tech_level_array) );
@@ -283,21 +283,21 @@ void UnitRes::load_attack_info()
 		attackRec  = (UnitAttackRec*) dbUnitAttack->read(i+1);
 		attackInfo = attack_info_array+i;
 
-		attackInfo->combat_level     = m.atoi(attackRec->combat_level 	  , attackRec->COMBAT_LEVEL_LEN);
-		attackInfo->attack_delay     = m.atoi(attackRec->attack_delay 	  , attackRec->UNIT_PARA_LEN);
-		attackInfo->attack_range     = m.atoi(attackRec->attack_range 	  , attackRec->UNIT_PARA_LEN);
-		attackInfo->attack_damage    = m.atoi(attackRec->attack_damage	  , attackRec->UNIT_PARA_LEN);
-		attackInfo->pierce_damage 	  = m.atoi(attackRec->pierce_damage	  , attackRec->UNIT_PARA_LEN);
-		attackInfo->bullet_out_frame = m.atoi(attackRec->bullet_out_frame, attackRec->UNIT_PARA_LEN);
-		attackInfo->bullet_speed 	  = m.atoi(attackRec->bullet_speed	  , attackRec->UNIT_PARA_LEN);
-		attackInfo->bullet_radius    = m.atoi(attackRec->bullet_radius       , attackRec->UNIT_PARA_LEN);
-		attackInfo->bullet_sprite_id = m.atoi(attackRec->bullet_sprite_id, attackRec->UNIT_PARA_LEN);
-		attackInfo->dll_bullet_sprite_id = m.atoi(attackRec->dll_bullet_sprite_id, attackRec->UNIT_PARA_LEN);
-		attackInfo->eqv_attack_next  = m.atoi(attackRec->eqv_attack_next, attackRec->UNIT_PARA_LEN);
-		attackInfo->min_power        = m.atoi(attackRec->min_power, attackRec->UNIT_PARA_LEN);
-		attackInfo->consume_power    = m.atoi(attackRec->consume_power, attackRec->UNIT_PARA_LEN);
-		attackInfo->fire_radius      = m.atoi(attackRec->fire_radius, attackRec->UNIT_PARA_LEN);
-		attackInfo->effect_id        = m.atoi(attackRec->effect_id, attackRec->UNIT_PARA_LEN);
+		attackInfo->combat_level = misc.atoi(attackRec->combat_level, attackRec->COMBAT_LEVEL_LEN);
+		attackInfo->attack_delay = misc.atoi(attackRec->attack_delay, attackRec->UNIT_PARA_LEN);
+		attackInfo->attack_range = misc.atoi(attackRec->attack_range, attackRec->UNIT_PARA_LEN);
+		attackInfo->attack_damage = misc.atoi(attackRec->attack_damage, attackRec->UNIT_PARA_LEN);
+		attackInfo->pierce_damage = misc.atoi(attackRec->pierce_damage, attackRec->UNIT_PARA_LEN);
+		attackInfo->bullet_out_frame = misc.atoi(attackRec->bullet_out_frame, attackRec->UNIT_PARA_LEN);
+		attackInfo->bullet_speed = misc.atoi(attackRec->bullet_speed, attackRec->UNIT_PARA_LEN);
+		attackInfo->bullet_radius = misc.atoi(attackRec->bullet_radius, attackRec->UNIT_PARA_LEN);
+		attackInfo->bullet_sprite_id = misc.atoi(attackRec->bullet_sprite_id, attackRec->UNIT_PARA_LEN);
+		attackInfo->dll_bullet_sprite_id = misc.atoi(attackRec->dll_bullet_sprite_id, attackRec->UNIT_PARA_LEN);
+		attackInfo->eqv_attack_next = misc.atoi(attackRec->eqv_attack_next, attackRec->UNIT_PARA_LEN);
+		attackInfo->min_power = misc.atoi(attackRec->min_power, attackRec->UNIT_PARA_LEN);
+		attackInfo->consume_power = misc.atoi(attackRec->consume_power, attackRec->UNIT_PARA_LEN);
+		attackInfo->fire_radius = misc.atoi(attackRec->fire_radius, attackRec->UNIT_PARA_LEN);
+		attackInfo->effect_id = misc.atoi(attackRec->effect_id, attackRec->UNIT_PARA_LEN);
 	}
 }
 //-------- End of function UnitRes::load_attack_info ---------//

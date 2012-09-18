@@ -271,7 +271,7 @@ inline void World::set_unit_recno(int xLoc,int yLoc, int mobileType, int newCarg
 //
 inline int World::distance_rating(int xLoc1, int yLoc1, int xLoc2, int yLoc2)
 {
-	int curDistance = m.points_distance(xLoc1, yLoc1, xLoc2, yLoc2);
+	int curDistance = misc.points_distance(xLoc1, yLoc1, xLoc2, yLoc2);
 
 	return 100 - 100 * curDistance / MAX_WORLD_X_LOC;
 }

@@ -791,8 +791,8 @@ float Unit::actual_damage()
 
 	//-------- pierce damage --------//
 
-	attackDamage += m.random(3) + attackInfo->pierce_damage
-						 * m.random(skill.combat_level-attackInfo->combat_level)
+	attackDamage += misc.random(3) + attackInfo->pierce_damage
+						 * misc.random(skill.combat_level-attackInfo->combat_level)
 						 / (100-attackInfo->combat_level);
 
 	//--- if this unit is led by a general, its attacking ability is influenced by the general ---//
@@ -829,7 +829,7 @@ float Unit::actual_damage()
 				leaderXLoc = -1;
 
 			if( leaderXLoc >= 0 &&
-				 m.points_distance(cur_x_loc(), cur_y_loc(), leaderXLoc, leaderYLoc) <= EFFECTIVE_LEADING_DISTANCE )
+				 misc.points_distance(cur_x_loc(), cur_y_loc(), leaderXLoc, leaderYLoc) <= EFFECTIVE_LEADING_DISTANCE )
 			{
 				attackDamage += attackDamage * leaderUnit->skill.skill_level / 100;
 			}
@@ -885,7 +885,7 @@ void Unit::gain_experience()
 			leaderXLoc = -1;
 
 		if( leaderXLoc >= 0 &&
-			 m.points_distance( cur_x_loc(), cur_y_loc(), leaderXLoc, leaderYLoc ) <= EFFECTIVE_LEADING_DISTANCE )
+			 misc.points_distance( cur_x_loc(), cur_y_loc(), leaderXLoc, leaderYLoc ) <= EFFECTIVE_LEADING_DISTANCE )
 		{
 			leaderUnit->inc_minor_skill_level(1);
 
@@ -893,7 +893,7 @@ void Unit::gain_experience()
 
 			if( leaderUnit->skill.skill_potential > 0 )
 			{
-				if( m.random(10-leaderUnit->skill.skill_potential/10)==0 )
+				if( misc.random(10-leaderUnit->skill.skill_potential/10)==0 )
 					leaderUnit->inc_minor_skill_level(5);
 			}
 		}
@@ -903,7 +903,7 @@ void Unit::gain_experience()
 
 		if( skill.skill_potential > 0 )
 		{
-			if( m.random(10-skill.skill_potential/10)==0 )
+			if( misc.random(10-skill.skill_potential/10)==0 )
 				inc_minor_skill_level(5);
 		}
 	}
@@ -1247,11 +1247,11 @@ void Unit::check_self_surround()
 
 	for(int i=startCount; i<=endCount; i++)
 	{
-		m.cal_move_around_a_point(i, width, width, xShift, yShift);
+		misc.cal_move_around_a_point(i, width, width, xShift, yShift);
 		locPtr = world.get_loc(curXLoc+xShift, curYLoc+yShift);
 		
 		if(!locPtr->can_move(mobile_type))
-			m.set_surround_bit(self_surround_flag, i-startCount);
+			misc.set_surround_bit(self_surround_flag, i-startCount);
 	}*/
 }
 //----------- End of function Unit::check_self_surround -----------//

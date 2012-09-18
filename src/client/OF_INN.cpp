@@ -88,7 +88,7 @@ FirmInn::~FirmInn()
 void FirmInn::init_derived()
 {
 	inn_unit_count = 0;
-	next_skill_id   = m.random(MAX_TRAINABLE_SKILL)+1;
+	next_skill_id   = misc.random(MAX_TRAINABLE_SKILL)+1;
 }
 //----------- End of function FirmInn::init_derived -----------//
 
@@ -444,7 +444,7 @@ static void put_hire_rec(int recNo, int x, int y, int refreshFlag)
 
 	font_san.use_std_height();
 
-	font_san.put( x+140, y, m.format(innUnit->hire_cost,2), 1, x+browse_hire.rec_width-3 );
+	font_san.put( x+140, y, misc.format(innUnit->hire_cost,2), 1, x+browse_hire.rec_width-3 );
 }
 //----------- End of static function put_hire_rec -----------//
 
@@ -480,7 +480,7 @@ void FirmInn::update_add_hire_list()
 	{
 		if( should_add_inn_unit() )
 		{
-			int unitId = race_res[m.random(MAX_RACE)+1]->basic_unit_id;
+			int unitId = race_res[misc.random(MAX_RACE)+1]->basic_unit_id;
 
 			if( unitId )
 				add_inn_unit(unitId);
@@ -558,18 +558,18 @@ void FirmInn::add_inn_unit(int unitId)
 	innUnit->skill.skill_id = skillId;
 
 	if( skillId > 0 )
-		innUnit->skill.skill_level = 30+m.random(70);
+		innUnit->skill.skill_level = 30+misc.random(70);
 	else
 		innUnit->skill.skill_level = 0;
 
 	if( skillId==0 || skillId==SKILL_LEADING )
-		innUnit->skill.combat_level = 30+m.random(70);
+		innUnit->skill.combat_level = 30+misc.random(70);
 	else
 		innUnit->skill.combat_level = 10;
 
 	innUnit->set_hire_cost();
 
-	innUnit->stay_count = 5 + m.random(5);
+	innUnit->stay_count = 5 + misc.random(5);
 
 	innUnit->spy_recno = 0;
 }
@@ -611,7 +611,7 @@ void FirmInn::del_inn_unit(int recNo)
 	err_when( inn_unit_count < 1 );
 	err_when( inn_unit_count > MAX_INN_UNIT );
 
-	m.del_array_rec(inn_unit_array, inn_unit_count, sizeof(InnUnit), recNo);
+	misc.del_array_rec(inn_unit_array, inn_unit_count, sizeof(InnUnit), recNo);
 
 	inn_unit_count--;
 }
@@ -672,7 +672,7 @@ void FirmInn::auto_defense(short targetRecno)
 			if(townPtr->nation_recno!=nation_recno)
 				continue;
 
-			dist = m.points_distance(center_x, center_y, townPtr->center_x, townPtr->center_y);
+			dist = misc.points_distance(center_x, center_y, townPtr->center_x, townPtr->center_y);
 			if(dist <= EFFECTIVE_FIRM_TOWN_DISTANCE)
 				townPtr->auto_defense(targetRecno);
 		}

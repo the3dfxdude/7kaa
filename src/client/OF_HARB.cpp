@@ -713,7 +713,7 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 			if( techLevel > 1 )
 			{
 				str += " ";
-				str += m.roman_number(techLevel);
+				str += misc.roman_number(techLevel);
 			}
 		}
 		
@@ -752,7 +752,7 @@ void FirmHarbor::disp_queue_button(int y, int unitId, int buttonUp)
 		y++;
 	}
 
-	font_san.center_put(x, y, x+COUNT_BUTTON_WIDTH-1 , y+COUNT_BUTTON_HEIGHT-1, m.format(queuedCount));
+	font_san.center_put(x, y, x+COUNT_BUTTON_WIDTH-1 , y+COUNT_BUTTON_HEIGHT-1, misc.format(queuedCount));
 }
 //----------- End of function FirmHarbor::disp_queue_button -----------//
 */
@@ -801,7 +801,7 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 	if( harbor->build_unit_id == unitId)
 		queuedCount++;
 
-	font_mid.center_put( x1+3, y1+3, x2-3, y2-3, m.format(queuedCount), 1);
+	font_mid.center_put( x1+3, y1+3, x2-3, y2-3, misc.format(queuedCount), 1);
 }
 //--------- End of static function i_disp_queue_button ---------//
 // ####### end Gilbert 20/9 #######//
@@ -1106,7 +1106,7 @@ void FirmHarbor::del_hosted_ship(int delUnitRecno)
 		{
 			err_when( ship_count > MAX_SHIP_IN_HARBOR );
 
-			m.del_array_rec( ship_recno_array, ship_count, sizeof(ship_recno_array[0]), i+1 );
+			misc.del_array_rec( ship_recno_array, ship_count, sizeof(ship_recno_array[0]), i+1 );
 			break;
 		}
 	}
@@ -1189,7 +1189,7 @@ void FirmHarbor::process_queue()
 
 		// remove the queue no matter build_ship success or not
 
-		m.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), 1 );
+		misc.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), 1 );
 		build_queue_count--;
 
 		if( firm_array.selected_recno == firm_recno )
@@ -1223,7 +1223,7 @@ void FirmHarbor::remove_queue(int unitId)
 		{
 			err_when( build_queue_count > MAX_BUILD_SHIP_QUEUE );
 
-			m.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), i+1 );
+			misc.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), i+1 );
 
 			build_queue_count--;
 			return;

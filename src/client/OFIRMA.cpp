@@ -383,7 +383,7 @@ int FirmArray::process()
 		{
 			LOG_MSG(" process_construction");
 			firmPtr->process_construction();
-			LOG_MSG(m.get_random_seed() );
+			LOG_MSG(misc.get_random_seed());
 		}
 		else
 		{
@@ -391,17 +391,17 @@ int FirmArray::process()
 			{
 				//### begin alex 22/9 ###//
 				#ifdef DEBUG
-				unsigned long profileStartTime = m.get_time();
+				unsigned long profileStartTime = misc.get_time();
 				#endif
 				//#### end alex 22/9 ####//
 
 				LOG_MSG(" next_day");
 				firmPtr->next_day();
-				LOG_MSG(m.get_random_seed() );
+				LOG_MSG(misc.get_random_seed());
 
 				//### begin alex 22/9 ###//
 				#ifdef DEBUG
-				firm_profile_time += m.get_time() - profileStartTime;
+				firm_profile_time += misc.get_time() - profileStartTime;
 				#endif
 				//#### end alex 22/9 ####//
 
@@ -424,21 +424,21 @@ int FirmArray::process()
 				{
 					LOG_MSG(" process_common_ai");
 					firmPtr->process_common_ai();
-					LOG_MSG(m.get_random_seed() );
+					LOG_MSG(misc.get_random_seed());
 
 					//### begin alex 22/9 ###//
 					#ifdef DEBUG
-					unsigned long profileAiStartTime = m.get_time();
+					unsigned long profileAiStartTime = misc.get_time();
 					#endif
 					//#### end alex 22/9 ####//
 
 					LOG_MSG(" process_ai");
 					firmPtr->process_ai();
-					LOG_MSG(m.get_random_seed());
+					LOG_MSG(misc.get_random_seed());
 
 					//### begin alex 22/9 ###//
 					#ifdef DEBUG
-					firm_ai_profile_time += m.get_time() - profileAiStartTime;
+					firm_ai_profile_time += misc.get_time() - profileAiStartTime;
 					#endif
 					//#### end alex 22/9 ####//
 
@@ -457,7 +457,7 @@ int FirmArray::process()
 
 		LOG_MSG(" process_animation");
 		firmPtr->process_animation();
-		LOG_MSG( m.get_random_seed() );
+		LOG_MSG(misc.get_random_seed());
 	}
 
 	return 0;
@@ -473,7 +473,7 @@ void FirmArray::next_month()
 	Firm*  firmPtr;
 
 	LOG_MSG("begin FirmArray::next_month");
-	LOG_MSG(m.get_random_seed() );
+	LOG_MSG(misc.get_random_seed());
 	for(i=1; i <=size() ; i++)
 	{
 		firmPtr = (Firm*)get_ptr(i);
@@ -483,11 +483,11 @@ void FirmArray::next_month()
 			LOG_MSG("Firm next_month");
 			LOG_MSG( i );
 			firmPtr->next_month();
-			LOG_MSG(m.get_random_seed() );
+			LOG_MSG(misc.get_random_seed());
 		}
 	}
 	LOG_MSG("end FirmArray::next_month");
-	LOG_MSG(m.get_random_seed() );
+	LOG_MSG(misc.get_random_seed());
 }
 //----------- End of function FirmArray::next_month -----------//
 
@@ -500,7 +500,7 @@ void FirmArray::next_year()
 	Firm*  firmPtr;
 
 	LOG_MSG("begin FirmArray::next_year");
-	LOG_MSG(m.get_random_seed() );
+	LOG_MSG(misc.get_random_seed());
 	for(i=1; i <=size() ; i++)
 	{
 		firmPtr = (Firm*)get_ptr(i);
@@ -510,11 +510,11 @@ void FirmArray::next_year()
 			LOG_MSG("Firm next_month");
 			LOG_MSG( i );
 			firmPtr->next_year();
-			LOG_MSG(m.get_random_seed() );
+			LOG_MSG(misc.get_random_seed() );
 		}
 	}
 	LOG_MSG("end FirmArray::next_year");
-	LOG_MSG(m.get_random_seed() );
+	LOG_MSG(misc.get_random_seed());
 }
 //----------- End of function FirmArray::next_year -----------//
 
@@ -607,12 +607,12 @@ void FirmArray::draw_dot()
 void FirmArray::draw_profile()
 {
 #ifdef DEBUG	
-	static unsigned long lastDrawTime = m.get_time();
+	static unsigned long lastDrawTime = misc.get_time();
 
-	if(m.get_time() >= lastDrawTime + 1000)
+	if(misc.get_time() >= lastDrawTime + 1000)
 	{
 		last_firm_profile_time = firm_profile_time;
-		lastDrawTime = m.get_time();
+		lastDrawTime = misc.get_time();
 		firm_profile_time = 0L;
 	}
 

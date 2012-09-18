@@ -142,7 +142,7 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, DWORD playe
 	god_res.init_nation_know(nation_recno);
 
 	//### begin alex 23/9 ###//
-	if(remote.is_enable() && nation_recno && !is_ai() && m.is_file_exist("TECHGOD.SYS"))
+	if(remote.is_enable() && nation_recno && !is_ai() && misc.is_file_exist("TECHGOD.SYS"))
 	{
 		tech_res.inc_all_tech_level(nation_recno);
 		tech_res.inc_all_tech_level(nation_recno);
@@ -598,12 +598,12 @@ char* NationBase::cash_str()
 
 	if( cash >= 0 )
 	{
-		str = m.format( (int)cash, 4 );			// format type 4 - no thousand separators
+		str = misc.format( (int)cash, 4 );			// format type 4 - no thousand separators
 	}
 	else
 	{
 		str  = "-";
-		str += m.format( (int)-cash, 4 );		// format type 4 - no thousand separators
+		str += misc.format( (int)-cash, 4 );		// format type 4 - no thousand separators
 	}
 
 	//--------------------------------------//
@@ -619,7 +619,7 @@ char* NationBase::cash_str()
 		else
 			str += "-";
 
-		str += m.format( abs(curProfit), 4 ); 	// format type 4 - no thousand separators
+		str += misc.format( abs(curProfit), 4 ); 	// format type 4 - no thousand separators
 		str += ")";
 	}
 
@@ -639,12 +639,12 @@ char* NationBase::food_str()
 
 	if( food >= 0 )
 	{
-		str = m.format( (int)food, 4 );			// format type 4 - no thousand separators
+		str = misc.format( (int)food, 4 );			// format type 4 - no thousand separators
 	}
 	else
 	{
 		str  = "-";
-		str += m.format( (int)-food, 4 );		// format type 4 - no thousand separators
+		str += misc.format( (int)-food, 4 );		// format type 4 - no thousand separators
 	}
 
 	//--------------------------------------//
@@ -660,7 +660,7 @@ char* NationBase::food_str()
 		else
 			str += "-";
 
-		str += m.format( abs(foodChange), 4 ); 	// format type 4 - no thousand separators
+		str += misc.format( abs(foodChange), 4 ); 	// format type 4 - no thousand separators
 		str += ")";
 	}
 
@@ -940,7 +940,7 @@ void NationBase::add_cheat(float cheatAmount)
 	}
 	else		// cheat less obviously, randomly add to one of the account at a random amount //
 	{
-		add_income( m.random(INCOME_TYPE_COUNT-1)+1, cheatAmount );
+		add_income( misc.random(INCOME_TYPE_COUNT-1)+1, cheatAmount );
 
 		cur_year_cheat += cheatAmount;
 	}
@@ -1470,7 +1470,7 @@ int NationBase::revealed_by_phoenix(int xLoc, int yLoc)
 		if( unitPtr->unit_id == UNIT_PHOENIX &&
 			 unitPtr->nation_recno == nation_recno )
 		{
-			if( m.points_distance( xLoc, yLoc,
+			if( misc.points_distance( xLoc, yLoc,
 				 unitPtr->next_x_loc(), unitPtr->next_y_loc() ) <= effectiveRange )
 			{
 				return 1;

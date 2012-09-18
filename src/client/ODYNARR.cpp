@@ -392,7 +392,7 @@ int DynArray::compare(void* varChar,int varOff,char varType)
          if( bodyStr == (char*) varChar )   // the pointer is the same
             return 1;
          else
-            return m.str_cmp(bodyStr, (char*) varChar);    // m1strcmp with exact set off
+            return misc.str_cmp(bodyStr, (char*) varChar);    // m1strcmp with exact set off
 
       case 'c' :
          return *(bodyPtr + varOff ) == *((char*)varChar);

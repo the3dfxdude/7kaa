@@ -610,7 +610,7 @@ char Bullet::display_layer()
 //------- Begin of function Bullet::attenuated_damage -----//
 float	Bullet::attenuated_damage(short curX, short curY)
 {
-	short d = m.points_distance(curX, curY, target_x_loc * ZOOM_LOC_WIDTH, target_y_loc * ZOOM_LOC_HEIGHT);
+	short d = misc.points_distance(curX, curY, target_x_loc * ZOOM_LOC_WIDTH, target_y_loc * ZOOM_LOC_HEIGHT);
 	// damage drops from attack_damage to attack_damage/2, as range drops from 0 to damage_radius
 	err_when(damage_radius == 0);
 	if( d > damage_radius)

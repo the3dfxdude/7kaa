@@ -161,7 +161,7 @@ Unit* Nation::find_skilled_unit(int skillId, int raceId, short destX, short dest
 			if( unitPtr->skill.skill_id==skillId &&
 				 unitPtr->cur_action!=SPRITE_ATTACK && !unitPtr->ai_action_id )
 			{
-				curDist = m.points_distance(unitPtr->next_x_loc(), unitPtr->next_y_loc(), destX, destY);
+				curDist = misc.points_distance(unitPtr->next_x_loc(), unitPtr->next_y_loc(), destX, destY);
 
 				if(curDist < minDist)
 				{
@@ -302,7 +302,7 @@ int Nation::hire_unit(int skillId, int raceId, short destX, short destY)
 
 		innUnit = firmInnPtr->inn_unit_array + innUnitCount - 1;
 
-		curFirmDist = m.points_distance(firmPtr->center_x, firmPtr->center_y, destX, destY);
+		curFirmDist = misc.points_distance(firmPtr->center_x, firmPtr->center_y, destX, destY);
 
 		//------- check units in the inn ---------//
 
@@ -394,7 +394,7 @@ int Nation::train_unit(int skillId, int raceId, short destX, short destY, int& t
 
 		//--------------------------------------//
 
-		curDist = m.points_distance(townPtr->center_x, townPtr->center_y, destX, destY);
+		curDist = misc.points_distance(townPtr->center_x, townPtr->center_y, destX, destY);
 
 		curRating = 100-100*curDist/MAX_WORLD_X_LOC;
 
@@ -492,7 +492,7 @@ int Nation::recruit_jobless_worker(Firm* destFirmPtr, int preferedRaceId)
 
 		//--- get the distance beteween town & the destination firm ---//
 
-		curDist = m.points_distance(townPtr->center_x, townPtr->center_y, destFirmPtr->center_x, destFirmPtr->center_y);
+		curDist = misc.points_distance(townPtr->center_x, townPtr->center_y, destFirmPtr->center_x, destFirmPtr->center_y);
 
 		curRating = 100-100*curDist/MAX_WORLD_X_LOC;
 
@@ -607,7 +607,7 @@ int Nation::recruit_on_job_worker(Firm* destFirmPtr, int preferedRaceId)
 
 		//-----------------------------------//
 
-		curDistance = m.points_distance( firmPtr->center_x, firmPtr->center_y,
+		curDistance = misc.points_distance( firmPtr->center_x, firmPtr->center_y,
 						  destFirmPtr->center_x, destFirmPtr->center_y );
 
 		curRating = 100 - 100 * curDistance / MAX_WORLD_X_LOC;

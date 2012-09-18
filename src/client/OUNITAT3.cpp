@@ -211,8 +211,8 @@ int Unit::move_to_range_attack(int targetXLoc, int targetYLoc, short miscNo, sho
 		}
 		else if(result_node_count==2)
 		{
-			int magnCG = m.points_distance(cur_x, cur_y, go_x, go_y);
-			int magnNG = m.points_distance(next_x, next_y, go_x, go_y);
+			int magnCG = misc.points_distance(cur_x, cur_y, go_x, go_y);
+			int magnNG = misc.points_distance(next_x, next_y, go_x, go_y);
 			err_when(magnCG==0 && magnNG==0);
 
 			if(magnCG && magnNG)
@@ -815,7 +815,7 @@ int Unit::ship_surr_has_free_land(int targetXLoc, int targetYLoc, UCHAR regionId
 
 	for(int i=2; i<9; i++)
 	{
-		m.cal_move_around_a_point(i, 3, 3, xShift, yShift);
+		misc.cal_move_around_a_point(i, 3, 3, xShift, yShift);
 		checkXLoc = targetXLoc+xShift;
 		checkYLoc = targetYLoc+yShift;
 

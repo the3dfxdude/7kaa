@@ -105,7 +105,7 @@ void FirmFactory::auto_set_product()
 	{
 		firmPtr = firm_array[linked_firm_array[i]];
 
-		firmDistance = m.points_distance( firmPtr->center_x, firmPtr->center_y,
+		firmDistance = misc.points_distance( firmPtr->center_x, firmPtr->center_y,
 													 center_x, center_y );
 
 		//----------- if the firm is a mine ----------//

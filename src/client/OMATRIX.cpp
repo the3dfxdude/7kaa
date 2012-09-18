@@ -240,12 +240,12 @@ void Matrix::disp()
 #ifdef DEBUG_TIMING
 			unsigned long start_time, elapsed_time;
 			int i = 0;
-			start_time = m.get_time();
+			start_time = misc.get_time();
 			for( i = 0; i < 10; ++i)
 #endif
 			vga_back.put_bitmap_dw( image_x1, image_y1, save_image_buf );
 #ifdef DEBUG_TIMING
-			elapsed_time = m.get_time() - start_time;
+			elapsed_time = misc.get_time() - start_time;
 			// dummy
 			start_time = 0;
 #endif
