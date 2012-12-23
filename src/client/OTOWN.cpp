@@ -2039,7 +2039,7 @@ void Town::assign_unit(int unitRecno)
 
 	Unit* unitPtr = unit_array[unitRecno];
 
-	if(population>=MAX_TOWN_POPULATION)
+	if( population >= MAX_TOWN_POPULATION || unitPtr->rank_id == RANK_KING )
 	{
 		unitPtr->stop2();
 		//----------------------------------------------------------------------//
