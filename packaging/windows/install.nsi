@@ -160,7 +160,7 @@ Section "Start Menu Shortcuts" startshort
   ; Create shortcuts
   CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\7kaa.lnk" "$INSTDIR\7kaa.exe"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Seven Kingdoms AA.lnk" "$INSTDIR\7kaa.exe"
   
   !insertmacro MUI_STARTMENU_WRITE_END
   
@@ -221,7 +221,7 @@ Section "Uninstall"
 
   ; Remove shortcuts
   Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
-  Delete "$SMPROGRAMS\$StartMenuFolder\7kaa.lnk"
+  Delete "$SMPROGRAMS\$StartMenuFolder\Seven Kingdoms AA.lnk"
 
   ; Remove directories if empty
   RMDir "$SMPROGRAMS\$StartMenuFolder"
