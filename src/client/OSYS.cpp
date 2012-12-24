@@ -217,6 +217,9 @@ int Sys::init_directx()
    if( !vga.init() )
       return FALSE;
    DEBUG_LOG("vga.init() ok");
+#ifndef DEBUG
+   vga.toggle_full_screen();
+#endif
 
    //---------- Initialize Audio ----------//
 
