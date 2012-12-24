@@ -55,6 +55,7 @@ RequestExecutionLevel admin
   !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
   !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\7kaa" 
   !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+  !define MUI_STARTMENUPAGE_DEFAULTFOLDER "Seven Kingdoms AA"
   
   !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
   
