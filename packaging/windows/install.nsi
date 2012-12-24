@@ -4,13 +4,20 @@
 ; Requires NSIS to compile
 ;
 ; Installs 7kaa in a directory the user selects and creates an uninstaller
+
+;--------------------------------
+; Set current working directory
+
+; You can achieve this with /NOCD, but this might get rolled into Makefile
+; and this makes more sense.
+!cd ..\..
+
 ;--------------------------------
 ;Include Modern UI
 
   !include "MUI2.nsh"
 
 ;--------------------------------
-
 ; The name of the installer
 Name "7KAA Installer"
 
@@ -40,7 +47,7 @@ RequestExecutionLevel admin
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_LICENSE ".\gpl-2.0.txt"
+  !insertmacro MUI_PAGE_LICENSE "COPYING"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   
@@ -72,54 +79,17 @@ Section "7kaa (required)" 7kaareq
 
   ;make section required
   SectionIn RO
-  ; Set output path to the installation directory.
+
   SetOutPath $INSTDIR
+  File ".\README"
+  File ".\COPYING"
+  File /r .\data\*.*
+  File .\src\client\7kaa.exe
   
-  ; Put file there
-  File ".\7kaa\*.*"
-  
-  SetOutPath "$INSTDIR\encyc\firm"
-  File ".\7kaa\encyc\firm\*.*"
-  SetOutPath "$INSTDIR\encyc\god"
-  File ".\7kaa\encyc\god\*.*"
-  SetOutPath "$INSTDIR\encyc\monster"
-  File ".\7kaa\encyc\monster\*.*"
-  SetOutPath "$INSTDIR\encyc\seat"
-  File ".\7kaa\encyc\seat\*.*"
-  SetOutPath "$INSTDIR\encyc\unit"
-  File ".\7kaa\encyc\unit\*.*"
-  
-  SetOutPath "$INSTDIR\encyc2\god"
-  File ".\7kaa\encyc2\god\*.*"
-  SetOutPath "$INSTDIR\encyc2\seat"
-  File ".\7kaa\encyc2\seat\*.*"
-  SetOutPath "$INSTDIR\encyc2\unit"
-  File ".\7kaa\encyc2\unit\*.*"
-  
-  SetOutPath "$INSTDIR\image"
-  File ".\7kaa\image\*.*"
-  
-  SetOutPath "$INSTDIR\resource"
-  File ".\7kaa\resource\*.*"
-  
-  SetOutPath "$INSTDIR\scenari2"
-  File ".\7kaa\scenari2\*.*"
-  
-  SetOutPath "$INSTDIR\scenario"
-  File ".\7kaa\scenario\*.*"
-  
-  SetOutPath "$INSTDIR\sound"
-  File ".\7kaa\sound\*.*"
-  
-  SetOutPath "$INSTDIR\sprite"
-  File ".\7kaa\sprite\*.*"
-  
-  SetOutPath "$INSTDIR\tutorial"
-  File ".\7kaa\tutorial\*.*"
+  ;Reset Install path
+  ;SetOutPath "$INSTDIR"
   
   ; Write the installation path into the registry
-  ;Reset Install path
-  SetOutPath "$INSTDIR"
   WriteRegStr HKLM SOFTWARE\7kaa "Install_Dir" "$INSTDIR"
   
   ; Write the uninstall keys for Windows
@@ -132,12 +102,13 @@ Section "7kaa (required)" 7kaareq
 SectionEnd
 
 ; Music Files (Non GPL and Public Domain)(can be disabled by user)
-Section "Music" music
-
-	SetOutPath "$INSTDIR\music"
-	File ".\music\*.*"
-	
-SectionEnd
+; The music won't be in this installer.
+;Section "Music" music
+;
+;        SetOutPath "$INSTDIR\music"
+;        File ".\music\*.*"
+; 
+;SectionEnd
 
 ; Start Menu Shortcuts (can be disabled by the user)
 Section "Start Menu Shortcuts" startshort
@@ -164,7 +135,7 @@ SectionEnd
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
     !insertmacro MUI_DESCRIPTION_TEXT ${7kaareq} $(secreq)
-	!insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
+;        !insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
 	!insertmacro MUI_DESCRIPTION_TEXT ${startshort} $(secshort)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
