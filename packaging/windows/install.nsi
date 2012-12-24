@@ -93,7 +93,7 @@ Section "7kaa (required)" 7kaareq
   ;make section required
   SectionIn RO
 
-  SetOutPath $INSTDIR
+  SetOutPath "$INSTDIR"
   File ".\README"
   File ".\COPYING"
   File /r ".\data\encyc"
@@ -126,10 +126,31 @@ SectionEnd
 ; The music won't be in this installer.
 ;Section "Music" music
 ;
-;        SetOutPath "$INSTDIR\music"
-;        File ".\music\*.*"
+;  SetOutPath "$INSTDIR"
+;  File /r ".\music"
 ; 
 ;SectionEnd
+
+Section "OpenAL" openal
+
+  SetOutPath "$INSTDIR"
+  File "lib\OpenAL32.dll"
+
+SectionEnd
+
+Section "SDL" sdl
+
+  SetOutPath "$INSTDIR"
+  File "lib\SDL.dll"
+
+SectionEnd
+
+Section "SDL_net" sdlnet
+
+  SetOutPath "$INSTDIR"
+  File "lib\SDL_net.dll"
+
+SectionEnd
 
 ; Start Menu Shortcuts (can be disabled by the user)
 Section "Start Menu Shortcuts" startshort
@@ -152,12 +173,18 @@ SectionEnd
   LangString secreq ${LANG_ENGLISH} "Files required for 7kaa to run"
   LangString secmusic ${LANG_ENGLISH} "Music files for 7kaa. These are not licensed under the GPL or part of the Public Domain and may only be distributed with 7kaa"
   LangString secshort ${LANG_ENGLISH} "Start menu shortcuts"
+  LangString secopenal ${LANG_ENGLISH} "OpenAL shared library (recommended)"
+  LangString secsdl ${LANG_ENGLISH} "SDL shared library (recommended)"
+  LangString secsdlnet ${LANG_ENGLISH} "SDL_net shared library (recommended)"
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
     !insertmacro MUI_DESCRIPTION_TEXT ${7kaareq} $(secreq)
 ;      !insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
       !insertmacro MUI_DESCRIPTION_TEXT ${startshort} $(secshort)
+    !insertmacro MUI_DESCRIPTION_TEXT ${openal} $(secopenal)
+    !insertmacro MUI_DESCRIPTION_TEXT ${sdl} $(secsdl)
+    !insertmacro MUI_DESCRIPTION_TEXT ${sdlnet} $(secsdlnet)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
@@ -184,9 +211,12 @@ Section "Uninstall"
   RMDir /r "$INSTDIR\sound"
   RMDir /r "$INSTDIR\sprite"
   RMDir /r "$INSTDIR\tutorial"
-  Delete "$INSTDIR\README"
-  Delete "$INSTDIR\COPYING"
   Delete "$INSTDIR\7kaa.exe"
+  Delete "$INSTDIR\COPYING"
+  Delete "$INSTDIR\README"
+  Delete "$INSTDIR\OpenAL32.dll"
+  Delete "$INSTDIR\SDL.dll"
+  Delete "$INSTDIR\SDL_net.dll"
   Delete "$INSTDIR\Uninstall.exe"
 
   ; Remove shortcuts
