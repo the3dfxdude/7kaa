@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.14.3
+Release version 2.14.4
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -11,13 +11,24 @@ details of the license. We are indebted to Enlight for making the 7kfans
 project possible and giving a new chance to build a community for fans
 of the game.
 
+Who should use this version of 7KAA?
+ * Any linux user.
+ * Anyone who wants to try the latest bugfixes.
+ * Anyone who likes the slightly improved game play.
+
+Who shouldn't use this version of 7KAA?
+ * Any multiplayer user under Windows. The new netcode, while it promises
+   actual cross-platform capatability, does not work well in lobby, nor
+   does not work on anything other than LAN (VPN okay) and 2 players. Please
+   use 2.13.xx series with DPlay instead if stability and full-features are
+   needed.
+
 Changes in this release:
- * Autoconf support is now the build system.
- * Fix crashes regarding the full screen toggle.
- * Fix issues with some uninitialized variables.
- * Fix for the address dialog.
- * Spacebar and 0 now toggle pausing.
- * Speed up drawing on Linux.
+ * Added the game data to the source tree.
+ * Added an NSIS install script.
+ * Started rewriting the lobby code to be UDP instead of TCP. It is not done
+   and does not work properly for >2 player or over anything but LAN. The game
+   port is now UDP 19255.
 
 Thanks to all who made this release possible.
 
@@ -29,14 +40,14 @@ What you will find in this archive
 
 What you will NOT find in this archive
 ---------
-* The original game music. These files cannot be distributed as Enlight
-  does not own the copyright. This includes the music directory and the
-  intro video.
+* The original game music. The are provided in a separate package from 
+  7kfans.com. It is not under the GPL license, but it is free to download
+  and use with 7KAA.
 * The original translations resource file. This file was created by third
   party distributors and Enlight does not have the right to distribute it.
   This will be replaced by the 7kfans project.
-* Any other content from original game CDs, including the version 2.12b
-  game binary or older. This also includes the I*Magic Online service.
+* Any other content from original game CDs, game manual including the version
+  2.12b game binary or older. This also includes the I*Magic Online service.
 
 
 Building the game
@@ -50,14 +61,16 @@ General Requirements
 * Autoconf (when using git snapshot)
 
 
-Running
+Installing
 --------
 You can download the game data if you do not already have the game
 installed. You can find the game data from the 7kfans sourceforge
 page at http://sourceforge.net/projects/skfans/
 
+To patch the game:
 Copy the executable file "7kaa*" from the src/client directory to your
-installed game directory.  Run the executable to start the game
+installed game directory.  Run the 7kaa.exe executable to start the game
 instead of the classic Enlight version called 7k.exe.
 
+There are precompiled win32 install packages available.
 
