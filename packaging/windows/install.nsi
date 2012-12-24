@@ -34,6 +34,9 @@ InstallDirRegKey HKLM "Software\7kaa" "Install_Dir"
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
 
+; Maximum Compression
+SetCompressor /SOLID lzma
+
 ;--------------------------------
 ;Variables
 
@@ -73,9 +76,18 @@ RequestExecutionLevel admin
   !insertmacro MUI_LANGUAGE "English"
 
 ;--------------------------------
+; Reserve Files
 
+; If you are using solid compression, files that are required before
+; the actual installation should be stored first in the data block,
+; because this will make your installer start faster.
 
+!insertmacro MUI_RESERVEFILE_LANGDLL
+ReserveFile "${NSISDIR}\Plugins\*.dll"
+
+;--------------------------------
 ; The stuff to install
+
 Section "7kaa (required)" 7kaareq
 
   ;make section required
@@ -84,7 +96,15 @@ Section "7kaa (required)" 7kaareq
   SetOutPath $INSTDIR
   File ".\README"
   File ".\COPYING"
-  File /r .\data\*.*
+  File /r ".\data\encyc"
+  File /r ".\data\encyc2"
+  File /r ".\data\image"
+  File /r ".\data\resource"
+  File /r ".\data\scenari2"
+  File /r ".\data\scenario"
+  File /r ".\data\sound"
+  File /r ".\data\sprite"
+  File /r ".\data\tutorial"
   File .\src\client\7kaa.exe
   
   ;Reset Install path
@@ -94,7 +114,7 @@ Section "7kaa (required)" 7kaareq
   WriteRegStr HKLM SOFTWARE\7kaa "Install_Dir" "$INSTDIR"
   
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\7kaa" "DisplayName" "7kaa"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\7kaa" "DisplayName" "Seven Kingdoms AA"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\7kaa" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\7kaa" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\7kaa" "NoRepair" 1
@@ -114,12 +134,12 @@ SectionEnd
 ; Start Menu Shortcuts (can be disabled by the user)
 Section "Start Menu Shortcuts" startshort
 
-    !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
-    ;Create shortcuts
-    CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-    CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
-	CreateShortCut "$SMPROGRAMS\$StartMenuFolder\7kaa.lnk" "$INSTDIR\7kaa.exe"
+  ; Create shortcuts
+  CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\7kaa.lnk" "$INSTDIR\7kaa.exe"
   
   !insertmacro MUI_STARTMENU_WRITE_END
   
@@ -136,8 +156,8 @@ SectionEnd
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
     !insertmacro MUI_DESCRIPTION_TEXT ${7kaareq} $(secreq)
-;        !insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
-	!insertmacro MUI_DESCRIPTION_TEXT ${startshort} $(secshort)
+;      !insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
+      !insertmacro MUI_DESCRIPTION_TEXT ${startshort} $(secshort)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
@@ -146,36 +166,35 @@ SectionEnd
 
 Section "Uninstall"
   
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\7kaa"
-  DeleteRegKey HKLM SOFTWARE\7kaa
+  DeleteRegKey HKLM "SOFTWARE\7kaa"
+  DeleteRegKey HKCU "SOFTWARE\7kaa\Start Menu Folder"
+  DeleteRegKey HKCU "SOFTWARE\7kaa"
 
-  ; Remove files and uninstaller
-  Delete "$INSTDIR\*.*"
-  Delete "$INSTDIR\encyc\firm\*.*"
-  Delete "$INSTDIR\encyc\god\*.*"
-  Delete "$INSTDIR\encyc\monster\*.*"
-  Delete "$INSTDIR\encyc\seat\*.*"
-  Delete "$INSTDIR\encyc\unit\*.*" 
-  Delete "$INSTDIR\encyc2\god\*.*"
-  Delete "$INSTDIR\encyc2\seat\*.*"
-  Delete "$INSTDIR\encyc2\unit\*.*"  
-  Delete "$INSTDIR\image\*.*"
-  Delete "$INSTDIR\resource\*.*" 
-  Delete "$INSTDIR\scenari2\*.*"
-  Delete "$INSTDIR\scenario\*.*" 
-  Delete "$INSTDIR\sound\*.*"
-  Delete "$INSTDIR\sprite\*.*"
-  Delete "$INSTDIR\tutorial\*.*"
+  ; Remove the program files
+  RMDir /r "$INSTDIR\encyc"
+  RMDir /r "$INSTDIR\encyc2"
+  RMDir /r "$INSTDIR\image"
+  RMDir /r "$INSTDIR\resource"
+  RMDir /r "$INSTDIR\scenari2"
+  RMDir /r "$INSTDIR\scenario"
+  RMDir /r "$INSTDIR\sound"
+  RMDir /r "$INSTDIR\sprite"
+  RMDir /r "$INSTDIR\tutorial"
+  Delete "$INSTDIR\README"
+  Delete "$INSTDIR\COPYING"
+  Delete "$INSTDIR\7kaa.exe"
+  Delete "$INSTDIR\Uninstall.exe"
 
-  
-  Delete $INSTDIR\uninstall.exe
+  ; Remove shortcuts
+  Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
+  Delete "$SMPROGRAMS\$StartMenuFolder\7kaa.lnk"
 
-  ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\7kaa\*.*"
-
-  ; Remove directories used
-  RMDir "$SMPROGRAMS\7kaa"
+  ; Remove directories if empty
+  RMDir "$SMPROGRAMS\$StartMenuFolder"
   RMDir "$INSTDIR"
 
 SectionEnd
