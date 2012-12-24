@@ -18,11 +18,11 @@
   !include "MUI2.nsh"
 
 ;--------------------------------
-; The name of the installer
-Name "7KAA Installer"
+; The name of the program to install
+Name "Seven Kingdoms: Ancient Adversaries"
 
-; The file to write
-OutFile "7KAA.exe"
+; The installer file name
+OutFile "7kaa-install-win32.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\7kaa
