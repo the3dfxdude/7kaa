@@ -222,7 +222,9 @@ void UnitMonster::king_leave_scroll()
 		if( locPtr->has_unit(UNIT_LAND) )
 		{
 			Unit* unitPtr = unit_array[locPtr->unit_recno(UNIT_LAND)];
-			raceCountArray[ unitPtr->race_id-1 ]++;
+			if ( unitPtr->race_id > 0 ) {
+				raceCountArray[ unitPtr->race_id-1 ]++;
+			}
 		}
 	}
 
