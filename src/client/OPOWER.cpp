@@ -749,7 +749,8 @@ int Power::detect_action()
 				{
 					unitPtr = unit_array[nationSelectedArray[i]];
 
-					if(unitPtr->mobile_type==UNIT_LAND && unitPtr->rank_id==RANK_SOLDIER && unitPtr->skill.skill_id<=0)
+					if(unitPtr->mobile_type==UNIT_LAND && unitPtr->rank_id==RANK_SOLDIER && unitPtr->skill.skill_id<=0
+							&& !(unitPtr->spy_recno && unitPtr->nation_recno != targetTown->nation_recno))
 						assignArray[assignCount++] = nationSelectedArray[i];
 					else
 						moveArray[moveCount++] = nationSelectedArray[i];
