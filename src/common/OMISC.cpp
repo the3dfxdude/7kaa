@@ -1332,7 +1332,7 @@ char* Misc::num_th(int inNum)
 unsigned long Misc::get_time()
 {
 #ifndef NO_WINDOWS
-	return timeGetTime();
+	return GetTickCount();
 #else
 	struct timeval tv;
 	int ret;
