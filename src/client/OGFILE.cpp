@@ -438,7 +438,9 @@ int GameFile::write_game_header(File* filePtr)
 #ifndef NO_WINDOWS  // FIXME
 	//----- set the file date ------//
 
-	CoFileTimeNow(&file_date);
+	SYSTEMTIME sysTime;
+	GetSystemTime(&sysTime);
+	SystemTimeToFileTime(&sysTime, &file_date);
 #endif
 
 	//------- write GameFile to the saved game file -------//
