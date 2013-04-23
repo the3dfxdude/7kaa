@@ -427,8 +427,8 @@ int UnitMarine::unloading_unit(int isAll, int unitSeqId)
 	Location *locPtr;
 	int xShift, yShift, checkXLoc, checkYLoc;
 	int regionId = 0; // unload all the units in the same territory
-	int found, i = 2;
-	int sqtSize = 3, sqtArea = sqtSize*sqtSize;
+	int found = 0, i = 2;
+	int sqtSize = 5, sqtArea = sqtSize*sqtSize;
 
 	#ifdef DEBUG
 		long debugCount = 0L;
