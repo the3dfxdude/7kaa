@@ -33,6 +33,9 @@
 #include <OWORLD.h>
 #include <OTERRAIN.h>
 #include <OUNIT.h>
+#include <dbglog.h>
+
+DBGLOG_DEFAULT_CHANNEL(Unit);
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when
@@ -615,12 +618,11 @@ void UnitArray::move_to_now(int destXLoc, int destYLoc, short* selectedUnitArray
 				}
 				y+=move_scale;
 				//-******************* auto correct ***********************-//
-				#ifdef DEBUG
-				err_when(unprocessCount && y>=MAX_WORLD_Y_LOC);
-				#else
 				if(unprocessCount && y>=MAX_WORLD_Y_LOC)
+				{
+					MSG("Unit attempted to walk off map...correcting.\n");
 					y = autoCorrectStartY;
-				#endif
+				}
 				//-******************* auto correct ***********************-//
 			}
 		}
