@@ -867,7 +867,8 @@ void Town::update_product_supply()
 		{
 			productId = firmPtr->market_goods_array[j].product_raw_id;
 
-			has_product_supply[productId-1]++;
+			if (productId > 1)
+				has_product_supply[productId-1]++;
 		}
 	}
 }
