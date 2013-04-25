@@ -126,7 +126,7 @@ public:
 	TownBuildType* town_build_type_array;
 	TownBuild*     town_build_array;
 	TownName*      town_name_array;
-	char*				town_name_used_array;	// store the used_count separately from town_name_array to faciliate file saving
+	unsigned char* town_name_used_array;	// store the used_count separately from town_name_array to faciliate file saving
 
 	ResourceDb     res_bitmap;
 

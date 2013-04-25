@@ -136,7 +136,7 @@ public:
 	RaceInfo*   race_info_array;
 	short			name_count;
 	RaceName*	name_array;
-	char*			name_used_array;
+	unsigned char*	name_used_array;
 
 	ResourceDb  res_bitmap;
 

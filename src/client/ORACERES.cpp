@@ -155,7 +155,7 @@ void RaceRes::load_name()
 
 	name_count = (short) dbRaceName->rec_count();
 	name_array = (RaceName*) mem_add( sizeof(RaceName)*name_count );
-	name_used_array = (char*) mem_add( sizeof(name_used_array[0])*name_count );
+	name_used_array = (unsigned char*) mem_add( sizeof(name_used_array[0])*name_count );
 
 	memset( name_used_array, 0, sizeof(name_used_array[0])*name_count );
 
@@ -330,8 +330,6 @@ void RaceInfo::free_name_id(WORD nameId)
 
 	race_res.name_used_array[nameRecno-1]--;
 
-	err_when( race_res.name_used_array[nameRecno-1] < 0 );
-
 	if( last_name_count > 0 )				// some races do not have last names
 	{
 		int lastNameId  = (nameId&0xFF);
@@ -341,8 +339,6 @@ void RaceInfo::free_name_id(WORD nameId)
 		err_when( nameRecno  < 1 || nameRecno  > race_res.name_count );
 
 		race_res.name_used_array[nameRecno-1]--;
-
-		err_when( race_res.name_used_array[nameRecno-1] < 0 );
 	}
 }
 //------ End of function RaceInfo::free_name_id -------//

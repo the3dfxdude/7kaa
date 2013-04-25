@@ -266,7 +266,7 @@ void TownRes::load_town_name()
 
 	town_name_count 		= dbTownName->rec_count();
 	town_name_array		= (TownName*) mem_add( sizeof(TownName)*town_name_count );
-	town_name_used_array = (char*) mem_add( sizeof(town_name_used_array[0]) * town_name_count );		// store the used_count separately from town_name_array to faciliate file saving
+	town_name_used_array = (unsigned char*) mem_add( sizeof(town_name_used_array[0]) * town_name_count );		// store the used_count separately from town_name_array to faciliate file saving
 
 	memset( town_name_used_array, 0, sizeof(town_name_used_array[0]) * town_name_count );
 
@@ -484,7 +484,5 @@ int TownRes::get_new_name_id(int raceId)
 void TownRes::free_name_id(int townNameId)
 {
 	town_name_used_array[townNameId-1]--;
-
-	err_when( town_name_used_array[townNameId-1] < 0 );
 }
 //--------- End of function TownRes::free_name_id ----------//
