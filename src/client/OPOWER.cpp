@@ -998,7 +998,8 @@ Location* Power::test_detect(int curX, int curY, char *mobileType)
 // <int> selX1, selY1, selX2, selY2 - the positions of the selection box
 //
 // <int> recallGroup - recall selection of the defined group to which the
-//							  selected unit belongs
+//							  selected unit belongs, such as all units that are patrolling
+//							  from the same Fort.
 //
 // <int> shiftSelect - add/remove individual selected unit
 //
@@ -1094,6 +1095,12 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 					err_when( recallGroup );		// press right button on enemy unit is attack, not select
 					shiftSelect = 0;
 				}
+				// when we have a non-own unit selected and are shift-clicking our own unit, clear selected units
+				else if ( shiftSelect && unit_array.selected_recno && !unit_array[unit_array.selected_recno]->is_own() )
+				{
+					shiftSelect = 0;
+				}
+
 				if( recallGroup && unitPtr->team_id )
 				{
 					DWORD teamId = unitPtr->team_id;
