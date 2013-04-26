@@ -1466,9 +1466,9 @@ int Unit::betray(int newNationRecno)
 				 unitPtr->rank_id == RANK_SOLDIER && unitPtr->is_visible() )
 			{
 				if( unitPtr->spy_recno )		// if the unit is a spy
-					unitPtr->spy_change_nation(newNationRecno, COMMAND_AUTO);
-				else
-					unitPtr->change_nation(newNationRecno);
+					unitPtr->spy_change_nation(newNationRecno, COMMAND_AUTO, 1); // 1-group defection of this unit, allowing us to hande the change of nation
+
+				unitPtr->change_nation(newNationRecno);
 
 				unitPtr->team_id = newTeamId; // assign new team_id or checking for nation_recno
 			}
@@ -2187,8 +2187,12 @@ void Unit::transform()
 //
 // <int>  newNationRecno - the new nation the spy changes its cloack to 
 // <char> remoteAction   - remote action type 
+// <int>  groupDefect    - if 1 this spy changed nation as part of a group defect called by Unit::betray
+//                         when a General-spy changes colour and takes its subordinates along
+//						   and the subordinate is actually an enemy spy. Supresses news notification and
+//						   lets the caller handle the Unit nation change (so only handles spy nation change)
 //
-void Unit::spy_change_nation(int newNationRecno, char remoteAction)
+void Unit::spy_change_nation(int newNationRecno, char remoteAction, int groupDefect)
 {
 	if( newNationRecno == nation_recno )
 		return;
@@ -2200,10 +2204,11 @@ void Unit::spy_change_nation(int newNationRecno, char remoteAction)
 
 	if( !remoteAction && remote.is_enable() )
 	{
-		// packet structure <unit recno> <new nation Recno>
-		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_UNIT_SPY_NATION, 2*sizeof(short) );
+		// packet structure <unit recno> <new nation Recno> <group defect>
+		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_UNIT_SPY_NATION, 3*sizeof(short) );
 		*shortPtr = sprite_recno;
 		shortPtr[1] = newNationRecno;
+		shortPtr[2] = groupDefect;
 		return;
 	}
 
@@ -2231,7 +2236,7 @@ void Unit::spy_change_nation(int newNationRecno, char remoteAction)
 	if( spyPtr->true_nation_recno != nation_array.player_recno )	// only send news message if he is not the player's own spy
 	{
 		if( rank_id == RANK_GENERAL || unit_mode == UNIT_MODE_OVERSEE ||
-			 spyPtr->notify_cloaked_nation_flag )
+			 (spyPtr->notify_cloaked_nation_flag && !groupDefect) )
 		{
 			//-- if this spy's cloaked nation is the player's nation, the player will be notified --//
 
@@ -2241,7 +2246,7 @@ void Unit::spy_change_nation(int newNationRecno, char remoteAction)
 
 		//---- send news to the cloaked nation if notify flag is on ---//
 
-		if( spyPtr->notify_cloaked_nation_flag )
+		if( spyPtr->notify_cloaked_nation_flag && !groupDefect )
 		{
 			if( newNationRecno == nation_array.player_recno )    			// cloaked as the player's nation
 				news_array.unit_betray(sprite_recno, newNationRecno);
@@ -2252,7 +2257,8 @@ void Unit::spy_change_nation(int newNationRecno, char remoteAction)
 
 	spyPtr->cloaked_nation_recno = newNationRecno;
 
-	betray(newNationRecno);		// call the betray function to change natino. There is no difference between a spy changing nation and a unit truly betrays
+	if (!groupDefect)
+		betray(newNationRecno);		// call the betray function to change natino. There is no difference between a spy changing nation and a unit truly betrays
 }
 //----------- End of function Unit::spy_change_nation -----------//
 

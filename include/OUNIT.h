@@ -533,7 +533,7 @@ public:
 	void  reward(int rewardNationRecno);
 	void  transform();
 	void  group_transform(char remoteAction, short *selectedArray=NULL, short selectedCount=0);
-	void  spy_change_nation(int nationRecno, char remoteAction);
+	void  spy_change_nation(int nationRecno, char remoteAction, int groupDefect = 0);
 	int   can_spy_change_nation();
 
 	void  change_hit_points(float changePoints);

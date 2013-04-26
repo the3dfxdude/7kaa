@@ -1354,7 +1354,7 @@ void RemoteMsg::ship_change_mode()
 void RemoteMsg::change_spy_nation()
 {
 	err_when( id != MSG_UNIT_SPY_NATION );
-	// packet structure <unit recno> <new nation recno>
+	// packet structure <unit recno> <new nation recno> <group defect>
 	short *shortPtr = (short *)data_buf;
 	short unitCount =1;
 	validate_selected_unit_array(shortPtr, unitCount);
@@ -1362,9 +1362,9 @@ void RemoteMsg::change_spy_nation()
 	if( unitCount > 0)
 	{
 #ifdef DEBUG_LONG_LOG
-		long_log->printf("unit %d changes nation %d\n", shortPtr[0], shortPtr[1]);
+		long_log->printf("unit %d changes nation %d (groupDefect=%d)\n", shortPtr[0], shortPtr[1], shortPtr[2]);
 #endif
-		unit_array[*shortPtr]->spy_change_nation(shortPtr[1], COMMAND_REMOTE);
+		unit_array[*shortPtr]->spy_change_nation(shortPtr[1], COMMAND_REMOTE, shortPtr[2]);
 		if( unit_array.selected_recno == *shortPtr || 
 			unit_array[*shortPtr]->selected_flag)
 			info.disp();
