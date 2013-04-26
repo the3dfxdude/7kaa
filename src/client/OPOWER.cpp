@@ -47,6 +47,35 @@
 
 static short nation_divide_order[MAX_NATION+1] = {1, 2, 3, 4, 5, 6, 7, 0};
 
+
+//-------- Begin of static function is_unit_higher_rank --------//
+//
+// Determines which unit is more important to be be displayed
+// in the selection.
+//
+// <return> true if recno1 is consider more important than recno2
+//
+// ##### Richard Dijk 26-4-2013 #####
+//
+static bool is_unit_higher_rank(int recno1, int recno2)
+{
+	Unit *unitPtr1 = unit_array[recno1], *unitPtr2 = unit_array[recno2];
+
+	if (unitPtr1->rank_id > unitPtr2->rank_id) // RANK_KING > RANK_GENERAL > RANK_SOLDIER
+		return true;
+	else if (unitPtr1->rank_id == unitPtr2->rank_id)
+	{
+		if (unit_res[unitPtr1->unit_id]->unit_class == UNIT_CLASS_HUMAN &&
+			unit_res[unitPtr2->unit_id]->unit_class != UNIT_CLASS_HUMAN)	// Favour humans
+			return true;
+		else if (unitPtr1->skill.skill_id && !unitPtr2->skill.skill_id)		// Between equal classes, favour the one with a skill
+			return true;
+	}
+	return false;
+}
+//--------- End of static function is_unit_higher_rank ---------//
+
+
 //-------- Begin of static function divide_by_nation --------//
 static void divide_by_nation(short *nationUnitCount, short *selectedArray, int selectedCount)
 {
@@ -468,9 +497,10 @@ int Power::detect_action()
 
 	//-------- find out how many units have been selected --------//
 
-	int 	 selectedCount=0;
-	short* selectedArray;
-	Unit*  unitPtr;
+	int		selectedCount=0;
+	short*	selectedArray;
+	Unit*	unitPtr;
+	Unit*	activeUnit = NULL; // = unit_array[selectedArray[0]];
 
 	selectedArray = (short*) mem_add( sizeof(short) * unit_array.size() );
 
@@ -491,6 +521,9 @@ int Power::detect_action()
 		if( !unitPtr->is_own() )				// only if the unit belongs to us (a spy is also okay if true_nation_recno is ours)
 			continue;
 
+		if (i == unit_array.selected_recno)		// set the selected unit as the active one if present and it passed the above criteria
+			activeUnit = unitPtr;
+
 		selectedArray[selectedCount++] = i;
 	}
 
@@ -509,6 +542,9 @@ int Power::detect_action()
 		return 0;
 	}
 
+	if ( ! activeUnit)			// default activeUnit to first unit when unit_array.selected_recno is 0 or could not be selected
+		activeUnit = unit_array[selectedArray[0]];
+
 	//----- get the info of the clicked location ------//
 
 	Location* locPtr=test_detect(mouse.cur_x, mouse.cur_y);
@@ -516,7 +552,6 @@ int Power::detect_action()
 	Firm*		 targetFirm=NULL;
 	Town*     targetTown=NULL;
 	char	 	 targetWall=0;
-	Unit*		 activeUnit = unit_array[selectedArray[0]];
 	int		 mobileType = activeUnit->mobile_type;		// mobile type of the selected units
 	int		 targetMobileType=0;
 	short		 nationRecno = activeUnit->nation_recno;
@@ -568,7 +603,7 @@ int Power::detect_action()
 	Nation	*nationPtr;
 	short		*nationSelectedArray;
 	short		nationSelectedCount;
-
+	Unit	*preferredActiveUnit = activeUnit;
 	int		isHuman;
 
 	for(int natCount=0, preNatCount=0; natCount<=MAX_NATION; natCount++, nationUnitCountPtr++)
@@ -582,10 +617,10 @@ int Power::detect_action()
 		nationPtr = (nation_divide_order[natCount]) ? nation_array[nation_divide_order[natCount]] : NULL;
 
 		//---------- if the target is a unit -----------//
-		//### begin alex 19/3 ###//
-		//activeUnit = unit_array[nationSelectedArray[0]];			// update activeUnit for each nation
-		activeUnit = unit_array[select_active_unit(nationSelectedArray, nationSelectedCount)]; // update activeUnit for each nation
-		//#### end alex 19/3 ####//
+		if (preferredActiveUnit->nation_recno != nation_divide_order[natCount]) // only for spies, as detect_select disallows multiple-nation selections
+			activeUnit = unit_array[select_active_unit(nationSelectedArray, nationSelectedCount)]; // update activeUnit for each nation
+		else
+			activeUnit = preferredActiveUnit;
 		isHuman = unit_res[activeUnit->unit_id]->race_id > 0;		// whether the unit can be assigned to firms and towns
 
 		if(targetMobileType)
@@ -1276,8 +1311,7 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 			if( !unit_array.is_deleted(i) && unit_array[i]->selected_flag )
 			{
 				unit_array.selected_count++;
-				if( !highRankUnitRecno || 
-					unit_array[i]->rank_id > unit_array[highRankUnitRecno]->rank_id )
+				if( !highRankUnitRecno || is_unit_higher_rank(i, highRankUnitRecno) )
 					highRankUnitRecno = i;
 			}
 		}
