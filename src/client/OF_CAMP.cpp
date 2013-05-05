@@ -697,7 +697,7 @@ void FirmCamp::train_unit()
 
 	for( int i=0 ; i<worker_count ; i++, workerPtr++ )
 	{
-		if( workerPtr->skill_id != SKILL_LEADING )
+		if( !workerPtr->race_id )
 			continue;
 
 		//------- increase worker skill -----------//

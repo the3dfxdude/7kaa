@@ -998,7 +998,7 @@ void Firm::assign_worker(int workerUnitRecno)
 	workerPtr->skill_id = firm_skill_id;
 	workerPtr->skill_level = unitPtr->skill.get_skill(firm_skill_id);
 
-	if( workerPtr->skill_level == 0 )
+	if( workerPtr->skill_level == 0 && workerPtr->race_id )
 		workerPtr->skill_level = CITIZEN_SKILL_LEVEL;
 
 	err_when( workerPtr->skill_level<0 );
