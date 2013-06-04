@@ -496,8 +496,8 @@ public:
 
 	int 			attack_enemy_town_defense(Town* targetTown, int useAllCamp=0);
 	Town* 		think_capture_enemy_town_target(Town* capturerTown);
-	int 			enemy_town_combat_level(Town* targetTown, int returnIfWar, int hasWar);
-	int 			enemy_firm_combat_level(Firm* targetFirm, int returnIfWar, int hasWar);
+	int 			enemy_town_combat_level(Town* targetTown, int returnIfWar, int& hasWar);
+	int 			enemy_firm_combat_level(Firm* targetFirm, int returnIfWar, int& hasWar);
 	int 			mobile_defense_combat_level(int targetXLoc, int targetYLoc, int targetNationRecno, int returnIfWar, int& hasWar);
 
 	int 			should_use_cash_to_capture();

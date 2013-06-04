@@ -423,7 +423,7 @@ Town* Nation::think_capture_enemy_town_target(Town* capturerTown)
 //					  combat level.
 ///		        return -1 if there is war and returnIfWar is 1
 //
-int Nation::enemy_town_combat_level(Town* targetTown, int returnIfWar, int hasWar)
+int Nation::enemy_town_combat_level(Town* targetTown, int returnIfWar, int& hasWar)
 {
 	int enemyCombatLevel = mobile_defense_combat_level(targetTown->center_x, targetTown->center_y, targetTown->nation_recno, returnIfWar, hasWar);		//0-don't return even there are wars around the town
 
@@ -476,7 +476,7 @@ int Nation::enemy_town_combat_level(Town* targetTown, int returnIfWar, int hasWa
 //					  combat level.
 ///		        return -1 if there is war and returnIfWar is 1
 //
-int Nation::enemy_firm_combat_level(Firm* targetFirm, int returnIfWar, int hasWar)
+int Nation::enemy_firm_combat_level(Firm* targetFirm, int returnIfWar, int& hasWar)
 {
 	int enemyCombatLevel = mobile_defense_combat_level(targetFirm->center_x, targetFirm->center_y, targetFirm->nation_recno, returnIfWar, hasWar);		//0-don't return even there are wars around the town
 
