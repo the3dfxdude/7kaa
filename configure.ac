@@ -80,7 +80,6 @@ dnl AC_CHECK_FUNCS([])
 audio_backend=openal # openal dsound
 input_backend=sdl    # sdl dinput none
 video_backend=sdl    # sdl ddraw none
-net_backend=enet   # enet none
 use_windows=no
 use_mingw=no
 
@@ -129,11 +128,6 @@ AS_IF([test "$with_directx" = yes], [
   audio_backend=dsound
   input_backend=dinput
   video_backend=ddraw
-  net_backend=none
-])
-
-AS_IF([test "$enable_network" = no], [
-  net_backend=none
 ])
 
 AS_IF([test "$audio_backend" = dsound \
@@ -152,8 +146,6 @@ AM_CONDITIONAL([AUDIO_DSOUND], [test "$audio_backend" = dsound])
 AM_CONDITIONAL([INPUT_DINPUT], [test "$input_backend" = dinput])
 AM_CONDITIONAL([INPUT_NONE],   [test "$input_backend" = none])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
-AM_CONDITIONAL([NET_NONE],     [test "$net_backend" = none])
-AM_CONDITIONAL([NET_ENET],     [test "$net_backend" = enet])
 AM_CONDITIONAL([VIDEO_DDRAW],  [test "$video_backend" = ddraw])
 AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
@@ -187,8 +179,7 @@ AS_IF([test "$audio_backend" = openal], [
 ])
 
 AS_IF([test "$input_backend" = sdl \
-       || test "$video_backend" = sdl \
-       || test "$net_backend" = sdlnet], [
+       || test "$video_backend" = sdl], [
   AM_PATH_SDL([], [], [
     AC_ERROR([SDL not found])
   ])
@@ -197,16 +188,8 @@ AS_IF([test "$input_backend" = sdl \
   LIBS="$SDL_LIBS $LIBS"
 ])
 
-AS_IF([test "$net_backend" = sdlnet], [
-  SEARCH_LIB_FLAGS([SDLNet_Init], ["-lSDL_net -lwsock32" -lSDL_net], [], [
-    AC_ERROR([SDL_net not found])
-  ])
-])
-
-AS_IF([test "$net_backend" = enet], [
-  SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lwsock32" -lenet], [], [
-    AC_ERROR([enet not found])
-  ])
+SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lwsock32" -lenet], [], [
+  AC_ERROR([enet not found])
 ])
 
 AS_IF([test "$video_backend" = ddraw], [
@@ -299,20 +282,6 @@ AS_CASE(["$input_backend"],
     AC_ERROR([Unknown input backend: $input_backend])
 ])
 
-AS_CASE(["$net_backend"],
-  [none], [
-    AC_DEFINE([DISABLE_MULTIPLAYER], [1], [
-      Define to 1 to disable multiplayer
-    ])
-  ],
-  [enet], [
-    AC_DEFINE([USE_ENET], [1], [
-      Define to 1 if using enet as the network backend
-    ])
-  ], [
-    AC_ERROR([Unknown network backend: $net_backend])
-])
-
 AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
   AC_DEFINE([USE_SDL], [1],
 	    [Define to 1 if using SDL as the video/input backend])
@@ -363,6 +332,5 @@ echo
 AC_MSG_NOTICE([audio backend: $audio_backend])
 AC_MSG_NOTICE([video backend: $video_backend])
 AC_MSG_NOTICE([input backend: $input_backend])
-AC_MSG_NOTICE([net backend:   $net_backend])
 echo
 AC_MSG_NOTICE([debugging features: $enable_debug])
