@@ -80,7 +80,7 @@ dnl AC_CHECK_FUNCS([])
 audio_backend=openal # openal dsound
 input_backend=sdl    # sdl dinput none
 video_backend=sdl    # sdl ddraw none
-net_backend=sdlnet   # sdlnet none
+net_backend=enet   # enet none
 use_windows=no
 use_mingw=no
 
@@ -153,7 +153,7 @@ AM_CONDITIONAL([INPUT_DINPUT], [test "$input_backend" = dinput])
 AM_CONDITIONAL([INPUT_NONE],   [test "$input_backend" = none])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([NET_NONE],     [test "$net_backend" = none])
-AM_CONDITIONAL([NET_SDLNET],   [test "$net_backend" = sdlnet])
+AM_CONDITIONAL([NET_ENET],     [test "$net_backend" = enet])
 AM_CONDITIONAL([VIDEO_DDRAW],  [test "$video_backend" = ddraw])
 AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
@@ -200,6 +200,12 @@ AS_IF([test "$input_backend" = sdl \
 AS_IF([test "$net_backend" = sdlnet], [
   SEARCH_LIB_FLAGS([SDLNet_Init], ["-lSDL_net -lwsock32" -lSDL_net], [], [
     AC_ERROR([SDL_net not found])
+  ])
+])
+
+AS_IF([test "$net_backend" = enet], [
+  SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lwsock32" -lenet], [], [
+    AC_ERROR([enet not found])
   ])
 ])
 
@@ -299,9 +305,9 @@ AS_CASE(["$net_backend"],
       Define to 1 to disable multiplayer
     ])
   ],
-  [sdlnet], [
-    AC_DEFINE([USE_SDLNET], [1], [
-      Define to 1 if using SDL_net as the network backend
+  [enet], [
+    AC_DEFINE([USE_ENET], [1], [
+      Define to 1 if using enet as the network backend
     ])
   ], [
     AC_ERROR([Unknown network backend: $net_backend])

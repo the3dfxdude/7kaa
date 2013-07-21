@@ -271,14 +271,6 @@ endif
 
 7kaa_LDADD += ../multiplayer/common/libmultiplayer.a
 
-if NET_NONE
-7kaa_LDADD += ../multiplayer/none/libnetwork_none.a
-endif
-
-if NET_SDLNET
-7kaa_LDADD += ../multiplayer/sdlnet/libnetwork_sdlnet.a
-endif
-
 
 if VIDEO_DDRAW
 7kaa_LDADD += ../video/ddraw/libvideo_ddraw.a

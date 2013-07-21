@@ -134,7 +134,8 @@ enum
 	MPMSG_TEST_LATENCY_SEND,
 	MPMSG_TEST_LATENCY_ECHO,
 	MPMSG_SET_PROCESS_FRAME_DELAY,
-	MPMSG_COOKIE,
+
+	MPMSG_PLAYER_ID,
 	MPMSG_PLAYER_DISCONNECT,
 };
 
@@ -206,13 +207,14 @@ struct MpStructConfig : public MpStructBase
 
 struct MpStructNewPlayer : public MpStructBase
 {
-	PID_TYPE player_id;
-	char player_name[MP_FRIENDLY_NAME_LEN+1];
+	char name[MP_FRIENDLY_NAME_LEN+1];
+	char pass[MP_FRIENDLY_NAME_LEN+1];
 	short player_balance;	// 2 for CD-ROM version, -1 for non CD-ROM version
-	MpStructNewPlayer(PID_TYPE p, short bal, char *name) : MpStructBase(MPMSG_NEW_PLAYER), player_id(p),
+	MpStructNewPlayer(short bal, char *name, char *pass) : MpStructBase(MPMSG_NEW_PLAYER),
 		player_balance(bal)
 	{
-		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
+		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
+		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
 	}
 };
 
@@ -220,9 +222,21 @@ struct MpStructAcceptNewPlayer : public MpStructBase
 {
 	PID_TYPE player_id;
 	char player_name[MP_FRIENDLY_NAME_LEN+1];
-	MpStructAcceptNewPlayer(PID_TYPE p, char *name) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p)
+	ENetAddress address;
+	char make_contact;
+	MpStructAcceptNewPlayer(PID_TYPE p, char *name, ENetAddress *address, char contact) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p), make_contact(contact)
 	{
 		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
+		if (address == NULL)
+		{
+			this->address.host = ENET_HOST_ANY;
+			this->address.host = 0;
+		}
+		else
+		{
+			this->address.host = address->host;
+			this->address.port = address->port;
+		}
 	}
 };
 
@@ -290,21 +304,22 @@ struct MpStructPlayerUnready : public MpStructBase
 
 struct MpStructLoadGameNewPlayer : public MpStructBase
 {
-	PID_TYPE player_id;
 	short nation_recno;
 	short color_scheme_id;
 	short race_id;
 	DWORD frame_count;			// detail to test save game from the same game
-	long	random_seed;
+	long  random_seed;
 	short player_balance;
-	char player_name[MP_FRIENDLY_NAME_LEN+1];
+	char  name[MP_FRIENDLY_NAME_LEN+1];
+	char  pass[MP_FRIENDLY_NAME_LEN+1];
 
-	MpStructLoadGameNewPlayer(PID_TYPE p, Nation *n, DWORD frame, long seed, short bal, char *name) : 
-		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER), player_id(p),
+	MpStructLoadGameNewPlayer(Nation *n, DWORD frame, long seed, short bal, char *name, char *pass) :
+		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
 		race_id(n->race_id), frame_count(frame), random_seed(seed), player_balance(bal) 
 	{
-		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
+		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
+		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
 	}
 };
 
@@ -361,6 +376,13 @@ struct MpStructProcessFrameDelay : public MpStructBase
 		common_process_frame_delay(newFrameDelay)
 	{
 	}
+};
+
+struct MpStructPlayerId : public MpStructBase
+{
+        PID_TYPE your_id;
+        MpStructPlayerId(PID_TYPE id) : MpStructBase(MPMSG_PLAYER_ID),
+                your_id(id) {}
 };
 
 struct MpStructPlayerDisconnect : public MpStructBase
@@ -560,17 +582,17 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
-			char game_name[MP_SESSION_NAME_LEN+1];
-			char password[MP_SESSION_NAME_LEN+1];
-			strncpy(game_name, config.player_name, MP_SESSION_NAME_LEN);
-			game_name[MP_SESSION_NAME_LEN] = 0;
-			if (!input_box("Enter the of the game:", game_name, MP_SESSION_NAME_LEN+1))
+			char game_name[MP_FRIENDLY_NAME_LEN+1];
+			char password[MP_FRIENDLY_NAME_LEN+1];
+			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
+			game_name[MP_FRIENDLY_NAME_LEN] = 0;
+			if (!input_box("Enter the of the game:", game_name, MP_FRIENDLY_NAME_LEN+1))
 			{
 				mp_obj.deinit();
 				return;
 			}
 			password[0] = 0;
-			if (!input_box("Set the game's password:", password, MP_SESSION_NAME_LEN+1))
+			if (!input_box("Set the game's password:", password, MP_FRIENDLY_NAME_LEN+1))
 				password[0] = 0;
 			if (!mp_obj.create_session(game_name, password, config.player_name, MAX_NATION))
 			{
@@ -587,6 +609,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		{
 			char join_address[100];
 			int choice;
+			SessionDesc *session;
 
 			choice = lobbied;
 			if (service_mode == 1 || service_mode == 3)
@@ -610,17 +633,23 @@ void Game::multi_player_game(int lobbied, char *game_host)
 				box.msg("Service not supported");
 			}
 
-
-			if (choice && !mp_join_session(choice, config.player_name))
-			{
-				choice = 0;
-				box.msg("Unable to connect");
-			}
-
 			if (!choice)
 			{
 				mp_obj.deinit();
 				return;
+			}
+
+			session = mp_obj.get_session(choice);
+			if (session == NULL)
+			{
+				mp_obj.deinit();
+				return;
+			}
+
+			if (!mp_join_session(choice, config.player_name))
+			{
+				choice = 0;
+				box.msg("Unable to connect");
 			}
 
 			remote.init(&mp_obj);
@@ -638,8 +667,6 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	if( !mp_select_option(nationPara, &mpPlayerCount) )
 	{
 		mem_del(nationPara);
-		if( remote.is_host )
-			mp_obj.close_session();
 		remote.deinit();
 		mp_obj.deinit();
 		return;
@@ -780,17 +807,17 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
-			char game_name[MP_SESSION_NAME_LEN+1];
-			char password[MP_SESSION_NAME_LEN+1];
-			strncpy(game_name, config.player_name, MP_SESSION_NAME_LEN);
-			game_name[MP_SESSION_NAME_LEN] = 0;
-			if (!input_box("Enter the name of the game:", game_name, MP_SESSION_NAME_LEN+1))
+			char game_name[MP_FRIENDLY_NAME_LEN+1];
+			char password[MP_FRIENDLY_NAME_LEN+1];
+			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
+			game_name[MP_FRIENDLY_NAME_LEN] = 0;
+			if (!input_box("Enter the name of the game:", game_name, MP_FRIENDLY_NAME_LEN+1))
 			{
 				mp_obj.deinit();
 				return;
 			}
 			password[0] = 0;
-			if (!input_box("Set the game's password:", password, MP_SESSION_NAME_LEN+1))
+			if (!input_box("Set the game's password:", password, MP_FRIENDLY_NAME_LEN+1))
 				password[0] = 0;
 			if (!mp_obj.create_session(game_name, password, config.player_name, gamePlayerCount))
 			{
@@ -807,6 +834,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		{
 			char join_address[100];
 			int choice;
+			SessionDesc *session;
 
 			choice = lobbied;
 			if (service_mode == 1 || service_mode == 3)
@@ -830,16 +858,23 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 				box.msg("Service not supported");
 			}
 
-			if (choice && !mp_join_session(choice, config.player_name))
-			{
-				choice = 0;
-				box.msg("Unable to connect");
-			}
-
 			if (!choice)
 			{
 				mp_obj.deinit();
 				return;
+			}
+
+			session = mp_obj.get_session(choice);
+			if (session == NULL)
+			{
+				mp_obj.deinit();
+				return;
+			}
+
+			if (!mp_join_session(choice, config.player_name))
+			{
+				choice = 0;
+				box.msg("Unable to connect");
 			}
 
 			// count required player
@@ -860,8 +895,6 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	// config game session ...
 	if( !mp_select_load_option(fileName) )
 	{
-		if( remote.is_host )
-			mp_obj.close_session();
 		remote.deinit();
 		mp_obj.deinit();
 		return;
@@ -1584,16 +1617,25 @@ int Game::mp_join_session(int session_id, char *player_name)
 {
 	Button buttonCancel;
 	int width;
-	int tried_connection = 0;
-	int connected = 0;
-	int finished = 0;
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
-	char password[MP_SESSION_NAME_LEN+1];
+	SessionDesc *session;
+	char password[MP_FRIENDLY_NAME_LEN+1];
+
+	session = mp_obj.get_session(session_id);
+	err_when(session == NULL);
  
-	memset(password, 0, sizeof(password));
-	if (mp_obj.get_session(session_id)->password[0] &&
-			!input_box("Enter the game's password:", password, MP_SESSION_NAME_LEN+1))
+	password[0] = 0;
+	if (
+		session->password[0] &&
+		!input_box(
+			"Enter the game's password:",
+			password,
+			MP_FRIENDLY_NAME_LEN+1
+		)
+	)
 		return 0;
+
+	strcpy(session->password, password);
 
 	box.tell("Attempting to connect");
 
@@ -1605,22 +1647,28 @@ int Game::mp_join_session(int session_id, char *player_name)
 	buttonCancel.paint();
 
 	vga_front.unlock_buf();
-	while (1) {
-		if (!tried_connection) {
-			tried_connection = 1;
 
-			// NOTE: If this function causes too much delay, put it in a thread
-			connected = mp_obj.join_session(session_id, password, player_name);
-			if (!connected)
-				break;
-		} else if (connected && mp_obj.is_pregame()) {
-			finished = 1;
+	if (!mp_obj.join_session(session, player_name))
+	{
+		goto END;
+	}
+
+	while (1)
+	{
+		uint32_t from;
+		uint32_t size;
+		int sysMsg;
+
+		mp_obj.receive(&from, &size, &sysMsg);
+
+
+		if (sysMsg)
+		{
 			break;
 		}
 
 		vga_front.lock_buf();
 
-		mp_obj.yield();
 		sys.yield();
 		mouse.get_event();
 
@@ -1633,7 +1681,6 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
 
-
 		if (config.music_flag && !music.is_playing())
 			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
 		else if (!config.music_flag && music.is_playing())
@@ -1641,12 +1688,14 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 		vga_front.unlock_buf();
 	}
+
+END:
 	if (!vga_front.buf_locked)
 		vga_front.lock_buf();
 
 	box.close();
 
-	return finished;
+	return mp_obj.is_player_connecting(1);
 }
 
 int Game::mp_get_leader_board()
@@ -1671,13 +1720,8 @@ int Game::mp_get_leader_board()
 	{
 		vga_front.lock_buf();
 
-		ret = mp_obj.show_leader_board();
-		if (ret)
-		{
-			ret = ret == 1;
-			break;
-		}
-			
+		// FIXME: Retrieve the leader board
+		break;
 
 		sys.yield();
 		mouse.get_event();
@@ -1764,7 +1808,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	if( tempConfig.difficulty_level != OPTION_CUSTOM )
 		tempConfig.change_difficulty(tempConfig.difficulty_level);
 
-	PID_TYPE from, to;
+	PID_TYPE from;
 	uint32_t recvLen;
 	int sysMsgCount;
 	char *recvPtr;
@@ -1807,14 +1851,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	int shareRace = 1;		// host only, 0= exclusive race of each player
 	int p;
 
-	// add local player to player registry
-	regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
-	playerReadyFlag[regPlayerCount] = 0;
-	playerColor[regPlayerCount] = 0;
-	playerRace[regPlayerCount] = 0;
-	playerBalance[regPlayerCount] = 0;
-	++regPlayerCount;
-
 	int i;
 	long refreshFlag = SGOPTION_ALL;
 	// ####### begin Gilbert 25/10 #####//
@@ -1830,23 +1866,29 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 		tempConfig.player_nation_color = 1;
 		colorAssigned[tempConfig.player_nation_color-1] = 1;
-		for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id(); ++p );
-		if( p < regPlayerCount )
-		{
-			playerRace[p] = tempConfig.race_id;
-			playerColor[p] = tempConfig.player_nation_color;
-			playerBalance[p] = PLAYER_RATIO_CDROM;
-		}
+		regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
+		playerReadyFlag[regPlayerCount] = 0;
+		playerColor[regPlayerCount] = tempConfig.player_nation_color;
+		playerRace[regPlayerCount] = tempConfig.race_id;
+		playerBalance[regPlayerCount] = PLAYER_RATIO_CDROM;
+		++regPlayerCount;
 	}
 	else
 	{
+		SessionDesc *current_session;
+
 		tempConfig.race_id = 0;
 		tempConfig.player_nation_color = 0;
-		// ask host for a race and color code
-		MpStructNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), 
+
+		current_session = mp_obj.get_current_session();
+
+		// ask host for an id, race, and color code
+		MpStructNewPlayer msgNewPlayer(
 			PLAYER_RATIO_CDROM,
-			config.player_name );
-		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
+			config.player_name,
+			current_session->password
+		);
+		mp_obj.send(1, &msgNewPlayer, sizeof(msgNewPlayer));
 	}
 
 	// --------- initialize race button group ---------- //
@@ -2185,7 +2227,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		vga_front.lock_buf();
 		// ####### end Gilbert 23/10 #######//
 
-		mp_obj.yield();
 		sys.yield();
 		mouse.get_event();
 
@@ -2410,7 +2451,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			music.stop();
 
 		// --------- detect remote message -------//
-		recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
+		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
 
 		if( sysMsgCount )
 		{
@@ -2424,7 +2465,13 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					if (remote.is_host) {
 						// inform clients of player disconnection
 						MpStructPlayerDisconnect msgDisconnect(regPlayerId[q]);
-						mp_obj.send_stream(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+						mp_obj.send(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+					}
+					else if (regPlayerId[q] == 1) // Game host is always #1
+					{
+						// Cannot continue without a game organizer
+						box.msg("The game host has disconnected.");
+						return 0;
 					}
 
 					mRefreshFlag |= MGOPTION_PLAYERS;
@@ -2449,12 +2496,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					--q;
 				}
 			}
-
-			// handle when the host is disconnecting
-			if (!remote.is_host) {
-				box.msg("The game host has disconnected.");
-				return 0;
-			}
 		}
 
 		if( recvPtr )
@@ -2466,6 +2507,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 			else
 			{
+				printf("Got %x\n", ((MpStructBase *)recvPtr)->msg_id);
+
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
@@ -2489,36 +2532,37 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					mp_obj.poll_players();
 					if( remote.is_host )
 					{
-						if( regPlayerCount < MAX_NATION )
+						printf("regPlayerCount=%d MAX_NATION=%d\n", regPlayerCount, MAX_NATION);
+						if (regPlayerCount < MAX_NATION &&
+							mp_obj.auth_player(
+								from,
+								((MpStructNewPlayer *)recvPtr)->name,
+								((MpStructNewPlayer *)recvPtr)->pass))
 						{
 							MpStructNewPlayer *newPlayerMsg = (MpStructNewPlayer *)recvPtr;
 
-							mp_obj.set_player_name(from, newPlayerMsg->player_name);
-
-							regPlayerId[regPlayerCount] = newPlayerMsg->player_id;
+							regPlayerId[regPlayerCount] = from;
 							playerReadyFlag[regPlayerCount] = 0;
 
-							// send accept new player to all player
-							MpStructAcceptNewPlayer msgAccept(from, newPlayerMsg->player_name);
-							mp_obj.send_stream( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
+							MpStructPlayerId msgId(from);
+							mp_obj.send(from, &msgId, sizeof(msgId));
 
-							// send player list
+							// notify all players of the new player
+							MpStructAcceptNewPlayer msgAccept(from,
+								newPlayerMsg->name,
+								mp_obj.get_player(from)->get_address(),
+								1);
+							mp_obj.send( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
+
+							// send the new player the list of players
 						        for (int i = 1; i <= MAX_NATION; i++) {
 								PlayerDesc *desc = mp_obj.get_player(i);
 								if (desc && desc->pid() != from) {
-									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
-									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
-									if (i != 1) {
-										struct inet_address addr;
-										int len;
-										len = desc->get_address(&addr);
-										MsgNewPeerAddress msgPeer;
-										msgPeer.msg_id = MPMSG_NEW_PEER_ADDRESS;
-										msgPeer.player_id = i;
-										msgPeer.host = addr.host;
-										msgPeer.port = addr.port;
-										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
-									}
+									MpStructAcceptNewPlayer msgNewb(desc->pid(),
+										desc->friendly_name_str(),
+										desc->get_address(),
+										0);
+									mp_obj.send(from, &msgNewb, sizeof(msgNewb));
 								}
 							}
 
@@ -2533,7 +2577,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 									raceAssigned[c]++;
 									playerRace[regPlayerCount] = c+1;
 									MpStructAcceptRace msgAcceptRace(from, c+1);
-									mp_obj.send_stream( from, &msgAcceptRace, sizeof(msgAcceptRace) );
+									mp_obj.send( from, &msgAcceptRace, sizeof(msgAcceptRace) );
 									break;
 								}
 							}
@@ -2549,7 +2593,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 									colorAssigned[c]=1;
 									playerColor[regPlayerCount] = c+1;
 									MpStructAcceptColor msgAcceptColor(from, c+1);
-									mp_obj.send_stream( from, &msgAcceptColor, sizeof(msgAcceptColor) );
+									mp_obj.send( from, &msgAcceptColor, sizeof(msgAcceptColor) );
 									break;
 								}
 							}
@@ -2558,13 +2602,13 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							// send random seed
 							// ###### begin Gilbert 25/10 #######//
 							// MpStructSeed msgRandomSeed(misc.get_random_seed());
-							// mp_obj.send_stream( from, &msgRandomSeed, sizeof(msgRandomSeed) );
-							mp_obj.send_stream( from, &msgSeedStr, sizeof(msgSeedStr) );
+							// mp_obj.send( from, &msgRandomSeed, sizeof(msgRandomSeed) );
+							mp_obj.send( from, &msgSeedStr, sizeof(msgSeedStr) );
 							// ###### end Gilbert 25/10 #######//
 
 							// send config 
 							MpStructConfig msgConfig( tempConfig );
-							mp_obj.send_stream( from, &msgConfig, sizeof(msgConfig) );
+							mp_obj.send( from, &msgConfig, sizeof(msgConfig) );
 
 							// send ready flag
 							for( c = 0; c < regPlayerCount; ++c)
@@ -2572,14 +2616,14 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 								if( playerReadyFlag[c] )
 								{
 									MpStructPlayerReady msgReady(regPlayerId[c]);
-									mp_obj.send_stream(from, &msgReady, sizeof(msgReady));
+									mp_obj.send(from, &msgReady, sizeof(msgReady));
 								}
 							}
 
 							// ###### patch begin Gilbert 22/1 ######//
 							// send remote.sync_test_level
 							MpStructSyncLevel msgSyncTest(remote.sync_test_level);
-							mp_obj.send_stream( from, &msgSyncTest, sizeof(msgSyncTest) );
+							mp_obj.send( from, &msgSyncTest, sizeof(msgSyncTest) );
 							// ###### patch end Gilbert 22/1 ######//
 
 							// update balance
@@ -2592,7 +2636,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						{
 							// reply refuse new player
 							MpStructRefuseNewPlayer msgRefuse(from);
-							mp_obj.send_stream( BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+							mp_obj.send( BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
 						}
 					}
 					break;
@@ -2600,7 +2644,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					{
 						// incorrect message, reject
 						MpStructRefuseNewPlayer msgRefuse(from);
-						mp_obj.send_stream(BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+						mp_obj.send(BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
 					}
 					break;
 				case MPMSG_ACCEPT_NEW_PLAYER:
@@ -2608,7 +2652,10 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.get_my_player_id() )
 					{
 						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
-						mp_obj.add_player(newb->player_name, newb->player_id);
+						mp_obj.add_player(newb->player_id,
+							newb->player_name,
+							&newb->address,
+							newb->make_contact);
 
 						// search if this player has existed
 						for (p = 0; p < regPlayerCount && regPlayerId[p] != newb->player_id; ++p);
@@ -2646,13 +2693,13 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 							// reply accept race
 							MpStructAcceptRace msgAcceptRace(from, cl );
-							mp_obj.send_stream( from, &msgAcceptRace, sizeof(msgAcceptRace) );
+							mp_obj.send( from, &msgAcceptRace, sizeof(msgAcceptRace) );
 						}
 						else
 						{
 							// reply refuse race
 							MpStructRefuseRace msgRefuseRace(from, ((MpStructAcquireRace *)recvPtr)->race_id );
-							mp_obj.send_stream( from, &msgRefuseRace, sizeof(msgRefuseRace) );
+							mp_obj.send( from, &msgRefuseRace, sizeof(msgRefuseRace) );
 						}
 					}
 					break;
@@ -2691,13 +2738,13 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 							// reply accept color
 							MpStructAcceptColor msgAcceptColor(from, cl );
-							mp_obj.send_stream( from, &msgAcceptColor, sizeof(msgAcceptColor) );
+							mp_obj.send( from, &msgAcceptColor, sizeof(msgAcceptColor) );
 						}
 						else
 						{
 							// reply refuse color
 							MpStructRefuseColor msgRefuseColor(from, ((MpStructAcquireColor *)recvPtr)->color_scheme_id );
-							mp_obj.send_stream( from, &msgRefuseColor, sizeof(msgRefuseColor) );
+							mp_obj.send( from, &msgRefuseColor, sizeof(msgRefuseColor) );
 						}
 					}
 					break;
@@ -2727,7 +2774,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						}
 						if (remote.is_host) {
 							// forward message to everyone
-							mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerReady));
+							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerReady));
 						}
 					}
 					break;
@@ -2743,7 +2790,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						}
 						if (remote.is_host) {
 							// forward message to everyone
-							mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerUnready));
+							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerUnready));
 						}
 					}
 					break;
@@ -2754,7 +2801,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					mRefreshFlag |= MGOPTION_IN_MESSAGE;
 					if (remote.is_host) {
 						// forward message to everyone
-						mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructChatMsg));
+						mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructChatMsg));
 					}
 					break;
 				// ###### patch begin Gilbert 22/1 ######//
@@ -2763,10 +2810,23 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					break;
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
+					printf("MPMSG_REFUSE_NEW_PLAYER: %d\n", ((MpStructRefuseNewPlayer *)recvPtr)->player_id);
 					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.get_my_player_id() )
 					{
 						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
 						return 0;
+					}
+					break;
+				case MPMSG_PLAYER_ID:
+					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
+					{
+						// add local player to player registry
+						regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
+						playerReadyFlag[regPlayerCount] = 0;
+						playerColor[regPlayerCount] = 0;
+						playerRace[regPlayerCount] = 0;
+						playerBalance[regPlayerCount] = PLAYER_RATIO_CDROM;
+						++regPlayerCount;
 					}
 					break;
 				case MPMSG_PLAYER_DISCONNECT:
@@ -2796,15 +2856,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							playerBalance[MAX_NATION-1] = 0;
 							--regPlayerCount;
 						}
-					}
-					break;
-				case MPMSG_NEW_PEER_ADDRESS:
-					if (!remote.is_host) {
-						struct inet_address address;
-						MsgNewPeerAddress *msg = (MsgNewPeerAddress *)recvPtr;
-						address.host = msg->host;
-						address.port = msg->port;
-						mp_obj.set_peer_address(msg->player_id, &address);
 					}
 					break;
 				default:		// if the game is started, any other thing is received
@@ -2843,7 +2894,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					else
 					{
 						MpStructAcquireRace msgAcquire(r);
-						mp_obj.send_stream(hostPlayerId, &msgAcquire, sizeof( msgAcquire) );
+						mp_obj.send(hostPlayerId, &msgAcquire, sizeof( msgAcquire) );
 					}
 					//refreshFlag |= SGOPTION_RACE;
 				}
@@ -2872,7 +2923,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					else
 					{
 						MpStructAcquireColor msgAcquire(r);
-						mp_obj.send_stream(hostPlayerId, &msgAcquire, sizeof( msgAcquire) );
+						mp_obj.send(hostPlayerId, &msgAcquire, sizeof( msgAcquire) );
 					}
 					//refreshFlag |= SGOPTION_COLOR;
 				}
@@ -2944,7 +2995,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				if( keyCode = mapIdField.detect() )
 				{
 					if( strcmp(oldMapStr.seed_str, msgSeedStr.seed_str) )
-						mp_obj.send_stream( BROADCAST_PID, &msgSeedStr, sizeof(msgSeedStr) );
+						mp_obj.send( BROADCAST_PID, &msgSeedStr, sizeof(msgSeedStr) );
 					refreshFlag |= SGOPTION_MAP_ID;
 				}
 				else
@@ -3204,7 +3255,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			if( configChange )
 			{
 				MpStructConfig msgConfig(tempConfig);
-				mp_obj.send_stream( BROADCAST_PID, &msgConfig, sizeof(msgConfig) );
+				mp_obj.send( BROADCAST_PID, &msgConfig, sizeof(msgConfig) );
 			}
 		}
 
@@ -3259,14 +3310,14 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				{
 					playerReadyFlag[p] = selfReadyFlag = 1;
 					MpStructPlayerReady msgReady(mp_obj.get_my_player_id());
-					mp_obj.send_stream(BROADCAST_PID, &msgReady, sizeof(msgReady));
+					mp_obj.send(BROADCAST_PID, &msgReady, sizeof(msgReady));
 				}
 				else
 				{
 					// else un-ready this player
 					playerReadyFlag[p] = selfReadyFlag = 0;
 					MpStructPlayerUnready msgUnready(mp_obj.get_my_player_id());
-					mp_obj.send_stream(BROADCAST_PID, &msgUnready, sizeof(msgUnready));
+					mp_obj.send(BROADCAST_PID, &msgUnready, sizeof(msgUnready));
 				}
 			}
 		}
@@ -3291,7 +3342,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				if( sumBalance >= 0 )
 				{
 //					MpStructBase msgStart(MPMSG_START_GAME);
-//					mp_obj.send_stream(BROADCAST_PID, &msgStart, sizeof(msgStart));
+//					mp_obj.send(BROADCAST_PID, &msgStart, sizeof(msgStart));
 					retFlag = 1;
 					break;							// break while(1)
 				}
@@ -3307,7 +3358,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			if( remote.is_host )
 			{
 				MpStructBase msgAbort(MPMSG_ABORT_GAME);
-				mp_obj.send_stream(BROADCAST_PID, &msgAbort, sizeof(msgAbort) );
+				mp_obj.send(BROADCAST_PID, &msgAbort, sizeof(msgAbort) );
 			}
 			retFlag = 0;
 			break;			// break while(1)
@@ -3325,7 +3376,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					mRefreshFlag |= MGOPTION_IN_MESSAGE;
 				}
 				// send message
-				mp_obj.send_stream(BROADCAST_PID, &typingMsg, sizeof(typingMsg) );
+				mp_obj.send(BROADCAST_PID, &typingMsg, sizeof(typingMsg) );
 
 				// clear the string
 				messageField.clear();
@@ -3432,7 +3483,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				memcpy( setupString.reserve(sizeof(msgSyncTest)), &msgSyncTest, sizeof(msgSyncTest));
 			}
 
-			mp_obj.send_stream(BROADCAST_PID, setupString.queue_buf, setupString.length() );
+			mp_obj.send(BROADCAST_PID, setupString.queue_buf, setupString.length() );
 		}
 		else
 		{
@@ -3558,7 +3609,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			// ------- broadcast end setting string ------- //
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
-			mp_obj.send_stream( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
+			mp_obj.send( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
 
 			// ------ wait for MPMSG_END_SETTING ----------//
 			// ---- to filter other all message until MP_MSG_END_SETTING ---//
@@ -3570,7 +3621,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				recvPtr = mp_obj.receive_stream( &from, &to, &recvLen);
+				recvPtr = mp_obj.receive(&from, &recvLen);
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);
@@ -3581,7 +3632,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					}
 					if (remote.is_host) {
 						// forward message to everyone
-						mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructBase));
+						mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructBase));
 					}
 				}
 			}
@@ -3614,7 +3665,7 @@ int Game::mp_select_load_option(char *fileName)
 	
 	Config &tempConfig = config;
 
-	PID_TYPE from, to;
+	PID_TYPE from;
 	uint32_t recvLen;
 	int sysMsgCount;
 	char *recvPtr;
@@ -3658,14 +3709,6 @@ int Game::mp_select_load_option(char *fileName)
 	int shareRace = 1;		// host only, 0= exclusive race of each player
 	int p;
 
-	// add local player to player registry
-	regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
-	playerReadyFlag[regPlayerCount] = 0;
-	playerColor[regPlayerCount] = 0;
-	playerRace[regPlayerCount] = 0;
-	playerBalance[regPlayerCount] = 0;
-	++regPlayerCount;
-
 	err_when( tempConfig.race_id != (~nation_array)->race_id );
 	err_when( tempConfig.player_nation_color != (~nation_array)->color_scheme_id );
 
@@ -3677,12 +3720,11 @@ int Game::mp_select_load_option(char *fileName)
 	if( remote.is_host )
 	{
 		colorAssigned[tempConfig.player_nation_color-1] = 1;
-		for( p = 0; p < regPlayerCount && regPlayerId[p] != mp_obj.get_my_player_id(); ++p );
-		if( p < regPlayerCount )
-		{
-			playerColor[p] = tempConfig.player_nation_color;
-			playerBalance[p] = PLAYER_RATIO_CDROM;
-		}
+		regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
+		playerReadyFlag[regPlayerCount] = 0;
+		playerColor[regPlayerCount] = tempConfig.player_nation_color;
+		playerRace[regPlayerCount] = 0;
+		playerBalance[regPlayerCount] = PLAYER_RATIO_CDROM;
 
 		// initialize other colorAssigned, only free for those of the remote players
 		maxPlayer = 1;			// host
@@ -3698,12 +3740,21 @@ int Game::mp_select_load_option(char *fileName)
 	}
 	else
 	{
+		SessionDesc *current_session;
+
 		memset( colorAssigned, 0, sizeof(colorAssigned) );		// assume all color are unassigned
-		MpStructLoadGameNewPlayer msgNewPlayer( mp_obj.get_my_player_id(), ~nation_array, sys.frame_count,
+
+		current_session = mp_obj.get_current_session();
+
+		MpStructLoadGameNewPlayer msgNewPlayer(
+			~nation_array,
+			sys.frame_count,
 			misc.get_random_seed(),
 			PLAYER_RATIO_CDROM,
-			config.player_name );
-		mp_obj.send_stream(BROADCAST_PID, &msgNewPlayer, sizeof(msgNewPlayer) );
+			config.player_name,
+			current_session->password
+		);
+		mp_obj.send(1, &msgNewPlayer, sizeof(msgNewPlayer));
 	}
 
 	// --------- initialize race button group ---------- //
@@ -4041,7 +4092,6 @@ int Game::mp_select_load_option(char *fileName)
 		vga_front.lock_buf();
 		// ####### begin Gilbert 24/10 ########//
 
-		mp_obj.yield();
 		sys.yield();
 		mouse.get_event();
 
@@ -4264,7 +4314,7 @@ int Game::mp_select_load_option(char *fileName)
 			music.stop();
 
 		// --------- detect remote message -------//
-		recvPtr = mp_obj.receive_stream(&from, &to, &recvLen, &sysMsgCount);
+		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
 
 		if( sysMsgCount )
 		{
@@ -4275,10 +4325,17 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					mp_obj.delete_player(regPlayerId[q]);
 
-					if (remote.is_host) {
+					if (remote.is_host)
+					{
 						// inform clients of player disconnection
 						MpStructPlayerDisconnect msgDisconnect(regPlayerId[q]);
-						mp_obj.send_stream(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+						mp_obj.send(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+					}
+					else if (regPlayerId[q] == 1) // Game host is always #1
+					{
+						// Cannot continue without a game organizer
+						box.msg("The game host has disconnected.");
+						return 0;
 					}
 
 					mRefreshFlag |= MGOPTION_PLAYERS;
@@ -4302,12 +4359,6 @@ int Game::mp_select_load_option(char *fileName)
 					--regPlayerCount;
 					--q;
 				}
-			}
-
-			// handle when the host is disconnecting
-			if (!remote.is_host) {
-				box.msg("The game host has disconnected.");
-				return 0;
 			}
 		}
 
@@ -4343,7 +4394,7 @@ int Game::mp_select_load_option(char *fileName)
 					{
 						// incorrect message, reject
 						MpStructRefuseNewPlayer msgRefuse(from);
-						mp_obj.send_stream(BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+						mp_obj.send(BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
 					}
 					break;
 				case MPMSG_LOAD_GAME_NEW_PLAYER:
@@ -4351,44 +4402,47 @@ int Game::mp_select_load_option(char *fileName)
 					if( remote.is_host )
 					{
 						MpStructLoadGameNewPlayer *newPlayerMsg = (MpStructLoadGameNewPlayer *)recvPtr;
-						if( regPlayerCount < MAX_NATION 
-							&& !nation_array.is_deleted(newPlayerMsg->nation_recno)
-							&& nation_array[newPlayerMsg->nation_recno]->color_scheme_id == newPlayerMsg->color_scheme_id
-							&& nation_array[newPlayerMsg->nation_recno]->race_id == newPlayerMsg->race_id
-							&& !colorAssigned[newPlayerMsg->color_scheme_id-1] 
-							&& newPlayerMsg->frame_count == sys.frame_count
-							&& newPlayerMsg->random_seed == misc.get_random_seed() )
+						if(
+							regPlayerCount < MAX_NATION &&
+							!nation_array.is_deleted(newPlayerMsg->nation_recno) &&
+							nation_array[newPlayerMsg->nation_recno]->color_scheme_id == newPlayerMsg->color_scheme_id &&
+							nation_array[newPlayerMsg->nation_recno]->race_id == newPlayerMsg->race_id &&
+							!colorAssigned[newPlayerMsg->color_scheme_id-1]  &&
+							newPlayerMsg->frame_count == sys.frame_count &&
+							newPlayerMsg->random_seed == misc.get_random_seed() &&
+							mp_obj.auth_player(
+								from,
+								((MpStructNewPlayer *)recvPtr)->name,
+								((MpStructNewPlayer *)recvPtr)->pass
+							)
+						)
 						{
-							mp_obj.set_player_name(from, newPlayerMsg->player_name);
-
-							regPlayerId[regPlayerCount] = newPlayerMsg->player_id;
+							regPlayerId[regPlayerCount] = from;
 							playerReadyFlag[regPlayerCount] = 0;
 							raceAssigned[newPlayerMsg->race_id]++;
 							playerRace[regPlayerCount] = newPlayerMsg->race_id;
 							colorAssigned[newPlayerMsg->color_scheme_id-1]=1;
 							playerColor[regPlayerCount] = newPlayerMsg->color_scheme_id;
 
-							// send accept new player to all player
-							MpStructAcceptNewPlayer msgAccept(from, newPlayerMsg->player_name);
-							mp_obj.send_stream( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
+							MpStructPlayerId msgId(from);
+							mp_obj.send(from, &msgId, sizeof(msgId));
 
-							// send player list
+							// notify all players of the new player
+							MpStructAcceptNewPlayer msgAccept(from,
+								newPlayerMsg->name,
+								mp_obj.get_player(from)->get_address(),
+								1);
+							mp_obj.send( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
+
+							// send the new player the list of players
 						        for (int i = 1; i <= MAX_NATION; i++) {
 								PlayerDesc *desc = mp_obj.get_player(i);
 								if (desc && desc->pid() != from) {
-									MpStructAcceptNewPlayer msgNewb(desc->pid(), desc->friendly_name_str());
-									mp_obj.send_stream(from, &msgNewb, sizeof(msgNewb));
-									if (i != 1) {
-										struct inet_address addr;
-										int len;
-										len = desc->get_address(&addr);
-										MsgNewPeerAddress msgPeer;
-										msgPeer.msg_id = MPMSG_NEW_PEER_ADDRESS;
-										msgPeer.player_id = i;
-										msgPeer.host = addr.host;
-										msgPeer.port = addr.port;
-										mp_obj.send_stream(from, &msgPeer, sizeof(msgPeer));
-									}
+									MpStructAcceptNewPlayer msgNewb(desc->pid(),
+										desc->friendly_name_str(),
+										desc->get_address(),
+										0);
+									mp_obj.send(from, &msgNewb, sizeof(msgNewb));
 								}
 							}
 
@@ -4398,14 +4452,14 @@ int Game::mp_select_load_option(char *fileName)
 								if( playerReadyFlag[c] )
 								{
 									MpStructPlayerReady msgReady(regPlayerId[c]);
-									mp_obj.send_stream(from, &msgReady, sizeof(msgReady));
+									mp_obj.send(from, &msgReady, sizeof(msgReady));
 								}
 							}
 
 							// ###### patch begin Gilbert 22/1 ######//
 							// send remote.sync_test_level
 							MpStructSyncLevel msgSyncTest(remote.sync_test_level);
-							mp_obj.send_stream( from, &msgSyncTest, sizeof(msgSyncTest) );
+							mp_obj.send( from, &msgSyncTest, sizeof(msgSyncTest) );
 							// ###### patch end Gilbert 22/1 ######//
 
 							// update balance
@@ -4418,7 +4472,7 @@ int Game::mp_select_load_option(char *fileName)
 						{
 							// reply refuse new player
 							MpStructRefuseNewPlayer msgRefuse(from);
-							mp_obj.send_stream( BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+							mp_obj.send( BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
 						}
 					}
 					break;
@@ -4427,7 +4481,10 @@ int Game::mp_select_load_option(char *fileName)
 					if( regPlayerCount < MAX_NATION && ((MpStructAcceptNewPlayer *)recvPtr)->player_id != mp_obj.get_my_player_id() )
 					{
 						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
-						mp_obj.add_player(newb->player_name, newb->player_id);
+						mp_obj.add_player(newb->player_id,
+							newb->player_name,
+							&newb->address,
+							newb->make_contact);
 
 						// search if this player has existed
 						for (p = 0; p < regPlayerCount && regPlayerId[p] != newb->player_id; ++p);
@@ -4450,7 +4507,7 @@ int Game::mp_select_load_option(char *fileName)
 						}
 						if (remote.is_host) {
 							// forward message to everyone
-							mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerReady));
+							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerReady));
 						}
 					}
 					break;
@@ -4466,7 +4523,7 @@ int Game::mp_select_load_option(char *fileName)
 						}
 						if (remote.is_host) {
 							// forward message to everyone
-							mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerUnready));
+							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerUnready));
 						}
 					}
 					break;
@@ -4477,7 +4534,7 @@ int Game::mp_select_load_option(char *fileName)
 					mRefreshFlag |= MGOPTION_IN_MESSAGE;
 					if (remote.is_host) {
 						// forward message to everyone
-						mp_obj.send_stream(BROADCAST_PID, recvPtr, sizeof(MpStructChatMsg));
+						mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructChatMsg));
 					}
 					break;
 				// ###### patch begin Gilbert 22/1 ######//
@@ -4490,6 +4547,18 @@ int Game::mp_select_load_option(char *fileName)
 					{
 						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
 						return 0;
+					}
+					break;
+				case MPMSG_PLAYER_ID:
+					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
+					{
+						// add local player to player registry
+						regPlayerId[regPlayerCount] = mp_obj.get_my_player_id();
+						playerReadyFlag[regPlayerCount] = 0;
+						playerColor[regPlayerCount] = 0;
+						playerRace[regPlayerCount] = 0;
+						playerBalance[regPlayerCount] = PLAYER_RATIO_CDROM;
+						++regPlayerCount;
 					}
 					break;
 				case MPMSG_PLAYER_DISCONNECT:
@@ -4519,15 +4588,6 @@ int Game::mp_select_load_option(char *fileName)
 							playerBalance[MAX_NATION-1] = 0;
 							--regPlayerCount;
 						}
-					}
-					break;
-				case MPMSG_NEW_PEER_ADDRESS:
-					if (!remote.is_host) {
-						struct inet_address address;
-						MsgNewPeerAddress *msg = (MsgNewPeerAddress *)recvPtr;
-						address.host = msg->host;
-						address.port = msg->port;
-						mp_obj.set_peer_address(msg->player_id, &address);
 					}
 					break;
 				default:		// if the game is started, any other thing is received
@@ -4589,14 +4649,14 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					playerReadyFlag[p] = selfReadyFlag = 1;
 					MpStructPlayerReady msgReady(mp_obj.get_my_player_id());
-					mp_obj.send_stream(BROADCAST_PID, &msgReady, sizeof(msgReady));
+					mp_obj.send(BROADCAST_PID, &msgReady, sizeof(msgReady));
 				}
 				else
 				{
 					// else un-ready this player
 					playerReadyFlag[p] = selfReadyFlag = 0;
 					MpStructPlayerUnready msgUnready(mp_obj.get_my_player_id());
-					mp_obj.send_stream(BROADCAST_PID, &msgUnready, sizeof(msgUnready));
+					mp_obj.send(BROADCAST_PID, &msgUnready, sizeof(msgUnready));
 				}
 			}
 		}
@@ -4652,7 +4712,7 @@ int Game::mp_select_load_option(char *fileName)
 				else
 				{
 //					MpStructBase msgStart(MPMSG_START_GAME);
-//					mp_obj.send_stream(BROADCAST_PID, &msgStart, sizeof(msgStart));
+//					mp_obj.send(BROADCAST_PID, &msgStart, sizeof(msgStart));
 					retFlag = 1;
 					break;							// break while(1)
 				}
@@ -4663,7 +4723,7 @@ int Game::mp_select_load_option(char *fileName)
 			if( remote.is_host )
 			{
 				MpStructBase msgAbort(MPMSG_ABORT_GAME);
-				mp_obj.send_stream(BROADCAST_PID, &msgAbort, sizeof(msgAbort) );
+				mp_obj.send(BROADCAST_PID, &msgAbort, sizeof(msgAbort) );
 			}
 			retFlag = 0;
 			break;			// break while(1)
@@ -4681,7 +4741,7 @@ int Game::mp_select_load_option(char *fileName)
 					mRefreshFlag |= MGOPTION_IN_MESSAGE;
 				}
 				// send message
-				mp_obj.send_stream(BROADCAST_PID, &typingMsg, sizeof(typingMsg) );
+				mp_obj.send(BROADCAST_PID, &typingMsg, sizeof(typingMsg) );
 
 				// clear the string
 				messageField.clear();
@@ -4851,7 +4911,7 @@ int Game::mp_select_load_option(char *fileName)
 				memcpy( setupString.reserve(sizeof(msgSyncTest)), &msgSyncTest, sizeof(msgSyncTest));
 			}
 
-			mp_obj.send_stream( BROADCAST_PID, setupString.queue_buf, setupString.length() );
+			mp_obj.send( BROADCAST_PID, setupString.queue_buf, setupString.length() );
 		}
 		else
 		{
@@ -4949,7 +5009,7 @@ int Game::mp_select_load_option(char *fileName)
 			// ------- send end setting string ------- //
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
-			mp_obj.send_stream( from, &mpEndSetting, sizeof(mpEndSetting) );
+			mp_obj.send( from, &mpEndSetting, sizeof(mpEndSetting) );
 		}	
 
 		if( remote.sync_test_level == 0)
@@ -4961,7 +5021,7 @@ int Game::mp_select_load_option(char *fileName)
 			// ------- broadcast end setting string ------- //
 
 			MpStructBase mpEndSetting(MPMSG_END_SETTING);
-			mp_obj.send_stream( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
+			mp_obj.send( BROADCAST_PID, &mpEndSetting, sizeof(mpEndSetting) );
 
 			// ------ wait for MPMSG_END_SETTING ----------//
 			// ---- to filter other all message until MP_MSG_END_SETTING ---//
@@ -4973,7 +5033,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				if( recvEndSetting >= playerCount-1)
 					break;
-				recvPtr = mp_obj.receive_stream( &from, &to, &recvLen);
+				recvPtr = mp_obj.receive(&from, &recvLen);
 				if( recvPtr )
 				{
 					trial = MAX(trial, 1000);

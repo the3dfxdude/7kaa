@@ -24,34 +24,46 @@
 //               multiplayer games.
 
 #include <player_desc.h>
+#include <string.h>
 
 PlayerDesc::PlayerDesc()
 {
 	id = 0;
-	name[0] = 0;
-	address.host = 0;
+	strcpy(name, "?Anonymous?");
+	address.host = ENET_HOST_ANY;
 	address.port = 0;
 	connecting = 1;
+	authorized = 0;
 }
 
-PlayerDesc::PlayerDesc(const char *name)
-{
-	this->id = 0;
-	strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
-	this->name[MP_FRIENDLY_NAME_LEN] = 0;
-	address.host = 0;
-	address.port = 0;
-	connecting = 1;
-}
-
-PlayerDesc::PlayerDesc(uint32_t id, const char *name, struct inet_address *addr)
+PlayerDesc::PlayerDesc(uint32_t id, ENetAddress *address)
 {
 	this->id = id;
-	strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
-	this->name[MP_FRIENDLY_NAME_LEN] = 0;
-	address.host = addr->host;
-	address.port = addr->port;
+	strcpy(name, "?Anonymous?");
+	this->address.host = address->host;
+	this->address.port = address->port;
 	connecting = 1;
+	authorized = 0;
+}
+
+PlayerDesc::PlayerDesc(uint32_t id, char *name)
+{
+	this->id = id;
+	strcpy(this->name, name);
+	address.host = ENET_HOST_ANY;
+	address.port = 0;
+	connecting = 1;
+	authorized = 0;
+}
+
+PlayerDesc::PlayerDesc(char *name)
+{
+	id = 0;
+	strcpy(this->name, name);
+	address.host = ENET_HOST_ANY;
+	address.port = 0;
+	connecting = 1;
+	authorized = 0;
 }
 
 uint32_t PlayerDesc::pid()
@@ -64,10 +76,10 @@ char *PlayerDesc::friendly_name_str()
 	return name;
 }
 
-int PlayerDesc::get_address(struct inet_address *addr)
+ENetAddress *PlayerDesc::get_address()
 {
-	addr->host = address.host;
-	addr->port = address.port;
-	return sizeof(struct inet_address);
-}
+	if (address.host == ENET_HOST_ANY)
+		return NULL;
 
+	return &this->address;
+}
