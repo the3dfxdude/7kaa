@@ -105,6 +105,8 @@
 #include <OINGMENU.h>
 // ###### end Gilbert 23/10 #######//
 #include <dbglog.h>
+#include <locale.h>
+#include "gettext.h"
 
 //------- define game version constant --------//
 
@@ -310,6 +312,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //
 int main(int argc, char **argv)
 {
+	setlocale(LC_ALL, "");
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
+
 	const char *lobbyJoinCmdLine = "-join";
 	const char *lobbyHostCmdLine = "-host";
 	const char *lobbyNameCmdLine = "-name";
