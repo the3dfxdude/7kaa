@@ -1,3 +1,5 @@
+AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
 	AM.cpp \
@@ -288,6 +290,7 @@ endif
 	../common/libcommon.a \
 	../file/libfile.a \
 	../video/common/libvideo_common.a \
-	../imgfun/libimgfun.a
+	../imgfun/libimgfun.a \
+	@LIBINTL@
 
 EXTRA_DIST = 7k.ico ico.rc
