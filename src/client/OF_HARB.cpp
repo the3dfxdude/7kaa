@@ -44,6 +44,7 @@
 #include <OBUTTCUS.h>
 #include <OSE.h>
 #include <OSERES.h>
+#include "gettext.h"
 
 
 //------------- Define coordinations -----------//
@@ -449,8 +450,8 @@ void FirmHarbor::put_det(int refreshFlag)
 	if( shipUnitInfo->carry_goods_capacity > 0 &&
 		 shipUnitInfo->carry_unit_capacity > 0 )
 	{
-		button_mode[0].create_text( SHIP_DET_X1+10, SHIP_DET_Y1+3, SHIP_DET_X1+80, SHIP_DET_Y1+19, "Units" );
-		button_mode[1].create_text( SHIP_DET_X1+90, SHIP_DET_Y1+3, SHIP_DET_X2-10, SHIP_DET_Y1+19, "Goods" );
+		button_mode[0].create_text( SHIP_DET_X1+10, SHIP_DET_Y1+3, SHIP_DET_X1+80, SHIP_DET_Y1+19, _("Units") );
+		button_mode[1].create_text( SHIP_DET_X1+90, SHIP_DET_Y1+3, SHIP_DET_X2-10, SHIP_DET_Y1+19, _("Goods") );
 		button_mode.paint(ship_disp_mode);
 
 		if( ship_disp_mode == SHIP_MENU_UNIT )
@@ -620,7 +621,7 @@ void FirmHarbor::disp_build_menu(int refreshFlag)
 			}
 		}
 		button_cancel.paint(x, y, x+BUILD_BUTTON_WIDTH-1, y+BUILD_BUTTON_HEIGHT*3/4,
-			ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)"Done",0) );
+			ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)_("Done"),0) );
 	}
 	// ###### end Gilbert 20/9 ######//
 }
