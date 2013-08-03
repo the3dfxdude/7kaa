@@ -41,6 +41,7 @@
 #include <OF_INN.h>
 #include <OREMOTE.h>
 #include <OSERES.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -387,7 +388,7 @@ void FirmInn::disp_unit_info(int dispY1, InnUnit* hireInfoPtr, int refreshFlag)
 	int x=INFO_X1+4, y=dispY1+4, x1=x+100;
 	String str;
 
-	font_san.field( x, y, "Combat", x1, skillPtr->combat_level, 1, INFO_X2-10, refreshFlag );
+	font_san.field( x, y, _("Combat"), x1, skillPtr->combat_level, 1, INFO_X2-10, refreshFlag );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -402,7 +403,7 @@ void FirmInn::disp_unit_info(int dispY1, InnUnit* hireInfoPtr, int refreshFlag)
 		font_san.update_field( x1, y+16, skillPtr->skill_level, 1, INFO_X2-10);
 	}
 
-	font_san.field( x, y+32, "Hiring Cost", x1, hireInfoPtr->hire_cost, 2, INFO_X2-10, refreshFlag);
+	font_san.field( x, y+32, _("Hiring Cost"), x1, hireInfoPtr->hire_cost, 2, INFO_X2-10, refreshFlag);
 }
 //----------- End of function FirmInn::disp_unit_info -----------//
 
@@ -438,7 +439,7 @@ static void put_hire_rec(int recNo, int x, int y, int refreshFlag)
 	}
 	else
 	{
-		font_san.put( x+32 , y, "Combat", 1, x+122 );		// 1-use short words
+		font_san.put( x+32 , y, _("Combat"), 1, x+122 );	// 1-use short words
 		font_san.put( x+116, y, innUnit->skill.combat_level, 1, x+146 );
 	}
 
