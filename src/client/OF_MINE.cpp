@@ -35,6 +35,7 @@
 #include <OSITE.h>
 #include <OF_MINE.h>
 #include <OF_FACT.h>
+#include "gettext.h"
 
 //--------- Begin of function FirmMine::FirmMine ---------//
 //
@@ -233,7 +234,7 @@ void FirmMine::disp_mine_info(int dispY1, int refreshFlag)
 
 	if( !raw_id )
 	{
-		font_san.center_put( INFO_X1, dispY1, INFO_X2, dispY1+70, "No Natural Resources" );
+		font_san.center_put( INFO_X1, dispY1, INFO_X2, dispY1+70, _("No Natural Resources") );
 		return;
 	}
 
@@ -245,23 +246,23 @@ void FirmMine::disp_mine_info(int dispY1, int refreshFlag)
 
 	String str;
 
-	str  = translate.process("Mining ");
-	str += raw_res[raw_id]->name;
+	// TRANSLATORS: Mining <Clay/Copper/Iron>
+	snprintf( str, MAX_STR_LEN+1, _("Mining %s"), raw_res[raw_id]->name );
 
 	font_san.disp( x+20, y, str, INFO_X2-2);
 	y+=16;
 
-	font_san.field( x, y, "Monthly Production", x+126, (int) production_30days(), 1, INFO_X2-2, refreshFlag, "MN_PROD");
+	font_san.field( x, y, _("Monthly Production"), x+126, (int) production_30days(), 1, INFO_X2-2, refreshFlag, "MN_PROD");
 	y+=16;
 
 	str  = (int) stock_qty;
 	str += " / ";
 	str += (int) max_stock_qty;
 
-	font_san.field( x, y, "Mined Stock", x+126, str, INFO_X2-2, refreshFlag, "MN_STOCK");
+	font_san.field( x, y, _("Mined Stock"), x+126, str, INFO_X2-2, refreshFlag, "MN_STOCK");
 	y+=16;
 
-	font_san.field( x, y, "Untapped Reserve", x+126, (int) reserve_qty, 1, INFO_X2-2, refreshFlag, "MN_UNTAP");
+	font_san.field( x, y, _("Untapped Reserve"), x+126, (int) reserve_qty, 1, INFO_X2-2, refreshFlag, "MN_UNTAP");
 }
 //----------- End of function FirmMine::disp_mine_info -----------//
 
