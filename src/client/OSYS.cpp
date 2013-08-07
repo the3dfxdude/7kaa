@@ -217,7 +217,7 @@ int Sys::init_directx()
    if( !vga.init() )
       return FALSE;
    DEBUG_LOG("vga.init() ok");
-#ifndef DEBUG
+#if !defined(DEBUG) && !defined(_DEBUG)
    vga.toggle_full_screen();
 #endif
 
