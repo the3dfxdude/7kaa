@@ -34,6 +34,7 @@
 #include <OGAME.h>
 #include <ONATION.h>
 #include <OGFILE.h>
+#include "gettext.h"
 
 //------ Begin of function GameFileArray::disp_hall_of_fame -----//
 //
@@ -101,21 +102,23 @@ void HallFame::disp_info(int x, int y, int pos)
 
 	//----------------------------------------//
 
-	str  = translate.process("King ");
+	str  = _("King");
+	str += " ";
 	str += player_name;
 
 	fontPtr->put( x, y, str );
 
 	//----------------------------------------//
 
-	str  = translate.process("Score : ");
+	str  = _("Score : ");
 	str += score;
 
 	fontPtr->put( x, y2, str );
 
 	//----------------------------------------//
 
-	str  = translate.process("Population : ");
+	str  = _("Population");
+	str += " : ";
 	str += population;
 
 	fontPtr->put( x+110, y2, str );
@@ -126,7 +129,7 @@ void HallFame::disp_info(int x, int y, int pos)
 		x-=10;			// position adjustment for the German version
 	#endif
 
-	str  = translate.process("Period : ");
+	str  = _("Period : ");
 	str += misc.num_to_str(start_year);     // without adding comma separators
 	str += "-";
 	str += misc.num_to_str(end_year);
@@ -135,7 +138,7 @@ void HallFame::disp_info(int x, int y, int pos)
 
 	//----------------------------------------//
 
-	str  = translate.process("Difficulty : ");
+	str  = _("Difficulty : ");
 	str += difficulty_rating;
 
 	fontPtr->put( x+420, y2, str );
