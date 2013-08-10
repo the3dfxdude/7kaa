@@ -44,6 +44,7 @@
 // ####### begin Gilbert 29/10 ########//
 #include <OPOWER.h>
 // ####### end Gilbert 29/10 ########//
+#include "gettext.h"
 
 
 
@@ -200,7 +201,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 		// ###### begin Gilbert 29/10 ######//
 		char powerWinFlag = power.win_opened;
 		power.win_opened = 1;
-		if( box.ask( "Do you want to continue to stay in the game?", "Yes", "No" ) )
+		if( box.ask( _("Do you want to continue to stay in the game?"), _("Yes"), _("No") ) )
 			sys.signal_exit_flag = 0;
 		power.win_opened = powerWinFlag;
 		// ###### end Gilbert 29/10 ######//
@@ -246,60 +247,91 @@ static void disp_goal_str(int winNationRecno)
 	Nation* winNation = nation_array[winNationRecno];
 	String  str, str2;
 
-	if( winNationRecno == nation_array.player_recno )
-		str = translate.process("Your Kingdom");
-	else
-		str = nation_array[winNationRecno]->nation_name();
-
 	str2 = "";
 
 	//---- if the player has achieved one of its goals ----//
 
 	if( winNation->goal_destroy_monster_achieved() )
 	{
-		str2  = str;
-		str   = translate.process("All Fryhtans have been Destroyed !");
-		str2 += translate.process(" has Achieved the Highest Fryhtan Battling Score !");
+		str = _("All Fryhtans have been Destroyed !");
+		if( winNationRecno == nation_array.player_recno )
+		{
+			str2 = _("Your Kingdom has Achieved the Highest Fryhtan Battling Score !");
+		}
+		else
+		{
+			// TRANSLATORS: <King's Kingdom> has Achieved the Highest Fryhtan Battling Score !
+			snprintf(str2, MAX_STR_LEN+1, _("%s has Achieved the Highest Fryhtan Battling Score !"), nation_array[winNationRecno]->nation_name());
+		}
 	}
 
 	//-----------------------------------//
 
 	else if( winNation->goal_population_achieved() )
 	{
-		str  += translate.process( " has Reached" );
-
-		str2  = translate.process( "its Population Goal of " );
-		str2 += config.goal_population;
-		str2 += " !";
+		if( winNationRecno == nation_array.player_recno )
+		{
+			// TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			str = _("Your Kingdom has Reached");
+		}
+		else
+		{
+			// TRANSLATORS: Part of "<King's Kingdom> has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			snprintf(str, MAX_STR_LEN+1, _("%s has Reached"), nation_array[winNationRecno]->nation_name());
+		}
+		// TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
+		snprintf(str2, MAX_STR_LEN+1, _("its Population Goal of %s !"), misc.format(config.goal_population));
 	}
 
 	//-----------------------------------//
 
 	else if( winNation->goal_economic_score_achieved() )
 	{
-		str  += translate.process( " has Reached" );
-
-		str2  = translate.process( "its Economic Score Goal of " );
-		str2 += config.goal_economic_score;
-		str2 += " !";
+		if( winNationRecno == nation_array.player_recno )
+		{
+			// TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			str = _("Your Kingdom has Reached");
+		}
+		else
+		{
+			// TRANSLATORS: Part of "<King's Kingdom> has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			snprintf(str, MAX_STR_LEN+1, _("%s has Reached"), nation_array[winNationRecno]->nation_name());
+		}
+		// TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Economic Score Goal of <Number> !"
+		snprintf(str2, MAX_STR_LEN+1, _("its Economic Score Goal of %s !"), misc.format(config.goal_economic_score));
 	}
 
 	//-----------------------------------//
 
 	else if( winNation->goal_total_score_achieved() )
 	{
-		str  += translate.process( " has Reached" );
-
-		str2  = translate.process( "its Total Score Goal of " );
-		str2 += config.goal_total_score;
-		str2 += " !";
+		if( winNationRecno == nation_array.player_recno )
+		{
+			// TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			str = _("Your Kingdom has Reached");
+		}
+		else
+		{
+			// TRANSLATORS: Part of "<King's Kingdom> has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			snprintf(str, MAX_STR_LEN+1, _("%s has Reached"), nation_array[winNationRecno]->nation_name());
+		}
+		// TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Total Score Goal of <Number> !"
+		snprintf(str2, MAX_STR_LEN+1, _("its Total Score Goal of %s !"), misc.format(config.goal_total_score));
 	}
 
 	//-----------------------------------//
 
 	else			// ( winNation->goal_destroy_nation_achieved() )
 	{
-		str += translate.process( " has Defeated All Other Kingdoms !" );
+		if( winNationRecno == nation_array.player_recno )
+		{
+			str = _("Your Kingdom has Defeated All Other Kingdoms !");
+		}
+		else
+		{
+			// TRANSLATORS: <King's Kingdom> has Defeated All Other Kingdoms !
+			snprintf(str, MAX_STR_LEN+1, _("%s has Defeated All Other Kingdoms !"), nation_array[winNationRecno]->nation_name());
+		}
 	}
 
 	//-----------------------------------//
@@ -308,7 +340,7 @@ static void disp_goal_str(int winNationRecno)
 
 	if( winNationRecno != nation_array.player_recno )
 	{
-		font_bible.center_put(0, 30, VGA_WIDTH-1, 60, "You Have Lost the Game !" );
+		font_bible.center_put(0, 30, VGA_WIDTH-1, 60, _("You Have Lost the Game !") );
 		y=60;
 	}
 
@@ -326,23 +358,19 @@ static void disp_losing_str(int surrenderToNationRecno)
 
 	if( surrenderToNationRecno )		// you surrender to another kingdom
 	{
-		str  = translate.process( "You Surrendered to " );
-		str += nation_array[surrenderToNationRecno]->nation_name();
-		str += " ";
-		str += translate.process( "on ");
-		str += date.date_str(info.game_date);
-		str += ".";
+		// TRANSLATORS: You Surrendered to <King's Kingdom> on <Date>.
+		snprintf(str, MAX_STR_LEN+1, _("You Surrendered to %1$s on %2$s."), nation_array[surrenderToNationRecno]->nation_name(), date.date_str(info.game_date));
 	}
 
 	// You failed to achieve the goal within the time limit
 
 	else if( config.goal_year_limit_flag && info.game_date >= info.goal_deadline )
 	{
-		str = "Your Kingdom has Failed to Achieve its Goal Within the Time Limit.";
+		str = _("Your Kingdom has Failed to Achieve its Goal Within the Time Limit.");
 	}
 	else		// you're defeated by another kingdom
 	{
-		str = "Your Kingdom has Gone Down to Ignominious Defeat !";
+		str = _("Your Kingdom has Gone Down to Ignominious Defeat !");
 	}
 
 	font_bible.center_put(0, 0, VGA_WIDTH-1, 139, str );
@@ -356,23 +384,8 @@ static void disp_retire_str()
 {
 	String str;
 
-#if(defined(SPANISH))
-	str  = "Te has retirado el ";
-	str += date.date_str( info.game_date );
-	str += ".";
-#elif(defined(FRENCH))
-	str  = "Vous avez abandonné le ";
-	str += date.date_str( info.game_date );
-	str += ".";
-#elif(defined(GERMAN))
-	str  = "Sie haben am ";
-	str += date.date_str( info.game_date );
-	str += " aufgegeben.";
-#else
-	str  = "You Retired on ";
-	str += date.date_str( info.game_date );
-	str += ".";
-#endif
+	// TRANSLATORS: You Retired on <Date>.
+	snprintf(str, MAX_STR_LEN+1, _("You Retired on %s."), date.date_str( info.game_date ));
 
 	font_bible.center_put(0, 0, VGA_WIDTH-1, 139, str );
 }
@@ -387,26 +400,26 @@ static void disp_stat()
 
 	Nation* nationPtr = ~nation_array;
 
-	put_stat( y		, "Duration of Your Rule", info.game_duration_str() );
-	put_stat( y+=20, "Total Gaming Time", info.play_time_str() );
+	put_stat( y		, _("Duration of Your Rule"), info.game_duration_str() );
+	put_stat( y+=20, _("Total Gaming Time"), info.play_time_str() );
 
-	put_stat( y+=30, "Final Population", nationPtr->all_population() );
-	put_stat( y+=20, "Final Treasure"  , misc.format((int)nationPtr->cash,2) );
+	put_stat( y+=30, _("Final Population"), nationPtr->all_population() );
+	put_stat( y+=20, _("Final Treasure")  , misc.format((int)nationPtr->cash,2) );
 
-	put_stat( y+=30, "Enemy Soldiers Dispatched", nationPtr->enemy_soldier_killed );
-	put_stat( y+=20, "King's Soldiers Martyred"  , nationPtr->own_soldier_killed );
+	put_stat( y+=30, _("Enemy Soldiers Dispatched"), nationPtr->enemy_soldier_killed );
+	put_stat( y+=20, _("King's Soldiers Martyred")  , nationPtr->own_soldier_killed );
 
-	put_stat( y+=30, "Enemy Weapons Destroyed"		  , nationPtr->enemy_weapon_destroyed );
-	put_stat( y+=20, "King's Weapons Rendered Obsolete", nationPtr->own_weapon_destroyed );
+	put_stat( y+=30, _("Enemy Weapons Destroyed")		  , nationPtr->enemy_weapon_destroyed );
+	put_stat( y+=20, _("King's Weapons Rendered Obsolete"), nationPtr->own_weapon_destroyed );
 
-	put_stat( y+=30, "Enemy Ships Sunk"   , nationPtr->enemy_ship_destroyed );
-	put_stat( y+=20, "King's Ships Missing", nationPtr->own_ship_destroyed );
+	put_stat( y+=30, _("Enemy Ships Sunk")   , nationPtr->enemy_ship_destroyed );
+	put_stat( y+=20, _("King's Ships Missing"), nationPtr->own_ship_destroyed );
 
-	put_stat( y+=30, "Enemy Buildings Destroyed"   , nationPtr->enemy_firm_destroyed );
-	put_stat( y+=20, "King's Buildings Cleared", nationPtr->own_firm_destroyed );
+	put_stat( y+=30, _("Enemy Buildings Destroyed")   , nationPtr->enemy_firm_destroyed );
+	put_stat( y+=20, _("King's Buildings Cleared"), nationPtr->own_firm_destroyed );
 
-	put_stat( y+=30, "Enemy Civilians Collaterally Damaged", nationPtr->enemy_civilian_killed );
-	put_stat( y+=20, "King's Civilians Cruelly Murdered"    , nationPtr->own_civilian_killed );
+	put_stat( y+=30, _("Enemy Civilians Collaterally Damaged"), nationPtr->enemy_civilian_killed );
+	put_stat( y+=20, _("King's Civilians Cruelly Murdered")    , nationPtr->own_civilian_killed );
 }
 //----------- End of static function disp_stat -----------//
 
@@ -439,18 +452,20 @@ static void disp_ranking()
 
 	int x=20, y=76;
 
-	font_bible.put( x+20 , y+7, "Kingdom" );
-	font_bible.put( x+260, y+7, "Population" );
-	font_bible.put( x+370, y+7, "Military" );
-	font_bible.put( x+470, y+7, "Economy" );
-	font_bible.put( x+562, y+7, "Reputation" );
+	font_bible.put( x+20 , y+7, _("Kingdom") );
+	font_bible.put( x+260, y+7, _("Population") );
+	font_bible.put( x+370, y+7, _("Military") );
+	font_bible.put( x+470, y+7, _("Economy") );
+	font_bible.put( x+562, y+7, _("Reputation") );
 
 #if(defined(SPANISH))
 	font_bible.put( x+670, y   , "Lucha" );
 	font_bible.put( x+670, y+14, "Fryhtan" );
 #else
-	font_bible.put( x+670, y   , "Fryhtan" );
-	font_bible.put( x+670, y+14, "Battling" );
+	// TRANSLATORS: Part of "Fryhtan Battling"
+	font_bible.put( x+670, y   , _("Fryhtan") );
+	// TRANSLATORS: Part of "Fryhtan Battling"
+	font_bible.put( x+670, y+14, _("Battling") );
 #endif
 
 	//--------- display rankings -----------//
@@ -498,8 +513,8 @@ static int disp_score(int winFlag)
 	int x=200, y=360;
 
 	static const char* rankStrArray[] =
-	{ "Population Score", "Military Score", "Economic Score",
-	  "Reputation Score", "Fryhtan Battling Score" };
+	{ N_("Population Score"), N_("Military Score"), N_("Economic Score"),
+	  N_("Reputation Score"), N_("Fryhtan Battling Score") };
 
 	//------ display individual scores ---------//
 
@@ -511,7 +526,7 @@ static int disp_score(int winFlag)
 		rankScore   = info.get_rank_score(i+1, viewNationRecno);
 		totalScore += rankScore;
 
-		font_bible.put( x    , y, rankStrArray[i] );
+		font_bible.put( x    , y, _(rankStrArray[i]) );
 		font_bible.put( x+300, y, rankScore );
 	}
 
@@ -520,7 +535,7 @@ static int disp_score(int winFlag)
 
 	//-------- display thte total score --------//
 
-	font_bible.put( x    , y+2, "Total Score" );
+	font_bible.put( x    , y+2, _("Total Score") );
 	font_bible.put( x+300, y+2, totalScore );
 	y+=28;
 
@@ -533,16 +548,13 @@ static int disp_score(int winFlag)
 	int	 finalScore = totalScore * difficultyRating / 100;
 	String str;
 
-	str  = translate.process("Final Score");
-	str += ":  ";
-	str += totalScore;
-	str += " X ";
+	// TRANSLATORS: Final Score:  <Number> X
+	snprintf( str, MAX_STR_LEN+1, _("Final Score:  %s X "), misc.format(totalScore) );
 
 	x = font_bible.put( x, y+20, str )+5;
 
-	str  = difficultyRating;
-	str += " ";
-	str += translate.process( "(Difficulty Rating)" );
+	// TRANSLATORS: <Number> (Difficulty Rating)
+	snprintf( str, MAX_STR_LEN+1, _("%s (Difficulty Rating)"), misc.format(difficultyRating) );
 
 	font_bible.center_put( x, y+4, x+170, y+1+font_bible.height(), str );
 	vga_front.bar( x, y+27, x+170, y+28, V_BLACK );
@@ -555,25 +567,17 @@ static int disp_score(int winFlag)
 	if( info.goal_score_bonus && winFlag &&
 		 !nation_array[viewNationRecno]->cheat_enabled_flag )		// if cheated, don't display bonus score, as there is no space for displaying both
 	{
-		str += "+  ";
-		str += info.goal_score_bonus;
-		str += " (Bonus)  ";
 		finalScore += info.goal_score_bonus;
+		// TRANSLATORS: +  <Number> (Bonus)  =  <Number>
+		snprintf( str, MAX_STR_LEN+1, _("+  %d (Bonus)  =  %s"), info.goal_score_bonus, misc.format(finalScore) );
 	}
 
 	//------- if the player has cheated -------//
 
 	if( nation_array[viewNationRecno]->cheat_enabled_flag )
 	{
-		str  = "X  0 ";
-		str += translate.process( "(Cheated)" );
-		str += "  ";
-
-		finalScore = 0;
+		str = _("X  0 (Cheated)  =  0");
 	}
-
-	str += "=  ";
-	str += finalScore;
 
 	font_bible.put( x+180, y+18, str);
 
