@@ -42,6 +42,7 @@
 // ####### begin Gilbert 4/11 #######//
 #include <OMUSIC.h>
 // ####### end Gilbert 4/11 #######//
+#include "gettext.h"
 
 // --------- declare static funtion --------//
 
@@ -128,7 +129,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 
 	if( scenCount==0 )
 	{
-		box.msg( "Scenario files not found." );
+		box.msg( _("Scenario files not found.") );
 		return 0;
 	}
 
@@ -399,13 +400,13 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 
 							//---- display the scenario difficulty and bonus points ----//
 
-							String str(translate.process("Difficulty: "));
+							String str(_("Difficulty : "));
 							str += scenInfoArray[rec-1].goal_difficulty;
 
 							font_bible.put(browseSlotX1+TEXT_OFFSET_X+400, browseSlotY1+TEXT_OFFSET_Y,
 												str, 0, browseSlotX2 );
 
-							str  = translate.process("Score Bonus: ");
+							str  = _("Score Bonus: ");
 							str += scenInfoArray[rec-1].goal_score_bonus;
 
 							font_bible.put(browseSlotX1+TEXT_OFFSET_X+530, browseSlotY1+TEXT_OFFSET_Y,
