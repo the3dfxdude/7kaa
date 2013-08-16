@@ -35,6 +35,7 @@
 #include <OVBROWSE.h>
 #include <OFILETXT.h>
 #include <OHELP.h>
+#include "gettext.h"
 
 
 //---------- Define constant -------------//
@@ -512,32 +513,32 @@ void Help::set_unit_help(int unitId, int rankId, int x1, int y1, int x2, int y2)
 
 	static String str;
 
-#if(defined(SPANISH) || defined(FRENCH))
-	str = "";
-	if( rankId==RANK_KING )
-		str = translate.process("King ");
-	else if( rankId==RANK_GENERAL )
-		str = translate.process("General ");
-	str += unit_res[unitId]->name;
-#else
 	str = unit_res[unitId]->name;
 
-	#if( !defined(GERMAN) && !defined(FRENCH) && !defined(SPANISH) )		 // english
-		if( rankId>=RANK_GENERAL && unitId==UNIT_MAYA )
-			str += "n";			// "Mayan"
-	#endif
-
 	if( rankId==RANK_KING )
 	{
-		str += " ";
-		str += translate.process( "King" );
+		if( unitId==UNIT_MAYA )
+		{
+			str = _("Mayan King");
+		}
+		else
+		{
+			// TRANSLATORS: <Race> King
+			snprintf( str, MAX_STR_LEN+1, _("%s King"), unit_res[unitId]->name );
+		}
 	}
 	else if( rankId==RANK_GENERAL )
 	{
-		str += " ";
-		str += translate.process( "General" );
+		if( unitId==UNIT_MAYA )
+		{
+			str = _("Mayan General");
+		}
+		else
+		{
+			// TRANSLATORS: <Race> General
+			snprintf( str, MAX_STR_LEN+1, _("%s General"), unit_res[unitId]->name );
+		}
 	}
-#endif
 
 	set_custom_help( x1, y1, x2, y2, str );
 }
