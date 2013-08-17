@@ -46,6 +46,7 @@
 #include <OCOLTBL.h>
 #include <OINFO.h>
 #include <OOPTMENU.h>
+#include "gettext.h"
 
 //------------ Define static vars ----------------//
 
@@ -583,15 +584,30 @@ char* Info::play_time_str()
 
 	str = "";
 
-	if( playHour > 0 )
+	if( playHour > 1 && playMin > 1 )
 	{
-		str += playHour;
-		str += translate.process( playHour>1 ? (char*)" hours" : (char*)" hour" );
-		str += translate.process( " and " );
+		snprintf( str, MAX_STR_LEN+1, _("%1$d hours and %2$d minutes"), playHour, playMin );
 	}
-
-	str += playMin;
-	str += translate.process( playMin>1  ? (char*)" minutes" : (char*)" minute" );
+	else if( playHour > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d hours and %2$d minute"), playHour, playMin );
+	}
+	else if( playHour > 0 && playMin > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d hour and %2$d minutes"), playHour, playMin );
+	}
+	else if( playHour > 0 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d hour and %2$d minute"), playHour, playMin );
+	}
+	else if( playMin > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%s minutes"), misc.format(playMin) );
+	}
+	else
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%s minute"), misc.format(playMin) );
+	}
 
 	return str;
 }
@@ -629,15 +645,30 @@ char* Info::game_duration_str()
 
 	str = "";
 
-	if( playYear > 0 )
+	if( playYear > 1 && playDay > 1 )
 	{
-		str += playYear;
-		str += translate.process( playYear>1 ? (char*)" years" : (char*)" year" );
-		str += translate.process( (char*)" and " );
+		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d days"), playYear, playDay );
 	}
-
-	str += playDay;
-	str += translate.process( playDay>1  ? (char*)" days" : (char*)" day" );
+	else if( playYear > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d day"), playYear, playDay );
+	}
+	else if( playYear > 0 && playDay > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d days"), playYear, playDay );
+	}
+	else if( playYear > 0 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d day"), playYear, playDay );
+	}
+	else if( playDay > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%s days"), misc.format(playDay) );
+	}
+	else
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%s day"), misc.format(playDay) );
+	}
 
 	return str;
 }
@@ -728,7 +759,7 @@ int Info::disp_loyalty(int x, int y, int x2, int curLoyalty, int targetLoyalty, 
 
 	if( x != x2 )		// if x==x2, don't display the field name.
 	{
-		font_san.field( x, y, "Loyalty", x2, curLoyalty, 1, INFO_X2-2, refreshFlag);
+		font_san.field( x, y, _("Loyalty"), x2, curLoyalty, 1, INFO_X2-2, refreshFlag);
 		endX = x2 + 4 + font_san.text_width( misc.format(curLoyalty) );
 	}
 	else
