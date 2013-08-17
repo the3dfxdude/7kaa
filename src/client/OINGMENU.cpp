@@ -39,6 +39,7 @@
 #include <OINGMENU.h>
 #include <OFONT.h>
 #include <OMUSIC.h>
+#include "gettext.h"
 
 
 
@@ -148,16 +149,7 @@ void InGameMenu::disp(int needRepaint)
          }
       }
 
-		String str;
-		#if(defined(SPANISH))
-			str = "I.D del Mapa: ";
-		#elif(defined(FRENCH) )
-			str = "Nº de la carte: ";
-		#elif(defined(GERMAN))
-			str = "Karten-I.D.: ";
-		#else
-			str = "Map I.D.: ";
-		#endif
+		String str(_("Map I.D.: "));
 
       str += info.random_seed;
       font_bible.center_put( MAP_ID_X1, MAP_ID_Y1, MAP_ID_X2, MAP_ID_Y2, str);
@@ -231,7 +223,7 @@ int InGameMenu::detect()
       case 5:     // retire
          if( nation_array.player_recno )     // only when the player's kingdom still exists
          {
-            if( box.ask("Do you really want to retire?", "Yes", "No", 175, 320) )
+            if( box.ask(_("Do you really want to retire?"), _("Yes"), _("No"), 175, 320) )
             {
                if( remote.is_enable() )
                {
@@ -256,7 +248,7 @@ int InGameMenu::detect()
          #endif
 
          if( !nation_array.player_recno ||
-             box.ask( "Do you really want to quit to the Main Menu?", "Yes", "No", boxX1, 350 ) )
+             box.ask( _("Do you really want to quit to the Main Menu?"), _("Yes"), _("No"), boxX1, 350 ) )
          {
             if( remote.is_enable() && nation_array.player_recno )
             {
@@ -272,7 +264,7 @@ int InGameMenu::detect()
 
       case 7:
          if( !nation_array.player_recno ||
-             box.ask( "Do you really want to quit Seven Kingdoms?", "Yes", "No", 178, 388 ) )
+             box.ask( _("Do you really want to quit Seven Kingdoms?"), _("Yes"), _("No"), 178, 388 ) )
          {
             if( remote.is_enable() && nation_array.player_recno )
             {
