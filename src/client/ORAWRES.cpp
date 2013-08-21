@@ -31,6 +31,7 @@
 #include <OF_MINE.h>
 #include <OF_MARK.h>
 #include <ORAWRES.h>
+#include "gettext.h"
 
 
 //---------- #define constant ------------//
@@ -275,15 +276,7 @@ void RawRes::put_small_product_icon(int x, int y, int rawId)
 
 	String str;
 
-#if(defined(FRENCH))
-	char productName[20];
-	strcpy(productName, raw_res[rawId]->name);
-	strcat(productName, " Products");
-	str  = translate.process(productName);
-#else
-	str  = raw_res[rawId]->name;
-	str += translate.process(" Products");
-#endif
+	snprintf( str, MAX_STR_LEN+1, _("%s Products"), raw_res[rawId]->name );
 
 	help.set_custom_help( x, y, x+RAW_SMALL_ICON_WIDTH-1, y+RAW_SMALL_ICON_HEIGHT-1, str );
 }
