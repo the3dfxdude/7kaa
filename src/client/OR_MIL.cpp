@@ -33,6 +33,7 @@
 #include <ONATION.h>
 #include <OUNIT.h>
 #include <OINFO.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -90,13 +91,15 @@ void Info::disp_military(int refreshFlag)
 		font_san.put( x+415, y+13, "Soldiers" );
 		font_san.put( x+485, y+7 , "Status" );
 	#else
-		font_san.put( x	 , y+7 , "Commander" );
-		font_san.put( x+200, y+7 , "Leadership" );
-		font_san.put( x+285, y+7 , "Loyalty" );
-		font_san.put( x+342, y+7 , "Hit Points" );
-		font_san.put( x+406, y   , "Commanded" );
-		font_san.put( x+423, y+13, "Soldiers" );
-		font_san.put( x+490, y+7 , "Status" );
+		font_san.put( x	 , y+7 , _("Commander") );
+		font_san.put( x+200, y+7 , _("Leadership") );
+		font_san.put( x+285, y+7 , _("Loyalty") );
+		font_san.put( x+342, y+7 , _("Hit Points") );
+		// TRANSLATORS: Part of "Commanded Soldiers"
+		font_san.put( x+406, y   , _("Commanded") );
+		// TRANSLATORS: Part of "Commanded Soldiers"
+		font_san.put( x+423, y+13, _("Soldiers") );
+		font_san.put( x+490, y+7 , _("Status") );
 	#endif
 
 	if( refreshFlag == INFO_REPAINT )
@@ -121,8 +124,8 @@ void Info::disp_military(int refreshFlag)
 
 	vga_back.d3_panel_up(UNIT_BROWSE_X1, UNIT_BROWSE_Y1, UNIT_BROWSE_X2, UNIT_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Unit Type" );
-	font_san.put( x+300, y, "No. of Units" );
+	font_san.put( x	 , y, _("Unit Type") );
+	font_san.put( x+300, y, _("No. of Units") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -218,40 +221,19 @@ static void disp_troop_total()
 
 	String str;
 
-	if( browse_troop.total_rec() > 1 )
-		str = "Total Commanders";
-	else
-		str = "Total Commander";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += browse_troop.total_rec();
+	snprintf( str, MAX_STR_LEN+1, _("Total Commanders: %s"), misc.format(browse_troop.total_rec()) );
 
 	font_san.put( x, y, str );
 
 	//------ display soldiers under command count ------//
 
-	if( totalCommandedSoldier > 1 )
-		str = "Total Soldiers Under Command";
-	else
-		str = "Total Soldier Under Command";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += totalCommandedSoldier;
+	snprintf( str, MAX_STR_LEN+1, _("Total Soldiers Under Command: %s"), misc.format(totalCommandedSoldier) );
 
 	font_san.put( x+160, y, str );
 
 	//------ display soldiers count ------//
 
-	if( totalSoldier > 1 )
-		str = "Total Soldiers";
-	else
-		str = "Total Soldier";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += totalSoldier;
+	snprintf( str, MAX_STR_LEN+1, _("Total Soldiers: %s"), misc.format(totalSoldier) );
 
 #if(defined(FRENCH))
 	font_san.put( x+396, y, str );
@@ -298,11 +280,7 @@ static void disp_unit_total()
 
 	String str;
 
-	str  = "Total Units";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += totalUnitCount;
+	snprintf( str, MAX_STR_LEN+1, _("Total Units: %s"), misc.format(totalUnitCount) );
 
 	font_san.put( x, y, str );
 }
@@ -395,21 +373,21 @@ static void put_troop_rec(int recNo, int x, int y, int refreshFlag)
 		int firmId = firm_array[ unitPtr->unit_mode_para ]->firm_id;
 
 		if( firmId == FIRM_CAMP )
-			statusStr = "In Fort";
+			statusStr = _("In Fort");
 
 		else if( firmId == FIRM_BASE )
-			statusStr = "In Seat";
+			statusStr = _("In Seat");
 
 		else
 			err_here();
 	}
 	else if( unitPtr->unit_mode == UNIT_MODE_ON_SHIP )
 	{
-		statusStr = "On Ship";
+		statusStr = _("On Ship");
 	}
 	else
 	{
-		statusStr = "Mobile";
+		statusStr = _("Mobile");
 	}
 
 #if(defined(FRENCH))
@@ -487,7 +465,7 @@ static void put_unit_rec(int recNo, int x, int y, int refreshFlag)
 		//------- count human units -------//
 
 		case -1:
-			str		  = "Human General";
+			str		  = _("Human General");
 			unitCount  = nationPtr->total_general_count;
 			break;
 
