@@ -29,6 +29,7 @@
 #include <ONATION.h>
 #include <OINFO.h>
 #include <vga_util.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -78,20 +79,15 @@ void Info::disp_rank(int refreshFlag)
 
 	vga_back.d3_panel_up(NATION_BROWSE_X1, NATION_BROWSE_Y1, NATION_BROWSE_X2, NATION_BROWSE_Y1+32 );
 
-	font_san.put( x	 , y+7, "Kingdom" );
-	font_san.put( x+180, y+7, "Population" );
-	font_san.put( x+264, y+7, "Military" );
-	font_san.put( x+332, y+7, "Economy" );
-	font_san.put( x+406, y+7, "Reputation" );
-
-#if(defined(SPANISH))
-	font_san.put( x+484, y   , "Lucha" );
-	font_san.put( x+484, y+13, "Fryhtan" );
-#else
-	// FRENCH, German and US
-	font_san.put( x+484, y   , "Fryhtan" );
-	font_san.put( x+484, y+13, "Battling" );
-#endif
+	font_san.put( x	 , y+7, _("Kingdom") );
+	font_san.put( x+180, y+7, _("Population") );
+	font_san.put( x+264, y+7, _("Military") );
+	font_san.put( x+332, y+7, _("Economy") );
+	font_san.put( x+406, y+7, _("Reputation") );
+	// TRANSLATORS: Part of "Fryhtan Battling"
+	font_san.put( x+484, y  , _("Fryhtan") );
+	// TRANSLATORS: Part of "Fryhtan Battling"
+	font_san.put( x+484, y+13, _("Battling") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -136,8 +132,8 @@ static void disp_score()
 	int x=NATION_SCORE_X1+6, y=NATION_SCORE_Y1+6;
 
 	static const char* rankStrArray[] =
-	{ "Population Score", "Military Score", "Economic Score",
-	  "Reputation Score", "Fryhtan Battling Score" };
+	{ N_("Population Score"), N_("Military Score"), N_("Economic Score"),
+	  N_("Reputation Score"), N_("Fryhtan Battling Score") };
 
 	vga_util.d3_panel_down( NATION_SCORE_X1, NATION_SCORE_Y1, NATION_SCORE_X2, NATION_SCORE_Y2 );
 
@@ -151,7 +147,7 @@ static void disp_score()
 		rankScore   = info.get_rank_score(i+1, viewNationRecno);
 		totalScore += rankScore;
 
-		font_san.put( x    , y, rankStrArray[i] );
+		font_san.put( x    , y, _(rankStrArray[i]) );
 		font_san.put( x+300, y, rankScore, 1 );
 	}
 
@@ -160,7 +156,7 @@ static void disp_score()
 
 	//-------- display thte total score --------//
 
-	font_san.put( x    , y+2, "Total Score" );
+	font_san.put( x    , y+2, _("Total Score") );
 	font_san.put( x+300, y+2, totalScore, 1 );
 	y+=20;
 
@@ -173,16 +169,13 @@ static void disp_score()
 	int	 finalScore = totalScore * difficultyRating / 100;
 	String str;
 
-	str  = translate.process("Final Score");
-	str += ":  ";
-	str += totalScore;
-	str += " X ";
+	// TRANSLATORS: Final Score:  <Number> X
+	snprintf( str, MAX_STR_LEN+1, _("Final Score:  %s X "), misc.format(totalScore) );
 
 	int x2 = font_san.put( x, y+12, str ) + 5;
 
-	str  = difficultyRating;
-	str += " ";
-	str += translate.process( "(Difficulty Rating)" );
+	// TRANSLATORS: <Number> (Difficulty Rating)
+	snprintf( str, MAX_STR_LEN+1, _("%s (Difficulty Rating)"), misc.format(difficultyRating) );
 
 	font_san.center_put( x2, y+1, x2+156, y+15, str );
 	vga_back.bar( x2   , y+16, x2+156, y+17, V_BLACK );
@@ -192,17 +185,13 @@ static void disp_score()
 
 	if( nation_array[viewNationRecno]->cheat_enabled_flag )
 	{
-		str  = "X  0 ";
-		str += translate.process( "(Cheated)" );
-		str += "  ";
-
-		finalScore = 0;
+		str = _("X  0 (Cheated)  =  0");
 	}
 	else
-		str = "";
-
-	str += "=  ";
-	str += finalScore;
+	{
+		str = "=  ";
+		str += finalScore;
+	}
 
 	font_san.put( x2+170, y+12, str);
 
@@ -236,21 +225,32 @@ static void disp_goal()
 	String str;
 
 	if( goalCount > 1 )
-		str = "GOAL: Achieve One of the Following";
+	{
+		if( config.goal_year_limit_flag )
+		{
+			// TRANSLATORS: GOAL: Achieve One of the Following Before <Date>.
+			snprintf( str, MAX_STR_LEN+1, _("GOAL: Achieve One of the Following Before %s."), date.date_str(info.goal_deadline) );
+		}
+		else
+		{
+			str = _("GOAL: Achieve One of the Following.");
+		}
+	}
 	else
-		str = "GOAL: Defeat All Other Kingdoms";
-
-	if( config.goal_year_limit_flag )
-		str += " Before ";
-
-	str = translate.process(str);
-
-	if( config.goal_year_limit_flag )
-		str += date.date_str( info.goal_deadline );
+	{
+		if( config.goal_year_limit_flag )
+		{
+			// TRANSLATORS: GOAL: Defeat All Other Kingdoms Before <Date>.
+			snprintf( str, MAX_STR_LEN+1, _("GOAL: Defeat All Other Kingdoms Before %s."), date.date_str( info.goal_deadline ) );
+		}
+		else
+		{
+			str = _("GOAL: Defeat All Other Kingdoms.");
+		}
+	}
 
 	//--------------------------------------//
 
-	str += ".";
 	font_san.put( x, y, str );
 
 	y+=18;
@@ -260,7 +260,7 @@ static void disp_goal()
 
 	//-----------------------------------//
 
-	str = "Defeat All Other Kingdoms.";
+	str = _("Defeat All Other Kingdoms.");
 
 	font_san.put( x, y, str );
 	y+=16;
@@ -269,7 +269,7 @@ static void disp_goal()
 
 	if( config.goal_destroy_monster )
 	{
-		str = "Destroy All Fryhtans.";
+		str = _("Destroy All Fryhtans.");
 
 		font_san.put( x, y, str );
 
@@ -280,23 +280,8 @@ static void disp_goal()
 
 	if( config.goal_population_flag )
 	{
-		#if(defined(SPANISH))
-			str  = "Alcanzar una población de ";
-			str += config.goal_population;
-			str += ".";
-		#elif(defined(FRENCH))
-			str  = "Atteindre une population de ";
-			str += config.goal_population;
-			str += ".";
-		#elif(defined(GERMAN))
-			str  = "Bevölkerungszahl von ";
-			str += config.goal_population;
-			str += " erreichen.";
-		#else
-			str  = "Achieve a Population of ";
-			str += config.goal_population;
-			str += ".";
-		#endif
+		// TRANSLATORS: Achieve a Population of <Number>.
+		snprintf( str, MAX_STR_LEN+1, _("Achieve a Population of %s."), misc.format(config.goal_population) );
 
 		font_san.put( x, y, str );
 
@@ -307,23 +292,8 @@ static void disp_goal()
 
 	if( config.goal_economic_score_flag )
 	{
-		#if(defined(SPANISH))
-			str  = "Alcanzar unos Puntos por Economía de ";
-			str += config.goal_economic_score;
-			str += ".";
-		#elif(defined(FRENCH))
-			str  = "Atteindre un score économique de ";
-			str += config.goal_economic_score;
-			str += ".";
-		#elif(defined(GERMAN))
-			str  = "Ökonom.-Punkte von ";
-			str += config.goal_economic_score;
-			str += " erreichen.";
-		#else
-			str  = "Achieve an Economic Score of ";
-			str += config.goal_economic_score;
-			str += ".";
-		#endif
+		// TRANSLATORS: Achieve an Economic Score of <Number>.
+		snprintf( str, MAX_STR_LEN+1, _("Achieve an Economic Score of %s."), misc.format(config.goal_economic_score) );
 
 		font_san.put( x, y, str );
 
@@ -334,23 +304,8 @@ static void disp_goal()
 
 	if( config.goal_total_score_flag )
 	{
-		#if(defined(SPANISH))
-			str  = "Alcanzar unos Puntos Totales de ";
-			str += config.goal_total_score;
-			str += ".";
-		#elif(defined(FRENCH))
-			str  = "Atteindre un score global de ";
-			str += config.goal_total_score;
-			str += ".";
-		#elif(defined(GERMAN))
-			str  = "Gesamtpunkte von ";
-			str += config.goal_total_score;
-			str += " erreichen.";
-		#else
-			str  = "Achieve a Total Score of ";
-			str += config.goal_total_score;
-			str += ".";
-		#endif
+		// TRANSLATORS: Achieve a Total Score of <Number>.
+		snprintf( str, MAX_STR_LEN+1, _("Achieve a Total Score of %s."), misc.format(config.goal_total_score) );
 
 		font_san.put( x, y, str );
 
@@ -368,11 +323,8 @@ static void disp_play_time(int y1)
 
 	String str;
 
-	str  = "Total Playing Time";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += info.play_time_str();
+	// TRANSLATORS: Total Playing Time: <Time duration>
+	snprintf( str, MAX_STR_LEN+1, _("Total Playing Time: %s"), info.play_time_str() );
 
 	font_san.put( PLAY_TIME_X1+6, y1+6, str );
 }
