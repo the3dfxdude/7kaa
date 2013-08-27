@@ -33,6 +33,7 @@
 #include <ONATION.h>
 #include <OU_GOD.h>
 #include <OINFO.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -78,7 +79,7 @@ void Info::disp_tech(int refreshFlag)
 
 	vga_back.d3_panel_up(TECH_BROWSE_X1, TECH_BROWSE_Y1, TECH_BROWSE_X2, TECH_BROWSE_Y1+32 );
 
-	font_san.put( x	 , y+7, "Technology" );
+	font_san.put( x	 , y+7, _("Technology") );
 
 #if(defined(SPANISH))
 	font_san.put( x+160, y   , "Version" );
@@ -105,16 +106,22 @@ void Info::disp_tech(int refreshFlag)
 	font_san.put( x+462, y+13, "Savoir" );
 #else
 	// German and US
-	font_san.put( x+160, y   , "Present" );
-	font_san.put( x+160, y+13, "Version" );
+	// TRANSLATORS: Part of "Present Version"
+	font_san.put( x+160, y   , _("Present") );
+	// TRANSLATORS: Part of "Present Version"
+	font_san.put( x+160, y+13, _("Version") );
 
-	font_san.put( x+230, y   , "Researching" );
-	font_san.put( x+245, y+13, "Version" );
+	// TRANSLATORS: Part of "Researching Version"
+	font_san.put( x+230, y   , _("Researching") );
+	// TRANSLATORS: Part of "Researching Version"
+	font_san.put( x+245, y+13, _("Version") );
 
-	font_san.put( x+320, y+7, "Research Progress" );
+	font_san.put( x+320, y+7, _("Research Progress") );
 
-	font_san.put( x+460, y   , "Tower of" );
-	font_san.put( x+462, y+13, "Science" );
+	// TRANSLATORS: Part of "Tower of Science"
+	font_san.put( x+460, y   , _("Tower of") );
+	// TRANSLATORS: Part of "Tower of Science"
+	font_san.put( x+462, y+13, _("Science") );
 #endif
 
 	if( refreshFlag == INFO_REPAINT )
@@ -141,8 +148,8 @@ void Info::disp_tech(int refreshFlag)
 
 	vga_back.d3_panel_up(GOD_BROWSE_X1, GOD_BROWSE_Y1, GOD_BROWSE_X2, GOD_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Greater Being" );
-	font_san.put( x+300, y, "Hit Points" );
+	font_san.put( x	 , y, _("Greater Being") );
+	font_san.put( x+300, y, _("Hit Points") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -364,9 +371,9 @@ static void disp_owned_scroll()
 	//------- display words -------//
 
 	if( scrollCount > 1 )
-		font_san.put( SCROLL_X1+6, SCROLL_Y1+5, "Acquired Scrolls:" );
+		font_san.put( SCROLL_X1+6, SCROLL_Y1+5, _("Acquired Scrolls:") );
 	else
-		font_san.put( SCROLL_X1+6, SCROLL_Y1+5, "Acquired Scroll:" );
+		font_san.put( SCROLL_X1+6, SCROLL_Y1+5, _("Acquired Scroll:") );
 
 	//------- display scrolls ----------//
 
