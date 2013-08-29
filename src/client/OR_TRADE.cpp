@@ -34,6 +34,7 @@
 #include <OU_CARA.h>
 #include <OU_MARI.h>
 #include <OINFO.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -78,16 +79,16 @@ void Info::disp_trade(int refreshFlag)
 
 	vga_back.d3_panel_up(CARAVAN_BROWSE_X1, CARAVAN_BROWSE_Y1, CARAVAN_BROWSE_X2, CARAVAN_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Caravan" );
+	font_san.put( x	 , y, _("Caravan") );
 #if(defined(FRENCH))
 	font_san.put( x+75 , y, "Hit Points" );
 #else
-	font_san.put( x+90 , y, "Hit Points" );
+	font_san.put( x+90 , y, _("Hit Points") );
 #endif
-	font_san.put( x+160, y, "Stop 1" );
-	font_san.put( x+220, y, "Stop 2" );
-	font_san.put( x+280, y, "Stop 3" );
-	font_san.put( x+340, y, "Goods Carried" );
+	font_san.put( x+160, y, _("Stop 1") );
+	font_san.put( x+220, y, _("Stop 2") );
+	font_san.put( x+280, y, _("Stop 3") );
+	font_san.put( x+340, y, _("Goods Carried") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -109,22 +110,16 @@ void Info::disp_trade(int refreshFlag)
 
 	vga_back.d3_panel_up(SHIP_BROWSE_X1, SHIP_BROWSE_Y1, SHIP_BROWSE_X2, SHIP_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Ship" );
+	font_san.put( x	 , y, _("Ship") );
 #if(defined(FRENCH))
 	font_san.put( x+75 , y, "Hit Points" );
 #else
-	font_san.put( x+90 , y, "Hit Points" );
+	font_san.put( x+90 , y, _("Hit Points") );
 #endif
-#if(defined(FRENCH))
-	font_san.put( x+160, y, "Escale 1" );
-	font_san.put( x+220, y, "Escale 2" );
-	font_san.put( x+280, y, "Escale 3" );
-#else
-	font_san.put( x+160, y, "Stop 1" );
-	font_san.put( x+220, y, "Stop 2" );
-	font_san.put( x+280, y, "Stop 3" );
-#endif
-	font_san.put( x+340, y, "Goods Carried" );
+	font_san.put( x+160, y, _("Stop 1") );
+	font_san.put( x+220, y, _("Stop 2") );
+	font_san.put( x+280, y, _("Stop 3") );
+	font_san.put( x+340, y, _("Goods Carried") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -194,14 +189,7 @@ static void disp_total()
 
 	String str;
 
-	if( info.report_array.size() > 1 )
-		str = "Total Caravans";
-	else
-		str = "Total Caravan";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += info.report_array.size();
+	snprintf( str, MAX_STR_LEN+1, _("Total Caravans: %s"), misc.format(info.report_array.size()) );
 
 	font_san.put( x, y, str );
 
@@ -212,14 +200,7 @@ static void disp_total()
 
 	vga_back.d3_panel_up(SHIP_BROWSE_X1, SHIP_BROWSE_Y2-18, SHIP_BROWSE_X2, SHIP_BROWSE_Y2 );
 
-	if( info.report_array2.size() > 1 )
-		str = "Total Ships";
-	else
-		str = "Total Ship";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += info.report_array2.size();
+	snprintf( str, MAX_STR_LEN+1, _("Total Ships: %s"), misc.format(info.report_array2.size()) );
 
 	font_san.put( x, y, str );
 }
