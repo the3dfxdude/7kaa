@@ -31,6 +31,7 @@
 #include <OGODRES.h>
 #include <ORACERES.h>
 #include <OSITE.h>
+#include "gettext.h"
 
 //--------- Begin of function Site::disp_info ---------//
 //
@@ -43,40 +44,40 @@ void Site::disp_info(int refreshFlag)
 
 	if( site_type == SITE_RAW )
 	{
-		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, "Natural Resource" );
+		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, _("Natural Resource") );
 		vga_util.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+59, 1 );
 
 		int x=INFO_X1+4, y=INFO_Y1+24;
 
-		font_san.put_field( x, y	, "Resource", x+70, raw_res[object_id]->name );
-		font_san.put_field( x, y+16, "Reserve" , x+70, reserve_qty, 1 );
+		font_san.put_field( x, y	, _("Resource"), x+70, raw_res[object_id]->name );
+		font_san.put_field( x, y+16, _("Reserve") , x+70, reserve_qty, 1 );
 	}
 
 	//--------- scroll of power --------//
 
 	else if( site_type == SITE_SCROLL )
 	{
-		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, "Scroll of Power" );
+		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, _("Scroll of Power") );
 		vga_util.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+59, 1 );
 
 		int x=INFO_X1+4, y=INFO_Y1+24;
 
 		GodInfo* godInfo = god_res[object_id];
 
-		font_san.put_field( x, y	, "Nationalty", x+82, race_res[godInfo->race_id]->name );
-		font_san.put_field( x, y+16, "Invoke"    , x+82, unit_res[godInfo->unit_id]->name );
+		font_san.put_field( x, y	, _("Nationalty"), x+82, race_res[godInfo->race_id]->name );
+		font_san.put_field( x, y+16, _("Invoke")    , x+82, unit_res[godInfo->unit_id]->name );
 	}
 
 	//----------- gold coins -----------//
 
 	else if( site_type == SITE_GOLD_COIN )
 	{
-		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, "Treasure" );
+		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+17, _("Treasure") );
 		vga_util.d3_panel_up( INFO_X1, INFO_Y1+20, INFO_X2, INFO_Y1+43, 1 );
 
 		int x=INFO_X1+4, y=INFO_Y1+24;
 
-		font_san.put_field( x, y, "Worth", x+60, object_id, 2 );
+		font_san.put_field( x, y, _("Worth"), x+60, object_id, 2 );
 	}
 }
 //----------- End of function Site::disp_info -----------//
