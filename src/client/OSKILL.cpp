@@ -25,18 +25,19 @@
 #include <OFIRMID.h>
 #include <OSITE.h>
 #include <OSKILL.h>
+#include "gettext.h"
 
 //----------- define static vars -----------//
 
 const char* Skill::skill_str_array[MAX_SKILL] =
 {
-	"Construction",
-	"Leadership",
-	"Mining",
-	"Manufacture",
-	"Research",
-	"Spying",
-	"Praying",
+	N_("Construction"),
+	N_("Leadership"),
+	N_("Mining"),
+	N_("Manufacture"),
+	N_("Research"),
+	N_("Spying"),
+	N_("Praying"),
 };
 
 const char* Skill::skill_code_array[MAX_SKILL] =
@@ -71,7 +72,7 @@ const char* Skill::skill_des(int shortWord)
 	if( skill_id==0 )
 		return "";
 	else
-		return skill_str_array[skill_id-1];
+		return _(skill_str_array[skill_id-1]);
 }
 //-------- End of function Skill::skill_des -------//
 
