@@ -45,6 +45,7 @@
 #include <OSE.h>
 #include <OSERES.h>
 #include <OBUTTCUS.h>
+#include "gettext.h"
 
 
 //------------- Define coordinations -----------//
@@ -259,17 +260,17 @@ void Town::disp_main_menu(int refreshFlag)
 
 		vga_util.d3_panel_up( RACE_BROWSE_X1, y, RACE_BROWSE_X2, RACE_BROWSE_Y1-3 );
 
-		font_san.put( x+2  , y+4, "Population" );
-		font_san.put( x+70 , y+4, "Peasants" );
+		font_san.put( x+2  , y+4, _("Population") );
+		font_san.put( x+70 , y+4, _("Peasants") );
 
 		if( nation_recno )      // only display loyalty if this town is controlled by a nation
-			font_san.put( x+132, y+4, "Loyalty" );
+			font_san.put( x+132, y+4, _("Loyalty") );
 		else
 		{
 			#ifdef GERMAN
 				font_san.put( x+128, y+4, "Resistance" );
 			#else
-				font_san.put( x+132, y+4, "Resistance" );
+				font_san.put( x+132, y+4, _("Resistance") );
 			#endif
 		}
 
@@ -286,8 +287,8 @@ void Town::disp_main_menu(int refreshFlag)
 
 		vga_util.d3_panel_up( RACE_BROWSE_X1, RACE_BROWSE_Y2+3, RACE_BROWSE_X2, RACE_BROWSE_Y2+23 );
 
-		font_san.put( RACE_BROWSE_X1+5, RACE_BROWSE_Y2+7, "Total" );
-		font_san.put( RACE_BROWSE_X1+128, RACE_BROWSE_Y2+7, "Avg" );
+		font_san.put( RACE_BROWSE_X1+5, RACE_BROWSE_Y2+7, _("Total") );
+		font_san.put( RACE_BROWSE_X1+128, RACE_BROWSE_Y2+7, _("Avg") );
 	}
 	else
 	{
@@ -321,7 +322,7 @@ void Town::disp_main_menu(int refreshFlag)
 	if( rebel_recno )
 	{
 		if( refreshFlag == INFO_REPAINT )
-			font_san.d3_put( BUTTON_X1, y-1, BUTTON_X2, y+19, "Controlled by Rebels" );
+			font_san.d3_put( BUTTON_X1, y-1, BUTTON_X2, y+19, _("Controlled by Rebels") );
 
 		y+=23;
 	}
@@ -847,7 +848,7 @@ void Town::disp_train_menu(int refreshFlag)
 	}
 	else if( refreshFlag == INFO_REPAINT )
 	{
-		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+18, "Train (Cost:$30, Skill:20)" );
+		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+18, _("Train (Cost:$30, Skill:20)") );
 		int x=INFO_X1, y=INFO_Y1+24;
 
 		for(int i=1; i<=MAX_TRAINABLE_SKILL; i++)
@@ -867,7 +868,7 @@ void Town::disp_train_menu(int refreshFlag)
 		}
 
 		button_cancel3.paint( INFO_X1, y, INFO_X2, y+BUTTON_ACTION_HEIGHT*3/4-1,
-		ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)"Done",0) );
+		ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)_("Done"),0) );
 	}
 	// ####### end Gilbert 13/9 ########//
 }
@@ -918,9 +919,9 @@ static void i_disp_skill_button(ButtonCustom *button, int repaintBody)
 		// put name
 
 		if( skillId == SKILL_MFT )
-			font_bible.put(x1+50, y1+11, "Manufacturing" );		// the string in skill_str_array[] is "Manufacture".
+			font_bible.put(x1+50, y1+11, _("Manufacturing") );		// the string in skill_str_array[] is "Manufacture".
 		else
-			font_bible.put(x1+50, y1+11, Skill::skill_str_array[skillId-1]);
+			font_bible.put(x1+50, y1+11, _(Skill::skill_str_array[skillId-1]));
 	}
 
 	// display small button
@@ -1125,11 +1126,11 @@ void Town::disp_auto_menu(int modeCollectTax)
 	const char* headingStr;
 
 	if( modeCollectTax )
-		headingStr = "Automatically Collect Tax from Villagers when their Loyalty reaches:";
+		headingStr = _("Automatically Collect Tax from Villagers when their Loyalty reaches:");
 	else
-		headingStr = "Automatically Grant Money to Villagers when their Loyalty drops below:";
+		headingStr = _("Automatically Grant Money to Villagers when their Loyalty drops below:");
 
-	const char* clickStr = "(Left-click below to apply to this village. Right-click below to apply to all your villages.)";
+	const char* clickStr = _("(Left-click below to apply to this village. Right-click below to apply to all your villages.)");
 
 	vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+110 );
 
@@ -1142,10 +1143,10 @@ void Town::disp_auto_menu(int modeCollectTax)
 	for( i=0, loyaltyLevel=30 ; i<BUTTON_LOYALTY_COUNT ; loyaltyLevel+=10, i++, y+=20 )
 		button_loyalty_array[i].paint_text( INFO_X1, y, INFO_X2, y+18, misc.format(loyaltyLevel), 0, loyaltyLevel==curAutoLoyalty );
 
-	button_loyalty_disabled.paint_text( INFO_X1, y, INFO_X2, y+18, "Disabled", 0, curAutoLoyalty==0 );
+	button_loyalty_disabled.paint_text( INFO_X1, y, INFO_X2, y+18, _("Disabled"), 0, curAutoLoyalty==0 );
 	y+=20;
 
-	button_cancel2.paint_text( INFO_X1, y, INFO_X2, y+18, "Cancel" );
+	button_cancel2.paint_text( INFO_X1, y, INFO_X2, y+18, _("Cancel") );
 }
 //----------- End of function Town::disp_auto_menu -----------//
 
@@ -1289,9 +1290,9 @@ void Town::disp_spy_menu(int refreshFlag)
 
 		vga_util.d3_panel_up( RACE_BROWSE_X1, y, RACE_BROWSE_X2, RACE_BROWSE_Y1-3 );
 
-		font_san.put( x+4  , y+4, "Spy Skill" );
-		font_san.put( x+70 , y+4, "Loyalty" );
-		font_san.put( x+130, y+4, "Action" );
+		font_san.put( x+4  , y+4, _("Spy Skill") );
+		font_san.put( x+70 , y+4, _("Loyalty") );
+		font_san.put( x+130, y+4, _("Action") );
 
 		//------------ create browser ------------//
 
