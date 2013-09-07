@@ -38,6 +38,7 @@
 #include <OWORLD.h>
 #include <OFILETXT.h>
 #include <OTUTOR.h>
+#include "gettext.h"
 
 //---------- define constant ------------//
 
@@ -463,8 +464,8 @@ void Tutor::disp()
 		button_new_tutor.paint_text( x, y, "Next Training" );
 		button_quit_tutor.paint_text( x+120, y, "Quit Training" );
 	#else
-		button_new_tutor.paint_text( x, y, "Next Training" );
-		button_quit_tutor.paint_text( x+100, y, "Quit Training" );
+		button_new_tutor.paint_text( x, y, _("Next Training") );
+		button_quit_tutor.paint_text( x+100, y, _("Quit Training") );
 	#endif
 
 	//---- display current text block position ----//
