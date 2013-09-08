@@ -40,6 +40,7 @@
 // ####### begin Gilbert 4/11 #######//
 #include <OMUSIC.h>
 // ####### end Gilbert 4/11 #######//
+#include "gettext.h"
 
 
 // --------- declare static funtion --------//
@@ -129,7 +130,7 @@ int Tutor::select_tutor(int actionMode)
 
 	if( tutor_count==0 )
 	{
-		box.msg( "Tutorial files not found." );
+		box.msg( _("Tutorial files not found.") );
 		return 0;
 	}
 
