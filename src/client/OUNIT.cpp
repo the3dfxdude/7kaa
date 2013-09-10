@@ -46,6 +46,7 @@
 #include <OMONSRES.h>
 #include <OREMOTE.h>
 #include <OSYS.h>
+#include "gettext.h"
 
 #if(GAME_FRAMES_PER_DAY!=FRAMES_PER_DAY)
 #error
@@ -747,18 +748,25 @@ char* Unit::unit_name(int withTitle)
          if( unit_mode == UNIT_MODE_REBEL )
          {
             if( rank_id == RANK_GENERAL )
-               str = "Rebel Leader ";
+            {
+               str = _("Rebel Leader");
+               str += " ";
+            }
          }
          else
          {
             if( rank_id == RANK_KING )
-               str = "King ";
+            {
+               str = _("King");
+               str += " ";
+            }
             else if( rank_id == RANK_GENERAL )
-               str = "General ";
+            {
+               str = _("General");
+               str += " ";
+            }
          }
 		}
-
-		str = translate.process(str);
 
 		if( rank_id == RANK_KING )		// use the player name
 			str += nation_array[nation_recno]->king_name();
