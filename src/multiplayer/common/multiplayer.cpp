@@ -118,6 +118,7 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	use_remote_session_provider = 0;
 	update_available = -1;
 	host = NULL;
+	packet_mode = ENET_PACKET_FLAG_RELIABLE;
 
 	if (!is_protocol_supported(protocol_type)) {
 		ERR("[MultiPlayer::init] trying to init unsupported protocol\n");
@@ -402,6 +403,7 @@ void MultiPlayer::close_session()
 void MultiPlayer::game_starting()
 {
 	allowing_connections = 0;
+	packet_mode = ENET_PACKET_FLAG_UNSEQUENCED;
 }
 
 // Create a player and add to the pool.
@@ -664,7 +666,7 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 	packet = enet_packet_create(
 		data,
 		msg_size,
-		ENET_PACKET_FLAG_RELIABLE
+		packet_mode
 	);
 
 	if (to == BROADCAST_PID) {

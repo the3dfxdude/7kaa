@@ -80,6 +80,7 @@ private:
 
 	int               host_flag;
 	int               allowing_connections;
+	uint32_t          packet_mode;
 	int               max_players;
 
 	PlayerDesc        *player_pool[MAX_NATION];
