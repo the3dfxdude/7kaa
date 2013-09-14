@@ -61,6 +61,7 @@
 #include <OANLINE.h>
 #include <OFIRMDIE.h>
 #include <OIMGRES.h>
+#include "gettext.h"
 
 //--------- Define static vars -----------//
 
@@ -981,7 +982,7 @@ void ZoomMatrix::disp_text()
 			}
 
 			if( dispSpy )
-				put_center_text( (townPtr->abs_x1+townPtr->abs_x2)/2, y, "(Spy)" );
+				put_center_text( (townPtr->abs_x1+townPtr->abs_x2)/2, y, _("(Spy)") );
 		}
 	}
 
@@ -1001,7 +1002,7 @@ void ZoomMatrix::disp_text()
 			if( firmPtr->player_spy_count )
 			{
 				put_center_text( (firmPtr->abs_x1+firmPtr->abs_x2)/2,
-									  (firmPtr->abs_y1+firmPtr->abs_y2)/2, "(Spy)" );
+									  (firmPtr->abs_y1+firmPtr->abs_y2)/2, _("(Spy)") );
 			}
 		}
 	}
@@ -1016,8 +1017,6 @@ void ZoomMatrix::disp_text()
 //
 void ZoomMatrix::put_center_text(int x, int y, const char* str)
 {
-	str = translate.process(str);
-
 	const unsigned int TEMP_BUFFER_SIZE = 0x2000;
 	char tempBuffer[TEMP_BUFFER_SIZE];
 	short w = font_news.text_width(str);
