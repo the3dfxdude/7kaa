@@ -26,8 +26,8 @@
 
 #include <OSTR.h>
 #include <OMISC.h>
-#include <OTRANSL.h>
 #include <ODATE.h>
+#include "gettext.h"
 
 
 //--------- Define static member variables -----------//
@@ -37,18 +37,34 @@
 
 static char month_str_array[][10] =
 {
-   "January",
-   "February",
-   "March",
-   "April",
-   "May",
-   "June",
-   "July",
-   "August",
-   "September",
-   "October",
-   "November",
-   "December"
+   N_("January"),
+   N_("February"),
+   N_("March"),
+   N_("April"),
+   N_("May"),
+   N_("June"),
+   N_("July"),
+   N_("August"),
+   N_("September"),
+   N_("October"),
+   N_("November"),
+   N_("December")
+} ;
+
+static char short_month_str_array[][10] =
+{
+   N_("Jan"),
+   N_("Feb"),
+   N_("Mar"),
+   N_("Apr"),
+   N_("May"),
+   N_("Jun"),
+   N_("Jul"),
+   N_("Aug"),
+   N_("Sep"),
+   N_("Oct"),
+   N_("Nov"),
+   N_("Dec")
 } ;
 
 static int month_tot[]=
@@ -226,54 +242,15 @@ char* DateInfo::date_str( long julianDate, int shortMonthStr)
 
    static String str;
 
-#if(defined(SPANISH))
-	if( shortMonthStr )
-	{
-		str  = itoa(day,strBuf,10);		// day
-		str += "-";
-		strcpy(strBuf, translate.process(month_str_array[month-1]));
-		if(strlen(strBuf) > 3)
-			strBuf[3] = '\0';		// limit month to 3 chars
-		str += strBuf;							// month
-		str += "-";
-	   str += itoa(year,strBuf,10);		// year
-	}
-	else
-	{
-		str  = itoa(day,strBuf,10);		// day
-		str += " de ";
-		str += translate.process(month_str_array[month-1]);
-		str += " de ";
-	   str += itoa(year,strBuf,10);		// year
-	}
-#elif(defined(FRENCH))
-	str  = itoa(day,strBuf,10);		// day
-	str += " ";
-	if( shortMonthStr )
-	{
-		strcpy(strBuf, translate.process(month_str_array[month-1]));
-		if(strlen(strBuf) > 3)
-			strBuf[3] = '\0';		// limit month to 4 chars
-		if(month == 7)				// Juillet(July) abbreviated to Jul.
-			strBuf[2] = 'l';
-		str += strBuf;							// month
-	}
-	else
-	{
-		str += translate.process(month_str_array[month-1]);
-	}
-	str += " ";
-	str += itoa(year,strBuf,10);		// year
-#else
-	// GERMAN and US
-	str = translate.process(month_str_array[month-1]);
    if( shortMonthStr )
-      str = str.left(3);
-   str += " ";
-   str += itoa(day,strBuf,10);
-   str += ", ";
-   str += itoa(year,strBuf,10);
-#endif
+   {
+      // TRANSLATORS: <Month> <Day>, <Year>
+      snprintf(str, MAX_STR_LEN+1, _("%1$s %2$d, %3$d"), _(short_month_str_array[month-1]), day, year);
+   }
+   else
+   {
+      snprintf(str, MAX_STR_LEN+1, _("%1$s %2$d, %3$d"), _(month_str_array[month-1]), day, year);
+   }
 
    return str;
 }
@@ -288,7 +265,7 @@ char* DateInfo::date_str( long julianDate, int shortMonthStr)
 //
 const char* DateInfo::month_str(int monthNo)
 {
-	return translate.process(month_str_array[monthNo-1]);
+	return _(month_str_array[monthNo-1]);
 }
 //------------- End of function DateInfo::month_str --------//
 
