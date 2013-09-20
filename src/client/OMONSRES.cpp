@@ -31,13 +31,13 @@
 #include <OFIRM.h>
 #include <OF_MONS.h>
 #include <OMONSRES.h>
-#if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-#include <OTRANSL.h>
-#endif
+#include "gettext.h"
 
 //---------- #define constant ------------//
 
 #define MONSTER_DB   "MONSTER"
+
+static void translate_monster_name(char *name);
 
 //------- Begin of function MonsterRes::MonsterRes -----------//
 
@@ -104,9 +104,7 @@ void MonsterRes::load_monster_info()
       monsterInfo->monster_id = i+1;
 
       misc.rtrim_fld( monsterInfo->name, monsterRec->name, monsterRec->NAME_LEN );
-#if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-		translate.multi_to_win(monsterInfo->name, monsterInfo->NAME_LEN);
-#endif
+		translate_monster_name(monsterInfo->name);
 
 		monsterInfo->unit_id      = misc.atoi(monsterRec->unit_id     , monsterRec->UNIT_ID_LEN);
 		monsterInfo->level        = monsterRec->level - '0';
@@ -323,3 +321,63 @@ void MonsterRes::stop_attack_nation(short nationRecno)
    }
 }
 //----------- End of function MonsterRes::stop_attack_nation ---------//
+
+
+//------- Begin of function translate_monster_name --------//
+//
+static void translate_monster_name(char *name)
+{
+   if( strncmp(name, "Deezboanz", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Deezboanz") );
+   }
+   else if( strncmp(name, "Rattus", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Rattus") );
+   }
+   else if( strncmp(name, "Broosken", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Broosken") );
+   }
+   else if( strncmp(name, "Haubudam", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Haubudam") );
+   }
+   else if( strncmp(name, "Pfith", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Pfith") );
+   }
+   else if( strncmp(name, "Rokken", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Rokken") );
+   }
+   else if( strncmp(name, "Doink", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Doink") );
+   }
+   else if( strncmp(name, "Wyrm", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Wyrm") );
+   }
+   else if( strncmp(name, "Droog", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Droog") );
+   }
+   else if( strncmp(name, "Ick", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Ick") );
+   }
+   else if( strncmp(name, "Sauroid", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Sauroid") );
+   }
+   else if( strncmp(name, "Karrotten", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Karrotten") );
+   }
+   else if( strncmp(name, "Holgh", MonsterInfo::NAME_LEN) == 0 )
+   {
+      snprintf( name, MonsterInfo::NAME_LEN+1, _("Holgh") );
+   }
+}
+//---------- End of function translate_monster_name -----------//
