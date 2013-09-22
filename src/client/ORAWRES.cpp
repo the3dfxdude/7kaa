@@ -109,9 +109,18 @@ void RawRes::load_all_info()
 		rawInfo = raw_info_array+i;
 
 		misc.rtrim_fld( rawInfo->name, rawRec->name, rawRec->NAME_LEN );
-#if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-		translate.multi_to_win(rawInfo->name, rawInfo->NAME_LEN);
-#endif
+		if( strncmp(rawInfo->name, "Clay", rawInfo->NAME_LEN) == 0 )
+		{
+			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Clay") );
+		}
+		else if( strncmp(rawInfo->name, "Copper", rawInfo->NAME_LEN) == 0 )
+		{
+			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Copper") );
+		}
+		else if( strncmp(rawInfo->name, "Iron", rawInfo->NAME_LEN) == 0 )
+		{
+			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Iron") );
+		}
 		rawInfo->raw_id    = i+1;
 		rawInfo->tera_type = misc.atoi( rawRec->tera_type, rawRec->TERA_TYPE_LEN );
 	}
