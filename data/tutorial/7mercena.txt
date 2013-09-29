@@ -1,0 +1,10 @@
+_("A quick -- although sometimes expensive -- way of building a multi-cultural Kingdom of highly skilled people is to hire Mercenaries.")
+~
+_("Mercenaries are hired in Inns, so to begin we must first build one. To build an Inn, you should use a Construction Worker. Inns, unlike other buildings, need not be placed within Linking distance of any other structure.")
+~
+_("Once your Inn has been built, Mercenaries will start to arrive. Clicking on the Inn will display the people present inside. These people will leave after a while, to be replaced by new faces.")
+~
+_("To the right of the Mercenaries' images you will see their skills, skill levels and asking prices. The asking price is a one-time payment.")
+~
+Button: HIREUNIT
+_("If you choose to hire a particular Mercenary, Click on his image and then Click on the Hire tile. When you do, the Mercenary will exit the Inn and wait for your further commands.")

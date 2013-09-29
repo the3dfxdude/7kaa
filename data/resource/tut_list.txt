@@ -1,0 +1,27 @@
+13
+1BAS_MIL
+_("Military")
+2BAS_ECO
+_("Basic Economics")
+2B_TRADE
+_("Trade")
+LOYALTY
+_("Loyalty & Reputation")
+7MERCENA
+_("Mercenaries")
+SPYING
+_("Espionage")
+10CAPTUR
+_("Capturing Villages")
+3RESEARC
+_("Research")
+4WEAPONS
+_("Weapons")
+5BAS_NAV
+_("Ships")
+6SEATRAD
+_("Seaborne Trade")
+8FRYHTAN
+_("Fryhtans")
+9SEATPOW
+_("Seats of Power & Greater Beings")

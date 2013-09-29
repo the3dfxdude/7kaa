@@ -1,0 +1,37 @@
+_("For a Kingdom separated by the sea from other Kingdoms and resources, sea-borne trade will become important to your survival.")
+~
+_("In some cases, even when you are not cut off by water, sea-borne Trade along a coastline may be much faster than trade by Caravan.")
+~
+_("Ships that can be used for trade are your Traders, Caravels and Galleons.")
+~
+_("Your Trading Ships may also provide simple transport, without having to engage in trade. With Trading Ships, you may carry Raw Materials from distant Mines to where your Factories are located.")
+~
+_("In order to set a sea-trading route, there must be at least one Harbor. The other Harbor required in a trading route can belong either to your Kingdom, or to another Kingdom with which you have a trade treaty.")
+~
+_("Any Harbor used as a terminus in a trading route must be Linked to either Markets, Mines or Factories. If a link is not made, your Trading Ships will have nothing to carry, as Harbors keep no goods in storage. They are simply a link between resource places and your Ships.")
+~
+_("To set your stops on your trading route, first select your Ship. It must, of course, be outside the Harbor.")
+~
+_("If you have selected a Caravel or a Galleon, you will have two choices of what to view inside the Ship: Goods or Units.")
+~
+_("For trading purposes, you will need to Click on the Goods Button.")
+~
+_("Now you will see that, as with your Caravans, you can set three different stops for your Trading Ships.")
+~
+_("When you Click on the Ship's Set Stop Button, your Hand Cursor will change into the Ship & Arrow Cursor. Use this cursor to Click on the first Harbor.")
+~
+_("Now you will see a list of items you can pick up from that Harbor. The items available will depend upon what the Harbor is linked to. You may also choose not to pick up anything.")
+~
+_("For your second or third stops you will need to Click on other Harbors. When you do, lists of goods you can pick up will appear.")
+~
+_("If a second Harbor is your own, your Ship will drop off the goods, if any, that you picked up from the first Harbor.")
+~
+_("If the second Harbor belongs to another Kingdom, you won't be able to drop off any goods. In foreign Harbors you will only be able to pick up goods from Markets linked to them.")
+~
+_("You may NOT pick up Finished Goods or Raw Materials from foreign Factories or Mines linked to their Harbors. This is to make sure Kingdoms can keep control over their production and distribution.")
+~
+_("When a Galleon or Caravel is selected, you will notice a 'T' Button to the right of the Goods Button. If you Click on this button it will change to a 'C' Button.")
+~
+_("When the button is set to 'T,' the Ship will continue to ply its trade route. If at any time you wish to regain total control over that Ship you must Click on the button, changing it to a 'C'.")
+~
+_("When the button is set to 'C,' you can use the Ship for other purposes, such as transporting Soldiers or for war at sea. Once those tasks finished, Clicking on the 'C' Button will change it back into a 'T'. Your Ship will then immediately return to its existing trading route.")

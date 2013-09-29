@@ -1,0 +1,14 @@
+_("Each nationality in the Seven Kingdoms will be searching for its own ancient Scroll of Power, taken ages ago by the Fryhtans. With these Scrolls the Kingdoms will regain the lost knowledge of how to build Seats of Power and how to invoke Greater Beings.")
+~
+_("When you have recovered a Scroll of Power, you may build a Seat of Power using a Construction Worker, a General or your King, providing they are of the same nationality as the scroll.")
+~
+_("For the Seat of Power to be of use it must open its doors to the faithful, so that they may gather in prayer and Invoke the Greater Being who helped the people in ages past.")
+~
+_("To gather the people, send up to eight Peasants into the Seat of Power with a Right-Click. You must also assign either a General or a King to a Seat of Power, to lead the people in prayer. As they pray, you will see your units slowly increasing the efficacy of their prayer.")
+~
+Button: INVOKE
+_("You will know your units' prayers have reached the desired level when you see the blue bar to the right of the Greater Being filled to 100%. Now you can Invoke the Greater Being at his full strength and power, by Clicking on the Invoke Tile.")
+~
+_("You can summon a Greater Being before the prayers have reached 100%, but one summoned before his time will not last as long in this world.")
+~
+_("Greater Beings differ widely in their powers; you should refer to your manual for more details.")

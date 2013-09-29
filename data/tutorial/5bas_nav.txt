@@ -1,0 +1,34 @@
+_("Before you can build a single Ship, you must build a Harbor. Harbors may be built only in certain places along coastal areas. Only Construction units or your King can build Harbors. When selecting a site to build a Harbor, make sure that the large square is flashing before you Click your mouse.")
+~
+Button: MAKESHIP
+_("Once the Harbor has been built, Clicking on it will reveal the Build Ship Tile. Clicking on that Tile will present you with a list of Ships you can build. The Ships available depend on the research you have done.")
+~
+_("You can build Transports and Traders without having to do any research. Caravels and Galleons require research. Let us first build a Transport.")
+~
+_("Click on the Transport Button.")
+~
+_("After any Ship has been built, it will remain in the safety of the Harbor. You'll see the Ship listed in the Harbor's registry. A maximum of four ships may be in the Harbor at any one time.")
+~
+Button: SAILOUT
+_("To move the Ship out of your Harbor, first Click on it in the Harbor registry, then Click on the Set Sail Tile.")
+~
+_("Your Transport will now appear immediately outside the Harbor.")
+~
+_("Transports are for transporting Soldiers or Weapons; let's look next at how to load them.")
+~
+_("Select as many as nine Soldiers or Weapons, then Right-Click on the Transport. You will see those units and your Transport moving towards the shore at the same time.")
+~
+_("When the two come together, the selected units will board the Transport. Clicking on the Transport will then show all the units inside. The numbers you see next to the units are their Hit-Points.")
+~
+Button: OUTSHIP
+_("To get your units off a Transport, first move the Ship up onto the shore and then Click on the Disembark Tile. This will unload the entire ship's company. The units will all be selected and ready for your orders.")
+~
+_("If you wish to unload a single unit, first move the Transport onto the shore and then Right-Click on the picture of the unit you wish to disembark. That unit will then exit the Transport and stand on the shore.")
+~
+_("If you have done your research, you'll also have Caravels and Galleons at your disposal. These two Ships are built in the same way you build your Transport.")
+~
+_("Unlike Transports and Traders, which are defenseless, Caravels and Galleons are built with Cannon aboard. Caravels and Galleons can thus both transport goods and units, and attack enemy Ships and targets on shore.")
+~
+_("You may order your Ships to attack the enemy in exactly the same way you order your Soldiers on land.")
+~
+_("The power of these Ships' Cannons can be enhanced by boarding a General with a high Leadership Level. A General with a Leadership Level of 100 will double the effectiveness of a Cannon as compared to a Ship with no Leaders.")

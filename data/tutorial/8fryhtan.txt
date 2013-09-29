@@ -1,0 +1,13 @@
+_("Across the landscape you will come across a number of Fryhtans' Lairs; these harbor a great variety of dangerous beings. The Lairs will appear on your world map as white dots, slightly smaller than those denoting Independent Villages.")
+~
+_("If left alone, these Fryhtans will seldom attack you; if you disturb them, however, they will sally forth and attack without mercy.")
+~
+_("Why then would you disturb them? Fryhtan Lairs hold great wealth in gold, as well as ancient Scrolls of Power; the latter will give you the ability to build Your Seats of Power.")
+~
+_("Do not attempt to attack a Fryhtan's Lair unless your troops are extremely well trained and numerous. If you succeed in dispatching the horde dispersing from the Lair, you will be able to pick up the treasures they drop.")
+~
+_("Do this by sending one of your soldiers to the spot where the treasure lies.")
+~
+_("When all the Fryhtans from a particular Lair have been disposed of, keep attacking the Lair until it is destroyed. Inside you will find a final hoard of treasure.")
+~
+_("Most of the treasure will consist of coins and other precious objects; the most precious of all, however, are the Scrolls of Power. To see how to make use of these, please continue to the next section.")
