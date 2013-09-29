@@ -190,7 +190,6 @@ bin_PROGRAMS = 7kaa
 	OTOWNIF.cpp \
 	OTOWNIND.cpp \
 	OTOWNRES.cpp \
-	OTRANSL.cpp \
 	OTUTOR.cpp \
 	OTUTOR2.cpp \
 	OUNIT.cpp \
