@@ -175,21 +175,6 @@ void FirmWar::detect_main_menu()
 	if( detect_basic_info() )
 		return;
 
-	//---------- detect cancel build ------------//
-	if(build_unit_id)
-	{
-		if(button_cancel_build.detect())
-		{
-			if( !remote.is_enable() )
-				cancel_build_unit();
-			else
-			{
-				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_SKIP_WEAPON, sizeof(short) );
-				shortPtr[0] = firm_recno;
-			}
-		}
-	}
-
 	//----------- detect worker -----------//
 
 	if( detect_worker_list() )
@@ -204,6 +189,18 @@ void FirmWar::detect_main_menu()
 
 	if( !own_firm() )
 		return;
+
+	//---------- detect cancel build ------------//
+	if( build_unit_id && button_cancel_build.detect() )
+	{
+		if( !remote.is_enable() )
+			cancel_build_unit();
+		else
+		{
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_SKIP_WEAPON, sizeof(short) );
+			shortPtr[0] = firm_recno;
+		}
+	}
 
 	//------ detect the select research button -------//
 
@@ -658,8 +655,11 @@ void FirmWar::disp_war_info(int dispY1, int refreshFlag)
 
 	vga_front.indicator( 0, x-2, y+21, buildProgressDays, unitInfo->build_days, VGA_GRAY );
 
-	button_cancel_build.paint(MSG_X2-27, dispY1, "V_X-U", "V_X-D");
-	button_cancel_build.set_help_code( "CANCELWP" );
+	if( own_firm() )        // Only display cancel button for the player's war factories
+	{
+		button_cancel_build.paint(MSG_X2-27, dispY1, "V_X-U", "V_X-D");
+		button_cancel_build.set_help_code( "CANCELWP" );
+	}
 }
 //----------- End of function FirmWar::disp_war_info -----------//
 
