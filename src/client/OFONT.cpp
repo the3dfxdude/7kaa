@@ -33,7 +33,6 @@
 #include <OINFO.h>
 #include <OGAME.h>
 #include <OMOUSE.h>
-#include <OTRANSL.h>
 #include <ONATION.h>
 #include <OGAME.h>
 #include <OHELP.h>
@@ -263,8 +262,6 @@ int Font::put(int x,int y,const char* textPtr, char clearBack, int x2 )
 
 	short textChar;
 
-	textPtr = translate.process(textPtr);
-
 	//-------------------------------------//
 
 	int textPtrLen = strlen(textPtr);
@@ -462,8 +459,6 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 	if( !init_flag )
 		return x;
 
-	textPtr = translate.process(textPtr);
-
 	if( textPtrLen < 0 )
 		textPtrLen = strlen(textPtr);
 
@@ -616,8 +611,6 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 {
 	if( !init_flag || y1+font_height-1 > y2 )
 		return;
-
-	textPtr = translate.process(textPtr);
 
 	//--------- define vars ---------------//
 
