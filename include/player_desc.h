@@ -26,7 +26,7 @@
 #define __PLAYER_DESC_H
 
 #include <MPTYPES.h>
-#include <network.h>
+#include <enet/enet.h>
 
 class PlayerDesc
 {
@@ -34,15 +34,17 @@ public:
 	uint32_t id;
 	char name[MP_FRIENDLY_NAME_LEN+1];
 	char connecting;
-	struct inet_address address;
+	char authorized;
+	ENetAddress address;
 
 	PlayerDesc();
-	PlayerDesc(const char *name);
-	PlayerDesc(uint32_t id, const char *name, struct inet_address *addr);
+	PlayerDesc(uint32_t id, ENetAddress *address);
+	PlayerDesc(uint32_t id, char *name);
+	PlayerDesc(char *name);
 
 	uint32_t pid();
 	char *friendly_name_str();
-	int get_address(struct inet_address *addr);
+	ENetAddress *get_address();
 };
 
 #endif // __PLAYER_DESC_H

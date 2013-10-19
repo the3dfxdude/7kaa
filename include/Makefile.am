@@ -173,10 +173,6 @@ noinst_HEADERS = \
 	mouse_none.h \
 	mouse_sdl.h \
 	multiplayer.h \
-	network.h \
-	network_base.h \
-	network_none.h \
-	network_sdlnet.h \
 	openal_audio.h \
 	output_stream.h \
 	player_desc.h \

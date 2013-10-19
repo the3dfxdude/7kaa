@@ -288,11 +288,11 @@ int Remote::poll_msg()
 	ec_remote.yield();
 
 	char *recvBuf;
-	// DPID from, to;
+	// DPID from;
 	char from;
 	DWORD recvLen;
 
-	// while( (recvBuf = mp_ptr->receive(&from, &to, &recvLen)) != NULL)
+	// while( (recvBuf = mp_ptr->receive(&from, &recvLen)) != NULL)
 	while( (recvBuf = ec_remote.receive(&from, (long unsigned int *)&recvLen)) != NULL)
 	{
 		err_when(++loopCount > 1000 );

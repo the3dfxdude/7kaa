@@ -1245,20 +1245,15 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
 
    //------- if some remote machines are not ready yet -------//
 
-   if( nationRecno>0 )
+   if( nationRecno>0 && !ec_remote.is_player_valid(nationRecno) )
    {
-      DEBUG_LOG("a nation not ready");
+      DEBUG_LOG("Connection Lost");
       DEBUG_LOG(nationRecno);
 
-      if (misc.get_time() >= last_frame_time + CONNECTION_LOST_TIME_OUT)
-      {
-         //---- if it has been time out for too long, carry out connection lost handling ---//
-         ec_remote.set_player_lost(nationRecno);
-         DEBUG_LOG("Connection Lost");
-         news_array.multi_connection_lost(nationRecno);
-         nationPtr->nation_type = NATION_AI;    // let computer take over the nation
-         nation_array.ai_nation_count++;
-      }
+      //---- the connection was lost with a remote player, let the ai take over ----//
+      news_array.multi_connection_lost(nationRecno);
+      nationPtr->nation_type = NATION_AI;
+      nation_array.ai_nation_count++;
 
       return 0;
    }

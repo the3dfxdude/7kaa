@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010,2011 Jesse Allen
+ * Copyright 2010,2011,2013 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,8 @@
 #include <multiplayer.h>
 #include <ALL.h>
 #include <string.h>
-#include <OVGALOCK.h>
-#include <OBLOB.h>
 #include <stdint.h>
 #include <dbglog.h>
-#include <vga_util.h>
-#include <OFONT.h>
-#include <OMOUSE.h>
 
 DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
@@ -43,25 +38,43 @@ const uint16_t UDP_GAME_PORT = 19255;
 SessionDesc::SessionDesc()
 {
 	id = 0;
-	session_name[0] = '\0';
-	password[0] = '\0';
-	memset(&address, 0, sizeof(struct inet_address));
+	memset(password, 0, sizeof(session_name));
+	memset(password, 0, sizeof(password));
+	this->address.host = ENET_HOST_ANY;
+	this->address.port = UDP_GAME_PORT;
+}
+
+SessionDesc::SessionDesc(const char *name, const char *pass, ENetAddress *address)
+{
+	id = 0;
+	strncpy(session_name, name, MP_FRIENDLY_NAME_LEN);
+	session_name[MP_FRIENDLY_NAME_LEN] = 0;
+	strncpy(password, pass, MP_FRIENDLY_NAME_LEN);
+	password[MP_FRIENDLY_NAME_LEN] = 0;
+	this->address.host = address->host;
+	this->address.port = address->port;
 }
 
 SessionDesc::SessionDesc(const SessionDesc &src)
 {
 	id = src.id;
-	strcpy(session_name, src.session_name);
-	strcpy(password, src.password);
-	memcpy(&address, &src.address, sizeof(struct inet_address));
+	strncpy(session_name, src.session_name, MP_FRIENDLY_NAME_LEN);
+	session_name[MP_FRIENDLY_NAME_LEN] = 0;
+	strncpy(password, src.password, MP_FRIENDLY_NAME_LEN);
+	password[MP_FRIENDLY_NAME_LEN] = 0;
+	address.host = src.address.host;
+	address.port = src.address.port;
 }
 
 SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 {
 	id = src.id;
-	strcpy(session_name, src.session_name);
-	strcpy(password, src.password);
-	memcpy(&address, &src.address, sizeof(struct inet_address));
+	strncpy(session_name, src.session_name, MP_FRIENDLY_NAME_LEN);
+	session_name[MP_FRIENDLY_NAME_LEN] = 0;
+	strncpy(password, src.password, MP_FRIENDLY_NAME_LEN);
+	password[MP_FRIENDLY_NAME_LEN] = 0;
+	address.host = src.address.host;
+	address.port = src.address.port;
 	return *this;
 }
 
@@ -75,12 +88,13 @@ SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 // service; create_session or poll_sessions+join_session;
 
 MultiPlayer::MultiPlayer() :
-	current_sessions(sizeof(SessionDesc), 10 )
+	current_sessions(sizeof(SessionDesc), 10)
 {
 	init_flag = 0;
 	lobbied_flag = 0;
 	supported_protocols = TCPIP;
 	my_player_id = 0;
+	my_player = NULL;
 	host_flag = 0;
 	allowing_connections = 0;
 	recv_buf = NULL;
@@ -103,23 +117,24 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	max_players = 0;
 	use_remote_session_provider = 0;
 	update_available = -1;
-	network = new Network();
-	game_sock = 0;
-	standard_port = 0;
-	status = MP_STATUS_IDLE;
+	host = NULL;
+	packet_mode = ENET_PACKET_FLAG_RELIABLE;
 
 	if (!is_protocol_supported(protocol_type)) {
 		ERR("[MultiPlayer::init] trying to init unsupported protocol\n");
 		return;
 	}
 
-	if (!network->init())
-	{
-		ERR("Could not init the network subsystem.\n");
+	if (enet_initialize() != 0) {
+		ERR("Could not init the enet library.\n");
 		return;
 	}
 
-	network->resolve_host(&lan_broadcast_address, "255.255.255.255", UDP_GAME_PORT);
+	if (enet_address_set_host(&lan_broadcast_address,
+		"255.255.255.255") != 0) {
+		return;
+	}
+	lan_broadcast_address.port = UDP_GAME_PORT;
 
 	for (int i = 0; i < MAX_NATION; i++) {
 		player_pool[i] = NULL;
@@ -132,37 +147,21 @@ void MultiPlayer::init(ProtocolType protocol_type)
 
 void MultiPlayer::deinit()
 {
-	int i;
-
-	if (host_flag) {
-		// disconnect all clients
-		for (i = 0; i < max_players; i++) {
-			delete_player(i+1);
-		}
-
-		host_flag = 0;
-		allowing_connections = 0;
+	if (!init_flag) {
+		return;
 	}
 
-	if (recv_buf) {
+	init_flag = 0;
+	lobbied_flag = 0;
+
+	close_session();
+	current_sessions.zap();
+	enet_deinitialize();
+
+	if (recv_buf != NULL) {
 		delete [] recv_buf;
 		recv_buf = NULL;
 	}
-
-	my_player_id = 0;
-	if (my_player)
-	{
-		delete my_player;
-		my_player = NULL;
-	}
-
-	delete network;
-	network = NULL;
-
-	current_sessions.zap();
-	init_flag = 0;
-	lobbied_flag = 0;
-	status = MP_STATUS_IDLE;
 }
 
 // init_lobbied
@@ -170,17 +169,18 @@ void MultiPlayer::deinit()
 // Returns non-zero on success.
 int MultiPlayer::init_lobbied(int maxPlayers, char *cmdLine)
 {
-	MSG("[MultiPlayer::init_lobbied] %d, %s\n", maxPlayers, cmdLine);
-	if (cmdLine) {
-		SessionDesc *session = new SessionDesc();
+	MSG("Launching a multiplayer game from command line maxPlayers=%d, cmdLine='%s'\n", maxPlayers, cmdLine);
 
-		strcpy(session->session_name, "Lobbied Game");
-		session->password[0] = 1;
-		if (!network->resolve_host(&session->address, cmdLine, UDP_GAME_PORT))
-		{
-			delete session;
+	if (cmdLine) {
+		ENetAddress address;
+		SessionDesc *session;
+
+		if (enet_address_set_host(&address, cmdLine) != 0) {
 			return 0;
 		}
+		address.port = UDP_GAME_PORT;
+
+		session = new SessionDesc("Lobbied Game", "1", &address);
 
 		current_sessions.linkin(session);
 
@@ -189,6 +189,7 @@ int MultiPlayer::init_lobbied(int maxPlayers, char *cmdLine)
 		// hosting doesn't work yet
 		lobbied_flag = 1;
 	}
+
 	return 1;
 }
 
@@ -219,241 +220,65 @@ int MultiPlayer::is_update_available()
 	return update_available;
 }
 
-int MultiPlayer::is_pregame()
+// Open a multiplayer game port to enable the network service. If successful,
+// returns 1. If not successful, returns 0. If fallback is set, then it will
+// try a second time using any port.
+int MultiPlayer::open_port(uint16_t port, int fallback)
 {
-	return status == MP_STATUS_PREGAME;
-}
+	ENetAddress address;
 
-// open game socket on any port
-int MultiPlayer::open_port()
-{
-	if (game_sock)
-	{
-		return 1;
-	}
-	standard_port = 0;
-	game_sock = network->udp_open(0);
-	return game_sock != 0;
-}
+	err_when(host != NULL);
 
-// open game socket on the standard port
-// Fallback will allow whether you can fallback on random port if the standard
-// port is not available. If the standard port is already open, the we don't
-// need to do anything. If a non standard port is open, then we close that,
-// and open a new socket. The standard port number is defined by UDP_GAME_PORT.
-// returns 1 on success, 0 on failure
-int MultiPlayer::open_standard_port(int fallback)
-{
-	if (game_sock)
-	{
-		if (standard_port)
-		{
-			return 1;
-		}
-		network->udp_close(game_sock);
-	}
-	game_sock = network->udp_open(UDP_GAME_PORT);
-	if (!game_sock)
-	{
-		if (fallback)
-		{
-			return open_port();
-		}
-		return 0;
-	}
-	standard_port = 1;
-	return 1;
-}
+	address.host = ENET_HOST_ANY;
+	address.port = port;
 
-int MultiPlayer::check_duplicates(struct inet_address *address)
-{
-	int i;
-	for (i = 0; i < current_sessions.size(); i++)
-	{
-		SessionDesc *desc;
-
-		desc = (SessionDesc *)current_sessions.get(i+1);
-		if (!desc)
+	host = enet_host_create(
+		&address,
+		MAX_NATION,
+		2,
+		0,
+		0
+	);
+	if (host == NULL) {
+		if (!fallback)
 			return 0;
-		if (desc->address.host == address->host &&
-		    desc->address.port == address->port)
-			return 1;
+
+		return open_port(0, 0);
 	}
-	return 0;
+	MSG("Opened port %hu\n", host->address.port);
+
+	return 1;
 }
 
 int MultiPlayer::set_remote_session_provider(const char *server)
 {
-	use_remote_session_provider = network->resolve_host(&remote_session_provider_address, server, UDP_GAME_PORT);
+	if (enet_address_set_host(
+			&remote_session_provider_address,
+			server) == 0) {
+		remote_session_provider_address.port = UDP_GAME_PORT;
+		use_remote_session_provider = 1;
+	} else {
+		use_remote_session_provider = 0;
+	}
+
 	return use_remote_session_provider;
-}
-
-void MultiPlayer::msg_game_beacon(MsgGameBeacon *m, struct inet_address *addr)
-{
-	SessionDesc *desc;
-
-	if (check_duplicates(addr))
-		return;
-
-	desc = new SessionDesc();
-
-	strncpy(desc->session_name, m->name, MP_SESSION_NAME_LEN);
-	desc->session_name[MP_SESSION_NAME_LEN] = 0;
-	desc->password[0] = m->password;
-	desc->address.host = addr->host;
-	desc->address.port = addr->port;
-	desc->id = current_sessions.size();
-	current_sessions.linkin(desc);
-
-	MSG("[MultiPlayer::poll_sessions] got beacon for game '%s'\n", desc->session_name);
-}
-
-// returns the next ack
-int MultiPlayer::msg_game_list(MsgGameList *m, int last_ack, struct inet_address *addr)
-{
-	SessionDesc *desc;
-	int i;
-
-	// only allow this message from a trusted provider
-	if (addr->host != remote_session_provider_address.host ||
-		addr->port != remote_session_provider_address.port) {
-		return last_ack;
-	}
-
-	for (i = 0; i < MP_GAME_LIST_SIZE; i++) {
-		struct inet_address addy;
-
-		if (!m->list[i].host) {
-			continue;
-		}
-
-		addy.host = m->list[i].host;
-		addy.port = m->list[i].port;
-		if (check_duplicates(&addy)) {
-			continue;
-		}
-
-		desc = new SessionDesc();
-
-		strncpy(desc->session_name, m->list[i].name, MP_SESSION_NAME_LEN);
-		desc->session_name[MP_SESSION_NAME_LEN] = 0;
-		desc->password[0] = m->list[i].password;
-		desc->address.host = addy.host;
-		desc->address.port = addy.port;
-		desc->id = current_sessions.size();
-		current_sessions.linkin(desc);
-
-		MSG("[MultiPlayer::poll_sessions] got beacon for game '%s'\n", desc->session_name);
-	}
-
-	if (m->total_pages >= last_ack)
-		return 1;
-
-	return last_ack++;
-}
-
-void MultiPlayer::msg_version_nak(MsgVersionNak *m, struct inet_address *addr)
-{
-	if (update_available > -1)
-		return;
-
-	// only allow this message from a trusted provider
-	if (addr->host != remote_session_provider_address.host ||
-		addr->port != remote_session_provider_address.port)
-		return;
-
-	if (m->major > SKVERMAJ)
-	{
-		update_available = 1;
-		return;
-	}
-	if (m->medium > SKVERMED)
-	{
-		update_available = 1;
-		return;
-	}
-	if (m->minor > SKVERMIN)
-	{
-		update_available = 1;
-		return;
-	}
-
-	update_available = 0;
 }
 
 int MultiPlayer::poll_sessions()
 {
-	static int ack_num = 1;
-	static int attempts = 0;
-	struct packet_header *h;
-	int ret;
-
 	err_when(!init_flag);
 
-	if (!open_standard_port(0))
-	{
+	if (!open_port(UDP_GAME_PORT, 0)) {
 		MSG("Cannot open port %d, unable to scan lan.\n", UDP_GAME_PORT);
 		return 0;
 	}
 
 	current_sessions.zap();
 
-	h = (struct packet_header *)recv_buf;
-	h->size = MP_UDP_MAX_PACKET_SIZE;
+	// Watch for a game beacon broadcast
 
-	while (1) {
-		struct inet_address addr;
-		struct MsgHeader *p;
-		int ack;
-
-		p = (struct MsgHeader *)(recv_buf+sizeof(struct packet_header));
-
-		ret = network->recv(game_sock, h, &addr);
-		if (ret <= 0)
-			break;
-
-		switch (p->msg_id)
-		{
-		case MPMSG_GAME_BEACON:
-			msg_game_beacon((MsgGameBeacon *)p, &addr);
-			break;
-		case MPMSG_GAME_LIST:
-			ack = msg_game_list((MsgGameList *)p, ack_num, &addr);
-			if (ack != ack_num) {
-				attempts = 0;
-				ack_num = ack;
-			}
-			break;
-		case MPMSG_VERSION_NAK:
-			msg_version_nak((MsgVersionNak *)p, &addr);
-			break;
-		default:
-			MSG("received unhandled message %u\n", p->msg_id);
-		}
-
-	}
-
-	if (use_remote_session_provider)
-	{
-		struct MsgRequestGameList m;
-
- 		if (attempts > 10)
-			ack_num = 1;
-		attempts++;
-
-		m.msg_id = MPMSG_REQ_GAME_LIST;
-		m.ack = ack_num;
-
-		send_nonseq_msg(game_sock, (char *)&m, sizeof(struct MsgRequestGameList), &remote_session_provider_address);
-
-		if (update_available < 0)
-		{
-			struct MsgVersionAck n;
-
-			n.msg_id = MPMSG_VERSION_ACK;
-
-			send_nonseq_msg(game_sock, (char *)&n, sizeof(struct MsgVersionAck), &remote_session_provider_address);
-		}
+	if (use_remote_session_provider) {
+		// Request a game list
 	}
 
 	return 1;
@@ -470,6 +295,11 @@ SessionDesc *MultiPlayer::get_session(int i)
 	return (SessionDesc *)current_sessions.get(i);
 }
 
+SessionDesc *MultiPlayer::get_current_session()
+{
+	return &joined_session;
+}
+
 // create a new session
 //
 // <char *> sessionName      arbitary name to identify a session, input from user
@@ -481,14 +311,12 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 {
 	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION);
 
-	// open socket for listening
 #ifdef HOST_ANY_PORT
-	if (!open_port())
+	if (!open_port(0, 0)) {
 #else
-	if (!open_standard_port(1))
+	if (!open_port(UDP_GAME_PORT, 1)) {
 #endif
-	{
-		MSG("Unable to get the game socket.\n");
+		MSG("Unable to open a port for the session.\n");
 		return 0;
 	}
 
@@ -501,12 +329,9 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	allowing_connections = 1;
 
 	// Add hosts machine's player to the pool now
-	if (!add_player(playerName, 1)) {
-		return 0;
-	}
+	err_when(player_pool[0] != NULL);
+	my_player = new PlayerDesc(1, playerName);
 	set_my_player_id(1);
-
-	status = MP_STATUS_PREGAME;
 
 	return 1;
 }
@@ -514,77 +339,71 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 // join a session
 // note : do not call poll_sessions between get_session and join_session
 //
-// <int> i -- the index from get_session()
-// <char *> playerName -- the name the player will be known by
-// <char *> password -- allows entering password for the session
-//
-int MultiPlayer::join_session(int i, char *password, char *playerName)
+int MultiPlayer::join_session(SessionDesc *session, char *playerName)
 {
-	SessionDesc *session = (SessionDesc *)current_sessions.get(i);
-	if (!session)
-		return 0;
+	ENetPeer *peer;
 
-	if (!open_port())
-	{
-		MSG("Unable to get the game socket.\n");
+	err_when(session == NULL);
+
+	if (!open_port(0, 0)) {
+		MSG("Unable to open a port for the session.\n");
+		return 0;
+	}
+
+	peer = enet_host_connect(
+		host,
+		&session->address,
+		1,
+		0
+	);
+	if (peer == NULL) {
 		return 0;
 	}
 
 	max_players = MAX_NATION;
 
 	// register the host now, even though his name is not known yet
-	player_pool[0] = new PlayerDesc(0, "", &session->address);
+	err_when(player_pool[0] != NULL);
+	player_pool[0] = new PlayerDesc(1, &session->address);
+	peer->data = player_pool[0];
 
-	// Create user's player, but don't insert into the player pool now
+	// create this player locally, we will put it in the right place
+	// later
 	my_player = new PlayerDesc(playerName);
 
 	joined_session = *session;
-	strncpy(joined_session.password, password, MP_SESSION_NAME_LEN);
-	joined_session.password[MP_SESSION_NAME_LEN] = 0;
-
-	status = MP_STATUS_CONNECTING;
 
 	return 1;
 }
 
+// Call close_session when leaving any session.
 void MultiPlayer::close_session()
 {
+	if (host_flag) {
+		int i;
+
+		// disconnect all clients
+		for (i = 0; i < max_players; i++) {
+			delete_player(i+1);
+		}
+
+		host_flag = 0;
+		allowing_connections = 0;
+	}
+
+	my_player_id = 0;
+	my_player = NULL;
+
+	if (host != NULL) {
+		enet_host_destroy(host);
+		host = NULL;
+	}
 }
 
 void MultiPlayer::game_starting()
 {
 	allowing_connections = 0;
-	status = MP_STATUS_INGAME;
-}
-
-void MultiPlayer::send_game_beacon()
-{
-	static uint32_t ticks = 0;
-	uint32_t player_id;
-	uint32_t cur_ticks;
-
-	cur_ticks = misc.get_time();
-	if (game_sock && (cur_ticks > ticks + 3000 || cur_ticks < ticks)) {
-		// send the session beacon
-		struct MsgGameBeacon p;
-
-		ticks = cur_ticks;
-
-		p.msg_id = MPMSG_GAME_BEACON;
-		strncpy(p.name, joined_session.session_name, MP_SESSION_NAME_LEN);
-		if (joined_session.password[0])
-			p.password = 1;
-		else
-			p.password = 0;
-		
-
-		send_system_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &lan_broadcast_address);
-
-		if (use_remote_session_provider)
-		{
-			send_system_msg(game_sock, (char *)&p, sizeof(struct MsgGameBeacon), &remote_session_provider_address);
-		}
-	}
+	packet_mode = ENET_PACKET_FLAG_UNSEQUENCED;
 }
 
 // Create a player and add to the pool.
@@ -595,48 +414,112 @@ void MultiPlayer::send_game_beacon()
 // Returns id if the player was added to the pool, and 0 if the player
 // wasn't added to the pool.
 //
-int MultiPlayer::create_player(char *name, struct inet_address *address)
+PlayerDesc *MultiPlayer::create_player(ENetAddress *address)
 {
 	int i;
 
 	// search for an empty slot
 	for (i = 0; i < max_players; i++)
-		if (!player_pool[i])
+		if (player_pool[i] == NULL)
 			break;
 	if (i >= max_players)
 		return 0;
 
-	// add to the pool
-	player_pool[i] = new PlayerDesc(i+1, name, address);
+	player_pool[i] = new PlayerDesc(i+1, address);
 
-	return player_pool[i]->id;
+	return player_pool[i];
 }
 
-// Adds a player already created by the host to the pool
+// Adds a player that is not already connected. Otherwise sets the player's
+// name.
 //
-// <char *>   name        name of the player
-// <uint32_t> id          id provided by the game host
-//
-// Returns 0 if the player cannot be added, and 1 if the player was added.
-//
-int MultiPlayer::add_player(char *name, uint32_t id)
+// Returns 1 when the player's name was set.
+// Returns 0 when the player's name could not be set.
+int MultiPlayer::add_player(uint32_t id, char *name, ENetAddress *address, char contact)
 {
-	if (!player_pool[id-1]) {
-		player_pool[id-1] = new PlayerDesc();
+	if (id < 1 || id >= max_players) {
+		return 0;
 	}
 
-	// add to the pool
-	player_pool[id-1]->id = id;
+	if (player_pool[id-1] == NULL && address->host != ENET_HOST_ANY) {
+		ENetPeer *peer;
+
+		peer = NULL;
+		if (contact) {
+			peer = enet_host_connect(host,
+				address,
+				1,
+				0);
+			if (peer == NULL) {
+				return 0;
+			}
+
+			peer->data = player_pool[id-1];
+		}
+
+		player_pool[id-1] = new PlayerDesc(id, address);
+	}
+
 	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
+	player_pool[id-1]->name[MP_FRIENDLY_NAME_LEN] = 0;
+
+	MSG("Player '%s' (%d) recognized.\n", player_pool[id-1]->name, id);
 
 	return 1;
 }
 
-void MultiPlayer::set_my_player_id(uint32_t id)
+// Called when a player is identifying himself. The game organizer validates
+// the password only, as the password is only sent to the organizer.
+//
+// Returns 1 when a player is newly authorized.
+// Returns 0 when nothing changed.
+int MultiPlayer::auth_player(uint32_t id, char *name, char *password)
 {
-	err_when(!id || id > max_players || !player_pool[id-1]);
+	if (id < 1 || id >= max_players) {
+		return 0;
+	}
+
+	if (player_pool[id-1] == NULL) {
+		return 0;
+	}
+
+	if (player_pool[id-1]->authorized) {
+		return 0;
+	}
+
+	if (host_flag && memcmp(password,
+			joined_session.password,
+			MP_FRIENDLY_NAME_LEN)) {
+		MSG("Player '%s' (%d) password is incorrect.\n", player_pool[id-1]->name, id);
+		return 0;
+	}
+
+	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN+1);
+        player_pool[id-1]->name[MP_FRIENDLY_NAME_LEN] = 0;
+	player_pool[id-1]->authorized = 1;
+	MSG("Player '%s' (%d) was authorized.\n", player_pool[id-1]->name, id);
+
+	return 1;
+}
+
+// Set my_player_id if not already set.
+// Returns 1 if it is newly set.
+// Returns 0 if it is cannot be set.
+int MultiPlayer::set_my_player_id(uint32_t id)
+{
+	if (id < 1 || id > max_players)
+		return 0;
+
+	if (my_player_id)
+		return 0;
 
 	my_player_id = id;
+	player_pool[id-1] = my_player;
+	my_player->connecting = 1;
+
+	MSG("You have been assigned id=%d\n", id);
+
+	return 1;
 }
 
 void MultiPlayer::set_player_name(uint32_t id, char *name)
@@ -646,20 +529,29 @@ void MultiPlayer::set_player_name(uint32_t id, char *name)
 }
 
 // Deletes a player from the pool
-//
-// <uint32_t> id          id provided by the game host
-//
 void MultiPlayer::delete_player(uint32_t id)
 {
-	err_when(id < 1 || id > max_players);
-	if (player_pool[id-1]) {
-		if (player_pool[id-1]->id == my_player_id && my_player)
-		{
-			my_player = NULL;
-		}
-		delete player_pool[id-1];
-		player_pool[id-1] = NULL;
+	ENetPeer *peer;
+
+	err_when(host == NULL);
+
+	if (id < 1 || id > max_players)
+		return;
+
+	peer = get_peer(id);
+
+	if (peer != NULL) {
+		enet_peer_disconnect_now(peer, 0);
+		peer->data = NULL;
 	}
+
+	if (player_pool[id-1] == NULL)
+		return;
+
+	MSG("Player '%s' (%d) deleted\n", player_pool[id-1]->name, id);
+
+	delete player_pool[id-1];
+	player_pool[id-1] = NULL;
 }
 
 void MultiPlayer::poll_players()
@@ -670,7 +562,28 @@ PlayerDesc *MultiPlayer::get_player(int i)
 {
 	if (i < 1 || i > max_players)
 		return NULL;
+
 	return player_pool[i-1];
+}
+
+PlayerDesc *MultiPlayer::get_player(ENetAddress *address)
+{
+	int i;
+
+	for (i = 0; i < max_players; i++) {
+		if (player_pool[i] == NULL) {
+			continue;
+		}
+		if (player_pool[i]->address.host == address->host &&
+			player_pool[i]->address.port == address->port) {
+			break;
+		}
+	}
+
+	if (i >= max_players)
+		return NULL;
+
+	return player_pool[i];
 }
 
 PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
@@ -680,23 +593,26 @@ PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 	return player_pool[playerId-1];
 }
 
-int MultiPlayer::get_player_id(struct inet_address *address)
+ENetPeer *MultiPlayer::get_peer(uint32_t id)
 {
-	int i;
-	for (i = 0; i < max_players; i++)
-	{
-		if (player_pool[i] &&
-			player_pool[i]->address.host == address->host &&
-			player_pool[i]->address.port == address->port)
-		{
-			break;
+	ENetPeer *peer;
+
+	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+		if (peer->data != NULL) {
+			PlayerDesc *player;
+
+			player = (PlayerDesc *)peer->data;
+
+			if (player->id == id)
+				break;
 		}
 	}
-	if (i >= max_players)
-	{
-		return 0;
+
+	if (peer < &host->peers[host->peerCount]) {
+		return peer;
 	}
-	return i+1;
+
+	return NULL;
 }
 
 // determine whether a player is lost
@@ -721,134 +637,52 @@ int MultiPlayer::get_player_count()
 	return count;
 }
 
-int MultiPlayer::send_nonseq_msg(int sock, char *msg, int msg_size, struct inet_address *to)
-{
-	char send_buf[MP_UDP_MAX_PACKET_SIZE];
-	struct packet_header *h;
-	char *msg_buf;
-	int total;
-
-	total = msg_size + sizeof(struct packet_header);
-	if (total > MP_UDP_MAX_PACKET_SIZE)
-	{
-		ERR("message exceeds maximum size\n");
-		return 0;
-	}
-
-	h = (struct packet_header *)send_buf;
-	msg_buf = send_buf + sizeof(struct packet_header);
-
-	h->type = PACKET_NONSEQ;
-	h->size = msg_size;
-	h->window = 0;
-	h->sequence = 0;
-	h->window_ack = 0;
-	h->sequence_ack = 0;
-
-	memcpy(msg_buf, msg, msg_size);
-
-	if (!network->send(sock, h, to))
-	{
-		return 0;
-	}
-
-	return 1;
-}
-
-int MultiPlayer::send_system_msg(int sock, char *msg, int msg_size, struct inet_address *to)
-{
-	char send_buf[MP_UDP_MAX_PACKET_SIZE];
-	struct packet_header *h;
-	char *msg_buf;
-	int total;
-
-	total = msg_size + sizeof(struct packet_header);
-	if (total > MP_UDP_MAX_PACKET_SIZE)
-	{
-		ERR("message exceeds maximum size\n");
-		return 0;
-	}
-
-	h = (struct packet_header *)send_buf;
-	msg_buf = send_buf + sizeof(struct packet_header);
-
-	h->type = PACKET_SYSTEM;
-	h->size = msg_size;
-	h->window = 0;
-	h->sequence = 0;
-	h->window_ack = 0;
-	h->sequence_ack = 0;
-
-	memcpy(msg_buf, msg, msg_size);
-
-	if (!network->send(sock, h, to))
-	{
-		return 0;
-	}
-
-	return 1;
-}
-
 // send udp message
 //
 // pass BROADCAST_PID as toId to all players
 //
 // return 1 on success
 //
-int MultiPlayer::send(uint32_t to, void * data, uint32_t msg_size)
+int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 {
-	int start;
-	int end;
+	ENetPacket *packet;
 
 	err_when(to > max_players);
 
-	if (!game_sock)
+	if (to == my_player_id) {
 		return 0;
-	if (to && to == my_player_id)
-		return 0;
+	}
+
 	if (msg_size > MP_UDP_MAX_PACKET_SIZE) {
-		ERR("[MultiPlayer::send] message exceeds maximum size\n");
+		ERR("Packet message exceeds maximum size.\n");
 		return 0;
 	}
 
-	if (to == BROADCAST_PID)
-	{
-		start = 0;
-		end = max_players;
+	if (to != BROADCAST_PID && player_pool[to-1] == NULL) {
+		ERR("Player %d does not exist.\n", to);
+		return 0;
+	}
+
+	packet = enet_packet_create(
+		data,
+		msg_size,
+		packet_mode
+	);
+
+	if (to == BROADCAST_PID) {
+		enet_host_broadcast(host, 0, packet);
 	} else {
-		start = to - 1;
-		end = to;
+		ENetPeer *peer;
+
+		peer = get_peer(to);
+
+		if (peer == NULL)
+			return 0;
+
+		enet_peer_send(peer, 0, packet);
 	}
 
-	for (int i = start; i < end; i++)
-	{
-		if (i == my_player_id - 1)
-			continue;
-
-		if (player_pool[i] && player_pool[i]->connecting)
-		{
-			if (!send_nonseq_msg(game_sock, (char *)data, msg_size, &player_pool[i]->address))
-			{
-				ERR("[MultiPlayer::send] error while sending data to player %d\n", i);
-				return 0;
-			}
-			MSG("[MultiPlayer::send] sent %d bytes to player %d\n", msg_size, i);
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-// send tcp message
-//
-// pass BROADCAST_PID as toId to all players
-//
-// return 1 on success
-//
-int MultiPlayer::send_stream(uint32_t to, void * data, uint32_t msg_size)
-{
-	return send(to, data, msg_size);
+	return 1;
 }
 
 // receive udp message
@@ -857,128 +691,86 @@ int MultiPlayer::send_stream(uint32_t to, void * data, uint32_t msg_size)
 // sysMsgCount records how many system messages have been handled
 // notice : *sysMsgCount may be != 0, but return NULL
 //
-char *MultiPlayer::receive(uint32_t * from, uint32_t * to, uint32_t * size, int *sysMsgCount)
+char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 {
-	if (sysMsgCount) *sysMsgCount = 0;
-	*from = max_players;
+	int ret;
+	ENetEvent event;
+	PlayerDesc *player;
+	char *got_recv;
 
-	if (!recv_queue.empty())
-	{
-		struct mp_msg *msg;
+	if (sysMsgCount)
+		*sysMsgCount = 0;
 
-		msg = recv_queue.front();
-		recv_queue.pop();
-
-		memcpy(recv_buf, msg->data, msg->size);
-		*from = msg->player_id;
-		*to = my_player_id;
-		*size = msg->size;
-
-		delete msg->data;
-		delete msg;
-
-		MSG("Received %d bytes from player %d\n", *size, *from);
-
-		return recv_buf;
-	}
-
-	if (status != MP_STATUS_INGAME)
-	{
+	ret = enet_host_service(host, &event, 0);
+	if (ret < 0) {
+		err_now("enet_host_service");
+	} else if (ret == 0) {
 		return NULL;
 	}
 
-	if (game_sock) {
-		struct inet_address addr;
-		struct packet_header *h;
-		int ret;
+	got_recv = NULL;
 
-		h = (struct packet_header *)recv_buf;
-		h->size = MP_UDP_MAX_PACKET_SIZE;
+	player = (PlayerDesc *)event.peer->data;
+	if (player == NULL) {
+		player = get_player(&event.peer->address);
+	}
 
-		ret = network->recv(game_sock, h, &addr);
-		if (ret > 0) {
-			*from = get_player_id(&addr);
-			*to = my_player_id;
-			*size = h->size;
-			MSG("[MultiPlayer::receive] received %d bytes from player %d\n", *size, *from);
-			return *from ? recv_buf + sizeof(struct packet_header) : NULL;
+	if (player != NULL) {
+		*from = player->pid();
+	}
+
+	switch (event.type) {
+	case ENET_EVENT_TYPE_RECEIVE:
+		if (event.packet->dataLength < MP_RECV_BUFFER_SIZE) {
+			memcpy(recv_buf, event.packet->data,
+				event.packet->dataLength);
+			*size = event.packet->dataLength;
+			got_recv = recv_buf;
 		}
+		enet_packet_destroy(event.packet);
+
+		break;
+
+	case ENET_EVENT_TYPE_CONNECT:
+		(*sysMsgCount)++;
+
+		if (player == NULL &&
+			host_flag &&
+			allowing_connections) {
+			player = create_player(&event.peer->address);
+		}
+
+		if (player == NULL) {
+			enet_peer_disconnect_now(event.peer, 0);
+			break;
+		}
+
+		if (player != NULL) {
+			event.peer->data = player;
+			MSG("Player '%s' (%d) connected.\n", player->name, player->id);
+		}
+
+		MSG("Number of connections: %d\n", host->connectedPeers);
+
+		break;
+
+	case ENET_EVENT_TYPE_DISCONNECT:
+		(*sysMsgCount)++;
+
+		if (player != NULL) {
+			player->connecting = 0;
+			MSG("Player '%s' (%d) disconnected. (fixme)\n", player->name, player->id);
+		}
+
+		MSG("Number of connections: %d\n", host->connectedPeers);
+
+		break;
+
+	default:
+		err_now("unhandled enet event");
 	}
-	return NULL;
-}
 
-// receive tcp message
-//
-// return NULL if fails
-// sysMsgCount records how many system messages have been handled
-// notice : *sysMsgCount may be != 0, but return NULL
-//
-char *MultiPlayer::receive_stream(uint32_t *from, uint32_t *to, uint32_t *size, int *sysMsgCount)
-{
-	return receive(from, to, size, sysMsgCount);
-}
-
-void MultiPlayer::udp_accept_connections(struct packet_header *h, struct inet_address *address)
-{
-	struct MsgConnect *m;
-	struct MsgConnectAck a;
-	char password[MP_SESSION_NAME_LEN+1];
-	char player_name[MP_SESSION_NAME_LEN+1];
-	int id;
-	MsgNewPeerAddress msg;
-
-	m = (struct MsgConnect *)((char *)h + sizeof(struct packet_header));
-
-	// check if this is really a connect message
-	if (h->size != sizeof(struct MsgConnect) ||
-			m->msg_id != MPMSG_CONNECT)
-		return;
-
-	// check the password
-	strncpy(password, m->password, MP_SESSION_NAME_LEN);
-	password[MP_SESSION_NAME_LEN] = 0;
-	if (strcmp(joined_session.password, password) != 0)
-		return;
-
-	strncpy(player_name, m->name, MP_SESSION_NAME_LEN);
-	player_name[MP_SESSION_NAME_LEN] = 0;
-
-	// allow connection if we can create the player
-	id = create_player(player_name, address);
-	if (!id)
-	{
-		return;
-	}
-	MSG("Player %d, %s, connected.\n", id, player_name);
-
-	// respond to the player
-	a.msg_id = MPMSG_CONNECT_ACK;
-	a.your_id = id;
-
-	// send the connection ack message
-	send_system_msg(game_sock, (char *)&a, sizeof(struct MsgConnectAck), address);
-
-	// tell all peers
-	msg.msg_id = MPMSG_NEW_PEER_ADDRESS;
-	msg.player_id = id;
-	msg.host = address->host;
-	msg.port = address->port;
-	send_stream(BROADCAST_PID, &msg, sizeof(msg));
-}
-
-void MultiPlayer::set_peer_address(uint32_t who, struct inet_address *address)
-{
-	err_when(who < 1 || who > max_players);
-
-	if (who == my_player_id)
-		return;
-	if (!player_pool[who-1])
-		return;
-
-	player_pool[who-1]->address.host = address->host;
-	player_pool[who-1]->address.port = address->port;
-
-	MSG("[MultiPlayer::set_peer_address] set address for %d\n", who);
+	return got_recv;
 }
 
 /*
@@ -1011,210 +803,5 @@ void MultiPlayer::sort_sessions(int sortType)
 		break;
 	default:
 		err_here();
-	}
-}
-
-int MultiPlayer::show_leader_board()
-{
-	struct MsgRequestLadder m;
-	struct MsgLadder *a;
-	struct inet_address addr;
-	struct packet_header *h;
-	int ret, i, x, y;
-
-	if (!open_port())
-	{
-		MSG("Unable to get the game socket.\n");
-		return -1;
-	}
-
-	m.msg_id = MPMSG_REQ_LADDER;
-
-	send_nonseq_msg(game_sock, (char *)&m, sizeof(struct MsgRequestLadder), &remote_session_provider_address);
-
-	h = (struct packet_header *)recv_buf;
-	a = (struct MsgLadder *)(recv_buf + sizeof(struct packet_header));
-	h->size = MP_UDP_MAX_PACKET_SIZE;
-
-	ret = network->recv(game_sock, h, &addr);
-	if (ret <= 0)
-		return 0;
-
-	if (h->size != sizeof(struct MsgLadder) ||
-		addr.host != remote_session_provider_address.host ||
-		addr.port != remote_session_provider_address.port ||
-		a->msg_id != MPMSG_LADDER)
-			return 0;
-
-	vga_util.disp_image_file("HALLFAME");
-
-	y = 116;
-	for (i = 0; i < MP_LADDER_LIST_SIZE; i++, y += 76)
-	{
-		String str;
-		char name[MP_PLAYER_NAME_LEN+1];
-		int pos, y2;
-
-		strncpy(name, a->list[i].name, MP_PLAYER_NAME_LEN);
-		name[MP_PLAYER_NAME_LEN] = 0;
-
-		if (!name[0])
-			continue;
-
-		x = 120;
-		y2 = y + 17;
-		pos = i + 1;
-		str = pos;
-		str += ".";
-		font_std.put(x, y, str);
-
-		x += 16;
-
-		font_std.put(x, y, name);
-
-		str = "Wins : ";
-		str += a->list[i].wins;
-
-		font_std.put(x, y2, str);
-
-		str = "Losses : ";
-		str += a->list[i].losses;
-
-		font_std.put(x + 110, y2, str);
-
-		str = "Score : ";
-		str += a->list[i].score;
-
-		font_std.put(x + 260, y2, str);
-	}
-
-	mouse.wait_press(60);
-
-	vga_util.finish_disp_image_file();
-
-	return 1;
-}
-
-void MultiPlayer::yield_recv()
-{
-	uint32_t ticks;
-	uint32_t cur_ticks;
-	struct inet_address sender;
-	struct packet_header *h;
-	int ret;
-
-	h = (struct packet_header *)recv_buf;
-
-	ticks = misc.get_time();
-	cur_ticks = ticks;
-
-	while (cur_ticks < ticks + 50) {
-		int player_id;
-		struct mp_msg *msg;
-		char *buf_copy;
-
-		h->size = MP_UDP_MAX_PACKET_SIZE;
-
-		ret = network->recv(game_sock, h, &sender);
-		if (ret <= 0)
-			return;
-
-		player_id = get_player_id(&sender);
-		if (!player_id && status == MP_STATUS_PREGAME) {
-			if (host_flag)
-				udp_accept_connections(h, &sender);
-			continue;
-		}
-
-		if (h->size <= 0 || h->size >= MP_UDP_MAX_PACKET_SIZE)
-			continue;
-
-
-		switch (h->type) {
-		case PACKET_STREAM:
-		case PACKET_NONSEQ:
-			msg = new struct mp_msg;
-			buf_copy = new char[h->size];
-
-			msg->player_id = player_id;
-			memcpy(&msg->header, h, sizeof(struct packet_header));
-			msg->size = h->size;
-			msg->data = buf_copy;
-			memcpy(buf_copy, (char *)h+sizeof(struct packet_header), h->size);
-			recv_queue.push(msg);
-			break;
-		case PACKET_SYSTEM:
-			break;
-		}
-	}
-}
-
-void MultiPlayer::yield_connecting()
-{
-	struct inet_address joining;
-	struct packet_header *h;
-	struct MsgConnect m;
-	struct MsgConnectAck *a;
-	struct inet_address *addr;
-	int ret;
-
-	addr = &player_pool[0]->address;
-	m.msg_id = MPMSG_CONNECT;
-	m.player_id = my_player_id;
-	strncpy(m.name, my_player->name, MP_SESSION_NAME_LEN);
-	strncpy(m.password, joined_session.password, MP_SESSION_NAME_LEN);
-
-	// send the connection message
-	send_system_msg(game_sock, (char *)&m, sizeof(struct MsgConnect), addr);
-
-
-	h = (struct packet_header *)recv_buf;
-	a = (struct MsgConnectAck *)(recv_buf + sizeof(struct packet_header));
-
-	h->size = MP_UDP_MAX_PACKET_SIZE;
-
-	// check for ack
-	ret = network->recv(game_sock, h, &joining);
-	if (ret <= 0)
-		return;
-
-	// check if this really is an ack
-	if (joining.host != addr->host ||
-			joining.port != addr->port ||
-			h->size != sizeof(struct MsgConnectAck) ||
-			a->msg_id != MPMSG_CONNECT_ACK)
-		return;
-
-	// Insert player into player pool
-	my_player_id = a->your_id;
-	err_when(player_pool[my_player_id-1]);
-	player_pool[my_player_id-1] = my_player;
-
-	status = MP_STATUS_PREGAME;
-
-	MSG("[MultiPlayer::udp_join_session] udp connection established\n");
-}
-
-void MultiPlayer::yield_pregame()
-{
-	yield_recv();
-	if (host_flag)
-	{
-		send_game_beacon();
-	}
-}
-
-void MultiPlayer::yield()
-{
-	switch (status)
-	{
-	case MP_STATUS_CONNECTING:
-		yield_connecting();
-		break;
-	case MP_STATUS_PREGAME:
-		yield_pregame();
-		break;
-	case MP_STATUS_INGAME:
-		break;
 	}
 }

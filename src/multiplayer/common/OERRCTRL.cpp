@@ -210,7 +210,7 @@ void ErrorControl::yield()
 	// -------- receive any frame from dplay -----------//
 	char *recvPtr;
 	uint32_t recvLen;
-	PID_TYPE from, to;
+	PID_TYPE from;
 
 	static int simError = 1;
 
@@ -229,7 +229,7 @@ void ErrorControl::yield()
 		}
 	}
 
-	while( (recvPtr = mp_ptr->receive(&from, &to, &recvLen, &sysMsgCount)) != NULL
+	while( (recvPtr = mp_ptr->receive(&from, &recvLen, &sysMsgCount)) != NULL
 		|| sysMsgCount != 0)
 	{
 		// -------- detect any player lost ---------//
