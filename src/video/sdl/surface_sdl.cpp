@@ -76,7 +76,10 @@ int SurfaceSDL::unlock_buf()
 //
 int SurfaceSDL::activate_pal(SDL_Color *pal, int firstcolor, int ncolors)
 {
-	return SDL_SetPalette(surface, SDL_LOGPAL, pal, firstcolor, ncolors);
+	return SDL_SetPaletteColors(surface->format->palette,
+				    pal,
+				    firstcolor,
+				    ncolors);
 }
 //--------- End of function SurfaceSDL::activate_pal ----------//
 

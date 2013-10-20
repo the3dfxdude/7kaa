@@ -180,7 +180,7 @@ AS_IF([test "$audio_backend" = openal], [
 
 AS_IF([test "$input_backend" = sdl \
        || test "$video_backend" = sdl], [
-  AM_PATH_SDL([], [], [
+  AM_PATH_SDL2([], [], [
     AC_ERROR([SDL not found])
   ])
 

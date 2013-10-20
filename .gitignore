@@ -28,3 +28,5 @@ include/stamp-h1
 install-sh
 m4/sdl.m4
 missing
+m4/pkg.m4
+m4/sdl2.m4

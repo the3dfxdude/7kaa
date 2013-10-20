@@ -141,7 +141,7 @@ SectionEnd
 Section "SDL" sdl
 
   SetOutPath "$INSTDIR"
-  File "lib\SDL.dll"
+  File "lib\SDL2.dll"
 
 SectionEnd
 
@@ -215,7 +215,7 @@ Section "Uninstall"
   Delete "$INSTDIR\COPYING"
   Delete "$INSTDIR\README"
   Delete "$INSTDIR\OpenAL32.dll"
-  Delete "$INSTDIR\SDL.dll"
+  Delete "$INSTDIR\SDL2.dll"
   Delete "$INSTDIR\SDL_net.dll"
   Delete "$INSTDIR\Uninstall.exe"
 
