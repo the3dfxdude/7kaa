@@ -317,8 +317,6 @@ AC_CONFIG_FILES([
   src/input/sdl/Makefile
   src/multiplayer/Makefile
   src/multiplayer/common/Makefile
-  src/multiplayer/sdlnet/Makefile
-  src/multiplayer/none/Makefile
   src/server/Makefile
   src/video/Makefile
   src/video/common/Makefile
