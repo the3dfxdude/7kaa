@@ -36,7 +36,11 @@
 class VgaSDL : public VgaBase
 {
 private:
+	SDL_Window*    window;
+	SDL_Renderer*  renderer;
+	SDL_Texture*   texture;
 	SDL_Surface*   front;
+	SDL_Surface*   target;
 	SDL_Color      game_pal[VGA_PALETTE_SIZE];
 	SDL_Color*     custom_pal;
 	Uint32         video_mode_flags;

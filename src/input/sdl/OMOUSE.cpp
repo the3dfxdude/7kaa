@@ -732,9 +732,8 @@ void MouseSDL::poll_event()
 	while (SDL_PeepEvents(&event,
 			1,
 			SDL_GETEVENT,
-			SDL_KEYEVENTMASK |
-			SDL_MOUSEEVENTMASK |
-			SDL_JOYEVENTMASK) > 0) {
+			SDL_KEYDOWN,
+			SDL_JOYBUTTONUP)) {
 
 		MouseEvent ev;
 
@@ -813,18 +812,20 @@ void MouseSDL::poll_event()
 					sys.signal_exit_flag = 1;
 				} else if (event.key.keysym.sym == SDLK_TAB) {
 					bypass = 1;
-					SDL_WM_IconifyWindow();
+					SDL_Window *window = SDL_GetWindowFromID(event.key.windowID);
+					SDL_MinimizeWindow(window);
 				}
 			} else if (mod == KMOD_LCTRL || mod == KMOD_RCTRL) {
 				if (event.key.keysym.sym == SDLK_g &&
 						!vga.is_full_screen()) {
 					static int grabbed = 0;
 					bypass = 1;
+					SDL_Window *window = SDL_GetWindowFromID(event.key.windowID);
 					if (!grabbed) {
-						SDL_WM_GrabInput(SDL_GRAB_ON);
+						SDL_SetWindowGrab(window, SDL_TRUE);
 						grabbed = 1;
 					} else {
-						SDL_WM_GrabInput(SDL_GRAB_OFF);
+						SDL_SetWindowGrab(window, SDL_FALSE);
 						grabbed = 0;
 					}
 				}
@@ -839,6 +840,7 @@ void MouseSDL::poll_event()
 		case SDL_KEYUP:
 			update_skey_state();
 			break;
+		case SDL_TEXTINPUT:
 		case SDL_JOYAXISMOTION:
 		case SDL_JOYBALLMOTION:
 		case SDL_JOYHATMOTION:
@@ -1155,16 +1157,16 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short
 	case 0x56:  priChar = capitalChar = '<'; shiftChar = '>'; altChar = '|'; break;
 #endif
 		
-	case SDLK_KP7: priChar = shiftChar = capitalChar = '7'; onNumPad = 1; break;
-	case SDLK_KP8: priChar = shiftChar = capitalChar = '8'; onNumPad = 1; break;
-	case SDLK_KP9: priChar = shiftChar = capitalChar = '9'; onNumPad = 1; break;
-	case SDLK_KP4: priChar = shiftChar = capitalChar = '4'; onNumPad = 1; break;
-	case SDLK_KP5: priChar = shiftChar = capitalChar = '5'; onNumPad = 1; break;
-	case SDLK_KP6: priChar = shiftChar = capitalChar = '6'; onNumPad = 1; break;
-	case SDLK_KP1: priChar = shiftChar = capitalChar = '1'; onNumPad = 1; break;
-	case SDLK_KP2: priChar = shiftChar = capitalChar = '2'; onNumPad = 1; break;
-	case SDLK_KP3: priChar = shiftChar = capitalChar = '3'; onNumPad = 1; break;
-	case SDLK_KP0: priChar = shiftChar = capitalChar = '0'; onNumPad = 1; break;
+	case SDLK_KP_7: priChar = shiftChar = capitalChar = '7'; onNumPad = 1; break;
+	case SDLK_KP_8: priChar = shiftChar = capitalChar = '8'; onNumPad = 1; break;
+	case SDLK_KP_9: priChar = shiftChar = capitalChar = '9'; onNumPad = 1; break;
+	case SDLK_KP_4: priChar = shiftChar = capitalChar = '4'; onNumPad = 1; break;
+	case SDLK_KP_5: priChar = shiftChar = capitalChar = '5'; onNumPad = 1; break;
+	case SDLK_KP_6: priChar = shiftChar = capitalChar = '6'; onNumPad = 1; break;
+	case SDLK_KP_1: priChar = shiftChar = capitalChar = '1'; onNumPad = 1; break;
+	case SDLK_KP_2: priChar = shiftChar = capitalChar = '2'; onNumPad = 1; break;
+	case SDLK_KP_3: priChar = shiftChar = capitalChar = '3'; onNumPad = 1; break;
+	case SDLK_KP_0: priChar = shiftChar = capitalChar = '0'; onNumPad = 1; break;
 	case SDLK_KP_PERIOD: priChar = shiftChar = capitalChar = '.'; onNumPad = 1; break;
 
 	// function keys
@@ -1349,16 +1351,16 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, 
 	case SDLK_F11: numLockChar = priChar = "F11"; break;
 	case SDLK_F12: numLockChar = priChar = "F12"; break;
 
-	case SDLK_KP7: priChar = "HOME"; numLockChar = "7"; onNumPad = 1; break;
-	case SDLK_KP8: priChar = "UP"; numLockChar = "8"; onNumPad = 1; break;
-	case SDLK_KP9: priChar = "PAGE UP"; numLockChar = "9"; onNumPad = 1; break;
-	case SDLK_KP4: priChar = "LEFT"; numLockChar = "4"; onNumPad = 1; break;
-	case SDLK_KP5: priChar = "CENTER"; numLockChar = "5"; onNumPad = 1; break;
-	case SDLK_KP6: priChar = "RIGHT"; numLockChar = "6"; onNumPad = 1; break;
-	case SDLK_KP1: priChar = "END"; numLockChar = "1"; onNumPad = 1; break;
-	case SDLK_KP2: priChar = "DOWN"; numLockChar = "2"; onNumPad = 1; break;
-	case SDLK_KP3: priChar = "PAGE DOWN"; numLockChar = "3"; onNumPad = 1; break;
-	case SDLK_KP0: priChar = "INSERT"; numLockChar = "0"; onNumPad = 1; break;
+	case SDLK_KP_7: priChar = "HOME"; numLockChar = "7"; onNumPad = 1; break;
+	case SDLK_KP_8: priChar = "UP"; numLockChar = "8"; onNumPad = 1; break;
+	case SDLK_KP_9: priChar = "PAGE UP"; numLockChar = "9"; onNumPad = 1; break;
+	case SDLK_KP_4: priChar = "LEFT"; numLockChar = "4"; onNumPad = 1; break;
+	case SDLK_KP_5: priChar = "CENTER"; numLockChar = "5"; onNumPad = 1; break;
+	case SDLK_KP_6: priChar = "RIGHT"; numLockChar = "6"; onNumPad = 1; break;
+	case SDLK_KP_1: priChar = "END"; numLockChar = "1"; onNumPad = 1; break;
+	case SDLK_KP_2: priChar = "DOWN"; numLockChar = "2"; onNumPad = 1; break;
+	case SDLK_KP_3: priChar = "PAGE DOWN"; numLockChar = "3"; onNumPad = 1; break;
+	case SDLK_KP_0: priChar = "INSERT"; numLockChar = "0"; onNumPad = 1; break;
 	case SDLK_KP_PERIOD: priChar = "DELETE"; numLockChar = "."; onNumPad = 1; break;
 
 	// keys above arrow keys
@@ -1374,8 +1376,8 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, 
 	case SDLK_DELETE: priChar = numLockChar = "DELETE"; break;
 
 	// 104-key only
-	case SDLK_LSUPER: priChar = numLockChar = "LEFT WINDOW"; break;
-	case SDLK_RSUPER: priChar = numLockChar = "RIGHT WINDOW"; break;
+	case SDLK_LGUI: priChar = numLockChar = "LEFT WINDOW"; break;
+	case SDLK_RGUI: priChar = numLockChar = "RIGHT WINDOW"; break;
 	case SDLK_MENU: priChar = numLockChar = "APP MENU"; break;
 	}
 
