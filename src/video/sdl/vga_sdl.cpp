@@ -37,6 +37,11 @@ char    VgaBase::use_back_buf = 0;
 char    VgaBase::opaque_flag  = 0;
 VgaBuf* VgaBase::active_buf   = &vga_front;      // default: front buffer
 
+namespace
+{
+   int window_pitch;
+}  // namespace
+
 //-------- Begin of function VgaSDL::VgaSDL ----------//
 
 VgaSDL::VgaSDL()
@@ -45,7 +50,7 @@ VgaSDL::VgaSDL()
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
    custom_pal = NULL;
    vga_color_table = NULL;
-   video_mode_flags = SDL_HWSURFACE|SDL_HWPALETTE|SDL_DOUBLEBUF;
+   video_mode_flags = SDL_WINDOW_SHOWN;
 }
 //-------- End of function VgaSDL::VgaSDL ----------//
 
@@ -68,8 +73,94 @@ int VgaSDL::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, video_mode_flags);
+   if (SDL_CreateWindowAndRenderer(1024,
+                                   768,
+                                   video_mode_flags,
+                                   &window,
+                                   &renderer) < 0)
+   {
+      ERR("Could not create window and renderer: %s\n", SDL_GetError());
+      SDL_Quit();
+      return 0;
+   }
+
+   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+   SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
+
+   SDL_RendererInfo info;
+   if (SDL_GetRendererInfo(renderer, &info) == 0)
+   {
+      MSG("Name of renderer: %s\n", info.name);
+      MSG("Using software fallback: %s\n", info.flags & SDL_RENDERER_SOFTWARE ? "yes" : "no");
+      MSG("Using hardware acceleration: %s\n", info.flags & SDL_RENDERER_ACCELERATED ? "yes" : "no");
+      MSG("V-sync: %s\n", info.flags & SDL_RENDERER_PRESENTVSYNC ? "on" : "off");
+      MSG("Rendering to texture support: %s\n", info.flags & SDL_RENDERER_TARGETTEXTURE ? "yes" : "no");
+      MSG("Maximum texture width: %d\n", info.max_texture_width);
+      MSG("Maximum texture height: %d\n", info.max_texture_height);
+   }
+
+   Uint32 window_pixel_format = SDL_GetWindowPixelFormat(window);
+   if (window_pixel_format == SDL_PIXELFORMAT_UNKNOWN)
+   {
+      ERR("Unknown pixel format: %s\n", SDL_GetError());
+      SDL_Quit();
+      return 0;
+   }
+   MSG("Pixel format: %s\n", SDL_GetPixelFormatName(window_pixel_format));
+
+   window_pitch = VGA_WIDTH * SDL_BYTESPERPIXEL(window_pixel_format);
+
+   // Cannot use SDL_PIXELFORMAT_INDEX8:
+   //   Palettized textures are not supported
+   texture = SDL_CreateTexture(renderer,
+                               window_pixel_format,
+                               SDL_TEXTUREACCESS_STREAMING,
+                               VGA_WIDTH,
+                               VGA_HEIGHT);
+   if (!texture)
+   {
+      ERR("Could not create texture: %s\n", SDL_GetError());
+      SDL_Quit();
+      return 0;
+   }
+
+   front = SDL_CreateRGBSurface(0,
+                                VGA_WIDTH,
+                                VGA_HEIGHT,
+                                VGA_BPP,
+                                0, 0, 0, 0);
    if (!front)
+   {
+      SDL_Quit();
+      return 0;
+   }
+
+   int desktop_bpp = 0;
+   if (SDL_PIXELTYPE(window_pixel_format) == SDL_PIXELTYPE_PACKED32)
+   {
+      desktop_bpp = 32;
+   }
+   else if (SDL_PIXELTYPE(window_pixel_format) == SDL_PIXELTYPE_PACKED16)
+   {
+      desktop_bpp = 16;
+   }
+   else if (SDL_PIXELTYPE(window_pixel_format) == SDL_PIXELTYPE_PACKED8)
+   {
+      desktop_bpp = 8;
+   }
+   else
+   {
+      ERR("Unsupported pixel type\n");
+      SDL_Quit();
+      return 0;
+   }
+
+   target = SDL_CreateRGBSurface(0,
+                                 VGA_WIDTH,
+                                 VGA_HEIGHT,
+                                 desktop_bpp,
+                                 0, 0, 0, 0);
+   if (!target)
    {
       SDL_Quit();
       return 0;
@@ -80,10 +171,10 @@ int VgaSDL::init()
    {
       Uint32 colorkey;
       colorkey = SDL_MapRGB(icon->format, 0, 0, 0);
-      SDL_SetColorKey(icon, SDL_SRCCOLORKEY, colorkey);
-      SDL_WM_SetIcon(icon, NULL);
+      SDL_SetColorKey(icon, SDL_TRUE, colorkey);
+      SDL_SetWindowIcon(window, icon);
    }
-   SDL_WM_SetCaption(WIN_TITLE, WIN_TITLE);
+   SDL_SetWindowTitle(window, WIN_TITLE);
 
    init_pal(DIR_RES"PAL_STD.RES");
 
@@ -128,7 +219,7 @@ int VgaSDL::init_front(VgaBuf *b)
 //
 int VgaSDL::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 {
-   SDL_Surface *surface = SDL_CreateRGBSurface(SDL_SWSURFACE,
+   SDL_Surface *surface = SDL_CreateRGBSurface(0,
                                                VGA_WIDTH,
                                                VGA_HEIGHT,
                                                VGA_BPP,
@@ -156,9 +247,19 @@ void VgaSDL::deinit()
    vga_front.deinit();
 
    if (vga_color_table) delete vga_color_table;
-   SDL_Quit();
+   SDL_FreeSurface(target);
+   target = NULL;
+   SDL_FreeSurface(front);
    front = NULL;
-   video_mode_flags = SDL_HWSURFACE|SDL_HWPALETTE;
+   SDL_DestroyTexture(texture);
+   texture = NULL;
+   window_pitch = 0;
+   SDL_DestroyRenderer(renderer);
+   renderer = NULL;
+   SDL_DestroyWindow(window);
+   window = NULL;
+   SDL_Quit();
+   video_mode_flags = SDL_WINDOW_HIDDEN;
 }
 //-------- End of function VgaSDL::deinit ----------//
 
@@ -204,10 +305,16 @@ void VgaSDL::refresh_palette()
    SurfaceSDL *fake_front = vga_front.get_buf();
    if (custom_pal) {
       fake_front->activate_pal(custom_pal, 0, VGA_PALETTE_SIZE);
-      SDL_SetColors(front, custom_pal, 0, VGA_PALETTE_SIZE);
+      SDL_SetPaletteColors(front->format->palette,
+                           custom_pal,
+                           0,
+                           VGA_PALETTE_SIZE);
    } else {
       fake_front->activate_pal(game_pal, 0, VGA_PALETTE_SIZE);
-      SDL_SetColors(front, game_pal, 0, VGA_PALETTE_SIZE);
+      SDL_SetPaletteColors(front->format->palette,
+                           game_pal,
+                           0,
+                           VGA_PALETTE_SIZE);
    }
 }
 //----------- End of function VgaSDL::refresh_palette ----------//
@@ -303,7 +410,10 @@ void VgaSDL::adjust_brightness(int changeValue)
 
    vga_front.temp_unlock();
 
-   SDL_SetColors(front, palBuf, 0, VGA_PALETTE_SIZE);
+   SDL_SetPaletteColors(front->format->palette,
+                        palBuf,
+                        0,
+                        VGA_PALETTE_SIZE);
 
    vga_front.temp_restore_lock();
 }
@@ -320,34 +430,34 @@ void VgaSDL::handle_messages()
    while (SDL_PeepEvents(&event,
                          1,
                          SDL_GETEVENT,
-                         SDL_ALLEVENTS ^
-                         SDL_KEYEVENTMASK ^
-                         SDL_MOUSEEVENTMASK ^
-                         SDL_JOYEVENTMASK) > 0) {
+                         SDL_QUIT,
+                         SDL_SYSWMEVENT)) {
 
       switch (event.type) {
-      case SDL_ACTIVEEVENT:
-         if (event.active.gain) 
-         {
-            sys.need_redraw_flag = 1;
-            if (!sys.is_mp_game)
-               sys.unpause();
+      case SDL_WINDOWEVENT_ENTER:
+      case SDL_WINDOWEVENT_FOCUS_GAINED:
+      case SDL_WINDOWEVENT_RESTORED:
+         sys.need_redraw_flag = 1;
+         if (!sys.is_mp_game)
+            sys.unpause();
 
-            // update ctrl/shift/alt key state
-            mouse.update_skey_state();
-            SDL_ShowCursor(SDL_DISABLE);
-         } else {
-            if (!sys.is_mp_game)
-              sys.pause();
-            // turn the system cursor back on to get around a fullscreen
-            // mouse grabbed problem on windows
-            SDL_ShowCursor(SDL_ENABLE);
-         }
+         // update ctrl/shift/alt key state
+         mouse.update_skey_state();
+         SDL_ShowCursor(SDL_DISABLE);
+         break;
+      case SDL_WINDOWEVENT_LEAVE:
+      case SDL_WINDOWEVENT_FOCUS_LOST:
+      case SDL_WINDOWEVENT_MINIMIZED:
+         if (!sys.is_mp_game)
+            sys.pause();
+         // turn the system cursor back on to get around a fullscreen
+         // mouse grabbed problem on windows
+         SDL_ShowCursor(SDL_ENABLE);
          break;
       case SDL_QUIT:
          sys.signal_exit_flag = 1;
          break;
-      case SDL_VIDEOEXPOSE:
+      case SDL_WINDOWEVENT_EXPOSED:
          sys.need_redraw_flag = 1;
          break;
       default:
@@ -369,7 +479,7 @@ void VgaSDL::flag_redraw()
 //
 int VgaSDL::is_full_screen()
 {
-   return video_mode_flags & SDL_FULLSCREEN;
+   return video_mode_flags & SDL_WINDOW_FULLSCREEN_DESKTOP;
 }
 //-------- End of function VgaSDL::is_full_screen ----------//
 
@@ -378,19 +488,20 @@ int VgaSDL::is_full_screen()
 // The previous front surface is freed by SDL_SetVideoMode.
 void VgaSDL::toggle_full_screen()
 {
-   video_mode_flags ^= SDL_FULLSCREEN;
-   front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, video_mode_flags);
-   if (!front)
-   {
-      // Try to restore the previous mode.
-      video_mode_flags ^= SDL_FULLSCREEN;
-      front = SDL_SetVideoMode(VGA_WIDTH, VGA_HEIGHT, VGA_BPP, video_mode_flags);
-      if (!front)
-      {
-         ERR("Lost video surface!");
-         return;
-      }
+   int result = 0;
+
+   if (!is_full_screen()) {
+      result = SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+      video_mode_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
+   } else {
+      result = SDL_SetWindowFullscreen(window, 0);
+      video_mode_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
    }
+   if (result < 0) {
+      ERR("Could not toggle fullscreen: %s\n", SDL_GetError());
+      return;
+   }
+
    refresh_palette();
    sys.need_redraw_flag = 1;
 }
@@ -406,8 +517,11 @@ void VgaSDL::flip()
       SurfaceSDL *tmp = vga_front.get_buf();
       SDL_Surface *src = tmp->get_surface();
       ticks = cur_ticks;
-      SDL_BlitSurface(src, NULL, front, NULL);
-      SDL_Flip(front);
+      SDL_BlitSurface(src, NULL, target, NULL);
+      SDL_UpdateTexture(texture, NULL, target->pixels, window_pitch);
+      SDL_RenderClear(renderer);
+      SDL_RenderCopy(renderer, texture, NULL, NULL);
+      SDL_RenderPresent(renderer);
    }
 }
 //-------- End of function VgaSDL::flip ----------//
