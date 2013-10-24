@@ -73,8 +73,27 @@ int VgaSDL::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   if (SDL_CreateWindowAndRenderer(1024,
-                                   768,
+   SDL_DisplayMode mode;
+   int window_width = 1024;
+   int window_height = 768;
+
+   if (SDL_GetDesktopDisplayMode(0, &mode) == 0)
+   {
+      if (mode.h < 1024)
+      {
+         window_width = 800;
+         window_height = 600;
+      }
+   }
+   else
+   {
+      ERR("Could not get desktop display mode: %s\n", SDL_GetError());
+      SDL_Quit();
+      return 0;
+   }
+
+   if (SDL_CreateWindowAndRenderer(window_width,
+                                   window_height,
                                    video_mode_flags,
                                    &window,
                                    &renderer) < 0)
