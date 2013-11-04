@@ -75,7 +75,7 @@ AC_TYPE_UINT8_T
 dnl AC_CHECK_FUNCS([])
 
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18.2])
+AM_GNU_GETTEXT_VERSION([0.18])
 
 # Configuration variables
 
