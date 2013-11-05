@@ -39,6 +39,7 @@
 // ###### begin Gilbert 10/10 #######//
 #include <OSE.h>
 // ###### end Gilbert 10/10 #######//
+#include "gettext.h"
 
 
 //--------- Begin of function Spy::Spy ----------//
@@ -587,17 +588,17 @@ const char* Spy::action_str()
 				 (spy_place==SPY_FIRM &&
 				  firm_array[spy_place_para]->nation_recno == true_nation_recno) )
 			{
-				return "Counter-Spy";
+				return _("Counter-Spy");
 			}
 			else
-				return "Sleep";
+				return _("Sleep");
 		}
 
 		case SPY_SOW_DISSENT:
-			return "Sow Dissent";
+			return _("Sow Dissent");
 
 		case SPY_SABOTAGE:
-			return "Sabotage";
+			return _("Sabotage");
 
 		default:
 			err_here();

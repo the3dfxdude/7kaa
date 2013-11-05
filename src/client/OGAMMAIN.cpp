@@ -35,6 +35,7 @@
 #include <OMUSIC.h>
 #include <OGAME.h>
 #include <OVGALOCK.h>
+#include "gettext.h"
 
 #ifdef DEMO
 #define DISABLE_MULTI_PLAYER
@@ -354,7 +355,8 @@ void Game::disp_version()
 
 	String str;
 
-	str  = "Version ";
+	str  = _("Version");
+	str += " ";
 	str += GAME_VERSION_STR;
 
 	#ifdef DEMO

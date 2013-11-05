@@ -40,6 +40,7 @@
 #include <OF_FACT.h>
 #include <OBUTTCUS.h>
 #include <OSE.h>
+#include "gettext.h"
 
 //------------- Define static vars ------------//
 
@@ -168,7 +169,7 @@ void UnitCaravan::disp_stop(int dispY1, int refreshFlag)
 #if(defined(FRENCH))
 				button_set_stop[i].paint_text( x+4, y+37, x+86, y+56, "Set Stop" );
 #else
-				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, "Set Stop" );
+				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, _("Set Stop") );
 #endif
 				button_set_stop[i].set_help_code( "CSETSTOP" );
 			}
@@ -184,12 +185,12 @@ void UnitCaravan::disp_stop(int dispY1, int refreshFlag)
 				firmPtr = firm_array[ stop_array[i].firm_recno ];
 				nation_array[firmPtr->nation_recno]->disp_nation_color(x+4, y+4);
 				font_san.put(x+20, y+4, firmPtr->firm_name());
-				font_san.put(x+4, y+19, "Pick up: ");
+				font_san.put(x+4, y+19, _("Pick up: "));
 
 #if(defined(FRENCH))
 				button_set_stop[i].paint_text( x+4, y+37, x+86, y+56, "Set Stop" );
 #else
-				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, "Set Stop" );
+				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, _("Set Stop") );
 #endif
 
 				button_set_stop[i].set_help_code( "CSETSTOP" );
@@ -197,7 +198,7 @@ void UnitCaravan::disp_stop(int dispY1, int refreshFlag)
 #if(defined(FRENCH))
 				button_go_stop[i].paint_text( x+90, y+37, x+180, y+56, "View Stop" );
 #else
-				button_go_stop[i].paint_text( x+84, y+37, x+180, y+56, "View Stop" );
+				button_go_stop[i].paint_text( x+84, y+37, x+180, y+56, _("View Stop") );
 #endif
 				button_go_stop[i].set_help_code( "CGOSTOP" );
 

@@ -35,6 +35,7 @@
 #include <OVBROWSE.h>
 #include <OFILETXT.h>
 #include <OHELP.h>
+#include "gettext.h"
 
 
 //---------- Define constant -------------//
@@ -278,6 +279,9 @@ void Help::rest_scr()
 //
 void Help::disp()
 {
+	char helpTitle[HelpInfo::HELP_TITLE_LEN+1] = {0};
+	char helpText[250] = {0};
+
 	//---- first check if we should disp the help now ------//
 
 	if( !should_disp() )
@@ -301,8 +305,15 @@ void Help::disp()
 			if( helpInfo->help_code[0] == help_code[0] &&
 				 strcmp( helpInfo->help_code, help_code )==0 )
 			{
+				int helpTitleLen = strlen(helpInfo->help_title)-5;
+				// Copy text without gettext markup _("").
+				strncpy(helpTitle, helpInfo->help_title+3, helpTitleLen);
+				helpTitle[helpTitleLen] = '\0';
+				// Copy text without gettext markup _("").
+				strncpy(helpText, helpInfo->help_text_ptr+3, helpInfo->help_text_len-7);
+				helpText[helpInfo->help_text_len-7] = '\0';
 				disp_help( help_x, help_y,
-							  helpInfo->help_title, helpInfo->help_text_ptr );
+							  _(helpTitle), _(helpText) );
 				break;
 			}
 		}
@@ -335,9 +346,16 @@ void Help::disp()
 			if( spotX >= helpInfo->area_x1 && spotY >= helpInfo->area_y1 &&
 				 spotX <= helpInfo->area_x2 && spotY <= helpInfo->area_y2 )
 			{
+				int helpTitleLen = strlen(helpInfo->help_title)-5;
+				// Copy text without gettext markup _("").
+				strncpy(helpTitle, helpInfo->help_title+3, helpTitleLen);
+				helpTitle[helpTitleLen] = '\0';
+				// Copy text without gettext markup _("").
+				strncpy(helpText, helpInfo->help_text_ptr+3, helpInfo->help_text_len-7);
+				helpText[helpInfo->help_text_len-7] = '\0';
 				disp_help( (helpInfo->area_x1+helpInfo->area_x2)/2,
 							  (helpInfo->area_y1+helpInfo->area_y2)/2,
-							  helpInfo->help_title, helpInfo->help_text_ptr );
+							  _(helpTitle), _(helpText) );
 				break;
 			}
 		}
@@ -512,32 +530,32 @@ void Help::set_unit_help(int unitId, int rankId, int x1, int y1, int x2, int y2)
 
 	static String str;
 
-#if(defined(SPANISH) || defined(FRENCH))
-	str = "";
-	if( rankId==RANK_KING )
-		str = translate.process("King ");
-	else if( rankId==RANK_GENERAL )
-		str = translate.process("General ");
-	str += unit_res[unitId]->name;
-#else
 	str = unit_res[unitId]->name;
 
-	#if( !defined(GERMAN) && !defined(FRENCH) && !defined(SPANISH) )		 // english
-		if( rankId>=RANK_GENERAL && unitId==UNIT_MAYA )
-			str += "n";			// "Mayan"
-	#endif
-
 	if( rankId==RANK_KING )
 	{
-		str += " ";
-		str += translate.process( "King" );
+		if( unitId==UNIT_MAYA )
+		{
+			str = _("Mayan King");
+		}
+		else
+		{
+			// TRANSLATORS: <Race> King
+			snprintf( str, MAX_STR_LEN+1, _("%s King"), unit_res[unitId]->name );
+		}
 	}
 	else if( rankId==RANK_GENERAL )
 	{
-		str += " ";
-		str += translate.process( "General" );
+		if( unitId==UNIT_MAYA )
+		{
+			str = _("Mayan General");
+		}
+		else
+		{
+			// TRANSLATORS: <Race> General
+			snprintf( str, MAX_STR_LEN+1, _("%s General"), unit_res[unitId]->name );
+		}
 	}
-#endif
 
 	set_custom_help( x1, y1, x2, y2, str );
 }

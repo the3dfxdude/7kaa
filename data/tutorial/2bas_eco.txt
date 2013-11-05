@@ -1,0 +1,97 @@
+_("To prevent excessive dependence on the whims of lesser Kingdoms, it is desirable to have your own source of Raw Materials. That source will be a working Mine.")
+~
+_("You should be able to see, near your first Village, a deposit of Natural Resources. It will appear as a small black dot on your World Map, and as a graphic image of that resource on your main screen.")
+~
+_("Click on the image on the map on your main screen to see what kind of Natural Resource it is. You will also discover the size of the deposit.")
+~
+_("You must build a Mine to exploit a Natural Resource. The best unit to build a Mine is a Miner.")
+~
+Button: TRAIN
+_("Train a Miner by first Clicking on your Village and then Clicking on the Train Tile.")
+~
+_("Clicking once on the Mining option will train one Miner. If you wish to train more, Click on the number until it shows the number of Miners you want to train; then Click on the Done Button.")
+~
+Button: BUILD
+_("After a Miner has been trained, select him and then Click on the Build Tile.")
+~
+_("You will see that Miners can only build Mines. Click on the Build Mine Button.")
+~
+_("Your Hand Cursor has now changed into a Hammer & Nail cursor along with a large purple flashing square.")
+~
+_("The square will be flashing when it is over an open area of land, and black when it is over an area where nothing can be built.")
+~
+_("Click your mouse once when the square is flashing and is over the Natural Resource image.")
+~
+_("Once the Mine has been built, the Miner will begin his work of extracting Raw Materials. If you have trained more than one Miner, group select them and send them into the Mine with a Right-Click.")
+~
+_("A Mine can hold eight Miners. If there are any jobs left in the Mine, Peasants from your Village will now start going to work there.")
+~
+_("Peasants are going on their own to your Mine because there is an active Linking Line between their Village and the Mine. If the Mine were beyond Linking range of your Village, you would have to send the Peasants there yourself.")
+~
+_("It's not necessary to train these Peasants as Miners; they will gradually learn their skill at work. They will, however, begin with half the skill of trained Miners.")
+~
+_("You now need to make use of the Raw Materials from your Mine. To turn the Mine's Raw Materials into Finished Goods you can sell, you must build a Factory.")
+~
+_("To build a Factory you should first Train one or more Peasants in Manufacturing. Do this in the same way you trained your Miner, except this time, choose the Manufacturing option.")
+~
+Button: BUILD
+_("After your Manufacturer has been trained, select him and then Click on the Build Tile.")
+~
+_("You will see that Manufacturers can build only Factories or War Factories. To build a Factory, Click on the Factory Button.")
+~
+_("Your Hand Cursor has now changed into a Hammer & Nail Cursor, combined with a large black or purple flashing square.")
+~
+_("Click your mouse when the square is flashing and when there are Linking Lines between it, your Mine and your Village.")
+~
+_("These Links will allow Raw Materials to be transferred directly from the Mine to the Factory, and will allow Peasants from your Village to volunteer to work in the Factory.")
+~
+_("After your Factory has been built, the Manufacturer who built it will go to work there, and Peasants from the Village will begin to volunteer.")
+~
+_("If you have trained more than one Manufacturer, send them quickly into the Factory before the Peasants take up all the existing places.")
+~
+_("Another thing you can do is to close the Link between the Village and the Factory, by Clicking on the rotating Green & Yellow ring. If close the Link it will change into a green cross. This will prevent any Peasants from volunteering for work in the Factory.")
+~
+_("When a Factory is built within Linking distance of a Mine, it will automatically adjust its production to suit the type of Raw Material coming from the Mine.")
+~
+Button: CHGPROD
+_("If you later build a Factory out of Linking distance from a Mine, you will have to adjust your Factory's production manually by Clicking on the Change Production Tile.")
+~
+_("With your Factory full of workers and the Raw Materials coming in from the Mine, you have started producing Finished Goods.")
+~
+_("These Finished Goods will pile up inside and outside your Factory, unless you have a Market from which to sell them.")
+~
+_("To build a Market, you should first train a Peasant in Construction.")
+~
+Button: BUILD
+_("When the newly trained Construction worker exits the Village, select him and then Click on the Build Tile.")
+~
+_("You will see that a Construction worker will be able to build every kind of building. To build a Market, Click on the Market option.")
+~
+_("Your Hand Cursor will change into a Hammer & Nail Cursor, with a black or purple flashing square.")
+~
+_("Click your mouse when the square is flashing and when there are Linking Lines between it, your Factory and your Village.")
+~
+_("With a Link to the Factory, Finished Goods will be sent to the Market for sale. With a Link to the Village, Villagers will be able to buy goods from the Market.")
+~
+_("When a Market is finished, you will begin to see goods from the Factory arriving there.")
+~
+_("Your Construction worker will now be standing outside the Market. Select him and send him into the Fort.")
+~
+_("Every building can hold one Construction Worker. When inside a building, a Construction Worker will repair the building unless it is under attack. To take a Construction Worker out of the building, first select the building and then Click or Right-Click on the hammer icon you'll see to the left of the blue bar.")
+~
+_("If you now Click on the Market, you will see information on how much money is flowing into your treasury.")
+~
+_("You will also notice that there is space in the Market for three different types of goods. To generate the most money for your Empire, you must do your best to fill these spaces with a variety of goods.")
+~
+_("This may be done either by Mining different Natural Resources and then building Factories to produce different Finished Goods, or by importing Finished Goods or Raw Materials from other Kingdoms. You will learn how to do both in the next lesson.")
+~
+_("A simpler way to get money is to tax your people. There are several ways of doing so:")
+~
+Button: COLLTAX
+_("The most basic way is to select one of your Villages and then Click on the Tax Tile.")
+~
+_("This will immediately liberate $5 from each Village resident. It will also cause their loyalty to decrease, so taxing too much can be a dangerous proposition.")
+~
+_("A more systematic way of collecting taxes from your people is to Right-Click on the Tax Tile. This will bring up a selection of buttons. Clicking on one of them will collect tax from that Village whenever its Loyalty Level reaches the number on the button.")
+~
+_("If you wish to collect tax from all your Villages in the same way, Right-Click on this number instead of Clicking on it. You will then collect tax from all of your present and future Villages whenever their Loyalty Level reaches this number.")

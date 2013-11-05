@@ -46,12 +46,22 @@
 #include <ONATION.h>
 #include <OREBEL.h>
 #include <OREMOTE.h>
+#include "gettext.h"
 
 //-------- Define static variables --------//
 
 const char* NationRelation::relation_status_str_array[5] =
 {
-	"War", "Tense", "Neutral", "Friendly", "Alliance"
+	// TRANSLATORS: Part of "Duration of War Status"
+	N_("War"),
+	// TRANSLATORS: Part of "Duration of Tense Status"
+	N_("Tense"),
+	// TRANSLATORS: Part of "Duration of Neutral Status"
+	N_("Neutral"),
+	// TRANSLATORS: Part of "Duration of Friendly Status"
+	N_("Friendly"),
+	// TRANSLATORS: Par of "Duration of Alliance Status"
+	N_("Alliance")
 };
 
 //--------- Define static functions -------//
@@ -535,30 +545,8 @@ void NationBase::set_king(int kingUnitRecno, int firstKing)
 //
 char* NationBase::nation_name()
 {
-
-#if(defined(SPANISH))
-	strncpy( nation_name_str, "Reino de ", NATION_NAME_LEN );
-	nation_name_str[NATION_NAME_LEN]='\0';
-
-	strncat( nation_name_str, king_name(1), NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]='\0';
-#elif(defined(FRENCH))
-	strncpy( nation_name_str, "Royaume de ", NATION_NAME_LEN );
-	nation_name_str[NATION_NAME_LEN]='\0';
-
-	strncat( nation_name_str, king_name(1), NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]='\0';
-#else
-	// German and US
-	strncpy( nation_name_str, king_name(1), NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]='\0';
-
-	strncat( nation_name_str, "'s ", NATION_NAME_LEN );		// 1-get the first word of the name only
-	nation_name_str[NATION_NAME_LEN]='\0';
-
-	strncat( nation_name_str, translate.process("Kingdom"), NATION_NAME_LEN );
-	nation_name_str[NATION_NAME_LEN]='\0';
-#endif
+	// TRANSLATORS: <Name>'s Kingdom
+	snprintf( nation_name_str, NATION_NAME_LEN+1, _("%s's Kingdom"), king_name(1) );
 
 	return nation_name_str;		// each name needs to have its own var as multiple nation names will be displayed at the same time in diplomatic talk choices
 }
@@ -2054,15 +2042,30 @@ char* NationBase::peace_duration_str()
 
 	str = "";
 
-	if( peaceYear > 0 )
+	if( peaceYear > 1 && peaceMonth > 1 )
 	{
-		str += peaceYear;
-		str += translate.process( peaceYear>1 ? (char*)" years" : (char*)" year" );
-		str += translate.process( (char*)" and " );
+		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d months"), peaceYear, peaceMonth );
 	}
-
-	str += peaceMonth;
-	str += translate.process( peaceMonth>1  ? (char*)" months" : (char*)" month" );
+	else if( peaceYear > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d month"), peaceYear, peaceMonth );
+	}
+	else if( peaceYear > 0 && peaceMonth > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d months"), peaceYear, peaceMonth );
+	}
+	else if( peaceYear > 0 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d month"), peaceYear, peaceMonth );
+	}
+	else if( peaceMonth > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%d months"), peaceMonth );
+	}
+	else
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%d month"), peaceMonth );
+	}
 
 	return str;
 }
@@ -2326,6 +2329,15 @@ void NationBase::set_auto_grant_loyalty(int loyaltyLevel)
 //------ End of function NationBase::set_auto_grant_loyalty -----//
 
 
+//----- Begin of function NationRelation::status_str -----//
+//
+const char* NationRelation::status_str()
+{
+	return _(relation_status_str_array[status]);
+}
+//------ End of function NationRelation::status_str -----//
+
+
 //----- Begin of function NationRelation::status_duration_str -----//
 //
 char* NationRelation::status_duration_str()
@@ -2338,15 +2350,30 @@ char* NationRelation::status_duration_str()
 
 	str = "";
 
-	if( statusYear > 0 )
+	if( statusYear > 1 && statusMonth > 1 )
 	{
-		str += statusYear;
-		str += translate.process( statusYear>1 ? (char*)" years" : (char*)" year" );
-		str += translate.process( (char*)" and " );
+		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d months"), statusYear, statusMonth );
 	}
-
-	str += statusMonth;
-	str += translate.process( statusMonth>1  ? (char*)" months" : (char*)" month" );
+	else if( statusYear > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d month"), statusYear, statusMonth );
+	}
+	else if( statusYear > 0 && statusMonth > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d months"), statusYear, statusMonth );
+	}
+	else if( statusYear > 0 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d month"), statusYear, statusMonth );
+	}
+	else if( statusMonth > 1 )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%d months"), statusMonth );
+	}
+	else
+	{
+		snprintf( str, MAX_STR_LEN+1, _("%d month"), statusMonth );
+	}
 
 	return str;
 }

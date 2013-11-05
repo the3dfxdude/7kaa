@@ -28,6 +28,7 @@
 #include <OFIRMRES.h>
 #include <OCONFIG.h>
 #include <dbglog.h>
+#include "gettext.h"
 
 DBGLOG_DEFAULT_CHANNEL(Config);
 
@@ -147,15 +148,7 @@ void Config::default_cheat_setting()
 void Config::default_local_game_setting()
 {
 	race_id = 1;
-#if(defined(SPANISH))
-	strcpy(player_name, "Nuevo Jugador");
-#elif(defined(FRENCH))
-	strcpy(player_name, "Nouveau Joueur");
-#elif(defined(GERMAN))
-	strcpy(player_name, "Neuer Spieler");
-#else
-	strcpy(player_name, "New Player");
-#endif
+	strcpy(player_name, _("New Player"));
 	player_nation_color = 1;
 	expired_flag = 0;
 }

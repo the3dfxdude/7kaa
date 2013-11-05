@@ -41,6 +41,7 @@
 #include <OUNIT.h>
 #include <OFIRM.h>
 #include <OREMOTE.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -90,9 +91,9 @@ void Firm::disp_spy_menu(int refreshFlag)
 
 		vga_util.d3_panel_up( SPY_BROWSE_X1, y, SPY_BROWSE_X2, SPY_BROWSE_Y1-3 );
 
-		font_san.put( x+4  , y+4, "Spy Skill" );
-		font_san.put( x+70 , y+4, "Loyalty" );
-		font_san.put( x+130, y+4, "Action" );
+		font_san.put( x+4  , y+4, _("Spy Skill") );
+		font_san.put( x+70 , y+4, _("Loyalty") );
+		font_san.put( x+130, y+4, _("Action") );
 
 		//------------ create browser ------------//
 

@@ -43,6 +43,7 @@
 #include <OBUTTCUS.h>
 #include <OSE.h>
 #include <OF_HARB.h>
+#include "gettext.h"
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -102,8 +103,8 @@ void UnitMarine::disp_info(int refreshFlag)
 		{
 			vga_util.d3_panel_up( INFO_X1, y, INFO_X2, y+22 );
 
-			button_mode[0].create_text( INFO_X1+5, y+3, INFO_X1+80, y+19, "Units" );
-			button_mode[1].create_text( INFO_X1+90, y+3, INFO_X1+155, y+19, "Goods" );
+			button_mode[0].create_text( INFO_X1+5, y+3, INFO_X1+80, y+19, _("Units") );
+			button_mode[1].create_text( INFO_X1+90, y+3, INFO_X1+155, y+19, _("Goods") );
 			button_mode.paint(menu_mode);
 
 			button_auto_trade.paint_text( INFO_X1+165, y+3, INFO_X2-10, y+19, auto_mode ? (char*)"T" : (char*)"C");
@@ -521,11 +522,11 @@ void UnitMarine::disp_unit_info(int dispY1, int refreshFlag)
 		if( unitPtr->race_id && unitPtr->rank_id != RANK_KING )
 			info.disp_loyalty( x, y, x1, unitPtr->loyalty, unitPtr->target_loyalty, nation_recno, refreshFlag);
 		else
-			font_san.field( x, y, "Loyalty", x1, "N/A", INFO_X2-2, refreshFlag );		// no loyalty because it does not belong to your empire
+			font_san.field( x, y, _("Loyalty"), x1, _("N/A"), INFO_X2-2, refreshFlag );	// no loyalty because it does not belong to your empire
 
 		y+=16;
 
-		font_san.field( x, y, "Combat", x1, unitPtr->skill.combat_level, 1, INFO_X2-2, refreshFlag);
+		font_san.field( x, y, _("Combat"), x1, unitPtr->skill.combat_level, 1, INFO_X2-2, refreshFlag);
 		y+=16;
 
 		//----------------------------------------------//
@@ -535,7 +536,7 @@ void UnitMarine::disp_unit_info(int dispY1, int refreshFlag)
 		str += "/";
 		str += unitPtr->max_hit_points;
 
-		font_san.field( x, y, "Hit Points", x1, str, INFO_X2-2, refreshFlag);
+		font_san.field( x, y, _("Hit Points"), x1, str, INFO_X2-2, refreshFlag);
 		y += 16;
 
 		//----------------------------------------------//
@@ -624,7 +625,7 @@ void UnitMarine::disp_stop(int dispY1, int refreshFlag)
 #if(defined(FRENCH))
 				button_set_stop[i].paint_text( x+4, y+37, x+90, y+56, "Faire Escale" );
 #else
-				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, "Set Stop" );
+				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, _("Set Stop") );
 #endif
 			}
 		}
@@ -639,12 +640,12 @@ void UnitMarine::disp_stop(int dispY1, int refreshFlag)
 				firmPtr = firm_array[ stop_array[i].firm_recno ];
 				nation_array[firmPtr->nation_recno]->disp_nation_color(x+4, y+4);
 				font_san.put(x+20, y+4, firmPtr->firm_name());
-				font_san.put(x+4, y+19, "Pick up: ");
+				font_san.put(x+4, y+19, _("Pick up: "));
 
 #if(defined(FRENCH))
 				button_set_stop[i].paint_text( x+4, y+37, x+90, y+56, "Faire Escale" );
 #else
-				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, "Set Stop" );
+				button_set_stop[i].paint_text( x+4, y+37, x+80, y+56, _("Set Stop") );
 #endif
 
 				button_set_stop[i].set_help_code( "SSETSTOP" );
@@ -652,7 +653,7 @@ void UnitMarine::disp_stop(int dispY1, int refreshFlag)
 #if(defined(FRENCH))
 				button_go_stop[i].paint_text( x+94, y+37, x+180, y+56, "Voir Escale" );
 #else
-				button_go_stop[i].paint_text( x+84, y+37, x+180, y+56, "View Stop" );
+				button_go_stop[i].paint_text( x+84, y+37, x+180, y+56, _("View Stop") );
 #endif
 				button_go_stop[i].set_help_code( "SGOSTOP" );
 

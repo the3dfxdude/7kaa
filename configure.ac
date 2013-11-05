@@ -74,6 +74,8 @@ AC_TYPE_UINT8_T
 # Checks for library functions.
 dnl AC_CHECK_FUNCS([])
 
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.18])
 
 # Configuration variables
 
@@ -323,6 +325,7 @@ AC_CONFIG_FILES([
   src/video/ddraw/Makefile
   src/video/none/Makefile
   src/video/sdl/Makefile
+  po/Makefile.in
 ])
 
 AC_OUTPUT

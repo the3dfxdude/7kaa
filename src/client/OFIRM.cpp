@@ -52,6 +52,7 @@
 #include <OFIRMDIE.h>
 // ###### end Gilbert 2/10 ######//
 #include <OUNITRES.h>
+#include "gettext.h"
 
 
 //---------- define static member vars -------------//
@@ -482,16 +483,8 @@ char* Firm::firm_name()
 	}
 	else
 	{
-#if(defined(SPANISH))
-		str  = firm_res[firm_id]->short_name;
-		str += " de ";
-		str += town_res.get_name(closest_town_name_id);
-#else
-		// FRENCH, GERMAN and US
-		str  = town_res.get_name(closest_town_name_id);
-		str += " ";
-		str += firm_res[firm_id]->short_name;
-#endif
+		// TRANSLATORS: <Town> <Firm>
+		snprintf( str, MAX_STR_LEN+1, _("%1$s %2$s"), town_res.get_name(closest_town_name_id), firm_res[firm_id]->short_name );
 
 		if( firm_name_instance_id > 1 )		// don't display number for the first firm
 		{

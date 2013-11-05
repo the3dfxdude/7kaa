@@ -1,3 +1,5 @@
+AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
 	AM.cpp \
@@ -188,7 +190,6 @@ bin_PROGRAMS = 7kaa
 	OTOWNIF.cpp \
 	OTOWNIND.cpp \
 	OTOWNRES.cpp \
-	OTRANSL.cpp \
 	OTUTOR.cpp \
 	OTUTOR2.cpp \
 	OUNIT.cpp \
@@ -288,6 +289,7 @@ endif
 	../common/libcommon.a \
 	../file/libfile.a \
 	../video/common/libvideo_common.a \
-	../imgfun/libimgfun.a
+	../imgfun/libimgfun.a \
+	@LIBINTL@
 
 EXTRA_DIST = 7k.ico ico.rc

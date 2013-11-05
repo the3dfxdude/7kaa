@@ -100,7 +100,7 @@ struct NationRelation			// many-to-many relationships between nations
 	char	trade_treaty;			// whether allow trading with this nation
 
 	char  status;
-	const char* status_str()		{ return relation_status_str_array[status]; }
+	const char* status_str();
 
 	int	last_change_status_date;
    char* status_duration_str();

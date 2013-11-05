@@ -39,6 +39,8 @@
 #include <OTALKRES.h>
 #include <OINFO.h>
 #include <OREMOTE.h>
+#include <locale.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -64,20 +66,20 @@ enum { REPORT_BROWSE_X1 = ZOOM_X1+6,
 
 static const char* report_mode_str_array[MAX_NATION_REPORT_MODE] =
 {
-	"Information",
-	"Diplomacy",
-	"Chat",
-	"Diplomatic Log",
-	"Debug",
+	N_("Information"),
+	N_("Diplomacy"),
+	N_("Chat"),
+	N_("Diplomatic Log"),
+	N_("Debug"),
 };
 
 //---------- Define chat receiver str strings ---------//
 
 static const char* chat_receiver_str_array[MAX_CHAT_RECEIVER_TYPE] =
 {
-	"Send to the selected kingdom",
-	"Send to all allied human controlled kingdoms",
-	"Send to all human controlled kingdoms",
+	N_("Send to the selected kingdom"),
+	N_("Send to all allied human controlled kingdoms"),
+	N_("Send to all human controlled kingdoms"),
 };
 
 //----------- Define static variables ----------//
@@ -124,10 +126,10 @@ void Info::disp_nation(int refreshFlag)
 
 	vga_back.d3_panel_up(REPORT_BROWSE_X1, REPORT_BROWSE_Y1, REPORT_BROWSE_X2, REPORT_BROWSE_Y1+33 );
 
-	font_san.put( x	 , y+7, "Kingdom" );
+	font_san.put( x	 , y+7, _("Kingdom") );
 
-	font_san.put( x+185, y+7, "Reputation" );
-	font_san.put( x+275, y+7, "Status" );
+	font_san.put( x+185, y+7, _("Reputation") );
+	font_san.put( x+275, y+7, _("Status") );
 
 
 #if(defined(SPANISH))
@@ -158,14 +160,20 @@ void Info::disp_nation(int refreshFlag)
 	font_san.put( x+465, y   , "Handels-" );
 	font_san.put( x+465, y+13, "Betrag" );
 #else
-	font_san.put( x+345, y   , "Allow" );
-	font_san.put( x+343, y+13, "Attack" );
+	// TRANSLATORS: Part of "Allow Attack"
+	font_san.put( x+345, y   , _("Allow") );
+	// TRANSLATORS: Part of "Allow Attack"
+	font_san.put( x+343, y+13, _("Attack") );
 
-	font_san.put( x+405, y   , "Trade" );
-	font_san.put( x+405, y+13, "Treaty" );
+	// TRANSLATORS: Part of "Trade Treaty"
+	font_san.put( x+405, y   , pgettext("OR_NAT", "Trade") );
+	// TRANSLATORS: Part of "Trade Treaty"
+	font_san.put( x+405, y+13, _("Treaty") );
 
-	font_san.put( x+465, y   , "Trade" );
-	font_san.put( x+465, y+13, "Amount" );
+	// TRANSLATORS: Part of "Trade Amount"
+	font_san.put( x+465, y   , pgettext("OR_NAT", "Trade") );
+	// TRANSLATORS: Part of "Trade Amount"
+	font_san.put( x+465, y+13, _("Amount") );
 #endif
 
 
@@ -323,8 +331,8 @@ static void put_nation_rec(int recNo, int x, int y, int refreshFlag)
 	if( nationRecno != info.viewing_nation_recno )
 	{
 		font_san.put( x+272, y, nationRelation->status_str() );
-		font_san.put( x+355, y, nationRelation->should_attack ? (char*)"Yes" : (char*)"No" );
-		font_san.put( x+412, y, nationRelation->trade_treaty ? (char*)"Yes" : (char*)"No" );
+		font_san.put( x+355, y, nationRelation->should_attack ? (char*)_("Yes") : (char*)_("No") );
+		font_san.put( x+412, y, nationRelation->trade_treaty ? (char*)_("Yes") : (char*)_("No") );
 		font_san.put( x+465, y, misc.format( (int) viewingNation->total_year_trade(nationRecno),2) );
 
 		if( config.show_ai_info )
@@ -366,7 +374,7 @@ static void disp_button()
 		else
 			vga_util.d3_panel_up( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2 );
 
-		font_san.center_put( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2, report_mode_str_array[i-1] );
+		font_san.center_put( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2, _(report_mode_str_array[i-1]) );
 
 		x+=REPORT_BUTTON_WIDTH;
 	}
@@ -491,76 +499,57 @@ static void disp_nation_info()
 	//-------- display economic data ----------//
 
 	String str;
+	char xstr[MAX_STR_LEN+1] = {0};
 
 	if( nationRecno == info.viewing_nation_recno )
 	{
-		font_san.put_field( x1, y, "Your Food", x2, nationPtr->food_str() );
+		font_san.put_field( x1, y, _("Your Food"), x2, nationPtr->food_str() );
 
 		str  = "$";
 		str += nationPtr->cash_str();
 
-		font_san.put_field( x1, y+=16, "Your Treasure", x2, str );
+		font_san.put_field( x1, y+=16, _("Your Treasure"), x2, str );
 
-		font_san.field( x1, y+=16, "Your Continuous Peace Time", x2, nationPtr->peace_duration_str(), x3, INFO_REPAINT, "PEACE" );
+		font_san.field( x1, y+=16, _("Your Continuous Peace Time"), x2, nationPtr->peace_duration_str(), x3, INFO_REPAINT, "PEACE" );
 	}
 	else
 	{
-		str  = translate.process("Your Yearly Import from ");
-		str += nationPtr->nation_name();
+		// TRANSLATORS: Your Yearly Import from <King>'s Kingdom
+		str = _("Your Yearly Import from %s's Kingdom");
+		snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
-		font_san.field( x1, y    , str, x2, (int) viewingNation->get_relation(nationRecno)->import_365days(IMPORT_TOTAL), 2, x3, INFO_REPAINT, "IMPORT" );
+		font_san.field( x1, y    , xstr, x2, (int) viewingNation->get_relation(nationRecno)->import_365days(IMPORT_TOTAL), 2, x3, INFO_REPAINT, "IMPORT" );
 
-		str  = translate.process("Your Yearly Export to ");
-		str += nationPtr->nation_name();
+		// TRANSLATORS: Your Yearly Export to <King>'s Kingdom
+		str = _("Your Yearly Export to %s's Kingdom");
+		snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
-		font_san.field( x1, y+=16, str, x2, (int) nationPtr->get_relation(info.viewing_nation_recno)->import_365days(IMPORT_TOTAL), 2, x3, INFO_REPAINT, "EXPORT" );
+		font_san.field( x1, y+=16, xstr, x2, (int) nationPtr->get_relation(info.viewing_nation_recno)->import_365days(IMPORT_TOTAL), 2, x3, INFO_REPAINT, "EXPORT" );
 
-		str  = translate.process("Continuous Peace Time of ");
-		str += nationPtr->nation_name();
+		// TRANSLATORS: Continuous Peace Time of <King>'s Kingdom
+		str = _("Continuous Peace Time of %s's Kingdom");
+		snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
-		font_san.field( x1, y+=16, str, x2, nationPtr->peace_duration_str(), x3, INFO_REPAINT, "PEACE" );
+		font_san.field( x1, y+=16, xstr, x2, nationPtr->peace_duration_str(), x3, INFO_REPAINT, "PEACE" );
 
 		//--------- duration of current status ----------//
 
-#if(defined(SPANISH))
-		str  = "Duración del estado de ";
-		str += translate.process(nationRelation->status_str());
-#elif(defined(FRENCH))
-		str  = "Duration of ";
-		str += nationRelation->status_str();
-		str += " Status";
-		str  = translate.process(str);
-#else
-		// GERMAN and US
-		str  = translate.process("Duration of ");
-		str += translate.process(nationRelation->status_str());
-		str += " Status";
-#endif
+		// TRANSLATORS: Duration of <War/Tense/Neutral/Friendly/Alliance> Status
+		str = _("Duration of %s Status");
+		snprintf( xstr, MAX_STR_LEN+1, str, nationRelation->status_str() );
 
-		font_san.field( x1, y+=16, str, x2, nationRelation->status_duration_str(), x3, INFO_REPAINT, "STATTIME" );
+		font_san.field( x1, y+=16, xstr, x2, nationRelation->status_duration_str(), x3, INFO_REPAINT, "STATTIME" );
 
 		//------- display the allow_attack field --------//
 
-		#if(defined(SPANISH))
-			// str  = "Permitir que tus Unidades ataquen al ";
-			str  = "Permitir atacar al ";
-			str += nationPtr->nation_name();
-		#elif(defined(FRENCH))
-			str  = "Autoriser attaque contre le ";
-			str += nationPtr->nation_name();
-		#elif(defined(GERMAN))
-			str  = "Angriffe auf ";
-			str += nationPtr->nation_name();
-			str += " erlauben";
-		#else
-			str  = "Allow Your Units to Attack ";
-			str += nationPtr->nation_name();
-		#endif
+		// TRANSLATORS: Allow Your Units to Attack <Kings>'s Kingdom
+		str = _("Allow Your Units to Attack %s's Kingdom");
+		snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
-		font_san.field( x1, y+=16, str, x2, "", x3, INFO_REPAINT, "ALLOWATK" );
+		font_san.field( x1, y+=16, xstr, x2, "", x3, INFO_REPAINT, "ALLOWATK" );
 
-		button_allow_attack[1].create_text( x2+6 , y, x2+50 , y+15, "Yes" );
-		button_allow_attack[0].create_text( x2+54, y, x2+100, y+15, "No"  );
+		button_allow_attack[1].create_text( x2+6 , y, x2+50 , y+15, _("Yes") );
+		button_allow_attack[0].create_text( x2+54, y, x2+100, y+15, _("No")  );
 
 		button_allow_attack.paint( viewingNation->get_relation(nationRecno)->should_attack );
 
@@ -568,33 +557,17 @@ static void disp_nation_info()
 
 		if( viewingNation->get_relation(nationRecno)->status == NATION_ALLIANCE )
 		{
-#if(defined(SPANISH))
-			str  = "Tesoro del ";
-			str += nationPtr->nation_name();
-#elif(defined(FRENCH))
-			str  = "Trésor du ";
-			str += nationPtr->nation_name();
-#else
-			// GERMAN and US
-			str  = nationPtr->nation_name();
-			str += " 's Treasure";
-#endif
+			// TRANSLATORS: <King>'s Kingdom's Treasure
+			str = _("%s's Kingdom's Treasure");
+			snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
-			font_san.field( x1, y+=16, str, x2, nationPtr->cash, 2, x3, INFO_REPAINT );
+			font_san.field( x1, y+=16, xstr, x2, nationPtr->cash, 2, x3, INFO_REPAINT );
 
-#if(defined(SPANISH))
-			str = "Alimentos del ";
-			str += nationPtr->nation_name();
-#elif(defined(FRENCH))
-			str = "Réserves de nourriture du ";
-			str += nationPtr->nation_name();
-#else
-			// GERMAN and US
-			str  = nationPtr->nation_name();
-			str += " 's Food";
-#endif
+			// TRANSLATORS: <King>'s Kingdom's Food
+			str = _("%s's Kingdom's Food");
+			snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
-			font_san.field( x1, y+=16, str, x2, nationPtr->food, 2, x3, INFO_REPAINT );
+			font_san.field( x1, y+=16, xstr, x2, nationPtr->food, 2, x3, INFO_REPAINT );
 		}
 	}
 
@@ -606,23 +579,12 @@ static void disp_nation_info()
 	{
 		String str;
 
-#if(defined(SPANISH))
-		str  = "Estado Diplomático del ";
-		str += nationPtr->nation_name();
-		str += " con otros Reinos:";
-#elif(defined(FRENCH))
-		str  = "Relations diplomatiques de ";
-		str += nationPtr->nation_name();
-		str += " avec les autres royaumes:";
-#else
-		// GERMAN and US
-		str  = nationPtr->nation_name();
-		str += "'s ";
-		str += translate.process( "Diplomatic Status with Other Kingdoms:" );
-#endif
+		// TRANSLATORS: <King>'s Kingdom's Diplomatic Status with Other Kingdoms:
+		str = _("%s's Kingdom's Diplomatic Status with Other Kingdoms:");
+		snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
 		nationPtr->disp_nation_color(x1, y+1);
-		font_san.put(x1+20, y, str);
+		font_san.put(x1+20, y, xstr);
 		y+=20;
 
 		for( int i=1 ; i<=nation_array.size() ; i++ )
@@ -641,7 +603,7 @@ static void disp_nation_info()
 
 			if( nationPtr->get_relation(i)->trade_treaty )
 			{
-				font_san.put( x1+330, y, "Trade Treaty" );
+				font_san.put( x1+330, y, _("Trade Treaty") );
 #if(defined(FRENCH))
 				font_san.put( x1+460, y, misc.format((int)nationPtr->total_year_trade(i),2) );
 #else
@@ -899,9 +861,11 @@ static void put_talk_msg_rec(int recNo, int x1, int y, int refreshFlag)
 	const char* str1;
 
 	if( isTo )
-		str1 = translate.process("To");
+		// TRANSLATORS: To <Nation color> on <Date> :
+		str1 = _("To");
 	else
-		str1 = translate.process("From");
+		// TRANSLATORS: From <Nation color> on <Date> :
+		str1 = _("From");
 
 	font_san.put( x , y, str1 );
 
@@ -917,17 +881,17 @@ static void put_talk_msg_rec(int recNo, int x1, int y, int refreshFlag)
 	x+=18;
 
 	String str;
+	char xstr[MAX_STR_LEN+1] = {0};
 
-	str = translate.process("on ");
+	// TRANSLATORS: To/From <Nation color> on <Date> :
+	str = _("on %s :");
 
 	if( talkMsgDisp->is_reply )
-		str += date.date_str(talkMsg->reply_date);
+		snprintf( xstr, MAX_STR_LEN+1, str, date.date_str(talkMsg->reply_date) );
 	else
-		str += date.date_str(talkMsg->date);
+		snprintf( xstr, MAX_STR_LEN+1, str, date.date_str(talkMsg->date) );
 
-	str += " :";
-
-	font_san.put( x , y, str );
+	font_san.put( x , y, xstr );
 
 	font_san.put( x1, y+13, talkMsg->msg_str(info.viewing_nation_recno, talkMsgDisp->is_reply), 0, browse_talk_msg.ix2 );
 }
@@ -953,7 +917,7 @@ static void disp_nation_chat(int refreshFlag)
 	vga_util.d3_panel_down( REPORT_DET_X1, REPORT_DET_Y1, REPORT_DET_X2, REPORT_TALK_Y2 );
 
 	font_san.put( REPORT_DET_X1+10, REPORT_DET_Y1+10,
-					  "Please enter your chat message and press <Enter> to send." );
+					  _("Please enter your chat message and press <Enter> to send.") );
 
 	// ###### begin Gilbert 15/10 #######//
 	if( !init_get_chat )
@@ -984,7 +948,7 @@ static void disp_nation_chat(int refreshFlag)
 		else
 			vga_util.d3_panel_up( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20 );
 
-		font_san.center_put( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20, chat_receiver_str_array[i-1] );
+		font_san.center_put( REPORT_DET_X1+10, y, REPORT_DET_X2-10, y+20, _(chat_receiver_str_array[i-1]) );
 	}
 }
 //----------- End of static function disp_nation_chat -----------//

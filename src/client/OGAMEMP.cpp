@@ -47,6 +47,7 @@
 #include <OGETA.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
+#include "gettext.h"
 
 // --------- Define constant --------//
 
@@ -551,14 +552,14 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
-		box.msg("Unable to connect from lobby.");
+		box.msg(_("Unable to connect from lobby."));
 	}
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg("Cannot initialize DirectPlay.");
+		box.msg(_("Cannot initialize ENet."));
 		mp_obj.deinit();
 		return;
 	}
@@ -572,7 +573,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	if (service_mode == 4)
 	{
 		if (!mp_get_leader_board())
-			box.msg("Unable to retrieve leader board");
+			box.msg(_("Unable to retrieve leader board"));
 		mp_obj.deinit();
 		return;
 	}
@@ -586,17 +587,17 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
-			if (!input_box("Enter the of the game:", game_name, MP_FRIENDLY_NAME_LEN+1))
+			if (!input_box(_("Enter the name of the game:"), game_name, MP_FRIENDLY_NAME_LEN+1))
 			{
 				mp_obj.deinit();
 				return;
 			}
 			password[0] = 0;
-			if (!input_box("Set the game's password:", password, MP_FRIENDLY_NAME_LEN+1))
+			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
 				password[0] = 0;
 			if (!mp_obj.create_session(game_name, password, config.player_name, MAX_NATION))
 			{
-				box.msg("Cannot create the game.");
+				box.msg(_("Cannot create the game."));
 				mp_obj.deinit();
 				return;
 			}
@@ -622,7 +623,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 				// Join by direct IP address
 				strcpy(join_address, "localhost");
 				if (!lobbied &&
-				    input_box("Enter the game's address:", join_address, 100) &&
+				    input_box(_("Enter the game's address:"), join_address, 100) &&
 				    mp_obj.init_lobbied(MAX_NATION, join_address))
 				{
 					choice = 1;
@@ -630,7 +631,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			}
 			else
 			{
-				box.msg("Service not supported");
+				box.msg(_("Service not supported"));
 			}
 
 			if (!choice)
@@ -649,7 +650,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			if (!mp_join_session(choice, config.player_name))
 			{
 				choice = 0;
-				box.msg("Unable to connect");
+				box.msg(_("Unable to connect"));
 			}
 
 			remote.init(&mp_obj);
@@ -762,14 +763,14 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
-		box.msg("Unable to connect from lobby.");
+		box.msg(_("Unable to connect from lobby."));
 	}
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg("Cannot initialize DirectPlay.");
+		box.msg(_("Cannot initialize ENet."));
 		mp_obj.deinit();
 		return;
 	}
@@ -783,7 +784,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if (service_mode == 4)
 	{
 		if (!mp_get_leader_board())
-			box.msg("Unable to retrieve leader board");
+			box.msg(_("Unable to retrieve leader board"));
 		mp_obj.deinit();
 		return;
 	}
@@ -811,17 +812,17 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
-			if (!input_box("Enter the name of the game:", game_name, MP_FRIENDLY_NAME_LEN+1))
+			if (!input_box(_("Enter the name of the game:"), game_name, MP_FRIENDLY_NAME_LEN+1))
 			{
 				mp_obj.deinit();
 				return;
 			}
 			password[0] = 0;
-			if (!input_box("Set the game's password:", password, MP_FRIENDLY_NAME_LEN+1))
+			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
 				password[0] = 0;
 			if (!mp_obj.create_session(game_name, password, config.player_name, gamePlayerCount))
 			{
-				box.msg("Cannot create the game.");
+				box.msg(_("Cannot create the game."));
 				mp_obj.deinit();
 				return;
 			}
@@ -847,7 +848,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 				// Join by direct IP address
 				strcpy(join_address, "localhost");
 				if (!lobbied &&
-				    input_box("Enter the game's address:", join_address, 100) &&
+				    input_box(_("Enter the game's address:"), join_address, 100) &&
 				    mp_obj.init_lobbied(gamePlayerCount, join_address))
 				{
 					choice = 1;
@@ -855,7 +856,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			}
 			else
 			{
-				box.msg("Service not supported");
+				box.msg(_("Service not supported"));
 			}
 
 			if (!choice)
@@ -874,7 +875,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			if (!mp_join_session(choice, config.player_name))
 			{
 				choice = 0;
-				box.msg("Unable to connect");
+				box.msg(_("Unable to connect"));
 			}
 
 			// count required player
@@ -1011,13 +1012,13 @@ int Game::mp_select_service()
 
 				// TODO: Properly change these buttons
 				vga_front.d3_panel_up(buttonX[0], buttonY[0], buttonX[0] + SERVICE_BUTTON_WIDTH, buttonY[0] + SERVICE_BUTTON_HEIGHT, 0);
-				font_san.put(buttonX[0] + 10, buttonY[0] + 10, "Local Area Network", 0, VGA_WIDTH);
+				font_san.put(buttonX[0] + 10, buttonY[0] + 10, _("Local Area Network"), 0, VGA_WIDTH);
 				vga_front.d3_panel_up(buttonX[1], buttonY[1], buttonX[1] + SERVICE_BUTTON_WIDTH, buttonY[1] + SERVICE_BUTTON_HEIGHT, 0);
-				font_san.put(buttonX[1] + 10, buttonY[1] + 10, "Enter IP Address", 0, VGA_WIDTH);
+				font_san.put(buttonX[1] + 10, buttonY[1] + 10, _("Enter IP Address"), 0, VGA_WIDTH);
 				vga_front.d3_panel_up(buttonX[2], buttonY[2], buttonX[2] + SERVICE_BUTTON_WIDTH, buttonY[2] + SERVICE_BUTTON_HEIGHT, 0);
 				font_san.put(buttonX[2] + 10, buttonY[2] + 10, "www.7kfans.com", 0, VGA_WIDTH);
 				vga_front.d3_panel_up(buttonX[3], buttonY[3], buttonX[3] + SERVICE_BUTTON_WIDTH, buttonY[3] + SERVICE_BUTTON_HEIGHT, 0);
-				font_san.put(buttonX[3] + 10, buttonY[3] + 10, "7kfans Leader Board", 0, VGA_WIDTH);
+				font_san.put(buttonX[3] + 10, buttonY[3] + 10, _("7kfans Leader Board"), 0, VGA_WIDTH);
 			}
 
 			refreshFlag = 0;
@@ -1215,7 +1216,7 @@ int Game::mp_select_mode(char *defSaveFileName)
 			if( misc.str_icmpx(getSaveFile.input_field, "AUTO") ||
 				misc.str_icmpx(getSaveFile.input_field, "AUTO2") )
 			{
-				if( !box.ask("It is not recommended to use this save game file name, do you wish to continue?") )
+				if( !box.ask(_("It is not recommended to use this save game file name, do you wish to continue?")) )
 				{
 					rc = 0;
 				}
@@ -1256,8 +1257,8 @@ int Game::mp_select_mode(char *defSaveFileName)
 // The return is 1 when ok is pressed, and 0 when cancel is pressed.
 int Game::input_box(const char *tell_string, char *buf, int len)
 {
-	const char *buttonDes1 = "Ok";
-	const char *buttonDes2 = "Cancel";
+	const char *buttonDes1 = _("Ok");
+	const char *buttonDes2 = _("Cancel");
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
 	const int box_x1 = 250;
 	const int box_y1 = 200;
@@ -1454,7 +1455,7 @@ int Game::mp_select_session()
 				if( !mp_obj.poll_sessions() )
 				{
 					// return fail if poll_sessions fails or cancel the dialogue box
-					box.msg("Unable to poll sessions.\n");
+					box.msg(_("Unable to poll sessions.\n"));
 					choice = 0;
 					break;
 				}
@@ -1518,7 +1519,7 @@ int Game::mp_select_session()
 				if (mp_obj.is_update_available() > 0)
 				{
 					String update_message;
-					update_message = "There is a new version of Seven Kingdoms: Ancient Adversaries at www.7kfans.com";
+					update_message = _("There is a new version of Seven Kingdoms: Ancient Adversaries at www.7kfans.com");
 					vga_front.d3_panel_up(60, 65, VGA_WIDTH-60, 100, 2);
 					font_san.put(70, 75, update_message, 0, VGA_WIDTH-70);
 				}
@@ -1628,7 +1629,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	if (
 		session->password[0] &&
 		!input_box(
-			"Enter the game's password:",
+			_("Enter the game's password:"),
 			password,
 			MP_FRIENDLY_NAME_LEN+1
 		)
@@ -1637,12 +1638,12 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 	strcpy(session->password, password);
 
-	box.tell("Attempting to connect");
+	box.tell(_("Attempting to connect"));
 
 	width = box.box_x2 - box.box_x1 + 1;
 	buttonCancel.create_text(box.box_x1 + width / 2 + 2,
 				 box.box_y2 - box_button_margin,
-				 (char*)"Cancel");
+				 (char*)_("Cancel"));
 
 	buttonCancel.paint();
 
@@ -1705,12 +1706,12 @@ int Game::mp_get_leader_board()
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
 	int ret;
 
-	box.tell("Retrieving leaderboard");
+	box.tell(_("Retrieving leaderboard"));
 
 	width = box.box_x2 - box.box_x1 + 1;
 	buttonCancel.create_text(box.box_x1 + width / 2 + 2,
 				 box.box_y2 - box_button_margin,
-				 (char*)"Cancel");
+				 (char*)_("Cancel"));
 
 	buttonCancel.paint();
 
@@ -2398,7 +2399,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						image_menu.put_front( tickX[p]+3, tickY[p]+3, "NMPG-RCH" );
 					}
 					PlayerDesc *dispPlayer = mp_obj.search_player(regPlayerId[p]);
-					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)"?anonymous?" );
+					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)_("?anonymous?") );
 				}
 			}
 
@@ -2470,7 +2471,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					else if (regPlayerId[q] == 1) // Game host is always #1
 					{
 						// Cannot continue without a game organizer
-						box.msg("The game host has disconnected.");
+						box.msg(_("The game host has disconnected."));
 						return 0;
 					}
 
@@ -2512,7 +2513,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
-					box.msg("The game host has aborted the game.");
+					box.msg(_("The game host has aborted the game."));
 					return 0;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
@@ -2813,7 +2814,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					printf("MPMSG_REFUSE_NEW_PLAYER: %d\n", ((MpStructRefuseNewPlayer *)recvPtr)->player_id);
 					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.get_my_player_id() )
 					{
-						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
+						box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
 						return 0;
 					}
 					break;
@@ -3562,38 +3563,38 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				if( !recvStartMsg || offset <= oldOffset )
 				{
 					err_here();
-					box.msg( "Connection string from host is corrupted" );
+					box.msg( _("Connection string from host is corrupted") );
 					return 0;
 				}
 			} // end while
 
 			if( !recvSeed )
 			{
-				box.msg( "Cannot get random seeds from the host." );
+				box.msg( _("Cannot get random seeds from the host.") );
 				return 0;
 			}
 			err_when( recvSeed > 1 );
 			if( !recvConfig )
 			{
-				box.msg( "Cannot get game configuration info from the host." );
+				box.msg( _("Cannot get game configuration info from the host.") );
 				return 0;
 			}
 			err_when( recvConfig > 1 );
 			if( playerCount == 0 )
 			{
-				box.msg( "Cannot get kingdom information from the host." );
+				box.msg( _("Cannot get kingdom information from the host.") );
 				return 0;
 			}
 			err_when( playerCount > MAX_NATION );
 			if( !ownPlayerFound )
 			{
-				box.msg( "The host cannot recognize your machine." );
+				box.msg( _("The host cannot recognize your machine.") );
 				return 0;
 			}
 			err_when( ownPlayerFound > 1 );
 			if( !recvSetFrameDelay || !recvSyncTestLevel )
 			{
-				box.msg("Cannot receive important information from the host");
+				box.msg(_("Cannot receive important information from the host"));
 				return 0;
 			}
 			err_when( recvSetFrameDelay > 1 );
@@ -3638,7 +3639,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 			if( recvEndSetting < playerCount-1 )
 			{
-				box.msg("Some player(s) encountered errors when initializing the game.");
+				box.msg(_("Some player(s) encountered errors when initializing the game."));
 				// but continue
 			}
 		}
@@ -4261,7 +4262,7 @@ int Game::mp_select_load_option(char *fileName)
 						image_menu.put_front( tickX[p]+3, tickY[p]+3, "NMPG-RCH" );
 					}
 					PlayerDesc *dispPlayer = mp_obj.search_player(regPlayerId[p]);
-					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)"?anonymous?" );
+					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)_("?anonymous?") );
 				}
 			}
 
@@ -4334,7 +4335,7 @@ int Game::mp_select_load_option(char *fileName)
 					else if (regPlayerId[q] == 1) // Game host is always #1
 					{
 						// Cannot continue without a game organizer
-						box.msg("The game host has disconnected.");
+						box.msg(_("The game host has disconnected."));
 						return 0;
 					}
 
@@ -4374,7 +4375,7 @@ int Game::mp_select_load_option(char *fileName)
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
-					box.msg("The game host has aborted the game.");
+					box.msg(_("The game host has aborted the game."));
 					return 0;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
@@ -4545,7 +4546,7 @@ int Game::mp_select_load_option(char *fileName)
 				case MPMSG_REFUSE_NEW_PLAYER:
 					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.get_my_player_id() )
 					{
-						box.msg("You cannot join the game because the multiplayer saved game you selected is different from those of other human players.");
+						box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
 						return 0;
 					}
 					break;
@@ -4683,23 +4684,13 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					String str;
 
-					str  = "This multiplayer saved game needs ";
-					str += maxPlayer;
-					str += " human players while now there ";
-
-					if( regPlayerCount > 1 )
-						str += " are";
-					else
-						str += " is";
-
-					str += " only ";
-					str += regPlayerCount;
-
-					if( regPlayerCount > 1 )
-						str += " human players.";
-					else
-						str += " human player.";
-
+					snprintf(str,
+						 255,
+						 ngettext("This multiplayer saved game needs %1$d human players while now there is only %2$d human player.",
+							  "This multiplayer saved game needs %1$d human players while now there are only %2$d human players.",
+							  regPlayerCount),
+						 maxPlayer,
+						 regPlayerCount);
 					str += " The game cannot start.";
 
 					box.msg(str);
@@ -4857,23 +4848,13 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				String str;
 
-				str  = "This multiplayer saved game needs ";
-				str += maxPlayer;
-				str += " human players while now there ";
-
-				if( playerCount > 1 )
-					str += " are";
-				else
-					str += " is";
-
-				str += " only ";
-				str += playerCount;
-
-				if( playerCount > 1 )
-					str += " human players.";
-				else
-					str += " human player.";
-
+				snprintf(str,
+					 255,
+					 ngettext("This multiplayer saved game needs %1$d human players while now there is only %2$d human player.",
+						  "This multiplayer saved game needs %1$d human players while now there are only %2$d human players.",
+						  playerCount),
+					 maxPlayer,
+					 playerCount);
 				str += " The game cannot start.";
 
 				box.msg(str);
@@ -4886,11 +4867,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				String str;
 
-				str  = "This multiplayer saved game can only support ";
-				str += maxPlayer;
-				str += " human players while now there are ";
-				str += playerCount;
-				str += " human players. The game cannot start.";
+				snprintf(str, 255, _("This multiplayer saved game can only support %1$d human players while now there are %2$d human players. The game cannot start."), maxPlayer, playerCount);
 
 				box.msg(str);
 				return 0;
@@ -4950,7 +4927,7 @@ int Game::mp_select_load_option(char *fileName)
 							!nationPtr->is_own() && !nationPtr->is_remote() ||
 							nationPtr->color_scheme_id != msgNation->color_scheme )
 						{
-							box.msg( "Incorrect kingdom information received from the host." );
+							box.msg( _("Incorrect kingdom information received from the host.") );
 							return 0;
 						}
 						nationPtr->player_id = msgNation->dp_player_id;
@@ -4981,26 +4958,26 @@ int Game::mp_select_load_option(char *fileName)
 				if( !recvStartMsg || offset <= oldOffset )
 				{
 					err_here();
-					box.msg( "Connection string from host is corrupted" );
+					box.msg( _("Connection string from host is corrupted") );
 					return 0;
 				}
 			} // end while
 
 			if( playerCount == 0 )
 			{
-				box.msg( "Cannot get kingdom information from the host." );
+				box.msg( _("Cannot get kingdom information from the host.") );
 				return 0;
 			}
 			err_when( playerCount > MAX_NATION );
 			if( !ownPlayerFound )
 			{
-				box.msg( "The host cannot recognize your machine." );
+				box.msg( _("The host cannot recognize your machine.") );
 				return 0;
 			}
 			err_when( ownPlayerFound > 1 );
 			if( !recvSetFrameDelay || !recvSyncTestLevel )
 			{
-				box.msg("Cannot receive important information from the host");
+				box.msg(_("Cannot receive important information from the host"));
 				return 0;
 			}
 			err_when( recvSetFrameDelay > 1 );
@@ -5046,7 +5023,7 @@ int Game::mp_select_load_option(char *fileName)
 			}
 			if( recvEndSetting < playerCount-1 )
 			{
-				box.msg("Some player(s) encountered errors when initializing the game.");
+				box.msg(_("Some player(s) encountered errors when initializing the game."));
 				// but continue
 			}
 		}

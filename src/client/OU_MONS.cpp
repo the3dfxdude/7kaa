@@ -28,6 +28,7 @@
 #include <OTOWN.h>
 #include <OMONSRES.h>
 #include <OU_MONS.h>
+#include "gettext.h"
 
 //--------- Begin of function UnitMonster::UnitMonster --------//
 UnitMonster::UnitMonster()
@@ -61,30 +62,11 @@ char* UnitMonster::unit_name(int withTitle)
 	switch( rank_id )
 	{
 		case RANK_KING:
-			#if(defined(SPANISH))
-				str  = "Gran Todo ";
-				str += monsterName;
-			#elif(defined(FRENCH))
-				str  = "Tout Puissant ";
-				str += monsterName;
-			#elif(defined(GERMAN))
-				str  = "Hochkönig ";
-				str += monsterName;
-			#else
-				// GERMAN US
-				str  = "All High ";
-				str += monsterName;
-			#endif
+			snprintf( str, MAX_STR_LEN+1, _("All High %s"), monsterName );
 			break;
 
 		case RANK_GENERAL:
-			#if(defined(SPANISH) || defined(FRENCH))
-				str  = "Ordo ";
-				str += monsterName;
-			#else
-				// GERMAN US
-				str += " Ordo";
-			#endif
+			snprintf( str, MAX_STR_LEN+1, _("%s Ordo"), monsterName );
 			break;
 	}
 

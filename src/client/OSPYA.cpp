@@ -36,12 +36,13 @@
 #include <OSYS.h>
 #include <OSPY.h>
 #include <vga_util.h>
+#include "gettext.h"
 
 //----- Define constants for viewing secret menu ------//
 
 #define SECRET_REPORT_COUNT 7
 
-static const char* 	secret_report_str_array[] = { "Kingdoms", "Villages", "Economy", "Trade", "Military", "Technology", "Espionage" };
+static const char* 	secret_report_str_array[] = { N_("Kingdoms"), N_("Villages"), N_("Economy"), N_("Trade"), N_("Military"), N_("Technology"), N_("Espionage") };
 static char	 	secret_view_mode_array[]  = { MODE_NATION, MODE_TOWN, MODE_ECONOMY, MODE_TRADE, MODE_MILITARY, MODE_TECH, MODE_SPY };
 static char	 	secret_view_skill_array[] = { 40, 20, 30, 30, 50, 40, 90 };
 
@@ -324,7 +325,7 @@ void SpyArray::disp_view_secret_menu(int spyRecno, int refreshFlag)
 	vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
 
 	font_san.put_paragraph( INFO_X1+7, INFO_Y1+5, INFO_X2-7, INFO_Y2-5,
-									"Steal which type of secrets?" );
+									_("Steal which type of secrets?") );
 
 	//------------------------------------//
 
@@ -338,7 +339,7 @@ void SpyArray::disp_view_secret_menu(int spyRecno, int refreshFlag)
 	{
 		if( spyPtr->spy_skill >= secret_view_skill_array[i] )
 		{
-			button_secret_report_array[i].paint_text( INFO_X1, y, INFO_X2, y+21, secret_report_str_array[i] );
+			button_secret_report_array[i].paint_text( INFO_X1, y, INFO_X2, y+21, _(secret_report_str_array[i]) );
 			y+=23;
 		}
 		else
@@ -347,7 +348,7 @@ void SpyArray::disp_view_secret_menu(int spyRecno, int refreshFlag)
 		}
 	}
 
-	button_secret_report_cancel.paint_text( INFO_X1, y, INFO_X2, y+22, "Cancel" );
+	button_secret_report_cancel.paint_text( INFO_X1, y, INFO_X2, y+22, _("Cancel") );
 }
 //----------- End of function SpyArray::disp_view_secret_menu -----------//
 

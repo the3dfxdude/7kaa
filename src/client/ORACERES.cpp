@@ -26,12 +26,16 @@
 #include <OSKILL.h>
 #include <OUNITRES.h>
 #include <ORACERES.h>
-#include <OTRANSL.h>
+#include <locale.h>
+#include "gettext.h"
 
 //---------- #define constant ------------//
 
 #define RACE_DB   		"RACE"
 #define RACE_NAME_DB		"RACENAME"
+
+static void translate_race_name(char *name);
+static void translate_race_adjective(char *adjective);
 
 //------- Begin of function RaceRes::RaceRes -----------//
 
@@ -114,10 +118,8 @@ void RaceRes::load_race_info()
 		misc.rtrim_fld( raceInfo->code, raceRec->code, raceRec->CODE_LEN );
 		misc.rtrim_fld( raceInfo->name, raceRec->name, raceRec->NAME_LEN );
 		misc.rtrim_fld( raceInfo->adjective, raceRec->adjective, raceRec->ADJECTIVE_LEN );
-#if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-		translate.multi_to_win(raceInfo->name, raceInfo->NAME_LEN);
-		translate.multi_to_win(raceInfo->adjective, raceInfo->ADJECTIVE_LEN);
-#endif
+		translate_race_name(raceInfo->name);
+		translate_race_adjective(raceInfo->adjective);
 
 		memcpy( &bitmapOffset, raceRec->icon_bitmap_ptr, sizeof(uint32_t) );
 
@@ -169,8 +171,6 @@ void RaceRes::load_name()
 		raceName    = name_array+i-1;
 
 		misc.rtrim_fld( raceName->name, raceNameRec->name, raceNameRec->NAME_LEN );
-		// translate for all language
-		translate.multi_to_win(raceName->name, raceName->NAME_LEN);
 
 		if( raceName->name[0]=='@' )
 		{
@@ -487,3 +487,105 @@ RaceInfo* RaceRes::operator[](int raceId)
 //------------ End of function RaceRes::operator[] -----------//
 
 
+//---------- Begin of function translate_race_name -----------//
+static void translate_race_name(char *name)
+{
+	if( strncmp(name, "Norman", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Norman") );
+	}
+	else if( strncmp(name, "Maya", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Maya") );
+	}
+	else if( strncmp(name, "Greek", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Greek") );
+	}
+	else if( strncmp(name, "Viking", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Viking") );
+	}
+	else if( strncmp(name, "Persian", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Persian") );
+	}
+	else if( strncmp(name, "Chinese", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Chinese") );
+	}
+	else if( strncmp(name, "Japanese", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Japanese") );
+	}
+	else if( strncmp(name, "Egyptian", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Egyptian") );
+	}
+	else if( strncmp(name, "Mughul", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Mughul") );
+	}
+	else if( strncmp(name, "Zulu", RaceInfo::NAME_LEN) == 0 )
+	{
+		snprintf( name, RaceInfo::NAME_LEN+1, _("Zulu") );
+	}
+}
+//---------- End of function translate_race_name -----------//
+
+
+//---------- Begin of function translate_race_adjective -----------//
+static void translate_race_adjective(char *adjective)
+{
+	if( strncmp(adjective, "Norman", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Norman Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Norman") );
+	}
+	else if( strncmp(adjective, "Mayan", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Mayan Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Mayan") );
+	}
+	else if( strncmp(adjective, "Greek", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Greek Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Greek") );
+	}
+	else if( strncmp(adjective, "Viking", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Viking Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Viking") );
+	}
+	else if( strncmp(adjective, "Persian", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Persian Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Persian") );
+	}
+	else if( strncmp(adjective, "Chinese", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Chinese Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Chinese") );
+	}
+	else if( strncmp(adjective, "Japanese", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Japanese Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Japanese") );
+	}
+	else if( strncmp(adjective, "Egyptian", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Egyptian Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Egyptian") );
+	}
+	else if( strncmp(adjective, "Mughul", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Mughul Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Mughul") );
+	}
+	else if( strncmp(adjective, "Zulu", RaceInfo::ADJECTIVE_LEN) == 0 )
+	{
+		// TRANSLATORS: "the Zulu Scroll of Power"
+		snprintf( adjective, RaceInfo::ADJECTIVE_LEN+1, pgettext("Race Adjective", "Zulu") );
+	}
+}
+//---------- End of function translate_race_adjective -----------//

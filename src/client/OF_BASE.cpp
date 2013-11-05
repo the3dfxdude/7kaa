@@ -46,6 +46,7 @@
 #include <OREMOTE.h>
 #include <OSERES.h>
 #include <OSE.h>
+#include "gettext.h"
 
 //----------- Define static vars -------------//
 
@@ -358,7 +359,7 @@ void FirmBase::disp_base_info(int dispY1, int refreshFlag)
 	if( overseerUnit->rank_id == RANK_KING )
 	{
 		if( refreshFlag == INFO_REPAINT )
-			font_san.put( x1, y, "King" );
+			font_san.put( x1, y, _("King") );
 
 		y+=14;
 	}
@@ -372,7 +373,7 @@ void FirmBase::disp_base_info(int dispY1, int refreshFlag)
 
 	String str;
 
-	str  = translate.process("Leadership");
+	str  = _("Leadership");
 	str += ": ";
 	str += overseerUnit->skill.get_skill(SKILL_LEADING);
 
@@ -383,7 +384,9 @@ void FirmBase::disp_base_info(int dispY1, int refreshFlag)
 
 	if( overseerUnit->rank_id != RANK_KING )
 	{
-		x1 = font_san.put( x1, y, "Loyalty:" );
+		str  = _("Loyalty");
+		str += ":";
+		x1 = font_san.put( x1, y, str );
 
 		int x2 = info.disp_loyalty( x1, y-1, x1, overseerUnit->loyalty, overseerUnit->target_loyalty, nation_recno, refreshFlag );
 

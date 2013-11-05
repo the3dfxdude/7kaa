@@ -532,8 +532,7 @@ char* TalkMsg::from_king_name()
 {
 	static String str;
 
-	str  = translate.process("King ");
-	str += nation_array[from_nation_recno]->king_name();
+	str = nation_array[from_nation_recno]->king_name();
 
 	//------ add nation color bar -------//
 
@@ -557,8 +556,7 @@ char* TalkMsg::to_king_name()
 {
 	static String str;
 
-	str  = translate.process("King ");
-	str += nation_array[to_nation_recno]->king_name();
+	str = nation_array[to_nation_recno]->king_name();
 
 	//------ add nation color bar -------//
 

@@ -68,7 +68,6 @@
 #include <OTECHRES.h>
 #include <OTERRAIN.h>
 #include <OTOWN.h>
-#include <OTRANSL.h>
 #include <OUNIT.h>
 #include <OVGA.h>
 #include <vga_util.h>
@@ -105,6 +104,8 @@
 #include <OINGMENU.h>
 // ###### end Gilbert 23/10 #######//
 #include <dbglog.h>
+#include <locale.h>
+#include "gettext.h"
 
 //------- define game version constant --------//
 
@@ -132,7 +133,6 @@ Audio             audio;
 Music             music;
 MultiPlayer       mp_obj;
 Sys               sys;
-Translate         translate;        // constructor only memset()
 SeekPath          seek_path;
 SeekPathReuse     seek_path_reuse;
 Flame             flame[FLAME_GROW_STEP];
@@ -310,6 +310,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //
 int main(int argc, char **argv)
 {
+	setlocale(LC_ALL, "");
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
+
 	const char *lobbyJoinCmdLine = "-join";
 	const char *lobbyHostCmdLine = "-host";
 	const char *lobbyNameCmdLine = "-name";

@@ -43,6 +43,7 @@
 #include <OIMGRES.h>
 #include <OGAME.h>
 #include <OSYS.h>
+#include "gettext.h"
 
 //---------- Define static variables ------------//
 
@@ -79,7 +80,7 @@ void Firm::disp_info_both(int refreshFlag)
 		disp_basic_info(INFO_Y1, refreshFlag);
 
 		if( refreshFlag == INFO_REPAINT )
-			font_san.d3_put( INFO_X1, INFO_Y1+54, INFO_X2, INFO_Y1+74, "Under Construction" );
+			font_san.d3_put( INFO_X1, INFO_Y1+54, INFO_X2, INFO_Y1+74, _("Under Construction") );
 	}
 	else
 	{
@@ -607,7 +608,7 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 		if( workerPtr->town_recno )		// FirmInfo::live_in_town is 1
 		{
 			Town* townPtr = town_array[workerPtr->town_recno];
-			font_san.field( x, y, "Residence", x+100, townPtr->town_name(), INFO_X2-2, refreshFlag);
+			font_san.field( x, y, _("Residence"), x+100, townPtr->town_name(), INFO_X2-2, refreshFlag);
 			y+=16;
 
 			if( town_array[workerPtr->town_recno]->nation_recno == nation_recno &&
@@ -616,14 +617,14 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 				info.disp_loyalty( x, y, x+100, workerPtr->loyalty(), workerPtr->target_loyalty(firm_recno), nation_recno, refreshFlag );
 			}
 			else
-				font_san.field( x, y, "Loyalty", x+100, "N/A", INFO_X2-2, refreshFlag );		// no loyalty because it does not belong to your empire
+				font_san.field( x, y, _("Loyalty"), x+100, _("N/A"), INFO_X2-2, refreshFlag );		// no loyalty because it does not belong to your empire
 		}
 		else										// FirmInfo::live_in_town is 0
 		{
 			if( workerPtr->race_id )
 				info.disp_loyalty( x, y, x+100, workerPtr->loyalty(), workerPtr->target_loyalty(firm_recno), nation_recno, refreshFlag );
 			else
-				font_san.field( x, y, "Loyalty", x+100, "N/A", INFO_X2-2, refreshFlag );		// no loyalty because it does not belong to your empire
+				font_san.field( x, y, _("Loyalty"), x+100, _("N/A"), INFO_X2-2, refreshFlag );		// no loyalty because it does not belong to your empire
 		}
 
 		y+=16;
@@ -635,9 +636,9 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 		if( workerPtr->race_id )
 			str = misc.format(workerPtr->skill_level, 1);
 		else
-			str = "N/A";
+			str = _("N/A");
 
-		font_san.field( x, y, Skill::skill_str_array[workerPtr->skill_id-1],
+		font_san.field( x, y, _(Skill::skill_str_array[workerPtr->skill_id-1]),
 			x+100, str, INFO_X2-2, refreshFlag);
 
 		y+=16;
@@ -649,9 +650,9 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 			if( workerPtr->race_id )
 				str = misc.format(workerPtr->combat_level, 1);
 			else
-				str = "N/A";
+				str = _("N/A");
 
-			font_san.field( x, y, "Combat", x+100, str, INFO_X2-2, refreshFlag);
+			font_san.field( x, y, _("Combat"), x+100, str, INFO_X2-2, refreshFlag);
 			y+=16;
 
 			//---------------------------------------//
@@ -660,7 +661,7 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 			str += "/";
 			str += workerPtr->max_hit_points();
 
-			font_san.field( x, y, "Hit Points", x+100, str, INFO_X2-2, refreshFlag);
+			font_san.field( x, y, _("Hit Points"), x+100, str, INFO_X2-2, refreshFlag);
 		}
 	}
 }
@@ -692,14 +693,14 @@ void Firm::disp_overseer_info(int dispY1, int refreshFlag)
 		y+=16;
 	}
 
-	font_san.field( x, y, Skill::skill_str_array[unitPtr->skill.skill_id-1],
+	font_san.field( x, y, _(Skill::skill_str_array[unitPtr->skill.skill_id-1]),
 		x+100, unitPtr->skill.skill_level , 1, INFO_X2-2, refreshFlag);
 
 	y+=16;
 
 	if( firm_id==FIRM_CAMP )		// only display combat level in camps and don't display it in seat of power
 	{
-		font_san.field( x, y, "Combat" , x+100, unitPtr->skill.combat_level, 1, INFO_X2-2, refreshFlag);
+		font_san.field( x, y, _("Combat") , x+100, unitPtr->skill.combat_level, 1, INFO_X2-2, refreshFlag);
 		y+=16;
 	}
 
@@ -708,7 +709,7 @@ void Firm::disp_overseer_info(int dispY1, int refreshFlag)
 	str += "/";
 	str += unitPtr->max_hit_points;
 
-	font_san.field( x, y, "Hit Points", x+100, str, INFO_X2-2, refreshFlag);
+	font_san.field( x, y, _("Hit Points"), x+100, str, INFO_X2-2, refreshFlag);
 }
 //----------- End of function Firm::disp_overseer_info -----------//
 

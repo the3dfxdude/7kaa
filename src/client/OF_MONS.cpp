@@ -37,6 +37,7 @@
 #include <ONATION.h>
 #include <OMONSRES.h>
 #include <OF_MONS.h>
+#include "gettext.h"
 
 //----------- Define constant ------------//
 
@@ -127,17 +128,7 @@ char* FirmMonster::firm_name()
 {
 	static String str;
 
-#if(defined(SPANISH))
-	str  = "Guarida ";
-	str += monster_res[monster_id]->name;
-#elif(defined(FRENCH))
-	str  = "Antre des ";
-	str += monster_res[monster_id]->name;
-#else
-	// GERMAN, US
-	str  = monster_res[monster_id]->name;
-	str += translate.process(" Lair");
-#endif
+	snprintf(str, MAX_STR_LEN+1, _("%s Lair"), monster_res[monster_id]->name);
 
 	return str;
 }

@@ -40,6 +40,7 @@
 #include <OF_FACT.h>
 #include <OREMOTE.h>
 #include <OSE.h>
+#include "gettext.h"
 
 
 //-------- define constant ---------//
@@ -349,16 +350,8 @@ void FirmFactory::disp_factory_info(int dispY1, int refreshFlag)
 
 	String str;
 
-	str  = translate.process("Producing ");
-#if(defined(FRENCH))
-	char productName[20];
-	strcpy(productName, raw_res[product_raw_id]->name);
-	strcat(productName, " Products");
-	str += translate.process(productName);
-#else
-	str += raw_res[product_raw_id]->name;
-	str += translate.process(" Products");
-#endif
+	// TRANSLATORS: Producing <Clay/Copper/Iron> Products
+	snprintf( str, MAX_STR_LEN+1, _("Producing %s Products"), raw_res[product_raw_id]->name );
 
 	font_san.use_max_height();							// make sure the old text is replaced completely
 #if(defined(FRENCH) || defined(SPANISH))
@@ -370,20 +363,20 @@ void FirmFactory::disp_factory_info(int dispY1, int refreshFlag)
 
 	y+=16;
 
-	font_san.field( x, y, "Monthly Production", x+133, (int) production_30days(), 1, INFO_X2-2, refreshFlag, "FC_PROD" );
+	font_san.field( x, y, _("Monthly Production"), x+133, (int) production_30days(), 1, INFO_X2-2, refreshFlag, "FC_PROD" );
 	y+=16;
 
 	str  = (int) raw_stock_qty;
 	str += " / ";
 	str += (int) max_raw_stock_qty;
-	font_san.field( x, y, "Raw Material Stock", x+133, str, INFO_X2-2, refreshFlag, "FC_RAW" );
+	font_san.field( x, y, _("Raw Material Stock"), x+133, str, INFO_X2-2, refreshFlag, "FC_RAW" );
 	y+=16;
 
 	str  = (int) stock_qty;
 	str += " / ";
 	str += (int) max_stock_qty;
 
-	font_san.field( x, y, "Product Stock", x+133, str, INFO_X2-2, refreshFlag, "FC_PROD");
+	font_san.field( x, y, _("Product Stock"), x+133, str, INFO_X2-2, refreshFlag, "FC_PROD");
 }
 //----------- End of function FirmFactory::disp_factory_info -----------//
 
