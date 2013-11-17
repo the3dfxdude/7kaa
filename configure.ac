@@ -188,7 +188,7 @@ AS_IF([test "$input_backend" = sdl \
   LIBS="$SDL_LIBS $LIBS"
 ])
 
-SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lwsock32" -lenet], [], [
+SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lws2_32 -lwinmm" -lenet], [], [
   AC_ERROR([enet not found])
 ])
 
@@ -206,7 +206,6 @@ AS_IF([test "$input_backend" = dinput], [
 
 AS_IF([test "$use_windows" = yes], [
   LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
-  LDFLAGS="-mno-cygwin $LDFLAGS"
 
   AS_IF([test "$enable_debug" = no], [
     LDFLAGS="$LDFLAGS -mwindows"
