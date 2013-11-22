@@ -393,25 +393,11 @@ void Sys::deinit_objects()
 //
 int Sys::set_config_dir()
 {
-#ifdef NO_WINDOWS
-   const char *home_env_var = "HOME";
-#else // WINDOWS
-   const char *home_env_var = "USERPROFILE";
-#endif 
-   int r;
-
-   // Find the path for the config directory--this is based on the default
-   // location for the logged in user.
-   char *home = getenv(home_env_var);
-
-   if (strlen(home) + strlen(DEFAULT_DIR_CONFIG) >= MAX_PATH-2)
-   {
-      ERR("Game config dir path too long.\n");
-      return 0;
-   }
-
+   // Get the path for the config directory from SDL. Guaranteed to end with a path separator
+   char *home = SDL_GetPrefPath(CONFIG_ORGANIZATION_NAME, CONFIG_APPLICATION_NAME);
    strcpy(dir_config, home);
-   strcat(dir_config, DEFAULT_DIR_CONFIG);
+   SDL_free(home);
+   home = NULL;
 
    MSG("Game config dir path: %s\n", dir_config);
 
@@ -422,9 +408,6 @@ int Sys::set_config_dir()
       dir_config[0] = 0;
       return 0;
    }
-
-   // place ending delimiter to help with concatenating
-   strcat(dir_config, PATH_DELIM);
 
    return 1;
 }
