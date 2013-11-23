@@ -33,6 +33,7 @@
 #include <ONATION.h>
 #include <OUNIT.h>
 #include <OINFO.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -80,11 +81,11 @@ void Info::disp_town(int refreshFlag)
 
 	vga_back.d3_panel_up(TOWN_BROWSE_X1, TOWN_BROWSE_Y1, TOWN_BROWSE_X2, TOWN_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Village" );
-	font_san.put( x+150, y, "Villagers" );
-	font_san.put( x+225, y, "Peasants" );
-	font_san.put( x+295, y, "Loyalty" );
-	font_san.put( x+355, y, "Races" );
+	font_san.put( x	 , y, _("Village") );
+	font_san.put( x+150, y, _("Villagers") );
+	font_san.put( x+225, y, _("Peasants") );
+	font_san.put( x+295, y, _("Loyalty") );
+	font_san.put( x+355, y, _("Races") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -108,15 +109,15 @@ void Info::disp_town(int refreshFlag)
 
 	vga_back.d3_panel_up(FIRM_BROWSE_X1, FIRM_BROWSE_Y1, FIRM_BROWSE_X2, FIRM_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Structure" );
-	font_san.put( x+140, y, "Unit Cost" );
+	font_san.put( x	 , y, _("Structure") );
+	font_san.put( x+140, y, _("Unit Cost") );
 #if(defined(FRENCH))
 	font_san.put( x+237, y, "No. of Structures" );
 #else
-	font_san.put( x+217, y, "No. of Structures" );
+	font_san.put( x+217, y, _("No. of Structures") );
 #endif
-	font_san.put( x+340, y, "Yearly Expense" );
-	font_san.put( x+450, y, "Yearly Income" );
+	font_san.put( x+340, y, _("Yearly Expense") );
+	font_san.put( x+450, y, _("Yearly Income") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -198,37 +199,19 @@ static void disp_total()
 
 	String str;
 
-	if( browse_town.total_rec() > 1 )
-		str = "Total Villages";
-	else
-		str = "Total Village";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += browse_town.total_rec();
+	snprintf( str, MAX_STR_LEN+1, _("Total Villages: %s"), misc.format(browse_town.total_rec()) );
 
 	font_san.put( x, y, str );
 
    //-------------------------------//
 
-	str  = "Total Villagers";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += total_population;
+	snprintf( str, MAX_STR_LEN+1, _("Total Villagers: %s"), misc.format(total_population) );
 
 	font_san.put( x+180, y, str );
 
 	//-------------------------------//
 
-	if( total_peasant > 1 )
-		str = "Total Peasants";
-	else
-		str = "Total Peasant";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += total_peasant;
+	snprintf( str, MAX_STR_LEN+1, _("Total Peasants: %s"), misc.format(total_peasant) );
 
 	font_san.put( x+360, y, str );
 
@@ -241,19 +224,11 @@ static void disp_total()
 
 	vga_back.d3_panel_up(POP_TOTAL_X1, POP_TOTAL_Y1, POP_TOTAL_X2, POP_TOTAL_Y2 );
 
-	str  = "Total Other Human Units";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += viewNation->total_human_count;
+	snprintf( str, MAX_STR_LEN+1, _("Total Other Human Units: %s"), misc.format(viewNation->total_human_count) );
 
 	font_san.put( x, y, str );
 
-	str  = "Total Population";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += viewNation->total_population + viewNation->total_human_count;
+	snprintf( str, MAX_STR_LEN+1, _("Total Population: %s"), misc.format(viewNation->total_population + viewNation->total_human_count) );
 
 	font_san.put( x+360, y, str );
 
@@ -264,7 +239,7 @@ static void disp_total()
 
 	vga_back.d3_panel_up(FIRM_BROWSE_X1, FIRM_BROWSE_Y2-18, FIRM_BROWSE_X2, FIRM_BROWSE_Y2 );
 
-	font_san.put( x	 , y, "Total" );
+	font_san.put( x	 , y, _("Total") );
 	font_san.put( x+265, y, total_firm_count );
 	font_san.put( x+370, y, misc.format(total_firm_cost,2) );
 	font_san.put( x+470, y, misc.format(total_firm_income,2) );

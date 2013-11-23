@@ -46,6 +46,7 @@
 #include <OBUTTCUS.h>
 
 #include <OU_MARI.h>
+#include "gettext.h"
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when
@@ -996,15 +997,14 @@ void Unit::disp_build(int refreshFlag)
 
 		String str;
 
-		str  = translate.process("Please select a location to build the ");
-		str += firm_res[power.command_para]->name;
-		str += ".";
+		// TRANSLATORS: Please select a location to build the <Firm>.
+		snprintf( str, MAX_STR_LEN+1, _("Please select a location to build the %s."), firm_res[power.command_para]->name );
 
 // FRENCH
 //		font_san.put_paragraph( INFO_X1, INFO_Y1, INFO_X2, INFO_Y2, str, 0 );
 		font_san.put_paragraph( INFO_X1+7, INFO_Y1+5, INFO_X2-7, INFO_Y2-5, str );
 
-		button_cancel2.paint_text( INFO_X1, INFO_Y1+45, INFO_X2, INFO_Y1+70, "Cancel" );
+		button_cancel2.paint_text( INFO_X1, INFO_Y1+45, INFO_X2, INFO_Y1+70, _("Cancel") );
 	}
 }
 //----------- End of function Unit::disp_build -----------//
@@ -1038,9 +1038,9 @@ void Unit::disp_settle(int refreshFlag)
 		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
 
 		font_san.put_paragraph( INFO_X1+7, INFO_Y1+5, INFO_X2-7, INFO_Y2-5,
-										"Please select a location to settle." );
+										_("Please select a location to settle.") );
 
-		button_cancel2.paint_text( INFO_X1, INFO_Y1+45, INFO_X2, INFO_Y1+70, "Cancel" );
+		button_cancel2.paint_text( INFO_X1, INFO_Y1+45, INFO_X2, INFO_Y1+70, _("Cancel") );
 	}
 }
 //----------- End of function Unit::disp_settle -----------//
@@ -1116,7 +1116,7 @@ void Unit::disp_unit_info(int dispY1, int refreshFlag)
 		if( spy_recno &&			// only display spy loyalty instead of unit loyalty if this is a spy and this spy is ours
 			 true_nation_recno() == nation_array.player_recno )
 		{
-			font_san.field( x, y, "Loyalty", x+92, spy_array[spy_recno]->spy_loyalty, 1, INFO_X2-2, refreshFlag);
+			font_san.field( x, y, _("Loyalty"), x+92, spy_array[spy_recno]->spy_loyalty, 1, INFO_X2-2, refreshFlag);
 		}
 		else if( nation_recno )
 		{
@@ -1128,7 +1128,7 @@ void Unit::disp_unit_info(int dispY1, int refreshFlag)
 
 	//--------- display combat level ----------//
 
-	font_san.field( x, y, "Combat" , x+92, skill.combat_level, 1, INFO_X2-2, refreshFlag);
+	font_san.field( x, y, _("Combat") , x+92, skill.combat_level, 1, INFO_X2-2, refreshFlag);
 
 	y+=16;
 
@@ -1148,7 +1148,7 @@ void Unit::disp_unit_info(int dispY1, int refreshFlag)
 
 	if( spy_recno && spy_array[spy_recno]->true_nation_recno == nation_array.player_recno )		// only spies of the player's nation can see the spy skill details
 	{
-		font_san.field( x, y, "Spying", x+92, spy_array[spy_recno]->spy_skill, 1, INFO_X2-2, refreshFlag);
+		font_san.field( x, y, _("Spying"), x+92, spy_array[spy_recno]->spy_skill, 1, INFO_X2-2, refreshFlag);
 
 		y+=16;
 	}
@@ -1156,7 +1156,7 @@ void Unit::disp_unit_info(int dispY1, int refreshFlag)
 	//--------- display debug info ---------//
 
 	if( !is_civilian() && rank_id != RANK_KING )
-		font_san.field( x, y, "Contribution", x+92, nation_contribution, 1, INFO_X2-2, refreshFlag);
+		font_san.field( x, y, _("Contribution"), x+92, nation_contribution, 1, INFO_X2-2, refreshFlag);
 }
 //----------- End of function Unit::disp_unit_info -----------//
 
@@ -1188,28 +1188,28 @@ void Unit::disp_unit_profile(int dispY1, int refreshFlag)
 	{
 		if( rank_id == RANK_KING )
 		{
-			str = "King";
+			str = _("King");
 		}
 		else if( rank_id == RANK_GENERAL )
 		{
 			// ##### patch begin Gilbert 17/2 #####//
 			if( unit_mode == UNIT_MODE_REBEL )
-				str = "Rebel Leader";
+				str = _("Rebel Leader");
 			else
-				str = "General";
+				str = _("General");
 			// ##### patch end Gilbert 17/2 #####//
 		}
 		else if( unit_mode == UNIT_MODE_DEFEND_TOWN )
 		{
-			str = "Defending Villager";
+			str = _("Defending Villager");
 		}
 		else if( unit_mode == UNIT_MODE_REBEL )
 		{
-			str = "Rebel";
+			str = _("Rebel");
 		}
 		else if( unit_res[unit_id]->unit_class == UNIT_CLASS_GOD )
 		{
-			str = "Greater Being";
+			str = _("Greater Being");
 		}
 		else
 		{
@@ -1218,41 +1218,41 @@ void Unit::disp_unit_profile(int dispY1, int refreshFlag)
 				switch( skill.skill_id )
 				{
 					case SKILL_LEADING:
-						str = "Soldier";
+						str = _("Soldier");
 						break;
 
 					case SKILL_CONSTRUCTION:
-						str  = "Construction Worker";
+						str  = _("Construction Worker");
 						break;
 
 					case SKILL_MINING:
-						str = "Miner";
+						str = _("Miner");
 						break;
 
 					case SKILL_MFT:
-						str = "Worker";
+						str = _("Worker");
 						break;
 
 					case SKILL_RESEARCH:
-						str = "Scientist";
+						str = _("Scientist");
 						break;
 
 					case SKILL_SPYING:
-						str = "Spy";
+						str = _("Spy");
 						break;
 
 					default:
-						str = "Peasant";
+						str = _("Peasant");
 						break;
 				}
 			}
 			else	//--- don't display too much info on enemy units ---//
 			{
 				if( skill.skill_id == SKILL_LEADING )
-					str = "Soldier";
+					str = _("Soldier");
 
 				else if( is_civilian() )
-					str = "Civilian";
+					str = _("Civilian");
 			}
 		}
 	}
@@ -1335,7 +1335,7 @@ void Unit::disp_spy_menu(int dispY1, int refreshFlag)
 		if( refreshFlag==INFO_REPAINT )
 		{
 			vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+26 );
-			font_san.center_put( INFO_X1, dispY1, INFO_X2-2, dispY1+26, "Enemies Nearby" );
+			font_san.center_put( INFO_X1, dispY1, INFO_X2-2, dispY1+26, _("Enemies Nearby") );
 		}
 
 		return;
@@ -1346,7 +1346,7 @@ void Unit::disp_spy_menu(int dispY1, int refreshFlag)
 	if( refreshFlag==INFO_REPAINT )
 	{
 		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+spyMenuHeight-1 );
-		font_san.put( INFO_X1+6, dispY1+6, "Spy Cloak:" );
+		font_san.put( INFO_X1+6, dispY1+6, _("Spy Cloak:") );
 	}
 
 	Nation* nationPtr = nation_array[true_nation_recno()];

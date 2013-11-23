@@ -256,6 +256,7 @@ nobase_dist_resdata_DATA = \
 	resource/tersub.res \
 	resource/tut_intr.res \
 	resource/tut_list.res \
+	resource/tut_list.txt \
 	resource/tut_pict.res \
 	resource/tut_text.res \
 	scenari2/scn_01.scn \
@@ -474,16 +475,42 @@ nobase_dist_resdata_DATA = \
 	sprite/zu_arrow.spr \
 	sprite/zu_god.spr \
 	sprite/zulu.spr \
+	tutorial/10captur.int \
 	tutorial/10captur.tut \
+	tutorial/10captur.txt \
+	tutorial/1bas_mil.int \
 	tutorial/1bas_mil.tut \
+	tutorial/1bas_mil.txt \
+	tutorial/2b_trade.int \
 	tutorial/2b_trade.tut \
+	tutorial/2b_trade.txt \
+	tutorial/2bas_eco.int \
 	tutorial/2bas_eco.tut \
+	tutorial/2bas_eco.txt \
+	tutorial/3researc.int \
 	tutorial/3researc.tut \
+	tutorial/3researc.txt \
+	tutorial/4weapons.int \
 	tutorial/4weapons.tut \
+	tutorial/4weapons.txt \
+	tutorial/5bas_nav.int \
 	tutorial/5bas_nav.tut \
+	tutorial/5bas_nav.txt \
+	tutorial/6seatrad.int \
 	tutorial/6seatrad.tut \
+	tutorial/6seatrad.txt \
+	tutorial/7mercena.int \
 	tutorial/7mercena.tut \
+	tutorial/7mercena.txt \
+	tutorial/8fryhtan.int \
 	tutorial/8fryhtan.tut \
+	tutorial/8fryhtan.txt \
+	tutorial/9seatpow.int \
 	tutorial/9seatpow.tut \
+	tutorial/9seatpow.txt \
+	tutorial/loyalty.int \
 	tutorial/loyalty.tut \
-	tutorial/spying.tut
+	tutorial/loyalty.txt \
+	tutorial/spying.int \
+	tutorial/spying.tut \
+	tutorial/spying.txt

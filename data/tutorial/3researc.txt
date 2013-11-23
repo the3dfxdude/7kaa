@@ -1,0 +1,25 @@
+_("To conduct research on Weapons and Ships, your Kingdom must posses at least one Tower of Science.")
+~
+Button: TRAIN
+_("To construct a Tower, you should first train a Peasant in the skill of Research.")
+~
+_("When the new researcher has exited your Village, select him and order him to build a Tower of Science, within Linking distance of the Village.")
+~
+_("When construction is complete, the researcher will stay in the Tower. With a Link to the Village operating, Peasants will quickly volunteer for positions inside.")
+~
+Button: RESEARCH
+_("To begin a research project, select the Tower of Science and Click on the Research Tile.")
+~
+_("You have now been presented with a choice of projects. Some projects are as yet unavailable, because you do not yet have the knowledge to even begin thinking about them.")
+~
+_("Click now on one of the two choices. When you have done so, your group of researchers will immediately get to work.")
+~
+_("You will notice that the Skill Levels of the researchers are very low. They will increase over time, however; later projects will finish much more quickly than your first ones do.")
+~
+_("When a research project has been completed, you will be notified in a news message at the bottom of your screen.")
+~
+_("For most of the Weapons projects, there are three possible levels to be researched. Once the Mark I research of a Weapon has been completed, your researchers will immediately begin work on the Mark II.")
+~
+_("Once a Mark III level project has been completed, you must return to your Towers of Science and designate a new project. You may, of course, change projects any time you wish.")
+~
+_("To view your research progress and your current technological level quickly, Click on the Technology Scroll at the top of your screen, or press the F6 key on your keyboard.")

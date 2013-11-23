@@ -42,6 +42,7 @@
 // ####### begin Gilbert 4/11 #######//
 #include <OMUSIC.h>
 // ####### end Gilbert 4/11 #######//
+#include "gettext.h"
 
 // --------- declare static funtion --------//
 
@@ -128,7 +129,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 
 	if( scenCount==0 )
 	{
-		box.msg( "Scenario files not found." );
+		box.msg( _("Scenario files not found.") );
 		return 0;
 	}
 
@@ -176,6 +177,8 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 		"SV-DW-U", "SV-DW-D", 1, 0);
 	VLenQueue textBuffer;
 	*(textBuffer.reserve(1)) = '\0';
+	char scenTitle[ScenInfo::SCEN_NAME_LEN+1] = {0};
+	char scenText[1024] = {0};
 
 	Font &textFont = font_std;
 	const int TEXT_LINE_SPACE = 4;
@@ -319,15 +322,18 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 					fileTxt.next_line();
 
 					textBuffer.clear();
-					fileTxt.read_paragraph(textBuffer.reserve(dataSize+8), dataSize);
+					int textLen = fileTxt.read_paragraph(textBuffer.reserve(dataSize+8), dataSize)-7;
 					// ##### end begin Gilbert 2/2 ####//
+					// Copy text without gettext markup _("").
+					strncpy(scenText, textBuffer.queue_buf+3, textLen);
+					scenText[textLen] = '\0';
 
 			      int dispLines;    // no. of lines can be displayed on the area
 			      int totalLines;   // total no. of lines of the text
 
 					textFont.count_line( menuX1+TEXT_AREA_X1, menuY1+TEXT_AREA_Y1,
 						menuX1+TEXT_AREA_X2, menuY1+TEXT_AREA_Y2,
-						textBuffer.queue_buf, TEXT_LINE_SPACE, dispLines, totalLines );
+						_(scenText), TEXT_LINE_SPACE, dispLines, totalLines );
 
 					// textScrollBar.view_size = dispLines;
 					textScrollBar.set(1, totalLines ,1);
@@ -343,7 +349,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 					textArea.ptr);
 #endif
 					textFont.put_paragraph(menuX1+TEXT_AREA_X1, menuY1+TEXT_AREA_Y1, menuX1+TEXT_AREA_X2, menuY1+TEXT_AREA_Y2,
-						textBuffer.queue_buf, TEXT_LINE_SPACE, textScrollBar.view_recno );		// 4 - space between lines
+						_(scenText), TEXT_LINE_SPACE, textScrollBar.view_recno );		// 4 - space between lines
 			}
 
 			if( refreshFlag & TUOPTION_TEXT_SCROLL )
@@ -394,18 +400,22 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 							textX = font_bible.put(textX, browseSlotY1+TEXT_OFFSET_Y,
 								". ", 0, browseSlotX2 );
 
+							int scenTitleLen = strlen(scenInfoArray[rec-1].scen_name)-5;
+							// Copy text without gettext markup _("").
+							strncpy(scenTitle, scenInfoArray[rec-1].scen_name+3, scenTitleLen);
+							scenTitle[scenTitleLen] = '\0';
 							textX = font_bible.put(textX, browseSlotY1+TEXT_OFFSET_Y,
-								scenInfoArray[rec-1].scen_name, 0, browseSlotX2 );
+								_(scenTitle), 0, browseSlotX2 );
 
 							//---- display the scenario difficulty and bonus points ----//
 
-							String str(translate.process("Difficulty: "));
+							String str(_("Difficulty : "));
 							str += scenInfoArray[rec-1].goal_difficulty;
 
 							font_bible.put(browseSlotX1+TEXT_OFFSET_X+400, browseSlotY1+TEXT_OFFSET_Y,
 												str, 0, browseSlotX2 );
 
-							str  = translate.process("Score Bonus: ");
+							str  = _("Score Bonus: ");
 							str += scenInfoArray[rec-1].goal_score_bonus;
 
 							font_bible.put(browseSlotX1+TEXT_OFFSET_X+530, browseSlotY1+TEXT_OFFSET_Y,

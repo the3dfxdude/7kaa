@@ -32,10 +32,6 @@
 #include <OVGABUF.h>
 #endif
 
-#ifndef __OTRANSL_H
-#include <OTRANSL.h>
-#endif
-
 //------- Define constant ------------//
 
 #define DEFAULT_LINE_SPACE  2   // 2 pixels space between lines

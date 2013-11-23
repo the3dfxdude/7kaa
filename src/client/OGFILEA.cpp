@@ -49,6 +49,7 @@
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
 #include <dbglog.h>
+#include "gettext.h"
 
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
@@ -213,7 +214,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 
 	if( action_mode==2 && size()==0 )
 	{
-		box.msg( "You haven't saved any games yet." );
+		box.msg( _("You haven't saved any games yet.") );
 		return 0;
 	}
 
@@ -391,7 +392,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 						{
 							err_when( action_mode!=1 );
 							font_bible.center_put( browseSlotX1, browseSlotY1,
-								browseSlotX2, browseSlotY2, "Empty Game Slot" );
+								browseSlotX2, browseSlotY2, _("Empty Game Slot") );
 						}
 						else if( rec <= size() )
 						{
@@ -541,7 +542,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 			}
 			else
 			{
-				box.msg("Cannot delete this slot");
+				box.msg(_("Cannot delete this slot"));
 			}
 			refreshFlag = LSOPTION_ALL;
 		}
@@ -613,21 +614,22 @@ void GameFile::disp_info(int x, int y)
 
 	String str;
 
-	str  = translate.process("King ");
+	str  = _("King");
+	str += " ";
 	str += player_name;
 
 	font_bible.put( x+18, y+8, str );
 
 	//------- display game date --------//
 
-	str  = translate.process("Game Date: ");
+	str  = _("Game Date: ");
 	str += date.date_str(game_date);
 
 	font_bible.put( x, y+30, str );
 
 	//---------------------------------//
 
-	str  = translate.process("File Name: ");
+	str  = _("File Name: ");
 	str += file_name;
 
 	#if(defined(FRENCH))
@@ -647,7 +649,7 @@ void GameFile::disp_info(int x, int y)
 	memset(&sysTime, 0, sizeof(SYSTEMTIME));
 #endif
 
-	str  = translate.process("File Date: ");
+	str  = _("File Date: ");
 	str += date.date_str(date.julian(sysTime.wYear, sysTime.wMonth,sysTime.wDay), 1);
 	str += " ";
 	str += date.time_str( sysTime.wHour * 100 + sysTime.wMinute );
@@ -684,7 +686,7 @@ int GameFileArray::process_action(int saveNew)
 		}
 		else           // save on existing slot
 		{
-			if( !box.ask( "It will overwrite the existing saved game, proceed ?" ) )
+			if( !box.ask( _("It will overwrite the existing saved game, proceed ?") ) )
 				return 0;
 
 			GameFile* gameFile = game_file_array[browse_recno];
@@ -783,7 +785,7 @@ void GameFileArray::del_game()
 	char full_path[MAX_PATH+1];
 	int recNo = browse_recno;
 
-	if( !box.ask( "This saved game will be deleted, proceed ?" ) )
+	if( !box.ask( _("This saved game will be deleted, proceed ?") ) )
 		return;
 
 	//---------------------------------------------------//

@@ -42,6 +42,7 @@
 #include <OF_MARK.h>
 #include <OREMOTE.h>
 #include <OSE.h>
+#include "gettext.h"
 
 //------- define static vars -------//
 
@@ -403,8 +404,10 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 		if( refreshFlag == INFO_REPAINT )
 		{
 			vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+51 );
-			font_san.center_put( INFO_X1, dispY1+3 , INFO_X2, dispY1+25, "You're not permitted to" );
-			font_san.center_put( INFO_X1, dispY1+23, INFO_X2, dispY1+51, "trade with this market." );
+			// TRANSLATORS: Part of "You're not permitted to trade with this market."
+			font_san.center_put( INFO_X1, dispY1+3 , INFO_X2, dispY1+25, _("You're not permitted to") );
+			// TRANSLATORS: Part of "You're not permitted to trade with this market."
+			font_san.center_put( INFO_X1, dispY1+23, INFO_X2, dispY1+51, _("trade with this market.") );
 		}
 
 		return;
@@ -430,15 +433,8 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 		}
 		else if( marketGoods->product_raw_id )
 		{
-#ifdef FRENCH
-			char productName[20];
-			strcpy(productName, raw_res[marketGoods->product_raw_id]->name);
-			strcat(productName, " Products");
-			str = translate.process(productName);
-#else
-			str  = raw_res[marketGoods->product_raw_id]->name;
-			str += translate.process(" Products");
-#endif
+			// TRANSLATORS: <Clay/Copper/Iron> Products
+			snprintf( str, MAX_STR_LEN+1, _("%s Products"), raw_res[marketGoods->product_raw_id]->name );
 			bitmapPtr = raw_res.small_product_icon(marketGoods->product_raw_id);
 		}
 		else
@@ -466,7 +462,7 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 
 			if( nation_recno == nation_array.player_recno )
 			{
-				button_clear_stock[i].paint_text( INFO_X2-46, y+2, INFO_X2-3, y+19, "Clear" );		// Clear Stock
+				button_clear_stock[i].paint_text( INFO_X2-46, y+2, INFO_X2-3, y+19, _("Clear") );	// Clear Stock
 				button_clear_stock[i].set_help_code( "MK_CLEAR" );
 			}
 		}
@@ -478,9 +474,9 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 		str += "/";
 		str += (int) max_stock_qty;
 
-		font_san.field( x, ty, "Stock", x+60, str, x+119, refreshFlag, "MK_STOCK" );
+		font_san.field( x, ty, _("Stock"), x+60, str, x+119, refreshFlag, "MK_STOCK" );
 
-		font_san.field( x, ty+16, "Sales", x+60, (int) marketGoods->sales_365days(), 2,
+		font_san.field( x, ty+16, _("Sales"), x+60, (int) marketGoods->sales_365days(), 2,
 							 x+104, refreshFlag, "MK_SALES" );
 
 		x+=105;
@@ -488,7 +484,7 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 		// ####### patch begin Gilbert 16/3 #########//
 		//font_san.field( x, ty+16, "Demand", x+70, (int) marketGoods->month_demand, 1,
 		//					 INFO_X2-2, refreshFlag, "MK_DEMAN" );
-		font_san.field( x, ty+16, "Demand", x+67, (int) marketGoods->month_demand, 1,
+		font_san.field( x, ty+16, _("Demand"), x+67, (int) marketGoods->month_demand, 1,
 							 INFO_X2-1, refreshFlag, "MK_DEMAN" );
 		// ####### patch end Gilbert 16/3 #########//
 	}
@@ -507,7 +503,7 @@ void FirmMarket::disp_income(int dispY1, int refreshFlag)
 
 	int x=INFO_X1+4, y=dispY1+4;
 
-	font_san.field( x, y, "Yearly Income", x+110, (int) income_365days(), 2, x+200, refreshFlag, "MK_INCOM" );
+	font_san.field( x, y, _("Yearly Income"), x+110, (int) income_365days(), 2, x+200, refreshFlag, "MK_INCOM" );
 }
 //----------- End of function FirmMarket::disp_income -----------//
 

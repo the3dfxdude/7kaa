@@ -130,7 +130,6 @@ noinst_HEADERS = \
 	OTOWN.h \
 	OTOWNREC.h \
 	OTOWNRES.h \
-	OTRANSL.h \
 	OTUTOR.h \
 	OUNIT.h \
 	OUNITALL.h \

@@ -35,6 +35,7 @@
 // #### begin Gilbert 9/10 ######//
 #include <OSE.h>
 // #### end Gilbert 9/10 ######//
+#include "gettext.h"
 
 //---------- the subtitle area ----------//
 
@@ -48,7 +49,7 @@ enum { TALK_LINE_HEIGHT = 18 };
 
 //------- define constant --------//
 
-#define MESSAGE_SENT_STR		"The message has been sent."
+#define MESSAGE_SENT_STR		_("The message has been sent.")
 
 //------- define static vars -------//
 
@@ -159,14 +160,14 @@ int TalkRes::set_talk_choices()
 		case TALK_DEMAND_TRIBUTE:
 			rc = add_tribute_choices();
 			if( rc )
-				choice_question = "How much tribute?";		// add the choice question here because we use the same function for both tribute and aid
+				choice_question = _("How much tribute?");	// add the choice question here because we use the same function for both tribute and aid
 			break;
 
 		case TALK_GIVE_AID:
 		case TALK_DEMAND_AID:
 			rc = add_tribute_choices();
 			if( rc )
-				choice_question = "How much aid?";
+				choice_question = _("How much aid?");
 			break;
 
 		case TALK_GIVE_TECH:
@@ -187,7 +188,7 @@ int TalkRes::set_talk_choices()
 	}
 
 	if( rc )
-		add_talk_choice( "Cancel.", 0 );
+		add_talk_choice( _("Cancel."), 0 );
 
 	return rc;
 }
@@ -200,26 +201,26 @@ void TalkRes::add_main_choices()
 {
 	static const char* talkMsgArray[] =
 	{
-		"Propose a trade treaty.",
-		"Propose a friendly treaty.",
-		"Propose an alliance treaty.",
-		"Terminate our trade treaty.",
-		"Terminate our friendly treaty.",
-		"Terminate our alliance treaty.",
-		"Request immediate military aid.",
-		"Request a trade embargo.",
-		"Request a cease-fire.",
-		"Request a declaration of war against a foe.",
-		"Request to purchase food.",
-		"Declare war.",
-		"Offer to pay tribute.",
-		"Demand tribute.",
-		"Offer aid.",
-		"Request aid.",
-		"Offer to transfer technology.",
-		"Request technology.",
-		"Offer to purchase throne and unite kingdoms.",
-		"Surrender.",
+		N_("Propose a trade treaty."),
+		N_("Propose a friendly treaty."),
+		N_("Propose an alliance treaty."),
+		N_("Terminate our trade treaty."),
+		N_("Terminate our friendly treaty."),
+		N_("Terminate our alliance treaty."),
+		N_("Request immediate military aid."),
+		N_("Request a trade embargo."),
+		N_("Request a cease-fire."),
+		N_("Request a declaration of war against a foe."),
+		N_("Request to purchase food."),
+		N_("Declare war."),
+		N_("Offer to pay tribute."),
+		N_("Demand tribute."),
+		N_("Offer aid."),
+		N_("Request aid."),
+		N_("Offer to transfer technology."),
+		N_("Request technology."),
+		N_("Offer to purchase throne and unite kingdoms."),
+		N_("Surrender."),
 	};
 
 	//-----------------------------------------//
@@ -235,7 +236,7 @@ void TalkRes::add_main_choices()
 		rc=0;
 
 		if( !rc )
-			add_talk_choice( talkMsgArray[i-1], i );
+			add_talk_choice( _(talkMsgArray[i-1]), i );
 
 		available_talk_id_array[i-1] = 1;
 	}
@@ -250,7 +251,7 @@ int TalkRes::add_trade_embargo_choices()
 	if( cur_talk_msg.talk_para1 )
 		return 0;
 
-	choice_question = "Request an embargo on trade with which kingdom?";
+	choice_question = _("Request an embargo on trade with which kingdom?");
 
 	Nation* fromNation = nation_array[cur_talk_msg.from_nation_recno];
 	Nation* toNation   = nation_array[cur_talk_msg.to_nation_recno];
@@ -299,7 +300,7 @@ int TalkRes::add_declare_war_choices()
 	if( cur_talk_msg.talk_para1 )
 		return 0;
 
-	choice_question = "Declare war on which kingdom?";
+	choice_question = _("Declare war on which kingdom?");
 
 	Nation* fromNation = nation_array[cur_talk_msg.from_nation_recno];
 	Nation* toNation   = nation_array[cur_talk_msg.to_nation_recno];
@@ -345,7 +346,7 @@ int TalkRes::add_buy_food_choices()
 
 	if( !cur_talk_msg.talk_para1 )
 	{
-		choice_question = "How much food do you want to purchase?";
+		choice_question = _("How much food do you want to purchase?");
 
 		static const char* qtyStrArray[] = { "500.", "1000.", "2000.", "4000." };
 		static short qtyArray[] = { 500, 1000, 2000, 4000 };
@@ -360,7 +361,7 @@ int TalkRes::add_buy_food_choices()
 	}
 	else if( !cur_talk_msg.talk_para2 )
 	{
-		choice_question = "How much do you offer for 10 units of food?";
+		choice_question = _("How much do you offer for 10 units of food?");
 
 		static const char* priceStrArray[] = { "$5.", "$10.", "$15.", "$20." };
 		static short priceArray[] = { 5, 10, 15, 20 };
@@ -417,7 +418,7 @@ int TalkRes::add_give_tech_choices()
 
 	if( !cur_talk_msg.talk_para1 )
 	{
-		choice_question = "Which technology?";
+		choice_question = _("Which technology?");
 
 		for( i=1 ; i<=tech_res.tech_count ; i++ )
 		{
@@ -436,7 +437,7 @@ int TalkRes::add_give_tech_choices()
 		if( techInfo->max_tech_level==1 )		// this tech only has one level
 			return 0;
 
-		choice_question = "Which version?";
+		choice_question = _("Which version?");
 
 		int nationLevel = techInfo->get_nation_tech_level(techNationRecno);
 
@@ -462,7 +463,7 @@ int TalkRes::add_request_surrender_choices()
 	if( cur_talk_msg.talk_para1 )
 		return 0;
 
-	choice_question = "How much do you offer?";
+	choice_question = _("How much do you offer?");
 
 	static const char* strArray[] = { "$5000.", "$7500.", "$10000.",
 		"$15000.", "$20000.", "$30000.", "$40000.", "$50000." };
@@ -491,20 +492,10 @@ int TalkRes::add_surrender_choices()
 
 	static String str;
 
-	#if(defined(GERMAN))
-		str  = "Wollen Sie wirklich vor ";
-		str += nation_array[cur_talk_msg.to_nation_recno]->nation_name();
-		str += " kapitulieren?";
-	#else
-		// SPANISH, FRENCH and US
-		str  = translate.process("Do you really want to Surrender to ");
-		str += nation_array[cur_talk_msg.to_nation_recno]->nation_name();
-		str += "?";
-	#endif
-
+	snprintf( str, MAX_STR_LEN+1, _("Do you really want to Surrender to %s's Kingdom?"), nation_array[cur_talk_msg.to_nation_recno]->king_name(1) );
 	choice_question = str;
 
-	add_talk_choice( "Confirm.", 1 );
+	add_talk_choice( _("Confirm."), 1 );
 
 	return 1;
 }
@@ -907,8 +898,7 @@ void TalkRes::disp_talk()
 	{
 		if( !( choice_question && strcmp(choice_question, MESSAGE_SENT_STR)==0 ) )		// if it's currently displaying the has sent notification, display that message
 		{
-			const char* msgStr = "You've sent too many messages to this kingdom. "
-								"You cannot send any new messages until the existing ones are processed.";
+			const char* msgStr = _("You've sent too many messages to this kingdom. You cannot send any new messages until the existing ones are processed.");
 
 			font_san.put_paragraph( TALK_X1, TALK_Y1, TALK_X2, TALK_Y2, msgStr, 4 );
 			return;
@@ -958,7 +948,7 @@ void TalkRes::disp_talk()
 		if( choice_question )
 		{
 			str  = "- ";		// display bullets in front of the text strings
-			str += translate.process( talk_choice_array[i].str );
+			str += talk_choice_array[i].str;
 		}
 		else
 			str = talk_choice_array[i].str;
@@ -1063,7 +1053,7 @@ int TalkRes::detect_talk()
 
 	//---------------------------------------//
 
-	if( strcmp( talk_choice_array[choiceId-1].str, "Cancel." ) == 0 ||
+	if( strcmp( talk_choice_array[choiceId-1].str, _("Cancel.") ) == 0 ||
 		 (choice_question && strcmp( choice_question, MESSAGE_SENT_STR )==0) )
 	{
 		cur_talk_msg.talk_id = 0;
@@ -1097,7 +1087,7 @@ int TalkRes::detect_talk()
 		choice_question_second_line = NULL;
 
 		talk_choice_count = 0;
-		add_talk_choice( "Continue", 0 );
+		add_talk_choice( _("Continue"), 0 );
 	}
 
 	return 1;
@@ -1346,9 +1336,9 @@ void TalkRes::player_reply(int talkMsgRecno)
 	//--------- add choices to the question ---------//
 
 	if( talkMsg->can_accept() )			// whether the replier can accept the request or demand of the message
-		add_talk_choice( "Accept.", 1 );
+		add_talk_choice( _("Accept."), 1 );
 
-	add_talk_choice( "Reject.", 0 );
+	add_talk_choice( _("Reject."), 0 );
 
 	//--- switch to the nation report mode and go to the diplomacy mode ---//
 

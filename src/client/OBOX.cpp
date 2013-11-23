@@ -34,6 +34,7 @@
 #include <OBUTTON.h>
 #include <OPOWER.h>
 #include <OBOX.h>
+#include "gettext.h"
 
 //----------- Define constant -------------//
 
@@ -176,7 +177,7 @@ void Box::ok_button(int timeOut)
 {
 	Button button;
 
-   button.paint_text( box_x1+(box_x2-box_x1+1)/2-10, box_y2-BOX_BUTTON_MARGIN, "Ok" );
+   button.paint_text( box_x1+(box_x2-box_x1+1)/2-10, box_y2-BOX_BUTTON_MARGIN, _("Ok") );
 	
 	if( sys.debug_session )
 		sys.blt_virtual_buf();
@@ -203,13 +204,13 @@ int Box::ask_button(const char* buttonDes1, const char* buttonDes2, int rightCli
 
    Button buttonOk, buttonCancel;
 
-   int buttonWidth1 = 20 + font_san.text_width(buttonDes1 ? buttonDes1 : (char*)"Ok");
+   int buttonWidth1 = 20 + font_san.text_width(buttonDes1 ? buttonDes1 : (char*)_("Ok"));
 
    buttonOk.create_text( box_x1+width/2-buttonWidth1, box_y2-BOX_BUTTON_MARGIN,
-			 (buttonDes1 ? buttonDes1 : (char*)"Ok") );
+			 (buttonDes1 ? buttonDes1 : (char*)_("Ok")) );
 
    buttonCancel.create_text( box_x1+width/2+2 , box_y2-BOX_BUTTON_MARGIN,
-			     (buttonDes2 ? buttonDes2 : (char*)"Cancel") );
+			     (buttonDes2 ? buttonDes2 : (char*)_("Cancel")) );
 
    buttonOk.paint();      // paint button
    buttonCancel.paint();
@@ -257,10 +258,10 @@ void Box::ask_button(Button& buttonOk, Button& buttonCancel, char* strOk, char* 
    width = box_x2-box_x1+1;
 
    buttonOk.create_text( box_x1+width/2-36, box_y2-BOX_BUTTON_MARGIN,
-                         (strOk ? strOk : (char*)"Ok") );
+                         (strOk ? strOk : (char*)_("Ok")) );
 
    buttonCancel.create_text( box_x1+width/2+2 , box_y2-BOX_BUTTON_MARGIN,
-			     (strCancel  ? strCancel  : (char*)"Cancel") );
+			     (strCancel  ? strCancel  : (char*)_("Cancel")) );
 
    buttonOk.paint();      // paint button
    buttonCancel.paint();

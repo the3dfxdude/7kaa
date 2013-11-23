@@ -59,6 +59,7 @@ General Requirements
 * SDL_net
 * OpenAL
 * Autoconf (when using git snapshot)
+* gettext 0.18 or later
 
 
 Installing

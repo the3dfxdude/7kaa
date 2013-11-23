@@ -30,6 +30,7 @@
 #include <OVBROWIF.h>
 #include <OSPY.h>
 #include <OINFO.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -69,12 +70,12 @@ void Info::disp_spy(int refreshFlag)
 	font_san.put( x+448, y, "Action" );
 #else
 	// German and US
-	font_san.put( x	 , y, "Spy Name" );
-	font_san.put( x+155, y, "Cloak" );
-	font_san.put( x+205, y, "Location" );
-	font_san.put( x+330, y, "Skill" );
-	font_san.put( x+370, y, "Loyalty" );
-	font_san.put( x+435, y, "Action" );
+	font_san.put( x	 , y, _("Spy Name") );
+	font_san.put( x+155, y, _("Cloak") );
+	font_san.put( x+205, y, _("Location") );
+	font_san.put( x+330, y, _("Skill") );
+	font_san.put( x+370, y, _("Loyalty") );
+	font_san.put( x+435, y, _("Action") );
 #endif
 
 	if( refreshFlag == INFO_REPAINT )
@@ -131,14 +132,7 @@ static void disp_total()
 
 	String str;
 
-	if( browse_spy.total_rec() > 1 )
-		str = "Total Spies";
-	else
-		str = "Total Spy";
-
-	str  = translate.process(str);
-	str += ": ";
-	str += browse_spy.total_rec();
+	snprintf( str, MAX_STR_LEN+1, _( "Total Spies: %s"), misc.format(browse_spy.total_rec()) );
 
 	font_san.put( x, y, str );
 }
@@ -269,11 +263,11 @@ static void put_spy_rec(int recNo, int x, int y, int refreshFlag)
 					break;
 
 				case UNIT_MODE_ON_SHIP:
-					str = "On Ship";
+					str = _("On Ship");
 					break;
 
 				default:
-					str = "Mobile";
+					str = _("Mobile");
 			}
 			break;
 		}

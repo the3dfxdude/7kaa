@@ -40,6 +40,7 @@
 #include <OAUDIO.h>
 #include <OMUSIC.h>
 #include <dbglog.h>
+#include "gettext.h"
 
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
@@ -67,7 +68,7 @@ int GameFile::save_game(const char* fileName)
 	if (!misc.path_cat(full_path, sys.dir_config, file_name, MAX_PATH))
 	{
 		rc = 0;
-		errStr = "Path too long to the saved game";
+		errStr = _("Path too long to the saved game");
 	}
 
 	char lowDiskSpaceFlag = 0;
@@ -90,7 +91,7 @@ int GameFile::save_game(const char* fileName)
 		}
 		if( !(rc = freeSpace >= MIN_FREE_SPACE) )
 		{
-			errStr = "Insufficient disk space ! The game is not saved.";
+			errStr = _("Insufficient disk space ! The game is not saved.");
 			lowDiskSpaceFlag = 1;
 		}
 	}
@@ -101,7 +102,7 @@ int GameFile::save_game(const char* fileName)
 		rc = file.file_create(full_path, 0, 1); // 0=tell File don't handle error itself
 																   // 1=allow the writing size and the read size to be different
 		if( !rc )
-			errStr = "Error creating saved game file.";
+			errStr = _("Error creating saved game file.");
 	}
 
 	if( rc )
@@ -111,14 +112,14 @@ int GameFile::save_game(const char* fileName)
 		rc = write_game_header(&file);    // write saved game header information
 
 		if( !rc )
-			errStr = "Error creating saved game header.";
+			errStr = _("Error creating saved game header.");
 
 		if( rc )
 		{
 			rc = write_file(&file);
 
 			if( !rc )
-				errStr = "Error writing saved game data.";
+				errStr = _("Error writing saved game data.");
 		}
 	}
 
@@ -134,7 +135,7 @@ int GameFile::save_game(const char* fileName)
 			remove( file_name );         // delete the file as it is not complete
 
 		#ifndef DEBUG
-			errStr = "Insufficient disk space ! The game is not saved.";		// use this message for all types of error message in the release version
+			errStr = _("Insufficient disk space ! The game is not saved.");		// use this message for all types of error message in the release version
 		#endif
 
 		box.msg( errStr );
@@ -173,13 +174,13 @@ int GameFile::load_game(const char *base_path, char* fileName)
 	if (!misc.path_cat(full_path, base_path, file_name, MAX_PATH))
 	{
 		rc = 0;
-		errMsg = "Path too long to the saved game";
+		errMsg = _("Path too long to the saved game");
 	}
 
 	if(rc && !file.file_open(full_path, 0, 1)) // 0=tell File don't handle error itself
 	{
 		rc = 0;
-		errMsg = "Cannot open save game file";
+		errMsg = _("Cannot open save game file");
 	}
 
 	//-------- read in the GameFile class --------//
@@ -195,14 +196,14 @@ int GameFile::load_game(const char *base_path, char* fileName)
 		if( !file.file_read(this, sizeof(GameFile)) )	// read the whole object from the saved game file
 		{
 			rc = 0;
-			errMsg = "Cannot read file header";
+			errMsg = _("Cannot read file header");
 		}
 		if( rc )
 		{
 			if( !validate_header() )
 			{
 				rc = 0;
-				errMsg = "Save game incompatible";
+				errMsg = _("Save game incompatible");
 			}
 			else
 				strcpy( file_name, gameFileName );
@@ -234,12 +235,12 @@ int GameFile::load_game(const char *base_path, char* fileName)
 			break;
 		case -1:
 			rc = 0;		// consider cancel load game
-			errMsg = "Incompatible save game";
+			errMsg = _("Incompatible save game");
 			break;
 		case 0:
 		default:
 			rc = -1;
-			errMsg = "Load game error";
+			errMsg = _("Load game error");
 		}
 
 		if( rc > 0 )

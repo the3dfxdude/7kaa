@@ -32,7 +32,6 @@
 #include <OVGA.h>
 #include <OGAME.h>
 #include <ONEWS.h>
-#include <OTRANSL.h>
 #include <OGAMESET.h>
 #include <OGFILE.h>
 #include <OINFO.h>
@@ -86,6 +85,7 @@
 #else
 #include <unistd.h>
 #endif
+#include "gettext.h"
 
 DBGLOG_DEFAULT_CHANNEL(Sys);
 
@@ -318,10 +318,6 @@ int Sys::init_objects()
    game_set.init();     // this must be called before game.init() as game.init() assume game_set has been initialized
    help.init("HELP.RES");
 
-#if( defined(GERMAN) || defined(FRENCH) || defined(SPANISH) )
-   translate.init();
-#endif
-
    tutor.init();
    game_file_array.init("*.SAV");
 
@@ -377,10 +373,6 @@ void Sys::deinit_objects()
 
    game_set.deinit();
    help.deinit();
-
-#if( defined(GERMAN) || defined(FRENCH) || defined(SPANISH) )
-   translate.deinit();
-#endif
 
    tutor.deinit();
    config.deinit();
@@ -777,8 +769,10 @@ void Sys::main_loop(int isLoadedGame)
 							{
 								if( !nation_array.is_deleted(nationRecno) )
 								{
-									int x2 = font_news.put( x, y, "Waiting for ");
-									x2 = font_news.put( x2, y, nation_array[nationRecno]->nation_name() );
+									String newsStr;
+									// TRANSLATORS: Waiting for <King's Kingdom>
+									snprintf( newsStr, MAX_STR_LEN+1, _("Waiting for %s"), nation_array[nationRecno]->nation_name() );
+									int x2 = font_news.put( x, y, newsStr );
 									y += font_news.height() + 5;
 								}
 							}
@@ -1375,7 +1369,7 @@ void Sys::process_key(unsigned scanCode, unsigned skeyState)
 						if( detect_key_str(1, "!!!@@@###") )
 					#endif
 					{
-                  box.msg( "Cheat Mode Enabled." );
+                  box.msg( _("Cheat Mode Enabled.") );
                   (~nation_array)->cheat_enabled_flag = 1;
                }
             }
@@ -1452,9 +1446,9 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          config.opaque_report = !config.opaque_report;
 
          if( config.opaque_report )
-            box.msg( "Opaque report mode." );
+            box.msg( _("Opaque report mode.") );
          else
-            box.msg( "Transparent report mode." );
+            box.msg( _("Transparent report mode.") );
          break;
 
       //------ clear news messages ------//
@@ -1665,7 +1659,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
       case 't':
          tech_res.inc_all_tech_level(nation_array.player_recno);
          god_res.enable_know_all(nation_array.player_recno);
-         box.msg( "Your technology has advanced.\nYou can now invoke all Greater Beings." );
+         box.msg( _("Your technology has advanced.\nYou can now invoke all Greater Beings.") );
          break;
 
       case 'm':
@@ -1697,9 +1691,9 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
          config.king_undie_flag = !config.king_undie_flag;
 
          if( config.king_undie_flag )
-            box.msg( "Your king is now immortal." );
+            box.msg( _("Your king is now immortal.") );
          else
-            box.msg( "King immortal mode is now disabled." );
+            box.msg( _("King immortal mode is now disabled.") );
          break;
 
       case '=':
@@ -1727,9 +1721,9 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
          config.fast_build = !config.fast_build;
 
          if( !config.fast_build )
-            box.msg( "Fast build is now disabled" );
+            box.msg( _("Fast build is now disabled") );
          else
-            box.msg( "Fast build is now enabled" );
+            box.msg( _("Fast build is now enabled") );
          break;
 
       //----- increase the combat level -------//
@@ -2453,20 +2447,9 @@ void Sys::capture_screen()
    //------ display msg --------//
 
    String str2;
+   const char *file_name = str;
 
-#if(defined(SPANISH))
-	str2  = "Pantalla actual guardada en el archivo ";
-	str2 += str;
-	str2 += ".";
-#elif(defined(FRENCH))
-	str2  = "Cet écran a été sauvegardé dans le fichier ";
-   str2 += str;
-   str2 += ".";
-#else
-   str2  = "The current screen has been written to file ";
-   str2 += str;
-   str2 += ".";
-#endif
+   snprintf( str2, MAX_STR_LEN+1, _("The current screen has been written to file %s."), file_name );
 
    box.msg( str2 );
 }
@@ -2504,7 +2487,7 @@ void Sys::load_game()
    //-----------------------------------//
    if( rc == -1)
    {
-      box.msg( "Fail Loading Game" );
+      box.msg( _("Fail Loading Game") );
       return;
    }
 
@@ -2515,7 +2498,7 @@ void Sys::load_game()
       // #### begin Gilbert 22/10 ######//
       disp_view_mode();
       // #### end Gilbert 22/10 ######//
-      box.msg( "Game Loaded Successfully" );
+      box.msg( _("Game Loaded Successfully") );
       signal_exit_flag=0;
       info.disp();
    }
@@ -2543,7 +2526,7 @@ void Sys::save_game()
    if( game_file_array.menu(1) == 1 )
    {
       if( GameFile::last_read_success_flag )
-         box.msg( "Game Saved Successfully" );
+         box.msg( _("Game Saved Successfully") );
    }
 
    game_file_array.menu(-1);               // restore screen area from back buffer

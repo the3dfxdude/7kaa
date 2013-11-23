@@ -40,6 +40,7 @@
 // ####### begin Gilbert 4/11 #######//
 #include <OMUSIC.h>
 // ####### end Gilbert 4/11 #######//
+#include "gettext.h"
 
 
 // --------- declare static funtion --------//
@@ -129,7 +130,7 @@ int Tutor::select_tutor(int actionMode)
 
 	if( tutor_count==0 )
 	{
-		box.msg( "Tutorial files not found." );
+		box.msg( _("Tutorial files not found.") );
 		return 0;
 	}
 
@@ -269,8 +270,13 @@ int Tutor::select_tutor(int actionMode)
 						int lineSpace = 4;
 					#endif
 
+					int tutIntroLen = strlen(get_intro(browseRecno))-6;
+					char tutIntro[512] = {0};
+					// Copy text without gettext markup _("").
+					strncpy(tutIntro, get_intro(browseRecno)+3, tutIntroLen);
+					tutIntro[tutIntroLen] = '\0';
 					font_std.put_paragraph(menuX1+TEXT_AREA_X1, menuY1+TEXT_AREA_Y1, menuX1+TEXT_AREA_X2, menuY1+TEXT_AREA_Y2,
-						get_intro(browseRecno), lineSpace );		// 4 - space between lines
+						_(tutIntro), lineSpace );		// 4 - space between lines
 				}
 			}
 
@@ -308,8 +314,13 @@ int Tutor::select_tutor(int actionMode)
 								browseSlotY1+TEXT_OFFSET_Y, misc.format(rec), 0, browseSlotX2 );
 							textX = font_bible.put(textX, browseSlotY1+TEXT_OFFSET_Y,
 								". ", 0, browseSlotX2 );
+							int tutDescLen = strlen(this->operator[](rec)->des)-5;
+							char tutDesc[TutorInfo::DES_LEN+1] = {0};
+							// Copy text without gettext markup _("").
+							strncpy(tutDesc, (this->operator[](rec)->des)+3, tutDescLen);
+							tutDesc[tutDescLen] = '\0';
 							textX = font_bible.put(textX, browseSlotY1+TEXT_OFFSET_Y,
-								this->operator[](rec)->des, 0, browseSlotX2 );
+								_(tutDesc), 0, browseSlotX2 );
 
 							if( rec == browseRecno )
 							{

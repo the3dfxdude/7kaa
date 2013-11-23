@@ -33,6 +33,7 @@
 #include <ONATION.h>
 #include <OUNIT.h>
 #include <OINFO.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -70,8 +71,8 @@ void Info::disp_economy(int refreshFlag)
 
 	vga_back.d3_panel_up(INCOME_BROWSE_X1, INCOME_BROWSE_Y1, INCOME_BROWSE_X2, INCOME_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Income Item" );
-	font_san.put( x+350, y, "Yearly Income" );
+	font_san.put( x	 , y, _("Income Item") );
+	font_san.put( x+350, y, _("Yearly Income") );
 
 	int incomeCount;		// only display the cheat income if it amount is > 0
 
@@ -103,8 +104,8 @@ void Info::disp_economy(int refreshFlag)
 
 	vga_back.d3_panel_up(EXPENSE_BROWSE_X1, EXPENSE_BROWSE_Y1, EXPENSE_BROWSE_X2, EXPENSE_BROWSE_Y1+20 );
 
-	font_san.put( x	 , y, "Expense Item" );
-	font_san.put( x+350, y, "Yearly Expense" );
+	font_san.put( x	 , y, _("Expense Item") );
+	font_san.put( x+350, y, _("Yearly Expense") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -164,7 +165,7 @@ static void disp_total()
 	int x=INCOME_BROWSE_X1+9;
 	int y=INCOME_BROWSE_Y2-16;
 
-	font_san.put( x, y, "Total Yearly Income" );
+	font_san.put( x, y, _("Total Yearly Income") );
 	font_san.put( x+370, y, misc.format( (int) totalIncome, 2 ) );
 
 	//---------- display total expense ----------//
@@ -174,7 +175,7 @@ static void disp_total()
 	x=EXPENSE_BROWSE_X1+9;
 	y=EXPENSE_BROWSE_Y2-16;
 
-	font_san.put( x, y, "Total Yearly Expenses" );
+	font_san.put( x, y, _("Total Yearly Expenses") );
 	font_san.put( x+370, y, misc.format( (int) totalExpense, 2 ) );
 
 	//----------- display the balance --------//
@@ -183,7 +184,7 @@ static void disp_total()
 
 	vga_back.d3_panel_up(EXPENSE_BROWSE_X1, EXPENSE_BROWSE_Y2+4, EXPENSE_BROWSE_X2, ZOOM_Y2-6 );
 
-	font_san.put( x, y, "Yearly Balance" );
+	font_san.put( x, y, _("Yearly Balance") );
 	font_san.put( x+370, y, misc.format( (int)(totalIncome-totalExpense), 2 ) );
 }
 //----------- End of static function disp_total -----------//
@@ -197,14 +198,14 @@ static void put_income_rec(int recNo, int x, int y, int refreshFlag)
 
 	static const char* income_des_array[INCOME_TYPE_COUNT] =
 	{
-		"Sale of Goods",
-		"Exports",
-		"Taxes",
-		"Recovered Treasure",
-		"Worker Income",
-		"Sale of Buildings",
-		"Aid/Tribute from Other Kingdoms",
-		"Cheating",
+		N_("Sale of Goods"),
+		N_("Exports"),
+		N_("Taxes"),
+		N_("Recovered Treasure"),
+		N_("Worker Income"),
+		N_("Sale of Buildings"),
+		N_("Aid/Tribute from Other Kingdoms"),
+		N_("Cheating"),
 	};
 
 	//---------------------------------//
@@ -214,7 +215,7 @@ static void put_income_rec(int recNo, int x, int y, int refreshFlag)
 
 	Nation* nationPtr = nation_array[info.viewing_nation_recno];
 
-	font_san.put( x    , y, income_des_array[recNo-1] );
+	font_san.put( x    , y, _(income_des_array[recNo-1]) );
 	font_san.put( x+370, y, misc.format( (int) nationPtr->income_365days(recNo-1), 2 ) );
 }
 //----------- End of static function put_income_rec -----------//
@@ -228,22 +229,22 @@ static void put_expense_rec(int recNo, int x, int y, int refreshFlag)
 
 	static const char* expense_des_array[EXPENSE_TYPE_COUNT] =
 	{
-		"General Costs",
-		"Spy Costs",
-		"Other Mobile Human Unit Costs",
-		"Caravan Costs",
-		"Weapons Costs",
-		"Ship Costs",
-		"Buildings Costs",
-		"Training Units",
-		"Hiring Units",
-		"Honoring Units",
-		"Foreign Worker Salaries",
-		"Grants to Your Villagers",
-		"Grants to Other Villagers",
-		"Imports",
-		"Aid/Tribute to Other Kingdoms",
-		"Bribes",
+		N_("General Costs"),
+		N_("Spy Costs"),
+		N_("Other Mobile Human Unit Costs"),
+		N_("Caravan Costs"),
+		N_("Weapons Costs"),
+		N_("Ship Costs"),
+		N_("Buildings Costs"),
+		N_("Training Units"),
+		N_("Hiring Units"),
+		N_("Honoring Units"),
+		N_("Foreign Worker Salaries"),
+		N_("Grants to Your Villagers"),
+		N_("Grants to Other Villagers"),
+		N_("Imports"),
+		N_("Aid/Tribute to Other Kingdoms"),
+		N_("Bribes"),
 	};
 
 	//---------------------------------//
@@ -253,7 +254,7 @@ static void put_expense_rec(int recNo, int x, int y, int refreshFlag)
 
 	Nation* nationPtr = nation_array[info.viewing_nation_recno];
 
-	font_san.put( x    , y, expense_des_array[recNo-1] );
+	font_san.put( x    , y, _(expense_des_array[recNo-1]) );
 	font_san.put( x+370, y, misc.format( (int) nationPtr->expense_365days(recNo-1), 2 ) );
 }
 //----------- End of static function put_expense_rec -----------//

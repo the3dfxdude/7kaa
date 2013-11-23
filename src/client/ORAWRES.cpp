@@ -31,6 +31,7 @@
 #include <OF_MINE.h>
 #include <OF_MARK.h>
 #include <ORAWRES.h>
+#include "gettext.h"
 
 
 //---------- #define constant ------------//
@@ -108,9 +109,18 @@ void RawRes::load_all_info()
 		rawInfo = raw_info_array+i;
 
 		misc.rtrim_fld( rawInfo->name, rawRec->name, rawRec->NAME_LEN );
-#if(defined(GERMAN) || defined(FRENCH) || defined(SPANISH))
-		translate.multi_to_win(rawInfo->name, rawInfo->NAME_LEN);
-#endif
+		if( strncmp(rawInfo->name, "Clay", rawInfo->NAME_LEN) == 0 )
+		{
+			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Clay") );
+		}
+		else if( strncmp(rawInfo->name, "Copper", rawInfo->NAME_LEN) == 0 )
+		{
+			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Copper") );
+		}
+		else if( strncmp(rawInfo->name, "Iron", rawInfo->NAME_LEN) == 0 )
+		{
+			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Iron") );
+		}
 		rawInfo->raw_id    = i+1;
 		rawInfo->tera_type = misc.atoi( rawRec->tera_type, rawRec->TERA_TYPE_LEN );
 	}
@@ -275,15 +285,7 @@ void RawRes::put_small_product_icon(int x, int y, int rawId)
 
 	String str;
 
-#if(defined(FRENCH))
-	char productName[20];
-	strcpy(productName, raw_res[rawId]->name);
-	strcat(productName, " Products");
-	str  = translate.process(productName);
-#else
-	str  = raw_res[rawId]->name;
-	str += translate.process(" Products");
-#endif
+	snprintf( str, MAX_STR_LEN+1, _("%s Products"), raw_res[rawId]->name );
 
 	help.set_custom_help( x, y, x+RAW_SMALL_ICON_WIDTH-1, y+RAW_SMALL_ICON_HEIGHT-1, str );
 }

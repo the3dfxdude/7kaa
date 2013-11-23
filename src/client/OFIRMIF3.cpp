@@ -35,6 +35,7 @@
 #include <OSPY.h>
 #include <OFIRM.h>
 #include <OREMOTE.h>
+#include "gettext.h"
 
 //---------- Define constant ------------//
 
@@ -84,7 +85,7 @@ void Firm::disp_bribe_menu(int refreshFlag)
 	{
 		int y=INFO_Y1;
 
-		font_san.d3_put( INFO_X1, y, INFO_X2, y+19, "Bribe" );
+		font_san.d3_put( INFO_X1, y, INFO_X2, y+19, _("Bribe") );
 		y+=22;
 
 		disp_bribe_unit( y );
@@ -112,15 +113,15 @@ void Firm::disp_bribe_menu(int refreshFlag)
 		{
 			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+24 );
 
-			font_san.center_put( INFO_X1, y, INFO_X2, y2, "Bribing Succeeded." );
+			font_san.center_put( INFO_X1, y, INFO_X2, y2, _("Bribing Succeeded.") );
 		}
 		else
 		{
 			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
 
-			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, "Bribing Failed." );
-			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Was Caught" );
-			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "And Executed." );
+			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, _("Bribing Failed.") );
+			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("Your Spy Was Caught") );
+			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("And Executed.") );
 		}
 
 		y+=26;
@@ -235,18 +236,13 @@ static void disp_bribe_button(int y, int bribeAmount, int buttonUp)
 	//--------- if display cancel button ---------//
 
 	if( bribeAmount==0 )
-		font_san.center_put( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1, "Cancel" );
+		font_san.center_put( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1, _("Cancel") );
 	else
 	{
 		String str;
 
-		#ifdef GERMAN
-			str  = misc.format(bribeAmount,2);
-			str += " anbieten";
-		#else
-			str  = translate.process("Offer ");
-			str += misc.format(bribeAmount,2);
-		#endif
+		// TRANSLATORS: Offer <Amount>
+		snprintf( str, MAX_STR_LEN+1, _("Offer %s"), misc.format(bribeAmount,2) );
 
 		font_san.center_put( INFO_X1, y, INFO_X2, y+BRIBE_OPTION_HEIGHT-1, str );
 	}
@@ -522,7 +518,8 @@ void Firm::disp_bribe_unit(int dispY1)
 
 	String str;
 
-	str  = translate.process("Loyalty: ");
+	str  = _("Loyalty");
+	str += ": ";
 	str += unitLoyalty;
 
 	font_san.disp( x+UNIT_LARGE_ICON_WIDTH+6, y+20, str, INFO_X2-10 );
@@ -543,8 +540,8 @@ void Firm::disp_assassinate_result(int refreshFlag)
 	{
 		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+43 );
 
-		font_san.center_put( INFO_X1, y, INFO_X2, y2, "Assassination Succeeded." );
-		font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Escaped." );
+		font_san.center_put( INFO_X1, y, INFO_X2, y2, _("Assassination Succeeded.") );
+		font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("Your Spy Escaped.") );
 	}
 	else if( assassinate_result == ASSASSINATE_SUCCEED_KILLED )
 	{
@@ -558,9 +555,11 @@ void Firm::disp_assassinate_result(int refreshFlag)
 		#else
 			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
 
-			font_san.center_put( INFO_X1, y, INFO_X2, y2, "Assassination Succeeded." );
-			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Was Caught" );
-			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "And Executed." );
+			font_san.center_put( INFO_X1, y, INFO_X2, y2, _("Assassination Succeeded.") );
+			// TRANSLATORS: Part of "Your Spy Was Caught And Executed."
+			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("Your Spy Was Caught") );
+			// TRANSLATORS: Part of "Your Spy Was Caught And Executed."
+			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("And Executed.") );
 		#endif
 	}
 	else
@@ -575,9 +574,11 @@ void Firm::disp_assassinate_result(int refreshFlag)
 		#else
 			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
 
-			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, "Assassination Failed." );
-			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "Your Spy Was Caught" );
-			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, "And Executed." );
+			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, _("Assassination Failed.") );
+			// TRANSLATORS: Part of "Your Spy Was Caught And Executed."
+			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("Your Spy Was Caught") );
+			// TRANSLATORS: Part of "Your Spy Was Caught And Executed."
+			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("And Executed.") );
 		#endif
 	}
 
