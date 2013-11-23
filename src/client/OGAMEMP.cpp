@@ -649,8 +649,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 			if (!mp_join_session(choice, config.player_name))
 			{
-				choice = 0;
 				box.msg(_("Unable to connect"));
+				mp_obj.deinit();
+				return;
 			}
 
 			remote.init(&mp_obj);
@@ -874,8 +875,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 			if (!mp_join_session(choice, config.player_name))
 			{
-				choice = 0;
 				box.msg(_("Unable to connect"));
+				mp_obj.deinit();
+				return;
 			}
 
 			// count required player
