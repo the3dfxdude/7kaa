@@ -29,7 +29,7 @@ AC_DEFUN([AM_PATH_OPENAL], [
   ac_cv_openal_al_libs=
   AS_IF([test -n "$ac_cv_openal_al_h" && test -n "$ac_cv_openal_alc_h"], [
     ac_save_LIBS="$LIBS"
-    AS_FOR([], [lib], ["-framework OpenAL" "-lopenal" "-lopenal32"], [
+    AS_FOR([], [lib], ["-framework OpenAL" "-lopenal" "-lopenal32" "-lOpenAL32"], [
       LIBS="$lib $ac_save_LIBS"
       AC_MSG_CHECKING([for alGenSources in $lib])
       AC_TRY_LINK([#include OPENAL_AL_H], [alGenSources (1, 0);], [
