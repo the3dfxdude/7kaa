@@ -4416,8 +4416,8 @@ int Game::mp_select_load_option(char *fileName)
 							newPlayerMsg->random_seed == misc.get_random_seed() &&
 							mp_obj.auth_player(
 								from,
-								((MpStructNewPlayer *)recvPtr)->name,
-								((MpStructNewPlayer *)recvPtr)->pass
+								newPlayerMsg->name,
+								newPlayerMsg->pass
 							)
 						)
 						{
