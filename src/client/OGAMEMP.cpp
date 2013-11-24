@@ -2639,7 +2639,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						{
 							// reply refuse new player
 							MpStructRefuseNewPlayer msgRefuse(from);
-							mp_obj.send( BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+							mp_obj.send( from, &msgRefuse, sizeof(msgRefuse) );
 						}
 					}
 					break;
@@ -2647,7 +2647,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					{
 						// incorrect message, reject
 						MpStructRefuseNewPlayer msgRefuse(from);
-						mp_obj.send(BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+						mp_obj.send(from, &msgRefuse, sizeof(msgRefuse) );
 					}
 					break;
 				case MPMSG_ACCEPT_NEW_PLAYER:
@@ -2814,11 +2814,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
 					printf("MPMSG_REFUSE_NEW_PLAYER: %d\n", ((MpStructRefuseNewPlayer *)recvPtr)->player_id);
-					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.get_my_player_id() )
-					{
-						box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
-						return 0;
-					}
+					box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
+					return 0;
 					break;
 				case MPMSG_PLAYER_ID:
 					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
@@ -4398,7 +4395,7 @@ int Game::mp_select_load_option(char *fileName)
 					{
 						// incorrect message, reject
 						MpStructRefuseNewPlayer msgRefuse(from);
-						mp_obj.send(BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+						mp_obj.send(from, &msgRefuse, sizeof(msgRefuse) );
 					}
 					break;
 				case MPMSG_LOAD_GAME_NEW_PLAYER:
@@ -4476,7 +4473,7 @@ int Game::mp_select_load_option(char *fileName)
 						{
 							// reply refuse new player
 							MpStructRefuseNewPlayer msgRefuse(from);
-							mp_obj.send( BROADCAST_PID, &msgRefuse, sizeof(msgRefuse) );
+							mp_obj.send( from, &msgRefuse, sizeof(msgRefuse) );
 						}
 					}
 					break;
@@ -4547,11 +4544,8 @@ int Game::mp_select_load_option(char *fileName)
 					break;
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
-					if( ((MpStructRefuseNewPlayer *)recvPtr)->player_id == mp_obj.get_my_player_id() )
-					{
-						box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
-						return 0;
-					}
+					box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
+					return 0;
 					break;
 				case MPMSG_PLAYER_ID:
 					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
