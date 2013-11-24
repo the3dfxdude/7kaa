@@ -437,7 +437,7 @@ PlayerDesc *MultiPlayer::create_player(ENetAddress *address)
 // Returns 0 when the player's name could not be set.
 int MultiPlayer::add_player(uint32_t id, char *name, ENetAddress *address, char contact)
 {
-	if (id < 1 || id >= max_players) {
+	if (id < 1 || id > max_players) {
 		return 0;
 	}
 
@@ -475,7 +475,7 @@ int MultiPlayer::add_player(uint32_t id, char *name, ENetAddress *address, char 
 // Returns 0 when nothing changed.
 int MultiPlayer::auth_player(uint32_t id, char *name, char *password)
 {
-	if (id < 1 || id >= max_players) {
+	if (id < 1 || id > max_players) {
 		return 0;
 	}
 
