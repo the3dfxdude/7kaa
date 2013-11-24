@@ -3728,6 +3728,7 @@ int Game::mp_select_load_option(char *fileName)
 		playerColor[regPlayerCount] = tempConfig.player_nation_color;
 		playerRace[regPlayerCount] = 0;
 		playerBalance[regPlayerCount] = PLAYER_RATIO_CDROM;
+		++regPlayerCount;
 
 		// initialize other colorAssigned, only free for those of the remote players
 		maxPlayer = 1;			// host
