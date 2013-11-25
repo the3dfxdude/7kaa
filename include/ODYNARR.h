@@ -87,8 +87,8 @@ public :
 
    void* get();
    void* get(int);
-   void* get_ptr();
-   void* get_ptr(int);
+   void* get_ptr() const;
+   void* get_ptr(int) const;
 	void  read(void*);
 
    int   check_pos();
@@ -159,7 +159,7 @@ inline void* DynArray::get(int specRec)
 // Return : the pointer
 //          NULL if the record no. is invalid.
 
-inline void* DynArray::get_ptr()
+inline void* DynArray::get_ptr() const
 {
    if( cur_pos == 0 )
       return NULL;
@@ -167,7 +167,7 @@ inline void* DynArray::get_ptr()
    return (void*) *((char**)(body_buf+(cur_pos-1)*ele_size));
 }
 
-inline void* DynArray::get_ptr(int specRec)
+inline void* DynArray::get_ptr(int specRec) const
 {
    if( specRec < 1 || specRec > last_ele )
       return NULL;
