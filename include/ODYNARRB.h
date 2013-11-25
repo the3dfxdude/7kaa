@@ -64,8 +64,8 @@ public:
    // packed_size()  is the size when the array is packed (deleted record are actually removed)
    // packed_recno() is the recno when the array is packed 
 
-   int  packed_size()  { return size() - empty_room_count; }
-   int  packed_recno(int);	// Given the recno unpacked, it returns the recno packed.
+   int  packed_size() const  { return size() - empty_room_count; }
+   int  packed_recno(int) const;	// Given the recno unpacked, it returns the recno packed.
 
    void linkin(void*);
    void linkout(int= -1);

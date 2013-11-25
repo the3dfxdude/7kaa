@@ -350,7 +350,7 @@ int DynArrayB::read_empty_room(File* filePtr)
 //
 // return : <int> the recno when packed
 //
-int DynArrayB::packed_recno(int recNo)
+int DynArrayB::packed_recno(int recNo) const
 {
    int i, packedRecno = recNo;
 
