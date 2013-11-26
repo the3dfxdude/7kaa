@@ -37,6 +37,7 @@
 #include <ONATION.h>
 #include <OFIRM.h>
 #include <OTOWN.h>
+#include <OTownNetwork.h>
 #include <OSE.h>
 
 
@@ -180,10 +181,6 @@ void Town::draw_selected()
 //
 int Town::draw_detect_link_line(int actionDetect)
 {
-	int 	i, firmX, firmY, townX, townY;
-	Firm* firmPtr;
-	Town* townPtr;
-
 	//-------- set source points ----------//
 
 	int srcX = ( ZOOM_X1 + (loc_x1-world.zoom_matrix->top_x_loc) * ZOOM_LOC_WIDTH
@@ -195,13 +192,11 @@ int Town::draw_detect_link_line(int actionDetect)
 	//------ draw lines to linked firms ---------//
 
 	char* bitmapPtr;
-	char  goodLinkName[9] = "GOODLINK";
 
-	goodLinkName[7] = '1'+(char)(sys.frame_count%3);
-
-	for( i=0 ; i<linked_firm_count ; i++ )
+	for(int i=0 ; i<linked_firm_count ; i++ )
 	{
-		firmPtr = firm_array[linked_firm_array[i]];
+		int firmX, firmY;
+		Firm *firmPtr = firm_array[linked_firm_array[i]];
 
 		firmX = ( ZOOM_X1 + (firmPtr->loc_x1-world.zoom_matrix->top_x_loc) * ZOOM_LOC_WIDTH
 				  + ZOOM_X1 + (firmPtr->loc_x2-world.zoom_matrix->top_x_loc+1) * ZOOM_LOC_WIDTH ) / 2;
@@ -283,13 +278,12 @@ int Town::draw_detect_link_line(int actionDetect)
 
 	//------ draw lines to linked towns ---------//
 
-	int townRecno;
-
-	for( i=0 ; i<linked_town_count ; i++ )
+	for( int i=0 ; i<linked_town_count ; i++ )
 	{
-		townRecno = linked_town_array[i];
+		int townX, townY;
+		int townRecno = linked_town_array[i];
 
-		townPtr = town_array[townRecno];
+		Town *townPtr = town_array[townRecno];
 
 		townX = ( ZOOM_X1 + (townPtr->loc_x1-world.zoom_matrix->top_x_loc) * ZOOM_LOC_WIDTH
 				  + ZOOM_X1 + (townPtr->loc_x2-world.zoom_matrix->top_x_loc+1) * ZOOM_LOC_WIDTH ) / 2;
@@ -298,39 +292,54 @@ int Town::draw_detect_link_line(int actionDetect)
 				  + ZOOM_Y1 + (townPtr->loc_y2-world.zoom_matrix->top_y_loc+1) * ZOOM_LOC_HEIGHT ) / 2;
 
 		anim_line.draw_line(&vga_back, srcX, srcY, townX, townY, linked_town_enable_array[i]==LINK_EE );
+	}
 
-		//------- detect on the migration icon -------//
+	//------------ detect on the migration icon ------------//
+	// allow migration to any town in the same town network //
 
-		if( nation_recno == nation_array.player_recno &&
-			 nation_recno == townPtr->nation_recno &&
-			 can_migrate(townRecno) )
+	if (town_network_recno != 0 && (nation_recno == nation_array.player_recno))
+	{
+		TownNetwork &townNetwork = *town_network_array[town_network_recno];
+		for (int i = 0; i < townNetwork.size(); ++i)
 		{
-			bitmapPtr = image_icon.get_ptr("MIGRATE");
+			int townRecno = townNetwork[i];
+			Town *townPtr = town_array[townRecno];
 
-			if( actionDetect )
+			if (can_migrate(townRecno))
 			{
-				int detectClick = world.zoom_matrix->detect_bitmap_clip( townX-11, townY-11, bitmapPtr );
-				if( detectClick )
+				bitmapPtr = image_icon.get_ptr("MIGRATE");
+
+				int townX, townY;
+				townX = ( ZOOM_X1 + (townPtr->loc_x1-world.zoom_matrix->top_x_loc) * ZOOM_LOC_WIDTH
+					  + ZOOM_X1 + (townPtr->loc_x2-world.zoom_matrix->top_x_loc+1) * ZOOM_LOC_WIDTH ) / 2;
+				townY = ( ZOOM_Y1 + (townPtr->loc_y1-world.zoom_matrix->top_y_loc) * ZOOM_LOC_HEIGHT
+						  + ZOOM_Y1 + (townPtr->loc_y2-world.zoom_matrix->top_y_loc+1) * ZOOM_LOC_HEIGHT ) / 2;
+
+				if( actionDetect )
 				{
-					mouse.reset_click();		// reset queued mouse click for fast single clicking
-
-					// Migrate 1 person on left click and 10 people on right click
-					err_when(town_array[townRecno]->population>MAX_TOWN_POPULATION);
-					int migrateRaceId = browse_selected_race_id();
-					for (int cnt = 1; cnt <= (detectClick == 1 ? 1 : 10); cnt++)
+					int detectClick = world.zoom_matrix->detect_bitmap_clip( townX-11, townY-11, bitmapPtr );
+					if( detectClick )
 					{
-						err_when( !migrateRaceId );
-						migrate_to(townRecno, COMMAND_PLAYER, migrateRaceId);
+						mouse.reset_click();		// reset queued mouse click for fast single clicking
+
+						// Migrate 1 person on left click and 10 people on right click
+						err_when(town_array[townRecno]->population>MAX_TOWN_POPULATION);
+						int migrateRaceId = browse_selected_race_id();
+						for (int cnt = 1; cnt <= (detectClick == 1 ? 1 : 10); cnt++)
+						{
+							err_when( !migrateRaceId );
+							migrate_to(townRecno, COMMAND_PLAYER, migrateRaceId);
+						}
+						// ###### begin Gilbert 25/9 #######//
+						se_ctrl.immediate_sound("PULL_MAN");
+						// ###### end Gilbert 25/9 #######//
+						return 1;
 					}
-					// ###### begin Gilbert 25/9 #######//
-					se_ctrl.immediate_sound("PULL_MAN");
-					// ###### end Gilbert 25/9 #######//
-					return 1;
 				}
-			}
-			else
-			{
-				world.zoom_matrix->put_bitmap_clip( townX-11, townY-11, bitmapPtr );
+				else
+				{
+					world.zoom_matrix->put_bitmap_clip( townX-11, townY-11, bitmapPtr );
+				}
 			}
 		}
 	}
