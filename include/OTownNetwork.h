@@ -45,6 +45,8 @@ public:
 	int size() const {return _Towns.size();}
 	int nation_recno() const {return _Nation;} // The nation_recno of all the towns in this list, or 0 if no towns are added (because independent villages do not form town networks)
 	int recno() const {return _MyRecno;}
+	
+	int	operator[](int index) {return _Towns[index];}
 
 
 protected:
