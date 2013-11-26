@@ -305,6 +305,9 @@ int Town::draw_detect_link_line(int actionDetect)
 			int townRecno = townNetwork[i];
 			Town *townPtr = town_array[townRecno];
 
+			// Do not draw/detect on self
+			if (townRecno == town_recno) continue;
+
 			if (can_migrate(townRecno))
 			{
 				bitmapPtr = image_icon.get_ptr("MIGRATE");
