@@ -293,7 +293,7 @@ int Town::draw_detect_link_line(int actionDetect)
 		townY = ( ZOOM_Y1 + (townPtr->loc_y1-world.zoom_matrix->top_y_loc) * ZOOM_LOC_HEIGHT
 				  + ZOOM_Y1 + (townPtr->loc_y2-world.zoom_matrix->top_y_loc+1) * ZOOM_LOC_HEIGHT ) / 2;
 
-		if ( ! awesome_lines_flag)
+		if ( !awesome_lines_flag || (townPtr->nation_recno != nation_array.player_recno) )
 			anim_line.draw_line(&vga_back, srcX, srcY, townX, townY, linked_town_enable_array[i]==LINK_EE );
 	}
 
