@@ -278,6 +278,8 @@ int Town::draw_detect_link_line(int actionDetect)
 
 	//------ draw lines to linked towns ---------//
 
+	bool awesome_lines_flag = true; // Set this to true to draw animated lines to ALL towns in the network. Not advised for actual play.
+
 	for( int i=0 ; i<linked_town_count ; i++ )
 	{
 		int townX, townY;
@@ -291,7 +293,8 @@ int Town::draw_detect_link_line(int actionDetect)
 		townY = ( ZOOM_Y1 + (townPtr->loc_y1-world.zoom_matrix->top_y_loc) * ZOOM_LOC_HEIGHT
 				  + ZOOM_Y1 + (townPtr->loc_y2-world.zoom_matrix->top_y_loc+1) * ZOOM_LOC_HEIGHT ) / 2;
 
-		anim_line.draw_line(&vga_back, srcX, srcY, townX, townY, linked_town_enable_array[i]==LINK_EE );
+		if ( ! awesome_lines_flag)
+			anim_line.draw_line(&vga_back, srcX, srcY, townX, townY, linked_town_enable_array[i]==LINK_EE );
 	}
 
 	//------------ detect on the migration icon ------------//
@@ -308,15 +311,21 @@ int Town::draw_detect_link_line(int actionDetect)
 			// Do not draw/detect on self
 			if (townRecno == town_recno) continue;
 
+			int townX, townY;
+			townX = ( ZOOM_X1 + (townPtr->loc_x1-world.zoom_matrix->top_x_loc) * ZOOM_LOC_WIDTH
+					+ ZOOM_X1 + (townPtr->loc_x2-world.zoom_matrix->top_x_loc+1) * ZOOM_LOC_WIDTH ) / 2;
+			townY = ( ZOOM_Y1 + (townPtr->loc_y1-world.zoom_matrix->top_y_loc) * ZOOM_LOC_HEIGHT
+						+ ZOOM_Y1 + (townPtr->loc_y2-world.zoom_matrix->top_y_loc+1) * ZOOM_LOC_HEIGHT ) / 2;
+
+			// If awesome_lines_flag is true then we draw the aminated lines on all towns in the town-network
+			if (awesome_lines_flag)
+			{
+				anim_line.draw_line(&vga_back, srcX, srcY, townX, townY, 1 /*-animated*/);
+			}
+
 			if (can_migrate(townRecno))
 			{
 				bitmapPtr = image_icon.get_ptr("MIGRATE");
-
-				int townX, townY;
-				townX = ( ZOOM_X1 + (townPtr->loc_x1-world.zoom_matrix->top_x_loc) * ZOOM_LOC_WIDTH
-					  + ZOOM_X1 + (townPtr->loc_x2-world.zoom_matrix->top_x_loc+1) * ZOOM_LOC_WIDTH ) / 2;
-				townY = ( ZOOM_Y1 + (townPtr->loc_y1-world.zoom_matrix->top_y_loc) * ZOOM_LOC_HEIGHT
-						  + ZOOM_Y1 + (townPtr->loc_y2-world.zoom_matrix->top_y_loc+1) * ZOOM_LOC_HEIGHT ) / 2;
 
 				if( actionDetect )
 				{
