@@ -47,7 +47,7 @@
 //------- define constant --------//
 
 #define MAX_TOWN_GROWTH_POPULATION  60		// grow up to 60 persons in a town
-#define MAX_TOWN_POPULATION  60		// MAX number of unitw in a town
+#define MAX_TOWN_POPULATION  60		// MAX number of units in a town
 
 //-------- Define constant -----------//
 
@@ -200,6 +200,12 @@ public:
 
 	int 	 closest_own_camp();
 
+	//========== NOTE: The following members are not loaded from/saved to file ==========//
+
+	//--------- town network ----------//
+	int		town_network_recno;						// The recno of the town network this town belongs to
+	bool	town_network_pulsed;					// Used for pulsing the town network to check which parts are still connected. Must always be set to false, and can only be true during a pulse-operation
+
 	//------ static class member var ------//
 
 	static short  if_town_recno;
@@ -226,22 +232,22 @@ public:
 
 	int	can_recruit(int raceId);
 	int	can_train(int raceId);
-	int   can_migrate(int destTownRecno, int migrateNow=0, int raceId=0);		 // if not called by Town::mirgate, don't set migrateNow to TRUE
+	int   can_migrate(int destTownRecno, int migrateNow=0, int raceId=0);		 // if not called by Town::migrate, don't set migrateNow to TRUE
 	void	move_pop(Town* destTown, int raceId, int hasJob);
 	int 	pick_random_race(int pickNonRecruitableAlso, int pickSpyFlag);
 	int 	camp_influence(int unitRecno);
 
-   void  setup_link();
+	void  setup_link();
 	void  release_link();
-   void  release_firm_link(int);
+	void  release_firm_link(int);
 	void  release_town_link(int);
-	int	linked_active_camp_count();
-	int 	can_toggle_firm_link(int firmRecno);
-	void 	update_camp_link();
+	int	  linked_active_camp_count();
+	int   can_toggle_firm_link(int firmRecno);
+	void  update_camp_link();
 
 	void  init_pop(int raceId, int addPop, int loyalty, int hasJob=0, int firstInit=0);
-   void  inc_pop(int raceId, int unitHasJob, int unitLoyalty);
-   void  inc_pop_overcrowded(int raceId, int unitHasJob, int unitLoyalty);
+	void  inc_pop(int raceId, int unitHasJob, int unitLoyalty);
+	void  inc_pop_overcrowded(int raceId, int unitHasJob, int unitLoyalty);
 	void  dec_pop(int raceId, int unitHasJob);
 
 	void  draw_selected();

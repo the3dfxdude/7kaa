@@ -42,6 +42,7 @@
 #include <OGODRES.h>
 #include <OMONSRES.h>
 #include <OTOWN.h>
+#include <OTownNetwork.h>
 #include <ONATION.h>
 #include <OFIRM.h>
 #include <OIMGRES.h>
@@ -160,6 +161,7 @@ int Game::init(int loadGameCall)
 	firm_die_array.init();
 	// ##### end Gilbert 2/10 #######//
 	town_array.init();
+	town_network_array.init();
 	unit_array.init();
 	bullet_array.init();
 	rebel_array.init();
@@ -255,9 +257,10 @@ void Game::deinit(int loadGameCall)
 	// ##### begin Gilbert 2/10 #######//
 	firm_die_array.deinit();
 	// ##### end Gilbert 2/10 #######//
-   town_array.deinit();
-   unit_array.deinit();
-   bullet_array.deinit();
+	town_network_array.deinit();
+	town_array.deinit();
+	unit_array.deinit();
+	bullet_array.deinit();
 	rebel_array.deinit();
 	spy_array.deinit();
 	region_array.deinit();

@@ -68,6 +68,7 @@
 #include <OTECHRES.h>
 #include <OTERRAIN.h>
 #include <OTOWN.h>
+#include <OTownNetwork.h>
 #include <OTRANSL.h>
 #include <OUNIT.h>
 #include <OVGA.h>
@@ -194,9 +195,10 @@ UnitArray         unit_array(100);        // 100-initial array size
 BulletArray       bullet_array(100);
 SiteArray         site_array;
 TownArray         town_array;
+TownNetworkArray  town_network_array;
 NationArray       nation_array;
 FirmArray         firm_array;
-FirmDieArray		firm_die_array;
+FirmDieArray	  firm_die_array;
 TornadoArray      tornado_array(10);
 RebelArray        rebel_array;
 SpyArray          spy_array;

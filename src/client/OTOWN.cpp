@@ -45,6 +45,7 @@
 #include <ONATION.h>
 #include <OREMOTE.h>
 #include <OTOWN.h>
+#include <OTownNetwork.h>
 #include <ONEWS.h>
 #include <OANLINE.h>
 // ##### begin Gilbert 9/10 ######//
@@ -162,6 +163,11 @@ void Town::init(int nationRecno, int raceId, int xLoc, int yLoc)
 		set_auto_collect_tax_loyalty( nationPtr->auto_collect_tax_loyalty );
 		set_auto_grant_loyalty( nationPtr->auto_grant_loyalty );
 	}
+
+	//--------- setup town network ---------//
+
+	town_network_pulsed = false;
+	town_network_recno = town_network_array.town_created(town_recno, nation_recno, linked_town_array, linked_town_count);
 }
 //--------- End of function Town::init ----------//
 
@@ -172,6 +178,11 @@ void Town::deinit()
 {
 	if( !town_recno )
 		return;
+
+	//--------- remove from town network ---------//
+
+	town_network_array.town_destroyed(town_recno);
+
 
 	clear_defense_mode();
 
@@ -697,6 +708,10 @@ void Town::set_nation(int newNationRecno)
 	if( nation_recno == newNationRecno )
 		return;
 
+	//--------- update town network (pre-step) ---------//
+	town_network_array.town_pre_changing_nation(town_recno);
+
+
 	clear_defense_mode();
 
 	//------------- stop all actions to attack this town ------------//
@@ -830,6 +845,9 @@ void Town::set_nation(int newNationRecno)
 	//---- reset the action mode of all spies in this town ----//
 
 	spy_array.set_action_mode( SPY_TOWN, town_recno, SPY_IDLE );      // we need to reset it. e.g. when we have captured an enemy town, SPY_SOW_DISSENT action must be reset to SPY_IDLE
+
+	//--------- update town network (post-step) ---------//
+	town_network_array.town_post_changing_nation(town_recno, newNationRecno);
 
 	//-------- refresh display ----------//
 
@@ -1053,7 +1071,7 @@ void Town::dec_pop(int raceId, int unitHasJob)
 	if( population==0 )		// it will be deleted in TownArray::process()
 	{
 		if( nation_recno == nation_array.player_recno )
-	   	news_array.town_abandoned(town_recno);
+	   		news_array.town_abandoned(town_recno);
 
 		deinit();
 		return;
@@ -3431,7 +3449,7 @@ void Town::release_town_link(int releaseTownRecno)
 
 //------- Begin of function Town::toggle_firm_link ---------//
 //
-// Toggle the firm link of the current firm.
+// Toggle the firm link of the current town.
 //
 // <int> linkId - id. of the link
 // <int> toggleFlag - 1-enable, 0-disable
@@ -3517,7 +3535,9 @@ void Town::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int s
 
 //------- Begin of function Town::toggle_town_link ---------//
 //
-// Toggle the town link of the current firm.
+// Toggle the town link of the current town.
+//
+// NOTE: This function is not used
 //
 // <int> linkId - id. of the link
 // <int> toggleFlag - 1-enable, 0-disable
@@ -3527,6 +3547,9 @@ void Town::toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int s
 //
 void Town::toggle_town_link(int linkId, int toggleFlag, char remoteAction, int setBoth)
 {
+	// Function is unused, and not updated to support town networks.
+	return;
+
 	if( !remoteAction && remote.is_enable() )
 	{
 		// packet structure : <town recno> <link Id> <toggle Flag>
