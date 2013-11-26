@@ -215,7 +215,7 @@ TownNetwork* TownNetworkArray::add_network(int nationRecno)
 {
 	TownNetwork *network = new TownNetwork(nationRecno);
 	
-	linkin(network);
+	linkin(&network);
 	network->set_recno(recno());
 
 	return network;
@@ -290,7 +290,8 @@ int TownNetworkArray::town_created(int townRecno, int nationRecno, short const *
 	if (tnRecno == 0)
 	{
 		TownNetwork *pNetwork = add_network(nationRecno);
-		pNetwork->add_town(tnRecno);
+		pNetwork->add_town(townRecno);
+		tnRecno = pNetwork->recno();
 	}
 
 	return tnRecno;
