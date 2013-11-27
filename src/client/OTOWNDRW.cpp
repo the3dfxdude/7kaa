@@ -303,6 +303,7 @@ int Town::draw_detect_link_line(int actionDetect)
 	if (town_network_recno != 0 && (nation_recno == nation_array.player_recno))
 	{
 		TownNetwork &townNetwork = *town_network_array[town_network_recno];
+		bitmapPtr = image_icon.get_ptr("MIGRATE");
 		for (int i = 0; i < townNetwork.size(); ++i)
 		{
 			int townRecno = townNetwork[i];
@@ -323,10 +324,11 @@ int Town::draw_detect_link_line(int actionDetect)
 				anim_line.draw_line(&vga_back, srcX, srcY, townX, townY, 1 /*-animated*/);
 			}
 
-			if (can_migrate(townRecno))
+			// Only perform checks on migration (draw/detect) when the 'active' part of the town is within
+			// the zoom matrix
+			if ( world.zoom_matrix->is_bitmap_clip( townX-11, townY-11, bitmapPtr ) &&
+				 can_migrate(townRecno) )
 			{
-				bitmapPtr = image_icon.get_ptr("MIGRATE");
-
 				if( actionDetect )
 				{
 					int detectClick = world.zoom_matrix->detect_bitmap_clip( townX-11, townY-11, bitmapPtr );

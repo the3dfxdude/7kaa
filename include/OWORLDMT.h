@@ -144,6 +144,7 @@ public:
 	void put_bitmap_clip(int x, int y, char* bitmapPtr,int compressedFlag=0);
 	void put_bitmap_remap_clip(int x, int y, char* bitmapPtr, char* colorRemapTable=NULL,int compressedFlag=0);
 	int  detect_bitmap_clip(int x, int y, char* bitmapPtr);
+	bool is_bitmap_clip(int x, int y, char* bitmapPtr);
 
 protected:
 	void draw_objects();
