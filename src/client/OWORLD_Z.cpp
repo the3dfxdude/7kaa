@@ -1992,6 +1992,26 @@ int ZoomMatrix::detect_bitmap_clip(int x, int y, char* bitmapPtr)
 //--------- End of function ZoomMatrix::detect_bitmap_clip ---------//
 
 
+//------ Begin of function ZoomMatrix::is_bitmap_clip ---------//
+//
+// Returns true if the bitmap is (partially) inside the zoom region, or false otherwise
+//
+// return: <bool> false - completely outside zoom
+//                true - (partially) inside zoom
+//
+bool ZoomMatrix::is_bitmap_clip(int x, int y, char* bitmapPtr)
+{
+	int x2 = x + *((short*)bitmapPtr) 	  - 1;
+	int y2 = y + *(((short*)bitmapPtr)+1) - 1;
+
+	if( x2 < ZOOM_X1 || y2 < ZOOM_Y1 || x > ZOOM_X2 || y > ZOOM_Y2 )
+		return 0;
+
+	return 1;
+}
+//--------- End of function ZoomMatrix::is_bitmap_clip ---------//
+
+
 //------ Begin of function ZoomMatrix::put_bitmap_remap_clip ---------//
 //
 // Put a bitmap on the surface buffer
