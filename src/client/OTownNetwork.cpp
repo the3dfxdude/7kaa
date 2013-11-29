@@ -32,7 +32,7 @@
 #define DEBUG_CHECK	true
 #define DEBUG_CHECK_WORK true
 #else
-#define DEBUG_CHECK	false;
+#define DEBUG_CHECK	false
 #define DEBUG_CHECK_WORK false
 #endif
 
