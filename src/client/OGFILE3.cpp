@@ -38,6 +38,7 @@
 #include <OSPY.h>
 #include <OTORNADO.h>
 #include <OTOWN.h>
+#include <OTownNetwork.h>
 #include <OU_MARI.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
@@ -1134,7 +1135,7 @@ int TownArray::write_file(File* filePtr)
 
 			filePtr->file_put_short(1);      // the town exists
 
-         if( !filePtr->file_write( townPtr, sizeof(Town) ) )
+         if( !filePtr->file_write( townPtr, sizeof(Town) - Town::SIZEOF_NONSAVED_ELEMENTS ) )
             return 0;
       }
    }
@@ -1180,23 +1181,23 @@ int TownArray::read_file(File* filePtr)
 		{
 			townPtr = town_array.create_town();
 
-				if(!game_file_array.same_version)
+			if(!game_file_array.same_version)
+			{
+				Version_1_Town *oldTown = (Version_1_Town*) mem_add(sizeof(Version_1_Town));
+				if(!filePtr->file_read(oldTown, sizeof(Version_1_Town)))
 				{
-					Version_1_Town *oldTown = (Version_1_Town*) mem_add(sizeof(Version_1_Town));
-					if(!filePtr->file_read(oldTown, sizeof(Version_1_Town)))
-					{
-						mem_del(oldTown);
-						return 0;
-					}
-
-					oldTown->convert_to_version_2(townPtr);
 					mem_del(oldTown);
+					return 0;
 				}
-				else
-				{
-					if( !filePtr->file_read( townPtr, sizeof(Town) ) )
-						return 0;
-				}
+
+				oldTown->convert_to_version_2(townPtr);
+				mem_del(oldTown);
+			}
+			else
+			{
+				if( !filePtr->file_read( townPtr, sizeof(Town) - Town::SIZEOF_NONSAVED_ELEMENTS ) )
+					return 0;
+			}
 
 			#ifdef DEBUG
 				townPtr->verify_slot_object_id_array();		// for debugging only
@@ -1208,19 +1209,23 @@ int TownArray::read_file(File* filePtr)
 	//-- So they will be marked deleted in DynArrayB and can be -----//
 	//-- undeleted and used when a new record is going to be added --//
 
-   for( i=size() ; i>0 ; i-- )
-   {
-      DynArrayB::go(i);             // since TownArray has its own go() which will call GroupArray::go()
+	for( i=size() ; i>0 ; i-- )
+	{
+		DynArrayB::go(i);             // since TownArray has its own go() which will call GroupArray::go()
 
-      if( get_ptr() == NULL )       // add_blank() record
-         linkout();
-   }
+		if( get_ptr() == NULL )       // add_blank() record
+			linkout();
+	}
 
-   //------- read empty room array --------//
+	//------- read empty room array --------//
 
-   read_empty_room(filePtr);
+	read_empty_room(filePtr);
 
-   return 1;
+	//------- create the town network --------//
+
+	town_network_array.recreate_after_load();
+
+	return 1;
 }
 //--------- End of function TownArray::read_file ---------------//
 

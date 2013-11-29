@@ -1,6 +1,3 @@
-#ifndef __OTOWNNETWORK_H
-#define __OTOWNNETWORK_H
-
 //
 // Seven Kingdoms: Ancient Adversaries
 //
@@ -21,11 +18,13 @@
 //
 //
 
-
 //Filename    : OTownNetwork.h
 //Description : Header file for TownNetwork, an extension to linked towns
 //              which is binary compatible with existing data by dynamically
 //				generating from existing data
+
+#ifndef __OTOWNNETWORK_H
+#define __OTOWNNETWORK_H
 
 #include <vector>
 #include <ODYNARRB.h>
@@ -78,11 +77,12 @@ public:
 	TownNetwork* operator[](int recNo) const {return network(recNo); }
 
 	// All the changes that can happen to a Town that affect the Town Networks. Called by Town when the events occur.
+	// Note that Independent Villages never form a town network.
 	int town_created(int townRecno, int nationRecno, short const *linkedTowns, int linkedCount); // Returns the town network recno for the town
 	void town_destroyed(int townRecno); // Call this when the town is about to be destroyed
 	void town_pre_changing_nation(int townRecno); // Call this just before a town changes nations
 	void town_post_changing_nation(int townRecno, int newNationRecno); // Call this just after a town has changed nations
-	// TODO: Will be called by independent nation towns. Don't forward those calls to a town network.
+	void recreate_after_load(); // Recreate the town network after the TownArray has finished loading from file
 
 private:
 	TownNetwork* network(int recNo) const {return (TownNetwork*) get_ptr(recNo);}
@@ -90,6 +90,7 @@ private:
 	TownNetwork* add_network(int nationRecno);
 	void remove_network(int recno);
 	int pulse(int townRecno, int nationRecno); // Pulses the towns that are linked, and returns the amount of pulses set
+	void add_all_linked(int townRecno, TownNetwork *pTownNetwork);
 };
 
 extern TownNetworkArray town_network_array;
