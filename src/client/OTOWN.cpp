@@ -1139,7 +1139,7 @@ void Town::population_grow()
 				debugRaceGrowth[i]++;
 			#endif
 
-			//-- if the race's population drops to too low, change the town layout --//
+			//-- if the race's population grows too high, change the town layout --//
 
 			if( race_pop_array[i] > max_race_pop_array[i] )
 			{
