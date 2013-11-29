@@ -441,6 +441,51 @@ int TownNetworkArray::pulse(int townRecno, int nationRecno)
 	return pulsed;
 }
 
+// ---- Function add_all_linked ----
+// Adds all the linked towns (directly or indirectly) to the given town network.
+// 
+//  - townRecno: the town to start the link traversal for
+//  - pTownNetwork: pointer to the town-network to add all towns to; should be an empty network
+//
+void TownNetworkArray::add_all_linked(int townRecno, TownNetwork *pTownNetwork)
+{
+	std::stack<int> towns;
+
+	if (DEBUG_CHECK && pTownNetwork->size() > 0)
+		throw "pTownNetwork does not point to a freshly created town network. Was this the intention?";
+	else if (DEBUG_CHECK && town_array[townRecno]->nation_recno != pTownNetwork->nation_recno())
+		throw "Start town nationality and Town Network nationality do not match";
+
+	// Use a stack to implement the algorithm of successively pulsing each linked town
+	// without employing recursion
+
+	towns.push(townRecno);
+	while( towns.size() > 0 )
+	{
+		// Pop from the top
+		int activeRecno = towns.top();
+		towns.pop();
+		Town *pTown = town_array[activeRecno];
+		// If it has not yet been pulsed, do so now, and add linked towns to the stack
+		if (!pTown->town_network_pulsed && pTown->nation_recno == pTownNetwork->nation_recno())
+		{
+			// Add town, and set its pulsed value
+			pTownNetwork->add_town(pTown->town_recno);
+			pTown->town_network_pulsed = true;
+			// Add linked towns
+			for (int i = 0; i < pTown->linked_town_count; ++i)
+			{
+				// Only same-nation linked
+				if (town_array[ pTown->linked_town_array[i] ]->nation_recno == pTownNetwork->nation_recno())
+					towns.push(pTown->linked_town_array[i]);
+			}
+		}
+	}
+
+	// Pulse value was used for each town in the network - reset it now
+	pTownNetwork->reset_pulsed();
+}
+
 
 // ---- Function town_pre_changing_nation ----
 // Does the pre-update for the town networks when a town is about to change nation
@@ -485,4 +530,27 @@ void TownNetworkArray::town_post_changing_nation(int townRecno, int newNationRec
 	// Changing nation is equivalent to being destroyed (as old nation) and recreated as new nation.
 	// Post-step is creating
 	town_created(townRecno, newNationRecno, pTown->linked_town_array, pTown->linked_town_count);
+}
+
+
+// ---- Function recreate_after_load ----
+// Recreates the town network after TownArray has finished loading from file.
+// Note: this function can only access the Towns and TownArray, as these are guaranteed to be loaded.
+// 
+void TownNetworkArray::recreate_after_load()
+{
+	for (int i = 1; i < town_array.size(); ++i)
+	{
+		Town *pTown = town_array[i];
+		if (pTown == NULL) continue; // Skip over empty elements
+		
+		// Create town networks for each town without a town network.
+		// Independent towns do not form town networks
+		if (pTown->town_network_recno == 0 && pTown->nation_recno != 0)
+		{
+			TownNetwork *pNetwork = add_network(pTown->nation_recno);
+			// Add all (indirectly) linked towns to the network
+			add_all_linked(pTown->town_recno, pNetwork);
+		}
+	}
 }

@@ -203,6 +203,7 @@ public:
 	int 	 closest_own_camp();
 
 	//========== NOTE: The following members are not loaded from/saved to file ==========//
+	enum {SIZEOF_NONSAVED_ELEMENTS = sizeof(int)+sizeof(bool)};
 
 	//--------- town network ----------//
 	int		town_network_recno;						// The recno of the town network this town belongs to
