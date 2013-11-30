@@ -44,8 +44,6 @@ private:
 	SDL_Color      game_pal[VGA_PALETTE_SIZE];
 	SDL_Color*     custom_pal;
 	Uint32         video_mode_flags;
-	int            window_width;
-	int            window_height;
 
 public:
 	ColorTable*    vga_color_table;

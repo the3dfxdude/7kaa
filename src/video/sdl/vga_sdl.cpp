@@ -74,8 +74,8 @@ int VgaSDL::init()
       return 0;
 
    SDL_DisplayMode mode;
-   window_width = 1024;
-   window_height = 768;
+   int window_width = 1024;
+   int window_height = 768;
 
    if (SDL_GetDesktopDisplayMode(0, &mode) == 0)
    {
@@ -515,11 +515,6 @@ void VgaSDL::toggle_full_screen()
    } else {
       result = SDL_SetWindowFullscreen(window, 0);
       video_mode_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
-	  if (result >= 0)
-	  {
-		  // SDL2 (on Windows 7 x64, at least) seems to resize the window after we have toggled fullscreen, so restore original size
-		  SDL_SetWindowSize(window, window_width, window_height);
-	  }
    }
    if (result < 0) {
       ERR("Could not toggle fullscreen: %s\n", SDL_GetError());
