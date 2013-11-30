@@ -1044,21 +1044,27 @@ void Town::detect_train_menu()
 		}
 		// ###### end Gilbert 10/9 ########//
 
+		int shiftPressed = mouse.event_skey_state & SHIFT_KEY_MASK;
+
 		//------- process the action --------//
 		if( rc > 0 )
 		{
+			// Holding shift will use batches of FIRMWAR_BUILD_BATCH_COUNT
+			int trainCancelAmount = shiftPressed ? TOWN_TRAIN_BATCH_COUNT : 1;
+
 			if( rc==1 )		// left button
 			{
 				if( remote.is_enable() )
 				{
-					// packet structure : <town recno> <skill id> <race id>
-					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 3*sizeof(short) );
+					// packet structure : <town recno> <skill id> <race id> <amount>
+					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 4*sizeof(short) );
 					shortPtr[0] = town_recno;
 					shortPtr[1] = b;
 					shortPtr[2] = race_filter(browse_race.recno());
+					shortPtr[3] = (short)trainCancelAmount;
 				}
 				else
-					add_queue(b, race_filter(browse_race.recno()) );
+					add_queue(b, race_filter(browse_race.recno()), trainCancelAmount);
 				// ##### begin Gilbert 26/9 ########//
 				se_ctrl.immediate_sound("TURN_ON");
 				// ##### end Gilbert 26/9 ########//
@@ -1067,14 +1073,15 @@ void Town::detect_train_menu()
 			{
 				if( remote.is_enable() )
 				{
-					// packet structure : <town recno> <skill id> <race id>
-					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 3*sizeof(short) );
+					// packet structure : <town recno> <skill id> <race id> <amount>
+					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 4*sizeof(short) );
 					shortPtr[0] = town_recno;
 					shortPtr[1] = b;
 					shortPtr[2] = -1;		// -1 race_id represent remove queue
+					shortPtr[3] = (short)trainCancelAmount;
 				}
 				else
-					remove_queue(b);
+					remove_queue(b, trainCancelAmount);
 				// ##### begin Gilbert 26/9 ########//
 				se_ctrl.immediate_sound("TURN_OFF");
 				// ##### end Gilbert 26/9 ########//
@@ -1955,13 +1962,19 @@ void Town::process_queue()
 
 
 //--------- Begin of function Town::add_queue ---------//
-void Town::add_queue(char skillId, char raceId)
+void Town::add_queue(char skillId, char raceId, int amount)
 {
-	if(train_queue_count+(train_unit_recno>0)==MAX_TRAIN_QUEUE)
-		return;
+	err_when(amount < 0);
+	if (amount < 0) return;
 
-	train_queue_skill_array[train_queue_count] = skillId;
-	train_queue_race_array[train_queue_count++] = raceId;
+	int queueSpace = MAX_TRAIN_QUEUE - train_queue_count - (train_unit_recno>0);
+	int enqueueAmount = MIN(queueSpace, amount);
+
+	for (int i = 0; i < enqueueAmount; ++i)
+	{
+		train_queue_skill_array[train_queue_count] = skillId;
+		train_queue_race_array[train_queue_count++] = raceId;
+	}	
 
 	if( !train_unit_recno )
 		process_queue();
@@ -1970,8 +1983,11 @@ void Town::add_queue(char skillId, char raceId)
 
 
 //--------- Begin of function Town::remove_queue ---------//
-void Town::remove_queue(char skillId)
+void Town::remove_queue(char skillId, int amount)
 {
+	err_when(amount < 1);
+	if (amount < 1) return;
+
 	for(int i=train_queue_count-1; i>=0; i--)
 	{
 		if(train_queue_skill_array[i] == skillId)
@@ -1980,11 +1996,15 @@ void Town::remove_queue(char skillId)
 
 			misc.del_array_rec(train_queue_skill_array, train_queue_count, sizeof(train_queue_skill_array[0]), i+1);
 			misc.del_array_rec(train_queue_race_array, train_queue_count, sizeof(train_queue_race_array[0]), i+1);
-			train_queue_count--;
-			return;
+			train_queue_count--;			
+			amount--;
+
+			if (amount <= 0) return;
 		}
 	}
 
+	// If there were less trained of skillId in the queue than were requested to be removed then
+	// also cancel currently trained unit
 	if(train_unit_recno)
 	{
 		Unit *unitPtr = unit_array[train_unit_recno];
