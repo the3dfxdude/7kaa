@@ -30,7 +30,7 @@
 
 //----------- Define constant --------------//
 
-#define MAX_SHIP_IN_HARBOR  4  		// maximum no. of ships in a harbor
+#define MAX_SHIP_IN_HARBOR		4  		// maximum no. of ships in a harbor
 #define MAX_BUILD_SHIP_QUEUE	10
 
 //------- Define class FirmHarbor --------//
@@ -104,9 +104,11 @@ public:
 	//--------------------------------------//
 
 	virtual FirmHarbor*     cast_to_FirmHarbor() { return this; };
-	void	add_queue(int unitId);
-	void	remove_queue(int unitId);
+	void	add_queue(int unitId, int amount = 1);
+	void	remove_queue(int unitId, int amount = 1);
 	void	cancel_build_unit();
+
+	enum {HARBOR_BUILD_BATCH_COUNT = 5}; // Number of units enqueued when holding shift - ensure this is less than MAX_BUILD_SHIP_QUEUE
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	UCHAR crc8();

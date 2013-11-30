@@ -2036,7 +2036,7 @@ void RemoteMsg::skip_build_weapon()
 void RemoteMsg::build_ship()
 {
 	err_when( id != MSG_F_HARBOR_BUILD_SHIP );
-	// packet structure : <firm recno> <unit Id>
+	// packet structure : <firm recno> <unit Id> <amount>
 	short *shortPtr = (short *)data_buf;
 	if( validate_firm(*shortPtr) )
 	{
@@ -2052,9 +2052,9 @@ void RemoteMsg::build_ship()
 #endif
 			// harbor->build_ship(shortPtr[1], COMMAND_REMOTE);
 			if( shortPtr[1] > 0)
-				harbor->add_queue(shortPtr[1]);
+				harbor->add_queue(shortPtr[1], shortPtr[2]);
 			else if( shortPtr[1] < 0)
-				harbor->remove_queue(-shortPtr[1]);
+				harbor->remove_queue(-shortPtr[1], shortPtr[2]);
 			else
 			{
 				err_here();

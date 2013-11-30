@@ -837,22 +837,28 @@ void FirmHarbor::detect_build_menu()
 			quitFlag = 1;		// quit the menu right after pressing the button
 		}
 		// ####### end Gilbert 20/9 ########//
+		
+		int shiftPressed = mouse.event_skey_state & SHIFT_KEY_MASK;
 
 		//------- process the action --------//
 
 		if( rc > 0 )
 		{
+			// Holding shift will use batches of FIRMWAR_BUILD_BATCH_COUNT
+			int createRemoveAmount = shiftPressed ? HARBOR_BUILD_BATCH_COUNT : 1;
+
 			if( rc==1 )		// left button
 			{
 				if( remote.is_enable() )
 				{
-					// packet structure : <firm recno> <unit Id>
-					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_HARBOR_BUILD_SHIP, 2*sizeof(short) );
+					// packet structure : <firm recno> <unit Id> <amount>
+					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_HARBOR_BUILD_SHIP, 3*sizeof(short) );
 					shortPtr[0] = firm_recno;
 					shortPtr[1] = unitId;
+					shortPtr[2] = createRemoveAmount;
 				}
 				else
-					add_queue(unitId);
+					add_queue(unitId, createRemoveAmount);
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_ON");
 				// ##### end Gilbert 25/9 ######//
@@ -861,13 +867,14 @@ void FirmHarbor::detect_build_menu()
 			{
 				if( remote.is_enable() )
 				{
-					// packet structure : <firm recno> <unit Id>
-					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_HARBOR_BUILD_SHIP, 2*sizeof(short) );
+					// packet structure : <firm recno> <unit Id> <amount>
+					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_HARBOR_BUILD_SHIP, 3*sizeof(short) );
 					shortPtr[0] = firm_recno;
 					shortPtr[1] = -unitId;
+					shortPtr[2] = createRemoveAmount;
 				}
 				else
-					remove_queue(unitId);
+					remove_queue(unitId, createRemoveAmount);
 
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_OFF");
@@ -1205,19 +1212,26 @@ void FirmHarbor::process_queue()
 
 
 //--------- Begin of function FirmHarbor::add_queue ---------//
-void FirmHarbor::add_queue(int unitId)
+void FirmHarbor::add_queue(int unitId, int amount)
 {
-	if( build_queue_count+(build_unit_id>0)==MAX_BUILD_SHIP_QUEUE )
-		return;
+	err_when(amount < 0);
+	if (amount < 0) return;
 
-	build_queue_array[build_queue_count++] = unitId;
+	int queueSpace = MAX_BUILD_SHIP_QUEUE - build_queue_count  - (build_unit_id>0);
+	int enqueueAmount = MIN(queueSpace, amount);
+
+	for (int i = 0; i < enqueueAmount; ++i)
+		build_queue_array[build_queue_count++] = unitId;
 }
 //----------- End of function FirmHarbor::add_queue -----------//
 
 
 //--------- Begin of function FirmHarbor::remove_queue ---------//
-void FirmHarbor::remove_queue(int unitId)
+void FirmHarbor::remove_queue(int unitId, int amount)
 {
+	err_when(amount < 1);
+	if (amount < 1) return;
+
 	for( int i=build_queue_count-1 ; i>=0 ; i-- )
 	{
 		if( build_queue_array[i] == unitId )
@@ -1227,10 +1241,14 @@ void FirmHarbor::remove_queue(int unitId)
 			misc.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), i+1 );
 
 			build_queue_count--;
-			return;
+			amount--;
+
+			if (amount <= 0) return;
 		}
 	}
 
+	// If there were less units of unitId in the queue than were requested to be removed then
+	// also cancel build unit
 	if(build_unit_id==unitId)
 		cancel_build_unit();
 }
