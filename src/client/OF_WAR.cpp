@@ -296,21 +296,27 @@ void FirmWar::detect_build_menu()
 		}
 		// ######## end Gilbert 10/9 #########//
 
+		int shiftPressed = mouse.event_skey_state & SHIFT_KEY_MASK;
+
 		//------- process the action --------//
 
 		if( rc > 0 )
 		{
+			// Holding shift will use batches of FIRMWAR_BUILD_BATCH_COUNT
+			int createRemoveAmount = shiftPressed ? FIRMWAR_BUILD_BATCH_COUNT : 1;
+
 			if( rc==1 )		// left button
 			{
 				if( remote.is_enable() )
 				{
 					// packet structure : <firm recno> <unit Id>
-					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_BUILD_WEAPON, 2*sizeof(short) );
+					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_BUILD_WEAPON, 3*sizeof(short) );
 					shortPtr[0] = firm_recno;
 					shortPtr[1] = unitId;
+					shortPtr[2] = (short)createRemoveAmount;
 				}
 				else
-					add_queue(unitId);
+					add_queue(unitId, createRemoveAmount);
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_ON");
 				// ##### end Gilbert 25/9 ######//
@@ -320,12 +326,13 @@ void FirmWar::detect_build_menu()
 				if( remote.is_enable() )
 				{
 					// packet structure : <firm recno> <unit Id>
-					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_CANCEL_WEAPON, 2*sizeof(short) );
+					short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_CANCEL_WEAPON, 3*sizeof(short) );
 					shortPtr[0] = firm_recno;
 					shortPtr[1] = unitId;
+					shortPtr[2] = (short)createRemoveAmount;
 				}
 				else
-					remove_queue(unitId);
+					remove_queue(unitId, createRemoveAmount);
 				// ##### begin Gilbert 25/9 ######//
 				se_ctrl.immediate_sound("TURN_OFF");
 				// ##### end Gilbert 25/9 ######//
@@ -559,20 +566,27 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 
 //--------- Begin of function FirmWar::add_queue ---------//
 //
-void FirmWar::add_queue(int unitId)
+void FirmWar::add_queue(int unitId, int amount)
 {
-	if( build_queue_count+(build_unit_id>0)==MAX_BUILD_QUEUE )
-		return;
+	err_when(amount < 0);
+	if (amount < 0) return;
 
-	build_queue_array[build_queue_count++] = unitId;
+	int queueSpace = MAX_BUILD_QUEUE - build_queue_count  - (build_unit_id>0);
+	int enqueueAmount = MIN(queueSpace, amount);
+
+	for (int i = 0; i < enqueueAmount; ++i)
+		build_queue_array[build_queue_count++] = unitId;
 }
 //----------- End of function FirmWar::add_queue -----------//
 
 
 //--------- Begin of function FirmWar::remove_queue ---------//
 //
-void FirmWar::remove_queue(int unitId)
+void FirmWar::remove_queue(int unitId, int amount)
 {
+	err_when(amount < 1);
+	if (amount < 1) return;
+
 	for( int i=build_queue_count-1 ; i>=0 ; i-- )
 	{
 		if( build_queue_array[i] == unitId )
@@ -582,10 +596,14 @@ void FirmWar::remove_queue(int unitId)
 			misc.del_array_rec( build_queue_array, build_queue_count, sizeof(build_queue_array[0]), i+1 );
 
 			build_queue_count--;
-			return;
+			amount--;
+
+			if (amount <= 0) return;
 		}
 	}
 
+	// If there were less units of unitId in the queue than were requested to be removed then
+	// also cancel build unit
 	if(build_unit_id==unitId)
 		cancel_build_unit();
 }

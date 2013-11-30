@@ -30,7 +30,7 @@
 
 //-------- Define constant ---------//
 
-#define MAX_BUILD_QUEUE 	20
+#define MAX_BUILD_QUEUE				20
 
 //------- Define class FirmWar --------//
 
@@ -64,13 +64,15 @@ public:
 	void	process_ai();
 
 	virtual	FirmWar* cast_to_FirmWar() { return this; };
-	void	add_queue(int unitId);
-	void	remove_queue(int unitId);
+	void	add_queue(int unitId, int amount = 1);
+	void	remove_queue(int unitId, int amount = 1);
 	void	cancel_build_unit();
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	UCHAR	crc8();
 	virtual	void	clear_ptr();
+
+	enum {FIRMWAR_BUILD_BATCH_COUNT = 10}; // Number of units enqueued when holding shift - ensure this is less than MAX_BUILD_QUEUE
 
 private:
 	void 	disp_war_info(int dispY1, int refreshFlag);
