@@ -1958,7 +1958,7 @@ void RemoteMsg::research_start()
 void RemoteMsg::build_weapon()
 {
 	err_when( id != MSG_F_WAR_BUILD_WEAPON );
-	// packet structure : <firm recno> <unit Id>
+	// packet structure : <firm recno> <unit Id> <amount>
 	short *shortPtr = (short *)data_buf;
 	if( validate_firm(*shortPtr) )
 	{
@@ -1973,7 +1973,7 @@ void RemoteMsg::build_weapon()
 #ifdef DEBUG_LONG_LOG
 			long_log->printf("war factory %d start building unit id %d\n", shortPtr[0], shortPtr[1]);
 #endif
-			warFactory->add_queue(shortPtr[1]);
+			warFactory->add_queue(shortPtr[1], shortPtr[2]);
 		}
 	}
 }
@@ -1984,7 +1984,7 @@ void RemoteMsg::build_weapon()
 void RemoteMsg::cancel_weapon()
 {
 	err_when( id != MSG_F_WAR_CANCEL_WEAPON );
-	// packet structure : <firm recno> <unit Id>
+	// packet structure : <firm recno> <unit Id> <amount>
 	short *shortPtr = (short *)data_buf;
 	if( validate_firm(*shortPtr) )
 	{
@@ -1999,7 +1999,7 @@ void RemoteMsg::cancel_weapon()
 #ifdef DEBUG_LONG_LOG
 			long_log->printf("war factory %d cancel building unit id %d\n", shortPtr[0], shortPtr[1]);
 #endif
-			warFactory->remove_queue(shortPtr[1]);
+			warFactory->remove_queue(shortPtr[1], shortPtr[2]);
 		}
 	}
 }
