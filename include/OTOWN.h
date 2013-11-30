@@ -162,6 +162,8 @@ public:
 	int	train_unit_action_id;	// id. of the action to be assigned to this unit when it is finished training.
 	DWORD start_train_frame_no;
 	short defend_target_recno; 	// used in defend mode, store recno of latest target atttacking this town
+	
+	enum {TOWN_TRAIN_BATCH_COUNT = 8}; // Number of units enqueued when holding shift - ensure this is less than MAX_TRAIN_QUEUE
 
 	//-------- other vars ----------//
 
@@ -296,8 +298,8 @@ public:
 	void 	set_auto_grant_loyalty(int loyaltyLevel);
 	void 	disp_auto_loyalty();
 
-	void	add_queue(char skillId, char raceId);
-	void	remove_queue(char skillId);
+	void	add_queue(char skillId, char raceId, int amount = 1);
+	void	remove_queue(char skillId, int amount = 1);
 
 	int   write_file(File*);
 	int   read_file(File*);

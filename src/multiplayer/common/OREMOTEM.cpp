@@ -2208,7 +2208,7 @@ void RemoteMsg::invoke_god()
 void RemoteMsg::town_recruit()
 {
 	err_when( id != MSG_TOWN_RECRUIT);
-	// packet structure : <town recno> <skill id> <race id>
+	// packet structure : <town recno> <skill id> <race id> <amount>
 	short *shortPtr = (short *)data_buf;
 	if( validate_town(*shortPtr) )
 	{
@@ -2220,12 +2220,12 @@ void RemoteMsg::town_recruit()
 			if( shortPtr[1] == -1 )		// recruit unskilled unit
 				town_array[*shortPtr]->recruit(shortPtr[1], shortPtr[2], COMMAND_REMOTE);
 			else								// add train worker skill 
-				town_array[*shortPtr]->add_queue((char) shortPtr[1], (char) shortPtr[2]);
+				town_array[*shortPtr]->add_queue((char) shortPtr[1], (char) shortPtr[2], shortPtr[3]);
 		}
 		else if( shortPtr[2] == -1)
 		{
 			// remove train worker skill
-			town_array[*shortPtr]->remove_queue((char) shortPtr[1]);
+			town_array[*shortPtr]->remove_queue((char) shortPtr[1], shortPtr[3]);
 		}
 		else
 		{
