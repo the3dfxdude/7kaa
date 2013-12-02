@@ -86,6 +86,7 @@ public:
 
 private:
 	TownNetwork* network(int recNo) const {return (TownNetwork*) get_ptr(recNo);}
+	void verify_town_network_before_merge(int nationRecno, int townRecno);
 	int merge(int tn1, int tn2); // Merges the two town-network, and returns the new recno for the network
 	TownNetwork* add_network(int nationRecno);
 	void remove_network(int recno);

@@ -270,12 +270,13 @@ int TownNetworkArray::town_created(int townRecno, int nationRecno, short const *
 		
 		if (pTown->nation_recno == nationRecno)
 		{
+			// Add some robustness for errors (in Release) by verifying and attempting to repair faults
+			verify_town_network_before_merge(nationRecno, pTown->town_recno);
+
 			// If it is the first own-nation town then add it to that network
 			if (tnRecno == 0)
 			{
 				tnRecno = pTown->town_network_recno;
-				if (DEBUG_CHECK && (tnRecno < 1 || tnRecno > size())) throw "town_created: one of the same-nation linked towns has an invalid town network recno";
-				else if (DEBUG_CHECK && network(tnRecno) == NULL) throw "Town Network has been deleted, but towns still point to its recno";
 				network(tnRecno)->add_town(townRecno);
 			}
 			else if (pTown->town_network_recno != tnRecno)
@@ -295,6 +296,44 @@ int TownNetworkArray::town_created(int townRecno, int nationRecno, short const *
 	}
 
 	return tnRecno;
+}
+
+
+// ---- Function verify_town_before_merge ----
+// Adds some robustness for errors by checking a town and fixing errors
+// in the town network structure. Used only by town_create.
+// 
+//  - nationRecno: the nation recno of the town that is created
+//  - townRecno: the recno of the town to check. This should be a town linked to the newly created town.
+//
+void TownNetworkArray::verify_town_network_before_merge(int nationRecno, int townRecno)
+{
+	Town *pTown = town_array[townRecno];
+	int tnRecno = pTown->town_network_recno;
+
+	bool shouldFix = false;
+
+	if (tnRecno < 1 || tnRecno > size())
+	{
+		if (DEBUG_CHECK)
+			throw "town_created: one of the same-nation linked towns has an invalid town network recno";
+		else
+			shouldFix = true;
+	}
+	else if (network(tnRecno) == NULL)
+	{
+		if (DEBUG_CHECK)
+			throw "Town Network has been deleted, but towns still point to its recno";
+		else
+			shouldFix = true;
+	}
+
+	// Fixing errors in the town-network structure, by creating a new town network for the town
+	if (shouldFix)
+	{
+		TownNetwork *pTN = add_network(nationRecno);
+		pTN->add_town(townRecno);
+	}
 }
 
 
