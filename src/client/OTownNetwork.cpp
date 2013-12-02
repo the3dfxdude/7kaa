@@ -539,7 +539,7 @@ void TownNetworkArray::town_post_changing_nation(int townRecno, int newNationRec
 // 
 void TownNetworkArray::recreate_after_load()
 {
-	for (int i = 1; i < town_array.size(); ++i)
+	for (int i = 1; i <= town_array.size(); ++i)
 	{
 		Town *pTown = town_array[i];
 		if (pTown == NULL) continue; // Skip over empty elements
