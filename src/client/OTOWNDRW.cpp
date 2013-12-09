@@ -278,7 +278,7 @@ int Town::draw_detect_link_line(int actionDetect)
 
 	//------ draw lines to linked towns ---------//
 
-	bool awesome_lines_flag = true; // Set this to true to draw animated lines to ALL towns in the network. Not advised for actual play.
+	bool awesome_lines_flag = false; // Set this to true to draw animated lines to ALL towns in the network. Not advised for actual play.
 
 	for( int i=0 ; i<linked_town_count ; i++ )
 	{
