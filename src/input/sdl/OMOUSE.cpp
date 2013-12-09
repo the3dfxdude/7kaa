@@ -138,7 +138,7 @@ void MouseSDL::hide()
 
 //--------- Start of MouseSDL::show -------//
 //
-// Resume the mouse function which is previously hideed by hide()
+// Resume the mouse function which is previously hidden by hide()
 //
 void MouseSDL::show()
 {
