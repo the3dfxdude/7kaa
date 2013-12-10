@@ -318,7 +318,7 @@ int Town::draw_detect_link_line(int actionDetect)
 			townY = ( ZOOM_Y1 + (townPtr->loc_y1-world.zoom_matrix->top_y_loc) * ZOOM_LOC_HEIGHT
 						+ ZOOM_Y1 + (townPtr->loc_y2-world.zoom_matrix->top_y_loc+1) * ZOOM_LOC_HEIGHT ) / 2;
 
-			// If awesome_lines_flag is true then we draw the aminated lines on all towns in the town-network
+			// If awesome_lines_flag is true then draw the aminated lines on all towns in the town-network
 			if (awesome_lines_flag)
 			{
 				anim_line.draw_line(&vga_back, srcX, srcY, townX, townY, 1 /*-animated*/);
@@ -339,11 +339,8 @@ int Town::draw_detect_link_line(int actionDetect)
 						// Migrate 1 person on left click and 10 people on right click
 						err_when(town_array[townRecno]->population>MAX_TOWN_POPULATION);
 						int migrateRaceId = browse_selected_race_id();
-						for (int cnt = 1; cnt <= (detectClick == 1 ? 1 : 10); cnt++)
-						{
-							err_when( !migrateRaceId );
-							migrate_to(townRecno, COMMAND_PLAYER, migrateRaceId);
-						}
+						err_when( !migrateRaceId );
+						migrate_to(townRecno, COMMAND_PLAYER, migrateRaceId, (detectClick == 1 ? 1 : 10));
 						// ###### begin Gilbert 25/9 #######//
 						se_ctrl.immediate_sound("PULL_MAN");
 						// ###### end Gilbert 25/9 #######//
