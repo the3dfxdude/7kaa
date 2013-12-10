@@ -2262,7 +2262,7 @@ void RemoteMsg::town_skip_recruit()
 void RemoteMsg::town_migrate()
 {
 	err_when( id != MSG_TOWN_MIGRATE);
-	// packet structure : <town recno> <dest town recno> <race id>
+	// packet structure : <town recno> <dest town recno> <race id> <count>
 	short *shortPtr = (short *)data_buf;
 
 	if( validate_town(*shortPtr) && validate_town(shortPtr[1]) )
@@ -2270,7 +2270,7 @@ void RemoteMsg::town_migrate()
 #ifdef DEBUG_LONG_LOG
 		long_log->printf("town %d race %d migrate to town %d\n", shortPtr[0], shortPtr[2], shortPtr[1]);
 #endif
-		town_array[*shortPtr]->migrate_to(shortPtr[1], COMMAND_REMOTE, shortPtr[2]);
+		town_array[*shortPtr]->migrate_to(shortPtr[1], COMMAND_REMOTE, shortPtr[2], shortPtr[3]);
 	}
 }
 // ------- End of function RemoteMsg::town_migrate ---------//

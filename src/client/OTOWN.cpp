@@ -2361,8 +2361,14 @@ void Town::migrate(int raceId, int destTownRecno, int newLoyalty)
 
 //------- Begin of function Town::migrate_to ---------//
 
-int Town::migrate_to(int destTownRecno, char remoteAction, int raceId)
+int Town::migrate_to(int destTownRecno, char remoteAction, int raceId, int count)
 {
+	if (count <= 0 || count > MAX_TOWN_POPULATION)
+	{
+		err_here();
+		return 0;
+	}
+
 	if( !raceId )
 	{
 		raceId = browse_selected_race_id();
@@ -2373,15 +2379,23 @@ int Town::migrate_to(int destTownRecno, char remoteAction, int raceId)
 
 	if( !remoteAction && remote.is_enable() )
 	{
-		// packet structure : <town recno> <dest town recno> <race id>
-		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_MIGRATE, 3*sizeof(short));
+		// packet structure : <town recno> <dest town recno> <race id> <count>
+		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_MIGRATE, 4*sizeof(short));
 		shortPtr[0] = town_recno;
 		shortPtr[1] = destTownRecno;
 		shortPtr[2] = raceId;
+		shortPtr[3] = count;
 		return 0;
 	}
 
-	return can_migrate(destTownRecno, 1, raceId);		// 1- migrate now, 1-allow migrate spy
+	bool continueMigrate = true;
+	int migrated = 0;
+	for ( ; migrated < count && continueMigrate; ++migrated)
+	{
+		continueMigrate = can_migrate(destTownRecno, 1, raceId); // 1- migrate now, 1-allow migrate spy
+	}
+
+	return migrated;
 }
 //-------- End of function Town::migrate_to -----------//
 

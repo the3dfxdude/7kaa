@@ -269,7 +269,7 @@ public:
 	int   mobilize_town_people(int raceId, int decPop, int mobilizeSpy);
 	int	mobilize_defender(int attackerNationRecno);
 
-	int	migrate_to(int destTownRecno, char remoteAction, int raceId=0);
+	int	migrate_to(int destTownRecno, char remoteAction, int raceId=0, int count=1);
 	void	collect_yearly_tax();
 	void  collect_tax(char remoteAction);
 	void  reward(char remoteAction);
