@@ -2390,9 +2390,10 @@ int Town::migrate_to(int destTownRecno, char remoteAction, int raceId, int count
 
 	bool continueMigrate = true;
 	int migrated = 0;
-	for ( ; migrated < count && continueMigrate; ++migrated)
+	while( continueMigrate && migrated < count )
 	{
 		continueMigrate = can_migrate(destTownRecno, 1, raceId); // 1- migrate now, 1-allow migrate spy
+		if (continueMigrate) ++migrated;
 	}
 
 	return migrated;
