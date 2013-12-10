@@ -64,6 +64,9 @@ extern const int GAME_VERSION;
 #define DEFAULT_DIR_TUTORIAL "tutorial"PATH_DELIM
 #define DEFAULT_DIR_SCENARIO "scenario"PATH_DELIM
 #define DEFAULT_DIR_SCENARI2 "scenari2"PATH_DELIM
+#ifdef USE_TINYGETTEXT
+#define DEFAULT_DIR_LOCALE   "locale"PATH_DELIM
+#endif
 
 // encylopedia chapter dirs
 #define DEFAULT_DIR_ENCYC_UNIT    "unit"PATH_DELIM
@@ -84,6 +87,9 @@ extern const int GAME_VERSION;
 #define DIR_SCENARIO		sys.dir_scenario
 // see MAX_SCENARIO_PATH in sys
 #define DIR_SCENARIO_PATH(p)	sys.dir_scenario_path[p]
+#ifdef USE_TINYGETTEXT
+#define DIR_LOCALE      DEFAULT_DIR_LOCALE
+#endif
 
 //--------- Define direction types -----------//
 

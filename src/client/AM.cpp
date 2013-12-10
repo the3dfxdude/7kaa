@@ -106,6 +106,10 @@
 #include <dbglog.h>
 #include <locale.h>
 #include "gettext.h"
+#ifdef USE_TINYGETTEXT
+#include <string>
+#include <tinygettext/language.hpp>
+#endif
 
 //------- define game version constant --------//
 
@@ -266,11 +270,19 @@ unsigned long last_unit_assign_profile_time = 0L;
 unsigned long unit_assign_profile_time = 0L;
 #endif
 
+#ifdef USE_TINYGETTEXT
+tinygettext::Dictionary lang_dict;
+tinygettext::DictionaryManager lang_dict_manager;
+#endif
+
 DBGLOG_DEFAULT_CHANNEL(am);
 
 //------- Define static functions --------//
 
 static void extra_error_handler();
+#ifdef USE_TINYGETTEXT
+static void init_tinygettext();
+#endif
 
 /* Override obstinate SDL hacks */
 #ifdef __WINE__
@@ -311,8 +323,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 int main(int argc, char **argv)
 {
 	setlocale(LC_ALL, "");
+#ifdef USE_TINYGETTEXT
+	init_tinygettext();
+#else
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
+#endif
 
 	const char *lobbyJoinCmdLine = "-join";
 	const char *lobbyHostCmdLine = "-host";
@@ -431,3 +447,31 @@ static void extra_error_handler()
 	box.msg( "Error encountered. The game has been saved to ERROR.SAV" );
 }
 //----------- End of function extra_error_handler -------------//
+
+
+#ifdef USE_TINYGETTEXT
+//------- Begin of function init_tinygettext -----------//
+static void init_tinygettext()
+{
+	lang_dict_manager.set_charset("ISO-8859-1");
+	lang_dict_manager.add_directory(DIR_LOCALE);
+	// Code cribbed from SuperTuxKart:
+	//   https://svn.code.sf.net/p/supertuxkart/code/main/trunk/src/utils/translation.cpp
+	std::string language;
+	// Thanks to the frogatto developer for this code snippet:
+	char c[1024] = {0};
+	GetLocaleInfoA(LOCALE_USER_DEFAULT, LOCALE_SISO639LANGNAME, c, 1024);
+	if (c[0])
+	{
+		language = c;
+		GetLocaleInfoA(LOCALE_USER_DEFAULT, LOCALE_SISO3166CTRYNAME, c, 1024);
+		if (c[0])
+		{
+			language += std::string("_") + c;
+		}
+	}
+	// End of code from SuperTuxKart.
+	lang_dict = lang_dict_manager.get_dictionary(tinygettext::Language::from_name(language));
+}
+//----------- End of function init_tinygettext -------------//
+#endif
