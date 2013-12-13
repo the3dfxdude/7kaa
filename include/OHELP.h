@@ -111,7 +111,7 @@ public:
 
 	int		  should_disp();
 	void       disp();
-	void 		  disp_help(int centerX, int centerY, char* helpTitle, char* helpDetail);
+	void 		  disp_help(int centerX, int centerY, const char* helpTitle, const char* helpDetail);
 
 	void       save_scr(int,int,int,int);   // save the screen to the save screen buffer in Help
 	void       rest_scr();

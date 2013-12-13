@@ -370,7 +370,7 @@ void Help::disp()
 // <char*> helpTitle  - title of the help
 // [char*] helpDetail - detail of the help.
 //
-void Help::disp_help(int centerX, int centerY, char* helpTitle, char* helpDetail)
+void Help::disp_help(int centerX, int centerY, const char* helpTitle, const char* helpDetail)
 {
 	if( config.help_mode == NO_HELP )
 		return;
