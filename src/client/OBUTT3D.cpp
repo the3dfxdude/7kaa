@@ -31,7 +31,7 @@
 
 //---------- define static vars ----------//
 
-static char save_back_buf[BUTTON_ACTION_WIDTH * BUTTON_ACTION_HEIGHT];
+static char save_back_buf[BUTTON_ACTION_WIDTH * BUTTON_ACTION_HEIGHT + 4];
 
 
 //-------- Begin of function Button3D::Button3D -------//
