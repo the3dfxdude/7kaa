@@ -58,7 +58,7 @@ struct TutorTextBlock
 {
 	enum { BUTTON_CODE_LEN=8 };
 
-	char* text_ptr;          // offset of the help text in the text buffer
+	const char* text_ptr;          // offset of the help text in the text buffer
 	short text_len;          // length of the help text
 
 	char	button_code[BUTTON_CODE_LEN+1];
