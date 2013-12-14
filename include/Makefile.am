@@ -127,6 +127,7 @@ noinst_HEADERS = \
 	OTECHRES.h \
 	OTERRAIN.h \
 	OTORNADO.h \
+	OTownNetwork.h \
 	OTOWN.h \
 	OTOWNREC.h \
 	OTOWNRES.h \

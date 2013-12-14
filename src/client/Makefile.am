@@ -182,6 +182,7 @@ bin_PROGRAMS = 7kaa
 	OTECHRES.cpp \
 	OTERRAIN.cpp \
 	OTORNADO.cpp \
+	OTownNetwork.cpp \
 	OTOWN.cpp \
 	OTOWNA.cpp \
 	OTOWNAI.cpp \
