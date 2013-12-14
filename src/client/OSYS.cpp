@@ -2299,7 +2299,7 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 {
    int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_CHAR_KEY );
 
-   if( !keyCode )    // since all keys concern are printable
+   if( !keyCode )    // since all keys concerned are printable
       return 0;
 
    //------- determine the speed to set of the key pressed -------//
@@ -2379,6 +2379,14 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
       // set the game speed
       requested_speed = frameSpeed;
       last_speed = 0;
+   } else if (last_speed == 0 && config.frame_speed == 0) {
+	   // can happen when loading games; the game should unpause
+	   requested_speed = 12;
+	   last_speed = 0;
+   } else if (last_speed != 0 && config.frame_speed != 0) {
+	  // can happen when loading games; the game should pause
+	  requested_speed = 0;
+	  last_speed = config.frame_speed;
    } else {
       // toggle last game speed
       requested_speed = last_speed;
