@@ -355,18 +355,6 @@ int FirmArray::process()
 		logStr += firmPtr->nation_recno;
 		LOG_MSG(logStr);
 #endif
-	
-		if(i==50)
-		{
-
-			FirmMarket *mPtr = (FirmMarket*) firmPtr;
-			MarketGoods *marketGoods = mPtr->market_goods_array;
-			marketGoods++;
-
-			if(marketGoods->stock_qty)
-				int debug = 0;
-		}
-
 
 		//-------- process visibility -----------//
 

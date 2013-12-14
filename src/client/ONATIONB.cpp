@@ -134,6 +134,9 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, DWORD playe
 
 	//---- initialize this nation's relation on other nations ----//
 
+	// #### Richard 6-12-2013: Moved this from init_relation to here, so it works with new independent nations spawning #### //
+	is_allied_with_player = 0;
+
 	for( int i=nation_array.size() ; i>0 ; i-- )
 	{
 		if( nation_array.is_deleted(i) )
@@ -292,8 +295,6 @@ void NationBase::init_relation(int relationNationRecno)
 		relation_status_array[relationNationRecno-1] = NATION_NEUTRAL;
 
 	set_relation_passable(relationNationRecno, NATION_FRIENDLY);
-
-	is_allied_with_player = 0;
 }
 //----------- End of function NationBase::init_relation ---------//
 
