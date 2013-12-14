@@ -207,7 +207,23 @@ AS_IF([test "$input_backend" = dinput], [
 ])
 
 AS_IF([test "$use_windows" = yes], [
-  LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
+  AC_LANG_PUSH([C++])
+  AC_CHECK_HEADER(["tinygettext/tinygettext.hpp"], [], [
+    AC_ERROR([tinygettext.hpp not found])
+  ])
+  AC_LANG_POP([C++])
+
+  AC_CHECK_HEADER(["libintl.h"], [], [
+    AC_ERROR([libintl.h not found])
+  ])
+  SEARCH_LIB_FLAGS([libintl_snprintf], [-lintl], [], [
+    AC_ERROR([libintl not found])
+  ])
+
+  AC_DEFINE([USE_TINYGETTEXT], [1],
+            [Define to 1 if using tinygettext])
+
+  LIBS="-lole32 -lmsvcrt -lwinmm -ltinygettext -lintl $LIBS"
 
   AS_IF([test "$enable_debug" = no], [
     LDFLAGS="$LDFLAGS -mwindows"

@@ -17,6 +17,25 @@
 #ifndef _LIBGETTEXT_H
 #define _LIBGETTEXT_H 1
 
+#ifdef USE_TINYGETTEXT
+
+/* Use SDL's iconv implementation.  */
+#define HAVE_SDL 1
+
+/* Use gettext's snprintf() implementation.  */
+#include <libintl.h>
+#include <tinygettext/tinygettext.hpp>
+
+extern tinygettext::Dictionary lang_dict;
+
+#define gettext(Msgid) (lang_dict.translate (Msgid)).c_str()
+#define ngettext(Msgid1, Msgid2, N) (lang_dict.translate_plural (Msgid1, Msgid2, N)).c_str()
+#define pgettext(Msgctxt, Msgid) (lang_dict.translate_ctxt (Msgctxt, Msgid)).c_str()
+#define _(String) gettext (String)
+#define N_(String) (String)
+
+#else
+
 /* NLS can be disabled through the configure --disable-nls option.  */
 #if ENABLE_NLS
 
@@ -287,5 +306,7 @@ dcnpgettext_expr (const char *domain,
     }
   return (n == 1 ? msgid : msgid_plural);
 }
+
+#endif /* USE_TINYGETTEXT */
 
 #endif /* _LIBGETTEXT_H */
