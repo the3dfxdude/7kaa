@@ -3,6 +3,7 @@
  *
  * Copyright 1997,1998 Enlight Software Ltd.
  * Copyright 2010 Unavowed <unavowed@vexillium.org>
+ * Copyright 2013 Richard Dijk <microvirus.multiplying@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,11 +34,17 @@
 class OpenALAudio: public AudioBase
 {
 private:
+
+   enum WaveType {NormalWave, LongWave, LoopWave};
+
    class StreamContext
    {
    public:
       AudioStream *stream;
       ALuint source;
+
+	  /* type of sound: normal, long or loop */
+	  WaveType waveType;
 
       /* frames played since fade started */
       size_t fade_frames_played;
@@ -56,7 +63,7 @@ private:
       bool streaming;
 
    public:
-      StreamContext();
+      StreamContext(WaveType);
       ~StreamContext();
       bool init(AudioStream *as);
       bool stream_data(int new_buffer_count = 0);
@@ -69,6 +76,9 @@ private:
    };
 
    typedef std::map<int, StreamContext *> StreamMap;
+
+   enum {DESIRED_LOOP_SOURCES_COUNT = 4, DESIRED_LONG_SOURCES_COUNT = 4,
+	   DEFAULT_NORMAL_SOURCES_COUNT = 24, MINIMAL_SOURCES_REQUIRED = 12};
 
 public:
    OpenALAudio();
@@ -131,7 +141,14 @@ private:
 
    StreamMap streams;
 
-   int	max_sources;
+   int  normal_sources; // Number of normal waves in stream
+   int	long_sources;
+   int	loop_sources;
+
+   int	max_normal_sources;
+   int	max_long_sources;
+   int	max_loop_sources;
+
    int	wav_volume; // -10000 to 0
 
 private:
@@ -143,6 +160,11 @@ private:
    void	deinit_wav();
    void	deinit_cd();
 
+   // All play/stop functions end up calling one of these
+   int	play_any_wav(WaveType, const char*, const DsVolume &);
+   int	play_any_wav(WaveType, InputStream *, const DsVolume &);
+   int  stop_any_wav(int);
+   
    int	play_long_wav(InputStream *, const DsVolume &);
 };
 

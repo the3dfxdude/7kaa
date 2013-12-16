@@ -3,6 +3,7 @@
  *
  * Copyright 1997,1998 Enlight Software Ltd.
  * Copyright 2010 Unavowed <unavowed@vexillium.org>
+ * Copyright 2013 Richard Dijk <microvirus.multiplying@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -242,7 +243,7 @@ int OpenALAudio::init_wav()
    alcGetIntegerv(this->al_device, ALC_ALL_ATTRIBUTES,
 		  attributes.size(), &attributes[0]);
 
-   this->max_sources = 16; /* default, in case OpenAL doesn't tell us */
+   int max_sources = 16; /* default, in case OpenAL doesn't tell us */
 
    for (int n = 0;; n += 2)
    {
@@ -253,7 +254,7 @@ int OpenALAudio::init_wav()
       {
 	 case ALC_MONO_SOURCES:
 	    MSG("ALC_MONO_SOURCES: %i\n", attributes[n + 1]);
-	    this->max_sources = attributes[n + 1];
+	    max_sources = attributes[n + 1];
 	    break;
 	 case ALC_STEREO_SOURCES:
 	    MSG("ALC_STEREO_SOURCES: %i\n", attributes[n + 1]);
@@ -261,6 +262,23 @@ int OpenALAudio::init_wav()
 	    break;
       }
    }
+   
+   // Divide sources between the categories
+   if (max_sources <= MINIMAL_SOURCES_REQUIRED)
+   {
+	   ERR("Too little sources to work with: %i\n", max_sources);
+	   goto err;
+   }
+   else
+   {
+	   max_long_sources = DESIRED_LONG_SOURCES_COUNT;
+	   max_loop_sources = DESIRED_LOOP_SOURCES_COUNT;
+	   max_normal_sources = max_sources - max_long_sources - max_loop_sources;
+	   if (max_normal_sources > DEFAULT_NORMAL_SOURCES_COUNT) max_normal_sources = DEFAULT_NORMAL_SOURCES_COUNT;
+	   MSG("WAV SOURCES: Long %i, Loop %i, Normal %i\n", max_long_sources, max_loop_sources, max_normal_sources);
+   }
+
+   normal_sources = 0; long_sources = 0; loop_sources = 0;
 
    this->wav_init_flag = true;
    return 1;
@@ -353,8 +371,12 @@ int OpenALAudio::play_wav(char *file_name, const DsVolume &vol)
 
    MSG("play_wav(\"%s\")\n", file_name);
 
+   // Limit amount of sources
+   if (normal_sources >= max_normal_sources)
+	   return 0;
+
    if (misc.is_file_exist(file_name))
-      return this->play_long_wav(file_name, vol);
+      return this->play_any_wav(NormalWave, file_name, vol);
 
    idx = this->wav_res.get_index(file_name);
    if (idx == 0)
@@ -379,6 +401,10 @@ int OpenALAudio::play_wav(short index, const DsVolume &vol)
    if (!this->wav_init_flag || !this->wav_flag)
       return 0;
 
+   // Limit amount of sources
+   if (normal_sources >= max_normal_sources)
+	   return 0;
+
    /* get size by ref */
    if (this->wav_res.get_file(index, size) == NULL)
       return 0;
@@ -398,7 +424,7 @@ int OpenALAudio::play_wav(short index, const DsVolume &vol)
    in = new MemInputStream;
    in->open(data, size);
 
-   return this->play_long_wav(in, vol);
+   return this->play_any_wav(NormalWave, in, vol);
 }
 
 // Play digitized wav from the wav file in memory
@@ -420,6 +446,10 @@ int OpenALAudio::play_resided_wav(char *buf, const DsVolume &vol)
 
    MSG("play_resided_wav(%p))\n", buf);
 
+   // Limit amount of sources
+   if (normal_sources >= max_normal_sources)
+	   return 0;
+
    /* read the wav size from the RIFF header */
    size = buf[4] | (buf[5] << 8) | (buf[6] << 16) | (buf[7] << 24);
    size += 8;
@@ -427,7 +457,7 @@ int OpenALAudio::play_resided_wav(char *buf, const DsVolume &vol)
    in = new MemInputStream;
    in->open(buf, size, false);
 
-   return this->play_long_wav(in, vol);
+   return this->play_any_wav(NormalWave, in, vol);
 }
 
 int OpenALAudio::get_free_wav_ch()
@@ -437,8 +467,7 @@ int OpenALAudio::get_free_wav_ch()
    if (!this->wav_init_flag)
       return 0;
 
-   free_count = this->max_sources
-      - static_cast<int>(this->streams.size());
+   free_count = this->max_normal_sources - this->normal_sources;
 
    return MAX(free_count, 0);
 }
@@ -452,7 +481,7 @@ int OpenALAudio::get_free_wav_ch()
 //
 int OpenALAudio::stop_wav(int id)
 {
-   return this->stop_long_wav(id);
+   return this->stop_any_wav(id);
 }
 
 // return wheather a short sound effect is stopped
@@ -464,6 +493,11 @@ int OpenALAudio::is_wav_playing(int id)
    return this->is_long_wav_playing(id);
 }
 
+int OpenALAudio::play_long_wav(const char *file_name, const DsVolume &vol)
+{
+	return this->play_any_wav(LongWave, file_name, vol);
+}
+
 // Play digitized wav from the wav file
 // suitable for very large wave file
 //
@@ -473,14 +507,31 @@ int OpenALAudio::is_wav_playing(int id)
 //         0 - wav not played
 // OpenALAudio::yield() keeps on feeding data to it
 //
-int OpenALAudio::play_long_wav(const char *file_name, const DsVolume &vol)
+int OpenALAudio::play_any_wav(WaveType waveType, const char *file_name, const DsVolume &vol)
 {
-   FileInputStream *in = new FileInputStream;
-
    if (!this->wav_init_flag)
       return 0;
 
-   MSG("play_long_wav(\"%s\", (%li, %li))\n", file_name,
+   // Limit amount of sources
+   bool canPlay = false;
+   switch( waveType )
+   {
+   case NormalWave:
+	   canPlay = (normal_sources < max_normal_sources);
+	   break;
+   case LongWave:
+	   canPlay = (long_sources < max_long_sources);
+	   break;
+   case LoopWave:
+	   canPlay = (loop_sources < max_loop_sources);
+	   break;
+   }
+   if ( ! canPlay)
+	   return 0;
+
+   FileInputStream *in = new FileInputStream;
+
+   MSG("play_any_wav(\"%s\", (%li, %li))\n", file_name,
        vol.ds_vol, vol.ds_pan);
 
    if (!in->open(file_name))
@@ -489,7 +540,12 @@ int OpenALAudio::play_long_wav(const char *file_name, const DsVolume &vol)
       return 0;
    }
 
-   return this->play_long_wav(in, vol);
+   return this->play_any_wav(waveType, in, vol);
+}
+
+int OpenALAudio::play_long_wav(InputStream *in, const DsVolume &vol)
+{
+	return this->play_any_wav(LongWave, in, vol);
 }
 
 /*
@@ -498,7 +554,7 @@ int OpenALAudio::play_long_wav(const char *file_name, const DsVolume &vol)
  *
  * return: 1 on success, 0 on failure
  */
-int OpenALAudio::play_long_wav(InputStream *in, const DsVolume &vol)
+int OpenALAudio::play_any_wav(WaveType waveType, InputStream *in, const DsVolume &vol)
 {
    const int BUFFER_COUNT = 4;
 
@@ -508,6 +564,23 @@ int OpenALAudio::play_long_wav(InputStream *in, const DsVolume &vol)
 
    assert(this->wav_init_flag);
 
+   // Limit amount of sources
+   bool canPlay = false;
+   switch( waveType )
+   {
+   case NormalWave:
+	   canPlay = (normal_sources < max_normal_sources);
+	   break;
+   case LongWave:
+	   canPlay = (long_sources < max_long_sources);
+	   break;
+   case LoopWave:
+	   canPlay = (loop_sources < max_loop_sources);
+	   break;
+   }
+   if ( ! canPlay)
+	   return 0;
+
    ws = new WavStream;
    if (!ws->open(in))
    {
@@ -515,7 +588,7 @@ int OpenALAudio::play_long_wav(InputStream *in, const DsVolume &vol)
       goto err;
    }
 
-   sc = new StreamContext;
+   sc = new StreamContext(waveType);
 
    if (!sc->init(ws))
       goto err;
@@ -530,6 +603,18 @@ int OpenALAudio::play_long_wav(InputStream *in, const DsVolume &vol)
 
    id = unused_key(&this->streams);
    this->streams[id] = sc;
+   switch( waveType )
+   {
+   case NormalWave:
+	   ++normal_sources;
+	   break;
+   case LongWave:
+	   ++long_sources;
+	   break;
+   case LoopWave:
+	   ++loop_sources;
+	   break;
+   }
 
    return id;
 
@@ -539,6 +624,11 @@ err:
    return 0;
 }
 
+int OpenALAudio::stop_long_wav(int id)
+{
+	return this->stop_any_wav(id);
+}
+
 // stop a short sound effect started by play_long_wav
 //
 // id - the serial no returned by play_long_wav
@@ -546,7 +636,7 @@ err:
 // return 1 - channel is found and stopped / channel not found
 // return 0 - cannot stop the channel
 //
-int OpenALAudio::stop_long_wav(int id)
+int OpenALAudio::stop_any_wav(int id)
 {
    StreamMap::iterator itr;
    StreamContext *sc;
@@ -561,6 +651,18 @@ int OpenALAudio::stop_long_wav(int id)
       return 1;
 
    sc = itr->second;
+   switch( sc->waveType )
+   {
+   case NormalWave:
+	   --normal_sources;
+	   break;
+   case LongWave:
+	   --long_sources;
+	   break;
+   case LoopWave:
+	   --loop_sources;
+	   break;
+   }
    sc->stop();
    this->streams.erase(itr);
    delete sc;
@@ -574,7 +676,7 @@ int OpenALAudio::stop_long_wav(int id)
 //
 int OpenALAudio::is_long_wav_playing(int id)
 {
-   return (this->streams.find(id) != this->streams.end());
+	return (this->streams.find(id) != this->streams.end());
 }
 
 // Play digitized wav from the wav resource file
@@ -598,7 +700,11 @@ int OpenALAudio::play_loop_wav(const char *file_name, int repeat_offset,
    MSG("play_loop_wav(\"%s\", %i, (%li, %li)\n", file_name, repeat_offset,
        vol.ds_vol, vol.ds_pan);
 
-   id = this->play_long_wav(file_name, vol);
+   // Limit amount of sources
+   if (loop_sources >= max_loop_sources)
+	   return 0;
+
+   id = this->play_any_wav(LoopWave, file_name, vol);
    if (id == 0)
       return 0;
 
@@ -691,16 +797,28 @@ void OpenALAudio::yield()
 
       if (sc->stream_data())
       {
-	 ++si;
-	 continue;
+		  ++si;
+		  continue;
       }
 
       alGetSourcei(sc->source, AL_SOURCE_STATE, &state);
       if (state == AL_STOPPED)
       {
-	 delete sc;
-	 this->streams.erase(si++);
-	 continue;
+		  switch( sc->waveType )
+		  {
+		  case NormalWave:
+			  --normal_sources;
+			  break;
+		  case LongWave:
+			  --long_sources;
+			  break;
+		  case LoopWave:
+			  --loop_sources;
+			  break;
+		  }
+		  delete sc;
+		  this->streams.erase(si++);
+		  continue;
       }
 
       ++si;
@@ -715,6 +833,8 @@ void OpenALAudio::stop_wav()
       delete itr->second;
 
    this->streams.clear();
+
+   normal_sources = 0; long_sources = 0; loop_sources = 0;
 }
 
 void OpenALAudio::stop_loop_wav(int id)
@@ -722,7 +842,7 @@ void OpenALAudio::stop_loop_wav(int id)
    if (!this->wav_init_flag)
       return;
 
-   this->stop_long_wav(id);
+   this->stop_any_wav(id);
 }
 
 // <int> trackId - the id. of the CD track to play.
@@ -856,7 +976,8 @@ void OpenALAudio::volume_long_wav(int id, const DsVolume &vol)
 }
 
 
-OpenALAudio::StreamContext::StreamContext()
+OpenALAudio::StreamContext::StreamContext(WaveType wvType)
+	: waveType(wvType)
 {
    this->stream = NULL;
    this->source = 0;
