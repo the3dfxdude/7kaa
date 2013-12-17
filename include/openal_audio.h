@@ -71,6 +71,10 @@ private:
       void apply_fading(void *buffer, size_t frames);
 
    private:
+      enum {BUFFER_SIZE = 0x4000};
+      uint8_t *data_buffer;
+
+   private:
       /* forbid copying */
       StreamContext(const StreamContext &) {}
    };

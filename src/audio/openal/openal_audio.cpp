@@ -986,6 +986,7 @@ OpenALAudio::StreamContext::StreamContext(WaveType wvType)
    this->looping = false;
    this->loop_start_frame = 0;
    this->streaming = true;
+   this->data_buffer = new uint8_t[BUFFER_SIZE];
 }
 
 OpenALAudio::StreamContext::~StreamContext()
@@ -994,6 +995,10 @@ OpenALAudio::StreamContext::~StreamContext()
    {
       this->stop();
       alDeleteSources(1, &this->source);
+   }
+   if (this->data_buffer != NULL)
+   {
+      delete[] this->data_buffer;
    }
 }
 
@@ -1074,8 +1079,6 @@ void OpenALAudio::StreamContext::apply_fading(void *buffer, size_t frames)
 
 bool OpenALAudio::StreamContext::stream_data(int new_buffer_count)
 {
-   const size_t BUFFER_SIZE = 0x4000;
-
    /*
     * This constant determines how many milliseconds of audio data go into
     * one buffer.  The larger it is, the less probability of skipping, but
@@ -1084,7 +1087,6 @@ bool OpenALAudio::StreamContext::stream_data(int new_buffer_count)
     */
    const size_t MAX_BUFFER_TIME_MS = 50;
 
-   uint8_t data[BUFFER_SIZE];
    size_t frames_read;
    size_t max_frames;
    ALenum format;
@@ -1123,16 +1125,16 @@ bool OpenALAudio::StreamContext::stream_data(int new_buffer_count)
 	    goto err;
       }
 
-      size_t space_frames = sizeof(data) / this->stream->frame_size();
+	  size_t space_frames = BUFFER_SIZE / this->stream->frame_size();
       space_frames = MIN(space_frames, max_frames);
-      frames_read = this->stream->read(data, space_frames);
+      frames_read = this->stream->read(data_buffer, space_frames);
 
       if (frames_read == 0)
       {
 	 if (this->looping)
 	 {
 	    this->stream->seek(this->loop_start_frame);
-	    frames_read = this->stream->read(data, space_frames);
+	    frames_read = this->stream->read(data_buffer, space_frames);
 	    if (frames_read == 0)
 	    {
 	       this->streaming = false;
@@ -1144,12 +1146,12 @@ bool OpenALAudio::StreamContext::stream_data(int new_buffer_count)
 	    this->streaming = false;
 	    break;
 	 }
-      }
+	  }
 
       if (this->fade_frames != 0)
-	 this->apply_fading(data, frames_read);
+	 this->apply_fading(data_buffer, frames_read);
 
-      alBufferData(buf, format, data,
+      alBufferData(buf, format, data_buffer,
 		   frames_read * this->stream->frame_size(),
 		   this->stream->frame_rate());
       if (!check_al())
