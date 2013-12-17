@@ -1085,7 +1085,7 @@ bool OpenALAudio::StreamContext::stream_data(int new_buffer_count)
     * the longer the delay from calling stop() to the point when it
     * actually stops.
     */
-   const size_t MAX_BUFFER_TIME_MS = 50;
+   const size_t MAX_BUFFER_TIME_MS = 500;
 
    size_t frames_read;
    size_t max_frames;
