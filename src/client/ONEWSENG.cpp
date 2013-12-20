@@ -1039,7 +1039,7 @@ void News::raw_exhaust()
 	//----------------------------------------------//
 
 	// TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
-	snprintf(str, MAX_STR_LEN+1, _("Your %s Mine has exhausted its %s deposit."), raw_res[short_para1]->name);
+	snprintf(str, MAX_STR_LEN+1, _("Your %s Mine has exhausted its %s deposit."), raw_res[short_para1]->name, raw_res[short_para1]->name);
 }
 //------- End of function News::raw_exhaust -----//
 
