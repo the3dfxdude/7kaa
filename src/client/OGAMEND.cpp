@@ -359,7 +359,7 @@ static void disp_losing_str(int surrenderToNationRecno)
 	if( surrenderToNationRecno )		// you surrender to another kingdom
 	{
 		// TRANSLATORS: You Surrendered to <King's Kingdom> on <Date>.
-		snprintf(str, MAX_STR_LEN+1, _("You Surrendered to %1$s on %2$s."), nation_array[surrenderToNationRecno]->nation_name(), date.date_str(info.game_date));
+		snprintf(str, MAX_STR_LEN+1, _("You Surrendered to %s on %s."), nation_array[surrenderToNationRecno]->nation_name(), date.date_str(info.game_date));
 	}
 
 	// You failed to achieve the goal within the time limit

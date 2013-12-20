@@ -17,6 +17,58 @@
 #ifndef _LIBGETTEXT_H
 #define _LIBGETTEXT_H 1
 
+/* Disable gettext if compiling with MSVC.  */
+#ifdef _MSC_VER
+
+#include <stdarg.h>
+#include <stdio.h>
+
+/* c99_snprintf and c99_vsnprintf implementations taken from:
+     http://stackoverflow.com/a/8712996  */
+#define snprintf c99_snprintf
+
+inline
+int
+c99_vsnprintf (char *str, size_t size, const char *format, va_list ap)
+{
+  int count = -1;
+
+  if (size != 0)
+    count = _vsnprintf_s(str, size, _TRUNCATE, format, ap);
+  if (count == -1)
+    count = _vscprintf(format, ap);
+
+  return count;
+}
+
+inline
+int
+c99_snprintf (char *str, size_t size, const char *format, ...)
+{
+  int count;
+  va_list ap;
+
+  va_start(ap, format);
+  count = c99_vsnprintf(str, size, format, ap);
+  va_end(ap);
+
+  return count;
+}
+
+# undef gettext
+# define gettext(Msgid) ((const char *) (Msgid))
+# undef ngettext
+# define ngettext(Msgid1, Msgid2, N) \
+    ((N) == 1 \
+     ? ((void) (Msgid2), (const char *) (Msgid1)) \
+     : ((void) (Msgid1), (const char *) (Msgid2)))
+# undef pgettext
+# define pgettext(Msgctxt, Msgid) ((const char *) (Msgid))
+# define _(String) gettext (String)
+# define N_(String) (String)
+
+#else
+
 /* NLS can be disabled through the configure --disable-nls option.  */
 #if ENABLE_NLS
 
@@ -287,5 +339,7 @@ dcnpgettext_expr (const char *domain,
     }
   return (n == 1 ? msgid : msgid_plural);
 }
+
+#endif /* _MSC_VER */
 
 #endif /* _LIBGETTEXT_H */

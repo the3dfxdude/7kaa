@@ -484,7 +484,7 @@ char* Firm::firm_name()
 	else
 	{
 		// TRANSLATORS: <Town> <Firm>
-		snprintf( str, MAX_STR_LEN+1, _("%1$s %2$s"), town_res.get_name(closest_town_name_id), firm_res[firm_id]->short_name );
+		snprintf( str, MAX_STR_LEN+1, _("%s %s"), town_res.get_name(closest_town_name_id), firm_res[firm_id]->short_name );
 
 		if( firm_name_instance_id > 1 )		// don't display number for the first firm
 		{

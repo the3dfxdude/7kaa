@@ -173,12 +173,12 @@ void News::town_rebel()
 		 MAX_STR_LEN+1,
 		 // TRANSLATORS: <Number> Peasant in <Town> in <King's Kingdom> is rebelling.
 		 // <Number> Peasants in <Town> in <King's Kingdom> are rebelling.
-		 ngettext("%3$d Peasant in %1$s in %2$s is rebelling.",
-			  "%3$d Peasants in %1$s in %2$s are rebelling.",
+		 ngettext("%d Peasant in %s in %s is rebelling.",
+			  "%d Peasants in %s in %s are rebelling.",
 			  short_para2),
+		 short_para2,
 		 town_res.get_name(short_para1),
-		 nation_name1(),
-		 short_para2);
+		 nation_name1());
 }
 //------- End of function News::town_rebel -----//
 
@@ -216,15 +216,15 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town> in <King's Kingdom>.
 					 // <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town> in <King's Kingdom>.
-					 ngettext("A %1$s %2$s has emigrated from your village of %3$s to %4$s in %5$s.",
-						  "%6$d %1$s %2$ss have emigrated from your village of %3$s to %4$s in %5$s.",
+					 ngettext("%d %s %s has emigrated from your village of %s to %s in %s.",
+						  "%d %s %ss have emigrated from your village of %s to %s in %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2),
-					 nation_name2(),
-					 short_para4);
+					 nation_name2());
 			}
 			else
 			{
@@ -232,14 +232,14 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town> in <King's Kingdom>.
 					 // <Number> <Race> Peasants have emigrated from your village of <Town> to <Town> in <King's Kingdom>.
-					 ngettext("A %1$s Peasant has emigrated from your village of %2$s to %3$s in %4$s.",
-						  "%5$d %1$s Peasants have emigrated from your village of %2$s to %3$s in %4$s.",
+					 ngettext("%d %s Peasant has emigrated from your village of %s to %s in %s.",
+						  "%d %s Peasants have emigrated from your village of %s to %s in %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2),
-					 nation_name2(),
-					 short_para4);
+					 nation_name2());
 			}
 		}
 		else
@@ -250,14 +250,14 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town>.
 					 // <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town>.
-					 ngettext("A %1$s %2$s has emigrated from your village of %3$s to %4$s.",
-						  "%5$d %1$s %2$ss have emigrated from your village of %3$s to %4$s.",
+					 ngettext("%d %s %s has emigrated from your village of %s to %s.",
+						  "%d %s %ss have emigrated from your village of %s to %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
-					 town_res.get_name(short_para2),
-					 short_para4);
+					 town_res.get_name(short_para2));
 			}
 			else
 			{
@@ -265,13 +265,13 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town>.
 					 // <Number> <Race> Peasants have emigrated from your village of <Town> to <Town>.
-					 ngettext("A %1$s Peasant has emigrated from your village of %2$s to %3$s.",
-						  "%4$d %1$s Peasants have emigrated from your village of %2$s to %3$s.",
+					 ngettext("%d %s Peasant has emigrated from your village of %s to %s.",
+						  "%d %s Peasants have emigrated from your village of %s to %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 town_res.get_name(short_para1),
-					 town_res.get_name(short_para2),
-					 short_para4);
+					 town_res.get_name(short_para2));
 			}
 		}
 	}
@@ -285,15 +285,15 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> <Worker> has immigrated from <Town> in <King's Kingdom> to your village of <Town>.
 					 // <Number> <Race> <Worker>s have immigrated from <Town> in <King's Kingdom> to your village of <Town>.
-					 ngettext("A %1$s %2$s has immigrated from %3$s in %4$s to your village of %5$s.",
-						  "%6$d %1$s %2$ss have immigrated from %3$s in %4$s to your village of %5$s.",
+					 ngettext("%d %s %s has immigrated from %s in %s to your village of %s.",
+						  "%d %s %ss have immigrated from %s in %s to your village of %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
 					 nation_name1(),
-					 town_res.get_name(short_para2),
-					 short_para4);
+					 town_res.get_name(short_para2));
 			}
 			else
 			{
@@ -301,14 +301,14 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> Peasant has immigrated from <Town> in <King's Kingdom> to your village of <Town>.
 					 // <Number> <Race> Peasants have immigrated from <Town> in <King's Kingdom> to your village of <Town>.
-					 ngettext("A %1$s Peasant has immigrated from %2$s in %3$s to your village of %4$s.",
-						  "%5$d %1$s Peasants have immigrated from %2$s in %3$s to your village of %4$s.",
+					 ngettext("%d %s Peasant has immigrated from %s in %s to your village of %s.",
+						  "%d %s Peasants have immigrated from %s in %s to your village of %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 town_res.get_name(short_para1),
 					 nation_name1(),
-					 town_res.get_name(short_para2),
-					 short_para4);
+					 town_res.get_name(short_para2));
 			}
 		}
 		else
@@ -319,14 +319,14 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> <Worker> has immigrated from <Town> to your village of <Town>.
 					 // <Number> <Race> <Worker>s have immigrated from <Town> to your village of <Town>.
-					 ngettext("A %1$s %2$s has immigrated from %3$s to your village of %4$s.",
-						  "%5$d %1$s %2$ss have immigrated from %3$s to your village of %4$s.",
+					 ngettext("%d %s %s has immigrated from %s to your village of %s.",
+						  "%d %s %ss have immigrated from %s to your village of %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
-					 town_res.get_name(short_para2),
-					 short_para4);
+					 town_res.get_name(short_para2));
 			}
 			else
 			{
@@ -334,13 +334,13 @@ void News::migrate()
 					 MAX_STR_LEN+1,
 					 // TRANSLATORS: A <Race> Peasant has immigrated from <Town> to your village of <Town>.
 					 // <Number> <Race> Peasants have immigrated from <Town> to your village of <Town>.
-					 ngettext("A %1$s Peasant has immigrated from %2$s to your village of %3$s.",
-						  "%4$d %1$s Peasants have immigrated from %2$s to your village of %3$s.",
+					 ngettext("%d %s Peasant has immigrated from %s to your village of %s.",
+						  "%d %s Peasants have immigrated from %s to your village of %s.",
 						  short_para4),
+					 short_para4,
 					 race_res[short_para3]->name,
 					 town_res.get_name(short_para1),
-					 town_res.get_name(short_para2),
-					 short_para4);
+					 town_res.get_name(short_para2));
 			}
 		}
 	}
@@ -407,7 +407,7 @@ void News::nation_surrender()
 	else
 	{
 		// TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("%1$s has surrendered to %2$s."), nation_name1(), nation_name2());
+		snprintf(str, MAX_STR_LEN+1, _("%s has surrendered to %s."), nation_name1(), nation_name2());
 	}
 }
 //------- End of function News::nation_surrender -----//
@@ -437,7 +437,7 @@ void News::king_die()
 	else
 	{
 		// TRANSLATORS: King <Name> of <King's Kingdom> has been slain.
-		snprintf(str, MAX_STR_LEN+1, _("King %1$s of %2$s has been slain."), king_name1(), nation_name1());
+		snprintf(str, MAX_STR_LEN+1, _("King %s of %s has been slain."), king_name1(), nation_name1());
 	}
 }
 //------- End of function News::king_die -----//
@@ -471,7 +471,7 @@ void News::new_king()
 	else
 	{
 		// TRANSLATORS: <Name> has ascended the throne as the new King of <King's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("%1$s has ascended the throne as the new King of %2$s."), race_res[short_para1]->get_name(short_para2), nation_name1());
+		snprintf(str, MAX_STR_LEN+1, _("%s has ascended the throne as the new King of %s."), race_res[short_para1]->get_name(short_para2), nation_name1());
 	}
 }
 //------- End of function News::new_king -----//
@@ -499,22 +499,22 @@ void News::firm_destroyed()
 	{
 		case DESTROYER_NATION:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King's Kingdom>.
-			snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been destroyed by %3$s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
 			break;
 
 		case DESTROYER_REBEL:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
-			snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been destroyed by Rebels."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Rebels."), firm_res[short_para1]->name, town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_MONSTER:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
-			snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been destroyed by Fryhtans."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Fryhtans."), firm_res[short_para1]->name, town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_UNKNOWN:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed.
-			snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been destroyed."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed."), firm_res[short_para1]->name, town_res.get_name(short_para2));
 			break;
 	}
 }
@@ -546,12 +546,12 @@ void News::firm_captured()
 	if( short_para3 )
 	{
 		// TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been captured by a spy from %3$s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by a spy from %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
 	}
 	else
 	{
 		// TRANSLATORS: Your <Firm> near <Town> has been captured by <King's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been captured by %3$s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
 	}
 }
 //------- End of function News::firm_captured -----//
@@ -576,7 +576,7 @@ void News::town_destroyed()
 	{
 		case DESTROYER_NATION:
 			// TRANSLATORS: Your village of <Town> has been destroyed by <King's Kingdom>.
-			snprintf(str, MAX_STR_LEN+1, _("Your village of %1$s has been destroyed by %2$s."), town_res.get_name(short_para1), nation_name2());
+			snprintf(str, MAX_STR_LEN+1, _("Your village of %s has been destroyed by %s."), town_res.get_name(short_para1), nation_name2());
 			break;
 
 		case DESTROYER_REBEL:
@@ -642,12 +642,12 @@ void News::town_surrendered()
 	if( nation_array.player_recno && nation_name_id2 == (~nation_array)->nation_name_id )
 	{
 		// TRANSLATORS: Your village of <Town> has surrendered to <King's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("Your village of %1$s has surrendered to %2$s."), town_res.get_name(short_para1), nation_name1());
+		snprintf(str, MAX_STR_LEN+1, _("Your village of %s has surrendered to %s."), town_res.get_name(short_para1), nation_name1());
 	}
 	else if( nation_name_id2 )
 	{
 		// TRANSLATORS: The village of <Town> in <King's Kingdom> has surrendered to you.
-		snprintf(str, MAX_STR_LEN+1, _("The village of %1$s in %2$s has surrendered to you."), town_res.get_name(short_para1), nation_name2());
+		snprintf(str, MAX_STR_LEN+1, _("The village of %s in %s has surrendered to you."), town_res.get_name(short_para1), nation_name2());
 	}
 	else // nation_name_id2 == 0, it's an independent town
 	{
@@ -723,7 +723,7 @@ void News::scroll_acquired()
 	else
 	{
 		// TRANSLATORS: <King's Kingdom> has acquired the <Race> Scroll of Power.
-		snprintf(str, MAX_STR_LEN+1, _("%1$s has acquired the %2$s Scroll of Power."), nation_name1(), race_res[short_para1]->adjective);
+		snprintf(str, MAX_STR_LEN+1, _("%s has acquired the %s Scroll of Power."), nation_name1(), race_res[short_para1]->adjective);
 	}
 }
 //------- End of function News::scroll_acquired -----//
@@ -781,12 +781,12 @@ void News::your_spy_killed()
 		if( nation_name_id2 )		// not for independent town.
 		{
 			// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King's Kingdom>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %1$s near %2$s in %3$s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s in %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
 		}
 		else
 		{
 			// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %1$s near %2$s."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s."), firm_res[short_para1]->name, town_res.get_name(short_para2));
 		}
 	}
 	else if( short_para3 == SPY_TOWN )
@@ -794,7 +794,7 @@ void News::your_spy_killed()
 		if( nation_name_id2 )		// not for independent town.
 		{
 			// TRANSLATORS: Your spy has been exposed and executed on his mission to <Town> in <King's Kingdom>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to %1$s in %2$s."), town_res.get_name(short_para2), nation_name2());
+			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to %s in %s."), town_res.get_name(short_para2), nation_name2());
 		}
 		else
 		{
@@ -807,7 +807,7 @@ void News::your_spy_killed()
 		if( nation_name_id2 )		// not for independent town.
 		{
 			// TRANSLATORS: Your spy <Name> has been exposed and executed on his mission to <King's Kingdom>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy %1$s has been exposed and executed on his mission to %2$s."), race_res[short_para1]->get_name(short_para2), nation_name2());
+			snprintf(str, MAX_STR_LEN+1, _("Your spy %s has been exposed and executed on his mission to %s."), race_res[short_para1]->get_name(short_para2), nation_name2());
 		}
 		else
 		{
@@ -849,12 +849,12 @@ void News::enemy_spy_killed()
 		if( short_para3==SPY_FIRM )
 		{
 			// TRANSLATORS: A spy from <King's Kingdom> has been uncovered and executed in your <Firm> near <Town>.
-			snprintf(str, MAX_STR_LEN+1, _("A spy from %1$s has been uncovered and executed in your %2$s near %3$s."), nation_name2(), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("A spy from %s has been uncovered and executed in your %s near %s."), nation_name2(), firm_res[short_para1]->name, town_res.get_name(short_para2));
 		}
 		else
 		{
 			// TRANSLATORS: A spy from <King's Kingdom> has been uncovered and executed in your village of <Town>.
-			snprintf(str, MAX_STR_LEN+1, _("A spy from %1$s has been uncovered and executed in your village of %2$s."), nation_name2(), town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("A spy from %s has been uncovered and executed in your village of %s."), nation_name2(), town_res.get_name(short_para2));
 		}
 	}
 	else
@@ -862,7 +862,7 @@ void News::enemy_spy_killed()
 		err_when( short_para3 != SPY_MOBILE );
 
 		// TRANSLATORS: Spy <Name> from <King's Kingdom> has been uncovered and executed.
-		snprintf(str, MAX_STR_LEN+1, _("Spy %1$s from %2$s has been uncovered and executed."), race_res[short_para1]->get_name(short_para2), nation_name2());
+		snprintf(str, MAX_STR_LEN+1, _("Spy %s from %s has been uncovered and executed."), race_res[short_para1]->get_name(short_para2), nation_name2());
 	}
 }
 //------- End of function News::enemy_spy_killed -----//
@@ -925,12 +925,12 @@ void News::unit_betray()
 			if( short_para3==RANK_GENERAL )
 			{
 				// TRANSLATORS: General <Name> has betrayed you and turned towards <King's Kingdom>.
-				snprintf(str, MAX_STR_LEN+1, _("General %1$s has betrayed you and turned towards %2$s."), race_res[short_para1]->get_name(short_para2), nation_name2());
+				snprintf(str, MAX_STR_LEN+1, _("General %s has betrayed you and turned towards %s."), race_res[short_para1]->get_name(short_para2), nation_name2());
 			}
 			else
 			{
 				// TRANSLATORS: <Name> has betrayed you and turned towards <King's Kingdom>.
-				snprintf(str, MAX_STR_LEN+1, _("%1$s has betrayed you and turned towards %2$s."), race_res[short_para1]->get_name(short_para2), nation_name2());
+				snprintf(str, MAX_STR_LEN+1, _("%s has betrayed you and turned towards %s."), race_res[short_para1]->get_name(short_para2), nation_name2());
 			}
 		}
 		else
@@ -938,12 +938,12 @@ void News::unit_betray()
 			if( short_para3==RANK_GENERAL )
 			{
 				// TRANSLATORS: General <Name> of <King's Kingdom> has defected to your forces.
-				snprintf(str, MAX_STR_LEN+1, _("General %1$s of %2$s has defected to your forces."), race_res[short_para1]->get_name(short_para2), nation_name1());
+				snprintf(str, MAX_STR_LEN+1, _("General %s of %s has defected to your forces."), race_res[short_para1]->get_name(short_para2), nation_name1());
 			}
 			else
 			{
 				// TRANSLATORS: <Name> of <King's Kingdom> has defected to your forces.
-				snprintf(str, MAX_STR_LEN+1, _("%1$s of %2$s has defected to your forces."), race_res[short_para1]->get_name(short_para2), nation_name1());
+				snprintf(str, MAX_STR_LEN+1, _("%s of %s has defected to your forces."), race_res[short_para1]->get_name(short_para2), nation_name1());
 			}
 		}
 	}
@@ -1039,7 +1039,7 @@ void News::raw_exhaust()
 	//----------------------------------------------//
 
 	// TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
-	snprintf(str, MAX_STR_LEN+1, _("Your %1$s Mine has exhausted its %1$s deposit."), raw_res[short_para1]->name);
+	snprintf(str, MAX_STR_LEN+1, _("Your %s Mine has exhausted its %s deposit."), raw_res[short_para1]->name, raw_res[short_para1]->name);
 }
 //------- End of function News::raw_exhaust -----//
 
@@ -1061,7 +1061,7 @@ void News::tech_researched()
 	if( tech_res[short_para1]->max_tech_level > 1 )		// if the tech has more than one level
 	{
 		// TRANSLATORS: Your scientists have finished their <Tech> Mark <Level> research.
-		snprintf(str, MAX_STR_LEN+1, _("Your scientists have finished their %1$s Mark %2$s research."), tech_res[short_para1]->tech_des(), misc.roman_number(short_para2));
+		snprintf(str, MAX_STR_LEN+1, _("Your scientists have finished their %s Mark %s research."), tech_res[short_para1]->tech_des(), misc.roman_number(short_para2));
 	}
 	else
 	{
@@ -1143,12 +1143,12 @@ void News::lightning_damage()
 			if( short_para5 )
 			{
 				// TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been destroyed by lightning."), firm_res[short_para2]->name, town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by lightning."), firm_res[short_para2]->name, town_res.get_name(short_para3));
 			}
 			else
 			{
 				// TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has been struck by lightning."), firm_res[short_para2]->name, town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been struck by lightning."), firm_res[short_para2]->name, town_res.get_name(short_para3));
 			}
 		}
 		else
@@ -1213,11 +1213,11 @@ void News::earthquake_damage()
 				 MAX_STR_LEN+1,
 				 // TRANSLATORS: <Number> of your units has been injured and <Number> killed in an earthquake.
 				 // <Number> of your units have been injured and <Number> killed in an earthquake.
-				 ngettext("%2$d of your units has been injured and %1$d killed in an earthquake.",
-					  "%2$d of your units have been injured and %1$d killed in an earthquake.",
+				 ngettext("%d of your units has been injured and %d killed in an earthquake.",
+					  "%d of your units have been injured and %d killed in an earthquake.",
 					  short_para2),
-				 short_para3,
-				 short_para2);
+				 short_para2,
+				 short_para3);
 		}
 		else
 		{
@@ -1253,11 +1253,11 @@ void News::earthquake_damage()
 				 MAX_STR_LEN+1,
 				 // TRANSLATORS: <Number> of your buildings has been damaged and <Number> destroyed in an earthquake.
 				 // <Number> of your buildings have been damaged and <Number> destroyed in an earthquake.
-				 ngettext("%2$d of your buildings has been damaged and %1$d destroyed in an earthquake.",
-					  "%2$d of your buildings have been damaged and %1$d destroyed in an earthquake.",
+				 ngettext("%d of your buildings has been damaged and %d destroyed in an earthquake.",
+					  "%d of your buildings have been damaged and %d destroyed in an earthquake.",
 					  short_para2),
-				 short_para3,
-				 short_para2);
+				 short_para2,
+				 short_para3);
 		}
 		else
 		{
@@ -1296,11 +1296,11 @@ void News::goal_deadline()
 
 	if( short_para1 > 1 && short_para2 > 1 )
 	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %1$d years and %2$d months left to achieve your goal."), short_para1, short_para2);
+		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d years and %d months left to achieve your goal."), short_para1, short_para2);
 	}
 	else if( short_para1 > 1 && short_para2 == 1 )
 	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %1$d years and %2$d month left to achieve your goal."), short_para1, short_para2);
+		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d years and %d month left to achieve your goal."), short_para1, short_para2);
 	}
 	else if( short_para1 > 1 )
 	{
@@ -1308,11 +1308,11 @@ void News::goal_deadline()
 	}
 	else if( short_para1 == 1 && short_para2 > 1 )
 	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %1$d year and %2$d months left to achieve your goal."), short_para1, short_para2);
+		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d year and %d months left to achieve your goal."), short_para1, short_para2);
 	}
 	else if( short_para1 == 1 && short_para2 == 1 )
 	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %1$d year and %2$d month left to achieve your goal."), short_para1, short_para2);
+		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d year and %d month left to achieve your goal."), short_para1, short_para2);
 	}
 	else if( short_para1 == 1 )
 	{
@@ -1378,7 +1378,7 @@ void News::firm_worn_out()
 	//----------------------------------------------//
 
 	// TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
-	snprintf(str, MAX_STR_LEN+1, _("Your %1$s near %2$s has fallen into disrepair due to the lack of maintenance funds."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+	snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has fallen into disrepair due to the lack of maintenance funds."), firm_res[short_para1]->name, town_res.get_name(short_para2));
 }
 //------- End of function News::firm_worn_out -----//
 

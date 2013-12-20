@@ -586,19 +586,19 @@ char* Info::play_time_str()
 
 	if( playHour > 1 && playMin > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d hours and %2$d minutes"), playHour, playMin );
+		snprintf( str, MAX_STR_LEN+1, _("%d hours and %d minutes"), playHour, playMin );
 	}
 	else if( playHour > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d hours and %2$d minute"), playHour, playMin );
+		snprintf( str, MAX_STR_LEN+1, _("%d hours and %d minute"), playHour, playMin );
 	}
 	else if( playHour > 0 && playMin > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d hour and %2$d minutes"), playHour, playMin );
+		snprintf( str, MAX_STR_LEN+1, _("%d hour and %d minutes"), playHour, playMin );
 	}
 	else if( playHour > 0 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d hour and %2$d minute"), playHour, playMin );
+		snprintf( str, MAX_STR_LEN+1, _("%d hour and %d minute"), playHour, playMin );
 	}
 	else if( playMin > 1 )
 	{
@@ -647,19 +647,19 @@ char* Info::game_duration_str()
 
 	if( playYear > 1 && playDay > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d days"), playYear, playDay );
+		snprintf( str, MAX_STR_LEN+1, _("%d years and %d days"), playYear, playDay );
 	}
 	else if( playYear > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d day"), playYear, playDay );
+		snprintf( str, MAX_STR_LEN+1, _("%d years and %d day"), playYear, playDay );
 	}
 	else if( playYear > 0 && playDay > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d days"), playYear, playDay );
+		snprintf( str, MAX_STR_LEN+1, _("%d year and %d days"), playYear, playDay );
 	}
 	else if( playYear > 0 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d day"), playYear, playDay );
+		snprintf( str, MAX_STR_LEN+1, _("%d year and %d day"), playYear, playDay );
 	}
 	else if( playDay > 1 )
 	{

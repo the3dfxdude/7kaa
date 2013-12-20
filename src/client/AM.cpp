@@ -312,9 +312,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //
 int main(int argc, char **argv)
 {
+#ifndef _MSC_VER
 	setlocale(LC_ALL, "");
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
+#endif
 
 	const char *lobbyJoinCmdLine = "-join";
 	const char *lobbyHostCmdLine = "-host";
