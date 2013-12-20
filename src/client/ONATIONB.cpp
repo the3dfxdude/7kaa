@@ -2045,19 +2045,19 @@ char* NationBase::peace_duration_str()
 
 	if( peaceYear > 1 && peaceMonth > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d months"), peaceYear, peaceMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d years and %d months"), peaceYear, peaceMonth );
 	}
 	else if( peaceYear > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d month"), peaceYear, peaceMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d years and %d month"), peaceYear, peaceMonth );
 	}
 	else if( peaceYear > 0 && peaceMonth > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d months"), peaceYear, peaceMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d year and %d months"), peaceYear, peaceMonth );
 	}
 	else if( peaceYear > 0 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d month"), peaceYear, peaceMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d year and %d month"), peaceYear, peaceMonth );
 	}
 	else if( peaceMonth > 1 )
 	{
@@ -2353,19 +2353,19 @@ char* NationRelation::status_duration_str()
 
 	if( statusYear > 1 && statusMonth > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d months"), statusYear, statusMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d years and %d months"), statusYear, statusMonth );
 	}
 	else if( statusYear > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d years and %2$d month"), statusYear, statusMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d years and %d month"), statusYear, statusMonth );
 	}
 	else if( statusYear > 0 && statusMonth > 1 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d months"), statusYear, statusMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d year and %d months"), statusYear, statusMonth );
 	}
 	else if( statusYear > 0 )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%1$d year and %2$d month"), statusYear, statusMonth );
+		snprintf( str, MAX_STR_LEN+1, _("%d year and %d month"), statusYear, statusMonth );
 	}
 	else if( statusMonth > 1 )
 	{

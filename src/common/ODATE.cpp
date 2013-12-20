@@ -245,11 +245,11 @@ char* DateInfo::date_str( long julianDate, int shortMonthStr)
    if( shortMonthStr )
    {
       // TRANSLATORS: <Month> <Day>, <Year>
-      snprintf(str, MAX_STR_LEN+1, _("%1$s %2$d, %3$d"), _(short_month_str_array[month-1]), day, year);
+      snprintf(str, MAX_STR_LEN+1, _("%s %d, %d"), _(short_month_str_array[month-1]), day, year);
    }
    else
    {
-      snprintf(str, MAX_STR_LEN+1, _("%1$s %2$d, %3$d"), _(month_str_array[month-1]), day, year);
+      snprintf(str, MAX_STR_LEN+1, _("%s %d, %d"), _(month_str_array[month-1]), day, year);
    }
 
    return str;
