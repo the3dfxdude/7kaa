@@ -794,9 +794,14 @@ Town* TownArray::operator[](int recNo)
 {
 	Town* townPtr = (Town*) get_ptr(recNo);
 
+/* sraboy patch: Eliminates the ability for the game to attempt to save the
+/				 game before it's completed loading it. If NULL pointers are
+/				 encountered here on loading, nation_array hasn't been
+/				 initialized yet and GameFile::read_file_3() will break.
+/				 Code elsewhere should simply handle NULL pointers as needed.
 	if( !townPtr )
 		err.run( "TownArray[] is deleted" );
-
+	*/
 	return townPtr;
 }
 
