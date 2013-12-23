@@ -34,6 +34,7 @@
 #include <OWORLD.h>
 #include <OPOWER.h>
 #include <OGAME.h>
+#include <OTownNetwork.h>
 #include <OINFO.h>
 #include <OGFILE.h>
 #include <OSYS.h>
@@ -244,7 +245,18 @@ int GameFile::load_game(const char *base_path, char* fileName)
 		}
 
 		if( rc > 0 )
+		{
 			load_process();           // process game data after loading the game
+			
+			/* sraboy patch 23DEC13
+			/ Moved from TownArray::read_file() to eliminate
+			/ the possibility of saving ERROR.SAV before the
+			/ nation_array() has been loaded which causes a crash
+			*/
+			//------- create the town network --------//
+			town_network_array.recreate_after_load();
+			
+		}
 		// ###### patch end Gilbert 20/1 #######//
 	}
 
