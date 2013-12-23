@@ -35,141 +35,141 @@ class OpenALAudio: public AudioBase
 {
 private:
 
-   enum WaveType {NormalWave, LongWave, LoopWave};
+	enum WaveType {NormalWave, LongWave, LoopWave};
 
-   class StreamContext
-   {
-   public:
-      AudioStream *stream;
-      ALuint source;
+	class StreamContext
+	{
+	public:
+		AudioStream *stream;
+		ALuint source;
 
-	  /* type of sound: normal, long or loop */
-	  WaveType waveType;
+		/* type of sound: normal, long or loop */
+		WaveType waveType;
 
-      /* frames played since fade started */
-      size_t fade_frames_played;
+		/* frames played since fade started */
+		size_t fade_frames_played;
 
-      /* 
-       * Number of frames over which volume fades to zero.  A value of
-       * 0 means not fading.
-       */
-      size_t fade_frames;
+		/* 
+		* Number of frames over which volume fades to zero.  A value of
+		* 0 means not fading.
+		*/
+		size_t fade_frames;
 
-      bool looping;
+		bool looping;
 
-      /* where to restart playing after reaching the end */
-      size_t loop_start_frame;
+		/* where to restart playing after reaching the end */
+		size_t loop_start_frame;
 
-      bool streaming;
+		bool streaming;
 
-   public:
-      StreamContext(WaveType);
-      ~StreamContext();
-      bool init(AudioStream *as);
-      bool stream_data(int new_buffer_count = 0);
-      void stop();
-      void apply_fading(void *buffer, size_t frames);
+	public:
+		StreamContext(WaveType);
+		~StreamContext();
+		bool init(AudioStream *as);
+		bool stream_data(int new_buffer_count = 0);
+		void stop();
+		void apply_fading(void *buffer, size_t frames);
 
-   private:
-      enum {BUFFER_SIZE = 0x4000};
-      uint8_t *data_buffer;
+	private:
+		enum {BUFFER_SIZE = 0x4000};
+		uint8_t *data_buffer;
 
-   private:
-      /* forbid copying */
-      StreamContext(const StreamContext &) {}
-   };
+	private:
+		/* forbid copying */
+		StreamContext(const StreamContext &) {}
+	};
 
-   typedef std::map<int, StreamContext *> StreamMap;
+	typedef std::map<int, StreamContext *> StreamMap;
 
-   enum {DESIRED_LOOP_SOURCES_COUNT = 4, DESIRED_LONG_SOURCES_COUNT = 4,
-	   DEFAULT_NORMAL_SOURCES_COUNT = 24, MINIMAL_SOURCES_REQUIRED = 12};
+	enum {DESIRED_LOOP_SOURCES_COUNT = 4, DESIRED_LONG_SOURCES_COUNT = 4,
+		DEFAULT_NORMAL_SOURCES_COUNT = 24, MINIMAL_SOURCES_REQUIRED = 12};
 
 public:
-   OpenALAudio();
-   ~OpenALAudio();
+	OpenALAudio();
+	~OpenALAudio();
 
-   int	init();
-   void	deinit();
+	int	init();
+	void deinit();
 
-   void	yield(); // called by sys every some time
+	void yield(); // called by sys every some time
 
-   int	play_mid(char*);
+	int	play_mid(char*);
 
-   // functions on short wave
-   int	play_wav(char*, const DsVolume &);
-   int	play_wav(short resIdx, const DsVolume &);
-   int	play_resided_wav(char *, const DsVolume &);
-   int	get_free_wav_ch();
-   int	stop_wav(int);
-   int	is_wav_playing(int);
+	// functions on short wave
+	int play_wav(char*, const DsVolume &);
+	int play_wav(short resIdx, const DsVolume &);
+	int play_resided_wav(char *, const DsVolume &);
+	int get_free_wav_ch();
+	int stop_wav(int);
+	int is_wav_playing(int);
 
-   // functions on long wave
-   int	play_long_wav(const char*, const DsVolume &);
-   int	stop_long_wav(int);
-   int	is_long_wav_playing(int);
-   void	volume_long_wav(int ch, const DsVolume &);
+	// functions on long wave
+	int play_long_wav(const char*, const DsVolume &);
+	int stop_long_wav(int);
+	int is_long_wav_playing(int);
+	void volume_long_wav(int ch, const DsVolume &);
 
-   // functions on loop wave
+	// functions on loop wave
 
-   // return channel no.
-   int	play_loop_wav(const char *, int repeatOffset, const DsVolume &);
-   void	stop_loop_wav(int ch);
-   void	volume_loop_wav(int ch, const DsVolume &);
-   void	fade_out_loop_wav(int ch, int fadeRate);
-   DsVolume get_loop_wav_volume(int ch);
-   int	is_loop_wav_fading(int ch);
+	// return channel no.
+	int play_loop_wav(const char *, int repeatOffset, const DsVolume &);
+	void stop_loop_wav(int ch);
+	void volume_loop_wav(int ch, const DsVolume &);
+	void fade_out_loop_wav(int ch, int fadeRate);
+	DsVolume get_loop_wav_volume(int ch);
+	int is_loop_wav_fading(int ch);
 
-   int	play_cd(int, int retVolume);
+	int play_cd(int, int retVolume);
 
-   void	stop_mid();
-   void	stop_wav();             // and stop also long wav
-   void	stop_cd();
+	void stop_mid();
+	void stop_wav();             // and stop also long wav
+	void stop_cd();
 
-   int	is_mid_playing();
-   int	is_wav_playing();
-   int	is_cd_playing();
+	int is_mid_playing();
+	int is_wav_playing();
+	int is_cd_playing();
 
-   void	toggle_mid(int);
-   void	toggle_wav(int);
-   void	toggle_cd(int);
+	void toggle_mid(int);
+	void toggle_wav(int);
+	void toggle_cd(int);
 
-   void	set_mid_volume(int);
-   void	set_wav_volume(int);    // 0 to 100
-   void	set_cd_volume(int);
+	void set_mid_volume(int);
+	void set_wav_volume(int);    // 0 to 100
+	void set_cd_volume(int);
 
-   int	get_wav_volume() const; // 0 to 100
-
-private:
-   ALCdevice  *al_device;
-   ALCcontext *al_context;
-
-   StreamMap streams;
-
-   int  normal_sources; // Number of normal waves in stream
-   int	long_sources;
-   int	loop_sources;
-
-   int	max_normal_sources;
-   int	max_long_sources;
-   int	max_loop_sources;
-
-   int	wav_volume; // -10000 to 0
+	int get_wav_volume() const; // 0 to 100
 
 private:
-   int	init_mid();
-   int	init_wav();
-   int	init_cd();
+	ALCdevice  *al_device;
+	ALCcontext *al_context;
 
-   void	deinit_mid();
-   void	deinit_wav();
-   void	deinit_cd();
+	StreamMap streams;
 
-   // All play/stop functions end up calling one of these
-   int	play_any_wav(WaveType, const char*, const DsVolume &);
-   int	play_any_wav(WaveType, InputStream *, const DsVolume &);
-   int  stop_any_wav(int);
-   
-   int	play_long_wav(InputStream *, const DsVolume &);
+	int normal_sources; // Number of normal waves in stream
+	int long_sources;
+	int loop_sources;
+
+	int	max_normal_sources;
+	int	max_long_sources;
+	int	max_loop_sources;
+
+	int	wav_volume; // -10000 to 0
+
+private:
+	int init_mid();
+	int init_wav();
+	int init_cd();
+
+	void deinit_mid();
+	void deinit_wav();
+	void deinit_cd();
+
+	// All play/stop functions end up calling one of these
+	int play_any_wav(WaveType, const char*, const DsVolume &);
+	int play_any_wav(WaveType, InputStream *, const DsVolume &);
+	int stop_any_wav(int);
+
+	int play_long_wav(InputStream *, const DsVolume &);
 };
 
 typedef OpenALAudio Audio;
