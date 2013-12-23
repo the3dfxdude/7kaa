@@ -785,7 +785,6 @@ int TownArray::is_deleted(int recNo)
 }
 //--------- End of function TownArray::is_deleted ----//
 
-
 #ifdef DEBUG
 
 //------- Begin of function TownArray::operator[] -----//
@@ -794,8 +793,15 @@ Town* TownArray::operator[](int recNo)
 {
 	Town* townPtr = (Town*) get_ptr(recNo);
 
+	/* sraboy patch 23DEC13
+	/ This check seems to be deprecated. The code already handles   
+	/ NULL townPtrs with linkout() in TownArray::read_file(). Leaving
+	/ this in causes crashes when SAV files have deleted towns
+	/ that were validly written by TownArray::write_file() 
+	/ without DEBUG turned on.
 	if( !townPtr )
 		err.run( "TownArray[] is deleted" );
+	*/
 
 	return townPtr;
 }
