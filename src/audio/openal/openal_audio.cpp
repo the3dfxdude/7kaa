@@ -208,6 +208,7 @@ void OpenALAudio::deinit()
 int OpenALAudio::init_wav()
 {
    ALCint size;
+   int max_sources;
 
    std::vector<ALCint> attributes;
 
@@ -243,8 +244,7 @@ int OpenALAudio::init_wav()
    alcGetIntegerv(this->al_device, ALC_ALL_ATTRIBUTES,
 		  attributes.size(), &attributes[0]);
 
-   int max_sources = 16; /* default, in case OpenAL doesn't tell us */
-
+   max_sources = 16; /* default, in case OpenAL doesn't tell us */
    for (int n = 0;; n += 2)
    {
       if (attributes[n] == 0)
