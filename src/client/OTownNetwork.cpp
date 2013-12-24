@@ -375,7 +375,7 @@ void TownNetworkArray::town_destroyed(int townRecno)
 	if (townRecno == 0) {if (DEBUG_CHECK) throw "townRecno is 0"; else return;}
 
 	Town *pTown = town_array[townRecno];
-	if (pTown == NULL) {if (DEBUG_CHECK) throw "Town is no longer exists in TownArray"; else return;}
+	if (pTown == NULL) {if (DEBUG_CHECK) throw "Town no longer exists in TownArray"; else return;}
 
 	// Independent towns do not form town networks
 	if (pTown->nation_recno == 0)
@@ -580,8 +580,8 @@ void TownNetworkArray::recreate_after_load()
 {
 	for (int i = 1; i <= town_array.size(); ++i)
 	{
+		if (town_array.is_deleted(i)) continue; // Skip over empty elements
 		Town *pTown = town_array[i];
-		if (pTown == NULL) continue; // Skip over empty elements
 		
 		// Create town networks for each town without a town network.
 		// Independent towns do not form town networks
