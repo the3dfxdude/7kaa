@@ -251,16 +251,11 @@ void Unit::ship_to_beach(int destX, int destY, int& finalDestX, int& finalDestY)
 	err_when(destX<0 || destX>=MAX_WORLD_X_LOC || destY<0 || destY>=MAX_WORLD_Y_LOC);
 	err_when(terrain_res[world.get_loc(destX, destY)->terrain_id]->average_type == TERRAIN_OCEAN);
 
-	//----------------------------------------------------------------//
-	// return if the unit is dead
-	//----------------------------------------------------------------//
+	//---------------------------------------------------------------------//
+	// return if unit is dead, -1 values ensure no pathfinding to this ship
+	//---------------------------------------------------------------------//
 	if(hit_points<=0 || action_mode==ACTION_DIE || cur_action==SPRITE_DIE)
 	{
-		/*
-		/ sraboy patch 23DEC13
-		/ Makes sure finalDestX and finalDestY are set to -1 so units
-		/ do not start building paths toward a ship that doesn't exist.
-		*/
 		finalDestX = finalDestY = -1;
 		return;
 	}
