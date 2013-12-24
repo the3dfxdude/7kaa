@@ -38,7 +38,6 @@
 #include <OSPY.h>
 #include <OTORNADO.h>
 #include <OTOWN.h>
-#include <OTownNetwork.h>
 #include <OU_MARI.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
@@ -1220,10 +1219,6 @@ int TownArray::read_file(File* filePtr)
 	//------- read empty room array --------//
 
 	read_empty_room(filePtr);
-
-	//------- create the town network --------//
-
-	town_network_array.recreate_after_load();
 
 	return 1;
 }
