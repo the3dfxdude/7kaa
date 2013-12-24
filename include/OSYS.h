@@ -83,7 +83,7 @@ public:
 
 	char		sys_flag;
 	char		init_flag;
-	char		signal_exit_flag;
+	char		signal_exit_flag; // 0 - not exiting; 1 - exit to OS; 2 - exit to main menu
 	char		need_redraw_flag;    // set to 1 if task switched back. After redraw, clear it
 	char		toggle_full_screen_flag;
 	char		cheat_enabled_flag;

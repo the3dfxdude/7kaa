@@ -185,6 +185,11 @@ void Game::view_encyclopedia()
 		mouse.get_event();
 		sys.blt_virtual_buf();
 
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
+
 		//------ detect main class buttons -------//
 
 		int selClass = detect_main_class_button();
