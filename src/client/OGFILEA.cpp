@@ -313,6 +313,12 @@ int GameFileArray::menu(int actionMode, int *recno)
 
 		mouse.get_event();
 
+		if( sys.signal_exit_flag == 1 )
+		{
+			retFlag = 0;
+			break;
+		}
+
 		// --------- display ----------//
 
 		if( refreshFlag )

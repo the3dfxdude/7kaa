@@ -465,6 +465,11 @@ void Button::wait_press(int timeOut)
 		sys.yield();
 		mouse.get_event();
 
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
+
 		//--- when the user is inactive for a certain time, ----//
 		//--------- close the report automatically -------------//
 
