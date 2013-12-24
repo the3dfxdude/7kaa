@@ -38,7 +38,6 @@
 #include <OSPY.h>
 #include <OTORNADO.h>
 #include <OTOWN.h>
-#include <OTownNetwork.h>
 #include <OU_MARI.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
@@ -1221,9 +1220,13 @@ int TownArray::read_file(File* filePtr)
 
 	read_empty_room(filePtr);
 
+	/* sraboy patch 23DEC13
+	/ Moved to TownArray::read_file() to eliminate
+	/ the possibility of saving ERROR.SAV before the
+	/ nation_array() has been loaded which causes a crash
 	//------- create the town network --------//
-
 	town_network_array.recreate_after_load();
+	*/
 
 	return 1;
 }
