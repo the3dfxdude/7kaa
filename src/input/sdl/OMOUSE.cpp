@@ -924,6 +924,11 @@ int MouseSDL::wait_press(int timeOutSecond)
 		sys.yield();
 		mouse.get_event();
 
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
+
 		if( sys.debug_session )
 			sys.blt_virtual_buf();
 

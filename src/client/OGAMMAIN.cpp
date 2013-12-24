@@ -225,7 +225,8 @@ void Game::main_menu()
 
 		optionInfo = main_option_array;
 
-		sys.signal_exit_flag = 0;
+		// Reset exit-to-main-menu flag
+		if (sys.signal_exit_flag == 2) sys.signal_exit_flag = 0;
 
 		for( i=0 ; i<MAIN_OPTION_COUNT ; i++, optionInfo++ )
 		{
@@ -432,6 +433,11 @@ void Game::single_player_menu()
 	{
 		sys.yield();
 		mouse.get_event();
+
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
 
 		if( refreshFlag )
 		{
@@ -682,6 +688,11 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 	{
 		sys.yield();
 		mouse.get_event();
+
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
 
 		if( refreshFlag )
 		{

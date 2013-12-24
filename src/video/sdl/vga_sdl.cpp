@@ -452,34 +452,44 @@ void VgaSDL::handle_messages()
                          SDL_QUIT,
                          SDL_SYSWMEVENT)) {
 
-      switch (event.type) {
-      case SDL_WINDOWEVENT_ENTER:
-      case SDL_WINDOWEVENT_FOCUS_GAINED:
-      case SDL_WINDOWEVENT_RESTORED:
-         sys.need_redraw_flag = 1;
-         if (!sys.is_mp_game)
-            sys.unpause();
+      switch (event.type)
+	  {
+	  case SDL_WINDOWEVENT:
+		  switch (event.window.event)
+		  {
+		  //case SDL_WINDOWEVENT_ENTER: // Do not respond to mouse focus
+		  case SDL_WINDOWEVENT_FOCUS_GAINED:
+		  case SDL_WINDOWEVENT_RESTORED:
+			 sys.need_redraw_flag = 1;
+			 if (!sys.is_mp_game)
+				sys.unpause();
 
-         // update ctrl/shift/alt key state
-         mouse.update_skey_state();
-         SDL_ShowCursor(SDL_DISABLE);
-         break;
-      case SDL_WINDOWEVENT_LEAVE:
-      case SDL_WINDOWEVENT_FOCUS_LOST:
-      case SDL_WINDOWEVENT_MINIMIZED:
-         if (!sys.is_mp_game)
-            sys.pause();
-         // turn the system cursor back on to get around a fullscreen
-         // mouse grabbed problem on windows
-         SDL_ShowCursor(SDL_ENABLE);
-         break;
-      case SDL_QUIT:
+			 // update ctrl/shift/alt key state
+			 mouse.update_skey_state();
+			 SDL_ShowCursor(SDL_DISABLE);
+			 break;
+
+		  //case SDL_WINDOWEVENT_LEAVE: // Do not respond to mouse focus
+		  case SDL_WINDOWEVENT_FOCUS_LOST:
+		  case SDL_WINDOWEVENT_MINIMIZED:
+			 if (!sys.is_mp_game)
+				sys.pause();
+			 // turn the system cursor back on to get around a fullscreen
+			 // mouse grabbed problem on windows
+			 SDL_ShowCursor(SDL_ENABLE);
+			 break;
+			 
+		  case SDL_WINDOWEVENT_EXPOSED:
+			  sys.need_redraw_flag = 1;
+			  break;
+		  }
+		  break;
+
+	  case SDL_QUIT:
          sys.signal_exit_flag = 1;
          break;
-      case SDL_WINDOWEVENT_EXPOSED:
-         sys.need_redraw_flag = 1;
-         break;
-      default:
+
+	  default:
          ERR("unhandled event %d\n", event.type);
          break;
       }

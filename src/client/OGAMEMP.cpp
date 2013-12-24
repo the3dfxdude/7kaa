@@ -722,6 +722,8 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	init();
 	remote.handle_vga_lock = 0;	// disable lock handling
 
+	sys.signal_exit_flag = 0; // Richard 24-12-2013: If player tried to exit just as the game loaded, cancel the exit request
+
 	battle.run(nationPara, mpPlayerCount);
 
 	mem_del(nationPara);
@@ -932,6 +934,8 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 //	init();
 	remote.handle_vga_lock = 0;	// disable lock handling
 
+	sys.signal_exit_flag = 0; // Richard 24-12-2013: If player tried to exit just as the game loaded, cancel the exit request
+
 	battle.run_loaded();		// 1-multiplayer game
 
 	remote.deinit();
@@ -994,6 +998,12 @@ int Game::mp_select_service()
 
 		sys.yield();
 		mouse.get_event();
+
+		if (sys.signal_exit_flag == 1)
+		{
+			choice = 0;
+			break;
+		}
 
 		if( refreshFlag )
 		{
@@ -1157,6 +1167,12 @@ int Game::mp_select_mode(char *defSaveFileName)
 		sys.yield();
 		mouse.get_event();
 
+		if( sys.signal_exit_flag == 1 )
+		{
+			rc = 0;
+			break;
+		}
+
 		if( refreshFlag )
 		{
 			if( refreshFlag & SMOPTION_PAGE )
@@ -1315,6 +1331,11 @@ int Game::input_box(const char *tell_string, char *buf, int len)
 		sys.yield();
 		mouse.get_event();
 
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
+
 		input_box.detect();
 
 		if (buttonOk.detect(KEY_RETURN)) {
@@ -1422,6 +1443,12 @@ int Game::mp_select_session()
 
 		sys.yield();
 		mouse.get_event();
+
+		if( sys.signal_exit_flag == 1 )
+		{
+			choice = 0;
+			break;
+		}
 
 		if( refreshFlag )
 		{
@@ -1719,6 +1746,7 @@ int Game::mp_get_leader_board()
 
 	vga_front.unlock_buf();
 
+	ret = 0;
 	while (1)
 	{
 		vga_front.lock_buf();
@@ -1728,6 +1756,11 @@ int Game::mp_get_leader_board()
 
 		sys.yield();
 		mouse.get_event();
+		
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
 
 		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
 		    mouse.any_click(1))     // detect right button only when the button is "Cancel"
@@ -2232,6 +2265,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 		sys.yield();
 		mouse.get_event();
+
+		// Note: sys.signal_exit_flag is detected at the same point as the cancel/abort button
 
 		// -------- display ----------//
 		// ##### begin Gilbert 25/10 #####//
@@ -3353,7 +3388,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				}
 			}
 		}
-		else if( returnButton.detect() )
+		else if( returnButton.detect() || (sys.signal_exit_flag == 1) ) // Richard 24-12-2013: signal_exit_flag works as cancel at this stage
 		{
 			if( remote.is_host )
 			{
@@ -4096,6 +4131,8 @@ int Game::mp_select_load_option(char *fileName)
 		sys.yield();
 		mouse.get_event();
 
+		// Note: sys.signal_exit_flag is detected at the same point as the cancel/abort button
+
 		// -------- display ----------//
 		if( refreshFlag || mRefreshFlag )
 		{
@@ -4706,7 +4743,7 @@ int Game::mp_select_load_option(char *fileName)
 				}
 			}
 		}
-		else if( returnButton.detect() )
+		else if( returnButton.detect() || (sys.signal_exit_flag == 1) ) // Richard 24-12-2013: signal_exit_flag works as cancel at this stage
 		{
 			if( remote.is_host )
 			{
