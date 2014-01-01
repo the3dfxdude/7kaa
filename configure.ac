@@ -103,11 +103,6 @@ AC_ARG_ENABLE([network],
   [], [enable_network=yes]
 )
 
-AC_ARG_WITH([directx],
-  AS_HELP_STRING([--with-directx], [use DirectX instead of SDL]),
-  [], [with_directx=no]
-)
-
 AC_ARG_WITH([wine],
   AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
   [], [with_wine=no]
