@@ -313,7 +313,6 @@ AC_CONFIG_FILES([
   src/input/sdl/Makefile
   src/multiplayer/Makefile
   src/multiplayer/common/Makefile
-  src/server/Makefile
   src/video/Makefile
   src/video/common/Makefile
   src/video/ddraw/Makefile
