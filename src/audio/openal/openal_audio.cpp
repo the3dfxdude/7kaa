@@ -23,10 +23,8 @@
 #include <limits.h>
 #include <math.h>
 #include <vector>
+#include <cstdlib>
 
-#include <ALL.h>
-#include <OBOX.h>
-#include <OSYS.h>
 #include <OVGALOCK.h>
 #include <dbglog.h>
 #include <file_input_stream.h>
