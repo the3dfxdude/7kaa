@@ -28,6 +28,7 @@
 #include <OPOWER.h>
 #include <KEY.h>
 #include <OSYS.h>
+#include <ctype.h>
 #include <dbglog.h>
 
 DBGLOG_DEFAULT_CHANNEL(Mouse);
