@@ -32,13 +32,7 @@
 #include <OFILE.h>
 #include <GAMEDEF.h>
 #include <OERROR.h>
-
-
-//-------- Game Version -----------//
-#define SKVERSION "2.14.4"
-#define SKVERMAJ 2
-#define SKVERMED 14
-#define SKVERMIN 4
+#include <version.h> // Game version
 
 
 //-------- Define macro functions -------//

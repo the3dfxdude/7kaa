@@ -181,6 +181,7 @@ noinst_HEADERS = \
 	surface_ddraw.h \
 	surface_none.h \
 	surface_sdl.h \
+	version.h \
 	vga_base.h \
 	vga_ddraw.h \
 	vga_none.h \
