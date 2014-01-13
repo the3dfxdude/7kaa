@@ -146,6 +146,7 @@ AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_DDRAW],  [test "$video_backend" = ddraw])
 AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
+AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 
 
 # Wine set-up
