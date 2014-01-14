@@ -22,6 +22,7 @@
 //Description : Ambition Entry Program
 
 #include <ALL.h>
+#include <version.h>
 
 #ifdef WIN32
 #include <initguid.h>

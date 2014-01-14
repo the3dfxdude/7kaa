@@ -32,7 +32,6 @@
 #include <OFILE.h>
 #include <GAMEDEF.h>
 #include <OERROR.h>
-#include <version.h> // Game version
 
 
 //-------- Define macro functions -------//
