@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <version.h>
+//Note: when added or removing headers & resource files, be sure to update the makefile.am to include/remove the dependencies 
 
 MAINICON ICON "7k.ico"
 
