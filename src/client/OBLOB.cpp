@@ -43,7 +43,8 @@ Blob::Blob(Blob &b) : ptr(mem_add(b.size)), size(b.size)
 
 Blob::~Blob()
 {
-	mem_del(ptr);
+	if (ptr != NULL)
+		mem_del(ptr);
 }
 
 void Blob::resize(int s)
