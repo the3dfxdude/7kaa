@@ -748,7 +748,7 @@ void Sys::main_loop(int isLoadedGame)
          }
 
          // ###### begin Gilbert 4/11 #######//
-         // ------- display graduately, keep on displaying --------- //
+         // ------- display gradually, keep on displaying --------- //
          if( rc )
          {
             lastDispFrameTime = misc.get_time();
@@ -779,7 +779,7 @@ void Sys::main_loop(int isLoadedGame)
 
 					// ####### patch begin Gilbert 17/11 ######//
 					// If somebody is not ready for more than five seconds
-					// (may to happen in multiplayer), display info message
+					// (may happen in multiplayer), display info message
 					if( firstUnreadyTime && misc.get_time() - firstUnreadyTime > 5000 )
 					{
 						int y = ZOOM_Y1 + 10;
@@ -804,7 +804,7 @@ void Sys::main_loop(int isLoadedGame)
          }
          // ###### end Gilbert 4/11 #######//
 
-         // ----------- detect sond is ended, play another -----------//
+         // ----------- detect if song has ended, play another -----------//
 
          if( config.frame_speed == 0 || day_frame_count == 0)
             music.yield();
@@ -850,7 +850,7 @@ void Sys::main_loop(int isLoadedGame)
          {
             mp_clear_request_save();            // clear request first before save game
 
-            if( nation_array.player_recno )     // only save then the player is still in the game
+            if( nation_array.player_recno )     // only save when the player is still in the game
             {
                game_file.save_game( remote.save_file_name );
 
@@ -866,9 +866,6 @@ void Sys::main_loop(int isLoadedGame)
          }
 
          vga_front.unlock_buf();
-
-         if( sys.signal_exit_flag )
-            break;
    }
 
    // #### begin Gilbert 23/10 #######//
