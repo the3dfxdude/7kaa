@@ -2472,7 +2472,7 @@ void Sys::load_game()
    if( remote.is_enable() )
       return;
 
-   signal_exit_flag=1;     // for deinit functions to recognize that this is an end game deinitialization instead of a normal deinitialization
+   signal_exit_flag=2;     // for deinit functions to recognize that this is an end game deinitialization instead of a normal deinitialization
 
    int rc=0;
 
@@ -2486,7 +2486,10 @@ void Sys::load_game()
       case 0:
          signal_exit_flag = 0;
          break;
-         // case -1 and otherwise, left sys.signal_exit_flag 1 to exit the game
+	  
+	  default:
+		 // case -1 and otherwise, set sys.signal_exit_flag to 1 to exit the game
+		 sys.signal_exit_flag = 1;
    }
 
    game_file_array.menu(-1);               // restore screen area from back buffer
