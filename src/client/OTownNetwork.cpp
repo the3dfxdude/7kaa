@@ -581,8 +581,8 @@ void TownNetworkArray::recreate_after_load()
 	for (int i = 1; i <= town_array.size(); ++i)
 	{
 		if (town_array.is_deleted(i)) continue; // Skip over empty elements
-		
 		Town *pTown = town_array[i];
+		
 		// Create town networks for each town without a town network.
 		// Independent towns do not form town networks
 		if (pTown->town_network_recno == 0 && pTown->nation_recno != 0)
