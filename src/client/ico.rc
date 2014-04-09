@@ -1,1 +1,41 @@
+#include <windows.h>
+#include <version.h>
+//Note: when added or removing headers & resource files, be sure to update the makefile.am to include/remove the dependencies 
+
 MAINICON ICON "7k.ico"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     SKVERMAJ,SKVERMED,SKVERMIN,0
+PRODUCTVERSION  SKVERMAJ,SKVERMED,SKVERMIN,0
+FILEFLAGSMASK   0x3fL
+#ifdef _DEBUG
+FILEFLAGS       0x1L
+#else
+FILEFLAGS       0x0L
+#endif
+FILEOS          VOS__WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     0x0L
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904B0"
+		BEGIN
+			VALUE "Comments",         ""
+			VALUE "CompanyName",      "7kfans.com"
+            VALUE "FileDescription",  "Seven Kingdoms: Ancient Adversaries executable for Windows (from the open-source project)"
+            VALUE "FileVersion",      SKVERSION
+            VALUE "InternalName",     "7kaa"
+			VALUE "LegalCopyright",   "Source code under GPL license"
+            VALUE "LegalTrademarks",  "Seven Kingdoms is a trademark of Enlight Software"
+            VALUE "OriginalFilename", "7kaa.exe"
+            VALUE "ProductName",      "Seven Kingdoms: Ancient Adversaries"
+            VALUE "ProductVersion",   SKVERSION
+		END
+	END
+
+	BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1200
+    END
+END

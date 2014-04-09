@@ -103,11 +103,6 @@ AC_ARG_ENABLE([network],
   [], [enable_network=yes]
 )
 
-AC_ARG_WITH([directx],
-  AS_HELP_STRING([--with-directx], [use DirectX instead of SDL]),
-  [], [with_directx=no]
-)
-
 AC_ARG_WITH([wine],
   AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
   [], [with_wine=no]
@@ -151,6 +146,7 @@ AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_DDRAW],  [test "$video_backend" = ddraw])
 AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
+AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 
 
 # Wine set-up
@@ -318,7 +314,6 @@ AC_CONFIG_FILES([
   src/input/sdl/Makefile
   src/multiplayer/Makefile
   src/multiplayer/common/Makefile
-  src/server/Makefile
   src/video/Makefile
   src/video/common/Makefile
   src/video/ddraw/Makefile

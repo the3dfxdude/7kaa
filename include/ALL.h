@@ -34,13 +34,6 @@
 #include <OERROR.h>
 
 
-//-------- Game Version -----------//
-#define SKVERSION "2.14.4"
-#define SKVERMAJ 2
-#define SKVERMED 14
-#define SKVERMIN 4
-
-
 //-------- Define macro functions -------//
 
 #define MAX(a,b)        (((a) > (b)) ? (a) : (b))

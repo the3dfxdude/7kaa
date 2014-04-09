@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2014 Richard Dijk <microvirus.multiplying@hotmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,46 +18,18 @@
  *
  */
 
-// Filename    : OBLOB.CPP
-// Description : fixed size binary block
 
+//Filename    : version.h
+//Description : Defines the Seven Kingdoms version
+//              Used also by resource (rc) file for Windows to generate executable details, so don't put anything too difficult in here.
+//              Note: the rc compiler requires a newline at the end of the file.
 
-#include <OBLOB.h>
-#include <ALL.h>
+#ifndef __VERSION_H
+#define __VERSION_H
 
+#define SKVERSION "2.14.4"
+#define SKVERMAJ 2
+#define SKVERMED 14
+#define SKVERMIN 4
 
-Blob::Blob() : ptr(NULL), size(0)
-{
-}
-
-
-Blob::Blob(int s) : ptr(mem_add(s)), size(s)
-{
-}
-
-
-Blob::Blob(Blob &b) : ptr(mem_add(b.size)), size(b.size)
-{
-	memcpy(ptr, b.ptr, b.size);
-}
-
-Blob::~Blob()
-{
-	if (ptr != NULL)
-		mem_del(ptr);
-}
-
-void Blob::resize(int s)
-{
-	ptr = (char *)mem_resize(ptr, s);
-	size = s;
-}
-
-
-Blob& Blob::operator= (Blob& b)
-{
-	ptr = mem_resize(ptr, b.size);
-	size = b.size;
-	memcpy( ptr, b.ptr, b.size);
-	return *this;
-}
+#endif

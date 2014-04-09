@@ -402,7 +402,7 @@ int Tutor::select_tutor(int actionMode)
 			}
 			// ##### end Gilbert 31/10 ########//
 		}
-		else if( cancelButton.detect(KEY_ESC) || mouse.any_click(RIGHT_BUTTON) > 0)		// also when ESC key is pressed or right button
+		else if( cancelButton.detect(KEY_ESC) || mouse.any_click(RIGHT_BUTTON) > 0 || sys.signal_exit_flag == 1 )		// also when ESC key is pressed or right button, or when the user wants to exit
 		{
 			// cancel button or escape key
 			refreshFlag = TUOPTION_ALL;

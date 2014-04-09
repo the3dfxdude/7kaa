@@ -1,1 +1,1 @@
-SUBDIRS = audio common file imgfun input multiplayer video client server
+SUBDIRS = audio common file imgfun input multiplayer video client

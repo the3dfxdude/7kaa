@@ -246,6 +246,9 @@ void Error::run( const char *format, ... )
 	if( vga.is_inited() )
 		box.msg( strBuf, 0 );
 
+	// Richard 17-1-2014: Set exit flag to signal termination (for atexit cleanup)
+	sys.signal_exit_flag = 1;
+
 	sys.deinit_directx();
 
 	exit( -2 );

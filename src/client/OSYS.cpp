@@ -385,25 +385,11 @@ void Sys::deinit_objects()
 //
 int Sys::set_config_dir()
 {
-#ifdef NO_WINDOWS
-   const char *home_env_var = "HOME";
-#else // WINDOWS
-   const char *home_env_var = "USERPROFILE";
-#endif 
-   int r;
-
-   // Find the path for the config directory--this is based on the default
-   // location for the logged in user.
-   char *home = getenv(home_env_var);
-
-   if (strlen(home) + strlen(DEFAULT_DIR_CONFIG) >= MAX_PATH-2)
-   {
-      ERR("Game config dir path too long.\n");
-      return 0;
-   }
-
+   // Get the path for the config directory from SDL. Guaranteed to end with a path separator
+   char *home = SDL_GetPrefPath(CONFIG_ORGANIZATION_NAME, CONFIG_APPLICATION_NAME);
    strcpy(dir_config, home);
-   strcat(dir_config, DEFAULT_DIR_CONFIG);
+   SDL_free(home);
+   home = NULL;
 
    MSG("Game config dir path: %s\n", dir_config);
 
@@ -414,9 +400,6 @@ int Sys::set_config_dir()
       dir_config[0] = 0;
       return 0;
    }
-
-   // place ending delimiter to help with concatenating
-   strcat(dir_config, PATH_DELIM);
 
    return 1;
 }
@@ -2421,6 +2404,20 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
 //
 void Sys::capture_screen()
 {
+   // NB: Increase this when allowing more decimals in the screenshot file, or when changing the screenshot filename
+   enum {MAX_SCREENSHOT_FILENAME_LENGTH = 8};
+
+   char full_path[MAX_PATH+1];
+   int path_len;
+
+   strcpy(full_path, dir_config);
+   path_len = strlen(full_path);
+   if (path_len + MAX_SCREENSHOT_FILENAME_LENGTH > MAX_PATH)
+   {
+	   ERR("Path to the screenshots too long.\n");
+	   return;
+   }
+
    String str("7K");
 
    int i;
@@ -2434,7 +2431,9 @@ void Sys::capture_screen()
       str += i;
       str += ".BMP";
 
-      if( !misc.is_file_exist(str) )
+	  strcpy(full_path + path_len, str);
+
+      if( !misc.is_file_exist(full_path) )
          break;
    }
 
@@ -2444,12 +2443,12 @@ void Sys::capture_screen()
    if( sys.debug_session )    // in debug session, the buffer is not locked, we need to lock it for capturing the screen
    {
       vga_true_front.lock_buf();
-      vga_true_front.write_bmp_file(str);
+      vga_true_front.write_bmp_file(full_path);
       vga_true_front.unlock_buf();
    }
    else
    {
-      vga_front.write_bmp_file(str);
+      vga_front.write_bmp_file(full_path);
    }
 
    //------ display msg --------//
@@ -2473,7 +2472,7 @@ void Sys::load_game()
    if( remote.is_enable() )
       return;
 
-   signal_exit_flag=1;     // for deinit functions to recognize that this is an end game deinitialization instead of a normal deinitialization
+   signal_exit_flag=2;     // for deinit functions to recognize that this is an end game deinitialization instead of a normal deinitialization
 
    int rc=0;
 
@@ -2487,7 +2486,10 @@ void Sys::load_game()
       case 0:
          signal_exit_flag = 0;
          break;
-         // case -1 and otherwise, left sys.signal_exit_flag 1 to exit the game
+	  
+	  default:
+		 // case -1 and otherwise, set sys.signal_exit_flag to 1 to exit the game
+		 sys.signal_exit_flag = 1;
    }
 
    game_file_array.menu(-1);               // restore screen area from back buffer

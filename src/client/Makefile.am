@@ -286,6 +286,14 @@ if VIDEO_SDL
 7kaa_LDADD += ../video/sdl/libvideo_sdl.a
 endif
 
+if USE_WINDOWS
+7kaa_SOURCES += ico.rc
+SUFFIXES = .rc
+.rc.o:
+	windres -I "$(top_srcdir)/include" -i $< $@
+ico.o: $(top_srcdir)/include/version.h 7k.ico
+endif
+
 7kaa_LDADD += \
 	../common/libcommon.a \
 	../file/libfile.a \

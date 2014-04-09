@@ -496,21 +496,6 @@ static int select_option()
 
 	while(1)
 	{
-#ifndef NO_WINDOWS  // FIXME
-		MSG msg;
-		if (PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage( &msg, NULL, 0, 0))
-			{
-				sys.signal_exit_flag = 1;
-				// BUGHERE : vga_front is unlocked
-				return 0;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
-		}
-#endif
 		if( sys.need_redraw_flag )
 		{
 			refreshFlag = SGOPTION_ALL;
@@ -521,6 +506,12 @@ static int select_option()
 
 		sys.yield();
 		mouse.get_event();
+
+		if( sys.signal_exit_flag == 1 )
+		{
+				retFlag = 0;
+				break;
+		}
 
 		// -------- display ----------//
 		if( refreshFlag )
