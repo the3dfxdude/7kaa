@@ -285,7 +285,7 @@ void Bullet::hit_target(short x, short y)
 	if( attackDamage == 0 )
 		return;
 
-	if( targetUnit->is_nation(nation_recno) )
+	if( targetUnit->nation_recno == nation_recno )
 	{
 		if( targetUnit->unit_id == UNIT_EXPLOSIVE_CART )
 			((UnitExpCart *)targetUnit)->trigger_explode();
