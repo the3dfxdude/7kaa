@@ -55,7 +55,7 @@ Building the game
 
 General Requirements
 * GCC 4.xx or later
-* SDL 2.0
+* SDL 2.0.2
 * SDL_net
 * OpenAL
 * Autoconf (when using git snapshot)
