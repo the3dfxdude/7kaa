@@ -212,6 +212,7 @@ public:
 	//--------------------------------------------------------//
 	// parameters used to make decisions
 	//--------------------------------------------------------//
+    int             ai_create_date;
 	short			ai_town_size;
 	short			ai_base_size;
 	short			ai_mine_size;
