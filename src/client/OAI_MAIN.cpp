@@ -72,7 +72,7 @@ void Nation::init(int nationType, int raceId, int colorSchemeId, DWORD playerId)
 
 	attack_camp_count = 0;
 
-    ai_create_date = info.game_date;
+	ai_create_date = info.game_date;
 
 	//------ init AI info arrays -----//
 
