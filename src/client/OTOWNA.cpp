@@ -557,7 +557,8 @@ void TownArray::draw_dot()
 
 		townLayout = town_res.get_layout(townPtr->layout_id);
 
-		writePtr = vgaBufPtr + (MAP_Y1+townPtr->loc_y1)*vgaBufPitch + (MAP_X1+townPtr->loc_x1);
+
+		writePtr = vgaBufPtr + (MAP_Y1+(int)(townPtr->loc_y1*(MINIMAP_MULTIPLIER)))*vgaBufPitch + (int)(MAP_X1+(townPtr->loc_x1*(MINIMAP_MULTIPLIER)));
 
 		char shadowColor = (char) VGA_GRAY;
 		for( y=STD_TOWN_LOC_HEIGHT ; y>0 ; y--, writePtr+=vgaBufPitch-STD_TOWN_LOC_WIDTH )

@@ -551,7 +551,7 @@ void FirmArray::draw_dot()
 
 		firmBuild = firm_res.get_build(firmPtr->firm_build_id);
 
-		writePtr = vgaBufPtr + (MAP_Y1+firmPtr->loc_y1)*vgaBufPitch + (MAP_X1+firmPtr->loc_x1);
+		writePtr = vgaBufPtr + (MAP_Y1+(int)(firmPtr->loc_y1*(MINIMAP_MULTIPLIER)))*vgaBufPitch + (MAP_X1+(int)(firmPtr->loc_x1*(MINIMAP_MULTIPLIER)));
 
 		nationColor = info.game_date - firmPtr->last_attacked_date > 2 ?
 			nationColorArray[firmPtr->nation_recno] :

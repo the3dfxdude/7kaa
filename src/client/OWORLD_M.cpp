@@ -151,7 +151,7 @@ void MapMatrix::draw()
 
 	if( save_image_buf )
 	{
-		vga_back.read_bitmap( image_x1, image_y1, image_x2, image_y2, save_image_buf );
+		vga_back.read_bitmap( image_x1, image_y1, image_x1 + MAP_M_WIDTH, image_y1 + MAP_M_HEIGHT , save_image_buf );
 		just_drawn_flag = 1;
 	}
 }
@@ -178,15 +178,23 @@ void MapMatrix::draw_map()
 	char		 tilePixel;
 	Location* northWestPtr;
 
+    char* writePtrOriginal = writePtr;
+    char* writePtrLine = writePtr;
+    float writePtrX = 0;
+    float writePtrY = 0;
 	switch(map_mode)
 	{
 	case MAP_MODE_TERRAIN:
-		for( y=image_y1 ; y<=image_y2 ; y++, writePtr+=lineRemain )
+
+        for( y=image_y1 ; y<=image_y2 ; y++, writePtrY += (MINIMAP_MULTIPLIER) )
 		{
 			tileYOffset = (y & TERRAIN_TILE_Y_MASK) * TERRAIN_TILE_WIDTH;
-
-			for( x=image_x1 ; x<=image_x2 ; x++, writePtr++, locPtr++ )
+            writePtrLine = writePtrOriginal + (int)(writePtrY)*(lineRemain + (image_x2 - image_x1) + 1);
+            writePtr = writePtrLine;
+            writePtrX = 0;
+			for( x=image_x1 ; x<=image_x2 ; x++, writePtrX+=(MINIMAP_MULTIPLIER), locPtr++ )
 			{
+                writePtr = writePtrLine + (int)(writePtrX);
 				if( locPtr->explored() )
 				{
 					if( locPtr->fire_str() > 0)
@@ -228,10 +236,14 @@ void MapMatrix::draw_map()
 		break;
 
 	case MAP_MODE_SPOT:
-		for( y=image_y1 ; y<=image_y2 ; y++, writePtr+=lineRemain )
+		for( y=image_y1 ; y<=image_y2 ; y++, writePtrY += (MINIMAP_MULTIPLIER) )
 		{
-			for( x=image_x1 ; x<=image_x2 ; x++, writePtr++, locPtr++ )
+            writePtrLine = writePtrOriginal + (int)(writePtrY)*(lineRemain + (image_x2 - image_x1) + 1);
+            writePtr = writePtrLine;
+            writePtrX = 0;
+			for( x=image_x1 ; x<=image_x2 ; x++, writePtrX+=(MINIMAP_MULTIPLIER), locPtr++ )
 			{
+                writePtr = writePtrLine + (int)(writePtrX);
 				if( locPtr->explored() )
 				{
 					if( locPtr->sailable() )
@@ -255,9 +267,12 @@ void MapMatrix::draw_map()
 		break;
 
 	case MAP_MODE_POWER:
-		for( y=image_y1 ; y<=image_y2 ; y++, writePtr+=lineRemain )
+		for( y=image_y1 ; y<=image_y2 ; y++, writePtrY += (MINIMAP_MULTIPLIER) )
 		{
-			for( x=image_x1 ; x<=image_x2 ; x++, writePtr++, locPtr++ )
+            writePtrLine = writePtrOriginal + (int)(writePtrY)*(lineRemain + (image_x2 - image_x1) + 1);
+            writePtr = writePtrLine;
+            writePtrX = 0;
+			for( x=image_x1 ; x<=image_x2 ; x++, writePtrX+=(MINIMAP_MULTIPLIER), locPtr++ )
 			{
 				if( locPtr->explored() )
 				{
@@ -324,10 +339,16 @@ void MapMatrix::draw_square()
 
 	static int squareFrameCount=0, squareFrameStep=1;
 
-	int x1=image_x1+(cur_x_loc-top_x_loc)*loc_width;
-	int y1=image_y1+(cur_y_loc-top_y_loc)*loc_height;
-	int x2=x1+cur_cargo_width *loc_width-1;
-	int y2=y1+cur_cargo_height*loc_height-1;
+	int x1=image_x1+((cur_x_loc-top_x_loc)*loc_width)*(MINIMAP_MULTIPLIER);
+	int y1=image_y1+((cur_y_loc-top_y_loc)*loc_height)*(MINIMAP_MULTIPLIER);
+	int x2=x1+(cur_cargo_width *loc_width-1)*(MINIMAP_MULTIPLIER);
+	int y2=y1+(cur_cargo_height*loc_height-1)*(MINIMAP_MULTIPLIER);
+
+    //Make sure square is actual square.
+    if(x2 <= x1)
+        x2 = x1+2;
+    if(y2 <= y1)
+        y2 = y1+2;
 
 	vga_back.rect( x1, y1, x2, y2, 1, VGA_YELLOW + squareFrameCount );
 
@@ -373,8 +394,8 @@ void MapMatrix::toggle_map_mode(int modeId)
 //
 int MapMatrix::detect_area()
 {
-	if( !mouse.press_area( image_x1,image_y1,image_x2,image_y2, 2 ) &&
-		 !mouse.any_click( image_x1,image_y1,image_x2,image_y2, 2 ) )
+	if( !mouse.press_area( image_x1,image_y1,image_x1 + MAP_M_WIDTH,image_y1+MAP_M_HEIGHT, 2 ) &&
+		 !mouse.any_click( image_x1,image_y1,image_x1 + MAP_M_WIDTH,image_y1+MAP_M_HEIGHT, 2 ) )
 	{
 		return 0;
 	}
@@ -386,11 +407,11 @@ int MapMatrix::detect_area()
 
 	//--- if press left button, select zoom area ----//
 
-	if( mouse.single_click( image_x1,image_y1,image_x2,image_y2 ) ||
-		 mouse.press_area( image_x1,image_y1,image_x2,image_y2, LEFT_BUTTON ) )
+	if( mouse.single_click( image_x1,image_y1,image_x1 + MAP_M_WIDTH,image_y1+MAP_M_HEIGHT ) ||
+		 mouse.press_area( image_x1,image_y1,image_x1 + MAP_M_WIDTH,image_y1+MAP_M_HEIGHT, LEFT_BUTTON ) )
 	{
-		int xLoc = top_x_loc + (mouse.cur_x-image_x1)/loc_width;
-		int yLoc = top_y_loc + (mouse.cur_y-image_y1)/loc_height;
+		int xLoc = top_x_loc + ((mouse.cur_x-image_x1)/loc_width)/(MINIMAP_MULTIPLIER);
+		int yLoc = top_y_loc + ((mouse.cur_y-image_y1)/loc_height)/(MINIMAP_MULTIPLIER);
 
 		//-- if only single click, don't highlight new firm, only new area --//
 

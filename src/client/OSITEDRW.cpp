@@ -185,8 +185,8 @@ void SiteArray::draw_dot()
 
 		rawPtr = operator[](i);
 
-		mapX = MAP_X1 + rawPtr->map_x_loc;
-		mapY = MAP_Y1 + rawPtr->map_y_loc;
+		mapX = MAP_X1 + (rawPtr->map_x_loc)*(MINIMAP_MULTIPLIER);
+		mapY = MAP_Y1 + rawPtr->map_y_loc*(MINIMAP_MULTIPLIER);
 
 		if( mapX == MAP_WIDTH-1 )
 			mapX = MAP_WIDTH-2;
