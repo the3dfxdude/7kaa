@@ -340,10 +340,10 @@ void UnitArray::draw_dot()
 					//-----------------------------------------------------------//
 					if(unitPtr->cur_x_loc()!=unitPtr->go_x_loc() || unitPtr->cur_y_loc()!=unitPtr->go_y_loc())
 					{
-						lineFromX = MAP_X1 + unitPtr->go_x_loc();
-						lineFromY = MAP_Y1 + unitPtr->go_y_loc();
-						lineToX = MAP_X1 + unitPtr->next_x_loc();
-						lineToY = MAP_Y1 + unitPtr->next_y_loc();
+						lineFromX = MAP_X1 + unitPtr->go_x_loc()*(MINIMAP_MULTIPLIER);
+						lineFromY = MAP_Y1 + unitPtr->go_y_loc()*(MINIMAP_MULTIPLIER);
+						lineToX = MAP_X1 + unitPtr->next_x_loc()*(MINIMAP_MULTIPLIER);
+						lineToY = MAP_Y1 + unitPtr->next_y_loc()*(MINIMAP_MULTIPLIER);
 						vga_back.line(lineFromX, lineFromY, lineToX, lineToY, lineColor);
 					}
 
@@ -353,10 +353,10 @@ void UnitArray::draw_dot()
 					resultNode2 = resultNode1 + 1;
 					for(j=resultNodeRecno+1; j<=resultNodeCount; j++, resultNode1++, resultNode2++)
 					{
-						lineFromX = MAP_X1 + resultNode2->node_x;
-						lineFromY = MAP_Y1 + resultNode2->node_y;
-						lineToX = MAP_X1 + resultNode1->node_x;
-						lineToY = MAP_Y1 + resultNode1->node_y;
+						lineFromX = MAP_X1 + resultNode2->node_x*(MINIMAP_MULTIPLIER);
+						lineFromY = MAP_Y1 + resultNode2->node_y*(MINIMAP_MULTIPLIER);
+						lineToX = MAP_X1 + resultNode1->node_x*(MINIMAP_MULTIPLIER);
+						lineToY = MAP_Y1 + resultNode1->node_y*(MINIMAP_MULTIPLIER);
 						vga_back.line(lineFromX, lineFromY, lineToX, lineToY, lineColor);
 					}
 				}
@@ -367,12 +367,12 @@ void UnitArray::draw_dot()
 				{
 					resultNode1 = unitPtr->way_point_array;
 					resultNode2 = resultNode1+1;
-					lineToX = MAP_X1 + resultNode1->node_x;
-					lineToY = MAP_Y1 + resultNode1->node_y;
+					lineToX = MAP_X1 + resultNode1->node_x*(MINIMAP_MULTIPLIER);
+					lineToY = MAP_Y1 + resultNode1->node_y*(MINIMAP_MULTIPLIER);
 					for(j=unitPtr->way_point_count-1; j>0; j--, resultNode1++, resultNode2++)
 					{
-						lineFromX = MAP_X1 + resultNode2->node_x;
-						lineFromY = MAP_Y1 + resultNode2->node_y;
+						lineFromX = MAP_X1 + resultNode2->node_x*(MINIMAP_MULTIPLIER);
+						lineFromY = MAP_Y1 + resultNode2->node_y*(MINIMAP_MULTIPLIER);
 						anim_line.draw_line(&vga_back, lineFromX, lineFromY, lineToX, lineToY, 0, 2);
 						lineToX = lineFromX;
 						lineToY = lineFromY;
@@ -398,8 +398,8 @@ void UnitArray::draw_dot()
 		if( !unitPtr || !unitPtr->is_visible() || unitPtr->is_shealth())
 			continue;
 
-		mapX = MAP_X1 + unitPtr->cur_x_loc();
-		mapY = MAP_Y1 + unitPtr->cur_y_loc();
+		mapX = MAP_X1 + unitPtr->cur_x_loc()*(MINIMAP_MULTIPLIER);
+		mapY = MAP_Y1 + unitPtr->cur_y_loc()*(MINIMAP_MULTIPLIER);
 
 		if( mapX == MAP_WIDTH-1 )
 			mapX = MAP_WIDTH-2;

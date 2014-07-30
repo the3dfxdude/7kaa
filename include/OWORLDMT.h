@@ -38,17 +38,23 @@
 #define MAX_WORLD_Y_LOC  (World::max_y_loc)
 
 //------------- Map window -------------//
+//This refers to the mini map.
 
 #define MAP_WIDTH       MAX_WORLD_X_LOC
 #define MAP_HEIGHT      MAX_WORLD_Y_LOC
 
-#define MAX_MAP_WIDTH	200
-#define MAX_MAP_HEIGHT	200
+#define MAX_MAP_WIDTH	1000
+#define MAX_MAP_HEIGHT	1000
 
-#define MAP_X1          (588+(MAX_MAP_WIDTH-MAP_WIDTH)/2)
-#define MAP_Y1          (56 +(MAX_MAP_HEIGHT-MAP_HEIGHT)/2)
-#define MAP_X2          (MAP_X1+MAP_WIDTH-1)
-#define MAP_Y2          (MAP_Y1+MAP_HEIGHT-1)
+#define MAP_M_WIDTH     200
+#define MAP_M_HEIGHT    200
+
+#define MINIMAP_MULTIPLIER 200.0/1000.0 //Drawing scale multiplier for minimap.
+
+#define MAP_X1          588 //Minimap's X position
+#define MAP_Y1          56 //Minimap's Y position
+#define MAP_X2          (MAP_X1+MAP_M_WIDTH-1)
+#define MAP_Y2          (MAP_Y1+MAP_M_HEIGHT-1)
 
 #define MAP_LOC_HEIGHT   1 		// when MAP_VIEW_ENTIRE
 #define MAP_LOC_WIDTH    1
@@ -57,17 +63,18 @@
 #define MAP2_LOC_WIDTH   2
 
 //----------- Zoom window -------------//
+//This refers to the actual game view.
 
 #define ZOOM_X1           0     // World Zoom Window
 #define ZOOM_Y1          56
 #define ZOOM_X2         575
 #define ZOOM_Y2         599
 
-#define ZOOM_WIDTH      576     // ZOOM_LOC_WIDTH(32)  * 18 = 576
-#define ZOOM_HEIGHT     544     // ZOOM_LOC_HEIGHT(32) * 17 = 544
+#define ZOOM_WIDTH      576     // The width of the game view, ZOOM_LOC_WIDTH(32)  * 18 = 576
+#define ZOOM_HEIGHT     544     // The height of the game view, ZOOM_LOC_HEIGHT(32) * 17 = 544
 
-#define ZOOM_LOC_HEIGHT  32     // in world zoom window
-#define ZOOM_LOC_WIDTH   32
+#define ZOOM_LOC_HEIGHT  32     // in world zoom window. A tile's height
+#define ZOOM_LOC_WIDTH   32     // A tile's width.
 
 #define ZOOM_X_SHIFT_COUNT  5    // x>>5 = xLoc
 #define ZOOM_Y_SHIFT_COUNT  5    // y>>5 = yLoc

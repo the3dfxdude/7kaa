@@ -48,7 +48,7 @@
 //------------ Define static class variables ------------//
 
 short World::view_top_x, World::view_top_y;
-int   World::max_x_loc=200, World::max_y_loc=200;
+int   World::max_x_loc=MAX_MAP_WIDTH, World::max_y_loc=MAX_MAP_HEIGHT;
 
 //----------- Begin of function World::World ----------//
 

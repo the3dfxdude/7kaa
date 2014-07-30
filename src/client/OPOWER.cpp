@@ -486,8 +486,8 @@ int Power::detect_action()
 	else if( mouseX >= MAP_X1 && mouseX <= MAP_X2 &&		// if the mouse is inside the zoom area
 				mouseY >= MAP_Y1 && mouseY <= MAP_Y2 )
 	{
-		curXLoc = world.map_matrix->top_x_loc + (mouseX-MAP_X1);
-		curYLoc = world.map_matrix->top_y_loc + (mouseY-MAP_Y1);
+		curXLoc = world.map_matrix->top_x_loc + (mouseX-MAP_X1)/(MINIMAP_MULTIPLIER);
+		curYLoc = world.map_matrix->top_y_loc + (mouseY-MAP_Y1)/(MINIMAP_MULTIPLIER);
 	}
 
 	else
