@@ -72,32 +72,6 @@ int GameFile::save_game(const char* fileName)
 		errStr = _("Path too long to the saved game");
 	}
 
-	char lowDiskSpaceFlag = 0;
-#ifndef NO_WINDOWS  // FIXME
-	DWORD sectorPerCluster = 0;
-	DWORD bytePerSector = 0;
-	DWORD freeCluster = 0;
-	DWORD totalCluster = 0;
-	if( GetDiskFreeSpace( NULL,	// address of root path, NULL means the current root directory
-		&sectorPerCluster, &bytePerSector, &freeCluster, &totalCluster))
-	{
-		DWORD freeSpace = DWORD( (double)freeCluster * sectorPerCluster * bytePerSector / 1024.0);
-
-		if( misc.is_file_exist(file_name) )
-		{	
-			// if overwritting existing file, count the file size of the existing file
-			file.file_open(file_name);
-			freeSpace += file.file_size() / 1024;		// count the existing space
-			file.file_close();
-		}
-		if( !(rc = freeSpace >= MIN_FREE_SPACE) )
-		{
-			errStr = _("Insufficient disk space ! The game is not saved.");
-			lowDiskSpaceFlag = 1;
-		}
-	}
-#endif
-
 	if( rc )
 	{
 		rc = file.file_create(full_path, 0, 1); // 0=tell File don't handle error itself
@@ -132,8 +106,7 @@ int GameFile::save_game(const char* fileName)
 
 	if( !rc )
 	{
-		if( !lowDiskSpaceFlag )
-			remove( file_name );         // delete the file as it is not complete
+		remove( file_name );         // delete the file as it is not complete
 
 		#ifndef DEBUG
 			errStr = _("Insufficient disk space ! The game is not saved.");		// use this message for all types of error message in the release version
