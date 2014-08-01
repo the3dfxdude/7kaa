@@ -175,7 +175,8 @@ int NewsArray::put(int detectAction)
 
 	//--- count the no. of recent news which should be displayed ---//
 
-	int dispCount=0;
+	int dispCount=0; // number of items actually displayed
+	int newsCount=0; // number of items reviewed (including non-displayed)
 
 	for( i=size() ; i>=MAX(1,last_clear_recno+1) ; i-- )
 	{
@@ -187,13 +188,17 @@ int NewsArray::put(int detectAction)
 			 game.game_mode == GAME_TUTORIAL )                    		// only display major news in the tutorial
 		{
 			if( !newsPtr->is_major() )
+			{
+				++newsCount;
 				continue;
+			}
 		}
 
 		//---------------------------------------//
 
 		if( info.game_date < newsPtr->news_date + DISP_NEWS_DAYS )
 		{
+			++newsCount;
 			if( ++dispCount >= DISP_NEWS_COUNT )
 				break;
 		}
@@ -207,7 +212,7 @@ int NewsArray::put(int detectAction)
 
 	int newsRecno, newsHeight;
 
-	for( i=dispCount ; i>0 ; i-- )
+	for( i=newsCount ; i>0 ; i-- )
 	{
 		newsRecno = size()-i+1;
 
@@ -235,6 +240,7 @@ int NewsArray::put(int detectAction)
 			if( talkMsgPtr->reply_type==REPLY_WAITING && !talkMsgPtr->is_valid_to_reply() )
 			{
 				news_array.linkout(newsRecno);
+				--newsCount; --dispCount; // removed a record, so indices shift
 				continue;
 			}
 		}
