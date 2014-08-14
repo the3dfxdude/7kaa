@@ -447,7 +447,7 @@ void Unit::disp_button(int dispY1)
 
 		//------------ "reward" button ---------//
 
-		if( nation_recno == nation_array.player_recno &&	// you can't promote your spy in other nation
+		if( nation_array.player_recno && is_own() &&	// Can only reward if the player is still alive. Can reward own spies (even when cloaked).
 			 rank_id != RANK_KING )
 		{
 			button_reward.paint( x, dispY1, 'A', "REWARD" );
