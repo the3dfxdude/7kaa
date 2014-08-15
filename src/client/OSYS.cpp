@@ -878,15 +878,15 @@ void Sys::auto_save()
          static int saveCount = 0;
          switch(saveCount)
          {
-            case 0:  game_file.save_game( "AUTO1.SAV" );
+            case 0:  game_file.save_game( "DEBUG1.SAV" );
                      break;
-            case 1:  game_file.save_game( "AUTO2.SAV" );
+            case 1:  game_file.save_game( "DEBUG2.SAV" );
                      break;
-            case 2:  game_file.save_game( "AUTO3.SAV" );
+            case 2:  game_file.save_game( "DEBUG3.SAV" );
                      break;
          }
 
-         if( ++saveCount>3 )
+         if( ++saveCount>=3 )
             saveCount = 0;
       }
       else
@@ -911,9 +911,9 @@ void Sys::auto_save()
 
             rename( auto1_path, auto2_path );
          }
-      }
 
-      game_file.save_game( "AUTO.SAV" );
+         game_file.save_game( "AUTO.SAV" );
+      }
 
       //-*********** syn game test ***********-//
       #ifdef DEBUG
