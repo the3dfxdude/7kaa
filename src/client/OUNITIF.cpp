@@ -758,7 +758,7 @@ static void group_reward()
 {
 	Unit* unitPtr;
 
-	//------ group chaning spy notify flag -------//
+	//------ group rewarding -------//
 
 	for( int i=unit_array.size() ; i>0 ; i-- )
 	{
@@ -767,9 +767,9 @@ static void group_reward()
 
 		unitPtr = unit_array[i];
 
-		//------ if this is a player spy --------//
+		//------ if this is a player unit (and not a weapon) --------//
 
-		if( unitPtr->selected_flag && unitPtr->is_own() )
+		if( unitPtr->selected_flag && unitPtr->race_id && unitPtr->is_own() )
 		{
 			if( !remote.is_enable() )
 				unitPtr->reward(nation_array.player_recno);
