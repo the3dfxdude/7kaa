@@ -381,6 +381,16 @@ void Unit::disp_button(int dispY1)
 
 	//---------- only for human units ---------//
 
+	// Reset all buttons, and activate them as-needed
+	button_build.reset();
+	button_settle.reset();
+	button_promote.reset();
+	button_demote.reset();
+	button_reward.reset();
+	button_return_camp.reset();
+	// button_burn.reset();
+	// button_assign.reset();
+
 	if( unit_res[unit_id]->unit_class == UNIT_CLASS_HUMAN && race_id )
 	{
 		int firmId;
@@ -396,10 +406,6 @@ void Unit::disp_button(int dispY1)
 			button_build.paint( x, dispY1, 'A', "BUILD" );
 			x += BUTTON_ACTION_WIDTH;
 		}
-		else
-		{
-			button_build.reset();
-		}
 
 		//-------- settle button ----------//
 
@@ -408,15 +414,9 @@ void Unit::disp_button(int dispY1)
 			button_settle.paint( x, dispY1, 'A', "SETTLE" );
 			x += BUTTON_ACTION_WIDTH;
 		}
-		else
-		{
-			button_settle.reset();
-		}
 
 		//-------- promote/demote button --------//
 
-		button_promote.reset();
-		button_demote.reset();
 
 		if( nation_recno == nation_array.player_recno )		// you can't promote your spy in other nation
 		{
@@ -459,32 +459,8 @@ void Unit::disp_button(int dispY1)
 				dispY1 += BUTTON_ACTION_HEIGHT;
 			}
 		}
-		else
-		{
-			button_reward.reset();
-		}
-
-		//------ "Return Camp" button -------//
-
-		if( home_camp_firm_recno &&
-			 firm_array[home_camp_firm_recno]->region_id == region_id() )
-		{
-			button_return_camp.paint( x, dispY1, 'A', "RETCAMP" );
-			x += BUTTON_ACTION_WIDTH;
-
-			if( x+BUTTON_ACTION_WIDTH-5 > INFO_X2 )
-			{
-				x  = INFO_X1;
-				dispY1 += BUTTON_ACTION_HEIGHT;
-			}
-		}
-		else
-		{
-			button_return_camp.reset();
-		}
 
 		/*
-
 		//-------- burn button ----------//
 
 		if( skill.combat_level > BURN_COMBAT_LEVEL && mobile_type==UNIT_LAND  )
@@ -492,8 +468,6 @@ void Unit::disp_button(int dispY1)
 			button_burn.paint_text( x, dispY1, "Burn" );
 			x += 60;
 		}
-		else
-			button_burn.reset();
 
 		//-------- assign to firm button --------//
 
@@ -502,9 +476,23 @@ void Unit::disp_button(int dispY1)
 			button_assign.paint_text( x, dispY1, "Assign" );
 			x+=60;
 		}
-		else
-			button_assign.reset();
 		*/
+	}
+
+	//------ "Return Camp" button -------//
+
+	if( home_camp_firm_recno &&
+		 (unit_res[unit_id]->unit_class == UNIT_CLASS_HUMAN || unit_res[unit_id]->unit_class == UNIT_CLASS_WEAPON) &&
+		 firm_array[home_camp_firm_recno]->region_id == region_id() )
+	{
+		button_return_camp.paint( x, dispY1, 'A', "RETCAMP" );
+		x += BUTTON_ACTION_WIDTH;
+
+		if( x+BUTTON_ACTION_WIDTH-5 > INFO_X2 )
+		{
+			x  = INFO_X1;
+			dispY1 += BUTTON_ACTION_HEIGHT;
+		}
 	}
 
 	//------- spy notify button ------//
