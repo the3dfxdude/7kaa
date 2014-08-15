@@ -229,7 +229,7 @@ const char* TechInfo::tech_des()
 }
 //---------- End of function TechInfo::tech_des -----------//
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //---------- Begin of function TechRes::operator[] -----------//
 

@@ -176,7 +176,7 @@ public:
 	int         write_file(File*);
 	int         read_file(File*);
 
-   #ifdef DEBUG
+   #ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		TechInfo*   operator[](int techId);      // pass techId as recno
 		TechClass*  tech_class(int techClassId);
 	#else

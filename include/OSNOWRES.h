@@ -99,7 +99,7 @@ public:
 	void deinit();
 
 	int			rand_root(unsigned rand);
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 	SnowInfo*	operator[](int);
 #else
 	SnowInfo*	operator[](int snowMapId) { return snow_info_array+snowMapId-1; }

@@ -298,7 +298,7 @@ short PlantRes::plant_recno(short bitmapId)
 }
 //---------- End of function PlantRes::plant_recno ----------//
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //---------- Begin of function PlantRes::operator[] -----------//
 

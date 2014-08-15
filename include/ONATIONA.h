@@ -127,7 +127,7 @@ public:
 
 	//--------------------------------------//
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Nation* operator[](int recNo);
 		Nation* operator~();
 	#else

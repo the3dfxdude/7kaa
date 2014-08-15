@@ -364,7 +364,7 @@ public:
 	int 	write_file(File* filePtr);
 	int	read_file(File* filePtr);
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		UnitInfo*   operator[](int unitId);
 		AttackInfo* get_attack_info(int attackId);
 	#else

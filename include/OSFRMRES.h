@@ -82,7 +82,7 @@ public:
 
 	void load_info();
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		SpriteFrame* operator[](int recNo);
 	#else
 		SpriteFrame* operator[](int recNo)   { return sprite_frame_array+recNo-1; }

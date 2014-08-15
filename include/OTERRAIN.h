@@ -217,7 +217,7 @@ public:
 
 	//-------------------------------------------------//
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		TerrainInfo* operator[](int terrainId);
 	#else
 		TerrainInfo* operator[](int terrainId) 	{ return terrain_info_array+terrainId-1; }

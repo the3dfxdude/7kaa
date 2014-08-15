@@ -967,7 +967,7 @@ char NationArray::should_attack(short attackingNation, short attackedNation)
 //------- End of function NationBase::should_attack -------//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function NationArray::operator[] -----//
 

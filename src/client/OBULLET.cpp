@@ -621,7 +621,7 @@ float	Bullet::attenuated_damage(short curX, short curY)
 }
 //------- End of function Bullet::attenuated_damage -----//
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function BulletArray::operator[] -----//
 

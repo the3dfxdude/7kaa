@@ -231,7 +231,7 @@ int SnowRes::rand_root(unsigned rand)
 }
 // ------- End of function SnowRes::rand_root ------//
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 // ------- Begin of function SnowRes::operator[] ------//
 SnowInfo * SnowRes::operator[](int snowMapId)
 {

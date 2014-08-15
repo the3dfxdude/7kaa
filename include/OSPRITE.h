@@ -180,7 +180,7 @@ public:
 
 	virtual void process();
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Sprite* operator[](int recNo);
 	#else
 		Sprite* operator[](int recNo)   { return (Sprite*) get_ptr(recNo); }

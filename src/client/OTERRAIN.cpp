@@ -949,7 +949,7 @@ char* TerrainRes::get_map_tile(int terrainId)
 //----- End of function TerrainRes::get_map_tile ------//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //---------- Begin of function TerrainRes::operator[] -----------//
 

@@ -1097,7 +1097,7 @@ void Unit::process_rebel()
 //----------- End of function Unit::process_rebel -----------//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function RebelArray::operator[] -----//
 

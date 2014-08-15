@@ -786,7 +786,7 @@ int TownArray::is_deleted(int recNo)
 //--------- End of function TownArray::is_deleted ----//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function TownArray::operator[] -----//
 
