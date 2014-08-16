@@ -141,6 +141,8 @@ void GameFileArray::init(const char *extStr)
 
 void GameFileArray::deinit()
 {
+	//-- Need to save hall of fame, because it contains last loaded/saved game --//
+	write_hall_of_fame();
 }
 //-------- End of function GameFileArray::deinit ------//
 
