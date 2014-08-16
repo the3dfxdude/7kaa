@@ -28,6 +28,11 @@
 #include <ODYNARR.h>
 #endif
 
+//------------ Define Debug Macro's -------------//
+#if defined(DEBUG) && !defined(DYNARRAY_DEBUG_ELEMENT_ACCESS)
+#define DYNARRAY_DEBUG_ELEMENT_ACCESS
+#endif
+
 //------------ Define Constant -------------//
 
 #define DEFAULT_REUSE_INTERVAL_DAYS		3

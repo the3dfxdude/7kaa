@@ -94,7 +94,7 @@ void SpriteFrameRes::load_info()
 //-------- End of function SpriteFrameRes::load_info ---------//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //-------- Begin of function SpriteFrameRes::operator[] -------//
 

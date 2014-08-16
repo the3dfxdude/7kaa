@@ -464,11 +464,11 @@ void Sys::run(int isLoadedGame)
 static void test_lzw()
 {
    // test lzw compress
-   if( misc.is_file_exist("NORMAL.SAV"))
+   if( misc.is_file_exist("NORMAL.SAV")) // BUGHERE: Should use a full path, using sys.dir_config
    {
       File f,g;
       Lzw lzw_c, lzw_d;    // one for compress, the other for decompress
-      f.file_open("NORMAL.SAV");
+      f.file_open("NORMAL.SAV"); // BUGHERE: <same as above>
 
       // read into buffer
       long fileSize = f.file_size();
@@ -878,31 +878,42 @@ void Sys::auto_save()
          static int saveCount = 0;
          switch(saveCount)
          {
-            case 0:  game_file.save_game( "AUTO1.SAV" );
+            case 0:  game_file.save_game( "DEBUG1.SAV" );
                      break;
-            case 1:  game_file.save_game( "AUTO2.SAV" );
+            case 1:  game_file.save_game( "DEBUG2.SAV" );
                      break;
-            case 2:  game_file.save_game( "AUTO3.SAV" );
+            case 2:  game_file.save_game( "DEBUG3.SAV" );
                      break;
          }
 
-         if( ++saveCount>3 )
+         if( ++saveCount>=3 )
             saveCount = 0;
       }
       else
       {
+         //---------- get path to savegames ----------//
+
+         char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
+
+         if (misc.path_cat(auto1_path, dir_config, "AUTO.SAV", MAX_PATH+1) == 0 ||
+             misc.path_cat(auto2_path, dir_config, "AUTO2.SAV", MAX_PATH+1) == 0)
+         {
+	        ERR("Path to the savegames too long.\n");
+            return;
+         }
+
          //--- rename the existing AUTO.SAV to AUTO2.SAV and save a new game ---//
 
-         if( misc.is_file_exist( "AUTO.SAV" ) )
+         if( misc.is_file_exist( auto1_path ) )
          {
-            if( misc.is_file_exist( "AUTO2.SAV" ) )      // if there is already an AUTO2.SAV, delete it
-               remove( "AUTO2.SAV" );
+            if( misc.is_file_exist( auto2_path ) )      // if there is already an AUTO2.SAV, delete it
+               remove( auto2_path );
 
-            rename( "AUTO.SAV", "AUTO2.SAV" );
+            rename( auto1_path, auto2_path );
          }
-      }
 
-      game_file.save_game( "AUTO.SAV" );
+         game_file.save_game( "AUTO.SAV" );
+      }
 
       //-*********** syn game test ***********-//
       #ifdef DEBUG
@@ -930,14 +941,25 @@ void Sys::auto_save()
       day_frame_count==0 && info.game_day==1 && info.game_month%2==0 )
 	// ###### patch end Gilbert 23/1 #######//
    {
+	  //---------- get path to savegames ----------//
+
+      char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
+
+	  if (misc.path_cat(auto1_path, dir_config, "AUTO.SVM", MAX_PATH+1) == 0 ||
+          misc.path_cat(auto2_path, dir_config, "AUTO2.SVM", MAX_PATH+1) == 0)
+      {
+	     ERR("Path to the savegames too long.\n");
+         return;
+      }
+
       //--- rename the existing AUTO.SVM to AUTO2.SVM and save a new game ---//
 
-      if( misc.is_file_exist( "AUTO.SVM" ) )
+      if( misc.is_file_exist( auto1_path ) )
       {
-         if( misc.is_file_exist( "AUTO2.SVM" ) )      // if there is already an AUTO2.SVM, delete it
-            remove( "AUTO2.SVM" );
+         if( misc.is_file_exist( auto2_path ) )      // if there is already an AUTO2.SVM, delete it
+            remove( auto2_path );
 
-         rename( "AUTO.SVM", "AUTO2.SVM" );
+         rename( auto1_path, auto2_path );
       }
 
       game_file.save_game( "AUTO.SVM" );

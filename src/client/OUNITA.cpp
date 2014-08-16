@@ -793,7 +793,7 @@ void UnitArray::return_camp(int remoteAction, short *selectedUnitArray, int sele
 //----------- End of function UnitArray::return_camp -----------//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function UnitArray::operator[] -----//
 

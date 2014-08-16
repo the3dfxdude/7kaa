@@ -84,11 +84,6 @@ int Directory::read(const char *fileSpec, int sortName)
 
 	FindClose(findHandle);
 
-   //------ the file list by file name ---------//
-
-   if( sortName )
-      quick_sort( sort_file_function );
-
 #else
 
    MSG("Listing Directory %s sortName=%d\n", fileSpec, sortName);
@@ -220,6 +215,11 @@ int Directory::read(const char *fileSpec, int sortName)
      free(namelist);
 
 #endif
+
+   //------ the file list by file name ---------//
+
+   if( sortName )
+      quick_sort( sort_file_function );
 
    return size();       // DynArray::size()
 }

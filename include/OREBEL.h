@@ -127,7 +127,7 @@ public:
 
 	//--------------------------------------//
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Rebel* operator[](int recNo);
 	#else
 		Rebel* operator[](int recNo)	{ return (Rebel*) get_ptr(recNo); }

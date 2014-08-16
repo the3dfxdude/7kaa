@@ -117,7 +117,7 @@ public:
 
 	int	bullet_class_size(int spriteId);
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Bullet* operator[](int recNo);
 	#else
 		Bullet* operator[](int recNo)   { return (Bullet*) get_ptr(recNo); }

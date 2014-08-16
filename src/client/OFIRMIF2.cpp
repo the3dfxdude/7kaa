@@ -674,6 +674,9 @@ static int get_player_spy_recno(int firmRecno)
 //
 int Firm::can_worker_capture(int captureNationRecno)
 {
+	if ( ! captureNationRecno)
+		return 0;									// neutral units cannot capture
+
 	if( nation_recno == captureNationRecno )		// cannot capture its own firm
 		return 0;
 
@@ -696,10 +699,8 @@ int Firm::can_worker_capture(int captureNationRecno)
 			 spy_array[workerPtr->spy_recno]->true_nation_recno == captureNationRecno )
 		{
 			captureUnitCount++;
-			continue;
 		}
-
-		if( workerPtr->town_recno )
+		else if( workerPtr->town_recno )
 		{
 			if( town_array[ workerPtr->town_recno ]->nation_recno == captureNationRecno )
 				captureUnitCount++;

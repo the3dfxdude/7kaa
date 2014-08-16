@@ -905,7 +905,7 @@ void GameFileArray::load_all_game_header(const char *extStr)
 		ERR("Path to the config directory too long.\n");
 		return;
 	}
-	gameDir.read(full_path, 1);  // 1-Sort file names
+	gameDir.read(full_path, 0);  // 0-Don't sort file names
 
 	//-------- read in the headers of all game sets -------//
 
@@ -928,15 +928,32 @@ void GameFileArray::load_all_game_header(const char *extStr)
 		}
 		file.file_close();
 	}
+
+	quick_sort( sort_game_file_function );
 }
 //------ End of function GameFileArray::load_all_game_header --------//
 
 
 //------ Begin of function sort_game_file_function ------//
 //
+// Sort files by name, whilst moving AUTO.SAV and AUTO2.SAV to the top
+//
 static int sort_game_file_function( const void *a, const void *b )
 {
-	return strcmp( ((GameFile*)a)->file_name, ((GameFile*)b)->file_name );
+	int firstAuto = 0, secondAuto = 0;
+
+	firstAuto = strcmpi( ((GameFile*)a)->file_name, "AUTO.SAV" ) == 0 ? 1 :
+		(strcmpi( ((GameFile*)a)->file_name, "AUTO2.SAV" ) == 0 ? 2 : 0);
+	if (firstAuto != 1) // only check second if first is not AUTO.SAV
+		secondAuto = strcmpi( ((GameFile*)b)->file_name, "AUTO.SAV" ) == 0 ? 1 :
+			(strcmpi( ((GameFile*)b)->file_name, "AUTO2.SAV" ) == 0 ? 2 : 0);
+
+	if (firstAuto == 1 || (firstAuto == 2 && secondAuto != 1))
+		return -1;
+	else if (secondAuto > 0)
+		return 1;
+	else
+		return strcmpi( ((GameFile*)a)->file_name, ((GameFile*)b)->file_name );
 }
 //------- End of function sort_game_file_function ------//
 

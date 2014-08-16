@@ -1090,7 +1090,7 @@ News* NewsArray::add_news(int newsId, int newsType, int nationRecno, int nationR
 			start();
 			linkout();
 
-			if( last_clear_recno > 1 )
+			if( last_clear_recno > 0 )
 				last_clear_recno--;
 		}
 

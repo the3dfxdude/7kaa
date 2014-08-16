@@ -125,7 +125,7 @@ public:
 
 	short			 plant_recno(short bitmapId);
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		PlantBitmap* get_bitmap(int bitmapId);
 		PlantInfo*   operator[](int plantId);
 	#else

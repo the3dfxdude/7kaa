@@ -458,7 +458,7 @@ public:
 
 	int   is_deleted(int recNo);
 
-   #ifdef DEBUG
+   #ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Town* operator[](int recNo);
 	#else
 		Town* operator[](int recNo)  { return (Town*) get_ptr(recNo); }

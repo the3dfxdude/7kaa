@@ -233,7 +233,7 @@ public:
 
 	void	update_speed();
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		SpriteInfo* operator[](int recNo);
 	#else
 		SpriteInfo* operator[](int recNo)   { return sprite_info_array+recNo-1; }

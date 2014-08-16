@@ -473,7 +473,7 @@ void UnitInfo::unit_change_nation(int newNationRecno, int oldNationRecno, int ra
 }
 //--------- End of function UnitInfo::unit_change_nation --------//
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //-------- Begin of function UnitRes::get_attack_info -------//
 

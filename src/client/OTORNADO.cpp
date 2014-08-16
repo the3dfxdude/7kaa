@@ -225,7 +225,7 @@ void Tornado::hit_fire()
 
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function TornadoArray::operator[] -----//
 

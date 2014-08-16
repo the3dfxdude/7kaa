@@ -829,7 +829,7 @@ public:
 	int   write_file(File* filePtr);
 	int   read_file(File* filePtr);
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Unit* operator[](int recNo);
 	#else
 		Unit* operator[](int recNo)   { return (Unit*) get_ptr(recNo); }

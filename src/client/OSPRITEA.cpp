@@ -362,7 +362,7 @@ void SpriteArray::process()
 }
 //----------- End of function SpriteArray::process -----------//
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function SpriteArray::operator[] -----//
 

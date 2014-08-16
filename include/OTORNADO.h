@@ -83,7 +83,7 @@ public:
 	short add_tornado(int xLoc, int yLoc, short lifeTime);   // unit attacks firm, townzone
 	// short tornado_possible(int parentXLoc, int parentYLoc, int targetXLoc, int targetYLoc, char tornadoSpeed);
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Tornado* operator[](int recNo);
 	#else
 		Tornado* operator[](int recNo)   { return (Tornado*) get_ptr(recNo); }

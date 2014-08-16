@@ -186,7 +186,7 @@ public:
 
 	//--------------------------------------//
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Spy* operator[](int recNo);
 	#else
 		Spy* operator[](int recNo)	  { return (Spy*) get(recNo); }

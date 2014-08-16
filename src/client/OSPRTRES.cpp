@@ -304,7 +304,7 @@ void SpriteRes::update_speed()
 //-------- End of function SpriteRes::update_speed -------//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //-------- Begin of function SpriteRes::operator[] -------//
 

@@ -700,7 +700,7 @@ int SpyArray::needed_view_secret_skill(int viewMode)
 //---------- End of function SpyArray::needed_view_secret_skill ----------//
 
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function SpyArray::operator[] -----//
 

@@ -671,7 +671,7 @@ void FirmArray::skip(int skipDirection)
 
 */
 
-#ifdef DEBUG
+#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 
 //------- Begin of function FirmArray::operator() -----//
 

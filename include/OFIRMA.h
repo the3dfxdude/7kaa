@@ -66,7 +66,7 @@ public:
 	int   write_file(File*);
 	int   read_file(File*);
 
-	#ifdef DEBUG
+	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Firm* operator()();             // reference to current Firm record
 		Firm* operator[](int recNo);
 	#else
