@@ -205,7 +205,7 @@ void FirmWar::detect_main_menu()
 
 	//------ detect the select research button -------//
 
-	if( button_select_build.detect() )
+	if( button_select_build.detect('B') )
 	{
 		war_menu_mode = WAR_MENU_BUILD;
 		disable_refresh = 1;    // static var for disp_info() only

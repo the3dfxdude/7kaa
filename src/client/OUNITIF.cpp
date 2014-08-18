@@ -108,6 +108,21 @@ static short build_firm_button_order[MAX_FIRM_TYPE] =
 };
 // ##### end Gilbert 3/10 #######//
 
+static char button_build_hotkey[MAX_FIRM_TYPE] =
+{
+	'F', // fort
+	'R', // mine (raw)
+	'A', // factory
+	'M', // market
+	'T', // tower of science
+	'W', // war factory
+	'I', // inn
+	'H', // harbour
+	'P', // seat of power
+	 0, // monster
+};
+
+
 //--------- Declare static functions ---------//
 
 static void disp_debug_info(Unit* unitPtr, int dispY1, int refreshFlag);
@@ -434,7 +449,6 @@ void Unit::disp_button(int dispY1)
 				{
 					button_demote.paint( x, dispY1, 'A', "DEMOTE"  );
 					x += BUTTON_ACTION_WIDTH;
-
 				}
 			}
 		}
@@ -557,7 +571,7 @@ void Unit::detect_button()
 
 	//--------- "return camp" button ---------//
 
-	if( home_camp_firm_recno && button_return_camp.detect() )
+	if( home_camp_firm_recno && button_return_camp.detect('R') )
 	{
 		// sound effect
 		se_res.far_sound(next_x_loc(), next_y_loc(), 1, 'S', sprite_id, "ACK");
@@ -575,7 +589,7 @@ void Unit::detect_button()
 
 	//-------- build button --------//
 
-	if( button_build.detect() )
+	if( button_build.detect('B') )
 	{
 		unit_menu_mode = UNIT_MENU_BUILD;
 		info.disp();
@@ -583,7 +597,7 @@ void Unit::detect_button()
 
 	//-------- settle button ---------//
 
-	if( button_settle.detect() )
+	if( button_settle.detect('T') )
 	{
 		power.issue_command(COMMAND_SETTLE, sprite_recno);
 		info.disp();
@@ -941,7 +955,7 @@ void Unit::detect_build_menu()
 
 		if( button_build_flag[i] && firm_res[firmId]->can_build(sprite_recno) )
 		{
-			if( button_build_array[i].detect() )
+			if( button_build_array[i].detect(button_build_hotkey[i]) )
 			{
 				power.issue_command(COMMAND_BUILD_FIRM, sprite_recno, firmId);
 				rc = 1;
