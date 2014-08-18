@@ -1490,6 +1490,11 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          news_array.clear_news_disp();
          break;
 
+      //------ open oldest open diplomatic message  ------//
+	  case 'd':
+		  news_array.view_first_diplomatic();
+		  break;
+
       //------ jump to a location with natural resource ---//
 
       case 'j':

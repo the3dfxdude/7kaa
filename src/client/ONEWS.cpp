@@ -160,11 +160,31 @@ int NewsArray::detect()
 //------- End of function NewsArray::detect -----//
 
 
+//------ Begin of function NewsArray::detect -----//
+//
+int NewsArray::view_first_diplomatic()
+{
+	//-- only display news in normal view and diplomatic option screen ---//
+
+	if( sys.view_mode == MODE_NORMAL ||
+		 (sys.view_mode == MODE_NATION &&
+		 (info.nation_report_mode==NATION_REPORT_TALK ||
+		  info.nation_report_mode==NATION_REPORT_CHAT) ) )
+	{
+		return put(2);     // 2-is a hotkey detect action
+	}
+
+	return 0;
+}
+//------- End of function NewsArray::detect -----//
+
+
 //------ Begin of function NewsArray::put -----//
 //
 // Display or detect news messages.
 //
-// <int> detectAction - 1 if this is a detect action.
+// <int> detectAction: 1 - if this is a detect action.
+//                     2 - if player pressed hotkey to reply to oldest diplomacy message
 //
 int NewsArray::put(int detectAction)
 {
@@ -265,7 +285,7 @@ int NewsArray::put(int detectAction)
 
 	//------- detect buttons -------//
 
-	else
+	else if (detectAction == 1)
 	{
 		//--- detect news log report ---//
 
@@ -310,7 +330,8 @@ void NewsArray::clear_news_disp()
 // <int&> newsHeight	 - for returning the height of the news message displayed
 //
 // return: <int> 1 - if detect pressing on the news
-//					  0 - not detected or it's a display action
+//               0 - not detected or it's a display action
+//               2 - if player pressed hotkey to reply to diplomacy
 //
 int News::put(int y, int detectAction, int& newsHeight)
 {
@@ -343,7 +364,8 @@ int News::put(int y, int detectAction, int& newsHeight)
 	{
 		help.set_help( NEWS_X1, y, NEWS_X1+10, y+10, "REPLYDIP" );
 
-		if( mouse.single_click( NEWS_X1, y, NEWS_X1+10, y+10 ) )
+		if( (detectAction == 2 && (id == NEWS_DIPLOMACY || id == NEWS_CHAT_MSG)) ||
+			mouse.single_click( NEWS_X1, y, NEWS_X1+10, y+10 ) )
 		{
 			if( id == NEWS_DIPLOMACY )
 			{
