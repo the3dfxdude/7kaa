@@ -1125,7 +1125,7 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
 		&& remote.has_send_frame(nation_array.player_recno, frame_count)
 		&& (~nation_array)->next_frame_ready==0 )
    {
-      DEBUG_LOG("Local player not ready");
+      //DEBUG_LOG("Local player not ready");
       if( !should_next_frame() )    // not ready to proceed yet
          return 0;
 
@@ -1160,7 +1160,7 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
 
       if( remote_send_success_flag )      // still failed, try again next time
       {
-         DEBUG_LOG("first send sucess" );
+         DEBUG_LOG("First send success" );
          remote.init_send_queue(frame_count+1, nation_array.player_recno);    // frame_count, initialize for next frame's send queue
          // sent random seed
          char *p = (char *)remote.new_send_queue_msg(MSG_TELL_RANDOM_SEED, sizeof(short)+sizeof(long));
@@ -1244,15 +1244,18 @@ int Sys::is_mp_sync(int *unreadyPlayerFlag)
 
    //------- if some remote machines are not ready yet -------//
 
-   if( nationRecno>0 && !ec_remote.is_player_valid(nationRecno) )
+   if( nationRecno>0 )
    {
-      DEBUG_LOG("Connection Lost");
-      DEBUG_LOG(nationRecno);
+      if ( !ec_remote.is_player_valid(nationRecno) )
+      {
+         DEBUG_LOG("Connection Lost");
+         DEBUG_LOG(nationRecno);
 
-      //---- the connection was lost with a remote player, let the ai take over ----//
-      news_array.multi_connection_lost(nationRecno);
-      nationPtr->nation_type = NATION_AI;
-      nation_array.ai_nation_count++;
+         //---- the connection was lost with a remote player, let the ai take over ----//
+         news_array.multi_connection_lost(nationRecno);
+         nationPtr->nation_type = NATION_AI;
+         nation_array.ai_nation_count++;
+      }
 
       return 0;
    }
