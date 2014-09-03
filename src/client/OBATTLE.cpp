@@ -164,7 +164,11 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 
 	//---- reset config parameter ----//
 
-	sys.set_speed(12);		// set the speed to normal.
+	// Set speed to normal. When hosting, broadcast the speed to the clients. As a client, set to default speed initially.
+	if ( remote.is_enable() && !remote.is_host )
+		sys.set_speed(12, COMMAND_REMOTE);
+	else
+		sys.set_speed(12, COMMAND_PLAYER);
 
 	//---- reset cheats ----//
 
