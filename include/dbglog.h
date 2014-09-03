@@ -40,7 +40,7 @@ struct __dbglog_channel
 
 extern void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, const char *format, ...);
 
-#ifdef DEBUG
+#if defined(DEBUG) || defined(DEBUG_ENABLE_MESSAGES)
 
 #define MSG(format,...) dbglog_printf(__DBGLOG_MSG, &__dbglog_default_channel, format, ##__VA_ARGS__)
 #define ERR(format,...) dbglog_printf(__DBGLOG_ERR, &__dbglog_default_channel, format, ##__VA_ARGS__)
