@@ -47,7 +47,13 @@
 #include <OGETA.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
+#include <dbglog.h>
 #include "gettext.h"
+
+
+DBGLOG_DEFAULT_CHANNEL(GameMP);
+
+
 
 // --------- Define constant --------//
 
@@ -2545,7 +2551,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 			else
 			{
-				printf("Got %x\n", ((MpStructBase *)recvPtr)->msg_id);
+				MSG("Received msg_id %x\n", ((MpStructBase *)recvPtr)->msg_id);
 
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
@@ -2570,7 +2576,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					mp_obj.poll_players();
 					if( remote.is_host )
 					{
-						printf("regPlayerCount=%d MAX_NATION=%d\n", regPlayerCount, MAX_NATION);
+						MSG("regPlayerCount=%d MAX_NATION=%d\n", regPlayerCount, MAX_NATION);
 						if (regPlayerCount < MAX_NATION &&
 							mp_obj.auth_player(
 								from,
@@ -2848,7 +2854,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					break;
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
-					printf("MPMSG_REFUSE_NEW_PLAYER: %d\n", ((MpStructRefuseNewPlayer *)recvPtr)->player_id);
+					MSG("MPMSG_REFUSE_NEW_PLAYER: %d\n", ((MpStructRefuseNewPlayer *)recvPtr)->player_id);
 					box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
 					return 0;
 					break;
