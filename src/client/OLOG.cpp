@@ -121,7 +121,9 @@ void Log::debug_log(const char *msg)
 {
 #ifdef WIN32
 	String s;
-	s = msg; 
+	s = GetTickCount();
+	s += ": ";
+	s += msg;
 	s += "\r\n"; 
 	OutputDebugString(s);
 #endif
@@ -133,7 +135,9 @@ void Log::debug_log(int n)
 {
 #ifdef WIN32
 	String s;
-	s = n; 
+	s = GetTickCount();
+	s += ": ";
+	s += n;
 	s += "\r\n"; 
 	OutputDebugString(s);
 #endif

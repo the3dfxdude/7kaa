@@ -67,7 +67,7 @@ int dbglog_init()
 		{
 			dbglog_settings[i].flags = DBGLOG_ERR_ON|DBGLOG_MSG_ON;
 		} else {
-			dbglog_settings[i].flags = DBGLOG_NEED_INIT;
+			dbglog_settings[i].flags = DBGLOG_ERR_ON; // Receive only errors. Use DBGLOG_NEED_INIT to silence unwatched channels completely
 		}
 	}
 
