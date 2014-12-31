@@ -55,6 +55,7 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
 AC_PROG_LN_S
+PKG_PROG_PKG_CONFIG
 
 # Checks for header files.
 dnl AC_CHECK_HEADERS([])
@@ -186,8 +187,17 @@ AS_IF([test "$input_backend" = sdl \
   LIBS="$SDL_LIBS $LIBS"
 ])
 
-SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lws2_32 -lwinmm" -lenet], [], [
-  AC_ERROR([enet not found])
+PKG_CHECK_MODULES([ENET], [libenet],, [
+  PKG_CHECK_MODULES([ENET], [enet],, [
+    SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lws2_32 -lwinmm" -lenet],, [
+      AC_ERROR([enet not found])
+    ])
+  ])
+])
+
+AS_IF([test "$ENET_CFLAGS" != "" || test "$ENET_LIBS" != ""], [
+  CXXFLAGS="$CXXFLAGS $ENET_CFLAGS"
+  LIBS="$LIBS $ENET_LIBS"
 ])
 
 AS_IF([test "$video_backend" = ddraw], [
