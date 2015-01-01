@@ -73,7 +73,7 @@ AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 
 # Checks for library functions.
-dnl AC_CHECK_FUNCS([])
+AC_CHECK_FUNCS([_NSGetExecutablePath])
 
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.18])

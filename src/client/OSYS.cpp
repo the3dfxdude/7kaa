@@ -21,8 +21,17 @@
 //Filename    : OSYS.CPP
 //Description : System resource management object
 
+#include <cstdio>
+#include <cstdlib>
+#include <limits.h>
+#include <stdint.h>
+#include <string>
+
+#ifdef HAVE__NSGETEXECUTABLEPATH
+# include <mach-o/dyld.h>
+#endif
+
 #include <RESOURCE.h>
-#include <stdio.h>
 #include <ALL.h>
 #include <OAUDIO.h>
 #include <ODATE.h>
@@ -78,7 +87,6 @@
 // ##### end Gilbert 23/10 ######//
 
 #include <dbglog.h>
-#include <stdint.h>
 #ifndef NO_WINDOWS
 #include <direct.h>
 #define chdir _chdir
@@ -107,6 +115,36 @@ static int  get_mouse_loc_in_zoom_map(int &x, int &y);
 static unsigned long last_frame_time=0, last_resend_time=0;
 static char          remote_send_success_flag=1;
 static char          scenario_cheat_flag=0;
+
+
+static std::string get_bundle_resources_path(void)
+{
+#ifdef HAVE__NSGETEXECUTABLEPATH
+   char path[PATH_MAX];
+   char real_path[PATH_MAX];
+   uint32_t buf_size = sizeof(path);
+
+   int rv = _NSGetExecutablePath(path, &buf_size);
+
+   if (rv != 0)
+      return "";
+
+   if (realpath(path, real_path) == NULL)
+      return "";
+
+   std::string res_path = real_path;
+   size_t sep = res_path.rfind('/');
+   if (sep == std::string::npos)
+      return "";
+
+   res_path = res_path.substr(0, sep + 1);
+   res_path = res_path + "../Resources";
+
+   return res_path;
+#else
+   return "";
+#endif
+}
 
 //----------- Begin of function Sys::Sys -----------//
 
@@ -2615,6 +2653,15 @@ int Sys::chdir_to_game_dir()
       chdir(env_data_path);
       if (misc.is_file_exist(test_file))
          return 1;
+   }
+
+   /* on Mac OS X, test the bundle resources directory */
+   std::string bundle_resources_path = get_bundle_resources_path();
+   if (!bundle_resources_path.empty())
+   {
+      chdir(bundle_resources_path.c_str());
+      if (misc.is_file_exist(test_file))
+	 return 1;
    }
 
    // test compile time path
