@@ -313,7 +313,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //
 int main(int argc, char **argv)
 {
-#ifndef _MSC_VER
+#ifdef ENABLE_NLS
 	setlocale(LC_ALL, "");
 	bindtextdomain(PACKAGE, LOCALE_PATH);
 	textdomain(PACKAGE);
