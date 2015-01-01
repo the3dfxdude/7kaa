@@ -41,8 +41,8 @@ AC_DEFUN([EVAL_SHELL_VAR], [
   AS_VAR_PUSHDEF([prev], [ac_previous_$1])
   AS_VAR_SET([prev], [$$1])
   while true; do
-    eval $1=$$1
-    AS_VAR_IF([prev], [$$1], [
+    eval $1="\"$$1\""
+    AS_VAR_IF([prev], ["$$1"], [
       break
     ])
     AS_VAR_SET([prev], [$$1])
