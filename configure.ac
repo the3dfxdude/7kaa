@@ -296,6 +296,9 @@ AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
 
 AS_IF([test "$enable_debug" = yes], [
   AC_DEFINE([DEBUG], [1], [Define to 1 if building with debugging features])
+  AC_DEFINE([DYNARRAY_DEBUG_ELEMENT_ACCESS], [1], [
+	 Define to 1 if building with element access checking for dynamic arrays
+  ])
 ])
 
 AC_DEFINE([NO_ASM], [1], [
