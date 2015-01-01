@@ -1,5 +1,3 @@
-AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
-
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
 	AM.cpp \

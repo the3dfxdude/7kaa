@@ -315,7 +315,7 @@ int main(int argc, char **argv)
 {
 #ifndef _MSC_VER
 	setlocale(LC_ALL, "");
-	bindtextdomain(PACKAGE, LOCALEDIR);
+	bindtextdomain(PACKAGE, LOCALE_PATH);
 	textdomain(PACKAGE);
 #endif
 

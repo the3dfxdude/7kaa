@@ -239,6 +239,11 @@ AS_IF([test "$use_mingw" != yes], [
 		     [Define to the path to the game data])
 ])
 
+EVAL_SHELL_VAR([localedir])
+AC_DEFINE_UNQUOTED([LOCALE_PATH], ["$localedir"], [
+  Define to the locale path
+])
+
 AS_IF([test "$use_windows" != yes], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
 ])
