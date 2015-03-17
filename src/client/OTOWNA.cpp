@@ -248,6 +248,9 @@ void TownArray::process()
 //
 void TownArray::think_new_independent_town()
 {
+	if ( !config.new_independent_town_emerge )
+		return;
+
 	if( misc.random(3) != 0 )		// 1/3 chance
 		return;
 
