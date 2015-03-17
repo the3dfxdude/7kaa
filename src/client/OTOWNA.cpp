@@ -254,6 +254,9 @@ void TownArray::think_new_independent_town()
 	if( misc.random(3) != 0 )		// 1/3 chance
 		return;
 
+	if ( !config.new_independent_town_emerge )
+		return;
+
 	//---- count the number of independent towns ----//
 
 	Town* townPtr;
@@ -273,7 +276,7 @@ void TownArray::think_new_independent_town()
 			independentTownCount++;
 	}
 
-	if( independentTownCount >= 10 )		// only when the no. of independent town is less than 10
+	if( independentTownCount >= config.start_up_independent_town )		// only when the no. of independent town is less than the starting amount
 		return;
 
 	//--- if the total population of all nations combined > 1000, then no new independent town will emerge ---//
