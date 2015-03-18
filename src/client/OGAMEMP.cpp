@@ -3444,7 +3444,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	{
 		retFlag = 0;
 
-		mp_obj.game_starting();
+		mp_obj.disable_new_connections();
 
 		// mp_obj.poll_players();
 		nation_array.init();
@@ -3684,6 +3684,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 		}
 
+		mp_obj.game_starting();
 		retFlag = 1;
 	}		// end if(retFlag)
 

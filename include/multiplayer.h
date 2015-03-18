@@ -114,6 +114,7 @@ public:
 	bool   is_protocol_supported(ProtocolType);
 	int    is_update_available();
 	void   game_starting();
+	void   disable_new_connections();
 
 	// ------- functions on session --------//
 	int    set_remote_session_provider(const char *server);
