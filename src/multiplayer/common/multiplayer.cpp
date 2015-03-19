@@ -717,7 +717,10 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 	player = (PlayerDesc *)event.peer->data;
 	if (player == NULL) {
+		// The player may actually exist via add_player, sync enet data
+		// by performing a lookup.
 		player = get_player(&event.peer->address);
+		event.peer->data = player;
 	}
 
 	if (player != NULL) {
