@@ -416,7 +416,7 @@ void MultiPlayer::disable_new_connections()
 // This is only called by the host upon connection from a client. The host
 // chooses the player's id.
 //
-// Returns id if the player was added to the pool, and 0 if the player
+// Returns the player pointer when added to the pool, and NULL if the player
 // wasn't added to the pool.
 //
 PlayerDesc *MultiPlayer::create_player(ENetAddress *address)
@@ -428,7 +428,7 @@ PlayerDesc *MultiPlayer::create_player(ENetAddress *address)
 		if (player_pool[i] == NULL)
 			break;
 	if (i >= max_players)
-		return 0;
+		return NULL;
 
 	player_pool[i] = new PlayerDesc(i+1, address);
 
@@ -749,6 +749,10 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 			}
 			if (host_flag) {
 				player = create_player(&event.peer->address);
+				if (player == NULL) {
+					enet_peer_disconnect_now(event.peer, 0);
+					break;
+				}
 			}
 		}
 
