@@ -389,8 +389,8 @@ void MultiPlayer::close_session()
 		}
 
 		host_flag = 0;
-		allowing_connections = 0;
 	}
+	allowing_connections = 0;
 
 	my_player_id = 0;
 	my_player = NULL;
