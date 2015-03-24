@@ -1468,10 +1468,6 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
 
       switch(keyCode)
       {
-      case KEY_ESC:
-         set_view_mode(MODE_NORMAL);
-         break;
-
       //---- keys for toggling map mode ----//
 
       case 'q':
