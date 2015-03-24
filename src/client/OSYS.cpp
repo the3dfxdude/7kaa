@@ -1475,7 +1475,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
 
       //--------- opaque report mode --------//
 
-      case 'p':
+      case '~':
          config.opaque_report = !config.opaque_report;
 
          if( config.opaque_report )
@@ -1557,11 +1557,11 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          locate_spy();
          break;
 
-      case 'h':
+      case 'v':
          locate_ship();
          break;
 
-      case 'f':
+      case 'q':
          locate_camp();
          break;
       }
@@ -1683,13 +1683,13 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
             (~nation_array)->add_food((float)1000);
          break;
 
-      case 't':
+      case 'n':
          tech_res.inc_all_tech_level(nation_array.player_recno);
          god_res.enable_know_all(nation_array.player_recno);
          box.msg( _("Your technology has advanced.\nYou can now invoke all Greater Beings.") );
          break;
 
-      case 'm':
+      case '/':
          world.unveil(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1);
          world.visit(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1, 0, 0);
          break;
@@ -1736,7 +1736,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
          }
          break;
 
-      case 'b':      // finish building a firm instantly or increase the hit points of a firm to its MAX
+      case '-':      // finish building a firm instantly or increase the hit points of a firm to its MAX
          if( firm_array.selected_recno )
          {
             Firm* firmPtr = firm_array[firm_array.selected_recno];
