@@ -1662,12 +1662,6 @@ void Sys::detect_function_key(unsigned scanCode, unsigned skeyState)
       case KEY_F11:
          capture_screen();
          break;
-
-#ifdef BETA
-      case KEY_F12:
-         sys.signal_exit_flag = 1;
-         break;
-#endif
       }
    }
 }
