@@ -1469,16 +1469,8 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       {
       //---- keys for toggling map mode ----//
 
-      case 'q':
-         world.map_matrix->toggle_map_mode(0);
-         break;
-
-      case 'w':
-         world.map_matrix->toggle_map_mode(1);
-         break;
-
       case 'e':
-         world.map_matrix->toggle_map_mode(2);
+         world.map_matrix->cycle_map_mode();
          break;
 
       //--------- opaque report mode --------//

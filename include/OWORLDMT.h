@@ -99,11 +99,12 @@ public:
 
 	void init_para();
 	void draw();
-   void paint();
-   void disp();
-   void draw_square();
-   int  detect();
+	void paint();
+	void disp();
+	void draw_square();
+	int  detect();
 	void toggle_map_mode(int modeId);
+	void cycle_map_mode();
 
 protected:
 	void draw_map();

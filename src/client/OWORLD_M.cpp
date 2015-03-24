@@ -363,6 +363,28 @@ void MapMatrix::toggle_map_mode(int modeId)
 //---------- End of function MapMatrix::toggle_map_mode ------------//
 
 
+//-------- Begin of function MapMatrix::cycle_map_mode ------------//
+
+void MapMatrix::cycle_map_mode()
+{
+	//--- Cycle through all available map modes ---//
+
+	if( map_mode == MAP_MODE_POWER && !power_mode)
+		power_mode = !power_mode;
+	else
+	{
+		map_mode = (map_mode + 1) % 3;
+		if (map_mode == MAP_MODE_POWER)
+			power_mode = 0;
+	}
+
+	disp_mode_button(1);		// 1-display the buttons on the front buffer.
+
+	refresh();
+}
+//---------- End of function MapMatrix::cycle_map_mode ------------//
+
+
 //----------- Begin of function MapMatrix::detect_area -----------//
 //
 // Detect for click on a new zoom area, update the zoom window as well
