@@ -1394,9 +1394,8 @@ void Sys::process_key(unsigned scanCode, unsigned skeyState)
       if( sys.debug_session || sys.testing_session || scenario_cheat_flag )
       {
          detect_cheat_key(scanCode, skeyState);
-         detect_debug_cheat_key(scanCode, skeyState);
 
-         if( detect_scenario_cheat_key(scanCode, skeyState) )
+         if( detect_debug_cheat_key(scanCode, skeyState) || detect_scenario_cheat_key(scanCode, skeyState) )
             return;
       }
       else
@@ -1408,13 +1407,13 @@ void Sys::process_key(unsigned scanCode, unsigned skeyState)
                detect_cheat_key(scanCode, skeyState);
             }
             else
-				{
-					#ifdef GERMAN
-						if( detect_key_str(1, "!!!###") )
-					#else
-						if( detect_key_str(1, "!!!@@@###") )
-					#endif
-					{
+            {
+            #ifdef GERMAN
+               if( detect_key_str(1, "!!!###") )
+            #else
+               if( detect_key_str(1, "!!!@@@###") )
+            #endif
+               {
                   box.msg( _("Cheat Mode Enabled.") );
                   (~nation_array)->cheat_enabled_flag = 1;
                }
@@ -1807,17 +1806,17 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
 
 //-------- Begin of function Sys::detect_debug_cheat_key --------//
 //
-void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
+int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
 {
+   int keyProcessed = 0;
+
    if( remote.is_enable() )      // no cheat keys in multiplayer games
-      return;
+      return keyProcessed;
 
-   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_UNIQUE_KEY );
+   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_IS_CTRL );
 
-   if( !keyCode )    // since all keys concern are printable
-      return;
-
-   keyCode = misc.lower(keyCode);
+   if( !keyCode )    // since all keys concerned are printable
+      return keyProcessed;
 
    switch( keyCode )
    {
@@ -1834,9 +1833,10 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
       case 'n':
          config.blacken_map = !config.blacken_map;
          config.fog_of_war  = config.blacken_map;
+         ++keyProcessed;
          break;
 
-      case 'r':      // set default report nation
+      case 'f':      // set default report nation
          if( firm_array.selected_recno )
          {
             info.default_viewing_nation_recno = firm_array[firm_array.selected_recno]->nation_recno;
@@ -1855,6 +1855,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             if( nationRecno )
                info.default_viewing_nation_recno = nationRecno;
          }
+         ++keyProcessed;
          break;
 
       case 'a':
@@ -1862,6 +1863,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             set_view_mode(MODE_NORMAL);
          else
             set_view_mode(MODE_AI_ACTION);
+         ++keyProcessed;
          break;
 
       //-----------------------------------//
@@ -1869,6 +1871,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
       case 't':   // next town layout
          if( town_array.selected_recno )
             town_array[town_array.selected_recno]->auto_set_layout();
+         ++keyProcessed;
          break;
 */
       //-------------------------------//
@@ -1880,6 +1883,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             box.msg( "AI is now disabled" );
          else
             box.msg( "AI is now enabled" );
+         ++keyProcessed;
          break;
 
       case 'd':
@@ -1890,6 +1894,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             box.msg( "Now AI info will be displayed." );
          else
             box.msg( "Now AI info will not be displayed." );
+         ++keyProcessed;
          break;
 
       case '/':
@@ -1899,6 +1904,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             box.msg( "Now all unit icons will be displayed." );
          else
             box.msg( "Now all unit icons will not be displayed." );
+         ++keyProcessed;
          break;
 
 #ifdef DEBUG
@@ -1909,6 +1915,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             box.msg( "sys.testing_session is now 1." );
          else
             box.msg( "sys.testing_session is now 0." );
+         ++keyProcessed;
          break;
 
       case '\\':
@@ -1916,6 +1923,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             debug2_enable_flag = 0;
          else
             debug2_enable_flag = 1;
+         ++keyProcessed;
          break;
 
 /*    //-*********** syn game test ***********-//
@@ -1925,6 +1933,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
          game_file.load_game("syn.sav");
          sp_load_seed_file();
          debug_seed_status_flag = DEBUG_SYN_AUTO_LOAD;
+         ++keyProcessed;
          break;
 
       case '[':
@@ -1937,6 +1946,7 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
 
             game_file.save_game("syn.sav");
          }
+         ++keyProcessed;
          break;
 
       case ']':
@@ -1951,10 +1961,13 @@ void Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
             else
                debug_seed_status_flag = NO_DEBUG_SYN;
          }
+         ++keyProcessed;
          break;
 */       //-*********** syn game test ***********-//
 #endif
    }
+
+   return keyProcessed;
 }
 //--------- End of function Sys::detect_debug_cheat_key ---------//
 
@@ -2144,7 +2157,6 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
                {
                   site_array.del_site(i);
                   //box.msg( "Site deleted." );
-                  keyProcessed++;
                }
             }
             else if(locPtr->can_build_site(1) && !locPtr->is_power_off()) // add site
@@ -2152,7 +2164,6 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
                i = MAX_RAW_RESERVE_QTY * (50 + misc.random(50)) / 100;
                site_array.add_site(curXLoc, curYLoc, SITE_RAW, misc.random(MAX_RAW)+1, i);
                //box.msg( "Site added." );
-               keyProcessed++;
             }
          }
          keyProcessed++;
@@ -2170,8 +2181,6 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
                {
                   sitePtr->reserve_qty += 100;
                   //box.msg( "increase reserve by 100." );
-                  keyProcessed++;
-
                   info.disp();
                }
             }
@@ -2191,8 +2200,6 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
                {
                   sitePtr->reserve_qty -= 100;
                   //box.msg( "reduce reserve by 100." );
-                  keyProcessed++;
-
                   info.disp();
                }
             }
@@ -2202,7 +2209,10 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
 
       case 'h': //-------- hide map except for areas around your village, people --------//
          if( config.explore_whole_map )      // no action if the setting of the map is explored
+         {
+            keyProcessed++;
             break;
+         }
 
          vga_back.bar(MAP_X1, MAP_Y1, MAP_X2, MAP_Y2, UNEXPLORED_COLOR);
          for(j=0; j<MAX_WORLD_Y_LOC; ++j)
@@ -2306,7 +2316,6 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
                   unitPtr->move_to_y_loc = curYLoc;
                   world.set_unit_recno(curXLoc, curYLoc, unitPtr->mobile_type, unitPtr->sprite_recno);
                   //box.msg( "move unit." );
-                  keyProcessed++;
                }
             }
          }
