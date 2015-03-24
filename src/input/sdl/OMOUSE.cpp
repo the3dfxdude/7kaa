@@ -1123,7 +1123,7 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short
 #else
 	case SDLK_SEMICOLON: priChar = capitalChar = ';'; shiftChar = ':'; break;
 	case SDLK_QUOTEDBL: priChar = capitalChar = '\''; shiftChar = '\"'; break;
-	case SDLK_BACKQUOTE: priChar = capitalChar = '~'; shiftChar = '`'; break;
+	case SDLK_BACKQUOTE: priChar = capitalChar = '~'; shiftChar = '`'; break; // Note: this can be reversed on certain keyboards (at the very least on Dutch USA-international keyboards) where ` is the base and ~ the shift
 	case SDLK_BACKSLASH: priChar = capitalChar = '\\'; shiftChar = '|'; break;
 #endif
 #if(defined(GERMAN))
