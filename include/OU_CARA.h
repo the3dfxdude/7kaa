@@ -151,6 +151,7 @@ public:
 
 	void 	disp_info(int refreshFlag);
 	void  detect_info();
+	bool  is_in_build_menu();
 
 	void 	set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAction);
 	void	del_stop(int stopId, char remoteAction);

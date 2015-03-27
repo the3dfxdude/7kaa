@@ -206,6 +206,18 @@ void UnitMarine::detect_info()
 //----------- End of function UnitMarine::detect_info -----------//
 
 
+//--------- Begin of function UnitMarine::is_in_build_menu ---------//
+// Returns true if a unit is currently in build mode.
+// Only reliable if this unit is the selected unit.
+// Used by Info to detect if the build mode is opened.
+//
+bool UnitMarine::is_in_build_menu()
+{
+	return false;
+}
+//----------- End of function UnitMarine::is_in_build_menu -----------//
+
+
 //-------- Begin of function UnitMarine::should_show_info ------//
 //
 int UnitMarine::should_show_info()

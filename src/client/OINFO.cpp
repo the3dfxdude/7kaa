@@ -489,6 +489,20 @@ int Info::detect()
 //-------- End of function Info::detect --------//
 
 
+//-------- Begin of function Info::is_unit_build_menu_opened --------//
+bool Info::is_unit_build_menu_opened()
+{
+	//--- Use exactly the same logic as Info::detect for determining if a unit is actively selected ---//
+	if( !firm_array.selected_recno && !town_array.selected_recno && !site_array.selected_recno
+		&& unit_array.selected_recno )
+	{
+		return unit_array[unit_array.selected_recno]->is_in_build_menu();
+	}
+	return false;
+}
+//-------- End of function Info::is_unit_build_menu_opened --------//
+
+
 //-------- Begin of function Info::draw_selected --------//
 
 void Info::draw_selected()

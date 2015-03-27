@@ -440,6 +440,7 @@ public:
 	virtual void disp_unit_profile(int dispY1, int refreshFlag);
 	virtual int  detect_unit_profile();
 	virtual void detect_info();
+	virtual bool is_in_build_menu();
 	int			 should_show_info();
 
 			  int  return_camp();

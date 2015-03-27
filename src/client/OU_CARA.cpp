@@ -130,6 +130,18 @@ void UnitCaravan::detect_info()
 //---------- End of function UnitCaravan::detect_info ----------//
 
 
+//--------- Begin of function UnitCaravan::is_in_build_menu ---------//
+// Returns true if a unit is currently in build mode.
+// Only reliable if this unit is the selected unit.
+// Used by Info to detect if the build mode is opened.
+//
+bool UnitCaravan::is_in_build_menu()
+{
+	return false;
+}
+//----------- End of function UnitCaravan::is_in_build_menu -----------//
+
+
 //--------- Begin of function UnitCaravan::disp_stop ---------//
 //
 void UnitCaravan::disp_stop(int dispY1, int refreshFlag)

@@ -200,6 +200,18 @@ void Unit::detect_info()
 //----------- End of function Unit::detect_info -----------//
 
 
+//--------- Begin of function Unit::is_in_build_menu ---------//
+// Returns true if a unit is currently in build mode.
+// Only reliable if this unit is the selected unit.
+// Used by Info to detect if the build mode is opened.
+//
+bool Unit::is_in_build_menu()
+{
+	return unit_menu_mode == UNIT_MENU_BUILD;
+}
+//----------- End of function Unit::is_in_build_menu -----------//
+
+
 //--------- Begin of function Unit::disp_main_menu ---------//
 //
 void Unit::disp_main_menu(int refreshFlag)
