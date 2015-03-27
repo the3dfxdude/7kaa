@@ -1472,13 +1472,17 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
 
       //--------- opaque report mode --------//
 
-      case '~':
-         config.opaque_report = !config.opaque_report;
+      case 'p':
+         // Key overlaps with Seat of Power from unit build menu.
+         if ( ! info.is_unit_build_menu_opened())
+         {
+            config.opaque_report = !config.opaque_report;
 
-         if( config.opaque_report )
-            box.msg( _("Opaque report mode.") );
-         else
-            box.msg( _("Transparent report mode.") );
+            if( config.opaque_report )
+               box.msg( _("Opaque report mode.") );
+            else
+               box.msg( _("Transparent report mode.") );
+         }
          break;
 
       //------ clear news messages ------//
@@ -1488,9 +1492,10 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          break;
 
       //------ open oldest open diplomatic message  ------//
-	  case 'd':
-		  news_array.view_first_diplomatic();
-		  break;
+
+      case 'd':
+         news_array.view_first_diplomatic();
+         break;
 
       //------ jump to a location with natural resource ---//
 
@@ -1559,12 +1564,16 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          locate_spy();
          break;
 
-      case 'v':
-         locate_ship();
+      case 'h':
+         // Key overlaps with Harbour from unit build menu.
+         if ( ! info.is_unit_build_menu_opened())
+            locate_ship();
          break;
 
-      case 'q':
-         locate_camp();
+      case 'f':
+         // Key overlaps with Fort from unit build menu.
+         if ( ! info.is_unit_build_menu_opened())
+            locate_camp();
          break;
       }
    }
