@@ -117,7 +117,7 @@ int Nation::think_capture_independent()
 			if( firmPtr->nation_recno == nation_recno )
 				break;
 
-			//--- if there is an overseer with high leadership and right race in the opponent's camp, do bother to compete with him ---//
+			//--- if there is an overseer with high leadership and right race in the opponent's camp, don't bother to compete with him ---//
 
 			if( firmPtr->overseer_recno )
 			{
@@ -134,7 +134,7 @@ int Nation::think_capture_independent()
 		if( i>=0 )			// there is already a camp linked to this town and we don't want to get involved with its capturing plan
 			continue;
 
-		//-- if the town has linked military camps of the same nation --//
+		//------ no linked camps interfering with potential capture ------//
 
 		int targetResistance  = capture_expected_resistance(townRecno);
 		int averageResistance = townPtr->average_resistance(nation_recno);
@@ -162,7 +162,7 @@ int Nation::think_capture_independent()
 		//-------------------------------------------//
 		// If the map is set to unexplored, wait for a
 		// reasonable amount of time before moving out
-		// to build the mine.
+		// to build the camp.
 		//-------------------------------------------//
 
 		if( !config.explore_whole_map )
@@ -287,6 +287,16 @@ int Nation::capture_build_camp(int townRecno, int raceId)
 {
 	Town* captureTown = town_array[townRecno];
 
+	//------- locate a place to build the camp -------//
+
+	short buildXLoc, buildYLoc;
+
+	if( !find_best_firm_loc(FIRM_CAMP, captureTown->loc_x1, captureTown->loc_y1, buildXLoc, buildYLoc) )
+	{
+		captureTown->no_neighbor_space = 1;
+		return 0;
+	}
+
 	//---- find the best available general for the capturing action ---//
 
 	int targetResistance;
@@ -313,16 +323,6 @@ int Nation::capture_build_camp(int townRecno, int raceId)
 
 		if( !unitRecno )
 			return 0;
-	}
-
-	//------- locate a place to build the camp -------//
-
-	short buildXLoc, buildYLoc;
-
-	if( !find_best_firm_loc(FIRM_CAMP, captureTown->loc_x1, captureTown->loc_y1, buildXLoc, buildYLoc) )
-	{
-		captureTown->no_neighbor_space = 1;
-		return 0;
 	}
 
 	//--- if the picked unit is an overseer of an existng camp ---//
