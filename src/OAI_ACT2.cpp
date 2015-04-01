@@ -70,16 +70,6 @@ int Nation::ai_build_firm(ActionNode* actionNode)
 	if( !skilledUnit )
 		return 0;
 
-	//--- a unit with the specific skill is not found, try to find a construction unit instead ---//
-
-	if( skillId != SKILL_CONSTRUCTION )
-	{
-		Unit* skilledUnit = get_skilled_unit(skillId, raceId, actionNode);
-
-		if( !skilledUnit )
-			return 0;
-	}
-
 	//------- build the firm now ---------//
 
 	skilledUnit->build_firm(actionNode->action_x_loc, actionNode->action_y_loc, firmId, COMMAND_AI);
