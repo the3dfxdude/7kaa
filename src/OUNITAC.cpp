@@ -1175,6 +1175,7 @@ void Unit::process_build_firm()
 		// cargo_recno
 
 		int succeedFlag=0;
+		int shouldProceed = 1;
 
 		if( cur_x_loc()==move_to_x_loc && cur_y_loc()==move_to_y_loc )
 		{
@@ -1201,7 +1202,7 @@ void Unit::process_build_firm()
 				nationPtr = nation_array[nation_recno];
 
 				if(nationPtr->cash < firmInfo->setup_cost)
-					return; // out of cash
+					shouldProceed = 0; // out of cash
 			}
 			else
 				nationPtr = NULL;
@@ -1209,7 +1210,7 @@ void Unit::process_build_firm()
 			//---------------------------------------------------------//
 			// check whether the firm can be built in the specified location
 			//---------------------------------------------------------//
-			if( world.can_build_firm(action_x_loc, action_y_loc, action_para, sprite_recno) &&
+			if( shouldProceed && world.can_build_firm(action_x_loc, action_y_loc, action_para, sprite_recno) &&
 				 firm_res[action_para]->can_build(sprite_recno) )
 			{
 				int aiUnit			= ai_unit;
@@ -1228,7 +1229,7 @@ void Unit::process_build_firm()
 				if( firm_array.build_firm(action_x_loc, action_y_loc, nation_recno,
 												action_para, sprite_info->sprite_code, sprite_recno) ) // action_para = firm id.
 				{
-					//--------- able to the firm --------//
+					//--------- able to build the firm --------//
 
 					reset_action_para2();
 					succeedFlag = 1;
