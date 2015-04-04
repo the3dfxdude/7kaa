@@ -42,11 +42,11 @@ enum { MAX_TALK_CHOICE = MAX_TALK_TYPE	};
 
 enum { MAX_WAIT_MSG_PER_NATION = 3 };	// you cannot send more than 3 messages to a nation until it processes some of them
 
-enum { TALK_MSG_KEEP_DAYS = 365 };		// keep TalkMsg for 365 days before deleteing it.
+enum { TALK_MSG_KEEP_DAYS = 365 };		// keep TalkMsg for 365 days before deleting it.
 
 //-------- define reply answer ------//
 
-enum { REPLY_NOT_NEEDED,		// do not need a reply for this messge, it's a informing message only
+enum { REPLY_NOT_NEEDED,		// do not need a reply for this messge, it's an informative message only
 		 REPLY_WAITING,
 		 REPLY_ACCEPT,
 		 REPLY_REJECT
@@ -90,7 +90,7 @@ public:
 	char*		msg_str(int viewingNationRecno, int dispReply=1, int dispSecondLine=0);
 
 	int		is_reply_needed();		// whether a reply is needed for this message
-	int		is_valid_to_disp();
+	int		is_valid_to_disp(int invalid_nation_recno = 0); // can specify an additional nation recno that is to be considered invalid.
 	int		is_valid_to_reply();
 	int		can_accept();
 
