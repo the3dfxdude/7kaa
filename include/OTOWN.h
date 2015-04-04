@@ -206,7 +206,7 @@ public:
 	enum {SIZEOF_NONSAVED_ELEMENTS = sizeof(int)+sizeof(bool)};
 
 	//--------- town network ----------//
-	int		town_network_recno;						// The recno of the town network this town belongs to
+	int		town_network_recno;						// The recno of the town network this town belongs to. Note: this value can change between saving and loading.
 	bool	town_network_pulsed;					// Used for pulsing the town network to check which parts are still connected. Must always be set to false, and can only be true during a pulse-operation
 
 	//------ static class member var ------//

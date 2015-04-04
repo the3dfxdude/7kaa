@@ -224,7 +224,7 @@ TownNetwork* TownNetworkArray::add_network(int nationRecno)
 
 void TownNetworkArray::remove_network(int recno)
 {
-	if (recno < 0 || recno > size())
+	if (recno < 1 || recno > size())
 	{
 		if (DEBUG_CHECK) throw "Invalid recno passed to remove_network";
 		else return;
@@ -536,7 +536,7 @@ void TownNetworkArray::town_pre_changing_nation(int townRecno)
 	if (townRecno == 0) {if (DEBUG_CHECK) throw "townRecno is 0"; else return;}
 
 	Town *pTown = town_array[townRecno];
-	if (pTown == NULL) {if (DEBUG_CHECK) throw "Town is no longer exists in TownArray"; else return;}
+	if (pTown == NULL) {if (DEBUG_CHECK) throw "Town no longer exists in TownArray"; else return;}
 
 	// Independent towns do not form town networks
 	if (pTown->nation_recno == 0)
