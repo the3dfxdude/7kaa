@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctime>
 #include <string.h>
 #include <stdarg.h>
 #include <dbglog.h>
@@ -109,9 +110,17 @@ void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, co
 		if (c->flags == DBGLOG_NEED_INIT) return;
 	}
 
+	// Get HH:MM:SS in local time
+	time_t rawTime;
+	time(&rawTime);
+	tm *curTime = localtime(&rawTime);
+	char curTimeStr[256];
+	if (strftime(curTimeStr, sizeof(curTimeStr)/sizeof(curTimeStr[0]), "%H:%M:%S", curTime) == 0)
+		strcpy(curTimeStr, "??:??:??");
+
 	if (c->flags & DBGLOG_ERR_ON && msg_class == __DBGLOG_ERR)
 	{
-		printf("err:%s: ", c->name);
+		printf("%s: err:%s: ", curTimeStr, c->name);
 		va_start(valist, format);
 		vprintf(format, valist);
 		va_end(valist);
@@ -119,7 +128,7 @@ void dbglog_printf(enum __dbglog_class msg_class, struct __dbglog_channel *c, co
 
 	if (c->flags & DBGLOG_MSG_ON && msg_class == __DBGLOG_MSG)
 	{
-		printf("msg:%s: ", c->name);
+		printf("%s: msg:%s: ", curTimeStr, c->name);
 		va_start(valist, format);
 		vprintf(format, valist);
 		va_end(valist);
