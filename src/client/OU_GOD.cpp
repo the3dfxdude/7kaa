@@ -260,6 +260,18 @@ void UnitGod::detect_info()
 //---------- End of function UnitGod::detect_info ----------//
 
 
+//--------- Begin of function UnitGod::is_in_build_menu ---------//
+// Returns true if a unit is currently in build mode.
+// Only reliable if this unit is the selected unit.
+// Used by Info to detect if the build mode is opened.
+//
+bool UnitGod::is_in_build_menu()
+{
+	return false;
+}
+//----------- End of function UnitGod::is_in_build_menu -----------//
+
+
 //--------- Begin of function UnitGod::cast_power ---------//
 //
 // <int> castXLoc, castYLoc - the location which the power should

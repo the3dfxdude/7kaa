@@ -799,7 +799,7 @@ void TalkRes::send_talk_msg_now(TalkMsg* talkMsgPtr)
 		case NATION_AI:
 			if( talkMsgPtr->reply_type == REPLY_WAITING )
 			{
-				//-- put the message in the receiver's actin queue --//
+				//-- put the message in the receiver's action queue --//
 
 				toNation->add_action( 0, 0, 0, 0, ACTION_AI_PROCESS_TALK_MSG, talk_msg_array.recno() );
 			}
@@ -1164,7 +1164,7 @@ void TalkRes::process_talk_msg()
 			nation_array[talkMsg->from_nation_recno]->ai_notify_reply(i);
 		}
 
-		//--- delete the talk message after 2 months ---//
+		//--- delete the talk message after a year ---//
 
 		if( info.game_date > talkMsg->date + TALK_MSG_KEEP_DAYS )
 			del_talk_msg(i);
@@ -1367,9 +1367,8 @@ void TalkRes::del_all_nation_msg(int nationRecno)
 
 		talkMsg = get_talk_msg(i);
 
-		if( talkMsg->from_nation_recno == nationRecno ||
-			 talkMsg->to_nation_recno   == nationRecno ||
-			 !talkMsg->is_valid_to_disp() )		// if the nation is the talk_para1 (e.g. TRADE_EMBARGO), is_valid_to_disp() will return 0 and the talk message should than be deleted
+		// If the nation is referenced anywhere in the talk-message, is_valid_to_disp() will return 0 and the talk message should than be deleted. Need to explicitly specify nation as it hasn't been deleted yet.
+		if( !talkMsg->is_valid_to_disp(nationRecno) )
 		{
 			del_talk_msg(i);
 		}

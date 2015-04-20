@@ -145,6 +145,7 @@ public:
 
 	void  disp_info(int refreshFlag);
 	void  detect_info();
+	bool  is_in_build_menu();
 
 	int 	should_show_info();
 

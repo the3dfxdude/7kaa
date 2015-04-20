@@ -419,14 +419,16 @@ int TalkMsg::is_valid_to_reply()
 // if this message is valid, the receiver can answer
 // this message.
 //
-int TalkMsg::is_valid_to_disp()
+// If invalid_player_recno > 0 then messages that involve this nation are considered invalid as well.
+//
+int TalkMsg::is_valid_to_disp(int invalid_player_recno)
 {
 	//--- check if the nations are still there -----//
 
-	if( nation_array.is_deleted(from_nation_recno) )
+	if( nation_array.is_deleted(from_nation_recno) || (invalid_player_recno && from_nation_recno == invalid_player_recno) )
 		return 0;
 
-	if( nation_array.is_deleted(to_nation_recno) )
+	if( nation_array.is_deleted(to_nation_recno) || (invalid_player_recno && to_nation_recno == invalid_player_recno) )
 		return 0;
 
 	//--------------------------------------//
@@ -437,12 +439,8 @@ int TalkMsg::is_valid_to_disp()
 	switch( talk_id )
 	{
 		case TALK_REQUEST_TRADE_EMBARGO:
-			if( nation_array.is_deleted(talk_para1) )
-				return 0;
-			break;
-
 		case TALK_REQUEST_DECLARE_WAR:
-			if( nation_array.is_deleted(talk_para1) )
+			if( nation_array.is_deleted(talk_para1) || (invalid_player_recno && talk_para1 == invalid_player_recno) )
 				return 0;
 			break;
 	}

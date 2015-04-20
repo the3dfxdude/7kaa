@@ -207,6 +207,7 @@ public:
 	void	set_font(Font*);
 
 	int	detect();
+	int view_first_diplomatic();
 	void	disp();
 	int   put(int detectAction);
 

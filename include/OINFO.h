@@ -188,6 +188,7 @@ public:
 	void	disp();
 	void	update();
 	int 	detect();
+	bool	is_unit_build_menu_opened();
 
 	void	next_day();
 

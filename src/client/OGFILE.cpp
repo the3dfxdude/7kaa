@@ -58,6 +58,7 @@ int GameFile::save_game(const char* fileName)
 	char full_path[MAX_PATH+1];
 	File   file;
 	String errStr;
+	bool fileOpened = false;
 
 	power.win_opened=1;				// to disable power.mouse_handler()
 
@@ -69,7 +70,7 @@ int GameFile::save_game(const char* fileName)
 	if (!misc.path_cat(full_path, sys.dir_config, file_name, MAX_PATH))
 	{
 		rc = 0;
-		errStr = _("Path too long to the saved game");
+		errStr = _("Path too long to the saved game.");
 	}
 
 	if( rc )
@@ -78,6 +79,8 @@ int GameFile::save_game(const char* fileName)
 																   // 1=allow the writing size and the read size to be different
 		if( !rc )
 			errStr = _("Error creating saved game file.");
+		else
+			fileOpened = true;
 	}
 
 	if( rc )
@@ -106,11 +109,9 @@ int GameFile::save_game(const char* fileName)
 
 	if( !rc )
 	{
-		remove( file_name );         // delete the file as it is not complete
+		if (fileOpened) remove( file_name );         // delete the file as it is not complete
 
-		#ifndef DEBUG
-			errStr = _("Insufficient disk space ! The game is not saved.");		// use this message for all types of error message in the release version
-		#endif
+		errStr += _(" The game is not saved.");      // Also explicitly inform the user that the game has not been saved.
 
 		box.msg( errStr );
 	}

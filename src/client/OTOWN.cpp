@@ -3198,7 +3198,7 @@ void Town::distribute_demand()
 			{
 				//---- if the demand is larger than the supply -----//
 
-				if( marketGoodsInfo->total_supply < townDemand )
+				if( marketGoodsInfo->total_supply <= townDemand )
 				{
 					marketGoods->month_demand += marketGoods->stock_qty +
 														 (townDemand - marketGoodsInfo->total_supply)
@@ -3212,10 +3212,12 @@ void Town::distribute_demand()
 
 					if( firmMarket->nation_recno == nation_recno )
 					{
-						marketGoods->month_demand += ownShareDemand * marketGoods->stock_qty / marketGoodsInfo->total_own_supply;
+						if (marketGoodsInfo->total_own_supply > 0.0f) // if total_own_supply is 0 then ownShareDemand is also 0 and we put no demand on the product
+							marketGoods->month_demand += ownShareDemand * marketGoods->stock_qty / marketGoodsInfo->total_own_supply;
 					}
 					else
 					{
+						// Note: total_supply > 0.0f, because else the first case above (demand larger than supply) will be triggered
 						marketGoods->month_demand += (townDemand-ownShareDemand) * marketGoods->stock_qty / marketGoodsInfo->total_supply;
 					}
 				}

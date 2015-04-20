@@ -226,7 +226,7 @@ private:
 	void		detect_letter_key(unsigned scanCode, unsigned skeyState);
 	void		detect_function_key(unsigned scanCode, unsigned skeyState);
 	void		detect_cheat_key(unsigned scanCode, unsigned skeyState);
-	void		detect_debug_cheat_key(unsigned scanCode, unsigned skeyState);
+	int			detect_debug_cheat_key(unsigned scanCode, unsigned skeyState);
 	int 		detect_set_speed(unsigned scanCode, unsigned skeyState);
 
 	int 		detect_key_str(int keyStrId, const char* keyStr);
