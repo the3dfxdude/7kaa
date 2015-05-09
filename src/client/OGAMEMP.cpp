@@ -1668,6 +1668,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
 	SessionDesc *session;
 	char password[MP_FRIENDLY_NAME_LEN+1];
+	unsigned long wait_time;
 
 	session = mp_obj.get_session(session_id);
 	err_when(session == NULL);
@@ -1701,7 +1702,8 @@ int Game::mp_join_session(int session_id, char *player_name)
 		goto END;
 	}
 
-	while (1)
+	wait_time = misc.get_time()+30000; // wait for response up to 30 secs
+	while (wait_time > misc.get_time())
 	{
 		uint32_t from;
 		uint32_t size;
