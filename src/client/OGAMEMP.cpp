@@ -775,7 +775,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 		// not launched from lobby
 
-		service_mode = mp_select_service();
+		//service_mode = mp_select_service();
+		// skip service selection since there is only one choice
+		service_mode = 2;
 		if (!service_mode)
 		{
 			mp_obj.deinit();
