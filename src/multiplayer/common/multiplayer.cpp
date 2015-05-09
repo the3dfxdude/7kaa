@@ -480,30 +480,21 @@ int MultiPlayer::add_player(uint32_t id, char *name, ENetAddress *address, char 
 // the password only, as the password is only sent to the organizer.
 //
 // Returns 1 when a player is newly authorized.
-// Returns 0 when nothing changed.
+// Returns 0 when a player is not authorized.
 int MultiPlayer::auth_player(uint32_t id, char *name, char *password)
 {
-	if (id < 1 || id > max_players) {
-		return 0;
-	}
-
-	if (player_pool[id-1] == NULL) {
-		return 0;
-	}
-
-	if (player_pool[id-1]->authorized) {
-		return 0;
-	}
-
-	if (host_flag && memcmp(password,
-			joined_session.password,
-			MP_FRIENDLY_NAME_LEN)) {
-		MSG("Player '%s' (%d) password is incorrect.\n", player_pool[id-1]->name, id);
+	if (!host_flag || id < 1 || id > max_players || player_pool[id-1] == NULL || player_pool[id-1]->authorized) {
 		return 0;
 	}
 
 	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN+1);
-        player_pool[id-1]->name[MP_FRIENDLY_NAME_LEN] = 0;
+	player_pool[id-1]->name[MP_FRIENDLY_NAME_LEN] = 0;
+
+	if (memcmp(password, joined_session.password, MP_FRIENDLY_NAME_LEN)) {
+		MSG("Player '%s' (%d) password is incorrect.\n", player_pool[id-1]->name, id);
+		return 0;
+	}
+
 	player_pool[id-1]->authorized = 1;
 	MSG("Player '%s' (%d) was authorized.\n", player_pool[id-1]->name, id);
 
