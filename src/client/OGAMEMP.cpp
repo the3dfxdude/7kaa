@@ -21,6 +21,7 @@
 //Filename    : OGAMEMP.CPP
 //Description : Main Game Object - Multiplayer Game (using Imagic multiplayer SDK)
 
+#include <version.h>
 #include <OSYS.h>
 #include <OMOUSE.h>
 #include <OMOUSECR.h>
@@ -214,12 +215,17 @@ struct MpStructConfig : public MpStructBase
 
 struct MpStructNewPlayer : public MpStructBase
 {
+	uint32_t ver1;
+	uint32_t ver2;
+	uint32_t ver3;
 	char name[MP_FRIENDLY_NAME_LEN+1];
 	char pass[MP_FRIENDLY_NAME_LEN+1];
-	short player_balance;	// 2 for CD-ROM version, -1 for non CD-ROM version
-	MpStructNewPlayer(short bal, char *name, char *pass) : MpStructBase(MPMSG_NEW_PLAYER),
-		player_balance(bal)
+
+	MpStructNewPlayer(char *name, char *pass) : MpStructBase(MPMSG_NEW_PLAYER)
 	{
+		ver1 = SKVERMAJ;
+		ver2 = SKVERMED;
+		ver3 = SKVERMIN;
 		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
 		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
 	}
@@ -249,8 +255,16 @@ struct MpStructAcceptNewPlayer : public MpStructBase
 
 struct MpStructRefuseNewPlayer : public MpStructBase
 {
-	PID_TYPE player_id;
-	MpStructRefuseNewPlayer(PID_TYPE p) : MpStructBase(MPMSG_REFUSE_NEW_PLAYER), player_id(p) {}
+	uint32_t reason;
+	MpStructRefuseNewPlayer(uint32_t r) : MpStructBase(MPMSG_REFUSE_NEW_PLAYER), reason(r) {}
+};
+enum {
+	REFUSE_REASON_SKVER_MISMATCH = 1,
+	REFUSE_REASON_GAME_FULL,
+	REFUSE_REASON_NOT_AUTHORIZED,
+	REFUSE_REASON_SAVEFILE_REQUIRED,
+	REFUSE_REASON_SAVEFILE_NOT_REQUIRED,
+	REFUSE_REASON_SAVEFILE_MISMATCH,
 };
 
 struct MpStructAcquireColor : public MpStructBase
@@ -311,20 +325,25 @@ struct MpStructPlayerUnready : public MpStructBase
 
 struct MpStructLoadGameNewPlayer : public MpStructBase
 {
+	uint32_t ver1;
+	uint32_t ver2;
+	uint32_t ver3;
 	short nation_recno;
 	short color_scheme_id;
 	short race_id;
 	DWORD frame_count;			// detail to test save game from the same game
 	long  random_seed;
-	short player_balance;
 	char  name[MP_FRIENDLY_NAME_LEN+1];
 	char  pass[MP_FRIENDLY_NAME_LEN+1];
 
-	MpStructLoadGameNewPlayer(Nation *n, DWORD frame, long seed, short bal, char *name, char *pass) :
+	MpStructLoadGameNewPlayer(Nation *n, DWORD frame, long seed, char *name, char *pass) :
 		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
-		race_id(n->race_id), frame_count(frame), random_seed(seed), player_balance(bal) 
+		race_id(n->race_id), frame_count(frame), random_seed(seed)
 	{
+		ver1 = SKVERMAJ;
+		ver2 = SKVERMED;
+		ver3 = SKVERMIN;
 		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
 		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
 	}
@@ -1940,7 +1959,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 		// ask host for an id, race, and color code
 		MpStructNewPlayer msgNewPlayer(
-			PLAYER_RATIO_CDROM,
 			config.player_name,
 			current_session->password
 		);
@@ -2565,8 +2583,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 			else
 			{
-				MSG("Received msg_id %x\n", ((MpStructBase *)recvPtr)->msg_id);
-
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
@@ -2590,15 +2606,30 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					mp_obj.poll_players();
 					if( remote.is_host )
 					{
-						MSG("regPlayerCount=%d MAX_NATION=%d\n", regPlayerCount, MAX_NATION);
-						if (regPlayerCount < MAX_NATION &&
-							mp_obj.auth_player(
-								from,
-								((MpStructNewPlayer *)recvPtr)->name,
-								((MpStructNewPlayer *)recvPtr)->pass))
-						{
-							MpStructNewPlayer *newPlayerMsg = (MpStructNewPlayer *)recvPtr;
+						MpStructNewPlayer *newPlayerMsg = (MpStructNewPlayer *)recvPtr;
 
+						if( newPlayerMsg->ver1 != SKVERMAJ ||
+							newPlayerMsg->ver2 != SKVERMED ||
+							newPlayerMsg->ver3 != SKVERMIN )
+						{
+							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SKVER_MISMATCH);
+							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
+							break;
+						}
+						if( regPlayerCount >= MAX_NATION )
+						{
+							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_GAME_FULL);
+							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
+							break;
+						}
+						if( !mp_obj.auth_player(from, newPlayerMsg->name, newPlayerMsg->pass) )
+						{
+							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_NOT_AUTHORIZED);
+							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
+							break;
+						}
+
+						{
 							regPlayerId[regPlayerCount] = from;
 							playerReadyFlag[regPlayerCount] = 0;
 
@@ -2613,7 +2644,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							mp_obj.send( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
 
 							// send the new player the list of players
-						        for (int i = 1; i <= MAX_NATION; i++) {
+							for (int i = 1; i <= MAX_NATION; i++) {
 								PlayerDesc *desc = mp_obj.get_player(i);
 								if (desc && desc->pid() != from) {
 									MpStructAcceptNewPlayer msgNewb(desc->pid(),
@@ -2664,7 +2695,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							mp_obj.send( from, &msgSeedStr, sizeof(msgSeedStr) );
 							// ###### end Gilbert 25/10 #######//
 
-							// send config 
+							// send config
 							MpStructConfig msgConfig( tempConfig );
 							mp_obj.send( from, &msgConfig, sizeof(msgConfig) );
 
@@ -2685,24 +2716,18 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							// ###### patch end Gilbert 22/1 ######//
 
 							// update balance
-							playerBalance[regPlayerCount] = newPlayerMsg->player_balance;
+							playerBalance[regPlayerCount] = PLAYER_RATIO_CDROM;
 
 							regPlayerCount++;
 							mRefreshFlag |= MGOPTION_PLAYERS;
-						}
-						else
-						{
-							// reply refuse new player
-							MpStructRefuseNewPlayer msgRefuse(from);
-							mp_obj.send( from, &msgRefuse, sizeof(msgRefuse) );
 						}
 					}
 					break;
 				case MPMSG_LOAD_GAME_NEW_PLAYER:
 					{
-						// incorrect message, reject
-						MpStructRefuseNewPlayer msgRefuse(from);
-						mp_obj.send(from, &msgRefuse, sizeof(msgRefuse) );
+						// client has incorrect game mode, reject
+						MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SAVEFILE_NOT_REQUIRED);
+						mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
 					}
 					break;
 				case MPMSG_ACCEPT_NEW_PLAYER:
@@ -2868,10 +2893,31 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					break;
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
-					MSG("MPMSG_REFUSE_NEW_PLAYER: %d\n", ((MpStructRefuseNewPlayer *)recvPtr)->player_id);
-					box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
+					switch (((MpStructRefuseNewPlayer *)recvPtr)->reason)
+					{
+					case REFUSE_REASON_SKVER_MISMATCH:
+						box.msg(_("Your game version does not match the host."));
+						break;
+					case REFUSE_REASON_GAME_FULL:
+						box.msg(_("The game you tried to join is currently full."));
+						break;
+					case REFUSE_REASON_NOT_AUTHORIZED:
+						box.msg(_("The host refused to authorize your connection."));
+						break;
+					case REFUSE_REASON_SAVEFILE_REQUIRED:
+						box.msg(_("You cannot join the game because the host is loading a save."));
+						break;
+					case REFUSE_REASON_SAVEFILE_NOT_REQUIRED:
+						box.msg(_("You cannot join the game because the host is not loading a save."));
+						break;
+					case REFUSE_REASON_SAVEFILE_MISMATCH:
+						box.msg(_("You cannot join the game because the saved multiplayer game you selected is different."));
+						break;
+					default:
+						box.msg(_("The host refused connection."));
+						break;
+					}
 					return 0;
-					break;
 				case MPMSG_PLAYER_ID:
 					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
 					{
@@ -3807,7 +3853,6 @@ int Game::mp_select_load_option(char *fileName)
 			~nation_array,
 			sys.frame_count,
 			misc.get_random_seed(),
-			PLAYER_RATIO_CDROM,
 			config.player_name,
 			current_session->password
 		);
@@ -4451,9 +4496,9 @@ int Game::mp_select_load_option(char *fileName)
 					// ####### end Gilbert 25/10 #######//
 				case MPMSG_NEW_PLAYER:
 					{
-						// incorrect message, reject
-						MpStructRefuseNewPlayer msgRefuse(from);
-						mp_obj.send(from, &msgRefuse, sizeof(msgRefuse) );
+						// client has incorrect game mode, reject
+						MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SAVEFILE_REQUIRED);
+						mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
 					}
 					break;
 				case MPMSG_LOAD_GAME_NEW_PLAYER:
@@ -4461,20 +4506,41 @@ int Game::mp_select_load_option(char *fileName)
 					if( remote.is_host )
 					{
 						MpStructLoadGameNewPlayer *newPlayerMsg = (MpStructLoadGameNewPlayer *)recvPtr;
+						if( newPlayerMsg->ver1 != SKVERMAJ ||
+							newPlayerMsg->ver2 != SKVERMED ||
+							newPlayerMsg->ver3 != SKVERMIN )
+						{
+							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SKVER_MISMATCH);
+							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
+							break;
+						}
+						if( regPlayerCount >= MAX_NATION )
+						{
+							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_GAME_FULL);
+							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
+							break;
+						}
 						if(
-							regPlayerCount < MAX_NATION &&
-							!nation_array.is_deleted(newPlayerMsg->nation_recno) &&
-							nation_array[newPlayerMsg->nation_recno]->color_scheme_id == newPlayerMsg->color_scheme_id &&
-							nation_array[newPlayerMsg->nation_recno]->race_id == newPlayerMsg->race_id &&
-							!colorAssigned[newPlayerMsg->color_scheme_id-1]  &&
-							newPlayerMsg->frame_count == sys.frame_count &&
-							newPlayerMsg->random_seed == misc.get_random_seed() &&
-							mp_obj.auth_player(
-								from,
-								newPlayerMsg->name,
-								newPlayerMsg->pass
-							)
+							nation_array.is_deleted(newPlayerMsg->nation_recno) ||
+							nation_array[newPlayerMsg->nation_recno]->color_scheme_id != newPlayerMsg->color_scheme_id ||
+							nation_array[newPlayerMsg->nation_recno]->race_id != newPlayerMsg->race_id ||
+							colorAssigned[newPlayerMsg->color_scheme_id-1] ||
+							newPlayerMsg->frame_count != sys.frame_count ||
+							newPlayerMsg->random_seed != misc.get_random_seed()
 						)
+						{
+							// client's save file doesn't match the host's
+							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SAVEFILE_MISMATCH);
+							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
+							break;
+						}
+						if( !mp_obj.auth_player(from, newPlayerMsg->name, newPlayerMsg->pass) )
+						{
+							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_NOT_AUTHORIZED);
+							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
+							break;
+						}
+
 						{
 							regPlayerId[regPlayerCount] = from;
 							playerReadyFlag[regPlayerCount] = 0;
@@ -4522,16 +4588,10 @@ int Game::mp_select_load_option(char *fileName)
 							// ###### patch end Gilbert 22/1 ######//
 
 							// update balance
-							playerBalance[regPlayerCount] = newPlayerMsg->player_balance;
+							playerBalance[regPlayerCount] = PLAYER_RATIO_CDROM;
 
 							regPlayerCount++;
 							mRefreshFlag |= MGOPTION_PLAYERS;
-						}
-						else
-						{
-							// reply refuse new player
-							MpStructRefuseNewPlayer msgRefuse(from);
-							mp_obj.send( from, &msgRefuse, sizeof(msgRefuse) );
 						}
 					}
 					break;
@@ -4602,9 +4662,31 @@ int Game::mp_select_load_option(char *fileName)
 					break;
 				// ###### patch end Gilbert 22/1 ######//
 				case MPMSG_REFUSE_NEW_PLAYER:
-					box.msg(_("You cannot join the game because the multiplayer saved game you selected is different from those of other human players."));
+					switch (((MpStructRefuseNewPlayer *)recvPtr)->reason)
+					{
+					case REFUSE_REASON_SKVER_MISMATCH:
+						box.msg(_("Your game version does not match the host."));
+						break;
+					case REFUSE_REASON_GAME_FULL:
+						box.msg(_("The game you tried to join is currently full."));
+						break;
+					case REFUSE_REASON_NOT_AUTHORIZED:
+						box.msg(_("The host refused to authorize your connection."));
+						break;
+					case REFUSE_REASON_SAVEFILE_REQUIRED:
+						box.msg(_("You cannot join the game because the host is loading a save."));
+						break;
+					case REFUSE_REASON_SAVEFILE_NOT_REQUIRED:
+						box.msg(_("You cannot join the game because the host is not loading a save."));
+						break;
+					case REFUSE_REASON_SAVEFILE_MISMATCH:
+						box.msg(_("You cannot join the game because the saved multiplayer game you selected is different."));
+						break;
+					default:
+						box.msg(_("The host refused connection."));
+						break;
+					}
 					return 0;
-					break;
 				case MPMSG_PLAYER_ID:
 					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
 					{
