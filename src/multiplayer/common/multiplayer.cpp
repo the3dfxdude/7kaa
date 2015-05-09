@@ -331,6 +331,7 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	// Add hosts machine's player to the pool now
 	err_when(player_pool[0] != NULL);
 	my_player = new PlayerDesc(1, playerName);
+	my_player->connecting = 1;
 	set_my_player_id(1);
 
 	return 1;
@@ -371,6 +372,7 @@ int MultiPlayer::join_session(SessionDesc *session, char *playerName)
 	// create this player locally, we will put it in the right place
 	// later
 	my_player = new PlayerDesc(playerName);
+	my_player->connecting = 1;
 
 	joined_session = *session;
 
@@ -431,6 +433,7 @@ PlayerDesc *MultiPlayer::create_player(ENetAddress *address)
 		return NULL;
 
 	player_pool[i] = new PlayerDesc(i+1, address);
+	player_pool[i]->connecting = 1;
 
 	return player_pool[i];
 }
@@ -757,6 +760,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 		}
 
 		if (player != NULL) {
+			player->connecting = 1;
 			event.peer->data = player;
 			MSG("Player '%s' (%d) connected.\n", player->name, player->id);
 			MSG("Number of connections: %d\n", host->connectedPeers);

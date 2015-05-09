@@ -32,7 +32,7 @@ PlayerDesc::PlayerDesc()
 	strcpy(name, "?Anonymous?");
 	address.host = ENET_HOST_ANY;
 	address.port = 0;
-	connecting = 1;
+	connecting = 0;
 	authorized = 0;
 }
 
@@ -42,7 +42,7 @@ PlayerDesc::PlayerDesc(uint32_t id, ENetAddress *address)
 	strcpy(name, "?Anonymous?");
 	this->address.host = address->host;
 	this->address.port = address->port;
-	connecting = 1;
+	connecting = 0;
 	authorized = 0;
 }
 
@@ -52,7 +52,7 @@ PlayerDesc::PlayerDesc(uint32_t id, char *name)
 	strcpy(this->name, name);
 	address.host = ENET_HOST_ANY;
 	address.port = 0;
-	connecting = 1;
+	connecting = 0;
 	authorized = 0;
 }
 
@@ -62,7 +62,7 @@ PlayerDesc::PlayerDesc(char *name)
 	strcpy(this->name, name);
 	address.host = ENET_HOST_ANY;
 	address.port = 0;
-	connecting = 1;
+	connecting = 0;
 	authorized = 0;
 }
 
