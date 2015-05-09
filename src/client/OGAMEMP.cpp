@@ -540,7 +540,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 		// not launched from lobby
 
-		service_mode = mp_select_service();
+		//service_mode = mp_select_service();
+		// skip service selection since there is only one choice
+		service_mode = 2;
 		if (!service_mode)
 		{
 			mp_obj.deinit();
@@ -1121,6 +1123,14 @@ int Game::mp_select_mode(char *defSaveFileName)
 	// ####### end Gilbert 13/2 ##########//
 	returnButton.create(520, 538, "CANCEL-U", "CANCEL-D", 1, 0);
 
+	ButtonCustom serviceButton[BUTTON_NUM];
+	for( int b = 0; b < BUTTON_NUM; ++b )
+	{
+		serviceButton[b].create(buttonX[b], buttonY[b],
+			buttonX[b]+SERVICE_BUTTON_WIDTH-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
+			disp_virtual_button, ButtonCustomPara(NULL,0) );
+	}
+
 	//Get get_name;
 	//get_name.field( 374, 470, config.player_name, Config::PLAYER_NAME_LEN, 574 );
 	char saveFileName[8+1];		// save game name without path or extension
@@ -1190,6 +1200,8 @@ int Game::mp_select_mode(char *defSaveFileName)
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 
 				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
+
+				serviceButton[1].paint(1); // show user the forced network service
 
 				if( createButton.enable_flag )
 					createButton.paint();
