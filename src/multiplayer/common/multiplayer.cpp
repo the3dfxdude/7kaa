@@ -547,7 +547,7 @@ void MultiPlayer::delete_player(uint32_t id)
 	if (player_pool[id-1] == NULL)
 		return;
 
-	MSG("Player '%s' (%d) deleted\n", player_pool[id-1]->name, id);
+	MSG("Player '%s' (%d) deleted.\n", player_pool[id-1]->name, id);
 
 	delete player_pool[id-1];
 	player_pool[id-1] = NULL;
@@ -753,8 +753,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 		if (player != NULL) {
 			player->connecting = 1;
 			event.peer->data = player;
-			MSG("Player '%s' (%d) connected.\n", player->name, player->id);
-			MSG("Number of connections: %d\n", host->connectedPeers);
+			MSG("Player (%d) connected. connectedPeers=%d\n", player->id, host->connectedPeers);
 		}
 
 		break;
@@ -764,8 +763,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 		if (player != NULL) {
 			player->connecting = 0;
-			MSG("Player '%s' (%d) disconnected. (fixme)\n", player->name, player->id);
-			MSG("Number of connections: %d\n", host->connectedPeers);
+			MSG("Player '%s' (%d) disconnected. connectedPeers=%d\n", player->name, player->id, host->connectedPeers);
 		}
 
 		break;
