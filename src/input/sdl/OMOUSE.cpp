@@ -104,6 +104,7 @@ void MouseSDL::init()
 	// ------- initialize event queue ---------//
 	head_ptr = tail_ptr = 0;
 
+	SDL_StopTextInput();
 	SDL_ShowCursor(SDL_DISABLE);
 }
 //------------- End of MouseSDL::init -------------//
