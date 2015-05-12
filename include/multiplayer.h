@@ -122,7 +122,7 @@ public:
 	void   sort_sessions(int sortType);
 	int    create_session(char *sessionName, char *password, char *playerName, int maxPlayers);
 	int    join_session(SessionDesc *session, char *playerName);
-	void   close_session();
+	int    close_session();
 	SessionDesc* get_session(int i);
 	SessionDesc *get_current_session();
 

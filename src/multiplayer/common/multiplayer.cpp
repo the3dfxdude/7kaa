@@ -156,6 +156,17 @@ void MultiPlayer::deinit()
 
 	close_session();
 	current_sessions.zap();
+
+	for (int i = 0; i < max_players; i++) {
+		delete_player(i+1);
+	}
+	my_player_id = 0;
+	my_player = NULL;
+
+	if (host != NULL) {
+		enet_host_destroy(host);
+		host = NULL;
+	}
 	enet_deinitialize();
 
 	if (recv_buf != NULL) {
@@ -379,28 +390,27 @@ int MultiPlayer::join_session(SessionDesc *session, char *playerName)
 	return 1;
 }
 
-// Call close_session when leaving any session.
-void MultiPlayer::close_session()
+// Call close_session when leaving any session. Returns the number of
+// disconnects pending.
+int MultiPlayer::close_session()
 {
-	if (host_flag) {
-		int i;
+	int pending;
 
-		// disconnect all clients
-		for (i = 0; i < max_players; i++) {
-			delete_player(i+1);
-		}
-
-		host_flag = 0;
-	}
+	pending = 0;
+	host_flag = 0;
 	allowing_connections = 0;
 
-	my_player_id = 0;
-	my_player = NULL;
-
-	if (host != NULL) {
-		enet_host_destroy(host);
-		host = NULL;
+	// disconnect all clients
+	for (int i = 0; i < max_players; i++) {
+		ENetPeer *peer;
+		peer = get_peer(i+1);
+		if (peer) {
+			enet_peer_disconnect_later(peer, 0);
+			pending++;
+		}
 	}
+
+	return pending;
 }
 
 void MultiPlayer::game_starting()

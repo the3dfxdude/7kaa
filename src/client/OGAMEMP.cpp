@@ -697,6 +697,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 		mem_del(nationPara);
 		remote.deinit();
+		mp_close_session();
 		mp_obj.deinit();
 		return;
 	}
@@ -755,6 +756,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 	mem_del(nationPara);
 	remote.deinit();
+	mp_close_session();
 	mp_obj.deinit();
 	deinit();
 }
@@ -1679,9 +1681,9 @@ int Game::mp_select_session()
 //-------- End of function Game::mp_select_session --------//
 
 
-// The purpose of this function is to negotiate the data between host and clients
-// DirectPlay used to do, that is necessary to move onto the game option/chat screen.
-// This also give the user the ability to back out in case this doesn't work.
+// The purpose of this function is to provide an event loop and status dialog
+// for establishing a connection with a game host. This will timeout if no
+// connection is seen for a period of time.
 int Game::mp_join_session(int session_id, char *player_name)
 {
 	Button buttonCancel;
@@ -1731,8 +1733,6 @@ int Game::mp_join_session(int session_id, char *player_name)
 		int sysMsg;
 
 		mp_obj.receive(&from, &size, &sysMsg);
-
-
 		if (sysMsg)
 		{
 			break;
@@ -1768,6 +1768,76 @@ END:
 
 	return mp_obj.is_player_connecting(1);
 }
+
+
+// The purpose of this function is to provide an event loop and status dialog
+// for terminating a session gracefully.
+void Game::mp_close_session()
+{
+	unsigned int pending;
+	Button buttonCancel;
+	int width;
+	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+	unsigned long wait_time;
+
+	pending = mp_obj.close_session();
+	if (!pending)
+		return;
+
+	box.tell(_("Please wait while disconnecting..."));
+
+	width = box.box_x2 - box.box_x1 + 1;
+	buttonCancel.create_text(box.box_x1 + width / 2 + 2,
+				 box.box_y2 - box_button_margin,
+				 (char*)_("Cancel"));
+
+	buttonCancel.paint();
+
+	vga_front.unlock_buf();
+
+	wait_time = misc.get_time()+5000; // wait for response up to 5 secs
+	while (pending && wait_time > misc.get_time())
+	{
+		uint32_t from;
+		uint32_t size;
+		int sysMsg;
+
+		mp_obj.receive(&from, &size, &sysMsg);
+		if (sysMsg)
+		{
+			pending--;
+		}
+
+		vga_front.lock_buf();
+
+		sys.yield();
+		mouse.get_event();
+
+		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
+		    mouse.any_click(1))     // detect right button only when the button is "Cancel"
+		{
+			mouse.get_event();
+			break;
+		}
+
+		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
+
+		if (config.music_flag && !music.is_playing())
+			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
+		else if (!config.music_flag && music.is_playing())
+			music.stop();
+
+		vga_front.unlock_buf();
+	}
+
+	if (!vga_front.buf_locked)
+		vga_front.lock_buf();
+
+	box.close();
+
+	MSG("Dropping %d remaining connections.\n", pending);
+}
+
 
 int Game::mp_get_leader_board()
 {
