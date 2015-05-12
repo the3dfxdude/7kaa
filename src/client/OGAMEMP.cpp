@@ -1311,6 +1311,47 @@ int Game::mp_select_mode(char *defSaveFileName)
 //-------- End of function Game::mp_select_mode --------//
 
 
+struct InfoBox {
+	Button button;
+	int visible;
+
+	InfoBox()
+	{
+		visible = 0;
+	}
+};
+
+
+void mp_info_box_show(InfoBox *info, const char *tell_string, const char *button_text)
+{
+	const int box_button_margin = 32;
+
+	if (info->visible)
+		return;
+
+	box.tell(tell_string);
+	info->button.create_text(box.box_x1+(box.box_x2-box.box_x1+1)/2-10, box.box_y2-box_button_margin, button_text);
+	info->button.paint();
+	info->visible = 1;
+}
+
+int mp_info_box_detect(InfoBox *info)
+{
+	if (!info->visible)
+		return 0;
+
+	if (info->button.detect(info->button.str_buf[0], KEY_RETURN))
+	{
+		mouse.get_event();
+		info->visible = 0;
+		box.close();
+		return 1;
+	}
+
+	return 0;
+}
+
+
 // Display a box to input a string. The pointer to name will be used
 // to initialize the field. The user may edit the box as appropriate.
 // The return is 1 when ok is pressed, and 0 when cancel is pressed.
@@ -2356,6 +2397,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	startButton.create(320, 538, "START-U", "START-D", 1, 0);
 	returnButton.create(520, 538, "CANCEL-U", "CANCEL-D", 1, 0);
 
+	InfoBox info_box;
+
 	// ###### begin Gilbert 24/10 #######//
 	vga_front.unlock_buf();
 	// ###### end Gilbert 24/10 #######//
@@ -2363,7 +2406,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
-		if( sys.need_redraw_flag )
+		if( sys.need_redraw_flag && !info_box.visible )
 		{
 			refreshFlag = SGOPTION_ALL;
 			mRefreshFlag = MGOPTION_ALL;
@@ -2588,6 +2631,12 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			refreshFlag = 0;
 			mRefreshFlag = 0;
 		}
+
+		if( mp_info_box_detect(&info_box) )
+		{
+			return 0;
+		}
+
 		sys.blt_virtual_buf();
 
 		if( config.music_flag )
@@ -2637,12 +2686,22 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					}
 					else if (regPlayerId[q] == 1) // Game host is always #1
 					{
-						// Cannot continue without a game organizer
-						box.msg(_("The game host has disconnected."));
-						return 0;
+						mp_info_box_show(&info_box, _("The game host has disconnected."), _("Ok"));
 					}
 				}
 			}
+		}
+
+		if( info_box.visible )
+		{
+			// If the info box is being displayed, then a serious condition
+			// has occurred, and the user will eventually close out the
+			// connection. Skip normal input at this point while the user
+			// has time to understand what happened. This jump is placed after
+			// the network polling so that connections can drop off smoothly.
+
+			vga_front.unlock_buf();
+			continue;
 		}
 
 		if( recvPtr )
@@ -2657,8 +2716,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
-					box.msg(_("The game host has aborted the game."));
-					return 0;
+					mp_info_box_show(&info_box, _("The game host has aborted the game."), _("Ok"));
+					break;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
 					refreshFlag |= SGOPTION_ALL_OPTIONS;
@@ -2967,28 +3026,28 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					switch (((MpStructRefuseNewPlayer *)recvPtr)->reason)
 					{
 					case REFUSE_REASON_SKVER_MISMATCH:
-						box.msg(_("Your game version does not match the host."));
+						mp_info_box_show(&info_box, _("Your game version does not match the host."), _("Ok"));
 						break;
 					case REFUSE_REASON_GAME_FULL:
-						box.msg(_("The game you tried to join is currently full."));
+						mp_info_box_show(&info_box, _("The game you tried to join is currently full."), _("Ok"));
 						break;
 					case REFUSE_REASON_NOT_AUTHORIZED:
-						box.msg(_("The host refused to authorize your connection."));
+						mp_info_box_show(&info_box, _("The host refused to authorize your connection."), _("Ok"));
 						break;
 					case REFUSE_REASON_SAVEFILE_REQUIRED:
-						box.msg(_("You cannot join the game because the host is loading a save."));
+						mp_info_box_show(&info_box, _("You cannot join the game because the host is loading a save."), _("Ok"));
 						break;
 					case REFUSE_REASON_SAVEFILE_NOT_REQUIRED:
-						box.msg(_("You cannot join the game because the host is not loading a save."));
+						mp_info_box_show(&info_box, _("You cannot join the game because the host is not loading a save."), _("Ok"));
 						break;
 					case REFUSE_REASON_SAVEFILE_MISMATCH:
-						box.msg(_("You cannot join the game because the saved multiplayer game you selected is different."));
+						mp_info_box_show(&info_box, _("You cannot join the game because the saved multiplayer game you selected is different."), _("Ok"));
 						break;
 					default:
-						box.msg(_("The host refused connection."));
+						mp_info_box_show(&info_box, _("The host refused connection."), _("Ok"));
 						break;
 					}
-					return 0;
+					break;
 				case MPMSG_PLAYER_ID:
 					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
 					{
@@ -3505,24 +3564,8 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			}
 			if( q >= regPlayerCount )		// not all playerReadyFlag[p] = 1;
 			{
-#ifdef DEBUG
-				sumBalance = 0;
-#endif
-#ifdef BETA
-				sumBalance = 0;
-#endif
-				if( sumBalance >= 0 )
-				{
-//					MpStructBase msgStart(MPMSG_START_GAME);
-//					mp_obj.send(BROADCAST_PID, &msgStart, sizeof(msgStart));
-					retFlag = 1;
-					break;							// break while(1)
-				}
-				else
-				{
-					// too many non-CD version
-					box.msg("There are not enough Seven Kingdoms CDROMs to start the game. Each CDROM supports "PLAYER_RATIO_STRING" players.");
-				}
+				retFlag = 1;
+				break;
 			}
 		}
 		else if( returnButton.detect() || (sys.signal_exit_flag == 1) ) // Richard 24-12-2013: signal_exit_flag works as cancel at this stage
@@ -4248,6 +4291,8 @@ int Game::mp_select_load_option(char *fileName)
 	startButton.create(320, 538, "START-U", "START-D", 1, 0);
 	returnButton.create(520, 538, "CANCEL-U", "CANCEL-D", 1, 0);
 
+	InfoBox info_box;
+
 	// ###### begin Gilbert 24/10 #######//
 	vga_front.unlock_buf();
 	// ###### end Gilbert 24/10 #######//
@@ -4255,7 +4300,7 @@ int Game::mp_select_load_option(char *fileName)
 	while(1)
 	{
 		// ####### begin Gilbert 23/10 #######//
-		if( sys.need_redraw_flag )
+		if( sys.need_redraw_flag && !info_box.visible )
 		{
 			refreshFlag = SGOPTION_ALL;
 			mRefreshFlag = MGOPTION_ALL;
@@ -4478,6 +4523,12 @@ int Game::mp_select_load_option(char *fileName)
 			refreshFlag = 0;
 			mRefreshFlag = 0;
 		}
+
+		if( mp_info_box_detect(&info_box) )
+		{
+			return 0;
+		}
+
 		sys.blt_virtual_buf();
 
 		if( config.music_flag )
@@ -4528,12 +4579,22 @@ int Game::mp_select_load_option(char *fileName)
 					}
 					else if (regPlayerId[q] == 1) // Game host is always #1
 					{
-						// Cannot continue without a game organizer
-						box.msg(_("The game host has disconnected."));
-						return 0;
+						mp_info_box_show(&info_box, _("The game host has disconnected."), _("Ok"));
 					}
 				}
 			}
+		}
+
+		if( info_box.visible )
+		{
+			// If the info box is being displayed, then a serious condition
+			// has occurred, and the user will eventually close out the
+			// connection. Skip normal input at this point while the user
+			// has time to understand what happened. This is placed here so
+			// that the network service will still get polled.
+
+			vga_front.unlock_buf();
+			continue;
 		}
 
 		if( recvPtr )
@@ -4548,8 +4609,8 @@ int Game::mp_select_load_option(char *fileName)
 				switch( ((MpStructBase *)recvPtr)->msg_id )
 				{
 				case MPMSG_ABORT_GAME:
-					box.msg(_("The game host has aborted the game."));
-					return 0;
+					mp_info_box_show(&info_box, _("The game host has aborted the game."), _("Ok"));
+					break;
 				case MPMSG_SEND_CONFIG:
 					tempConfig.change_game_setting( ((MpStructConfig *)recvPtr)->game_config );
 					refreshFlag |= SGOPTION_ALL_OPTIONS;
@@ -4735,28 +4796,28 @@ int Game::mp_select_load_option(char *fileName)
 					switch (((MpStructRefuseNewPlayer *)recvPtr)->reason)
 					{
 					case REFUSE_REASON_SKVER_MISMATCH:
-						box.msg(_("Your game version does not match the host."));
+						mp_info_box_show(&info_box, _("Your game version does not match the host."), _("Ok"));
 						break;
 					case REFUSE_REASON_GAME_FULL:
-						box.msg(_("The game you tried to join is currently full."));
+						mp_info_box_show(&info_box, _("The game you tried to join is currently full."), _("Ok"));
 						break;
 					case REFUSE_REASON_NOT_AUTHORIZED:
-						box.msg(_("The host refused to authorize your connection."));
+						mp_info_box_show(&info_box, _("The host refused to authorize your connection."), _("Ok"));
 						break;
 					case REFUSE_REASON_SAVEFILE_REQUIRED:
-						box.msg(_("You cannot join the game because the host is loading a save."));
+						mp_info_box_show(&info_box, _("You cannot join the game because the host is loading a save."), _("Ok"));
 						break;
 					case REFUSE_REASON_SAVEFILE_NOT_REQUIRED:
-						box.msg(_("You cannot join the game because the host is not loading a save."));
+						mp_info_box_show(&info_box, _("You cannot join the game because the host is not loading a save."), _("Ok"));
 						break;
 					case REFUSE_REASON_SAVEFILE_MISMATCH:
-						box.msg(_("You cannot join the game because the saved multiplayer game you selected is different."));
+						mp_info_box_show(&info_box, _("You cannot join the game because the saved multiplayer game you selected is different."), _("Ok"));
 						break;
 					default:
-						box.msg(_("The host refused connection."));
+						mp_info_box_show(&info_box, _("The host refused connection."), _("Ok"));
 						break;
 					}
-					return 0;
+					break;
 				case MPMSG_PLAYER_ID:
 					if (mp_obj.set_my_player_id(((MpStructPlayerId *)recvPtr)->your_id))
 					{
@@ -4881,12 +4942,6 @@ int Game::mp_select_load_option(char *fileName)
 			}
 			if( q >= regPlayerCount )		// not all playerReadyFlag[p] = 1;
 			{
-#ifdef DEBUG
-				sumBalance = 0;
-#endif
-#ifdef BETA
-				sumBalance = 0;
-#endif
 				if( regPlayerCount != maxPlayer )
 				{
 					String str;
@@ -4901,11 +4956,6 @@ int Game::mp_select_load_option(char *fileName)
 					str += " The game cannot start.";
 
 					box.msg(str);
-				}
-				else if( sumBalance < 0 )
-				{
-					// too many non-CD version
-					box.msg("There are not enough Seven Kingdoms CDROMs to start the game. Each CDROM supports "PLAYER_RATIO_STRING" players.");
 				}
 				else
 				{
