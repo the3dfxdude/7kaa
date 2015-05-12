@@ -773,6 +773,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 		if (player != NULL) {
 			player->connecting = 0;
+			event.peer->data = NULL;
 			MSG("Player '%s' (%d) disconnected. connectedPeers=%d\n", player->name, player->id, host->connectedPeers);
 		}
 
