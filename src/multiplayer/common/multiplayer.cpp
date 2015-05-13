@@ -567,6 +567,7 @@ void MultiPlayer::poll_players()
 {
 }
 
+// retrieve the ith index from the player pool array
 PlayerDesc *MultiPlayer::get_player(int i)
 {
 	if (i < 1 || i > max_players)
@@ -595,6 +596,7 @@ PlayerDesc *MultiPlayer::get_player(ENetAddress *address)
 	return player_pool[i];
 }
 
+// retrieve the player by ID value (currently ID == array index)
 PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 {
 	if (playerId < 1 || playerId > max_players)
@@ -602,7 +604,8 @@ PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 	return player_pool[playerId-1];
 }
 
-ENetPeer *MultiPlayer::get_peer(uint32_t id)
+// retrieve the player by ID value from enet peer arrary
+ENetPeer *MultiPlayer::get_peer(uint32_t playerId)
 {
 	ENetPeer *peer;
 
@@ -612,7 +615,7 @@ ENetPeer *MultiPlayer::get_peer(uint32_t id)
 
 			player = (PlayerDesc *)peer->data;
 
-			if (player->id == id)
+			if (player->id == playerId)
 				break;
 		}
 	}

@@ -148,7 +148,7 @@ private:
 	int open_port(uint16_t port, int fallback);
 
 	PlayerDesc *create_player(ENetAddress *address);
-	ENetPeer *get_peer(uint32_t id);
+	ENetPeer *get_peer(uint32_t playerId);
 };
 
 extern MultiPlayer mp_obj;

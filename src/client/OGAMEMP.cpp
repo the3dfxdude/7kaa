@@ -2769,7 +2769,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							// notify all players of the new player
 							MpStructAcceptNewPlayer msgAccept(from,
 								newPlayerMsg->name,
-								mp_obj.get_player(from)->get_address(),
+								mp_obj.search_player(from)->get_address(),
 								1);
 							mp_obj.send( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
 
@@ -4686,7 +4686,7 @@ int Game::mp_select_load_option(char *fileName)
 							// notify all players of the new player
 							MpStructAcceptNewPlayer msgAccept(from,
 								newPlayerMsg->name,
-								mp_obj.get_player(from)->get_address(),
+								mp_obj.search_player(from)->get_address(),
 								1);
 							mp_obj.send( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
 
