@@ -874,6 +874,10 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 		player = get_pending_player(&event.peer->address);
 	}
 
+	if (player) {
+		*from = player->id;
+	}
+
 	switch (event.type) {
 	case ENET_EVENT_TYPE_RECEIVE:
 		if (event.packet->dataLength < MP_RECV_BUFFER_SIZE) {
@@ -899,6 +903,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 			player = new PlayerDesc(&event.peer->address);
 			if (host_flag) {
 				player->id = get_avail_player_id();
+				*from = player->id;
 			}
 		}
 
@@ -933,10 +938,6 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 	default:
 		err_now("unhandled enet event");
-	}
-
-	if (player) {
-		*from = player->id;
 	}
 
 	return got_recv;
