@@ -3675,7 +3675,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				// ensure it is a valid player
 				PID_TYPE playerId = regPlayerId[p];
 				PlayerDesc *player = mp_obj.search_player(playerId);
-				if( !playerId || !player || !player->connecting )
+				if( !playerId || !player || !mp_obj.is_player_connecting(player->id) )
 					continue;
 
 				nationPara[playerCount].init(playerCount+1, playerId, playerColor[p], playerRace[p], player->friendly_name_str());
@@ -5057,7 +5057,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				PID_TYPE playerId = regPlayerId[p];
 				PlayerDesc *player = mp_obj.search_player(playerId);
-				if( !playerId || !player || !player->connecting )
+				if( !playerId || !player || !mp_obj.is_player_connecting(player->id) )
 					continue;
 
 				// match nation color
@@ -5084,7 +5084,7 @@ int Game::mp_select_load_option(char *fileName)
 				// ensure it is a valid player
 				PlayerDesc *player = mp_obj.get_player(d);
 				PID_TYPE playerId = player ? player->pid() : 0;
-				if( !playerId || !player->connecting )
+				if( !playerId || !mp_obj.is_player_connecting(player->id) )
 					continue;
 				for( p = 0; p < regPlayerCount && regPlayerId[p] != playerId; ++p);
 				if( p >= regPlayerCount )		// not found

@@ -33,7 +33,6 @@ class PlayerDesc
 public:
 	uint32_t id;
 	char name[MP_FRIENDLY_NAME_LEN+1];
-	char connecting;
 	char authorized;
 	ENetAddress address;
 

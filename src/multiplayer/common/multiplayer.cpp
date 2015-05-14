@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010,2011,2013 Jesse Allen
+ * Copyright 2010,2011,2013,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -557,7 +557,6 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 		// already connected
 		MSG("Player (%d) already connected\n", playerId);
 		peer->data = player;
-		player->connecting = 1;
 		poll_players();
 
 	} else if (contact) {
@@ -621,7 +620,6 @@ int MultiPlayer::set_my_player_id(uint32_t playerId)
 {
 	my_player_id = playerId;
 	my_player->id = playerId;
-	my_player->connecting = 1;
 	my_player->authorized = 1;
 
 	MSG("You have been assigned id=%d\n", playerId);
@@ -906,7 +904,6 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 		if (player) {
 			MSG("Player '%s' (%d) connected.\n", player->name, player->id);
-			player->connecting = 1;
 			event.peer->data = player;
 			poll_players();
 		}
@@ -920,7 +917,6 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 		if (player) {
 			MSG("Player '%s' (%d) disconnected.\n", player->name, player->id);
-			player->connecting = 0;
 			if (host_flag) {
 				delete player;
 			} else {
