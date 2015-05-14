@@ -4547,7 +4547,7 @@ int Game::mp_select_load_option(char *fileName)
 		// --------- detect remote message -------//
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
 
-		if( sysMsgCount && from )
+		if( sysMsgCount < 0 && from )
 		{
 			mRefreshFlag |= MGOPTION_PLAYERS;
 
