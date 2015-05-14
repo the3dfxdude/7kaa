@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010,2011 Jesse Allen
+ * Copyright 2010,2011,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,26 +42,6 @@ PlayerDesc::PlayerDesc(ENetAddress *address)
 	strcpy(name, "?Anonymous?");
 	this->address.host = address->host;
 	this->address.port = address->port;
-	connecting = 0;
-	authorized = 0;
-}
-
-PlayerDesc::PlayerDesc(uint32_t id, ENetAddress *address)
-{
-	this->id = id;
-	strcpy(name, "?Anonymous?");
-	this->address.host = address->host;
-	this->address.port = address->port;
-	connecting = 0;
-	authorized = 0;
-}
-
-PlayerDesc::PlayerDesc(uint32_t id, char *name)
-{
-	this->id = id;
-	strcpy(this->name, name);
-	address.host = ENET_HOST_ANY;
-	address.port = 0;
 	connecting = 0;
 	authorized = 0;
 }

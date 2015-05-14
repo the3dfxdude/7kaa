@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010,2011 Jesse Allen
+ * Copyright 2010,2011,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,6 @@ public:
 
 	PlayerDesc();
 	PlayerDesc(ENetAddress *address);
-	PlayerDesc(uint32_t id, ENetAddress *address);
-	PlayerDesc(uint32_t id, char *name);
 	PlayerDesc(char *name);
 
 	uint32_t pid();
