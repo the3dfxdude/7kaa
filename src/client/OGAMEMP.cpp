@@ -2650,46 +2650,51 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		// --------- detect remote message -------//
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
 
-		if( sysMsgCount )
+		if( sysMsgCount < 0 && from )
 		{
-			// see any player disconnect
-			for(int q = 0; q < regPlayerCount; ++q)
+			mRefreshFlag |= MGOPTION_PLAYERS;
+
+			if( from == 1 ) // The game host is always #1
 			{
-				if( !mp_obj.is_player_connecting(regPlayerId[q]) )
+				mp_info_box_show(&info_box, _("The game host has disconnected."), _("Ok"));
+			}
+
+			if( remote.is_host )
+			{
+				// inform clients of player disconnection
+				MpStructPlayerDisconnect msgDisconnect(from);
+				mp_obj.send(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+				mp_obj.delete_player(from);
+
+				int q;
+				for( q = 0; q < regPlayerCount; ++q )
+					if( regPlayerId[q] == from )
+						break;
+				if( q < regPlayerCount )
 				{
-					if (remote.is_host) {
-						mp_obj.delete_player(regPlayerId[q]);
-						// inform clients of player disconnection
-						MpStructPlayerDisconnect msgDisconnect(regPlayerId[q]);
-						mp_obj.send(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
-
-						mRefreshFlag |= MGOPTION_PLAYERS;
-
-						memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
-						regPlayerId[MAX_NATION-1] = 0;
-						memmove( playerReadyFlag+q, playerReadyFlag+q+1, (MAX_NATION-1-q)*sizeof(playerReadyFlag[0]) );
-						playerReadyFlag[MAX_NATION-1] = 0;
-						short freeColor = playerColor[q];
-						memmove( playerColor+q, playerColor+q+1, (MAX_NATION-1-q)*sizeof(playerColor[0]) );
-						playerColor[MAX_NATION-1] = 0;
-						if(freeColor > 0 && freeColor <= MAX_COLOR_SCHEME)
-							colorAssigned[freeColor-1] = 0;
-						short freeRace = playerRace[q];
-						memmove( playerRace+q, playerRace+q+1, (MAX_NATION-1-q)*sizeof(playerRace[0]) );
-						playerRace[MAX_NATION-1] = 0;
-						if(freeRace > 0 && freeRace <= MAX_RACE)
-							raceAssigned[freeRace-1]--;
-						memmove( playerBalance+q, playerBalance+q+1, (MAX_NATION-1-q)*sizeof(playerBalance[0]) );
-						playerBalance[MAX_NATION-1] = 0;
-						--regPlayerCount;
-						--q;
-					}
-					else if (regPlayerId[q] == 1) // Game host is always #1
-					{
-						mp_info_box_show(&info_box, _("The game host has disconnected."), _("Ok"));
-					}
+					memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
+					regPlayerId[MAX_NATION-1] = 0;
+					memmove( playerReadyFlag+q, playerReadyFlag+q+1, (MAX_NATION-1-q)*sizeof(playerReadyFlag[0]) );
+					playerReadyFlag[MAX_NATION-1] = 0;
+					short freeColor = playerColor[q];
+					memmove( playerColor+q, playerColor+q+1, (MAX_NATION-1-q)*sizeof(playerColor[0]) );
+					playerColor[MAX_NATION-1] = 0;
+					if(freeColor > 0 && freeColor <= MAX_COLOR_SCHEME)
+						colorAssigned[freeColor-1] = 0;
+					short freeRace = playerRace[q];
+					memmove( playerRace+q, playerRace+q+1, (MAX_NATION-1-q)*sizeof(playerRace[0]) );
+					playerRace[MAX_NATION-1] = 0;
+					if(freeRace > 0 && freeRace <= MAX_RACE)
+						raceAssigned[freeRace-1]--;
+					memmove( playerBalance+q, playerBalance+q+1, (MAX_NATION-1-q)*sizeof(playerBalance[0]) );
+					playerBalance[MAX_NATION-1] = 0;
+					--regPlayerCount;
 				}
 			}
+		}
+		else if( sysMsgCount > 0 && from && !remote.is_host )
+		{
+			mRefreshFlag |= MGOPTION_PLAYERS;
 		}
 
 		if( info_box.visible )
@@ -4542,48 +4547,54 @@ int Game::mp_select_load_option(char *fileName)
 		// --------- detect remote message -------//
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
 
-		if( sysMsgCount )
+		if( sysMsgCount && from )
 		{
-			// see any player disconnect
-			for(int q = 0; q < regPlayerCount; ++q)
+			mRefreshFlag |= MGOPTION_PLAYERS;
+
+			if( from == 1 ) // The game host is always #1
 			{
-				if( !mp_obj.is_player_connecting(regPlayerId[q]) )
+				err_when(remote.is_host);
+				mp_info_box_show(&info_box, _("The game host has disconnected."), _("Ok"));
+			}
+
+			if( remote.is_host )
+			{
+				// inform clients of player disconnection
+				MpStructPlayerDisconnect msgDisconnect(from);
+				mp_obj.send(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
+				mp_obj.delete_player(from);
+
+				int q;
+				for( q = 0; q < regPlayerCount; ++q )
+					if( regPlayerId[q] == from )
+						break;
+				if( q < regPlayerCount)
 				{
-					if (remote.is_host)
-					{
-						mp_obj.delete_player(regPlayerId[q]);
-						// inform clients of player disconnection
-						MpStructPlayerDisconnect msgDisconnect(regPlayerId[q]);
-						mp_obj.send(BROADCAST_PID, &msgDisconnect, sizeof(msgDisconnect));
-
-						mRefreshFlag |= MGOPTION_PLAYERS;
-
-						memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
-						regPlayerId[MAX_NATION-1] = 0;
-						memmove( playerReadyFlag+q, playerReadyFlag+q+1, (MAX_NATION-1-q)*sizeof(playerReadyFlag[0]) );
-						playerReadyFlag[MAX_NATION-1] = 0;
-						short freeColor = playerColor[q];
-						memmove( playerColor+q, playerColor+q+1, (MAX_NATION-1-q)*sizeof(playerColor[0]) );
-						playerColor[MAX_NATION-1] = 0;
-						if(freeColor > 0 && freeColor <= MAX_COLOR_SCHEME)
-							colorAssigned[freeColor-1] = 0;
-						short freeRace = playerRace[q];
-						memmove( playerRace+q, playerRace+q+1, (MAX_NATION-1-q)*sizeof(playerRace[0]) );
-						playerRace[MAX_NATION-1] = 0;
-						if(freeRace > 0 && freeRace <= MAX_RACE)
-							raceAssigned[freeRace-1]--;
-						memmove( playerBalance+q, playerBalance+q+1, (MAX_NATION-1-q)*sizeof(playerBalance[0]) );
-						playerBalance[MAX_NATION-1] = 0;
-						--regPlayerCount;
-						--q;
-					}
-					else if (regPlayerId[q] == 1) // Game host is always #1
-					{
-						mp_info_box_show(&info_box, _("The game host has disconnected."), _("Ok"));
-					}
+					memmove( regPlayerId+q, regPlayerId+q+1, (MAX_NATION-1-q)*sizeof(regPlayerId[0]) );
+					regPlayerId[MAX_NATION-1] = 0;
+					memmove( playerReadyFlag+q, playerReadyFlag+q+1, (MAX_NATION-1-q)*sizeof(playerReadyFlag[0]) );
+					playerReadyFlag[MAX_NATION-1] = 0;
+					short freeColor = playerColor[q];
+					memmove( playerColor+q, playerColor+q+1, (MAX_NATION-1-q)*sizeof(playerColor[0]) );
+					playerColor[MAX_NATION-1] = 0;
+					if(freeColor > 0 && freeColor <= MAX_COLOR_SCHEME)
+						colorAssigned[freeColor-1] = 0;
+					short freeRace = playerRace[q];
+					memmove( playerRace+q, playerRace+q+1, (MAX_NATION-1-q)*sizeof(playerRace[0]) );
+					playerRace[MAX_NATION-1] = 0;
+					if(freeRace > 0 && freeRace <= MAX_RACE)
+						raceAssigned[freeRace-1]--;
+					memmove( playerBalance+q, playerBalance+q+1, (MAX_NATION-1-q)*sizeof(playerBalance[0]) );
+					playerBalance[MAX_NATION-1] = 0;
+					--regPlayerCount;
 				}
 			}
 		}
+		else if( sysMsgCount > 0 && from && !remote.is_host )
+		{
+			mRefreshFlag |= MGOPTION_PLAYERS;
+		}
+
 
 		if( info_box.visible )
 		{

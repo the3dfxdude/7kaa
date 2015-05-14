@@ -36,6 +36,16 @@ PlayerDesc::PlayerDesc()
 	authorized = 0;
 }
 
+PlayerDesc::PlayerDesc(ENetAddress *address)
+{
+	id = 0;
+	strcpy(name, "?Anonymous?");
+	this->address.host = address->host;
+	this->address.port = address->port;
+	connecting = 0;
+	authorized = 0;
+}
+
 PlayerDesc::PlayerDesc(uint32_t id, ENetAddress *address)
 {
 	this->id = id;

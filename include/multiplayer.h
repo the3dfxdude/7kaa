@@ -84,6 +84,7 @@ private:
 	int               max_players;
 
 	PlayerDesc        *player_pool[MAX_NATION];
+	PlayerDesc        *pending_pool[MAX_NATION];
 
 	char *            recv_buf;
 
@@ -127,14 +128,12 @@ public:
 	SessionDesc *get_current_session();
 
 	// -------- functions on player management -------//
-	int         add_player(uint32_t id, char *name, ENetAddress *address, char contact);
-	int         auth_player(uint32_t id, char *name, char *password);
-	int         set_my_player_id(uint32_t id);
-	void        set_player_name(uint32_t id, char *name);
-	void        delete_player(uint32_t id);
+	int         add_player(uint32_t playerId, char *name, ENetAddress *address, char contact);
+	int         auth_player(uint32_t playerId, char *name, char *password);
+	int         set_my_player_id(uint32_t playerId);
+	void        delete_player(uint32_t playerId);
 	void        poll_players();
 	PlayerDesc* get_player(int i);
-	PlayerDesc* get_player(ENetAddress *address);
 	PlayerDesc* search_player(uint32_t playerId);
 	int         is_player_connecting(uint32_t playerId);
 	int         get_player_count();
@@ -146,9 +145,14 @@ public:
 
 private:
 	int open_port(uint16_t port, int fallback);
+	void close_port();
 
-	PlayerDesc *create_player(ENetAddress *address);
+	uint32_t get_avail_player_id();
+	int add_pending_player(PlayerDesc *player);
+	PlayerDesc* get_pending_player(uint32_t playerId);
+	PlayerDesc* get_pending_player(ENetAddress *address);
 	ENetPeer *get_peer(uint32_t playerId);
+	ENetPeer *get_peer(ENetAddress *address);
 };
 
 extern MultiPlayer mp_obj;

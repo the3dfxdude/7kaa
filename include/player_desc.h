@@ -38,6 +38,7 @@ public:
 	ENetAddress address;
 
 	PlayerDesc();
+	PlayerDesc(ENetAddress *address);
 	PlayerDesc(uint32_t id, ENetAddress *address);
 	PlayerDesc(uint32_t id, char *name);
 	PlayerDesc(char *name);

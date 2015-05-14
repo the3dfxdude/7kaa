@@ -138,6 +138,7 @@ void MultiPlayer::init(ProtocolType protocol_type)
 
 	for (int i = 0; i < MAX_NATION; i++) {
 		player_pool[i] = NULL;
+		pending_pool[i] = NULL;
 	}
 
 	recv_buf = new char[MP_RECV_BUFFER_SIZE];
@@ -153,25 +154,35 @@ void MultiPlayer::deinit()
 
 	init_flag = 0;
 	lobbied_flag = 0;
+	host_flag = 0;
+	allowing_connections = 0;
 
-	close_session();
 	current_sessions.zap();
 
-	for (int i = 0; i < max_players; i++) {
-		delete_player(i+1);
+	if (host) {
+		ENetPeer *peer;
+		for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+			if (peer->state == ENET_PEER_STATE_CONNECTED) {
+				enet_peer_disconnect_now(peer, 0);
+			}
+			if (peer->data) {
+				delete (PlayerDesc *)peer->data;
+				peer->data = NULL;
+			}
+		}
 	}
-	my_player_id = 0;
-	my_player = NULL;
+	for (int i = 0; i < MAX_NATION; i++) {
+		if (pending_pool[i]) {
+			delete pending_pool[i];
+		}
+	}
+	delete my_player;
 
-	if (host != NULL) {
-		enet_host_destroy(host);
-		host = NULL;
-	}
+	close_port();
 	enet_deinitialize();
 
-	if (recv_buf != NULL) {
+	if (recv_buf) {
 		delete [] recv_buf;
-		recv_buf = NULL;
 	}
 }
 
@@ -261,6 +272,14 @@ int MultiPlayer::open_port(uint16_t port, int fallback)
 	return 1;
 }
 
+void MultiPlayer::close_port()
+{
+	if (host) {
+		enet_host_destroy(host);
+		host = NULL;
+	}
+}
+
 int MultiPlayer::set_remote_session_provider(const char *server)
 {
 	if (enet_address_set_host(
@@ -320,7 +339,7 @@ SessionDesc *MultiPlayer::get_current_session()
 // return 1 if success
 int MultiPlayer::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
 {
-	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION);
+	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION || host);
 
 #ifdef HOST_ANY_PORT
 	if (!open_port(0, 0)) {
@@ -339,11 +358,10 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	max_players = maxPlayers;
 	allowing_connections = 1;
 
-	// Add hosts machine's player to the pool now
-	err_when(player_pool[0] != NULL);
-	my_player = new PlayerDesc(1, playerName);
-	my_player->connecting = 1;
+	my_player = new PlayerDesc(playerName);
+	my_player->id = 1;
 	set_my_player_id(1);
+	player_pool[0] = my_player; // can we skip polling players?
 
 	return 1;
 }
@@ -354,8 +372,9 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 int MultiPlayer::join_session(SessionDesc *session, char *playerName)
 {
 	ENetPeer *peer;
+	PlayerDesc *game_host;
 
-	err_when(session == NULL);
+	err_when(!session || host);
 
 	if (!open_port(0, 0)) {
 		MSG("Unable to open a port for the session.\n");
@@ -368,49 +387,47 @@ int MultiPlayer::join_session(SessionDesc *session, char *playerName)
 		1,
 		0
 	);
-	if (peer == NULL) {
+	if (!peer) {
+		close_port();
 		return 0;
 	}
 
 	max_players = MAX_NATION;
 	allowing_connections = 1;
 
-	// register the host now, even though his name is not known yet
-	err_when(player_pool[0] != NULL);
-	player_pool[0] = new PlayerDesc(1, &session->address);
-	peer->data = player_pool[0];
-
-	// create this player locally, we will put it in the right place
-	// later
-	my_player = new PlayerDesc(playerName);
-	my_player->connecting = 1;
-
 	joined_session = *session;
+
+	game_host = new PlayerDesc(&session->address);
+	game_host->id = 1;
+	game_host->authorized = 1;
+	peer->data = game_host;
+
+	my_player = new PlayerDesc(playerName);
 
 	return 1;
 }
 
 // Call close_session when leaving any session. Returns the number of
-// disconnects pending.
+// disconnect procedures started.
 int MultiPlayer::close_session()
 {
-	int pending;
+	ENetPeer *peer;
+	int count;
 
-	pending = 0;
+	err_when(!host);
+
 	host_flag = 0;
 	allowing_connections = 0;
 
-	// disconnect all clients
-	for (int i = 0; i < max_players; i++) {
-		ENetPeer *peer;
-		peer = get_peer(i+1);
-		if (peer) {
+	count = 0;
+	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+		if (peer->state == ENET_PEER_STATE_CONNECTED) {
 			enet_peer_disconnect_later(peer, 0);
-			pending++;
+			count++;
 		}
 	}
 
-	return pending;
+	return count;
 }
 
 void MultiPlayer::game_starting()
@@ -423,65 +440,146 @@ void MultiPlayer::disable_new_connections()
 	allowing_connections = 0;
 }
 
-// Create a player and add to the pool.
-//
-// This is only called by the host upon connection from a client. The host
-// chooses the player's id.
-//
-// Returns the player pointer when added to the pool, and NULL if the player
-// wasn't added to the pool.
-//
-PlayerDesc *MultiPlayer::create_player(ENetAddress *address)
+// Returns the next available player id.
+uint32_t MultiPlayer::get_avail_player_id()
 {
-	int i;
+	uint32_t playerId;
 
-	// search for an empty slot
-	for (i = 0; i < max_players; i++)
-		if (player_pool[i] == NULL)
-			break;
-	if (i >= max_players)
-		return NULL;
+	err_when(!host_flag);
 
-	player_pool[i] = new PlayerDesc(i+1, address);
-	player_pool[i]->connecting = 1;
+	playerId = 2;
+	while (get_peer(playerId))
+		playerId++;
 
-	return player_pool[i];
+	return playerId;
 }
 
-// Adds a player that is not already connected. Otherwise sets the player's
-// name.
-//
-// Returns 1 when the player's name was set.
-// Returns 0 when the player's name could not be set.
-int MultiPlayer::add_player(uint32_t id, char *name, ENetAddress *address, char contact)
+// When a player is not already connected, or when initially connecting
+// to a game host, then this will add the player to the pending list.
+// Returns 0 if the list is full.
+// Returns 1 if the player was added.
+int MultiPlayer::add_pending_player(PlayerDesc *player)
 {
-	if (id < 1 || id > max_players) {
+	unsigned int i;
+
+	for (i = 0; i < MAX_NATION; i++) {
+		if (!pending_pool[i])
+			break;
+	}
+
+	if (i >= MAX_NATION)
 		return 0;
-	}
 
-	if (player_pool[id-1] == NULL && address->host != ENET_HOST_ANY) {
-		ENetPeer *peer;
+	pending_pool[i] = player;
 
-		peer = NULL;
-		if (contact) {
-			peer = enet_host_connect(host,
-				address,
-				1,
-				0);
-			if (peer == NULL) {
-				return 0;
-			}
+	return 1;
+}
 
-			peer->data = player_pool[id-1];
+// Returns NULL if player is not pending.
+// Returns player if found. player is removed from pending pool and
+// becomes the responsiblity of the caller.
+PlayerDesc *MultiPlayer::get_pending_player(uint32_t playerId)
+{
+	unsigned int i;
+	PlayerDesc *player;
+
+	for (i = 0; i < MAX_NATION; i++) {
+		if (pending_pool[i] && pending_pool[i]->id == playerId) {
+			break;
 		}
-
-		player_pool[id-1] = new PlayerDesc(id, address);
 	}
 
-	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
-	player_pool[id-1]->name[MP_FRIENDLY_NAME_LEN] = 0;
+	if (i >= MAX_NATION)
+		return NULL;
 
-	MSG("Player '%s' (%d) recognized.\n", player_pool[id-1]->name, id);
+	player = pending_pool[i];
+	pending_pool[i] = NULL;
+
+	return player;
+}
+
+// Returns NULL if player is not pending.
+// Returns player if found. player is removed from pending pool and
+// becomes the responsiblity of the caller.
+PlayerDesc *MultiPlayer::get_pending_player(ENetAddress *address)
+{
+	unsigned int i;
+	PlayerDesc *player;
+
+	for (i = 0; i < MAX_NATION; i++) {
+		if (pending_pool[i]) {
+			ENetAddress *a = &pending_pool[i]->address;
+			if (a->host == address->host && a->port == address->port)
+				break;
+		}
+	}
+
+	if (i >= MAX_NATION)
+		return NULL;
+
+	player = pending_pool[i];
+	pending_pool[i] = NULL;
+
+	return player;
+}
+
+// Adds a player that previously was unknown. Creates a player descriptor if needed, and
+// initiates contact if requested. If contact is not requested, then the player is added
+// to the pending pool, and waits for contact from that player.
+//
+// Returns 1 when the player was added succesfully.
+// Returns 0 when the player was not added.
+int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address, char contact)
+{
+	PlayerDesc *player;
+	ENetPeer *peer;
+
+	if (playerId == my_player_id) {
+		err_now("add player");
+	}
+	peer = get_peer(playerId);
+	if (!peer && address->host != ENET_HOST_ANY) {
+		peer = get_peer(address);
+	}
+	if (peer) {
+		player = (PlayerDesc *)peer->data;
+	}
+	if (!player) {
+		player = new PlayerDesc(address);
+	}
+
+	player->id = playerId;
+	strncpy(player->name, name, MP_FRIENDLY_NAME_LEN);
+	player->name[MP_FRIENDLY_NAME_LEN] = 0;
+	player->authorized = 1;
+
+	if (peer) {
+		// already connected
+		MSG("Player (%d) already connected\n", playerId);
+		peer->data = player;
+		player->connecting = 1;
+		poll_players();
+
+	} else if (contact) {
+		// initiate contact
+		MSG("Contacting player (%d)\n", playerId);
+		peer = enet_host_connect(host, address, 1, 0);
+		if (!peer) {
+			delete player;
+			return 0;
+		}
+		peer->data = player;
+
+	} else {
+		MSG("Waiting for player (%d)\n", playerId);
+		// wait for contact
+		if (!add_pending_player(player)) {
+			delete player;
+			return 0;
+		}
+	}
+
+	MSG("Player '%s' (%d) recognized.\n", player->name, playerId);
 
 	return 1;
 }
@@ -491,123 +589,139 @@ int MultiPlayer::add_player(uint32_t id, char *name, ENetAddress *address, char 
 //
 // Returns 1 when a player is newly authorized.
 // Returns 0 when a player is not authorized.
-int MultiPlayer::auth_player(uint32_t id, char *name, char *password)
-{
-	if (!host_flag || id < 1 || id > max_players || player_pool[id-1] == NULL || player_pool[id-1]->authorized) {
-		return 0;
-	}
-
-	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN+1);
-	player_pool[id-1]->name[MP_FRIENDLY_NAME_LEN] = 0;
-
-	if (memcmp(password, joined_session.password, MP_FRIENDLY_NAME_LEN)) {
-		MSG("Player '%s' (%d) password is incorrect.\n", player_pool[id-1]->name, id);
-		return 0;
-	}
-
-	player_pool[id-1]->authorized = 1;
-	MSG("Player '%s' (%d) was authorized.\n", player_pool[id-1]->name, id);
-
-	return 1;
-}
-
-// Set my_player_id if not already set.
-// Returns 1 if it is newly set.
-// Returns 0 if it is cannot be set.
-int MultiPlayer::set_my_player_id(uint32_t id)
-{
-	if (id < 1 || id > max_players)
-		return 0;
-
-	if (my_player_id)
-		return 0;
-
-	my_player_id = id;
-	player_pool[id-1] = my_player;
-	my_player->connecting = 1;
-
-	MSG("You have been assigned id=%d\n", id);
-
-	return 1;
-}
-
-void MultiPlayer::set_player_name(uint32_t id, char *name)
-{
-	err_when(!player_pool[id-1]);
-	strncpy(player_pool[id-1]->name, name, MP_FRIENDLY_NAME_LEN);
-}
-
-// Deletes a player from the pool
-void MultiPlayer::delete_player(uint32_t id)
+int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 {
 	ENetPeer *peer;
+	PlayerDesc *player;
 
-	err_when(host == NULL);
+	err_when(!host || !host_flag);
 
-	if (id < 1 || id > max_players)
-		return;
+	peer = get_peer(playerId);
+	if (!peer || !peer->data) {
+		return 0;
+	}
+	player = (PlayerDesc *)peer->data;
 
-	peer = get_peer(id);
-
-	if (peer != NULL) {
-		enet_peer_disconnect_now(peer, 0);
-		peer->data = NULL;
+	if (memcmp(password, joined_session.password, MP_FRIENDLY_NAME_LEN)) {
+		MSG("Player (%d) password is incorrect.\n", playerId);
+		return 0;
 	}
 
-	if (player_pool[id-1] == NULL)
-		return;
+	strncpy(player->name, name, MP_FRIENDLY_NAME_LEN+1);
+	player->name[MP_FRIENDLY_NAME_LEN] = 0;
+	player->authorized = 1;
 
-	MSG("Player '%s' (%d) deleted.\n", player_pool[id-1]->name, id);
+	MSG("Player '%s' (%d) was authorized.\n", player->name, playerId);
+	poll_players();
 
-	delete player_pool[id-1];
-	player_pool[id-1] = NULL;
+	return 1;
+}
+
+int MultiPlayer::set_my_player_id(uint32_t playerId)
+{
+	my_player_id = playerId;
+	my_player->id = playerId;
+	my_player->connecting = 1;
+	my_player->authorized = 1;
+
+	MSG("You have been assigned id=%d\n", playerId);
+
+	return 1;
+}
+
+// Deletes a player by id, disconnecting if necessary.
+void MultiPlayer::delete_player(uint32_t playerId)
+{
+	ENetPeer *peer;
+	PlayerDesc *player;
+
+	err_when(!host);
+
+	player = NULL;
+	peer = get_peer(playerId);
+	if (peer) {
+		enet_peer_disconnect(peer, 0);
+		player = (PlayerDesc *)peer->data;
+		peer->data = NULL;
+		MSG("Requesting disconnect from player '%s' (%d).\n", player->name, playerId);
+		poll_players();
+	} else {
+		player = get_pending_player(playerId);
+		if (!player)
+			return;
+	}
+
+	MSG("Player '%s' (%d) deleted.\n", player->name, playerId);
+	delete player;
+}
+
+static int sort_players(const void *a, const void *b)
+{
+	if (((PlayerDesc *)a)->id < ((PlayerDesc *)b)->id)
+		return -1;
+	if (((PlayerDesc *)a)->id > ((PlayerDesc *)b)->id)
+		return 1;
+	return 0;
 }
 
 void MultiPlayer::poll_players()
 {
+	ENetPeer *peer;
+	unsigned int i;
+	unsigned int count;
+
+	player_pool[0] = my_player;
+	i = 1;
+	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+		if (peer->data) {
+			PlayerDesc *player = (PlayerDesc *)peer->data;
+
+			if (peer->state == ENET_PEER_STATE_CONNECTED && player->authorized) {
+				player_pool[i++] = player;
+				if (i >= MAX_NATION)
+					break;
+			}
+		}
+	}
+
+	count = i;
+	for ( ; i < MAX_NATION; i++)
+		player_pool[i] = NULL;
+
+	qsort(&player_pool, count, sizeof(player_pool[0]), &sort_players);
 }
 
-// retrieve the ith index from the player pool array
+// retrieve the ith-1 index from the player pool array
 PlayerDesc *MultiPlayer::get_player(int i)
 {
-	if (i < 1 || i > max_players)
+	if (i < 1 || i > MAX_NATION)
 		return NULL;
 
 	return player_pool[i-1];
 }
 
-PlayerDesc *MultiPlayer::get_player(ENetAddress *address)
+// retrieve the player by ID value from the player pool array
+PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 {
-	int i;
+	unsigned int i;
 
-	for (i = 0; i < max_players; i++) {
-		if (player_pool[i] == NULL) {
-			continue;
-		}
-		if (player_pool[i]->address.host == address->host &&
-			player_pool[i]->address.port == address->port) {
+	for (i = 0; i < MAX_NATION; i++) {
+		if (player_pool[i] && player_pool[i]->id == playerId)
 			break;
-		}
 	}
 
-	if (i >= max_players)
+	if (i >= MAX_NATION)
 		return NULL;
 
 	return player_pool[i];
-}
-
-// retrieve the player by ID value (currently ID == array index)
-PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
-{
-	if (playerId < 1 || playerId > max_players)
-		return NULL;
-	return player_pool[playerId-1];
 }
 
 // retrieve the player by ID value from enet peer arrary
 ENetPeer *MultiPlayer::get_peer(uint32_t playerId)
 {
 	ENetPeer *peer;
+
+	err_when(!host);
 
 	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
 		if (peer->data != NULL) {
@@ -627,6 +741,25 @@ ENetPeer *MultiPlayer::get_peer(uint32_t playerId)
 	return NULL;
 }
 
+// retrieve the player by ID value from enet peer arrary
+ENetPeer *MultiPlayer::get_peer(ENetAddress *address)
+{
+	ENetPeer *peer;
+
+	err_when(!host);
+
+	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+		if (peer->address.host == address->host && peer->address.port == address->port)
+			break;
+	}
+
+	if (peer < &host->peers[host->peerCount]) {
+		return peer;
+	}
+
+	return NULL;
+}
+
 // determine whether a player is lost
 //
 // MultiPlayer::received must be called (or remote.poll_msg) , 
@@ -635,18 +768,29 @@ ENetPeer *MultiPlayer::get_peer(uint32_t playerId)
 //
 int MultiPlayer::is_player_connecting(uint32_t playerId)
 {
-	if (playerId < 1 || playerId > max_players || !player_pool[playerId-1])
+	ENetPeer *peer;
+
+	if (playerId == my_player_id)
+		return 1;
+
+	peer = get_peer(playerId);
+	if (!peer)
 		return 0;
-	return player_pool[playerId-1]->connecting;
+
+	return peer->state == ENET_PEER_STATE_CONNECTED;
 }
 
+// return the number of players in the pool
 int MultiPlayer::get_player_count()
 {
-	int count = 0;
-	for (int i = 0; i < max_players; i++)
-		if (player_pool[i] && player_pool[i]->connecting)
-			count++;
-	return count;
+	int i;
+
+	for (i = 0; i < MAX_NATION; i++) {
+		if (!player_pool[i])
+			break;
+	}
+
+	return i;
 }
 
 // send udp message
@@ -659,7 +803,7 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 {
 	ENetPacket *packet;
 
-	err_when(to > max_players);
+	err_when(!host);
 
 	if (to == my_player_id) {
 		return 0;
@@ -670,11 +814,6 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 		return 0;
 	}
 
-	if (to != BROADCAST_PID && player_pool[to-1] == NULL) {
-		ERR("Player %d does not exist.\n", to);
-		return 0;
-	}
-
 	packet = enet_packet_create(
 		data,
 		msg_size,
@@ -682,14 +821,15 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 	);
 
 	if (to == BROADCAST_PID) {
+		// should we limit broadcast packets to authorized players?
 		enet_host_broadcast(host, 0, packet);
 	} else {
 		ENetPeer *peer;
 
 		peer = get_peer(to);
-
-		if (peer == NULL)
+		if (!peer) {
 			return 0;
+		}
 
 		enet_peer_send(peer, 0, packet);
 	}
@@ -697,12 +837,17 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 	return 1;
 }
 
-// receive udp message
+// Returns pointer to the recv_buf when a message is received, with size set.
+// Returns NULL when a message was not received.
 //
-// return NULL if fails
-// sysMsgCount records how many system messages have been handled
-// notice : *sysMsgCount may be != 0, but return NULL
+// If a pointer for sysMsgCount is given:
+//   The value of sysMsgCount is < 0 when a DISCONNECT event is encountered.
+//   The value of sysMsgCount is > 0 when a CONNECT event is encountered.
+//   Otherwise sysMsgCount is set to zero.
 //
+// The value of from is set to the playerId if the player was found.
+// If a player was not found from is set to 0.
+// Currently, pointers for from and size are always expected.
 char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 {
 	int ret;
@@ -710,8 +855,11 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	PlayerDesc *player;
 	char *got_recv;
 
+	err_when(!host);
+
 	if (sysMsgCount)
 		*sysMsgCount = 0;
+	*from = 0;
 
 	ret = enet_host_service(host, &event, 0);
 	if (ret < 0) {
@@ -723,15 +871,9 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	got_recv = NULL;
 
 	player = (PlayerDesc *)event.peer->data;
-	if (player == NULL) {
-		// The player may actually exist via add_player, sync enet data
-		// by performing a lookup.
-		player = get_player(&event.peer->address);
-		event.peer->data = player;
-	}
-
-	if (player != NULL) {
-		*from = player->pid();
+	if (!player) {
+		// The player may actually exist in the pending_pool.
+		player = get_pending_player(&event.peer->address);
 	}
 
 	switch (event.type) {
@@ -747,43 +889,58 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 		break;
 
 	case ENET_EVENT_TYPE_CONNECT:
-		(*sysMsgCount)++;
+		if (sysMsgCount)
+			*sysMsgCount = 1;
+		MSG("ENET_EVENT_TYPE_CONNECT connectedPeers=%d\n", host->connectedPeers);
 
-		if (player == NULL) {
+		if (!player) {
 			if (!allowing_connections) {
-				enet_peer_disconnect_now(event.peer, 0);
+				enet_peer_disconnect(event.peer, 0);
 				break;
 			}
+			player = new PlayerDesc(&event.peer->address);
 			if (host_flag) {
-				player = create_player(&event.peer->address);
-				if (player == NULL) {
-					enet_peer_disconnect_now(event.peer, 0);
-					break;
-				}
+				player->id = get_avail_player_id();
 			}
 		}
 
-		if (player != NULL) {
+		if (player) {
+			MSG("Player '%s' (%d) connected.\n", player->name, player->id);
 			player->connecting = 1;
 			event.peer->data = player;
-			MSG("Player (%d) connected. connectedPeers=%d\n", player->id, host->connectedPeers);
+			poll_players();
 		}
 
 		break;
 
 	case ENET_EVENT_TYPE_DISCONNECT:
-		(*sysMsgCount)++;
+		if (sysMsgCount)
+			*sysMsgCount = -1;
+		MSG("ENET_EVENT_TYPE_DISCONNECT connectedPeers=%d\n", host->connectedPeers);
 
-		if (player != NULL) {
+		if (player) {
+			MSG("Player '%s' (%d) disconnected.\n", player->name, player->id);
 			player->connecting = 0;
+			if (host_flag) {
+				delete player;
+			} else {
+				// try to save in case of a reconnection or host acknowledgement
+				if (!add_pending_player(player)) {
+					delete player;
+				}
+			}
 			event.peer->data = NULL;
-			MSG("Player '%s' (%d) disconnected. connectedPeers=%d\n", player->name, player->id, host->connectedPeers);
+			poll_players();
 		}
 
 		break;
 
 	default:
 		err_now("unhandled enet event");
+	}
+
+	if (player) {
+		*from = player->id;
 	}
 
 	return got_recv;
