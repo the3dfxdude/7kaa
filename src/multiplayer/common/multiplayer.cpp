@@ -829,8 +829,15 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 	);
 
 	if (to == BROADCAST_PID) {
-		// should we limit broadcast packets to authorized players?
-		enet_host_broadcast(host, 0, packet);
+		ENetPeer *peer;
+		for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+			if (peer->state == ENET_PEER_STATE_CONNECTED && peer->data) {
+				PlayerDesc *player = (PlayerDesc *)peer->data;
+				if (!player->authorized)
+					continue;
+				enet_peer_send(peer, 0, packet);
+			}
+		}
 	} else {
 		ENetPeer *peer;
 
