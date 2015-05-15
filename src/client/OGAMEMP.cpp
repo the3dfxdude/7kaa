@@ -437,7 +437,6 @@ void Game::mp_disp_players()
 	int 	 y=BUTTON_TOP_Y;
 	Button buttonArray[BUTTON_NUM];
 
-	mp_obj.poll_players();
 	for( int i=0 ; i<BUTTON_NUM && mp_obj.get_player(i+1); i++, y+=BUTTON_Y_SPACE )
 	{
 		buttonArray[i].paint_text(x, y, x+BUTTON_WIDTH-1, y+BUTTON_HEIGHT-1, mp_obj.get_player(i+1)->friendly_name );
@@ -2738,7 +2737,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					break;
 					// ####### end Gilbert 25/10 #######//
 				case MPMSG_NEW_PLAYER:
-					mp_obj.poll_players();
 					if( remote.is_host )
 					{
 						MpStructNewPlayer *newPlayerMsg = (MpStructNewPlayer *)recvPtr;
@@ -3625,7 +3623,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 		mp_obj.disable_new_connections();
 
-		// mp_obj.poll_players();
 		nation_array.init();
 		nation_array.zap();
 			
@@ -4644,7 +4641,6 @@ int Game::mp_select_load_option(char *fileName)
 					}
 					break;
 				case MPMSG_LOAD_GAME_NEW_PLAYER:
-					mp_obj.poll_players();
 					if( remote.is_host )
 					{
 						MpStructLoadGameNewPlayer *newPlayerMsg = (MpStructLoadGameNewPlayer *)recvPtr;
@@ -5028,8 +5024,6 @@ int Game::mp_select_load_option(char *fileName)
 		retFlag = 0;
 
 		mp_obj.game_starting();
-
-		// mp_obj.poll_players();
 			
 		int trial;
 		unsigned long startTime;
