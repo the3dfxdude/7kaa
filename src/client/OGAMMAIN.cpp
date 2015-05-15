@@ -360,6 +360,10 @@ void Game::disp_version()
 	str += " ";
 	str += GAME_VERSION_STR;
 
+	#ifdef DEBUG
+		str += " (DEBUG)";
+	#endif
+
 	#ifdef DEMO
 		str = "Demo Version";
 	#endif
