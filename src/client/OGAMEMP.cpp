@@ -5023,8 +5023,8 @@ int Game::mp_select_load_option(char *fileName)
 	{
 		retFlag = 0;
 
-		mp_obj.game_starting();
-			
+		mp_obj.disable_new_connections();
+
 		int trial;
 		unsigned long startTime;
 		int playerCount = 0;
@@ -5290,6 +5290,7 @@ int Game::mp_select_load_option(char *fileName)
 			}
 		}
 
+		mp_obj.game_starting();
 		retFlag = 1;
 	}
 
