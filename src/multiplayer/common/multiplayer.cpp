@@ -256,7 +256,7 @@ int MultiPlayer::open_port(uint16_t port, int fallback)
 
 	host = enet_host_create(
 		&address,
-		MAX_NATION,
+		2 * MAX_NATION,
 		2,
 		0,
 		0
