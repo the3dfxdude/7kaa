@@ -437,7 +437,17 @@ void MultiPlayer::game_starting()
 
 void MultiPlayer::disable_new_connections()
 {
+	ENetPeer *peer;
+
 	allowing_connections = 0;
+
+	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+		if (peer->data) {
+			PlayerDesc *player = (PlayerDesc *)peer->data;
+			if (!player->authorized)
+				enet_peer_disconnect(peer, 0);
+		}
+	}
 }
 
 // Returns the next available player id.
@@ -926,7 +936,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 				delete player;
 			} else {
 				// try to save in case of a reconnection or host acknowledgement
-				if (!add_pending_player(player)) {
+				if (!player->authorized || !add_pending_player(player)) {
 					delete player;
 				}
 			}
