@@ -677,7 +677,6 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 			if (!mp_join_session(choice, config.player_name))
 			{
-				box.msg(_("Unable to connect"));
 				mp_obj.deinit();
 				return;
 			}
@@ -912,7 +911,6 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 			if (!mp_join_session(choice, config.player_name))
 			{
-				box.msg(_("Unable to connect"));
 				mp_obj.deinit();
 				return;
 			}
@@ -1344,7 +1342,8 @@ int mp_info_box_detect(InfoBox *info)
 	if (!info->visible)
 		return 0;
 
-	if (info->button.detect(info->button.str_buf[0], KEY_RETURN))
+	if (info->button.detect(info->button.str_buf[0], KEY_RETURN) ||
+		info->button.detect(KEY_ESC) || mouse.any_click(1))
 	{
 		mouse.get_event();
 		info->visible = 0;
@@ -1737,6 +1736,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	SessionDesc *session;
 	char password[MP_FRIENDLY_NAME_LEN+1];
 	unsigned long wait_time;
+	int sysMsg;
 
 	session = mp_obj.get_session(session_id);
 	err_when(session == NULL);
@@ -1775,7 +1775,6 @@ int Game::mp_join_session(int session_id, char *player_name)
 	{
 		uint32_t from;
 		uint32_t size;
-		int sysMsg;
 
 		mp_obj.receive(&from, &size, &sysMsg);
 		if (sysMsg)
@@ -1810,6 +1809,12 @@ END:
 		vga_front.lock_buf();
 
 	box.close();
+
+	if (sysMsg < 0 || wait_time <= misc.get_time())
+	{
+		box.msg(_("Unable to connect"));
+		return 0;
+	}
 
 	return mp_obj.is_player_connecting(1);
 }
