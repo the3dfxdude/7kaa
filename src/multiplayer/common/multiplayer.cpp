@@ -879,11 +879,6 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	got_recv = NULL;
 
 	player = (PlayerDesc *)event.peer->data;
-	if (!player) {
-		// The player may actually exist in the pending_pool.
-		player = yank_pending_player(&event.peer->address);
-	}
-
 	if (player) {
 		*from = player->id;
 	}
@@ -904,6 +899,11 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 		if (sysMsgCount)
 			*sysMsgCount = 1;
 		MSG("ENET_EVENT_TYPE_CONNECT connectedPeers=%d\n", host->connectedPeers);
+
+		if (!player) {
+			// The player may actually exist in the pending_pool.
+			player = yank_pending_player(&event.peer->address);
+		}
 
 		if (!player) {
 			if (!allowing_connections) {
