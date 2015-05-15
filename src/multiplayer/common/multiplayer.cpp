@@ -488,7 +488,7 @@ int MultiPlayer::add_pending_player(PlayerDesc *player)
 // Returns NULL if player is not pending.
 // Returns player if found. player is removed from pending pool and
 // becomes the responsiblity of the caller.
-PlayerDesc *MultiPlayer::get_pending_player(uint32_t playerId)
+PlayerDesc *MultiPlayer::yank_pending_player(uint32_t playerId)
 {
 	unsigned int i;
 	PlayerDesc *player;
@@ -511,7 +511,7 @@ PlayerDesc *MultiPlayer::get_pending_player(uint32_t playerId)
 // Returns NULL if player is not pending.
 // Returns player if found. player is removed from pending pool and
 // becomes the responsiblity of the caller.
-PlayerDesc *MultiPlayer::get_pending_player(ENetAddress *address)
+PlayerDesc *MultiPlayer::yank_pending_player(ENetAddress *address)
 {
 	unsigned int i;
 	PlayerDesc *player;
@@ -654,7 +654,7 @@ void MultiPlayer::delete_player(uint32_t playerId)
 		MSG("Requesting disconnect from player '%s' (%d).\n", player->name, playerId);
 		poll_players();
 	} else {
-		player = get_pending_player(playerId);
+		player = yank_pending_player(playerId);
 		if (!player)
 			return;
 	}
@@ -881,7 +881,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	player = (PlayerDesc *)event.peer->data;
 	if (!player) {
 		// The player may actually exist in the pending_pool.
-		player = get_pending_player(&event.peer->address);
+		player = yank_pending_player(&event.peer->address);
 	}
 
 	if (player) {
