@@ -149,8 +149,8 @@ private:
 
 	uint32_t get_avail_player_id();
 	int add_pending_player(PlayerDesc *player);
-	PlayerDesc* get_pending_player(uint32_t playerId);
-	PlayerDesc* get_pending_player(ENetAddress *address);
+	PlayerDesc* yank_pending_player(uint32_t playerId);
+	PlayerDesc* yank_pending_player(ENetAddress *address);
 	ENetPeer *get_peer(uint32_t playerId);
 	ENetPeer *get_peer(ENetAddress *address);
 };
