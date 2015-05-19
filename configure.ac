@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([7kaa], [2.14.4], [skfans-devel@lists.sourceforge.net], [],
+AC_INIT([7kaa], [2.14.5], [skfans-devel@lists.sourceforge.net], [],
 	[http://7kfans.com/])
 AC_CONFIG_SRCDIR([src/client/AM.cpp])
 AC_CONFIG_HEADERS([include/config.h])

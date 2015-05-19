@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.14.4
+Release version 2.14.5
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -11,67 +11,69 @@ details of the license. We are indebted to Enlight for making the 7kfans
 project possible and giving a new chance to build a community for fans
 of the game.
 
-Who should use this version of 7KAA?
- * Any linux user.
- * Anyone who wants to try the latest bugfixes.
- * Anyone who likes the slightly improved game play.
-
-Who shouldn't use this version of 7KAA?
- * Any multiplayer user under Windows. The new netcode, while it promises
-   actual cross-platform capatability, does not work well in lobby, nor
-   does not work on anything other than LAN (VPN okay) and 2 players. Please
-   use 2.13.xx series with DPlay instead if stability and full-features are
-   needed.
-
-Changes in this release:
- * Added the game data to the source tree.
- * Added an NSIS install script.
- * Started rewriting the lobby code to be UDP instead of TCP. It is not done
-   and does not work properly for >2 player or over anything but LAN. The game
-   port is now UDP 19255.
+Summary of changes in this release
+---------
+ * Switched to using SDL2.
+ * Gained support for full-screen stretching.
+ * Gained support for MacOS.
+ * Switched to using enet, replacing SDL_net.
+ * Audio code improvements.
+ * The multiplayer connection code has stablized.
+ * New game hotkeys.
+ * Migrate population across extended town networks.
+ * Added ability to migrate 10 people at a time across between towns.
+ * Gettext translation support.
+ * Several bug fixes.
 
 Thanks to all who made this release possible.
 
 
-What you will find in this archive
+What is missing from the open source version of the game
 ---------
-* The GPL source and data files.
-
-
-What you will NOT find in this archive
----------
-* The original game music. The are provided in a separate package from 
-  7kfans.com. It is not under the GPL license, but it is free to download
-  and use with 7KAA.
-* The original translations resource file. This file was created by third
-  party distributors and Enlight does not have the right to distribute it.
-  This will be replaced by the 7kfans project.
-* Any other content from original game CDs, game manual including the version
+* The original game music. The music is provided by 7kfans, but separately
+  from the source tree. It is not under the GPL license, but it is free to
+  download and use with 7KAA.
+* The original game intro video. Support may be restored in future releases.
+* Any other content from original game CDs, game manual, including the version
   2.12b game binary or older. This also includes the I*Magic Online service.
+
+
+System Requirements
+---------
+
+The game is known to run on recent versions of
+* Windows
+* Linux
+* MacOS
+
+The game is known to build and work on both x86 and x86_64 architectures. But
+please note that playing multiplayer games between different architectures has
+not been tested deeply. It would be best if to try with x86 builds on everyone's
+system when arranging a multiplayer match until other arrangements are better
+tested.
 
 
 Building the game
 ---------
 
-General Requirements
+Required dependencies
 * GCC 4.xx or later
-* SDL 2.0.2
-* SDL_net
-* OpenAL
-* Autoconf (when using git snapshot)
+* SDL 2.0.2 or later (http://libsdl.org/)
+* enet 1.3.xx (http://enet.bespin.org/)
+* OpenAL-soft or equivalent driver (http://kcat.strangesoft.net/openal.html)
+
+Optional dependencies
+* Autoconf 2.65 (when using git snapshot)
 * gettext 0.18 or later
+* Game music bundle
+* NSIS for building a Windows installer
 
 
-Installing
+Running
 --------
-You can download the game data if you do not already have the game
-installed. You can find the game data from the 7kfans sourceforge
-page at http://sourceforge.net/projects/skfans/
 
-To patch the game:
-Copy the executable file "7kaa*" from the src/client directory to your
-installed game directory.  Run the 7kaa.exe executable to start the game
-instead of the classic Enlight version called 7k.exe.
-
-There are precompiled win32 install packages available.
+To run the game from the build directory, you need to point to the game data
+folder. The game data folder is set by the environment variable SKDATA. In
+a bash shell, this can be accomplished by
+$ SKDATA=data src/client/7kaa
 

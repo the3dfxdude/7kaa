@@ -51,6 +51,7 @@ SetCompressor /SOLID lzma
 ;Pages
 
   !insertmacro MUI_PAGE_LICENSE "COPYING"
+  !insertmacro MUI_PAGE_LICENSE "COPYING-Music.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   
@@ -95,7 +96,10 @@ Section "7kaa (required)" 7kaareq
 
   SetOutPath "$INSTDIR"
   File ".\README"
+  Rename "$INSTDIR\README" "$INSTDIR\README.txt"
   File ".\COPYING"
+  Rename "$INSTDIR\COPYING" "$INSTDIR\COPYING.txt"
+  File ".\doc\7kaa-hotkeys-2.14.5.png"
   File /r ".\data\encyc"
   File /r ".\data\encyc2"
   File /r ".\data\image"
@@ -122,33 +126,27 @@ Section "7kaa (required)" 7kaareq
   
 SectionEnd
 
-; Music Files (Non GPL and Public Domain)(can be disabled by user)
-; The music won't be in this installer.
-;Section "Music" music
-;
-;  SetOutPath "$INSTDIR"
-;  File /r ".\music"
-; 
-;SectionEnd
+; Music Files (Not GPL and not Public Domain)(can be disabled by user)
+Section "Music" music
+
+  SetOutPath "$INSTDIR"
+  File ".\README-music.txt"
+  File ".\COPYING-music.txt"
+  File /r ".\data\music"
+
+SectionEnd
 
 Section "OpenAL" openal
 
   SetOutPath "$INSTDIR"
-  File "lib\OpenAL32.dll"
+  File ".\OpenAL32.dll"
 
 SectionEnd
 
 Section "SDL" sdl
 
   SetOutPath "$INSTDIR"
-  File "lib\SDL2.dll"
-
-SectionEnd
-
-Section "SDL_net" sdlnet
-
-  SetOutPath "$INSTDIR"
-  File "lib\SDL_net.dll"
+  File ".\SDL2.dll"
 
 SectionEnd
 
@@ -161,6 +159,7 @@ Section "Start Menu Shortcuts" startshort
   CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Seven Kingdoms AA.lnk" "$INSTDIR\7kaa.exe"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Hotkeys.lnk" "$INSTDIR\7kaa-hotkeys-2.14.5.png"
   
   !insertmacro MUI_STARTMENU_WRITE_END
   
@@ -171,20 +170,18 @@ SectionEnd
 
   ;Language strings
   LangString secreq ${LANG_ENGLISH} "Files required for 7kaa to run"
-  LangString secmusic ${LANG_ENGLISH} "Music files for 7kaa. These are not licensed under the GPL or part of the Public Domain and may only be distributed with 7kaa"
+  LangString secmusic ${LANG_ENGLISH} "Music files for 7kaa"
   LangString secshort ${LANG_ENGLISH} "Start menu shortcuts"
-  LangString secopenal ${LANG_ENGLISH} "OpenAL shared library (recommended)"
+  LangString secopenal ${LANG_ENGLISH} "OpenAL-soft shared library (recommended if not provided by your hardware driver)"
   LangString secsdl ${LANG_ENGLISH} "SDL shared library (recommended)"
-  LangString secsdlnet ${LANG_ENGLISH} "SDL_net shared library (recommended)"
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
     !insertmacro MUI_DESCRIPTION_TEXT ${7kaareq} $(secreq)
-;      !insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
+      !insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
       !insertmacro MUI_DESCRIPTION_TEXT ${startshort} $(secshort)
     !insertmacro MUI_DESCRIPTION_TEXT ${openal} $(secopenal)
     !insertmacro MUI_DESCRIPTION_TEXT ${sdl} $(secsdl)
-    !insertmacro MUI_DESCRIPTION_TEXT ${sdlnet} $(secsdlnet)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
@@ -211,12 +208,15 @@ Section "Uninstall"
   RMDir /r "$INSTDIR\sound"
   RMDir /r "$INSTDIR\sprite"
   RMDir /r "$INSTDIR\tutorial"
+  RMDir /r "$INSTDIR\music"
   Delete "$INSTDIR\7kaa.exe"
-  Delete "$INSTDIR\COPYING"
-  Delete "$INSTDIR\README"
+  Delete "$INSTDIR\COPYING.txt"
+  Delete "$INSTDIR\README.txt"
+  Delete "$INSTDIR\7kaa-hotkeys-2.14.5.png"
+  Delete "$INSTDIR\COPYING-music.txt"
+  Delete "$INSTDIR\README-music.txt"
   Delete "$INSTDIR\OpenAL32.dll"
   Delete "$INSTDIR\SDL2.dll"
-  Delete "$INSTDIR\SDL_net.dll"
   Delete "$INSTDIR\Uninstall.exe"
 
   ; Remove shortcuts
