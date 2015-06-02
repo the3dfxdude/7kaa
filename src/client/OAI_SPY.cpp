@@ -352,7 +352,7 @@ int Nation::ai_assign_spy(ActionNode* actionNode)
 
 //-------- Begin of function Nation::think_assign_spy_target_camp --------//
 //
-// Think about planting spies into independent towns and enemy towns.
+// Think about planting spies into enemy buildings.
 //
 int Nation::think_assign_spy_target_camp(int raceId, int regionId)
 {
@@ -465,7 +465,7 @@ int Nation::think_assign_spy_target_town(int raceId, int regionId)
 
 //-------- Begin of function Nation::think_assign_spy_own_town --------//
 //
-// Think about planting spies into independent towns and enemy towns.
+// Think about planting spies into own towns.
 //
 int Nation::think_assign_spy_own_town(int raceId, int regionId)
 {
