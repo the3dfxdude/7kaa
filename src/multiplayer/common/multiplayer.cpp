@@ -541,7 +541,7 @@ PlayerDesc *MultiPlayer::yank_pending_player(ENetAddress *address)
 // Returns 0 when the player was not added.
 int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address, char contact)
 {
-	PlayerDesc *player;
+	PlayerDesc *player = NULL;
 	ENetPeer *peer;
 
 	if (playerId == my_player_id) {

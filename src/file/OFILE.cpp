@@ -56,7 +56,11 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 	int size = strlen(fileName);
 
 	if(strlen(fileName) > MAX_PATH)
-		err.run("File : file name is too long.");
+	{
+		if (handleError)
+			err.run("File : file name is too long.");
+		return 0;
+	}
 
 	if (file_handle != NULL)
 		file_close();
@@ -72,16 +76,18 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 
 	file_handle = fopen(name, "rb");
 	if (!file_handle)
-        {
+	{
 		for (int i = 0; i < size; i++)
 		{
 			name[i] = tolower(name[i]);
 		}
 		file_handle = fopen(name, "rb");
-        }
+	}
 	if (!file_handle)
 	{
-		err.run("[File::file_open] error opening file %s: %s\n", name, strerror(errno));
+		if (handleError)
+			err.run("[File::file_open] error opening file %s: %s\n", name, strerror(errno));
+		return 0;
 	}
 
 	strcpy(file_name, name);
@@ -113,7 +119,11 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 int File::file_create(const char* fileName, int handleError, int fileType)
 {
 	if(strlen(fileName) > MAX_PATH)
-		err.run("File : file name is too long.");
+	{
+		if (handleError)
+			err.run("File : file name is too long.");
+		return 0;
+	}
 
 	strcpy(file_name, fileName);
 	// FIXME: this fileName handling is broken
@@ -129,7 +139,9 @@ int File::file_create(const char* fileName, int handleError, int fileType)
 	file_handle = fopen(fileName, "wb+");
 	if (!file_handle)
 	{
-		err.run("[File::file_create] couldn't create %s: %s\n", fileName, strerror(errno));
+		if (handleError)
+			err.run("[File::file_create] couldn't create %s: %s\n", fileName, strerror(errno));
+		return 0;
 	}
 
 	MSG("[File::file_create] created %s\n", file_name);
