@@ -25,9 +25,7 @@
 #ifndef __OVGA_H
 #define __OVGA_H
 
-#if defined(USE_DDRAW)
-#include <vga_ddraw.h>
-#elif defined(USE_SDL)
+#if defined(USE_SDL)
 #include <vga_sdl.h>
 #elif defined(USE_NOVIDEO)
 #include <vga_none.h>

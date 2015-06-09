@@ -25,9 +25,7 @@
 #ifndef __SURFACE_H
 #define __SURFACE_H
 
-#if defined(USE_DDRAW)
-#include <surface_ddraw.h>
-#elif defined(USE_SDL)
+#if defined(USE_SDL)
 #include <surface_sdl.h>
 #elif defined(USE_NOVIDEO)
 #include <surface_none.h>

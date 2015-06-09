@@ -25,9 +25,7 @@
 #ifndef __OMOUSE_H
 #define __OMOUSE_H
 
-#if defined(USE_DINPUT)
-#include <mouse_dinput.h>
-#elif defined(USE_SDL)
+#if defined(USE_SDL)
 #include <mouse_sdl.h>
 #elif defined(USE_NOINPUT)
 #include <mouse_none.h>

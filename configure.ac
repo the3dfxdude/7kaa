@@ -80,15 +80,14 @@ AM_GNU_GETTEXT_VERSION([0.18])
 
 # Configuration variables
 
-audio_backend=openal # openal dsound
-input_backend=sdl    # sdl dinput none
-video_backend=sdl    # sdl ddraw none
+audio_backend=openal # openal
+input_backend=sdl    # sdl none
+video_backend=sdl    # sdl none
 use_windows=no
 use_mingw=no
 
 # Set in argument handlers:
 # enable_debug=no
-# with_directx=no
 # with_wine=no
 # enable_dynamic_support_libs=no
 
@@ -118,21 +117,6 @@ AC_ARG_ENABLE([dynamic-support-libs],
 
 # Select which backends to build
 
-AS_IF([test "$with_wine" = yes], [
-  with_directx=yes
-])
-
-AS_IF([test "$with_directx" = yes], [
-  audio_backend=dsound
-  input_backend=dinput
-  video_backend=ddraw
-])
-
-AS_IF([test "$audio_backend" = dsound \
-       || test "$input_backend" = dinput \
-       || test "$video_backend" = ddraw], [
-  use_windows=yes
-])
 AS_CASE(["$host"],
   [*-mingw*], [
     use_windows=yes
@@ -140,11 +124,8 @@ AS_CASE(["$host"],
 ])
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
-AM_CONDITIONAL([AUDIO_DSOUND], [test "$audio_backend" = dsound])
-AM_CONDITIONAL([INPUT_DINPUT], [test "$input_backend" = dinput])
 AM_CONDITIONAL([INPUT_NONE],   [test "$input_backend" = none])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
-AM_CONDITIONAL([VIDEO_DDRAW],  [test "$video_backend" = ddraw])
 AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
@@ -200,18 +181,6 @@ AS_IF([test "$ENET_CFLAGS" != "" || test "$ENET_LIBS" != ""], [
   LIBS="$LIBS $ENET_LIBS"
 ])
 
-AS_IF([test "$video_backend" = ddraw], [
-  LIBS="-lgdi32 -lddraw -ldxguid $LIBS"
-])
-
-AS_IF([test "$audio_backend" = dsound], [
-  LIBS="-ldsound $LIBS"
-])
-
-AS_IF([test "$input_backend" = dinput], [
-  LIBS="-ldinput $LIBS"
-])
-
 AS_IF([test "$use_windows" = yes], [
   LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
 
@@ -249,10 +218,6 @@ AS_IF([test "$use_windows" != yes], [
 ])
 
 AS_CASE(["$video_backend"],
-  [ddraw], [
-    AC_DEFINE([USE_DDRAW], [1],
-	      [Define to 1 if using DirectDraw as the video backend])
-  ],
   [sdl], [
     # Define later
   ],
@@ -264,11 +229,6 @@ AS_CASE(["$video_backend"],
 ])
 
 AS_CASE(["$audio_backend"],
-  [dsound], [
-    AC_DEFINE([USE_DSOUND], [1], [
-      Define to 1 if using DirectSound as the audio backend
-    ])
-  ],
   [openal], [
     AC_DEFINE([USE_OPENAL], [1], [
       Define to 1 if using OpenAL as the audio backend
@@ -278,11 +238,6 @@ AS_CASE(["$audio_backend"],
 ])
 
 AS_CASE(["$input_backend"],
-  [dinput], [
-    AC_DEFINE([USE_DINPUT], [1], [
-      Define to 1 if using Direct Input as the input backend
-    ])
-  ],
   [none], [
     AC_DEFINE([USE_NOINPUT], [1], [
       Define to 1 if building without input support
@@ -319,7 +274,6 @@ AC_CONFIG_FILES([
   include/Makefile
   src/Makefile
   src/audio/Makefile
-  src/audio/dsound/Makefile
   src/audio/openal/Makefile
   src/client/Makefile
   src/common/Makefile
@@ -327,14 +281,12 @@ AC_CONFIG_FILES([
   src/imgfun/Makefile
   src/imgfun/asm/Makefile
   src/input/Makefile
-  src/input/dinput/Makefile
   src/input/none/Makefile
   src/input/sdl/Makefile
   src/multiplayer/Makefile
   src/multiplayer/common/Makefile
   src/video/Makefile
   src/video/common/Makefile
-  src/video/ddraw/Makefile
   src/video/none/Makefile
   src/video/sdl/Makefile
   po/Makefile.in

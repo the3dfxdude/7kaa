@@ -251,14 +251,6 @@ if AUDIO_OPENAL
 7kaa_LDADD += ../audio/openal/libaudio_openal.a
 endif
 
-if AUDIO_DSOUND
-7kaa_LDADD += ../audio/dsound/libaudio_dsound.a
-endif
-
-
-if INPUT_DINPUT
-7kaa_LDADD += ../input/dinput/libinput_dinput.a
-endif
 
 if INPUT_NONE
 7kaa_LDADD += ../input/none/libinput_none.a
@@ -271,10 +263,6 @@ endif
 
 7kaa_LDADD += ../multiplayer/common/libmultiplayer.a
 
-
-if VIDEO_DDRAW
-7kaa_LDADD += ../video/ddraw/libvideo_ddraw.a
-endif
 
 if VIDEO_NONE
 7kaa_LDADD += ../video/none/libvideo_none.a
