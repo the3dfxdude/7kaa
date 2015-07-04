@@ -24,6 +24,15 @@
 #ifndef __GETTEXT_H_WRAPPER
 #define __GETTEXT_H_WRAPPER
 
+#ifdef USE_NEW_GETTEXT_H
+
+#include "gettext-gnu.h"
+
+#define _(String) gettext(String)
+#define N_(String) gettext_noop(String)
+
+#else
 #include "gettext-gnu-old.h"
+#endif
 
 #endif
