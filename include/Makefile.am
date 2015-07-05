@@ -168,7 +168,6 @@ noinst_HEADERS = \
 	file_writer.h \
 	gettext.h \
 	gettext-gnu.h \
-	gettext-gnu-old.h \
 	input_stream.h \
 	mem_input_stream.h \
 	mouse_none.h \

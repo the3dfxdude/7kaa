@@ -67,15 +67,9 @@ inline int c99_snprintf(char *outBuf, size_t size, const char *format, ...)
 
 #endif // _MSC_VER < 1900
 
-#ifdef USE_NEW_GETTEXT_H
-
 #include "gettext-gnu.h"
 
 #define _(String) gettext(String)
 #define N_(String) gettext_noop(String)
-
-#else
-#include "gettext-gnu-old.h"
-#endif
 
 #endif
