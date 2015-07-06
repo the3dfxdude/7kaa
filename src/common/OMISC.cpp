@@ -35,6 +35,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <gettext.h> // for snprintf on both C++11 compilers and MSVC++
 #include <time.h>
 #include <ctype.h>
 #include <math.h>
