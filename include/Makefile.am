@@ -159,6 +159,7 @@ noinst_HEADERS = \
 	asmfun.h \
 	audio_base.h \
 	audio_stream.h \
+	c99_printf.h \
 	dbglog.h \
 	file_input_stream.h \
 	file_io_visitor.h \
