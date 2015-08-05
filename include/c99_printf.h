@@ -24,9 +24,9 @@
 #ifndef __C99_PRINTF_H
 #define __C99_PRINTF_H
 
-#if defined(_MSC_VER) && _MSC_VER < 1900
-
 #include <stdio.h>
+
+#if defined(_MSC_VER) && _MSC_VER < 1900
 
 // C99 snprintf compatibility for MSVC earlier than 2015
 // credit: http://stackoverflow.com/questions/2915672/snprintf-and-visual-studio-2010

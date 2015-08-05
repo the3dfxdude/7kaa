@@ -29,7 +29,10 @@
 // gettext-gnu.h assumes we have a good locale.h, but that is not always the
 // case.
 #if (! defined ENABLE_NLS && ! defined LC_MESSAGES)
-#define LC_MESSAGES 1729
+  #include <locale.h>
+  #if (! defined LC_MESSAGES)
+    #define LC_MESSAGES 1729
+  #endif
 #endif
 
 #include <c99_printf.h>
