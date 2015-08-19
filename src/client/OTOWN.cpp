@@ -221,6 +221,7 @@ void Town::deinit()
 	//------- reset parameters ---------//
 
 	town_recno = 0;
+	town_network_recno = 0;
 }
 //--------- End of function Town::deinit ----------//
 
