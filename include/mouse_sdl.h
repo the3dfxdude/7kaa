@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010 Jesse Allen
+ * Copyright 2010,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
  *
  */
 
-//Filename    : mouse_dinput.h
-//Description : Implements the dinput backend
+//Filename    : mouse_sdl.h
+//Description : Implements the sdl input backend
 
 #ifndef __MOUSE_SDL_H
 #define __MOUSE_SDL_H
@@ -95,11 +95,6 @@ struct MouseEvent               // event buffer structure
 #define MOUSE_X_UPPER_LIMIT   (VGA_WIDTH-5)
 #define MOUSE_Y_UPPER_LIMIT	(VGA_HEIGHT-5)
 
-//------ Default settting ---------//
-
-#define DEFAULT_DOUBLE_SPEED_THRESHOLD 8
-#define DEFAULT_TRIPLE_SPEED_THRESHOLD 16
-
 //-------- Define struct MouseClick -------//
 
 struct MouseClick               // MultiClick buffer structure
@@ -117,10 +112,6 @@ class MouseSDL
 {
 private:
 	char*  vga_update_buf;
-
-	// ------ mouse setting ---------- //
-	int	double_speed_threshold;				// default DEFAULT_DOUBLE_SPEED_THRESHOLD
-	int	triple_speed_threshold;				// default DEFAULT_TRIPLE_SPEED_THRESHOLD
 
 	//-------- click buffer ---------//
 	MouseClick click_buffer[2];    // left button & right button only
@@ -218,9 +209,6 @@ public:
 
 	void disp_count_start();
 	void disp_count_end();
-
-private:
-	long	micky_to_displacement(unsigned long);
 };
 //---------- End of define class ---------------//
 

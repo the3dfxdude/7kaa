@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010 Jesse Allen
+ * Copyright 2010,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,8 +71,6 @@ MouseSDL::MouseSDL()
 	memset(event_buffer, 0, sizeof(MouseEvent) * EVENT_BUFFER_SIZE);
 	head_ptr = 0;
 	tail_ptr = 0;
-	double_speed_threshold = DEFAULT_DOUBLE_SPEED_THRESHOLD;
-	triple_speed_threshold = DEFAULT_TRIPLE_SPEED_THRESHOLD;
 }
 //---------- End of MouseSDL::MouseSDL ---------//
 
@@ -743,21 +741,21 @@ void MouseSDL::poll_event()
 		case SDL_MOUSEMOTION:
 		// SDL already accelerates relative mouse motions.
 		// Disable to let the user control speed outside of game.
-#ifdef MOUSE_RELATIVE
-			cur_x += micky_to_displacement(event.motion.xrel);
-			cur_y += micky_to_displacement(event.motion.yrel);
-#else
-			cur_x = event.motion.x;
-			cur_y = event.motion.y;
-#endif
-			if(cur_x < bound_x1)
-				cur_x = bound_x1;
-			if(cur_x > bound_x2)
-				cur_x = bound_x2;
-			if(cur_y < bound_y1)
-				cur_y = bound_y1;
-			if(cur_y > bound_y2)
-				cur_y = bound_y2;
+			if(vga.is_input_grabbed()) {
+				cur_x += event.motion.xrel;
+				cur_y += event.motion.yrel;
+				if(cur_x < bound_x1)
+					cur_x = bound_x1;
+				else if(cur_x > bound_x2)
+					cur_x = bound_x2;
+				if(cur_y < bound_y1)
+					cur_y = bound_y1;
+				else if(cur_y > bound_y2)
+					cur_y = bound_y2;
+			} else {
+				cur_x = event.motion.x;
+				cur_y = event.motion.y;
+			}
 			moveFlag = 1;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
@@ -962,17 +960,6 @@ void MouseSDL::reset_click()
 	click_buffer[1].count=0;
 }
 //--------- End of MouseSDL::reset_click --------------//
-
-
-// ------ Begin of MouseSDL::mickey_to_displacment -------//
-long MouseSDL::micky_to_displacement(unsigned long w)
-{
-	long d = (long)w ;
-	// long a = abs(d);
-	// return a >= double_speed_threshold ? (a >= triple_speed_threshold ? 3 * d : 2 * d) : d;
-	return abs(d) >= double_speed_threshold ? d+d : d;
-}
-// ------ End of MouseSDL::mickey_to_displacment -------//
 
 
 // ------ Begin of MouseSDL::is_key -------//

@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010 Jesse Allen
+ * Copyright 2010,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,6 +259,8 @@ int VgaSDL::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 
 void VgaSDL::deinit()
 {
+   SDL_SetRelativeMouseMode(SDL_FALSE);
+
    vga_back.deinit();
    if (sys.debug_session)
       vga_true_front.deinit();
@@ -552,6 +554,7 @@ void VgaSDL::set_full_screen_mode(int mode)
 
    refresh_palette();
    sys.need_redraw_flag = 1;
+   set_window_grab(flags == SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 //-------- End of function VgaSDL::set_full_screen_mode ----------//
 
@@ -579,6 +582,7 @@ void VgaSDL::set_window_grab(int mode)
          err_now();
    }
    SDL_SetWindowGrab(window, grabbed);
+   SDL_SetRelativeMouseMode(grabbed);
 }
 //-------- End of function VgaSDL::set_window_grab ----------//
 
