@@ -806,7 +806,6 @@ void MouseSDL::poll_event()
 				if (event.key.keysym.sym == SDLK_RETURN) {
 					bypass = 1;
 					sys.toggle_full_screen_flag = 1;
-					sys.need_redraw_flag = 1;
 				} else if (event.key.keysym.sym == SDLK_F4) {
 					bypass = 1;
 					sys.signal_exit_flag = 1;
