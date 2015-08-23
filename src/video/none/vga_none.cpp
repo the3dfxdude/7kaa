@@ -119,11 +119,11 @@ int VgaNone::is_full_screen()
 }
 //-------- End of function VgaNone::is_full_screen ----------/
 
-//-------- Begin of function VgaNone::toggle_full_screen --------//
-void VgaNone::toggle_full_screen()
+//-------- Begin of function VgaNone::set_full_screen_mode --------//
+void VgaNone::set_full_screen_mode(int mode)
 {
 }
-//-------- End of function VgaNone::toggle_full_screen ----------//
+//-------- End of function VgaNone::set_full_screen_mode ----------//
 
 //-------- Beginning of function VgaNone::flip ----------//
 void VgaNone::flip()

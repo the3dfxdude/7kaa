@@ -43,7 +43,6 @@ private:
 	SDL_Surface*   target;
 	SDL_Color      game_pal[VGA_PALETTE_SIZE];
 	SDL_Color*     custom_pal;
-	Uint32         video_mode_flags;
 
 public:
 	ColorTable*    vga_color_table;
@@ -65,7 +64,7 @@ public:
 	void   handle_messages();
 	void   flag_redraw();
 	int    is_full_screen();
-	void   toggle_full_screen();
+	void   set_full_screen_mode(int mode);
 	void   flip();
 
 private:
