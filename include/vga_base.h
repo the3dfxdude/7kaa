@@ -2,7 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
- * Copyright 2010 Jesse Allen
+ * Copyright 2010,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,9 @@ public:
 	virtual void handle_messages() =0;
 	virtual void flag_redraw() =0;
 	virtual int is_full_screen() =0;
+	virtual int is_input_grabbed() =0;
 	virtual void set_full_screen_mode(int mode) =0;
+	virtual void set_window_grab(int mode) =0;
 	virtual void flip() =0;
 };
 

@@ -119,11 +119,29 @@ int VgaNone::is_full_screen()
 }
 //-------- End of function VgaNone::is_full_screen ----------/
 
+
+//-------- Begin of function VgaNone::is_input_grabbed --------//
+//
+int VgaNone::is_input_grabbed()
+{
+   return 0;
+}
+//-------- End of function VgaNone::is_input_grabbed ----------/
+
+
 //-------- Begin of function VgaNone::set_full_screen_mode --------//
 void VgaNone::set_full_screen_mode(int mode)
 {
 }
 //-------- End of function VgaNone::set_full_screen_mode ----------//
+
+
+//-------- Begin of function VgaNone::set_window_grab --------//
+void VgaNone::set_window_grab(int mode)
+{
+}
+//-------- End of function VgaNone::set_window_grab ----------//
+
 
 //-------- Beginning of function VgaNone::flip ----------//
 void VgaNone::flip()

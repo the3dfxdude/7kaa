@@ -818,18 +818,9 @@ void MouseSDL::poll_event()
 					SDL_MinimizeWindow(window);
 				}
 			} else if (mod == KMOD_LCTRL || mod == KMOD_RCTRL) {
-				if (event.key.keysym.sym == SDLK_g &&
-						!vga.is_full_screen()) {
-					static int grabbed = 0;
+				if (event.key.keysym.sym == SDLK_g) {
 					bypass = 1;
-					SDL_Window *window = SDL_GetWindowFromID(event.key.windowID);
-					if (!grabbed) {
-						SDL_SetWindowGrab(window, SDL_TRUE);
-						grabbed = 1;
-					} else {
-						SDL_SetWindowGrab(window, SDL_FALSE);
-						grabbed = 0;
-					}
+					vga.set_window_grab(-1);
 				}
 			}
 			if (!bypass) {

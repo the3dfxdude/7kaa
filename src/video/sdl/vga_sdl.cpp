@@ -510,6 +510,16 @@ int VgaSDL::is_full_screen()
 }
 //-------- End of function VgaSDL::is_full_screen ----------//
 
+
+//-------- Begin of function VgaSDL::is_input_grabbed --------//
+//
+int VgaSDL::is_input_grabbed()
+{
+   return ((SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_GRABBED) != 0);
+}
+//-------- End of function VgaSDL::is_input_grabbed ----------//
+
+
 //-------- Begin of function VgaSDL::set_full_screen_mode --------//
 //
 // mode -1: toggle
@@ -544,6 +554,33 @@ void VgaSDL::set_full_screen_mode(int mode)
    sys.need_redraw_flag = 1;
 }
 //-------- End of function VgaSDL::set_full_screen_mode ----------//
+
+
+//-------- Begin of function VgaSDL::set_window_grab --------//
+//
+// mode -1: toggle
+// mode  0: unset grab
+// mode  1: set grab
+void VgaSDL::set_window_grab(int mode)
+{
+   SDL_bool grabbed = SDL_FALSE;
+
+   switch (mode)
+   {
+      case -1:
+         grabbed = is_input_grabbed() ? SDL_FALSE : SDL_TRUE;
+         break;
+      case 0:
+         break;
+      case 1:
+         grabbed = SDL_TRUE;
+         break;
+      default:
+         err_now();
+   }
+   SDL_SetWindowGrab(window, grabbed);
+}
+//-------- End of function VgaSDL::set_window_grab ----------//
 
 
 //-------- Beginning of function VgaSDL::flip ----------//

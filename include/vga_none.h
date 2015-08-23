@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 2010 Jesse Allen
+ * Copyright 2010,2015 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,9 @@ public:
 	void   handle_messages();
 	void   flag_redraw();
 	int    is_full_screen();
+	int    is_input_grabbed();
 	void   set_full_screen_mode(int mode);
+	void   set_window_grab(int mode);
 	void   flip();
 };
 
