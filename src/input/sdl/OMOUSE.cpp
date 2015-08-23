@@ -739,8 +739,6 @@ void MouseSDL::poll_event()
 
 		switch (event.type) {
 		case SDL_MOUSEMOTION:
-		// SDL already accelerates relative mouse motions.
-		// Disable to let the user control speed outside of game.
 			if(vga.is_input_grabbed()) {
 				cur_x += event.motion.xrel;
 				cur_y += event.motion.yrel;
