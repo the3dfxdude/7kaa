@@ -543,7 +543,7 @@ void VgaSDL::set_full_screen_mode(int mode)
          flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
          break;
       default:
-         err_now();
+         err_now("invalid mode");
    }
 
    result = SDL_SetWindowFullscreen(window, flags);
@@ -579,7 +579,7 @@ void VgaSDL::set_window_grab(int mode)
          grabbed = SDL_TRUE;
          break;
       default:
-         err_now();
+         err_now("invalid mode");
    }
    SDL_SetWindowGrab(window, grabbed);
    SDL_SetRelativeMouseMode(grabbed);
