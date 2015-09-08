@@ -537,7 +537,8 @@ int MouseSDL::single_click(int x1, int y1, int x2, int y2,int buttonId)
 // [int] buttonId    = which button ( 0=left, 1-right, 2-left or right)
 //                     (default:0)
 //
-// Return : 1 - if the area has been clicked
+// Return : 1 - if the area has been clicked (left click)
+//				2 - if the area has been clicked (right click)
 //          0 - if not
 //
 int MouseSDL::double_click(int x1, int y1, int x2, int y2,int buttonId)
@@ -569,7 +570,7 @@ int MouseSDL::double_click(int x1, int y1, int x2, int y2,int buttonId)
           && cptr->x >= x1 && cptr->y >= y1
           && cptr->x <= x2 && cptr->y <= y2 )
       {
-         return 1;
+         return 2;
       }
    }
 
