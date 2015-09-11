@@ -71,6 +71,8 @@ MouseSDL::MouseSDL()
 	memset(event_buffer, 0, sizeof(MouseEvent) * EVENT_BUFFER_SIZE);
 	head_ptr = 0;
 	tail_ptr = 0;
+	double_speed_threshold = DEFAULT_DOUBLE_SPEED_THRESHOLD;
+	triple_speed_threshold = DEFAULT_TRIPLE_SPEED_THRESHOLD;
 }
 //---------- End of MouseSDL::MouseSDL ---------//
 
@@ -740,8 +742,8 @@ void MouseSDL::poll_event()
 		switch (event.type) {
 		case SDL_MOUSEMOTION:
 			if(vga.is_input_grabbed()) {
-				cur_x += event.motion.xrel;
-				cur_y += event.motion.yrel;
+				cur_x += micky_to_displacement(event.motion.xrel);
+				cur_y += micky_to_displacement(event.motion.yrel);
 				if(cur_x < bound_x1)
 					cur_x = bound_x1;
 				else if(cur_x > bound_x2)
@@ -957,6 +959,14 @@ void MouseSDL::reset_click()
 	click_buffer[1].count=0;
 }
 //--------- End of MouseSDL::reset_click --------------//
+
+
+// ------ Begin of MouseSDL::micky_to_displacement -------//
+int MouseSDL::micky_to_displacement(int d)
+{
+	return abs(d) >= double_speed_threshold ? d+d : d;
+}
+// ------ End of MouseSDL::micky_to_displacement -------//
 
 
 // ------ Begin of MouseSDL::is_key -------//

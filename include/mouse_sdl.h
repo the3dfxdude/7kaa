@@ -113,6 +113,10 @@ class MouseSDL
 private:
 	char*  vga_update_buf;
 
+	// ------ mouse setting ---------- //
+	int	double_speed_threshold;				// default DEFAULT_DOUBLE_SPEED_THRESHOLD
+	int	triple_speed_threshold;				// default DEFAULT_TRIPLE_SPEED_THRESHOLD
+
 	//-------- click buffer ---------//
 	MouseClick click_buffer[2];    // left button & right button only
 
@@ -209,6 +213,9 @@ public:
 
 	void disp_count_start();
 	void disp_count_end();
+
+private:
+	int     micky_to_displacement(int d);
 };
 //---------- End of define class ---------------//
 

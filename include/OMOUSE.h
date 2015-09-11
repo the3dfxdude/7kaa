@@ -25,6 +25,11 @@
 #ifndef __OMOUSE_H
 #define __OMOUSE_H
 
+//------ Default settting ---------//
+
+#define DEFAULT_DOUBLE_SPEED_THRESHOLD 8
+#define DEFAULT_TRIPLE_SPEED_THRESHOLD 16
+
 #if defined(USE_SDL)
 #include <mouse_sdl.h>
 #elif defined(USE_NOINPUT)
