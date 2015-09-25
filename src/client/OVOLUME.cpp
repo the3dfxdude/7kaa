@@ -70,7 +70,7 @@ RelVolume::RelVolume(PosVolume &posVolume)
 	long absY = posVolume.y >= 0 ? posVolume.y : -posVolume.y;
 	long dist = absX >= absY ? absX :absY;
 	if( dist <= DEFAULT_DIST_LIMIT )
-		rel_vol = rel_vol = 100 - dist * 100 / DEFAULT_VOL_DROP;
+		rel_vol = 100 - dist * 100 / DEFAULT_VOL_DROP;
 	else
 		rel_vol = 0;
 
