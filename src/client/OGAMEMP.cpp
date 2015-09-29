@@ -4957,7 +4957,7 @@ int Game::mp_select_load_option(char *fileName)
 					String str;
 
 					snprintf(str,
-						 255,
+						 MAX_STR_LEN+1,
 						 ngettext("This multiplayer saved game needs %d human players while now there is only %d human player.",
 							  "This multiplayer saved game needs %d human players while now there are only %d human players.",
 							  regPlayerCount),
@@ -5113,7 +5113,7 @@ int Game::mp_select_load_option(char *fileName)
 				String str;
 
 				snprintf(str,
-					 255,
+					 MAX_STR_LEN+1,
 					 ngettext("This multiplayer saved game needs %d human players while now there is only %d human player.",
 						  "This multiplayer saved game needs %d human players while now there are only %d human players.",
 						  playerCount),
@@ -5131,7 +5131,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				String str;
 
-				snprintf(str, 255, _("This multiplayer saved game can only support %d human players while now there are %d human players. The game cannot start."), maxPlayer, playerCount);
+				snprintf(str, MAX_STR_LEN+1, _("This multiplayer saved game can only support %d human players while now there are %d human players. The game cannot start."), maxPlayer, playerCount);
 
 				box.msg(str);
 				return 0;
