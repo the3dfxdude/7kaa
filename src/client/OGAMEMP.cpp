@@ -1737,6 +1737,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	char password[MP_FRIENDLY_NAME_LEN+1];
 	unsigned long wait_time;
 	int sysMsg;
+	bool joinSessionInitiated = false;
 
 	session = mp_obj.get_session(session_id);
 	err_when(session == NULL);
@@ -1750,7 +1751,9 @@ int Game::mp_join_session(int session_id, char *player_name)
 			MP_FRIENDLY_NAME_LEN+1
 		)
 	)
+	{
 		return 0;
+	}
 
 	strcpy(session->password, password);
 
@@ -1769,6 +1772,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	{
 		goto END;
 	}
+	joinSessionInitiated = true;
 
 	wait_time = misc.get_time()+30000; // wait for response up to 30 secs
 	while (wait_time > misc.get_time())
@@ -1810,9 +1814,14 @@ END:
 
 	box.close();
 
-	if (sysMsg < 0 || wait_time <= misc.get_time())
+	if (joinSessionInitiated && (sysMsg < 0 || wait_time <= misc.get_time()))
 	{
 		box.msg(_("Unable to connect"));
+		return 0;
+	}
+	else if (!joinSessionInitiated)
+	{
+		box.msg(_("Failed to initiate connection"));
 		return 0;
 	}
 
