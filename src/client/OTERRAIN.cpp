@@ -739,7 +739,7 @@ void TerrainRes::load_sub_info()
 	ter_sub_index = (TerrainSubInfo **) mem_add(sizeof(TerrainSubInfo *) * ter_sub_index_count);
 	memset(ter_sub_index, 0, sizeof(TerrainSubInfo *) * ter_sub_index_count);
 
-	TerrainSubInfo *lastTerrainSubInfo;
+	TerrainSubInfo *lastTerrainSubInfo = NULL;
 	for( i=0 ; i < ter_sub_rec_count ; i++ )
 	{
 		terrainSubInfo = ter_sub_array+i;
