@@ -1,6 +1,10 @@
 EXTRA_DIST = \
 	ALL.inc \
 	COLCODE.inc \
+	IMGFUN.inc
+
+noinst_LIBRARIES = libimgfun_x86.a
+libimgfun_x86_a_SOURCES = \
 	CRC.asm \
 	IB.asm \
 	IB2.asm \
@@ -29,7 +33,6 @@ EXTRA_DIST = \
 	IC.asm \
 	IC_R.asm \
 	IJ_T.asm \
-	IMGFUN.inc \
 	IR.asm \
 	IR_A.asm \
 	IR_AM.asm \
@@ -47,3 +50,7 @@ EXTRA_DIST = \
 	I_READ.asm \
 	I_SNOW.asm \
 	I_XOR.asm
+
+SUFFIXES = .asm
+.asm.o:
+	$(JWASM_CMD) $(JWASM_FMT) -q -Fo $@ $<

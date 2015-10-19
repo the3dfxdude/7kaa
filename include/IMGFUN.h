@@ -31,62 +31,62 @@
 extern "C"
 {
 	// not used : void IMGcall IMGinit(int,int);
-	void IMGcall IMGbar(char*,int pitch,int,int,int,int,int) __asmsym__("_IMGbar");
-	void IMGcall IMGread(char*,int pitch,int,int,int,int,char*) __asmsym__("_IMGread");
-	void IMGcall IMGblack32x32(char*,int pitch,int,int) __asmsym__("_IMGblack32x32");
+	void IMGcall IMGbar(char*,int pitch,int,int,int,int,int);
+	void IMGcall IMGread(char*,int pitch,int,int,int,int,char*);
+	void IMGcall IMGblack32x32(char*,int pitch,int,int);
 
-	void IMGcall IMGblt(char*,int pitch,int,int,char*) __asmsym__("_IMGblt");
-	void IMGcall IMGblt2(char*,int pitch,int,int,int,int,char*) __asmsym__("_IMGblt2");
-	void IMGcall IMGblt32x32(char*,int pitch,int,int,char*) __asmsym__("_IMGblt32x32");
-	void IMGcall IMGbltDW(char*,int pitch,int,int,char*) __asmsym__("_IMGbltDW");
-	void IMGcall IMGbltTrans(char*,int pitch,int,int,char*) __asmsym__("_IMGbltTrans");
+	void IMGcall IMGblt(char*,int pitch,int,int,char*);
+	void IMGcall IMGblt2(char*,int pitch,int,int,int,int,char*);
+	void IMGcall IMGblt32x32(char*,int pitch,int,int,char*);
+	void IMGcall IMGbltDW(char*,int pitch,int,int,char*);
+	void IMGcall IMGbltTrans(char*,int pitch,int,int,char*);
 	void IMGcall IMGbltTransHMirror(char*,int pitch,int,int,char*);
 	void IMGcall IMGbltTransVMirror(char*,int pitch,int,int,char*);
 	void IMGcall IMGbltTransHVMirror(char*,int pitch,int,int,char*);
-	void IMGcall IMGbltTransRemap(char*,int pitch,int,int,char*,char*) __asmsym__("_IMGbltTransRemap");
-	void IMGcall IMGbltArea(char* imageBuf,int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2) __asmsym__("_IMGbltArea");
-	void IMGcall IMGbltAreaTrans(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2) __asmsym__("_IMGbltAreaTrans");
+	void IMGcall IMGbltTransRemap(char*,int pitch,int,int,char*,char*);
+	void IMGcall IMGbltArea(char* imageBuf,int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2);
+	void IMGcall IMGbltAreaTrans(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2);
 	void IMGcall IMGbltAreaTransHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2);
 
-	void IMGcall IMGbltTransDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf) __asmsym__("_IMGbltTransDecompressHMirror");
-	void IMGcall IMGbltAreaTransDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2) __asmsym__("_IMGbltAreaTransDecompressHMirror");
+	void IMGcall IMGbltTransDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf);
+	void IMGcall IMGbltAreaTransDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2);
 
 	void IMGcall IMGremapDecompress(char* desPtr, char* srcPtr, char* colorTable);
-	void IMGcall IMGbltTransDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf) __asmsym__("_IMGbltTransDecompress");
-	void IMGcall IMGbltTransRemapDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable) __asmsym__("_IMGbltTransRemapDecompress");
-	void IMGcall IMGbltTransRemapDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable) __asmsym__("_IMGbltTransRemapDecompressHMirror");
-	void IMGcall IMGbltAreaTransDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2) __asmsym__("_IMGbltAreaTransDecompress");
-	void IMGcall IMGbltAreaTransRemapDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable) __asmsym__("_IMGbltAreaTransRemapDecompress");
-	void IMGcall IMGbltAreaTransRemapDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable) __asmsym__("_IMGbltAreaTransRemapDecompressHMirror");
+	void IMGcall IMGbltTransDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf);
+	void IMGcall IMGbltTransRemapDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable);
+	void IMGcall IMGbltTransRemapDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable);
+	void IMGcall IMGbltAreaTransDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2);
+	void IMGcall IMGbltAreaTransRemapDecompress(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable);
+	void IMGcall IMGbltAreaTransRemapDecompressHMirror(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable);
 
-	void IMGcall IMGjoinTrans(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x, int y, char* bitmapPtr) __asmsym__("_IMGjoinTrans");
-	void IMGcall IMGcopy(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x1, int y1, int x2, int y2) __asmsym__("_IMGcopy");
-	void IMGcall IMGcopyRemap(char*, int imgPitch,char*, int backPitch,int,int,int,int,unsigned char*) __asmsym__("_IMGcopyRemap");
+	void IMGcall IMGjoinTrans(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x, int y, char* bitmapPtr);
+	void IMGcall IMGcopy(char* imageBuf, int imgPitch, char* backBuf, int backPitch, int x1, int y1, int x2, int y2);
+	void IMGcall IMGcopyRemap(char*, int imgPitch,char*, int backPitch,int,int,int,int,unsigned char*);
 
 	// used in wall
-	void IMGcall IMGbltRemap(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable) __asmsym__("_IMGbltRemap");
-	void IMGcall IMGbltAreaTransRemap(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable) __asmsym__("_IMGbltAreaTransRemap");
-	void IMGcall IMGbltAreaRemap(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable) __asmsym__("_IMGbltAreaRemap");
+	void IMGcall IMGbltRemap(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, char* colorTable);
+	void IMGcall IMGbltAreaTransRemap(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable);
+	void IMGcall IMGbltAreaRemap(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2, char* colorTable);
 
 	void IMGcall IMGputBitFont(char*,int pitch,int,int,int,int,int,int,char*,int,int);
-	void IMGcall IMGline(char*,int pitch,int w, int h, int,int,int,int,int) __asmsym__("_IMGline");
+	void IMGcall IMGline(char*,int pitch,int w, int h, int,int,int,int,int);
 	void IMGcall IMGxor(char*,int pitch,int,int,int,int);
 
 	void IMGcall IMGdarken(char*,int pitch,int,int,int,int,int);
 	void IMGcall IMGtile(char*,int pitch,int,int,int,int,char*);
-	void IMGcall IMGpixel32x32(char*,int pitch,int,int,int) __asmsym__("_IMGpixel32x32");
+	void IMGcall IMGpixel32x32(char*,int pitch,int,int,int);
 
-	void IMGcall IMGsnow32x32(char*,int pitch,int,int,int,int) __asmsym__("_IMGsnow32x32");
-	void IMGcall IMGexploreMask32x32( char *,int pitch, int, int, char *, int, int, int) __asmsym__("_IMGexploreMask32x32");;
-	void IMGcall IMGexploreRemap32x32( char *,int pitch, int, int, char *, char **,int, int, int) __asmsym__("_IMGexploreRemap32x32");
-	void IMGcall IMGfogRemap32x32( char *,int pitch, int, int, char**, unsigned char*, unsigned char*, unsigned char*) __asmsym__("_IMGfogRemap32x32");
+	void IMGcall IMGsnow32x32(char*,int pitch,int,int,int,int);
+	void IMGcall IMGexploreMask32x32( char *,int pitch, int, int, char *, int, int, int);
+	void IMGcall IMGexploreRemap32x32( char *,int pitch, int, int, char *, char **,int, int, int);
+	void IMGcall IMGfogRemap32x32( char *,int pitch, int, int, char**, unsigned char*, unsigned char*, unsigned char*);
 
 	// ----- colour remapping functions ------//
-	void IMGcall IMGremapBar(char*,int pitch,int,int,int,int,unsigned char*) __asmsym__("_IMGremapBar");
-	void IMGcall IMGremap(char*,int pitch,int,int,char*,unsigned char**) __asmsym__("_IMGremap");
-	void IMGcall IMGremapHMirror(char*,int pitch,int,int,char*,unsigned char**) __asmsym__("_IMGremapHMirror");
-	void IMGcall IMGremapArea(char*,int pitch,int,int,char*,unsigned char**,int,int,int,int) __asmsym__("_IMGremapArea");
-	void IMGcall IMGremapAreaHMirror(char*,int pitch,int,int,char*,unsigned char**,int,int,int,int) __asmsym__("_IMGremapAreaHMirror");
+	void IMGcall IMGremapBar(char*,int pitch,int,int,int,int,unsigned char*);
+	void IMGcall IMGremap(char*,int pitch,int,int,char*,unsigned char**);
+	void IMGcall IMGremapHMirror(char*,int pitch,int,int,char*,unsigned char**);
+	void IMGcall IMGremapArea(char*,int pitch,int,int,char*,unsigned char**,int,int,int,int);
+	void IMGcall IMGremapAreaHMirror(char*,int pitch,int,int,char*,unsigned char**,int,int,int,int);
 };
 
 //-------------------------------------------//

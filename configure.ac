@@ -85,13 +85,20 @@ input_backend=sdl    # sdl none
 video_backend=sdl    # sdl none
 use_windows=no
 use_mingw=no
+jwasm_fmt="-elf -zt0"
 
 # Set in argument handlers:
+# enable_asm=no
 # enable_debug=no
 # with_wine=no
 # enable_dynamic_support_libs=no
 
 # Configuration options
+
+AC_ARG_ENABLE([asm],
+  AS_HELP_STRING([--enable-asm], [enable x86 asm optimizations]),
+  [], [enable_asm=no]
+)
 
 AC_ARG_ENABLE([debug],
   AS_HELP_STRING([--enable-debug], [enable debugging features]),
@@ -121,6 +128,7 @@ AS_CASE(["$host"],
   [*-mingw*], [
     use_windows=yes
     use_mingw=yes
+    jwasm_fmt=-coff
 ])
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
@@ -129,6 +137,7 @@ AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
+AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
 
 
 # Wine set-up
@@ -144,6 +153,17 @@ AS_IF([test "$with_wine" = yes], [
   CXX="wineg++"
   CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/msvcrt\""
   CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/windows\""
+])
+
+
+# Jwasm assembler set-up
+AS_IF([test "$enable_asm" = yes], [
+  JWASM_CMD=$(which jwasm)
+  AS_IF([test -z "$JWASM_CMD"], [
+    AC_ERROR([jwasm not found])
+  ])
+  AC_ARG_VAR([JWASM_CMD],[jwasm command])
+  AC_SUBST([JWASM_FMT],["$jwasm_fmt"])
 ])
 
 
@@ -261,8 +281,10 @@ AS_IF([test "$enable_debug" = yes], [
   ])
 ])
 
-AC_DEFINE([NO_ASM], [1], [
-  Define to 1 if not using assembly routines or if NO_WINDOWS is defined
+AS_IF([test "$enable_asm" = yes], [
+  AC_DEFINE([USE_ASM], [1], [
+    Define to 1 if using assembly routines
+  ])
 ])
 
 CXXFLAGS="$CXXFLAGS -I\"\$(top_srcdir)/include\""
@@ -279,7 +301,8 @@ AC_CONFIG_FILES([
   src/common/Makefile
   src/file/Makefile
   src/imgfun/Makefile
-  src/imgfun/asm/Makefile
+  src/imgfun/generic/Makefile
+  src/imgfun/x86/Makefile
   src/input/Makefile
   src/input/none/Makefile
   src/input/sdl/Makefile
@@ -298,4 +321,5 @@ AC_MSG_NOTICE([audio backend: $audio_backend])
 AC_MSG_NOTICE([video backend: $video_backend])
 AC_MSG_NOTICE([input backend: $input_backend])
 echo
+AC_MSG_NOTICE([x86 asm: $enable_asm])
 AC_MSG_NOTICE([debugging features: $enable_debug])

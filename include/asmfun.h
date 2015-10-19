@@ -24,20 +24,15 @@
 #ifndef _ASMFUN_H
 #define _ASMFUN_H
 
-
-#if (defined(NO_ASM))
-
-#define __asmsym__(s)
-#define IMGcall
-
-#else // ASM Requires Wine or Win32 and JWasm!!
-
-#include <windows.h>
-
-#define __asmsym__(s) __asm__(s)
-#define IMGcall _stdcall
-
+#ifdef USE_ASM
+#ifdef _MSC_VER
+	#include <windows.h>
+	#define IMGcall _stdcall
+#else
+	#define IMGcall __attribute__((stdcall))
 #endif
-
+#else
+#define IMGcall
+#endif
 
 #endif // _ASMFUN_H

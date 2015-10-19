@@ -272,6 +272,19 @@ if VIDEO_SDL
 7kaa_LDADD += ../video/sdl/libvideo_sdl.a
 endif
 
+7kaa_LDADD += ../video/common/libvideo_common.a
+
+if USE_ASM
+7kaa_LDADD += ../imgfun/x86/libimgfun_x86.a
+else
+7kaa_LDADD += ../imgfun/generic/libimgfun_generic.a
+endif
+
+7kaa_LDADD += \
+	../common/libcommon.a \
+	../file/libfile.a \
+	@LIBINTL@
+
 if USE_WINDOWS
 7kaa_SOURCES += ico.rc
 SUFFIXES = .rc
@@ -279,12 +292,5 @@ SUFFIXES = .rc
 	windres -I "$(top_srcdir)/include" -i $< $@
 ico.o: $(top_srcdir)/include/version.h 7k.ico
 endif
-
-7kaa_LDADD += \
-	../common/libcommon.a \
-	../file/libfile.a \
-	../video/common/libvideo_common.a \
-	../imgfun/libimgfun.a \
-	@LIBINTL@
 
 EXTRA_DIST = 7k.ico ico.rc
