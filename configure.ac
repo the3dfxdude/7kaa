@@ -274,6 +274,7 @@ AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
 	    [Define to 1 if using SDL as the video/input backend])
 ])
 
+AC_DEFINE([NO_MEM_CLASS], [1], [Define to 1 if not monitoring memory alloc])
 AS_IF([test "$enable_debug" = yes], [
   AC_DEFINE([DEBUG], [1], [Define to 1 if building with debugging features])
   AC_DEFINE([DYNARRAY_DEBUG_ELEMENT_ACCESS], [1], [
