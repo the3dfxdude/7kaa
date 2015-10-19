@@ -106,6 +106,7 @@ void MouseSDL::init()
 
 	SDL_StopTextInput();
 	SDL_ShowCursor(SDL_DISABLE);
+	SDL_GetMouseState(&cur_x, &cur_y);
 }
 //------------- End of MouseSDL::init -------------//
 
