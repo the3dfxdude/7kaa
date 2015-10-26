@@ -743,8 +743,13 @@ void MouseSDL::poll_event()
 		switch (event.type) {
 		case SDL_MOUSEMOTION:
 			if(vga.is_input_grabbed()) {
+#ifdef MOUSE_ACCEL
 				cur_x += micky_to_displacement(event.motion.xrel);
 				cur_y += micky_to_displacement(event.motion.yrel);
+#else
+				cur_x += event.motion.xrel;
+				cur_y += event.motion.yrel;
+#endif
 				if(cur_x < bound_x1)
 					cur_x = bound_x1;
 				else if(cur_x > bound_x2)
