@@ -237,7 +237,7 @@ void Flame::rise(short wind)
 {
 	// rise of each particle of frame
 	unsigned char *p;			// pointer to heat_map
-
+#ifndef USE_ASM
 	short x,y;
 /*	
 	// 1st version, left to right, top to bottom
@@ -302,7 +302,7 @@ void Flame::rise(short wind)
 	}
 
 
-#if 0
+#else
 
 	// 2nd version assembly version
 	const unsigned int BALANCE_PERIOD = 11;
@@ -337,7 +337,7 @@ void Flame::rise(short wind)
 	int	rightLen = map_width - leftLen;
 	p = heat_map + (map_height-2)*map_width;
 	unsigned char Decay = (unsigned char) decay;
-	/* Original Visual C++ assembly code for reference
+#ifdef _MSC_VER
 	_asm
 	{
 		mov	ecx, mapHeight
@@ -468,7 +468,7 @@ void Flame::rise(short wind)
 	rise_4:
 		cld
 	}
-	*/
+#else
 
 	__asm__ __volatile__ (
                 "movl %0, %%ecx\n\t"
@@ -615,6 +615,7 @@ void Flame::rise(short wind)
 		"i"(WIND_PERIOD),"i"(DECAY_PERIOD),"m"(rightLen)
 		: "%eax","%ebx","%edx","%edi","memory"
 	);
+#endif
 #endif
 }
 //-------------- End Function Flame::rise ----------//

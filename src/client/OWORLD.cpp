@@ -2035,6 +2035,7 @@ void World::process_visibility()
 	if( config.fog_of_war )
 	{
 		// ###### begin Gilbert 13/10 ########//
+#ifndef USE_ASM
 		for( int y = 0; y < max_y_loc; ++y)
 		{
 			Location *locPtr = get_loc(0,y);
@@ -2043,13 +2044,12 @@ void World::process_visibility()
 				locPtr->dec_visibility();
 			}
 		}
-		
+#else
 		int count = max_x_loc * max_y_loc;
 		const int sizeOfLoc = sizeof(Location);
 		unsigned char *locVisitLevel = &get_loc(0,0)->visit_level;
 		unsigned char decVisitLevel = EXPLORED_VISIBILITY*2+1;
-#if 0
-		/* Original Visual C++ assembly code for reference
+#ifdef _MSC_VER
 		_asm
 		{
 			mov	ecx, count
@@ -2065,8 +2065,7 @@ process_visit_level_1:
 			add	ebx, edx
 			loop	process_visit_level_1
 		}
-		*/
-
+#else
 		__asm__ __volatile__ (
 			"movb %0, %%ah\n"
 		"process_visit_level_1:\n\t"
@@ -2081,6 +2080,7 @@ process_visit_level_1:
 			: "m"(decVisitLevel), "b"(locVisitLevel), "c"(count), "d"(sizeOfLoc)
 			: "%eax"
 		);
+#endif
 #endif
 		// ###### end Gilbert 13/10 ########//
 	}
