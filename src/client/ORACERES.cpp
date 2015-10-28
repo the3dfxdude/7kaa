@@ -171,6 +171,8 @@ void RaceRes::load_name()
 		raceName    = name_array+i-1;
 
 		misc.rtrim_fld( raceName->name, raceNameRec->name, raceNameRec->NAME_LEN );
+		// The default STD.SET uses a different code page than the used fonts.
+		misc.dos_encoding_to_win(raceName->name, raceName->NAME_LEN);
 
 		if( raceName->name[0]=='@' )
 		{
