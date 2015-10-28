@@ -69,6 +69,8 @@ public:
    void  rtrim_fld(char*,char*,int);
    int   atoi(char*,int);
 
+   void  dos_encoding_to_win(char *c, int len);
+
    void  empty(char*,int);
    int   is_empty(char*,int=0);
 

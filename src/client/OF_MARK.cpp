@@ -814,7 +814,7 @@ void FirmMarket::clear_market_goods(int position)
 	}
 	else
 	{
-		market_product_array[marketGoods->raw_id-1] = NULL;
+		market_product_array[marketGoods->product_raw_id-1] = NULL;
 		marketGoods->product_raw_id = 0;
 	}
 }

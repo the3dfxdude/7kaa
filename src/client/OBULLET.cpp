@@ -358,7 +358,7 @@ void Bullet::hit_building(short x, short y)
 	if( attackDamage == 0)
 		return;
 
-	Unit *virtualUnit, *parentUnit;
+	Unit *virtualUnit = NULL, *parentUnit;
 	if(unit_array.is_deleted(parent_recno))
 	{
 		parentUnit = NULL;

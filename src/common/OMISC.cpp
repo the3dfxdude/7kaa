@@ -900,6 +900,32 @@ void Misc::rtrim_fld(char* varPtr, char* fldPtr, int fldLen)
 //---------- End of function Misc::rtrim_fld ---------//
 
 
+//-------- Begin of function Misc::dos_encoding_to_win ---------//
+// Changes the encoding from DOS codepage 437 to the Windows-1252 codepage used by the fonts.
+//
+void Misc::dos_encoding_to_win(char *c, int len)
+{
+	// look up table to convert multilingual char set to windows char set
+	static unsigned char multi_to_win_table[] = 
+		"ÇüéâäàåçêëèïîìÄÅ"
+		"ÉæÆôöòûùÿÖÜø£Ø×\x83"
+		"áíóúñÑªº¿\xae¬½¼¡«»"
+		"?????ÁÂÀ©????¢¥?"
+		"??????ãÃ???????¤"
+		"ðÐÊËÈ'ÍÎÏ????¦Ì?"
+		"ÓßÔÒõÕµÞþÚÛÙýÝ?´"
+		"·±=¾¶§÷?°¨?¹³²??";
+
+
+	unsigned char *textPtr = (unsigned char *)c;
+	for( ; len > 0 && *textPtr; --len, ++textPtr )
+	{
+		if( *textPtr >= 0x80 && multi_to_win_table[*textPtr - 0x80] != '?' )
+			*textPtr = multi_to_win_table[*textPtr - 0x80];
+	}
+}
+//---------- End of function Misc::dos_encoding_to_win ---------//
+
 
 //------- Begin of function Misc::atoi ---------//
 //

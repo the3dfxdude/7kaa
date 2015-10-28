@@ -1737,6 +1737,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	char password[MP_FRIENDLY_NAME_LEN+1];
 	unsigned long wait_time;
 	int sysMsg;
+	bool joinSessionInitiated = false;
 
 	session = mp_obj.get_session(session_id);
 	err_when(session == NULL);
@@ -1750,7 +1751,9 @@ int Game::mp_join_session(int session_id, char *player_name)
 			MP_FRIENDLY_NAME_LEN+1
 		)
 	)
+	{
 		return 0;
+	}
 
 	strcpy(session->password, password);
 
@@ -1769,6 +1772,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 	{
 		goto END;
 	}
+	joinSessionInitiated = true;
 
 	wait_time = misc.get_time()+30000; // wait for response up to 30 secs
 	while (wait_time > misc.get_time())
@@ -1810,9 +1814,14 @@ END:
 
 	box.close();
 
-	if (sysMsg < 0 || wait_time <= misc.get_time())
+	if (joinSessionInitiated && (sysMsg < 0 || wait_time <= misc.get_time()))
 	{
 		box.msg(_("Unable to connect"));
+		return 0;
+	}
+	else if (!joinSessionInitiated)
+	{
+		box.msg(_("Failed to initiate connection"));
 		return 0;
 	}
 
@@ -4957,7 +4966,7 @@ int Game::mp_select_load_option(char *fileName)
 					String str;
 
 					snprintf(str,
-						 255,
+						 MAX_STR_LEN+1,
 						 ngettext("This multiplayer saved game needs %d human players while now there is only %d human player.",
 							  "This multiplayer saved game needs %d human players while now there are only %d human players.",
 							  regPlayerCount),
@@ -5113,7 +5122,7 @@ int Game::mp_select_load_option(char *fileName)
 				String str;
 
 				snprintf(str,
-					 255,
+					 MAX_STR_LEN+1,
 					 ngettext("This multiplayer saved game needs %d human players while now there is only %d human player.",
 						  "This multiplayer saved game needs %d human players while now there are only %d human players.",
 						  playerCount),
@@ -5131,7 +5140,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				String str;
 
-				snprintf(str, 255, _("This multiplayer saved game can only support %d human players while now there are %d human players. The game cannot start."), maxPlayer, playerCount);
+				snprintf(str, MAX_STR_LEN+1, _("This multiplayer saved game can only support %d human players while now there are %d human players. The game cannot start."), maxPlayer, playerCount);
 
 				box.msg(str);
 				return 0;

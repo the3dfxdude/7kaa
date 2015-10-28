@@ -491,7 +491,7 @@ int Firm::detect_worker_list()
 		x = INFO_X1+6+i%4*50;
 		y = pop_disp_y1+1+i/4*29;
 
-		switch( mouse.single_click(x, y, x+27, y+23, 2) )
+		switch( mouse.any_click(x, y, x+27, y+23, LEFT_BUTTON) ? 1 : (mouse.any_click(x, y, x+27, y+23, RIGHT_BUTTON) ? 2 : 0) )
 		{
 			case 1:         // left button to select worker
 				selected_worker_id = i+1;
