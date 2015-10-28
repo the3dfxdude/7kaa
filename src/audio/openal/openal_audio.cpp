@@ -1122,8 +1122,8 @@ bool OpenALAudio::StreamContext::stream_data(int new_buffer_count)
 		}
 
 		size_t space_frames = BUFFER_SIZE / this->stream->frame_size();
-			space_frames = MIN(space_frames, max_frames);
-			frames_read = this->stream->read(data_buffer, space_frames);
+		space_frames = MIN(space_frames, max_frames);
+		frames_read = this->stream->read(data_buffer, space_frames);
 
 		if (frames_read == 0)
 		{

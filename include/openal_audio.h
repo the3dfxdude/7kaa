@@ -76,7 +76,7 @@ private:
 
 	private:
 		/* forbid copying */
-		StreamContext(const StreamContext &) {}
+		StreamContext(const StreamContext &);
 	};
 
 	typedef std::map<int, StreamContext *> StreamMap;
