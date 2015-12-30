@@ -75,6 +75,14 @@ static void put_ranking(int y, int nationRecno);
 //
 void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNationRecno, int retireFlag)
 {
+	//--- skip all game ending screens if in demo mode ---//
+
+	if( game_mode == GAME_DEMO )
+	{
+		sys.signal_exit_flag = 2;
+		return;
+	}
+
 	//--- if the player has already won/lost the game and is just staying/observing the game ---//
 
 	if( game_has_ended && !retireFlag )		// don't repeat displaying the winning/losing screen
