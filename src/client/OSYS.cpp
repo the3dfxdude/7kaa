@@ -434,7 +434,7 @@ int Sys::set_config_dir()
    // create the config directory
    if (!misc.mkpath(dir_config))
    {
-      ERR("Unable to acquire a usable game config dir.\n");
+      show_error_dialog(_("Unable to determine a location for storing the game configuration."));
       dir_config[0] = 0;
       return 0;
    }
@@ -1032,6 +1032,28 @@ void Sys::unpause()
    }
 }
 //--------- End of function Sys::unpause ---------//
+
+
+//-------- Begin of function Sys::show_error_dialog ----------//
+//
+// Show SDL error dialog that does not depend on video init. This is a blocking
+// routine, and never should be used after init.
+//
+void Sys::show_error_dialog(const char *formatStr, ...)
+{
+   enum { RESULT_STR_LEN=200 };
+
+   static char resultStr[RESULT_STR_LEN+1];
+
+   va_list argPtr;
+
+   va_start( argPtr, formatStr );
+   vsnprintf( resultStr, RESULT_STR_LEN, formatStr, argPtr );
+   va_end( argPtr );
+
+   SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Seven Kingdoms", resultStr, NULL );
+}
+//----------- End of function Sys::show_error_dialog ----------//
 
 
 //-------- Begin of function Sys::yield --------//
@@ -2673,7 +2695,7 @@ int Sys::chdir_to_game_dir()
       return 1;
 #endif
 
-   ERR("Unable to locate the game data.\n");
+   show_error_dialog(_("Unable to locate the game resources."));
 
    return 0;
 }

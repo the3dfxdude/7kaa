@@ -340,11 +340,11 @@ int main(int argc, char **argv)
 	for (int i = 0; i < argc; i++) {
 		if (!strcmp(argv[i], lobbyJoinCmdLine)) {
 			if (lobbied) {
-				ERR("You cannot specify multiple -host or -join options.\n");
+				sys.show_error_dialog(_("You cannot specify multiple -host or -join options."));
 				return 1;
 			}
 			if (i >= argc - 1) {
-				ERR("The %s switch requires a hostname parameter.\n", lobbyJoinCmdLine);
+				sys.show_error_dialog(_("Expected argument after %s."), lobbyJoinCmdLine);
 				return 1;
 			}
 			lobbied = 1;
@@ -352,13 +352,13 @@ int main(int argc, char **argv)
 			i++;
 		} else if (!strcmp(argv[i], lobbyHostCmdLine)) {
 			if (lobbied) {
-				ERR("You cannot specify multiple -host or -join options.\n");
+				sys.show_error_dialog(_("You cannot specify multiple -host or -join options."));
 				return 1;
 			}
 			lobbied = 1;
 		} else if (!strcmp(argv[i], lobbyNameCmdLine)) {
 			if (i >= argc - 1) {
-				ERR("The %s switch requires a hostname parameter.\n", lobbyNameCmdLine);
+				sys.show_error_dialog(_("Expected argument after %s."), lobbyNameCmdLine);
 				return 1;
 			}
 			strncpy(config.player_name, argv[i+1], config.PLAYER_NAME_LEN);
