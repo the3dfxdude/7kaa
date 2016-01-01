@@ -1092,6 +1092,13 @@ void Sys::disp_frames_per_second()
 	str  = "Frames per second: ";
 	str += frames_per_second;
 
+	if( frames_per_second < config.frame_speed-1 ) // -1 for rounding
+	{
+		str += " (expecting ";
+		str += config.frame_speed;
+		str += ")";
+	}
+
 	vga.use_back();
 
 	font_news.disp( ZOOM_X1+10, ZOOM_Y1+10, str, MAP_X2);
