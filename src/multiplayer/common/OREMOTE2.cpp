@@ -290,10 +290,10 @@ int Remote::poll_msg()
 	char *recvBuf;
 	// DPID from;
 	char from;
-	DWORD recvLen;
+	uint32_t recvLen;
 
 	// while( (recvBuf = mp_ptr->receive(&from, &recvLen)) != NULL)
-	while( (recvBuf = ec_remote.receive(&from, (long unsigned int *)&recvLen)) != NULL)
+	while( (recvBuf = ec_remote.receive(&from, &recvLen)) != NULL )
 	{
 		err_when(++loopCount > 1000 );
 		msgListSize = recvLen;

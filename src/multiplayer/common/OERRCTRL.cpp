@@ -170,7 +170,7 @@ int ErrorControl::send(char ecPlayerId, void *dataPtr, long unsigned int dataLen
 	return 1;
 }
 
-char *ErrorControl::receive(char *sendEcPlayerId, long unsigned int *dataLen)
+char *ErrorControl::receive(char *sendEcPlayerId, uint32_t *dataLen)
 {
 	// ----- draw the head of recv_queue ----- //
 

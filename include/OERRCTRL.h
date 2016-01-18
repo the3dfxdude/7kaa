@@ -118,7 +118,7 @@ public:
 	char	get_ec_player_id( unsigned long dpPlayerId );
 
 	int	send(char ecPlayerId, void *dataPtr, unsigned long dataLen);
-	char *receive(char *sendEcPlayerId, unsigned long *dataLen);
+	char*	receive(char *sendEcPlayerId, uint32_t *dataLen);
 	void	de_recv_queue();			// get the content from recv_queue[recv_head] before de_recv_queue
 
 	int	is_player_valid(char ecPlayerId);
