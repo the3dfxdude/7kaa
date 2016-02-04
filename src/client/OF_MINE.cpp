@@ -35,7 +35,12 @@
 #include <OSITE.h>
 #include <OF_MINE.h>
 #include <OF_FACT.h>
+#include <OBUTT3D.h>
 #include "gettext.h"
+
+//------- define static vars -------//
+
+static Button3D	button_vacate_firm;
 
 //--------- Begin of function FirmMine::FirmMine ---------//
 //
@@ -187,9 +192,26 @@ void FirmMine::put_info(int refreshFlag)
 	disp_worker_list(INFO_Y1+127, refreshFlag);
 	disp_worker_info(INFO_Y1+191, refreshFlag);
 
+	//------ display mobilize button -------//
+
+	int x = INFO_X1;
+
+	if (own_firm() && refreshFlag == INFO_REPAINT)
+	{
+		button_vacate_firm.paint(INFO_X1 + BUTTON_ACTION_WIDTH, INFO_Y1 + 248, 'A', "RECRUIT");
+		button_vacate_firm.set_help_code("Mobilize all workers");
+
+		if (worker_count)
+			button_vacate_firm.enable();
+		else
+			button_vacate_firm.disable();
+
+		x += BUTTON_ACTION_WIDTH;
+	}
+
 	//---------- display spy button ----------//
 
-	disp_spy_button(INFO_X1, INFO_Y1+249, refreshFlag);
+	disp_spy_button(x, INFO_Y1+249, refreshFlag);
 }
 //----------- End of function FirmMine::put_info -----------//
 
@@ -217,6 +239,14 @@ void FirmMine::detect_info()
 
 	if( !own_firm() )
 		return;
+
+	//-------- detect mobilize button ----------//
+
+	if (button_vacate_firm.detect())
+	{
+		mobilize_all_worker(0);
+		info.disp();
+	}
 }
 //----------- End of function FirmMine::detect_info -----------//
 

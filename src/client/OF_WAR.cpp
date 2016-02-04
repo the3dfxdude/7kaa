@@ -76,6 +76,7 @@ static ButtonCustom button_weapon[MAX_WEAPON_TYPE];
 static ButtonCustom button_queue_weapon[MAX_WEAPON_TYPE];
 // ###### end Gilbert 10/9 #######//
 static ButtonCustom button_cancel;
+static Button3D	button_vacate_firm;
 
 
 // --------- declare static function ----------//
@@ -156,13 +157,28 @@ void FirmWar::disp_main_menu(int refreshFlag)
 
 	disp_worker_info(INFO_Y1+171, refreshFlag);
 
-	if( own_firm() )
+	//------ display mobilize button -------//
+
+	int x = INFO_X1;
+
+	if (own_firm())
 	{
-		if( refreshFlag==INFO_REPAINT )
-			button_select_build.paint( INFO_X1, INFO_Y1+235, 'A', "MAKEWEAP" );
+		if (refreshFlag == INFO_REPAINT)
+		{	
+			button_select_build.paint(INFO_X1, INFO_Y1 + 235, 'A', "MAKEWEAP");
+			button_vacate_firm.paint(INFO_X1 + BUTTON_ACTION_WIDTH, INFO_Y1 + 235, 'A', "RECRUIT");
+			button_vacate_firm.set_help_code("Mobilize all workers");
+		}
+
+		if (worker_count)
+			button_vacate_firm.enable();
+		else
+			button_vacate_firm.disable();
+
+		x += (BUTTON_ACTION_WIDTH * 2);
 	}
 
-	disp_spy_button( INFO_X1+BUTTON_ACTION_WIDTH, INFO_Y1+235, refreshFlag );
+	disp_spy_button( x, INFO_Y1+235, refreshFlag );
 }
 //----------- End of function FirmWar::disp_main_menu -----------//
 
@@ -211,6 +227,14 @@ void FirmWar::detect_main_menu()
 		disable_refresh = 1;    // static var for disp_info() only
 		info.disp();
 		disable_refresh = 0;
+	}
+
+	//-------- detect mobilize button ----------//
+
+	if (button_vacate_firm.detect())
+	{
+		mobilize_all_worker(0);
+		info.disp();
 	}
 }
 //----------- End of function FirmWar::detect_main_menu -----------//

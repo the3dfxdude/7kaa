@@ -2562,19 +2562,14 @@ void Firm::mobilize_all_worker(int leaderUnitRecno)
 		if(!unitRecno)
 			break; // keep the rest workers as there is no space for creating the unit
 
-		if( leaderUnitRecno )
+		Unit* unitPtr = unit_array[unitRecno];
+		unitPtr->team_id = unit_array.cur_team_id;   // define it as a team
+
+		if (nation_recno == nation_array.player_recno)
 		{
-			Unit* unitPtr = unit_array[unitRecno];
-
-			unitPtr->team_id = unit_array.cur_team_id;   // define it as a team
-			unitPtr->leader_unit_recno = leaderUnitRecno;
-			unitPtr->update_loyalty();							// the unit is just assigned to a new leader, set its target loyalty
-
-			err_when( unitPtr->rank_id != RANK_KING && unitPtr->rank_id != RANK_GENERAL );
-
-			if( nation_recno == nation_array.player_recno )
-				unitPtr->selected_flag = 1;
-      }
+			unitPtr->selected_flag = 1;
+			unit_array.selected_count++;
+		}
 	}
 
    unit_array.cur_team_id++;
