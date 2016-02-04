@@ -200,7 +200,7 @@ void FirmBase::put_info(int refreshFlag)
 			button_invoke.paint( INFO_X1, y, 'A', "INVOKE" );
 			button_reward.paint( INFO_X1 + BUTTON_ACTION_WIDTH, y, 'A', "REWARDSP" );
 			button_vacate_firm.paint(INFO_X1 + BUTTON_ACTION_WIDTH * 2, y, 'A', "RECRUIT");
-			button_vacate_firm.set_help_code("Mobilize all workers");
+			button_vacate_firm.set_help_code("MOBILIZE");
 		}
 
 		if( can_invoke() )

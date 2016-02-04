@@ -225,7 +225,7 @@ void FirmFactory::put_info(int refreshFlag)
 		{
 			button_change_production.paint(INFO_X1, INFO_Y1 + 248, 'A', "CHGPROD");
 			button_vacate_firm.paint(INFO_X1 + BUTTON_ACTION_WIDTH, INFO_Y1 + 248, 'A', "RECRUIT");
-			button_vacate_firm.set_help_code("Mobilize all workers");
+			button_vacate_firm.set_help_code("MOBILIZE");
 		}
 
 		if (worker_count)
