@@ -2544,6 +2544,9 @@ int Firm::create_worker_unit(Worker& thisWorker)
 //
 void Firm::mobilize_all_worker(int leaderUnitRecno)
 {
+	if (nation_recno == nation_array.player_recno)
+		power.reset_selection();
+
 	err_when( !worker_array );    // this function shouldn't be called if this firm does not need worker
 
 	//------- detect buttons on hiring firm workers -------//
