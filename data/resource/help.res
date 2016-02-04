@@ -125,6 +125,10 @@ MAKEWEAP
 _("Make a Weapon")
 _("This takes you to a menu where you can select weapons to make in this war factory.")
 ~
+MOBILIZE
+_("Mobilize Workers")
+_("This will cause all workers to exit the building immediately.")
+~
 MOBILSPY
 _("Mobilize Spy")
 _("This will send the selected spy out of the place where he has been infiltrated.")
