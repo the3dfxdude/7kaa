@@ -212,6 +212,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 		//---------- yield --------//
 
 		sys.yield();
+		vga.flip();
 
 		mouse.get_event();
 

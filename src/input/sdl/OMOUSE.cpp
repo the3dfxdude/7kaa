@@ -919,6 +919,7 @@ int MouseSDL::wait_press(int timeOutSecond)
 	while(1)
 	{
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )

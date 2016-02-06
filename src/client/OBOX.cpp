@@ -223,6 +223,7 @@ int Box::ask_button(const char* buttonDes1, const char* buttonDes2, int rightCli
    while( 1 )
 	{
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.debug_session )

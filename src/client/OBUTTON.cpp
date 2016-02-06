@@ -410,6 +410,7 @@ int Button::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int su
 		while( (rc==1 && mouse.left_press) || (rc==2 && mouse.right_press) )
 		{
 			sys.yield();
+			vga.flip();
 			mouse.get_event();
 
 			if( misc.get_time() >= timeOutTime )
@@ -431,6 +432,7 @@ int Button::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int su
 		while( (rc==1 && mouse.left_press) || (rc==2 && mouse.right_press) )
 		{
 			sys.yield();
+			vga.flip();
 			mouse.get_event();
 
 			if( misc.get_time() >= timeOutTime )
@@ -463,6 +465,7 @@ void Button::wait_press(int timeOut)
 	while( !detect(KEY_RETURN,KEY_ESC) && !mouse.any_click(1) )  // 1-only right mouse button
 	{
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )

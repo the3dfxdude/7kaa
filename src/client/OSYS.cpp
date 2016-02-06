@@ -683,6 +683,7 @@ void Sys::main_loop(int isLoadedGame)
          vga_front.lock_buf();
 
          yield();       // could be improved, give back the control to Windows, so it can do some OS management. Maybe call WaitMessage() here and set up a timer to get messages regularly.
+         vga.flip();
 
          detect();
 
@@ -1113,8 +1114,6 @@ void Sys::yield()
          font_san.disp( ZOOM_X1, 4, str, ZOOM_X1+300);
       }
    }
-
-   vga.flip();
 
    isYielding=0;
 }

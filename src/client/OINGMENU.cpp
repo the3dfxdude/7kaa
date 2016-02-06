@@ -102,6 +102,7 @@ void InGameMenu::enter(char untilExitFlag)
       while( is_active() )
       {
          sys.yield();
+         vga.flip();
          mouse.get_event();
 
          // display on front buffer
@@ -193,6 +194,7 @@ int InGameMenu::detect()
    while( mouse.left_press )  // holding down the button
    {
       sys.yield();
+      vga.flip();
       mouse.get_event();
    }
 

@@ -116,6 +116,7 @@ void Game::in_game_menu()
 		//---------- yield --------//
 
 		sys.yield();
+		vga.flip();
 
 		mouse.get_event();
 
@@ -419,6 +420,7 @@ int Game::in_game_option_menu()
 	while(1)
 	{
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		// ------- display --------//

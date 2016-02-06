@@ -333,6 +333,7 @@ int ScrollBar::detect()
       while( mouse.left_press )
 		{
 			sys.yield();
+			vga.flip();
 
 			if( type==VERTICAL )
          {

@@ -319,6 +319,7 @@ int Button3D::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int 
 		while( (rc==1 && mouse.left_press) || (rc==2 && mouse.right_press) )
 		{
 			sys.yield();
+			vga.flip();
 			mouse.get_event();
 
 			if( misc.get_time() >= timeOutTime )
@@ -340,6 +341,7 @@ int Button3D::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int 
 		while( (rc==1 && mouse.left_press) || (rc==2 && mouse.right_press) )
 		{
 			sys.yield();
+			vga.flip();
 			mouse.get_event();
 
 			if( misc.get_time() >= timeOutTime )

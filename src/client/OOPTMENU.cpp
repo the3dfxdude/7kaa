@@ -193,6 +193,7 @@ void OptionMenu::enter(char untilExitFlag)
 		while( is_active() )
 		{
 			sys.yield();
+			vga.flip();
 			mouse.get_event();
 			disp();
 			sys.blt_virtual_buf();

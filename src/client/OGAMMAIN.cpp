@@ -221,6 +221,7 @@ void Game::main_menu()
 		//---------- detect buttons -----------//
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		optionInfo = main_option_array;
@@ -436,6 +437,7 @@ void Game::single_player_menu()
 	while(1)
 	{
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -691,6 +693,7 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 	while(1)
 	{
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )

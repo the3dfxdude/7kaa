@@ -1030,6 +1030,7 @@ int Game::mp_select_service()
 		vga_front.lock_buf();
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if (sys.signal_exit_flag == 1)
@@ -1206,6 +1207,7 @@ int Game::mp_select_mode(char *defSaveFileName)
 		vga_front.lock_buf();
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -1414,6 +1416,7 @@ int Game::input_box(const char *tell_string, char *buf, int len)
 		input_box.paint();
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -1527,6 +1530,7 @@ int Game::mp_select_session()
 		vga_front.lock_buf();
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -1789,6 +1793,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 		vga_front.lock_buf();
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
@@ -1870,6 +1875,7 @@ void Game::mp_close_session()
 		vga_front.lock_buf();
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
@@ -1925,6 +1931,7 @@ int Game::mp_get_leader_board()
 		break;
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 		
 		if( sys.signal_exit_flag == 1 )
@@ -2435,6 +2442,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		// ####### end Gilbert 23/10 #######//
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		// Note: sys.signal_exit_flag is detected at the same point as the cancel/abort button
@@ -4328,6 +4336,7 @@ int Game::mp_select_load_option(char *fileName)
 		// ####### begin Gilbert 24/10 ########//
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 
 		// Note: sys.signal_exit_flag is detected at the same point as the cancel/abort button

@@ -182,6 +182,7 @@ void Game::view_encyclopedia()
 		//-------------- yield ---------------//
 
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 		sys.blt_virtual_buf();
 

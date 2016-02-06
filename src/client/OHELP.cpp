@@ -462,6 +462,7 @@ void Help::disp_help(int centerX, int centerY, const char* helpTitle, const char
 	while( help.should_disp() )
 	{
 		sys.yield();
+		vga.flip();
 		music.yield();
 
 		mouse.get_event();

@@ -198,6 +198,7 @@ int Tutor::select_tutor(int actionMode)
 		//---------- yield --------//
 
 		sys.yield();
+		vga.flip();
 
 		mouse.get_event();
 

@@ -312,6 +312,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 		//---------- yield --------//
 
 		sys.yield();
+		vga.flip();
 
 		mouse.get_event();
 
