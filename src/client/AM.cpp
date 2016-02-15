@@ -433,7 +433,7 @@ int main(int argc, char **argv)
 	{
 		mouse_cursor.set_icon(CURSOR_NORMAL);
 		sys.set_speed(demoSpeed);
-		config.show_ai_info = 1;
+		sys.disp_fps_flag = 1;
 		config.help_mode = NO_HELP;
 		game.game_mode = GAME_DEMO;
 		game.init();

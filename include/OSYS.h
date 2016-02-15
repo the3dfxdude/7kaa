@@ -88,6 +88,7 @@ public:
 	char		toggle_full_screen_flag;
 	char		cheat_enabled_flag;
 	char		user_pause_flag;
+	char		disp_fps_flag;
 
 	char 		view_mode;				// the view mode can be MODE_???
 

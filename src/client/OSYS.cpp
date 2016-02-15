@@ -160,6 +160,7 @@ Sys::Sys()
    is_mp_game = 0;
    toggle_full_screen_flag = 0;
    user_pause_flag = 0;
+   disp_fps_flag = 0;
 }
 //----------- End of function Sys::Sys -----------//
 
