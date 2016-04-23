@@ -47,6 +47,19 @@ enum ProtocolType
 	Serial = 8
 };
 
+enum
+{
+	MPMSG_USER_SESSION_STATUS = 0x1f960001,
+};
+
+struct MpMsgUserSessionStatus {
+	uint32_t id;
+	uint16_t game_version[3];
+	uint16_t reserved0;
+	uint32_t flags;
+	char session_name[MP_FRIENDLY_NAME_LEN];
+};
+
 struct SessionDesc
 {
 	char session_name[MP_FRIENDLY_NAME_LEN+1];
@@ -58,6 +71,7 @@ struct SessionDesc
 	SessionDesc(const SessionDesc &);
 	SessionDesc& operator= (const SessionDesc &);
 	SessionDesc(const char *name, const char *pass, ENetAddress *address);
+	SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address);
 
 	char *name_str() { return session_name; };
 	uint32_t session_id() { return id; }
@@ -89,8 +103,8 @@ private:
 	char *            recv_buf;
 
 	ENetHost          *host;
+	ENetSocket        session_monitor;
 
-	ENetAddress       lan_broadcast_address;
 	ENetAddress       remote_session_provider_address;
 
 	int use_remote_session_provider;
@@ -125,7 +139,8 @@ public:
 	int    join_session(SessionDesc *session, char *playerName);
 	int    close_session();
 	SessionDesc* get_session(int i);
-	SessionDesc *get_current_session();
+	SessionDesc* get_session(ENetAddress *address);
+	SessionDesc* get_current_session();
 
 	// -------- functions on player management -------//
 	int         add_player(uint32_t playerId, char *name, ENetAddress *address, char contact);
@@ -146,6 +161,11 @@ public:
 private:
 	int open_port(uint16_t port, int fallback);
 	void close_port();
+
+	ENetSocket create_socket(uint16_t port);
+	void destroy_socket(ENetSocket socket);
+
+	void send_user_session_status(ENetAddress *address);
 
 	uint32_t get_avail_player_id();
 	int add_pending_player(PlayerDesc *player);
