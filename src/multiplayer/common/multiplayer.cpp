@@ -89,6 +89,11 @@ SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 	return *this;
 }
 
+inline bool cmp_addr(ENetAddress *a, ENetAddress *b)
+{
+	return a->host == b->host && a->port == b->port;
+}
+
 // to start a multiplayer game, first check if it is called from a
 // lobbied (MultiPlayer::is_lobbied)
 
@@ -394,12 +399,8 @@ SessionDesc *MultiPlayer::get_session(ENetAddress *address)
 	int i;
 	for (i = 1; i <= current_sessions.size(); i++) {
 		SessionDesc *p = (SessionDesc *)current_sessions.get(i);
-		if (!p)
-			continue;
-		ENetAddress *a = &p->address;
-		if (a->host == address->host && a->port == address->port) {
+		if (p && cmp_addr(&p->address, address))
 			return p;
-		}
 	}
 	return NULL;
 }
@@ -597,8 +598,7 @@ PlayerDesc *MultiPlayer::yank_pending_player(ENetAddress *address)
 
 	for (i = 0; i < MAX_NATION; i++) {
 		if (pending_pool[i]) {
-			ENetAddress *a = &pending_pool[i]->address;
-			if (a->host == address->host && a->port == address->port)
+			if (cmp_addr(&pending_pool[i]->address, address))
 				break;
 		}
 	}
@@ -836,7 +836,7 @@ ENetPeer *MultiPlayer::get_peer(ENetAddress *address)
 	err_when(!host);
 
 	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
-		if (peer->address.host == address->host && peer->address.port == address->port)
+		if (cmp_addr(&peer->address, address))
 			break;
 	}
 
