@@ -39,6 +39,9 @@ const uint16_t UDP_MONITOR_PORT = 19383;
 SessionDesc::SessionDesc()
 {
 	id = 0;
+	flags = SESSION_PREGAME;
+	max_players = MAX_NATION;
+	player_count = 1;
 	memset(password, 0, sizeof(session_name));
 	memset(password, 0, sizeof(password));
 	this->address.host = ENET_HOST_ANY;
@@ -48,10 +51,15 @@ SessionDesc::SessionDesc()
 SessionDesc::SessionDesc(const char *name, const char *pass, ENetAddress *address)
 {
 	id = 0;
+	flags = SESSION_PREGAME;
+	max_players = MAX_NATION;
+	player_count = 1;
 	strncpy(session_name, name, MP_FRIENDLY_NAME_LEN);
 	session_name[MP_FRIENDLY_NAME_LEN] = 0;
 	strncpy(password, pass, MP_FRIENDLY_NAME_LEN);
 	password[MP_FRIENDLY_NAME_LEN] = 0;
+	if (pass[0])
+		flags |= SESSION_PASSWORD;
 	this->address.host = address->host;
 	this->address.port = address->port;
 }
@@ -59,6 +67,9 @@ SessionDesc::SessionDesc(const char *name, const char *pass, ENetAddress *addres
 SessionDesc::SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address)
 {
 	id = 0;
+	flags = m->flags;
+	max_players = MAX_NATION;
+	player_count = 1;
 	strncpy(this->session_name, m->session_name, MP_FRIENDLY_NAME_LEN);
 	session_name[MP_FRIENDLY_NAME_LEN] = 0;
 	this->password[0] = 0;
@@ -69,6 +80,9 @@ SessionDesc::SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address)
 SessionDesc::SessionDesc(const SessionDesc &src)
 {
 	id = src.id;
+	flags = src.flags;
+	max_players = src.max_players;
+	player_count = src.player_count;
 	strncpy(session_name, src.session_name, MP_FRIENDLY_NAME_LEN);
 	session_name[MP_FRIENDLY_NAME_LEN] = 0;
 	strncpy(password, src.password, MP_FRIENDLY_NAME_LEN);
@@ -80,6 +94,9 @@ SessionDesc::SessionDesc(const SessionDesc &src)
 SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 {
 	id = src.id;
+	flags = src.flags;
+	max_players = src.max_players;
+	player_count = src.player_count;
 	strncpy(session_name, src.session_name, MP_FRIENDLY_NAME_LEN);
 	session_name[MP_FRIENDLY_NAME_LEN] = 0;
 	strncpy(password, src.password, MP_FRIENDLY_NAME_LEN);
@@ -111,8 +128,7 @@ MultiPlayer::MultiPlayer() :
 	supported_protocols = TCPIP;
 	my_player_id = 0;
 	my_player = NULL;
-	host_flag = 0;
-	allowing_connections = 0;
+	joined_session.flags = 0;
 	recv_buf = NULL;
 }
 
@@ -129,8 +145,6 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	lobbied_flag = 0;
 	my_player_id = 0;
 	my_player = NULL;
-	host_flag = 0;
-	max_players = 0;
 	use_remote_session_provider = 0;
 	update_available = -1;
 	host = NULL;
@@ -167,8 +181,6 @@ void MultiPlayer::deinit()
 
 	init_flag = 0;
 	lobbied_flag = 0;
-	host_flag = 0;
-	allowing_connections = 0;
 
 	current_sessions.zap();
 
@@ -433,10 +445,13 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	joined_session.id = 0;
 	strcpy(joined_session.session_name, sessionName);
 	strcpy(joined_session.password, password);
-
-	host_flag = 1;
-	max_players = maxPlayers;
-	allowing_connections = 1;
+	joined_session.max_players = maxPlayers;
+	joined_session.player_count = 1;
+	joined_session.flags |= SESSION_HOSTING | SESSION_PREGAME;
+	if (password[0])
+		joined_session.flags |= SESSION_PASSWORD;
+	if (joined_session.player_count >= joined_session.max_players)
+		joined_session.flags |= SESSION_FULL;
 
 	my_player = new PlayerDesc(playerName);
 	my_player->id = 1;
@@ -472,10 +487,8 @@ int MultiPlayer::join_session(SessionDesc *session, char *playerName)
 		return 0;
 	}
 
-	max_players = MAX_NATION;
-	allowing_connections = 1;
-
 	joined_session = *session;
+	joined_session.flags &= ~SESSION_HOSTING; // we're not the host
 
 	game_host = new PlayerDesc(&session->address);
 	game_host->id = 1;
@@ -496,8 +509,7 @@ int MultiPlayer::close_session()
 
 	err_when(!host);
 
-	host_flag = 0;
-	allowing_connections = 0;
+	joined_session.flags = 0;
 
 	count = 0;
 	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
@@ -519,7 +531,7 @@ void MultiPlayer::disable_new_connections()
 {
 	ENetPeer *peer;
 
-	allowing_connections = 0;
+	joined_session.flags &= ~SESSION_PREGAME;
 
 	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
 		if (peer->data) {
@@ -530,12 +542,10 @@ void MultiPlayer::disable_new_connections()
 	}
 }
 
-// Returns the next available player id.
+// Returns the next available player id. Used by the game host for adding players.
 uint32_t MultiPlayer::get_avail_player_id()
 {
 	uint32_t playerId;
-
-	err_when(!host_flag);
 
 	playerId = 2;
 	while (get_peer(playerId))
@@ -682,7 +692,8 @@ int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 	ENetPeer *peer;
 	PlayerDesc *player;
 
-	err_when(!host || !host_flag);
+	err_when(!host);
+	err_when(!(joined_session & SESSION_HOSTING));
 
 	peer = get_peer(playerId);
 	if (!peer || !peer->data) {
@@ -755,27 +766,31 @@ void MultiPlayer::poll_players()
 {
 	ENetPeer *peer;
 	unsigned int i;
-	unsigned int count;
 
 	player_pool[0] = my_player;
 	i = 1;
 	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
+		if (i >= joined_session.max_players)
+			break;
 		if (peer->data) {
 			PlayerDesc *player = (PlayerDesc *)peer->data;
 
 			if (peer->state == ENET_PEER_STATE_CONNECTED && player->authorized) {
 				player_pool[i++] = player;
-				if (i >= MAX_NATION)
-					break;
 			}
 		}
 	}
 
-	count = i;
+	joined_session.player_count = i;
+	if (joined_session.player_count >= joined_session.max_players)
+		joined_session.flags |= SESSION_FULL;
+	else
+		joined_session.flags &= ~SESSION_FULL;
+
 	for ( ; i < MAX_NATION; i++)
 		player_pool[i] = NULL;
 
-	qsort(&player_pool, count, sizeof(player_pool[0]), &sort_players);
+	qsort(&player_pool, joined_session.player_count, sizeof(player_pool[0]), &sort_players);
 }
 
 // retrieve the ith-1 index from the player pool array
@@ -867,17 +882,9 @@ int MultiPlayer::is_player_connecting(uint32_t playerId)
 	return peer->state == ENET_PEER_STATE_CONNECTED;
 }
 
-// return the number of players in the pool
 int MultiPlayer::get_player_count()
 {
-	int i;
-
-	for (i = 0; i < MAX_NATION; i++) {
-		if (!player_pool[i])
-			break;
-	}
-
-	return i;
+	return joined_session.player_count;
 }
 
 // send udp message
@@ -947,7 +954,7 @@ void MultiPlayer::send_user_session_status(ENetAddress *a)
 	m.game_version[1] = SKVERMED;
 	m.game_version[2] = SKVERMIN;
 	m.reserved0 = 0;
-	m.flags = joined_session.password[0] != 0;
+	m.flags = joined_session.flags;
 	strncpy(m.session_name, joined_session.session_name, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(host->socket, a, &b, 1);
@@ -1026,12 +1033,12 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 		}
 
 		if (!player) {
-			if (!allowing_connections) {
+			if (!(joined_session.flags & SESSION_PREGAME)) {
 				enet_peer_disconnect(event.peer, 0);
 				break;
 			}
 			player = new PlayerDesc(&event.peer->address);
-			if (host_flag) {
+			if (joined_session.flags & SESSION_HOSTING) {
 				player->id = get_avail_player_id();
 			}
 		}
@@ -1052,7 +1059,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 		if (player) {
 			MSG("Player '%s' (%d) disconnected.\n", player->name, player->id);
-			if (host_flag) {
+			if (joined_session.flags & SESSION_HOSTING) {
 				delete player;
 			} else {
 				// try to save in case of a reconnection or host acknowledgement

@@ -60,11 +60,20 @@ struct MpMsgUserSessionStatus {
 	char session_name[MP_FRIENDLY_NAME_LEN];
 };
 
+#define SESSION_HOSTING         1
+#define SESSION_FULL            2
+#define SESSION_PASSWORD        4
+#define SESSION_LOADING_SAVE    8
+#define SESSION_PREGAME         16
+
 struct SessionDesc
 {
 	char session_name[MP_FRIENDLY_NAME_LEN+1];
 	char password[MP_FRIENDLY_NAME_LEN+1];
 	uint32_t id;
+	uint32_t flags;
+	int max_players;
+	int player_count;
 	ENetAddress address;
 
 	SessionDesc();
@@ -92,19 +101,15 @@ private:
 	uint32_t          my_player_id;
 	PlayerDesc        *my_player;
 
-	int               host_flag;
-	int               allowing_connections;
-	uint32_t          packet_mode;
-	int               max_players;
-
 	PlayerDesc        *player_pool[MAX_NATION];
 	PlayerDesc        *pending_pool[MAX_NATION];
 
 	char *            recv_buf;
 
 	ENetHost          *host;
-	ENetSocket        session_monitor;
+	uint32_t          packet_mode;
 
+	ENetSocket        session_monitor;
 	ENetAddress       remote_session_provider_address;
 
 	int use_remote_session_provider;
