@@ -949,7 +949,7 @@ void MultiPlayer::send_user_session_status(ENetAddress *a)
 	b.data = &m;
 	b.dataLength = sizeof(MpMsgUserSessionStatus);
 
-	m.id = MPMSG_USER_SESSION_STATUS;
+	m.msg_id = MPMSG_USER_SESSION_STATUS;
 	m.game_version[0] = SKVERMAJ;
 	m.game_version[1] = SKVERMED;
 	m.game_version[2] = SKVERMIN;

@@ -50,13 +50,71 @@ enum ProtocolType
 enum
 {
 	MPMSG_USER_SESSION_STATUS = 0x1f960001,
+	MPMSG_GET_LOGIN_ID,
+	MPMSG_LOGIN_ID,
+	MPMSG_REGISTER_SESSION,
+	MPMSG_REGISTER_SESSION_ACK,
+	MPMSG_REQ_SESSION_LIST_SIZE,
+	MPMSG_SESSION_LIST_SIZE,
+	MPMSG_REQ_SESSION_INFO,
+	MPMSG_SESSION_INFO_IPV4,
 };
 
 struct MpMsgUserSessionStatus {
-	uint32_t id;
+	uint32_t msg_id;
 	uint16_t game_version[3];
 	uint16_t reserved0;
 	uint32_t flags;
+	char session_name[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgGetLoginId {
+	uint32_t msg_id;
+	uint32_t reserved0;
+	char name[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgLoginId {
+	uint32_t msg_id;
+	uint32_t login_id;
+};
+struct MpMsgRegisterSession {
+	uint32_t msg_id;
+	uint32_t login_id;
+	uint16_t game_version[3];
+	uint16_t reserved0;
+	uint32_t flags;
+	uint32_t reserved1;
+	char session_name[MP_FRIENDLY_NAME_LEN];
+	char session_password[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgRegisterSessionAck {
+	uint32_t msg_id;
+	uint32_t reserved0;
+};
+struct MpMsgReqSessionListSize {
+	uint32_t msg_id;
+	uint32_t login_id;
+};
+struct MpMsgSessionListSize {
+	uint32_t msg_id;
+	uint32_t size;
+};
+struct MpMsgReqSessionInfo {
+	uint32_t msg_id;
+	uint32_t login_id;
+	uint32_t session_id_start;
+	uint32_t reserved0;
+	char password[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgSessionInfoIPv4 {
+	uint32_t msg_id;
+	uint32_t session_id;
+	uint16_t game_version[3];
+	uint16_t reserved0;
+	uint32_t flags;
+	uint32_t host;
+	uint16_t port;
+	uint16_t reserved1;
+	uint32_t reserved2;
 	char session_name[MP_FRIENDLY_NAME_LEN];
 };
 
