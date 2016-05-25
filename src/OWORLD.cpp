@@ -785,7 +785,7 @@ inline int World::check_unit_space(int xLoc1, int yLoc1, int xLoc2, int yLoc2, i
 // [int]  regionId		 = specify the region no. of the location to locate
 //									(default: region no. of xLoc1, yLoc1)
 // [int]  buildFlag 		 = whether the located area is for building a firm/town
-//									if so, the location must no have any raw site.
+//									if so, the location must not have any raw site.
 //									(default: 0)
 //
 // return : <int> 1 - free space found

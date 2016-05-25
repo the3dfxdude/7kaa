@@ -19,7 +19,7 @@
  */
 
 //Filename    : OF_MONS.CPP
-//Description : Firm Airport
+//Description : Fryhtan Lair
 
 #include <OINFO.h>
 #include <OVGA.h>

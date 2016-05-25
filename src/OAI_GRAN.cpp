@@ -335,12 +335,12 @@ int Nation::think_surrender()
 
 		nationPtr = nation_array[i];
 
-		if( nationPtr->cash <= 300 )		// don't surrender to an ecnomically handicapped nation
+		if( nationPtr->cash <= 300 )		// don't surrender to an economically handicapped nation
 			continue;
 
 		curRating = ai_surrender_to_rating(i);
 
-		//--- if the nation will tend to surrender if there is only a small number of units left ---//
+		//--- the nation will tend to surrender if there is only a small number of units left ---//
 
 		curRating += 50 - total_unit_count*5;
 
