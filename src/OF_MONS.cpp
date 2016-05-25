@@ -546,7 +546,7 @@ int FirmMonster::mobilize_monster(int monsterId, int rankId, int combatLevel, in
 	int			xLoc=center_x, yLoc=center_y;
 	SpriteInfo* spriteInfo = sprite_res[unitInfo->sprite_id];
 
-	if( !world.locate_space( xLoc, yLoc, xLoc, yLoc, spriteInfo->loc_width, spriteInfo->loc_height, unitInfo->mobile_type ) )
+	if( !world.locate_space( &xLoc, &yLoc, xLoc, yLoc, spriteInfo->loc_width, spriteInfo->loc_height, unitInfo->mobile_type ) )
 		return 0;
 
 	//---------- add the unit now -----------//

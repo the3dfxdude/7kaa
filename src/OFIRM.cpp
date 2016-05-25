@@ -805,7 +805,7 @@ int Firm::mobilize_builder(short recno)
 	int xLoc=loc_x1, yLoc=loc_y1;
 
 	if(!locate_space(remove_firm, xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height, UNIT_LAND, builder_region_id) &&
-		!world.locate_space(xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height, UNIT_LAND, builder_region_id))
+		!world.locate_space(&xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height, UNIT_LAND, builder_region_id))
 	{
 		kill_builder(recno);
 		return 0;
@@ -1082,7 +1082,7 @@ int Firm::assign_settle(int raceId, int unitLoyalty, int isOverseer)
 
    int xLoc=loc_x1, yLoc=loc_y1;    // xLoc & yLoc are used for returning results
 
-	if( world.locate_space( xLoc, yLoc, loc_x2, loc_y2, STD_TOWN_LOC_WIDTH,
+	if( world.locate_space( &xLoc, &yLoc, loc_x2, loc_y2, STD_TOWN_LOC_WIDTH,
 									STD_TOWN_LOC_HEIGHT, UNIT_LAND, region_id, 1 ) )		// the town must be in the same region as this firm.
    {
       if( misc.points_distance( center_x, center_y, xLoc+(STD_TOWN_LOC_WIDTH-1)/2,

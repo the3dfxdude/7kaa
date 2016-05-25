@@ -134,7 +134,7 @@ public:
 	void		build_wall_tile(int xLoc1, int yLoc1, short nationRecno, char remoteAction);
 	void		destruct_wall_tile(int xLoc1, int yLoc1, short nationRecno, char remoteAction);
 
-	int 		locate_space(int& xLoc1, int& yLoc1, int xLoc2, int yLoc2,
+	int 		locate_space(int* /*in/out*/ xLoc1, int* /*in/out*/ yLoc1, int xLoc2, int yLoc2,
 										int spaceLocWidth, int spaceLocHeight, int mobileType=UNIT_LAND, int regionId=0, int buildFlag=0);
 	int		check_unit_space(int xLoc1, int yLoc1, int xLoc2, int yLoc2, int mobileType=UNIT_LAND, int buildFlag=0);
 

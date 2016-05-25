@@ -2027,7 +2027,7 @@ int Town::create_rebel_unit(int raceId, int isLeader)
 	SpriteInfo*    spriteInfo = sprite_res[unit_res[unitId]->sprite_id];
 	int            xLoc=loc_x1, yLoc=loc_y1;     // xLoc & yLoc are used for returning results
 
-	if( !world.locate_space( xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
+	if( !world.locate_space( &xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
 		return 0;
 
 	//---------- add the unit now -----------//
@@ -2594,7 +2594,7 @@ int Town::mobilize_town_people(int raceId, int decPop, int mobileSpyFlag)
    SpriteInfo*    spriteInfo = sprite_res[unit_res[unitId]->sprite_id];
    int            xLoc=loc_x1, yLoc=loc_y1;     // xLoc & yLoc are used for returning results
 
-   if( !world.locate_space( xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
+   if( !world.locate_space( &xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
       return 0;
 
 	//---------- add the unit now -----------//

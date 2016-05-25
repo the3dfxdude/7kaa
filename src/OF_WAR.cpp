@@ -799,7 +799,7 @@ void FirmWar::process_build()
 		int 			xLoc=loc_x1; // xLoc & yLoc are used for returning results
 		int 			yLoc=loc_y1;
 
-		if( !world.locate_space(xLoc, yLoc, loc_x2, loc_y2,
+		if( !world.locate_space(&xLoc, &yLoc, loc_x2, loc_y2,
 			 spriteInfo->loc_width, spriteInfo->loc_height, unitInfo->mobile_type) )
 		{
 			build_progress_days = (float)(totalBuildDays + 1);

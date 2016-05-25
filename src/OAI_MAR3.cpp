@@ -344,7 +344,7 @@ int Nation::ai_build_camp_town_next_to(int xLoc1, int yLoc1, int xLoc2, int yLoc
 	{
 		//--- if we don't have one yet, build one next to the destination ---//
 
-		if( !world.locate_space( xLoc1, yLoc1, xLoc2, yLoc2,
+		if( !world.locate_space( &xLoc1, &yLoc1, xLoc2, yLoc2,
 									 3, 3, UNIT_LAND, regionId, 1 ) )		// 1-locating the space for building
 		{
 			return 0;
@@ -371,7 +371,7 @@ int Nation::ai_build_camp_town_next_to(int xLoc1, int yLoc1, int xLoc2, int yLoc
 			xLoc2 = firmCamp->loc_x2;
 			yLoc2 = firmCamp->loc_y2;
 
-			if( world.locate_space( xLoc1, yLoc1, xLoc2, yLoc2,
+			if( world.locate_space( &xLoc1, &yLoc1, xLoc2, yLoc2,
 				 STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, UNIT_LAND, regionId, 1 ) )		// 1-locating the space for building
 			{
 				if( world.can_build_town( xLoc1, yLoc1 ) )

@@ -160,7 +160,7 @@ int Firm::locate_space(int removeFirm, int &xLoc, int &yLoc, int xLoc2, int yLoc
 	{
 		checkXLoc = loc_x1;
 		checkYLoc = loc_y1;
-		if(!world.locate_space(checkXLoc, checkYLoc, xLoc2, yLoc2, width, height, mobileType, regionId))
+		if(!world.locate_space(&checkXLoc, &checkYLoc, xLoc2, yLoc2, width, height, mobileType, regionId))
 			return 0;
 		else
 		{

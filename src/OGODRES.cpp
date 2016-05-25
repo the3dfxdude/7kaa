@@ -184,7 +184,7 @@ short GodInfo::invoke(int firmRecno, int xLoc, int yLoc)
 
 	SpriteInfo* spriteInfo = sprite_res[unit_res[unit_id]->sprite_id];
 
-	if( !world.locate_space( xLoc, yLoc, xLoc, yLoc, spriteInfo->loc_width, spriteInfo->loc_height, UNIT_AIR ) )
+	if( !world.locate_space( &xLoc, &yLoc, xLoc, yLoc, spriteInfo->loc_width, spriteInfo->loc_height, UNIT_AIR ) )
 		return 0;
 
 	//---------- add the god unit now -----------//

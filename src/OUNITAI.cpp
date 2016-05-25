@@ -1233,7 +1233,7 @@ int Unit::ai_settle_new_town()
 	int xLoc=bestCamp->loc_x1;
 	int yLoc=bestCamp->loc_y1;
 
-	if( world.locate_space(xLoc, yLoc, bestCamp->loc_x2, bestCamp->loc_y2,
+	if( world.locate_space(&xLoc, &yLoc, bestCamp->loc_x2, bestCamp->loc_y2,
 								  STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT,
 								  UNIT_LAND, curRegionId, 1 ) )					// 1-build flag
 	{
