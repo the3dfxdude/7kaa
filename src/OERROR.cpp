@@ -96,6 +96,11 @@ static void new_func_handler()
 //
 void Error::internal(char* errMsg,const char* fileName,int lineNum)
 {
+#if defined(_MSC_VER) && defined(_DEBUG)
+	// Let the debugger have a first shot at the error when in debug build, before clean-up happens.
+	__debugbreak();
+#endif
+
  	if( error_flag )	// prevent error message dead loop
 		return;
 
@@ -137,6 +142,11 @@ void Error::internal(char* errMsg,const char* fileName,int lineNum)
 //
 void Error::mem()
 {
+#if defined(_MSC_VER) && defined(_DEBUG)
+	// Let the debugger have a first shot at the error when in debug build, before clean-up happens.
+	__debugbreak();
+#endif
+
 	if( error_flag )	// prevent error message dead loop
 		return;
 
