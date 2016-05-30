@@ -125,11 +125,11 @@ void Town::process_ai()
 
 	if( info.game_date%30==town_recno%30 )
 	{
-		LOG_MSG("think_split_town");
-		think_split_town();
-		LOG_MSG(misc.get_random_seed() );
 		LOG_MSG("think_move_between_town");
 		think_move_between_town();
+		LOG_MSG(misc.get_random_seed() );
+		LOG_MSG("think_split_town");
+		think_split_town();
 		LOG_MSG(misc.get_random_seed() );
 	}
 
@@ -992,7 +992,7 @@ int Town::think_build_war_factory()
 
 //------- Begin of function Town::think_build_base -------//
 //
-// Think about building seats of powre.
+// Think about building seats of power.
 //
 int Town::think_build_base()
 {
