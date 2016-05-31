@@ -560,9 +560,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 		// not launched from lobby
 
-		//service_mode = mp_select_service();
-		// skip service selection since there is only one choice
-		service_mode = 2;
+		service_mode = mp_select_service();
 		if (!service_mode)
 		{
 			mp_obj.deinit();
@@ -607,7 +605,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	}
 
 	// create game or join game
-	switch( mp_select_mode(NULL) )
+	switch( mp_select_mode(NULL, service_mode) )
 	{
 	case 1:		// create game
 		{
@@ -780,9 +778,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 		// not launched from lobby
 
-		//service_mode = mp_select_service();
-		// skip service selection since there is only one choice
-		service_mode = 2;
+		service_mode = mp_select_service();
 		if (!service_mode)
 		{
 			mp_obj.deinit();
@@ -841,7 +837,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			++gamePlayerCount;
 
 	// create game or join game
-	switch( mp_select_mode(fileName) )
+	switch( mp_select_mode(fileName, service_mode) )
 	{
 	case 1:		// create game
 		{
@@ -987,11 +983,22 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 // 
 int Game::mp_select_service()
 {
-	enum { BUTTON_NUM = 4 };
-	static short buttonX[BUTTON_NUM] = { 206, 412, 206, 412 };
-	static short buttonY[BUTTON_NUM] = { 94, 94, 254, 254 };
-	#define SERVICE_BUTTON_WIDTH SERVICE_OPTION_X_SPACE
-	#define SERVICE_BUTTON_HEIGHT SERVICE_OPTION_HEIGHT
+	enum { BUTTON_NUM = 2 };
+	static short buttonX[BUTTON_NUM] = { 171, 171 };
+	static short buttonY[BUTTON_NUM] = {  57, 125 };
+	#define SERVICE_BUTTON_WIDTH 459
+	#define SERVICE_BUTTON_HEIGHT 67
+	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
+	const char *service_short_desc[BUTTON_NUM] =
+	{
+		"Local Area Network",
+	        "Enter Address",
+	};
+	const char *service_long_desc[BUTTON_NUM] =
+	{
+		"Host or join a game using the local area network",
+		"Join a game by entering an address",
+	};
 
 #define SVOPTION_PAGE        0x00000001
 #define SVOPTION_ALL         0x0fffffff
@@ -1046,6 +1053,10 @@ int Game::mp_select_service()
 				//--------- display interface screen -------//
 
 				image_menu.put_to_buf( &vga_back, "MPG-PG1" );
+				// protection : image_menu.put_to_buf( &vga_back, "MPG-PG1");
+				// ensure the user has the release version (I_MENU.RES)
+				// image_menu2.put_to_buf( &vga_back, "MPG-PG1") get the real one
+				image_menu2.put_to_buf( &vga_back, "MPG-PG1");
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
@@ -1053,18 +1064,21 @@ int Game::mp_select_service()
 				returnButton.paint();
 				for( b = 0; b < buttonCount; ++b )
 				{
+					int y = buttonY[b]+DESC_TOP_MARGIN;
+					// write service name to back buffer
+					char useBack = vga.use_back_buf;
+					vga.use_back();
+					font_bible.center_put(buttonX[b], y,
+						buttonX[b]+SERVICE_BUTTON_WIDTH-1, y+font_bible.max_font_height-1,
+						_(service_short_desc[b]));
+					y += font_bible.max_font_height;
+					font_san.put_paragraph(buttonX[b]+DESC_MARGIN, y,
+						buttonX[b]+SERVICE_BUTTON_WIDTH-DESC_MARGIN-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
+						_(service_long_desc[b]));
+					if( !useBack )
+						vga.use_front();
 					serviceButton[b].paint();
 				}
-
-				// TODO: Properly change these buttons
-				vga_front.d3_panel_up(buttonX[0], buttonY[0], buttonX[0] + SERVICE_BUTTON_WIDTH, buttonY[0] + SERVICE_BUTTON_HEIGHT, 0);
-				font_san.put(buttonX[0] + 10, buttonY[0] + 10, _("Local Area Network"), 0, VGA_WIDTH);
-				vga_front.d3_panel_up(buttonX[1], buttonY[1], buttonX[1] + SERVICE_BUTTON_WIDTH, buttonY[1] + SERVICE_BUTTON_HEIGHT, 0);
-				font_san.put(buttonX[1] + 10, buttonY[1] + 10, _("Enter IP Address"), 0, VGA_WIDTH);
-				vga_front.d3_panel_up(buttonX[2], buttonY[2], buttonX[2] + SERVICE_BUTTON_WIDTH, buttonY[2] + SERVICE_BUTTON_HEIGHT, 0);
-				font_san.put(buttonX[2] + 10, buttonY[2] + 10, "www.7kfans.com", 0, VGA_WIDTH);
-				vga_front.d3_panel_up(buttonX[3], buttonY[3], buttonX[3] + SERVICE_BUTTON_WIDTH, buttonY[3] + SERVICE_BUTTON_HEIGHT, 0);
-				font_san.put(buttonX[3] + 10, buttonY[3] + 10, _("7kfans Leader Board"), 0, VGA_WIDTH);
 			}
 
 			refreshFlag = 0;
@@ -1116,13 +1130,24 @@ int Game::mp_select_service()
 
 //-------- Begin of function Game::mp_select_mode --------//
 // return 0 = cancel, 1 = create, 2 = join
-int Game::mp_select_mode(char *defSaveFileName)
+int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 {
-	enum { BUTTON_NUM = 4 };
-	static short buttonX[BUTTON_NUM] = { 206, 412, 206, 412 };
-	static short buttonY[BUTTON_NUM] = { 94, 94, 254, 254 };
-	#define SERVICE_BUTTON_WIDTH SERVICE_OPTION_X_SPACE
-	#define SERVICE_BUTTON_HEIGHT SERVICE_OPTION_HEIGHT
+	enum { BUTTON_NUM = 2 };
+	static short buttonX[BUTTON_NUM] = { 171, 171 };
+	static short buttonY[BUTTON_NUM] = {  57, 125 };
+	#define SERVICE_BUTTON_WIDTH 459
+	#define SERVICE_BUTTON_HEIGHT 67
+	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
+	const char *service_short_desc[BUTTON_NUM] =
+	{
+		"Local Area Network",
+	        "Enter Address",
+	};
+	const char *service_long_desc[BUTTON_NUM] =
+	{
+		"Host or join a game using the local area network",
+		"Join a game by entering an address",
+	};
 
 #define SMOPTION_GETA(n)   (1 << n)
 #define SMOPTION_GETA_ALL  0x0000000f
@@ -1223,13 +1248,33 @@ int Game::mp_select_mode(char *defSaveFileName)
 				//--------- display interface screen -------//
 
 				image_menu.put_to_buf( &vga_back, "MPG-PG1" );
+				// protection : image_menu.put_to_buf( &vga_back, "MPG-PG1");
+				// ensure the user has the release version (I_MENU.RES)
+				// image_menu2.put_to_buf( &vga_back, "MPG-PG1") get the real one
+				image_menu2.put_to_buf( &vga_back, "MPG-PG1");
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
+				int b = 0;
+				for( b = 0; b < BUTTON_NUM; ++b )
+				{
+					int y = buttonY[b]+DESC_TOP_MARGIN;
+					// write service name to back buffer
+					char useBack = vga.use_back_buf;
+					vga.use_back();
+					font_bible.center_put(buttonX[b], y,
+						buttonX[b]+SERVICE_BUTTON_WIDTH-1, y+font_bible.max_font_height-1,
+						_(service_short_desc[b]));
+					y += font_bible.max_font_height;
+					font_san.put_paragraph(buttonX[b]+DESC_MARGIN, y,
+						buttonX[b]+SERVICE_BUTTON_WIDTH-DESC_MARGIN-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
+						_(service_long_desc[b]));
+					if( !useBack )
+						vga.use_front();
+				}
 
 				vga_util.blt_buf(0, 0, vga_back.buf_width()-1, vga_back.buf_height()-1, 0);
 
-				serviceButton[1].paint(1); // show user the forced network service
-
+				serviceButton[service_mode-1].paint(1);
 				if( createButton.enable_flag )
 					createButton.paint();
 				if( joinButton.enable_flag )
