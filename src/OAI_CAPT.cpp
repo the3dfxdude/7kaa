@@ -21,6 +21,7 @@
 //Filename   : OAI_CAPT.CPP
 //Description: AI - capturing independent towns
 
+#include <queue>
 #include <ALL.h>
 #include <OREMOTE.h>
 #include <OCONFIG.h>
@@ -29,17 +30,17 @@
 #include <OF_INN.h>
 #include <ONATION.h>
 
+
 //------- define struct CaptureTown -------//
 
 struct CaptureTown
 {
-	short town_recno;
-	short min_resistance;
+	int town_recno;
+	int min_resistance;
+
+	bool operator<(const CaptureTown &other) const {return min_resistance < other.min_resistance;}
 };
 
-//------ Declare static functions --------//
-
-static int sort_capture_town_function( const void *a, const void *b );
 
 //--------- Begin of function Nation::think_capture --------//
 //
@@ -71,10 +72,7 @@ int Nation::think_capture_independent()
 {
 	//------- Capture target choices -------//
 
-	#define MAX_CAPTURE_TOWN	30
-
-	CaptureTown capture_town_array[MAX_CAPTURE_TOWN];
-	short 		capture_town_count=0;
+	std::priority_queue<CaptureTown> captureTownQueue;
 
 	//--- find the town that makes most sense to capture ---//
 
@@ -142,22 +140,18 @@ int Nation::think_capture_independent()
 
 		if( minResistance < 50 - pref_peacefulness/5 )		// 30 to 50 depending on
 		{
-			capture_town_array[capture_town_count].town_recno 	   = townRecno;
-			capture_town_array[capture_town_count].min_resistance = minResistance;
-
-			capture_town_count++;
+			captureTownQueue.push({townRecno, minResistance});
 		}
 	}
 
-	//------ sort the capture target choices by min_resistance ----//
-
-	qsort( &capture_town_array, capture_town_count, sizeof(capture_town_array[0]), sort_capture_town_function );
-
 	//------- try to capture the town in their resistance order ----//
 
-	for( int i=0 ; i<capture_town_count ; i++ )
+	while( captureTownQueue.size() > 0 )
 	{
-		err_when( town_array.is_deleted(capture_town_array[i].town_recno) );
+		int captureRecno = captureTownQueue.top().town_recno;
+		captureTownQueue.pop();
+
+		err_when( town_array.is_deleted(captureRecno) );
 
 		//-------------------------------------------//
 		// If the map is set to unexplored, wait for a
@@ -167,7 +161,7 @@ int Nation::think_capture_independent()
 
 		if( !config.explore_whole_map )
 		{
-			Town* targetTown = town_array[ capture_town_array[i].town_recno ];
+			Town* targetTown = town_array[ captureRecno ];
 
 			int j;
 			for( j=0 ; j<ai_town_count ; j++ )
@@ -188,7 +182,7 @@ int Nation::think_capture_independent()
 				continue;
 		}
 
-		if( start_capture( capture_town_array[i].town_recno ) )
+		if( start_capture( captureRecno ) )
 			return 1;
 	}
 
@@ -590,14 +584,3 @@ int Nation::hire_best_capturer(int townRecno, int raceId)
 	return unitRecno;
 }
 //-------- End of function Nation::hire_best_capturer -------//
-
-
-//------ Begin of function sort_capture_town_function ------//
-//
-static int sort_capture_town_function( const void *a, const void *b )
-{
-	return ((CaptureTown*)a)->min_resistance - ((CaptureTown*)b)->min_resistance;
-}
-//------- End of function sort_capture_town_function ------//
-
-
