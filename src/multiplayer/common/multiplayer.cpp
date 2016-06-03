@@ -374,14 +374,14 @@ int MultiPlayer::poll_sessions()
 		switch (id) {
 		case MPMSG_USER_SESSION_STATUS: {
 			MpMsgUserSessionStatus *m = (MpMsgUserSessionStatus *)recv_buf;
-			SessionDesc *desc;
 
+			if ((m->flags & (SESSION_HOSTING|SESSION_PREGAME)) == 0)
+				break;
 			if (get_session(&a))
 				break;
 
-			desc = new SessionDesc(m, &a);
-			desc->id = current_sessions.size();
-			current_sessions.linkin(desc);
+			SessionDesc desc(m, &a);
+			current_sessions.linkin(&desc);
 
 			break;
 			}
