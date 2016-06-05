@@ -270,7 +270,7 @@ public:
 
 	short       spy_recno;              // spy parameters
 
-	short       nation_contribution;    // contribution to the nation
+	short       nation_contribution;    // For humans: contribution to the nation. For weapons: the tech level!
 	short       total_reward;           // total amount of reward you have given to the unit
 
 	int			commander_power();
