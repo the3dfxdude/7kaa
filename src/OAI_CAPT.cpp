@@ -37,6 +37,7 @@ struct CaptureTown
 {
 	int town_recno;
 	int min_resistance;
+	int capture_unit_recno; // if > 0, the unit that was found to best be able to capture the town.
 
 	bool operator<(const CaptureTown &other) const {return min_resistance < other.min_resistance;}
 };
@@ -134,13 +135,14 @@ int Nation::think_capture_independent()
 
 		//------ no linked camps interfering with potential capture ------//
 
-		int targetResistance  = capture_expected_resistance(townRecno);
+		int captureUnitRecno;
+		int targetResistance  = capture_expected_resistance(townRecno, &captureUnitRecno);
 		int averageResistance = townPtr->average_resistance(nation_recno);
 		int minResistance 	 = MIN( averageResistance, targetResistance );
 
 		if( minResistance < 50 - pref_peacefulness/5 )		// 30 to 50 depending on
 		{
-			captureTownQueue.push({townRecno, minResistance});
+			captureTownQueue.push({townRecno, minResistance, captureUnitRecno});
 		}
 	}
 
@@ -149,6 +151,7 @@ int Nation::think_capture_independent()
 	while( captureTownQueue.size() > 0 )
 	{
 		int captureRecno = captureTownQueue.top().town_recno;
+		int captureUnitRecno = captureTownQueue.top().capture_unit_recno;
 		captureTownQueue.pop();
 
 		err_when( town_array.is_deleted(captureRecno) );
@@ -182,7 +185,7 @@ int Nation::think_capture_independent()
 				continue;
 		}
 
-		if( start_capture( captureRecno ) )
+		if( start_capture( captureRecno, captureUnitRecno ) )
 			return 1;
 	}
 
@@ -208,9 +211,11 @@ int Nation::should_use_cash_to_capture()
 // The lowest resistance can be expected if we are going to capture the
 // town.
 //
-int Nation::capture_expected_resistance(int townRecno)
+int Nation::capture_expected_resistance(int townRecno, int *captureUnitRecno)
 {
 	//--- we have plenty of cash, use cash to decrease the resistance of the villagers ---//
+
+	*captureUnitRecno = 0;
 
 	if( should_use_cash_to_capture() )
 		return 0;			// return zero resistance
@@ -227,17 +232,13 @@ int Nation::capture_expected_resistance(int townRecno)
 	else
 		averageResistance = townPtr->average_resistance(nation_recno);
 
-	//----- get the id. of the most populated races in the town -----//
-
-	int majorityRace = townPtr->majority_race();
-
-	err_when( !majorityRace );		// this should not happen
-
 	//---- see if there are general available for capturing this town ---//
 
-	int targetResistance=0;
+	int majorityRace = townPtr->majority_race();
+	int targetResistance;
 
-	if( !find_best_capturer(townRecno, majorityRace, targetResistance) )
+	*captureUnitRecno = find_best_capturer(townRecno, majorityRace, /*out*/ targetResistance);
+	if( !(*captureUnitRecno) )
 		return 100;
 
 	int resultResistance =
@@ -252,7 +253,7 @@ int Nation::capture_expected_resistance(int townRecno)
 
 //--------- Begin of function Nation::start_capture --------//
 //
-int Nation::start_capture(int townRecno)
+int Nation::start_capture(int townRecno, int captureUnitRecno)
 {
 	//--- find the two races with most population in the town ---//
 
@@ -265,19 +266,18 @@ int Nation::start_capture(int townRecno)
 	if( townPtr->nation_recno == 0 )
 	{
 		majorityRace = townPtr->majority_race();
-		err_when( !majorityRace );		// this shouldn't happen
 	}
 
 	//---- see if we have generals in the most populated race, if so build a camp next to the town ----//
 
-	return capture_build_camp(townRecno, majorityRace);
+	return capture_build_camp(townRecno, majorityRace, captureUnitRecno);
 }
 //---------- End of function Nation::start_capture ---------//
 
 
 //--------- Begin of function Nation::capture_build_camp --------//
 //
-int Nation::capture_build_camp(int townRecno, int raceId)
+int Nation::capture_build_camp(int townRecno, int raceId, int captureUnitRecno)
 {
 	Town* captureTown = town_array[townRecno];
 
@@ -293,9 +293,11 @@ int Nation::capture_build_camp(int townRecno, int raceId)
 
 	//---- find the best available general for the capturing action ---//
 
+	int unitRecno = captureUnitRecno;
 	int targetResistance;
 
-	int unitRecno = find_best_capturer(townRecno, raceId, targetResistance);
+	if ( !unitRecno )
+		unitRecno = find_best_capturer(townRecno, raceId, targetResistance);
 
 	if( !unitRecno )
 		unitRecno = hire_best_capturer(townRecno, raceId);
