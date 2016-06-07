@@ -148,6 +148,9 @@ int Nation::think_capture_independent()
 
 	//------- try to capture the town in their resistance order ----//
 
+	const bool needToCheckDistance = !config.explore_whole_map && info.game_date-info.game_start_date >
+					MAX(MAX_WORLD_X_LOC, MAX_WORLD_Y_LOC) * (5-config.ai_aggressiveness) / 5;    // 3 to 5 / 5
+
 	while( captureTownQueue.size() > 0 )
 	{
 		int captureRecno = captureTownQueue.top().town_recno;
@@ -162,7 +165,7 @@ int Nation::think_capture_independent()
 		// to build the camp.
 		//-------------------------------------------//
 
-		if( !config.explore_whole_map )
+		if( needToCheckDistance )
 		{
 			Town* targetTown = town_array[ captureRecno ];
 
