@@ -202,6 +202,7 @@ static int detect_game_option()
 	while( mouse.left_press )	// holding down the button
 	{
 		sys.yield();
+		vga.flip();
 		mouse.get_event();
 	}
 

@@ -198,6 +198,7 @@ void Firm::detect_bribe_menu()
 		while( mouse.left_press )
 		{
 			sys.yield();
+			vga.flip();
 			mouse.get_event();
 		}
 
