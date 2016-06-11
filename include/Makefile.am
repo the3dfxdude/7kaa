@@ -170,6 +170,7 @@ noinst_HEADERS = \
 	gettext-gnu.h \
 	input_stream.h \
 	mem_input_stream.h \
+	misc_uuid.h \
 	mouse_none.h \
 	mouse_sdl.h \
 	multiplayer.h \

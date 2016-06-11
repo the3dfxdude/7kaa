@@ -25,6 +25,7 @@
 #define __MISC_H
 
 #include <stdint.h>
+#include <misc_uuid.h>
 
 //-------- Define macro constant ---------//
 
@@ -123,6 +124,19 @@ public:
 	void	lock_seed();
 	void	unlock_seed();
 	int	is_seed_locked();
+
+	// uuid functions
+	void uuid_clear(uuid_t uu);
+	int  uuid_compare(const uuid_t uu1, const uuid_t uu2);
+	void uuid_copy(uuid_t dst, const uuid_t src);
+	void get_system_random_bytes(void *buf, int nbytes);
+	void uuid_generate_random(uuid_t out);
+	int  uuid_is_null(const uuid_t uu);
+	int  uuid_parse(const char *in, uuid_t uu);
+	void uuid_unparse_lower(const uuid_t uu, char *out);
+	void uuid_unparse_upper(const uuid_t uu, char *out);
+	void uuid_unparse(const uuid_t uu, char *out);
+
 
 private:
 	void	construct_move_around_table();

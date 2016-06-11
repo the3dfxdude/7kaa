@@ -6,4 +6,5 @@ libcommon_a_SOURCES = \
 	OMEM.cpp \
 	OMISC.cpp \
 	OSTR.cpp \
-	dbglog.cpp
+	dbglog.cpp \
+	misc_uuid.cpp
