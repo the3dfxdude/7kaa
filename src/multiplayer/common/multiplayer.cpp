@@ -38,7 +38,7 @@ const uint16_t UDP_MONITOR_PORT = 19383;
 
 SessionDesc::SessionDesc()
 {
-	id = 0;
+	misc.uuid_generate_random(id);
 	flags = SESSION_PREGAME;
 	max_players = MAX_NATION;
 	player_count = 1;
@@ -50,7 +50,7 @@ SessionDesc::SessionDesc()
 
 SessionDesc::SessionDesc(const char *name, const char *pass, ENetAddress *address)
 {
-	id = 0;
+	misc.uuid_generate_random(id);
 	flags = SESSION_PREGAME;
 	max_players = MAX_NATION;
 	player_count = 1;
@@ -66,7 +66,7 @@ SessionDesc::SessionDesc(const char *name, const char *pass, ENetAddress *addres
 
 SessionDesc::SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address)
 {
-	id = 0;
+	misc.uuid_generate_random(id);
 	flags = m->flags;
 	max_players = MAX_NATION;
 	player_count = 1;
@@ -79,7 +79,7 @@ SessionDesc::SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address)
 
 SessionDesc::SessionDesc(const SessionDesc &src)
 {
-	id = src.id;
+	misc.uuid_copy(id, src.id);
 	flags = src.flags;
 	max_players = src.max_players;
 	player_count = src.player_count;
@@ -93,7 +93,7 @@ SessionDesc::SessionDesc(const SessionDesc &src)
 
 SessionDesc& SessionDesc::operator= (const SessionDesc &src)
 {
-	id = src.id;
+	misc.uuid_copy(id, src.id);
 	flags = src.flags;
 	max_players = src.max_players;
 	player_count = src.player_count;
@@ -439,7 +439,6 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 		return 0;
 	}
 
-	joined_session.id = 0;
 	strcpy(joined_session.session_name, sessionName);
 	strcpy(joined_session.password, password);
 	joined_session.max_players = maxPlayers;

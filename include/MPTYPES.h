@@ -29,7 +29,6 @@
 
 #define PID_TYPE uint32_t
 #define BROADCAST_PID 0
-#define SessionIdType uint32_t
 
 #define MP_FRIENDLY_NAME_LEN 64
 // NOTE: MP_PLAYER_NAME_LEN must match PLAYER_NAME_LEN in OCONFIG.h

@@ -1530,8 +1530,8 @@ int Game::mp_select_session()
 	unsigned long refreshTime;
 	int refreshFlag = SSOPTION_ALL;
 	int choice = 0;
-	SessionIdType sessionGuid;
-	memset(&sessionGuid, 0, sizeof(sessionGuid));
+	uuid_t sessionGuid;
+	misc.uuid_clear(sessionGuid);
 
 	// ------- initialized button -----------//
 
@@ -1637,7 +1637,7 @@ int Game::mp_select_session()
 				choice = 0;
 				for( s = 1; mp_obj.get_session(s); ++s )
 				{
-					if( sessionGuid == mp_obj.get_session(s)->session_id() )
+					if( misc.uuid_compare(sessionGuid, mp_obj.get_session(s)->session_id()) )
 						choice = s;
 				}
 				if( choice > 0)
@@ -1727,7 +1727,7 @@ int Game::mp_select_session()
 					SESSION_DESC_X2, SESSION_BUTTON_Y1 + (b+1)*SESSION_BUTTON_Y_SPACING -1 ) )
 				{
 					choice = s;
-					sessionGuid = mp_obj.get_session(s)->session_id();
+					misc.uuid_copy(sessionGuid, mp_obj.get_session(s)->session_id());
 					refreshFlag |= SSOPTION_DISP_SESSION;
 					joinButton.enable();
 

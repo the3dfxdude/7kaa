@@ -30,6 +30,7 @@
 #include <ODYNARRB.h>
 #include <stdint.h>
 #include <enet/enet.h>
+#include <OMISC.h>
 
 #define MP_SERVICE_PROVIDER_NAME_LEN 64
 #define MP_SESSION_NAME_LEN 64
@@ -128,7 +129,7 @@ struct SessionDesc
 {
 	char session_name[MP_FRIENDLY_NAME_LEN+1];
 	char password[MP_FRIENDLY_NAME_LEN+1];
-	uint32_t id;
+	uuid_t id;
 	uint32_t flags;
 	int max_players;
 	int player_count;
@@ -141,7 +142,7 @@ struct SessionDesc
 	SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address);
 
 	char *name_str() { return session_name; };
-	uint32_t session_id() { return id; }
+	uuid_t &session_id() { return id; }
 };
 
 
