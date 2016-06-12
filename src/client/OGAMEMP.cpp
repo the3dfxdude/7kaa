@@ -592,8 +592,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 	if (service_mode == 3 || service_mode == 4)
 	{
-		// internet game list provider
-		mp_obj.set_remote_session_provider("www.7kfans.com");
+		mp_obj.set_service_provider("www.7kfans.com");
 	}
 
 	if (service_mode == 4)
@@ -810,8 +809,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 	if (service_mode == 3 || service_mode == 4)
 	{
-		// internet game list provider
-		mp_obj.set_remote_session_provider("www.7kfans.com");
+		mp_obj.set_service_provider("www.7kfans.com");
 	}
 
 	if (service_mode == 4)

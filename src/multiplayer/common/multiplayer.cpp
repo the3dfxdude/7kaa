@@ -77,6 +77,19 @@ SessionDesc::SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address)
 	this->address.port = address->port;
 }
 
+SessionDesc::SessionDesc(MpMsgSession *m)
+{
+	misc.uuid_copy(id, m->session_id);
+	flags = m->flags;
+	max_players = MAX_NATION;
+	player_count = 1;
+	strncpy(session_name, m->session_name, MP_FRIENDLY_NAME_LEN);
+	session_name[MP_FRIENDLY_NAME_LEN] = 0;
+	this->password[0] = 0;
+	this->address.host = 0;
+	this->address.port = 0;
+}
+
 SessionDesc::SessionDesc(const SessionDesc &src)
 {
 	misc.uuid_copy(id, src.id);
@@ -145,7 +158,8 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	lobbied_flag = 0;
 	my_player_id = 0;
 	my_player = NULL;
-	use_remote_session_provider = 0;
+	service_provider.host = ENET_HOST_ANY;
+	misc.uuid_clear(service_login_id);
 	update_available = -1;
 	host = NULL;
 	session_monitor = ENET_SOCKET_NULL;
@@ -336,18 +350,16 @@ void MultiPlayer::close_port()
 	}
 }
 
-int MultiPlayer::set_remote_session_provider(const char *server)
+int MultiPlayer::set_service_provider(const char *host)
 {
-	if (enet_address_set_host(
-			&remote_session_provider_address,
-			server) == 0) {
-		remote_session_provider_address.port = UDP_MONITOR_PORT;
-		use_remote_session_provider = 1;
+	if (host) {
+		enet_address_set_host(&service_provider, host);
+		service_provider.port = UDP_MONITOR_PORT;
 	} else {
-		use_remote_session_provider = 0;
+		service_provider.host = ENET_HOST_ANY;
 	}
 
-	return use_remote_session_provider;
+	return service_provider.host != ENET_HOST_ANY;
 }
 
 int MultiPlayer::poll_sessions()
@@ -382,11 +394,39 @@ int MultiPlayer::poll_sessions()
 
 			break;
 			}
+		case MPMSG_LOGIN_ID: {
+			MpMsgLoginId *m = (MpMsgLoginId*)recv_buf;
+
+			if (a.host == service_provider.host)
+				misc.uuid_copy(service_login_id, m->login_id);
+
+			break;
+			}
+		case MPMSG_SESSION: {
+			MpMsgSession *m = (MpMsgSession*)recv_buf;
+
+			if (a.host == service_provider.host) {
+				SessionDesc *prev;
+				if (prev = get_session(m->session_id)) {
+					prev->flags = m->flags;
+					break;
+				}
+
+				SessionDesc desc(m);
+				current_sessions.linkin(&desc);
+			}
+
+			break;
+			}
 		}
 	}
 
-	if (use_remote_session_provider) {
-		// Request a game list
+	if (service_provider.host != ENET_HOST_ANY) {
+		if (misc.uuid_is_null(service_login_id)) {
+			send_req_login_id(session_monitor);
+		} else {
+			send_poll_sessions(session_monitor);
+		}
 	}
 
 	return 1;
@@ -409,6 +449,17 @@ SessionDesc *MultiPlayer::get_session(ENetAddress *address)
 	for (i = 1; i <= current_sessions.size(); i++) {
 		SessionDesc *p = (SessionDesc *)current_sessions.get(i);
 		if (p && cmp_addr(&p->address, address))
+			return p;
+	}
+	return NULL;
+}
+
+SessionDesc *MultiPlayer::get_session(uuid_t id)
+{
+	int i;
+	for (i = 1; i <= current_sessions.size(); i++) {
+		SessionDesc *p = (SessionDesc *)current_sessions.get(i);
+		if (p && misc.uuid_compare(p->id, id))
 			return p;
 	}
 	return NULL;
@@ -954,6 +1005,36 @@ void MultiPlayer::send_user_session_status(ENetAddress *a)
 	strncpy(m.session_name, joined_session.session_name, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(host->socket, a, &b, 1);
+}
+
+void MultiPlayer::send_req_login_id(ENetSocket s)
+{
+	ENetBuffer b;
+	MpMsgReqLoginId m;
+
+	b.data = &m;
+	b.dataLength = sizeof(MpMsgReqLoginId);
+
+	m.msg_id = MPMSG_REQ_LOGIN_ID;
+	m.reserved0 = 0;
+	strncpy(m.name, "?Anonymous?", MP_FRIENDLY_NAME_LEN);
+
+	enet_socket_send(s, &service_provider, &b, 1);
+}
+
+void MultiPlayer::send_poll_sessions(ENetSocket s)
+{
+	ENetBuffer b;
+	MpMsgPollSessions m;
+
+	b.data = &m;
+	b.dataLength = sizeof(MpMsgPollSessions);
+
+	m.msg_id = MPMSG_POLL_SESSIONS;
+	misc.uuid_copy(m.login_id, service_login_id);
+	m.reserved0 = 0;
+
+	enet_socket_send(s, &service_provider, &b, 1);
 }
 
 // Returns pointer to the recv_buf when a message is received, with size set.
