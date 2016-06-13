@@ -693,7 +693,7 @@ int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 	PlayerDesc *player;
 
 	err_when(!host);
-	err_when(!(joined_session & SESSION_HOSTING));
+	err_when(!(joined_session.flags & SESSION_HOSTING));
 
 	peer = get_peer(playerId);
 	if (!peer || !peer->data) {
