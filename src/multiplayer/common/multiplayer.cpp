@@ -274,8 +274,6 @@ ENetSocket MultiPlayer::create_socket(uint16_t port)
 	ENetSocket socket;
 	ENetAddress address;
 
-	err_when(!init_flag);
-
 	socket = enet_socket_create(ENET_SOCKET_TYPE_DATAGRAM);
 	if (socket == ENET_SOCKET_NULL)
 		return ENET_SOCKET_NULL;
@@ -295,7 +293,6 @@ ENetSocket MultiPlayer::create_socket(uint16_t port)
 
 void MultiPlayer::destroy_socket(ENetSocket socket)
 {
-	err_when(!init_flag);
 	if (socket != ENET_SOCKET_NULL)
 		enet_socket_destroy(socket);
 }
