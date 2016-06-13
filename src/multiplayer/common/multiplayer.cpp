@@ -698,7 +698,7 @@ int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 	}
 	player = (PlayerDesc *)peer->data;
 
-	if (memcmp(password, joined_session.password, MP_FRIENDLY_NAME_LEN)) {
+	if ((joined_session.flags & SESSION_PASSWORD) && memcmp(password, joined_session.password, MP_FRIENDLY_NAME_LEN)) {
 		MSG("Player (%d) password is incorrect.\n", playerId);
 		return 0;
 	}

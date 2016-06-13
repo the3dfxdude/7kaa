@@ -1793,7 +1793,7 @@ int Game::mp_join_session(int session_id, char *player_name)
  
 	password[0] = 0;
 	if (
-		session->password[0] &&
+		(session->flags & SESSION_PASSWORD) &&
 		!input_box(
 			_("Enter the game's password:"),
 			password,
