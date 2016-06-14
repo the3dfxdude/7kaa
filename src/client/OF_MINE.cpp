@@ -196,10 +196,13 @@ void FirmMine::put_info(int refreshFlag)
 
 	int x = INFO_X1;
 
-	if (own_firm() && refreshFlag == INFO_REPAINT)
+	if (own_firm())
 	{
-		button_vacate_firm.paint(INFO_X1, INFO_Y1 + 249, 'A', "RECRUIT");
-		button_vacate_firm.set_help_code("MOBILIZE");
+		if (refreshFlag == INFO_REPAINT)
+		{
+			button_vacate_firm.paint(INFO_X1, INFO_Y1 + 249, 'A', "RECRUIT");
+			button_vacate_firm.set_help_code("MOBILIZE");
+		}
 
 		if (worker_count)
 			button_vacate_firm.enable();
