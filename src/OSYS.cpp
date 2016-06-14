@@ -199,7 +199,7 @@ int Sys::init()
 //	debug_session       = misc.is_file_exist("DEBUG.SYS");
 
    // set game directory paths and game version
-   if (!set_config_dir() || !set_game_dir())
+   if ( !set_game_dir() )
       return FALSE;
 
    //------- initialize more stuff ---------//
