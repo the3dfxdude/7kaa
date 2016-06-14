@@ -319,10 +319,9 @@ void FirmBase::detect_info()
 
 	//-------- detect mobilize button ----------//
 
-	if (button_vacate_firm.detect())
+	if( button_vacate_firm.detect() )
 	{
-		mobilize_all_worker(0);
-		info.disp();
+		mobilize_all_workers(COMMAND_PLAYER);
 	}
 }
 //----------- End of function FirmBase::detect_info -----------//

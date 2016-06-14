@@ -334,7 +334,7 @@ public:
 	virtual void next_month();
 	virtual void next_year();
 
-			  void mobilize_all_worker(int leaderUnitRecno);
+			  void mobilize_all_workers(char remoteAction);
 	virtual int	 mobilize_worker(int workerId, char remoteAction);
 			  int	 create_worker_unit(Worker& thisWorker);
 	virtual int  mobilize_overseer();

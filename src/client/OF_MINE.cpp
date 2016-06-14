@@ -244,8 +244,7 @@ void FirmMine::detect_info()
 
 	if (button_vacate_firm.detect())
 	{
-		mobilize_all_worker(0);
-		info.disp();
+		mobilize_all_workers(COMMAND_PLAYER);
 	}
 }
 //----------- End of function FirmMine::detect_info -----------//

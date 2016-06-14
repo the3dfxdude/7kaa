@@ -216,8 +216,7 @@ void FirmResearch::detect_main_menu()
 
 	if (button_vacate_firm.detect())
 	{
-		mobilize_all_worker(0);
-		info.disp();
+		mobilize_all_workers(COMMAND_PLAYER);
 	}
 }
 //----------- End of function FirmResearch::detect_main_menu -----------//

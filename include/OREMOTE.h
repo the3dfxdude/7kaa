@@ -110,6 +110,7 @@ enum { MSG_QUEUE_HEADER=FIRST_REMOTE_MSG_ID,
 		 MSG_FIRM_SET_REPAIR,
 		 MSG_FIRM_TRAIN_LEVEL,
 		 MSG_FIRM_MOBL_WORKER,
+		 MSG_FIRM_MOBL_ALL_WORKERS,
 		 MSG_FIRM_MOBL_OVERSEER,
 		 MSG_FIRM_MOBL_BUILDER,
 		 MSG_FIRM_TOGGLE_LINK_FIRM,
@@ -259,6 +260,7 @@ public:
 	void	firm_set_repair();
 	void	firm_train_level();
 	void	mobilize_worker();
+	void	mobilize_all_workers();
 	void	mobilize_overseer();
 	void	mobilize_builder();
 	void	firm_toggle_link_firm();
