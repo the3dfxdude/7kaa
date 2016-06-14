@@ -2574,6 +2574,8 @@ void Firm::mobilize_all_workers(char remoteAction)
 			Unit* unitPtr = unit_array[unitRecno];
 			unitPtr->selected_flag = 1;
 			unit_array.selected_count++;
+			if ( !unit_array.selected_recno )
+				unit_array.selected_recno = unitRecno;       // set first worker as selected
 		}
 	}
 
