@@ -641,7 +641,7 @@ void FirmCamp::next_day()
 
 //------- Begin of function FirmCamp::train_unit -------//
 //
-// Increase the leadership and ocmbat level of the general and the soldiers.
+// Increase the leadership and combat level of the general and the soldiers.
 //
 void FirmCamp::train_unit()
 {
@@ -944,21 +944,25 @@ int FirmCamp::patrol_all_soldier()
 		if(!unitRecno)
 			return 0; // keep the rest workers as there is no space for creating the unit
 
+		Unit* unitPtr = unit_array[unitRecno];
+
+		unitPtr->team_id = unit_array.cur_team_id;   // define it as a team
+
 		if(overseer_recno)
 		{
-			Unit* unitPtr = unit_array[unitRecno];
-			unitPtr->team_id = unit_array.cur_team_id;   // define it as a team
 			unitPtr->leader_unit_recno = overseer_recno;
 			unitPtr->update_loyalty();							// the unit is just assigned to a new leader, set its target loyalty
 
 			err_when( unit_array[overseer_recno]->rank_id != RANK_KING &&
 					  unit_array[overseer_recno]->rank_id != RANK_GENERAL );
+		}
 
-			if( nation_recno == nation_array.player_recno )
-			{
-				unitPtr->selected_flag = 1;
-				unit_array.selected_count++;
-			}
+		if( nation_recno == nation_array.player_recno )
+		{
+			unitPtr->selected_flag = 1;
+			unit_array.selected_count++;
+			if ( !unit_array.selected_recno )
+				unit_array.selected_recno = unitRecno;       // set the first soldier as selected; this is also the soldier with the highest leadership (because of sorting)
 		}
 	}
 
