@@ -2572,12 +2572,15 @@ void Firm::mobilize_all_workers(char remoteAction)
 		if (nation_recno == nation_array.player_recno)
 		{
 			Unit* unitPtr = unit_array[unitRecno];
+			unitPtr->team_id = unit_array.cur_team_id;
 			unitPtr->selected_flag = 1;
 			unit_array.selected_count++;
 			if ( !unit_array.selected_recno )
 				unit_array.selected_recno = unitRecno;       // set first worker as selected
 		}
 	}
+
+	unit_array.cur_team_id++;
 
 	if( nation_recno == nation_array.player_recno )		// for player, mobilize_all_workers can only be called when the player presses the button.
 		info.disp();
