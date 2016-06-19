@@ -53,8 +53,8 @@ enum
 	MPMSG_USER_SESSION_STATUS = 0x1f960001,
 	MPMSG_REQ_LOGIN_ID,
 	MPMSG_LOGIN_ID,
-	MPMSG_REGISTER_SESSION,
-	MPMSG_REGISTER_SESSION_ACK,
+	MPMSG_REQ_SESSION_ID,
+	MPMSG_SESSION_ID,
 	MPMSG_POLL_SESSIONS,
 	MPMSG_SESSION,
 	MPMSG_REQ_SESSION_ADDR,
@@ -63,8 +63,9 @@ enum
 
 struct MpMsgUserSessionStatus {
 	uint32_t msg_id;
-	uint16_t game_version[3];
-	uint16_t reserved0;
+	uuid_t login_id;
+	uuid_t session_id;
+	uint32_t player_id;
 	uint32_t flags;
 	char session_name[MP_FRIENDLY_NAME_LEN];
 };
@@ -78,18 +79,15 @@ struct MpMsgLoginId {
 	uint32_t reserved0;
 	uuid_t login_id;
 };
-struct MpMsgRegisterSession {
+struct MpMsgReqSessionId {
 	uint32_t msg_id;
 	uuid_t login_id;
-	uint16_t game_version[3];
-	uint16_t reserved0;
-	uint32_t flags;
 	char session_name[MP_FRIENDLY_NAME_LEN];
 	char session_password[MP_FRIENDLY_NAME_LEN];
 };
-struct MpMsgRegisterSessionAck {
+struct MpMsgSessionId {
 	uint32_t msg_id;
-	uint32_t reserved0;
+	uuid_t session_id;
 };
 struct MpMsgPollSessions {
 	uint32_t msg_id;
@@ -99,8 +97,6 @@ struct MpMsgPollSessions {
 struct MpMsgSession {
 	uint32_t msg_id;
 	uuid_t session_id;
-	uint16_t game_version[3];
-	uint16_t reserved0;
 	uint32_t flags;
 	char session_name[MP_FRIENDLY_NAME_LEN];
 };
@@ -113,6 +109,7 @@ struct MpMsgReqSessionAddr {
 };
 struct MpMsgSessionAddr {
 	uint32_t msg_id;
+	uuid_t session_id;
 	uint32_t host;
 	uint16_t port;
 	uint16_t reserved0;
@@ -227,13 +224,16 @@ public:
 private:
 	int open_port(uint16_t port, int fallback);
 	void close_port();
+	int connect_host();
 
 	ENetSocket create_socket(uint16_t port);
 	void destroy_socket(ENetSocket socket);
 
 	void send_user_session_status(ENetAddress *a);
-	void send_req_login_id(ENetSocket s);
-	void send_poll_sessions(ENetSocket s);
+	void send_req_login_id();
+	void send_poll_sessions();
+	void send_req_session_id();
+	void send_req_session_addr();
 
 	uint32_t get_avail_player_id();
 	int add_pending_player(PlayerDesc *player);
