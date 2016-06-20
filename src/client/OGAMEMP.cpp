@@ -620,7 +620,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			password[0] = 0;
 			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
 				password[0] = 0;
-			if (!mp_obj.create_session(game_name, password, config.player_name, MAX_NATION))
+			if (!mp_obj.create_session(game_name, password, MAX_NATION))
 			{
 				box.msg(_("Cannot create the game."));
 				mp_obj.deinit();
@@ -672,7 +672,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 				return;
 			}
 
-			if (!mp_join_session(choice, config.player_name))
+			if (!mp_join_session(choice))
 			{
 				mp_obj.deinit();
 				return;
@@ -851,7 +851,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			password[0] = 0;
 			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
 				password[0] = 0;
-			if (!mp_obj.create_session(game_name, password, config.player_name, gamePlayerCount))
+			if (!mp_obj.create_session(game_name, password, gamePlayerCount))
 			{
 				box.msg(_("Cannot create the game."));
 				mp_obj.deinit();
@@ -903,7 +903,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 				return;
 			}
 
-			if (!mp_join_session(choice, config.player_name))
+			if (!mp_join_session(choice))
 			{
 				mp_obj.deinit();
 				return;
@@ -1353,6 +1353,8 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
 
+	mp_obj.create_my_player(config.player_name);
+
 	return rc;
 }
 //-------- End of function Game::mp_select_mode --------//
@@ -1775,7 +1777,7 @@ int Game::mp_select_session()
 // The purpose of this function is to provide an event loop and status dialog
 // for establishing a connection with a game host. This will timeout if no
 // connection is seen for a period of time.
-int Game::mp_join_session(int session_id, char *player_name)
+int Game::mp_join_session(int session_id)
 {
 	Button buttonCancel;
 	int width;
@@ -1815,7 +1817,7 @@ int Game::mp_join_session(int session_id, char *player_name)
 
 	vga_front.unlock_buf();
 
-	if (!mp_obj.join_session(session, player_name))
+	if (!mp_obj.join_session(session))
 	{
 		goto END;
 	}

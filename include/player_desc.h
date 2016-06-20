@@ -38,7 +38,7 @@ public:
 
 	PlayerDesc();
 	PlayerDesc(ENetAddress *address);
-	PlayerDesc(char *name);
+	PlayerDesc(const char *name);
 
 	uint32_t pid();
 	char *friendly_name_str();

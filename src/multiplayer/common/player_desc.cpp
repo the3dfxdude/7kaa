@@ -44,7 +44,7 @@ PlayerDesc::PlayerDesc(ENetAddress *address)
 	authorized = 0;
 }
 
-PlayerDesc::PlayerDesc(char *name)
+PlayerDesc::PlayerDesc(const char *name)
 {
 	id = 0;
 	strcpy(this->name, name);

@@ -217,7 +217,10 @@ void MultiPlayer::deinit()
 			delete pending_pool[i];
 		}
 	}
-	delete my_player;
+	if (my_player) {
+		delete my_player;
+		my_player = NULL;
+	}
 
 	close_port();
 	enet_deinitialize();
@@ -473,12 +476,13 @@ SessionDesc *MultiPlayer::get_current_session()
 // create a new session
 //
 // <char *> sessionName      arbitary name to identify a session, input from user
-// <char *> playerName       name to identify the local player's name in this session
 // <int>    maxPlayers       maximum no. of players in a session
 //
 // return 1 if success
-int MultiPlayer::create_session(char *sessionName, char *password, char *playerName, int maxPlayers)
+int MultiPlayer::create_session(char *sessionName, char *password, int maxPlayers)
 {
+	const char *name;
+
 	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION || host);
 
 #ifdef HOST_ANY_PORT
@@ -490,7 +494,11 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 		return 0;
 	}
 
-	strcpy(joined_session.session_name, sessionName);
+	if (strlen(sessionName))
+		name = sessionName;
+	else
+		name = "?Anonymous?";
+	strcpy(joined_session.session_name, name);
 	strcpy(joined_session.password, password);
 	joined_session.max_players = maxPlayers;
 	joined_session.player_count = 1;
@@ -506,8 +514,6 @@ int MultiPlayer::create_session(char *sessionName, char *password, char *playerN
 	joined_session.address.host = host->address.host;
 	joined_session.address.port = host->address.port;
 
-	my_player = new PlayerDesc(playerName);
-	my_player->id = 1;
 	set_my_player_id(1);
 	player_pool[0] = my_player; // can we skip polling players?
 
@@ -541,7 +547,7 @@ int MultiPlayer::connect_host()
 // join a session
 // note : do not call poll_sessions between get_session and join_session
 //
-int MultiPlayer::join_session(SessionDesc *session, char *playerName)
+int MultiPlayer::join_session(SessionDesc *session)
 {
 	err_when(!session || host);
 
@@ -553,8 +559,6 @@ int MultiPlayer::join_session(SessionDesc *session, char *playerName)
 	joined_session = *session;
 	joined_session.flags &= ~SESSION_HOSTING; // we're not the host
 	connect_host();
-
-	my_player = new PlayerDesc(playerName);
 
 	return 1;
 }
@@ -773,6 +777,19 @@ int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 	poll_players();
 
 	return 1;
+}
+
+void MultiPlayer::create_my_player(char *playerName)
+{
+	const char *name;
+	if (strlen(playerName))
+		name = playerName;
+	else
+		name = "?Anonymous?";
+	if (my_player)
+		strcpy(my_player->name, name);
+	else
+		my_player = new PlayerDesc(name);
 }
 
 int MultiPlayer::set_my_player_id(uint32_t playerId)
@@ -1034,7 +1051,7 @@ void MultiPlayer::send_req_login_id()
 
 	m.msg_id = MPMSG_REQ_LOGIN_ID;
 	m.reserved0 = 0;
-	strncpy(m.name, "?Anonymous?", MP_FRIENDLY_NAME_LEN);
+	strncpy(m.name, my_player->name, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
 }

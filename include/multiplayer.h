@@ -197,8 +197,8 @@ public:
 	int    set_service_provider(const char *host);
 	int    poll_sessions();
 	void   sort_sessions(int sortType);
-	int    create_session(char *sessionName, char *password, char *playerName, int maxPlayers);
-	int    join_session(SessionDesc *session, char *playerName);
+	int    create_session(char *sessionName, char *password, int maxPlayers);
+	int    join_session(SessionDesc *session);
 	int    close_session();
 	SessionDesc* get_session(int i);
 	SessionDesc* get_session(ENetAddress *address);
@@ -208,6 +208,7 @@ public:
 	// -------- functions on player management -------//
 	int         add_player(uint32_t playerId, char *name, ENetAddress *address, char contact);
 	int         auth_player(uint32_t playerId, char *name, char *password);
+	void        create_my_player(char *playerName);
 	int         set_my_player_id(uint32_t playerId);
 	void        delete_player(uint32_t playerId);
 	void        poll_players();
