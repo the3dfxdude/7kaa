@@ -1050,7 +1050,6 @@ void MultiPlayer::send_req_login_id()
 	b.dataLength = sizeof(MpMsgReqLoginId);
 
 	m.msg_id = MPMSG_REQ_LOGIN_ID;
-	m.reserved0 = 0;
 	strncpy(m.name, my_player->name, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
@@ -1066,7 +1065,6 @@ void MultiPlayer::send_poll_sessions()
 
 	m.msg_id = MPMSG_POLL_SESSIONS;
 	misc.uuid_copy(m.login_id, service_login_id);
-	m.reserved0 = 0;
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
 }
@@ -1104,7 +1102,6 @@ void MultiPlayer::send_req_session_addr()
 	m.msg_id = MPMSG_REQ_SESSION_ADDR;
 	misc.uuid_copy(m.login_id, service_login_id);
 	misc.uuid_copy(m.session_id, joined_session.id);
-	m.reserved0 = 0;
 	memcpy(m.session_password, joined_session.password, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);

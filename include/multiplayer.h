@@ -71,12 +71,10 @@ struct MpMsgUserSessionStatus {
 };
 struct MpMsgReqLoginId {
 	uint32_t msg_id;
-	uint32_t reserved0;
 	char name[MP_FRIENDLY_NAME_LEN];
 };
 struct MpMsgLoginId {
 	uint32_t msg_id;
-	uint32_t reserved0;
 	uuid_t login_id;
 };
 struct MpMsgReqSessionId {
@@ -92,7 +90,6 @@ struct MpMsgSessionId {
 struct MpMsgPollSessions {
 	uint32_t msg_id;
 	uuid_t login_id;
-	uint32_t reserved0;
 };
 struct MpMsgSession {
 	uint32_t msg_id;
@@ -104,7 +101,6 @@ struct MpMsgReqSessionAddr {
 	uint32_t msg_id;
 	uuid_t login_id;
 	uuid_t session_id;
-	uint32_t reserved0;
 	char session_password[MP_FRIENDLY_NAME_LEN];
 };
 struct MpMsgSessionAddr {
@@ -113,7 +109,6 @@ struct MpMsgSessionAddr {
 	uint32_t host;
 	uint16_t port;
 	uint16_t reserved0;
-	uint32_t reserved1;
 };
 
 #define SESSION_HOSTING         1
