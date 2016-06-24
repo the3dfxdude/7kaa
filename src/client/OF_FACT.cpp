@@ -51,6 +51,7 @@
 //------- define static vars -------//
 
 static Button3D	button_change_production;
+static Button3D	button_vacate_firm;
 
 //--------- Begin of function FirmFactory::FirmFactory ---------//
 //
@@ -214,17 +215,26 @@ void FirmFactory::put_info(int refreshFlag)
 	disp_worker_list(INFO_Y1+126, refreshFlag);
 	disp_worker_info(INFO_Y1+190, refreshFlag);
 
-	//------ display button -------//
+	//------ display mobilize button -------//
 
-	int x;
+	int x = INFO_X1;
 
-	if( own_firm() && refreshFlag==INFO_REPAINT )
+	if(own_firm())
 	{
-		button_change_production.paint( INFO_X1, INFO_Y1+248, 'A', "CHGPROD" );
-		x = INFO_X1+BUTTON_ACTION_WIDTH;
+		if (refreshFlag == INFO_REPAINT)
+		{
+			button_change_production.paint(INFO_X1, INFO_Y1 + 248, 'A', "CHGPROD");
+			button_vacate_firm.paint(INFO_X1 + BUTTON_ACTION_WIDTH, INFO_Y1 + 248, 'A', "RECRUIT");
+			button_vacate_firm.set_help_code("MOBILIZE");
+		}
+
+		if (worker_count)
+			button_vacate_firm.enable();
+		else
+			button_vacate_firm.disable();
+
+		x += (BUTTON_ACTION_WIDTH * 2);
 	}
-	else
-		x = INFO_X1;
 
 	//---------- display spy button ----------//
 
@@ -266,6 +276,14 @@ void FirmFactory::detect_info()
 		// ##### begin Gilbert 25/9 ######//
 		se_ctrl.immediate_sound("TURN_ON");
 		// ##### end Gilbert 25/9 ######//
+	}
+
+	//-------- detect mobilize button ----------//
+
+	if (button_vacate_firm.detect())
+	{		
+		mobilize_all_worker(0);
+		info.disp();
 	}
 }
 //----------- End of function FirmFactory::detect_info -----------//
