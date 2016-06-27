@@ -981,21 +981,23 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 // 
 int Game::mp_select_service()
 {
-	enum { BUTTON_NUM = 2 };
-	static short buttonX[BUTTON_NUM] = { 171, 171 };
-	static short buttonY[BUTTON_NUM] = {  57, 125 };
+	enum { BUTTON_NUM = 3 };
+	static short buttonX[BUTTON_NUM] = { 171, 171, 171 };
+	static short buttonY[BUTTON_NUM] = {  57, 125, 193 };
 	#define SERVICE_BUTTON_WIDTH 459
 	#define SERVICE_BUTTON_HEIGHT 67
 	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
 	const char *service_short_desc[BUTTON_NUM] =
 	{
 		"Local Area Network",
-	        "Enter Address",
+		"Enter Address",
+		"7kfans.com",
 	};
 	const char *service_long_desc[BUTTON_NUM] =
 	{
 		"Host or join a game using the local area network",
 		"Join a game by entering an address",
+		"Host or join a game over the internet",
 	};
 
 #define SVOPTION_PAGE        0x00000001
@@ -1130,21 +1132,23 @@ int Game::mp_select_service()
 // return 0 = cancel, 1 = create, 2 = join
 int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 {
-	enum { BUTTON_NUM = 2 };
-	static short buttonX[BUTTON_NUM] = { 171, 171 };
-	static short buttonY[BUTTON_NUM] = {  57, 125 };
+	enum { BUTTON_NUM = 3 };
+	static short buttonX[BUTTON_NUM] = { 171, 171, 171 };
+	static short buttonY[BUTTON_NUM] = {  57, 125, 193 };
 	#define SERVICE_BUTTON_WIDTH 459
 	#define SERVICE_BUTTON_HEIGHT 67
 	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
 	const char *service_short_desc[BUTTON_NUM] =
 	{
 		"Local Area Network",
-	        "Enter Address",
+		"Enter Address",
+		"7kfans.com",
 	};
 	const char *service_long_desc[BUTTON_NUM] =
 	{
 		"Host or join a game using the local area network",
 		"Join a game by entering an address",
+		"Host or join a game over the internet",
 	};
 
 #define SMOPTION_GETA(n)   (1 << n)
