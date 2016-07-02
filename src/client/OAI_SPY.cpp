@@ -212,7 +212,7 @@ Spy* Nation::ai_find_spy(int targetXLoc, int targetYLoc, int spyRaceId, int mobi
 
 		spyPtr = spy_array[i];
 
-		if( !spyPtr->true_nation_recno != nation_recno )
+		if( spyPtr->true_nation_recno != nation_recno )
 			continue;
 
 		if( spyRaceId && spyRaceId != race_id )
