@@ -21,6 +21,7 @@
 //Filename    : OGAMMAIN.CPP
 //Description : Main Game Object - Main menu
 
+#include <version.h>
 #include <OVGA.h>
 #include <vga_util.h>
 #include <OIMGRES.h>
@@ -360,6 +361,10 @@ void Game::disp_version()
 	str  = _("Version");
 	str += " ";
 	str += GAME_VERSION_STR;
+
+	#ifdef DEV_VERSION
+		str += "-dev";
+	#endif
 
 	#ifdef DEBUG
 		str += " (DEBUG)";

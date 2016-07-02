@@ -551,6 +551,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	#ifdef DEBUG
 		mp_build_flags |= 0x00000001;
 	#endif
+	#ifdef DEV_VERSION
+		mp_build_flags |= 0x00000002;
+	#endif
 
 	info.init_random_seed(0);			// initialize the random seed
 
