@@ -2533,17 +2533,24 @@ int Firm::create_worker_unit(Worker& thisWorker)
 //----------- End of function Firm::create_worker_unit -----------//
 
 
-//--------- Begin of function Firm::mobilize_all_worker ---------//
+//--------- Begin of function Firm::mobilize_all_workers ---------//
 //
 // mobilize as many as workers if there is space for creating the
 // workers
 //
-// [int] leaderUnitRecno - if given, the workers are assigned as
-//									a team and their leader_unit_recno are set.
-//									(default: 0)
-//
-void Firm::mobilize_all_worker(int leaderUnitRecno)
+void Firm::mobilize_all_workers(char remoteAction)
 {
+	if( !remoteAction && remote.is_enable() )
+	{
+		// packet strcture : <firm_recno>
+		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_FIRM_MOBL_ALL_WORKERS, sizeof(short) );
+		shortPtr[0] = firm_recno;
+		return;
+	}
+
+	if (nation_recno == nation_array.player_recno)
+		power.reset_selection();
+
 	err_when( !worker_array );    // this function shouldn't be called if this firm does not need worker
 
 	//------- detect buttons on hiring firm workers -------//
@@ -2562,24 +2569,23 @@ void Firm::mobilize_all_worker(int leaderUnitRecno)
 		if(!unitRecno)
 			break; // keep the rest workers as there is no space for creating the unit
 
-		if( leaderUnitRecno )
+		if (nation_recno == nation_array.player_recno)
 		{
 			Unit* unitPtr = unit_array[unitRecno];
-
-			unitPtr->team_id = unit_array.cur_team_id;   // define it as a team
-			unitPtr->leader_unit_recno = leaderUnitRecno;
-			unitPtr->update_loyalty();							// the unit is just assigned to a new leader, set its target loyalty
-
-			err_when( unitPtr->rank_id != RANK_KING && unitPtr->rank_id != RANK_GENERAL );
-
-			if( nation_recno == nation_array.player_recno )
-				unitPtr->selected_flag = 1;
-      }
+			unitPtr->team_id = unit_array.cur_team_id;
+			unitPtr->selected_flag = 1;
+			unit_array.selected_count++;
+			if ( !unit_array.selected_recno )
+				unit_array.selected_recno = unitRecno;       // set first worker as selected
+		}
 	}
 
-   unit_array.cur_team_id++;
+	unit_array.cur_team_id++;
+
+	if( nation_recno == nation_array.player_recno )		// for player, mobilize_all_workers can only be called when the player presses the button.
+		info.disp();
 }
-//----------- End of function Firm::mobilize_all_worker -----------//
+//----------- End of function Firm::mobilize_all_workers -----------//
 
 
 //--------- Begin of function Firm::resign_all_worker ---------//
@@ -2644,7 +2650,7 @@ int Firm::resign_worker(int workerId)
 	{
 		Town* townPtr = town_array[workerPtr->town_recno];
 
-		townPtr->jobless_race_pop_array[workerPtr->race_id-1]++; // decrease the town's population
+		townPtr->jobless_race_pop_array[workerPtr->race_id-1]++; // move into jobless population
 		townPtr->jobless_population++;
 
 		//------ put the spy in the town -------//

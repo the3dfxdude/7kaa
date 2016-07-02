@@ -111,6 +111,7 @@ static MsgProcessFP msg_process_function_array[] =
 	&RemoteMsg::firm_set_repair,
 	&RemoteMsg::firm_train_level,
 	&RemoteMsg::mobilize_worker,
+	&RemoteMsg::mobilize_all_workers,
 	&RemoteMsg::mobilize_overseer,
 	&RemoteMsg::mobilize_builder,
 	&RemoteMsg::firm_toggle_link_firm,
@@ -1569,6 +1570,24 @@ void RemoteMsg::mobilize_worker()
 	}
 }
 // ------- End of function RemoteMsg::mobilize_worker ---------//
+
+
+// ------- Begin of function RemoteMsg::mobilize_all_workers ---------//
+void RemoteMsg::mobilize_all_workers()
+{
+	err_when( id != MSG_FIRM_MOBL_ALL_WORKERS );
+	// packet structure : <firm recno>
+	short *shortPtr = (short *)data_buf;
+
+	if( validate_firm(*shortPtr) )
+	{
+#ifdef DEBUG_LONG_LOG
+		long_log->printf("firm %d mobilize all workers\n", shortPtr[0]);
+#endif
+		firm_array[*shortPtr]->mobilize_all_workers(COMMAND_REMOTE);
+	}
+}
+// ------- End of function RemoteMsg::mobilize_all_workers ---------//
 
 
 // ------- Begin of function RemoteMsg::mobilize_overseer ---------//

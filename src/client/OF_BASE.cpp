@@ -51,6 +51,7 @@
 //----------- Define static vars -------------//
 
 static Button3D   button_invoke, button_reward;
+static Button3D	button_vacate_firm;
 
 //--------- Begin of function FirmBase::FirmBase ---------//
 //
@@ -197,7 +198,9 @@ void FirmBase::put_info(int refreshFlag)
 		if( refreshFlag==INFO_REPAINT )
 		{
 			button_invoke.paint( INFO_X1, y, 'A', "INVOKE" );
-			button_reward.paint( INFO_X1+BUTTON_ACTION_WIDTH, y, 'A', "REWARDSP" );
+			button_reward.paint( INFO_X1 + BUTTON_ACTION_WIDTH, y, 'A', "REWARDSP" );
+			button_vacate_firm.paint(INFO_X1 + BUTTON_ACTION_WIDTH * 2, y, 'A', "RECRUIT");
+			button_vacate_firm.set_help_code("MOBILIZE");
 		}
 
 		if( can_invoke() )
@@ -216,7 +219,12 @@ void FirmBase::put_info(int refreshFlag)
 			button_reward.disable();
 		}
 
-		x=INFO_X1+BUTTON_ACTION_WIDTH*2;
+		if (worker_count)
+			button_vacate_firm.enable();
+		else
+			button_vacate_firm.disable();
+
+		x=INFO_X1+BUTTON_ACTION_WIDTH * 3;
 	}
 	else
 		x=INFO_X1;
@@ -307,6 +315,13 @@ void FirmBase::detect_info()
 		// ##### begin Gilbert 26/9 ########//
 		se_ctrl.immediate_sound("TURN_ON");
 		// ##### end Gilbert 26/9 ########//
+	}
+
+	//-------- detect mobilize button ----------//
+
+	if( button_vacate_firm.detect() )
+	{
+		mobilize_all_workers(COMMAND_PLAYER);
 	}
 }
 //----------- End of function FirmBase::detect_info -----------//

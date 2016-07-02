@@ -65,6 +65,7 @@ static ButtonCustom	button_research_array[MAX_RESEARCH_OPTION];
 static ButtonCustom	button_cancel;
 // ######## end Gilbert 16/8 ######//
 static int added_count;			// no. of buttons in button_research_array
+static Button3D	button_vacate_firm;
 
 //---------- Declare static functions ---------//
 
@@ -148,18 +149,31 @@ void FirmResearch::disp_main_menu(int refreshFlag)
 		return;
 
 	disp_research_info(INFO_Y1+54, refreshFlag);
-
 	disp_worker_list(INFO_Y1+107, refreshFlag);
-
 	disp_worker_info(INFO_Y1+171, refreshFlag);
+
+	//------ display mobilize button -------//
+
+	int x = INFO_X1;
 
 	if( own_firm() )
 	{
-		if( refreshFlag==INFO_REPAINT )
-			button_select_research.paint( INFO_X1, INFO_Y1+235, 'A', "RESEARCH" );
+		if (refreshFlag == INFO_REPAINT)
+		{
+			button_select_research.paint(INFO_X1, INFO_Y1 + 235, 'A', "RESEARCH");
+			button_vacate_firm.paint(INFO_X1 + BUTTON_ACTION_WIDTH, INFO_Y1 + 235, 'A', "RECRUIT");
+			button_vacate_firm.set_help_code("MOBILIZE");
+		}
+
+		if (worker_count)
+			button_vacate_firm.enable();
+		else
+			button_vacate_firm.disable();
+
+		x += (BUTTON_ACTION_WIDTH * 2);
 	}
 
-	disp_spy_button( INFO_X1+BUTTON_ACTION_WIDTH, INFO_Y1+235, refreshFlag );
+	disp_spy_button( x, INFO_Y1+235, refreshFlag );
 }
 //----------- End of function FirmResearch::disp_main_menu -----------//
 
@@ -196,6 +210,13 @@ void FirmResearch::detect_main_menu()
 		disable_refresh = 1;    // static var for disp_info() only
 		info.disp();
 		disable_refresh = 0;
+	}
+
+	//-------- detect mobilize button ----------//
+
+	if (button_vacate_firm.detect())
+	{
+		mobilize_all_workers(COMMAND_PLAYER);
 	}
 }
 //----------- End of function FirmResearch::detect_main_menu -----------//
