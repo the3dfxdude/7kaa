@@ -61,6 +61,14 @@ enum
 	MPMSG_SESSION_ADDR,
 };
 
+enum
+{
+	MP_POLL_NO_UPDATE,
+	MP_POLL_UPDATE,
+	MP_POLL_LOGIN_PENDING,
+	MP_POLL_NO_SOCKET,
+};
+
 struct MpMsgUserSessionStatus {
 	uint32_t msg_id;
 	uuid_t login_id;

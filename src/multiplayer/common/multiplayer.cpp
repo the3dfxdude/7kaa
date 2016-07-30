@@ -369,20 +369,21 @@ int MultiPlayer::poll_sessions()
 {
 	ENetAddress a;
 	ENetBuffer b;
+	int ret;
 
 	err_when(!init_flag);
 
 	if (session_monitor == ENET_SOCKET_NULL) {
-		return 0;
+		return MP_POLL_NO_SOCKET;
 	}
 
 	b.data = recv_buf;
 	b.dataLength = MP_RECV_BUFFER_SIZE;
 
-	current_sessions.zap();
-
+	ret = MP_POLL_NO_UPDATE;
 	while (enet_socket_receive(session_monitor, &a, &b, 1)>0) {
 		uint32_t id = *(uint32_t *)recv_buf;
+		ret = MP_POLL_UPDATE;
 		switch (id) {
 		case MPMSG_USER_SESSION_STATUS: {
 			MpMsgUserSessionStatus *m = (MpMsgUserSessionStatus *)recv_buf;
@@ -427,12 +428,13 @@ int MultiPlayer::poll_sessions()
 	if (service_provider.host != ENET_HOST_ANY) {
 		if (misc.uuid_is_null(service_login_id)) {
 			send_req_login_id();
+			return MP_POLL_LOGIN_PENDING;
 		} else {
 			send_poll_sessions();
 		}
 	}
 
-	return 1;
+	return ret;
 }
 
 // return a session description
@@ -462,7 +464,7 @@ SessionDesc *MultiPlayer::get_session(uuid_t id)
 	int i;
 	for (i = 1; i <= current_sessions.size(); i++) {
 		SessionDesc *p = (SessionDesc *)current_sessions.get(i);
-		if (p && misc.uuid_compare(p->id, id))
+		if (p && !misc.uuid_compare(p->id, id))
 			return p;
 	}
 	return NULL;

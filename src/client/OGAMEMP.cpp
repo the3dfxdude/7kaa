@@ -1536,6 +1536,7 @@ int Game::mp_select_session()
 
 	unsigned long refreshTime;
 	int refreshFlag = SSOPTION_ALL;
+	int pollStatus = MP_POLL_NO_UPDATE;
 	int choice = 0;
 	uuid_t sessionGuid;
 	misc.uuid_clear(sessionGuid);
@@ -1621,14 +1622,12 @@ int Game::mp_select_session()
 
 			if( refreshFlag & SSOPTION_POLL_SESSION )
 			{
+				int poll;
 				pollTime = misc.get_time();
-				if( !mp_obj.poll_sessions() )
-				{
-					// return fail if poll_sessions fails or cancel the dialogue box
-					box.msg(_("Unable to poll sessions.\n"));
-					choice = 0;
-					break;
-				}
+				poll = mp_obj.poll_sessions();
+				if( poll != pollStatus )
+					sys.need_redraw_flag = 1;
+				pollStatus = poll;
 
 				// limit the pollTime between 5 sec to 10 sec
 				pollTime = misc.get_time() - pollTime + 5000;
@@ -1637,6 +1636,8 @@ int Game::mp_select_session()
 
 				refreshTime = misc.get_time();
 
+				if( pollStatus == MP_POLL_UPDATE )
+				{
 				// ------- sort by name ---------//
 				mp_obj.sort_sessions(2);		// sort by session name
 
@@ -1657,6 +1658,7 @@ int Game::mp_select_session()
 				scrollBar.set(1, s-1, scrollBar.view_recno);
 				refreshFlag |= SSOPTION_SCROLL_BAR;
 				refreshFlag |= SSOPTION_DISP_SESSION;
+				}
 			}
 
 			if( refreshFlag & SSOPTION_DISP_SESSION )
@@ -1686,6 +1688,22 @@ int Game::mp_select_session()
 					}
 				}
 
+				const char *statusMsg = NULL;
+				switch( pollStatus )
+				{
+				case MP_POLL_NO_SOCKET:
+					statusMsg = _("Unable to communicate with the network");
+					break;
+				case MP_POLL_LOGIN_PENDING:
+					statusMsg = _("Trying to connect to the service provider");
+					break;
+				}
+				if( statusMsg )
+				{
+					vga_front.d3_panel_up(60, 65, VGA_WIDTH-60, 100, 2);
+					font_san.put(70, 75, statusMsg, 0, VGA_WIDTH-70);
+				}
+#if 0
 				if (mp_obj.is_update_available() > 0)
 				{
 					String update_message;
@@ -1693,6 +1711,7 @@ int Game::mp_select_session()
 					vga_front.d3_panel_up(60, 65, VGA_WIDTH-60, 100, 2);
 					font_san.put(70, 75, update_message, 0, VGA_WIDTH-70);
 				}
+#endif
 			}
 
 			if( refreshFlag & SSOPTION_SCROLL_BAR )
