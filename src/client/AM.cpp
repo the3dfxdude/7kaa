@@ -437,7 +437,12 @@ int main(int argc, char **argv)
 		config.help_mode = NO_HELP;
 		game.game_mode = GAME_DEMO;
 		game.init();
+#ifdef HEADLESS_SIM
+		info.init_random_seed(0);
+		battle.run(0);
+#else
 		battle.run_test();
+#endif
 		game.deinit();
 	}
 
