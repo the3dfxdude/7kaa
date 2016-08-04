@@ -320,6 +320,10 @@ int Nation::think_surrender()
 	if( !rc )
 		return 0;
 
+	//don't surrender if nation hasn't been around for 2 years
+	if(ai_create_date + 365*2 > info.game_date)
+		return 1;
+
 	//---- see if there is any nation worth getting our surrender ---//
 
 	Nation* nationPtr;
