@@ -115,7 +115,7 @@ static int get_random_fd(void)
 }
 
 
-void uuid_pack(const struct uuid *uu, uuid_t ptr)
+void uuid_pack(const struct uuid *uu, guuid_t ptr)
 {
 	uint32_t	tmp;
 	unsigned char	*out = ptr;
@@ -148,7 +148,7 @@ void uuid_pack(const struct uuid *uu, uuid_t ptr)
 }
 
 
-void uuid_unpack(const uuid_t in, struct uuid *uu)
+void uuid_unpack(const guuid_t in, struct uuid *uu)
 {
 	const uint8_t	*ptr = in;
 	uint32_t		tmp;
@@ -175,7 +175,7 @@ void uuid_unpack(const uuid_t in, struct uuid *uu)
 }
 
 
-void Misc::uuid_clear(uuid_t uu)
+void Misc::uuid_clear(guuid_t uu)
 {
 	memset(uu, 0, 16);
 }
@@ -183,7 +183,7 @@ void Misc::uuid_clear(uuid_t uu)
 
 #define UUCMP(u1,u2) if (u1 != u2) return((u1 < u2) ? -1 : 1);
 
-int Misc::uuid_compare(const uuid_t uu1, const uuid_t uu2)
+int Misc::uuid_compare(const guuid_t uu1, const guuid_t uu2)
 {
 	struct uuid	uuid1, uuid2;
 
@@ -198,7 +198,7 @@ int Misc::uuid_compare(const uuid_t uu1, const uuid_t uu2)
 }
 
 
-void Misc::uuid_copy(uuid_t dst, const uuid_t src)
+void Misc::uuid_copy(guuid_t dst, const guuid_t src)
 {
 	unsigned char		*cp1;
 	const unsigned char	*cp2;
@@ -244,9 +244,9 @@ void Misc::get_system_random_bytes(void *buf, int nbytes)
 }
 
 
-void Misc::uuid_generate_random(uuid_t out)
+void Misc::uuid_generate_random(guuid_t out)
 {
-	uuid_t	buf;
+	guuid_t	buf;
 	struct uuid uu;
 	int i, n;
 
@@ -260,13 +260,13 @@ void Misc::uuid_generate_random(uuid_t out)
 		uu.time_hi_and_version = (uu.time_hi_and_version & 0x0FFF)
 			| 0x4000;
 		uuid_pack(&uu, out);
-		out += sizeof(uuid_t);
+		out += sizeof(guuid_t);
 	}
 }
 
 
 /* Returns 1 if the uuid is the NULL uuid */
-int Misc::uuid_is_null(const uuid_t uu)
+int Misc::uuid_is_null(const guuid_t uu)
 {
 	const unsigned char 	*cp;
 	int			i;
@@ -289,7 +289,7 @@ static const char *fmt_upper =
 #define FMT_DEFAULT fmt_lower
 #endif
 
-int Misc::uuid_parse(const char *in, uuid_t uu)
+int Misc::uuid_parse(const char *in, guuid_t uu)
 {
 	struct uuid	uuid;
 	int 		i;
@@ -328,7 +328,7 @@ int Misc::uuid_parse(const char *in, uuid_t uu)
 	return 0;
 }
 
-static void uuid_unparse_x(const uuid_t uu, char *out, const char *fmt)
+static void uuid_unparse_x(const guuid_t uu, char *out, const char *fmt)
 {
 	struct uuid uuid;
 
@@ -340,17 +340,17 @@ static void uuid_unparse_x(const uuid_t uu, char *out, const char *fmt)
 		uuid.node[3], uuid.node[4], uuid.node[5]);
 }
 
-void Misc::uuid_unparse_lower(const uuid_t uu, char *out)
+void Misc::uuid_unparse_lower(const guuid_t uu, char *out)
 {
 	uuid_unparse_x(uu, out,	fmt_lower);
 }
 
-void Misc::uuid_unparse_upper(const uuid_t uu, char *out)
+void Misc::uuid_unparse_upper(const guuid_t uu, char *out)
 {
 	uuid_unparse_x(uu, out,	fmt_upper);
 }
 
-void Misc::uuid_unparse(const uuid_t uu, char *out)
+void Misc::uuid_unparse(const guuid_t uu, char *out)
 {
 	uuid_unparse_x(uu, out, FMT_DEFAULT);
 }

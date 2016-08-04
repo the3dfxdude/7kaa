@@ -459,7 +459,7 @@ SessionDesc *MultiPlayer::get_session(ENetAddress *address)
 	return NULL;
 }
 
-SessionDesc *MultiPlayer::get_session(uuid_t id)
+SessionDesc *MultiPlayer::get_session(guuid_t id)
 {
 	int i;
 	for (i = 1; i <= current_sessions.size(); i++) {

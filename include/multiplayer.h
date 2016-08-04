@@ -71,8 +71,8 @@ enum
 
 struct MpMsgUserSessionStatus {
 	uint32_t msg_id;
-	uuid_t login_id;
-	uuid_t session_id;
+	guuid_t login_id;
+	guuid_t session_id;
 	uint32_t player_id;
 	uint32_t flags;
 	char session_name[MP_FRIENDLY_NAME_LEN];
@@ -83,37 +83,37 @@ struct MpMsgReqLoginId {
 };
 struct MpMsgLoginId {
 	uint32_t msg_id;
-	uuid_t login_id;
+	guuid_t login_id;
 };
 struct MpMsgReqSessionId {
 	uint32_t msg_id;
-	uuid_t login_id;
+	guuid_t login_id;
 	char session_name[MP_FRIENDLY_NAME_LEN];
 	char session_password[MP_FRIENDLY_NAME_LEN];
 };
 struct MpMsgSessionId {
 	uint32_t msg_id;
-	uuid_t session_id;
+	guuid_t session_id;
 };
 struct MpMsgPollSessions {
 	uint32_t msg_id;
-	uuid_t login_id;
+	guuid_t login_id;
 };
 struct MpMsgSession {
 	uint32_t msg_id;
-	uuid_t session_id;
+	guuid_t session_id;
 	uint32_t flags;
 	char session_name[MP_FRIENDLY_NAME_LEN];
 };
 struct MpMsgReqSessionAddr {
 	uint32_t msg_id;
-	uuid_t login_id;
-	uuid_t session_id;
+	guuid_t login_id;
+	guuid_t session_id;
 	char session_password[MP_FRIENDLY_NAME_LEN];
 };
 struct MpMsgSessionAddr {
 	uint32_t msg_id;
-	uuid_t session_id;
+	guuid_t session_id;
 	uint32_t host;
 	uint16_t port;
 	uint16_t reserved0;
@@ -129,7 +129,7 @@ struct SessionDesc
 {
 	char session_name[MP_FRIENDLY_NAME_LEN+1];
 	char password[MP_FRIENDLY_NAME_LEN+1];
-	uuid_t id;
+	guuid_t id;
 	uint32_t flags;
 	int max_players;
 	int player_count;
@@ -143,7 +143,7 @@ struct SessionDesc
 	SessionDesc(MpMsgSession *m);
 
 	char *name_str() { return session_name; };
-	uuid_t &session_id() { return id; }
+	guuid_t &session_id() { return id; }
 };
 
 
@@ -171,7 +171,7 @@ private:
 
 	ENetSocket        session_monitor;
 	ENetAddress       service_provider;
-	uuid_t            service_login_id;
+	guuid_t            service_login_id;
 
 	int update_available;
 
@@ -205,7 +205,7 @@ public:
 	int    close_session();
 	SessionDesc* get_session(int i);
 	SessionDesc* get_session(ENetAddress *address);
-	SessionDesc* get_session(uuid_t id);
+	SessionDesc* get_session(guuid_t id);
 	SessionDesc* get_current_session();
 
 	// -------- functions on player management -------//

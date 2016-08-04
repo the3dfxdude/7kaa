@@ -1538,7 +1538,7 @@ int Game::mp_select_session()
 	int refreshFlag = SSOPTION_ALL;
 	int pollStatus = MP_POLL_NO_UPDATE;
 	int choice = 0;
-	uuid_t sessionGuid;
+	guuid_t sessionGuid;
 	misc.uuid_clear(sessionGuid);
 
 	// ------- initialized button -----------//
