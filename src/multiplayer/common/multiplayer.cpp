@@ -1189,7 +1189,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 						break;
 					if (a.host != service_provider.host)
 						break;
-					if (!misc.uuid_compare(joined_session.id, m->session_id))
+					if (misc.uuid_compare(joined_session.id, m->session_id))
 						break;
 
 					joined_session.address.host = m->host;
