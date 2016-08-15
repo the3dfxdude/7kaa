@@ -1127,6 +1127,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	PlayerDesc *player;
 	char *got_recv;
 	static unsigned long last_broadcast_time;
+	static int poll_time;
 	unsigned long current_time;
 
 	err_when(!host);
@@ -1134,7 +1135,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	// periodically broadcast status
 	current_time = misc.get_time();
 	if ((joined_session.flags & SESSION_PREGAME) &&
-		(current_time > last_broadcast_time + 5000 || current_time < last_broadcast_time)) {
+		(current_time > last_broadcast_time + poll_time || current_time < last_broadcast_time)) {
 		ENetAddress a;
 		last_broadcast_time = current_time;
 
@@ -1143,6 +1144,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 		a.port = UDP_MONITOR_PORT;
 		send_user_session_status(&a);
 
+		poll_time = 5000;
 		if (service_provider.host != ENET_HOST_ANY) {
 			// communicate with service provider
 			ENetBuffer b;
@@ -1150,9 +1152,11 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 			if (joined_session.flags & SESSION_HOSTING) {
 				if (misc.uuid_is_null(joined_session.id)) {
 					send_req_session_id();
+					poll_time = 300;
 				}
 			} else if (joined_session.address.host == ENET_HOST_ANY) {
 				send_req_session_addr();
+				poll_time = 300;
 			}
 
 			b.data = recv_buf;
@@ -1199,6 +1203,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 			if (misc.uuid_is_null(service_login_id)) {
 				send_req_login_id();
+				poll_time = 300;
 			} else {
 				send_user_session_status(&service_provider);
 			}

@@ -1623,16 +1623,16 @@ int Game::mp_select_session()
 			if( refreshFlag & SSOPTION_POLL_SESSION )
 			{
 				int poll;
-				pollTime = misc.get_time();
 				poll = mp_obj.poll_sessions();
 				if( poll != pollStatus )
 					sys.need_redraw_flag = 1;
 				pollStatus = poll;
 
-				// limit the pollTime between 5 sec to 10 sec
-				pollTime = misc.get_time() - pollTime + 5000;
-				if( pollTime > 10000 )
-					pollTime = 10000;
+				// Limit poll after we established polling interaction
+				if( pollStatus == MP_POLL_LOGIN_PENDING )
+					pollTime = 300;
+				else
+					pollTime = 5000;
 
 				refreshTime = misc.get_time();
 
