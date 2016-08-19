@@ -1697,6 +1697,9 @@ int Game::mp_select_session()
 				case MP_POLL_LOGIN_PENDING:
 					statusMsg = _("Trying to connect to the service provider");
 					break;
+				case MP_POLL_LOGIN_FAILED:
+					box.msg(_("Unable to connect to the service provider. Check your name that it matches your forum account and login with your web browser."));
+					goto exit_poll;
 				}
 				if( statusMsg )
 				{
@@ -1791,6 +1794,7 @@ int Game::mp_select_session()
 
 		vga_front.unlock_buf();
 	}
+exit_poll:
 
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();

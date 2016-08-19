@@ -370,6 +370,7 @@ int MultiPlayer::poll_sessions()
 	ENetAddress a;
 	ENetBuffer b;
 	int ret;
+	int login_failed;
 
 	err_when(!init_flag);
 
@@ -381,6 +382,7 @@ int MultiPlayer::poll_sessions()
 	b.dataLength = MP_RECV_BUFFER_SIZE;
 
 	ret = MP_POLL_NO_UPDATE;
+	login_failed = 0;
 	while (enet_socket_receive(session_monitor, &a, &b, 1)>0) {
 		uint32_t id = *(uint32_t *)recv_buf;
 		ret = MP_POLL_UPDATE;
@@ -401,6 +403,10 @@ int MultiPlayer::poll_sessions()
 		case MPMSG_LOGIN_ID: {
 			MpMsgLoginId *m = (MpMsgLoginId*)recv_buf;
 
+			if (misc.uuid_is_null(m->login_id)) {
+				login_failed = 1;
+				break;
+			}
 			if (a.host == service_provider.host)
 				misc.uuid_copy(service_login_id, m->login_id);
 
@@ -427,6 +433,8 @@ int MultiPlayer::poll_sessions()
 
 	if (service_provider.host != ENET_HOST_ANY) {
 		if (misc.uuid_is_null(service_login_id)) {
+			if (login_failed)
+				return MP_POLL_LOGIN_FAILED;
 			send_req_login_id();
 			return MP_POLL_LOGIN_PENDING;
 		} else {
