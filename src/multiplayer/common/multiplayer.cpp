@@ -729,7 +729,7 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 		// already connected
 		MSG("Player (%d) already connected\n", playerId);
 		peer->data = player;
-		poll_players();
+		update_player_pool();
 
 	} else if (contact) {
 		// initiate contact
@@ -784,7 +784,7 @@ int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 	player->authorized = 1;
 
 	MSG("Player '%s' (%d) was authorized.\n", player->name, playerId);
-	poll_players();
+	update_player_pool();
 
 	return 1;
 }
@@ -828,7 +828,7 @@ void MultiPlayer::delete_player(uint32_t playerId)
 		player = (PlayerDesc *)peer->data;
 		peer->data = NULL;
 		MSG("Requesting disconnect from player '%s' (%d).\n", player->name, playerId);
-		poll_players();
+		update_player_pool();
 	} else {
 		player = yank_pending_player(playerId);
 		if (!player)
@@ -848,7 +848,94 @@ static int sort_players(const void *a, const void *b)
 	return 0;
 }
 
-void MultiPlayer::poll_players()
+int MultiPlayer::poll_players()
+{
+	static unsigned long last_broadcast_time;
+	static int poll_time;
+	unsigned long current_time;
+
+	// periodically broadcast status
+	current_time = misc.get_time();
+	if ((joined_session.flags & SESSION_PREGAME) &&
+		(current_time > last_broadcast_time + poll_time || current_time < last_broadcast_time)) {
+		ENetAddress a;
+		last_broadcast_time = current_time;
+
+		// broadcast status to lan
+		a.host = ENET_HOST_BROADCAST;
+		a.port = UDP_MONITOR_PORT;
+		send_user_session_status(&a);
+
+		poll_time = 5000;
+		if (service_provider.host != ENET_HOST_ANY) {
+			// communicate with service provider
+			ENetBuffer b;
+
+			if (joined_session.flags & SESSION_HOSTING) {
+				if (misc.uuid_is_null(joined_session.id)) {
+					send_req_session_id();
+					poll_time = 300;
+				}
+			} else if (joined_session.address.host == ENET_HOST_ANY) {
+				send_req_session_addr();
+				poll_time = 300;
+			}
+
+			b.data = recv_buf;
+			b.dataLength = MP_RECV_BUFFER_SIZE;
+
+			while (enet_socket_receive(session_monitor, &a, &b, 1)>0) {
+				uint32_t id = *(uint32_t *)recv_buf;
+				switch (id) {
+				case MPMSG_LOGIN_ID: {
+					MpMsgLoginId *m = (MpMsgLoginId*)recv_buf;
+
+					if (a.host == service_provider.host)
+						misc.uuid_copy(service_login_id, m->login_id);
+
+					break;
+					}
+				case MPMSG_SESSION_ID: {
+					MpMsgSessionId *m = (MpMsgSessionId*)recv_buf;
+
+					if (a.host != service_provider.host)
+						break;
+
+					misc.uuid_copy(joined_session.id, m->session_id);
+					break;
+					}
+				case MPMSG_SESSION_ADDR: {
+					MpMsgSessionAddr *m = (MpMsgSessionAddr*)recv_buf;
+
+					if (joined_session.address.host != ENET_HOST_ANY)
+						break;
+					if (a.host != service_provider.host)
+						break;
+					if (misc.uuid_compare(joined_session.id, m->session_id))
+						break;
+
+					joined_session.address.host = m->host;
+					joined_session.address.port = m->port;
+					connect_host();
+
+					break;
+					}
+				}
+			}
+
+			if (misc.uuid_is_null(service_login_id)) {
+				send_req_login_id();
+				poll_time = 300;
+			} else {
+				send_user_session_status(&service_provider);
+			}
+		}
+	}
+
+	return MP_POLL_NO_UPDATE;
+}
+
+void MultiPlayer::update_player_pool()
 {
 	ENetPeer *peer;
 	unsigned int i;
@@ -1134,89 +1221,9 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	ENetEvent event;
 	PlayerDesc *player;
 	char *got_recv;
-	static unsigned long last_broadcast_time;
-	static int poll_time;
-	unsigned long current_time;
-
 	err_when(!host);
 
-	// periodically broadcast status
-	current_time = misc.get_time();
-	if ((joined_session.flags & SESSION_PREGAME) &&
-		(current_time > last_broadcast_time + poll_time || current_time < last_broadcast_time)) {
-		ENetAddress a;
-		last_broadcast_time = current_time;
-
-		// broadcast status to lan
-		a.host = ENET_HOST_BROADCAST;
-		a.port = UDP_MONITOR_PORT;
-		send_user_session_status(&a);
-
-		poll_time = 5000;
-		if (service_provider.host != ENET_HOST_ANY) {
-			// communicate with service provider
-			ENetBuffer b;
-
-			if (joined_session.flags & SESSION_HOSTING) {
-				if (misc.uuid_is_null(joined_session.id)) {
-					send_req_session_id();
-					poll_time = 300;
-				}
-			} else if (joined_session.address.host == ENET_HOST_ANY) {
-				send_req_session_addr();
-				poll_time = 300;
-			}
-
-			b.data = recv_buf;
-			b.dataLength = MP_RECV_BUFFER_SIZE;
-
-			while (enet_socket_receive(session_monitor, &a, &b, 1)>0) {
-				uint32_t id = *(uint32_t *)recv_buf;
-				switch (id) {
-				case MPMSG_LOGIN_ID: {
-					MpMsgLoginId *m = (MpMsgLoginId*)recv_buf;
-
-					if (a.host == service_provider.host)
-						misc.uuid_copy(service_login_id, m->login_id);
-
-					break;
-					}
-				case MPMSG_SESSION_ID: {
-					MpMsgSessionId *m = (MpMsgSessionId*)recv_buf;
-
-					if (a.host != service_provider.host)
-						break;
-
-					misc.uuid_copy(joined_session.id, m->session_id);
-					break;
-					}
-				case MPMSG_SESSION_ADDR: {
-					MpMsgSessionAddr *m = (MpMsgSessionAddr*)recv_buf;
-
-					if (joined_session.address.host != ENET_HOST_ANY)
-						break;
-					if (a.host != service_provider.host)
-						break;
-					if (misc.uuid_compare(joined_session.id, m->session_id))
-						break;
-
-					joined_session.address.host = m->host;
-					joined_session.address.port = m->port;
-					connect_host();
-
-					break;
-					}
-				}
-			}
-
-			if (misc.uuid_is_null(service_login_id)) {
-				send_req_login_id();
-				poll_time = 300;
-			} else {
-				send_user_session_status(&service_provider);
-			}
-		}
-	}
+	poll_players();
 
 	if (sysMsgCount)
 		*sysMsgCount = 0;
@@ -1273,7 +1280,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 			MSG("Player '%s' (%d) connected.\n", player->name, player->id);
 			*from = player->id;
 			event.peer->data = player;
-			poll_players();
+			update_player_pool();
 		}
 
 		break;
@@ -1294,7 +1301,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 				}
 			}
 			event.peer->data = NULL;
-			poll_players();
+			update_player_pool();
 		}
 
 		break;

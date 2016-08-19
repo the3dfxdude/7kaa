@@ -215,7 +215,7 @@ public:
 	void        create_my_player(char *playerName);
 	int         set_my_player_id(uint32_t playerId);
 	void        delete_player(uint32_t playerId);
-	void        poll_players();
+	int         poll_players();
 	PlayerDesc* get_player(int i);
 	PlayerDesc* search_player(uint32_t playerId);
 	int         is_player_connecting(uint32_t playerId);
@@ -240,6 +240,7 @@ private:
 	void send_req_session_id();
 	void send_req_session_addr();
 
+	void update_player_pool();
 	uint32_t get_avail_player_id();
 	int add_pending_player(PlayerDesc *player);
 	PlayerDesc* yank_pending_player(uint32_t playerId);
