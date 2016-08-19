@@ -853,9 +853,11 @@ int MultiPlayer::poll_players()
 	static unsigned long last_broadcast_time;
 	static int poll_time;
 	unsigned long current_time;
+	int ret;
 
 	// periodically broadcast status
 	current_time = misc.get_time();
+	ret = MP_POLL_NO_UPDATE;
 	if ((joined_session.flags & SESSION_PREGAME) &&
 		(current_time > last_broadcast_time + poll_time || current_time < last_broadcast_time)) {
 		ENetAddress a;
@@ -875,6 +877,7 @@ int MultiPlayer::poll_players()
 				if (misc.uuid_is_null(joined_session.id)) {
 					send_req_session_id();
 					poll_time = 300;
+					ret = MP_POLL_LOGIN_PENDING;
 				}
 			} else if (joined_session.address.host == ENET_HOST_ANY) {
 				send_req_session_addr();
@@ -889,6 +892,11 @@ int MultiPlayer::poll_players()
 				switch (id) {
 				case MPMSG_LOGIN_ID: {
 					MpMsgLoginId *m = (MpMsgLoginId*)recv_buf;
+
+					if (misc.uuid_is_null(m->login_id)) {
+						ret = MP_POLL_LOGIN_FAILED;
+						break;
+					}
 
 					if (a.host == service_provider.host)
 						misc.uuid_copy(service_login_id, m->login_id);
@@ -932,7 +940,7 @@ int MultiPlayer::poll_players()
 		}
 	}
 
-	return MP_POLL_NO_UPDATE;
+	return ret;
 }
 
 void MultiPlayer::update_player_pool()

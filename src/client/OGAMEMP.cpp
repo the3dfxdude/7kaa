@@ -1698,7 +1698,7 @@ int Game::mp_select_session()
 					statusMsg = _("Trying to connect to the service provider");
 					break;
 				case MP_POLL_LOGIN_FAILED:
-					box.msg(_("Unable to connect to the service provider. Check your name that it matches your forum account and login with your web browser."));
+					box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
 					goto exit_poll;
 				}
 				if( statusMsg )
@@ -1817,6 +1817,7 @@ int Game::mp_join_session(int session_id)
 	unsigned long wait_time;
 	int sysMsg;
 	bool joinSessionInitiated = false;
+	int pollStatus = MP_POLL_NO_UPDATE;
 
 	session = mp_obj.get_session(session_id);
 	err_when(session == NULL);
@@ -1859,6 +1860,10 @@ int Game::mp_join_session(int session_id)
 		uint32_t from;
 		uint32_t size;
 
+		pollStatus = mp_obj.poll_players();
+		if (pollStatus == MP_POLL_LOGIN_FAILED)
+			break;
+
 		mp_obj.receive(&from, &size, &sysMsg);
 		if (sysMsg)
 		{
@@ -1893,6 +1898,12 @@ END:
 		vga_front.lock_buf();
 
 	box.close();
+
+	if (pollStatus == MP_POLL_LOGIN_FAILED)
+	{
+		box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+		return 0;
+	}
 
 	if (joinSessionInitiated && (sysMsg < 0 || wait_time <= misc.get_time()))
 	{
@@ -2100,6 +2111,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	uint32_t recvLen;
 	int sysMsgCount;
 	char *recvPtr;
+	int pollStatus = MP_POLL_NO_UPDATE;
 
 	char raceAssigned[MAX_RACE];		// master copy belongs to host's
 	char colorAssigned[MAX_COLOR_SCHEME];		// master copy belongs to host's
@@ -2749,6 +2761,12 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			music.stop();
 
 		// --------- detect remote message -------//
+		pollStatus = mp_obj.poll_players();
+		if (pollStatus == MP_POLL_LOGIN_FAILED)
+		{
+			box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+			break;
+		}
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
 
 		if( sysMsgCount < 0 && from )
@@ -3985,6 +4003,7 @@ int Game::mp_select_load_option(char *fileName)
 	uint32_t recvLen;
 	int sysMsgCount;
 	char *recvPtr;
+	int pollStatus = MP_POLL_NO_UPDATE;
 
 	char raceAssigned[MAX_RACE];		// master copy belongs to host's
 	char colorAssigned[MAX_COLOR_SCHEME];		// master copy belongs to host's
@@ -4641,6 +4660,12 @@ int Game::mp_select_load_option(char *fileName)
 			music.stop();
 
 		// --------- detect remote message -------//
+		pollStatus = mp_obj.poll_players();
+		if (pollStatus == MP_POLL_LOGIN_FAILED)
+		{
+			box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+			break;
+		}
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
 
 		if( sysMsgCount < 0 && from )
@@ -5387,6 +5412,11 @@ int Game::mp_select_load_option(char *fileName)
 
 		mp_obj.game_starting();
 		retFlag = 1;
+	}
+
+	if( pollStatus == MP_POLL_LOGIN_FAILED )
+	{
+		box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
 	}
 
 	return retFlag;
