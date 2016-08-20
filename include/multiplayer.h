@@ -68,6 +68,7 @@ enum
 	MP_POLL_LOGIN_PENDING,
 	MP_POLL_LOGIN_FAILED,
 	MP_POLL_NO_SOCKET,
+	MP_POLL_NO_SESSION,
 };
 
 struct MpMsgUserSessionStatus {

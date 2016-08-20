@@ -1861,7 +1861,7 @@ int Game::mp_join_session(int session_id)
 		uint32_t size;
 
 		pollStatus = mp_obj.poll_players();
-		if (pollStatus == MP_POLL_LOGIN_FAILED)
+		if (pollStatus == MP_POLL_LOGIN_FAILED || pollStatus == MP_POLL_NO_SESSION)
 			break;
 
 		mp_obj.receive(&from, &size, &sysMsg);
@@ -1902,6 +1902,11 @@ END:
 	if (pollStatus == MP_POLL_LOGIN_FAILED)
 	{
 		box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+		return 0;
+	}
+	else if (pollStatus == MP_POLL_NO_SESSION)
+	{
+		box.msg(_("The session you selected no longer exists."));
 		return 0;
 	}
 

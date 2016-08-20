@@ -858,8 +858,7 @@ int MultiPlayer::poll_players()
 	// periodically broadcast status
 	current_time = misc.get_time();
 	ret = MP_POLL_NO_UPDATE;
-	if ((joined_session.flags & SESSION_PREGAME) &&
-		(current_time > last_broadcast_time + poll_time || current_time < last_broadcast_time)) {
+	if (current_time > last_broadcast_time + poll_time || current_time < last_broadcast_time) {
 		ENetAddress a;
 		last_broadcast_time = current_time;
 
@@ -917,6 +916,10 @@ int MultiPlayer::poll_players()
 
 					if (joined_session.address.host != ENET_HOST_ANY)
 						break;
+					if (misc.uuid_is_null(m->session_id)) {
+						ret = MP_POLL_NO_SESSION;
+						break;
+					}
 					if (a.host != service_provider.host)
 						break;
 					if (misc.uuid_compare(joined_session.id, m->session_id))
@@ -1230,8 +1233,6 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	PlayerDesc *player;
 	char *got_recv;
 	err_when(!host);
-
-	poll_players();
 
 	if (sysMsgCount)
 		*sysMsgCount = 0;
