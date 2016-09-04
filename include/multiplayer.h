@@ -59,6 +59,7 @@ enum
 	MPMSG_SESSION,
 	MPMSG_REQ_SESSION_ADDR,
 	MPMSG_SESSION_ADDR,
+	MPMSG_PING,
 };
 
 enum
@@ -119,6 +120,9 @@ struct MpMsgSessionAddr {
 	uint32_t host;
 	uint16_t port;
 	uint16_t reserved0;
+};
+struct MpMsgPing {
+	uint32_t msg_id;
 };
 
 #define SESSION_HOSTING         1
