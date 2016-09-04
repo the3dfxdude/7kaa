@@ -99,6 +99,8 @@ Section "7kaa (required)" 7kaareq
   Rename "$INSTDIR\README" "$INSTDIR\README.txt"
   File ".\COPYING"
   Rename "$INSTDIR\COPYING" "$INSTDIR\COPYING.txt"
+  File ".\COPYING.uuid"
+  Rename "$INSTDIR\COPYING.uuid" "$INSTDIR\COPYING-uuid.txt"
   File ".\doc\7kaa-hotkeys-2.14.5.png"
   File /r ".\data\encyc"
   File /r ".\data\encyc2"

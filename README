@@ -13,17 +13,15 @@ of the game.
 
 Summary of changes in this release
 ---------
- * Switched to using SDL2.
- * Gained support for full-screen stretching.
- * Gained support for MacOS.
- * Switched to using enet, replacing SDL_net.
- * Audio code improvements.
- * The multiplayer connection code has stablized.
- * New game hotkeys.
- * Migrate population across extended town networks.
- * Added ability to migrate 10 people at a time across between towns.
- * Gettext translation support.
- * Several bug fixes.
+ * Added support for 7kfans.com match-making.
+ * Added LAN game browsing support.
+ * Added Mobilize Worker button on firms. (sraboy/Microvirus)
+ * Improvements to mouse acceleration.
+ * Fixes to mouse movement in fullscreen mode.
+ * Fixed a bug with 64-bit multiplayer matches.
+ * Begun translation work. (toaster)
+ * Fix character encoding with accented characters. (MicroVirus)
+ * Bugfixes...
 
 Thanks to all who made this release possible.
 
@@ -65,7 +63,7 @@ Required dependencies
 Optional dependencies
 * Autoconf 2.65 (when using git snapshot)
 * gettext 0.18 or later
-* Game music bundle
+* Game music bundle (copy music into data folder or PACKAGE_DATA_PATH)
 * NSIS for building a Windows installer
 
 
