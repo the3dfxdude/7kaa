@@ -226,8 +226,6 @@ void Sys::deinit()
    if( !init_flag )
       return;
 
-   music.deinit();
-   audio.deinit();
    game.deinit();    // actually game.deinit() will be called by main_win_proc() and calling it here will have no effect
 
    deinit_objects();
@@ -241,6 +239,8 @@ void Sys::deinit()
       vga_front.unlock_buf();
 
    //-------------------------------------//
+
+   deinit_directx();
 
    init_flag = 0;
 }
