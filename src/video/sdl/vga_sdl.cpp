@@ -58,7 +58,8 @@ VgaSDL::VgaSDL()
 
 VgaSDL::~VgaSDL()
 {
-   deinit();
+   if (window != NULL)
+      deinit();
 }
 //-------- End of function VgaSDL::~VgaSDL ----------//
 

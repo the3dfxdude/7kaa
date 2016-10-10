@@ -240,6 +240,8 @@ void Sys::deinit()
 
    //-------------------------------------//
 
+   deinit_directx();
+
    init_flag = 0;
 }
 //--------- End of function Sys::deinit ---------//

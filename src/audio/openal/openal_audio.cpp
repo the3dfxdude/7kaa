@@ -168,7 +168,8 @@ OpenALAudio::OpenALAudio()
 
 OpenALAudio::~OpenALAudio()
 {
-	this->deinit();
+	if (this->init_flag != 0)
+		this->deinit();
 }
 
 // Initialize the mid driver

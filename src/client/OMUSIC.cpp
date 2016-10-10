@@ -81,7 +81,8 @@ Music::Music()
 // -------- begin of function Music::~Music ---------//
 Music::~Music()
 {
-	deinit();
+	if (init_flag != 0)
+		deinit();
 }
 // -------- end of function Music::~Music ---------//
 
