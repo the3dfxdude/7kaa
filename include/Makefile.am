@@ -171,7 +171,6 @@ noinst_HEADERS = \
 	input_stream.h \
 	mem_input_stream.h \
 	misc_uuid.h \
-	mouse_none.h \
 	mouse_sdl.h \
 	multiplayer.h \
 	openal_audio.h \
@@ -179,11 +178,9 @@ noinst_HEADERS = \
 	player_desc.h \
 	surface.h \
 	surface_base.h \
-	surface_none.h \
 	surface_sdl.h \
 	version.h \
 	vga_base.h \
-	vga_none.h \
 	vga_sdl.h \
 	vga_util.h \
 	wav_stream.h \
