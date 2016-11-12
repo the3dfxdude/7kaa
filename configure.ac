@@ -287,11 +287,10 @@ AC_CONFIG_FILES([
   src/Makefile
   src/audio/Makefile
   src/audio/openal/Makefile
+  src/enet/Makefile
   src/imgfun/Makefile
   src/imgfun/generic/Makefile
   src/imgfun/x86/Makefile
-  src/multiplayer/Makefile
-  src/multiplayer/common/Makefile
   po/Makefile.in
 ])
 

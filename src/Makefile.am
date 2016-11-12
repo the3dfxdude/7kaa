@@ -1,4 +1,4 @@
-SUBDIRS = audio imgfun multiplayer
+SUBDIRS = audio enet imgfun
 
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
@@ -293,7 +293,7 @@ if AUDIO_OPENAL
 endif
 
 
-7kaa_LDADD += ./multiplayer/common/libmultiplayer.a
+7kaa_LDADD += ./enet/libmultiplayer.a
 
 
 if USE_ASM
