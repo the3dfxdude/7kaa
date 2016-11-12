@@ -1,4 +1,4 @@
-SUBDIRS = audio enet imgfun
+SUBDIRS = enet imgfun openal
 
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
@@ -289,7 +289,7 @@ CXXFLAGS += $(SDL_CFLAGS)
 
 
 if AUDIO_OPENAL
-7kaa_LDADD += ./audio/openal/libaudio_openal.a
+7kaa_LDADD += ./openal/libaudio_openal.a
 endif
 
 

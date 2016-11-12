@@ -285,12 +285,11 @@ AC_CONFIG_FILES([
   data/Makefile
   include/Makefile
   src/Makefile
-  src/audio/Makefile
-  src/audio/openal/Makefile
   src/enet/Makefile
   src/imgfun/Makefile
   src/imgfun/generic/Makefile
   src/imgfun/x86/Makefile
+  src/openal/Makefile
   po/Makefile.in
 ])
 
