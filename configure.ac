@@ -4,7 +4,7 @@
 AC_PREREQ([2.65])
 AC_INIT([7kaa], [2.14.7], [skfans-devel@lists.sourceforge.net], [],
 	[http://7kfans.com/])
-AC_CONFIG_SRCDIR([src/client/AM.cpp])
+AC_CONFIG_SRCDIR([src/AM.cpp])
 AC_CONFIG_HEADERS([include/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -81,8 +81,8 @@ AM_GNU_GETTEXT_VERSION([0.18])
 # Configuration variables
 
 audio_backend=openal # openal
-input_backend=sdl    # sdl none
-video_backend=sdl    # sdl none
+input_backend=sdl    # sdl
+video_backend=sdl    # sdl
 use_windows=no
 use_mingw=no
 jwasm_fmt="-elf -zt0"
@@ -132,9 +132,7 @@ AS_CASE(["$host"],
 ])
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
-AM_CONDITIONAL([INPUT_NONE],   [test "$input_backend" = none])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
-AM_CONDITIONAL([VIDEO_NONE],   [test "$video_backend" = none])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
@@ -240,10 +238,6 @@ AS_IF([test "$use_windows" != yes], [
 AS_CASE(["$video_backend"],
   [sdl], [
     # Define later
-  ],
-  [none], [
-    AC_DEFINE([USE_NOVIDEO], [1],
-	      [Define to 1 if building without a graphical display])
   ], [
     AC_ERROR([Unknown video backend: $video_backend])
 ])
@@ -258,11 +252,6 @@ AS_CASE(["$audio_backend"],
 ])
 
 AS_CASE(["$input_backend"],
-  [none], [
-    AC_DEFINE([USE_NOINPUT], [1], [
-      Define to 1 if building without input support
-    ])
-  ],
   [sdl], [
     # Define later
   ], [
@@ -298,21 +287,11 @@ AC_CONFIG_FILES([
   src/Makefile
   src/audio/Makefile
   src/audio/openal/Makefile
-  src/client/Makefile
-  src/common/Makefile
-  src/file/Makefile
   src/imgfun/Makefile
   src/imgfun/generic/Makefile
   src/imgfun/x86/Makefile
-  src/input/Makefile
-  src/input/none/Makefile
-  src/input/sdl/Makefile
   src/multiplayer/Makefile
   src/multiplayer/common/Makefile
-  src/video/Makefile
-  src/video/common/Makefile
-  src/video/none/Makefile
-  src/video/sdl/Makefile
   po/Makefile.in
 ])
 

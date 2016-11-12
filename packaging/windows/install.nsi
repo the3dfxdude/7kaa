@@ -111,7 +111,7 @@ Section "7kaa (required)" 7kaareq
   File /r ".\data\sound"
   File /r ".\data\sprite"
   File /r ".\data\tutorial"
-  File .\src\client\7kaa.exe
+  File .\src\7kaa.exe
   
   ;Reset Install path
   ;SetOutPath "$INSTDIR"

@@ -27,8 +27,6 @@
 
 #if defined(USE_SDL)
 #include <vga_sdl.h>
-#elif defined(USE_NOVIDEO)
-#include <vga_none.h>
 #else
 #error "A video backend must be specified."
 #endif

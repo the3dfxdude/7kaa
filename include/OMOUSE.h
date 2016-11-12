@@ -32,8 +32,6 @@
 
 #if defined(USE_SDL)
 #include <mouse_sdl.h>
-#elif defined(USE_NOINPUT)
-#include <mouse_none.h>
 #else
 #error "A input backend must be specified."
 #endif

@@ -88,5 +88,5 @@ find "$RDIR" -type f \
     chmod 644 "$FILE" || exit 1
   done
 
-install -v "$SRC/client/7kaa" "$EXEC" || exit 1
+install -v "$SRC/7kaa" "$EXEC" || exit 1
 install_dyn_libs "$EXEC" || exit 1
