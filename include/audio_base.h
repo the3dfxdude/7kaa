@@ -87,9 +87,9 @@ public:
    virtual int	is_wav_playing() = 0;
    virtual int	is_cd_playing() = 0;
 
-   virtual void	toggle_mid(int) = 0;
-   virtual void	toggle_wav(int) = 0;
-   virtual void	toggle_cd(int) = 0;
+   virtual void	toggle_mid(bool) = 0;
+   virtual void	toggle_wav(bool) = 0;
+   virtual void	toggle_cd(bool) = 0;
 
    virtual void	set_mid_volume(int) = 0;
    virtual void	set_wav_volume(int) = 0;    // 0 to 100

@@ -129,9 +129,9 @@ public:
 	int is_wav_playing();
 	int is_cd_playing();
 
-	void toggle_mid(int);
-	void toggle_wav(int);
-	void toggle_cd(int);
+	void toggle_mid(bool);
+	void toggle_wav(bool);
+	void toggle_cd(bool);
 
 	void set_mid_volume(int);
 	void set_wav_volume(int);    // 0 to 100

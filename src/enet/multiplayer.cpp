@@ -949,7 +949,7 @@ int MultiPlayer::poll_players()
 void MultiPlayer::update_player_pool()
 {
 	ENetPeer *peer;
-	unsigned int i;
+	int i;
 
 	player_pool[0] = my_player;
 	i = 1;
