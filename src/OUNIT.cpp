@@ -1098,6 +1098,8 @@ void Unit::update_loyalty()
 	if( unit_mode == UNIT_MODE_CONSTRUCT )		// constructor worker will not change their loyalty when they are in a building
 		return;
 
+// The following never really worked that well, since it created a dead give away due to the constant loyalty.
+#ifdef EASY_SPY_DETECTION
 	//----- if this unit is a spy, set its fake loyalty ------//
 
    if( spy_recno )      // a spy's loyalty is always >= 70
@@ -1108,6 +1110,7 @@ void Unit::update_loyalty()
       target_loyalty = loyalty;
       return;
    }
+#endif
 
 	//-------- if this is a general ---------//
 
