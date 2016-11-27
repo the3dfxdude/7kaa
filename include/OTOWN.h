@@ -235,7 +235,7 @@ public:
 
 	int	can_recruit(int raceId);
 	int	can_train(int raceId);
-	int   can_migrate(int destTownRecno, int migrateNow=0, int raceId=0);		 // if not called by Town::migrate, don't set migrateNow to TRUE
+	bool   can_migrate(int destTownRecno, bool migrateNow=false, int raceId=0);		 // if not called by Town::migrate, don't set migrateNow to TRUE
 	void	move_pop(Town* destTown, int raceId, int hasJob);
 	int 	pick_random_race(int pickNonRecruitableAlso, int pickSpyFlag);
 	int 	camp_influence(int unitRecno);
@@ -382,7 +382,6 @@ private:
 	void  think_migrate();
 	int 	think_migrate_one(Town* targetTown, int raceId, int townDistance);
 	void  migrate(int raceId, int destTownZoneRecno, int newLoyalty);
-	// int 	can_migrate(int destTownRecno, int migrateNow=0, int raceId=0);
 	int	unjob_town_people(int raceId, int unjobOverseer, int killOverseer=0);
 
 	// void 	kill_town_people(int raceId);
