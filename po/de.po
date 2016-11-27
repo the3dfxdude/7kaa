@@ -7046,8 +7046,8 @@ msgid "Scroll of Power"
 msgstr "Scroll of Power"
 
 #: src/client/OSITEDRW.cpp:67
-msgid "Nationalty"
-msgstr "Nationalty"
+msgid "Nationality"
+msgstr "Nationality"
 
 #: src/client/OSITEDRW.cpp:68
 msgid "Invoke"
