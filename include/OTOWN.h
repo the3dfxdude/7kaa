@@ -250,7 +250,6 @@ public:
 
 	void  init_pop(int raceId, int addPop, int loyalty, int hasJob=0, int firstInit=0);
 	void  inc_pop(int raceId, int unitHasJob, int unitLoyalty);
-	void  inc_pop_overcrowded(int raceId, int unitHasJob, int unitLoyalty);
 	void  dec_pop(int raceId, int unitHasJob);
 
 	void  draw_selected();
@@ -384,7 +383,6 @@ private:
 	void  migrate(int raceId, int destTownZoneRecno, int newLoyalty);
 	int	unjob_town_people(int raceId, int unjobOverseer, int killOverseer=0);
 
-	// void 	kill_town_people(int raceId);
 	int	think_layout_id();
 
 	void  draw_flag(int,int);
@@ -398,8 +396,6 @@ private:
 	void 	disp_debug_resistance(int refreshFlag);
 
 	void  disp_train_menu(int refreshFlag);
-	void	disp_train_button(int y, int skillId, int buttonUp);
-	void	disp_queue_button(int y, int skillId, int buttonUp);
 	void  detect_train_menu();
 
 	void  disp_auto_menu(int modeCollectTax);
@@ -407,9 +403,6 @@ private:
 
 	void  disp_spy_menu(int refreshFlag);
 	void  detect_spy_menu();
-
-	void  daily_update_loyalty();
-	void  calc_loyalty();
 
 	void  think_rebel();
 	int	think_surrender();
