@@ -148,7 +148,7 @@ bool WavStream::open(InputStream *in)
    ok = ok && (size >= FormatHeader::SIZE);
    ok = ok && read_format_header(this->in, &fmth);
    ok = ok && this->in->seek(size - FormatHeader::SIZE, SEEK_CUR);
-   if (fmth.audio_format != 1
+   if (!ok || fmth.audio_format != 1
        || (fmth.bits_per_sample != 8 && fmth.bits_per_sample != 16)
        || (fmth.num_channels != 1 && fmth.num_channels != 2))
    {
