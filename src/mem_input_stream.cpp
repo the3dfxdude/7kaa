@@ -32,7 +32,7 @@ MemInputStream::~MemInputStream()
    this->close();
 }
 
-void MemInputStream::open(void *data, size_t length, bool own_data)
+void MemInputStream::open(void *data, long length, bool own_data)
 {
    this->close();
    this->data = static_cast<uint8_t *>(data);
@@ -42,9 +42,9 @@ void MemInputStream::open(void *data, size_t length, bool own_data)
 
 long MemInputStream::read(void *buffer, long length)
 {
-   size_t read_count;
+   long read_count;
 
-   if (this->data == NULL)
+   if (this->data == NULL || length < 0)
       return 0;
 
    read_count = MIN(length, this->length - this->pos);
@@ -66,7 +66,7 @@ bool MemInputStream::seek(long offset, int whence)
       default: return false;
    }
 
-   if (target < 0 || static_cast<size_t>(target) >= this->length)
+   if (target < 0 || target >= this->length)
       return false;
 
    this->pos = target;
