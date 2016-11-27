@@ -433,9 +433,9 @@ void UnitInfo::dec_nation_general_count(int nationRecno)
 		nation_general_count_array[nationRecno-1]--;
 
 		nation_array[nationRecno]->total_general_count--;
-	}
 
-	err_when( nation_general_count_array[nationRecno-1] < 0 );
+		err_when( nation_general_count_array[nationRecno-1] < 0 );
+	}
 }
 //----- End of function UnitInfo::dec_nation_general_count -----//
 

@@ -2650,6 +2650,7 @@ int Firm::resign_worker(int workerId)
 	{
 		Town* townPtr = town_array[workerPtr->town_recno];
 
+		err_when(workerPtr->race_id < 1);
 		townPtr->jobless_race_pop_array[workerPtr->race_id-1]++; // move into jobless population
 		townPtr->jobless_population++;
 

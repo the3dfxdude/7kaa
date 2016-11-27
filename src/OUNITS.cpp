@@ -93,6 +93,7 @@ void Unit::assign_to_ship(int destX, int destY, short shipRecno, int miscNo)
 	Unit *shipPtr = unit_array[shipRecno];
 	int shipXLoc = shipPtr->next_x_loc();
 	int shipYLoc = shipPtr->next_y_loc();
+	bool resultXYLocWritten = false;
 	int resultXLoc, resultYLoc;
 	int xShift, yShift;
 	if(!miscNo)
@@ -115,6 +116,7 @@ void Unit::assign_to_ship(int destX, int destY, short shipRecno, int miscNo)
 				if(locPtr->region_id!=regionId)
 					continue;
 
+				resultXYLocWritten = true;
 				resultXLoc = checkXLoc;
 				resultYLoc = checkYLoc;
 
@@ -127,10 +129,12 @@ void Unit::assign_to_ship(int destX, int destY, short shipRecno, int miscNo)
 		}
 		else
 		{
+			resultXYLocWritten = true;
 			resultXLoc = action_x_loc2;
 			resultYLoc = action_y_loc2;
 		}
 
+		err_when(!resultXYLocWritten);
 		err_when(resultXLoc<0 || resultXLoc>=MAX_WORLD_X_LOC || resultYLoc<0 || resultYLoc>=MAX_WORLD_Y_LOC);
 	}
 	else
