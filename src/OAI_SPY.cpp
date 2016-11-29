@@ -222,7 +222,8 @@ Spy* Nation::ai_find_spy(int targetXLoc, int targetYLoc, int spyRaceId, int mobi
 		{
 			Unit* unitPtr = unit_array[spyPtr->spy_place_para];
 
-			if( !unitPtr->is_ai_all_stop() )
+			// Don't 'find' units that are dying, under training by a town, or under AI orders
+			if( unitPtr->is_unit_dead() || !unitPtr->is_visible() || !unitPtr->is_ai_all_stop() )
 				continue;
 
 			spyXLoc = unitPtr->next_x_loc();
