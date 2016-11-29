@@ -534,7 +534,6 @@ void Unit::hit_building(Unit* attackUnit, int targetXLoc, int targetYLoc, float 
 //
 void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float attackDamage)
 {
-	err_when(!attackUnit);
 	Location* locPtr = world.get_loc(targetXLoc, targetYLoc);
 	if(!locPtr->is_firm())
 		return;	// do nothing if no firm there
