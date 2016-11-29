@@ -177,7 +177,7 @@ class Version_1_NationArray// : public DynArrayB
 		char		nation_color_array[MAX_NATION+1];
 		char		nation_power_color_array[MAX_NATION+2];
 
-		char		human_name_array[MAX_NATION][NationArray::HUMAN_NAME_LEN+1];
+		char		human_name_array[MAX_NATION][HUMAN_NAME_LEN+1];
 
 	public:
 		void	convert_to_version_2(NationArray *nationArrayPtr);

@@ -1190,7 +1190,7 @@ static void visit_config(Visitor *v, Config *cfg)
 	visit<int8_t>(v, &cfg->disable_ai_flag);
 	visit<int8_t>(v, &cfg->king_undie_flag);
 	visit<int8_t>(v, &cfg->race_id);
-	visit_array<int8_t>(v, cfg->player_name, Config::PLAYER_NAME_LEN+1);
+	visit_array<int8_t>(v, cfg->player_name, HUMAN_NAME_LEN+1);
 	visit<int8_t>(v, &cfg->player_nation_color);
 	visit<int8_t>(v, &cfg->expired_flag);
 	visit<int8_t>(v, &cfg->opaque_report);

@@ -199,8 +199,8 @@ void HallFame::record_data(int totalScore)
 {
 	Nation* playerNation = ~nation_array;
 
-	strncpy( player_name, playerNation->king_name(), NationArray::HUMAN_NAME_LEN );
-	player_name[NationArray::HUMAN_NAME_LEN] = '\0';
+	strncpy( player_name, playerNation->king_name(), HUMAN_NAME_LEN );
+	player_name[HUMAN_NAME_LEN] = '\0';
 
 	race_id	  = playerNation->race_id;
 

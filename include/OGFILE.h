@@ -54,7 +54,7 @@ enum { HALL_FAME_NUM = 6 };     // No. of Hall of Fame entries
 #pragma pack(1)
 struct HallFame         // Hall of Fame
 {
-   char  player_name[NationArray::HUMAN_NAME_LEN+1];
+   char  player_name[HUMAN_NAME_LEN+1];
    char  race_id;
    short start_year;
    short end_year;
@@ -77,7 +77,7 @@ public:
    uint32_t class_size;    // for version compare
    char     file_name[MAX_PATH+1];
 
-   char     player_name[NationArray::HUMAN_NAME_LEN+1];
+   char     player_name[HUMAN_NAME_LEN+1];
 
    char     race_id;
    char     nation_color;

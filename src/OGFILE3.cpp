@@ -1270,7 +1270,7 @@ static void visit_nation_array(Visitor *v, NationArray *na)
 
 	for (int n = 0; n < MAX_NATION; n++)
 		visit_array<int8_t>(v, na->human_name_array[n],
-								  NationArray::HUMAN_NAME_LEN+1);
+								  HUMAN_NAME_LEN+1);
 }
 
 enum { NATION_ARRAY_RECORD_SIZE = 288 };
@@ -1368,7 +1368,7 @@ static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
 
 	for (int n = 0; n < MAX_NATION; n++)
 		visit_array<int8_t>(v, na->human_name_array[n],
-								  NationArray::HUMAN_NAME_LEN+1);
+								  HUMAN_NAME_LEN+1);
 }
 
 enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };

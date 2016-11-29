@@ -142,7 +142,7 @@ int Game::run_scenario(ScenInfo* scenInfo)
 	{
 		// ###### begin Gilbert 1/11 #########//
 		// save the name in the config
-		char playerName[Config::PLAYER_NAME_LEN+1];
+		char playerName[HUMAN_NAME_LEN+1];
 		strcpy(playerName, config.player_name);
 		// ###### end Gilbert 1/11 #########//
 

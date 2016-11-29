@@ -365,8 +365,8 @@ int main(int argc, char **argv)
 				sys.show_error_dialog(_("Expected argument after %s."), lobbyNameCmdLine);
 				return 1;
 			}
-			strncpy(config.player_name, argv[i+1], config.PLAYER_NAME_LEN);
-			config.player_name[config.PLAYER_NAME_LEN] = 0;
+			strncpy(config.player_name, argv[i+1], HUMAN_NAME_LEN);
+			config.player_name[HUMAN_NAME_LEN] = 0;
 			i++;
 		} else if (!strcmp(argv[i], demoCmdLine)) {
 			demoSelection = 1;

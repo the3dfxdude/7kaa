@@ -1,5 +1,6 @@
 noinst_HEADERS = \
 	ALL.h \
+	storage_constants.h \
 	COLCODE.h \
 	COLOR.h \
 	CRC.h \
