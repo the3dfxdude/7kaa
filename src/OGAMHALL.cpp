@@ -21,6 +21,7 @@
 //Filename    : OGAMHALL.CPP
 //Description : Hall of Fame
 
+#include <OGAMHALL.h>
 #include <OVGA.h>
 #include <vga_util.h>
 #include <OVGALOCK.h>
@@ -34,13 +35,121 @@
 #include <OGAME.h>
 #include <ONATION.h>
 #include <OGFILE.h>
+#include <dbglog.h>
 #include "gettext.h"
 
-//------ Begin of function GameFileArray::disp_hall_of_fame -----//
+#include <string.h> // for strncpy
+
+#define HALL_OF_FAME_FILE_NAME  "HALLFAME.DAT"
+
+DBGLOG_DEFAULT_CHANNEL(HallOfFame);
+
+
+HallOfFame::HallOfFame()
+	: hall_fame_array{},
+	  last_savegame_file_name{}
+{
+}
+
+
+void HallOfFame::init()
+{
+	read_hall_of_fame();
+}
+
+
+void HallOfFame::deinit()
+{
+	write_hall_of_fame();
+}
+
+
+void HallOfFame::set_last_savegame_file_name(const char* fileName) {
+	strncpy(last_savegame_file_name, fileName, MAX_PATH);
+	last_savegame_file_name[MAX_PATH] = '\0';
+}
+
+
+//------- Begin of function HallOfFame::read_hall_of_fame ------//
+//
+int HallOfFame::read_hall_of_fame()
+{
+	char full_path[MAX_PATH+1];
+	int  rc;
+	File file;
+
+	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
+	{
+		ERR("Path to the hall of fame too long.\n");
+		return 0;
+	}
+
+	if( !misc.is_file_exist(full_path) )
+		return 0;
+
+	rc = file.file_open(full_path, 0, 1);   // 0=don't handle error itself
+											// 1=allow the writing size and the read size to be different
+	if( !rc )
+		return 0;
+	// 1=allow the writing size and the read size to be different
+	//--------- Read Hall of Fame ----------//
+
+	if( rc )
+		rc = file.file_read( hall_fame_array, sizeof(HallFameEntry) * HALL_FAME_NUM );
+
+	//------ read last saved game file name ------//
+
+	if( rc )
+		rc = file.file_read( last_savegame_file_name, MAX_PATH+1 );
+
+	file.file_close();
+
+	return rc;
+}
+//--------- End of function HallOfFame::read_hall_of_fame ------//
+
+
+//------- Begin of function HallOfFame::write_hall_of_fame ------//
+//
+int HallOfFame::write_hall_of_fame()
+{
+	char full_path[MAX_PATH+1];
+	int  rc;
+	File file;
+
+	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
+	{
+		ERR("Path to the hall of fame too long.\n");
+		return 0;
+	}
+
+	rc = file.file_create( full_path, 0, 1 );  // 0=don't handle error itself
+
+	if( !rc )
+		return 0;
+	// 1=allow the writing size and the read size to be different
+	//--------- Write Hall of Fame ----------//
+
+	if( rc )
+		rc = file.file_write( hall_fame_array, sizeof(HallFameEntry) * HALL_FAME_NUM );
+
+	//------ write last saved game file name ------//
+
+	if( rc )
+		rc = file.file_write( last_savegame_file_name, MAX_PATH+1 );
+
+	file.file_close();
+
+	return rc;
+}
+//--------- End of function HallOfFame::write_hall_of_fame ------//
+
+
+//------ Begin of function HallOfFame::disp_hall_of_fame -----//
 //
 // Display the Hall of Fame
 //
-void GameFileArray::disp_hall_of_fame()
+void HallOfFame::disp_hall_of_fame()
 {
 	vga_util.disp_image_file("HALLFAME");
 
@@ -58,17 +167,62 @@ void GameFileArray::disp_hall_of_fame()
 
 	vga_util.finish_disp_image_file();
 }
-//------- End of function GameFileArray::disp_hall_of_fame -----//
+//------- End of function HallOfFame::disp_hall_of_fame -----//
 
 
-//------ Begin of function HallFame::disp_info -------//
+//------ Begin of function HallOfFame::add_hall_of_fame -----//
+//
+// Add current game into the hall of hame
+//
+// <int> totalScore of the player.
+//
+// return : <int> 1-hall of fame updated
+//                0-not updated
+//
+int HallOfFame::add_hall_of_fame(int totalScore)
+{
+	//-------- insert the record -----------//
+
+	int i;
+
+	for( i=0 ; i<HALL_FAME_NUM ; i++ )
+	{
+		if( totalScore > hall_fame_array[i].score )
+		{
+			//---------- move and insert the data --------//
+
+			if( i < HALL_FAME_NUM-1 )      // it is not the last record
+			{
+				memmove( hall_fame_array+i+1, hall_fame_array+i,
+					sizeof(HallFameEntry) * (HALL_FAME_NUM-i-1) );
+			}
+
+			//-------- record the hall of fame rcord ------//
+
+			hall_fame_array[i].record_data(totalScore);
+
+			//--------- display the hall of fame ----------//
+
+			write_hall_of_fame();
+
+			disp_hall_of_fame();
+			return 1;
+		}
+	}
+
+	return 0;
+}
+//------- End of function HallOfFame::add_hall_of_fame -----//
+
+
+//------ Begin of function HallFameEntry::disp_info -------//
 //
 // Display a Hall of Fame record
 //
 // <int> x, y = the location of the information
 // <int> pos  = the position of the record.
 //
-void HallFame::disp_info(int x, int y, int pos)
+void HallFameEntry::disp_info(int x, int y, int pos)
 {
 	if( !start_year )    // no information
 		return;
@@ -143,59 +297,14 @@ void HallFame::disp_info(int x, int y, int pos)
 
 	fontPtr->put( x+420, y2, str );
 }
-//------- End of function HallFame::disp_info -------//
+//------- End of function HallFameEntry::disp_info -------//
 
 
-//------ Begin of function GameFileArray::add_hall_of_fame -----//
-//
-// Add current game into the hall of hame
-//
-// <int> totalScore of the player.
-//
-// return : <int> 1-hall of fame updated
-//                0-not updated
-//
-int GameFileArray::add_hall_of_fame(int totalScore)
-{
-   //-------- insert the record -----------//
-
-   int i;
-
-   for( i=0 ; i<HALL_FAME_NUM ; i++ )
-   {
-      if( totalScore > hall_fame_array[i].score )
-      {
-         //---------- move and insert the data --------//
-
-         if( i < HALL_FAME_NUM-1 )      // it is not the last record
-         {
-            memmove( hall_fame_array+i+1, hall_fame_array+i,
-                     sizeof(HallFame) * (HALL_FAME_NUM-i-1) );
-         }
-
-         //-------- record the hall of fame rcord ------//
-
-         hall_fame_array[i].record_data(totalScore);
-
-         //--------- display the hall of fame ----------//
-
-		   write_hall_of_fame();        // must write hall of fame, because it also write the last saved game slot no.
-
-         disp_hall_of_fame();
-         return 1;
-      }
-   }
-
-   return 0;
-}
-//------- End of function GameFileArray::add_hall_of_fame -----//
-
-
-//--------- Begin of function HallFame::record_data --------//
+//--------- Begin of function HallFameEntry::record_data --------//
 //
 // Record the hall of fame record_data
 //
-void HallFame::record_data(int totalScore)
+void HallFameEntry::record_data(int totalScore)
 {
 	Nation* playerNation = ~nation_array;
 
@@ -212,4 +321,4 @@ void HallFame::record_data(int totalScore)
 
 	difficulty_rating = config.difficulty_rating;
 }
-//----------- End of function HallFame::record_data ---------//
+//----------- End of function HallFameEntry::record_data ---------//

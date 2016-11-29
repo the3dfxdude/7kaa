@@ -46,28 +46,6 @@
 #define	VERSION_1_GODRES_GOD_COUNT				7
 #define	VERSION_1_TECH_COUNT						7
 
-
-//-------- Define struct HallFame ----------//
-
-enum { HALL_FAME_NUM = 6 };     // No. of Hall of Fame entries
-
-#pragma pack(1)
-struct HallFame         // Hall of Fame
-{
-   char  player_name[HUMAN_NAME_LEN+1];
-   char  race_id;
-   short start_year;
-   short end_year;
-   int   score;
-   int   population;
-   short difficulty_rating;
-
-public:
-   void  disp_info(int,int,int);
-   void  record_data(int);
-};
-#pragma pack()
-
 //-------- Define class GameFile -----------//
 
 #pragma pack(1)
@@ -123,13 +101,11 @@ class GameFileArray : public DynArray
 {
 public:
    char     demo_format;       // whether write the game in shareware format or not (only selectable in design mode)
-   char     has_read_hall_of_fame;
-   char     last_file_name[MAX_PATH+1];
+   bool     has_fetched_last_file_name_from_hall_of_fame;
+   char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
 
 	short		load_file_game_version;	// game version of load file
 	char		same_version;				// true if major version of the load game is same as that of the program
-
-	HallFame hall_fame_array[HALL_FAME_NUM];
 
 public:
    GameFileArray();
@@ -143,12 +119,6 @@ public:
    int  load_game()    { return menu(2); }
 
    int save_new_game(const char* =NULL); // save a new game immediately without prompting menu
-
-   int  read_hall_of_fame();
-   int  write_hall_of_fame();    // it may be called by group_res.gen_group() in writting default name
-
-   void disp_hall_of_fame();
-   int  add_hall_of_fame(int);
 
    GameFile* operator[](int recNo);
 

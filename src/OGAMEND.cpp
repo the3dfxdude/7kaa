@@ -35,7 +35,7 @@
 #include <OIMGRES.h>
 #include <ORACERES.h>
 #include <OGAME.h>
-#include <OGFILE.h>
+#include <OGAMHALL.h>
 #include <ONATION.h>
 #include <OMOUSECR.h>
 #include <OMUSIC.h>
@@ -177,7 +177,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 
 	if( !game_has_ended )
 	{
-		if( !game_file_array.add_hall_of_fame(totalScore) )
+		if( !hall_of_fame.add_hall_of_fame(totalScore) )
 			vga_util.finish_disp_image_file();		// if add_hall_of_fame() has displayed the bitmap, it should have called vga_util.finish_disp_image_file() already
 	}
 	else

@@ -33,6 +33,7 @@
 #include <OBUTTON.h>
 #include <OBATTLE.h>
 #include <OGFILE.h>
+#include <OGAMHALL.h>
 #include <OMUSIC.h>
 #include <OGAME.h>
 #include <OVGALOCK.h>
@@ -319,7 +320,7 @@ void Game::run_main_menu_option(int optionId)
 
 	if( optionId==4 )
 	{
-		game_file_array.disp_hall_of_fame();
+		hall_of_fame.disp_hall_of_fame();
 	}
 
 	//------------- Credits -----------//

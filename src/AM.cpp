@@ -45,6 +45,7 @@
 #include <OGAME.h>
 #include <OGAMESET.h>
 #include <OGFILE.h>
+#include <OGAMHALL.h>
 #include <OGODRES.h>
 #include <OHELP.h>
 #include <OHILLRES.h>
@@ -224,6 +225,7 @@ Battle            battle;
 Power             power;
 World             world;
 GameFileArray     game_file_array;
+HallOfFame        hall_of_fame;
 GameFile          game_file;
 // ###### begin Gilbert 23/10 #######//
 OptionMenu			option_menu;

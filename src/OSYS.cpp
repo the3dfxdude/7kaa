@@ -43,6 +43,7 @@
 #include <ONEWS.h>
 #include <OGAMESET.h>
 #include <OGFILE.h>
+#include <OGAMHALL.h>
 #include <OINFO.h>
 #include <OVBROWSE.h>
 #include <OIMGRES.h>
@@ -360,6 +361,8 @@ int Sys::init_objects()
    help.init("HELP.RES");
 
    tutor.init();
+   // Need to init hall_of_fame *before* game_file_array to persist the last savegame filename
+   hall_of_fame.init();
    game_file_array.init("*.SAV");
 
    //---------- init game_set -----------//
@@ -417,7 +420,9 @@ void Sys::deinit_objects()
 
    tutor.deinit();
    config.deinit();
+   // Need to deinit hall_of_fame *after* game_file_array to persist the last savegame filename
    game_file_array.deinit();
+   hall_of_fame.deinit();
 }
 //------- End of function Sys::deinit_objects -----------//
 

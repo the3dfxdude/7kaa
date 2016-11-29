@@ -45,11 +45,14 @@
 #include <OGAME.h>
 #include <OGAMESET.h>
 #include <OGFILE.h>
+#include <OGAMHALL.h>
 #include <OBUTT3D.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
 #include <dbglog.h>
 #include "gettext.h"
+
+#include <string.h> //strncpy
 
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
@@ -82,7 +85,6 @@ enum { SCROLL_X1 = 595,
 
 #define MAX_BROWSE_DISP_REC	   5		// MAX. no. of records can be displayed in the saved game browser
 
-#define HALL_OF_FAME_FILE_NAME  "HALLFAME.DAT"
 
 //------- Declare static vars & functions ----------//
 
@@ -110,10 +112,8 @@ GameFileArray::GameFileArray() : DynArray( sizeof(GameFile), 10 )
 		demo_format = 1;
 	#endif
 
+	has_fetched_last_file_name_from_hall_of_fame = false;
 	last_file_name[0] = '\0';
-	has_read_hall_of_fame = 0;
-
-	memset( hall_fame_array, 0, sizeof(HallFame)*HALL_FAME_NUM );
 }
 //-------- End of function GameFileArray constuctor ------//
 
@@ -122,12 +122,11 @@ GameFileArray::GameFileArray() : DynArray( sizeof(GameFile), 10 )
 
 void GameFileArray::init(const char *extStr)
 {
-	//------------- Read Hall of Fame ------------//
-
-	if( !has_read_hall_of_fame )		// only read once, GameFileArray::init() is called every time the load/save game menu is brought up.
+	if( !has_fetched_last_file_name_from_hall_of_fame )		// only read once, GameFileArray::init() is called every time the load/save game menu is brought up.
 	{
-		read_hall_of_fame();
-		has_read_hall_of_fame = 1;
+		strncpy(last_file_name, hall_of_fame.get_last_savegame_file_name(), MAX_PATH);
+		last_file_name[MAX_PATH] = '\0';
+		has_fetched_last_file_name_from_hall_of_fame = true;
 	}
 
 	//-- Load all headers of all saved game files in current directory --//
@@ -141,8 +140,8 @@ void GameFileArray::init(const char *extStr)
 
 void GameFileArray::deinit()
 {
-	//-- Need to save hall of fame, because it contains last loaded/saved game --//
-	write_hall_of_fame();
+	//-- Need to transfer last savegame filename to hall of fame, because it contains last loaded/saved game --//
+	hall_of_fame.set_last_savegame_file_name(last_file_name);
 }
 //-------- End of function GameFileArray::deinit ------//
 
@@ -821,81 +820,6 @@ void GameFileArray::del_game()
 	go(recNo-1);    // skip back one record
 }
 //--------- End of function GameFileArray::del_game ------//
-
-
-//------- Begin of function GameFileArray::write_hall_of_fame ------//
-//
-int GameFileArray::write_hall_of_fame()
-{
-	char full_path[MAX_PATH+1];
-	int  rc;
-	File file;
-
-	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
-	{
-		ERR("Path to the hall of fame too long.\n");
-		return 0;
-	}
-
-	rc = file.file_create( full_path, 0, 1 );  // 0=don't handle error itself
-
-	if( !rc )
-		return 0;
-																			// 1=allow the writing size and the read size to be different
-	//--------- Write Hall of Fame ----------//
-
-	if( rc )
-		rc = file.file_write( hall_fame_array, sizeof(HallFame) * HALL_FAME_NUM );
-
-	//------ write last saved game file name ------//
-
-	if( rc )
-		rc = file.file_write( last_file_name, MAX_PATH+1 );
-
-	file.file_close();
-	
-	return rc;
-}
-//--------- End of function GameFileArray::write_hall_of_fame ------//
-
-
-//------- Begin of function GameFileArray::read_hall_of_fame ------//
-//
-int GameFileArray::read_hall_of_fame()
-{
-	char full_path[MAX_PATH+1];
-	int  rc;
-	File file;
-
-	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
-	{
-		ERR("Path to the hall of fame too long.\n");
-		return 0;
-	}
-
-	if( !misc.is_file_exist(full_path) )
-		return 0;
-
-	rc = file.file_open(full_path, 0, 1);   // 0=don't handle error itself
-                                                        // 1=allow the writing size and the read size to be different
-	if( !rc )
-		return 0;
-																			// 1=allow the writing size and the read size to be different
-	//--------- Read Hall of Fame ----------//
-
-	if( rc )
-		rc = file.file_read( hall_fame_array, sizeof(HallFame) * HALL_FAME_NUM );
-
-	//------ read last saved game file name ------//
-
-	if( rc )
-		rc = file.file_read( last_file_name, MAX_PATH+1);
-
-	file.file_close();
-
-	return rc;
-}
-//--------- End of function GameFileArray::read_hall_of_fame ------//
 
 
 //-------- Begin of function GameFileArray::load_all_game_header --------//

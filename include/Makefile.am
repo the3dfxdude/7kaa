@@ -55,6 +55,7 @@ noinst_HEADERS = \
 	OF_WAR.h \
 	OGAME.h \
 	OGAMESET.h \
+	OGAMHALL.h \
 	OGET.h \
 	OGETA.h \
 	OGFILE.h \
