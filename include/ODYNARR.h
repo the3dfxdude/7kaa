@@ -73,12 +73,12 @@ public :
 
    void  resize(int);
 
-   void  linkin(void*);
-	void  linkin_unique(void*);
+   void  linkin(const void*);
+	void  linkin_unique(const void*);
 	void  linkout(int= -1);
-   void  update(void*, int= -1);
-   void  insert(void*);
-	void  insert_at(int,void*);
+   void  update(const void*, int= -1);
+   void  insert(const void*);
+	void  insert_at(int,const void*);
 	void  add_blank(int);
 
    void  init_sort(int,char);
@@ -93,7 +93,7 @@ public :
 
    int   check_pos();
 
-   void  push(void*);
+   void  push(const void*);
    void  pop(void* =0);
 
    void  start();
@@ -195,7 +195,7 @@ inline void DynArray::read(void* ent)
 
 // <void*> ent = the address of the entity to be linked into the array
 
-inline void DynArray::push(void* ent)
+inline void DynArray::push(const void* ent)
 {
    linkin(ent);
 }

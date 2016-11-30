@@ -67,7 +67,7 @@ public:
    int  packed_size() const  { return size() - empty_room_count; }
    int  packed_recno(int) const;	// Given the recno unpacked, it returns the recno packed.
 
-   void linkin(void*);
+   void linkin(const void*);
    void linkout(int= -1);
    void zap();
 
