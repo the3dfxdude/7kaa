@@ -2027,7 +2027,7 @@ int Town::create_rebel_unit(int raceId, int isLeader)
 	SpriteInfo*    spriteInfo = sprite_res[unit_res[unitId]->sprite_id];
 	int            xLoc=loc_x1, yLoc=loc_y1;     // xLoc & yLoc are used for returning results
 
-	if( !world.locate_space( xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
+	if( !world.locate_space( &xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
 		return 0;
 
 	//---------- add the unit now -----------//
@@ -2428,28 +2428,28 @@ int Town::migrate_to(int destTownRecno, char remoteAction, int raceId, int count
 //								 will migrate to.
 //
 // [int] migrateNow 	  - migrate now or not if the result is true
-//								 (default: 0)
+//								 (default: false)
 //
 // [int] raceId        - race to check migrate
 //                       (default: 0, to find from the selected_race_id() )
 //
-// return: <int> 1 - migration allowed
-//					  0 - migration not allowed
+// return: <int> true - migration allowed
+//					  false - migration not allowed
 //
-int Town::can_migrate(int destTownRecno, int migrateNow, int raceId)
+bool Town::can_migrate(int destTownRecno, bool migrateNow, int raceId)
 {
 	if(!raceId)
 	{
 		raceId = browse_selected_race_id();
 
 		if( !raceId )
-			return 0;
+			return false;
 	}
 
 	Town* destTown = town_array[destTownRecno];
 
 	if( destTown->population>=MAX_TOWN_POPULATION )
-		return 0;
+		return false;
 
 	//---- if there are still jobless units ----//
 
@@ -2458,7 +2458,7 @@ int Town::can_migrate(int destTownRecno, int migrateNow, int raceId)
 		if( migrateNow )
 			move_pop(destTown, raceId, 0);		// 0-doesn't have job 
 
-		return 1;
+		return true;
 	}
 
 	//--- if there is no jobless units left -----//
@@ -2509,13 +2509,13 @@ int Town::can_migrate(int destTownRecno, int migrateNow, int raceId)
 						move_pop(destTown, raceId, 1);		// 1-has job
 					}
 
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
 
-	return 0;
+	return false;
 }
 //-------- End of function Town::can_migrate -----------//
 
@@ -2594,7 +2594,7 @@ int Town::mobilize_town_people(int raceId, int decPop, int mobileSpyFlag)
    SpriteInfo*    spriteInfo = sprite_res[unit_res[unitId]->sprite_id];
    int            xLoc=loc_x1, yLoc=loc_y1;     // xLoc & yLoc are used for returning results
 
-   if( !world.locate_space( xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
+   if( !world.locate_space( &xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
       return 0;
 
 	//---------- add the unit now -----------//

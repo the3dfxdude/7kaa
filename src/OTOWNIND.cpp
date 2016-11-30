@@ -189,7 +189,7 @@ int Town::form_new_nation()
 	int xLoc=loc_x1, yLoc=loc_y1;     // xLoc & yLoc are used for returning results
 	SpriteInfo* spriteInfo = sprite_res[unit_res[unitId]->sprite_id];
 
-	if( !world.locate_space( xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
+	if( !world.locate_space( &xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height ) )
 		return 0;
 
 	//--------- create a new nation ---------//

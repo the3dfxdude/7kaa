@@ -2515,6 +2515,8 @@ void Unit::cycle_wait_shift_recno(Unit* curUnit, Unit* nextUnit)
 	else
 		blockedUnitPtr = this;
 
+	err_when(!blockedUnitPtr);
+
 	if(blockedUnitPtr != this)
 	{
 		cycle_wait_shift_recno(nextUnit, blockedUnitPtr);

@@ -131,7 +131,7 @@ char* Database::read( long recNo )
    if( recNo <= 0 )
       recNo = cur_recno;
 
-   if( recNo < 1 || recNo > dbf_header.last_rec )
+   if( recNo < 1 || static_cast<uint32_t>(recNo) > dbf_header.last_rec )
       return NULL;
 
    if( dbf_buf )        // the whole database has been read into memory

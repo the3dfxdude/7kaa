@@ -976,7 +976,7 @@ int FirmCamp::ai_capture_enemy_town(Town* targetTown, int defenseCombatLevel)
 
 	//---- use all camps to attack the enemy if the enemy is a human player
 
-	else if( config.ai_aggressiveness >= OPTION_MEDIUM &&
+	else if( config.ai_aggressiveness >= OPTION_MODERATE &&
 				!targetNation->is_ai() && ourMilitary > enemyMilitary )
 	{
 		if( config.ai_aggressiveness >= OPTION_HIGH ||

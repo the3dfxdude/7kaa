@@ -775,8 +775,8 @@ inline int World::check_unit_space(int xLoc1, int yLoc1, int xLoc2, int yLoc2, i
 // Locate an area in the world map around the firm to place
 // the unit
 //
-// <int&> xLoc1          = the upper left x location of the building, also for returning the result location
-// <int&> yLoc1          = the upper left y location of the building
+// <int*> xLoc1          = the upper left x location of the building, also for returning the result location
+// <int*> yLoc1          = the upper left y location of the building
 // <int>  xLoc2          = the lower right x location of the building
 // <int>  yLoc2          = the lower right y location of the building
 // <int>  spaceLocWidth  = the location width of the required space
@@ -785,15 +785,17 @@ inline int World::check_unit_space(int xLoc1, int yLoc1, int xLoc2, int yLoc2, i
 // [int]  regionId		 = specify the region no. of the location to locate
 //									(default: region no. of xLoc1, yLoc1)
 // [int]  buildFlag 		 = whether the located area is for building a firm/town
-//									if so, the location must no have any raw site.
+//									if so, the location must not have any raw site.
 //									(default: 0)
 //
 // return : <int> 1 - free space found
 //                0 - free space not found
 //
-int World::locate_space(int& xLoc1, int& yLoc1, int xLoc2, int yLoc2,
+int World::locate_space(int* pxLoc1, int* pyLoc1, int xLoc2, int yLoc2,
 								int spaceLocWidth, int spaceLocHeight, int mobileType, int regionId, int buildFlag)
 {
+	int &xLoc1 = *pxLoc1, &yLoc1 = *pyLoc1;
+
 	if( !regionId )
 		regionId = get_loc(xLoc1, yLoc1)->region_id;
 

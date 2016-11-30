@@ -32,7 +32,7 @@
 #include <ODYNARR.h>
 #endif
 
-#ifndef __ONATION_Hd
+#ifndef __ONATION_H
 #include <ONATION.h>
 #endif
 

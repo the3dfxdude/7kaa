@@ -60,6 +60,8 @@ public:
 	void 	disp_build_menu(int refreshFlag);
 	void 	detect_build_menu();
 
+	void    change_nation(int newNationRecno);
+
 	void	next_day();
 	void	process_ai();
 

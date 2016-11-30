@@ -853,7 +853,6 @@ void Town::disp_train_menu(int refreshFlag)
 
 		for(int i=1; i<=MAX_TRAINABLE_SKILL; i++)
 		{
-			//disp_train_button(y, i, 1);
 			button_queue_skill[i-1].create(INFO_X1+COUNT_BUTTON_OFFSET_X,
 			y+COUNT_BUTTON_OFFSET_Y,
 			INFO_X1+COUNT_BUTTON_OFFSET_X+COUNT_BUTTON_WIDTH-1,
@@ -928,42 +927,6 @@ static void i_disp_skill_button(ButtonCustom *button, int repaintBody)
 	queueButton->paint(-1, repaintBody);
 }
 //--------- End of static function i_disp_skill_button ---------//
-
-
-/*
-//--------- Begin of function Town::disp_queue_button ---------//
-void Town::disp_queue_button(int y, int skillId, int buttonUp)
-{
-	//----- count the no. of units queued for this ship ------//
-	int x=INFO_X1+2+COUNT_BUTTON_OFFSET_X;
-	int trainCount=0;
-
-	for(int i=0; i<train_queue_count; i++)
-	{
-		if(train_queue_skill_array[i] == skillId)
-			trainCount++;
-	}
-
-	if(train_unit_recno)
-	{
-		Unit *unitPtr = unit_array[train_unit_recno];
-		if(unitPtr->skill.skill_id==skillId)
-			trainCount++;
-	}
-
-	if(buttonUp)
-		vga_util.d3_panel_up(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
-	else
-	{
-		vga_util.d3_panel_down(x, y, x+COUNT_BUTTON_WIDTH-1, y+COUNT_BUTTON_HEIGHT-1);
-		x++;
-		y++;
-	}
-
-	font_san.center_put(x, y, x+COUNT_BUTTON_WIDTH-1 , y+COUNT_BUTTON_HEIGHT-1, misc.format(trainCount));
-}
-//----------- End of function Town::disp_queue_button -----------//
-*/
 
 //-------- Begin of static function i_disp_queue_skill_button --------//
 //
@@ -1092,7 +1055,6 @@ void Town::detect_train_menu()
 				info.disp();		// info.disp() will call put_info() which will switch mode back to the main menu mode
 			// ####### begin Gilbert 10/9 ######//
 			else
-				// disp_queue_button(y+COUNT_BUTTON_OFFSET_Y, b, 1);
 				info.update();
 			// ####### end Gilbert 10/9 ######//
 
@@ -1880,7 +1842,7 @@ void Town::finish_train(Unit* unitPtr)
 	int 			xLoc=loc_x1; // xLoc & yLoc are used for returning results
 	int 			yLoc=loc_y1;
 
-	if( !world.locate_space(xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height) )
+	if( !world.locate_space(&xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height) )
 		return;
 
 	unitPtr->init_sprite(xLoc, yLoc);

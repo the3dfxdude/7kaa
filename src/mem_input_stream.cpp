@@ -32,7 +32,7 @@ MemInputStream::~MemInputStream()
    this->close();
 }
 
-void MemInputStream::open(void *data, size_t length, bool own_data)
+void MemInputStream::open(void *data, long length, bool own_data)
 {
    this->close();
    this->data = static_cast<uint8_t *>(data);
@@ -44,7 +44,7 @@ long MemInputStream::read(void *buffer, long length)
 {
    long read_count;
 
-   if (this->data == NULL)
+   if (this->data == NULL || length < 0)
       return 0;
 
    read_count = MIN(length, this->length - this->pos);

@@ -875,12 +875,12 @@ int OpenALAudio::is_cd_playing()
 	return 0;
 }
 
-void OpenALAudio::toggle_mid(int midFlag)
+void OpenALAudio::toggle_mid(bool midFlag)
 {
 	WARN_UNIMPLEMENTED("toggle_mid");
 }
 
-void OpenALAudio::toggle_wav(int wav_flag)
+void OpenALAudio::toggle_wav(bool wav_flag)
 {
 	if (!wav_flag)
 		this->stop_wav();
@@ -888,7 +888,7 @@ void OpenALAudio::toggle_wav(int wav_flag)
 	this->wav_flag = wav_flag;
 }
 
-void OpenALAudio::toggle_cd(int cdFlag)
+void OpenALAudio::toggle_cd(bool cdFlag)
 {
 	WARN_UNIMPLEMENTED("toggle_cd");
 }

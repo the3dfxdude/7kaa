@@ -836,7 +836,7 @@ int Battle::create_unit(int townRecno, int unitId, int rankId)
 	int xLoc = townPtr->loc_x1;
 	int yLoc = townPtr->loc_y1;
 
-	if( !world.locate_space( xLoc, yLoc, xLoc+STD_TOWN_LOC_WIDTH-1, yLoc+STD_TOWN_LOC_HEIGHT-1,
+	if( !world.locate_space( &xLoc, &yLoc, xLoc+STD_TOWN_LOC_WIDTH-1, yLoc+STD_TOWN_LOC_HEIGHT-1,
 									 spriteInfo->loc_width, spriteInfo->loc_height ) )
 	{
 		return 0;

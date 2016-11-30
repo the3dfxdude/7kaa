@@ -494,7 +494,10 @@ int Firm::detect_worker_list()
 		switch( mouse.any_click(x, y, x+27, y+23, LEFT_BUTTON) ? 1 : (mouse.any_click(x, y, x+27, y+23, RIGHT_BUTTON) ? 2 : 0) )
 		{
 			case 1:         // left button to select worker
-				selected_worker_id = i+1;
+				if (selected_worker_id == i+1)
+					selected_worker_id = 0;
+				else
+					selected_worker_id = i+1;
 				return 1;
 
 			case 2:

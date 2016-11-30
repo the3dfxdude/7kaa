@@ -973,7 +973,7 @@ void FirmHarbor::sail_ship(int unitRecno, char remoteAction)
 	int 			xLoc=loc_x1; // xLoc & yLoc are used for returning results
 	int 			yLoc=loc_y1;
 
-	if(!world.locate_space(xLoc, yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height, UNIT_SEA, sea_region_id))
+	if(!world.locate_space(&xLoc, &yLoc, loc_x2, loc_y2, spriteInfo->loc_width, spriteInfo->loc_height, UNIT_SEA, sea_region_id))
 		return;
 
 	unitPtr->init_sprite(xLoc, yLoc);

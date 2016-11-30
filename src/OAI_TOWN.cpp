@@ -91,7 +91,7 @@ void Nation::optimize_town_race_region(int regionId)
 
 	Town* destTown;
 
-	for( int raceId=0 ; raceId<MAX_RACE ; raceId++ )
+	for( int raceId=1 ; raceId<=MAX_RACE ; raceId++ )
 	{
 		if( racePopArray[raceId-1] == 0 )		// we don't have any minority of this race
 			continue;

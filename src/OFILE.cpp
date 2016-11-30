@@ -127,7 +127,7 @@ int File::file_create(const char* fileName, int handleError, int fileType)
 
 	strcpy(file_name, fileName);
 	// FIXME: this fileName handling is broken
-	for (int i = 0; i < strlen(fileName); i++)
+	for (int i = 0; i < static_cast<int>(strlen(fileName)); i++)
 	{
 		file_name[i] = tolower(file_name[i]);
 		if (file_name[i] == '\\') file_name[i] = '/';

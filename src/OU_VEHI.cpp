@@ -69,7 +69,7 @@ void UnitVehicle::dismount()
 
 	int xLoc=next_x_loc(), yLoc=next_y_loc();
 
-	if( !world.locate_space( xLoc, yLoc, xLoc+sprite_info->loc_width-1,
+	if( !world.locate_space( &xLoc, &yLoc, xLoc+sprite_info->loc_width-1,
 									 yLoc+sprite_info->loc_height-1, soliderSpriteInfo->loc_width, soliderSpriteInfo->loc_height ) )
 	{
 		return;

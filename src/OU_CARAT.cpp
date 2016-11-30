@@ -452,6 +452,7 @@ void UnitCaravan::mine_load_goods(char pickUpType)
 		int		goodsId = curMine->raw_id-1;
 		short		maxLoadQty = (pickUpType!=AUTO_PICK_UP) ? (short)curMine->stock_qty :
 									 MAX(0, (int)(curMine->stock_qty-MIN_FIRM_STOCK_QTY)); // MAX Qty mine can supply
+		err_when(goodsId >= MAX_RAW);
 		short		qty = MIN(MAX_CARAVAN_CARRY_QTY-raw_qty_array[goodsId], maxLoadQty); // MAX Qty caravan can carry
 
 		raw_qty_array[goodsId]		+= qty;
@@ -541,6 +542,7 @@ void UnitCaravan::factory_load_goods(char pickUpType)
 		int		goodsId = curFactory->product_raw_id-1;
 		short		maxLoadQty = (pickUpType!=AUTO_PICK_UP) ? (short)curFactory->stock_qty :
 									 MAX(0, (int)(curFactory->stock_qty-MIN_FIRM_STOCK_QTY)); // MAX Qty factory can supply
+		err_when(goodsId < 0);
 		short		qty = MIN(MAX_CARAVAN_CARRY_QTY-product_raw_qty_array[goodsId], maxLoadQty); // MAX Qty caravan can carry
 
 		product_raw_qty_array[goodsId]	+= qty;

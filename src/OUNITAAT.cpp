@@ -1597,6 +1597,8 @@ void UnitArray::check_nearby_location(int targetXLoc, int targetYLoc, char xOffs
 	int rightXLoc, rightYLoc, rightContinue=1;
 	int rightXIncre, rightYIncre, rightIncreCount=1;
 
+	bool haveValidSituation = true;
+
 	//-------------------------------------------------------------------------------------//
 	// determine the initial situation
 	//-------------------------------------------------------------------------------------//
@@ -1691,7 +1693,12 @@ void UnitArray::check_nearby_location(int targetXLoc, int targetYLoc, char xOffs
 			rightYIncre = 0;
 			rightIncreCount = 2;
 		}
+		else {
+			haveValidSituation = false;
+		}
 	}
+
+	err_when( !haveValidSituation );
 
 	leftXLoc = rightXLoc = targetXLoc + xOffset;
 	leftYLoc = rightYLoc = targetYLoc + yOffset;

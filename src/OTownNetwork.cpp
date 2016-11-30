@@ -224,7 +224,7 @@ TownNetwork* TownNetworkArray::add_network(int nationRecno)
 
 void TownNetworkArray::remove_network(int recno)
 {
-	if (recno < 0 || recno > size())
+	if (recno < 1 || recno > size())
 	{
 		if (DEBUG_CHECK) throw "Invalid recno passed to remove_network";
 		else return;
@@ -536,15 +536,12 @@ void TownNetworkArray::town_pre_changing_nation(int townRecno)
 	if (townRecno == 0) {if (DEBUG_CHECK) throw "townRecno is 0"; else return;}
 
 	Town *pTown = town_array[townRecno];
-	if (pTown == NULL) {if (DEBUG_CHECK) throw "Town is no longer exists in TownArray"; else return;}
-
-	// Independent towns do not form town networks
-	if (pTown->nation_recno == 0)
-		return;
+	if (pTown == NULL) {if (DEBUG_CHECK) throw "Town no longer exists in TownArray"; else return;}
 
 	// Changing nation is equivalent to being destroyed (as old nation) and recreated as new nation.
 	// Pre-step is destroying
 	town_destroyed(townRecno);
+	pTown->town_network_recno = 0;
 }
 
 
@@ -561,10 +558,7 @@ void TownNetworkArray::town_post_changing_nation(int townRecno, int newNationRec
 	if (pTown == NULL) {if (DEBUG_CHECK) throw "Town is no longer exists in TownArray"; else return;}
 
 	if (DEBUG_CHECK && pTown->nation_recno != newNationRecno) throw "Town has not yet changed nations (newNationsRecno != nation_recno), but town_post_changing_nation was called already";
-
-	// Independent towns do not form town networks
-	if (newNationRecno == 0)
-		return;
+	else if (DEBUG_CHECK && pTown->town_network_recno != 0) throw "Town has changed to neutral but still has a town_network_recno";
 
 	// Changing nation is equivalent to being destroyed (as old nation) and recreated as new nation.
 	// Post-step is creating

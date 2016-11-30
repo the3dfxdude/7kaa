@@ -659,7 +659,7 @@ int Rebel::think_settle_new()
 
 	int regionId = world.get_region_id( leaderXLoc, leaderYLoc );
 
-	if( world.locate_space( leaderXLoc, leaderYLoc, xLoc2, yLoc2, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, UNIT_LAND, regionId, 1 ) )
+	if( world.locate_space( &leaderXLoc, &leaderYLoc, xLoc2, yLoc2, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT, UNIT_LAND, regionId, 1 ) )
 	{
 		action_mode  = REBEL_SETTLE_NEW;
 		action_para  = leaderXLoc;
