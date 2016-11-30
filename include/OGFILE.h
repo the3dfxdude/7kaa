@@ -36,6 +36,8 @@
 #include <ONATION.h>
 #endif
 
+#include <OSaveGameProvider.h>
+
 
 //------------ Define constant for game version == 1xx -----------------//
 #define	VERSION_1_MAX_RACE						7
@@ -46,58 +48,57 @@
 #define	VERSION_1_GODRES_GOD_COUNT				7
 #define	VERSION_1_TECH_COUNT						7
 
-//-------- Define class GameFile -----------//
 
 #pragma pack(1)
-class GameFile
+struct SaveGameHeader
 {
-public:
-   uint32_t class_size;    // for version compare
-   char     file_name[MAX_PATH+1];
-
-   char     player_name[HUMAN_NAME_LEN+1];
-
-   char     race_id;
-   char     nation_color;
-
-   int      game_date;      // the game date of the saved game
-   FILETIME file_date;              // saving game date
-   short    terrain_set;
-
-   static   File* file_ptr;
-	static   char  last_read_success_flag;
-
-public:
-   int   save_game(const char* =NULL);
-   int   load_game(const char*, char*);
-
-   void  set_file_name();
-   void  disp_info(int x, int y);
-   int   validate_header();
-
-private:
-   void  save_process();
-   void  load_process();
-   int   write_game_header(File* filePtr);
-
-   int   write_file(File*);
-   int   write_file_1(File*);
-   int   write_file_2(File*);
-   int   write_file_3(File*);
-
-   int   read_file(File*);
-   int   read_file_1(File*);
-   int   read_file_2(File*);
-   int   read_file_3(File*);
-
-   void  write_book_mark(short bookMark);
-   int   read_book_mark(short bookMark);
+	uint32_t class_size;    // for version compare
+	SaveGameInfo info;
 };
 #pragma pack()
 
+
+//-------- Define static class GameFile -----------//
+
+class GameFile
+{
+public:
+   static   File* file_ptr;
+   static   char  last_read_success_flag;
+
+public:
+   static int save_game(SaveGameInfo* /*in/out*/ saveGame, const char* =NULL);
+   static int load_game(SaveGameInfo* /*in/out*/ saveGame, const char*, char*);
+
+   static bool validate_header(const SaveGameHeader* saveGame);
+
+private:
+   static void  save_process();
+   static void  load_process();
+   static int   write_game_header(SaveGameInfo* /*in/out*/ saveGame, File* filePtr);
+
+   static int   write_file(File*);
+   static int   write_file_1(File*);
+   static int   write_file_2(File*);
+   static int   write_file_3(File*);
+
+   static int   read_file(File*);
+   static int   read_file_1(File*);
+   static int   read_file_2(File*);
+   static int   read_file_3(File*);
+
+   static void  write_book_mark(short bookMark);
+   static int   read_book_mark(short bookMark);
+
+   // Static class has no constructors
+private:
+   GameFile() = delete;
+   GameFile(const GameFile&) = delete;
+};
+
 //------- Define class GameFileArray --------//
 
-class GameFileArray : public DynArray
+class GameFileArray : private DynArray
 {
 public:
    char     demo_format;       // whether write the game in shareware format or not (only selectable in design mode)
@@ -120,17 +121,20 @@ public:
 
    int save_new_game(const char* =NULL); // save a new game immediately without prompting menu
 
-   GameFile* operator[](int recNo);
+   SaveGameInfo* operator[](int recNo);
 
 private:
+   void set_file_name(SaveGameInfo* /*in/out*/ saveGame);
+
    void disp_browse();
+   static void disp_entry_info(const SaveGameInfo* entry, int x, int y);
    void load_all_game_header(const char *extStr);
    int  process_action(int=0);
    void del_game();
 };
 
 extern GameFileArray game_file_array;
-extern GameFile      game_file;        //**BUGHERE
+extern SaveGameInfo  save_game_info;        //**BUGHERE
 
 //-----------------------------------------
 

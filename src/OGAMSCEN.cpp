@@ -146,7 +146,7 @@ int Game::run_scenario(ScenInfo* scenInfo)
 		strcpy(playerName, config.player_name);
 		// ###### end Gilbert 1/11 #########//
 
-		if( game_file.load_game("", str) > 0 )
+		if( GameFile::load_game(&save_game_info, "", str) > 0 )
 		{
 			init_scenario_var(scenInfo);
 

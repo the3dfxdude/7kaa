@@ -823,13 +823,6 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		return;
 	}
 
-	// load game
-	//if( !game_file.load_game(fileName) )
-	//{
-	//	mp_obj.deinit();
-	//	return;
-	//}
-
 	// count required player
 	int gamePlayerCount = 0;
 	for(nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)

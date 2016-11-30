@@ -865,7 +865,7 @@ void Sys::main_loop(int isLoadedGame)
 
             if( nation_array.player_recno )     // only save when the player is still in the game
             {
-               game_file.save_game( remote.save_file_name );
+               GameFile::save_game( &save_game_info, remote.save_file_name );
 
                // ####### begin Gilbert 24/10 ######//
                //static String str;
@@ -926,11 +926,11 @@ void Sys::auto_save()
          static int saveCount = 0;
          switch(saveCount)
          {
-            case 0:  game_file.save_game( "DEBUG1.SAV" );
+            case 0:  GameFile::save_game( &save_game_info, "DEBUG1.SAV" );
                      break;
-            case 1:  game_file.save_game( "DEBUG2.SAV" );
+			case 1:  GameFile::save_game( &save_game_info, "DEBUG2.SAV" );
                      break;
-            case 2:  game_file.save_game( "DEBUG3.SAV" );
+			case 2:  GameFile::save_game( &save_game_info, "DEBUG3.SAV" );
                      break;
          }
 
@@ -960,7 +960,7 @@ void Sys::auto_save()
             rename( auto1_path, auto2_path );
          }
 
-         game_file.save_game( "AUTO.SAV" );
+         GameFile::save_game( &save_game_info, "AUTO.SAV" );
       }
 
       //-*********** syn game test ***********-//
@@ -1010,7 +1010,7 @@ void Sys::auto_save()
          rename( auto1_path, auto2_path );
       }
 
-      game_file.save_game( "AUTO.SVM" );
+      GameFile::save_game( &save_game_info, "AUTO.SVM" );
    }
 }
 //-------- End of function Sys::auto_save --------//

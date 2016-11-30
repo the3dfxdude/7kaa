@@ -48,12 +48,16 @@ DBGLOG_DEFAULT_CHANNEL(GameFile);
 // -------- define constant ----------//
 #define MIN_FREE_SPACE 1000
 
+enum {CLASS_SIZE = 302};
+static_assert(sizeof(SaveGameHeader) == CLASS_SIZE, "Savegame header size mismatch"); // (no packing)
+
+
 //-------- Begin of function GameFile::save_game --------//
 //
 // return : <int> 1 - saved successfully.
 //                0 - not saved.
 //
-int GameFile::save_game(const char* fileName)
+int GameFile::save_game(SaveGameInfo* /*in/out*/ saveGame, const char* fileName)
 {
 	char full_path[MAX_PATH+1];
 	File   file;
@@ -63,11 +67,11 @@ int GameFile::save_game(const char* fileName)
 	power.win_opened=1;				// to disable power.mouse_handler()
 
 	if( fileName )
-		strcpy( file_name, fileName );
+		strcpy( saveGame->file_name, fileName );
 
 	int rc = 1;
 
-	if (!misc.path_cat(full_path, sys.dir_config, file_name, MAX_PATH))
+	if (!misc.path_cat(full_path, sys.dir_config, saveGame->file_name, MAX_PATH))
 	{
 		rc = 0;
 		errStr = _("Path too long to the saved game.");
@@ -87,7 +91,7 @@ int GameFile::save_game(const char* fileName)
 	{
 		save_process();      // process game data before saving the game
 
-		rc = write_game_header(&file);    // write saved game header information
+		rc = write_game_header(saveGame, &file);    // write saved game header information
 
 		if( !rc )
 			errStr = _("Error creating saved game header.");
@@ -109,7 +113,7 @@ int GameFile::save_game(const char* fileName)
 
 	if( !rc )
 	{
-		if (fileOpened) remove( file_name );         // delete the file as it is not complete
+		if (fileOpened) remove( saveGame->file_name );         // delete the file as it is not complete
 
 		errStr += _(" The game is not saved.");      // Also explicitly inform the user that the game has not been saved.
 
@@ -127,7 +131,7 @@ int GameFile::save_game(const char* fileName)
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
-int GameFile::load_game(const char *base_path, char* fileName)
+int GameFile::load_game(SaveGameInfo* /*in/out*/ saveGame, const char *base_path, char* fileName)
 {
 	char full_path[MAX_PATH+1];
 	File file;
@@ -142,11 +146,11 @@ int GameFile::load_game(const char *base_path, char* fileName)
 	int powerEnableFlag = power.enable_flag;
 
 	if( fileName )
-		strcpy( file_name, fileName );
+		strcpy( saveGame->file_name, fileName );
 
 	rc = 1;
 
-	if (!misc.path_cat(full_path, base_path, file_name, MAX_PATH))
+	if (!misc.path_cat(full_path, base_path, saveGame->file_name, MAX_PATH))
 	{
 		rc = 0;
 		errMsg = _("Path too long to the saved game");
@@ -160,28 +164,30 @@ int GameFile::load_game(const char *base_path, char* fileName)
 
 	//-------- read in the GameFile class --------//
 
-   if( rc )
-   {
+	if( rc )
+	{
 		char gameFileName[MAX_PATH+1];
 
-      strcpy( gameFileName, file_name );     // save the file name actually read, in case that the file names are different
+		strcpy( gameFileName, saveGame->file_name );     // save the file name actually read, in case that the file names are different
 
 		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
 
-		if( !file.file_read(this, sizeof(GameFile)) )	// read the whole object from the saved game file
+		SaveGameHeader saveGameHeader;
+		if( !file.file_read(&saveGameHeader, CLASS_SIZE) )	// read the whole object from the saved game file
 		{
 			rc = 0;
 			errMsg = _("Cannot read file header");
 		}
 		if( rc )
 		{
-			if( !validate_header() )
+			*saveGame = saveGameHeader.info;
+			if( !validate_header(&saveGameHeader) )
 			{
 				rc = 0;
 				errMsg = _("Save game incompatible");
 			}
 			else
-				strcpy( file_name, gameFileName );
+				strcpy( saveGame->file_name, gameFileName );
 		}
 	}
 
@@ -189,7 +195,7 @@ int GameFile::load_game(const char *base_path, char* fileName)
 																  // 1=allow the writing size and the read size to be different
 	if( rc )
 	{
-		config.terrain_set = terrain_set;
+		config.terrain_set = saveGame->terrain_set;
 
 		game.deinit(1);		// deinit last game first, 1-it is called during loading of a game
 		game.init(1);			// init game
@@ -254,95 +260,6 @@ int GameFile::load_game(const char *base_path, char* fileName)
 //--------- End of function GameFile::load_game --------//
 
 
-//------- Begin of function GameFile::set_file_name -------//
-//
-// Set the game file name of current save game, called by
-// GameFile::save_game().
-//
-// e.g. ENLI_001.SAV - the first saved game of the group "Enlight Enterprise"
-//
-void GameFile::set_file_name()
-{
-	enum { NAME_PREFIX_LEN = 4,    // Maximum 4 characters in name prefix, e.g. "ENLIG" for "Enlight Enterprise"
-			 NAME_NUMBER_LEN = 3  };
-
-	String str, str2;
-	int    i;
-	char   nameChar;
-	const char*  baseName;             // the long name which the file name is based on
-	char   addStr[] = "0";       // as a small string for adding to the large string
-
-	baseName = (~nation_array)->king_name();
-
-	//--------- add the group name prfix ----------//
-
-	for( i=0 ; i<(int) strlen(baseName) && (int) str.len() < NAME_PREFIX_LEN ; i++ )
-	{
-		nameChar = misc.upper(baseName[i]);
-
-		if( ( nameChar >= 'A' && nameChar <= 'Z' ) ||
-			 ( nameChar >= '0' && nameChar <= '9' ) )
-		{
-			addStr[0] = nameChar;
-
-			str += addStr;
-		}
-	}
-
-	//----- add tailing characters if prefix len < NAME_PREFIX_LEN+1 ---//
-
-	while( str.len() < NAME_PREFIX_LEN+1 )       // +1 is the "_" between the name and the number
-		str += "_";
-
-	//---- find the saved game number for this saved game ----//
-
-	int       curNumber, lastNumber=0;
-	GameFile* gameFile;
-
-	for( i=1 ; i<=game_file_array.size() ; i++ )
-	{
-		gameFile = game_file_array[i];
-
-		// ##### begin Gilbert 3/10 ########//
-		// if( memcmp(gameFile->file_name, str, NAME_PREFIX_LEN)==0 )
-		if( strnicmp(gameFile->file_name, str, NAME_PREFIX_LEN)==0 )
-		// ##### end Gilbert 3/10 ########//
-		{
-			//------------------------------------------------//
-			//
-			// if there is a free number in the middle of the list
-			// (left by being deleted game), use this number.
-			//
-			//------------------------------------------------//
-
-			curNumber = atoi( gameFile->file_name+NAME_PREFIX_LEN+1 );      // +1 is to pass the "_" between the name and the number
-
-			if( curNumber > lastNumber+1 )   // normally, curNumber should be lastNumber+1
-				break;
-
-			lastNumber = curNumber;
-		}
-	}
-
-	//------- add saved game number after the prefix --------//
-
-	str2 = lastNumber+1;    // use the next number after the last number
-
-	for( i=NAME_NUMBER_LEN-str2.len() ; i>0 ; i-- )   // add "0" before the number if the len of the number < NAME_NUMBER_LEN
-		str += "0";
-
-	str += str2;
-	str += ".SAV";
-
-	//----- copy the string to file_name ------//
-
-	strncpy( file_name, str, MAX_PATH );
-
-	file_name[MAX_PATH] = '\0';
-}
-//--------- End of function GameFile::set_file_name -------//
-
-
 //-------- Begin of function GameFile::save_process -------//
 //
 // Make the game data ready for saving game
@@ -402,39 +319,40 @@ void GameFile::load_process()
 // Return : <int> 1 - file written successfully
 //                0 - not successful
 //
-int GameFile::write_game_header(File* filePtr)
+int GameFile::write_game_header(SaveGameInfo* /*in/out*/ saveGame, File* filePtr)
 {
-	class_size = sizeof(GameFile);
-
 	Nation* playerNation = ~nation_array;
 
-	strncpy( player_name, playerNation->king_name(), HUMAN_NAME_LEN );
-	player_name[HUMAN_NAME_LEN] = '\0';
+	strncpy( saveGame->player_name, playerNation->king_name(), HUMAN_NAME_LEN );
+	saveGame->player_name[HUMAN_NAME_LEN] = '\0';
 
-	race_id 		 = playerNation->race_id;
-	nation_color = playerNation->nation_color;
-	terrain_set  = config.terrain_set;
+	saveGame->race_id      = playerNation->race_id;
+	saveGame->nation_color = playerNation->nation_color;
+	saveGame->terrain_set  = config.terrain_set;
 
-	game_date = info.game_date;
+	saveGame->game_date    = info.game_date;
 
 #ifndef NO_WINDOWS  // FIXME
 	//----- set the file date ------//
 
 	SYSTEMTIME sysTime;
 	GetSystemTime(&sysTime);
-	SystemTimeToFileTime(&sysTime, &file_date);
+	SystemTimeToFileTime(&sysTime, &saveGame->file_date);
 #endif
 
 	//------- write GameFile to the saved game file -------//
 
-   return filePtr->file_write( this, sizeof(GameFile) );     // write the whole object to the saved game file
+	SaveGameHeader saveGameHeader;
+	saveGameHeader.class_size = CLASS_SIZE;
+	saveGameHeader.info = *saveGame;
+	return filePtr->file_write( &saveGameHeader, sizeof(SaveGameHeader) );     // write the whole object to the saved game file
 }
 //--------- End of function GameFile::write_game_header -------//
 
 
 //--------- Begin of function GameFile::validate_header -------//
-int GameFile::validate_header()
+bool GameFile::validate_header(const SaveGameHeader* saveGameHeader)
 {
-	return class_size == sizeof(GameFile) && terrain_set > 0;
+	return saveGameHeader->class_size == CLASS_SIZE && saveGameHeader->info.terrain_set > 0;
 }
 //--------- End of function GameFile::validate_header -------//
