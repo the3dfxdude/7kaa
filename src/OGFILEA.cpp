@@ -29,7 +29,6 @@
 
 #include <KEY.h>
 #include <OSYS.h>
-#include <OSaveGameProvider.h>
 #include <ODATE.h>
 #include <OMOUSE.h>
 #include <OMOUSECR.h>
@@ -45,6 +44,7 @@
 #include <OGAME.h>
 #include <OGAMESET.h>
 #include <OGFILE.h>
+#include <OSaveGameProvider.h>
 #include <OGAMHALL.h>
 #include <OBUTT3D.h>
 #include <OSLIDCUS.h>

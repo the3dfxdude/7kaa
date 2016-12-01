@@ -36,7 +36,7 @@
 #include <ONATION.h>
 #endif
 
-#include <OSaveGameProvider.h>
+#include <OSaveGameInfo.h>
 
 
 //------------ Define constant for game version == 1xx -----------------//

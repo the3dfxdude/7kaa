@@ -18,27 +18,30 @@
 *
 */
 
-//Filename    : OSaveGameProvider.h
-//Description : Provides the layer between the game (GameFileArray) and the save backends.
-//              Enumerates the savegames and provides actions for loading and saving.
+//Filename    : OSaveGameInfo.h
+//Description : Defines the basic information of a savegame. Also part of the header (SaveGameHeader) written as binary to the V2 savegames.
 
-#ifndef __OSAVEGAMEPROVIDER_H
-#define __OSAVEGAMEPROVIDER_H
+#ifndef __OSAVEGAMEINFO_H
+#define __OSAVEGAMEINFO_H
 
-#include <OSaveGameInfo.h>
-
-#include <functional>
+#include <storage_constants.h>
+#include <win32_compat.h>
 
 
-
-
-
-// Provides an abstraction layer between the UI for savegame handling, GameFileArray, file handling, and the data reader/writer, GameFile.
-class SaveGameProvider
+// The basic information ('header') of a savegame.
+#pragma pack(1)
+struct SaveGameInfo
 {
-public:
-	//  Enumerates all the savegames, calling callback for each savegame.
-	static void enumerate_savegames(const char* filenameWildcard, const std::function<void (const SaveGameInfo* saveGameInfo)>& callback);
-};
+	char     file_name[MAX_PATH+1];
+	char     player_name[HUMAN_NAME_LEN+1];
 
-#endif // !__OSAVEGAMEPROVIDER_H
+	char     race_id;
+	char     nation_color;
+
+	int      game_date;      // the game date of the saved game
+	FILETIME file_date;      // saving game date
+	short    terrain_set;
+};
+#pragma pack()
+
+#endif // ! __OSAVEGAMEINFO_H
