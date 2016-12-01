@@ -27,6 +27,7 @@
 
 #include <storage_constants.h>
 #include <win32_compat.h>
+#include <functional>
 
 
 // The basic information ('header') of a savegame.
@@ -44,5 +45,13 @@ struct SaveGameInfo
 	short    terrain_set;
 };
 #pragma pack()
+
+// Provides an abstraction layer between the UI for savegame handling, GameFileArray, file handling, and the data reader/writer, GameFile.
+class SaveGameProvider
+{
+public:
+	//  Enumerates all the savegames, calling callback for each savegame.
+	static void enumerate_savegames(const char* filenameWildcard, const std::function<void (const SaveGameInfo* saveGameInfo)>& callback);
+};
 
 #endif // !__OSAVEGAMEPROVIDER_H

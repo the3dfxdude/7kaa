@@ -163,6 +163,7 @@ bin_PROGRAMS = 7kaa
 	OR_TECH.cpp \
 	OR_TOWN.cpp \
 	OR_TRADE.cpp \
+	OSaveGameProvider.cpp \
 	OSCROLL.cpp \
 	OSE.cpp \
 	OSERES.cpp \

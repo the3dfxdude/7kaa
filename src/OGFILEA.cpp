@@ -28,8 +28,8 @@
 #endif
 
 #include <KEY.h>
-#include <ODIR.h>
 #include <OSYS.h>
+#include <OSaveGameProvider.h>
 #include <ODATE.h>
 #include <OMOUSE.h>
 #include <OMOUSECR.h>
@@ -903,41 +903,11 @@ void GameFileArray::del_game()
 //
 void GameFileArray::load_all_game_header(const char *extStr)
 {
-	char full_path[MAX_PATH+1];
-	int       i;
-	Directory gameDir;
-	File      file;
-
-	if (!misc.path_cat(full_path, sys.dir_config, extStr, MAX_PATH))
-	{
-		ERR("Path to the config directory too long.\n");
-		return;
-	}
-	gameDir.read(full_path, 0);  // 0-Don't sort file names
-
-	//-------- read in the headers of all game sets -------//
-
 	zap();
 
-	for( i=1 ; i<=gameDir.size() ; i++ )
-	{
-		if (!misc.path_cat(full_path, sys.dir_config, gameDir[i]->name, MAX_PATH))
-		{
-			ERR("Path to the saved game too long.\n");
-			continue;
-		}
-
-		SaveGameHeader saveGameHeader;
-		if( file.file_open(full_path, 1, 1)      // last 1=allow varying read & write size
-			&& file.file_read(&saveGameHeader, sizeof(SaveGameHeader))
-			&& GameFile::validate_header(&saveGameHeader) )
-		{
-			strcpy( saveGameHeader.info.file_name, gameDir[i]->name );  // in case that the name may be different
-			saveGameHeader.info.file_date = gameDir[i]->time;
-			linkin(&saveGameHeader.info);
-		}
-		file.file_close();
-	}
+	SaveGameProvider::enumerate_savegames(extStr, [this](const SaveGameInfo* saveGameInfo) {
+		this->linkin(saveGameInfo);
+	});
 
 	quick_sort( sort_game_file_function );
 }
