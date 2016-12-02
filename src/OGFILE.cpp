@@ -32,7 +32,7 @@
 #include <OTALKRES.h>
 #include <ONATION.h>
 #include <OWORLD.h>
-#include <OPOWER.h>
+#include <OPOWER.h> // TODO: Remove
 #include <OGAME.h>
 #include <OTownNetwork.h>
 #include <OINFO.h>
@@ -54,27 +54,23 @@ static_assert(sizeof(SaveGameHeader) == CLASS_SIZE, "Savegame header size mismat
 
 //-------- Begin of function GameFile::save_game --------//
 //
-// return : <int> 1 - saved successfully.
-//                0 - not saved.
+// Saves the current game under the given fileName in the given directory.
+// Updates the saveGameInfo with the new savegame information.
+// Returns true if saved successfully, in which case saveGameInfo is complete.
+// On error, returns false, and returns the error message in errorMessage; saveGameInfo may also be partially overwritten.
 //
-int GameFile::save_game(SaveGameInfo* /*in/out*/ saveGame, const char* fileName)
+bool GameFile::save_game(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
 	char full_path[MAX_PATH+1];
-	File   file;
-	String errStr;
+	File file;
 	bool fileOpened = false;
-
-	power.win_opened=1;				// to disable power.mouse_handler()
-
-	if( fileName )
-		strcpy( saveGame->file_name, fileName );
 
 	int rc = 1;
 
-	if (!misc.path_cat(full_path, sys.dir_config, saveGame->file_name, MAX_PATH))
+	if (!misc.path_cat(full_path, directory, fileName, MAX_PATH))
 	{
 		rc = 0;
-		errStr = _("Path too long to the saved game.");
+		errorMessage = _("Path too long to the saved game.");
 	}
 
 	if( rc )
@@ -82,7 +78,7 @@ int GameFile::save_game(SaveGameInfo* /*in/out*/ saveGame, const char* fileName)
 		rc = file.file_create(full_path, 0, 1); // 0=tell File don't handle error itself
 																   // 1=allow the writing size and the read size to be different
 		if( !rc )
-			errStr = _("Error creating saved game file.");
+			errorMessage = _("Error creating saved game file.");
 		else
 			fileOpened = true;
 	}
@@ -91,36 +87,36 @@ int GameFile::save_game(SaveGameInfo* /*in/out*/ saveGame, const char* fileName)
 	{
 		save_process();      // process game data before saving the game
 
-		rc = write_game_header(saveGame, &file);    // write saved game header information
+		if (saveGameInfo->file_name != fileName /*(comparison as pointers)*/) {
+			strncpy(saveGameInfo->file_name, fileName, MAX_PATH);
+			saveGameInfo->file_name[MAX_PATH] = '\0';
+		}
+		rc = write_game_header(/*out*/ saveGameInfo, &file);    // write saved game header information
 
 		if( !rc )
-			errStr = _("Error creating saved game header.");
+			errorMessage = _("Error creating saved game header.");
 
 		if( rc )
 		{
 			rc = write_file(&file);
 
 			if( !rc )
-				errStr = _("Error writing saved game data.");
+				errorMessage = _("Error writing saved game data.");
 		}
 	}
 
 	file.file_close();
 
-	power.win_opened=0;
-
 	//------- when saving error ---------//
 
 	if( !rc )
 	{
-		if (fileOpened) remove( saveGame->file_name );         // delete the file as it is not complete
+		if (fileOpened) remove( full_path );         // delete the file as it is not complete
 
-		errStr += _(" The game is not saved.");      // Also explicitly inform the user that the game has not been saved.
-
-		box.msg( errStr );
+		errorMessage += _(" The game is not saved.");      // Also explicitly inform the user that the game has not been saved.
 	}
 
-	return rc;
+	return rc != 0;
 }
 //--------- End of function GameFile::save_game --------//
 

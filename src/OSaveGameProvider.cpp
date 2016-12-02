@@ -4,7 +4,10 @@
 #include <ODIR.h>
 #include <OSYS.h>
 #include <OGFILE.h>
+#include <OPOWER.h> // TODO: There might be an even better (higher-level / UI) place to do this (power.win_opened)
 #include <dbglog.h>
+
+#include "gettext.h"
 
 #ifdef NO_WINDOWS
 #include <unistd.h>
@@ -72,3 +75,39 @@ void SaveGameProvider::delete_savegame(const char* saveGameName) {
 	unlink(full_path);
 }
 //-------- End of function SaveGameProvider::delete_savegame --------//
+
+
+//-------- Begin of function SaveGameProvider::save_game(1) --------//
+//
+// Save the current game under the file specified by saveGameInfo. Updates saveGameInfo to the new savegame information on success.
+//
+bool SaveGameProvider::save_game(SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage)
+{
+	return save_game(saveGameInfo, saveGameInfo->file_name, /*out*/ errorMessage);
+}
+//-------- End of function SaveGameProvider::save_game(1) --------//
+
+
+//-------- Begin of function SaveGameProvider::save_game(2) --------//
+//
+// Save the current game under the name given by newFileName. Updates saveGameInfo to the new savegame information on success.
+//
+bool SaveGameProvider::save_game(SaveGameInfo* /*in/out*/ saveGameInfo, const char* newFileName, String& /*out*/ errorMessage)
+{
+	power.win_opened=1;				// to disable power.mouse_handler()
+
+	bool success;
+	SaveGameInfo newSaveGameInfo;
+	if (GameFile::save_game(sys.dir_config, newFileName, &newSaveGameInfo, /*out*/ errorMessage)) {
+		*saveGameInfo = newSaveGameInfo;
+		success = true;
+	}
+	else {
+		success = false;
+	}
+
+	power.win_opened=0;
+
+	return success;
+}
+//-------- End of function SaveGameProvider::save_game(2) --------//

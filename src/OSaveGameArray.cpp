@@ -688,8 +688,12 @@ int SaveGameArray::process_action(int saveNew)
 				return 0;
 
 			SaveGameInfo* saveGameInfo = (*this)[browse_recno];
-			if( !GameFile::save_game(saveGameInfo) )
+			String errorMessage;
+			if( !SaveGameProvider::save_game(saveGameInfo, /*out*/ errorMessage) )
+			{
+				box.msg( errorMessage );
 				return -1;
+			}
 
 			strcpy( last_file_name, saveGameInfo->file_name );
 		}
@@ -756,7 +760,8 @@ int SaveGameArray::save_new_game(const char* fileName)
 
 	//----------- save game now ------------//
 
-	if( GameFile::save_game(&saveGameInfo, fileName) )
+	String errorMessage;
+	if( SaveGameProvider::save_game(&saveGameInfo, /*out*/ errorMessage) )
 	{
 		strcpy( last_file_name, saveGameInfo.file_name );
 
@@ -773,7 +778,10 @@ int SaveGameArray::save_new_game(const char* fileName)
 
 		return 1;
 	}
-	return 0;
+	else {
+		box.msg( errorMessage );
+		return 0;
+	}
 }
 //-------- End of function SaveGameArray::save_new_game -------//
 

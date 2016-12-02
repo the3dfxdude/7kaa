@@ -29,8 +29,7 @@
 
 #include <functional>
 
-
-
+class String;
 
 
 // Provides an abstraction layer between the UI for savegame handling, SaveGameArray, file handling, and the data reader/writer, GameFile.
@@ -42,6 +41,11 @@ public:
 
 	// Deletes the savegame whose file part of filename is saveGameName.
 	static void delete_savegame(const char* saveGameName);
+
+	// Save the current game under the file specified by saveGameInfo. Updates saveGameInfo to the new savegame information on success.
+	static bool save_game(SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage);
+	// Save the current game under the name given by newFileName. Updates saveGameInfo to the new savegame information on success.
+	static bool save_game(SaveGameInfo* /*in/out*/ saveGameInfo, const char* newFileName, String& /*out*/ errorMessage);
 };
 
 #endif // !__OSAVEGAMEPROVIDER_H

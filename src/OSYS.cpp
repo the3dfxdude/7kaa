@@ -44,6 +44,7 @@
 #include <OGAMESET.h>
 #include <OGFILE.h>
 #include <OSaveGameArray.h>
+#include <OSaveGameProvider.h>
 #include <OGAMHALL.h>
 #include <OINFO.h>
 #include <OVBROWSE.h>
@@ -866,7 +867,11 @@ void Sys::main_loop(int isLoadedGame)
 
             if( nation_array.player_recno )     // only save when the player is still in the game
             {
-               GameFile::save_game( &save_game_info, remote.save_file_name );
+               String errorMessage;
+               if ( !SaveGameProvider::save_game( &save_game_info, remote.save_file_name, /*out*/ errorMessage ) ) 
+			   {
+				   box.msg( errorMessage );
+			   }
 
                // ####### begin Gilbert 24/10 ######//
                //static String str;
@@ -925,16 +930,21 @@ void Sys::auto_save()
       #endif
       {
          static int saveCount = 0;
+		 bool saveSuccessfull = false;
+		 String errorMessage;
          switch(saveCount)
          {
-            case 0:  GameFile::save_game( &save_game_info, "DEBUG1.SAV" );
+            case 0:  saveSuccessfull = SaveGameProvider::save_game( &save_game_info, "DEBUG1.SAV", /*out*/ errorMessage );
                      break;
-			case 1:  GameFile::save_game( &save_game_info, "DEBUG2.SAV" );
+			case 1:  saveSuccessfull = SaveGameProvider::save_game( &save_game_info, "DEBUG2.SAV", /*out*/ errorMessage );
                      break;
-			case 2:  GameFile::save_game( &save_game_info, "DEBUG3.SAV" );
+			case 2:  saveSuccessfull = SaveGameProvider::save_game( &save_game_info, "DEBUG3.SAV", /*out*/ errorMessage );
                      break;
          }
-
+		 if( !saveSuccessfull )
+		 {
+			box.msg( errorMessage );
+		 }
          if( ++saveCount>=3 )
             saveCount = 0;
       }
@@ -961,7 +971,11 @@ void Sys::auto_save()
             rename( auto1_path, auto2_path );
          }
 
-         GameFile::save_game( &save_game_info, "AUTO.SAV" );
+		 String errorMessage;
+         if( !SaveGameProvider::save_game( &save_game_info, "AUTO.SAV", /*out*/ errorMessage ) )
+		 {
+			 box.msg( errorMessage );
+		 }
       }
 
       //-*********** syn game test ***********-//
@@ -1011,7 +1025,11 @@ void Sys::auto_save()
          rename( auto1_path, auto2_path );
       }
 
-      GameFile::save_game( &save_game_info, "AUTO.SVM" );
+	  String errorMessage;
+	  if( !SaveGameProvider::save_game( &save_game_info, "AUTO.SVM", /*out*/ errorMessage ) )
+	  {
+		  box.msg( errorMessage );
+	  }
    }
 }
 //-------- End of function Sys::auto_save --------//
