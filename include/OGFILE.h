@@ -55,10 +55,6 @@ struct SaveGameHeader
 class GameFile
 {
 public:
-   static   File* file_ptr;
-   static   char  last_read_success_flag;
-
-public:
    // Saves the current game under the given fileName in the given directory. Updates the saveGameInfo with the new savegame information. Returns true on success.
    static bool save_game(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
    static int load_game(SaveGameInfo* /*in/out*/ saveGame, const char*, char*);
@@ -80,8 +76,8 @@ private:
    static int   read_file_2(File*);
    static int   read_file_3(File*);
 
-   static void  write_book_mark(short bookMark);
-   static int   read_book_mark(short bookMark);
+   static void  write_book_mark(File* filePtr, short bookMark);
+   static int   read_book_mark(File* filePtr, short bookMark);
 
    // Static class has no constructors
 private:

@@ -115,10 +115,6 @@ DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 static int loaded_random_seed;
 
-//-------- Define static class member vars -------//
-
-File* GameFile::file_ptr;
-char  GameFile::last_read_success_flag=0;
 
 //-------- Begin of function GameFile::write_file -------//
 //
@@ -129,8 +125,6 @@ char  GameFile::last_read_success_flag=0;
 //
 int GameFile::write_file(File* filePtr)
 {
-	file_ptr = filePtr;			// for write_book_mark()
-
 	//----- check valid version first ------//
 
 	if( save_game_array.demo_format )
@@ -180,8 +174,6 @@ int GameFile::write_file(File* filePtr)
 //
 int GameFile::read_file(File* filePtr)
 {
-	file_ptr = filePtr;			// for read_book_mark()
-
 	//----- check version no. first ------//
 
 	int originalRandomSeed = misc.get_random_seed();
@@ -248,47 +240,47 @@ int GameFile::read_file(File* filePtr)
 //
 int GameFile::write_file_1(File* filePtr)
 {
-	write_book_mark( BOOK_MARK+1 );
+	write_book_mark( filePtr, BOOK_MARK+1 );
 
 	if( !race_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+2 );
+	write_book_mark( filePtr, BOOK_MARK+2 );
 
 	if( !unit_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+3 );
+	write_book_mark( filePtr, BOOK_MARK+3 );
 
 	if( !firm_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+4 );
+	write_book_mark( filePtr, BOOK_MARK+4 );
 
 	if( !town_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+5 );
+	write_book_mark( filePtr, BOOK_MARK+5 );
 
 	if( !tech_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+6 );
+	write_book_mark( filePtr, BOOK_MARK+6 );
 
 	if( !talk_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+7 );
+	write_book_mark( filePtr, BOOK_MARK+7 );
 
 	if( !raw_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+8 );
+	write_book_mark( filePtr, BOOK_MARK+8 );
 
 	if( !god_res.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+9 );
+	write_book_mark( filePtr, BOOK_MARK+9 );
 
 	if( !monster_res.write_file(filePtr) )
 		return 0;
@@ -307,58 +299,58 @@ int GameFile::write_file_1(File* filePtr)
 //
 int GameFile::write_file_2(File* filePtr)
 {
-	write_book_mark( BOOK_MARK+101 );
+	write_book_mark( filePtr, BOOK_MARK+101 );
 
 	if( !game.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+102 );
+	write_book_mark( filePtr, BOOK_MARK+102 );
 
 	if( !config.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+103 );
+	write_book_mark( filePtr, BOOK_MARK+103 );
 
 	if( !sys.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+104 );
+	write_book_mark( filePtr, BOOK_MARK+104 );
 
 	if( !info.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+105 );
+	write_book_mark( filePtr, BOOK_MARK+105 );
 
 	if( !power.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+106 );
+	write_book_mark( filePtr, BOOK_MARK+106 );
 
 	if( !weather.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+107 );
+	write_book_mark( filePtr, BOOK_MARK+107 );
 
 	if( !magic_weather.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+108 );
+	write_book_mark( filePtr, BOOK_MARK+108 );
 
 	if( !news_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+109 );
+	write_book_mark( filePtr, BOOK_MARK+109 );
 
 	if( !world.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+110 );
+	write_book_mark( filePtr, BOOK_MARK+110 );
 
 	if( !tutor.write_file(filePtr) )
 		return 0;
 
 	//### begin alex 23/9 ###//
-	write_book_mark( BOOK_MARK+111 );
+	write_book_mark( filePtr, BOOK_MARK+111 );
 
 	if( !seek_path.write_file(filePtr) )
 		return 0;
@@ -376,78 +368,78 @@ int GameFile::write_file_2(File* filePtr)
 //
 int GameFile::write_file_3(File* filePtr)
 {
-	write_book_mark( BOOK_MARK+201 );
+	write_book_mark( filePtr, BOOK_MARK+201 );
 
 	if( !unit_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+202 );
+	write_book_mark( filePtr, BOOK_MARK+202 );
 
 	if( !bullet_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+203 );
+	write_book_mark( filePtr, BOOK_MARK+203 );
 
 	if( !site_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+204 );
+	write_book_mark( filePtr, BOOK_MARK+204 );
 
 	if( !town_array.write_file(filePtr) )  // job will affect firm, group, item
 		return 0;
 
-	write_book_mark( BOOK_MARK+205 );
+	write_book_mark( filePtr, BOOK_MARK+205 );
 
 	if( !nation_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+206 );
+	write_book_mark( filePtr, BOOK_MARK+206 );
 
 	if( !firm_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+207 );
+	write_book_mark( filePtr, BOOK_MARK+207 );
 
 	if( !tornado_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+208 );
+	write_book_mark( filePtr, BOOK_MARK+208 );
 
 	if( !rebel_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+209 );
+	write_book_mark( filePtr, BOOK_MARK+209 );
 
 	if( !spy_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+210 );
+	write_book_mark( filePtr, BOOK_MARK+210 );
 
 	if( !snow_ground_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+211 );
+	write_book_mark( filePtr, BOOK_MARK+211 );
 
 	if( !region_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+212 );
+	write_book_mark( filePtr, BOOK_MARK+212 );
 
 	if( !news_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+213 );
+	write_book_mark( filePtr, BOOK_MARK+213 );
 
 	if( !rock_array.write_file(filePtr) )
 		return 0;
 
-	write_book_mark( BOOK_MARK+214 );
+	write_book_mark( filePtr, BOOK_MARK+214 );
 
 	if( !dirt_array.write_file(filePtr) )
 		return 0;
 
 	// ##### begin Gilbert 2/10 ######//
-	write_book_mark( BOOK_MARK+215 );
+	write_book_mark( filePtr, BOOK_MARK+215 );
 
 	if( !firm_die_array.write_file(filePtr) )
 		return 0;
@@ -465,55 +457,55 @@ int GameFile::write_file_3(File* filePtr)
 //
 int GameFile::read_file_1(File* filePtr)
 {
-	if( !read_book_mark( BOOK_MARK+1 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+1 ) )
 		return 0;
 
 	if( !race_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+2 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+2 ) )
 		return 0;
 
 	if( !unit_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+3 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+3 ) )
 		return 0;
 
 	if( !firm_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+4 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+4 ) )
 		return 0;
 
 	if( !town_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+5 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+5 ) )
 		return 0;
 
 	if( !tech_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+6 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+6 ) )
 		return 0;
 
 	if( !talk_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+7 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+7 ) )
 		return 0;
 
 	if( !raw_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+8 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+8 ) )
 		return 0;
 
 	if( !god_res.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+9 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+9 ) )
 		return 0;
 
 	if( !monster_res.read_file(filePtr) )
@@ -532,37 +524,37 @@ int GameFile::read_file_1(File* filePtr)
 //
 int GameFile::read_file_2(File* filePtr)
 {
-	if( !read_book_mark( BOOK_MARK+101 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+101 ) )
 		return 0;
 
 	if( !game.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+102 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+102 ) )
 		return 0;
 
 	if( !config.read_file(filePtr, 1) )		// 1-keep system settings
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+103 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+103 ) )
 		return 0;
 
 	if( !sys.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+104 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+104 ) )
 		return 0;
 
 	if( !info.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+105 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+105 ) )
 		return 0;
 
 	if( !power.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+106 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+106 ) )
 		return 0;
 
 	if( !weather.read_file(filePtr) )
@@ -577,7 +569,7 @@ int GameFile::read_file_2(File* filePtr)
 		weather_forecast[foreDay].next_day();
 	}
 
-	if( !read_book_mark( BOOK_MARK+107 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+107 ) )
 		return 0;
 
 	if( !magic_weather.read_file(filePtr) )
@@ -585,26 +577,26 @@ int GameFile::read_file_2(File* filePtr)
 
 	sprite_res.update_speed();
 
-	if( !read_book_mark( BOOK_MARK+108 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+108 ) )
 		return 0;
 
 	if( !news_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+109 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+109 ) )
 		return 0;
 
 	if( !world.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+110 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+110 ) )
 		return 0;
 
 	if( !tutor.read_file(filePtr) )
 		return 0;
 
 	//### begin alex 23/9 ###//
-	if( !read_book_mark( BOOK_MARK+111 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+111 ) )
 		return 0;
 
 	if( !seek_path.read_file(filePtr) )
@@ -623,92 +615,92 @@ int GameFile::read_file_2(File* filePtr)
 //
 int GameFile::read_file_3(File* filePtr)
 {
-	if( !read_book_mark( BOOK_MARK+201 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+201 ) )
 		return 0;
 
 	if( !unit_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+202 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+202 ) )
 		return 0;
 
 	if( !bullet_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+203 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+203 ) )
 		return 0;
 
 	if( !site_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+204 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+204 ) )
 		return 0;
 
 	if( !town_array.read_file(filePtr) )  // job will affect firm, group, item
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+205 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+205 ) )
 		return 0;
 
 	if( !nation_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+206 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+206 ) )
 		return 0;
 
 	if( !firm_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+207 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+207 ) )
 		return 0;
 
 	if( !tornado_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+208 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+208 ) )
 		return 0;
 
 	if( !rebel_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+209 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+209 ) )
 		return 0;
 
 	if( !spy_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+210 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+210 ) )
 		return 0;
 
 	if( !snow_ground_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+211 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+211 ) )
 		return 0;
 
 	if( !region_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+212 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+212 ) )
 		return 0;
 
 	if( !news_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+213 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+213 ) )
 		return 0;
 
 	if( !rock_array.read_file(filePtr) )
 		return 0;
 
-	if( !read_book_mark( BOOK_MARK+214 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+214 ) )
 		return 0;
 
 	if( !dirt_array.read_file(filePtr) )
 		return 0;
 
 	// ##### begin Gilbert 2/10 ######//
-	if( !read_book_mark( BOOK_MARK+215 ) )
+	if( !read_book_mark( filePtr, BOOK_MARK+215 ) )
 
 	if( !firm_die_array.read_file(filePtr) )
 		return 0;
@@ -721,11 +713,11 @@ int GameFile::read_file_3(File* filePtr)
 
 //-------- Begin of function GameFile::write_book_mark -------//
 //
-void GameFile::write_book_mark(short bookMark)
+void GameFile::write_book_mark(File* filePtr, short bookMark)
 {
 	sys.yield();
 
-	file_ptr->file_put_short(bookMark);
+	filePtr->file_put_short(bookMark);
 }
 //---------- End of function GameFile::write_book_mark -------//
 
@@ -735,11 +727,11 @@ void GameFile::write_book_mark(short bookMark)
 // Return : 1  - the book mark is matched
 //          0  - the book mark is not matched
 //
-int GameFile::read_book_mark(short bookMark)
+int GameFile::read_book_mark(File* filePtr, short bookMark)
 {
 	sys.yield();
 
-	return file_ptr->file_get_short() == bookMark;
+	return filePtr->file_get_short() == bookMark;
 }
 //---------- End of function GameFile::read_book_mark -------//
 

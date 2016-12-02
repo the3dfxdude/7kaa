@@ -249,8 +249,6 @@ int GameFile::load_game(SaveGameInfo* /*in/out*/ saveGame, const char *base_path
 			break;
 	}
 
-   last_read_success_flag = rc;		// for external functions to read.  
-
 	return rc;
 }
 //--------- End of function GameFile::load_game --------//
