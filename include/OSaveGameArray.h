@@ -34,7 +34,6 @@
 class SaveGameArray : private DynArray
 {
 public:
-	char     demo_format;       // whether write the game in shareware format or not (only selectable in design mode)
 	bool     has_fetched_last_file_name_from_hall_of_fame;
 	char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
 

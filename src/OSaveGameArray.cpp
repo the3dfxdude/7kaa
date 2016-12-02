@@ -97,16 +97,6 @@ static void    disp_scroll_bar_func(SlideVBar *scroll, int);
 
 SaveGameArray::SaveGameArray() : DynArray( sizeof(SaveGameInfo), 10 )
 {
-	demo_format = 0;
-
-	#ifdef DEMO
-		demo_format = 1;
-	#endif
-
-	#ifdef DEMO_DESIGN
-		demo_format = 1;
-	#endif
-
 	has_fetched_last_file_name_from_hall_of_fame = false;
 	last_file_name[0] = '\0';
 }

@@ -125,9 +125,14 @@ static int loaded_random_seed;
 //
 int GameFile::write_file(File* filePtr)
 {
+	bool demo_format = false;
+#if defined(DEMO) || defined(DEMO_DESIGN)
+	demo_format = true;
+#endif
+
 	//----- check valid version first ------//
 
-	if( save_game_array.demo_format )
+	if( demo_format )
 		filePtr->file_put_short( -GAME_VERSION );    // negative no. means shareware version
 	else
 		filePtr->file_put_short( GAME_VERSION );
@@ -139,7 +144,7 @@ int GameFile::write_file(File* filePtr)
 	//
 	//------------------------------------------------//
 
-	if( save_game_array.demo_format )
+	if( demo_format )
 	{
 		if( !write_file_1(filePtr) )
 			return 0;
@@ -174,6 +179,11 @@ int GameFile::write_file(File* filePtr)
 //
 int GameFile::read_file(File* filePtr)
 {
+	bool demo_format = false;
+#if defined(DEMO) || defined(DEMO_DESIGN)
+	demo_format = true;
+#endif
+
 	//----- check version no. first ------//
 
 	int originalRandomSeed = misc.get_random_seed();
@@ -181,8 +191,8 @@ int GameFile::read_file(File* filePtr)
 	short load_file_game_version = filePtr->file_get_short();
 
 	// compare if same demo format or not
-	if( save_game_array.demo_format && load_file_game_version > 0
-		|| !save_game_array.demo_format && load_file_game_version < 0)
+	if( demo_format && load_file_game_version > 0
+		|| !demo_format && load_file_game_version < 0)
 		return -1;
 
 	// take the absolute value of game version
@@ -200,7 +210,7 @@ int GameFile::read_file(File* filePtr)
 	//
 	//------------------------------------------------//
 
-	if( save_game_array.demo_format )
+	if( demo_format )
 	{
 		if( !read_file_1(filePtr) )
 			return 0;
