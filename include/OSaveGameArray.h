@@ -34,10 +34,6 @@
 class SaveGameArray : private DynArray
 {
 public:
-	bool     has_fetched_last_file_name_from_hall_of_fame;
-	char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
-
-public:
 	SaveGameArray();
 
 	void init(const char *extStr);
@@ -60,6 +56,10 @@ private:
 	void load_all_game_header(const char *extStr);
 	int  process_action(int=0);
 	void del_game();
+
+private:
+	bool     has_fetched_last_file_name_from_hall_of_fame;
+	char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
 };
 
 extern SaveGameArray save_game_array;
