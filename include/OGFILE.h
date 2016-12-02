@@ -79,6 +79,9 @@ private:
    static void  write_book_mark(File* filePtr, short bookMark);
    static int   read_book_mark(File* filePtr, short bookMark);
 
+public:
+	static bool read_file_same_version;				// true if major version of the game being loaded is same as that of the program
+
    // Static class has no constructors
 private:
    GameFile() = delete;
