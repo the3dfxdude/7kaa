@@ -43,6 +43,7 @@
 #include <ONEWS.h>
 #include <OGAMESET.h>
 #include <OGFILE.h>
+#include <OSaveGameArray.h>
 #include <OGAMHALL.h>
 #include <OINFO.h>
 #include <OVBROWSE.h>
@@ -361,9 +362,9 @@ int Sys::init_objects()
    help.init("HELP.RES");
 
    tutor.init();
-   // Need to init hall_of_fame *before* game_file_array to persist the last savegame filename
+   // Need to init hall_of_fame *before* save_game_array to persist the last savegame filename
    hall_of_fame.init();
-   game_file_array.init("*.SAV");
+   save_game_array.init("*.SAV");
 
    //---------- init game_set -----------//
 
@@ -420,8 +421,8 @@ void Sys::deinit_objects()
 
    tutor.deinit();
    config.deinit();
-   // Need to deinit hall_of_fame *after* game_file_array to persist the last savegame filename
-   game_file_array.deinit();
+   // Need to deinit hall_of_fame *after* save_game_array to persist the last savegame filename
+   save_game_array.deinit();
    hall_of_fame.deinit();
 }
 //------- End of function Sys::deinit_objects -----------//
@@ -1968,7 +1969,7 @@ int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
 /*    //-*********** syn game test ***********-//
       case '\'':
          //if(debug2_enable_flag && debug_sim_game_type)
-         //game_file_array[0]->load_game("syn.sav");
+         //save_game_array[0]->load_game("syn.sav");
          game_file.load_game("syn.sav");
          sp_load_seed_file();
          debug_seed_status_flag = DEBUG_SYN_AUTO_LOAD;
@@ -2577,9 +2578,9 @@ void Sys::load_game()
 
    int rc=0;
 
-   game_file_array.init("*.SAV");                  // reload any save game file
-   game_file_array.menu(-2);               // save screen area to back buffer
-   switch( game_file_array.menu(2) )
+   save_game_array.init("*.SAV");                  // reload any save game file
+   save_game_array.menu(-2);               // save screen area to back buffer
+   switch( save_game_array.menu(2) )
    {
       case 1:
          rc = 1;                 // fall through to case 0
@@ -2593,7 +2594,7 @@ void Sys::load_game()
 		 sys.signal_exit_flag = 1;
    }
 
-   game_file_array.menu(-1);               // restore screen area from back buffer
+   save_game_array.menu(-1);               // restore screen area from back buffer
 
    //-----------------------------------//
    if( rc == -1)
@@ -2631,15 +2632,15 @@ void Sys::save_game()
       return;
    }
 
-   game_file_array.init("*.SAV");                  // reload any save game file
-   game_file_array.menu(-2);               // save screen area to back buffer
+   save_game_array.init("*.SAV");                  // reload any save game file
+   save_game_array.menu(-2);               // save screen area to back buffer
 
-   if( game_file_array.menu(1) == 1 )
+   if( save_game_array.menu(1) == 1 )
    {
       box.msg( _("Game Saved Successfully") );
    }
 
-   game_file_array.menu(-1);               // restore screen area from back buffer
+   save_game_array.menu(-1);               // restore screen area from back buffer
 
 	// ##### patch begin Gilbert 16/3 #######//
 	info.disp();

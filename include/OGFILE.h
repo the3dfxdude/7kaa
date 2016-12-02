@@ -28,14 +28,6 @@
 #include <OFILE.h>
 #endif
 
-#ifndef __ODYNARR_H
-#include <ODYNARR.h>
-#endif
-
-#ifndef __ONATION_H
-#include <ONATION.h>
-#endif
-
 #include <OSaveGameInfo.h>
 
 
@@ -95,47 +87,5 @@ private:
    GameFile() = delete;
    GameFile(const GameFile&) = delete;
 };
-
-//------- Define class GameFileArray --------//
-
-class GameFileArray : private DynArray
-{
-public:
-   char     demo_format;       // whether write the game in shareware format or not (only selectable in design mode)
-   bool     has_fetched_last_file_name_from_hall_of_fame;
-   char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
-
-	short		load_file_game_version;	// game version of load file
-	char		same_version;				// true if major version of the load game is same as that of the program
-
-public:
-   GameFileArray();
-
-   void init(const char *extStr);
-   void deinit();
-
-   int  menu(int, int *recno=NULL);
-
-   int  save_game()    { return menu(1); }
-   int  load_game()    { return menu(2); }
-
-   int save_new_game(const char* =NULL); // save a new game immediately without prompting menu
-
-   SaveGameInfo* operator[](int recNo);
-
-private:
-   void set_file_name(SaveGameInfo* /*in/out*/ saveGame);
-
-   void disp_browse();
-   static void disp_entry_info(const SaveGameInfo* entry, int x, int y);
-   void load_all_game_header(const char *extStr);
-   int  process_action(int=0);
-   void del_game();
-};
-
-extern GameFileArray game_file_array;
-extern SaveGameInfo  save_game_info;        //**BUGHERE
-
-//-----------------------------------------
 
 #endif

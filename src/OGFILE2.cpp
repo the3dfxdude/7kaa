@@ -54,6 +54,7 @@
 #include <OUNIT.h>
 #include <OWEATHER.h>
 #include <OWORLD.h>
+#include <OSaveGameArray.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
 
@@ -132,7 +133,7 @@ int GameFile::write_file(File* filePtr)
 
 	//----- check valid version first ------//
 
-	if( game_file_array.demo_format )
+	if( save_game_array.demo_format )
 		filePtr->file_put_short( -GAME_VERSION );    // negative no. means shareware version
 	else
 		filePtr->file_put_short( GAME_VERSION );
@@ -144,7 +145,7 @@ int GameFile::write_file(File* filePtr)
 	//
 	//------------------------------------------------//
 
-	if( game_file_array.demo_format )
+	if( save_game_array.demo_format )
 	{
 		if( !write_file_1(filePtr) )
 			return 0;
@@ -185,22 +186,22 @@ int GameFile::read_file(File* filePtr)
 
 	int originalRandomSeed = misc.get_random_seed();
 
-	game_file_array.load_file_game_version = filePtr->file_get_short();
+	save_game_array.load_file_game_version = filePtr->file_get_short();
 
 	// compare if same demo format or not
-	if( game_file_array.demo_format && game_file_array.load_file_game_version > 0
-		|| !game_file_array.demo_format && game_file_array.load_file_game_version < 0)
+	if( save_game_array.demo_format && save_game_array.load_file_game_version > 0
+		|| !save_game_array.demo_format && save_game_array.load_file_game_version < 0)
 		return -1;
 
 	// take the absolute value of game version
-	game_file_array.load_file_game_version = abs(game_file_array.load_file_game_version);
+	save_game_array.load_file_game_version = abs(save_game_array.load_file_game_version);
 
-	if(game_file_array.load_file_game_version > GAME_VERSION)
+	if(save_game_array.load_file_game_version > GAME_VERSION)
 		return -1;		// the executing program can't handle saved game in future version
 
-//	game_file_array.same_version = (game_file_array.load_file_game_version/100==
-//												(game_file_array.demo_format ? -(GAME_VERSION/100) : GAME_VERSION/100));
-	game_file_array.same_version = ( game_file_array.load_file_game_version/100==GAME_VERSION/100 );
+//	save_game_array.same_version = (save_game_array.load_file_game_version/100==
+//												(save_game_array.demo_format ? -(GAME_VERSION/100) : GAME_VERSION/100));
+	save_game_array.same_version = ( save_game_array.load_file_game_version/100==GAME_VERSION/100 );
 
 	//------------------------------------------------//
 	//
@@ -209,7 +210,7 @@ int GameFile::read_file(File* filePtr)
 	//
 	//------------------------------------------------//
 
-	if( game_file_array.demo_format )
+	if( save_game_array.demo_format )
 	{
 		if( !read_file_1(filePtr) )
 			return 0;
@@ -774,11 +775,11 @@ int RaceRes::read_file(File* filePtr)
 
 	for( int i=1 ; i<=race_res.race_count ; i++, raceInfo++ )
 	{
-		raceInfo->town_name_used_count = (!game_file_array.same_version && i>VERSION_1_MAX_RACE) ?
+		raceInfo->town_name_used_count = (!save_game_array.same_version && i>VERSION_1_MAX_RACE) ?
 													0 : filePtr->file_get_short();
 	}
 
-	if(!game_file_array.same_version)
+	if(!save_game_array.same_version)
 	{
 		memset(name_used_array, 0, sizeof(name_used_array[0]) * name_count);
 		return filePtr->file_read( name_used_array, sizeof(name_used_array[0]) * VERSION_1_RACERES_NAME_COUNT );
@@ -825,7 +826,7 @@ int UnitRes::read_file(File* filePtr)
 
 	for( int i=1 ; i<=unit_res.unit_info_count ; i++, unitInfo++ )
 	{
-			if(!game_file_array.same_version && i > VERSION_1_UNITRES_UNIT_INFO_COUNT)
+			if(!save_game_array.same_version && i > VERSION_1_UNITRES_UNIT_INFO_COUNT)
 			{
 				memset(unitInfo->nation_tech_level_array, 0, sizeof(unitInfo->nation_tech_level_array));
 				memset(unitInfo->nation_unit_count_array, 0, sizeof(unitInfo->nation_unit_count_array));
@@ -906,7 +907,7 @@ int TownRes::write_file(File* filePtr)
 //
 int TownRes::read_file(File* filePtr)
 {
-	if(!game_file_array.same_version)
+	if(!save_game_array.same_version)
 	{
 		memset(town_name_used_array, 0, sizeof(town_name_used_array));
 		return filePtr->file_read( town_name_used_array, sizeof(town_name_used_array[0]) * VERSION_1_TOWNRES_TOWN_NAME_COUNT );
@@ -940,7 +941,7 @@ int TechRes::read_file(File* filePtr)
 	if( !filePtr->file_read( tech_class_array, tech_class_count * sizeof(TechClass) ) )
 		return 0;
 
-	if(!game_file_array.same_version)
+	if(!save_game_array.same_version)
 	{
 		if(!filePtr->file_read( tech_info_array, VERSION_1_TECH_COUNT * sizeof(TechInfo) ) )
 			return 0;
@@ -1095,7 +1096,7 @@ int GodRes::write_file(File* filePtr)
 //
 int GodRes::read_file(File* filePtr)
 {
-	if(!game_file_array.same_version)
+	if(!save_game_array.same_version)
 	{
 		memset(god_info_array, 0, sizeof(god_info_array));
 		return filePtr->file_read( god_info_array, sizeof(GodInfo) * VERSION_1_GODRES_GOD_COUNT );

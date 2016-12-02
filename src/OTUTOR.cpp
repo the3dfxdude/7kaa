@@ -33,6 +33,7 @@
 #include <OBUTTON.h>
 #include <OBUTT3D.h>
 #include <OGFILE.h>
+#include <OSaveGameArray.h>
 #include <OGAME.h>
 #include <OGAMESET.h>
 #include <OWORLD.h>

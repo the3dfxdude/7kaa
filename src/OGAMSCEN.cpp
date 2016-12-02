@@ -26,6 +26,7 @@
 #include <ONEWS.h>
 #include <ODATE.h>
 #include <OGFILE.h>
+#include <OSaveGameArray.h>
 #include <OF_MONS.h>
 #include <OMONSRES.h>
 #include <OFILETXT.h>
@@ -33,6 +34,7 @@
 #include <OBOX.h>
 #include <OBATTLE.h>
 #include <OGAME.h>
+#include <ONATIONA.h>
 
 //--------- declare static vars ----------//
 

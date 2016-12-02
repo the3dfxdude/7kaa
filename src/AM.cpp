@@ -44,7 +44,7 @@
 #include <OFONT.h>
 #include <OGAME.h>
 #include <OGAMESET.h>
-#include <OGFILE.h>
+#include <OSaveGameArray.h>
 #include <OGAMHALL.h>
 #include <OGODRES.h>
 #include <OHELP.h>
@@ -224,7 +224,7 @@ GameSet           game_set;         // no constructor
 Battle            battle;
 Power             power;
 World             world;
-GameFileArray     game_file_array;
+SaveGameArray     save_game_array;
 HallOfFame        hall_of_fame;
 SaveGameInfo      save_game_info;
 // ###### begin Gilbert 23/10 #######//
@@ -462,7 +462,7 @@ static void extra_error_handler()
 	if( game.game_mode != GAME_SINGLE_PLAYER )
 		return;
 
-	game_file_array.save_new_game("ERROR.SAV");  // save a new game immediately without prompting menu
+	save_game_array.save_new_game("ERROR.SAV");  // save a new game immediately without prompting menu
 
 	box.msg( "Error encountered. The game has been saved to ERROR.SAV" );
 }

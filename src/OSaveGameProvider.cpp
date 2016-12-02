@@ -2,9 +2,15 @@
 #include <OMISC.h>
 #include <OFILE.h>
 #include <ODIR.h>
-#include <dbglog.h>
 #include <OSYS.h>
-#include <OGFILE.h> // For SaveGameHeader and GameFile -- TODO: Split those two off from GameFileArray, and perhaps rename that one to SavedGamesMenu or such.
+#include <OGFILE.h>
+#include <dbglog.h>
+
+#ifdef NO_WINDOWS
+#include <unistd.h>
+#else
+#include <io.h>
+#endif
 
 DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 
@@ -49,3 +55,20 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 	}
 }
 //-------- End of function SaveGameProvider::enumerate_savegames --------//
+
+
+//-------- Begin of function SaveGameProvider::delete_savegame --------//
+//
+// Deletes the savegame whose file part of filename is saveGameName.
+//
+void SaveGameProvider::delete_savegame(const char* saveGameName) {
+	char full_path[MAX_PATH+1];
+	if (!misc.path_cat(full_path, sys.dir_config, saveGameName, MAX_PATH))
+	{
+		ERR("Path to the saved game too long.\n");
+		return;
+	}
+
+	unlink(full_path);
+}
+//-------- End of function SaveGameProvider::delete_savegame --------//

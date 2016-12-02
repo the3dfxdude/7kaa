@@ -102,7 +102,6 @@ bin_PROGRAMS = 7kaa
 	OGFILE.cpp \
 	OGFILE2.cpp \
 	OGFILE3.cpp \
-	OGFILEA.cpp \
 	OGF_V1.cpp \
 	OGODRES.cpp \
 	OGRPSEL.cpp \
@@ -163,6 +162,7 @@ bin_PROGRAMS = 7kaa
 	OR_TECH.cpp \
 	OR_TOWN.cpp \
 	OR_TRADE.cpp \
+	OSaveGameArray.cpp \
 	OSaveGameProvider.cpp \
 	OSCROLL.cpp \
 	OSE.cpp \

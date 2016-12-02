@@ -103,6 +103,7 @@ noinst_HEADERS = \
 	ORESX.h \
 	OROCK.h \
 	OROCKRES.h \
+	OSaveGameArray.h \
 	OSaveGameInfo.h \
 	OSaveGameProvider.h \
 	OSCROLL.h \

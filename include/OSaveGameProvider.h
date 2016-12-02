@@ -19,7 +19,7 @@
 */
 
 //Filename    : OSaveGameProvider.h
-//Description : Provides the layer between the game (GameFileArray) and the save backends.
+//Description : Provides the layer between the game (SaveGameArray) and the save backends.
 //              Enumerates the savegames and provides actions for loading and saving.
 
 #ifndef __OSAVEGAMEPROVIDER_H
@@ -33,12 +33,15 @@
 
 
 
-// Provides an abstraction layer between the UI for savegame handling, GameFileArray, file handling, and the data reader/writer, GameFile.
+// Provides an abstraction layer between the UI for savegame handling, SaveGameArray, file handling, and the data reader/writer, GameFile.
 class SaveGameProvider
 {
 public:
 	//  Enumerates all the savegames, calling callback for each savegame.
 	static void enumerate_savegames(const char* filenameWildcard, const std::function<void (const SaveGameInfo* saveGameInfo)>& callback);
+
+	// Deletes the savegame whose file part of filename is saveGameName.
+	static void delete_savegame(const char* saveGameName);
 };
 
 #endif // !__OSAVEGAMEPROVIDER_H

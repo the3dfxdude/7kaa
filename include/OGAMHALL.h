@@ -68,7 +68,7 @@ private:
 
 private:
 	HallFameEntry hall_fame_array[HALL_FAME_NUM];
-	// In a slight (historical) abuse of responsibility, HALLFAME.DAT contains the last savegame name. GameFileArray maintains it during runtime, however.
+	// In a slight (historical) abuse of responsibility, HALLFAME.DAT contains the last savegame name. SaveGameArray maintains it during runtime, however.
 	char     last_savegame_file_name[MAX_PATH+1];
 };
 
