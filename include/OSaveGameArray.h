@@ -38,7 +38,6 @@ public:
 	bool     has_fetched_last_file_name_from_hall_of_fame;
 	char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
 
-	short		load_file_game_version;	// game version of load file
 	char		same_version;				// true if major version of the load game is same as that of the program
 
 public:

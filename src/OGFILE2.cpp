@@ -178,22 +178,20 @@ int GameFile::read_file(File* filePtr)
 
 	int originalRandomSeed = misc.get_random_seed();
 
-	save_game_array.load_file_game_version = filePtr->file_get_short();
+	short load_file_game_version = filePtr->file_get_short();
 
 	// compare if same demo format or not
-	if( save_game_array.demo_format && save_game_array.load_file_game_version > 0
-		|| !save_game_array.demo_format && save_game_array.load_file_game_version < 0)
+	if( save_game_array.demo_format && load_file_game_version > 0
+		|| !save_game_array.demo_format && load_file_game_version < 0)
 		return -1;
 
 	// take the absolute value of game version
-	save_game_array.load_file_game_version = abs(save_game_array.load_file_game_version);
+	load_file_game_version = abs(load_file_game_version);
 
-	if(save_game_array.load_file_game_version > GAME_VERSION)
+	if(load_file_game_version > GAME_VERSION)
 		return -1;		// the executing program can't handle saved game in future version
 
-//	save_game_array.same_version = (save_game_array.load_file_game_version/100==
-//												(save_game_array.demo_format ? -(GAME_VERSION/100) : GAME_VERSION/100));
-	save_game_array.same_version = ( save_game_array.load_file_game_version/100==GAME_VERSION/100 );
+	save_game_array.same_version = ( load_file_game_version/100==GAME_VERSION/100 );
 
 	//------------------------------------------------//
 	//
