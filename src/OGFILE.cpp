@@ -254,6 +254,53 @@ int GameFile::load_game(SaveGameInfo* /*in/out*/ saveGame, const char *base_path
 //--------- End of function GameFile::load_game --------//
 
 
+//-------- Begin of function GameFile::read_header --------//
+//
+// Reads the given file and fills the save game info from the header. Returns true if successful.
+//
+bool GameFile::read_header(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+{
+	char full_path[MAX_PATH+1];
+	if (!misc.path_cat(full_path, directory, fileName, MAX_PATH))
+	{
+		errorMessage = _("Path to the saved game too long");
+		return false;
+	}
+
+	bool success;
+	File file;
+	SaveGameHeader saveGameHeader;
+	if( file.file_open(full_path, 1, 1)      // last 1=allow varying read & write size
+		&& file.file_read(&saveGameHeader, sizeof(SaveGameHeader)) )
+	{
+		if( !validate_header(&saveGameHeader) )
+		{
+			errorMessage = _("Invalid header");
+			success = false;
+		}
+		else
+		{
+			strcpy( saveGameHeader.info.file_name, fileName );  // in case that the name may be different
+			success = true;
+		}
+	}
+	else
+	{
+		errorMessage = _("Could not open file");
+		success = false;
+	}
+	file.file_close();
+
+	if (success)
+	{
+		*saveGameInfo = saveGameHeader.info;
+	}
+
+	return success;
+}
+//--------- End of function GameFile::read_header --------//
+
+
 //-------- Begin of function GameFile::save_process -------//
 //
 // Make the game data ready for saving game

@@ -59,9 +59,12 @@ public:
    static bool save_game(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
    static int load_game(SaveGameInfo* /*in/out*/ saveGame, const char*, char*);
 
-   static bool validate_header(const SaveGameHeader* saveGame);
+   // Reads the given file and fills the save game info from the header. Returns true if successful.
+   static bool read_header(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
 
 private:
+   static bool validate_header(const SaveGameHeader* saveGame);
+
    static void  save_process();
    static void  load_process();
    static int   write_game_header(SaveGameInfo* /*in/out*/ saveGame, File* filePtr);

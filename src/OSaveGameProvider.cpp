@@ -24,8 +24,10 @@ DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 //
 void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const std::function<void(const SaveGameInfo* saveGameInfo)>& callback)
 {
+	const char* const directory = sys.dir_config;
+
 	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, filenameWildcard, MAX_PATH))
+	if (!misc.path_cat(full_path, directory, filenameWildcard, MAX_PATH))
 	{
 		ERR("Path to the config directory too long.\n");
 		return;
@@ -38,23 +40,17 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 
 	for( int i=1 ; i<=saveGameDirectory.size() ; i++ )
 	{
-		if (!misc.path_cat(full_path, sys.dir_config, saveGameDirectory[i]->name, MAX_PATH))
+		SaveGameInfo saveGameInfo;
+		String errorMessage;
+		if( GameFile::read_header(directory, saveGameDirectory[i]->name, &saveGameInfo, /*out*/ errorMessage) )
 		{
-			ERR("Path to the saved game too long.\n");
-			continue;
+			saveGameInfo.file_date = saveGameDirectory[i]->time;
+			callback(&saveGameInfo);
 		}
-
-		File file;
-		SaveGameHeader saveGameHeader;
-		if( file.file_open(full_path, 1, 1)      // last 1=allow varying read & write size
-			&& file.file_read(&saveGameHeader, sizeof(SaveGameHeader))
-			&& GameFile::validate_header(&saveGameHeader) )
+		else
 		{
-			strcpy( saveGameHeader.info.file_name, saveGameDirectory[i]->name );  // in case that the name may be different
-			saveGameHeader.info.file_date = saveGameDirectory[i]->time;
-			callback(&saveGameHeader.info);
+			ERR("Failed to enumerate savegame '%s': %s\n", saveGameDirectory[i]->name, (const char*)errorMessage);
 		}
-		file.file_close();
 	}
 }
 //-------- End of function SaveGameProvider::enumerate_savegames --------//
