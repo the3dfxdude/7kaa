@@ -39,10 +39,14 @@
 #include <OF_MONS.h>
 #include "gettext.h"
 
+
 //----------- Define constant ------------//
 
 #define MONSTER_SOLDIER_COMBAT_LEVEL_DIVIDER		2
 static char current_monster_action_mode;
+
+static int fryhtan_attacks_per_six_months(int numOfLairs);
+
 
 //--------- Begin of function FirmMonster::init_derived ---------//
 //
@@ -209,10 +213,17 @@ void FirmMonster::next_day()
 		//------ attack human towns and firms randomly -----//
 
 		if( info.game_date > info.game_start_date + 1000 &&	// only start attacking 3 years after the game starts so the human can build up things
-			 info.game_date%30 == firm_recno%30 &&
-			 misc.random( firm_res[FIRM_MONSTER]->total_firm_count*6 )==0 )		// it will expand slower when there are already a lot of the monster structures on the map
+			info.game_date%30 == firm_recno%30 )
 		{
-			think_attack_human();
+			// From the desired average number of attacks per 6 months, we want the attack chance per lair (which is per month):
+			//   Lairs * P(Attack) * 6 = Desired      <=>    P(Attack) = Desired / 6 / Lairs
+			// Note that Desired < (6 * Lairs). We can use: rand(6 * Lairs) < Desired to simulate this chance.
+			int numOfLairs = firm_res[FIRM_MONSTER]->total_firm_count;
+			int attacksPerSixMonths = fryhtan_attacks_per_six_months(numOfLairs);
+			if (misc.random(6 * numOfLairs) < attacksPerSixMonths)
+			{
+				think_attack_human();
+			}
 		}
 
 		//--------- think expansion ---------//
@@ -225,6 +236,46 @@ void FirmMonster::next_day()
 	}
 }
 //----------- End of function FirmMonster::next_day -----------//
+
+
+//------- Begin of function fryhtan_attacks_per_six_months -------//
+//
+// Encodes the Fryhtan attack curve.
+// Returns the average number of Fryhtan attacks in 6 months for the given number of lairs.
+//
+int fryhtan_attacks_per_six_months(int numOfLairs)
+{
+	// This algorithm encodes the continuation of the following table:
+	//
+	// # Lairs     | 0   5   10  15  20  30  40  50  60  70  80  95  110 ...
+	// -----------------------------------------------------------------------
+	// # attacks   | 1   2   3   4   5   6   7   8   9   10  11  12  13  ...
+	//
+	//                      4 x +5            6 x +10                  8 x +15 
+	//
+	// The plateaus in this table are given by
+	//   x0 = 0
+	//   x1 = x0 + 4 * 5    = 20
+	//   x2 = x1 + 6 * 10   = 80
+	//   x3 = x2 + 8 * 15   = 200
+	//   ...
+	// 
+	int attacks = 1;
+	int plateauThreshold = 0;
+	int plateauLength = 4;
+	int plateau = 5;
+
+	while (plateauThreshold < numOfLairs)
+	{
+		int currentPlateau = numOfLairs - plateauThreshold;
+		plateauThreshold += plateauLength * plateau;
+		attacks += MIN(currentPlateau, plateauThreshold)  / plateau;
+		plateauLength += 2;
+		plateau += 5;
+	}
+	return attacks;
+}
+//----------- End of function fryhtan_attacks_per_six_months -----------//
 
 
 //------- Begin of function FirmMonster::recover_hit_points -------//
