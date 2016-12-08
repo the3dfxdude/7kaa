@@ -2598,7 +2598,7 @@ void Sys::load_game()
 
    save_game_array.init("*.SAV");                  // reload any save game file
    save_game_array.menu(-2);               // save screen area to back buffer
-   switch( save_game_array.menu(2) )
+   switch( save_game_array.load_game() )
    {
       case 1:
          rc = 1;                 // fall through to case 0

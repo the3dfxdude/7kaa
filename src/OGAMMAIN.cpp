@@ -611,7 +611,7 @@ void Game::single_player_menu()
 					case 3:
 						save_game_array.init("*.SAV");
 
-						if( save_game_array.menu(2) == 1)
+						if( save_game_array.load_game() == 1)
 						{
 							battle.run_loaded();
 							deinit();
