@@ -2631,8 +2631,7 @@ void Sys::save_game()
 
    if( game_file_array.menu(1) == 1 )
    {
-      if( GameFile::last_read_success_flag )
-         box.msg( _("Game Saved Successfully") );
+      box.msg( _("Game Saved Successfully") );
    }
 
    game_file_array.menu(-1);               // restore screen area from back buffer

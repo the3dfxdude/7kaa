@@ -484,9 +484,9 @@ public:
 	//--------------------------------------------------------------//
 
 	int 			think_capture_independent();
-	int 			capture_expected_resistance(int townRecno);
-	int 			start_capture(int townRecno);
-	int 			capture_build_camp(int townRecno, int raceId);
+	int 			capture_expected_resistance(int townRecno, int *captureUnitRecno);
+	int 			start_capture(int townRecno, int captureUnitRecno);
+	int 			capture_build_camp(int townRecno, int raceId, int captureUnitRecno);
 	int 			find_best_capturer(int townRecno, int raceId, int& bestResistanceReduce);
 	int 			hire_best_capturer(int townRecno, int raceId);
 	int			mobilize_capturer(int unitRecno);

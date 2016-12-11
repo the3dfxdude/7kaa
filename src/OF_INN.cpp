@@ -218,7 +218,7 @@ void FirmInn::detect_info()
 		put_det(INFO_UPDATE);
 	}
 
-	if( button_hire.detect() && inn_unit_count > 0 )
+	if( button_hire.detect('R') && inn_unit_count > 0 )
 	{
 		// ###### begin Gilbert 31/7 #######//
 		se_res.far_sound(center_x, center_y, 1, 'S', 

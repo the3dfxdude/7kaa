@@ -692,7 +692,8 @@ int GameFileArray::process_action(int saveNew)
 	{
 		if( saveNew || browse_recno==0 )   // save on empty slot
 		{
-			save_new_game();
+			if ( !save_new_game())
+				return -1;
 		}
 		else           // save on existing slot
 		{
@@ -736,7 +737,10 @@ int GameFileArray::process_action(int saveNew)
 //
 // [char*] fileName - file name of the saved game
 //
-void GameFileArray::save_new_game(const char* fileName)
+// return : <int> 1 - saved successfully.
+//                0 - not saved.
+//
+int GameFileArray::save_new_game(const char* fileName)
 {
 	GameFile  gameFile;
 	GameFile* gameFilePtr;
@@ -761,11 +765,11 @@ void GameFileArray::save_new_game(const char* fileName)
 		}
 
 		strcpy( gameFile.file_name, fileName );
-   }
+	}
 	else
-   {
-      gameFile.set_file_name();        // give it a new game_file_name based on current group name
-   }
+	{
+		gameFile.set_file_name();        // give it a new game_file_name based on current group name
+	}
 
 	//----------- save game now ------------//
 
@@ -775,15 +779,18 @@ void GameFileArray::save_new_game(const char* fileName)
 
 		if( addFlag )
 		{
-         linkin(&gameFile);
+			linkin(&gameFile);
 
 			quick_sort( sort_game_file_function );
-      }
+		}
 		else
-      {
-         game_file_array.update(&gameFile, gameFileRecno);
-      }
-   }
+		{
+			game_file_array.update(&gameFile, gameFileRecno);
+		}
+
+		return 1;
+	}
+	return 0;
 }
 //-------- End of function GameFileArray::save_new_game -------//
 
