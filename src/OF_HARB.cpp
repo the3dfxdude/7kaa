@@ -371,7 +371,7 @@ void FirmHarbor::detect_main_menu()
 
 	//------- detect the build button ---------//
 
-	if( button_build.detect() )
+	if( button_build.detect('B') )
 	{
 		harbor_menu_mode = HARBOR_MENU_BUILD;
 		disable_refresh = 1;    // static var for disp_info() only
@@ -381,7 +381,7 @@ void FirmHarbor::detect_main_menu()
 
 	//-------- detect the sail button ---------//
 
-	if( button_sail.detect() && browse_ship.recno() > 0 )
+	if( button_sail.detect('R') && browse_ship.recno() > 0 )
 		sail_ship( ship_recno_array[browse_ship.recno()-1], COMMAND_PLAYER );
 
 	//---------- detect cancel build button -----------//

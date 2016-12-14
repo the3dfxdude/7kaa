@@ -303,7 +303,7 @@ void FirmMarket::detect_info()
 
 	//----- detect hire caravan button -------//
 
-	if( button_hire_caravan.detect() )
+	if( button_hire_caravan.detect('R') )
 		hire_caravan(COMMAND_PLAYER);
 }
 //----------- End of function FirmMarket::detect_info -----------//

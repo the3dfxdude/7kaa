@@ -289,7 +289,7 @@ void UnitMarine::detect_unit_menu()
 
 	//----------- detect the unload all button -----------//
 
-	if( button_unload_all.detect() )
+	if( button_unload_all.detect('R') )
 	{
 		unload_all_units(COMMAND_PLAYER);
 		info.disp();

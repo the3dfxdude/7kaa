@@ -75,7 +75,7 @@ int Nation::think_capture_new_enemy_town(Town* capturerTown, int useAllCamp)
 
 	else if( rc == -1 )		// -1 means no defense on the target town, no attacking is needed.
 	{
-		return start_capture( targetTown->town_recno );		// call AI functions in OAI_CAPT.CPP to capture the town
+		return start_capture( targetTown->town_recno, 0 );		// call AI functions in OAI_CAPT.CPP to capture the town
 	}
 
 	return 0;
@@ -164,7 +164,7 @@ void Nation::think_capturing_enemy_town()
 
 		if( rc == -1 )		// -1 means no defense on the target town, no attacking is needed.
 		{
-			start_capture( targetTown->town_recno );		// call AI functions in OAI_CAPT.CPP to capture the town
+			start_capture( targetTown->town_recno, 0 );		// call AI functions in OAI_CAPT.CPP to capture the town
 		}
 		
 		// 0 means we don't have enough troop to attack the enemy
