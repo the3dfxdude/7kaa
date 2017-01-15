@@ -25,11 +25,10 @@
 #ifndef __OSAVEGAMEPROVIDER_H
 #define __OSAVEGAMEPROVIDER_H
 
-#include <OSaveGameInfo.h>
-
 #include <functional>
 
 class String;
+struct SaveGameInfo;
 
 
 // Provides an abstraction layer between the UI for savegame handling, SaveGameArray, file handling, and the data reader/writer, GameFile.

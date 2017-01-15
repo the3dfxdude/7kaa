@@ -30,6 +30,7 @@
 #include <OFIRMDIE.h>
 #include <OGAME.h>
 #include <OGFILE.h>
+#include <OGF_V1.h>
 #include <OGODRES.h>
 #include <OINFO.h>
 #include <OMONSRES.h>

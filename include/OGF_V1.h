@@ -37,6 +37,15 @@
 #include <OGFILE.h>
 #endif
 
+//------------ Define constant for game version == 1xx -----------------//
+#define	VERSION_1_MAX_RACE						7
+#define	VERSION_1_MAX_UNIT_TYPE					37
+#define	VERSION_1_RACERES_NAME_COUNT			1582
+#define	VERSION_1_UNITRES_UNIT_INFO_COUNT	37
+#define	VERSION_1_TOWNRES_TOWN_NAME_COUNT	367
+#define	VERSION_1_GODRES_GOD_COUNT				7
+#define	VERSION_1_TECH_COUNT						7
+
 #pragma pack(1)
 class Version_1_Town
 {

@@ -1,4 +1,5 @@
 #include <OSaveGameProvider.h>
+#include <OSaveGameInfo.h>
 #include <OMISC.h>
 #include <OFILE.h>
 #include <ODIR.h>

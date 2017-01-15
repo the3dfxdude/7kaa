@@ -25,10 +25,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <OBOX.h>
+#include <OGFILE.h>
+#include <OFILE.h>
 #include <OSTR.h>
-#include <ODATE.h>
 #include <OMOUSECR.h>
+#include <OBOX.h>
 #include <OTALKRES.h>
 #include <ONATION.h>
 #include <OWORLD.h>
@@ -36,10 +37,10 @@
 #include <OGAME.h>
 #include <OTownNetwork.h>
 #include <OINFO.h>
-#include <OGFILE.h>
 #include <OSYS.h>
 #include <OAUDIO.h>
 #include <OMUSIC.h>
+#include <OSaveGameInfo.h>
 #include <dbglog.h>
 #include "gettext.h"
 
