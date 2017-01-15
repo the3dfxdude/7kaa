@@ -45,9 +45,15 @@
 
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
-// -------- define constant ----------//
-#define MIN_FREE_SPACE 1000
+#pragma pack(1)
+struct GameFile::SaveGameHeader
+{
+	uint32_t class_size;    // for version compare
+	SaveGameInfo info;
+};
+#pragma pack()
 
+typedef GameFile::SaveGameHeader SaveGameHeader;
 enum {CLASS_SIZE = 302};
 static_assert(sizeof(SaveGameHeader) == CLASS_SIZE, "Savegame header size mismatch"); // (no packing)
 

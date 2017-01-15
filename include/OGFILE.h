@@ -40,16 +40,6 @@
 #define	VERSION_1_GODRES_GOD_COUNT				7
 #define	VERSION_1_TECH_COUNT						7
 
-
-#pragma pack(1)
-struct SaveGameHeader
-{
-	uint32_t class_size;    // for version compare
-	SaveGameInfo info;
-};
-#pragma pack()
-
-
 //-------- Define static class GameFile -----------//
 
 class GameFile
@@ -61,6 +51,9 @@ public:
 
    // Reads the given file and fills the save game info from the header. Returns true if successful.
    static bool read_header(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
+
+public:
+   struct SaveGameHeader;
 
 private:
    static bool validate_header(const SaveGameHeader* saveGame);
