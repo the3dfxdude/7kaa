@@ -212,7 +212,7 @@ bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameI
 	bool success;
 	File file;
 	SaveGameHeader saveGameHeader;
-	if( file.file_open(filePath, 1, 1)      // last 1=allow varying read & write size
+	if( file.file_open(filePath, 0, 1)      // last 1=allow varying read & write size
 		&& file.file_read(&saveGameHeader, sizeof(SaveGameHeader)) )
 	{
 		if( !validate_header(&saveGameHeader) )
