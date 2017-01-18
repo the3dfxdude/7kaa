@@ -28,12 +28,10 @@
 #include <OGFILE.h>
 #include <OFILE.h>
 #include <OSTR.h>
-#include <OMOUSECR.h>
 #include <OBOX.h>
 #include <OTALKRES.h>
 #include <ONATION.h>
 #include <OWORLD.h>
-#include <OPOWER.h> // TODO: Remove
 #include <OGAME.h>
 #include <OTownNetwork.h>
 #include <OINFO.h>
@@ -134,63 +132,31 @@ bool GameFile::save_game(const char* directory, const char* fileName, SaveGameIn
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
-int GameFile::load_game(SaveGameInfo* /*in/out*/ saveGame, const char *base_path, char* fileName)
+int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
-	char full_path[MAX_PATH+1];
 	File file;
-	int  rc=0;
-	const char *errMsg = NULL;
+	int  rc=1;
 
-	power.win_opened=1;				// to disable power.mouse_handler()
-
-	int oldCursor = mouse_cursor.get_icon();
-	mouse_cursor.set_icon( CURSOR_WAITING );
-
-	int powerEnableFlag = power.enable_flag;
-
-	if( fileName )
-		strcpy( saveGame->file_name, fileName );
-
-	rc = 1;
-
-	if (!misc.path_cat(full_path, base_path, saveGame->file_name, MAX_PATH))
+	if(rc && !file.file_open(filePath, 0, 1)) // 0=tell File don't handle error itself
 	{
 		rc = 0;
-		errMsg = _("Path too long to the saved game");
-	}
-
-	if(rc && !file.file_open(full_path, 0, 1)) // 0=tell File don't handle error itself
-	{
-		rc = 0;
-		errMsg = _("Cannot open save game file");
+		errorMessage = _("Cannot open save game file");
 	}
 
 	//-------- read in the GameFile class --------//
 
+	SaveGameHeader saveGameHeader;
 	if( rc )
 	{
-		char gameFileName[MAX_PATH+1];
-
-		strcpy( gameFileName, saveGame->file_name );     // save the file name actually read, in case that the file names are different
-
-		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
-
-		SaveGameHeader saveGameHeader;
 		if( !file.file_read(&saveGameHeader, CLASS_SIZE) )	// read the whole object from the saved game file
 		{
 			rc = 0;
-			errMsg = _("Cannot read file header");
+			errorMessage = _("Cannot read file header");
 		}
-		if( rc )
+		else if( !validate_header(&saveGameHeader) )
 		{
-			*saveGame = saveGameHeader.info;
-			if( !validate_header(&saveGameHeader) )
-			{
-				rc = 0;
-				errMsg = _("Save game incompatible");
-			}
-			else
-				strcpy( saveGame->file_name, gameFileName );
+			rc = 0;
+			errorMessage = _("Save game incompatible");
 		}
 	}
 
@@ -198,19 +164,12 @@ int GameFile::load_game(SaveGameInfo* /*in/out*/ saveGame, const char *base_path
 																  // 1=allow the writing size and the read size to be different
 	if( rc )
 	{
-		config.terrain_set = saveGame->terrain_set;
+		config.terrain_set = saveGameHeader.info.terrain_set;
 
 		game.deinit(1);		// deinit last game first, 1-it is called during loading of a game
 		game.init(1);			// init game
 
 		//-------- read in saved game ----------//
-
-		// ###### patch begin Gilbert 20/1 #######//
-		//if( !read_file(&file) )
-		//{
-		//	rc = -1;
-		//	errMsg = "Load game error";
-		//}
 
 		switch( read_file(&file) )
 		{
@@ -219,12 +178,12 @@ int GameFile::load_game(SaveGameInfo* /*in/out*/ saveGame, const char *base_path
 			break;
 		case -1:
 			rc = 0;		// consider cancel load game
-			errMsg = _("Incompatible save game");
+			errorMessage = _("Incompatible save game");
 			break;
 		case 0:
 		default:
 			rc = -1;
-			errMsg = _("Load game error");
+			errorMessage = _("Load game error");
 		}
 
 		if( rc > 0 )
@@ -233,27 +192,16 @@ int GameFile::load_game(SaveGameInfo* /*in/out*/ saveGame, const char *base_path
 			
 			//------- create the town network --------//
 			town_network_array.recreate_after_load();
-			
 		}
-		// ###### patch end Gilbert 20/1 #######//
 	}
 
 	file.file_close();
 
-	power.enable_flag = powerEnableFlag;
-
-	mouse_cursor.restore_icon( oldCursor );
-
-	power.win_opened=0;
-
 	//---------------------------------------//
 
-	switch(rc)   // don't display msg if loaded successfully (rc==1)
+	if (rc > 0)
 	{
-		case 0:
-		case -1:
-			box.msg( errMsg );
-			break;
+		*saveGameInfo = saveGameHeader.info;
 	}
 
 	return rc;
@@ -340,8 +288,6 @@ void GameFile::load_process()
 
 	if( sys.view_mode==MODE_NATION && info.nation_report_mode==NATION_REPORT_TALK )
 		talk_res.set_talk_choices();
-
-	mouse_cursor.set_frame(0);		// to fix a frame bug with loading game
 
 	// reflect the effect of config.music_flag, config.wav_music_volume
 	audio.set_wav_volume(config.sound_effect_volume);

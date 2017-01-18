@@ -36,7 +36,8 @@ class GameFile
 public:
    // Saves the current game under the given fileName in the given directory. Updates the saveGameInfo with the new savegame information. Returns true on success.
    static bool save_game(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
-   static int load_game(SaveGameInfo* /*in/out*/ saveGame, const char*, char*);
+   // Loads the saved game given by directory and fileName. Updates saveGameInfo in with the new savegame information. Returns 1, 0, or -1 for success, recoverable failure, failure.
+   static int load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
 
    // Reads the given file and fills the save game info from the header. Returns true if successful.
    static bool read_header(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);

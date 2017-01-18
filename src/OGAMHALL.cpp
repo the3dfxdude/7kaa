@@ -34,7 +34,6 @@
 #include <ORACERES.h>
 #include <OGAME.h>
 #include <ONATION.h>
-#include <OGFILE.h>
 #include <dbglog.h>
 #include "gettext.h"
 

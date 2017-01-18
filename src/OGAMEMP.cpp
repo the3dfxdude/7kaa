@@ -37,7 +37,6 @@
 #include <OGAME.h>
 #include <multiplayer.h>
 #include <OERRCTRL.h>
-#include <OGFILE.h>
 #include <OCONFIG.h>
 #include <OIMGRES.h>
 #include <OGET.h>

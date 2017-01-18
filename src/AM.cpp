@@ -226,7 +226,6 @@ Power             power;
 World             world;
 SaveGameArray     save_game_array;
 HallOfFame        hall_of_fame;
-SaveGameInfo      save_game_info;
 // ###### begin Gilbert 23/10 #######//
 OptionMenu			option_menu;
 InGameMenu			in_game_menu;

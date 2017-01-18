@@ -33,7 +33,6 @@
 #include <OIMGRES.h>
 #include <OINFO.h>
 #include <OGAME.h>
-#include <OGFILE.h>
 #include <OCONFIG.h>
 #include <ORACERES.h>
 #include <OBUTT3D.h>

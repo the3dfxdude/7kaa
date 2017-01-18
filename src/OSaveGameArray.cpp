@@ -38,7 +38,6 @@
 #include <OINFO.h>
 #include <OGAME.h>
 #include <OGAMESET.h>
-#include <OGFILE.h>
 #include <OSaveGameProvider.h>
 #include <OGAMHALL.h>
 #include <OBUTT3D.h>
@@ -697,9 +696,16 @@ int SaveGameArray::process_action(int saveNew)
 	{
 		SaveGameInfo* saveGameInfo = (*this)[browse_recno];
 
-		int rc = GameFile::load_game(saveGameInfo, (const char*)sys.dir_config, NULL);
+		String errorMessage;
+		int rc = SaveGameProvider::load_game(saveGameInfo, /*out*/ errorMessage);
 		if( rc > 0 )
+		{
 			strcpy( last_file_name, saveGameInfo->file_name );
+		}
+		else
+		{
+			box.msg( errorMessage );
+		}
 		return rc;
 	}
 

@@ -42,7 +42,6 @@
 #include <OGAME.h>
 #include <ONEWS.h>
 #include <OGAMESET.h>
-#include <OGFILE.h>
 #include <OSaveGameArray.h>
 #include <OSaveGameProvider.h>
 #include <OGAMHALL.h>

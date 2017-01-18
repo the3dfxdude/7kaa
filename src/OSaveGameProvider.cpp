@@ -6,6 +6,7 @@
 #include <OSYS.h>
 #include <OGFILE.h>
 #include <OPOWER.h> // TODO: There might be an even better (higher-level / UI) place to do this (power.win_opened)
+#include <OMOUSECR.h>
 #include <dbglog.h>
 
 #include "gettext.h"
@@ -120,3 +121,92 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 	return success;
 }
 //-------- End of function SaveGameProvider::save_game(3) --------//
+
+
+//-------- Begin of function SaveGameProvider::load_game --------//
+//
+// Loads the game given by saveGameInfo as he current game. Updates saveGameInfo on success.
+// return : <int> 1 - loaded successfully.
+//                0 - not loaded.
+//               -1 - error and partially loaded
+//
+int SaveGameProvider::load_game(SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage)
+{
+	return load_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage);
+}
+
+//-------- Begin of function SaveGameProvider::load_game --------//
+//
+// Loads the game given by fileName as the current game. Updates saveGameInfo to the new savegame information on success.
+// return : <int> 1 - loaded successfully.
+//                0 - not loaded.
+//               -1 - error and partially loaded
+//
+int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+{
+	int rc = 1;
+	char full_path[MAX_PATH+1];
+	if (!misc.path_cat(full_path, sys.dir_config, fileName, MAX_PATH))
+	{
+		rc = 0;
+		errorMessage = _("Path too long to the saved game");
+	}
+
+	if (rc > 0)
+	{
+		rc = load_game_from_file(full_path, /*out*/ saveGameInfo, /*out*/ errorMessage);
+	}
+
+	if (rc > 0)
+	{
+		if (saveGameInfo->file_name != fileName /*(comparison as pointers)*/) {
+			strncpy(saveGameInfo->file_name, fileName, MAX_PATH);
+			saveGameInfo->file_name[MAX_PATH] = '\0';
+		}
+	}
+
+	return rc;
+}
+//-------- End of function SaveGameProvider::load_game --------//
+
+
+//-------- Begin of function SaveGameProvider::load_scenario --------//
+//
+// Loads the scenario whose full path is given by filePath.
+// return : <int> 1 - loaded successfully.
+//                0 - not loaded.
+//               -1 - error and partially loaded
+//
+int SaveGameProvider::load_scenario(const char* filePath, String& /*out*/ errorMessage)
+{
+	SaveGameInfo saveGameInfo;
+	return load_game_from_file(filePath, /*out*/ &saveGameInfo, /*out*/ errorMessage);
+}
+//-------- End of function SaveGameProvider::load_scenario --------//
+
+
+//-------- Begin of function SaveGameProvider::load_game_from_file --------//
+//
+// Loads the game given by the full filePath as the current game. Updates saveGameInfo to the new savegame information on success.
+// return : <int> 1 - loaded successfully.
+//                0 - not loaded.
+//               -1 - error and partially loaded
+//
+int SaveGameProvider::load_game_from_file(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+{
+	power.win_opened=1;				// to disable power.mouse_handler()
+	const int oldCursor = mouse_cursor.get_icon();
+	mouse_cursor.set_icon( CURSOR_WAITING );
+	const int powerEnableFlag = power.enable_flag;
+
+	int rc = GameFile::load_game(filePath, /*out*/ saveGameInfo, /*out*/ errorMessage);
+
+	mouse_cursor.set_frame(0);		// to fix a frame bug with loading game
+
+	power.enable_flag = powerEnableFlag;
+	mouse_cursor.restore_icon( oldCursor );
+	power.win_opened=0;
+
+	return rc;
+}
+//-------- End of function SaveGameProvider::load_game_from_file --------//

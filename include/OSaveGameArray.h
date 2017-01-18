@@ -63,6 +63,5 @@ private:
 };
 
 extern SaveGameArray save_game_array;
-extern SaveGameInfo  save_game_info;        //**BUGHERE
 
 #endif
