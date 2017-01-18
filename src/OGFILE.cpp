@@ -213,19 +213,12 @@ int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo
 //
 // Reads the given file and fills the save game info from the header. Returns true if successful.
 //
-bool GameFile::read_header(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, directory, fileName, MAX_PATH))
-	{
-		errorMessage = _("Path to the saved game too long");
-		return false;
-	}
-
 	bool success;
 	File file;
 	SaveGameHeader saveGameHeader;
-	if( file.file_open(full_path, 1, 1)      // last 1=allow varying read & write size
+	if( file.file_open(filePath, 1, 1)      // last 1=allow varying read & write size
 		&& file.file_read(&saveGameHeader, sizeof(SaveGameHeader)) )
 	{
 		if( !validate_header(&saveGameHeader) )
@@ -235,7 +228,6 @@ bool GameFile::read_header(const char* directory, const char* fileName, SaveGame
 		}
 		else
 		{
-			strcpy( saveGameHeader.info.file_name, fileName );  // in case that the name may be different
 			success = true;
 		}
 	}

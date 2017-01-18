@@ -42,16 +42,25 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 
 	for( int i=1 ; i<=saveGameDirectory.size() ; i++ )
 	{
-		SaveGameInfo saveGameInfo;
+		const char* const saveGameName = saveGameDirectory[i]->name;
 		String errorMessage;
-		if( GameFile::read_header(directory, saveGameDirectory[i]->name, &saveGameInfo, /*out*/ errorMessage) )
+		char save_game_path[MAX_PATH+1];
+		if (!misc.path_cat(save_game_path, directory, saveGameName, MAX_PATH))
 		{
+			ERR("Path to saved game '%s' too long\n", saveGameName);
+			continue;
+		}
+
+		SaveGameInfo saveGameInfo;
+		if( GameFile::read_header(save_game_path, &saveGameInfo, /*out*/ errorMessage) )
+		{
+			strncpy(saveGameInfo.file_name, saveGameName, MAX_PATH); // in case file names are different
 			saveGameInfo.file_date = saveGameDirectory[i]->time;
 			callback(&saveGameInfo);
 		}
 		else
 		{
-			ERR("Failed to enumerate savegame '%s': %s\n", saveGameDirectory[i]->name, (const char*)errorMessage);
+			ERR("Failed to enumerate savegame '%s': %s\n", saveGameName, (const char*)errorMessage);
 		}
 	}
 }

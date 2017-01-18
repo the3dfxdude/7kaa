@@ -40,7 +40,7 @@ public:
    static int load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
 
    // Reads the given file and fills the save game info from the header. Returns true if successful.
-   static bool read_header(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
+   static bool read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
 
 public:
    struct SaveGameHeader;
