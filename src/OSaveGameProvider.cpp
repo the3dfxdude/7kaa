@@ -80,16 +80,28 @@ void SaveGameProvider::delete_savegame(const char* saveGameName) {
 //
 bool SaveGameProvider::save_game(SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
-	return save_game(saveGameInfo, saveGameInfo->file_name, /*out*/ errorMessage);
+	return save_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage);
 }
 //-------- End of function SaveGameProvider::save_game(1) --------//
 
 
 //-------- Begin of function SaveGameProvider::save_game(2) --------//
 //
-// Save the current game under the name given by newFileName. Updates saveGameInfo to the new savegame information on success.
+// Save the current game under the name given by newFileName.
 //
-bool SaveGameProvider::save_game(SaveGameInfo* /*in/out*/ saveGameInfo, const char* newFileName, String& /*out*/ errorMessage)
+bool SaveGameProvider::save_game(const char* newFileName, String& /*out*/ errorMessage)
+{
+	SaveGameInfo newSaveGameInfo;
+	return save_game(newFileName, /*out*/ &newSaveGameInfo, /*out*/ errorMessage);
+}
+//-------- End of function SaveGameProvider::save_game(2) --------//
+
+
+//-------- Begin of function SaveGameProvider::save_game(3) --------//
+//
+// Save the current game under the file specified by newFileName. Updates saveGameInfo to the new savegame information on success.
+//
+bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
 	power.win_opened=1;				// to disable power.mouse_handler()
 
@@ -107,4 +119,4 @@ bool SaveGameProvider::save_game(SaveGameInfo* /*in/out*/ saveGameInfo, const ch
 
 	return success;
 }
-//-------- End of function SaveGameProvider::save_game(2) --------//
+//-------- End of function SaveGameProvider::save_game(3) --------//

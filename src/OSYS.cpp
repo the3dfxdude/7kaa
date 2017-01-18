@@ -868,7 +868,7 @@ void Sys::main_loop(int isLoadedGame)
             if( nation_array.player_recno )     // only save when the player is still in the game
             {
                String errorMessage;
-               if ( !SaveGameProvider::save_game( &save_game_info, remote.save_file_name, /*out*/ errorMessage ) ) 
+               if ( !SaveGameProvider::save_game( remote.save_file_name, /*out*/ errorMessage ) )
 			   {
 				   box.msg( errorMessage );
 			   }
@@ -934,11 +934,11 @@ void Sys::auto_save()
 		 String errorMessage;
          switch(saveCount)
          {
-            case 0:  saveSuccessfull = SaveGameProvider::save_game( &save_game_info, "DEBUG1.SAV", /*out*/ errorMessage );
+            case 0:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG1.SAV", /*out*/ errorMessage );
                      break;
-			case 1:  saveSuccessfull = SaveGameProvider::save_game( &save_game_info, "DEBUG2.SAV", /*out*/ errorMessage );
+			case 1:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG2.SAV", /*out*/ errorMessage );
                      break;
-			case 2:  saveSuccessfull = SaveGameProvider::save_game( &save_game_info, "DEBUG3.SAV", /*out*/ errorMessage );
+			case 2:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG3.SAV", /*out*/ errorMessage );
                      break;
          }
 		 if( !saveSuccessfull )
@@ -972,7 +972,7 @@ void Sys::auto_save()
          }
 
 		 String errorMessage;
-         if( !SaveGameProvider::save_game( &save_game_info, "AUTO.SAV", /*out*/ errorMessage ) )
+         if( !SaveGameProvider::save_game( "AUTO.SAV", /*out*/ errorMessage ) )
 		 {
 			 box.msg( errorMessage );
 		 }
@@ -1026,7 +1026,7 @@ void Sys::auto_save()
       }
 
 	  String errorMessage;
-	  if( !SaveGameProvider::save_game( &save_game_info, "AUTO.SVM", /*out*/ errorMessage ) )
+	  if( !SaveGameProvider::save_game( "AUTO.SVM", /*out*/ errorMessage ) )
 	  {
 		  box.msg( errorMessage );
 	  }

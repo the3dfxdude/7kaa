@@ -43,8 +43,10 @@ public:
 
 	// Save the current game under the file specified by saveGameInfo. Updates saveGameInfo to the new savegame information on success.
 	static bool save_game(SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage);
-	// Save the current game under the name given by newFileName. Updates saveGameInfo to the new savegame information on success.
-	static bool save_game(SaveGameInfo* /*in/out*/ saveGameInfo, const char* newFileName, String& /*out*/ errorMessage);
+	// Save the current game under the name given by newFileName.
+	static bool save_game(const char* newFileName, String& /*out*/ errorMessage);
+	// Save the current game under the file specified by newFileName. Updates saveGameInfo to the new savegame information on success.
+	static bool save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
 };
 
 #endif // !__OSAVEGAMEPROVIDER_H
