@@ -34,8 +34,8 @@ struct SaveGameInfo;
 class GameFile
 {
 public:
-   // Saves the current game under the given fileName in the given directory. Updates the saveGameInfo with the new savegame information. Returns true on success.
-   static bool save_game(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
+   // Saves the current game under the given filePath. Updates the saveGameInfo with the new savegame information. Returns true on success.
+   static bool save_game(const char* filePath, SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage);
    // Loads the saved game given by directory and fileName. Updates saveGameInfo in with the new savegame information. Returns 1, 0, or -1 for success, recoverable failure, failure.
    static int load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
 

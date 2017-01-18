@@ -1,7 +1,6 @@
 #include <OSaveGameProvider.h>
 #include <OSaveGameInfo.h>
 #include <OMISC.h>
-#include <OFILE.h>
 #include <ODIR.h>
 #include <OSYS.h>
 #include <OGFILE.h>
@@ -113,20 +112,27 @@ bool SaveGameProvider::save_game(const char* newFileName, String& /*out*/ errorM
 //
 bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
+	// Note: we cannot assume that newFileName and saveGameInfo->file_name are different addresses, so we must take care when copying between the two.
+
+	bool success = true;
+
+	char full_path[MAX_PATH+1];
+	if (!misc.path_cat(full_path, sys.dir_config, newFileName, MAX_PATH))
+	{
+		success = false;
+		errorMessage = _("Path too long to the saved game.");
+	}
+
 	power.win_opened=1;				// to disable power.mouse_handler()
 
-	bool success;
-	SaveGameInfo newSaveGameInfo;
-	if (GameFile::save_game(sys.dir_config, newFileName, &newSaveGameInfo, /*out*/ errorMessage)) {
-		*saveGameInfo = newSaveGameInfo;
-		success = true;
-	}
-	else {
-		success = false;
-	}
+	SaveGameInfo newSaveGameInfo = *saveGameInfo;
+	strncpy(newSaveGameInfo.file_name, newFileName, MAX_PATH);
+	saveGameInfo->file_name[MAX_PATH] = '\0';
+	success = success && GameFile::save_game(full_path, /*in/out*/ &newSaveGameInfo, /*out*/ errorMessage);
 
 	power.win_opened=0;
 
+	*saveGameInfo = newSaveGameInfo;
 	return success;
 }
 //-------- End of function SaveGameProvider::save_game(3) --------//

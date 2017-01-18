@@ -28,7 +28,6 @@
 #include <OGFILE.h>
 #include <OFILE.h>
 #include <OSTR.h>
-#include <OBOX.h>
 #include <OTALKRES.h>
 #include <ONATION.h>
 #include <OWORLD.h>
@@ -59,28 +58,22 @@ static_assert(sizeof(SaveGameHeader) == CLASS_SIZE, "Savegame header size mismat
 
 //-------- Begin of function GameFile::save_game --------//
 //
-// Saves the current game under the given fileName in the given directory.
+// Saves the current game under the given filePath.
 // Updates the saveGameInfo with the new savegame information.
 // Returns true if saved successfully, in which case saveGameInfo is complete.
-// On error, returns false, and returns the error message in errorMessage; saveGameInfo may also be partially overwritten.
+// On error, returns false, and returns the error message in errorMessage.
 //
-bool GameFile::save_game(const char* directory, const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+bool GameFile::save_game(const char* filePath, SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
-	char full_path[MAX_PATH+1];
 	File file;
 	bool fileOpened = false;
+	SaveGameInfo newSaveGameInfo = *saveGameInfo;
 
 	int rc = 1;
 
-	if (!misc.path_cat(full_path, directory, fileName, MAX_PATH))
-	{
-		rc = 0;
-		errorMessage = _("Path too long to the saved game.");
-	}
-
 	if( rc )
 	{
-		rc = file.file_create(full_path, 0, 1); // 0=tell File don't handle error itself
+		rc = file.file_create(filePath, 0, 1); // 0=tell File don't handle error itself
 																   // 1=allow the writing size and the read size to be different
 		if( !rc )
 			errorMessage = _("Error creating saved game file.");
@@ -92,11 +85,7 @@ bool GameFile::save_game(const char* directory, const char* fileName, SaveGameIn
 	{
 		save_process();      // process game data before saving the game
 
-		if (saveGameInfo->file_name != fileName /*(comparison as pointers)*/) {
-			strncpy(saveGameInfo->file_name, fileName, MAX_PATH);
-			saveGameInfo->file_name[MAX_PATH] = '\0';
-		}
-		rc = write_game_header(/*out*/ saveGameInfo, &file);    // write saved game header information
+		rc = write_game_header(/*in/out*/ &newSaveGameInfo, &file);    // write saved game header information
 
 		if( !rc )
 			errorMessage = _("Error creating saved game header.");
@@ -116,9 +105,14 @@ bool GameFile::save_game(const char* directory, const char* fileName, SaveGameIn
 
 	if( !rc )
 	{
-		if (fileOpened) remove( full_path );         // delete the file as it is not complete
+		if (fileOpened) remove( filePath );         // delete the file as it is not complete
 
 		errorMessage += _(" The game is not saved.");      // Also explicitly inform the user that the game has not been saved.
+	}
+
+	if (rc)
+	{
+		*saveGameInfo = newSaveGameInfo;
 	}
 
 	return rc != 0;
