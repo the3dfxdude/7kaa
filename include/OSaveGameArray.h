@@ -49,7 +49,7 @@ public:
 	SaveGameInfo* operator[](int recNo);
 
 private:
-	void set_file_name(SaveGameInfo* /*in/out*/ saveGame);
+	void set_file_name(char* /*out*/ fileName, int size);
 
 	void disp_browse();
 	static void disp_entry_info(const SaveGameInfo* entry, int x, int y);

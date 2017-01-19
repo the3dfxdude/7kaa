@@ -678,7 +678,7 @@ int SaveGameArray::process_action(int saveNew)
 
 			SaveGameInfo* saveGameInfo = (*this)[browse_recno];
 			String errorMessage;
-			if( !SaveGameProvider::save_game(saveGameInfo, /*out*/ errorMessage) )
+			if( !SaveGameProvider::save_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage) )
 			{
 				box.msg( errorMessage );
 				return -1;
@@ -697,7 +697,7 @@ int SaveGameArray::process_action(int saveNew)
 		SaveGameInfo* saveGameInfo = (*this)[browse_recno];
 
 		String errorMessage;
-		int rc = SaveGameProvider::load_game(saveGameInfo, /*out*/ errorMessage);
+		int rc = SaveGameProvider::load_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage);
 		if( rc > 0 )
 		{
 			strcpy( last_file_name, saveGameInfo->file_name );
@@ -726,13 +726,13 @@ int SaveGameArray::process_action(int saveNew)
 // return : <int> 1 - saved successfully.
 //                0 - not saved.
 //
-int SaveGameArray::save_new_game(const char* fileName)
+int SaveGameArray::save_new_game(const char* newFileName)
 {
-	SaveGameInfo saveGameInfo{};
 	int addFlag=1;
 	int gameFileRecno;
+	char fileName[MAX_PATH+1];
 
-	if( fileName )
+	if( newFileName )
 	{
 		//----- check for overwriting an existing file ----//
 
@@ -740,24 +740,25 @@ int SaveGameArray::save_new_game(const char* fileName)
 		{
 			SaveGameInfo* saveGameInfoPtr = (*this)[gameFileRecno];
 
-			if( strcmp(saveGameInfoPtr->file_name, fileName)==0 )      // if this file name already exist
+			if( strcmp(saveGameInfoPtr->file_name, newFileName)==0 )      // if this file name already exist
 			{
 				addFlag=0;
 				break;
 			}
 		}
 
-		strcpy( saveGameInfo.file_name, fileName );
+		strcpy( fileName, newFileName );
 	}
 	else
 	{
-		set_file_name(&saveGameInfo);        // give it a new game_file_name based on current group name
+		set_file_name(fileName, sizeof(fileName)/sizeof(fileName[0]));        // give it a new game_file_name based on current group name
 	}
 
 	//----------- save game now ------------//
 
+	SaveGameInfo saveGameInfo;
 	String errorMessage;
-	if( SaveGameProvider::save_game(&saveGameInfo, /*out*/ errorMessage) )
+	if( SaveGameProvider::save_game(fileName, /*out*/ &saveGameInfo, /*out*/ errorMessage) )
 	{
 		strcpy( last_file_name, saveGameInfo.file_name );
 
@@ -789,7 +790,7 @@ int SaveGameArray::save_new_game(const char* fileName)
 //
 // e.g. ENLI_001.SAV - the first saved game of the group "Enlight Enterprise"
 //
-void SaveGameArray::set_file_name(SaveGameInfo* /*in/out*/ saveGame)
+void SaveGameArray::set_file_name(char* /*out*/ fileName, int size)
 {
 	enum { NAME_PREFIX_LEN = 4,    // Maximum 4 characters in name prefix, e.g. "ENLI" for "Enlight Enterprise"
 		NAME_NUMBER_LEN = 3  };
@@ -860,11 +861,10 @@ void SaveGameArray::set_file_name(SaveGameInfo* /*in/out*/ saveGame)
 	str += str2;
 	str += ".SAV";
 
-	//----- copy the string to file_name ------//
+	//----- copy the string to fileName ------//
 
-	strncpy( saveGame->file_name, str, MAX_PATH );
-
-	saveGame->file_name[MAX_PATH] = '\0';
+	strncpy( fileName, str, size-1 );
+	fileName[size-1] = '\0';
 }
 //--------- End of function SaveGameArray::set_file_name -------//
 

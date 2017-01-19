@@ -1,3 +1,27 @@
+/*
+* Seven Kingdoms: Ancient Adversaries
+*
+* Copyright 2016-2017 Richard Dijk <microvirus.multiplying@gmail.com>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
+//Filename    : OSaveGameProvider.cpp
+//Description : Provides the interface between the UI and the save game handling logic
+
+
 #include <OSaveGameProvider.h>
 #include <OSaveGameInfo.h>
 #include <OMISC.h>
@@ -85,30 +109,19 @@ void SaveGameProvider::delete_savegame(const char* saveGameName) {
 
 //-------- Begin of function SaveGameProvider::save_game(1) --------//
 //
-// Save the current game under the file specified by saveGameInfo. Updates saveGameInfo to the new savegame information on success.
-//
-bool SaveGameProvider::save_game(SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage)
-{
-	return save_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage);
-}
-//-------- End of function SaveGameProvider::save_game(1) --------//
-
-
-//-------- Begin of function SaveGameProvider::save_game(2) --------//
-//
-// Save the current game under the name given by newFileName.
+// Save the current game under the file specified by newFileName.
 //
 bool SaveGameProvider::save_game(const char* newFileName, String& /*out*/ errorMessage)
 {
 	SaveGameInfo newSaveGameInfo;
 	return save_game(newFileName, /*out*/ &newSaveGameInfo, /*out*/ errorMessage);
 }
-//-------- End of function SaveGameProvider::save_game(2) --------//
+//-------- End of function SaveGameProvider::save_game(1) --------//
 
 
-//-------- Begin of function SaveGameProvider::save_game(3) --------//
+//-------- Begin of function SaveGameProvider::save_game(2) --------//
 //
-// Save the current game under the file specified by newFileName. Updates saveGameInfo to the new savegame information on success.
+// Save the current game under the file specified by newFileName. Sets saveGameInfo to the new savegame information on success.
 //
 bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
@@ -125,40 +138,31 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 
 	power.win_opened=1;				// to disable power.mouse_handler()
 
-	SaveGameInfo newSaveGameInfo = *saveGameInfo;
-	strncpy(newSaveGameInfo.file_name, newFileName, MAX_PATH);
-	saveGameInfo->file_name[MAX_PATH] = '\0';
-	success = success && GameFile::save_game(full_path, /*in/out*/ &newSaveGameInfo, /*out*/ errorMessage);
+	SaveGameInfo newSaveGameInfo = SaveGameInfoFromCurrentGame(newFileName);
+	success = success && GameFile::save_game(full_path, newSaveGameInfo, /*out*/ errorMessage);
 
 	power.win_opened=0;
 
-	*saveGameInfo = newSaveGameInfo;
+	if (success)
+	{
+		*saveGameInfo = newSaveGameInfo;
+	}
 	return success;
 }
-//-------- End of function SaveGameProvider::save_game(3) --------//
+//-------- End of function SaveGameProvider::save_game(2) --------//
 
 
 //-------- Begin of function SaveGameProvider::load_game --------//
 //
-// Loads the game given by saveGameInfo as he current game. Updates saveGameInfo on success.
-// return : <int> 1 - loaded successfully.
-//                0 - not loaded.
-//               -1 - error and partially loaded
-//
-int SaveGameProvider::load_game(SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage)
-{
-	return load_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage);
-}
-
-//-------- Begin of function SaveGameProvider::load_game --------//
-//
-// Loads the game given by fileName as the current game. Updates saveGameInfo to the new savegame information on success.
+// Loads the game given by fileName as the current game. Sets saveGameInfo to the new savegame information on success.
 // return : <int> 1 - loaded successfully.
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
 int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
 {
+	// Note: we cannot assume that fileName and saveGameInfo->file_name are different addresses, so we must take care when copying between the two.
+
 	int rc = 1;
 	char full_path[MAX_PATH+1];
 	if (!misc.path_cat(full_path, sys.dir_config, fileName, MAX_PATH))
@@ -174,6 +178,7 @@ int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ save
 
 	if (rc > 0)
 	{
+		// Fixup file name if stored file_name is different than actual file name
 		if (saveGameInfo->file_name != fileName /*(comparison as pointers)*/) {
 			strncpy(saveGameInfo->file_name, fileName, MAX_PATH);
 			saveGameInfo->file_name[MAX_PATH] = '\0';

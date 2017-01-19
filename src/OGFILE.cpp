@@ -59,33 +59,25 @@ static_assert(sizeof(SaveGameHeader) == CLASS_SIZE, "Savegame header size mismat
 //-------- Begin of function GameFile::save_game --------//
 //
 // Saves the current game under the given filePath.
-// Updates the saveGameInfo with the new savegame information.
-// Returns true if saved successfully, in which case saveGameInfo is complete.
 // On error, returns false, and returns the error message in errorMessage.
 //
-bool GameFile::save_game(const char* filePath, SaveGameInfo* /*in/out*/ saveGameInfo, String& /*out*/ errorMessage)
+bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo, String& /*out*/ errorMessage)
 {
 	File file;
 	bool fileOpened = false;
-	SaveGameInfo newSaveGameInfo = *saveGameInfo;
 
-	int rc = 1;
-
-	if( rc )
-	{
-		rc = file.file_create(filePath, 0, 1); // 0=tell File don't handle error itself
-																   // 1=allow the writing size and the read size to be different
-		if( !rc )
-			errorMessage = _("Error creating saved game file.");
-		else
-			fileOpened = true;
-	}
+	int rc = file.file_create(filePath, 0, 1); // 0=tell File don't handle error itself
+												// 1=allow the writing size and the read size to be different
+	if( !rc )
+		errorMessage = _("Error creating saved game file.");
+	else
+		fileOpened = true;
 
 	if( rc )
 	{
 		save_process();      // process game data before saving the game
 
-		rc = write_game_header(/*in/out*/ &newSaveGameInfo, &file);    // write saved game header information
+		rc = write_game_header(saveGameInfo, &file);    // write saved game header information
 
 		if( !rc )
 			errorMessage = _("Error creating saved game header.");
@@ -108,11 +100,6 @@ bool GameFile::save_game(const char* filePath, SaveGameInfo* /*in/out*/ saveGame
 		if (fileOpened) remove( filePath );         // delete the file as it is not complete
 
 		errorMessage += _(" The game is not saved.");      // Also explicitly inform the user that the game has not been saved.
-	}
-
-	if (rc)
-	{
-		*saveGameInfo = newSaveGameInfo;
 	}
 
 	return rc != 0;
@@ -250,11 +237,11 @@ bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameI
 //
 void GameFile::save_process()
 {
-   //--------- set the total playing time --------//
+	//--------- set the total playing time --------//
 
 	info.total_play_time += misc.get_time()-info.start_play_time;
 
-   info.start_play_time  = misc.get_time();
+	info.start_play_time  = misc.get_time();
 }
 //--------- End of function GameFile::save_process -------//
 
@@ -299,32 +286,11 @@ void GameFile::load_process()
 // Return : <int> 1 - file written successfully
 //                0 - not successful
 //
-int GameFile::write_game_header(SaveGameInfo* /*in/out*/ saveGame, File* filePtr)
+int GameFile::write_game_header(const SaveGameInfo& saveGameInfo, File* filePtr)
 {
-	Nation* playerNation = ~nation_array;
-
-	strncpy( saveGame->player_name, playerNation->king_name(), HUMAN_NAME_LEN );
-	saveGame->player_name[HUMAN_NAME_LEN] = '\0';
-
-	saveGame->race_id      = playerNation->race_id;
-	saveGame->nation_color = playerNation->nation_color;
-	saveGame->terrain_set  = config.terrain_set;
-
-	saveGame->game_date    = info.game_date;
-
-#ifndef NO_WINDOWS  // FIXME
-	//----- set the file date ------//
-
-	SYSTEMTIME sysTime;
-	GetSystemTime(&sysTime);
-	SystemTimeToFileTime(&sysTime, &saveGame->file_date);
-#endif
-
-	//------- write GameFile to the saved game file -------//
-
 	SaveGameHeader saveGameHeader;
 	saveGameHeader.class_size = CLASS_SIZE;
-	saveGameHeader.info = *saveGame;
+	saveGameHeader.info = saveGameInfo;
 	return filePtr->file_write( &saveGameHeader, sizeof(SaveGameHeader) );     // write the whole object to the saved game file
 }
 //--------- End of function GameFile::write_game_header -------//

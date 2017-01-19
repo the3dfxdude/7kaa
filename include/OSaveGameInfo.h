@@ -44,4 +44,7 @@ struct SaveGameInfo
 };
 #pragma pack()
 
+
+SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName);
+
 #endif // ! __OSAVEGAMEINFO_H
