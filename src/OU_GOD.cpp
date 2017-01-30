@@ -122,7 +122,13 @@ int UnitGod::process_attack()
 	#endif
 	//-*********** simulate aat ************-//
 
-	consume_power_pray_points();
+	//------- consumer pray points --------//
+	/* The other gods have their prayer points consumed
+	 * in UnitGod::cast_power(). See comments there for an
+	 * explanation of the exploit this avoids.
+	 */
+	if (god_id == GOD_CHINESE || god_id == GOD_NORMAN)
+		consume_power_pray_points();
 
 	return 1;
 }
@@ -282,8 +288,13 @@ void UnitGod::cast_power(int xLoc, int yLoc)
 	err_when( !god_res[god_id]->can_cast_power );
 
 	//------- consumer pray points --------//
-
-	// consume_power_pray_points();		// let process_attack to consume
+	/* This must be done here to avoid an exploit where a human player 
+	 * can cast an ability and then order the god to move within a 
+	 * few frames and not consumer prayer points. This function is not
+	 * used for the Chinese and Norman dragons so the function is also
+	 * called in UnitGod::process_attack() for the dragons.
+	 */
+	consume_power_pray_points();		
 
 	//---- viking god does not need a range for casting power ----//
 
