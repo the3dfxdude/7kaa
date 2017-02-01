@@ -28,6 +28,7 @@
 #define MUSIC_PLAY_LOOPED 1
 #define MUSIC_PLAY_CD 2
 #define MUSIC_CD_THEN_WAV 4
+#define MAX_RACE_TABLE 7
 
 class Music
 {
