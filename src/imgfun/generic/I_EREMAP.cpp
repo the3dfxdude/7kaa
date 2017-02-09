@@ -77,12 +77,13 @@ int RSE_SQR_DECISION[] = {XNW_MASK_OFFS, SOUTH2_MASK_OFFS, XNW_MASK_OFFS, SOUTH2
 // int pitch      - the pitch of the display surface buffer
 // int  x,y       - where to put the image on the surface buffer
 // char *maskPtr  - pointer to the bit mask (from inside 'EXPLMASK.BIN')
-void IMGremap16x16 (char *imageBuf, int pitch, int x, int y,  char* maskPtr, char**colorTableArray)
+void IMGremap16x16 (char *_imageBuf, int pitch, int x, int y,  char *maskPtr, char **colorTableArray)
 {
+	unsigned char *imageBuf = (unsigned char *) _imageBuf;
 	int offset = y*pitch + x;
 	int srcline = 0;
 	int al;
-	char* table;
+	char *table;
 	for (int j=0; j<16; ++j, offset+=pitch, srcline+=16)
 	{
 		for (int i=0; i<16; ++i)

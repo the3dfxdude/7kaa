@@ -41,9 +41,7 @@ SurfaceSDL::SurfaceSDL(SDL_Surface *s)
 
 SurfaceSDL::~SurfaceSDL()
 {
-	// surface will be freed by SDL_Quit if it is the front buffer
-	// any other surface should be freed here, but we will let
-	// SDL_Quit take care of it since it is likely only the back buffer
+	SDL_FreeSurface(surface);
 }
 //-------- End of function SurfaceSDL::~SurfaceSDL ----------//
 

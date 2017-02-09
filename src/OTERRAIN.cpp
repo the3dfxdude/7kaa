@@ -881,10 +881,10 @@ void TerrainRes::load_anim_info()
 		int replaceCount = 0;
 		for(l = 0; l < terrain_count; ++l)
 		{
-			if( memcmp(&file_name_array[terrainAnimRec.FILE_NAME_LEN *(l-1)],
+			if( memcmp(&file_name_array[terrainAnimRec.FILE_NAME_LEN *(l)],
 				lastAnimRec.base_file, terrainAnimRec.FILE_NAME_LEN) == 0)
 			{
-				TerrainInfo *terrainInfo = terrain_info_array+l-1;
+				TerrainInfo *terrainInfo = terrain_info_array+l;
 				err_when(terrainInfo->anim_frames > 0);
 				terrainInfo->anim_frames = animFrameCount;
 				terrainInfo->anim_bitmap_ptr = (char **) mem_add(
