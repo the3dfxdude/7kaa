@@ -193,6 +193,7 @@ int VgaSDL::init()
       colorkey = SDL_MapRGB(icon->format, 0, 0, 0);
       SDL_SetColorKey(icon, SDL_TRUE, colorkey);
       SDL_SetWindowIcon(window, icon);
+      SDL_FreeSurface(icon);
    }
    SDL_SetWindowTitle(window, WIN_TITLE);
 
