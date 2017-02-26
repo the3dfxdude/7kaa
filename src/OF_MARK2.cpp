@@ -584,16 +584,15 @@ int FirmMarket::think_export_product()
 		if( misc.points_distance( center_x, center_y, townPtr->center_x, center_y ) > MAX_WORLD_X_LOC/4 )		// don't consider if it is too far away
 			continue;
 
-		if( townPtr->town_recno &&
-			 nationPtr->get_relation_status(townPtr->town_recno) < NATION_FRIENDLY )		// only build markets to friendly nation's town
-		{
-			continue;
-		}
-
       //-----------------------------------------//
 
 		if( townPtr->nation_recno )
 		{
+
+			if( nationPtr->get_relation_status(townPtr->nation_recno) < NATION_FRIENDLY )		// only build markets to friendly nation's town
+			{
+				continue;
+			}
 			//--- if it's a nation town, only export if we have trade treaty with it ---//
 
 			if( !nationPtr->get_relation(townPtr->nation_recno)->trade_treaty )
