@@ -461,6 +461,8 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 
 	if( textPtrLen < 0 )
 		textPtrLen = strlen(textPtr);
+	if( textPtrLen < 1 )
+		return 0;
 
 	text_line_count=1;
 
