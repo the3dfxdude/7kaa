@@ -1193,7 +1193,9 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	if( defSaveFileName )
 	{
 		int newLen = misc.str_str(defSaveFileName, "." );
-		if( newLen > 1)
+		if( newLen > 8 )
+			misc.str_cut(saveFileName, defSaveFileName, 1, 8);	// saveFileName has 8 char only plus string terminator
+		else if( newLen > 1 )
 			misc.str_cut(saveFileName, defSaveFileName, 1, newLen-1);
 		else
 			err_here();
