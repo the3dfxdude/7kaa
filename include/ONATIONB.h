@@ -414,7 +414,7 @@ public:
 	int		has_people();		// whether the nation has any people (but not counting the king). If no, then the nation is going to end.
 
 	void		being_attacked(int attackNationRecno);
-	void		civilian_killed(int civilianRaceId, int isAttacker);
+	void		civilian_killed(int civilianRaceId, int penaltyLevel);
 	void 		change_all_people_loyalty(int loyaltyChange, int raceId=0);
 
 	void 		form_friendly_treaty(int nationRecno);

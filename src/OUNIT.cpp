@@ -857,9 +857,7 @@ int Unit::is_nation(int nationRecno)
 //
 int Unit::is_civilian()
 {
-	return race_id>0 && skill.combat_level<20 &&
-			 skill.skill_id != SKILL_LEADING &&
-			 unit_mode != UNIT_MODE_DEFEND_TOWN &&
+	return race_id>0 && skill.skill_id != SKILL_LEADING &&
 			 unit_mode != UNIT_MODE_REBEL;
 }
 //----------- End of function Unit::is_civilian ---------//

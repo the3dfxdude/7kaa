@@ -1514,24 +1514,30 @@ int NationBase::total_tech_level(int unitClass)
 //								  0 - all races, when a Caravan is killed, 0 will
 //								  be passed, the loyalty of all races will be decreased.
 //
-// <int> isAttacker     - 1 if the nation is the offensive attacker.
-//								  0 if the nation that suffers the atttack.
+// <int> penaltyLevel - positive value if this nation caused the death
+//								  negative value if this nation suffered the death
+//								  any nonzero value means loyalty will be decreased by
+//								  by that absolute amount
 //
-void NationBase::civilian_killed(int civilianRaceId, int isAttacker)
+// Reputation penalties are based on severity coded below.
+// (Attacker,Defender)
+// Killed caravan: (-10,-3)
+// Killed town connected civilian: (-1,-0.3)
+// Killed any other non-combat mobile unit: (-0.3,-0.3)
+void NationBase::civilian_killed(int civilianRaceId, int penaltyLevel)
 {
-	if( isAttacker )
-	{
-		change_all_people_loyalty(-3, civilianRaceId);
+	if( penaltyLevel )
+		change_all_people_loyalty(-abs(penaltyLevel), civilianRaceId);
 
+	if( penaltyLevel > 0 ) // caused the death by attacking a town or caravan
+	{
 		if( civilianRaceId==0 )				// a caravan
 			change_reputation(-(float)10);
 		else
 			change_reputation(-(float)1);
 	}
-	else
+	else // suffered the death or minor low-combat civilian death
 	{
-		change_all_people_loyalty(-1, civilianRaceId);
-
 		if( civilianRaceId==0 )				// a caravan
 			change_reputation(-(float)3);
 		else

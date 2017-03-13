@@ -172,9 +172,9 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage)
 
 		if( targetUnit->race_id )
 		{
-			//---- if the unit killed is a civilian unit -----//
+			//---- if the unit killed is a town defender unit -----//
 
-			if( targetUnit->is_civilian() )
+			if( targetUnit->is_civilian() && targetUnit->in_defend_town_mode() )
 			{
 				if( targetNationRecno )
 				{
@@ -185,6 +185,20 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage)
 				if(parentUnit && parentNationRecno )
 				{
 					parentNationPtr->civilian_killed(targetUnit->race_id, 1);
+					parentNationPtr->enemy_civilian_killed++;
+				}
+			}
+			else if( targetUnit->is_civilian() && targetUnit->skill.combat_level<20 ) //--- mobile civilian ---//
+			{
+				if( targetNationRecno )
+				{
+					targetNationPtr->civilian_killed(targetUnit->race_id, 0);
+					targetNationPtr->own_civilian_killed++;
+				}
+
+				if(parentUnit && parentNationRecno )
+				{
+					parentNationPtr->civilian_killed(targetUnit->race_id, 0);
 					parentNationPtr->enemy_civilian_killed++;
 				}
 			}
@@ -224,14 +238,15 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage)
 
 			//---- if the unit destroyed is a trader or caravan -----//
 
-			if( targetUnit->unit_id == UNIT_CARAVAN ||	// whoever kills a caravan decrease, who will be resented by all races
+			if( targetUnit->unit_id == UNIT_CARAVAN ||	// killing a caravan is resented by all races
 				 targetUnit->unit_id == UNIT_VESSEL )
 			{
+				// Race-Id of 0 means a loyalty penalty applied for all races
 				if( targetNationRecno )
-					targetNationPtr->civilian_killed(0, 0);		// 0-for all races
+					targetNationPtr->civilian_killed(0, -1);
 
-				if(parentUnit && parentNationRecno )
-					parentNationPtr->civilian_killed(0, 1);		// 1-is the nation is the attacking one
+				if( parentUnit && parentNationRecno )
+					parentNationPtr->civilian_killed(0, 3);
 			}
 		}
 
