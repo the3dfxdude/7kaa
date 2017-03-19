@@ -60,6 +60,8 @@ enum
 	MPMSG_REQ_SESSION_ADDR,
 	MPMSG_SESSION_ADDR,
 	MPMSG_PING,
+	MPMSG_REQ_HOST_NAT_PUNCH,
+	MPMSG_HOST_NAT_PUNCH,
 };
 
 enum
@@ -123,6 +125,18 @@ struct MpMsgSessionAddr {
 };
 struct MpMsgPing {
 	uint32_t msg_id;
+};
+struct MpMsgReqHostNatPunch {
+	uint32_t msg_id;
+	guuid_t login_id;
+	guuid_t session_id;
+	char session_password[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgHostNatPunch {
+	uint32_t msg_id;
+	uint32_t host;
+	uint16_t port;
+	uint16_t reserved0;
 };
 
 #define SESSION_HOSTING         1
@@ -244,6 +258,10 @@ private:
 	void send_poll_sessions();
 	void send_req_session_id();
 	void send_req_session_addr();
+	void send_ping(ENetSocket s, ENetAddress *a);
+	void send_req_host_nat_punch();
+	void send_service_ping();
+	void do_host_nat_punch(MpMsgHostNatPunch *in);
 
 	void update_player_pool();
 	uint32_t get_avail_player_id();

@@ -437,9 +437,8 @@ int MultiPlayer::poll_sessions()
 				return MP_POLL_LOGIN_FAILED;
 			send_req_login_id();
 			return MP_POLL_LOGIN_PENDING;
-		} else {
-			send_poll_sessions();
 		}
+		send_poll_sessions();
 	}
 
 	return ret;
@@ -541,7 +540,7 @@ int MultiPlayer::connect_host()
 	if (joined_session.address.host == ENET_HOST_ANY)
 		return 1;
 
-	// The host is known (LAN), go ahead and contact now.
+	// The host is known, connect now.
 	peer = enet_host_connect(host, &joined_session.address, 1, 0);
 	if (!peer)
 		return 0;
@@ -730,8 +729,9 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 		MSG("Player (%d) already connected\n", playerId);
 		peer->data = player;
 		update_player_pool();
-
-	} else if (contact) {
+		return 1;
+	}
+	if (contact) {
 		// initiate contact
 		MSG("Contacting player (%d)\n", playerId);
 		peer = enet_host_connect(host, address, 1, 0);
@@ -740,7 +740,6 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 			return 0;
 		}
 		peer->data = player;
-
 	} else {
 		MSG("Waiting for player (%d)\n", playerId);
 		// wait for contact
@@ -748,6 +747,8 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 			delete player;
 			return 0;
 		}
+		// NAT punch for incoming connection
+		send_ping(host->socket, address);
 	}
 
 	MSG("Player '%s' (%d) recognized.\n", player->name, playerId);
@@ -877,6 +878,9 @@ int MultiPlayer::poll_players()
 					send_req_session_id();
 					poll_time = 300;
 					ret = MP_POLL_LOGIN_PENDING;
+				} else {
+					// try to keep NAT forwarding alive from server to game host
+					send_service_ping();
 				}
 			} else if (joined_session.address.host == ENET_HOST_ANY) {
 				send_req_session_addr();
@@ -931,6 +935,17 @@ int MultiPlayer::poll_players()
 
 					break;
 					}
+				case MPMSG_HOST_NAT_PUNCH: {
+					MpMsgHostNatPunch *m = (MpMsgHostNatPunch*)recv_buf;
+
+					if (a.host != service_provider.host)
+						break;
+					if (!(joined_session.flags & SESSION_HOSTING))
+						break;
+
+					do_host_nat_punch(m);
+					break;
+					}
 				}
 			}
 
@@ -939,6 +954,12 @@ int MultiPlayer::poll_players()
 				poll_time = 300;
 			} else {
 				send_user_session_status(&service_provider);
+			}
+
+			if (joined_session.address.host != ENET_HOST_ANY &&
+				joined_session.player_count < 2) {
+				send_req_host_nat_punch();
+				poll_time = 300;
 			}
 		}
 	}
@@ -1213,6 +1234,70 @@ void MultiPlayer::send_req_session_addr()
 	memcpy(m.session_password, joined_session.password, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
+}
+
+void MultiPlayer::send_ping(ENetSocket s, ENetAddress *a)
+{
+	ENetBuffer b;
+	MpMsgPing m;
+
+	if (!host)
+		return;
+	if (misc.uuid_is_null(joined_session.id))
+		return;
+
+	b.data = &m;
+	b.dataLength = sizeof(MpMsgPing);
+
+	m.msg_id = MPMSG_PING;
+
+	enet_socket_send(s, a, &b, 1);
+}
+
+void MultiPlayer::send_req_host_nat_punch()
+{
+	ENetBuffer b;
+	MpMsgReqHostNatPunch m;
+
+	if (!host)
+		return;
+	if (misc.uuid_is_null(joined_session.id))
+		return;
+	if (misc.uuid_is_null(service_login_id))
+		return;
+
+	b.data = &m;
+	b.dataLength = sizeof(MpMsgReqHostNatPunch);
+
+	m.msg_id = MPMSG_REQ_HOST_NAT_PUNCH;
+	misc.uuid_copy(m.login_id, service_login_id);
+	misc.uuid_copy(m.session_id, joined_session.id);
+	memcpy(m.session_password, joined_session.password, MP_FRIENDLY_NAME_LEN);
+
+	enet_socket_send(host->socket, &service_provider, &b, 1);
+}
+
+void MultiPlayer::send_service_ping()
+{
+	if (session_monitor == ENET_SOCKET_NULL)
+		return;
+
+	send_ping(session_monitor, &service_provider);
+}
+
+void MultiPlayer::do_host_nat_punch(MpMsgHostNatPunch *in)
+{
+	ENetAddress a;
+	ENetBuffer b;
+	MpMsgPing m;
+
+	if (!host)
+		return;
+
+	a.host = in->host;
+	a.port = in->port;
+
+	send_ping(host->socket, &a);
 }
 
 // Returns pointer to the recv_buf when a message is received, with size set.
