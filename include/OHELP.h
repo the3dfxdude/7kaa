@@ -90,7 +90,7 @@ public:
 
 	short			last_mouse_x;
 	short			last_mouse_y;
-	int			mouse_still_time;
+	unsigned long		mouse_still_time;
 
 public:
 	Help();
