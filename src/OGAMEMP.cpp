@@ -611,18 +611,28 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
+			const char *dialog_txt[3] =
+			{
+				_("Enter a name for your game session."),
+				_("Session Name:"),
+				_("Password:")
+			};
 			char game_name[MP_FRIENDLY_NAME_LEN+1];
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
-			if (!input_box(_("Enter the name of the game:"), game_name, MP_FRIENDLY_NAME_LEN+1))
+			password[0] = 0;
+			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
 				mp_obj.deinit();
 				return;
 			}
-			password[0] = 0;
-			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
-				password[0] = 0;
+			if ( !strlen(game_name) )
+			{
+				box.msg(_("Invalid game name."));
+				mp_obj.deinit();
+				return;
+			}
 			if (!mp_obj.create_session(game_name, password, MAX_NATION))
 			{
 				box.msg(_("Cannot create the game."));
@@ -842,18 +852,28 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
+			const char *dialog_txt[3] =
+			{
+				_("Enter a name for your game session."),
+				_("Session Name:"),
+				_("Password:")
+			};
 			char game_name[MP_FRIENDLY_NAME_LEN+1];
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
-			if (!input_box(_("Enter the name of the game:"), game_name, MP_FRIENDLY_NAME_LEN+1))
+			password[0] = 0;
+			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
 				mp_obj.deinit();
 				return;
 			}
-			password[0] = 0;
-			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
-				password[0] = 0;
+			if ( !strlen(game_name) )
+			{
+				box.msg(_("Invalid game name."));
+				mp_obj.deinit();
+				return;
+			}
 			if (!mp_obj.create_session(game_name, password, gamePlayerCount))
 			{
 				box.msg(_("Cannot create the game."));
@@ -1411,7 +1431,7 @@ int mp_info_box_detect(InfoBox *info)
 }
 
 
-// Display a box to input a string. The pointer to name will be used
+// Display a box to input a string. The buf provided will be used
 // to initialize the field. The user may edit the box as appropriate.
 // The return is 1 when ok is pressed, and 0 when cancel is pressed.
 int Game::input_box(const char *tell_string, char *buf, int len)
@@ -1490,6 +1510,140 @@ int Game::input_box(const char *tell_string, char *buf, int len)
 			mouse.get_event();
 			break;
 		}
+
+		sys.blt_virtual_buf();
+
+		if (config.music_flag && !music.is_playing())
+			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
+		else if (!config.music_flag && music.is_playing())
+			music.stop();
+
+		vga_front.unlock_buf();
+	}
+	if (!vga_front.buf_locked)
+		vga_front.lock_buf();
+
+	return ret;
+}
+
+
+// Display a two part dialog box, with input for a name and password. The title
+// and field descriptions are provided by the caller using the array txt.
+// The return is 1 when ok is pressed, and 0 when cancel is pressed.
+int Game::input_name_pass(const char *txt[], char *name, int name_len, char *pass, int pass_len)
+{
+	const char *title = txt[0];
+	const char *inputFieldDes1 = txt[1];
+	const char *inputFieldDes2 = txt[2];
+	const char *buttonDes1 = _("Ok");
+	const char *buttonDes2 = _("Cancel");
+	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+	const int box_side_margin = 10;
+	const int box_top_margin = 5;
+	const int box_min_width = 375;
+	const int field_span = 200;
+	int box_x1, box_y1, box_x2, box_y2;
+	int titleWidth, titleHeight, fieldDesWidth, field_x_pos, boxWidth, boxHeight, buttonWidth1, ret;
+	Button buttonOk, buttonCancel;
+	GetAGroup getGroup(2);
+	GetA &field1 = getGroup[0];
+	GetA &field2 = getGroup[1];
+
+	ret = 0;
+
+	titleWidth = font_san.text_width(title, -1, box_min_width);
+	titleHeight = font_san.text_height() + 5;
+	fieldDesWidth = MAX(font_san.text_width(inputFieldDes1),
+		 font_san.text_width(inputFieldDes2)) + 10;
+	boxWidth = MAX(fieldDesWidth+field_span, box_min_width) + box_side_margin * 2;
+	boxHeight = titleHeight + font_san.max_font_height * 2 + box_button_margin + box_top_margin;
+	buttonWidth1 = 20 + font_san.text_width(buttonDes1);
+
+	box_x1 = VGA_WIDTH / 2 - boxWidth / 2;
+	box_x2 = VGA_WIDTH / 2 + boxWidth / 2;
+	box_y1 = 200;
+	box_y2 = box_y1 + boxHeight;
+	field_x_pos = box_side_margin + fieldDesWidth;
+
+	vga_back.d3_panel_up(box_x1, box_y1, box_x2, box_y2, 2, 1);
+	vga_front.d3_panel_up(box_x1, box_y1, box_x2, box_y2, 2, 1);
+
+	font_san.put_paragraph(box_x1 + box_side_margin,
+			       box_y1 + box_top_margin,
+			       box_x2 - box_side_margin,
+			       box_y2 - box_top_margin,
+			       title,
+			       2);
+	font_san.put_paragraph(box_x1 + box_side_margin,
+			       box_y1 + box_top_margin + titleHeight,
+			       box_x2 - box_side_margin,
+			       box_y2 - box_top_margin,
+			       inputFieldDes1,
+			       2);
+	font_san.put_paragraph(box_x1 + box_side_margin,
+			       box_y1 + box_top_margin + titleHeight + font_san.max_font_height,
+			       box_x2 - box_side_margin,
+			       box_y2 - box_top_margin,
+			       inputFieldDes2,
+			       2);
+
+	buttonOk.create_text(box_x1 + boxWidth / 2 - buttonWidth1,
+			     box_y2 - box_button_margin,
+			     buttonDes1);
+
+	buttonCancel.create_text(box_x1 + boxWidth / 2 + 2,
+				 box_y2 - box_button_margin,
+				 buttonDes2);
+
+	field1.init( box_x1 + box_side_margin + fieldDesWidth,
+		box_y1 + box_top_margin + titleHeight,
+		box_x2 - box_side_margin,
+		name,
+		name_len,
+		&font_san,
+		0,
+		0 );
+
+	field2.init( box_x1 + box_side_margin + fieldDesWidth,
+		box_y1 + box_top_margin + titleHeight + font_san.max_font_height,
+		box_x2 - box_side_margin,
+		pass,
+		pass_len,
+		&font_san,
+		0,
+		0 );
+
+	getGroup.set_focus(0,1);
+
+	vga_front.unlock_buf();
+	while (1) {
+		vga_front.lock_buf();
+
+		buttonOk.paint();
+		buttonCancel.paint();
+		getGroup.paint();
+
+		sys.yield();
+		vga.flip();
+		mouse.get_event();
+
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
+
+		if (buttonOk.detect(KEY_RETURN)) {
+			ret = 1;
+			break;
+		}
+
+		if (buttonCancel.detect(KEY_ESC) ||
+		    mouse.any_click(1)) {
+			mouse.get_event();
+			break;
+		}
+
+		getGroup.detect();
 
 		sys.blt_virtual_buf();
 

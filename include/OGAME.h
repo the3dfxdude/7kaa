@@ -143,7 +143,8 @@ private:
 	void			view_encyclopedia();
 	void			view_credits();
 
-	int			input_box(const char *tell_string, char *name, int name_len);
+	int			input_box(const char *tell_string, char *buf, int len);
+	int			input_name_pass(const char *txt[], char *name, int name_len, char *pass, int pass_len);
 
 	//------- multiplayer game functions -------//
 
