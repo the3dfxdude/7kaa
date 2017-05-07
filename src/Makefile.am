@@ -1,4 +1,7 @@
 SUBDIRS = enet imgfun openal
+if USE_CURL
+SUBDIRS += curl
+endif
 
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
@@ -303,6 +306,11 @@ else
 endif
 
 7kaa_LDADD += @LIBINTL@
+
+if USE_CURL
+7kaa_LDADD += ./curl/libWebService.a
+7kaa_LDADD += @LIBCURL@
+endif
 
 if USE_WINDOWS
 7kaa_SOURCES += ico.rc

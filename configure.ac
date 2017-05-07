@@ -91,6 +91,7 @@ jwasm_fmt="-elf -zt0"
 
 # Set in argument handlers:
 # enable_asm=no
+# enable_curl=yes
 # enable_debug=no
 # with_wine=no
 # enable_dynamic_support_libs=no
@@ -100,6 +101,11 @@ jwasm_fmt="-elf -zt0"
 AC_ARG_ENABLE([asm],
   AS_HELP_STRING([--enable-asm], [enable x86 asm optimizations]),
   [], [enable_asm=no]
+)
+
+AC_ARG_ENABLE([curl],
+  AS_HELP_STRING([--disable-curl], [disable curl support]),
+  [], [enable_curl=yes]
 )
 
 AC_ARG_ENABLE([debug],
@@ -138,6 +144,7 @@ AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
+AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
 
 
 # Wine set-up
@@ -215,6 +222,11 @@ AS_IF([test "$use_mingw" = yes], [
   ])
 ])
 
+AS_IF([test "$enable_curl" = yes], [
+  LIBCURL_CHECK_CONFIG([], [], [], [
+    AC_ERROR([libcurl not found])
+  ])
+])
 
 # Defines
 
@@ -287,6 +299,7 @@ AC_CONFIG_FILES([
   data/Makefile
   include/Makefile
   src/Makefile
+  src/curl/Makefile
   src/enet/Makefile
   src/imgfun/Makefile
   src/imgfun/generic/Makefile

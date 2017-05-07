@@ -36,6 +36,9 @@
 #include <OBATTLE.h>
 #include <OGAME.h>
 #include <multiplayer.h>
+#ifdef HAVE_LIBCURL
+#include <WebService.h>
+#endif
 #include <OERRCTRL.h>
 #include <OGFILE.h>
 #include <OCONFIG.h>
@@ -566,6 +569,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		service_mode = mp_select_service();
 		if (!service_mode)
 		{
+#ifdef HAVE_LIBCURL
+			ws.deinit();
+#endif
 			mp_obj.deinit();
 			return;
 		}
@@ -577,7 +583,12 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	}
 
 	if (mp_obj.is_protocol_supported(TCPIP))
+	{
 		mp_obj.init(TCPIP);
+#ifdef HAVE_LIBCURL
+		ws.init();
+#endif
+	}
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
@@ -589,6 +600,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 		// BUGHERE : display error message
 		box.msg(_("Cannot initialize ENet."));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -602,6 +616,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 		if (!mp_get_leader_board())
 			box.msg(_("Unable to retrieve leader board"));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -624,18 +641,27 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			password[0] = 0;
 			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 			if ( !strlen(game_name) )
 			{
 				box.msg(_("Invalid game name."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 			if (!mp_obj.create_session(game_name, password, MAX_NATION))
 			{
 				box.msg(_("Cannot create the game."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -674,6 +700,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 			if (!choice)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -681,12 +710,18 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			session = mp_obj.get_session(choice);
 			if (session == NULL)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 
 			if (!mp_join_session(choice))
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -696,6 +731,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		}
 		break;
 	default:			// cancel
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -708,6 +746,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		mem_del(nationPara);
 		remote.deinit();
 		mp_close_session();
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -767,6 +808,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	mem_del(nationPara);
 	remote.deinit();
 	mp_close_session();
+#ifdef HAVE_LIBCURL
+	ws.deinit();
+#endif
 	mp_obj.deinit();
 	deinit();
 }
@@ -793,6 +837,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		service_mode = mp_select_service();
 		if (!service_mode)
 		{
+#ifdef HAVE_LIBCURL
+			ws.deinit();
+#endif
 			mp_obj.deinit();
 			return;
 		}
@@ -804,7 +851,12 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	}
 
 	if (mp_obj.is_protocol_supported(TCPIP))
+	{
 		mp_obj.init(TCPIP);
+#ifdef HAVE_LIBCURL
+		ws.init();
+#endif
+	}
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
@@ -816,6 +868,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 		// BUGHERE : display error message
 		box.msg(_("Cannot initialize ENet."));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -829,6 +884,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 		if (!mp_get_leader_board())
 			box.msg(_("Unable to retrieve leader board"));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -836,6 +894,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	// load game
 	//if( !game_file.load_game(fileName) )
 	//{
+	//	ws.deinit();
 	//	mp_obj.deinit();
 	//	return;
 	//}
@@ -865,18 +924,27 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			password[0] = 0;
 			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 			if ( !strlen(game_name) )
 			{
 				box.msg(_("Invalid game name."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 			if (!mp_obj.create_session(game_name, password, gamePlayerCount))
 			{
 				box.msg(_("Cannot create the game."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -915,6 +983,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 			if (!choice)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -922,12 +993,18 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			session = mp_obj.get_session(choice);
 			if (session == NULL)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 
 			if (!mp_join_session(choice))
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -943,6 +1020,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		}
 		break;
 	default:			// cancel
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -951,6 +1031,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if( !mp_select_load_option(fileName) )
 	{
 		remote.deinit();
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -989,6 +1072,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	battle.run_loaded();		// 1-multiplayer game
 
 	remote.deinit();
+#ifdef HAVE_LIBCURL
+	ws.deinit();
+#endif
 	mp_obj.deinit();
 	deinit();
 }
@@ -1374,6 +1460,8 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 
 			strcpy(remote.save_file_name, saveFileName);
 			strcat(remote.save_file_name, ".SVM");
+
+			mp_obj.create_my_player(config.player_name);
 			break;
 		}
 
@@ -1382,7 +1470,36 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
 
-	mp_obj.create_my_player(config.player_name);
+	if( rc && service_mode == 3 )
+	{
+#ifdef HAVE_LIBCURL
+		const char *dialog_txt[3] =
+		{
+			_("Enter your 7kfans.com/forums account credentials to continue.\nTIP: If you have just previously logged in using the same username, you can leave your password blank, and the previous session is used."),
+			_("Username:"),
+			_("Password:")
+		};
+		char username[MP_FRIENDLY_NAME_LEN+1];
+		char password[MP_FRIENDLY_NAME_LEN+1];
+
+		strncpy(username, config.player_name, MP_FRIENDLY_NAME_LEN);
+		username[MP_FRIENDLY_NAME_LEN] = 0;
+		password[0] = 0;
+
+		if( input_name_pass(dialog_txt, username, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
+		{
+			if( strlen(password) )
+				ws.login(username, password);
+			else
+				ws.refresh(username);
+			mp_obj.create_my_player(username); // reset name
+		}
+		else
+		{
+			rc = 0;
+		}
+#endif
+	}
 
 	return rc;
 }
@@ -1854,7 +1971,11 @@ int Game::mp_select_session()
 					statusMsg = _("Trying to connect to the service provider");
 					break;
 				case MP_POLL_LOGIN_FAILED:
-					box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+#ifdef HAVE_LIBCURL
+					box.msg(_("Unable to connect to the 7kfans.com service. Verify your account information and try again."));
+#else
+					box.msg(_("Unable to connect to the 7kfans service. Use a multiplayer username that matches your forum account username. Open your web browser to 7kfans.com/forums and ensure you are logged in with the same username."));
+#endif
 					goto exit_poll;
 				}
 				if( statusMsg )
