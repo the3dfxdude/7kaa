@@ -1551,7 +1551,7 @@ int mp_info_box_detect(InfoBox *info)
 // Display a box to input a string. The buf provided will be used
 // to initialize the field. The user may edit the box as appropriate.
 // The return is 1 when ok is pressed, and 0 when cancel is pressed.
-int Game::input_box(const char *tell_string, char *buf, int len)
+int Game::input_box(const char *tell_string, char *buf, int len, char hide_input)
 {
 	const char *buttonDes1 = _("Ok");
 	const char *buttonDes2 = _("Cancel");
@@ -1596,7 +1596,8 @@ int Game::input_box(const char *tell_string, char *buf, int len)
 		       len,
 		       &font_san,
 		       0,
-		       0);
+		       0,
+		       hide_input);
 
 	vga_front.unlock_buf();
 	while (1) {
@@ -1728,7 +1729,8 @@ int Game::input_name_pass(const char *txt[], char *name, int name_len, char *pas
 		pass_len,
 		&font_san,
 		0,
-		0 );
+		0,
+		1);
 
 	getGroup.set_focus(0,1);
 
@@ -2100,14 +2102,8 @@ int Game::mp_join_session(int session_id)
 	err_when(session == NULL);
  
 	password[0] = 0;
-	if (
-		(session->flags & SESSION_PASSWORD) &&
-		!input_box(
-			_("Enter the game's password:"),
-			password,
-			MP_FRIENDLY_NAME_LEN+1
-		)
-	)
+	if( (session->flags & SESSION_PASSWORD) &&
+		!input_box(_("Enter the game's password:"), password, MP_FRIENDLY_NAME_LEN+1, 1) )
 	{
 		return 0;
 	}

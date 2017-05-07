@@ -30,6 +30,7 @@
 #include <OSYS.h>
 #include <COLCODE.h>
 
+#define HIDE_CHAR '*'
 
 GetA::GetA()
 {
@@ -40,10 +41,19 @@ GetA::GetA()
 	enable_flag = 1;
 	mouse_drag_flag = 0;
 	back_ground_bitmap = NULL;
+	hide_flag = 0;
+	hide_field = NULL;
+	disp_field = NULL;
 }
 
-void GetA::init( int x1, int y1, int x2, char *field, unsigned length, 
-					 Font *fontPtr, char align, char detectEsc)
+GetA::~GetA()
+{
+	if( hide_field )
+		mem_del(hide_field);
+}
+
+void GetA::init(int x1, int y1, int x2, char *field, unsigned length,
+					 Font *fontPtr, char align, char detectEsc, char hide)
 {
 	x = x1;
 	y = y1;
@@ -57,6 +67,19 @@ void GetA::init( int x1, int y1, int x2, char *field, unsigned length,
 	esc_key_flag = detectEsc;
 	mouse_drag_flag = 0;
 	back_ground_bitmap = NULL;
+	disp_field = input_field;
+
+	if( hide )
+	{
+		int len;
+		len = strlen(input_field);
+		err_when(len >= field_len);
+		hide_flag = 1;
+		hide_field = mem_add(field_len+1);
+		memset(hide_field, HIDE_CHAR, len);
+		hide_field[len] = 0;
+		disp_field = hide_field;
+	}
 
 	select_whole();
 }
@@ -71,6 +94,8 @@ void GetA::clear()
 {
 	input_field[0] = '\0';
 	cursor_pos = 0;
+	if( hide_flag )
+		hide_field[0] = '\0';
 	clear_select();
 }
 
@@ -103,6 +128,11 @@ unsigned GetA::detect_key()
 			}
 			err_when( cursor_pos < 0 || cursor_pos > strlen(input_field) );
 			err_when( mark_cursor_pos < 0 || mark_cursor_pos > strlen(input_field) );
+			if( hide_flag && strlen(input_field) )
+			{
+				hide_field[strlen(input_field)-1] = HIDE_CHAR;
+				hide_field[strlen(input_field)] = 0;
+			}
 			return keyCode;
 		}
 		else if( keyCode == KEY_DEL )
@@ -129,6 +159,10 @@ unsigned GetA::detect_key()
 			}
 			err_when( cursor_pos < 0 || cursor_pos > strlen(input_field) );
 			err_when( mark_cursor_pos < 0 || mark_cursor_pos > strlen(input_field) );
+			if( hide_flag )
+			{
+				hide_field[strlen(input_field)] = 0;
+			}
 			return keyCode;
 		}
 		else if( keyCode == KEY_BACK_SPACE )
@@ -157,6 +191,10 @@ unsigned GetA::detect_key()
 			}
 			err_when( cursor_pos < 0 || cursor_pos > strlen(input_field) );
 			err_when( mark_cursor_pos < 0 || mark_cursor_pos > strlen(input_field) );
+			if( hide_flag )
+			{
+				hide_field[strlen(input_field)] = 0;
+			}
 			return keyCode;
 		}
 		if( keyCode == KEY_LEFT )
@@ -217,13 +255,13 @@ void GetA::paint(int paintCursor)
 {
 	err_when( cursor_pos < 0 || cursor_pos > strlen(input_field) );
 	err_when( mark_cursor_pos < 0 || mark_cursor_pos > strlen(input_field) );
-	int cursorX = font_ptr->text_width(input_field, cursor_pos);
-	int leftX = font_ptr->text_width(input_field, mark_begin());
-	int rightX = font_ptr->text_width(input_field, mark_end());
+	int cursorX = font_ptr->text_width(disp_field, cursor_pos);
+	int leftX = font_ptr->text_width(disp_field, mark_begin());
+	int rightX = font_ptr->text_width(disp_field, mark_end());
 
 	// create a temp buffer to store character
 	int rightLimit = x_limit - x;
-	int textWidth = font_ptr->text_width(input_field, -1, rightLimit ) + 1;
+	int textWidth = font_ptr->text_width(disp_field, -1, rightLimit)+1;
 	int textHeight = font_ptr->max_font_height;
 	char *bitmap = sys.common_data_buf;
 	err_when( 2*sizeof(short) + textWidth * textHeight > COMMON_DATA_BUF_SIZE );
@@ -265,7 +303,7 @@ void GetA::paint(int paintCursor)
 			err_here();
 		}
 	}
-	font_ptr->put_to_buffer(bitmap, textWidth, 0, 0, input_field);
+	font_ptr->put_to_buffer(bitmap, textWidth, 0, 0, disp_field);
 
 	if( paintCursor && enable_flag && cursorX < x_limit )
 	{
@@ -403,11 +441,11 @@ int GetA::cursor_x(int curPos)
 	switch( align_flag )
 	{
 	case 0:		// left justified
-		return x + font_ptr->text_width(input_field, curPos);
+		return x + font_ptr->text_width(disp_field, curPos);
 	case 1:		// center justified
-		return x + ((x_limit-x) - font_ptr->text_width(input_field))/2 + font_ptr->text_width(input_field, curPos);
+		return x + ((x_limit-x) - font_ptr->text_width(disp_field))/2 + font_ptr->text_width(disp_field, curPos);
 	case -1:		// right justified
-		return x_limit - font_ptr->text_width(input_field) + font_ptr->text_width(input_field, curPos);
+		return x_limit - font_ptr->text_width(disp_field) + font_ptr->text_width(disp_field, curPos);
 	default:
 		err_here();
 		return 0;
