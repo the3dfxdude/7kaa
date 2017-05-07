@@ -1488,11 +1488,20 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 
 		if( input_name_pass(dialog_txt, username, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 		{
+			int rc2;
 			if( strlen(password) )
-				ws.login(username, password);
+				rc2 = ws.login(username, password);
 			else
-				ws.refresh(username);
-			mp_obj.create_my_player(username); // reset name
+				rc2 = ws.refresh(username);
+			if( rc2 )
+			{
+				mp_obj.create_my_player(username); // reset name
+			}
+			else
+			{
+				box.msg(_("Unable to contact, or an error occurred trying to reach 7kfans.com."));
+				rc = 0;
+			}
 		}
 		else
 		{

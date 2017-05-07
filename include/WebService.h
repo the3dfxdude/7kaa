@@ -42,8 +42,8 @@ public:
 
 	void init();
 	void deinit();
-	void refresh(char *user);
-	void login(char *user, char *pass);
+	int refresh(char *user);
+	int login(char *user, char *pass);
 };
 
 extern WebService ws;

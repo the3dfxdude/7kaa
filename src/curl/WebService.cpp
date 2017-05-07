@@ -57,6 +57,9 @@ void WebService::init()
 	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&buffer);
+	// Use a hard timeout at 10 seconds. This is not foolproof, but it is
+	// somewhat necessary while we are using the blocking API.
+	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10L);
 
 	init_flag = 1;
 }
@@ -71,7 +74,7 @@ void WebService::deinit()
 	init_flag = 0;
 }
 
-void WebService::refresh(char *user)
+int WebService::refresh(char *user)
 {
 	CURLcode res;
 
@@ -80,13 +83,10 @@ void WebService::refresh(char *user)
 	buffer = "";
 
 	res = curl_easy_perform(curl);
-	if( res != CURLE_OK )
-		return;
-
-	return;
+	return res == CURLE_OK;
 }
 
-void WebService::login(char *user, char *pass)
+int WebService::login(char *user, char *pass)
 {
 	CURLcode res;
 
@@ -108,8 +108,5 @@ void WebService::login(char *user, char *pass)
 	buffer = "";
 
 	res = curl_easy_perform(curl);
-	if( res != CURLE_OK )
-		return;
-
-	return;
+	return res == CURLE_OK;
 }
