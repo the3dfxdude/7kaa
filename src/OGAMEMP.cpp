@@ -1789,6 +1789,13 @@ int Game::input_name_pass(const char *txt[], char *name, int name_len, char *pas
 }
 
 
+#ifdef HAVE_LIBCURL
+const char *login_failed_msg = "Unable to connect to the 7kfans.com service. Verify your account information and try again.";
+#else
+const char *login_failed_msg = "Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to log in.\n(No libcurl)";
+#endif
+
+
 //-------- Begin of function Game::mp_select_session --------//
 int Game::mp_select_session()
 {
@@ -1982,11 +1989,7 @@ int Game::mp_select_session()
 					statusMsg = _("Trying to connect to the service provider");
 					break;
 				case MP_POLL_LOGIN_FAILED:
-#ifdef HAVE_LIBCURL
-					box.msg(_("Unable to connect to the 7kfans.com service. Verify your account information and try again."));
-#else
-					box.msg(_("Unable to connect to the 7kfans service. Use a multiplayer username that matches your forum account username. Open your web browser to 7kfans.com/forums and ensure you are logged in with the same username."));
-#endif
+					box.msg(_(login_failed_msg));
 					goto exit_poll;
 				}
 				if( statusMsg )
@@ -2183,7 +2186,7 @@ END:
 
 	if (pollStatus == MP_POLL_LOGIN_FAILED)
 	{
-		box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+		box.msg(_(login_failed_msg));
 		return 0;
 	}
 	else if (pollStatus == MP_POLL_NO_SESSION)
@@ -3051,7 +3054,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		pollStatus = mp_obj.poll_players();
 		if (pollStatus == MP_POLL_LOGIN_FAILED)
 		{
-			box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+			box.msg(_(login_failed_msg));
 			break;
 		}
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
@@ -4950,7 +4953,7 @@ int Game::mp_select_load_option(char *fileName)
 		pollStatus = mp_obj.poll_players();
 		if (pollStatus == MP_POLL_LOGIN_FAILED)
 		{
-			box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+			box.msg(_(login_failed_msg));
 			break;
 		}
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
@@ -5703,7 +5706,7 @@ int Game::mp_select_load_option(char *fileName)
 
 	if( pollStatus == MP_POLL_LOGIN_FAILED )
 	{
-		box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+		box.msg(_(login_failed_msg));
 	}
 
 	return retFlag;
