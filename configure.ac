@@ -88,6 +88,7 @@ video_backend=sdl    # sdl
 use_windows=no
 use_mingw=no
 jwasm_fmt="-elf -zt0"
+enable_enet=yes
 
 # Set in argument handlers:
 # enable_asm=no
@@ -118,14 +119,14 @@ AC_ARG_ENABLE([network],
   [], [enable_network=yes]
 )
 
-AC_ARG_WITH([wine],
-  AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
-  [], [with_wine=no]
-)
+#AC_ARG_WITH([wine],
+#  AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
+#  [], [with_wine=no]
+#)
 
 AC_ARG_ENABLE([dynamic-support-libs],
   AS_HELP_STRING([--enable-dynamic-suppport-libs],
-		 [do not link statically with libgcc and libstdc++ on Windows]),
+		 [do not link statically with libgcc and libstdc++ on mingw]),
   [], [enable_dynamic_support_libs=no]
 )
 
@@ -177,8 +178,15 @@ AS_IF([test "$enable_asm" = yes], [
 # Library dependencies
 
 AS_IF([test "$audio_backend" = openal], [
-  AM_PATH_OPENAL([], [
-    AC_ERROR([OpenAL not found])
+  PKG_CHECK_MODULES([OPENAL], [openal], [
+    AC_DEFINE_UNQUOTED([OPENAL_AL_H], [<AL/al.h>],
+      [Define to the equivalent of <AL/al.h> on your system])
+    AC_DEFINE_UNQUOTED([OPENAL_ALC_H], [<AL/alc.h>],
+      [Define to the equivalent of <AL/alc.h> on your system])
+  ], [
+    AM_PATH_OPENAL([], [
+      AC_ERROR([OpenAL not found])
+    ])
   ])
 
   CXXFLAGS="$CXXFLAGS $OPENAL_CFLAGS"
@@ -195,17 +203,24 @@ AS_IF([test "$input_backend" = sdl \
   LIBS="$SDL_LIBS $LIBS"
 ])
 
-PKG_CHECK_MODULES([ENET], [libenet],, [
-  PKG_CHECK_MODULES([ENET], [enet],, [
+AS_IF([test "$enable_enet" = yes], [
+  PKG_CHECK_MODULES([ENET], [libenet], [], [
     SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lws2_32 -lwinmm" -lenet],, [
       AC_ERROR([enet not found])
     ])
   ])
-])
 
-AS_IF([test "$ENET_CFLAGS" != "" || test "$ENET_LIBS" != ""], [
   CXXFLAGS="$CXXFLAGS $ENET_CFLAGS"
   LIBS="$LIBS $ENET_LIBS"
+])
+
+AS_IF([test "$enable_curl" = yes], [
+  PKG_CHECK_MODULES([CURL], [libcurl], [], [
+    AC_ERROR([curl not found])
+  ])
+
+  CXXFLAGS="$CXXFLAGS $CURL_CFLAGS"
+  LIBS="$LIBS $CURL_LIBS"
 ])
 
 AS_IF([test "$use_windows" = yes], [
@@ -218,13 +233,10 @@ AS_IF([test "$use_windows" = yes], [
 
 AS_IF([test "$use_mingw" = yes], [
   AS_IF([test "$enable_dynamic_support_libs" = no], [
-    LIBS="$LIBS -static-libstdc++ -static-libgcc"
-  ])
-])
-
-AS_IF([test "$enable_curl" = yes], [
-  LIBCURL_CHECK_CONFIG([], [], [], [
-    AC_ERROR([libcurl not found])
+    # Static linking on windows, plus a thread library work-around:
+    # The --whole-archive switch makes the linker try to static link anyway,
+    # even though the application does not call the library.
+    LIBS="$LIBS -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive"
   ])
 ])
 
@@ -275,6 +287,11 @@ AS_CASE(["$input_backend"],
 AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
   AC_DEFINE([USE_SDL], [1],
 	    [Define to 1 if using SDL as the video/input backend])
+])
+
+AS_IF([test "$enable_curl" = yes], [
+  AC_DEFINE([HAVE_LIBCURL], [1],
+	    [Define to 1 if using libcurl])
 ])
 
 AC_DEFINE([NO_MEM_CLASS], [1], [Define to 1 if not monitoring memory alloc])

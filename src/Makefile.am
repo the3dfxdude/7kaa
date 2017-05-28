@@ -286,10 +286,8 @@ bin_PROGRAMS = 7kaa
 	vgautil.cpp \
 	vgautil2.cpp
 
-CXXFLAGS += $(SDL_CFLAGS)
 
 7kaa_LDADD =
-
 
 if AUDIO_OPENAL
 7kaa_LDADD += ./openal/libaudio_openal.a
@@ -309,7 +307,6 @@ endif
 
 if USE_CURL
 7kaa_LDADD += ./curl/libWebService.a
-7kaa_LDADD += @LIBCURL@
 endif
 
 if USE_WINDOWS
