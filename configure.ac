@@ -229,6 +229,8 @@ AS_IF([test "$use_windows" = yes], [
   AS_IF([test "$enable_debug" = no], [
     LDFLAGS="$LDFLAGS -mwindows"
   ])
+
+  AC_DEFINE([USE_WINDOWS], [1], [Define to 1 if building on the windows platform])
 ])
 
 AS_IF([test "$use_mingw" = yes], [
@@ -322,6 +324,7 @@ AC_CONFIG_FILES([
   src/imgfun/generic/Makefile
   src/imgfun/x86/Makefile
   src/openal/Makefile
+  src/platform/Makefile
   po/Makefile.in
 ])
 

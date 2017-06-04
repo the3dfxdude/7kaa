@@ -155,6 +155,7 @@ noinst_HEADERS = \
 	OWORLDMT.h \
 	RESOURCE.h \
 	WALLTILE.h \
+	WebService.h \
 	asmfun.h \
 	audio_base.h \
 	audio_stream.h \
@@ -175,6 +176,7 @@ noinst_HEADERS = \
 	multiplayer.h \
 	openal_audio.h \
 	output_stream.h \
+	platform.h \
 	player_desc.h \
 	surface.h \
 	surface_base.h \
