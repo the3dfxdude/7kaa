@@ -32,6 +32,6 @@
 #define SKVERMED 14
 #define SKVERMIN 7
 
-#define DEV_VERSION
+//#define DEV_VERSION
 
 #endif

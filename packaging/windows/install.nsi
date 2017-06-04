@@ -99,8 +99,6 @@ Section "7kaa (required)" 7kaareq
   Rename "$INSTDIR\README" "$INSTDIR\README.txt"
   File ".\COPYING"
   Rename "$INSTDIR\COPYING" "$INSTDIR\COPYING.txt"
-  File ".\COPYING.uuid"
-  Rename "$INSTDIR\COPYING.uuid" "$INSTDIR\COPYING-uuid.txt"
   File ".\doc\7kaa-hotkeys-2.14.5.png"
   File /r ".\data\encyc"
   File /r ".\data\encyc2"
@@ -112,6 +110,8 @@ Section "7kaa (required)" 7kaareq
   File /r ".\data\sprite"
   File /r ".\data\tutorial"
   File .\src\7kaa.exe
+  File ".\SDL2.dll"
+  File ".\libcurl.dll"
   
   ;Reset Install path
   ;SetOutPath "$INSTDIR"
@@ -145,13 +145,6 @@ Section "OpenAL" openal
 
 SectionEnd
 
-Section "SDL" sdl
-
-  SetOutPath "$INSTDIR"
-  File ".\SDL2.dll"
-
-SectionEnd
-
 ; Start Menu Shortcuts (can be disabled by the user)
 Section "Start Menu Shortcuts" startshort
 
@@ -174,8 +167,7 @@ SectionEnd
   LangString secreq ${LANG_ENGLISH} "Files required for 7kaa to run"
   LangString secmusic ${LANG_ENGLISH} "Music files for 7kaa"
   LangString secshort ${LANG_ENGLISH} "Start menu shortcuts"
-  LangString secopenal ${LANG_ENGLISH} "OpenAL-soft shared library (recommended if not provided by your hardware driver)"
-  LangString secsdl ${LANG_ENGLISH} "SDL shared library (recommended)"
+  LangString secopenal ${LANG_ENGLISH} "OpenAL-soft shared library (recommended if not provided by your sound driver)"
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
@@ -183,7 +175,6 @@ SectionEnd
       !insertmacro MUI_DESCRIPTION_TEXT ${music} $(secmusic)
       !insertmacro MUI_DESCRIPTION_TEXT ${startshort} $(secshort)
     !insertmacro MUI_DESCRIPTION_TEXT ${openal} $(secopenal)
-    !insertmacro MUI_DESCRIPTION_TEXT ${sdl} $(secsdl)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
@@ -219,6 +210,7 @@ Section "Uninstall"
   Delete "$INSTDIR\README-music.txt"
   Delete "$INSTDIR\OpenAL32.dll"
   Delete "$INSTDIR\SDL2.dll"
+  Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\Uninstall.exe"
 
   ; Remove shortcuts
