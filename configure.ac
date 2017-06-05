@@ -51,6 +51,8 @@ AC_DEFUN([EVAL_SHELL_VAR], [
 ])
 
 # Checks for programs.
+CXXFLAGS="$CXXFLAGS -fsigned-char"
+AC_LANG(C++)
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
@@ -58,6 +60,20 @@ AC_PROG_LN_S
 PKG_PROG_PKG_CONFIG
 
 AX_CXX_COMPILE_STDCXX_11(,[mandatory])
+
+AC_MSG_CHECKING(whether char is signed)
+AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+#include <limits.h>
+#if CHAR_MIN == 0
+#error
+#endif
+  )],[
+    AC_MSG_RESULT(yes)
+  ],[
+    AC_MSG_RESULT(no)
+    AC_ERROR([The compiler must interpret char as signed])
+  ]
+)
 
 # Checks for header files.
 dnl AC_CHECK_HEADERS([])
