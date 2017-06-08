@@ -455,6 +455,7 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 {
 	int   charWidth, x=0, lenCount, maxLen=0, wordWidth=0;
 	short textChar;
+	char lastChar = '\0';
 
 	if( !init_flag )
 		return x;
@@ -471,6 +472,7 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 	for( lenCount=1 ; *textPtr && lenCount<=textPtrLen ; textPtr++, lenCount++, x+=inter_char_space )
 	{
 		textChar = *((unsigned char*)textPtr);
+		lastChar = *textPtr;
 
 //#ifdef GERMAN
 //		textChar = translate_german_char(textChar);
@@ -539,7 +541,7 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 	if( maxDispWidth && x > maxDispWidth )
 		text_line_count++;
 
-	if( textPtr[-1] == '\n' )       // if last character is line feed, don't count double
+	if( lastChar == '\n' )       // if last character is line feed, don't count double
 		text_line_count--;
 
 	return MAX(maxLen,x);
