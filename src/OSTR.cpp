@@ -23,7 +23,8 @@
 
 #include <OMISC.h>
 #include <OSTR.h>
-#include <win32_compat.h>
+
+#include <cctype>
 
 
 //------- Define static variable --------//
@@ -95,7 +96,13 @@ char* String::substr(int pos, int len)
 char* String::upper()
 {
    memcpy( work_buf, str_buf, len()+1 );
-   strupr( work_buf );
+
+   char* str = work_buf;
+   while (*str)
+   {
+	   *str = std::toupper(*str);
+	   str++;
+   }
 
    return work_buf;
 }
@@ -103,7 +110,13 @@ char* String::upper()
 char* String::lower(void)
 {
    memcpy( work_buf, str_buf, len()+1 );
-   strlwr( work_buf );
+
+   char* str = work_buf;
+   while (*str)
+   {
+	   *str = std::tolower(*str);
+	   str++;
+   }
 
    return work_buf;
 }

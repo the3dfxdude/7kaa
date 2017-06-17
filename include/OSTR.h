@@ -24,9 +24,7 @@
 #ifndef __OSTR_H
 #define __OSTR_H
 
-#ifndef __STRING_H
 #include <string.h>
-#endif
 
 //--------- Define macro ant ------------//
 

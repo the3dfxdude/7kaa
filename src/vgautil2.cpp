@@ -44,7 +44,7 @@
 //                        before blitting.
 //                        (default: 1)
 //
-BOOL VgaUtil::blt_buf(int x1, int y1, int x2, int y2, int putBackCursor)
+void VgaUtil::blt_buf(int x1, int y1, int x2, int y2, int putBackCursor)
 {
    if( putBackCursor )
    {
@@ -75,8 +75,6 @@ BOOL VgaUtil::blt_buf(int x1, int y1, int x2, int y2, int putBackCursor)
       mouse_cursor.hide_area_flag = 0;    // do not call mouse.show_area() which will double paint the cursor
    else
       mouse.show_area();
-
-   return TRUE;
 }
 //---------- End of function VgaUtil::blt_buf ----------//
 

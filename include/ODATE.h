@@ -24,9 +24,7 @@
 #ifndef __ODATE_H
 #define __ODATE_H
 
-#ifndef __ALL_H
 #include <ALL.h>
-#endif
 
 class DateInfo
 {

@@ -74,26 +74,6 @@ inline char *ltoa(long num, char *str, int radix)
 
 #define _rotr(value,shift) (value<<shift)|(value>>(32-shift))
 
-inline char *strupr(char *str)
-{
-	while (*str)
-	{
-		*str = toupper(*str);
-		str++;
-	}
-	return str;
-}
-
-inline char *strlwr(char *str)
-{
-	while (*str)
-	{
-		*str = tolower(*str);
-		str++;
-	}
-	return str;
-}
-
 #else // WINE || WIN32
 
 #include <windows.h>
