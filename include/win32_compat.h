@@ -76,6 +76,10 @@ inline char *ltoa(long num, char *str, int radix)
 
 #else // WINE || WIN32
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#define NOMINMAX
 #include <windows.h>
 
 #endif
