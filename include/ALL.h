@@ -45,21 +45,21 @@ struct MemInfo;
 class Mem
 {
 public :
-        MemInfo* info_array;
-        short    ptr_num;
-        short    ptr_used;
+	MemInfo* info_array;
+	short    ptr_num;
+	short    ptr_used;
 
 public :
-        Mem();
-        ~Mem();
+	Mem();
+	~Mem();
 
-    char* add(unsigned, const char*, int);
-    char* add_clear(unsigned, const char*,int);
-    char* resize(void*,unsigned, const char*,int);
-    char* resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize, const char* fileName, int fileLine);
-    void  del(void*,const char*,int);
+	char* add(unsigned, const char*, int);
+	char* add_clear(unsigned, const char*,int);
+	char* resize(void*,unsigned, const char*,int);
+	char* resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize, const char* fileName, int fileLine);
+	void  del(void*,const char*,int);
 
-    int get_mem_size(void *memPtr);
+	int get_mem_size(void *memPtr);
 };
 
 char* mem_resize_keep_data(void*,unsigned,unsigned);    // called when DEBUG mode is off
