@@ -26,7 +26,6 @@
 
 //--------- Include other headers -------//
 
-#include <win32_compat.h>
 #include <OMISC.h>
 #include <OSTR.h>
 #include <OFILE.h>
