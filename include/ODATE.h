@@ -46,8 +46,6 @@ public:
 
 	int 	add_months(int inDate, int addMonth);
 
-	int	file_time_to_julian(FILETIME& fileTime);
-
 private:
    long ytoj(int);
    int  month_day(int,int,int&,int&);

@@ -27,6 +27,8 @@
 #include <storage_constants.h>
 #include <win32_compat.h>
 
+#include <cstdint>
+
 
 // The basic information ('header') of a savegame.
 #pragma pack(1)
@@ -38,9 +40,9 @@ struct SaveGameInfo
 	char     race_id;
 	char     nation_color;
 
-	int      game_date;      // the game date of the saved game
-	FILETIME file_date;      // saving game date
-	short    terrain_set;
+	int           game_date;      // the game date of the saved game
+	std::uint64_t file_date;      // saving game date (FILETIME)
+	short         terrain_set;
 };
 #pragma pack()
 

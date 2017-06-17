@@ -627,9 +627,12 @@ void SaveGameArray::disp_entry_info(const SaveGameInfo* entry, int x, int y)
 	#endif
 
 	SYSTEMTIME sysTime;
-	FILETIME localFileTime;
 #ifndef NO_WINDOWS  //FIXME
-	FileTimeToLocalFileTime( &entry->file_date, &localFileTime );
+	FILETIME fileTime;
+	FILETIME localFileTime;
+	fileTime.dwLowDateTime = static_cast<std::uint32_t>(entry->file_date);
+	fileTime.dwHighDateTime = static_cast<std::uint32_t>(entry->file_date >> 32);
+	FileTimeToLocalFileTime( &fileTime, &localFileTime );
 	FileTimeToSystemTime( &localFileTime, &sysTime );
 #else
 	memset(&sysTime, 0, sizeof(SYSTEMTIME));

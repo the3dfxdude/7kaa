@@ -42,11 +42,6 @@ typedef uint32_t DWORD;
 #define MAX_PATH 260
 
 typedef struct {
-	DWORD dwLowDateTime;
-	DWORD dwHighDateTime;
-} FILETIME;
-
-typedef struct {
 	WORD wYear;
 	WORD wMonth;
 	WORD wDayOfWeek;
