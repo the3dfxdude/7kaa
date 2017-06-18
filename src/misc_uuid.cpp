@@ -39,14 +39,14 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#ifndef _WIN32
+#ifdef NO_WINDOWS
 #include <unistd.h>
 #include <sys/time.h>
 #endif
 
 #include "OMISC.h"
 
-#ifdef _WIN32
+#ifndef NO_WINDOWS
 #include <windows.h>
 #include <process.h>
 #include <io.h>
@@ -76,7 +76,7 @@ static int getuid (void)
 
 #define _getpid getpid
 #define _read read
-#endif // _WIN32
+#endif // !NO_WINDOWS
 
 struct uuid {
 	uint32_t	time_low;
@@ -95,7 +95,7 @@ static int get_random_fd(void)
 
 	if (fd == -2) {
 		gettimeofday(&tv, 0);
-#ifndef _WIN32
+#ifdef NO_WINDOWS
 		fd = open("/dev/urandom", O_RDONLY);
 		if (fd == -1)
 			fd = open("/dev/random", O_RDONLY | O_NONBLOCK);

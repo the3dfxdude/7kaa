@@ -24,7 +24,7 @@
 #include <ALL.h>
 #include <version.h>
 
-#ifdef WIN32
+#ifndef NO_WINDOWS
 #include <initguid.h>
 #endif
 
@@ -289,7 +289,7 @@ static void extra_error_handler();
 # endif
 #endif
 
-#if (WIN32 && !USE_SDL)
+#if (!defined(NO_WINDOWS) && !USE_SDL)
 // Prototype main since the runtime does not do that for us
 int main(int, char**);
 

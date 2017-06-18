@@ -26,7 +26,6 @@
 
 #ifdef USE_ASM
 #ifdef _MSC_VER
-	#include <windows.h>
 	#define IMGcall _stdcall
 #else
 	#define IMGcall __attribute__((stdcall))
