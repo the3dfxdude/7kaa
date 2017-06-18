@@ -62,8 +62,6 @@ public :
 	int get_mem_size(void *memPtr);
 };
 
-char* mem_resize_keep_data(void*,unsigned,unsigned);    // called when DEBUG mode is off
-
 extern Mem mem;
 
 //------ memory allocation functions --------//
@@ -75,8 +73,6 @@ extern Mem mem;
 	#define mem_resize(orgPtr,newSize)   mem.resize(orgPtr, newSize, __FILE__, __LINE__)
 	#define mem_del(memPtr)              mem.del(memPtr, __FILE__, __LINE__)
 
-	#define mem_resize_keep_data(orgPtr, orgSize, newSize) \
-								  mem.resize_keep_data(orgPtr, orgSize, newSize, __FILE__, __LINE__)
 #else
 
 	#include <stdlib.h>
@@ -85,8 +81,6 @@ extern Mem mem;
 	#define mem_add_clear(memSize)      ((char*)calloc(1,memSize))
 	#define mem_resize(orgPtr, newSize) ((char*)realloc(orgPtr,newSize))
 	#define mem_del(memPtr)             free(memPtr)
-
-	// mem_resize_keep_data() will be called directly when not in DEBUG mode
 
 #endif
 

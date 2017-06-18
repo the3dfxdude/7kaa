@@ -404,75 +404,7 @@ Mem::~Mem()
 
 //---------- END OF FUNCTION Mem::~Mem ------------//
 
-/*
-
-//-------- Begin of Overload "new" operator --------//
-
-void* operator new(size_t memSize)
-{
-   void *memPtr = malloc(memSize);
-
-   return memPtr;
-}
-
-//--------- End of Overload "new" operator ---------//
-
-
-//-------- Begin of Overload "delete" operator --------//
-
-void operator delete(void *memPtr)
-{
-   free(memPtr);
-}
-
-//--------- End of Overload "delete" operator ---------//
-
-*/
-
-#else
-
-//-------- BEGIN OF FUNCTION mem_resize_keep_data ----------//
-//
-// This is the non-DEBUG version of Mem::resize_keep_data()
-//
-// <void*>    orgPtr    = the original memory data pointer
-// <unsigned> orgSize   = the original data size
-// <unsigned> newSize   = new size of memory required
-//
-// Returns : NULL    - not enough memory
-//           <char*> - pointer to the allocated memory
-//
-char* mem_resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize)
-{
-   if( orgPtr == NULL )
-      return (char*) malloc(newSize);
-
-   if( newSize <= orgSize )
-      return (char*) realloc(orgPtr, newSize);
-
-   //-------- save the original data first ------//
-
-   char* saveBuf = (char*)malloc(sizeof(char)*(orgSize));
-
-   memcpy( saveBuf, orgPtr, orgSize );
-
-   //------ reallocate the memory --------//
-
-   char* newPtr = (char*) realloc(orgPtr, newSize);
-
-   //----- store the original data to the new buf -------//
-
-   if( newPtr != orgPtr )       // only when the pointer has been changed
-      memcpy( newPtr, saveBuf, orgSize );
-
-   free(saveBuf);
-
-   return newPtr;
-}
-//----------- END OF FUNCTION mem_resize_keep_data ---------------//
-
-
-#endif
+#endif // !defined(NO_MEM_CLASS)
 
 //-----------------------------------------------------//
 //
