@@ -364,8 +364,6 @@ char* DateInfo::time_str(int inTime)
 {
 	// #### begin Gilbert 18/8 ####//
 	static char strBuf[6] = "00:00";
-	//itoa( inTime/100, strBuf, 10 );
-	//itoa( inTime%100, strBuf+3, 10 );
 	strBuf[4] = '0' + inTime % 10;
 	strBuf[3] = '0' + (inTime/10) % 10;
 	strBuf[1] = '0' + (inTime/100) % 10;

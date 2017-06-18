@@ -48,6 +48,7 @@
 #include "gettext.h"
 
 #include <string.h> //strncpy
+#include <posix_string_compat.h> //strnicmp
 
 DBGLOG_DEFAULT_CHANNEL(SaveGameArray);
 

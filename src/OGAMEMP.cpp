@@ -176,7 +176,7 @@ struct MpStructSeedStr : public MpStructBase
 
 	MpStructSeedStr(long l) : MpStructBase(MPMSG_RANDOM_SEED_STR)
 	{
-		ltoa(l, seed_str, 10);
+		sprintf(seed_str,"%ld",l);
 	}
 };
 

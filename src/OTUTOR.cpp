@@ -41,6 +41,9 @@
 #include <OTUTOR.h>
 #include <OBOX.h>
 #include <dbglog.h>
+
+#include <posix_string_compat.h>
+
 #include "gettext.h"
 
 //---------- define constant ------------//

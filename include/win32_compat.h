@@ -25,9 +25,7 @@
 
 #ifdef NO_WINDOWS // !WINE && !WIN32
 
-#include <ctype.h>
 #include <stdint.h>
-#include <stdio.h>
 
 typedef uint8_t  BYTE;
 typedef uint8_t  UCHAR;
@@ -35,25 +33,6 @@ typedef uint16_t WORD;
 typedef int32_t  BOOL;
 typedef uint32_t UINT;
 typedef uint32_t DWORD;
-
-#define MAX_PATH 260
-
-inline char *itoa(int num, char *str, int radix)
-{
-	sprintf(str,"%d",num);
-	return str;
-}
-
-inline char *ltoa(long num, char *str, int radix)
-{
-	sprintf(str,"%ld",num);
-	return str;
-}
-
-#define strcmpi(s1,s2) strcasecmp(s1,s2)
-#define strnicmp(s1,s2,len) strncasecmp(s1,s2,len)
-
-#define _rotr(value,shift) (value<<shift)|(value>>(32-shift))
 
 #else // WINE || WIN32
 
@@ -63,7 +42,6 @@ inline char *ltoa(long num, char *str, int radix)
 #define NOMINMAX
 #include <windows.h>
 
-#endif
-
+#endif // NO_WINDOWS
 
 #endif // _WIN32_COMPAT_H

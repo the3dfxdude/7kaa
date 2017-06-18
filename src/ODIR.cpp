@@ -29,9 +29,12 @@
 #include <dirent.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#else
+#include <Windows.h>
 #endif
 
-#include <win32_compat.h>
+#include <storage_constants.h>
+#include <posix_string_compat.h>
 
 #include <dbglog.h>
 
