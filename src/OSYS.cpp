@@ -1486,7 +1486,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
 {
    int keyCode;
 
-   if((keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_IS_CTRL)))
+   if((keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_IS_CTRL)))
    {
       int groupId;
       switch(keyCode)
@@ -1499,7 +1499,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       }
    }
 
-   if((keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_IS_ALT)))
+   if((keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_IS_ALT)))
    {
       int groupId;
       switch(keyCode)
@@ -1512,7 +1512,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       }
    }
 
-   if( (keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_UNIQUE_KEY)) )
+   if( (keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_UNIQUE_KEY)) )
    {
       keyCode = misc.lower(keyCode);
 
@@ -1641,7 +1641,7 @@ void Sys::detect_function_key(unsigned scanCode, unsigned skeyState)
 {
    int keyCode;
 
-   if( (keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_UNIQUE_KEY)) )
+   if( (keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_UNIQUE_KEY)) )
    {
       switch(keyCode)
       {
@@ -1727,7 +1727,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return;
 
-   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_CHAR_KEY );
+   int keyCode = mouse.is_key( scanCode, skeyState, (unsigned short) 0, K_CHAR_KEY );
 
    if( !keyCode )    // since all keys concern are printable
       return;
@@ -1870,7 +1870,7 @@ int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return keyProcessed;
 
-   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_IS_CTRL );
+   int keyCode = mouse.is_key( scanCode, skeyState, (unsigned short) 0, K_IS_CTRL );
 
    if( !keyCode )    // since all keys concerned are printable
       return keyProcessed;
@@ -2036,7 +2036,7 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return 0;
 
-   int keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_IS_CTRL);
+   int keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_IS_CTRL);
 
    if( !keyCode )
       return 0;
@@ -2399,7 +2399,7 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
 //
 int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 {
-   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_CHAR_KEY );
+   int keyCode = mouse.is_key( scanCode, skeyState, (unsigned short) 0, K_CHAR_KEY );
 
    if( !keyCode )    // since all keys concerned are printable
       return 0;

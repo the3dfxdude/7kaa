@@ -24,7 +24,7 @@
 #ifndef __ODIR_H
 #define __ODIR_H
 
-#include <win32_compat.h>
+#include <storage_constants.h>
 #include <ODYNARR.h>
 
 #include <cstdint>

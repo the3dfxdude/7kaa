@@ -32,6 +32,8 @@
 #include <ORAWRES.h>
 #endif
 
+#include <win32_compat.h>
+
 //-------- Define Site Type --------//
 
 enum { MAX_SITE_TYPE=3 };

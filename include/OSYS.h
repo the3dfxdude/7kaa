@@ -25,6 +25,7 @@
 #define __OSYS_H
 
 #include <ALL.h>
+#include <win32_compat.h>
 #include <stdint.h>
 
 //------ Define common data buffer size  ------//

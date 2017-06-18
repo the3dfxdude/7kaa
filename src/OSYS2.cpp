@@ -1064,7 +1064,7 @@ void Sys::disp_frames_per_second()
 
 	//------- get the curren system time ---------//
 
-	DWORD curTime = misc.get_time();		// in millisecond
+	unsigned long curTime = misc.get_time();		// in millisecond
 
 	//----------- first time calling -------------//
 

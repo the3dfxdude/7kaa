@@ -28,6 +28,8 @@
 #include <ORESDB.h>
 #endif
 
+#include <win32_compat.h>
+
 //------------ Define race id. -------------//
 
 enum { RACE_NORMAN=1,

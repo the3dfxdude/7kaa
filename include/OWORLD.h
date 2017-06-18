@@ -64,7 +64,7 @@ public:
 	ZoomMatrix   *zoom_matrix;
 	Location     *loc_matrix;
 
-	DWORD	 		 next_scroll_time;		 // next scroll time
+	unsigned long	 		 next_scroll_time;		 // next scroll time
 
 	char			 scan_fire_x;				// cycle from 0 to SCAN_FIRE_DIST-1
 	char			 scan_fire_y;

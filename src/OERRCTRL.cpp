@@ -27,6 +27,8 @@
 #include <ALL.h>
 #include <stdint.h>
 
+#include <win32_compat.h>
+
 #define DEBUG_LOG_LOCAL 1
 #include <OLOG.h>
 

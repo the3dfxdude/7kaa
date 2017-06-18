@@ -44,6 +44,8 @@
 #include <OTOWNRES.h>
 #endif
 
+#include <win32_compat.h>
+
 //------- define constant --------//
 
 #define MAX_TOWN_GROWTH_POPULATION  60		// grow up to 60 persons in a town

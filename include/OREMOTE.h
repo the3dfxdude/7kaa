@@ -24,24 +24,10 @@
 #ifndef __OREMOTE_H
 #define __OREMOTE_H
 
-// #ifndef __WINDOWS_
-// #include <windows.h>
-// #endif
-
-// #ifndef __OWSIPX_H
-// #include <OWSIPX.h>
-// #endif
-
 #include <MPTYPES.h>
 #include <OREMOTEQ.h>
 
-//------ Define connectivity mode -------//
-
-// enum { REMOTE_WSOCK_TCPIP=1,
-// REMOTE_WSOCK_IPX,
-// REMOTE_MODEM,
-// REMOTE_NULL_MODEM,
-//	  };
+#include <win32_compat.h>
 
 //---------- Define message id. ---------//
 

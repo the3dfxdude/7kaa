@@ -87,7 +87,7 @@ void Video::play(char* aviFileName, DWORD waitTime)
 
 	//-------- wait still after playing the movie ------//
 
-	DWORD curTime = misc.get_time();
+	unsigned long curTime = misc.get_time();
 
 	while( misc.get_time() < curTime+waitTime );
 

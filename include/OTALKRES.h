@@ -36,6 +36,8 @@
 #include <OTALKMSG.h>
 #endif
 
+#include <win32_compat.h>
+
 //-------- define constant ----------//
 
 enum { MAX_TALK_CHOICE = MAX_TALK_TYPE	};

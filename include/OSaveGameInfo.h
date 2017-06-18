@@ -25,7 +25,6 @@
 #define __OSAVEGAMEINFO_H
 
 #include <storage_constants.h>
-#include <win32_compat.h>
 
 #include <cstdint>
 

@@ -31,6 +31,8 @@
 #include <sys/stat.h>
 #endif
 
+#include <win32_compat.h>
+
 #include <dbglog.h>
 
 DBGLOG_DEFAULT_CHANNEL(Directory);

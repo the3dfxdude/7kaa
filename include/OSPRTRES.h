@@ -28,6 +28,8 @@
 #include <ALL.h>
 #endif
 
+#include <win32_compat.h>
+
 #ifndef __ORESDB_H
 #include <ORESDB.h>
 #endif

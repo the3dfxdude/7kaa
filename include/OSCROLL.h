@@ -28,6 +28,8 @@
 #include <ALL.h>
 #endif
 
+#include <win32_compat.h>
+
 //--------- Define class ScrollBar --------//
 
 class ScrollBar

@@ -45,17 +45,6 @@ enum MouseEventType
 
 //------- Define struct MouseEvent --------//
 
-/*
-struct MouseEvent               // event buffer structure
-{
-	int      state;              // mouse state
-	int      x, y;               // cursor coordinates
-	DWORD    time;               // time event occurred
-	unsigned scan_code;           // if scan_code>0 then it's a key press event
-	unsigned short skey_state;   // speical key state, such as LEFT_SHIFT_KEY_MASK ...
-};
-*/
-
 struct MouseEvent               // event buffer structure
 {
 	MouseEventType	event_type;   // mouse state

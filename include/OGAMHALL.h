@@ -25,7 +25,6 @@
 //Description : Hall of Fame
 
 #include <storage_constants.h>
-#include <win32_compat.h>
 
 
 //-------- Define struct HallFameEntry ----------//

@@ -161,7 +161,7 @@ int ButtonCustom::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, 
    //----- paint the button with pressed shape ------//
 
 	#define PRESSED_TIMEOUT_SECONDS  1      // 1 seconds
-	DWORD timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+	unsigned long timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
 
 	if( elastic_flag )
 	{

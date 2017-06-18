@@ -21,14 +21,15 @@
 //Filename    : OMISC.CPP
 //Description : Object of Misc useful functions
 
-#ifndef NO_WINDOWS
-#include <windows.h>
-#else
+#ifdef NO_WINDOWS
+#include <sys/time.h>
 #include <sys/stat.h>
 #include <errno.h>
 #endif 
 
 #include <SDL.h>
+#include <win32_compat.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <c99_printf.h>

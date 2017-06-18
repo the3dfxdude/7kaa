@@ -32,6 +32,8 @@
 #include <ORESDB.h>
 #endif
 
+#include <win32_compat.h>
+
 #ifdef NO_DEBUG_UNIT
 #undef DEBUG
 #endif

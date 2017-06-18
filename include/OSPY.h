@@ -28,6 +28,8 @@
 #include <ODYNARRB.h>
 #endif
 
+#include <win32_compat.h>
+
 //------- define constant -------//
 
 #define MAX_BRIBE_AMOUNT	 4000

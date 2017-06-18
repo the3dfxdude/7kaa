@@ -24,7 +24,8 @@
 #ifndef __OFILE_H
 #define __OFILE_H
 
-#include <win32_compat.h>
+#include <storage_constants.h>
+
 #include <stdio.h>
 #include <stdint.h>
 

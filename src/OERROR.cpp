@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#ifdef __WIN32__
+#ifndef NO_WINDOWS
 #include <windows.h>
 #endif
 
