@@ -30,6 +30,8 @@
 
 #include <OREGION.h>
 
+#include <win32_compat.h>
+
 //----- Define bit meanings Location::flag ------//
 #define 	LOCATE_WALK_LAND			0x01
 #define	LOCATE_WALK_SEA			0x02

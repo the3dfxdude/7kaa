@@ -27,8 +27,6 @@
 #include <ALL.h>
 #include <stdint.h>
 
-#include <win32_compat.h>
-
 #define DEBUG_LOG_LOCAL 1
 #include <OLOG.h>
 
@@ -183,7 +181,7 @@ char *ErrorControl::receive(char *sendEcPlayerId, uint32_t *dataLen)
 	else
 	{
 		char *dataPtr = receive_queue[recv_head].queue_buf;
-		DWORD len = receive_queue[recv_head].length();
+		uint32_t len = receive_queue[recv_head].length();
 		err_when( len < sizeof(EcMsgHeader) + CRC_LEN);
 		if( sendEcPlayerId )
 			*sendEcPlayerId = ((EcMsgHeader *)dataPtr)->sender_id;
@@ -443,7 +441,7 @@ void ErrorControl::yield()
 					DEBUG_LOG(debugStr);
 #endif
 					char *replyMsg = send_queue[ecMsg.frame_id].queue_buf;
-					DWORD replyLen = send_queue[ecMsg.frame_id].length();
+					uint32_t replyLen = send_queue[ecMsg.frame_id].length();
 
 					mp_ptr->send( dp_id[ecMsg.sender_id-1], replyMsg, replyLen );
 					err_when( replyLen <= sizeof(EcMsgHeader) );
@@ -669,7 +667,7 @@ void ErrorControl::re_transmit(int promptFactor)
 			int resendSuccess = 0;
 			int resendFail = 0;
 			char *ecMsg = send_queue[f].queue_buf;
-			DWORD ecMsgLen = send_queue[f].length();
+			uint32_t ecMsgLen = send_queue[f].length();
 
 			for( char ecPlayerId = 1; ecPlayerId <= MAX_PLAYER; ++ecPlayerId )
 			{

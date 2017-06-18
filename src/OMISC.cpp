@@ -25,10 +25,11 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <errno.h>
+#else
+#include <Windows.h>
 #endif 
 
 #include <SDL.h>
-#include <win32_compat.h>
 
 #include <string.h>
 #include <stdlib.h>
