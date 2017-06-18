@@ -553,7 +553,7 @@ void RemoteMsg::unit_move()
 //--------- Begin of function RemoteMsg::unit_set_force_move ---------//
 void RemoteMsg::unit_set_force_move()
 {
-	err_when(id != MSG_UNIT_SET_FORCE_MOVE);
+	err_when( id != MSG_UNIT_SET_FORCE_MOVE);
 
 	// packet structure : <unit count> <unit recno>...
 	short* shortPtr = (short*) data_buf;

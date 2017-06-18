@@ -60,7 +60,7 @@ public:
 
 	void	record_all();
 	void	send_all();
-	int	compare_remote(DWORD remoteMsgId, char *);
+	int	compare_remote(uint32_t remoteMsgId, char *);
 };
 
 extern CrcStore crc_store;

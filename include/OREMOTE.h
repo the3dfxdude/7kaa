@@ -174,7 +174,7 @@ enum { REMOTE_MSG_TYPE_COUNT= LAST_REMOTE_MSG_ID - FIRST_REMOTE_MSG_ID };
 struct RemoteMsg
 {
 public:
-	DWORD	id;
+	uint32_t	id;
 	char  data_buf[1];
 
 public:
@@ -409,10 +409,10 @@ public:
 	void 			send_msg(RemoteMsg* remoteMsgPtr, int receiverId=0);
 	void 			send_free_msg(RemoteMsg* remoteMsgPtr, int receiverId=0);
 
-	RemoteMsg* 		new_msg(int msgId, int dataSize);
+	RemoteMsg* 		new_msg(uint32_t msgId, int dataSize);
 	void 			free_msg(RemoteMsg* remoteMsgPtr);
 
-	char* 	 		new_send_queue_msg(int msgId, int msgSize);
+	char* 	 		new_send_queue_msg(uint32_t msgId, int msgSize);
 	int				send_queue_now(int receiverId=0);
 	int				send_backup_now(int receiverId, uint32_t requestFrameCount);
 	void 			append_send_to_receive();
@@ -424,7 +424,7 @@ public:
 
 
 	void 			process_receive_queue();
-	void 			process_specific_msg(DWORD msgId);
+	void 			process_specific_msg(uint32_t msgId);
 
 	void			init_send_queue(uint32_t,short);
 	void			init_receive_queue(uint32_t);

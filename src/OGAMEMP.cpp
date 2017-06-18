@@ -152,8 +152,8 @@ enum
 
 struct MpStructBase
 {
-	DWORD msg_id;
-	MpStructBase(DWORD msgId) : msg_id(msgId) {}
+	uint32_t msg_id;
+	MpStructBase(uint32_t msgId) : msg_id(msgId) {}
 };
 
 struct MpStructSeed : public MpStructBase
