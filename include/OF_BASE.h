@@ -75,7 +75,7 @@ public:
 	virtual	FirmBase* cast_to_FirmBase() { return this; };
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

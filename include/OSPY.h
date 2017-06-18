@@ -28,8 +28,6 @@
 #include <ODYNARRB.h>
 #endif
 
-#include <win32_compat.h>
-
 //------- define constant -------//
 
 #define MAX_BRIBE_AMOUNT	 4000
@@ -140,7 +138,7 @@ public:
 	int 	ai_spy_being_attacked(int attackerUnitRecno);
 
 	// #### patch begin Gilbert 20/1 ######//
-	UCHAR crc8();
+	uint8_t crc8();
 	void	clear_ptr();
 	// #### patch end Gilbert 20/1 ######//
 };

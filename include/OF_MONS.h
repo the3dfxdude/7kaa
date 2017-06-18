@@ -130,7 +130,7 @@ public:
 	int	is_hostile_nation(int nationRecno);
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

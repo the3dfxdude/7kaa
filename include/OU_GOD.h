@@ -56,7 +56,7 @@ public:
 	void cast_power(int castXLoc, int castYLoc);
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

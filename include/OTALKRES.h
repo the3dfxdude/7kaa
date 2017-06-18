@@ -36,8 +36,6 @@
 #include <OTALKMSG.h>
 #endif
 
-#include <win32_compat.h>
-
 //-------- define constant ----------//
 
 enum { MAX_TALK_CHOICE = MAX_TALK_TYPE	};
@@ -114,7 +112,7 @@ public:
 	void		surrender();
 
 	// ###### begin Gilbert 10/10 #########//
-	UCHAR		crc8();
+	uint8_t		crc8();
 	void		clear_ptr();
 	// ###### end Gilbert 10/10 #########//
 

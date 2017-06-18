@@ -566,7 +566,7 @@ public:
 	virtual void fix_attack_info();         // set attack_info_array appropriately
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

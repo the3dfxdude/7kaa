@@ -71,7 +71,7 @@ public:
 	void	cancel_build_unit();
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR	crc8();
+	virtual	uint8_t	crc8();
 	virtual	void	clear_ptr();
 
 	enum {FIRMWAR_BUILD_BATCH_COUNT = 10}; // Number of units enqueued when holding shift - ensure this is less than MAX_BUILD_QUEUE

@@ -174,7 +174,7 @@ public:
 	void	think_set_pick_up_type2(int fromStopId, int toStopId);
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

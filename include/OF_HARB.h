@@ -111,7 +111,7 @@ public:
 	enum {HARBOR_BUILD_BATCH_COUNT = 5}; // Number of units enqueued when holding shift - ensure this is less than MAX_BUILD_SHIP_QUEUE
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:
