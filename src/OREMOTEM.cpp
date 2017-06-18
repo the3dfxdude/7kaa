@@ -292,8 +292,8 @@ void RemoteMsg::update_game_setting()
 	{
 		short nationRecno = *(short *)dataPtr;
 		dataPtr += sizeof(short);
-		DWORD dpPlayerId = *(DWORD *)dataPtr;
-		dataPtr += sizeof(DWORD);
+		PID_TYPE dpPlayerId = *(PID_TYPE *)dataPtr;
+		dataPtr += sizeof(PID_TYPE);
 		short colorSchemeId = *(short *)dataPtr;
 		dataPtr += sizeof(short);
 		short raceId = *(short *)dataPtr;

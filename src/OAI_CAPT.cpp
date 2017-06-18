@@ -23,7 +23,6 @@
 
 #include <queue>
 #include <ALL.h>
-#include <OREMOTE.h>
 #include <OCONFIG.h>
 #include <OUNIT.h>
 #include <OF_CAMP.h>

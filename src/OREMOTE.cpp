@@ -180,7 +180,7 @@ int Remote::number_of_opponent()
 
 //-------- Begin of function Remote::self_player_id ---------//
 //
-DWORD Remote::self_player_id()
+PID_TYPE Remote::self_player_id()
 {
 	err_when(!connectivity_mode);
 

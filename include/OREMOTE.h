@@ -27,7 +27,7 @@
 #include <MPTYPES.h>
 #include <OREMOTEQ.h>
 
-#include <win32_compat.h>
+#include <storage_constants.h>
 
 //---------- Define message id. ---------//
 
@@ -399,7 +399,7 @@ public:
 	int				is_enable();
 	// int			can_start_game();
 	int				number_of_opponent();
-	DWORD			self_player_id();
+	PID_TYPE    	self_player_id();
 	// void			set_disconnect_handler(DisconnectFP disconnectFP);
 
 	int				create_game();
