@@ -28,14 +28,8 @@
 #include <ALL.h>
 #endif
 
-#include <win32_compat.h>
-
 #ifndef __ORESDB_H
 #include <ORESDB.h>
-#endif
-
-#ifndef __OSFRMRES_H
-#include <OSFRMRES.h>
 #endif
 
 //-------- Define struct SpriteRec ----------//
@@ -149,15 +143,15 @@ public:
 	short			 loc_width;			// no. of locations it takes horizontally and vertically
 	short 		 loc_height;
 
-	BYTE 			 speed;					// based on UnitRes, can be upgraded during the game.
-	BYTE			 frames_per_step;
-	BYTE			 max_rain_slowdown;
-	BYTE			 max_snow_slowdown;
-	BYTE			 lightning_damage;
+	int 			 speed;					// based on UnitRes, can be upgraded during the game.
+	int				 frames_per_step;
+	int				 max_rain_slowdown;
+	int				 max_snow_slowdown;
+	int				 lightning_damage;
 	// ###### begin Gilbert 21/8 #######//
 	char			 remap_bitmap_flag;
 	// ###### end Gilbert 21/8 #######//
-	BYTE			 max_speed;				// original speed
+	int				 max_speed;				// original speed
 	char			 can_guard_flag;            // bit0= standing guard, bit1=moving guard
 
 	int  			 loaded_count;			// if it >= 1, it has been loaded into the memory

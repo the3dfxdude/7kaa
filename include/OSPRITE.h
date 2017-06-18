@@ -24,17 +24,11 @@
 #ifndef __OSPRITE_H
 #define __OSPRITE_H
 
-#ifndef __ODYNARRB_H
 #include <ODYNARRB.h>
-#endif
-
-#ifndef __OSPRTRES_H
 #include <OSPRTRES.h>
-#endif
-
-#ifndef __OWORLD_H
+#include <OSFRMRES.h>
 #include <OWORLD.h>
-#endif
+
 
 //---------- Define action types ---------//
 
