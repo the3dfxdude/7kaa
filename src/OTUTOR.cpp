@@ -285,7 +285,7 @@ void Tutor::load(int tutorId)
 		textPtr[readLen-7] = '\0';
 
 		tutorTextBlock->text_ptr = _(textPtr);
-		tutorTextBlock->text_len = strlen(tutorTextBlock->text_ptr);
+		tutorTextBlock->text_len = static_cast<short>(strlen(tutorTextBlock->text_ptr));
 
 		textPtr      += readLen;
 		totalReadLen += readLen;
