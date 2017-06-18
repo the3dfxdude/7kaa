@@ -29,6 +29,8 @@
 #include <OSFRMRES.h>
 #include <OWORLD.h>
 
+#include <win32_compat.h>
+
 
 //---------- Define action types ---------//
 

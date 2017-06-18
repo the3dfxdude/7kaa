@@ -48,6 +48,8 @@
 #include <OSKILL.h>
 #endif
 
+#include <win32_compat.h>
+
 //----------- Define constant ------------//
 
 #define MAX_WORKER         	 8       // maximum no. of workers in a firm

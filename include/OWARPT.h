@@ -29,7 +29,7 @@
 
 struct WarPoint
 {
-	DWORD strength;
+	int strength;
 
 	void	inc();
 	void	decay();

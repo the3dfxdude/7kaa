@@ -30,8 +30,6 @@
 
 #include <OREGION.h>
 
-#include <win32_compat.h>
-
 //----- Define bit meanings Location::flag ------//
 #define 	LOCATE_WALK_LAND			0x01
 #define	LOCATE_WALK_SEA			0x02
@@ -276,7 +274,7 @@ public:
 	int 	get_any_unit(int& mobileType);
 	int   is_accessible(int mobileType);      // whether the location is accessible to the unit of the specific mobile type
 
-	int   is_unit_group_accessible(int mobileType, DWORD curGroupId);
+	int   is_unit_group_accessible(int mobileType, uint32_t curGroupId);
 
 	//int   can_move(int mobileType)      { return is_accessible(mobileType) && cargo_recno==0; }
 	int   can_move(int mobileType)      { return is_accessible(mobileType) && (mobileType==UNIT_AIR ? !air_cargo_recno : !cargo_recno); }

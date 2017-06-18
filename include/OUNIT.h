@@ -212,7 +212,7 @@ public:
 	char        ai_unit;
 	uint16_t    name_id;             // id. of the unit's name in RaceRes::first_name_array;
 
-	DWORD       unit_group_id;       // the group id this unit belong to if it is selected
+	uint32_t       unit_group_id;       // the group id this unit belong to if it is selected
 	DWORD       team_id;             // id. of defined team
 	char        selected_flag;       // whether the unit has been selected or not
 	char        group_select_id;     // id for group selection
@@ -744,7 +744,7 @@ public:
 	short selected_recno;
 	short selected_count;
 
-	DWORD cur_group_id;            // for Unit::unit_group_id
+	uint32_t cur_group_id;            // for Unit::unit_group_id
 	DWORD cur_team_id;             // for Unit::team_id
 
 	short idle_blocked_unit_reset_count; // used to improve performance for searching related to attack
@@ -858,7 +858,7 @@ private:
 	char* get_target_x_offset(int targetWidth, int targetHeight, char curDir);
 	char* get_target_y_offset(int targetWidth, int targetHeight, char curDir);
 
-	void  arrange_units_in_group(int xLoc1, int yLoc1, int xLoc2, int yLoc2, short* selectedUnitArray, int selectedCount, DWORD unitGroupId, int targetType);
+	void  arrange_units_in_group(int xLoc1, int yLoc1, int xLoc2, int yLoc2, short* selectedUnitArray, int selectedCount, uint32_t unitGroupId, int targetType);
 	int   analyse_surround_location(int targetXLoc, int targetYLoc, int targetWidth, int targetHeight, char mobileType);
 	void  check_nearby_location(int targetXLoc, int targetYLoc, char xOffset, char yOffset, int targetWidth, int targetHeight, char targetMobileType, int& analyzeResult);
 	void  handle_attack_target_totally_blocked(int targetXLoc, int targetYLoc, short targetRecno, short *selectedUnitArray, short selectedCount, int targetType);

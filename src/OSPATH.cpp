@@ -55,7 +55,7 @@
 static Location*  world_loc_matrix;
 static int		   cur_stack_pos=0;
 static Node* 	   stack_array[MAX_STACK_NUM];
-static DWORD	   group_id;
+static uint32_t	   group_id;
 static short	   search_mode;
 static char	  	   mobile_type;
 static char			seek_nation_recno;
@@ -626,7 +626,7 @@ inline void SeekPath::add_result_node(int x, int y, ResultNode** curPtr, ResultN
 // return : <int> seekStatus - PATH_FOUND, PATH_SEEKING, PATH_NODE_USED_UP, or PATH_IMPOSSIBLE
 //						if PATH_FOUND, or PATH_NODE_USED_UP, can call get_result() to retrieve the result.
 //
-int SeekPath::seek(int sx,int sy,int dx,int dy, DWORD groupId, char mobileType,
+int SeekPath::seek(int sx,int sy,int dx,int dy, uint32_t groupId, char mobileType,
 						 short searchMode, short miscNo, short numOfPath, int maxTries,
 						 int borderX1,int borderY1,int borderX2,int borderY2)
 {
