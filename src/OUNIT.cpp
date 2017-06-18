@@ -2389,7 +2389,7 @@ void Unit::resign(int remoteAction)
 //
 // Return the region id. of this unit.
 //
-BYTE Unit::region_id()
+uint8_t Unit::region_id()
 {
    if( is_visible() )
    {

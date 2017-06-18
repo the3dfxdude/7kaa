@@ -173,7 +173,7 @@ public:
 	short  loc_x1, loc_y1, loc_x2, loc_y2;
 	short  abs_x1, abs_y1, abs_x2, abs_y2;
 	short  center_x, center_y;
-	BYTE	 region_id;
+	uint8_t	 region_id;
 
 	char   cur_frame;          // current animation frame id.
 	char   remain_frame_delay;
@@ -188,7 +188,7 @@ public:
 	short  overseer_recno;
 	short  overseer_town_recno;
 	short	 builder_recno;		// the recno of the builder
-	BYTE 	 builder_region_id;	// the original region no. of builder
+	uint8_t 	 builder_region_id;	// the original region no. of builder
 	float  productivity;
 
 	Worker* worker_array;

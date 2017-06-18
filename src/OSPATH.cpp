@@ -61,7 +61,7 @@ static char	  	   mobile_type;
 static char			seek_nation_recno;
 static int			attack_range;	// used in search_mode = SEARCH_MODE_ATTACK_UNIT_BY_RANGE
 static short		target_recno;	// used in search_mode = SEARCH_MODE_TO_ATTACK or SEARCH_MODE_TO_VEHICLE, get from miscNo
-static UCHAR		region_id;		// used in search_mode = SEARCH_MODE_TO_LAND_FOR_SHIP
+static uint8_t		region_id;		// used in search_mode = SEARCH_MODE_TO_LAND_FOR_SHIP
 static short		building_id;	// used in search_mode = SEARCH_MODE_TO_FIRM or SEARCH_MODE_TO_TOWN, get from miscNo
 //======================================================================//
 // 1) if search_mode = SEARCH_MODE_TO_FIRM or SEARCH_MODE_TO_TOWN
@@ -2661,7 +2661,7 @@ int SeekPath::seek2(int sx, int sy, int dx, int dy, short miscNo, short numOfPat
 				break;
 	
 		case SEARCH_MODE_TO_LAND_FOR_SHIP:
-				region_id = (UCHAR)miscNo;
+				region_id = static_cast<uint8_t>(miscNo);
 				break;
 	}
 	

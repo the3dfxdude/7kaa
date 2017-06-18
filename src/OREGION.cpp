@@ -217,7 +217,7 @@ void RegionArray::sort_region()
 //
 static int sort_region_function( const void *a, const void *b )
 {
-	return region_array[*((BYTE*)b)]->region_size - region_array[*((BYTE*)a)]->region_size;
+	return region_array[*((uint8_t*)b)]->region_size - region_array[*((uint8_t*)a)]->region_size;
 }
 //------- End of function sort_region_function ------//
 

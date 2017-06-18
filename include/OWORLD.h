@@ -106,12 +106,12 @@ public:
 public:
 	#ifdef DEBUG3
 		Location* get_loc(int xLoc,int yLoc);
-		BYTE		 get_region_id(int xLoc,int yLoc);
+		uint8_t		 get_region_id(int xLoc,int yLoc);
 	#else
 		Location* get_loc(int xLoc,int yLoc)
 						{ return loc_matrix + MAX_WORLD_X_LOC * yLoc + xLoc; }
 
-		BYTE		 get_region_id(int xLoc,int yLoc)
+		uint8_t		 get_region_id(int xLoc,int yLoc)
 						{ return loc_matrix[MAX_WORLD_X_LOC*yLoc+xLoc].region_id; }
 	#endif
 

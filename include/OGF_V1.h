@@ -62,7 +62,7 @@ public:
 	short abs_x1, abs_y1, abs_x2, abs_y2;
 	short center_x;
 	short center_y;
-	BYTE	region_id;
+	uint8_t	region_id;
 	short layout_id;           // town layout id.
 	short first_slot_id;       // the first slot id. of the layout
 	short slot_object_id_array[MAX_TOWN_LAYOUT_SLOT];  // the race id. of each slot building

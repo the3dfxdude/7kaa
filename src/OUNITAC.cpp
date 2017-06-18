@@ -483,7 +483,7 @@ void Unit::assign(int assignXLoc, int assignYLoc, short curAssignUnitNum)
 	// move there if the destination in other territory
 	//----------------------------------------------------------------//
 	Location	*locPtr = world.get_loc(assignXLoc, assignYLoc);
-	UCHAR unitRegionId = world.get_loc(next_x_loc(), next_y_loc())->region_id;
+	uint8_t unitRegionId = world.get_loc(next_x_loc(), next_y_loc())->region_id;
 	if(locPtr->is_firm())
 	{
 		Firm *firmPtr = firm_array[locPtr->firm_recno()];

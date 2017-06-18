@@ -32,8 +32,6 @@
 #include <ORAWRES.h>
 #endif
 
-#include <win32_compat.h>
-
 //-------- Define Site Type --------//
 
 enum { MAX_SITE_TYPE=3 };
@@ -59,7 +57,7 @@ public:
 	short map_x_loc;
 	short map_y_loc;
 
-	BYTE	region_id;
+	uint8_t	region_id;
 
 public:
 	void 	init(int siteRecno, int siteType, int xLoc, int yLoc);

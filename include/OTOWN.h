@@ -119,7 +119,7 @@ public:
 
 	short center_x;
 	short center_y;
-	BYTE	region_id;
+	uint8_t	region_id;
 
 	short layout_id;           // town layout id.
 	short first_slot_id;       // the first slot id. of the layout

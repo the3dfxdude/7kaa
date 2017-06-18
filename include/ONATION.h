@@ -113,7 +113,7 @@ enum  {  SEA_ACTION_SETTLE=1, 			// for AI marine actions
 #pragma pack(1)
 struct AIRegion
 {
-	BYTE	region_id;
+	uint8_t	region_id;
 	char  town_count;
 	char  base_town_count;
 };

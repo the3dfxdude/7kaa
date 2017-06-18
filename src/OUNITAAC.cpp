@@ -1054,7 +1054,7 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 			int countLimit = TRY_SIZE*TRY_SIZE;
 			//### begin alex 30/10 ###//
 			int j, k, xShift, yShift, checkXLoc, checkYLoc;
-			UCHAR regionId = world.get_loc(landX, landY)->region_id;
+			uint8_t regionId = world.get_loc(landX, landY)->region_id;
 			Location *locPtr;
 			for(i=0, k=0; i<newSelectedCount; i++)
 			{
@@ -1119,7 +1119,7 @@ void UnitArray::ship_to_beach(int destX, int destY, int divided, short* selected
 	#define CHECK_SEA_DIMENSION	50
 	#define CHECK_SEA_SIZE			CHECK_SEA_DIMENSION*CHECK_SEA_DIMENSION
 	Location *locPtr = world.get_loc(destX, destY);
-	UCHAR regionId = locPtr->region_id;
+	uint8_t regionId = locPtr->region_id;
 	int xShift, yShift, checkXLoc, checkYLoc;
 	int landX, landY, seaX, seaY, tempX, tempY;
 

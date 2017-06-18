@@ -136,7 +136,7 @@ int Unit::think_change_attack_target()
 	int		 xLoc, yLoc;
 	Location* locPtr;
 	int		 curXLoc = next_x_loc(), curYLoc = next_y_loc();
-	BYTE	 	 regionId = world.get_region_id(curXLoc, curYLoc);
+	int	 	 regionId = world.get_region_id(curXLoc, curYLoc);
 
 	for( int i=2 ; i<attackScanRange*attackScanRange ; i++ )
 	{

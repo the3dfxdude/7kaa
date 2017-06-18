@@ -50,8 +50,8 @@ public:
 	char			 build_queue_array[MAX_BUILD_SHIP_QUEUE];	// it stores the unit id.
 	char			 build_queue_count;
 
-	UCHAR			 land_region_id;
-	UCHAR			 sea_region_id;
+	uint8_t			 land_region_id;
+	uint8_t			 sea_region_id;
 
 	//----------- for harbor trading ------------//
 

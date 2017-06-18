@@ -117,7 +117,7 @@ public:
 	char		flammability;				// -100 to 100, likelihood of fire
 
 	char		power_nation_recno;		// 0-no nation has power over this location
-	unsigned char region_id;
+	uint8_t		region_id;
 	unsigned char visit_level;			// drop from FULL_VISIBILITY to 0
 
 public:

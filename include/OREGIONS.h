@@ -39,8 +39,8 @@
 #pragma pack(1)
 struct RegionPath
 {
-	BYTE		sea_region_id;				// region id. of the sea route
-	BYTE		land_region_stat_id;
+	uint8_t		sea_region_id;				// region id. of the sea route
+	uint8_t		land_region_stat_id;
 };
 #pragma pack()
 
@@ -50,7 +50,7 @@ struct RegionPath
 class RegionStat
 {
 public:
-	BYTE		region_id;				// sorted in the order of region size
+	uint8_t		region_id;				// sorted in the order of region size
 
 	char		nation_is_present_array[MAX_NATION];
 	char		nation_presence_count;

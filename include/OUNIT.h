@@ -225,7 +225,7 @@ public:
 
 	int           is_visible()      { return cur_x >= 0; }     // whether the unit is visible on the map, it is not invisable if cur_x == -1
 	virtual char* unit_name(int withTitle=1);
-	BYTE          region_id();
+	uint8_t          region_id();
 
 	//--------- action vars ------------//
 	char        action_misc;
@@ -634,7 +634,7 @@ private:
 	int   space_for_attack(int targetXLoc, int targetYLoc, char targetMobileType, int targetWidth, int targetHeight);
 	int   space_around_target(int squareXLoc, int squareYLoc, int width, int height);
 	int   space_around_target_ver2(int targetXLoc, int targetYLoc, int targetWidth, int targetHeight);
-	int   ship_surr_has_free_land(int targetXLoc, int targetYLoc, UCHAR regionId);
+	int   ship_surr_has_free_land(int targetXLoc, int targetYLoc, uint8_t regionId);
 	int   free_space_for_range_attack(int targetXLoc, int targetYLoc, int targetWidth, int targetHeight, int targetMobileType, int maxRange);
 
 	void  choose_best_attack_mode(int attackDistance, char targetMobileType=UNIT_LAND);
@@ -681,7 +681,7 @@ private:
 	int   monster_defend_follow_target();
 
 	//---------- embark to ship and other ship functions ---------//
-	int   ship_to_beach_path_edit(int& resultXLoc, int& resultYLoc, UCHAR regionNo);
+	int   ship_to_beach_path_edit(int& resultXLoc, int& resultYLoc, uint8_t regionId);
 	void  ship_leave_beach(int shipOldXLoc, int shipOldYLoc);
 
 	//---------------- other functions -----------------//
