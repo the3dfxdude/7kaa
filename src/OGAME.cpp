@@ -224,7 +224,7 @@ int Game::init(int loadGameCall)
 
 	init_flag=1;
 
-	return TRUE;
+	return 1;
 }
 //--------- End of function Game::init ---------//
 

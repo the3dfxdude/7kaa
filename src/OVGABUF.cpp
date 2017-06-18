@@ -35,7 +35,7 @@
 VgaBuf::VgaBuf()
 {
 	surface = NULL;
-	buf_locked = FALSE;
+	buf_locked = 0;
 	is_front = 0;
 	save_locked_flag = 0;
 }
@@ -82,7 +82,7 @@ void VgaBuf::lock_buf()
 		err_now( "VgaBuf::lock_buf() error, buffer already locked." );
 
 	if( surface->lock_buf() )
-		buf_locked = TRUE;
+		buf_locked = 1;
 	else
 	{
 		if( is_front )
@@ -105,7 +105,7 @@ void VgaBuf::unlock_buf()
 	err_when( !buf_locked );
 
 	if( surface->unlock_buf() )
-		buf_locked = FALSE;
+		buf_locked = 0;
 	else
 	{
 		if( is_front )

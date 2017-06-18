@@ -40,8 +40,8 @@ int World::can_build_area(short x1, short y1, short x2, short y2)
 	for(y = y1; y <= y2; ++y)
 		for( x = x1; x <= x2; ++x)
 			if( ! get_loc(x,y)->can_build_wall())
-				return FALSE;
-	return TRUE;
+				return 0;
+	return 1;
 }
 //--------------- end of function World::can_build_area ----------//
 

@@ -183,7 +183,7 @@ int RegionArray::is_adjacent(int reg1, int reg2)
 	int bitOffset;
 
 	if( reg1 == reg2 )
-		return TRUE;
+		return 1;
 	if( reg1 > reg2 )
 	{
 		bitOffset = region_info_array[reg1 -1].adj_offset_bit + (reg2 -1);

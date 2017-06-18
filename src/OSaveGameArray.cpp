@@ -626,22 +626,25 @@ void SaveGameArray::disp_entry_info(const SaveGameInfo* entry, int x, int y)
 		font_small.put( x+335, y+16, str );
 	#endif
 
-	SYSTEMTIME sysTime;
+	int timeYear, timeMonth, timeDay, timeHour, timeMinute;
 #ifndef NO_WINDOWS  //FIXME
 	FILETIME fileTime;
 	FILETIME localFileTime;
+	SYSTEMTIME sysTime;
 	fileTime.dwLowDateTime = static_cast<std::uint32_t>(entry->file_date);
 	fileTime.dwHighDateTime = static_cast<std::uint32_t>(entry->file_date >> 32);
 	FileTimeToLocalFileTime( &fileTime, &localFileTime );
 	FileTimeToSystemTime( &localFileTime, &sysTime );
+	timeYear = sysTime.wYear; timeMonth = sysTime.wMonth; timeDay = sysTime.wDay;
+	timeHour = sysTime.wHour; timeMinute = sysTime.wMinute;
 #else
-	memset(&sysTime, 0, sizeof(SYSTEMTIME));
+	timeYear = timeMonth = timeDay = timeHour = timeMinute = 0;
 #endif
 
 	str  = _("File Date: ");
-	str += date.date_str(date.julian(sysTime.wYear, sysTime.wMonth,sysTime.wDay), 1);
+	str += date.date_str(date.julian(timeYear, timeMonth, timeDay), 1);
 	str += " ";
-	str += date.time_str( sysTime.wHour * 100 + sysTime.wMinute );
+	str += date.time_str( timeHour * 100 + timeMinute );
 
 	#if(defined(FRENCH))
 		font_small.put( x+318, y+34, str );

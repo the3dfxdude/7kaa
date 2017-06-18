@@ -222,7 +222,7 @@ void World::plant_spread(int pSpread)
 	int x = 1+misc.random(max_x_loc-2);
 
 	Location *l = get_loc(x,y);
-	int build_flag = TRUE;
+	int build_flag = 1;
 	char teraType = terrain_res[l->terrain_id]->average_type;
 
 	// ------- all square around are the same terrain type and empty
@@ -232,7 +232,7 @@ void World::plant_spread(int pSpread)
 			l = get_loc(x1,y1);
 			// #### begin Gilbert 6/3 #######//
 			if( !l->can_add_plant() || terrain_res[l->terrain_id]->average_type != teraType)
-				build_flag = FALSE;
+				build_flag = 0;
 			// #### end Gilbert 6/3 #######//
 		}
 
@@ -391,7 +391,7 @@ void World::plant_init()
 		int x = 1+misc.random(max_x_loc-2);
 
 		Location *l = get_loc(x,y);
-		int build_flag = TRUE;
+		int build_flag = 1;
 		char teraType = terrain_res[l->terrain_id]->average_type;
 
 		// ------- all square around are the same terrain type and empty
@@ -401,7 +401,7 @@ void World::plant_init()
 				l = get_loc(x1,y1);
 				// #### begin Gilbert 6/3 #######//
 				if( !l->can_add_plant() || terrain_res[l->terrain_id]->average_type != teraType)
-					build_flag = FALSE;
+					build_flag = 0;
 				// #### end Gilbert 6/3 #######//
 			}
 

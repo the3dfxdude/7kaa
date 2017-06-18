@@ -36,21 +36,7 @@ typedef int32_t  BOOL;
 typedef uint32_t UINT;
 typedef uint32_t DWORD;
 
-#define TRUE 1
-#define FALSE 0
-
 #define MAX_PATH 260
-
-typedef struct {
-	WORD wYear;
-	WORD wMonth;
-	WORD wDayOfWeek;
-	WORD wDay;
-	WORD wHour;
-	WORD wMinute;
-	WORD wSecond;
-	WORD wMilliseconds;
-} SYSTEMTIME;
 
 inline char *itoa(int num, char *str, int radix)
 {

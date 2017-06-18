@@ -133,7 +133,7 @@ int Remote::create_game()
 {
 	//--------- initialize session parameters ---------//
 
-	is_host = TRUE;
+	is_host = 1;
 
 	return 1;
 }
@@ -144,7 +144,7 @@ int Remote::create_game()
 //
 int Remote::connect_game()
 {
-	is_host = FALSE;
+	is_host = 0;
 	return 1;
 }
 //--------- End of function Remote::connect_game ---------//

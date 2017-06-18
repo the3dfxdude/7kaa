@@ -202,19 +202,19 @@ int Sys::init()
 
    // set game directory paths and game version
    if ( !set_game_dir() )
-      return FALSE;
+      return 0;
 
    //------- initialize more stuff ---------//
 
    if( !init_directx() )
-      return FALSE;
+      return 0;
 
    if( !init_objects() )   // initialize system objects which do not change from games to games.
-      return FALSE;
+      return 0;
 
    init_flag = 1;
 
-   return TRUE;
+   return 1;
 }
 //------------ End of function Sys::init ----------//
 
@@ -258,7 +258,7 @@ int Sys::init_directx()
 
    DEBUG_LOG("Attempt vga.init()");
    if( !vga.init() )
-      return FALSE;
+      return 0;
    DEBUG_LOG("vga.init() ok");
 #if !defined(DEBUG) && !defined(_DEBUG)
    vga.set_full_screen_mode(1);
@@ -272,7 +272,7 @@ int Sys::init_directx()
    music.init();
    se_ctrl.init();
 
-   return TRUE;
+   return 1;
 }
 //-------- End of function Sys::init_directx --------//
 
@@ -370,7 +370,7 @@ int Sys::init_objects()
 
    DEBUG_LOG("Sys::init_objects finish");
 
-   return TRUE;
+   return 1;
 }
 //------- End of function Sys::init_objects -----------//
 
