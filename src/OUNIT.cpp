@@ -801,7 +801,7 @@ char* Unit::unit_name(int withTitle)
 //
 // Set the name id. of this unit.
 //
-void Unit::set_name(WORD newNameId)
+void Unit::set_name(uint16_t newNameId)
 {
    //------- free up the existing name id. ------//
 

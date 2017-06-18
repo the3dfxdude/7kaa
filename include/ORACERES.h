@@ -28,7 +28,7 @@
 #include <ORESDB.h>
 #endif
 
-#include <win32_compat.h>
+#include <stdint.h>
 
 //------------ Define race id. -------------//
 
@@ -103,12 +103,12 @@ public:
 	short town_name_used_count;
 
 public:
-	const char* get_name(WORD nameId, int nameType=0);
-	const char* get_single_name(WORD nameId);
+	const char* get_name(uint16_t nameId, int nameType=0);
+	const char* get_single_name(uint16_t nameId);
 
-	WORD	get_new_name_id();
-	void	free_name_id(WORD nameId);
-	void	use_name_id(WORD nameId);
+	uint16_t	get_new_name_id();
+	void	free_name_id(uint16_t nameId);
+	void	use_name_id(uint16_t nameId);
 };
 
 //-------- Define struct NameRec ----------//

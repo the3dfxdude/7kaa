@@ -285,7 +285,7 @@ class Version_1_NationBase
 		short		 largest_town_pop;
 
 		short		 raw_count_array[MAX_RAW];		// no. of natural resources site this nation possesses
-		short		 last_unit_name_id_array[VERSION_1_MAX_UNIT_TYPE];
+		uint16_t	 last_unit_name_id_array[VERSION_1_MAX_UNIT_TYPE];
 
 		//--------- rank ratings ---------//
 		int		 population_rating;

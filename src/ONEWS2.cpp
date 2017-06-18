@@ -1117,7 +1117,7 @@ void News::set_loc(int xLoc, int yLoc, int locType, int locTypePara, int locType
 	loc_type_para2 = locTypePara2;
 
 	err_when( loc_type_para < 0 );
-	err_when( loc_type_para2 < 0 );
+	err_when( locTypePara2 < 0 );
 
 	loc_x = xLoc;
 	loc_y = yLoc;

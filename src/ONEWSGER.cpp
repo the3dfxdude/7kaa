@@ -1053,7 +1053,7 @@ void News::general_die()
 	//----------------------------------------------//
 
 	str  = "Ihr General ";
-	str += race_res[short_para1]->get_single_name( (WORD)short_para2 );
+	str += race_res[short_para1]->get_single_name( static_cast<uint16_t>(short_para2) );
 	str += " wurde getötet. Friede seiner Asche.";
 }
 //------- End of function News::general_die -----//
@@ -1087,12 +1087,12 @@ void News::unit_assassinated()
 	if( short_para3 == RANK_KING )
 	{
 		str  = "Ihr König ";
-		str += race_res[short_para1]->get_single_name( (WORD)short_para2 );
+		str += race_res[short_para1]->get_single_name( static_cast<uint16_t>(short_para2) );
 	}
 	else
 	{
 		str  = "Ihr General ";
-		str += race_res[short_para1]->get_single_name( (WORD)short_para2 );
+		str += race_res[short_para1]->get_single_name( static_cast<uint16_t>(short_para2) );
 	}
 
 	str += " wurde von einem feindlichen Spion ermordet.";
@@ -1226,7 +1226,7 @@ void News::lightning_damage()
 			str += "";
 
 		if( short_para2 > 0 )
-			str += race_res[short_para2]->get_name((WORD) short_para3);
+			str += race_res[short_para2]->get_name(short_para3);
 		else
 			str += unit_res[short_para3]->name;
 
@@ -1582,7 +1582,7 @@ char* News::nation_name1()
 	if( nation_name_id1 < 0 )		// human player - custom name
 		str = nation_array.get_human_name(nation_name_id1, 1);		// 1-first word of the name only
 	else
-		str = race_res[nation_race_id1]->get_single_name( (WORD)nation_name_id1 );
+		str = race_res[nation_race_id1]->get_single_name( static_cast<uint16_t>(nation_name_id1) );
 
 	str += "'s Königreich";
 
@@ -1608,7 +1608,7 @@ char* News::nation_name2()
 	if( nation_name_id2 < 0 )		// human player - custom name
 		str = nation_array.get_human_name(nation_name_id2, 1);		// 1-first word of the name only
 	else
-		str = race_res[nation_race_id2]->get_single_name( (WORD)nation_name_id2 );
+		str = race_res[nation_race_id2]->get_single_name( static_cast<uint16_t>(nation_name_id2) );
 
 	str += "'s Königreich";
 
@@ -1637,7 +1637,7 @@ char* News::king_name1(int addColor)
 	if( nation_name_id1 < 0 )		// human player - custom name
 		str = nation_array.get_human_name(nation_name_id1);
 	else
-		str = race_res[nation_race_id1]->get_name( (WORD)nation_name_id1 );
+		str = race_res[nation_race_id1]->get_name( static_cast<uint16_t>(nation_name_id1) );
 
 	//------ add color bar -------//
 
@@ -1666,7 +1666,7 @@ char* News::king_name2(int addColor)
 	if( nation_name_id2 < 0 )		// human player - custom name
 		str = nation_array.get_human_name(nation_name_id2);
 	else
-		str = race_res[nation_race_id2]->get_name( (WORD)nation_name_id2 );
+		str = race_res[nation_race_id2]->get_name( static_cast<uint16_t>(nation_name_id2) );
 
 	//------ add color bar -------//
 

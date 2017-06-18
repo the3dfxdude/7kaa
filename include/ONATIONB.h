@@ -329,7 +329,7 @@ public:
 
 	short		 raw_count_array[MAX_RAW];		// no. of natural resources site this nation possesses
 
-	short		 last_unit_name_id_array[MAX_UNIT_TYPE];
+	uint16_t     last_unit_name_id_array[MAX_UNIT_TYPE];
 
 	//--------- rank ratings ---------//
 

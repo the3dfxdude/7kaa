@@ -210,12 +210,12 @@ public:
 	char        race_id;
 	char        nation_recno;
 	char        ai_unit;
-	WORD        name_id;          // id. of the unit's name in RaceRes::first_name_array;
+	uint16_t    name_id;             // id. of the unit's name in RaceRes::first_name_array;
 
 	DWORD       unit_group_id;       // the group id this unit belong to if it is selected
 	DWORD       team_id;             // id. of defined team
 	char        selected_flag;       // whether the unit has been selected or not
-	char			group_select_id;		// id for group selection
+	char        group_select_id;     // id for group selection
 
 	char        waiting_term;        // for 2x2 unit only, the term to wait before recalling A* to get a new path
 	char        blocked_by_member;
@@ -370,7 +370,7 @@ public:
 			  void draw_skill_icon();
 
 			  void set_spy(int spyRecno);
-			  void set_name(WORD newNameId);
+			  void set_name(uint16_t newNameId);
 			  void set_mode(char modeId, short modePara=0) { unit_mode=modeId; unit_mode_para=modePara; }
 			  int  is_shealth();
 			  int  is_civilian();

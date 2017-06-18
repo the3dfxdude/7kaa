@@ -99,7 +99,7 @@ public:
 	char  race_id;
 	char  unit_id;
 	short town_recno;
-	short	name_id;
+	uint16_t name_id;
 
 	char	skill_id;
 	char  skill_level;

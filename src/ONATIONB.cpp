@@ -568,9 +568,9 @@ const char* NationBase::king_name(int firstWordOnly)
 	else
 	{
 		if( firstWordOnly )
-			return race_res[race_id]->get_single_name( (WORD) nation_name_id );
+			return race_res[race_id]->get_single_name( static_cast<uint16_t>(nation_name_id) );
 		else
-			return race_res[race_id]->get_name( (WORD) nation_name_id );
+			return race_res[race_id]->get_name( static_cast<uint16_t>(nation_name_id) );
 	}
 }
 //----------- End of function NationBase::king_name ---------//

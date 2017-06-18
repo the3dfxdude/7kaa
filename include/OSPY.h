@@ -71,7 +71,7 @@ public:
 	char  exposed_flag;							// this is set to 1 when the spy finished stealing the secret of a nation.
 
 	char  race_id;
-	short	name_id;
+	uint16_t name_id;
 	char  action_mode;
 	const char* action_str();
 
