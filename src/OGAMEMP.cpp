@@ -334,12 +334,12 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 	short nation_recno;
 	short color_scheme_id;
 	short race_id;
-	DWORD frame_count;			// detail to test save game from the same game
+	uint32_t frame_count;			// detail to test save game from the same game
 	long  random_seed;
 	char  name[MP_FRIENDLY_NAME_LEN+1];
 	char  pass[MP_FRIENDLY_NAME_LEN+1];
 
-	MpStructLoadGameNewPlayer(Nation *n, DWORD frame, long seed, char *name, char *pass) :
+	MpStructLoadGameNewPlayer(Nation *n, uint32_t frame, long seed, char *name, char *pass) :
 		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
 		race_id(n->race_id), frame_count(frame), random_seed(seed),

@@ -92,7 +92,7 @@ public:
 	char  train_queue_count;
 	short	train_unit_recno;			// race id. of the unit the town is currently training, 0-if currently not training any
 	int	train_unit_action_id;	// id. of the action to be assigned to this unit when it is finished training.
-	DWORD start_train_frame_no;
+	uint32_t start_train_frame_no;
 	short defend_target_recno; 	// used in defend mode, store recno of latest target atttacking this town
 
 	//-------- other vars ----------//

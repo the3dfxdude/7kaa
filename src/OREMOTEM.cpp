@@ -364,7 +364,7 @@ void RemoteMsg::next_frame()
 //
 void RemoteMsg::request_resend()
 {
-	DWORD *dwordPtr = (DWORD*) data_buf;
+	uint32_t *dwordPtr = (uint32_t*) data_buf;
 
 	err_when( dwordPtr[0] == (~nation_array)->player_id );   // sent to itself
 
@@ -478,7 +478,7 @@ void RemoteMsg::request_save_game()
 #ifdef DEBUG_LONG_LOG
 	long_log->printf("Request save on %d\n", *(DWORD*)data_buf);
 #endif
-	sys.mp_request_save( *(DWORD*)data_buf);
+	sys.mp_request_save( *(uint32_t*)data_buf);
 }
 //-------- End of function RemoteMsg::request_save_game ---------//
 

@@ -296,7 +296,7 @@ int Remote::get_alternating_send()
 
 
 //-------- Begin of function Remote::has_send_frame ---------//
-int Remote::has_send_frame(int nationRecno, DWORD frameCount)
+int Remote::has_send_frame(int nationRecno, uint32_t frameCount)
 {
 	return ((frameCount + nationRecno) % alternating_send_rate) == 0;
 }
@@ -306,9 +306,9 @@ int Remote::has_send_frame(int nationRecno, DWORD frameCount)
 //-------- Begin of function Remote::next_send_frame ---------//
 // if has_send_frame is true, return frameCount
 // otherwise return the next frame which has_send_frame return true
-DWORD Remote::next_send_frame(int nationRecno, DWORD frameCount)
+uint32_t Remote::next_send_frame(int nationRecno, uint32_t frameCount)
 {
-	DWORD remainder = ((frameCount + nationRecno) % alternating_send_rate);
+	uint32_t remainder = ((frameCount + nationRecno) % alternating_send_rate);
 	if(remainder == 0)
 		return frameCount;
 	else

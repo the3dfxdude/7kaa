@@ -39,7 +39,7 @@ class FirmWar : public Firm
 {
 public:
 	short build_unit_id;
-	DWORD last_process_build_frame_no;
+	uint32_t last_process_build_frame_no;
 	float build_progress_days;
 
 	char  build_queue_array[MAX_BUILD_QUEUE];		// it stores the unit id.

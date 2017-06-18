@@ -275,7 +275,7 @@ int Remote::poll_msg()
 	//--------------------------------------------//
 
    int        receivedFlag=0;
-   DWORD      msgListSize;
+   uint32_t   msgListSize;
    int        loopCount=0;
 
    if( handle_vga_lock )
@@ -326,7 +326,7 @@ int Remote::poll_msg()
 
 			// ------- find which receive queue to hold the message -----//
 
-			DWORD senderFrameCount = *(DWORD *)rMsg->data_buf;
+			uint32_t senderFrameCount = *(uint32_t *)rMsg->data_buf;
 			for(int n = 0; n < RECEIVE_QUEUE_BACKUP; ++n )
 			{
 				if( senderFrameCount == receive_frame_count[n] )
@@ -360,7 +360,7 @@ int Remote::poll_msg()
 			}
 			else
 			{
-				DWORD senderFrameCount = *(DWORD *)rMsg->data_buf;
+				uint32_t senderFrameCount = *(uint32_t *)rMsg->data_buf;
 				DEBUG_LOG("MSG_QUEUE_HEADER message");
 				DEBUG_LOG(senderFrameCount);
 			}
@@ -606,7 +606,7 @@ void Remote::copy_send_to_backup()
 //                    by the receivers.
 //                0 - not successful.
 //
-int Remote::send_backup_now(int receiverId, DWORD requestFrameCount)
+int Remote::send_backup_now(int receiverId, uint32_t requestFrameCount)
 {
    //------ determine which backup buffer to send -----//
 
@@ -634,7 +634,7 @@ int Remote::send_backup_now(int receiverId, DWORD requestFrameCount)
 	}
 
 	if( requestFrameCount < send_frame_count[SEND_QUEUE_BACKUP-1])
-		err.run( "requestFrameCount:%d < backup2_frame_count:%d", requestFrameCount, send_frame_count[SEND_QUEUE_BACKUP-1] );
+		err.run( "requestFrameCount:%u < backup2_frame_count:%u", requestFrameCount, send_frame_count[SEND_QUEUE_BACKUP-1] );
 	return 0;
 }
 //--------- End of function Remote::send_backup_now ---------//
@@ -647,21 +647,21 @@ int Remote::send_backup_now(int receiverId, DWORD requestFrameCount)
 // <int>   frameCount  - frame count of this queue
 // <short> nationCount - nation recno of the sender
 //
-void Remote::init_send_queue(DWORD frameCount, short nationRecno)
+void Remote::init_send_queue(uint32_t frameCount, short nationRecno)
 {
 	send_queue[0].clear();
 
 	// put into the queue : <message length>, MSG_QUEUE_HEADER, <frameCount>, <nationRecno>
 
-	int msgSize = sizeof(DWORD)*2 + sizeof(short);
+	int msgSize = sizeof(DWORD) + sizeof(uint32_t) + sizeof(short);
 	char *sendPtr = send_queue[0].reserve(sizeof(short) + msgSize);
 
 	*(short *)sendPtr = msgSize;
 	 sendPtr += sizeof(short);
 	*(DWORD *)sendPtr = MSG_QUEUE_HEADER;
 	 sendPtr += sizeof(DWORD);
-	*(DWORD *)sendPtr = send_frame_count[0] = next_send_frame(nationRecno, frameCount + process_frame_delay);
-	 sendPtr += sizeof(DWORD);
+	*(uint32_t *)sendPtr = send_frame_count[0] = next_send_frame(nationRecno, frameCount + process_frame_delay);
+	 sendPtr += sizeof(uint32_t);
 	*(short *)sendPtr = nationRecno;
 	 sendPtr += sizeof(short);
 }
@@ -676,7 +676,7 @@ void Remote::init_send_queue(DWORD frameCount, short nationRecno)
 // <int>   frameCount  - frame count of this queue
 // <short> nationCount - nation recno of the receiveer
 //
-void Remote::init_receive_queue(DWORD frameCount)
+void Remote::init_receive_queue(uint32_t frameCount)
 {
 	int n;
 
@@ -701,14 +701,14 @@ void Remote::init_receive_queue(DWORD frameCount)
 
 			// put into the queue : <message length>, MSG_QUEUE_HEADER, <frameCount>, <nationRecno>
 
-			msgSize = sizeof(DWORD)*2 + sizeof(short);
+			msgSize = sizeof(DWORD) + sizeof(uint32_t) + sizeof(short);
 			receivePtr = receive_queue[n].reserve(sizeof(short) + msgSize);
 			*(short *)receivePtr = msgSize;
 			 receivePtr += sizeof(short);
 			*(DWORD *)receivePtr = MSG_QUEUE_HEADER;
 			 receivePtr += sizeof(DWORD);
-			*(DWORD *)receivePtr = frameCount + n;
-			 receivePtr += sizeof(DWORD);
+			*(uint32_t *)receivePtr = frameCount + n;
+			 receivePtr += sizeof(uint32_t);
 			*(short *)receivePtr = nationRecno;
 			 receivePtr += sizeof(short);
 

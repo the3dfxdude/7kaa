@@ -45,7 +45,7 @@ public:
 	short			 ship_count;
 
 	short			 build_unit_id;			// race id. of the unit the town is currently building, 0-if currently not building any
-	DWORD			 start_build_frame_no;
+	uint32_t			 start_build_frame_no;
 
 	char			 build_queue_array[MAX_BUILD_SHIP_QUEUE];	// it stores the unit id.
 	char			 build_queue_count;

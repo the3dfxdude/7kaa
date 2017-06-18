@@ -1410,7 +1410,7 @@ int Sys::should_next_frame()
 
    if( next_frame_time )      // if next_frame_time==0, it's the first frame of the game
    {
-      if( next_frame_time < 1000 )  // the DWORD variable has been overflow
+      if( next_frame_time < 1000 )  // the uint32_t variable has been overflow
       {
          if( curTime < next_frame_time || curTime >= 1000 )    // >= 1000 if the curTime has been overflow yet, wait for it to overflow so we can compare it when next_frame_time
             return 0;
@@ -2644,7 +2644,7 @@ void Sys::save_game()
 
    if( remote.is_enable() )
    {
-      DWORD *dwordPtr = (DWORD *)remote.new_send_queue_msg( MSG_REQUEST_SAVE, sizeof(DWORD) );
+      uint32_t *dwordPtr = (uint32_t *)remote.new_send_queue_msg( MSG_REQUEST_SAVE, sizeof(uint32_t) );
       *dwordPtr = remote.next_send_frame(nation_array.player_recno, sys.frame_count+remote.process_frame_delay)+2;
       return;
    }
@@ -2667,7 +2667,7 @@ void Sys::save_game()
 
 
 // --------- begin of function Sys::mp_request_save ----------//
-void Sys::mp_request_save(DWORD frame)
+void Sys::mp_request_save(uint32_t frame)
 {
    if( !mp_save_flag )
    {
