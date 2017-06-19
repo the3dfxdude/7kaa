@@ -208,7 +208,7 @@ static int can_move_to(int xLoc, int yLoc)
 	Unit		*unitPtr;
 	short		recno;
 	char		powerNationRecno;
-	UCHAR		unitCurAction;
+	uint8_t		unitCurAction;
 
 	//------ check terrain id. -------//
 	switch(mobile_type)

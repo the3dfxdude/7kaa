@@ -107,7 +107,7 @@ void Sprite::deinit()
 //
 SpriteFrame* Sprite::cur_sprite_frame(int *needMirror)
 {
-	UCHAR curDir = display_dir();
+	uint8_t curDir = display_dir();
 	if( needMirror)
 		*needMirror = need_mirror(curDir);
 
@@ -309,9 +309,9 @@ void Sprite::draw()
 
 
 // ---------- Begin of function Sprite::display_dir ---------//
-UCHAR Sprite::display_dir()
+uint8_t Sprite::display_dir()
 {
-	UCHAR curDir = cur_dir;
+	uint8_t curDir = cur_dir;
 	switch( sprite_info->turn_resolution)
 	{
 	case 0:		// fall through
@@ -362,7 +362,7 @@ UCHAR Sprite::display_dir()
 
 
 // ---------- Begin of function Sprite::need_mirror --------//
-int Sprite::need_mirror(UCHAR dispDir)
+int Sprite::need_mirror(uint8_t dispDir)
 {
 	return (dispDir < 8 || sprite_info->turn_resolution <= 8) ? (dispDir & 7) >= 5 : (dispDir & 7) >= 4;
 }

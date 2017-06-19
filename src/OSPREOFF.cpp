@@ -56,7 +56,7 @@ int SeekPathReuse::can_walk(int xLoc, int yLoc)
 	Location *locPtr = world.get_loc(xLoc, yLoc);
 	short	recno = (mobile_type!=UNIT_AIR) ? locPtr->cargo_recno : locPtr->air_cargo_recno;
 	Unit *unitPtr;
-	UCHAR	unitCurAction;
+	uint8_t	unitCurAction;
 
 	//------ check terrain id. -------//
 

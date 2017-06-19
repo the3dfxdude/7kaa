@@ -29,8 +29,6 @@
 #include <OSFRMRES.h>
 #include <OWORLD.h>
 
-#include <win32_compat.h>
-
 
 //---------- Define action types ---------//
 
@@ -62,17 +60,17 @@ public:
 
 	char 	mobile_type;
 
-	UCHAR cur_action;       // current action
-	UCHAR cur_dir;				// current direction
-	UCHAR cur_frame;			// current frame
-	UCHAR cur_attack;			// current attack mode
-	UCHAR final_dir;			// for turning dir before attacking or moving
+	uint8_t cur_action;       // current action
+	uint8_t cur_dir;				// current direction
+	uint8_t cur_frame;			// current frame
+	uint8_t cur_attack;			// current attack mode
+	uint8_t final_dir;			// for turning dir before attacking or moving
 	char	turn_delay;			// value between -60 and 60
 	char	guard_count;		// shield guarding, affecting move/stop frame
 									// 0=not guarding, count up from 1 when guarding, reset to 0 after guard
 
-	UCHAR remain_attack_delay;			// no. of frames has to be delayed before the next attack motion
-	UCHAR remain_frames_per_step;    // no. of frames remained in this step
+	uint8_t remain_attack_delay;			// no. of frames has to be delayed before the next attack motion
+	uint8_t remain_frames_per_step;    // no. of frames remained in this step
 
 	short cur_x , cur_y;		// current location
 	short	go_x  , go_y;		// the destination of the path
@@ -133,7 +131,7 @@ public:
 	virtual void	process_extra_move() {;} // for ship only
 
 			  void	set_dir(int curX, int curY, int destX, int destY);
-			  void	set_dir(UCHAR newDir);	//	 overloading function
+			  void	set_dir(uint8_t newDir);	//	 overloading function
 			  int 	get_dir(int curX, int curY, int destX, int destY);
 			  int		is_dir_correct();
 			  int		match_dir();
@@ -141,8 +139,8 @@ public:
 			  void	set_remain_attack_delay();
 	virtual void	update_abs_pos(SpriteFrame* =0);
 
-			  UCHAR	display_dir();
-			  int		need_mirror(UCHAR dispDir);
+			  uint8_t	display_dir();
+			  int		need_mirror(uint8_t dispDir);
 
 			  void	set_guard_on();
 			  void	set_guard_off();

@@ -48,6 +48,8 @@
 #include <OSPREUSE.h>
 #endif
 
+#include <win32_compat.h>
+
 #ifdef NO_DEBUG_UNIT
 #undef DEBUG
 #endif
@@ -242,7 +244,7 @@ public:
 	short       action_y_loc2;
 
 	char        blocked_edge[4];        // for calling searching in attacking
-	UCHAR       attack_dir;
+	uint8_t       attack_dir;
 
 	//------------ attack parameters -----------//
 
