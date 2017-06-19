@@ -215,7 +215,7 @@ public:
 	uint16_t    name_id;             // id. of the unit's name in RaceRes::first_name_array;
 
 	uint32_t       unit_group_id;       // the group id this unit belong to if it is selected
-	DWORD       team_id;             // id. of defined team
+	uint32_t       team_id;             // id. of defined team
 	char        selected_flag;       // whether the unit has been selected or not
 	char        group_select_id;     // id for group selection
 
@@ -747,7 +747,7 @@ public:
 	short selected_count;
 
 	uint32_t cur_group_id;            // for Unit::unit_group_id
-	DWORD cur_team_id;             // for Unit::team_id
+	uint32_t cur_team_id;             // for Unit::team_id
 
 	short idle_blocked_unit_reset_count; // used to improve performance for searching related to attack
 

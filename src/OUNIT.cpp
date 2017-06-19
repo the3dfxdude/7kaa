@@ -1455,7 +1455,7 @@ int Unit::betray(int newNationRecno)
 
 	//--- if this unit is a general, change nation for the units he commands ---//
 
-	DWORD newTeamId = unit_array.cur_team_id++;
+	uint32_t newTeamId = unit_array.cur_team_id++;
 
 	if( rank_id==RANK_GENERAL )
 	{
