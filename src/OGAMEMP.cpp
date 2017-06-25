@@ -183,20 +183,20 @@ struct MpStructSeedStr : public MpStructBase
 struct MpStructNation : public MpStructBase
 {
 	short nation_recno;
-	DWORD dp_player_id;
+	uint32_t dp_player_id;
 	short color_scheme;
 	short race_id;
 	char  player_name[HUMAN_NAME_LEN+1];
 
 	MpStructNation() : MpStructBase(MPMSG_DECLARE_NATION) {}
-	MpStructNation(short n, DWORD playerId, short scheme, short race,
+	MpStructNation(short n, uint32_t playerId, short scheme, short race,
 		char *playerName):
 		MpStructBase(MPMSG_DECLARE_NATION), nation_recno(n),
 		dp_player_id(playerId), color_scheme(scheme), race_id(race)
 		{
 			strcpy(player_name, playerName);
 		}
-	void init(short n, DWORD playerId, short scheme, short race,
+	void init(short n, uint32_t playerId, short scheme, short race,
 		char *playerName)
 	{
 		msg_id = MPMSG_DECLARE_NATION;
@@ -421,8 +421,8 @@ struct MpStructPlayerDisconnect : public MpStructBase
 
 //--------- Define static functions ------------//
 
-static void pregame_disconnect_handler(DWORD playerId);
-static void ingame_disconnect_handler(DWORD playerId);
+static void pregame_disconnect_handler(uint32_t playerId);
+static void ingame_disconnect_handler(uint32_t playerId);
 
 /*
 //--------- Begin of function Game::mp_disp_player ---------//
@@ -460,7 +460,7 @@ void Game::mp_broadcast_setting()
 	// send (short) no. of nations
 	// for each nation, send :
 	//	(short) nation recno
-	// (DWORD) directPlay player id
+	// (uint32_t) directPlay player id
 	// (short) color scheme
 	// (short) race id
 	//
@@ -502,7 +502,7 @@ void Game::mp_broadcast_setting()
 // disconnects from the game when it's still in multiplayer game setting
 // menu.
 //
-static void pregame_disconnect_handler(DWORD playerId)
+static void pregame_disconnect_handler(uint32_t playerId)
 {
 	int i;
 
@@ -523,7 +523,7 @@ static void pregame_disconnect_handler(DWORD playerId)
 // Host disconnection handler, called by Remote when one of the players
 // disconnects from the game after the game has started.
 //
-static void ingame_disconnect_handler(DWORD playerId)
+static void ingame_disconnect_handler(uint32_t playerId)
 {
 	int i;
 

@@ -159,7 +159,7 @@ public:
 	char* nation_name();
 	const char* king_name(int firstWordOnly=0);
 
-	DWORD player_id;				   // player id for multiplayer game
+	uint32_t player_id;				   // player id for multiplayer game
 
 	char  next_frame_ready;				// for indicating whether the next frame is ready or not
 	short last_caravan_id;				// id. of the nation's caravan.
@@ -382,7 +382,7 @@ public:
 	NationBase();
 	~NationBase();
 
-	virtual	void init(int nationType, int raceId, int colorSchemeId, DWORD playerId=0);
+	virtual	void init(int nationType, int raceId, int colorSchemeId, uint32_t playerId=0);
    virtual  void deinit();
 
 	void 		init_relation(int relationNationRecno);

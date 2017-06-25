@@ -35,14 +35,6 @@
 #include <multiplayer.h>
 #include <OERRCTRL.h>
 
-//---------- Define static variables ----------//
-
-static int	connection_failed = 0;		// connect_game_disconnect_handler() will set connection_failed to 0
-
-//---------- Define static functions ----------//
-
-static void connect_game_disconnect_handler(DWORD playerId);
-
 //--------- Begin of function Remote::Remote ----------//
 
 Remote::Remote()
@@ -211,18 +203,6 @@ void Remote::start_game()
 	// wsock_ptr->start_game();
 }
 //--------- End of function Remote::start_game ----------//
-
-
-//----- Begin of function connect_game_disconnect_handler -----//
-//
-// Disconnection handler for Remote::connect_game()
-//
-static void connect_game_disconnect_handler(DWORD playerId)
-{
-	connection_failed = 1;
-}
-//------ End of function connect_game_disconnect_handler ------//
-
 
 
 //-------- Begin of function Remote::reset_process_frame_delay ---------//

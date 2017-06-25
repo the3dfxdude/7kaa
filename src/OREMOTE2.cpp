@@ -117,7 +117,7 @@ void Remote::free_msg(RemoteMsg* remoteMsgPtr)
 // ^                           ^
 // | Allocate starts here      | return variable here to the client function
 //
-void Remote::send_msg(RemoteMsg* remoteMsgPtr, int receiverId)
+void Remote::send_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId)
 {
 	if( handle_vga_lock )
 		vga_front.temp_unlock();
@@ -147,7 +147,7 @@ void Remote::send_msg(RemoteMsg* remoteMsgPtr, int receiverId)
 // ^                           ^
 // | Allocate starts here      | return variable here to the client function
 //
-void Remote::send_free_msg(RemoteMsg* remoteMsgPtr, int receiverId)
+void Remote::send_free_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId)
 {
    if( handle_vga_lock )
 		vga_front.temp_unlock();
@@ -210,7 +210,7 @@ char* Remote::new_send_queue_msg(uint32_t msgId, int dataSize)
 //                    by the receivers.
 //                0 - not successful.
 //
-int Remote::send_queue_now(int receiverId)
+int Remote::send_queue_now(uint32_t receiverId)
 {
    if( send_queue[0].length() ==0 )
       return 1;
@@ -606,7 +606,7 @@ void Remote::copy_send_to_backup()
 //                    by the receivers.
 //                0 - not successful.
 //
-int Remote::send_backup_now(int receiverId, uint32_t requestFrameCount)
+int Remote::send_backup_now(uint32_t receiverId, uint32_t requestFrameCount)
 {
    //------ determine which backup buffer to send -----//
 

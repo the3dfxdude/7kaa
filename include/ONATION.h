@@ -306,7 +306,7 @@ public:
 	//--------------------------------------------------------------//
 	// functions to init. parameters and process ai actions
 	//--------------------------------------------------------------//
-	void			init(int nationType, int raceId, int colorSchemeId, DWORD playerId); // init local parameters
+	void			init(int nationType, int raceId, int colorSchemeId, uint32_t playerId); // init local parameters
 	void			deinit();
 
 	void 			init_all_ai_info();

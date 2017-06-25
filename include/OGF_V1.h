@@ -203,7 +203,7 @@ class Version_1_NationBase
 		char	king_leadership;
 		int 	nation_name_id;			// name of the king/nation
 		char  nation_name_str[NATION_NAME_LEN+1];		// for nation_name()'s use
-		DWORD player_id;				   // player id for multiplayer game
+		uint32_t player_id;				   // player id for multiplayer game
 		char  next_frame_ready;				// for indicating whether the next frame is ready or not
 		short last_caravan_id;				// id. of the nation's caravan.
 		short	nation_firm_count;			// total no. of firms the nation has built

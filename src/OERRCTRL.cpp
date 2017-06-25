@@ -57,7 +57,7 @@ void ErrorControl::deinit()
 {
 }
 
-void ErrorControl::set_dp_id(char ecPlayerId, long unsigned int dpPlayerId )
+void ErrorControl::set_dp_id(char ecPlayerId, uint32_t dpPlayerId )
 {
 	if( ecPlayerId != self_ec_player_id )
 	{
@@ -78,7 +78,7 @@ void ErrorControl::set_dp_id(char ecPlayerId, long unsigned int dpPlayerId )
 }
 
 // return ec_player_id, 0 for not found (can't found own dpPlayerId)
-char ErrorControl::get_ec_player_id( long unsigned int dpPlayerId )
+char ErrorControl::get_ec_player_id( uint32_t dpPlayerId )
 {
 	if( dpPlayerId == BROADCAST_PID || dpPlayerId == 0)
 		return 0;
@@ -124,7 +124,7 @@ int ErrorControl::send(char ecPlayerId, void *dataPtr, long unsigned int dataLen
 		*((CRC_TYPE *) (ecMsg + sizeof(EcMsgHeader) + dataLen) ) = crc8((unsigned char *)ecMsg, sizeof(EcMsgHeader) + dataLen);
 
 		// ------- clear all ack flags of that frame --------//
-		PID_TYPE toDPid = BROADCAST_PID;
+		uint32_t toDPid = BROADCAST_PID;
 		clear_ack( frameId );
 		if( ecPlayerId != 0)
 		{
@@ -210,7 +210,7 @@ void ErrorControl::yield()
 	// -------- receive any frame from dplay -----------//
 	char *recvPtr;
 	uint32_t recvLen;
-	PID_TYPE from;
+	uint32_t from;
 
 	static int simError = 1;
 

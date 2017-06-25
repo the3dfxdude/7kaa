@@ -406,15 +406,15 @@ public:
 	int				connect_game();
 	void			start_game();
 
-	void 			send_msg(RemoteMsg* remoteMsgPtr, int receiverId=0);
-	void 			send_free_msg(RemoteMsg* remoteMsgPtr, int receiverId=0);
+	void 			send_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId=0);
+	void 			send_free_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId=0);
 
 	RemoteMsg* 		new_msg(uint32_t msgId, int dataSize);
 	void 			free_msg(RemoteMsg* remoteMsgPtr);
 
 	char* 	 		new_send_queue_msg(uint32_t msgId, int msgSize);
-	int				send_queue_now(int receiverId=0);
-	int				send_backup_now(int receiverId, uint32_t requestFrameCount);
+	int				send_queue_now(uint32_t receiverId=0);
+	int				send_backup_now(uint32_t receiverId, uint32_t requestFrameCount);
 	void 			append_send_to_receive();
 	void			copy_send_to_backup();
 	// int			poll_msg(UINT message, UINT wParam, LONG lParam);
