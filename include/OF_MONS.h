@@ -49,7 +49,7 @@ struct MonsterInFirm
 {
 public:
 	BYTE  monster_id;
-	BYTE  unit_id;
+	uint8_t  _unused;
 	short mobile_unit_recno;		// unit recno of this monster when it is a mobile unit
 											// this is only used as a reference for soldiers to find their leaders
 	char  combat_level;

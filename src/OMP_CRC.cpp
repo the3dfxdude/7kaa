@@ -652,7 +652,6 @@ void FirmMonster::clear_ptr()
 
 	if( !monster_king.monster_id )
 	{
-		monster_king.unit_id = 0;
 		monster_king.mobile_unit_recno = 0;
 		monster_king.combat_level = 0;
 		monster_king.hit_points = 0;

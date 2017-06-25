@@ -366,7 +366,7 @@ void FirmMonster::add_general(int generalUnitRecno)
 	if( monsterInFirm->hit_points == 0 )		// 0.? will become 0 in (float) to (int) conversion
 		monsterInFirm->hit_points = 1;
 
-	monsterInFirm->soldier_monster_id = unitPtr->get_monster_soldier_id();		// skill id is used for storing the soldier monster id temporarily
+	monsterInFirm->soldier_monster_id = unitPtr->get_monster_soldier_id();		// total_reward is used for storing the soldier monster id temporarily
 	monsterInFirm->soldier_count   	 = 0;
 
 	monsterInFirm->mobile_unit_recno = generalUnitRecno; 	// unit recno of this monster when it is a mobile unit
