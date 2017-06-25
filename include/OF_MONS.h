@@ -28,8 +28,6 @@
 #include <OFIRM.h>
 #endif
 
-#include <win32_compat.h>
-
 //---------- Define constant ---------//
 
 #define MAX_MONSTER_GENERAL_IN_FIRM 	 8		// maximum no. of monster generals in a firm
@@ -48,15 +46,15 @@
 struct MonsterInFirm
 {
 public:
-	BYTE  monster_id;
-	uint8_t  _unused;
+	char  monster_id;
+	char  _unused;
 	short mobile_unit_recno;		// unit recno of this monster when it is a mobile unit
 											// this is only used as a reference for soldiers to find their leaders
 	char  combat_level;
 	short hit_points;
 	short	max_hit_points;
 
-	BYTE  soldier_monster_id;     // monster id. of the soldiers led by this monster general
+	char  soldier_monster_id;     // monster id. of the soldiers led by this monster general
 	char	soldier_count;				// no. of soldiers commaned by this monster general/king
 
 public:

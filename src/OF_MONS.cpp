@@ -509,11 +509,10 @@ int FirmMonster::mobilize_king()
 
 //--------- Begin of function FirmMonster::mobilize_general ---------//
 //
-// Mobilize monster generals. Soldiers need by the general is also mobilized.
+// Mobilize monster generals. Soldiers led by the general are also mobilized.
 //
 // <int> generalId 		 - id. of the general.
-// [int] mobilizeSoldier - whether also mobilize soldiers this general
-//									commands. (default: 1)
+// [int] mobilizeSoldier - whether also mobilize soldiers this general commands. (default: 1)
 //
 // Return: <int> the no. of monsters have been mobilized.
 //
@@ -809,10 +808,9 @@ int FirmMonster::total_combat_level()
 int FirmMonster::can_assign_monster(int unitRecno)
 {
 	Unit* unitPtr = unit_array[unitRecno];
-	int   monsterId = unitPtr->get_monster_id();
 
 	return strcmp( firm_res.get_build(firm_build_id)->build_code,	// can assign if the build code are the same
-			 monster_res[monsterId]->firm_build_code ) == 0;
+			 monster_res[unitPtr->get_monster_id()]->firm_build_code ) == 0;
 }
 //------ End of function FirmMonster::can_assign_monster ---------//
 
