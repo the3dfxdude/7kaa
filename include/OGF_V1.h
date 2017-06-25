@@ -317,7 +317,7 @@ class Version_1_Nation : public Version_1_NationBase
 {
 	public:
 		DynArray		action_array;
-		WORD			last_action_id; 	// a 16-bit id. for identifying ActionNode
+		uint16_t			last_action_id; 	// a 16-bit id. for identifying ActionNode
 		short*		ai_town_array;
 		short* 		ai_base_array;
 		short* 		ai_mine_array;

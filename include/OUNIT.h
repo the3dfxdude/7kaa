@@ -48,8 +48,6 @@
 #include <OSPREUSE.h>
 #endif
 
-#include <win32_compat.h>
-
 #ifdef NO_DEBUG_UNIT
 #undef DEBUG
 #endif
@@ -312,7 +310,7 @@ public:
 
 	//--------- AI parameters ------------//
 
-	WORD        ai_action_id;     			// an unique id. for locating the AI action node this unit belongs to in Nation::action_array
+	uint16_t        ai_action_id;     			// an unique id. for locating the AI action node this unit belongs to in Nation::action_array
 
 	char  		original_action_mode;
 	short			original_action_para;

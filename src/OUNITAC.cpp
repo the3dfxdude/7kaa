@@ -1365,7 +1365,7 @@ void Unit::process_assign()
 					short	unitRecno = sprite_recno;
 					int	actionXLoc = action_x_loc;
 					int	actionYLoc = action_y_loc;
-					short	aiActionId = ai_action_id;
+					uint16_t	aiActionId = ai_action_id;
 					char	aiUnit = ai_unit;
 
 					reset_action_para2();
