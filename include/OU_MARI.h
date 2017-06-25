@@ -36,6 +36,8 @@
 #include <OU_CARA.h>
 #endif
 
+#include <win32_compat.h>
+
 //------- Define constant ---------//
 
 #define MAX_UNIT_IN_SHIP	   9	

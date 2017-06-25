@@ -28,6 +28,8 @@
 #include <OFIRM.h>
 #endif
 
+#include <win32_compat.h>
+
 //---------- Define constant ---------//
 
 #define MAX_MONSTER_GENERAL_IN_FIRM 	 8		// maximum no. of monster generals in a firm

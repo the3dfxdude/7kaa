@@ -48,8 +48,6 @@
 #include <OSKILL.h>
 #endif
 
-#include <win32_compat.h>
-
 //----------- Define constant ------------//
 
 #define MAX_WORKER         	 8       // maximum no. of workers in a firm
@@ -198,7 +196,7 @@ public:
 	char   selected_worker_id;
 
 	char	 player_spy_count;
-	BYTE	 sabotage_level;			// 0-100 for counter productivity
+	uint8_t	 sabotage_level;			// 0-100 for counter productivity
 
 	int	 average_worker_skill();
 
