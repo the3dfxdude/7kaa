@@ -26,6 +26,10 @@
 #include <OCONFIG.h>
 #include <OINFO.h>
 
+#ifndef NO_WINDOWS
+#include <Windows.h>
+#endif
+
 
 SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 {

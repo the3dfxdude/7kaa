@@ -36,8 +36,6 @@
 #include <OTALKMSG.h>
 #endif
 
-#include <win32_compat.h>
-
 //---------- Define constant -----------//
 
 enum { NATION_OWN=1, NATION_REMOTE, NATION_AI };       // NATION_MISC=Government

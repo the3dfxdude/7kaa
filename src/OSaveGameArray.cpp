@@ -50,6 +50,10 @@
 #include <string.h> //strncpy
 #include <posix_string_compat.h> //strnicmp
 
+#ifndef NO_WINDOWS
+#include <Windows.h>
+#endif
+
 DBGLOG_DEFAULT_CHANNEL(SaveGameArray);
 
 

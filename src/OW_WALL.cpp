@@ -958,7 +958,7 @@ void World::form_world_wall()
 	if(! init_build_wall_seq )
 	{
 		init_build_wall_seq = 1;
-		DWORD seed = misc.get_random_seed();
+		long seed = misc.get_random_seed();
 		// ------ initialize with linear sequence----- //
 		for( y = 0; y < SPACING; ++y)
 		{

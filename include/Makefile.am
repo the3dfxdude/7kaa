@@ -190,5 +190,4 @@ noinst_HEADERS = \
 	vga_base.h \
 	vga_sdl.h \
 	vga_util.h \
-	wav_stream.h \
-	win32_compat.h
+	wav_stream.h

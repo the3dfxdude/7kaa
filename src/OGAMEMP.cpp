@@ -376,26 +376,6 @@ struct MpStructSyncLevel : public MpStructBase
 	}
 };
 
-
-struct MpStructLatencySend : public MpStructBase
-{
-	int test_id;
-	DWORD send_time;
-	MpStructLatencySend(int testId, DWORD sendTime) : MpStructBase(MPMSG_TEST_LATENCY_SEND),
-		test_id(testId), send_time(sendTime)
-	{
-	}
-};
-
-struct MpStructLatencyReturn : public MpStructLatencySend
-{
-	MpStructLatencyReturn(const MpStructLatencySend &ls) : MpStructLatencySend(ls)
-	{
-		msg_id = MPMSG_TEST_LATENCY_ECHO;
-	}
-};
-
-
 struct MpStructProcessFrameDelay : public MpStructBase
 {
 	int	common_process_frame_delay;
@@ -4105,7 +4085,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 			err_when( !recvPtr);
 
-			DWORD offset = 0;
+			uint32_t offset = 0;
 			int recvStartMsg = 0;
 			int recvSeed = 0;
 			int recvConfig = 0;
@@ -4118,7 +4098,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			// process the string received
 			while( offset < recvLen )
 			{
-				DWORD oldOffset = offset;
+				uint32_t oldOffset = offset;
 				recvPtr = oriRecvPtr + offset;
 
 				switch( ((MpStructBase *)(recvPtr))->msg_id )
@@ -5559,7 +5539,7 @@ int Game::mp_select_load_option(char *fileName)
 
 			err_when( !recvPtr );
 
-			DWORD offset = 0;
+			uint32_t offset = 0;
 			int recvStartMsg = 0;
 			int ownPlayerFound = 0;
 			playerCount = 0;
@@ -5570,7 +5550,7 @@ int Game::mp_select_load_option(char *fileName)
 			// process the string received
 			while( offset < recvLen )
 			{
-				DWORD oldOffset = offset;
+				uint32_t oldOffset = offset;
 				recvPtr = oriRecvPtr + offset;
 
 				switch( ((MpStructBase *)(recvPtr))->msg_id )
