@@ -36,8 +36,6 @@
 #include <OU_CARA.h>
 #endif
 
-#include <win32_compat.h>
-
 //------- Define constant ---------//
 
 #define MAX_UNIT_IN_SHIP	   9	
@@ -130,7 +128,7 @@ public:
 	//----------- vars for attacking ----------//
 
 	AttackInfo	ship_attack_info;
-	UCHAR			attack_mode_selected;
+	uint8_t			attack_mode_selected;
 
 	//-------------- vars for AI --------------//
 
