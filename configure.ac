@@ -51,6 +51,8 @@ AC_DEFUN([EVAL_SHELL_VAR], [
 ])
 
 # Checks for programs.
+CXXFLAGS="$CXXFLAGS -fsigned-char"
+AC_LANG(C++)
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
@@ -58,6 +60,20 @@ AC_PROG_LN_S
 PKG_PROG_PKG_CONFIG
 
 AX_CXX_COMPILE_STDCXX_11(,[mandatory])
+
+AC_MSG_CHECKING(whether char is signed)
+AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+#include <limits.h>
+#if CHAR_MIN == 0
+#error
+#endif
+  )],[
+    AC_MSG_RESULT(yes)
+  ],[
+    AC_MSG_RESULT(no)
+    AC_ERROR([The compiler must interpret char as signed])
+  ]
+)
 
 # Checks for header files.
 dnl AC_CHECK_HEADERS([])
@@ -88,9 +104,11 @@ video_backend=sdl    # sdl
 use_windows=no
 use_mingw=no
 jwasm_fmt="-elf -zt0"
+enable_enet=yes
 
 # Set in argument handlers:
 # enable_asm=no
+# enable_curl=yes
 # enable_debug=no
 # with_wine=no
 # enable_dynamic_support_libs=no
@@ -100,6 +118,11 @@ jwasm_fmt="-elf -zt0"
 AC_ARG_ENABLE([asm],
   AS_HELP_STRING([--enable-asm], [enable x86 asm optimizations]),
   [], [enable_asm=no]
+)
+
+AC_ARG_ENABLE([curl],
+  AS_HELP_STRING([--disable-curl], [disable curl support]),
+  [], [enable_curl=yes]
 )
 
 AC_ARG_ENABLE([debug],
@@ -112,14 +135,14 @@ AC_ARG_ENABLE([network],
   [], [enable_network=yes]
 )
 
-AC_ARG_WITH([wine],
-  AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
-  [], [with_wine=no]
-)
+#AC_ARG_WITH([wine],
+#  AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
+#  [], [with_wine=no]
+#)
 
 AC_ARG_ENABLE([dynamic-support-libs],
   AS_HELP_STRING([--enable-dynamic-suppport-libs],
-		 [do not link statically with libgcc and libstdc++ on Windows]),
+		 [do not link statically with libgcc and libstdc++ on mingw]),
   [], [enable_dynamic_support_libs=no]
 )
 
@@ -138,6 +161,7 @@ AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
+AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
 
 
 # Wine set-up
@@ -170,8 +194,15 @@ AS_IF([test "$enable_asm" = yes], [
 # Library dependencies
 
 AS_IF([test "$audio_backend" = openal], [
-  AM_PATH_OPENAL([], [
-    AC_ERROR([OpenAL not found])
+  PKG_CHECK_MODULES([OPENAL], [openal], [
+    AC_DEFINE_UNQUOTED([OPENAL_AL_H], [<AL/al.h>],
+      [Define to the equivalent of <AL/al.h> on your system])
+    AC_DEFINE_UNQUOTED([OPENAL_ALC_H], [<AL/alc.h>],
+      [Define to the equivalent of <AL/alc.h> on your system])
+  ], [
+    AM_PATH_OPENAL([], [
+      AC_ERROR([OpenAL not found])
+    ])
   ])
 
   CXXFLAGS="$CXXFLAGS $OPENAL_CFLAGS"
@@ -188,17 +219,24 @@ AS_IF([test "$input_backend" = sdl \
   LIBS="$SDL_LIBS $LIBS"
 ])
 
-PKG_CHECK_MODULES([ENET], [libenet],, [
-  PKG_CHECK_MODULES([ENET], [enet],, [
+AS_IF([test "$enable_enet" = yes], [
+  PKG_CHECK_MODULES([ENET], [libenet], [], [
     SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lws2_32 -lwinmm" -lenet],, [
       AC_ERROR([enet not found])
     ])
   ])
-])
 
-AS_IF([test "$ENET_CFLAGS" != "" || test "$ENET_LIBS" != ""], [
   CXXFLAGS="$CXXFLAGS $ENET_CFLAGS"
   LIBS="$LIBS $ENET_LIBS"
+])
+
+AS_IF([test "$enable_curl" = yes], [
+  PKG_CHECK_MODULES([CURL], [libcurl], [], [
+    AC_ERROR([curl not found])
+  ])
+
+  CXXFLAGS="$CXXFLAGS $CURL_CFLAGS"
+  LIBS="$LIBS $CURL_LIBS"
 ])
 
 AS_IF([test "$use_windows" = yes], [
@@ -207,14 +245,18 @@ AS_IF([test "$use_windows" = yes], [
   AS_IF([test "$enable_debug" = no], [
     LDFLAGS="$LDFLAGS -mwindows"
   ])
+
+  AC_DEFINE([USE_WINDOWS], [1], [Define to 1 if building on the windows platform])
 ])
 
 AS_IF([test "$use_mingw" = yes], [
   AS_IF([test "$enable_dynamic_support_libs" = no], [
-    LIBS="$LIBS -static-libstdc++ -static-libgcc"
+    # Static linking on windows, plus a thread library work-around:
+    # The --whole-archive switch makes the linker try to static link anyway,
+    # even though the application does not call the library.
+    LIBS="$LIBS -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive"
   ])
 ])
-
 
 # Defines
 
@@ -265,6 +307,11 @@ AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
 	    [Define to 1 if using SDL as the video/input backend])
 ])
 
+AS_IF([test "$enable_curl" = yes], [
+  AC_DEFINE([HAVE_LIBCURL], [1],
+	    [Define to 1 if using libcurl])
+])
+
 AC_DEFINE([NO_MEM_CLASS], [1], [Define to 1 if not monitoring memory alloc])
 AS_IF([test "$enable_debug" = yes], [
   AC_DEFINE([DEBUG], [1], [Define to 1 if building with debugging features])
@@ -287,11 +334,13 @@ AC_CONFIG_FILES([
   data/Makefile
   include/Makefile
   src/Makefile
+  src/curl/Makefile
   src/enet/Makefile
   src/imgfun/Makefile
   src/imgfun/generic/Makefile
   src/imgfun/x86/Makefile
   src/openal/Makefile
+  src/platform/Makefile
   po/Makefile.in
 ])
 

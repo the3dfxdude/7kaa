@@ -93,6 +93,9 @@
 #include <OREGION.h>
 #include <OWARPT.h>
 #include <multiplayer.h>
+#ifdef HAVE_LIBCURL
+#include <WebService.h>
+#endif
 #include <OERRCTRL.h>
 #include <OMUSIC.h>
 #include <OLOG.h>
@@ -135,6 +138,9 @@ Video             video;
 Audio             audio;
 Music             music;
 MultiPlayer       mp_obj;
+#ifdef HAVE_LIBCURL
+WebService        ws;
+#endif
 Sys               sys;
 SeekPath          seek_path;
 SeekPathReuse     seek_path_reuse;

@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.14.7-dev
+Release version 2.14.7
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -13,15 +13,16 @@ of the game.
 
 Summary of changes in this release
 ---------
- * Added support for 7kfans.com match-making.
- * Added LAN game browsing support.
- * Added Mobilize Worker button on firms. (sraboy/Microvirus)
- * Improvements to mouse acceleration.
- * Fixes to mouse movement in fullscreen mode.
- * Fixed a bug with 64-bit multiplayer matches.
- * Begun translation work. (toaster)
- * Fix character encoding with accented characters. (MicroVirus)
- * Bugfixes...
+ * Fixed the visibly fake spy loyalty, leading to easy spy detection
+ * Increased the rate of fryhtan attacks, based on the number of lairs (MicroVirus)
+ * Fixed the greater being mana exploit (sraboy)
+ * Implement better penalty levels for killing civilians
+ * Fixed a number of AI bugs
+ * Fixed bugs and crashes
+ * Improved platform compatibility
+ * Disabled virtualized window scaling in Windows, which may fix strange mouse behavior
+ * Added a login dialog for using 7kfans multiplayer service
+ * Added support for NAT punch-through
 
 Thanks to all who made this release possible.
 
@@ -55,13 +56,14 @@ Building the game
 ---------
 
 Required dependencies
-* GCC 4.xx or later
+* GCC 4.6+ or later (or other C++11 compliant compiler)
 * SDL 2.0.2 or later (http://libsdl.org/)
 * enet 1.3.xx (http://enet.bespin.org/)
 * OpenAL-soft or equivalent driver (http://kcat.strangesoft.net/openal.html)
 
 Optional dependencies
 * Autoconf 2.65 (when using git snapshot)
+* libcurl the URL transfer library, for full 7kfans multiplayer integration
 * gettext 0.18 or later
 * Game music bundle (copy music into data folder or PACKAGE_DATA_PATH)
 * NSIS for building a Windows installer
@@ -73,5 +75,5 @@ Running
 To run the game from the build directory, you need to point to the game data
 folder. The game data folder is set by the environment variable SKDATA. In
 a bash shell, this can be accomplished by
-$ SKDATA=data src/client/7kaa
+$ SKDATA=data src/7kaa
 

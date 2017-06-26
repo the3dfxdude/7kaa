@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 2014 Richard Dijk <microvirus.multiplying@hotmail.com>
+ * Copyright 2017 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,18 @@
  *
  */
 
+// Filename    : platform.h
+// Description : Routines to handle platform dependent routines
 
-//Filename    : version.h
-//Description : Defines the Seven Kingdoms version
-//              Used also by resource (rc) file for Windows to generate executable details, so don't put anything too difficult in here.
-//              Note: the rc compiler requires a newline at the end of the file.
 
-#ifndef __VERSION_H
-#define __VERSION_H
+#ifndef __PLATFORM_H
+#define __PLATFORM_H
 
-#define SKVERSION "2.14.7"
-#define SKVERMAJ 2
-#define SKVERMED 14
-#define SKVERMIN 7
-
-//#define DEV_VERSION
+#ifdef USE_WINDOWS
+extern void WIN_InitDPI();
+#define InitDPI WIN_InitDPI
+#else
+#define InitDPI()
+#endif
 
 #endif

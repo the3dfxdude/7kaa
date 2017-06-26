@@ -36,6 +36,9 @@
 #include <OBATTLE.h>
 #include <OGAME.h>
 #include <multiplayer.h>
+#ifdef HAVE_LIBCURL
+#include <WebService.h>
+#endif
 #include <OERRCTRL.h>
 #include <OCONFIG.h>
 #include <OIMGRES.h>
@@ -565,6 +568,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		service_mode = mp_select_service();
 		if (!service_mode)
 		{
+#ifdef HAVE_LIBCURL
+			ws.deinit();
+#endif
 			mp_obj.deinit();
 			return;
 		}
@@ -576,7 +582,12 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	}
 
 	if (mp_obj.is_protocol_supported(TCPIP))
+	{
 		mp_obj.init(TCPIP);
+#ifdef HAVE_LIBCURL
+		ws.init();
+#endif
+	}
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
@@ -588,6 +599,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 		// BUGHERE : display error message
 		box.msg(_("Cannot initialize ENet."));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -601,6 +615,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 		if (!mp_get_leader_board())
 			box.msg(_("Unable to retrieve leader board"));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -610,21 +627,40 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
+			const char *dialog_txt[3] =
+			{
+				_("Enter a name for your game session."),
+				_("Session Name:"),
+				_("Password:")
+			};
 			char game_name[MP_FRIENDLY_NAME_LEN+1];
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
-			if (!input_box(_("Enter the name of the game:"), game_name, MP_FRIENDLY_NAME_LEN+1))
+			password[0] = 0;
+			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
-			password[0] = 0;
-			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
-				password[0] = 0;
+			if ( !strlen(game_name) )
+			{
+				box.msg(_("Invalid game name."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
+				mp_obj.deinit();
+				return;
+			}
 			if (!mp_obj.create_session(game_name, password, MAX_NATION))
 			{
 				box.msg(_("Cannot create the game."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -663,6 +699,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 			if (!choice)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -670,12 +709,18 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			session = mp_obj.get_session(choice);
 			if (session == NULL)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 
 			if (!mp_join_session(choice))
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -685,6 +730,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		}
 		break;
 	default:			// cancel
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -697,6 +745,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 		mem_del(nationPara);
 		remote.deinit();
 		mp_close_session();
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -756,6 +807,9 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	mem_del(nationPara);
 	remote.deinit();
 	mp_close_session();
+#ifdef HAVE_LIBCURL
+	ws.deinit();
+#endif
 	mp_obj.deinit();
 	deinit();
 }
@@ -782,6 +836,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		service_mode = mp_select_service();
 		if (!service_mode)
 		{
+#ifdef HAVE_LIBCURL
+			ws.deinit();
+#endif
 			mp_obj.deinit();
 			return;
 		}
@@ -793,7 +850,12 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	}
 
 	if (mp_obj.is_protocol_supported(TCPIP))
+	{
 		mp_obj.init(TCPIP);
+#ifdef HAVE_LIBCURL
+		ws.init();
+#endif
+	}
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
@@ -805,6 +867,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 		// BUGHERE : display error message
 		box.msg(_("Cannot initialize ENet."));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -818,6 +883,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 		if (!mp_get_leader_board())
 			box.msg(_("Unable to retrieve leader board"));
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -834,21 +902,40 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
+			const char *dialog_txt[3] =
+			{
+				_("Enter a name for your game session."),
+				_("Session Name:"),
+				_("Password:")
+			};
 			char game_name[MP_FRIENDLY_NAME_LEN+1];
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
-			if (!input_box(_("Enter the name of the game:"), game_name, MP_FRIENDLY_NAME_LEN+1))
+			password[0] = 0;
+			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
-			password[0] = 0;
-			if (!input_box(_("Set the game's password:"), password, MP_FRIENDLY_NAME_LEN+1))
-				password[0] = 0;
+			if ( !strlen(game_name) )
+			{
+				box.msg(_("Invalid game name."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
+				mp_obj.deinit();
+				return;
+			}
 			if (!mp_obj.create_session(game_name, password, gamePlayerCount))
 			{
 				box.msg(_("Cannot create the game."));
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -887,6 +974,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 			if (!choice)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -894,12 +984,18 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			session = mp_obj.get_session(choice);
 			if (session == NULL)
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
 
 			if (!mp_join_session(choice))
 			{
+#ifdef HAVE_LIBCURL
+				ws.deinit();
+#endif
 				mp_obj.deinit();
 				return;
 			}
@@ -915,6 +1011,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		}
 		break;
 	default:			// cancel
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -923,6 +1022,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if( !mp_select_load_option(fileName) )
 	{
 		remote.deinit();
+#ifdef HAVE_LIBCURL
+		ws.deinit();
+#endif
 		mp_obj.deinit();
 		return;
 	}
@@ -961,6 +1063,9 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	battle.run_loaded();		// 1-multiplayer game
 
 	remote.deinit();
+#ifdef HAVE_LIBCURL
+	ws.deinit();
+#endif
 	mp_obj.deinit();
 	deinit();
 }
@@ -1185,7 +1290,9 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	if( defSaveFileName )
 	{
 		int newLen = misc.str_str(defSaveFileName, "." );
-		if( newLen > 1)
+		if( newLen > 8 )
+			misc.str_cut(saveFileName, defSaveFileName, 1, 8);	// saveFileName has 8 char only plus string terminator
+		else if( newLen > 1 )
 			misc.str_cut(saveFileName, defSaveFileName, 1, newLen-1);
 		else
 			err_here();
@@ -1344,6 +1451,8 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 
 			strcpy(remote.save_file_name, saveFileName);
 			strcat(remote.save_file_name, ".SVM");
+
+			mp_obj.create_my_player(config.player_name);
 			break;
 		}
 
@@ -1352,7 +1461,45 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
 
-	mp_obj.create_my_player(config.player_name);
+	if( rc && service_mode == 3 )
+	{
+#ifdef HAVE_LIBCURL
+		const char *dialog_txt[3] =
+		{
+			_("Enter your 7kfans.com/forums account credentials to continue.\nTIP: If you have just previously logged in using the same username, you can leave your password blank, and the previous session is used."),
+			_("Username:"),
+			_("Password:")
+		};
+		char username[MP_FRIENDLY_NAME_LEN+1];
+		char password[MP_FRIENDLY_NAME_LEN+1];
+
+		strncpy(username, config.player_name, MP_FRIENDLY_NAME_LEN);
+		username[MP_FRIENDLY_NAME_LEN] = 0;
+		password[0] = 0;
+
+		if( input_name_pass(dialog_txt, username, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
+		{
+			int rc2;
+			if( strlen(password) )
+				rc2 = ws.login(username, password);
+			else
+				rc2 = ws.refresh(username);
+			if( rc2 )
+			{
+				mp_obj.create_my_player(username); // reset name
+			}
+			else
+			{
+				box.msg(_("Unable to contact, or an error occurred trying to reach 7kfans.com."));
+				rc = 0;
+			}
+		}
+		else
+		{
+			rc = 0;
+		}
+#endif
+	}
 
 	return rc;
 }
@@ -1401,10 +1548,10 @@ int mp_info_box_detect(InfoBox *info)
 }
 
 
-// Display a box to input a string. The pointer to name will be used
+// Display a box to input a string. The buf provided will be used
 // to initialize the field. The user may edit the box as appropriate.
 // The return is 1 when ok is pressed, and 0 when cancel is pressed.
-int Game::input_box(const char *tell_string, char *buf, int len)
+int Game::input_box(const char *tell_string, char *buf, int len, char hide_input)
 {
 	const char *buttonDes1 = _("Ok");
 	const char *buttonDes2 = _("Cancel");
@@ -1449,7 +1596,8 @@ int Game::input_box(const char *tell_string, char *buf, int len)
 		       len,
 		       &font_san,
 		       0,
-		       0);
+		       0,
+		       hide_input);
 
 	vga_front.unlock_buf();
 	while (1) {
@@ -1495,6 +1643,148 @@ int Game::input_box(const char *tell_string, char *buf, int len)
 
 	return ret;
 }
+
+
+// Display a two part dialog box, with input for a name and password. The title
+// and field descriptions are provided by the caller using the array txt.
+// The return is 1 when ok is pressed, and 0 when cancel is pressed.
+int Game::input_name_pass(const char *txt[], char *name, int name_len, char *pass, int pass_len)
+{
+	const char *title = txt[0];
+	const char *inputFieldDes1 = txt[1];
+	const char *inputFieldDes2 = txt[2];
+	const char *buttonDes1 = _("Ok");
+	const char *buttonDes2 = _("Cancel");
+	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
+	const int box_side_margin = 10;
+	const int box_top_margin = 5;
+	const int box_min_width = 375;
+	const int field_span = 200;
+	int box_x1, box_y1, box_x2, box_y2;
+	int titleWidth, titleHeight, fieldDesWidth, field_x_pos, boxWidth, boxHeight, buttonWidth1, ret;
+	Button buttonOk, buttonCancel;
+	GetAGroup getGroup(2);
+	GetA &field1 = getGroup[0];
+	GetA &field2 = getGroup[1];
+
+	ret = 0;
+
+	titleWidth = font_san.text_width(title, -1, box_min_width);
+	titleHeight = font_san.text_height() + 5;
+	fieldDesWidth = MAX(font_san.text_width(inputFieldDes1),
+		 font_san.text_width(inputFieldDes2)) + 10;
+	boxWidth = MAX(fieldDesWidth+field_span, box_min_width) + box_side_margin * 2;
+	boxHeight = titleHeight + font_san.max_font_height * 2 + box_button_margin + box_top_margin;
+	buttonWidth1 = 20 + font_san.text_width(buttonDes1);
+
+	box_x1 = VGA_WIDTH / 2 - boxWidth / 2;
+	box_x2 = VGA_WIDTH / 2 + boxWidth / 2;
+	box_y1 = 200;
+	box_y2 = box_y1 + boxHeight;
+	field_x_pos = box_side_margin + fieldDesWidth;
+
+	vga_back.d3_panel_up(box_x1, box_y1, box_x2, box_y2, 2, 1);
+	vga_front.d3_panel_up(box_x1, box_y1, box_x2, box_y2, 2, 1);
+
+	font_san.put_paragraph(box_x1 + box_side_margin,
+			       box_y1 + box_top_margin,
+			       box_x2 - box_side_margin,
+			       box_y2 - box_top_margin,
+			       title,
+			       2);
+	font_san.put_paragraph(box_x1 + box_side_margin,
+			       box_y1 + box_top_margin + titleHeight,
+			       box_x2 - box_side_margin,
+			       box_y2 - box_top_margin,
+			       inputFieldDes1,
+			       2);
+	font_san.put_paragraph(box_x1 + box_side_margin,
+			       box_y1 + box_top_margin + titleHeight + font_san.max_font_height,
+			       box_x2 - box_side_margin,
+			       box_y2 - box_top_margin,
+			       inputFieldDes2,
+			       2);
+
+	buttonOk.create_text(box_x1 + boxWidth / 2 - buttonWidth1,
+			     box_y2 - box_button_margin,
+			     buttonDes1);
+
+	buttonCancel.create_text(box_x1 + boxWidth / 2 + 2,
+				 box_y2 - box_button_margin,
+				 buttonDes2);
+
+	field1.init( box_x1 + box_side_margin + fieldDesWidth,
+		box_y1 + box_top_margin + titleHeight,
+		box_x2 - box_side_margin,
+		name,
+		name_len,
+		&font_san,
+		0,
+		0 );
+
+	field2.init( box_x1 + box_side_margin + fieldDesWidth,
+		box_y1 + box_top_margin + titleHeight + font_san.max_font_height,
+		box_x2 - box_side_margin,
+		pass,
+		pass_len,
+		&font_san,
+		0,
+		0,
+		1);
+
+	getGroup.set_focus(0,1);
+
+	vga_front.unlock_buf();
+	while (1) {
+		vga_front.lock_buf();
+
+		buttonOk.paint();
+		buttonCancel.paint();
+		getGroup.paint();
+
+		sys.yield();
+		vga.flip();
+		mouse.get_event();
+
+		if( sys.signal_exit_flag == 1 )
+		{
+			break;
+		}
+
+		if (buttonOk.detect(KEY_RETURN)) {
+			ret = 1;
+			break;
+		}
+
+		if (buttonCancel.detect(KEY_ESC) ||
+		    mouse.any_click(1)) {
+			mouse.get_event();
+			break;
+		}
+
+		getGroup.detect();
+
+		sys.blt_virtual_buf();
+
+		if (config.music_flag && !music.is_playing())
+			music.play(1, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
+		else if (!config.music_flag && music.is_playing())
+			music.stop();
+
+		vga_front.unlock_buf();
+	}
+	if (!vga_front.buf_locked)
+		vga_front.lock_buf();
+
+	return ret;
+}
+
+
+#ifdef HAVE_LIBCURL
+const char *login_failed_msg = "Unable to connect to the 7kfans.com service. Verify your account information and try again.";
+#else
+const char *login_failed_msg = "Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to log in.\n(No libcurl)";
+#endif
 
 
 //-------- Begin of function Game::mp_select_session --------//
@@ -1690,7 +1980,7 @@ int Game::mp_select_session()
 					statusMsg = _("Trying to connect to the service provider");
 					break;
 				case MP_POLL_LOGIN_FAILED:
-					box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+					box.msg(_(login_failed_msg));
 					goto exit_poll;
 				}
 				if( statusMsg )
@@ -1815,14 +2105,8 @@ int Game::mp_join_session(int session_id)
 	err_when(session == NULL);
  
 	password[0] = 0;
-	if (
-		(session->flags & SESSION_PASSWORD) &&
-		!input_box(
-			_("Enter the game's password:"),
-			password,
-			MP_FRIENDLY_NAME_LEN+1
-		)
-	)
+	if( (session->flags & SESSION_PASSWORD) &&
+		!input_box(_("Enter the game's password:"), password, MP_FRIENDLY_NAME_LEN+1, 1) )
 	{
 		return 0;
 	}
@@ -1893,7 +2177,7 @@ END:
 
 	if (pollStatus == MP_POLL_LOGIN_FAILED)
 	{
-		box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+		box.msg(_(login_failed_msg));
 		return 0;
 	}
 	else if (pollStatus == MP_POLL_NO_SESSION)
@@ -2761,7 +3045,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		pollStatus = mp_obj.poll_players();
 		if (pollStatus == MP_POLL_LOGIN_FAILED)
 		{
-			box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+			box.msg(_(login_failed_msg));
 			break;
 		}
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
@@ -4660,7 +4944,7 @@ int Game::mp_select_load_option(char *fileName)
 		pollStatus = mp_obj.poll_players();
 		if (pollStatus == MP_POLL_LOGIN_FAILED)
 		{
-			box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+			box.msg(_(login_failed_msg));
 			break;
 		}
 		recvPtr = mp_obj.receive(&from, &recvLen, &sysMsgCount);
@@ -5413,7 +5697,7 @@ int Game::mp_select_load_option(char *fileName)
 
 	if( pollStatus == MP_POLL_LOGIN_FAILED )
 	{
-		box.msg(_("Unable to connect to the service provider. Check that your name matches your forum account name and also you are logged in with your web browser."));
+		box.msg(_(login_failed_msg));
 	}
 
 	return retFlag;

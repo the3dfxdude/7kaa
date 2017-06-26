@@ -45,11 +45,16 @@ public:
 	char	esc_key_flag;		// detect esc key to clear the field
 	char* back_ground_bitmap;
 
+	char    hide_flag;
+	char*   hide_field;
+	char*   disp_field;
+
 	char	mouse_drag_flag;
 
 public:
 	GetA();
-	void	init( int x1, int y1, int x2, char *field, unsigned length, Font *, char align, char detectEsc);
+	~GetA();
+	void	init(int x1, int y1, int x2, char *field, unsigned length, Font *, char align, char detectEsc, char hide=0);
 	int	height();
 	void	clear();
 	unsigned	detect_key();

@@ -284,13 +284,13 @@ enum { SERVICE_OPTION_X_SPACE = 180,
 enum { SLIDE_BUTTON_WIDTH = 23,
 		 SLIDE_BUTTON_HEIGHT = 24 };
 
-static char race_table[MAX_RACE] =		// race translation table
+static char race_table[MAX_RACE_TABLE] =		// race translation table
 {
 	RACE_CHINESE, RACE_GREEK, RACE_JAPANESE, RACE_MAYA,
 	RACE_PERSIAN, RACE_NORMAN, RACE_VIKING
 };
 
-static char reverse_race_table[MAX_RACE] =		// race translation table
+static char reverse_race_table[MAX_RACE_TABLE] =		// race translation table
 {
 	5, 3, 1, 6, 4, 0, 2 
 };
@@ -311,6 +311,8 @@ static void disp_slide_bar(SlideBar *slideBar, int);
 #define IGOPTION_DRAW_PATH       0x00000200
 #define IGOPTION_PAGE            0x40000000
 #define IGOPTION_ALL             0x7FFFFFFF
+
+
 
 // ---------- begin of function Game::in_game_option_menu ------//
 int Game::in_game_option_menu()
@@ -351,8 +353,8 @@ int Game::in_game_option_menu()
 
 	// --------- initialize race buttons ---------- //
 
-	ButtonCustom raceButton[MAX_RACE];
-	for( i = 0; i < MAX_RACE; ++i )
+	ButtonCustom raceButton[MAX_RACE_TABLE];
+	for( i = 0; i < MAX_RACE_TABLE; ++i )
 	{
 		raceButton[i].create(181+i*BASIC_OPTION_X_SPACE, 162,
 			181+(i+1)*BASIC_OPTION_X_SPACE-1, 162+BASIC_OPTION_HEIGHT-1,
@@ -446,7 +448,7 @@ int Game::in_game_option_menu()
 			}
 			if( refreshFlag & IGOPTION_RACE )
 			{
-				for( i = 0; i < MAX_RACE; ++i )
+				for( i = 0; i < MAX_RACE_TABLE; ++i )
 					raceButton[i].paint();
 			}
 			if( refreshFlag & IGOPTION_HELP )
@@ -531,7 +533,7 @@ int Game::in_game_option_menu()
 			tempConfig.scroll_speed = scrollSpeedSlide.view_recno;
 		}
 
-		for( i = 0; i < MAX_RACE; ++i )
+		for( i = 0; i < MAX_RACE_TABLE; ++i )
 		{
 			if( raceButton[i].detect() )
 			{

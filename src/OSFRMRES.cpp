@@ -53,7 +53,7 @@ void SpriteFrameRes::deinit()
 {
 	if( init_flag )
 	{
-		delete sprite_frame_array;
+		delete[] sprite_frame_array;
 
 		init_flag=0;
 	}

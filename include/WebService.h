@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2017 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,42 +18,34 @@
  *
  */
 
-// Filename    : OMUSIC.H
-// Description : header of music
+// Filename    : WebService.h
+// Description : A curl implementation to access web services
 
 
-#ifndef __OMUSIC_H
-#define __OMUSIC_H
+#ifndef __WEBSERVICE_H
+#define __WEBSERVICE_H
 
-#define MUSIC_PLAY_LOOPED 1
-#define MUSIC_PLAY_CD 2
-#define MUSIC_CD_THEN_WAV 4
-#define MAX_RACE_TABLE 7
+#include <string>
+#include <curl/curl.h>
 
-class Music
+class WebService
 {
-public:
-	int	init_flag;
-	int	song_id;
-	int	music_channel;
-	int	play_type;	// 0 = non-looped, 1 = looped, bit 1 = play from CD (looped not supported)
+private:
+	bool init_flag;
+	CURL *curl;
+	std::string buffer;
 
 public:
-	Music();
-	~Music();
-	void	init();
-	void	deinit();
 
-	int	stop();
-	int	play(int songId, int playType=1);
-	int	is_playing(int songId=0);
-	void	change_volume(int volume);		// 0-100
-	void  yield();
+	WebService();
+	~WebService();
 
-	static int max_song();
-	static int random_bgm_track(int excludeId = 0);
+	void init();
+	void deinit();
+	int refresh(char *user);
+	int login(char *user, char *pass);
 };
 
-extern Music music;
+extern WebService ws;
 
 #endif

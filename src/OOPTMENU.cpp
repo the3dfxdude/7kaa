@@ -51,13 +51,13 @@ enum { SERVICE_OPTION_X_SPACE = 180,
 enum { SLIDE_BUTTON_WIDTH = 23,
 		 SLIDE_BUTTON_HEIGHT = 24 };
 
-static char race_table[MAX_RACE] =		// race translation table
+static char race_table[MAX_RACE_TABLE] =		// race translation table
 {
 	RACE_CHINESE, RACE_GREEK, RACE_JAPANESE, RACE_MAYA,
 	RACE_PERSIAN, RACE_NORMAN, RACE_VIKING
 };
 
-static char reverse_race_table[MAX_RACE] =		// race translation table
+static char reverse_race_table[MAX_RACE_TABLE] =		// race translation table
 {
 	5, 3, 1, 6, 4, 0, 2 
 };
@@ -128,7 +128,7 @@ void OptionMenu::enter(char untilExitFlag)
 
 	// --------- initialize race buttons ---------- //
 
-	for( i = 0; i < MAX_RACE; ++i )
+	for( i = 0; i < MAX_RACE_TABLE; ++i )
 	{
 		race_button[i].create(181+i*BASIC_OPTION_X_SPACE, 162,
 			181+(i+1)*BASIC_OPTION_X_SPACE-1, 162+BASIC_OPTION_HEIGHT-1,
@@ -237,7 +237,7 @@ void OptionMenu::disp(int needRepaint)
 		}
 		if( refresh_flag & IGOPTION_RACE )
 		{
-			for( i = 0; i < MAX_RACE; ++i )
+			for( i = 0; i < MAX_RACE_TABLE; ++i )
 				race_button[i].paint();
 		}
 		if( refresh_flag & IGOPTION_HELP )
@@ -327,7 +327,7 @@ int OptionMenu::detect()
 		retFlag1 = 0;
 
 	int retFlag2 = 0;
-	for( i = 0; i < MAX_RACE; ++i )
+	for( i = 0; i < MAX_RACE_TABLE; ++i )
 	{
 		if( race_button[i].detect() )
 		{

@@ -23,16 +23,12 @@
 
 #ifndef NO_WINDOWS
 #include <windows.h>
-#include <windowsx.h>
-#include <mmsystem.h>
-#include <dos.h>
 #else
-#include <sys/time.h>
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <errno.h>
 #endif 
 
+#include <SDL.h>
 #include <string.h>
 #include <stdlib.h>
 #include <c99_printf.h>
@@ -44,10 +40,6 @@
 #include <OSTR.h>
 #include <OMISC.h>
 #include <ODIR.h>
-
-#include <dbglog.h>
-
-DBGLOG_DEFAULT_CHANNEL(Misc);
 
 #define	MOVE_AROUND_TABLE_SIZE	900
 
@@ -1358,24 +1350,7 @@ char* Misc::num_th(int inNum)
 //
 unsigned long Misc::get_time()
 {
-#ifndef NO_WINDOWS
-	return GetTickCount();
-#else
-	struct timeval tv;
-	int ret;
-	static time_t starting_time = 0;
-
-	if (!starting_time)
-		starting_time = time(NULL);
-
-	ret = gettimeofday(&tv, NULL);
-	if (ret)
-	{
-		ERR("gettimeofday returned %d\n", ret);
-		return 0;
-	}
-	return (tv.tv_sec - starting_time) * 1000 + tv.tv_usec / 1000;
-#endif
+	return SDL_GetTicks();
 }
 //---------- End of function Misc::get_time ---------//
 

@@ -1,4 +1,7 @@
-SUBDIRS = enet imgfun openal
+SUBDIRS = enet imgfun openal platform
+if USE_CURL
+SUBDIRS += curl
+endif
 
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
@@ -285,10 +288,8 @@ bin_PROGRAMS = 7kaa
 	vgautil.cpp \
 	vgautil2.cpp
 
-CXXFLAGS += $(SDL_CFLAGS)
 
 7kaa_LDADD =
-
 
 if AUDIO_OPENAL
 7kaa_LDADD += ./openal/libaudio_openal.a
@@ -304,7 +305,13 @@ else
 7kaa_LDADD += ./imgfun/generic/libimgfun_generic.a
 endif
 
+7kaa_LDADD += ./platform/libplatform.a
+
 7kaa_LDADD += @LIBINTL@
+
+if USE_CURL
+7kaa_LDADD += ./curl/libWebService.a
+endif
 
 if USE_WINDOWS
 7kaa_SOURCES += ico.rc

@@ -26,6 +26,7 @@
 #include <OMOUSE.h>
 #include <OSYS.h>
 #include <surface.h>
+#include <platform.h>
 #include <dbglog.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
@@ -69,6 +70,8 @@ VgaSDL::~VgaSDL()
 int VgaSDL::init()
 {
    SDL_Surface *icon;
+
+   InitDPI();
 
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
@@ -193,6 +196,7 @@ int VgaSDL::init()
       colorkey = SDL_MapRGB(icon->format, 0, 0, 0);
       SDL_SetColorKey(icon, SDL_TRUE, colorkey);
       SDL_SetWindowIcon(window, icon);
+      SDL_FreeSurface(icon);
    }
    SDL_SetWindowTitle(window, WIN_TITLE);
 
