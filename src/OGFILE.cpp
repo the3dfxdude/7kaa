@@ -155,7 +155,7 @@ int GameFile::load_game(const char *base_path, char* fileName)
 	if(rc && !file.file_open(full_path, 0, 1)) // 0=tell File don't handle error itself
 	{
 		rc = 0;
-		errMsg = _("Cannot open save game file");
+		errMsg = _("Cannot open saved game file");
 	}
 
 	//-------- read in the GameFile class --------//
@@ -178,7 +178,7 @@ int GameFile::load_game(const char *base_path, char* fileName)
 			if( !validate_header() )
 			{
 				rc = 0;
-				errMsg = _("Save game incompatible");
+				errMsg = _("Saved game incompatible");
 			}
 			else
 				strcpy( file_name, gameFileName );
@@ -210,7 +210,7 @@ int GameFile::load_game(const char *base_path, char* fileName)
 			break;
 		case -1:
 			rc = 0;		// consider cancel load game
-			errMsg = _("Incompatible save game");
+			errMsg = _("Incompatible saved game");
 			break;
 		case 0:
 		default:
