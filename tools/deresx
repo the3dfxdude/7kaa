@@ -1,0 +1,107 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2017 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use File::Basename;
+use File::Path qw(make_path);
+use File::Spec;
+
+if (@ARGV < 1) {
+	print "Usage: $0 file.res out_dir .ext\n";
+	print "Extracts all files from file.res, giving each file the defined suffix .ext\n";
+	print "This is not for a 'LIBDB' generated resource file.\n";
+	exit 1;
+}
+
+my ($res, $outdir, $ext) = @ARGV;
+if (!defined($outdir)) {
+	$outdir = "";
+}
+if (!defined($ext)) {
+	$ext = "";
+}
+
+if ($outdir ne "" && ! -d $outdir) {
+	eval { make_path($outdir) };
+	if ($@) {
+		print "Error: Cannot create $outdir\n";
+		exit 1;
+	}
+}
+
+my $fh;
+if (!open($fh, '<', $res)) {
+	print "Error: Cannot open $res\n";
+	exit 1;
+}
+my $file_size = -s $res;
+my $buf;
+my $last_offset = 0;
+read($fh, $buf, 2);
+my $rec_count = unpack('s', $buf);
+my $header_size = 2 + 13*$rec_count + 13;
+my @files;
+my @sizes;
+my $read_bytes = $header_size;
+for (my $i = 0; $i < $rec_count; $i++) {
+	$read_bytes += 13;
+	read($fh, $buf, 13);
+	my ($rec_name, $offset) = unpack('Z9l', $buf);
+	push(@files, $rec_name);
+	if ($last_offset) {
+		push(@sizes, $offset - $last_offset);
+	}
+	if ($last_offset > $offset) {
+		print "Error: Corrupt res file.\n";
+		exit 1;
+	}
+	$last_offset = $offset;
+}
+$read_bytes += 13;
+read($fh, $buf, 13);
+my ($rec_name, $offset) = unpack('Z9l', $buf);
+push(@sizes, $offset - $last_offset);
+
+for (my $i = 0; $i < $rec_count; $i++) {
+	$read_bytes += $sizes[$i];
+	read($fh, $buf, $sizes[$i]);
+	my $filename = sprintf("%.5d-%s%s", $i, $files[$i], $ext);
+	my $outfile = File::Spec->catfile($outdir, $filename);
+	my $fh2;
+	if (!open($fh2, '>', $outfile)) {
+		print "Error: Cannot open $outfile\n";
+		exit 1;
+	}
+	print $fh2 $buf;
+	close($fh2);
+}
+
+close($fh);
+
+if ($read_bytes < $file_size) {
+	print "Error: Trailing data\n";
+	exit 1;
+}
+
+exit 0;

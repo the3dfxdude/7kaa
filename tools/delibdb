@@ -1,0 +1,107 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2017 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+
+use dbf;
+
+if (@ARGV != 4) {
+	print "Usage: $0 ptr.dbf file.res filename_field ptr_field file_ext\n";
+	print "Extracts files from res that are enumerated and offset in the dbf file. This is the LIBDB or ResourceDb style format.\n";
+	exit 0;
+}
+my ($dbf_file, $res_file, $filename_field, $ptr_field, $ext) = @ARGV;
+if (!defined($ext)) {
+	$ext = '.icn';
+}
+my $res_fh;
+
+my $dbf = dbf->read_file($dbf_file);
+if (!$dbf) {
+	print "Error: Unable to read $dbf_file\n";
+	exit 0;
+}
+my $filename_idx = $dbf->get_field($filename_field);
+if ($filename_idx < 0) {
+	print "Error: Invalid field '$filename_field'\n";
+	exit 1;
+}
+my $ptr_idx = $dbf->get_field($ptr_field);
+if ($ptr_idx < 0) {
+	print "Error: Invalid field '$ptr_field'\n";
+	exit 1;
+}
+if (!open($res_fh, '<', $res_file)) {
+	print "Error: Unable to open $res_file\n";
+	exit 1;
+}
+my $records = $dbf->get_records();
+for (my $i = 0; $i < $records; $i++) {
+	my $buf;
+	my $bytes;
+	my $len;
+	my $fh;
+	my $filename = dbf::trim($dbf->get_value($i, $filename_idx));
+	if (!defined($filename)) {
+		print "Error while reading record $i for $filename_field\n";
+		exit 1;
+	}
+	my $packed_ptr = $dbf->get_value($i, $ptr_idx);
+	if (!defined($packed_ptr)) {
+		print "Error while reading record $i for $ptr_field\n";
+		exit 1;
+	}
+	my $ptr = unpack('L', $packed_ptr);
+	if (!defined($ptr)) {
+		print "Can't extract unsigned int (LE 4-bytes) $ptr_field value for record $i ($packed_ptr)\n";
+		next;
+	}
+	print "Extracting record $i for $filename (field $filename_idx) at $ptr_field=$ptr (field $ptr_idx)\n";
+	if (!seek($res_fh, $ptr, 0)) {
+		print "Error: Corrupt RES file: cannot seek to $ptr\n";
+		exit 1;
+	}
+	$bytes = read($res_fh, $buf, 4);
+	if ($bytes != 4) {
+		print "Error: Corrupt RES file: $bytes != 4\n";
+		exit 1;
+	}
+	$len = unpack('L', $buf);
+	$bytes = read($res_fh, $buf, $len);
+	if ($bytes != $len) {
+		print "Error: Corrupt RES file: $bytes != $len\n";
+		exit 1;
+	}
+	if (!open($fh, '>', "$filename$ext")) {
+		print "Unable to open file $filename$ext\n";
+		exit 1;
+	}
+	print $fh $buf;
+	close($fh);
+}
+close($res_fh);
+
+exit 0;

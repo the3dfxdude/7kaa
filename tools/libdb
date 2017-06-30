@@ -1,0 +1,118 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2017 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+
+use File::Spec;
+
+use dbf;
+
+if (@ARGV < 5) {
+	print "Usage: $0 ptr.dbf file.res input_dir filename_field ptr_field file_ext\n";
+	print "Puts all files defined by dbf in res. Input_dir must have all the files.\n";
+	exit 0;
+}
+my ($dbf_file, $res_file, $input_dir, $filename_field, $ptr_field, $ext) = @ARGV;
+if (!defined($ext)) {
+	$ext = '.icn';
+}
+my $res_fh;
+
+my $dbf = dbf->read_file($dbf_file);
+if (!$dbf) {
+	print "Error: Unable to read $dbf_file\n";
+	exit 1;
+}
+my $filename_idx = $dbf->get_field($filename_field);
+if ($filename_idx < 0) {
+	print "Error: Invalid field '$filename_field'\n";
+	exit 1;
+}
+my $ptr_idx = $dbf->get_field($ptr_field);
+if ($ptr_idx < 0) {
+	print "Error: Invalid field '$ptr_field'\n";
+	exit 1;
+}
+my $records = $dbf->get_records();
+my %file_order;
+for (my $i = 0; $i < $records; $i++) {
+	my $buf;
+	my $bytes;
+	my $len;
+	my $filename = dbf::trim($dbf->get_value($i, $filename_idx));
+	if (!defined($filename)) {
+		print "Error: Can't read record $i for $filename_field\n";
+		next;
+	}
+	my $packed_ptr = $dbf->get_value($i, $ptr_idx);
+	if (!defined($packed_ptr)) {
+		print "Error: Can't read record $i for $ptr_field\n";
+		next;
+	}
+	my $ptr = unpack('L', $packed_ptr);
+	if (!defined($ptr)) {
+		print "Error: Can't extract $ptr_field pointer for record $i\n";
+		next;
+	}
+	$file_order{$ptr} = [$i, $filename];
+}
+if (!open($res_fh, '>', $res_file)) {
+	print "Error: Unable to open $res_file\n";
+	exit 1;
+}
+my @ptrs = sort {$a <=> $b} (keys(%file_order));
+my $offset = 0;
+for (my $i = 0; $i < @ptrs; $i++) {
+	my $record;
+	my $infile;
+	my $file;
+	my $size;
+	my $buf;
+	$record = $file_order{$ptrs[$i]};
+        $infile = File::Spec->catfile($input_dir, $record->[1]) . $ext;
+	if (! -f $infile) {
+		print "Error: No such file $infile, found in record $record->[0]\n";
+		exit 1;
+	}
+	if (!open($file, '<', $infile)) {
+		print "Error: Cannot open $infile\n";
+		exit 1;
+	}
+	$size = -s $infile;
+	if (read($file, $buf, $size) != $size) {
+		print "Error: Could not read $infile\n";
+		exit 1;
+	}
+	close($file);
+	print $res_fh pack('L', $size);
+	print $res_fh $buf;
+	$dbf->set_value($record->[0], $ptr_idx, pack('L', $offset));
+	$offset += $size + 4; # includes ptr
+}
+close($res_fh);
+$dbf->write_file("$dbf_file.new");
+
+exit 0;

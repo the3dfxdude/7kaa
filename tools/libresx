@@ -1,0 +1,92 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2017 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use File::Basename;
+use File::Spec;
+
+if (@ARGV != 2) {
+	print "Usage: $0 file.res src_dir\n";
+	print "Puts all files in src_dir into the res archive\n";
+	exit 1;
+}
+
+my ($out_file, $src_dir) = @ARGV;
+
+my $dir;
+if (!opendir($dir, $src_dir)) {
+	print "Error: Unable to read $src_dir\n";
+	exit 1;
+}
+my @files = sort grep {-f File::Spec->catfile($src_dir, $_)} readdir($dir);
+close($dir);
+
+my @sizes = map {-s File::Spec->catfile($src_dir, $_)} @files;
+
+my $rec_count = scalar(@files);
+
+# RESX Header
+# ----------------------------------------------------------------------------
+# short (2 bytes): Number of records
+# 
+# char[9] (9 bytes): Record name
+# int (4 bytes): offset to record
+# Repeat for each record
+#
+# char[9] (9 bytes): Dummy record (all zeros)
+# int (4 bytes): final offset for size calculation of last record
+
+my $fh;
+if (!open($fh, '>', $out_file)) {
+	print "Error: Cannot open $out_file\n";
+	exit 1;
+}
+
+my $header_size = 2 + 13*$rec_count + 13;
+print $fh pack('s', $rec_count);
+
+my $offset = $header_size;
+for (my $i = 0; $i < $rec_count; $i++) {
+	my $record_name = uc $files[$i];
+	$record_name =~ s/\.\w+$//;
+	$record_name =~ s/^\d+-//;
+	print $fh pack('Z9l', $record_name, $offset);
+	$offset += $sizes[$i];
+}
+print $fh "\0\0\0\0\0\0\0\0\0";
+print $fh pack('l', $offset); # final offset for size calculation of last rec
+
+for (my $i = 0; $i < $rec_count; $i++) {
+	my $fh2;
+	if (!open($fh2, '<', File::Spec->catfile($src_dir, $files[$i]))) {
+		print "Error: Cannot open ", File::Spec->catfile($src_dir, $files[$i]), "\n";
+		exit 1;
+	}
+	my $data = do { local $/; <$fh2> };
+	close($fh2);
+	print $fh $data;
+}
+close($fh);
+
+exit 0;

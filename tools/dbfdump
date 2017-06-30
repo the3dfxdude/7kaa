@@ -1,0 +1,68 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2017 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+
+use List::Util qw(min max);
+use dbf;
+
+if (!@ARGV) {
+	print "Usage: $0 input.dbf\n";
+	exit 0;
+}
+my ($dbf_file) = @ARGV;
+
+my ($dbf) = dbf->read_file($dbf_file);
+
+# used for write testing
+#$dbf->write_file("$dbf_file.new");
+
+my $records = $dbf->get_records();
+my $fields = $dbf->get_field_names();
+my @ptr_fields;
+my $format = "%6s:";
+for (my $i = 0; $i < @$fields; $i++) {
+	my $len = max($dbf->get_field_len($i), length($fields->[$i]));
+	if ($fields->[$i] =~ /PTR/) {
+		$format .= " %-${len}s";
+		push(@ptr_fields, $i);
+	} else {
+		$format .= " %-${len}s";
+	}
+}
+$format .= "\n";
+printf($format, "RECORD", @$fields);
+#print "Format string: $format\n";
+for (my $i = 0; $i < $records; $i++) {
+	my $record = $dbf->get_record($i);
+	for (my $j = 0; $j < @ptr_fields; $j++) {
+		my $val = unpack('L', $record->[$ptr_fields[$j]]);
+		$record->[$ptr_fields[$j]] = $val;
+	}
+	printf($format, $i, @$record);
+}
+
+exit 0;
