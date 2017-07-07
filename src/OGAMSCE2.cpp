@@ -193,7 +193,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 	// ###### begin Gilbert 1/11 ########//
 	GetA playerNameField;
 	playerNameField.init( menuX1+NAME_FIELD_X1, menuY1+NAME_FIELD_Y1, menuX1+NAME_FIELD_X2, 
-		config.player_name, config.PLAYER_NAME_LEN, &font_san, 0, 1);
+		config.player_name, HUMAN_NAME_LEN, &font_san, 0, 1);
 	// ###### end Gilbert 1/11 ########//
 
 #ifdef TU_USE_BACKUP_SURFACE

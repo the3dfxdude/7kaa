@@ -1,0 +1,6 @@
+#ifndef __STORAGE_CONSTANTS_H
+#define __STORAGE_CONSTANTS_H
+
+enum { HUMAN_NAME_LEN=20 };
+
+#endif // !__STORAGE_CONSTANTS_H

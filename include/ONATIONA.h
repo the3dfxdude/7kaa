@@ -32,6 +32,8 @@
 #include <ONATION.h>
 #endif
 
+#include <storage_constants.h>
+
 //---- at least wait for 1 year after a nation is deleted before setting up a new nation. ---//
 
 #define NEW_NATION_INTERVAL_DAYS		365
@@ -44,8 +46,6 @@ struct NewNationPara;
 class NationArray : public DynArrayB
 {
 public:
-	enum { HUMAN_NAME_LEN=20 }; // should be the same as Config::PLAYER_NAME_LEN
-
 	short  	nation_count;    // no. of nations, it's different from nation_array.size() which is a DynArrayB
 	short  	ai_nation_count;
 	int		last_del_nation_date;
@@ -156,7 +156,7 @@ struct NewNationPara
 	DWORD dp_player_id;
 	short color_scheme;
 	short race_id;
-	char  player_name[NationArray::HUMAN_NAME_LEN+1];
+	char  player_name[HUMAN_NAME_LEN+1];
 
 	void init(short n, DWORD playerId, short scheme, short race, char *playerName)
 	{

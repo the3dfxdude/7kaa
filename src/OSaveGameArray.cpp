@@ -18,17 +18,11 @@
  *
  */
 
-//Filename    : OGFILEA.CPP
-//Description : Game File Array
+//Filename    : OSaveGameArray.cpp
+//Description : Save Game Array / UI.
 
-#ifndef NO_WINDOWS
-#include <io.h>
-#else
-#include <unistd.h>
-#endif
-
+#include <OSaveGameArray.h>
 #include <KEY.h>
-#include <ODIR.h>
 #include <OSYS.h>
 #include <ODATE.h>
 #include <OMOUSE.h>
@@ -44,14 +38,18 @@
 #include <OINFO.h>
 #include <OGAME.h>
 #include <OGAMESET.h>
-#include <OGFILE.h>
+#include <OSaveGameProvider.h>
+#include <OGAMHALL.h>
 #include <OBUTT3D.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
 #include <dbglog.h>
+#include <ONATIONA.h>
 #include "gettext.h"
 
-DBGLOG_DEFAULT_CHANNEL(GameFile);
+#include <string.h> //strncpy
+
+DBGLOG_DEFAULT_CHANNEL(SaveGameArray);
 
 
 //--------- Define constant ---------//
@@ -82,7 +80,6 @@ enum { SCROLL_X1 = 595,
 
 #define MAX_BROWSE_DISP_REC	   5		// MAX. no. of records can be displayed in the saved game browser
 
-#define HALL_OF_FAME_FILE_NAME  "HALLFAME.DAT"
 
 //------- Declare static vars & functions ----------//
 
@@ -92,59 +89,45 @@ static short	browse_top_recno;
 static short	menu_x1, menu_y1;
 
 static int     sort_game_file_function( const void *a, const void *b );
-static int     last_game_recno();
-static void    key_search();
-static void		disp_scroll_bar_func(SlideVBar *scroll, int);
+static void    disp_scroll_bar_func(SlideVBar *scroll, int);
 
-//------ Begin of function GameFileArray constuctor ------//
 
-GameFileArray::GameFileArray() : DynArray( sizeof(GameFile), 10 )
+//------ Begin of function SaveGameArray constuctor ------//
+
+SaveGameArray::SaveGameArray() : DynArray( sizeof(SaveGameInfo), 10 )
 {
-	demo_format = 0;
-
-	#ifdef DEMO
-		demo_format = 1;
-	#endif
-
-	#ifdef DEMO_DESIGN
-		demo_format = 1;
-	#endif
-
+	has_fetched_last_file_name_from_hall_of_fame = false;
 	last_file_name[0] = '\0';
-	has_read_hall_of_fame = 0;
-
-	memset( hall_fame_array, 0, sizeof(HallFame)*HALL_FAME_NUM );
 }
-//-------- End of function GameFileArray constuctor ------//
+//-------- End of function SaveGameArray constuctor ------//
 
 
-//------ Begin of function GameFileArray::init ------//
+//------ Begin of function SaveGameArray::init ------//
 
-void GameFileArray::init(const char *extStr)
+void SaveGameArray::init(const char *extStr)
 {
-	//------------- Read Hall of Fame ------------//
-
-	if( !has_read_hall_of_fame )		// only read once, GameFileArray::init() is called every time the load/save game menu is brought up.
+	if( !has_fetched_last_file_name_from_hall_of_fame )		// only read once, SaveGameArray::init() is called every time the load/save game menu is brought up.
 	{
-		read_hall_of_fame();
-		has_read_hall_of_fame = 1;
+		strncpy(last_file_name, hall_of_fame.get_last_savegame_file_name(), MAX_PATH);
+		last_file_name[MAX_PATH] = '\0';
+		has_fetched_last_file_name_from_hall_of_fame = true;
 	}
 
 	//-- Load all headers of all saved game files in current directory --//
 
 	load_all_game_header(extStr);
 }
-//-------- End of function GameFileArray::init ------//
+//-------- End of function SaveGameArray::init ------//
 
 
-//------ Begin of function GameFileArray::deinit ------//
+//------ Begin of function SaveGameArray::deinit ------//
 
-void GameFileArray::deinit()
+void SaveGameArray::deinit()
 {
-	//-- Need to save hall of fame, because it contains last loaded/saved game --//
-	write_hall_of_fame();
+	//-- Need to transfer last savegame filename to hall of fame, because it contains last loaded/saved game --//
+	hall_of_fame.set_last_savegame_file_name(last_file_name);
 }
-//-------- End of function GameFileArray::deinit ------//
+//-------- End of function SaveGameArray::deinit ------//
 
 
 #define LSOPTION_SLOT(n) (1 << (n))
@@ -154,7 +137,7 @@ void GameFileArray::deinit()
 #define LSOPTION_ALL             0xffffffff
 
 
-//-------- Begin of function GameFileArray::menu --------//
+//-------- Begin of function SaveGameArray::menu --------//
 //
 // <int> actionMode = -2 - save screen to back buffer
 //                    -1 - restore screen to back buffer
@@ -162,13 +145,13 @@ void GameFileArray::deinit()
 //                    2 - load game
 //
 // <int *> recno    = if overwritting save game or load game acion 
-//                    is succcessful, return the recno of GameFile
+//                    is succcessful, return the recno of SaveGameInfo
 //
 // return : <int> 1 - game loaded/saved
 //                0 - user cancel loading/saving 
 //               -1 - loading/saving error
 //
-int GameFileArray::menu(int actionMode, int *recno)
+int SaveGameArray::menu(int actionMode, int *recno)
 {
 	if( actionMode == -2 || actionMode == -1)
 	{
@@ -204,13 +187,6 @@ int GameFileArray::menu(int actionMode, int *recno)
 
 		return 1;
 	}
-
-	// #### begin Gilbert 25/9 ########//
-	//#ifdef DEMO          // No game saving in demo version
-	//	box.msg( "Sorry, you cannot load/save game in the demo version." );
-	//	return -1;
-	//#endif
-	// #### end Gilbert 25/9 ########//
 
 	action_mode = actionMode;
 
@@ -269,7 +245,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 
 	for( int i=1 ; i<=size() ; i++ )
 	{
-		if( strcmp(last_file_name, game_file_array[i]->file_name)==0 )
+		if( strcmp(last_file_name, (*this)[i]->file_name)==0 )
 		{
 			browse_recno = i;
 			break;
@@ -406,7 +382,7 @@ int GameFileArray::menu(int actionMode, int *recno)
 						}
 						else if( rec <= size() )
 						{
-							game_file_array[rec]->disp_info(browseSlotX1, browseSlotY1);
+							disp_entry_info((*this)[rec], browseSlotX1, browseSlotY1);
 						}
 						if( rec == browse_recno )
 						{
@@ -573,14 +549,14 @@ int GameFileArray::menu(int actionMode, int *recno)
 	mouse.reset_click();
 	return retFlag;
 }
-//---------- End of function GameFileArray::menu --------//
+//---------- End of function SaveGameArray::menu --------//
 
 
-//-------- Begin of function GameFileArray::disp_browse --------//
+//-------- Begin of function SaveGameArray::disp_browse --------//
 //
 // Display saved game info on the browser.
 //
-void GameFileArray::disp_browse()
+void SaveGameArray::disp_browse()
 {
 	int lastRec = MIN(browse_top_recno+MAX_BROWSE_DISP_REC-1, size());
 
@@ -596,7 +572,7 @@ void GameFileArray::disp_browse()
 		}
 		else
 		{
-			game_file_array[i]->disp_info(x, y);
+			disp_entry_info((*this)[i], x, y);
 		}
 		if( i == browse_recno )
 		{
@@ -605,20 +581,20 @@ void GameFileArray::disp_browse()
 		}
 	}
 }
-//--------- End of function GameFileArray::disp_browse --------//
+//--------- End of function SaveGameArray::disp_browse --------//
 
 
-//-------- Begin of function GameFile::disp_info --------//
+//-------- Begin of function SaveGameArray::disp_entry_info --------//
 //
-void GameFile::disp_info(int x, int y)
+void SaveGameArray::disp_entry_info(const SaveGameInfo* entry, int x, int y)
 {
-	vga_front.put_bitmap(x+10, y+10,	unit_res[ race_res[race_id]->basic_unit_id ]->king_icon_ptr);
+	vga_front.put_bitmap(x+10, y+10,	unit_res[ race_res[entry->race_id]->basic_unit_id ]->king_icon_ptr);
 
 	x+=60;
 
 	//------ display player color -----//
 
-	nation_array.disp_nation_color( x+1, y+13, nation_color );
+	nation_array.disp_nation_color( x+1, y+13, entry->nation_color );
 
 	//-------- display king name ------//
 
@@ -626,21 +602,21 @@ void GameFile::disp_info(int x, int y)
 
 	str  = _("King");
 	str += " ";
-	str += player_name;
+	str += entry->player_name;
 
 	font_bible.put( x+18, y+8, str );
 
 	//------- display game date --------//
 
 	str  = _("Game Date: ");
-	str += date.date_str(game_date);
+	str += date.date_str(entry->game_date);
 
 	font_bible.put( x, y+30, str );
 
 	//---------------------------------//
 
 	str  = _("File Name: ");
-	str += file_name;
+	str += entry->file_name;
 
 	#if(defined(FRENCH))
 		font_small.put( x+320, y+16, str );
@@ -653,7 +629,7 @@ void GameFile::disp_info(int x, int y)
 	SYSTEMTIME sysTime;
 	FILETIME localFileTime;
 #ifndef NO_WINDOWS  //FIXME
-	FileTimeToLocalFileTime( &file_date, &localFileTime );
+	FileTimeToLocalFileTime( &entry->file_date, &localFileTime );
 	FileTimeToSystemTime( &localFileTime, &sysTime );
 #else
 	memset(&sysTime, 0, sizeof(SYSTEMTIME));
@@ -672,10 +648,10 @@ void GameFile::disp_info(int x, int y)
 		font_small.put( x+335, y+34, str );
 	#endif
 }
-//--------- End of function GameFile::disp_info --------//
+//--------- End of function SaveGameArray::disp_entry_info --------//
 
 
-//------- Begin of function GameFileArray::process_action ------//
+//------- Begin of function SaveGameArray::process_action ------//
 //
 // [int] saveNew - save on a new game file
 //                 (default : 0)
@@ -684,7 +660,7 @@ void GameFile::disp_info(int x, int y)
 //                0 - process cancelled
 //               -1 - save/load failed
 //
-int GameFileArray::process_action(int saveNew)
+int SaveGameArray::process_action(int saveNew)
 {
 	//------------ save game --------------//
 
@@ -700,12 +676,15 @@ int GameFileArray::process_action(int saveNew)
 			if( !box.ask( _("It will overwrite the existing saved game, proceed ?") ) )
 				return 0;
 
-			GameFile* gameFile = game_file_array[browse_recno];
-
-			if( !gameFile->save_game())
+			SaveGameInfo* saveGameInfo = (*this)[browse_recno];
+			String errorMessage;
+			if( !SaveGameProvider::save_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage) )
+			{
+				box.msg( errorMessage );
 				return -1;
+			}
 
-			strcpy( last_file_name, gameFile->file_name );
+			strcpy( last_file_name, saveGameInfo->file_name );
 		}
 
 		return 1;
@@ -715,233 +694,215 @@ int GameFileArray::process_action(int saveNew)
 
 	else
 	{
-		GameFile* gameFile = game_file_array[browse_recno];
+		SaveGameInfo* saveGameInfo = (*this)[browse_recno];
 
-		int rc = gameFile->load_game((const char*)sys.dir_config, NULL);
+		String errorMessage;
+		int rc = SaveGameProvider::load_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage);
 		if( rc > 0 )
-			strcpy( last_file_name, gameFile->file_name );
+		{
+			strcpy( last_file_name, saveGameInfo->file_name );
+		}
+		else
+		{
+			box.msg( errorMessage );
+		}
 		return rc;
 	}
 
 	return 0;
 }
-//--------- End of function GameFileArray::process_action ------//
+//--------- End of function SaveGameArray::process_action ------//
 
 
-//-------- Begin of function GameFileArray::save_new_game -----//
+//-------- Begin of function SaveGameArray::save_new_game -----//
 //
 // Save current game to a new saved game file immediately without
 // prompting menu.
 //
-// Called by GameFileArray::process_action() and error handler.
+// Called by SaveGameArray::process_action() and error handler.
 //
 // [char*] fileName - file name of the saved game
 //
 // return : <int> 1 - saved successfully.
 //                0 - not saved.
 //
-int GameFileArray::save_new_game(const char* fileName)
+int SaveGameArray::save_new_game(const char* newFileName)
 {
-	GameFile  gameFile;
-	GameFile* gameFilePtr;
-	int       addFlag=1;
-	int       gameFileRecno;
+	int addFlag=1;
+	int gameFileRecno;
+	char fileName[MAX_PATH+1];
 
-	memset( &gameFile, 0, sizeof(GameFile) );
-
-	if( fileName )
+	if( newFileName )
 	{
 		//----- check for overwriting an existing file ----//
 
-		for( gameFileRecno=1 ; gameFileRecno<=game_file_array.size() ; gameFileRecno++ )
+		for( gameFileRecno=1 ; gameFileRecno<=this->size() ; gameFileRecno++ )
 		{
-			gameFilePtr = game_file_array[gameFileRecno];
+			SaveGameInfo* saveGameInfoPtr = (*this)[gameFileRecno];
 
-			if( strcmp(gameFilePtr->file_name, fileName)==0 )      // if this file name already exist
+			if( strcmp(saveGameInfoPtr->file_name, newFileName)==0 )      // if this file name already exist
 			{
 				addFlag=0;
 				break;
 			}
 		}
 
-		strcpy( gameFile.file_name, fileName );
+		strcpy( fileName, newFileName );
 	}
 	else
 	{
-		gameFile.set_file_name();        // give it a new game_file_name based on current group name
+		set_file_name(fileName, sizeof(fileName)/sizeof(fileName[0]));        // give it a new game_file_name based on current group name
 	}
 
 	//----------- save game now ------------//
 
-	if( gameFile.save_game(fileName) )
+	SaveGameInfo saveGameInfo;
+	String errorMessage;
+	if( SaveGameProvider::save_game(fileName, /*out*/ &saveGameInfo, /*out*/ errorMessage) )
 	{
-		strcpy( last_file_name, gameFile.file_name );
+		strcpy( last_file_name, saveGameInfo.file_name );
 
 		if( addFlag )
 		{
-			linkin(&gameFile);
+			linkin(&saveGameInfo);
 
 			quick_sort( sort_game_file_function );
 		}
 		else
 		{
-			game_file_array.update(&gameFile, gameFileRecno);
+			this->update(&saveGameInfo, gameFileRecno);
 		}
 
 		return 1;
 	}
-	return 0;
+	else {
+		box.msg( errorMessage );
+		return 0;
+	}
 }
-//-------- End of function GameFileArray::save_new_game -------//
+//-------- End of function SaveGameArray::save_new_game -------//
 
 
-//------- Begin of function GameFileArray::del_game ------//
 
-void GameFileArray::del_game()
+//------- Begin of function SaveGameArray::set_file_name -------//
+//
+// Set the game file name of the given save game
+//
+// e.g. ENLI_001.SAV - the first saved game of the group "Enlight Enterprise"
+//
+void SaveGameArray::set_file_name(char* /*out*/ fileName, int size)
 {
-	char full_path[MAX_PATH+1];
+	enum { NAME_PREFIX_LEN = 4,    // Maximum 4 characters in name prefix, e.g. "ENLI" for "Enlight Enterprise"
+		NAME_NUMBER_LEN = 3  };
+
+	String str, str2;
+	int    i;
+	char   nameChar;
+	const char*  baseName;             // the long name which the file name is based on
+	char   addStr[] = "0";       // as a small string for adding to the large string
+
+	baseName = (~nation_array)->king_name();
+
+	//--------- add the group name prfix ----------//
+
+	for( i=0 ; i<(int) strlen(baseName) && (int) str.len() < NAME_PREFIX_LEN ; i++ )
+	{
+		nameChar = misc.upper(baseName[i]);
+
+		if( ( nameChar >= 'A' && nameChar <= 'Z' ) ||
+			( nameChar >= '0' && nameChar <= '9' ) )
+		{
+			addStr[0] = nameChar;
+
+			str += addStr;
+		}
+	}
+
+	//----- add tailing characters if prefix len < NAME_PREFIX_LEN+1 ---//
+
+	while( str.len() < NAME_PREFIX_LEN+1 )       // +1 is the "_" between the name and the number
+		str += "_";
+
+	//---- find the saved game number for this saved game ----//
+
+	int       curNumber, lastNumber=0;
+
+	for( i=1 ; i<=this->size() ; i++ )
+	{
+		SaveGameInfo* findSaveGameInfo = (*this)[i];
+
+		// ##### begin Gilbert 3/10 ########//
+		if( strnicmp(findSaveGameInfo->file_name, str, NAME_PREFIX_LEN)==0 )
+			// ##### end Gilbert 3/10 ########//
+		{
+			//------------------------------------------------//
+			//
+			// if there is a free number in the middle of the list
+			// (left by being deleted game), use this number.
+			//
+			//------------------------------------------------//
+
+			curNumber = atoi( findSaveGameInfo->file_name+NAME_PREFIX_LEN+1 );      // +1 is to pass the "_" between the name and the number
+
+			if( curNumber > lastNumber+1 )   // normally, curNumber should be lastNumber+1
+				break;
+
+			lastNumber = curNumber;
+		}
+	}
+
+	//------- add saved game number after the prefix --------//
+
+	str2 = lastNumber+1;    // use the next number after the last number
+
+	for( i=NAME_NUMBER_LEN-str2.len() ; i>0 ; i-- )   // add "0" before the number if the len of the number < NAME_NUMBER_LEN
+		str += "0";
+
+	str += str2;
+	str += ".SAV";
+
+	//----- copy the string to fileName ------//
+
+	strncpy( fileName, str, size-1 );
+	fileName[size-1] = '\0';
+}
+//--------- End of function SaveGameArray::set_file_name -------//
+
+
+//------- Begin of function SaveGameArray::del_game ------//
+
+void SaveGameArray::del_game()
+{
 	int recNo = browse_recno;
 
 	if( !box.ask( _("This saved game will be deleted, proceed ?") ) )
 		return;
 
-	//---------------------------------------------------//
-
-	if (!misc.path_cat(full_path, sys.dir_config, game_file_array[recNo]->file_name, MAX_PATH))
-	{
-		ERR("Path to the saved game too long.\n");
-		return;
-	}
-
-	unlink(full_path);   // unlink() is a C standard function in io.h, for delete file
+	SaveGameProvider::delete_savegame((*this)[recNo]->file_name);
 
 	go(recNo);
 	linkout();
 
 	go(recNo-1);    // skip back one record
 }
-//--------- End of function GameFileArray::del_game ------//
+//--------- End of function SaveGameArray::del_game ------//
 
 
-//------- Begin of function GameFileArray::write_hall_of_fame ------//
-//
-int GameFileArray::write_hall_of_fame()
-{
-	char full_path[MAX_PATH+1];
-	int  rc;
-	File file;
-
-	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
-	{
-		ERR("Path to the hall of fame too long.\n");
-		return 0;
-	}
-
-	rc = file.file_create( full_path, 0, 1 );  // 0=don't handle error itself
-
-	if( !rc )
-		return 0;
-																			// 1=allow the writing size and the read size to be different
-	//--------- Write Hall of Fame ----------//
-
-	if( rc )
-		rc = file.file_write( hall_fame_array, sizeof(HallFame) * HALL_FAME_NUM );
-
-	//------ write last saved game file name ------//
-
-	if( rc )
-		rc = file.file_write( last_file_name, MAX_PATH+1 );
-
-	file.file_close();
-	
-	return rc;
-}
-//--------- End of function GameFileArray::write_hall_of_fame ------//
-
-
-//------- Begin of function GameFileArray::read_hall_of_fame ------//
-//
-int GameFileArray::read_hall_of_fame()
-{
-	char full_path[MAX_PATH+1];
-	int  rc;
-	File file;
-
-	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
-	{
-		ERR("Path to the hall of fame too long.\n");
-		return 0;
-	}
-
-	if( !misc.is_file_exist(full_path) )
-		return 0;
-
-	rc = file.file_open(full_path, 0, 1);   // 0=don't handle error itself
-                                                        // 1=allow the writing size and the read size to be different
-	if( !rc )
-		return 0;
-																			// 1=allow the writing size and the read size to be different
-	//--------- Read Hall of Fame ----------//
-
-	if( rc )
-		rc = file.file_read( hall_fame_array, sizeof(HallFame) * HALL_FAME_NUM );
-
-	//------ read last saved game file name ------//
-
-	if( rc )
-		rc = file.file_read( last_file_name, MAX_PATH+1);
-
-	file.file_close();
-
-	return rc;
-}
-//--------- End of function GameFileArray::read_hall_of_fame ------//
-
-
-//-------- Begin of function GameFileArray::load_all_game_header --------//
+//-------- Begin of function SaveGameArray::load_all_game_header --------//
 //
 // Load all headers of all saved game files in current directory.
 //
-void GameFileArray::load_all_game_header(const char *extStr)
+void SaveGameArray::load_all_game_header(const char *extStr)
 {
-	char full_path[MAX_PATH+1];
-	int       i;
-	Directory gameDir;
-	GameFile  gameFile;
-	File      file;
-
-	if (!misc.path_cat(full_path, sys.dir_config, extStr, MAX_PATH))
-	{
-		ERR("Path to the config directory too long.\n");
-		return;
-	}
-	gameDir.read(full_path, 0);  // 0-Don't sort file names
-
-	//-------- read in the headers of all game sets -------//
-
 	zap();
 
-	for( i=1 ; i<=gameDir.size() ; i++ )
-	{
-		if (!misc.path_cat(full_path, sys.dir_config, gameDir[i]->name, MAX_PATH))
-		{
-			ERR("Path to the saved game too long.\n");
-			continue;
-		}
-		if( file.file_open(full_path, 1, 1)      // last 1=allow varying read & write size
-			&& file.file_read(&gameFile, sizeof(GameFile))
-			&& gameFile.validate_header() )
-		{
-			strcpy( gameFile.file_name, gameDir[i]->name );  // in case that the name may be different
-			gameFile.file_date = gameDir[i]->time;
-	      linkin(&gameFile);
-		}
-		file.file_close();
-	}
+	SaveGameProvider::enumerate_savegames(extStr, [this](const SaveGameInfo* saveGameInfo) {
+		this->linkin(saveGameInfo);
+	});
 
 	quick_sort( sort_game_file_function );
 }
-//------ End of function GameFileArray::load_all_game_header --------//
+//------ End of function SaveGameArray::load_all_game_header --------//
 
 
 //------ Begin of function sort_game_file_function ------//
@@ -952,81 +913,41 @@ static int sort_game_file_function( const void *a, const void *b )
 {
 	int firstAuto = 0, secondAuto = 0;
 
-	firstAuto = strcmpi( ((GameFile*)a)->file_name, "AUTO.SAV" ) == 0 ? 1 :
-		(strcmpi( ((GameFile*)a)->file_name, "AUTO2.SAV" ) == 0 ? 2 : 0);
+	firstAuto = strcmpi( ((SaveGameInfo*)a)->file_name, "AUTO.SAV" ) == 0 ? 1 :
+		(strcmpi( ((SaveGameInfo*)a)->file_name, "AUTO2.SAV" ) == 0 ? 2 : 0);
 	if (firstAuto != 1) // only check second if first is not AUTO.SAV
-		secondAuto = strcmpi( ((GameFile*)b)->file_name, "AUTO.SAV" ) == 0 ? 1 :
-			(strcmpi( ((GameFile*)b)->file_name, "AUTO2.SAV" ) == 0 ? 2 : 0);
+		secondAuto = strcmpi( ((SaveGameInfo*)b)->file_name, "AUTO.SAV" ) == 0 ? 1 :
+			(strcmpi( ((SaveGameInfo*)b)->file_name, "AUTO2.SAV" ) == 0 ? 2 : 0);
 
 	if (firstAuto == 1 || (firstAuto == 2 && secondAuto != 1))
 		return -1;
 	else if (secondAuto > 0)
 		return 1;
 	else
-		return strcmpi( ((GameFile*)a)->file_name, ((GameFile*)b)->file_name );
+		return strcmpi( ((SaveGameInfo*)a)->file_name, ((SaveGameInfo*)b)->file_name );
 }
 //------- End of function sort_game_file_function ------//
 
 
-//------ Begin of function last_game_recno ------//
-//
-static int last_game_recno()
+//------- Begin of function SaveGameArray::operator[] -----//
+
+SaveGameInfo* SaveGameArray::operator[](int recNo)
 {
-	int i;
+	SaveGameInfo* saveGameInfo = (SaveGameInfo*) get(recNo);
 
-	for( i=game_file_array.size() ; i>0 ; i-- )
-	{
-		if( strcmp(game_file_array[i]->file_name, game_file_array.last_file_name)==0 )
-			return i;
-	}
-
-	return 0;    // if none of them match, return 1 as the first record
+	return saveGameInfo;
 }
-//------- End of function last_game_recno ------//
-
-
-//------- Begin of function GameFileArray::operator[] -----//
-
-GameFile* GameFileArray::operator[](int recNo)
-{
-	GameFile* gameFile = (GameFile*) get(recNo);
-
-	return gameFile;
-}
-//--------- End of function GameFileArray::operator[] ----//
-
-
-//------- Begin of static function key_search --------//
-
-static void key_search()
-{
-	int i;
-	int searchKey = misc.upper(mouse.key_code);
-
-	if( searchKey < '0' || searchKey > 'Z' )
-		return;
-
-	for( i=1 ; i<=game_file_array.size() ; i++ )
-	{
-		if( misc.upper(game_file_array[i]->file_name[0]) >= searchKey )
-		{
-			browse_recno = i+(action_mode==1);
-			return;
-		}
-	}
-}
-//------- End of static function key_search --------//
-
+//--------- End of function SaveGameArray::operator[] ----//
 
 //------- Begin of static function disp_scroll_bar_func --------//
 static void disp_scroll_bar_func(SlideVBar *scroll, int)
 {
-	short rectTop = scroll->rect_top();
-	short rectBottom = scroll->rect_bottom();
-	vga_front.bar( scroll->scrn_x1, rectTop, scroll->scrn_x2, rectBottom, VGA_YELLOW+1);
-	if( rectBottom - rectTop > 6 )
-	{
-		vga_front.d3_panel_up(scroll->scrn_x1, rectTop, scroll->scrn_x2, rectBottom,2,0);
-	}
+    short rectTop = scroll->rect_top();
+    short rectBottom = scroll->rect_bottom();
+    vga_front.bar( scroll->scrn_x1, rectTop, scroll->scrn_x2, rectBottom, VGA_YELLOW+1);
+    if( rectBottom - rectTop > 6 )
+    {
+        vga_front.d3_panel_up(scroll->scrn_x1, rectTop, scroll->scrn_x2, rectBottom,2,0);
+    }
 }
 //------- End of static function disp_scroll_bar_func --------//

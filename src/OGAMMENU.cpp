@@ -33,7 +33,6 @@
 #include <OIMGRES.h>
 #include <OINFO.h>
 #include <OGAME.h>
-#include <OGFILE.h>
 #include <OCONFIG.h>
 #include <ORACERES.h>
 #include <OBUTT3D.h>
@@ -45,6 +44,7 @@
 #include <OREMOTE.h>
 #include <OTUTOR.h>
 #include <OOPTMENU.h>
+#include <ONATIONA.h>
 
 
 //--------- Define Constant ----------//

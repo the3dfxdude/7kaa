@@ -37,7 +37,6 @@
 #include <OTOWN.h>
 #include <ODATE.h>
 #include <OGAME.h>
-#include <OGFILE.h>
 #include <OPOWER.h>
 #include <OSITE.h>
 #include <OWALLRES.h>

@@ -40,7 +40,6 @@
 #include <WebService.h>
 #endif
 #include <OERRCTRL.h>
-#include <OGFILE.h>
 #include <OCONFIG.h>
 #include <OIMGRES.h>
 #include <OGET.h>
@@ -187,7 +186,7 @@ struct MpStructNation : public MpStructBase
 	DWORD dp_player_id;
 	short color_scheme;
 	short race_id;
-	char  player_name[NationArray::HUMAN_NAME_LEN+1];
+	char  player_name[HUMAN_NAME_LEN+1];
 
 	MpStructNation() : MpStructBase(MPMSG_DECLARE_NATION) {}
 	MpStructNation(short n, DWORD playerId, short scheme, short race,
@@ -891,14 +890,6 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 		return;
 	}
 
-	// load game
-	//if( !game_file.load_game(fileName) )
-	//{
-	//	ws.deinit();
-	//	mp_obj.deinit();
-	//	return;
-	//}
-
 	// count required player
 	int gamePlayerCount = 0;
 	for(nationRecno = 1; nationRecno <= nation_array.size(); ++nationRecno)
@@ -1272,8 +1263,8 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	// ####### begin Gilbert 13/2 ##########//
 	if( mp_obj.get_lobbied_name() )
 	{
-		strncpy(config.player_name, mp_obj.get_lobbied_name(), Config::PLAYER_NAME_LEN );
-		config.player_name[Config::PLAYER_NAME_LEN] = '\0';
+		strncpy(config.player_name, mp_obj.get_lobbied_name(), HUMAN_NAME_LEN );
+		config.player_name[HUMAN_NAME_LEN] = '\0';
 	}
 
 	createButton.create(120, 538, "CREATE-U", "CREATE-D", 1, 0);
@@ -1294,7 +1285,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	}
 
 	//Get get_name;
-	//get_name.field( 374, 470, config.player_name, Config::PLAYER_NAME_LEN, 574 );
+	//get_name.field( 374, 470, config.player_name, HUMAN_NAME_LEN, 574 );
 	char saveFileName[8+1];		// save game name without path or extension
 	if( defSaveFileName )
 	{
@@ -1317,7 +1308,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 
 
 	//GetA getName, getSaveFile;
-	//getName.init( 319, 423, 582, config.player_name, Config::PLAYER_NAME_LEN, &font_san, 0);
+	//getName.init( 319, 423, 582, config.player_name, HUMAN_NAME_LEN, &font_san, 0);
 	//getName.enable_flag = !sub_game_mode;		// disable the first input, all input
 	//getName.paint();
 	//getSaveFile.init( 394, 447, 582, saveFileName, 8, &font_san, 0);
@@ -1326,7 +1317,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	GetAGroup keyInField(2);
 	GetA &getName = keyInField[0];
 	GetA &getSaveFile = keyInField[1];
-	getName.init( 319, 423, 582, config.player_name, Config::PLAYER_NAME_LEN, &font_san, 0 ,1);
+	getName.init( 319, 423, 582, config.player_name, HUMAN_NAME_LEN, &font_san, 0 ,1);
 	getSaveFile.init( 394, 447, 582, saveFileName, 8, &font_san, 0, 1);
 	keyInField.set_focus(0, 0);		// 0 in 2nd parameter - don't display
 

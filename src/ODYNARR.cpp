@@ -121,7 +121,7 @@ void DynArray::zap(int resizeFlag)
 // WARNING : After calling linkin() all pointers to the linklist body
 //           should be updated, because mem_resize() will move the body memory
 //
-void DynArray::linkin(void* ent)
+void DynArray::linkin(const void* ent)
 {
    last_ele++;
    cur_pos=last_ele;
@@ -142,7 +142,7 @@ void DynArray::linkin(void* ent)
 //
 // Linkin - unique mode. If duplicated, don't link into the array.
 //
-void DynArray::linkin_unique(void* ent)
+void DynArray::linkin_unique(const void* ent)
 {
 	int i;
 
@@ -163,7 +163,7 @@ void DynArray::linkin_unique(void* ent)
 //
 // Warning : DynArrayB (version B) can't use this function
 //
-void DynArray::insert(void* ent)
+void DynArray::insert(const void* ent)
 {
 	if( size()==0 )
 	{
@@ -196,7 +196,7 @@ void DynArray::insert(void* ent)
 // <int>   insertPos - the recno to insert the new entity.
 // <void*> ent		   - pointer to the record entity. If NULL, blank record.
 //
-void DynArray::insert_at(int insertPos, void* ent)
+void DynArray::insert_at(int insertPos, const void* ent)
 {
 	if( size()==0 || insertPos>last_ele )
 	{
@@ -259,7 +259,7 @@ void DynArray::linkout(int delPos)
 // [int]   recNo   = no. of the record to be updated
 //                   ( default : current record no. )
 //
-void DynArray::update(void* bodyPtr, int recNo)
+void DynArray::update(const void* bodyPtr, int recNo)
 {
    if( recNo < 0 )
       recNo = cur_pos;

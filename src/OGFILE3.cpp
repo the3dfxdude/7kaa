@@ -39,6 +39,7 @@
 #include <OTORNADO.h>
 #include <OTOWN.h>
 #include <OU_MARI.h>
+#include <OSaveGameArray.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
 #include <file_reader.h>
@@ -974,7 +975,7 @@ int FirmArray::read_file(File* filePtr)
 
          //---- read data in base class -----//
 
-			if(!game_file_array.same_version && firmPtr->firm_id > FIRM_BASE)
+			if(!GameFile::read_file_same_version && firmPtr->firm_id > FIRM_BASE)
 				firmPtr->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
 
          //--------- read worker_array ---------//
@@ -1158,7 +1159,7 @@ int TownArray::read_file(File* filePtr)
 	int townCount = filePtr->file_get_short();  // get no. of towns from file
 	selected_recno = filePtr->file_get_short();
 
-	if(!game_file_array.same_version)
+	if(!GameFile::read_file_same_version)
 	{
 		memset(race_wander_pop_array, 0, sizeof(race_wander_pop_array));
 		filePtr->file_read( race_wander_pop_array, sizeof(race_wander_pop_array[0])*VERSION_1_MAX_RACE );
@@ -1180,7 +1181,7 @@ int TownArray::read_file(File* filePtr)
 		{
 			townPtr = town_array.create_town();
 
-			if(!game_file_array.same_version)
+			if(!GameFile::read_file_same_version)
 			{
 				Version_1_Town *oldTown = (Version_1_Town*) mem_add(sizeof(Version_1_Town));
 				if(!filePtr->file_read(oldTown, sizeof(Version_1_Town)))
@@ -1270,7 +1271,7 @@ static void visit_nation_array(Visitor *v, NationArray *na)
 
 	for (int n = 0; n < MAX_NATION; n++)
 		visit_array<int8_t>(v, na->human_name_array[n],
-								  NationArray::HUMAN_NAME_LEN+1);
+								  HUMAN_NAME_LEN+1);
 }
 
 enum { NATION_ARRAY_RECORD_SIZE = 288 };
@@ -1368,7 +1369,7 @@ static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
 
 	for (int n = 0; n < MAX_NATION; n++)
 		visit_array<int8_t>(v, na->human_name_array[n],
-								  NationArray::HUMAN_NAME_LEN+1);
+								  HUMAN_NAME_LEN+1);
 }
 
 enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
@@ -1378,7 +1379,7 @@ enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
 int NationArray::read_file(File* filePtr)
 {
    //------ read info in NationArray ------//
-	if(!game_file_array.same_version)
+	if(!GameFile::read_file_same_version)
 	{
 		Version_1_NationArray *oldNationArrayPtr = (Version_1_NationArray*) mem_add(sizeof(Version_1_NationArray));
 		if (!read_with_record_size(filePtr, oldNationArrayPtr,
@@ -1955,7 +1956,7 @@ static bool read_nation(File *file, Nation *nat)
 //
 int Nation::read_file(File* filePtr)
 {
-	if(!game_file_array.same_version)
+	if(!GameFile::read_file_same_version)
 	{
 		Version_1_Nation *oldNationPtr = (Version_1_Nation*) mem_add(sizeof(Version_1_Nation));
 

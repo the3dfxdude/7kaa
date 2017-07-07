@@ -1,5 +1,6 @@
 noinst_HEADERS = \
 	ALL.h \
+	storage_constants.h \
 	COLCODE.h \
 	COLOR.h \
 	CRC.h \
@@ -54,6 +55,7 @@ noinst_HEADERS = \
 	OF_WAR.h \
 	OGAME.h \
 	OGAMESET.h \
+	OGAMHALL.h \
 	OGET.h \
 	OGETA.h \
 	OGFILE.h \
@@ -101,6 +103,9 @@ noinst_HEADERS = \
 	ORESX.h \
 	OROCK.h \
 	OROCKRES.h \
+	OSaveGameArray.h \
+	OSaveGameInfo.h \
+	OSaveGameProvider.h \
 	OSCROLL.h \
 	OSE.h \
 	OSERES.h \

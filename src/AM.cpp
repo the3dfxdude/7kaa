@@ -44,7 +44,8 @@
 #include <OFONT.h>
 #include <OGAME.h>
 #include <OGAMESET.h>
-#include <OGFILE.h>
+#include <OSaveGameArray.h>
+#include <OGAMHALL.h>
 #include <OGODRES.h>
 #include <OHELP.h>
 #include <OHILLRES.h>
@@ -229,8 +230,8 @@ GameSet           game_set;         // no constructor
 Battle            battle;
 Power             power;
 World             world;
-GameFileArray     game_file_array;
-GameFile          game_file;
+SaveGameArray     save_game_array;
+HallOfFame        hall_of_fame;
 // ###### begin Gilbert 23/10 #######//
 OptionMenu			option_menu;
 InGameMenu			in_game_menu;
@@ -371,8 +372,8 @@ int main(int argc, char **argv)
 				sys.show_error_dialog(_("Expected argument after %s."), lobbyNameCmdLine);
 				return 1;
 			}
-			strncpy(config.player_name, argv[i+1], config.PLAYER_NAME_LEN);
-			config.player_name[config.PLAYER_NAME_LEN] = 0;
+			strncpy(config.player_name, argv[i+1], HUMAN_NAME_LEN);
+			config.player_name[HUMAN_NAME_LEN] = 0;
 			i++;
 		} else if (!strcmp(argv[i], demoCmdLine)) {
 			demoSelection = 1;
@@ -466,7 +467,7 @@ static void extra_error_handler()
 	if( game.game_mode != GAME_SINGLE_PLAYER )
 		return;
 
-	game_file_array.save_new_game("ERROR.SAV");  // save a new game immediately without prompting menu
+	save_game_array.save_new_game("ERROR.SAV");  // save a new game immediately without prompting menu
 
 	box.msg( "Error encountered. The game has been saved to ERROR.SAV" );
 }

@@ -25,7 +25,8 @@
 #include <OSYS.h>
 #include <ONEWS.h>
 #include <ODATE.h>
-#include <OGFILE.h>
+#include <OSaveGameArray.h>
+#include <OSaveGameProvider.h>
 #include <OF_MONS.h>
 #include <OMONSRES.h>
 #include <OFILETXT.h>
@@ -33,6 +34,7 @@
 #include <OBOX.h>
 #include <OBATTLE.h>
 #include <OGAME.h>
+#include <ONATIONA.h>
 
 //--------- declare static vars ----------//
 
@@ -142,11 +144,12 @@ int Game::run_scenario(ScenInfo* scenInfo)
 	{
 		// ###### begin Gilbert 1/11 #########//
 		// save the name in the config
-		char playerName[Config::PLAYER_NAME_LEN+1];
+		char playerName[HUMAN_NAME_LEN+1];
 		strcpy(playerName, config.player_name);
 		// ###### end Gilbert 1/11 #########//
 
-		if( game_file.load_game("", str) > 0 )
+		String errorMessage;
+		if( SaveGameProvider::load_scenario(str, /*out*/ errorMessage) > 0 )
 		{
 			init_scenario_var(scenInfo);
 
@@ -161,6 +164,9 @@ int Game::run_scenario(ScenInfo* scenInfo)
 			// ##### end Gilbert 1/11 #######//
 
 			battle.run_loaded();
+		}
+		else {
+			box.msg(errorMessage);
 		}
 		game.deinit();
 		return 1;

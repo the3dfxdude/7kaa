@@ -42,7 +42,9 @@
 #include <OGAME.h>
 #include <ONEWS.h>
 #include <OGAMESET.h>
-#include <OGFILE.h>
+#include <OSaveGameArray.h>
+#include <OSaveGameProvider.h>
+#include <OGAMHALL.h>
 #include <OINFO.h>
 #include <OVBROWSE.h>
 #include <OIMGRES.h>
@@ -360,7 +362,9 @@ int Sys::init_objects()
    help.init("HELP.RES");
 
    tutor.init();
-   game_file_array.init("*.SAV");
+   // Need to init hall_of_fame *before* save_game_array to persist the last savegame filename
+   hall_of_fame.init();
+   save_game_array.init("*.SAV");
 
    //---------- init game_set -----------//
 
@@ -417,7 +421,9 @@ void Sys::deinit_objects()
 
    tutor.deinit();
    config.deinit();
-   game_file_array.deinit();
+   // Need to deinit hall_of_fame *after* save_game_array to persist the last savegame filename
+   save_game_array.deinit();
+   hall_of_fame.deinit();
 }
 //------- End of function Sys::deinit_objects -----------//
 
@@ -860,7 +866,11 @@ void Sys::main_loop(int isLoadedGame)
 
             if( nation_array.player_recno )     // only save when the player is still in the game
             {
-               game_file.save_game( remote.save_file_name );
+               String errorMessage;
+               if ( !SaveGameProvider::save_game( remote.save_file_name, /*out*/ errorMessage ) )
+			   {
+				   box.msg( errorMessage );
+			   }
 
                // ####### begin Gilbert 24/10 ######//
                //static String str;
@@ -919,16 +929,21 @@ void Sys::auto_save()
       #endif
       {
          static int saveCount = 0;
+		 bool saveSuccessfull = false;
+		 String errorMessage;
          switch(saveCount)
          {
-            case 0:  game_file.save_game( "DEBUG1.SAV" );
+            case 0:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG1.SAV", /*out*/ errorMessage );
                      break;
-            case 1:  game_file.save_game( "DEBUG2.SAV" );
+			case 1:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG2.SAV", /*out*/ errorMessage );
                      break;
-            case 2:  game_file.save_game( "DEBUG3.SAV" );
+			case 2:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG3.SAV", /*out*/ errorMessage );
                      break;
          }
-
+		 if( !saveSuccessfull )
+		 {
+			box.msg( errorMessage );
+		 }
          if( ++saveCount>=3 )
             saveCount = 0;
       }
@@ -955,7 +970,11 @@ void Sys::auto_save()
             rename( auto1_path, auto2_path );
          }
 
-         game_file.save_game( "AUTO.SAV" );
+		 String errorMessage;
+         if( !SaveGameProvider::save_game( "AUTO.SAV", /*out*/ errorMessage ) )
+		 {
+			 box.msg( errorMessage );
+		 }
       }
 
       //-*********** syn game test ***********-//
@@ -1005,7 +1024,11 @@ void Sys::auto_save()
          rename( auto1_path, auto2_path );
       }
 
-      game_file.save_game( "AUTO.SVM" );
+	  String errorMessage;
+	  if( !SaveGameProvider::save_game( "AUTO.SVM", /*out*/ errorMessage ) )
+	  {
+		  box.msg( errorMessage );
+	  }
    }
 }
 //-------- End of function Sys::auto_save --------//
@@ -1963,7 +1986,7 @@ int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
 /*    //-*********** syn game test ***********-//
       case '\'':
          //if(debug2_enable_flag && debug_sim_game_type)
-         //game_file_array[0]->load_game("syn.sav");
+         //save_game_array[0]->load_game("syn.sav");
          game_file.load_game("syn.sav");
          sp_load_seed_file();
          debug_seed_status_flag = DEBUG_SYN_AUTO_LOAD;
@@ -2572,9 +2595,9 @@ void Sys::load_game()
 
    int rc=0;
 
-   game_file_array.init("*.SAV");                  // reload any save game file
-   game_file_array.menu(-2);               // save screen area to back buffer
-   switch( game_file_array.menu(2) )
+   save_game_array.init("*.SAV");                  // reload any save game file
+   save_game_array.menu(-2);               // save screen area to back buffer
+   switch( save_game_array.load_game() )
    {
       case 1:
          rc = 1;                 // fall through to case 0
@@ -2588,7 +2611,7 @@ void Sys::load_game()
 		 sys.signal_exit_flag = 1;
    }
 
-   game_file_array.menu(-1);               // restore screen area from back buffer
+   save_game_array.menu(-1);               // restore screen area from back buffer
 
    //-----------------------------------//
    if( rc == -1)
@@ -2626,15 +2649,15 @@ void Sys::save_game()
       return;
    }
 
-   game_file_array.init("*.SAV");                  // reload any save game file
-   game_file_array.menu(-2);               // save screen area to back buffer
+   save_game_array.init("*.SAV");                  // reload any save game file
+   save_game_array.menu(-2);               // save screen area to back buffer
 
-   if( game_file_array.menu(1) == 1 )
+   if( save_game_array.menu(1) == 1 )
    {
       box.msg( _("Game Saved Successfully") );
    }
 
-   game_file_array.menu(-1);               // restore screen area from back buffer
+   save_game_array.menu(-1);               // restore screen area from back buffer
 
 	// ##### patch begin Gilbert 16/3 #######//
 	info.disp();

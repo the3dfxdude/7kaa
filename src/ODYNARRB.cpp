@@ -90,7 +90,7 @@ DynArrayB::~DynArrayB()
 // WARNING : After calling linkin() all pointers to the linklist body
 //           should be updated, because mem_resize() will move the body memory
 //
-void DynArrayB::linkin(void* ent)
+void DynArrayB::linkin(const void* ent)
 {
 	//------- detect for empty rooms --------//
 

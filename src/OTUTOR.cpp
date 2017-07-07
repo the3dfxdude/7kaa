@@ -32,12 +32,15 @@
 #include <OIMGRES.h>
 #include <OBUTTON.h>
 #include <OBUTT3D.h>
-#include <OGFILE.h>
+#include <OSaveGameArray.h>
+#include <OSaveGameProvider.h>
 #include <OGAME.h>
 #include <OGAMESET.h>
 #include <OWORLD.h>
 #include <OFILETXT.h>
 #include <OTUTOR.h>
+#include <OBOX.h>
+#include <dbglog.h>
 #include "gettext.h"
 
 //---------- define constant ------------//
@@ -63,6 +66,8 @@ enum { TUTOR_BUTTON_X1 = TUTOR_X2-66,
 static Button button_new_tutor, button_quit_tutor;
 static Button button_restart, button_prev, button_next;
 static Button3D button_sample;
+
+DBGLOG_DEFAULT_CHANNEL(Tutor);
 
 //------- Begin of function Tutor::Tutor -----------//
 
@@ -377,17 +382,26 @@ void Tutor::run(int tutorId, int inGameCall)
 		str += tutor[tutorId]->code;
 		str += ".TUT";
 
+		String errorMessage;
+		int rc = 0;
 		if( misc.is_file_exist(str) )
 		{
-			game_file.load_game("", str);
+			rc = SaveGameProvider::load_scenario(str, /*out*/ errorMessage);
+			ERR("Failed to load tutortial '%s'; retrying with default. Reason: %s", (const char*)str, (const char*)errorMessage);
 		}
-		else
+		if (rc <= 0)
 		{
 			str = DIR_TUTORIAL;
 			str += "STANDARD.TUT";
 
 			if( misc.is_file_exist(str) )
-				game_file.load_game("", str);
+				rc = SaveGameProvider::load_scenario(str, /*out*/ errorMessage);
+		}
+
+		if (rc <= 0)
+		{
+			box.msg(errorMessage);
+			return;
 		}
 
 		//------ fix firm_build_id problem -----//

@@ -28,6 +28,8 @@
 #include <OFILE.h>
 #endif
 
+#include <storage_constants.h>
+
 //------------- Define constant -------------//
 
 enum { OPTION_NONE=0, OPTION_LOW, OPTION_MODERATE, OPTION_HIGH, OPTION_VERY_HIGH };
@@ -77,8 +79,6 @@ public:
 	void			disable_weather_audio();
 
 public:
-	enum { PLAYER_NAME_LEN=20 }; // should be the same as NationArray::HUMAN_NAME_LEN
-
 	//--------- GLOBAL GAME SETTING --------//
 	//
 	// parameters under GLOBAL GAME SETTING should remain unchange
@@ -162,7 +162,7 @@ public:
 	//-------------------------------------//
 
 	char			race_id;
-	char			player_name[PLAYER_NAME_LEN+1];
+	char			player_name[HUMAN_NAME_LEN+1];
 	char			player_nation_color;
 
 	char			expired_flag;
