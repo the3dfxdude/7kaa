@@ -23,6 +23,12 @@ package dbf;
 
 use warnings;
 use strict;
+use Carp;
+
+sub rtrim {
+	$_[0] =~ s/\s+$//;
+	return $_[0];
+}
 
 sub trim {
 	$_[0] =~ s/^\s+//;
@@ -45,9 +51,12 @@ sub read_file {
 	($class, $dbf_file) = @_;
 
 	$success = 0;
+	if (!defined($dbf_file)) {
+		confess("parameter error");
+	}
 	if (!open($fh, '<', $dbf_file)) {
 		#print "Error: Cannot open $dbf_file\n";
-		goto OUT;
+		return undef;
 	}
 	if (read($fh, $buf, 32) != 32) {
 		#print "Error: Corrupt file\n";
@@ -161,12 +170,14 @@ sub get_field {
 	my $field_name;
 	($dbf, $field_name) = @_;
 
+	if (!defined($field_name)) {
+		confess("parameter error");
+	}
 	for (my $i = 0; $i < @{$dbf->{fields}}; $i++) {
 		my $field;
 		my $name;
 		$field = $dbf->{fields}[$i];
 		$name = $field->[0];
-print "$name eq $field_name\n";
 		if ($name eq $field_name) {
 			return $i;
 		}

@@ -1,0 +1,116 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2017 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+
+use File::Spec;
+
+use dbf;
+
+if (!@ARGV) {
+	print "Usage: $0 datadir\n";
+	exit 0;
+}
+my ($datadir) = @ARGV;
+
+if (! -d stdpath()) {
+	warn "Error: Expecting std.res unpacked in ", stdpath(), "\n";
+}
+
+my @dbf_list = (
+[
+	respath('tut_list.res'),
+	['DES', 'title'],
+],[
+	stdpath('00003-RAW.dbf'),
+	['NAME', 'title'],
+],[
+	stdpath('00005-UNIT.dbf'),
+	['NAME', 'title'],
+],[
+	stdpath('00006-RACE.dbf'), # NAME and ADJECTIVE
+	['NAME', 'title'],
+],[
+	stdpath('00007-FIRM.dbf'),
+	['NAME', 'title'],
+	['OVERTITLE', 'title'],
+	['WORKTITLE', 'title'],
+],[
+	stdpath('00019-UNIT2.dbf'),
+	['NAME', 'title'],
+]);
+
+print "# POT extraction from 7KAA data files\n";
+foreach (@dbf_list) {
+	pot_extract_dbf(@$_);
+}
+
+exit 0;
+
+sub respath {
+	return File::Spec->catfile($datadir, 'resource', @_);
+}
+
+sub stdpath {
+	return File::Spec->catfile($datadir, 'resource', 'std', @_);
+}
+
+sub pot_extract_dbf {
+	my $dbf_file;
+	my $dbf;
+	my @fields;
+	my $records;
+	$dbf_file = shift(@_);
+	$dbf = dbf->read_file($dbf_file);
+	if (!defined($dbf)) {
+		warn "Error: Can't read $dbf_file\n";
+		return;
+	}
+	$records = $dbf->get_records();
+	for (my $i = 0; $i < @_; $i++) {
+		my $field;
+		$field = $dbf->get_field($_[$i]->[0]);
+		if (!defined($field)) {
+			warn "Error: Can't read $dbf_file for $_[$i]->[0]\n";
+			return;
+		}
+		for (my $j = 0; $j < $records; $j++) {
+			my $value;
+			$value = $dbf->get_value($j, $field);
+			if (!defined($value)) {
+				next;
+			}
+			$value = dbf::rtrim($value);
+			if ($value eq '') {
+				next;
+			}
+			print "\n# $dbf_file\n";
+			print "msgctxt \"$_[$i]->[1]\"\n";
+			print "msgid \"$value\"\n";
+			print "msgstr \"\"\n";
+		}
+	}
+}

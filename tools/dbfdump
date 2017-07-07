@@ -36,6 +36,10 @@ if (!@ARGV) {
 my ($dbf_file) = @ARGV;
 
 my ($dbf) = dbf->read_file($dbf_file);
+if (!defined($dbf)) {
+	printf("Error: Can't read $dbf_file\n");
+	exit 0;
+}
 
 # used for write testing
 #$dbf->write_file("$dbf_file.new");
