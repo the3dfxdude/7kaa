@@ -66,6 +66,8 @@ data/tutorial/loyalty.txt
 data/tutorial/spying.int
 data/tutorial/spying.txt
 src/OBOX.cpp
+src/OCONFIG.cpp
+src/ODATE.cpp
 src/OFIRM.cpp
 src/OFIRMIF.cpp
 src/OFIRMIF2.cpp
@@ -87,7 +89,6 @@ src/OGAMHALL.cpp
 src/OGAMMAIN.cpp
 src/OGAMSCE2.cpp
 src/OGFILE.cpp
-src/OGFILEA.cpp
 src/OHELP.cpp
 src/OINFO.cpp
 src/OINGMENU.cpp
@@ -109,6 +110,8 @@ src/OSKILL.cpp
 src/OSPY.cpp
 src/OSPYA.cpp
 src/OSYS.cpp
+src/OSaveGameArray.cpp
+src/OSaveGameProvider.cpp
 src/OTALKENG.cpp
 src/OTALKMSG.cpp
 src/OTALKRES.cpp
@@ -122,5 +125,3 @@ src/OU_CARA.cpp
 src/OU_MARIF.cpp
 src/OU_MONS.cpp
 src/OWORLD_Z.cpp
-src/OCONFIG.cpp
-src/ODATE.cpp
