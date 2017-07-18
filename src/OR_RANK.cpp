@@ -228,12 +228,12 @@ static void disp_goal()
 	{
 		if( config.goal_year_limit_flag )
 		{
-			// TRANSLATORS: GOAL: Achieve One of the Following Before <Date>.
-			snprintf( str, MAX_STR_LEN+1, _("GOAL: Achieve One of the Following Before %s."), date.date_str(info.goal_deadline) );
+			// TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
+			snprintf( str, MAX_STR_LEN+1, _("GOAL: Achieve One of the Following Before %s:"), date.date_str(info.goal_deadline) );
 		}
 		else
 		{
-			str = _("GOAL: Achieve One of the Following.");
+			str = _("GOAL: Achieve One of the Following:");
 		}
 	}
 	else
