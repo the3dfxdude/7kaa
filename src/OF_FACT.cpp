@@ -368,7 +368,7 @@ void FirmFactory::disp_factory_info(int dispY1, int refreshFlag)
 	String str;
 
 	// TRANSLATORS: Producing <Clay/Copper/Iron> Products
-	snprintf( str, MAX_STR_LEN+1, _("Producing %s Products"), raw_res[product_raw_id]->name );
+	snprintf( str, MAX_STR_LEN+1, _("Producing %s Products"), _(raw_res[product_raw_id]->name) );
 
 	font_san.use_max_height();							// make sure the old text is replaced completely
 #if(defined(FRENCH) || defined(SPANISH))

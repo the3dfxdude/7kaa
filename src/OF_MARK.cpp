@@ -428,13 +428,13 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 
 		if( marketGoods->raw_id )
 		{
-			str = raw_res[marketGoods->raw_id]->name;
+			str = _(raw_res[marketGoods->raw_id]->name);
 			bitmapPtr = raw_res.small_raw_icon(marketGoods->raw_id);
 		}
 		else if( marketGoods->product_raw_id )
 		{
 			// TRANSLATORS: <Clay/Copper/Iron> Products
-			snprintf( str, MAX_STR_LEN+1, _("%s Products"), raw_res[marketGoods->product_raw_id]->name );
+			snprintf( str, MAX_STR_LEN+1, _("%s Products"), _(raw_res[marketGoods->product_raw_id]->name) );
 			bitmapPtr = raw_res.small_product_icon(marketGoods->product_raw_id);
 		}
 		else

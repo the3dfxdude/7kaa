@@ -49,7 +49,7 @@ void Site::disp_info(int refreshFlag)
 
 		int x=INFO_X1+4, y=INFO_Y1+24;
 
-		font_san.put_field( x, y	, _("Resource"), x+70, raw_res[object_id]->name );
+		font_san.put_field( x, y	, _("Resource"), x+70, _(raw_res[object_id]->name) );
 		font_san.put_field( x, y+16, _("Reserve") , x+70, reserve_qty, 1 );
 	}
 

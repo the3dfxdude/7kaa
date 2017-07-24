@@ -109,18 +109,6 @@ void RawRes::load_all_info()
 		rawInfo = raw_info_array+i;
 
 		misc.rtrim_fld( rawInfo->name, rawRec->name, rawRec->NAME_LEN );
-		if( strncmp(rawInfo->name, "Clay", rawInfo->NAME_LEN) == 0 )
-		{
-			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Clay") );
-		}
-		else if( strncmp(rawInfo->name, "Copper", rawInfo->NAME_LEN) == 0 )
-		{
-			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Copper") );
-		}
-		else if( strncmp(rawInfo->name, "Iron", rawInfo->NAME_LEN) == 0 )
-		{
-			snprintf( rawInfo->name, rawInfo->NAME_LEN+1, _("Iron") );
-		}
 		rawInfo->raw_id    = i+1;
 		rawInfo->tera_type = misc.atoi( rawRec->tera_type, rawRec->TERA_TYPE_LEN );
 	}
@@ -270,7 +258,7 @@ void RawRes::put_small_raw_icon(int x, int y, int rawId)
 	Vga::active_buf->put_bitmap_trans(x, y, bitmapPtr);
 
 	help.set_custom_help( x, y, x+RAW_SMALL_ICON_WIDTH-1, y+RAW_SMALL_ICON_HEIGHT-1,
-								 raw_res[rawId]->name );
+								 _(raw_res[rawId]->name) );
 }
 //---------- End of function RawRes::put_small_raw_icon -----------//
 
@@ -285,7 +273,7 @@ void RawRes::put_small_product_icon(int x, int y, int rawId)
 
 	String str;
 
-	snprintf( str, MAX_STR_LEN+1, _("%s Products"), raw_res[rawId]->name );
+	snprintf( str, MAX_STR_LEN+1, _("%s Products"), _(raw_res[rawId]->name) );
 
 	help.set_custom_help( x, y, x+RAW_SMALL_ICON_WIDTH-1, y+RAW_SMALL_ICON_HEIGHT-1, str );
 }
