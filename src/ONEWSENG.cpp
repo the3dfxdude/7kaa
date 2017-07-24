@@ -21,8 +21,6 @@
 //Filename    : ONEWS3.CPP
 //Description : Object news msg generating routines
 
-#if( !defined(GERMAN) && !defined(FRENCH) && !defined(SPANISH) )
-
 #include <OSTR.h>
 #include <OTOWN.h>
 #include <OFIRMRES.h>
@@ -1574,5 +1572,3 @@ char* News::king_name2(int addColor)
 	return str;
 }
 //------- End of function News::king_name2 -----//
-
-#endif

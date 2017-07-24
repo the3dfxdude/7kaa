@@ -131,9 +131,6 @@ bin_PROGRAMS = 7kaa
 	ONEWS.cpp \
 	ONEWS2.cpp \
 	ONEWSENG.cpp \
-	ONEWSFRE.cpp \
-	ONEWSGER.cpp \
-	ONEWSSPA.cpp \
 	OOPTMENU.cpp \
 	OPLANT.cpp \
 	OPLASMA.cpp \
