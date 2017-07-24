@@ -322,7 +322,7 @@ static void put_god_rec(int recNo, int x, int y, int refreshFlag)
 	x+=3;
 	y+=5;
 
-	font_san.put( x, y, unit_res[unitGod->unit_id]->name );
+	font_san.put( x, y, _(unit_res[unitGod->unit_id]->name) );
 
 	//--------- display hit points -----------//
 

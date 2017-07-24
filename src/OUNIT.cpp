@@ -775,7 +775,7 @@ char* Unit::unit_name(int withTitle)
    }
    else
    {
-      str = unitInfo->name;
+      str = _(unitInfo->name);
 
       //--- for weapons, the rank_id is used to store the version of the weapon ---//
 

@@ -29,6 +29,7 @@
 #include <ORESX.h>
 #include <ONATION.h>
 #include <OTECHRES.h>
+#include "gettext.h"
 
 //---------- #define constant ------------//
 
@@ -219,7 +220,7 @@ char* TechInfo::tech_small_icon()
 const char* TechInfo::tech_des()
 {
 	if( unit_id )
-		return unit_res[unit_id]->name;
+		return _(unit_res[unit_id]->name);
 
 	else if( firm_id )
 		return firm_res[firm_id]->name;

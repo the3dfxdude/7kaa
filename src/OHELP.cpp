@@ -531,31 +531,17 @@ void Help::set_unit_help(int unitId, int rankId, int x1, int y1, int x2, int y2)
 
 	static String str;
 
-	str = unit_res[unitId]->name;
+	str = _(unit_res[unitId]->name);
 
 	if( rankId==RANK_KING )
 	{
-		if( unitId==UNIT_MAYA )
-		{
-			str = _("Mayan King");
-		}
-		else
-		{
-			// TRANSLATORS: <Race> King
-			snprintf( str, MAX_STR_LEN+1, _("%s King"), unit_res[unitId]->name );
-		}
+		// TRANSLATORS: <Race> King
+		snprintf( str, MAX_STR_LEN+1, _("%s King"), _(unit_res[unitId]->name) );
 	}
 	else if( rankId==RANK_GENERAL )
 	{
-		if( unitId==UNIT_MAYA )
-		{
-			str = _("Mayan General");
-		}
-		else
-		{
-			// TRANSLATORS: <Race> General
-			snprintf( str, MAX_STR_LEN+1, _("%s General"), unit_res[unitId]->name );
-		}
+		// TRANSLATORS: <Race> General
+		snprintf( str, MAX_STR_LEN+1, _("%s General"), _(unit_res[unitId]->name) );
 	}
 
 	set_custom_help( x1, y1, x2, y2, str );

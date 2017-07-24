@@ -1094,7 +1094,7 @@ void News::lightning_damage()
 		if( short_para2 > 0 )
 			unitName = race_res[short_para2]->get_name(short_para3);
 		else
-			unitName = unit_res[short_para3]->name;
+			unitName = _(unit_res[short_para3]->name);
 
 		if( short_para4 == RANK_GENERAL )
 		{
@@ -1347,7 +1347,7 @@ void News::weapon_ship_worn_out()
 	//
 	//----------------------------------------------//
 
-	String tmp(unit_res[short_para1]->name);
+	String tmp(_(unit_res[short_para1]->name));
 
 	if( short_para2 )
 	{

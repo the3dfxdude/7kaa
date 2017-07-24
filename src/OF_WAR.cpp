@@ -416,7 +416,7 @@ void FirmWar::disp_build_button(int y, int unitId, int buttonUp)
 	//-------- display unit name --------//
 
 	String str;
-	str = unitInfo->name;
+	str = _(unitInfo->name);
 
 	if( unitInfo->unit_class == UNIT_CLASS_WEAPON )		// add version no.
 	{
@@ -479,7 +479,7 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 		//-------- display unit name --------//
 
 		String str;
-		str = unitInfo->name;
+		str = _(unitInfo->name);
 
 		if( unitInfo->unit_class == UNIT_CLASS_WEAPON )		// add version no.
 		{
@@ -669,7 +669,7 @@ void FirmWar::disp_war_info(int dispY1, int refreshFlag)
 
 		x += UNIT_LARGE_ICON_WIDTH+10;
 
-		String str(unitInfo->name);
+		String str(_(unitInfo->name));
 
 		if( unitInfo->unit_class == UNIT_CLASS_WEAPON )		// add version no.
 		{

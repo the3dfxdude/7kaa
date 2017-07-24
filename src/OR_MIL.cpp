@@ -471,7 +471,7 @@ static void put_unit_rec(int recNo, int x, int y, int refreshFlag)
 
 		default:
 			unitInfo   = unit_res[rc];
-			str 		  = unitInfo->name;
+			str 		  = _(unitInfo->name);
 			unitCount  = unitInfo->nation_unit_count_array[ info.viewing_nation_recno-1 ];
 	}
 

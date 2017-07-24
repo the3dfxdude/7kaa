@@ -654,7 +654,7 @@ void FirmHarbor::disp_build_button(int y, int unitId, int buttonUp)
 	//-------- display unit name --------//
 
 	String str;
-	str = unitInfo->name;
+	str = _(unitInfo->name);
 	font_bible.put( x+60, y+14, str );
 	disp_queue_button(y0+COUNT_BUTTON_OFFSET_Y, unitId, 1);
 }
@@ -704,7 +704,7 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 		//-------- display unit name --------//
 
 		String str;
-		str = unitInfo->name;
+		str = _(unitInfo->name);
 
 		if( unitInfo->unit_class == UNIT_CLASS_WEAPON )		// add version no.
 		{
@@ -1273,7 +1273,7 @@ static void put_ship_rec(int recNo, int x, int y, int refreshFlag)
 
 	//---------- display unit name ----------//
 
-	font_san.put( x+32 , y, unitInfo->name, 1, x+119 );		// 1-use short words
+	font_san.put( x+32 , y, _(unitInfo->name), 1, x+119 );		// 1-use short words
 
 	//------- display unit hit points -------//
 

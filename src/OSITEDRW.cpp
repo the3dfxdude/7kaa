@@ -65,7 +65,7 @@ void Site::disp_info(int refreshFlag)
 		GodInfo* godInfo = god_res[object_id];
 
 		font_san.put_field( x, y	, _("Nationality"), x+82, _(race_res[godInfo->race_id]->name) );
-		font_san.put_field( x, y+16, _("Invoke")    , x+82, unit_res[godInfo->unit_id]->name );
+		font_san.put_field( x, y+16, _("Invoke")    , x+82, _(unit_res[godInfo->unit_id]->name) );
 	}
 
 	//----------- gold coins -----------//

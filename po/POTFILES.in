@@ -116,6 +116,7 @@ src/OSaveGameProvider.cpp
 src/OTALKENG.cpp
 src/OTALKMSG.cpp
 src/OTALKRES.cpp
+src/OTECHRES.cpp
 src/OTOWNIF.cpp
 src/OTUTOR.cpp
 src/OTUTOR2.cpp

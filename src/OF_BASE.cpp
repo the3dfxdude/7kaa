@@ -613,7 +613,7 @@ void FirmBase::disp_god_info(int dispY1, int refreshFlag)
 
 		x += UNIT_LARGE_ICON_WIDTH+10;
 
-		font_san.put( x, y+2, unitInfo->name );
+		font_san.put( x, y+2, _(unitInfo->name) );
 	}
 	else
 	{
