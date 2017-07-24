@@ -94,7 +94,7 @@ AC_TYPE_UINT8_T
 AC_CHECK_FUNCS([_NSGetExecutablePath])
 
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18])
+AM_GNU_GETTEXT_VERSION([0.19])
 
 # Configuration variables
 

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ ! -d "src" ]; then
+  echo Run from the top level dir
+  exit 1
+fi
+
+grep -lR 'gettext\.h' src/* >> po/POTFILES.in
+sort po/POTFILES.in | uniq > po/POTFILES.in2
+mv po/POTFILES.in2 po/POTFILES.in

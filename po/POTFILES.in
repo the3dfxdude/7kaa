@@ -65,6 +65,7 @@ data/tutorial/loyalty.int
 data/tutorial/loyalty.txt
 data/tutorial/spying.int
 data/tutorial/spying.txt
+src/AM.cpp
 src/OBOX.cpp
 src/OCONFIG.cpp
 src/ODATE.cpp

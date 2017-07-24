@@ -51,15 +51,20 @@ my @dbf_list = (
 	stdpath('00005-UNIT.dbf'),
 	['NAME', 'title'],
 ],[
-	stdpath('00006-RACE.dbf'), # NAME and ADJECTIVE
+	stdpath('00006-RACE.dbf'),
 	['NAME', 'title'],
+	['ADJECTIVE', 'title'],
 ],[
 	stdpath('00007-FIRM.dbf'),
 	['NAME', 'title'],
+	['SHORTNAME', 'title'],
 	['OVERTITLE', 'title'],
 	['WORKTITLE', 'title'],
 ],[
 	stdpath('00019-UNIT2.dbf'),
+	['NAME', 'title'],
+],[
+	stdpath('00027-MONSTER.dbf'),
 	['NAME', 'title'],
 ]);
 

@@ -14,6 +14,7 @@ Makefile.in
 .deps
 aclocal.m4
 autom4te.cache
+compile
 config.guess
 config.log
 config.status
@@ -31,6 +32,7 @@ m4/sdl2.m4
 ABOUT-NLS
 config.rpath
 m4/codeset.m4
+m4/extern-inline.m4
 m4/fcntl-o.m4
 m4/gettext.m4
 m4/glibc2.m4
@@ -66,6 +68,7 @@ po/7kaa.pot
 po/Makefile.in.in
 po/Makevars.template
 po/Rules-quot
+po/POTFILES
 po/boldquot.sed
 po/en@boldquot.header
 po/en@quot.header
