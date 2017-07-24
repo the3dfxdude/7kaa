@@ -671,7 +671,7 @@ void News::monster_king_killed()
 	//----------------------------------------------//
 
 	// TRANSLATORS: An All High <Fryhtan> has been slain.
-	snprintf(str, MAX_STR_LEN+1, _("An All High %s has been slain."), monster_res[short_para1]->name);
+	snprintf(str, MAX_STR_LEN+1, _("An All High %s has been slain."), _(monster_res[short_para1]->name));
 }
 //------- End of function News::monster_king_killed -----//
 
@@ -688,7 +688,7 @@ void News::monster_firm_destroyed()
 	//
 	//----------------------------------------------//
 
-	char* nameStr = monster_res[short_para1]->name;
+	char* nameStr = _(monster_res[short_para1]->name);
 
 	if( nameStr[0] == 'I' )		// "An Ick Lair"
 		// TRANSLATORS: An Ick Lair has been destroyed.

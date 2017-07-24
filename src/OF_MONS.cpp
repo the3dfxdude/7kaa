@@ -37,6 +37,7 @@
 #include <ONATION.h>
 #include <OMONSRES.h>
 #include <OF_MONS.h>
+#include <locale.h>
 #include "gettext.h"
 
 
@@ -132,7 +133,8 @@ char* FirmMonster::firm_name()
 {
 	static String str;
 
-	snprintf(str, MAX_STR_LEN+1, _("%s Lair"), monster_res[monster_id]->name);
+	// TRANSLATORS: <Fryhtan Type> Lair
+	snprintf(str, MAX_STR_LEN+1, pgettext ("FirmUI|Name", "%s Lair"), _(monster_res[monster_id]->name));
 
 	return str;
 }
