@@ -247,7 +247,7 @@ int RaceRes::is_same_race(int raceId1, int raceId2)
 // Return an unused name id. and set the used_count of the
 // first and first name to 1.
 //
-WORD RaceInfo::get_new_name_id()
+uint16_t RaceInfo::get_new_name_id()
 {
 	//---------- get the first name ----------//
 
@@ -320,7 +320,7 @@ WORD RaceInfo::get_new_name_id()
 // Unit names are freed when they settle into a town.
 // But unit names are not freed when they are killed.
 //
-void RaceInfo::free_name_id(WORD nameId)
+void RaceInfo::free_name_id(uint16_t nameId)
 {
 	err_when( !nameId );
 
@@ -350,7 +350,7 @@ void RaceInfo::free_name_id(WORD nameId)
 //
 // Claim the use a specific name id.
 //
-void RaceInfo::use_name_id(WORD nameId)
+void RaceInfo::use_name_id(uint16_t nameId)
 {
 	int firstNameId = (nameId>>8);
 	int nameRecno = first_first_name_id+firstNameId-1;
@@ -376,10 +376,10 @@ void RaceInfo::use_name_id(WORD nameId)
 
 //-------- Start of function RaceInfo::get_name -------------//
 //
-// <WORD> nameId - higher byte - first name id, lower byte - last name id.
+// <uint16_t> nameId - higher byte - first name id, lower byte - last name id.
 // [int]  nameType - 0-full name, 1-first name only, 2-last name only
 //
-const char* RaceInfo::get_name(WORD nameId, int nameType)
+const char* RaceInfo::get_name(uint16_t nameId, int nameType)
 {
 	static String str;
 
@@ -451,9 +451,9 @@ const char* RaceInfo::get_name(WORD nameId, int nameType)
 // Return a single word name. If there are last names for this race,
 // return the last name, otherwise, return the first name.
 //
-// <WORD> nameId - higher byte - first name id, lower byte - last name id.
+// <uint16_t> nameId - higher byte - first name id, lower byte - last name id.
 //
-const char* RaceInfo::get_single_name(WORD nameId)
+const char* RaceInfo::get_single_name(uint16_t nameId)
 {
 	switch( race_id )
 	{

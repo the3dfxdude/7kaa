@@ -400,7 +400,7 @@ int Button::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int su
 	//----- paint the button with pressed shape ------//
 
 	#define PRESSED_TIMEOUT_SECONDS  1      // 1 seconds
-	DWORD timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+	unsigned long timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
 
 	if( elastic )
 	{
@@ -458,7 +458,7 @@ void Button::wait_press(int timeOut)
 	#define INACTIVE_TIMEOUT_SECONDS  10      // 10 seconds
 
 	int   lastMouseX= -1, lastMouseY;
-	DWORD timeOutTime = misc.get_time()+INACTIVE_TIMEOUT_SECONDS*1000;
+	unsigned long timeOutTime = misc.get_time()+INACTIVE_TIMEOUT_SECONDS*1000;
 
 	mouse.get_event();			// clean up previous mouse events
 

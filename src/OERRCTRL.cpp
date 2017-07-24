@@ -57,7 +57,7 @@ void ErrorControl::deinit()
 {
 }
 
-void ErrorControl::set_dp_id(char ecPlayerId, long unsigned int dpPlayerId )
+void ErrorControl::set_dp_id(char ecPlayerId, uint32_t dpPlayerId )
 {
 	if( ecPlayerId != self_ec_player_id )
 	{
@@ -78,7 +78,7 @@ void ErrorControl::set_dp_id(char ecPlayerId, long unsigned int dpPlayerId )
 }
 
 // return ec_player_id, 0 for not found (can't found own dpPlayerId)
-char ErrorControl::get_ec_player_id( long unsigned int dpPlayerId )
+char ErrorControl::get_ec_player_id( uint32_t dpPlayerId )
 {
 	if( dpPlayerId == BROADCAST_PID || dpPlayerId == 0)
 		return 0;
@@ -124,7 +124,7 @@ int ErrorControl::send(char ecPlayerId, void *dataPtr, long unsigned int dataLen
 		*((CRC_TYPE *) (ecMsg + sizeof(EcMsgHeader) + dataLen) ) = crc8((unsigned char *)ecMsg, sizeof(EcMsgHeader) + dataLen);
 
 		// ------- clear all ack flags of that frame --------//
-		PID_TYPE toDPid = BROADCAST_PID;
+		uint32_t toDPid = BROADCAST_PID;
 		clear_ack( frameId );
 		if( ecPlayerId != 0)
 		{
@@ -181,7 +181,7 @@ char *ErrorControl::receive(char *sendEcPlayerId, uint32_t *dataLen)
 	else
 	{
 		char *dataPtr = receive_queue[recv_head].queue_buf;
-		DWORD len = receive_queue[recv_head].length();
+		uint32_t len = receive_queue[recv_head].length();
 		err_when( len < sizeof(EcMsgHeader) + CRC_LEN);
 		if( sendEcPlayerId )
 			*sendEcPlayerId = ((EcMsgHeader *)dataPtr)->sender_id;
@@ -210,7 +210,7 @@ void ErrorControl::yield()
 	// -------- receive any frame from dplay -----------//
 	char *recvPtr;
 	uint32_t recvLen;
-	PID_TYPE from;
+	uint32_t from;
 
 	static int simError = 1;
 
@@ -441,7 +441,7 @@ void ErrorControl::yield()
 					DEBUG_LOG(debugStr);
 #endif
 					char *replyMsg = send_queue[ecMsg.frame_id].queue_buf;
-					DWORD replyLen = send_queue[ecMsg.frame_id].length();
+					uint32_t replyLen = send_queue[ecMsg.frame_id].length();
 
 					mp_ptr->send( dp_id[ecMsg.sender_id-1], replyMsg, replyLen );
 					err_when( replyLen <= sizeof(EcMsgHeader) );
@@ -667,7 +667,7 @@ void ErrorControl::re_transmit(int promptFactor)
 			int resendSuccess = 0;
 			int resendFail = 0;
 			char *ecMsg = send_queue[f].queue_buf;
-			DWORD ecMsgLen = send_queue[f].length();
+			uint32_t ecMsgLen = send_queue[f].length();
 
 			for( char ecPlayerId = 1; ecPlayerId <= MAX_PLAYER; ++ecPlayerId )
 			{

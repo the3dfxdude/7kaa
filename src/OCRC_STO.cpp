@@ -219,7 +219,7 @@ void CrcStore::send_all()
 
 // return 0 if equal
 // otherwise not equal
-int CrcStore::compare_remote(DWORD remoteMsgId, char *dataPtr)
+int CrcStore::compare_remote(uint32_t remoteMsgId, char *dataPtr)
 {
 	VLenQueue *vq = NULL;
 	const char *arrayName;

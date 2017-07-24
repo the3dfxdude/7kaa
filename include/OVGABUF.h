@@ -24,7 +24,6 @@
 #ifndef __VGABUF_H
 #define __VGABUF_H
 
-#include <win32_compat.h>
 #include <IMGFUN.h>
 #include <surface.h>
 
@@ -38,7 +37,7 @@ protected:
 	Surface *surface;
 
 public:
-	BOOL						buf_locked;			// whether the and back buffers have been locked or not.
+	int						buf_locked;			// whether the and back buffers have been locked or not.
 	char						is_front;			// whether it's the front buffer or not
 	char                                            save_locked_flag;
 
@@ -69,8 +68,8 @@ public:
 	void            init(Surface *s, char front);
 	void		deinit();
 
-	BOOL		is_buf_lost() { return surface->is_buf_lost(); }
-	BOOL		restore_buf() { return surface->restore_buf(); }
+	int		is_buf_lost() { return surface->is_buf_lost(); }
+	int		restore_buf() { return surface->restore_buf(); }
 
 	Surface*        get_buf() { return surface; }
 	void		lock_buf();

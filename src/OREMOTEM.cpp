@@ -292,8 +292,8 @@ void RemoteMsg::update_game_setting()
 	{
 		short nationRecno = *(short *)dataPtr;
 		dataPtr += sizeof(short);
-		DWORD dpPlayerId = *(DWORD *)dataPtr;
-		dataPtr += sizeof(DWORD);
+		PID_TYPE dpPlayerId = *(PID_TYPE *)dataPtr;
+		dataPtr += sizeof(PID_TYPE);
 		short colorSchemeId = *(short *)dataPtr;
 		dataPtr += sizeof(short);
 		short raceId = *(short *)dataPtr;
@@ -364,7 +364,7 @@ void RemoteMsg::next_frame()
 //
 void RemoteMsg::request_resend()
 {
-	DWORD *dwordPtr = (DWORD*) data_buf;
+	uint32_t *dwordPtr = (uint32_t*) data_buf;
 
 	err_when( dwordPtr[0] == (~nation_array)->player_id );   // sent to itself
 
@@ -478,7 +478,7 @@ void RemoteMsg::request_save_game()
 #ifdef DEBUG_LONG_LOG
 	long_log->printf("Request save on %d\n", *(DWORD*)data_buf);
 #endif
-	sys.mp_request_save( *(DWORD*)data_buf);
+	sys.mp_request_save( *(uint32_t*)data_buf);
 }
 //-------- End of function RemoteMsg::request_save_game ---------//
 
@@ -553,7 +553,7 @@ void RemoteMsg::unit_move()
 //--------- Begin of function RemoteMsg::unit_set_force_move ---------//
 void RemoteMsg::unit_set_force_move()
 {
-	err_when(id != MSG_UNIT_SET_FORCE_MOVE);
+	err_when( id != MSG_UNIT_SET_FORCE_MOVE);
 
 	// packet structure : <unit count> <unit recno>...
 	short* shortPtr = (short*) data_buf;

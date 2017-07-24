@@ -29,7 +29,12 @@
 #include <dirent.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#else
+#include <Windows.h>
 #endif
+
+#include <storage_constants.h>
+#include <posix_string_compat.h>
 
 #include <dbglog.h>
 
@@ -74,7 +79,7 @@ int Directory::read(const char *fileSpec, int sortName)
       misc.extract_file_name( fileInfo.name, findData.cFileName ); // get the file name only from a full path string
 
       fileInfo.size = findData.nFileSizeLow;
-      fileInfo.time = findData.ftLastWriteTime; 
+      fileInfo.time = static_cast<std::uint64_t>(findData.ftLastWriteTime.dwHighDateTime) << 32 | findData.ftLastWriteTime.dwLowDateTime;
 
       linkin( &fileInfo );
 
@@ -204,8 +209,7 @@ int Directory::read(const char *fileSpec, int sortName)
          strncpy(fileInfo.name, namelist[i]->d_name, MAX_PATH - 2);
 
          fileInfo.size = file_stat.st_size;
-         fileInfo.time.dwLowDateTime = 0;
-         fileInfo.time.dwHighDateTime = 0;
+         fileInfo.time = 0;
 
          linkin( &fileInfo );
       }

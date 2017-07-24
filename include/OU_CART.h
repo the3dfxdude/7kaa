@@ -40,7 +40,7 @@ public:
 	void	trigger_explode();
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
 #pragma pack()

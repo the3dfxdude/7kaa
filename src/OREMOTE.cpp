@@ -21,10 +21,6 @@
 //Filename    : OREMOTE.CPP
 //Description : Object Remote
 
-//#include <windows.h>
-//#include <windowsx.h>
-//#include <mmsystem.h>
-
 #include <ALL.h>
 #include <OBOX.h>
 #include <OVGA.h>
@@ -38,14 +34,6 @@
 #include <OREMOTE.h>
 #include <multiplayer.h>
 #include <OERRCTRL.h>
-
-//---------- Define static variables ----------//
-
-static int	connection_failed = 0;		// connect_game_disconnect_handler() will set connection_failed to 0
-
-//---------- Define static functions ----------//
-
-static void connect_game_disconnect_handler(DWORD playerId);
 
 //--------- Begin of function Remote::Remote ----------//
 
@@ -133,7 +121,7 @@ int Remote::create_game()
 {
 	//--------- initialize session parameters ---------//
 
-	is_host = TRUE;
+	is_host = 1;
 
 	return 1;
 }
@@ -144,7 +132,7 @@ int Remote::create_game()
 //
 int Remote::connect_game()
 {
-	is_host = FALSE;
+	is_host = 0;
 	return 1;
 }
 //--------- End of function Remote::connect_game ---------//
@@ -184,7 +172,7 @@ int Remote::number_of_opponent()
 
 //-------- Begin of function Remote::self_player_id ---------//
 //
-DWORD Remote::self_player_id()
+PID_TYPE Remote::self_player_id()
 {
 	err_when(!connectivity_mode);
 
@@ -215,18 +203,6 @@ void Remote::start_game()
 	// wsock_ptr->start_game();
 }
 //--------- End of function Remote::start_game ----------//
-
-
-//----- Begin of function connect_game_disconnect_handler -----//
-//
-// Disconnection handler for Remote::connect_game()
-//
-static void connect_game_disconnect_handler(DWORD playerId)
-{
-	connection_failed = 1;
-}
-//------ End of function connect_game_disconnect_handler ------//
-
 
 
 //-------- Begin of function Remote::reset_process_frame_delay ---------//
@@ -300,7 +276,7 @@ int Remote::get_alternating_send()
 
 
 //-------- Begin of function Remote::has_send_frame ---------//
-int Remote::has_send_frame(int nationRecno, DWORD frameCount)
+int Remote::has_send_frame(int nationRecno, uint32_t frameCount)
 {
 	return ((frameCount + nationRecno) % alternating_send_rate) == 0;
 }
@@ -310,9 +286,9 @@ int Remote::has_send_frame(int nationRecno, DWORD frameCount)
 //-------- Begin of function Remote::next_send_frame ---------//
 // if has_send_frame is true, return frameCount
 // otherwise return the next frame which has_send_frame return true
-DWORD Remote::next_send_frame(int nationRecno, DWORD frameCount)
+uint32_t Remote::next_send_frame(int nationRecno, uint32_t frameCount)
 {
-	DWORD remainder = ((frameCount + nationRecno) % alternating_send_rate);
+	uint32_t remainder = ((frameCount + nationRecno) % alternating_send_rate);
 	if(remainder == 0)
 		return frameCount;
 	else

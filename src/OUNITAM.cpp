@@ -184,7 +184,7 @@ void UnitArray::move_to(int destXLoc, int destYLoc, int divided, short* selected
 			// set the unit_group_id
 			//---------------------------------------------------------//
 			Unit* unitPtr;
-			DWORD curGroupId = unit_array.cur_group_id++; 
+			uint32_t curGroupId = unit_array.cur_group_id++; 
 
 			for(int k=0; k<selectedCount; k++)
 			{
@@ -328,7 +328,7 @@ void UnitArray::move_to_now(int destXLoc, int destYLoc, short* selectedUnitArray
 	short		oddCount, evenCount;
 	int		j;
 	Unit*		unitPtr = unit_array[selectedUnitArray[0]];
-	DWORD		curGroupId = unitPtr->unit_group_id;
+	uint32_t		curGroupId = unitPtr->unit_group_id;
 	int		mobileType = unitPtr->mobile_type;
 	Location	*worldLocMatrix=world.loc_matrix, *locPtr;
 	//int		sizeOneSelectedCount=0, sizeTwoSelectedCount=0;

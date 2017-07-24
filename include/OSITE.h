@@ -57,7 +57,7 @@ public:
 	short map_x_loc;
 	short map_y_loc;
 
-	BYTE	region_id;
+	uint8_t	region_id;
 
 public:
 	void 	init(int siteRecno, int siteType, int xLoc, int yLoc);

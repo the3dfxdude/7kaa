@@ -202,19 +202,19 @@ int Sys::init()
 
    // set game directory paths and game version
    if ( !set_game_dir() )
-      return FALSE;
+      return 0;
 
    //------- initialize more stuff ---------//
 
    if( !init_directx() )
-      return FALSE;
+      return 0;
 
    if( !init_objects() )   // initialize system objects which do not change from games to games.
-      return FALSE;
+      return 0;
 
    init_flag = 1;
 
-   return TRUE;
+   return 1;
 }
 //------------ End of function Sys::init ----------//
 
@@ -258,7 +258,7 @@ int Sys::init_directx()
 
    DEBUG_LOG("Attempt vga.init()");
    if( !vga.init() )
-      return FALSE;
+      return 0;
    DEBUG_LOG("vga.init() ok");
 #if !defined(DEBUG) && !defined(_DEBUG)
    vga.set_full_screen_mode(1);
@@ -272,7 +272,7 @@ int Sys::init_directx()
    music.init();
    se_ctrl.init();
 
-   return TRUE;
+   return 1;
 }
 //-------- End of function Sys::init_directx --------//
 
@@ -370,7 +370,7 @@ int Sys::init_objects()
 
    DEBUG_LOG("Sys::init_objects finish");
 
-   return TRUE;
+   return 1;
 }
 //------- End of function Sys::init_objects -----------//
 
@@ -1410,7 +1410,7 @@ int Sys::should_next_frame()
 
    if( next_frame_time )      // if next_frame_time==0, it's the first frame of the game
    {
-      if( next_frame_time < 1000 )  // the DWORD variable has been overflow
+      if( next_frame_time < 1000 )  // the uint32_t variable has been overflow
       {
          if( curTime < next_frame_time || curTime >= 1000 )    // >= 1000 if the curTime has been overflow yet, wait for it to overflow so we can compare it when next_frame_time
             return 0;
@@ -1486,7 +1486,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
 {
    int keyCode;
 
-   if((keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_IS_CTRL)))
+   if((keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_IS_CTRL)))
    {
       int groupId;
       switch(keyCode)
@@ -1499,7 +1499,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       }
    }
 
-   if((keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_IS_ALT)))
+   if((keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_IS_ALT)))
    {
       int groupId;
       switch(keyCode)
@@ -1512,7 +1512,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       }
    }
 
-   if( (keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_UNIQUE_KEY)) )
+   if( (keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_UNIQUE_KEY)) )
    {
       keyCode = misc.lower(keyCode);
 
@@ -1641,7 +1641,7 @@ void Sys::detect_function_key(unsigned scanCode, unsigned skeyState)
 {
    int keyCode;
 
-   if( (keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_UNIQUE_KEY)) )
+   if( (keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_UNIQUE_KEY)) )
    {
       switch(keyCode)
       {
@@ -1727,7 +1727,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return;
 
-   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_CHAR_KEY );
+   int keyCode = mouse.is_key( scanCode, skeyState, (unsigned short) 0, K_CHAR_KEY );
 
    if( !keyCode )    // since all keys concern are printable
       return;
@@ -1870,7 +1870,7 @@ int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return keyProcessed;
 
-   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_IS_CTRL );
+   int keyCode = mouse.is_key( scanCode, skeyState, (unsigned short) 0, K_IS_CTRL );
 
    if( !keyCode )    // since all keys concerned are printable
       return keyProcessed;
@@ -2036,7 +2036,7 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
    if( remote.is_enable() )      // no cheat keys in multiplayer games
       return 0;
 
-   int keyCode = mouse.is_key(scanCode, skeyState, (WORD) 0, K_IS_CTRL);
+   int keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_IS_CTRL);
 
    if( !keyCode )
       return 0;
@@ -2399,7 +2399,7 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
 //
 int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 {
-   int keyCode = mouse.is_key( scanCode, skeyState, (WORD) 0, K_CHAR_KEY );
+   int keyCode = mouse.is_key( scanCode, skeyState, (unsigned short) 0, K_CHAR_KEY );
 
    if( !keyCode )    // since all keys concerned are printable
       return 0;
@@ -2644,7 +2644,7 @@ void Sys::save_game()
 
    if( remote.is_enable() )
    {
-      DWORD *dwordPtr = (DWORD *)remote.new_send_queue_msg( MSG_REQUEST_SAVE, sizeof(DWORD) );
+      uint32_t *dwordPtr = (uint32_t *)remote.new_send_queue_msg( MSG_REQUEST_SAVE, sizeof(uint32_t) );
       *dwordPtr = remote.next_send_frame(nation_array.player_recno, sys.frame_count+remote.process_frame_delay)+2;
       return;
    }
@@ -2667,7 +2667,7 @@ void Sys::save_game()
 
 
 // --------- begin of function Sys::mp_request_save ----------//
-void Sys::mp_request_save(DWORD frame)
+void Sys::mp_request_save(uint32_t frame)
 {
    if( !mp_save_flag )
    {

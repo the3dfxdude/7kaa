@@ -24,9 +24,7 @@
 #ifndef __ODATE_H
 #define __ODATE_H
 
-#ifndef __ALL_H
 #include <ALL.h>
-#endif
 
 class DateInfo
 {
@@ -47,8 +45,6 @@ public:
    int   day_year(int,int,int);
 
 	int 	add_months(int inDate, int addMonth);
-
-	int	file_time_to_julian(FILETIME& fileTime);
 
 private:
    long ytoj(int);

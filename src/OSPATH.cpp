@@ -55,13 +55,13 @@
 static Location*  world_loc_matrix;
 static int		   cur_stack_pos=0;
 static Node* 	   stack_array[MAX_STACK_NUM];
-static DWORD	   group_id;
+static uint32_t	   group_id;
 static short	   search_mode;
 static char	  	   mobile_type;
 static char			seek_nation_recno;
 static int			attack_range;	// used in search_mode = SEARCH_MODE_ATTACK_UNIT_BY_RANGE
 static short		target_recno;	// used in search_mode = SEARCH_MODE_TO_ATTACK or SEARCH_MODE_TO_VEHICLE, get from miscNo
-static UCHAR		region_id;		// used in search_mode = SEARCH_MODE_TO_LAND_FOR_SHIP
+static uint8_t		region_id;		// used in search_mode = SEARCH_MODE_TO_LAND_FOR_SHIP
 static short		building_id;	// used in search_mode = SEARCH_MODE_TO_FIRM or SEARCH_MODE_TO_TOWN, get from miscNo
 //======================================================================//
 // 1) if search_mode = SEARCH_MODE_TO_FIRM or SEARCH_MODE_TO_TOWN
@@ -208,7 +208,7 @@ static int can_move_to(int xLoc, int yLoc)
 	Unit		*unitPtr;
 	short		recno;
 	char		powerNationRecno;
-	UCHAR		unitCurAction;
+	uint8_t		unitCurAction;
 
 	//------ check terrain id. -------//
 	switch(mobile_type)
@@ -626,7 +626,7 @@ inline void SeekPath::add_result_node(int x, int y, ResultNode** curPtr, ResultN
 // return : <int> seekStatus - PATH_FOUND, PATH_SEEKING, PATH_NODE_USED_UP, or PATH_IMPOSSIBLE
 //						if PATH_FOUND, or PATH_NODE_USED_UP, can call get_result() to retrieve the result.
 //
-int SeekPath::seek(int sx,int sy,int dx,int dy, DWORD groupId, char mobileType,
+int SeekPath::seek(int sx,int sy,int dx,int dy, uint32_t groupId, char mobileType,
 						 short searchMode, short miscNo, short numOfPath, int maxTries,
 						 int borderX1,int borderY1,int borderX2,int borderY2)
 {
@@ -2661,7 +2661,7 @@ int SeekPath::seek2(int sx, int sy, int dx, int dy, short miscNo, short numOfPat
 				break;
 	
 		case SEARCH_MODE_TO_LAND_FOR_SHIP:
-				region_id = (UCHAR)miscNo;
+				region_id = static_cast<uint8_t>(miscNo);
 				break;
 	}
 	

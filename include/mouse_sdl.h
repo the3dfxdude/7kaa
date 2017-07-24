@@ -25,8 +25,6 @@
 #ifndef __MOUSE_SDL_H
 #define __MOUSE_SDL_H
 
-#include <win32_compat.h>
-
 //-------- Define macro constant --------//
 //
 // Button id, for Mouse internal use only,
@@ -46,17 +44,6 @@ enum MouseEventType
 };
 
 //------- Define struct MouseEvent --------//
-
-/*
-struct MouseEvent               // event buffer structure
-{
-	int      state;              // mouse state
-	int      x, y;               // cursor coordinates
-	DWORD    time;               // time event occurred
-	unsigned scan_code;           // if scan_code>0 then it's a key press event
-	unsigned short skey_state;   // speical key state, such as LEFT_SHIFT_KEY_MASK ...
-};
-*/
 
 struct MouseEvent               // event buffer structure
 {
@@ -99,11 +86,11 @@ struct MouseEvent               // event buffer structure
 
 struct MouseClick               // MultiClick buffer structure
 {
-   int   x, y;
-	int	release_x, release_y;	// where mouse is release
-   int   count;          // number of clicks
-   DWORD time;           // time of last click
-	DWORD release_time;	 // time of last release
+	int x, y;
+	int release_x, release_y;	// where mouse is release
+	int count;          // number of clicks
+	unsigned long time;           // time of last click
+	unsigned long release_time;	 // time of last release
 };
 
 //--------- Define class MouseSDL ------------//
@@ -111,7 +98,7 @@ struct MouseClick               // MultiClick buffer structure
 class MouseSDL
 {
 private:
-	char*  vga_update_buf;
+	char* vga_update_buf;
 
 	// ------ mouse setting ---------- //
 	int	double_speed_threshold;				// default DEFAULT_DOUBLE_SPEED_THRESHOLD
@@ -120,22 +107,22 @@ private:
 	//-------- click buffer ---------//
 	MouseClick click_buffer[2];    // left button & right button only
 
-        //-------- event buffer ---------//
+	//-------- event buffer ---------//
 
-        enum { EVENT_BUFFER_SIZE = 20 };  // No. of events can be stored in buffer
+	enum { EVENT_BUFFER_SIZE = 20 };  // No. of events can be stored in buffer
 
-        MouseEvent event_buffer[EVENT_BUFFER_SIZE];
+	MouseEvent event_buffer[EVENT_BUFFER_SIZE];
 
-        int     head_ptr;        // head pointer to the event buffer
-        int     tail_ptr;        // tail pointer to the event buffer
+	int head_ptr;        // head pointer to the event buffer
+	int tail_ptr;        // tail pointer to the event buffer
 
 public:
-	char   handle_flicking;
+	char handle_flicking;
 
 	//------- real-time mouse state -------//
 
-	int  	cur_x, cur_y;
-	int  	left_press, right_press;
+	int cur_x, cur_y;
+	int left_press, right_press;
 
 	//------- real-time keyboard state ---------//
 	unsigned short skey_state;		// such as LEFT_SHIFT_KEY_MASK
@@ -149,7 +136,7 @@ public:
 	//-------- click & key buffer ---------//
 
 	unsigned short event_skey_state;
-	char 	   has_mouse_event;		 // if has_mouse_event, mouse_event_type is valid
+	char has_mouse_event;		 // if has_mouse_event, mouse_event_type is valid
 	MouseEventType mouse_event_type;
 											 // use : LEFT_BUTTON=0, RIGHT_BUTTON=1
 	unsigned scan_code;             // key pressed, keyboard event
@@ -215,7 +202,7 @@ public:
 	void disp_count_end();
 
 private:
-	int     micky_to_displacement(int d);
+	int micky_to_displacement(int d);
 };
 //---------- End of define class ---------------//
 

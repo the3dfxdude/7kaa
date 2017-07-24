@@ -93,7 +93,7 @@ static union
 
 
 //----------- End of function Sprite::crc8 -----------//
-UCHAR Sprite::crc8()
+uint8_t Sprite::crc8()
 {
 	Sprite &dummySprite = *(Sprite *)temp_obj.sprite;
 	memcpy(&dummySprite, this, sizeof(Sprite));
@@ -101,7 +101,7 @@ UCHAR Sprite::crc8()
 	dummySprite.clear_ptr();
 	*((char**) &dummySprite) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummySprite, sizeof(Sprite));
+	uint8_t c = ::crc8((uint8_t*)&dummySprite, sizeof(Sprite));
 	return c;
 }
 //----------- End of function Sprite::crc8 -----------//
@@ -116,7 +116,7 @@ void Sprite::clear_ptr()
 
 
 //----------- End of function Unit::crc8 -----------//
-UCHAR Unit::crc8()
+uint8_t Unit::crc8()
 {
 	Unit &dummyUnit = *(Unit *)temp_obj.unit;
 	memcpy(&dummyUnit, this, sizeof(Unit));
@@ -124,7 +124,7 @@ UCHAR Unit::crc8()
 	dummyUnit.clear_ptr();
 	*((char**) &dummyUnit) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyUnit, sizeof(Unit));
+	uint8_t c = ::crc8((uint8_t*)&dummyUnit, sizeof(Unit));
 	return c;
 }
 //----------- End of function Unit::crc8 -----------//
@@ -159,7 +159,7 @@ void Unit::clear_ptr()
 
 
 //----------- End of function UnitGod::crc8 -----------//
-UCHAR UnitGod::crc8()
+uint8_t UnitGod::crc8()
 {
 	UnitGod &dummyUnitGod = *(UnitGod *)temp_obj.unit_god;
 	memcpy(&dummyUnitGod, this, sizeof(UnitGod));
@@ -167,7 +167,7 @@ UCHAR UnitGod::crc8()
 	dummyUnitGod.clear_ptr();
 	*((char**) &dummyUnitGod) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyUnitGod, sizeof(UnitGod));
+	uint8_t c = ::crc8((uint8_t*)&dummyUnitGod, sizeof(UnitGod));
 	return c;
 }
 //----------- End of function UnitGod::crc8 -----------//
@@ -191,7 +191,7 @@ void UnitGod::clear_ptr()
 
 
 //----------- End of function UnitVehicle::crc8 -----------//
-UCHAR UnitVehicle::crc8()
+uint8_t UnitVehicle::crc8()
 {
 	UnitVehicle &dummyUnitVehicle = *(UnitVehicle *)temp_obj.unit_vehicle;
 	memcpy(&dummyUnitVehicle, this, sizeof(UnitVehicle));
@@ -199,7 +199,7 @@ UCHAR UnitVehicle::crc8()
 	dummyUnitVehicle.clear_ptr();
 	*((char**) &dummyUnitVehicle) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyUnitVehicle, sizeof(UnitVehicle));
+	uint8_t c = ::crc8((uint8_t*)&dummyUnitVehicle, sizeof(UnitVehicle));
 	return c;
 }
 //----------- End of function UnitVehicle::crc8 -----------//
@@ -214,7 +214,7 @@ void UnitVehicle::clear_ptr()
 
 
 //----------- End of function UnitMonster::crc8 -----------//
-UCHAR UnitMonster::crc8()
+uint8_t UnitMonster::crc8()
 {
 	UnitMonster &dummyUnitMonster = *(UnitMonster *)temp_obj.unit_monster;
 	memcpy(&dummyUnitMonster, this, sizeof(UnitMonster));
@@ -222,7 +222,7 @@ UCHAR UnitMonster::crc8()
 	dummyUnitMonster.clear_ptr();
 	*((char**) &dummyUnitMonster) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyUnitMonster, sizeof(UnitMonster));
+	uint8_t c = ::crc8((uint8_t*)&dummyUnitMonster, sizeof(UnitMonster));
 	return c;
 }
 //----------- End of function UnitMonster::crc8 -----------//
@@ -237,7 +237,7 @@ void UnitMonster::clear_ptr()
 
 
 //----------- End of function UnitExpCart::crc8 -----------//
-UCHAR UnitExpCart::crc8()
+uint8_t UnitExpCart::crc8()
 {
 	UnitExpCart &dummyUnitExpCart = *(UnitExpCart *)temp_obj.unit_exp_cart;
 	memcpy(&dummyUnitExpCart, this, sizeof(UnitExpCart));
@@ -245,7 +245,7 @@ UCHAR UnitExpCart::crc8()
 	dummyUnitExpCart.clear_ptr();
 	*((char**) &dummyUnitExpCart) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyUnitExpCart, sizeof(UnitExpCart));
+	uint8_t c = ::crc8((uint8_t*)&dummyUnitExpCart, sizeof(UnitExpCart));
 	return c;
 }
 //----------- End of function UnitExpCart::crc8 -----------//
@@ -260,7 +260,7 @@ void UnitExpCart::clear_ptr()
 
 
 //----------- End of function UnitMarine::crc8 -----------//
-UCHAR UnitMarine::crc8()
+uint8_t UnitMarine::crc8()
 {
 	UnitMarine &dummyUnitMarine = *(UnitMarine *)temp_obj.unit_marine;
 	memcpy(&dummyUnitMarine, this, sizeof(UnitMarine));
@@ -268,7 +268,7 @@ UCHAR UnitMarine::crc8()
 	dummyUnitMarine.clear_ptr();
 	*((char**) &dummyUnitMarine) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyUnitMarine, sizeof(UnitMarine));
+	uint8_t c = ::crc8((uint8_t*)&dummyUnitMarine, sizeof(UnitMarine));
 	return c;
 }
 //----------- End of function UnitMarine::crc8 -----------//
@@ -305,7 +305,7 @@ void UnitMarine::clear_ptr()
 
 
 //----------- End of function UnitCaravan::crc8 -----------//
-UCHAR UnitCaravan::crc8()
+uint8_t UnitCaravan::crc8()
 {
 	UnitCaravan &dummyUnitCaravan = *(UnitCaravan *)temp_obj.unit_caravan;
 	memcpy(&dummyUnitCaravan, this, sizeof(UnitCaravan));
@@ -313,7 +313,7 @@ UCHAR UnitCaravan::crc8()
 	dummyUnitCaravan.clear_ptr();
 	*((char**) &dummyUnitCaravan) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyUnitCaravan, sizeof(UnitCaravan));
+	uint8_t c = ::crc8((uint8_t*)&dummyUnitCaravan, sizeof(UnitCaravan));
 	return c;
 }
 //----------- End of function UnitCaravan::crc8 -----------//
@@ -338,7 +338,7 @@ void UnitCaravan::clear_ptr()
 
 
 //----------- End of function Firm::crc8 -----------//
-UCHAR Firm::crc8()
+uint8_t Firm::crc8()
 {
 	Firm &dummyFirm = *(Firm *)temp_obj.firm;
 	memcpy(&dummyFirm, this, sizeof(Firm));
@@ -346,7 +346,7 @@ UCHAR Firm::crc8()
 	dummyFirm.clear_ptr();
 	*((char**) &dummyFirm) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirm, sizeof(Firm));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirm, sizeof(Firm));
 	return c;
 }
 //----------- End of function Firm::crc8 -----------//
@@ -371,7 +371,7 @@ void Firm::clear_ptr()
 
 
 //----------- End of function FirmBase::crc8 -----------//
-UCHAR FirmBase::crc8()
+uint8_t FirmBase::crc8()
 {
 	FirmBase &dummyFirmBase = *(FirmBase *)temp_obj.firm_base;
 	memcpy(&dummyFirmBase, this, sizeof(FirmBase));
@@ -379,7 +379,7 @@ UCHAR FirmBase::crc8()
 	dummyFirmBase.clear_ptr();
 	*((char**) &dummyFirmBase) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmBase, sizeof(FirmBase));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmBase, sizeof(FirmBase));
 	return c;
 }
 //----------- End of function FirmBase::crc8 -----------//
@@ -394,7 +394,7 @@ void FirmBase::clear_ptr()
 
 
 //----------- End of function FirmCamp::crc8 -----------//
-UCHAR FirmCamp::crc8()
+uint8_t FirmCamp::crc8()
 {
 	FirmCamp &dummyFirmCamp = *(FirmCamp *)temp_obj.firm_camp;
 	memcpy(&dummyFirmCamp, this, sizeof(FirmCamp));
@@ -402,7 +402,7 @@ UCHAR FirmCamp::crc8()
 	dummyFirmCamp.clear_ptr();
 	*((char**) &dummyFirmCamp) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmCamp, sizeof(FirmCamp));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmCamp, sizeof(FirmCamp));
 	return c;
 }
 //----------- End of function FirmCamp::crc8 -----------//
@@ -432,7 +432,7 @@ void FirmCamp::clear_ptr()
 
 
 //----------- End of function FirmFactory::crc8 -----------//
-UCHAR FirmFactory::crc8()
+uint8_t FirmFactory::crc8()
 {
 	FirmFactory &dummyFirmFactory = *(FirmFactory *)temp_obj.firm_factory;
 	memcpy(&dummyFirmFactory, this, sizeof(FirmFactory));
@@ -440,7 +440,7 @@ UCHAR FirmFactory::crc8()
 	dummyFirmFactory.clear_ptr();
 	*((char**) &dummyFirmFactory) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmFactory, sizeof(FirmFactory));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmFactory, sizeof(FirmFactory));
 	return c;
 }
 //----------- End of function FirmFactory::crc8 -----------//
@@ -455,7 +455,7 @@ void FirmFactory::clear_ptr()
 
 
 //----------- End of function FirmInn::crc8 -----------//
-UCHAR FirmInn::crc8()
+uint8_t FirmInn::crc8()
 {
 	FirmInn &dummyFirmInn = *(FirmInn *)temp_obj.firm_inn;
 	memcpy(&dummyFirmInn, this, sizeof(FirmInn));
@@ -463,7 +463,7 @@ UCHAR FirmInn::crc8()
 	dummyFirmInn.clear_ptr();
 	*((char**) &dummyFirmInn) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmInn, sizeof(FirmInn));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmInn, sizeof(FirmInn));
 	return c;
 }
 //----------- End of function FirmInn::crc8 -----------//
@@ -481,7 +481,7 @@ void FirmInn::clear_ptr()
 
 
 //----------- End of function FirmMarket::crc8 -----------//
-UCHAR FirmMarket::crc8()
+uint8_t FirmMarket::crc8()
 {
 	FirmMarket &dummyFirmMarket = *(FirmMarket *)temp_obj.firm_market;
 	memcpy(&dummyFirmMarket, this, sizeof(FirmMarket));
@@ -489,7 +489,7 @@ UCHAR FirmMarket::crc8()
 	dummyFirmMarket.clear_ptr();
 	*((char**) &dummyFirmMarket) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmMarket, sizeof(FirmMarket));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmMarket, sizeof(FirmMarket));
 	return c;
 }
 //----------- End of function FirmMarket::crc8 -----------//
@@ -520,7 +520,7 @@ void FirmMarket::clear_ptr()
 
 
 //----------- End of function FirmMine::crc8 -----------//
-UCHAR FirmMine::crc8()
+uint8_t FirmMine::crc8()
 {
 	FirmMine &dummyFirmMine = *(FirmMine *)temp_obj.firm_mine;
 	memcpy(&dummyFirmMine, this, sizeof(FirmMine));
@@ -528,7 +528,7 @@ UCHAR FirmMine::crc8()
 	dummyFirmMine.clear_ptr();
 	*((char**) &dummyFirmMine) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmMine, sizeof(FirmMine));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmMine, sizeof(FirmMine));
 	return c;
 }
 //----------- End of function FirmMine::crc8 -----------//
@@ -543,7 +543,7 @@ void FirmMine::clear_ptr()
 
 
 //----------- End of function FirmResearch::crc8 -----------//
-UCHAR FirmResearch::crc8()
+uint8_t FirmResearch::crc8()
 {
 	FirmResearch &dummyFirmResearch = *(FirmResearch *)temp_obj.firm_research;
 	memcpy(&dummyFirmResearch, this, sizeof(FirmResearch));
@@ -551,7 +551,7 @@ UCHAR FirmResearch::crc8()
 	dummyFirmResearch.clear_ptr();
 	*((char**) &dummyFirmResearch) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmResearch, sizeof(FirmResearch));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmResearch, sizeof(FirmResearch));
 	return c;
 }
 //----------- End of function FirmResearch::crc8 -----------//
@@ -566,7 +566,7 @@ void FirmResearch::clear_ptr()
 
 
 //----------- End of function FirmWar::crc8 -----------//
-UCHAR FirmWar::crc8()
+uint8_t FirmWar::crc8()
 {
 	FirmWar &dummyFirmWar = *(FirmWar *)temp_obj.firm_war;
 	memcpy(&dummyFirmWar, this, sizeof(FirmWar));
@@ -574,7 +574,7 @@ UCHAR FirmWar::crc8()
 	dummyFirmWar.clear_ptr();
 	*((char**) &dummyFirmWar) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmWar, sizeof(FirmWar));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmWar, sizeof(FirmWar));
 	return c;
 }
 //----------- End of function FirmWar::crc8 -----------//
@@ -599,7 +599,7 @@ void FirmWar::clear_ptr()
 
 
 //----------- End of function FirmHarbor::crc8 -----------//
-UCHAR FirmHarbor::crc8()
+uint8_t FirmHarbor::crc8()
 {
 	FirmHarbor &dummyFirmHarbor = *(FirmHarbor *)temp_obj.firm_harbor;
 	memcpy(&dummyFirmHarbor, this, sizeof(FirmHarbor));
@@ -607,7 +607,7 @@ UCHAR FirmHarbor::crc8()
 	dummyFirmHarbor.clear_ptr();
 	*((char**) &dummyFirmHarbor) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmHarbor, sizeof(FirmHarbor));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmHarbor, sizeof(FirmHarbor));
 	return c;
 }
 //----------- End of function FirmHarbor::crc8 -----------//
@@ -631,7 +631,7 @@ void FirmHarbor::clear_ptr()
 
 
 //----------- End of function FirmMonster::crc8 -----------//
-UCHAR FirmMonster::crc8()
+uint8_t FirmMonster::crc8()
 {
 	FirmMonster &dummyFirmMonster = *(FirmMonster *)temp_obj.firm_monster;
 	memcpy(&dummyFirmMonster, this, sizeof(FirmMonster));
@@ -639,7 +639,7 @@ UCHAR FirmMonster::crc8()
 	dummyFirmMonster.clear_ptr();
 	*((char**) &dummyFirmMonster) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyFirmMonster, sizeof(FirmMonster));
+	uint8_t c = ::crc8((uint8_t*)&dummyFirmMonster, sizeof(FirmMonster));
 	return c;
 }
 //----------- End of function FirmMonster::crc8 -----------//
@@ -652,7 +652,6 @@ void FirmMonster::clear_ptr()
 
 	if( !monster_king.monster_id )
 	{
-		monster_king.unit_id = 0;
 		monster_king.mobile_unit_recno = 0;
 		monster_king.combat_level = 0;
 		monster_king.hit_points = 0;
@@ -667,7 +666,7 @@ void FirmMonster::clear_ptr()
 
 
 //----------- End of function Town::crc8 -----------//
-UCHAR Town::crc8()
+uint8_t Town::crc8()
 {
 	Town &dummyTown = *(Town *)temp_obj.town;
 	memcpy(&dummyTown, this, sizeof(Town));
@@ -677,7 +676,7 @@ UCHAR Town::crc8()
 	if( (void *)&dummyTown != (void *)&dummyTown.town_recno )
 		*((char**) &dummyTown) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyTown, sizeof(Town));
+	uint8_t c = ::crc8((uint8_t*)&dummyTown, sizeof(Town));
 	return c;
 }
 //----------- End of function Town::crc8 -----------//
@@ -702,7 +701,7 @@ void Town::clear_ptr()
 
 
 //----------- End of function NationBase::crc8 -----------//
-UCHAR NationBase::crc8()
+uint8_t NationBase::crc8()
 {
 	NationBase &dummyNationBase = *(NationBase *)temp_obj.nation;
 	memcpy(&dummyNationBase, this, sizeof(NationBase));
@@ -710,7 +709,7 @@ UCHAR NationBase::crc8()
 	dummyNationBase.clear_ptr();
 	*((char**) &dummyNationBase) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyNationBase, sizeof(NationBase));
+	uint8_t c = ::crc8((uint8_t*)&dummyNationBase, sizeof(NationBase));
 	return c;
 }
 //----------- End of function NationBase::crc8 -----------//
@@ -734,7 +733,7 @@ void NationBase::clear_ptr()
 
 
 //----------- End of function Bullet::crc8 -----------//
-UCHAR Bullet::crc8()
+uint8_t Bullet::crc8()
 {
 	Bullet &dummyBullet = *(Bullet *)temp_obj.bullet;
 	memcpy(&dummyBullet, this, sizeof(Bullet));
@@ -742,7 +741,7 @@ UCHAR Bullet::crc8()
 	dummyBullet.clear_ptr();
 	*((char**) &dummyBullet) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyBullet, sizeof(Bullet));
+	uint8_t c = ::crc8((uint8_t*)&dummyBullet, sizeof(Bullet));
 	return c;
 }
 //----------- End of function Bullet::crc8 -----------//
@@ -757,7 +756,7 @@ void Bullet::clear_ptr()
 
 
 //----------- End of function Projectile::crc8 -----------//
-UCHAR Projectile::crc8()
+uint8_t Projectile::crc8()
 {
 	Projectile &dummyProjectile = *(Projectile *)temp_obj.projectile;
 	memcpy(&dummyProjectile, this, sizeof(Projectile));
@@ -765,7 +764,7 @@ UCHAR Projectile::crc8()
 	dummyProjectile.clear_ptr();
 	*((char**) &dummyProjectile) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyProjectile, sizeof(Projectile));
+	uint8_t c = ::crc8((uint8_t*)&dummyProjectile, sizeof(Projectile));
 	return c;
 }
 //----------- End of function Projectile::crc8 -----------//
@@ -783,7 +782,7 @@ void Projectile::clear_ptr()
 
 
 //----------- End of function BulletHoming::crc8 -----------//
-UCHAR BulletHoming::crc8()
+uint8_t BulletHoming::crc8()
 {
 	BulletHoming &dummyBulletHoming = *(BulletHoming *)temp_obj.bullet_homing;
 	memcpy(&dummyBulletHoming, this, sizeof(BulletHoming));
@@ -791,7 +790,7 @@ UCHAR BulletHoming::crc8()
 	dummyBulletHoming.clear_ptr();
 	*((char**) &dummyBulletHoming) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyBulletHoming, sizeof(BulletHoming));
+	uint8_t c = ::crc8((uint8_t*)&dummyBulletHoming, sizeof(BulletHoming));
 	return c;
 }
 //----------- End of function BulletHoming::crc8 -----------//
@@ -806,7 +805,7 @@ void BulletHoming::clear_ptr()
 
 
 //----------- End of function BulletFlame::crc8 -----------//
-UCHAR BulletFlame::crc8()
+uint8_t BulletFlame::crc8()
 {
 	BulletFlame &dummyBulletFlame = *(BulletFlame *)temp_obj.bullet_flame;
 	memcpy(&dummyBulletFlame, this, sizeof(BulletFlame));
@@ -814,7 +813,7 @@ UCHAR BulletFlame::crc8()
 	dummyBulletFlame.clear_ptr();
 	*((char**) &dummyBulletFlame) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyBulletFlame, sizeof(BulletFlame));
+	uint8_t c = ::crc8((uint8_t*)&dummyBulletFlame, sizeof(BulletFlame));
 	return c;
 }
 //----------- End of function BulletFlame::crc8 -----------//
@@ -830,14 +829,14 @@ void BulletFlame::clear_ptr()
 
 // ###### patch begin Gilbert 20/1 #######//
 //----------- Begin of function Rebel::crc8 -----------//
-UCHAR Rebel::crc8()
+uint8_t Rebel::crc8()
 {
 	Rebel &dummyRebel = *(Rebel *)temp_obj.rebel;
 	memcpy(&dummyRebel, this, sizeof(Rebel));
 
 	dummyRebel.clear_ptr();
 
-	UCHAR c = ::crc8((UCHAR *)&dummyRebel, sizeof(Rebel));
+	uint8_t c = ::crc8((uint8_t *)&dummyRebel, sizeof(Rebel));
 	return c;
 }
 //----------- End of function Rebel::crc8 -----------//
@@ -851,14 +850,14 @@ void Rebel::clear_ptr()
 
 
 //----------- Begin of function Spy::crc8 -----------//
-UCHAR Spy::crc8()
+uint8_t Spy::crc8()
 {
 	Spy &dummySpy = *(Spy *)temp_obj.spy;
 	memcpy(&dummySpy, this, sizeof(Spy));
 
 	dummySpy.clear_ptr();
 
-	UCHAR c = ::crc8((UCHAR *)&dummySpy, sizeof(Spy));
+	uint8_t c = ::crc8((uint8_t *)&dummySpy, sizeof(Spy));
 	return c;
 }
 //----------- End of function Spy::crc8 -----------//
@@ -872,7 +871,7 @@ void Spy::clear_ptr()
 // ###### patch end Gilbert 20/1 #######//
 
 //----------- Begin of function TalkMsg::crc8 -----------//
-UCHAR TalkMsg::crc8()
+uint8_t TalkMsg::crc8()
 {
 	TalkMsg &dummyTalkMsg = *(TalkMsg *)temp_obj.talk_msg;
 	memcpy(&dummyTalkMsg, this, sizeof(TalkMsg));
@@ -880,7 +879,7 @@ UCHAR TalkMsg::crc8()
 	dummyTalkMsg.clear_ptr();
 	// *((char**) &dummyTalkMsg) = NULL;
 
-	UCHAR c = ::crc8((UCHAR*)&dummyTalkMsg, sizeof(TalkMsg));
+	uint8_t c = ::crc8((uint8_t*)&dummyTalkMsg, sizeof(TalkMsg));
 	return c;
 }
 //----------- End of function TalkMsg::crc8 -----------//

@@ -965,7 +965,7 @@ void News::general_die()
 	//----------------------------------------------//
 
 	// TRANSLATORS: Your general, <Name>, has been slain.
-	snprintf(str, MAX_STR_LEN+1, _("Your general, %s, has been slain."), race_res[short_para1]->get_single_name( (WORD)short_para2 ));
+	snprintf(str, MAX_STR_LEN+1, _("Your general, %s, has been slain."), race_res[short_para1]->get_single_name( static_cast<uint16_t>(short_para2) ));
 }
 //------- End of function News::general_die -----//
 
@@ -991,12 +991,12 @@ void News::unit_assassinated()
 	if( short_para3 == RANK_KING )
 	{
 		// TRANSLATORS: Your King, <Name>, has been assassinated by an enemy spy.
-		snprintf(str, MAX_STR_LEN+1, _("Your King, %s, has been assassinated by an enemy spy."), race_res[short_para1]->get_single_name( (WORD)short_para2 ));
+		snprintf(str, MAX_STR_LEN+1, _("Your King, %s, has been assassinated by an enemy spy."), race_res[short_para1]->get_single_name( static_cast<uint16_t>(short_para2) ));
 	}
 	else
 	{
 		// TRANSLATORS: Your general, <Name>, has been assassinated by an enemy spy.
-		snprintf(str, MAX_STR_LEN+1, _("Your general, %s, has been assassinated by an enemy spy."), race_res[short_para1]->get_single_name( (WORD)short_para2 ));
+		snprintf(str, MAX_STR_LEN+1, _("Your general, %s, has been assassinated by an enemy spy."), race_res[short_para1]->get_single_name( static_cast<uint16_t>(short_para2) ));
 	}
 
 	if( short_para4 )
@@ -1092,7 +1092,7 @@ void News::lightning_damage()
 	{
 	case NEWS_LOC_UNIT:
 		if( short_para2 > 0 )
-			unitName = race_res[short_para2]->get_name((WORD) short_para3);
+			unitName = race_res[short_para2]->get_name(short_para3);
 		else
 			unitName = unit_res[short_para3]->name;
 
@@ -1479,7 +1479,7 @@ char* News::nation_name1()
 	if( nation_name_id1 < 0 )		// human player - custom name
 		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom"), nation_array.get_human_name(nation_name_id1, 1));	// 1-first word of the name only
 	else
-		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom"), race_res[nation_race_id1]->get_single_name( (WORD)nation_name_id1 ));
+		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom"), race_res[nation_race_id1]->get_single_name( static_cast<uint16_t>(nation_name_id1) ));
 
 	//------ add color bar -------//
 
@@ -1503,7 +1503,7 @@ char* News::nation_name2()
 	if( nation_name_id2 < 0 )		// human player - custom name
 		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom"), nation_array.get_human_name(nation_name_id2, 1));	// 1-first word of the name only
 	else
-		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom"), race_res[nation_race_id2]->get_single_name( (WORD)nation_name_id2 ));
+		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom"), race_res[nation_race_id2]->get_single_name( static_cast<uint16_t>(nation_name_id2) ));
 
 	//------ add color bar -------//
 
@@ -1530,7 +1530,7 @@ char* News::king_name1(int addColor)
 	if( nation_name_id1 < 0 )		// human player - custom name
 		str = nation_array.get_human_name(nation_name_id1);
 	else
-		str = race_res[nation_race_id1]->get_name( (WORD)nation_name_id1 );
+		str = race_res[nation_race_id1]->get_name( static_cast<uint16_t>(nation_name_id1) );
 
 	//------ add color bar -------//
 
@@ -1559,7 +1559,7 @@ char* News::king_name2(int addColor)
 	if( nation_name_id2 < 0 )		// human player - custom name
 		str = nation_array.get_human_name(nation_name_id2);
 	else
-		str = race_res[nation_race_id2]->get_name( (WORD)nation_name_id2 );
+		str = race_res[nation_race_id2]->get_name( static_cast<uint16_t>(nation_name_id2) );
 
 	//------ add color bar -------//
 

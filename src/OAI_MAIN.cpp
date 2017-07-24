@@ -54,7 +54,7 @@ Nation::~Nation()
 
 
 //--------- Begin of function Nation::init --------//
-void Nation::init(int nationType, int raceId, int colorSchemeId, DWORD playerId)
+void Nation::init(int nationType, int raceId, int colorSchemeId, uint32_t playerId)
 {
 	NationBase::init(nationType, raceId, colorSchemeId, playerId);
 

@@ -1889,7 +1889,7 @@ void Town::think_rebel()
 	if( !leaderUnitRecno )
 		return;
 
-	DWORD curGroupId = unit_array.cur_group_id++;
+	uint32_t curGroupId = unit_array.cur_group_id++;
 	Unit *unitPtr = unit_array[leaderUnitRecno];
 	unitPtr->unit_group_id = curGroupId;
 

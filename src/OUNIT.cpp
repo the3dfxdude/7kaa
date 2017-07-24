@@ -801,7 +801,7 @@ char* Unit::unit_name(int withTitle)
 //
 // Set the name id. of this unit.
 //
-void Unit::set_name(WORD newNameId)
+void Unit::set_name(uint16_t newNameId)
 {
    //------- free up the existing name id. ------//
 
@@ -1455,7 +1455,7 @@ int Unit::betray(int newNationRecno)
 
 	//--- if this unit is a general, change nation for the units he commands ---//
 
-	DWORD newTeamId = unit_array.cur_team_id++;
+	uint32_t newTeamId = unit_array.cur_team_id++;
 
 	if( rank_id==RANK_GENERAL )
 	{
@@ -2389,7 +2389,7 @@ void Unit::resign(int remoteAction)
 //
 // Return the region id. of this unit.
 //
-BYTE Unit::region_id()
+uint8_t Unit::region_id()
 {
    if( is_visible() )
    {

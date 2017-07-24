@@ -64,7 +64,7 @@ public:
 	ZoomMatrix   *zoom_matrix;
 	Location     *loc_matrix;
 
-	DWORD	 		 next_scroll_time;		 // next scroll time
+	unsigned long	 		 next_scroll_time;		 // next scroll time
 
 	char			 scan_fire_x;				// cycle from 0 to SCAN_FIRE_DIST-1
 	char			 scan_fire_y;
@@ -106,12 +106,12 @@ public:
 public:
 	#ifdef DEBUG3
 		Location* get_loc(int xLoc,int yLoc);
-		BYTE		 get_region_id(int xLoc,int yLoc);
+		uint8_t		 get_region_id(int xLoc,int yLoc);
 	#else
 		Location* get_loc(int xLoc,int yLoc)
 						{ return loc_matrix + MAX_WORLD_X_LOC * yLoc + xLoc; }
 
-		BYTE		 get_region_id(int xLoc,int yLoc)
+		uint8_t		 get_region_id(int xLoc,int yLoc)
 						{ return loc_matrix[MAX_WORLD_X_LOC*yLoc+xLoc].region_id; }
 	#endif
 

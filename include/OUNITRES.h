@@ -239,10 +239,10 @@ struct UnitInfo
 
 	char  mobile_type;
 
-	BYTE  visual_range;
-	BYTE	visual_extend;
-	BYTE	shealth;
-	BYTE  armor;
+	int  visual_range;
+	int	visual_extend;
+	int	shealth;
+	int  armor;
 
 	short hit_points;
 
@@ -309,13 +309,13 @@ public:
 #pragma pack(1)
 struct AttackInfo
 {
-	BYTE  combat_level;
+	uint8_t  combat_level;
 
-	BYTE  attack_delay;
-	BYTE  attack_range;
+	uint8_t  attack_delay;
+	uint8_t  attack_range;
 
-	BYTE  attack_damage;
-   BYTE  pierce_damage;
+	uint8_t  attack_damage;
+	uint8_t  pierce_damage;
 
 	short bullet_out_frame;    // on which attacking frames the bullet should be out
 	char  bullet_speed;

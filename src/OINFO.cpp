@@ -177,7 +177,7 @@ void Info::init_random_seed(int randomSeed)
 	else
 	{
 		randomSeed = time(NULL);
-		randomSeed = (int) _rotr( randomSeed, 4 );
+		randomSeed = randomSeed << 4 | randomSeed >> (32-4); // _rotr( randomSeed, 4 )
 		if( randomSeed < 0 )
 			randomSeed = ~randomSeed;
 		if( randomSeed == 0 )

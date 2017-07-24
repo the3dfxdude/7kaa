@@ -51,8 +51,8 @@ enum RegionType
 #pragma pack(1)
 struct RegionInfo
 {
-	BYTE 				region_id;
-	BYTE 				region_stat_id;
+	uint8_t				region_id;
+	uint8_t				region_stat_id;
 
 	RegionType		region_type;
 	int				adj_offset_bit;
@@ -79,7 +79,7 @@ public:
 	int				region_stat_count;
 
 	unsigned char *connect_bits;
-	BYTE		 		region_sorted_array[MAX_REGION]; 	// an array of region id. sorted by the region size
+	uint8_t		 		region_sorted_array[MAX_REGION]; 	// an array of region id. sorted by the region size
 
 public:
 	RegionArray();

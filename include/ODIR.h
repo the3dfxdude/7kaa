@@ -24,16 +24,18 @@
 #ifndef __ODIR_H
 #define __ODIR_H
 
-#include <win32_compat.h>
+#include <storage_constants.h>
 #include <ODYNARR.h>
+
+#include <cstdint>
 
 //---------- Define struct FileInfo ----------//
 
 struct FileInfo
 {
-    char				name[MAX_PATH+1];
+    char          name[MAX_PATH+1];
     unsigned long size;
-	 FILETIME		time;
+    std::uint64_t time;
 };
 
 //---------- Define class Directory ----------//

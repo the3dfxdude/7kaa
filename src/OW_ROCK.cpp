@@ -36,8 +36,8 @@ int World::can_add_rock(short x1, short y1, short x2, short y2)
 	for(y = y1; y <= y2; ++y)
 		for( x = x1; x <= x2; ++x)
 			if( !get_loc(x,y)->can_add_rock(3) )
-				return FALSE;
-	return TRUE;
+				return 0;
+	return 1;
 }
 //--------------- end of function World::can_add_rock ----------//
 
@@ -211,8 +211,8 @@ int World::can_add_dirt(short x1, short y1, short x2, short y2)
 	for(y = y1; y <= y2; ++y)
 		for( x = x1; x <= x2; ++x)
 			if( !get_loc(x,y)->can_add_dirt() )
-				return FALSE;
-	return TRUE;
+				return 0;
+	return 1;
 }
 //--------------- end of function World::can_add_dirt ----------//
 

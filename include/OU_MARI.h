@@ -128,7 +128,7 @@ public:
 	//----------- vars for attacking ----------//
 
 	AttackInfo	ship_attack_info;
-	UCHAR			attack_mode_selected;
+	uint8_t			attack_mode_selected;
 
 	//-------------- vars for AI --------------//
 
@@ -191,7 +191,7 @@ public:
 
 	//-------------- multiplayer checking codes ---------------//
 
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

@@ -21,10 +21,6 @@
 //Filename    : OREMOTE2.CPP
 //Description : Object Remote - part 2
 
-//#include <windows.h>
-//#include <windowsx.h>
-//#include <mmsystem.h>
-
 #define DEBUG_LOG_LOCAL 1
 #include <ALL.h>
 #include <OVGA.h>
@@ -55,11 +51,11 @@
 // ^                           ^
 // | Allocate starts here      | return variable here to the client function
 //
-RemoteMsg* Remote::new_msg(int msgId, int dataSize)
+RemoteMsg* Remote::new_msg(uint32_t msgId, int dataSize)
 {
 
-   int msgSize = sizeof(DWORD) + dataSize;
-	// <DWORD> is for the message id.
+   int msgSize = sizeof(uint32_t) + dataSize;
+	// <uint32_t> is for the message id.
 
    char* shortPtr;
 
@@ -83,7 +79,7 @@ RemoteMsg* Remote::new_msg(int msgId, int dataSize)
 
 	RemoteMsg* remoteMsgPtr = (RemoteMsg*) shortPtr;
 
-	remoteMsgPtr->id = (DWORD) msgId;
+	remoteMsgPtr->id = msgId;
 
 	return remoteMsgPtr;
 }
@@ -121,7 +117,7 @@ void Remote::free_msg(RemoteMsg* remoteMsgPtr)
 // ^                           ^
 // | Allocate starts here      | return variable here to the client function
 //
-void Remote::send_msg(RemoteMsg* remoteMsgPtr, int receiverId)
+void Remote::send_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId)
 {
 	if( handle_vga_lock )
 		vga_front.temp_unlock();
@@ -151,7 +147,7 @@ void Remote::send_msg(RemoteMsg* remoteMsgPtr, int receiverId)
 // ^                           ^
 // | Allocate starts here      | return variable here to the client function
 //
-void Remote::send_free_msg(RemoteMsg* remoteMsgPtr, int receiverId)
+void Remote::send_free_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId)
 {
    if( handle_vga_lock )
 		vga_front.temp_unlock();
@@ -187,12 +183,12 @@ void Remote::send_free_msg(RemoteMsg* remoteMsgPtr, int receiverId)
 //
 // return : <char*> the pointer RemoteMsg::data_buf of the allocated message
 //
-char* Remote::new_send_queue_msg(int msgId, int dataSize)
+char* Remote::new_send_queue_msg(uint32_t msgId, int dataSize)
 {
-	char *dataPtr = send_queue[0].reserve(sizeof(short) + sizeof(DWORD) + dataSize);
+	char *dataPtr = send_queue[0].reserve(sizeof(short) + sizeof(uint32_t) + dataSize);
 
 	// ----- put the size of message ------//
-	*(short *)dataPtr = sizeof(DWORD) + dataSize;
+	*(short *)dataPtr = sizeof(uint32_t) + dataSize;
 	dataPtr += sizeof(short);
 
 	// ----- put the message id --------//
@@ -214,7 +210,7 @@ char* Remote::new_send_queue_msg(int msgId, int dataSize)
 //                    by the receivers.
 //                0 - not successful.
 //
-int Remote::send_queue_now(int receiverId)
+int Remote::send_queue_now(uint32_t receiverId)
 {
    if( send_queue[0].length() ==0 )
       return 1;
@@ -279,7 +275,7 @@ int Remote::poll_msg()
 	//--------------------------------------------//
 
    int        receivedFlag=0;
-   DWORD      msgListSize;
+   uint32_t   msgListSize;
    int        loopCount=0;
 
    if( handle_vga_lock )
@@ -311,7 +307,7 @@ int Remote::poll_msg()
 		}
 		else
 */
-		err_when( msgListSize < sizeof(short) + sizeof(DWORD) );
+		err_when( msgListSize < sizeof(short) + sizeof(uint32_t) );
 		RemoteMsg *rMsg = (RemoteMsg *)(recvBuf + sizeof(short) );
 		int	queueToCopy = -1;
 
@@ -330,7 +326,7 @@ int Remote::poll_msg()
 
 			// ------- find which receive queue to hold the message -----//
 
-			DWORD senderFrameCount = *(DWORD *)rMsg->data_buf;
+			uint32_t senderFrameCount = *(uint32_t *)rMsg->data_buf;
 			for(int n = 0; n < RECEIVE_QUEUE_BACKUP; ++n )
 			{
 				if( senderFrameCount == receive_frame_count[n] )
@@ -364,7 +360,7 @@ int Remote::poll_msg()
 			}
 			else
 			{
-				DWORD senderFrameCount = *(DWORD *)rMsg->data_buf;
+				uint32_t senderFrameCount = *(uint32_t *)rMsg->data_buf;
 				DEBUG_LOG("MSG_QUEUE_HEADER message");
 				DEBUG_LOG(senderFrameCount);
 			}
@@ -441,11 +437,11 @@ void Remote::process_receive_queue()
 
 				if( remoteMsgPtr->id == MSG_QUEUE_HEADER )
 				{
-					short msgNation = *(short *)(&remoteMsgPtr->data_buf[sizeof(DWORD)]);
+					short msgNation = *(short *)(&remoteMsgPtr->data_buf[sizeof(uint32_t)]);
 
 					//--- if this is the message queue of the nation we should process now ----//
 
-					if(msgNation==nationRecno )   // struct of data_buf: <DWORD> frameCount + <short> nationRecno
+					if(msgNation==nationRecno )   // struct of data_buf: <uint32_t> frameCount + <short> nationRecno
 					{
 						processFlag = 1;
 					}
@@ -508,7 +504,7 @@ void Remote::process_receive_queue()
 //
 // Pre-process a specific message type.
 //
-void Remote::process_specific_msg(DWORD msgId)
+void Remote::process_specific_msg(uint32_t msgId)
 {
 	if( !process_queue_flag )			// avoid sys.yield()
 		return;
@@ -526,11 +522,11 @@ void Remote::process_specific_msg(DWORD msgId)
 	{
 		err_when( ++loopCount > 1000 );
 		RemoteMsg* remoteMsgPtr = rqt.get_remote_msg();
-      if( remoteMsgPtr->id == msgId )
-      {
+		if( remoteMsgPtr->id == msgId )
+		{
 			remoteMsgPtr->process_msg();
-         remoteMsgPtr->id = 0;
-      }
+			remoteMsgPtr->id = 0;
+		}
 	}
 
 	enable_poll_msg();
@@ -610,7 +606,7 @@ void Remote::copy_send_to_backup()
 //                    by the receivers.
 //                0 - not successful.
 //
-int Remote::send_backup_now(int receiverId, DWORD requestFrameCount)
+int Remote::send_backup_now(uint32_t receiverId, uint32_t requestFrameCount)
 {
    //------ determine which backup buffer to send -----//
 
@@ -638,7 +634,7 @@ int Remote::send_backup_now(int receiverId, DWORD requestFrameCount)
 	}
 
 	if( requestFrameCount < send_frame_count[SEND_QUEUE_BACKUP-1])
-		err.run( "requestFrameCount:%d < backup2_frame_count:%d", requestFrameCount, send_frame_count[SEND_QUEUE_BACKUP-1] );
+		err.run( "requestFrameCount:%u < backup2_frame_count:%u", requestFrameCount, send_frame_count[SEND_QUEUE_BACKUP-1] );
 	return 0;
 }
 //--------- End of function Remote::send_backup_now ---------//
@@ -651,21 +647,21 @@ int Remote::send_backup_now(int receiverId, DWORD requestFrameCount)
 // <int>   frameCount  - frame count of this queue
 // <short> nationCount - nation recno of the sender
 //
-void Remote::init_send_queue(DWORD frameCount, short nationRecno)
+void Remote::init_send_queue(uint32_t frameCount, short nationRecno)
 {
 	send_queue[0].clear();
 
 	// put into the queue : <message length>, MSG_QUEUE_HEADER, <frameCount>, <nationRecno>
 
-	int msgSize = sizeof(DWORD)*2 + sizeof(short);
+	int msgSize = sizeof(uint32_t) + sizeof(uint32_t) + sizeof(short);
 	char *sendPtr = send_queue[0].reserve(sizeof(short) + msgSize);
 
 	*(short *)sendPtr = msgSize;
 	 sendPtr += sizeof(short);
-	*(DWORD *)sendPtr = MSG_QUEUE_HEADER;
-	 sendPtr += sizeof(DWORD);
-	*(DWORD *)sendPtr = send_frame_count[0] = next_send_frame(nationRecno, frameCount + process_frame_delay);
-	 sendPtr += sizeof(DWORD);
+	*(uint32_t *)sendPtr = MSG_QUEUE_HEADER;
+	 sendPtr += sizeof(uint32_t);
+	*(uint32_t *)sendPtr = send_frame_count[0] = next_send_frame(nationRecno, frameCount + process_frame_delay);
+	 sendPtr += sizeof(uint32_t);
 	*(short *)sendPtr = nationRecno;
 	 sendPtr += sizeof(short);
 }
@@ -680,7 +676,7 @@ void Remote::init_send_queue(DWORD frameCount, short nationRecno)
 // <int>   frameCount  - frame count of this queue
 // <short> nationCount - nation recno of the receiveer
 //
-void Remote::init_receive_queue(DWORD frameCount)
+void Remote::init_receive_queue(uint32_t frameCount)
 {
 	int n;
 
@@ -705,38 +701,38 @@ void Remote::init_receive_queue(DWORD frameCount)
 
 			// put into the queue : <message length>, MSG_QUEUE_HEADER, <frameCount>, <nationRecno>
 
-			msgSize = sizeof(DWORD)*2 + sizeof(short);
+			msgSize = sizeof(uint32_t) + sizeof(uint32_t) + sizeof(short);
 			receivePtr = receive_queue[n].reserve(sizeof(short) + msgSize);
 			*(short *)receivePtr = msgSize;
 			 receivePtr += sizeof(short);
-			*(DWORD *)receivePtr = MSG_QUEUE_HEADER;
-			 receivePtr += sizeof(DWORD);
-			*(DWORD *)receivePtr = frameCount + n;
-			 receivePtr += sizeof(DWORD);
+			*(uint32_t *)receivePtr = MSG_QUEUE_HEADER;
+			 receivePtr += sizeof(uint32_t);
+			*(uint32_t *)receivePtr = frameCount + n;
+			 receivePtr += sizeof(uint32_t);
 			*(short *)receivePtr = nationRecno;
 			 receivePtr += sizeof(short);
 
 			// put into the queue : <message length>, MSG_NEXT_FRAME, <nationRecno>
 
-			msgSize = sizeof(DWORD) + sizeof(short);
+			msgSize = sizeof(uint32_t) + sizeof(short);
 			receivePtr = receive_queue[n].reserve(sizeof(short) + msgSize);
 
 			*(short *)receivePtr = msgSize;
 			 receivePtr += sizeof(short);
-			*(DWORD *)receivePtr = MSG_NEXT_FRAME;
-			 receivePtr += sizeof(DWORD);
+			*(uint32_t *)receivePtr = MSG_NEXT_FRAME;
+			 receivePtr += sizeof(uint32_t);
 			*(short *)receivePtr = nationRecno;
 			 receivePtr += sizeof(short);
 
 			// put into the queue : <message length>, MSG_QUEUE_TRAILER, <nationRecno>
 
-			msgSize = sizeof(DWORD) + sizeof(short);
+			msgSize = sizeof(uint32_t) + sizeof(short);
 			receivePtr = receive_queue[n].reserve(sizeof(short) + msgSize);
 
 			*(short *)receivePtr = msgSize;
 			 receivePtr += sizeof(short);
-			*(DWORD *)receivePtr = MSG_QUEUE_TRAILER;
-			 receivePtr += sizeof(DWORD);
+			*(uint32_t *)receivePtr = MSG_QUEUE_TRAILER;
+			 receivePtr += sizeof(uint32_t);
 			*(short *)receivePtr = nationRecno;
 			 receivePtr += sizeof(short);
 

@@ -126,7 +126,7 @@ public:
 
 	char  loc_type;
 	short loc_type_para;
-	WORD  loc_type_para2;	// must use WORD as it will be used to store unit name id. 
+	uint16_t  loc_type_para2;	// must use uint16_t as it will be used to store unit name id. 
 	short loc_x, loc_y;		// location where the news happens
 
 public:

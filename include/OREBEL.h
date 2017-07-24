@@ -88,7 +88,7 @@ public:
 	void 	process_leader_quit();
 
 	// #### patch begin Gilbert 20/1 ######//
-	UCHAR crc8();
+	uint8_t crc8();
 	void	clear_ptr();
 	// #### patch end Gilbert 20/1 ######//
 };

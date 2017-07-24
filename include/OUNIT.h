@@ -210,12 +210,12 @@ public:
 	char        race_id;
 	char        nation_recno;
 	char        ai_unit;
-	WORD        name_id;          // id. of the unit's name in RaceRes::first_name_array;
+	uint16_t    name_id;             // id. of the unit's name in RaceRes::first_name_array;
 
-	DWORD       unit_group_id;       // the group id this unit belong to if it is selected
-	DWORD       team_id;             // id. of defined team
+	uint32_t       unit_group_id;       // the group id this unit belong to if it is selected
+	uint32_t       team_id;             // id. of defined team
 	char        selected_flag;       // whether the unit has been selected or not
-	char			group_select_id;		// id for group selection
+	char        group_select_id;     // id for group selection
 
 	char        waiting_term;        // for 2x2 unit only, the term to wait before recalling A* to get a new path
 	char        blocked_by_member;
@@ -225,7 +225,7 @@ public:
 
 	int           is_visible()      { return cur_x >= 0; }     // whether the unit is visible on the map, it is not invisable if cur_x == -1
 	virtual char* unit_name(int withTitle=1);
-	BYTE          region_id();
+	uint8_t          region_id();
 
 	//--------- action vars ------------//
 	char        action_misc;
@@ -242,7 +242,7 @@ public:
 	short       action_y_loc2;
 
 	char        blocked_edge[4];        // for calling searching in attacking
-	UCHAR       attack_dir;
+	uint8_t       attack_dir;
 
 	//------------ attack parameters -----------//
 
@@ -310,7 +310,7 @@ public:
 
 	//--------- AI parameters ------------//
 
-	WORD        ai_action_id;     			// an unique id. for locating the AI action node this unit belongs to in Nation::action_array
+	uint16_t        ai_action_id;     			// an unique id. for locating the AI action node this unit belongs to in Nation::action_array
 
 	char  		original_action_mode;
 	short			original_action_para;
@@ -370,7 +370,7 @@ public:
 			  void draw_skill_icon();
 
 			  void set_spy(int spyRecno);
-			  void set_name(WORD newNameId);
+			  void set_name(uint16_t newNameId);
 			  void set_mode(char modeId, short modePara=0) { unit_mode=modeId; unit_mode_para=modePara; }
 			  int  is_shealth();
 			  int  is_civilian();
@@ -566,7 +566,7 @@ public:
 	virtual void fix_attack_info();         // set attack_info_array appropriately
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:
@@ -634,7 +634,7 @@ private:
 	int   space_for_attack(int targetXLoc, int targetYLoc, char targetMobileType, int targetWidth, int targetHeight);
 	int   space_around_target(int squareXLoc, int squareYLoc, int width, int height);
 	int   space_around_target_ver2(int targetXLoc, int targetYLoc, int targetWidth, int targetHeight);
-	int   ship_surr_has_free_land(int targetXLoc, int targetYLoc, UCHAR regionId);
+	int   ship_surr_has_free_land(int targetXLoc, int targetYLoc, uint8_t regionId);
 	int   free_space_for_range_attack(int targetXLoc, int targetYLoc, int targetWidth, int targetHeight, int targetMobileType, int maxRange);
 
 	void  choose_best_attack_mode(int attackDistance, char targetMobileType=UNIT_LAND);
@@ -681,7 +681,7 @@ private:
 	int   monster_defend_follow_target();
 
 	//---------- embark to ship and other ship functions ---------//
-	int   ship_to_beach_path_edit(int& resultXLoc, int& resultYLoc, UCHAR regionNo);
+	int   ship_to_beach_path_edit(int& resultXLoc, int& resultYLoc, uint8_t regionId);
 	void  ship_leave_beach(int shipOldXLoc, int shipOldYLoc);
 
 	//---------------- other functions -----------------//
@@ -744,8 +744,8 @@ public:
 	short selected_recno;
 	short selected_count;
 
-	DWORD cur_group_id;            // for Unit::unit_group_id
-	DWORD cur_team_id;             // for Unit::team_id
+	uint32_t cur_group_id;            // for Unit::unit_group_id
+	uint32_t cur_team_id;             // for Unit::team_id
 
 	short idle_blocked_unit_reset_count; // used to improve performance for searching related to attack
 
@@ -858,7 +858,7 @@ private:
 	char* get_target_x_offset(int targetWidth, int targetHeight, char curDir);
 	char* get_target_y_offset(int targetWidth, int targetHeight, char curDir);
 
-	void  arrange_units_in_group(int xLoc1, int yLoc1, int xLoc2, int yLoc2, short* selectedUnitArray, int selectedCount, DWORD unitGroupId, int targetType);
+	void  arrange_units_in_group(int xLoc1, int yLoc1, int xLoc2, int yLoc2, short* selectedUnitArray, int selectedCount, uint32_t unitGroupId, int targetType);
 	int   analyse_surround_location(int targetXLoc, int targetYLoc, int targetWidth, int targetHeight, char mobileType);
 	void  check_nearby_location(int targetXLoc, int targetYLoc, char xOffset, char yOffset, int targetWidth, int targetHeight, char targetMobileType, int& analyzeResult);
 	void  handle_attack_target_totally_blocked(int targetXLoc, int targetYLoc, short targetRecno, short *selectedUnitArray, short selectedCount, int targetType);

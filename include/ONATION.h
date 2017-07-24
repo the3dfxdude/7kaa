@@ -113,7 +113,7 @@ enum  {  SEA_ACTION_SETTLE=1, 			// for AI marine actions
 #pragma pack(1)
 struct AIRegion
 {
-	BYTE	region_id;
+	uint8_t	region_id;
 	char  town_count;
 	char  base_town_count;
 };
@@ -130,7 +130,7 @@ struct ActionNode
 	char	action_type;		// action type. For 7kaa, this is always ACTION_FIXED.
 	short action_para;		// parameter for the action. e.g. firmId for AI_BUILD_FIRM
 	short action_para2;		// parameter for the action. e.g. firm race id. for building FirmBase
-	WORD	action_id;			// an unique id. for identifying this node
+	uint16_t	action_id;			// an unique id. for identifying this node
 
 	int32_t add_date;			// when this action is added
 	short	unit_recno;			// unit associated with this action.
@@ -178,7 +178,7 @@ class Nation : public NationBase
 {
 public:
 	DynArray		action_array;
-	WORD			last_action_id; 	// a 16-bit id. for identifying ActionNode
+	uint16_t			last_action_id; 	// a 16-bit id. for identifying ActionNode
 
 public:
 	Nation();
@@ -306,7 +306,7 @@ public:
 	//--------------------------------------------------------------//
 	// functions to init. parameters and process ai actions
 	//--------------------------------------------------------------//
-	void			init(int nationType, int raceId, int colorSchemeId, DWORD playerId); // init local parameters
+	void			init(int nationType, int raceId, int colorSchemeId, uint32_t playerId); // init local parameters
 	void			deinit();
 
 	void 			init_all_ai_info();
@@ -398,8 +398,8 @@ public:
 	int 			process_action(int priorityActionRecno=0, int processActionMode=0);	// waiting --> processing
 	int 			process_action_id(int actionId);
 
-	void			action_finished(WORD aiActionId, short unitRecno=0, int actionFailure=0);
-	void			action_failure(WORD aiActionId, short unitRecno=0);
+	void			action_finished(uint16_t aiActionId, short unitRecno=0, int actionFailure=0);
+	void			action_failure(uint16_t aiActionId, short unitRecno=0);
 	void 			auto_next_action(ActionNode* actionNode);
 
 	void 			stop_unit_action(short unitRecno);

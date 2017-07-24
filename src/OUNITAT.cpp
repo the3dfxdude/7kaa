@@ -1054,10 +1054,10 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 	//return;
 
 	//-------------------- define parameters -----------------------//
-	UCHAR attackModeBeingUsed = cur_attack;
+	uint8_t attackModeBeingUsed = cur_attack;
 	err_when(attackModeBeingUsed<0 || attackModeBeingUsed>MAX_UNIT_ATTACK_TYPE);
 	//UCHAR maxAttackRangeMode = 0;
-	UCHAR maxAttackRangeMode = cur_attack;
+	uint8_t maxAttackRangeMode = cur_attack;
 	AttackInfo* attackInfoMaxRange = attack_info_array;
 	AttackInfo* attackInfoChecking;
 	AttackInfo* attackInfoSelected = attack_info_array+cur_attack;
@@ -1072,7 +1072,7 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 		int canAttack = 0;
 		int checkingDamageWeight, selectedDamageWeight;
 
-		for(UCHAR i=0; i<attack_count; i++)
+		for(uint8_t i=0; i<attack_count; i++)
 		{
 			if(attackModeBeingUsed==i)
 				continue; // it is the mode already used
@@ -1085,7 +1085,7 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 
 				if(attackInfoSelected->attack_range<attackDistance)
 				{
-					attackModeBeingUsed = UCHAR(i);
+					attackModeBeingUsed = i;
 					attackInfoSelected = attackInfoChecking;
 					continue;
 				}
@@ -1100,14 +1100,14 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 					{
 						if(attackInfoChecking->attack_range==attackDistance && checkingDamageWeight>selectedDamageWeight)
 						{
-							attackModeBeingUsed = UCHAR(i); // choose the one with strongest damage
+							attackModeBeingUsed = i; // choose the one with strongest damage
 							attackInfoSelected = attackInfoChecking;
 						}
 						continue;
 					}
 					else if(attackInfoChecking->attack_range==1)
 					{
-						attackModeBeingUsed = UCHAR(i);
+						attackModeBeingUsed = i;
 						attackInfoSelected = attackInfoChecking;
 						continue;
 					}
@@ -1125,7 +1125,7 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 							//--------------------------------------------------------------------------//
 							// select one with shortest attack_range
 							//--------------------------------------------------------------------------//
-							attackModeBeingUsed = UCHAR(i);
+							attackModeBeingUsed = i;
 							attackInfoSelected = attackInfoChecking;
 						}
 					}
@@ -1135,7 +1135,7 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 					//--------------------------------------------------------------------------//
 					// select one that can do the attacking immediately with the strongest damage point
 					//--------------------------------------------------------------------------//
-					attackModeBeingUsed = UCHAR(i);
+					attackModeBeingUsed = i;
 					attackInfoSelected = attackInfoChecking;
 				}
 			}
@@ -1151,7 +1151,7 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 					(attackInfoChecking->attack_range==attackInfoMaxRange->attack_range &&
 					 attackInfoChecking->attack_damage>attackInfoMaxRange->attack_damage)))
 				{
-					maxAttackRangeMode = UCHAR(i);
+					maxAttackRangeMode = i;
 					attackInfoMaxRange = attackInfoChecking;
 				}
 			}
@@ -1186,10 +1186,10 @@ void Unit::choose_best_attack_mode(int attackDistance, char targetMobileType)
 //
 void Unit::set_attack_dir(short curX, short curY, short targetX, short targetY)
 {
-	UCHAR targetDir = get_dir(curX, curY, targetX, targetY);
+	int targetDir = get_dir(curX, curY, targetX, targetY);
 	if(unit_res[unit_id]->unit_class==UNIT_CLASS_SHIP)
 	{
-		UCHAR attackDir1, attackDir2;
+		int attackDir1, attackDir2;
 
 		attackDir1 = (targetDir+2)%MAX_SPRITE_DIR_TYPE;
 		attackDir2 = (targetDir+6)%MAX_SPRITE_DIR_TYPE;

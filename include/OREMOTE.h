@@ -24,24 +24,10 @@
 #ifndef __OREMOTE_H
 #define __OREMOTE_H
 
-// #ifndef __WINDOWS_
-// #include <windows.h>
-// #endif
-
-// #ifndef __OWSIPX_H
-// #include <OWSIPX.h>
-// #endif
-
 #include <MPTYPES.h>
 #include <OREMOTEQ.h>
 
-//------ Define connectivity mode -------//
-
-// enum { REMOTE_WSOCK_TCPIP=1,
-// REMOTE_WSOCK_IPX,
-// REMOTE_MODEM,
-// REMOTE_NULL_MODEM,
-//	  };
+#include <storage_constants.h>
 
 //---------- Define message id. ---------//
 
@@ -188,7 +174,7 @@ enum { REMOTE_MSG_TYPE_COUNT= LAST_REMOTE_MSG_ID - FIRST_REMOTE_MSG_ID };
 struct RemoteMsg
 {
 public:
-	DWORD	id;
+	uint32_t	id;
 	char  data_buf[1];
 
 public:
@@ -349,7 +335,7 @@ public:
 	//--------- send queue -----------//
 
 	RemoteQueue		send_queue[SEND_QUEUE_BACKUP];		// 0 for the latest, other for backup
-	DWORD				send_frame_count[SEND_QUEUE_BACKUP];
+	uint32_t	send_frame_count[SEND_QUEUE_BACKUP];
 /*
 	char*				send_queue_buf;
 	char*				send_queue_ptr;
@@ -369,7 +355,7 @@ public:
 	//------- receive queue ---------//
 
 	RemoteQueue		receive_queue[RECEIVE_QUEUE_BACKUP];
-	DWORD				receive_frame_count[RECEIVE_QUEUE_BACKUP];
+	uint32_t	receive_frame_count[RECEIVE_QUEUE_BACKUP];
 /*
 	char*				receive_queue_buf;
 	char*				receive_queue_ptr;
@@ -410,52 +396,52 @@ public:
 	void			deinit();
 
 	void			init_start_mp();
-	int			is_enable();
+	int				is_enable();
 	// int			can_start_game();
-	int			number_of_opponent();
-	DWORD			self_player_id();
+	int				number_of_opponent();
+	PID_TYPE    	self_player_id();
 	// void			set_disconnect_handler(DisconnectFP disconnectFP);
 
-	int			create_game();
-	int			connect_game();
+	int				create_game();
+	int				connect_game();
 	void			start_game();
 
-	void 			send_msg(RemoteMsg* remoteMsgPtr, int receiverId=0);
-	void 			send_free_msg(RemoteMsg* remoteMsgPtr, int receiverId=0);
+	void 			send_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId=0);
+	void 			send_free_msg(RemoteMsg* remoteMsgPtr, uint32_t receiverId=0);
 
-	RemoteMsg* 	new_msg(int msgId, int dataSize);
+	RemoteMsg* 		new_msg(uint32_t msgId, int dataSize);
 	void 			free_msg(RemoteMsg* remoteMsgPtr);
 
-	char* 	 	new_send_queue_msg(int msgId, int msgSize);
-	int			send_queue_now(int receiverId=0);
-	int			send_backup_now(int receiverId, DWORD requestFrameCount);
+	char* 	 		new_send_queue_msg(uint32_t msgId, int msgSize);
+	int				send_queue_now(uint32_t receiverId=0);
+	int				send_backup_now(uint32_t receiverId, uint32_t requestFrameCount);
 	void 			append_send_to_receive();
 	void			copy_send_to_backup();
 	// int			poll_msg(UINT message, UINT wParam, LONG lParam);
-	int			poll_msg();
+	int				poll_msg();
 	void			enable_poll_msg();
 	void			disable_poll_msg();
 
 
 	void 			process_receive_queue();
-	void 			process_specific_msg(DWORD msgId);
+	void 			process_specific_msg(uint32_t msgId);
 
-	void			init_send_queue(DWORD,short);
-	void			init_receive_queue(DWORD);
+	void			init_send_queue(uint32_t,short);
+	void			init_receive_queue(uint32_t);
 
 	void			enable_process_queue();
 	void			disable_process_queue();
 
 	void			reset_process_frame_delay();
-	int			get_process_frame_delay();
+	int				get_process_frame_delay();
 	void			set_process_frame_delay(int);
-	int			calc_process_frame_delay(int milliSecond);
+	int				calc_process_frame_delay(int milliSecond);
 
 	// ------- alternating send frame -------//
 	void			set_alternating_send(int rate);
-	int			get_alternating_send();
-	int			has_send_frame(int nationRecno, DWORD frameCount);
-	DWORD			next_send_frame(int nationRecno, DWORD frameCount);
+	int				get_alternating_send();
+	int				has_send_frame(int nationRecno, uint32_t frameCount);
+	uint32_t		next_send_frame(int nationRecno, uint32_t frameCount);
 };
 
 extern Remote remote;

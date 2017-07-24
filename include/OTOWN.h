@@ -117,7 +117,7 @@ public:
 
 	short center_x;
 	short center_y;
-	BYTE	region_id;
+	uint8_t	region_id;
 
 	short layout_id;           // town layout id.
 	short first_slot_id;       // the first slot id. of the layout
@@ -160,7 +160,7 @@ public:
 	char  train_queue_count;
 	short	train_unit_recno;			// race id. of the unit the town is currently training, 0-if currently not training any
 	int	train_unit_action_id;	// id. of the action to be assigned to this unit when it is finished training.
-	DWORD start_train_frame_no;
+	uint32_t start_train_frame_no;
 	short defend_target_recno; 	// used in defend mode, store recno of latest target atttacking this town
 	
 	enum {TOWN_TRAIN_BATCH_COUNT = 8}; // Number of units enqueued when holding shift - ensure this is less than MAX_TRAIN_QUEUE
@@ -362,7 +362,7 @@ public:
 	int	get_selected_race();
 
 	//-------------- multiplayer checking codes ---------------//
-	UCHAR crc8();
+	uint8_t crc8();
 	void	clear_ptr();
 
 	//-------------------------------//

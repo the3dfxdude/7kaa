@@ -1582,7 +1582,7 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 	visit<int16_t>(v, &v1n->largest_town_recno);
 	visit<int16_t>(v, &v1n->largest_town_pop);
 	visit_array<int16_t>(v, v1n->raw_count_array, MAX_RAW);
-	visit_array<int16_t>(v, v1n->last_unit_name_id_array,
+	visit_array<uint16_t>(v, v1n->last_unit_name_id_array,
 								VERSION_1_MAX_UNIT_TYPE);
 	visit<int32_t>(v, &v1n->population_rating);
 	visit<int32_t>(v, &v1n->military_rating);
@@ -1785,7 +1785,7 @@ static void visit_nation(Visitor *v, Nation *nat)
 	visit<int16_t>(v, &nat->largest_town_recno);
 	visit<int16_t>(v, &nat->largest_town_pop);
 	visit_array<int16_t>(v, nat->raw_count_array, MAX_RAW);
-	visit_array<int16_t>(v, nat->last_unit_name_id_array, MAX_UNIT_TYPE);
+	visit_array<uint16_t>(v, nat->last_unit_name_id_array, MAX_UNIT_TYPE);
 	visit<int32_t>(v, &nat->population_rating);
 	visit<int32_t>(v, &nat->military_rating);
 	visit<int32_t>(v, &nat->economic_rating);

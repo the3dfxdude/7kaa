@@ -183,7 +183,7 @@ int RegionArray::is_adjacent(int reg1, int reg2)
 	int bitOffset;
 
 	if( reg1 == reg2 )
-		return TRUE;
+		return 1;
 	if( reg1 > reg2 )
 	{
 		bitOffset = region_info_array[reg1 -1].adj_offset_bit + (reg2 -1);
@@ -217,7 +217,7 @@ void RegionArray::sort_region()
 //
 static int sort_region_function( const void *a, const void *b )
 {
-	return region_array[*((BYTE*)b)]->region_size - region_array[*((BYTE*)a)]->region_size;
+	return region_array[*((uint8_t*)b)]->region_size - region_array[*((uint8_t*)a)]->region_size;
 }
 //------- End of function sort_region_function ------//
 

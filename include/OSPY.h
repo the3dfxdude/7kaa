@@ -69,7 +69,7 @@ public:
 	char  exposed_flag;							// this is set to 1 when the spy finished stealing the secret of a nation.
 
 	char  race_id;
-	short	name_id;
+	uint16_t name_id;
 	char  action_mode;
 	const char* action_str();
 
@@ -138,7 +138,7 @@ public:
 	int 	ai_spy_being_attacked(int attackerUnitRecno);
 
 	// #### patch begin Gilbert 20/1 ######//
-	UCHAR crc8();
+	uint8_t crc8();
 	void	clear_ptr();
 	// #### patch end Gilbert 20/1 ######//
 };

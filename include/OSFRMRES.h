@@ -28,10 +28,6 @@
 #include <ALL.h>
 #endif
 
-#ifndef __OSPRTRES_H
-#include <OSPRTRES.h>
-#endif
-
 
 //-------- Define struct SpriteFrameRec ----------//
 

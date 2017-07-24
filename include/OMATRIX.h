@@ -117,7 +117,7 @@ public:
 	char		flammability;				// -100 to 100, likelihood of fire
 
 	char		power_nation_recno;		// 0-no nation has power over this location
-	unsigned char region_id;
+	uint8_t		region_id;
 	unsigned char visit_level;			// drop from FULL_VISIBILITY to 0
 
 public:
@@ -274,7 +274,7 @@ public:
 	int 	get_any_unit(int& mobileType);
 	int   is_accessible(int mobileType);      // whether the location is accessible to the unit of the specific mobile type
 
-	int   is_unit_group_accessible(int mobileType, DWORD curGroupId);
+	int   is_unit_group_accessible(int mobileType, uint32_t curGroupId);
 
 	//int   can_move(int mobileType)      { return is_accessible(mobileType) && cargo_recno==0; }
 	int   can_move(int mobileType)      { return is_accessible(mobileType) && (mobileType==UNIT_AIR ? !air_cargo_recno : !cargo_recno); }

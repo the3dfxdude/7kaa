@@ -2351,7 +2351,7 @@ Location* World::get_loc(int xLoc, int yLoc)
 
 //--------- Begin of function World::get_region_id --------//
 //
-BYTE World::get_region_id(int xLoc, int yLoc)
+uint8_t World::get_region_id(int xLoc, int yLoc)
 {
 	err_when( xLoc<0 || xLoc>=MAX_WORLD_X_LOC );
 	err_when( yLoc<0 || yLoc>=MAX_WORLD_Y_LOC );

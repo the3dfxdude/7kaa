@@ -143,7 +143,7 @@ int Sprite::match_dir()
 	{
 		err_when(cur_dir==final_dir || ((cur_dir+HALF_SPRITE_DIR_TYPE)%MAX_SPRITE_DIR_TYPE)==final_dir);
 
-		UCHAR dirDiff = (final_dir - cur_dir + MAX_SPRITE_DIR_TYPE) % MAX_SPRITE_DIR_TYPE;
+		uint8_t dirDiff = (final_dir - cur_dir + MAX_SPRITE_DIR_TYPE) % MAX_SPRITE_DIR_TYPE;
 		if(dirDiff<HALF_SPRITE_DIR_TYPE)
 		{
 			turn_delay += turnAmount;
@@ -176,7 +176,7 @@ int Sprite::match_dir()
 //------ Begin of function Sprite::set_dir -------//
 void Sprite::set_dir(int curX, int curY, int destX, int destY)
 {
-	UCHAR newDir = get_dir(curX, curY, destX, destY);
+	uint8_t newDir = get_dir(curX, curY, destX, destY);
 	if(newDir != final_dir)
 	{
 		final_dir = newDir;
@@ -192,7 +192,7 @@ void Sprite::set_dir(int curX, int curY, int destX, int destY)
 
 
 //------ Begin of function Sprite::set_dir -------//
-void Sprite::set_dir(UCHAR newDir)
+void Sprite::set_dir(uint8_t newDir)
 {
 	if(newDir != final_dir)
 	{

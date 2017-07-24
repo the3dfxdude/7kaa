@@ -46,15 +46,15 @@
 struct MonsterInFirm
 {
 public:
-	BYTE  monster_id;
-	BYTE  unit_id;
+	char  monster_id;
+	char  _unused;
 	short mobile_unit_recno;		// unit recno of this monster when it is a mobile unit
 											// this is only used as a reference for soldiers to find their leaders
 	char  combat_level;
 	short hit_points;
 	short	max_hit_points;
 
-	BYTE  soldier_monster_id;     // monster id. of the soldiers led by this monster general
+	char  soldier_monster_id;     // monster id. of the soldiers led by this monster general
 	char	soldier_count;				// no. of soldiers commaned by this monster general/king
 
 public:
@@ -130,7 +130,7 @@ public:
 	int	is_hostile_nation(int nationRecno);
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

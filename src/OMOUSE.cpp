@@ -365,7 +365,7 @@ int MouseSDL::get_event()
 
 	case KEY_PRESS:
 		scan_code = eptr->scan_code;
-		key_code = mouse.is_key(scan_code, event_skey_state, (WORD) 0, K_CHAR_KEY);
+		key_code = mouse.is_key(scan_code, event_skey_state, (unsigned short)0, K_CHAR_KEY);
 		has_mouse_event = 0;
 		break;
 
@@ -986,10 +986,10 @@ int MouseSDL::micky_to_displacement(int d)
 //
 // pass 0 as charValue to disable checking in charValue
 // e.g pressed key is 'a'
-// mouse.is_key(mouse.scan_code, mouse.event_skey_state, (WORD) 0, K_CHAR_KEY) returns 'a'
+// mouse.is_key(mouse.scan_code, mouse.event_skey_state, (unsigned short) 0, K_CHAR_KEY) returns 'a'
 // but if key pressed is alt-a
 // the same function call returns 0
-// use mouse.is_key(mouse.scan_code, mouse.event_skey_state, (WORD) 0, K_CHAR_KEY | K_IS_ALT ) instead
+// use mouse.is_key(mouse.scan_code, mouse.event_skey_state, (unsigned short) 0, K_CHAR_KEY | K_IS_ALT ) instead
 //
 int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short charValue, unsigned flags)
 {

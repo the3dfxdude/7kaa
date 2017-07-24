@@ -40,7 +40,7 @@ public:
 	char	display_layer();
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
 #pragma pack()

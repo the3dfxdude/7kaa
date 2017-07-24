@@ -26,7 +26,7 @@
 #include <OLOG.h>
 #include <stdio.h>
 #include <OFILE.h>
-#ifdef WIN32
+#ifndef NO_WINDOWS
 #include <windows.h> // OutputDebugString
 #endif
 #include <dbglog.h>
@@ -119,7 +119,7 @@ void Log::dump()
 // -------- begin of function Log::debug_log ----------//
 void Log::debug_log(const char *msg)
 {
-#ifdef WIN32
+#ifndef NO_WINDOWS
 	String s;
 	s = GetTickCount();
 	s += ": ";
@@ -133,7 +133,7 @@ void Log::debug_log(const char *msg)
 
 void Log::debug_log(int n)
 {
-#ifdef WIN32
+#ifndef NO_WINDOWS
 	String s;
 	s = GetTickCount();
 	s += ": ";

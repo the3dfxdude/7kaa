@@ -21,14 +21,16 @@
 //Filename    : OMISC.CPP
 //Description : Object of Misc useful functions
 
-#ifndef NO_WINDOWS
-#include <windows.h>
-#else
+#ifdef NO_WINDOWS
+#include <sys/time.h>
 #include <sys/stat.h>
 #include <errno.h>
+#else
+#include <Windows.h>
 #endif 
 
 #include <SDL.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <c99_printf.h>
@@ -683,7 +685,8 @@ char* Misc::format( int inNum, int formatType )
    else
       sign  = 0;
 
-   longStr  = ltoa( inNum, longBuf, 10 );
+   longStr = longBuf;
+   sprintf( longStr, "%d", inNum );
    intDigit = strlen(longStr);  // no. of integer digits
 
    //--------- negetive bracket ------------//
@@ -827,7 +830,8 @@ char* Misc::num_to_str(int inNum)
 {
    static char strBuf[25];
 
-   return ltoa( inNum, strBuf, 10 );
+   sprintf(strBuf,"%d",inNum);
+   return strBuf;
 }
 //---------- End of function Misc::format ---------//
 

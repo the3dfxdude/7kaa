@@ -25,6 +25,7 @@
 #define __OSYS_H
 
 #include <ALL.h>
+#include <storage_constants.h>
 #include <stdint.h>
 
 //------ Define common data buffer size  ------//
@@ -172,7 +173,7 @@ public:
 
 	void		show_error_dialog(const char *formatStr, ...);
 
-	void		mp_request_save(DWORD frame);
+	void		mp_request_save(uint32_t frame);
 	void		mp_clear_request_save();
 
 	//-------------- single player syn. game testing functions --------------//

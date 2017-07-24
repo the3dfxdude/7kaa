@@ -99,7 +99,7 @@ public:
 	char  race_id;
 	char  unit_id;
 	short town_recno;
-	short	name_id;
+	uint16_t name_id;
 
 	char	skill_id;
 	char  skill_level;
@@ -173,7 +173,7 @@ public:
 	short  loc_x1, loc_y1, loc_x2, loc_y2;
 	short  abs_x1, abs_y1, abs_x2, abs_y2;
 	short  center_x, center_y;
-	BYTE	 region_id;
+	uint8_t	 region_id;
 
 	char   cur_frame;          // current animation frame id.
 	char   remain_frame_delay;
@@ -188,7 +188,7 @@ public:
 	short  overseer_recno;
 	short  overseer_town_recno;
 	short	 builder_recno;		// the recno of the builder
-	BYTE 	 builder_region_id;	// the original region no. of builder
+	uint8_t 	 builder_region_id;	// the original region no. of builder
 	float  productivity;
 
 	Worker* worker_array;
@@ -196,7 +196,7 @@ public:
 	char   selected_worker_id;
 
 	char	 player_spy_count;
-	BYTE	 sabotage_level;			// 0-100 for counter productivity
+	uint8_t	 sabotage_level;			// 0-100 for counter productivity
 
 	int	 average_worker_skill();
 
@@ -378,7 +378,7 @@ public:
 			  void 			ai_firm_captured(int capturerNationRecno);
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
    //---------------------------------------//

@@ -39,7 +39,7 @@ class FirmWar : public Firm
 {
 public:
 	short build_unit_id;
-	DWORD last_process_build_frame_no;
+	uint32_t last_process_build_frame_no;
 	float build_progress_days;
 
 	char  build_queue_array[MAX_BUILD_QUEUE];		// it stores the unit id.
@@ -71,7 +71,7 @@ public:
 	void	cancel_build_unit();
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR	crc8();
+	virtual	uint8_t	crc8();
 	virtual	void	clear_ptr();
 
 	enum {FIRMWAR_BUILD_BATCH_COUNT = 10}; // Number of units enqueued when holding shift - ensure this is less than MAX_BUILD_QUEUE

@@ -110,7 +110,7 @@ void NationArray::deinit()
 //
 // return : <int> nationRecno = the recno. of the newly added nation
 //
-int NationArray::new_nation(int nationType, int raceId, int colorSchemeId, unsigned long dpPlayerId)
+int NationArray::new_nation(int nationType, int raceId, int colorSchemeId, uint32_t dpPlayerId)
 {
 	err_when( info.game_date < last_del_nation_date + NEW_NATION_INTERVAL_DAYS );
 

@@ -26,6 +26,10 @@
 #include <OCONFIG.h>
 #include <OINFO.h>
 
+#ifndef NO_WINDOWS
+#include <Windows.h>
+#endif
+
 
 SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 {
@@ -42,13 +46,15 @@ SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 	saveGameInfo.nation_color = playerNation->nation_color;
 
 	saveGameInfo.game_date    = info.game_date;
-	saveGameInfo.file_date.dwHighDateTime = saveGameInfo.file_date.dwLowDateTime = 0;
+	saveGameInfo.file_date    = 0;
 #ifndef NO_WINDOWS  // FIXME
 	//----- set the file date ------//
 
+	FILETIME sysTimeAsFileTime;
 	SYSTEMTIME sysTime;
 	GetSystemTime(&sysTime);
-	SystemTimeToFileTime(&sysTime, &saveGameInfo.file_date);
+	SystemTimeToFileTime(&sysTime, &sysTimeAsFileTime);
+	saveGameInfo.file_date = static_cast<std::uint64_t>(sysTimeAsFileTime.dwHighDateTime) << 32 | sysTimeAsFileTime.dwLowDateTime;
 #endif
 
 	saveGameInfo.terrain_set  = config.terrain_set;

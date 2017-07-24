@@ -802,12 +802,12 @@ int Unit::space_around_target_ver2(int targetXLoc, int targetYLoc, int targetWid
 //
 // <int>		targetXLoc	- target x loc
 // <int>		targetYLoc	- target y loc
-// <UCHAR>	regionId		- region id
+// <uint8_t>	regionId		- region id
 //
 // return 1 if there is space for the land unit to move to ship surrounding for close attack
 // return 0 otherwise
 //
-int Unit::ship_surr_has_free_land(int targetXLoc, int targetYLoc, UCHAR regionId)
+int Unit::ship_surr_has_free_land(int targetXLoc, int targetYLoc, uint8_t regionId)
 {
 	err_when(mobile_type!=UNIT_LAND);
 	Location *locPtr;

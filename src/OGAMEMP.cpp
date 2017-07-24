@@ -152,8 +152,8 @@ enum
 
 struct MpStructBase
 {
-	DWORD msg_id;
-	MpStructBase(DWORD msgId) : msg_id(msgId) {}
+	uint32_t msg_id;
+	MpStructBase(uint32_t msgId) : msg_id(msgId) {}
 };
 
 struct MpStructSeed : public MpStructBase
@@ -176,27 +176,27 @@ struct MpStructSeedStr : public MpStructBase
 
 	MpStructSeedStr(long l) : MpStructBase(MPMSG_RANDOM_SEED_STR)
 	{
-		ltoa(l, seed_str, 10);
+		sprintf(seed_str,"%ld",l);
 	}
 };
 
 struct MpStructNation : public MpStructBase
 {
 	short nation_recno;
-	DWORD dp_player_id;
+	uint32_t dp_player_id;
 	short color_scheme;
 	short race_id;
 	char  player_name[HUMAN_NAME_LEN+1];
 
 	MpStructNation() : MpStructBase(MPMSG_DECLARE_NATION) {}
-	MpStructNation(short n, DWORD playerId, short scheme, short race,
+	MpStructNation(short n, uint32_t playerId, short scheme, short race,
 		char *playerName):
 		MpStructBase(MPMSG_DECLARE_NATION), nation_recno(n),
 		dp_player_id(playerId), color_scheme(scheme), race_id(race)
 		{
 			strcpy(player_name, playerName);
 		}
-	void init(short n, DWORD playerId, short scheme, short race,
+	void init(short n, uint32_t playerId, short scheme, short race,
 		char *playerName)
 	{
 		msg_id = MPMSG_DECLARE_NATION;
@@ -334,12 +334,12 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 	short nation_recno;
 	short color_scheme_id;
 	short race_id;
-	DWORD frame_count;			// detail to test save game from the same game
+	uint32_t frame_count;			// detail to test save game from the same game
 	long  random_seed;
 	char  name[MP_FRIENDLY_NAME_LEN+1];
 	char  pass[MP_FRIENDLY_NAME_LEN+1];
 
-	MpStructLoadGameNewPlayer(Nation *n, DWORD frame, long seed, char *name, char *pass) :
+	MpStructLoadGameNewPlayer(Nation *n, uint32_t frame, long seed, char *name, char *pass) :
 		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
 		race_id(n->race_id), frame_count(frame), random_seed(seed),
@@ -376,26 +376,6 @@ struct MpStructSyncLevel : public MpStructBase
 	}
 };
 
-
-struct MpStructLatencySend : public MpStructBase
-{
-	int test_id;
-	DWORD send_time;
-	MpStructLatencySend(int testId, DWORD sendTime) : MpStructBase(MPMSG_TEST_LATENCY_SEND),
-		test_id(testId), send_time(sendTime)
-	{
-	}
-};
-
-struct MpStructLatencyReturn : public MpStructLatencySend
-{
-	MpStructLatencyReturn(const MpStructLatencySend &ls) : MpStructLatencySend(ls)
-	{
-		msg_id = MPMSG_TEST_LATENCY_ECHO;
-	}
-};
-
-
 struct MpStructProcessFrameDelay : public MpStructBase
 {
 	int	common_process_frame_delay;
@@ -421,8 +401,8 @@ struct MpStructPlayerDisconnect : public MpStructBase
 
 //--------- Define static functions ------------//
 
-static void pregame_disconnect_handler(DWORD playerId);
-static void ingame_disconnect_handler(DWORD playerId);
+static void pregame_disconnect_handler(uint32_t playerId);
+static void ingame_disconnect_handler(uint32_t playerId);
 
 /*
 //--------- Begin of function Game::mp_disp_player ---------//
@@ -460,7 +440,7 @@ void Game::mp_broadcast_setting()
 	// send (short) no. of nations
 	// for each nation, send :
 	//	(short) nation recno
-	// (DWORD) directPlay player id
+	// (uint32_t) directPlay player id
 	// (short) color scheme
 	// (short) race id
 	//
@@ -502,7 +482,7 @@ void Game::mp_broadcast_setting()
 // disconnects from the game when it's still in multiplayer game setting
 // menu.
 //
-static void pregame_disconnect_handler(DWORD playerId)
+static void pregame_disconnect_handler(uint32_t playerId)
 {
 	int i;
 
@@ -523,7 +503,7 @@ static void pregame_disconnect_handler(DWORD playerId)
 // Host disconnection handler, called by Remote when one of the players
 // disconnects from the game after the game has started.
 //
-static void ingame_disconnect_handler(DWORD playerId)
+static void ingame_disconnect_handler(uint32_t playerId)
 {
 	int i;
 
@@ -4105,7 +4085,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 			err_when( !recvPtr);
 
-			DWORD offset = 0;
+			uint32_t offset = 0;
 			int recvStartMsg = 0;
 			int recvSeed = 0;
 			int recvConfig = 0;
@@ -4118,7 +4098,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			// process the string received
 			while( offset < recvLen )
 			{
-				DWORD oldOffset = offset;
+				uint32_t oldOffset = offset;
 				recvPtr = oriRecvPtr + offset;
 
 				switch( ((MpStructBase *)(recvPtr))->msg_id )
@@ -5559,7 +5539,7 @@ int Game::mp_select_load_option(char *fileName)
 
 			err_when( !recvPtr );
 
-			DWORD offset = 0;
+			uint32_t offset = 0;
 			int recvStartMsg = 0;
 			int ownPlayerFound = 0;
 			playerCount = 0;
@@ -5570,7 +5550,7 @@ int Game::mp_select_load_option(char *fileName)
 			// process the string received
 			while( offset < recvLen )
 			{
-				DWORD oldOffset = offset;
+				uint32_t oldOffset = offset;
 				recvPtr = oriRecvPtr + offset;
 
 				switch( ((MpStructBase *)(recvPtr))->msg_id )

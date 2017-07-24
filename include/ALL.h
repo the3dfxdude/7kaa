@@ -26,7 +26,6 @@
 
 //--------- Include other headers -------//
 
-#include <win32_compat.h>
 #include <OMISC.h>
 #include <OSTR.h>
 #include <OFILE.h>
@@ -46,24 +45,22 @@ struct MemInfo;
 class Mem
 {
 public :
-        MemInfo* info_array;
-        short    ptr_num;
-        short    ptr_used;
+	MemInfo* info_array;
+	short    ptr_num;
+	short    ptr_used;
 
 public :
-        Mem();
-        ~Mem();
+	Mem();
+	~Mem();
 
-    char* add(unsigned, const char*, int);
-    char* add_clear(unsigned, const char*,int);
-    char* resize(void*,unsigned, const char*,int);
-    char* resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize, const char* fileName, int fileLine);
-    void  del(void*,const char*,int);
+	char* add(unsigned, const char*, int);
+	char* add_clear(unsigned, const char*,int);
+	char* resize(void*,unsigned, const char*,int);
+	char* resize_keep_data(void *orgPtr, unsigned orgSize, unsigned newSize, const char* fileName, int fileLine);
+	void  del(void*,const char*,int);
 
-    int get_mem_size(void *memPtr);
+	int get_mem_size(void *memPtr);
 };
-
-char* mem_resize_keep_data(void*,unsigned,unsigned);    // called when DEBUG mode is off
 
 extern Mem mem;
 
@@ -76,8 +73,6 @@ extern Mem mem;
 	#define mem_resize(orgPtr,newSize)   mem.resize(orgPtr, newSize, __FILE__, __LINE__)
 	#define mem_del(memPtr)              mem.del(memPtr, __FILE__, __LINE__)
 
-	#define mem_resize_keep_data(orgPtr, orgSize, newSize) \
-								  mem.resize_keep_data(orgPtr, orgSize, newSize, __FILE__, __LINE__)
 #else
 
 	#include <stdlib.h>
@@ -86,8 +81,6 @@ extern Mem mem;
 	#define mem_add_clear(memSize)      ((char*)calloc(1,memSize))
 	#define mem_resize(orgPtr, newSize) ((char*)realloc(orgPtr,newSize))
 	#define mem_del(memPtr)             free(memPtr)
-
-	// mem_resize_keep_data() will be called directly when not in DEBUG mode
 
 #endif
 

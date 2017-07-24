@@ -45,13 +45,13 @@ public:
 	short			 ship_count;
 
 	short			 build_unit_id;			// race id. of the unit the town is currently building, 0-if currently not building any
-	DWORD			 start_build_frame_no;
+	uint32_t			 start_build_frame_no;
 
 	char			 build_queue_array[MAX_BUILD_SHIP_QUEUE];	// it stores the unit id.
 	char			 build_queue_count;
 
-	UCHAR			 land_region_id;
-	UCHAR			 sea_region_id;
+	uint8_t			 land_region_id;
+	uint8_t			 sea_region_id;
 
 	//----------- for harbor trading ------------//
 
@@ -111,7 +111,7 @@ public:
 	enum {HARBOR_BUILD_BATCH_COUNT = 5}; // Number of units enqueued when holding shift - ensure this is less than MAX_BUILD_SHIP_QUEUE
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 
 private:

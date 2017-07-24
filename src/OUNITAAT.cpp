@@ -472,7 +472,7 @@ void UnitArray::attack_unit(int targetXLoc, int targetYLoc, short targetUnitRecn
 	//---------------------------------------------------------------------//
 	Unit		*unitPtr = (Unit*) get_ptr(selectedUnitArray[0]);
 	err_when(!unitPtr);
-	DWORD groupId = unit_array.cur_group_id++;
+	uint32_t groupId = unit_array.cur_group_id++;
 	arrange_units_in_group(targetXLoc, targetYLoc, targetXLoc2, targetYLoc2, selectedUnitArray, selectedCount, groupId, 1);
 
 	//---------------------------------------------------------------------//
@@ -735,7 +735,7 @@ void UnitArray::attack_firm(int targetXLoc, int targetYLoc, short firmRecno, sho
 	//---------------------------------------------------------------------//
 	Unit		*unitPtr = (Unit*) get_ptr(selectedUnitArray[0]);
 	err_when(!unitPtr);
-	DWORD groupId = unit_array.cur_group_id++;
+	uint32_t groupId = unit_array.cur_group_id++;
 	arrange_units_in_group(targetXLoc, targetYLoc, targetXLoc2, targetYLoc2, selectedUnitArray, selectedCount, groupId, 2);
 
 	//---------------------------------------------------------------------//
@@ -988,7 +988,7 @@ void UnitArray::attack_town(int targetXLoc, int targetYLoc, short townRecno, sho
 	//---------------------------------------------------------------------//
 	Unit		*unitPtr = (Unit*) get_ptr(selectedUnitArray[0]);
 	err_when(!unitPtr);
-	DWORD groupId = unit_array.cur_group_id++;
+	uint32_t groupId = unit_array.cur_group_id++;
 	arrange_units_in_group(targetXLoc, targetYLoc, targetXLoc2, targetYLoc2, selectedUnitArray, selectedCount, groupId, 3);
 
 	//---------------------------------------------------------------------//
@@ -1234,7 +1234,7 @@ void UnitArray::attack_wall(int targetXLoc, int targetYLoc, short* selectedUnitA
 	//---------------------------------------------------------------------//
 	Unit		*unitPtr = (Unit*) get_ptr(selectedUnitArray[0]);
 	err_when(!unitPtr);
-	DWORD groupId = unit_array.cur_group_id++;
+	uint32_t groupId = unit_array.cur_group_id++;
 	arrange_units_in_group(targetXLoc, targetYLoc, targetXLoc, targetYLoc, selectedUnitArray, selectedCount, groupId, 0);
 
 	//---------------------------------------------------------------------//
@@ -1424,12 +1424,12 @@ void UnitArray::attack_wall(int targetXLoc, int targetYLoc, short* selectedUnitA
 // <int>		yLoc2					- bottom right y location of the target
 // <short*> selectedUnitArray	- recno. of selected units
 // <int>		selectedCount		- count of selected units
-// <DWORD>	unitGroupId			- group id for the selected units
+// <uint32_t>	unitGroupId			- group id for the selected units
 //
 // <int> targetType	- 0 for wall, 1 for unit, 2 for firm, 3 for town
 //
 void UnitArray::arrange_units_in_group(int xLoc1, int yLoc1, int xLoc2, int yLoc2, short* selectedUnitArray,
-													int selectedCount, DWORD unitGroupId, int targetType)
+													int selectedCount, uint32_t unitGroupId, int targetType)
 {
 	Unit	*unitPtr;
 	int	curXLoc, curYLoc;

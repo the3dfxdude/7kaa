@@ -277,9 +277,9 @@ void SpriteRes::load_sub_sprite_info()
 void SpriteRes::update_speed()
 {
 	SpriteInfo *spriteInfo;
-	short rainScale = weather.rain_scale();
-	short snowScale = weather.snow_scale();
-	short speedDrop;
+	int rainScale = weather.rain_scale();
+	int snowScale = weather.snow_scale();
+	int speedDrop;
 
 	rainScale = rainScale > 7 ? 7 : rainScale;
 	snowScale = snowScale > 7 ? 7 : snowScale;

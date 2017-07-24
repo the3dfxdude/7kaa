@@ -52,7 +52,7 @@ int	SeekPathReuse::max_node;
 short SeekPathReuse::total_num_of_path;
 short SeekPathReuse::cur_path_num;
 short SeekPathReuse::unit_size;
-DWORD SeekPathReuse::cur_group_id;
+uint32_t SeekPathReuse::cur_group_id;
 char	SeekPathReuse::mobile_type;
 char	SeekPathReuse::unit_nation_recno;
 short SeekPathReuse::move_scale;
@@ -629,7 +629,7 @@ void SeekPathReuse::move_beyond_map(int preX, int preY, int curX, int curY)
 //	miscNo == target record no if searchMode==SEARCH_MODE_TO_ATTACK
 //			 == firm ID if searchMode==SEARCH_MODE_TO_FIRM
 //
-int SeekPathReuse::seek(int sx,int sy,int dx,int dy,short unitSize, DWORD groupId, char mobileType,
+int SeekPathReuse::seek(int sx,int sy,int dx,int dy,short unitSize, uint32_t groupId, char mobileType,
 								short searchMode, short miscID,
 								short numOfPath, short reuseMode, short pathReuseStatus,
 								int maxTries,int borderX1, int borderY1, int borderX2, int borderY2)

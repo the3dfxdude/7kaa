@@ -119,7 +119,7 @@ void UnitArray::set_group_id(short* selectedArray, int selectedCount)
 	//-------------------------------------------------//
 	// set unit cur_action and unit_group_id
 	//-------------------------------------------------//
-	DWORD curGroupId = unit_array.cur_group_id++;
+	uint32_t curGroupId = unit_array.cur_group_id++;
 
 	for(int j=0; j<selectedCount; j++)
 	{
@@ -172,7 +172,7 @@ void UnitArray::stop(short* selectedUnitArray, int selectedCount, char remoteAct
 	}
 	else
 	{
-		DWORD curGroupId = unit_array.cur_group_id++;
+		uint32_t curGroupId = unit_array.cur_group_id++;
 
 		//-------------- stop now ---------------//
 
@@ -889,7 +889,7 @@ void UnitArray::settle(int destX, int destY, int divided, char remoteAction, sho
 void UnitArray::group_settle(int destX, int destY, short* selectedArray, int selectedCount)
 {
 	#ifdef DEBUG
-		DWORD debugGroupId = (operator[](selectedArray[0]))->unit_group_id;
+		uint32_t debugGroupId = (operator[](selectedArray[0]))->unit_group_id;
 	#endif
 
 	Unit* unitPtr;
@@ -999,7 +999,7 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 		// on the same territory as the closet unit for processing, there will be no action for
 		// the rest units.
 		//------------------------------------------------------------------------------------//
-		DWORD				curGroupId = unit_array.cur_group_id++;
+		uint32_t				curGroupId = unit_array.cur_group_id++;
 		Unit				*closestUnit = (Unit*) get_ptr(selectedArray[closestUnitRecno]);
 		int				closestUnitXLoc = closestUnit->next_x_loc();
 		int				closestUnitYLoc = closestUnit->next_y_loc();
@@ -1054,7 +1054,7 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 			int countLimit = TRY_SIZE*TRY_SIZE;
 			//### begin alex 30/10 ###//
 			int j, k, xShift, yShift, checkXLoc, checkYLoc;
-			UCHAR regionId = world.get_loc(landX, landY)->region_id;
+			uint8_t regionId = world.get_loc(landX, landY)->region_id;
 			Location *locPtr;
 			for(i=0, k=0; i<newSelectedCount; i++)
 			{
@@ -1119,7 +1119,7 @@ void UnitArray::ship_to_beach(int destX, int destY, int divided, short* selected
 	#define CHECK_SEA_DIMENSION	50
 	#define CHECK_SEA_SIZE			CHECK_SEA_DIMENSION*CHECK_SEA_DIMENSION
 	Location *locPtr = world.get_loc(destX, destY);
-	UCHAR regionId = locPtr->region_id;
+	uint8_t regionId = locPtr->region_id;
 	int xShift, yShift, checkXLoc, checkYLoc;
 	int landX, landY, seaX, seaY, tempX, tempY;
 
@@ -1270,7 +1270,7 @@ void UnitArray::add_way_point(int pointX, int pointY, short* selectedArray, int 
 	}
 	else
 	{
-		DWORD groupId = unit_array.cur_group_id;
+		uint32_t groupId = unit_array.cur_group_id;
 		Unit *unitPtr;
 
 		int i;

@@ -64,7 +64,7 @@ private:
 	unsigned long	send_time[MAX_QUEUE];
 	unsigned long	re_send_after[MAX_QUEUE];
 
-	unsigned long	dp_id[MAX_PLAYER];		// directPlay playerid, 0 if not valid
+	uint32_t	dp_id[MAX_PLAYER];		// directPlay playerid, 0 if not valid
 	char	wait_to_receive[MAX_PLAYER];
 	char	recv_flag[MAX_PLAYER][MAX_QUEUE];
 	// char	next_send[MAX_PLAYER];
@@ -114,8 +114,8 @@ private:
 public:
 	void	init(MultiPlayer *mp, char ecPlayerId);
 	void	deinit();
-	void	set_dp_id(char ecPlayerId, unsigned long dpPlayerId );
-	char	get_ec_player_id( unsigned long dpPlayerId );
+	void	set_dp_id(char ecPlayerId, uint32_t dpPlayerId );
+	char	get_ec_player_id( uint32_t dpPlayerId );
 
 	int	send(char ecPlayerId, void *dataPtr, unsigned long dataLen);
 	char*	receive(char *sendEcPlayerId, uint32_t *dataLen);

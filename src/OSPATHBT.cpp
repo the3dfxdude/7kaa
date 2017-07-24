@@ -49,7 +49,7 @@ void NodePriorityQueue::reset_priority_queue()
 //-------- Begin of function NodePriorityQueue::insert_node -------//
 void NodePriorityQueue::insert_node(Node *insertNode)
 {
-	UINT i = ++size;
+	unsigned int i = ++size;
 	register int f=insertNode->node_f;
 	Node **localElements = elements;
 	
@@ -70,8 +70,8 @@ Node* NodePriorityQueue::return_min()
 	if(!size)
 		return NULL;
 
-	UINT i, child, doubleI;
-	UINT localSize = size--;
+	unsigned int i, child, doubleI;
+	unsigned int localSize = size--;
 
 	Node **localElements = elements;
 	Node *minElement = localElements[1];

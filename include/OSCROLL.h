@@ -53,7 +53,7 @@ private:
    short indicator_height;  // height of the scroll indicator
    short indicator_y;       // the position of the indicator
 
-   DWORD	next_press_time;   // clock() must > next_press_time, so we
+   unsigned long	next_press_time;   // clock() must > next_press_time, so we
 									 // would allow next mouse press action
 
 public :

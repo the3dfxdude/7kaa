@@ -62,7 +62,7 @@ class SeekPathReuse
 		static short			total_num_of_path;	// equal to number of unit to process path-reuse
 		static short			cur_path_num;			// which unit in the group is processing path-reuse
 		static short			unit_size;				// the size of the current unit
-		static DWORD			cur_group_id;			// group id used to pass into SeekPath for searching
+		static uint32_t			cur_group_id;			// group id used to pass into SeekPath for searching
 		static char				mobile_type;			// mobile type used to pass into SeekPath for searching
 		static char				unit_nation_recno;	// the nation recno of this unit
 		static short			move_scale;				// 1 for UNIT_LAND, 2 for others
@@ -135,15 +135,14 @@ class SeekPathReuse
 		void			init_reuse_node_matrix();
 		void			set_index_in_node_matrix(int xLoc, int yLoc);
 
-		int			seek(int sx,int sy,int dx,int dy,short unitSize, DWORD groupId,char mobileType, short searchMode=4, short miscNo=0,
+		int			seek(int sx,int sy,int dx,int dy,short unitSize, uint32_t groupId,char mobileType, short searchMode=4, short miscNo=0,
 							 short numOfPath=1, short pathReuseStatus=REUSE_PATH_INITIAL, short reuseMode=GENERAL_GROUP_MOVEMENT,
 							 int maxTries=0,int borderX1=0, int borderY1=0, int borderX2=MAX_WORLD_X_LOC-1, int borderY2=MAX_WORLD_Y_LOC-1);
 		ResultNode* get_result(int& resultNodeCount, short& pathDist);
-		inline ResultNode* call_seek(int sx, int sy, int dx, int dy, DWORD groupId, char mobileType, short searchMode, int& nodeCount)
+		inline ResultNode* call_seek(int sx, int sy, int dx, int dy, uint32_t groupId, char mobileType, short searchMode, int& nodeCount)
 						{	seek_path.seek(sx, sy, dx, dy, groupId, mobileType, searchMode);
 							return seek_path.get_result(nodeCount, reuse_path_dist);
 						}
-		inline ResultNode* call_seek2(int sx, int sy, int dx, int dy, DWORD groupId, char mobileType, short searchMode, int& nodeCount, int& returnValue);
 		short			count_path_dist(ResultNode* nodeArray, int nodeNum);
 
 		void			extend_result_path(short addSize=RNA_RESET_AMOUNT);

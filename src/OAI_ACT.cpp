@@ -525,13 +525,13 @@ int Nation::is_build_action_exist(int firmId, int xLoc, int yLoc)
 //
 // The action under processing is finished successfully.
 //
-// <WORD>  aiActionId   - the id. of the action to be marked finished.
+// <uint16_t>  aiActionId   - the id. of the action to be marked finished.
 // [short] unitRecno    - if this is given, the the unit's all action
 //								  will be stopped.
 // [int]   actionFailure - whether the action is failed and called by
 //                        action_failure(). (default: 0)
 //
-void Nation::action_finished(WORD aiActionId, short unitRecno, int actionFailure)
+void Nation::action_finished(uint16_t aiActionId, short unitRecno, int actionFailure)
 {
 	//----- locate the ActionNode of this action ------//
 
@@ -641,11 +641,11 @@ void Nation::action_finished(WORD aiActionId, short unitRecno, int actionFailure
 // It's basically the same as action_finish(). Now there isn't any
 // difference.
 //
-// <WORD>  aiActionId - the id. of the action to be marked finished.
+// <uint16_t>  aiActionId - the id. of the action to be marked finished.
 // [short] unitRecno  - if this is given, the the unit's all action
 //							 	 will be stopped.
 //
-void Nation::action_failure(WORD aiActionId, short unitRecno)
+void Nation::action_failure(uint16_t aiActionId, short unitRecno)
 {
 	//-- if the unit is a ship, ignore it as it will be called by stop2() when it stops, but hasn't yet finished its action --//
 /*

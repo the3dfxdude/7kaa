@@ -100,7 +100,7 @@ public:
 	void 		deinit();
 	int  		nation_class_size();
 
-	int  		new_nation(int,int,int,unsigned long=0);
+	int  		new_nation(int,int,int,uint32_t=0);
 	int		new_nation(NewNationPara &);
 	int  		create_nation();
 	void 		del_nation(int);
@@ -153,12 +153,12 @@ public:
 struct NewNationPara
 {
 	short nation_recno;
-	DWORD dp_player_id;
+	uint32_t dp_player_id;
 	short color_scheme;
 	short race_id;
 	char  player_name[HUMAN_NAME_LEN+1];
 
-	void init(short n, DWORD playerId, short scheme, short race, char *playerName)
+	void init(short n, uint32_t playerId, short scheme, short race, char *playerName)
 	{
 		nation_recno = n;
 		dp_player_id = playerId;

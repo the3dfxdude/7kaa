@@ -483,7 +483,7 @@ void Unit::assign(int assignXLoc, int assignYLoc, short curAssignUnitNum)
 	// move there if the destination in other territory
 	//----------------------------------------------------------------//
 	Location	*locPtr = world.get_loc(assignXLoc, assignYLoc);
-	UCHAR unitRegionId = world.get_loc(next_x_loc(), next_y_loc())->region_id;
+	uint8_t unitRegionId = world.get_loc(next_x_loc(), next_y_loc())->region_id;
 	if(locPtr->is_firm())
 	{
 		Firm *firmPtr = firm_array[locPtr->firm_recno()];
@@ -1365,7 +1365,7 @@ void Unit::process_assign()
 					short	unitRecno = sprite_recno;
 					int	actionXLoc = action_x_loc;
 					int	actionYLoc = action_y_loc;
-					short	aiActionId = ai_action_id;
+					uint16_t	aiActionId = ai_action_id;
 					char	aiUnit = ai_unit;
 
 					reset_action_para2();

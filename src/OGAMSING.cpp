@@ -283,7 +283,7 @@ static int select_option()
 	const int mapIdSize = 11;		// enough to hold a dword in decimal
 	char mapIdStr[mapIdSize+1];
 	info.init_random_seed(0);
-	ltoa( info.random_seed , mapIdStr, 10);
+	sprintf( mapIdStr,"%d",info.random_seed);
 	GetA mapIdField;
 #if(defined(SPANISH))
 	#define MAPID_X1 586

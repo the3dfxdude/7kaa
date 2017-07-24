@@ -112,7 +112,7 @@ public:
 	void		surrender();
 
 	// ###### begin Gilbert 10/10 #########//
-	UCHAR		crc8();
+	uint8_t		crc8();
 	void		clear_ptr();
 	// ###### end Gilbert 10/10 #########//
 

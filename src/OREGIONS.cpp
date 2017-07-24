@@ -76,7 +76,7 @@ void RegionArray::init_region_stat()
 		err_when( regionStatId<1 || regionStatId>region_stat_count );
 
 		region_stat_array[regionStatId-1].region_id = regionInfo->region_id;
-		regionInfo->region_stat_id	= regionStatId;
+		regionInfo->region_stat_id	= static_cast<uint8_t>(regionStatId);
 
 		if( ++regionStatId > region_stat_count )
 			break;

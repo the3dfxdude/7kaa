@@ -366,7 +366,7 @@ void FirmMonster::add_general(int generalUnitRecno)
 	if( monsterInFirm->hit_points == 0 )		// 0.? will become 0 in (float) to (int) conversion
 		monsterInFirm->hit_points = 1;
 
-	monsterInFirm->soldier_monster_id = unitPtr->get_monster_soldier_id();		// skill id is used for storing the soldier monster id temporarily
+	monsterInFirm->soldier_monster_id = unitPtr->get_monster_soldier_id();		// total_reward is used for storing the soldier monster id temporarily
 	monsterInFirm->soldier_count   	 = 0;
 
 	monsterInFirm->mobile_unit_recno = generalUnitRecno; 	// unit recno of this monster when it is a mobile unit
@@ -509,11 +509,10 @@ int FirmMonster::mobilize_king()
 
 //--------- Begin of function FirmMonster::mobilize_general ---------//
 //
-// Mobilize monster generals. Soldiers need by the general is also mobilized.
+// Mobilize monster generals. Soldiers led by the general are also mobilized.
 //
 // <int> generalId 		 - id. of the general.
-// [int] mobilizeSoldier - whether also mobilize soldiers this general
-//									commands. (default: 1)
+// [int] mobilizeSoldier - whether also mobilize soldiers this general commands. (default: 1)
 //
 // Return: <int> the no. of monsters have been mobilized.
 //
@@ -809,10 +808,9 @@ int FirmMonster::total_combat_level()
 int FirmMonster::can_assign_monster(int unitRecno)
 {
 	Unit* unitPtr = unit_array[unitRecno];
-	int   monsterId = unitPtr->get_monster_id();
 
 	return strcmp( firm_res.get_build(firm_build_id)->build_code,	// can assign if the build code are the same
-			 monster_res[monsterId]->firm_build_code ) == 0;
+			 monster_res[unitPtr->get_monster_id()]->firm_build_code ) == 0;
 }
 //------ End of function FirmMonster::can_assign_monster ---------//
 

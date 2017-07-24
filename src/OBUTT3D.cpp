@@ -292,24 +292,24 @@ int Button3D::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int 
 
 	else if(mouse.key_code)
 	{
-      unsigned mouseKey=mouse.key_code;
+		unsigned mouseKey=mouse.key_code;
 
-      if( mouseKey >= 'a' && mouseKey <= 'z' )   // non-case sensitive comparsion
-         mouseKey -= 32;                         // convert from lower case to upper case
+		if( mouseKey >= 'a' && mouseKey <= 'z' )   // non-case sensitive comparsion
+			mouseKey -= 32;                         // convert from lower case to upper case
 
-      if( mouseKey == keyCode1 || mouseKey == keyCode2 || mouseKey == button_key )
+		if( mouseKey == keyCode1 || mouseKey == keyCode2 || mouseKey == button_key )
 		{
-         rc=3;
-      }
-   }
+		 rc=3;
+		}
+	}
 
-   if( !rc )
-      return 0;
+	if( !rc )
+		return 0;
 
    //----- paint the button with pressed shape ------//
 
 	#define PRESSED_TIMEOUT_SECONDS  1      // 1 seconds
-	DWORD timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+	unsigned long timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
 
 	if( elastic_flag )
 	{

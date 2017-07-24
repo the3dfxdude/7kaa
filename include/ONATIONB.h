@@ -157,7 +157,7 @@ public:
 	char* nation_name();
 	const char* king_name(int firstWordOnly=0);
 
-	DWORD player_id;				   // player id for multiplayer game
+	uint32_t player_id;				   // player id for multiplayer game
 
 	char  next_frame_ready;				// for indicating whether the next frame is ready or not
 	short last_caravan_id;				// id. of the nation's caravan.
@@ -329,7 +329,7 @@ public:
 
 	short		 raw_count_array[MAX_RAW];		// no. of natural resources site this nation possesses
 
-	short		 last_unit_name_id_array[MAX_UNIT_TYPE];
+	uint16_t     last_unit_name_id_array[MAX_UNIT_TYPE];
 
 	//--------- rank ratings ---------//
 
@@ -380,7 +380,7 @@ public:
 	NationBase();
 	~NationBase();
 
-	virtual	void init(int nationType, int raceId, int colorSchemeId, DWORD playerId=0);
+	virtual	void init(int nationType, int raceId, int colorSchemeId, uint32_t playerId=0);
    virtual  void deinit();
 
 	void 		init_relation(int relationNationRecno);
@@ -434,7 +434,7 @@ public:
 	int		read_file(File* filePtr);
 
 	//-------------- multiplayer checking codes ---------------//
-	virtual	UCHAR crc8();
+	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
 #pragma pack()

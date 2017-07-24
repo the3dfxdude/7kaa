@@ -364,8 +364,6 @@ char* DateInfo::time_str(int inTime)
 {
 	// #### begin Gilbert 18/8 ####//
 	static char strBuf[6] = "00:00";
-	//itoa( inTime/100, strBuf, 10 );
-	//itoa( inTime%100, strBuf+3, 10 );
 	strBuf[4] = '0' + inTime % 10;
 	strBuf[3] = '0' + (inTime/10) % 10;
 	strBuf[1] = '0' + (inTime/100) % 10;
@@ -421,27 +419,3 @@ int DateInfo::add_months(int inDate, int addMonth)
 	return julian( inYear, inMonth, inDay );
 }
 //---------- End of function DateInfo::add_months ------//
-
-
-//-------- Begin of function DateInfo::file_time_to_julian ------//
-//
-int DateInfo::file_time_to_julian(FILETIME& fileTime)
-{
-/*
-	WORD dosTime, dosDate;
-
-	CoFileTimeToDosDateTime( &fileTime, &dosDate, &dosTime );
-
-	//--------------------------------------------//
-	// Bits	Contents
-	// 0-4	Days of the month (1-31).
-	// 5-8	Months (1 = January, 2 = February, and so forth).
-	// 9-15	Year offset from 1980 (add 1980 to get actual year).
-	//--------------------------------------------//
-
-	return julian( 1980 + (dosDate>>9), (dosDate>>5) & 0x0F, dosDate & 0x0F );
-*/
-	return 0;
-}
-//---------- End of function DateInfo::file_time_to_julian ------//
-

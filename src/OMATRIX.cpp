@@ -932,7 +932,7 @@ int Location::get_any_unit(int& mobileType)
 // return : <int> whether the location can be accessed by the unit of
 //						the specific unit group id.
 //
-int Location::is_unit_group_accessible(int mobileType, DWORD curGroupId)
+int Location::is_unit_group_accessible(int mobileType, uint32_t curGroupId)
 {
 	if(is_accessible(mobileType))
 	{

@@ -62,7 +62,7 @@ public:
 	short abs_x1, abs_y1, abs_x2, abs_y2;
 	short center_x;
 	short center_y;
-	BYTE	region_id;
+	uint8_t	region_id;
 	short layout_id;           // town layout id.
 	short first_slot_id;       // the first slot id. of the layout
 	short slot_object_id_array[MAX_TOWN_LAYOUT_SLOT];  // the race id. of each slot building
@@ -92,7 +92,7 @@ public:
 	char  train_queue_count;
 	short	train_unit_recno;			// race id. of the unit the town is currently training, 0-if currently not training any
 	int	train_unit_action_id;	// id. of the action to be assigned to this unit when it is finished training.
-	DWORD start_train_frame_no;
+	uint32_t start_train_frame_no;
 	short defend_target_recno; 	// used in defend mode, store recno of latest target atttacking this town
 
 	//-------- other vars ----------//
@@ -203,7 +203,7 @@ class Version_1_NationBase
 		char	king_leadership;
 		int 	nation_name_id;			// name of the king/nation
 		char  nation_name_str[NATION_NAME_LEN+1];		// for nation_name()'s use
-		DWORD player_id;				   // player id for multiplayer game
+		uint32_t player_id;				   // player id for multiplayer game
 		char  next_frame_ready;				// for indicating whether the next frame is ready or not
 		short last_caravan_id;				// id. of the nation's caravan.
 		short	nation_firm_count;			// total no. of firms the nation has built
@@ -285,7 +285,7 @@ class Version_1_NationBase
 		short		 largest_town_pop;
 
 		short		 raw_count_array[MAX_RAW];		// no. of natural resources site this nation possesses
-		short		 last_unit_name_id_array[VERSION_1_MAX_UNIT_TYPE];
+		uint16_t	 last_unit_name_id_array[VERSION_1_MAX_UNIT_TYPE];
 
 		//--------- rank ratings ---------//
 		int		 population_rating;
@@ -317,7 +317,7 @@ class Version_1_Nation : public Version_1_NationBase
 {
 	public:
 		DynArray		action_array;
-		WORD			last_action_id; 	// a 16-bit id. for identifying ActionNode
+		uint16_t			last_action_id; 	// a 16-bit id. for identifying ActionNode
 		short*		ai_town_array;
 		short* 		ai_base_array;
 		short* 		ai_mine_array;

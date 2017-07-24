@@ -145,7 +145,7 @@ struct NodePriorityQueue
 {
 	#define MAX_ARRAY_SIZE	MAX_BACKGROUND_NODE+1
 	public:
-		UINT	size;
+		unsigned int	size;
 		Node	*elements[MAX_ARRAY_SIZE];
 
 	public:
@@ -203,7 +203,7 @@ public:
 
 	void	reset();
 	inline void add_result_node(int x, int y, ResultNode** curPtr, ResultNode** prePtr, int& count);
-	int   seek(int sx,int sy,int dx,int dy,DWORD groupId,char mobileType, short searchMode=SEARCH_MODE_IN_A_GROUP, short miscNo=0, short numOfPath=1, int maxTries=0,int borderX1=0, int borderY1=0, int borderX2=MAX_WORLD_X_LOC-1, int borderY2=MAX_WORLD_Y_LOC-1);
+	int   seek(int sx,int sy,int dx,int dy,uint32_t groupId,char mobileType, short searchMode=SEARCH_MODE_IN_A_GROUP, short miscNo=0, short numOfPath=1, int maxTries=0,int borderX1=0, int borderY1=0, int borderX2=MAX_WORLD_X_LOC-1, int borderY2=MAX_WORLD_Y_LOC-1);
 	int   continue_seek(int,char=0);
 
 	ResultNode* get_result(int& resultNodeCount, short& pathDist);
