@@ -220,7 +220,7 @@ void News::migrate()
 						  "%d %s %ss have emigrated from your village of %s to %s in %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2),
@@ -236,7 +236,7 @@ void News::migrate()
 						  "%d %s Peasants have emigrated from your village of %s to %s in %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2),
 					 nation_name2());
@@ -254,7 +254,7 @@ void News::migrate()
 						  "%d %s %ss have emigrated from your village of %s to %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2));
@@ -269,7 +269,7 @@ void News::migrate()
 						  "%d %s Peasants have emigrated from your village of %s to %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2));
 			}
@@ -289,7 +289,7 @@ void News::migrate()
 						  "%d %s %ss have immigrated from %s in %s to your village of %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
 					 nation_name1(),
@@ -305,7 +305,7 @@ void News::migrate()
 						  "%d %s Peasants have immigrated from %s in %s to your village of %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 town_res.get_name(short_para1),
 					 nation_name1(),
 					 town_res.get_name(short_para2));
@@ -323,7 +323,7 @@ void News::migrate()
 						  "%d %s %ss have immigrated from %s to your village of %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 firm_res[short_para5]->worker_title,
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2));
@@ -338,7 +338,7 @@ void News::migrate()
 						  "%d %s Peasants have immigrated from %s to your village of %s.",
 						  short_para4),
 					 short_para4,
-					 race_res[short_para3]->name,
+					 _(race_res[short_para3]->name),
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2));
 			}
@@ -718,12 +718,12 @@ void News::scroll_acquired()
 	if( nation_array.player_recno && nation_name_id1 == (~nation_array)->nation_name_id )
 	{
 		// TRANSLATORS: You have acquired the <Race> Scroll of Power.
-		snprintf(str, MAX_STR_LEN+1, _("You have acquired the %s Scroll of Power."), race_res[short_para1]->adjective);
+		snprintf(str, MAX_STR_LEN+1, _("You have acquired the %s Scroll of Power."), _(race_res[short_para1]->adjective));
 	}
 	else
 	{
 		// TRANSLATORS: <King's Kingdom> has acquired the <Race> Scroll of Power.
-		snprintf(str, MAX_STR_LEN+1, _("%s has acquired the %s Scroll of Power."), nation_name1(), race_res[short_para1]->adjective);
+		snprintf(str, MAX_STR_LEN+1, _("%s has acquired the %s Scroll of Power."), nation_name1(), _(race_res[short_para1]->adjective));
 	}
 }
 //------- End of function News::scroll_acquired -----//
