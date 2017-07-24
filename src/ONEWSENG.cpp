@@ -221,7 +221,7 @@ void News::migrate()
 						  short_para4),
 					 short_para4,
 					 _(race_res[short_para3]->name),
-					 firm_res[short_para5]->worker_title,
+					 _(firm_res[short_para5]->worker_title),
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2),
 					 nation_name2());
@@ -255,7 +255,7 @@ void News::migrate()
 						  short_para4),
 					 short_para4,
 					 _(race_res[short_para3]->name),
-					 firm_res[short_para5]->worker_title,
+					 _(firm_res[short_para5]->worker_title),
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2));
 			}
@@ -290,7 +290,7 @@ void News::migrate()
 						  short_para4),
 					 short_para4,
 					 _(race_res[short_para3]->name),
-					 firm_res[short_para5]->worker_title,
+					 _(firm_res[short_para5]->worker_title),
 					 town_res.get_name(short_para1),
 					 nation_name1(),
 					 town_res.get_name(short_para2));
@@ -324,7 +324,7 @@ void News::migrate()
 						  short_para4),
 					 short_para4,
 					 _(race_res[short_para3]->name),
-					 firm_res[short_para5]->worker_title,
+					 _(firm_res[short_para5]->worker_title),
 					 town_res.get_name(short_para1),
 					 town_res.get_name(short_para2));
 			}
@@ -499,22 +499,22 @@ void News::firm_destroyed()
 	{
 		case DESTROYER_NATION:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King's Kingdom>.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by %s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), nation_name2());
 			break;
 
 		case DESTROYER_REBEL:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Rebels."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Rebels."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_MONSTER:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Fryhtans."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Fryhtans."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_UNKNOWN:
 			// TRANSLATORS: Your <Firm> near <Town> has been destroyed.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
 			break;
 	}
 }
@@ -546,12 +546,12 @@ void News::firm_captured()
 	if( short_para3 )
 	{
 		// TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by a spy from %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by a spy from %s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), nation_name2());
 	}
 	else
 	{
 		// TRANSLATORS: Your <Firm> near <Town> has been captured by <King's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by %s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), nation_name2());
 	}
 }
 //------- End of function News::firm_captured -----//
@@ -781,12 +781,12 @@ void News::your_spy_killed()
 		if( nation_name_id2 )		// not for independent town.
 		{
 			// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King's Kingdom>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s in %s."), firm_res[short_para1]->name, town_res.get_name(short_para2), nation_name2());
+			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s in %s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), nation_name2());
 		}
 		else
 		{
 			// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
 		}
 	}
 	else if( short_para3 == SPY_TOWN )
@@ -849,7 +849,7 @@ void News::enemy_spy_killed()
 		if( short_para3==SPY_FIRM )
 		{
 			// TRANSLATORS: A spy from <King's Kingdom> has been uncovered and executed in your <Firm> near <Town>.
-			snprintf(str, MAX_STR_LEN+1, _("A spy from %s has been uncovered and executed in your %s near %s."), nation_name2(), firm_res[short_para1]->name, town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _("A spy from %s has been uncovered and executed in your %s near %s."), nation_name2(), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
 		}
 		else
 		{
@@ -1143,12 +1143,12 @@ void News::lightning_damage()
 			if( short_para5 )
 			{
 				// TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by lightning."), firm_res[short_para2]->name, town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by lightning."), _(firm_res[short_para2]->name), town_res.get_name(short_para3));
 			}
 			else
 			{
 				// TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been struck by lightning."), firm_res[short_para2]->name, town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been struck by lightning."), _(firm_res[short_para2]->name), town_res.get_name(short_para3));
 			}
 		}
 		else
@@ -1156,12 +1156,12 @@ void News::lightning_damage()
 			if( short_para5 )
 			{
 				// TRANSLATORS: Your <Firm> has been destroyed by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s has been destroyed by lightning."), firm_res[short_para2]->name);
+				snprintf(str, MAX_STR_LEN+1, _("Your %s has been destroyed by lightning."), _(firm_res[short_para2]->name));
 			}
 			else
 			{
 				// TRANSLATORS: Your <Firm> has been struck by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s has been struck by lightning."), firm_res[short_para2]->name);
+				snprintf(str, MAX_STR_LEN+1, _("Your %s has been struck by lightning."), _(firm_res[short_para2]->name));
 			}
 		}
 		break;
@@ -1378,7 +1378,7 @@ void News::firm_worn_out()
 	//----------------------------------------------//
 
 	// TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
-	snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has fallen into disrepair due to the lack of maintenance funds."), firm_res[short_para1]->name, town_res.get_name(short_para2));
+	snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has fallen into disrepair due to the lack of maintenance funds."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
 }
 //------- End of function News::firm_worn_out -----//
 

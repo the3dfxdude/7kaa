@@ -52,6 +52,7 @@
 #include <OFIRMDIE.h>
 // ###### end Gilbert 2/10 ######//
 #include <OUNITRES.h>
+#include <locale.h>
 #include "gettext.h"
 
 
@@ -479,17 +480,22 @@ char* Firm::firm_name()
 
 	if( !closest_town_name_id )
 	{
-		str = firm_res[firm_id]->name;
+		str = _(firm_res[firm_id]->name);
 	}
 	else
 	{
-		// TRANSLATORS: <Town> <Firm>
-		snprintf( str, MAX_STR_LEN+1, _("%s %s"), town_res.get_name(closest_town_name_id), firm_res[firm_id]->short_name );
-
-		if( firm_name_instance_id > 1 )		// don't display number for the first firm
+		if( firm_name_instance_id > 1 )
 		{
-			str += " ";
-			str += firm_name_instance_id;
+			// display number when there are multiple linked firms of the same type
+			// TRANSLATORS: <Town> <Short Firm Name> <Firm #>
+			// This is the name of the firm when there are multiple linked firms to a town.
+			snprintf( str, MAX_STR_LEN+1, pgettext ("FirmUI|Name", "%s %s %d"), town_res.get_name(closest_town_name_id), _(firm_res[firm_id]->short_name), firm_name_instance_id );
+		}
+		else
+		{
+			// TRANSLATORS: <Town> <Short Firm Name>
+			// This is the name of the firm.
+			snprintf( str, MAX_STR_LEN+1, pgettext ("FirmUI|Name", "%s %s"), town_res.get_name(closest_town_name_id), _(firm_res[firm_id]->short_name) );
 		}
 	}
 

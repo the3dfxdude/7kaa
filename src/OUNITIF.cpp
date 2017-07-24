@@ -1012,7 +1012,7 @@ void Unit::disp_build(int refreshFlag)
 		String str;
 
 		// TRANSLATORS: Please select a location to build the <Firm>.
-		snprintf( str, MAX_STR_LEN+1, _("Please select a location to build the %s."), firm_res[power.command_para]->name );
+		snprintf( str, MAX_STR_LEN+1, _("Please select a location to build the %s."), _(firm_res[power.command_para]->name) );
 
 // FRENCH
 //		font_san.put_paragraph( INFO_X1, INFO_Y1, INFO_X2, INFO_Y2, str, 0 );

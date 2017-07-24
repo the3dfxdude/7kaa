@@ -98,6 +98,7 @@ src/ONATIONB.cpp
 src/ONEWSENG.cpp
 src/ORACERES.cpp
 src/ORAWRES.cpp
+src/OR_AI.cpp
 src/OR_ECO.cpp
 src/OR_MIL.cpp
 src/OR_NAT.cpp

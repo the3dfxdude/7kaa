@@ -29,6 +29,7 @@
 #include <OFIRMRES.h>
 #include <ONATION.h>
 #include <OINFO.h>
+#include "gettext.h"
 
 //------------- Define coordinations -----------//
 
@@ -161,7 +162,7 @@ static void put_action_rec(int recNo, int x, int y, int refreshFlag)
 	if( actionNode->action_mode >= ACTION_AI_BUILD_FIRM &&
 		 actionNode->action_mode <= ACTION_AI_ASSIGN_WORKER )
 	{
-		font_san.put( x+120, y, firm_res[actionNode->action_para]->name, 0, x+216 );
+		font_san.put( x+120, y, _(firm_res[actionNode->action_para]->name), 0, x+216 );
 	}
 
 	font_san.put( x+220, y, date.date_str(actionNode->add_date, 1) );		// short month string

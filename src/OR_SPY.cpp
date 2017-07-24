@@ -245,7 +245,7 @@ static void put_spy_rec(int recNo, int x, int y, int refreshFlag)
 	switch( spyPtr->spy_place )
 	{
 		case SPY_FIRM:
-			str = firm_res[firm_array[spyPtr->spy_place_para]->firm_id]->name;
+			str = _(firm_res[firm_array[spyPtr->spy_place_para]->firm_id]->name);
 			break;
 
 		case SPY_TOWN:
@@ -259,7 +259,7 @@ static void put_spy_rec(int recNo, int x, int y, int refreshFlag)
 			switch( unitPtr->unit_mode )
 			{
 				case UNIT_MODE_CONSTRUCT:
-					str = firm_res[firm_array[unitPtr->unit_mode_para]->firm_id]->name;
+					str = _(firm_res[firm_array[unitPtr->unit_mode_para]->firm_id]->name);
 					break;
 
 				case UNIT_MODE_ON_SHIP:

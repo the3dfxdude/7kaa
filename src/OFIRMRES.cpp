@@ -36,11 +36,6 @@
 #define FIRM_FRAME_DB 	"FFRAME"
 #define FIRM_BITMAP_DB 	"FBITMAP"
 
-static void translate_firm_name(char *name);
-static void translate_firm_short_name(char *short_name);
-static void translate_overseer_title(char *overseer_title);
-static void translate_worker_title(char *worker_title);
-
 //------- Begin of function FirmRes::FirmRes -----------//
 
 FirmRes::FirmRes()
@@ -324,10 +319,6 @@ void FirmRes::load_firm_info()
 
 		misc.rtrim_fld( firmInfo->overseer_title, firmRec->overseer_title, firmRec->TITLE_LEN );
 		misc.rtrim_fld( firmInfo->worker_title  , firmRec->worker_title  , firmRec->TITLE_LEN );
-		translate_firm_name(firmInfo->name);
-		translate_firm_short_name(firmInfo->short_name);
-		translate_overseer_title(firmInfo->overseer_title);
-		translate_worker_title(firmInfo->worker_title);
 
 		firmInfo->firm_id     	 	  = i+1;
 		firmInfo->tera_type   	 	  = firmRec->tera_type-'0';
@@ -627,107 +618,3 @@ void FirmBitmap::draw_at(int absX, int absY, char *colorRemapTable, int displayL
 	}
 }
 // --------- end of function FirmBitmap::draw_at ---------//
-
-
-//-------- Start of function translate_firm_name -------------//
-static void translate_firm_name(char *name)
-{
-	if( strncmp(name, "Seat of Power", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Seat of Power") );
-	}
-	else if( strncmp(name, "Factory", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Factory") );
-	}
-	else if( strncmp(name, "Inn", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Inn") );
-	}
-	else if( strncmp(name, "Market", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Market") );
-	}
-	else if( strncmp(name, "Fort", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Fort") );
-	}
-	else if( strncmp(name, "Mine", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Mine") );
-	}
-	else if( strncmp(name, "Tower of Science", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Tower of Science") );
-	}
-	else if( strncmp(name, "War Factory", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("War Factory") );
-	}
-	else if( strncmp(name, "Harbor", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Harbor") );
-	}
-	else if( strncmp(name, "Fryhtan Lair", FirmInfo::NAME_LEN) == 0 )
-	{
-		snprintf( name, FirmInfo::NAME_LEN+1, _("Fryhtan Lair") );
-	}
-}
-//--------- End of function translate_firm_name ---------------//
-
-
-//-------- Start of function translate_firm_short_name -------------//
-static void translate_firm_short_name(char *short_name)
-{
-	if( strncmp(short_name, "Factory", FirmInfo::SHORT_NAME_LEN) == 0 )
-	{
-		snprintf( short_name, FirmInfo::SHORT_NAME_LEN+1, _("Factory") );
-	}
-	else if( strncmp(short_name, "Market", FirmInfo::SHORT_NAME_LEN) == 0 )
-	{
-		snprintf( short_name, FirmInfo::SHORT_NAME_LEN+1, _("Market") );
-	}
-	else if( strncmp(short_name, "Mine", FirmInfo::SHORT_NAME_LEN) == 0 )
-	{
-		snprintf( short_name, FirmInfo::SHORT_NAME_LEN+1, _("Mine") );
-	}
-}
-//--------- End of function translate_firm_short_name ---------------//
-
-
-//-------- Start of function translate_overseer_title -------------//
-static void translate_overseer_title(char *overseer_title)
-{
-	if( strncmp(overseer_title, "General", FirmInfo::TITLE_LEN) == 0 )
-	{
-		snprintf( overseer_title, FirmInfo::TITLE_LEN+1, _("General") );
-	}
-}
-//--------- End of function translate_overseer_title ---------------//
-
-
-//-------- Start of function translate_worker_title -------------//
-static void translate_worker_title(char *worker_title)
-{
-	if( strncmp(worker_title, "Prayer", FirmInfo::TITLE_LEN) == 0 )
-	{
-		snprintf( worker_title, FirmInfo::TITLE_LEN+1, _("Prayer") );
-	}
-	else if( strncmp(worker_title, "Worker", FirmInfo::TITLE_LEN) == 0 )
-	{
-		snprintf( worker_title, FirmInfo::TITLE_LEN+1, _("Worker") );
-	}
-	else if( strncmp(worker_title, "Solider", FirmInfo::TITLE_LEN) == 0 )
-	{
-		snprintf( worker_title, FirmInfo::TITLE_LEN+1, _("Soldier") );
-	}
-	else if( strncmp(worker_title, "Miner", FirmInfo::TITLE_LEN) == 0 )
-	{
-		snprintf( worker_title, FirmInfo::TITLE_LEN+1, _("Miner") );
-	}
-	else if( strncmp(worker_title, "Scientist", FirmInfo::TITLE_LEN) == 0 )
-	{
-		snprintf( worker_title, FirmInfo::TITLE_LEN+1, _("Scientist") );
-	}
-}
-//--------- End of function translate_worker_title ---------------//

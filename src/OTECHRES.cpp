@@ -223,7 +223,7 @@ const char* TechInfo::tech_des()
 		return _(unit_res[unit_id]->name);
 
 	else if( firm_id )
-		return firm_res[firm_id]->name;
+		return _(firm_res[firm_id]->name);
 
 	else
 		return "";
