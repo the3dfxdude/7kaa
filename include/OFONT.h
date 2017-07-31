@@ -179,7 +179,7 @@ public:
 
 	//-------------- <char*> version ---------------//
 
-	void put_field(int,int,const char*,int,char*);
+	void put_field(int,int,const char*,int,const char*);
 	void update_field(int,int,const char*,int);
 	void field(int,int,const char*,int,const char*,int,int,const char* helpCode=NULL);
 	int  disp(int,int,const char*,int);

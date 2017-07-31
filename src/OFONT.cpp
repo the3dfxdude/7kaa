@@ -1169,7 +1169,7 @@ void Font::field(int xDes, int y1, const char* desStr, int xValue, double value,
 // <int>   x2     = the coordination of the spinner variable
 // <char*> value  = value
 //
-void Font::put_field(int x1, int y1, const char* desStr, int x2, char* value)
+void Font::put_field(int x1, int y1, const char* desStr, int x2, const char* value)
 {
 	vga_util.d3_panel_up( x1, y1, x2, y1+font_height+3 );
 

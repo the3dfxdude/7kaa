@@ -555,7 +555,7 @@ void Help::set_unit_help(int unitId, int rankId, int x1, int y1, int x2, int y2)
 // <char*> helpTitle  - the title of the help
 // [char*] helpDetail - the detailed text of the help
 //
-void Help::set_custom_help(int x1, int y1, int x2, int y2, char* helpTitle, char* helpDetail)
+void Help::set_custom_help(int x1, int y1, int x2, int y2, const char* helpTitle, const char* helpDetail)
 {
 	if( !mouse.in_area(x1, y1, x2, y2) )
 		return;

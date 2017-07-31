@@ -686,7 +686,7 @@ void News::monster_firm_destroyed()
 	//
 	//----------------------------------------------//
 
-	char* nameStr = _(monster_res[short_para1]->name);
+	const char* nameStr = _(monster_res[short_para1]->name);
 
 	if( nameStr[0] == 'I' )		// "An Ick Lair"
 		// TRANSLATORS: An Ick Lair has been destroyed.
