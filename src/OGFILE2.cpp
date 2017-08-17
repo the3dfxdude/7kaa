@@ -1248,9 +1248,6 @@ int Config::write_file(File* filePtr)
 //
 int Config::read_file(File* filePtr, int keepSysSettings)
 {
-	FileReader r;
-	FileReaderVisitor v;
-
 	//--- these settings are not game dependent -----//
 
 	char  musicFlag 		 = music_flag;
@@ -1260,11 +1257,12 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 	short	soundEffectVol  = sound_effect_volume;
 	char	helpMode			 = help_mode;
 
+	FileReader r;
 	if (!r.init(filePtr))
 		return 0;
 
 	r.check_record_size(CONFIG_RECORD_SIZE);
-	v.init(&r);
+	FileReaderVisitor v(r);
 	visit_config(&v, this);
 
 	if( keepSysSettings )

@@ -364,13 +364,11 @@ static void visit_sprite(Visitor *v, Sprite *s)
 int Unit::read_file(File* filePtr)
 {
 	FileReader r;
-	FileReaderVisitor v;
-
 	if (!r.init(filePtr))
 		return 0;
 
 	r.check_record_size(169);
-	v.init(&r);
+	FileReaderVisitor v(r);
 	visit_unit(&v, this);
 
 	if (!r.good())

@@ -26,45 +26,30 @@
 class FileReaderVisitor
 {
 protected:
-   FileReader *reader;
+   FileReader& reader;
 
 public:
-   FileReaderVisitor()
+   FileReaderVisitor(FileReader& reader)
+	   : reader(reader)
    {
-      this->reader = NULL;
-   }
-
-   ~FileReaderVisitor()
-   {
-      this->deinit();
-   }
-
-   void init(FileReader *reader)
-   {
-      this->reader = reader;
-   }
-
-   void deinit()
-   {
-      this->reader = NULL;
    }
 
    bool skip(size_t len)
    {
-      return this->reader->skip(len);
+      return reader.skip(len);
    }
 
    template <typename FileT, typename MemT>
    bool visit(MemT *v)
    {
-      return this->reader->read<FileT, MemT>(v);
+      return reader.read<FileT, MemT>(v);
    }
 
    template <typename T>
    bool visit(T **v)
    {
       uint32_t p;
-      if (!reader->read<uint32_t>(&p))
+      if (!reader.read<uint32_t>(&p))
          return false;
 
       if (p != 0)
@@ -80,45 +65,30 @@ public:
 class FileWriterVisitor
 {
 protected:
-   FileWriter *writer;
+   FileWriter& writer;
 
 public:
-   FileWriterVisitor()
+   FileWriterVisitor(FileWriter& writer)
+	   : writer(writer)
    {
-      this->writer = NULL;
-   }
-
-   ~FileWriterVisitor()
-   {
-      this->deinit();
-   }
-
-   void init(FileWriter *writer)
-   {
-      this->writer = writer;
-   }
-
-   void deinit()
-   {
-      this->writer = NULL;
    }
 
    bool skip(size_t len)
    {
-      return this->writer->skip(len);
+      return writer.skip(len);
    }
 
    template <typename FileT, typename MemT>
    bool visit(MemT *v)
    {
-      return this->writer->write<FileT, MemT>(*v);
+      return writer.write<FileT, MemT>(*v);
    }
 
    template <typename T>
    bool visit(T **v)
    {
       uint32_t p (*v ? 0xdeadbeefUL : 0);
-      return writer->write<uint32_t>(p);
+      return writer.write<uint32_t>(p);
    }
 };
 
@@ -153,13 +123,11 @@ namespace FileIOVisitor
                                uint16_t rec_size)
    {
       FileWriter w;
-      FileWriterVisitor v;
-
       if (!w.init(file))
          return false;
 
       w.write_record_size(rec_size);
-      v.init(&w);
+	  FileWriterVisitor v(w);
       visit_obj(&v, obj);
 
       return w.good();
@@ -171,13 +139,11 @@ namespace FileIOVisitor
                               uint16_t expected_rec_size)
    {
       FileReader r;
-      FileReaderVisitor v;
-
       if (!r.init(file))
          return false;
 
       r.check_record_size(expected_rec_size);
-      v.init(&r);
+	  FileReaderVisitor v(r);
       visit_obj(&v, obj);
 
       return r.good();
