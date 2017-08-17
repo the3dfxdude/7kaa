@@ -61,11 +61,6 @@ void FileReader::deinit()
    this->file = NULL;
 }
 
-bool FileReader::good() const
-{
-   return this->ok;
-}
-
 bool FileReader::skip(size_t len)
 {
    if (!this->ok)

@@ -62,8 +62,8 @@ static void visit_game_header(Visitor *v, SaveGameHeader *gh)
 
 	SaveGameInfo* gi = &gh->info;
 
-	visit_array<int8_t>(v, gi->file_name, MAX_PATH+1);
-	visit_array<int8_t>(v, gi->player_name, HUMAN_NAME_LEN+1);
+	visit_array<int8_t>(v, gi->file_name);
+	visit_array<int8_t>(v, gi->player_name);
 
 	visit<int8_t>(v, &gi->race_id);
 	visit<int8_t>(v, &gi->nation_color);

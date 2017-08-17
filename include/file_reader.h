@@ -35,7 +35,7 @@ public:
    ~FileReader();
    bool init(File *file);
    void deinit();
-   bool good() const;
+   bool good() const { return ok; }
    bool skip(size_t len);
    bool check_record_size(uint16_t expected_size);
 
@@ -45,40 +45,12 @@ public:
       FileT val;
 
       if (!this->ok)
-	 return false;
+         return false;
 
       if (read_le(&this->is, &val))
-	 *v = val;
+         *v = val;
       else
-	 this->ok = false;
-
-      return this->ok;
-   }
-
-   template <typename T>
-   bool read(T **v)
-   {
-      uint32_t p;
-
-      if (!this->read<uint32_t>(&p))
-	 return false;
-
-      if (p != 0)
-	 *v = reinterpret_cast<T *>(uintptr_t(0xdeadbeefUL));
-      else
-	 *v = NULL;
-
-      return true;
-   }
-
-   template <typename FileT, typename MemT>
-   bool read_array(MemT *array, size_t len)
-   {
-      for (size_t n = 0; n < len; n++)
-      {
-	 if (!this->read<FileT>(&array[n]))
-	    break;
-      }
+         this->ok = false;
 
       return this->ok;
    }

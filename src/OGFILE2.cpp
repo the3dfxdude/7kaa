@@ -1002,7 +1002,7 @@ static void visit_talk_res(Visitor *v, TalkRes *tr)
 	for (int n = 0; n < MAX_TALK_CHOICE; n++)
 		visit_talk_choice(v, &tr->talk_choice_array[n]);
 
-	visit_array<int8_t>(v, tr->available_talk_id_array, MAX_TALK_TYPE);
+	visit_array<int8_t>(v, tr->available_talk_id_array);
 	visit<int16_t>(v, &tr->cur_choice_id);
 	visit<int8_t>(v, &tr->save_view_mode);
 	visit<int8_t>(v, &tr->msg_add_nation_color);
@@ -1193,7 +1193,7 @@ static void visit_config(Visitor *v, Config *cfg)
 	visit<int8_t>(v, &cfg->disable_ai_flag);
 	visit<int8_t>(v, &cfg->king_undie_flag);
 	visit<int8_t>(v, &cfg->race_id);
-	visit_array<int8_t>(v, cfg->player_name, HUMAN_NAME_LEN+1);
+	visit_array<int8_t>(v, cfg->player_name);
 	visit<int8_t>(v, &cfg->player_nation_color);
 	visit<int8_t>(v, &cfg->expired_flag);
 	visit<int8_t>(v, &cfg->opaque_report);

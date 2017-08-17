@@ -239,7 +239,7 @@ static void visit_unit(Visitor *v, Unit *u)
 	visit<int16_t>(v, &u->action_para2);
 	visit<int16_t>(v, &u->action_x_loc2);
 	visit<int16_t>(v, &u->action_y_loc2);
-	visit_array<int8_t>(v, u->blocked_edge, 4);
+	visit_array<int8_t>(v, u->blocked_edge);
 	visit<uint8_t>(v, &u->attack_dir);
 	visit<int16_t>(v, &u->range_attack_x_loc);
 	visit<int16_t>(v, &u->range_attack_y_loc);
@@ -471,7 +471,7 @@ static void visit_trade_stop(Visitor *v, TradeStop *ts)
 	visit<int16_t>(v, &ts->firm_loc_x1);
 	visit<int16_t>(v, &ts->firm_loc_y1);
 	visit<int8_t>(v, &ts->pick_up_type);
-	visit_array<int8_t>(v, ts->pick_up_array, MAX_PICK_UP_GOODS);
+	visit_array<int8_t>(v, ts->pick_up_array);
 }
 
 template <typename Visitor>
@@ -502,7 +502,7 @@ static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
 	visit<int8_t>(v, &u->extra_move_in_beach);
 	visit<int8_t>(v, &u->in_beach);
 	visit<int8_t>(v, &u->selected_unit_id);
-	visit_array<int16_t>(v, u->unit_recno_array, MAX_UNIT_IN_SHIP);
+	visit_array<int16_t>(v, u->unit_recno_array);
 	visit<int8_t>(v, &u->unit_count);
 	visit<int8_t>(v, &u->journey_status);
 	visit<int8_t>(v, &u->dest_stop_id);
@@ -517,8 +517,8 @@ static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
 	for (int n = 0; n < MAX_STOP_FOR_SHIP; n++)
 		visit_trade_stop(v, &u->stop_array[n]);
 
-	visit_array<int16_t>(v, u->raw_qty_array, MAX_RAW);
-	visit_array<int16_t>(v, u->product_raw_qty_array, MAX_PRODUCT);
+	visit_array<int16_t>(v, u->raw_qty_array);
+	visit_array<int16_t>(v, u->product_raw_qty_array);
 	visit_attack_info(v, &u->ship_attack_info);
 	visit<uint8_t>(v, &u->attack_mode_selected);
 	visit<int32_t>(v, &u->last_load_goods_date);
@@ -848,14 +848,12 @@ static void visit_firm(Visitor *v, Firm *f)
 	visit<uint8_t>(v, &f->sabotage_level);
 	visit<int8_t>(v, &f->linked_firm_count);
 	visit<int8_t>(v, &f->linked_town_count);
-	visit_array<int16_t>(v, f->linked_firm_array, MAX_LINKED_FIRM_FIRM);
-	visit_array<int16_t>(v, f->linked_town_array, MAX_LINKED_FIRM_TOWN);
+	visit_array<int16_t>(v, f->linked_firm_array);
+	visit_array<int16_t>(v, f->linked_town_array);
 
-	visit_array<int8_t>(v, f->linked_firm_enable_array,
-							  MAX_LINKED_FIRM_FIRM);
+	visit_array<int8_t>(v, f->linked_firm_enable_array);
 
-	visit_array<int8_t>(v, f->linked_town_enable_array,
-							  MAX_LINKED_FIRM_TOWN);
+	visit_array<int8_t>(v, f->linked_town_enable_array);
 
 	visit<float>(v, &f->last_year_income);
 	visit<float>(v, &f->cur_year_income);
@@ -1241,7 +1239,7 @@ static void visit_nation_array(Visitor *v, NationArray *na)
 	visit<int32_t>(v, &na->max_nation_population);
 	visit<int32_t>(v, &na->all_nation_population);
    visit<int16_t>(v, &na->independent_town_count);
-	visit_array<int16_t>(v, na->independent_town_count_race_array, MAX_RACE);
+	visit_array<int16_t>(v, na->independent_town_count_race_array);
 	visit<int32_t>(v, &na->max_nation_units);
 	visit<int32_t>(v, &na->max_nation_humans);
 	visit<int32_t>(v, &na->max_nation_generals);
@@ -1266,12 +1264,11 @@ static void visit_nation_array(Visitor *v, NationArray *na)
 	visit<int32_t>(v, &na->nation_peace_days);
 	visit<int16_t>(v, &na->player_recno);
 	visit_pointer(v, &na->player_ptr);
-	visit_array<int8_t>(v, na->nation_color_array, MAX_NATION+1);
-	visit_array<int8_t>(v, na->nation_power_color_array, MAX_NATION+2);
+	visit_array<int8_t>(v, na->nation_color_array);
+	visit_array<int8_t>(v, na->nation_power_color_array);
 
 	for (int n = 0; n < MAX_NATION; n++)
-		visit_array<int8_t>(v, na->human_name_array[n],
-								  HUMAN_NAME_LEN+1);
+		visit_array<int8_t>(v, na->human_name_array[n]);
 }
 
 enum { NATION_ARRAY_RECORD_SIZE = 288 };
@@ -1338,8 +1335,7 @@ static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
 	visit<int32_t>(v, &na->max_nation_population);
 	visit<int32_t>(v, &na->all_nation_population);
 	visit<int16_t>(v, &na->independent_town_count);
-	visit_array<int16_t>(v, na->independent_town_count_race_array,
-								VERSION_1_MAX_RACE);
+	visit_array<int16_t>(v, na->independent_town_count_race_array);
 	visit<int32_t>(v, &na->max_nation_units);
 	visit<int32_t>(v, &na->max_nation_humans);
 	visit<int32_t>(v, &na->max_nation_generals);
@@ -1364,12 +1360,11 @@ static void visit_version_1_nation_array(Visitor *v, Version_1_NationArray *na)
 	visit<int32_t>(v, &na->nation_peace_days);
 	visit<int16_t>(v, &na->player_recno);
 	visit_pointer(v, &na->player_ptr);
-	visit_array<int8_t>(v, na->nation_color_array, MAX_NATION+1);
-	visit_array<int8_t>(v, na->nation_power_color_array, MAX_NATION+2);
+	visit_array<int8_t>(v, na->nation_color_array);
+	visit_array<int8_t>(v, na->nation_power_color_array);
 
 	for (int n = 0; n < MAX_NATION; n++)
-		visit_array<int8_t>(v, na->human_name_array[n],
-								  HUMAN_NAME_LEN+1);
+		visit_array<int8_t>(v, na->human_name_array[n]);
 }
 
 enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
@@ -1468,11 +1463,11 @@ static void visit_nation_relation(Visitor *v, NationRelation *nr)
 	visit<float>(v, &nr->good_relation_duration_rating);
 	visit<int16_t>(v, &nr->started_war_on_us_count);
 
-	visit_array<float>(v, nr->cur_year_import, IMPORT_TYPE_COUNT);
-	visit_array<float>(v, nr->last_year_import, IMPORT_TYPE_COUNT);
-	visit_array<float>(v, nr->lifetime_import, IMPORT_TYPE_COUNT);
+	visit_array<float>(v, nr->cur_year_import);
+	visit_array<float>(v, nr->last_year_import);
+	visit_array<float>(v, nr->lifetime_import);
 
-	visit_array<int32_t>(v, nr->last_talk_reject_date_array, MAX_TALK_TYPE);
+	visit_array<int32_t>(v, nr->last_talk_reject_date_array);
 
 	visit<int32_t>(v, &nr->last_military_aid_date);
 
@@ -1514,16 +1509,15 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 	visit<int8_t>(v, &v1n->king_leadership);
 	visit<int32_t>(v, &v1n->nation_name_id);
 
-	visit_array<int8_t>(v, v1n->nation_name_str,
-							  Version_1_Nation::NATION_NAME_LEN+1);
+	visit_array<int8_t>(v, v1n->nation_name_str);
 
 	visit<uint32_t>(v, &v1n->player_id);
 	visit<int8_t>(v, &v1n->next_frame_ready);
 	visit<int16_t>(v, &v1n->last_caravan_id);
 	visit<int16_t>(v, &v1n->nation_firm_count);
 	visit<int32_t>(v, &v1n->last_build_firm_date);
-	visit_array<int8_t>(v, v1n->know_base_array, VERSION_1_MAX_RACE);
-	visit_array<int8_t>(v, v1n->base_count_array, VERSION_1_MAX_RACE);
+	visit_array<int8_t>(v, v1n->know_base_array);
+	visit_array<int8_t>(v, v1n->base_count_array);
 	visit<int8_t>(v, &v1n->is_at_war_today);
 	visit<int8_t>(v, &v1n->is_at_war_yesterday);
 	visit<int32_t>(v, &v1n->last_war_date);
@@ -1542,12 +1536,12 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 	visit<float>(v, &v1n->last_year_fixed_income);
 	visit<float>(v, &v1n->cur_year_fixed_expense);
 	visit<float>(v, &v1n->last_year_fixed_expense);
-	visit_array<float>(v, v1n->cur_year_income_array, INCOME_TYPE_COUNT);
-	visit_array<float>(v, v1n->last_year_income_array, INCOME_TYPE_COUNT);
+	visit_array<float>(v, v1n->cur_year_income_array);
+	visit_array<float>(v, v1n->last_year_income_array);
 	visit<float>(v, &v1n->cur_year_income);
 	visit<float>(v, &v1n->last_year_income);
-	visit_array<float>(v, v1n->cur_year_expense_array, EXPENSE_TYPE_COUNT);
-	visit_array<float>(v, v1n->last_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit_array<float>(v, v1n->cur_year_expense_array);
+	visit_array<float>(v, v1n->last_year_expense_array);
 	visit<float>(v, &v1n->cur_year_expense);
 	visit<float>(v, &v1n->last_year_expense);
 	visit<float>(v, &v1n->cur_year_cheat);
@@ -1564,10 +1558,10 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 	for (int n = 0; n < MAX_NATION; n++)
 		visit_nation_relation(v, &v1n->relation_array[n]);
 
-	visit_array<int8_t>(v, v1n->relation_status_array, MAX_NATION);
-	visit_array<int8_t>(v, v1n->relation_passable_array, MAX_NATION);
+	visit_array<int8_t>(v, v1n->relation_status_array);
+	visit_array<int8_t>(v, v1n->relation_passable_array);
 
-	visit_array<int8_t>(v, v1n->relation_should_attack_array, MAX_NATION);
+	visit_array<int8_t>(v, v1n->relation_should_attack_array);
 	visit<int8_t>(v, &v1n->is_allied_with_player);
 	visit<int32_t>(v, &v1n->total_population);
 	visit<int32_t>(v, &v1n->total_jobless_population);
@@ -1581,9 +1575,8 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 	visit<int32_t>(v, &v1n->total_ship_combat_level);
 	visit<int16_t>(v, &v1n->largest_town_recno);
 	visit<int16_t>(v, &v1n->largest_town_pop);
-	visit_array<int16_t>(v, v1n->raw_count_array, MAX_RAW);
-	visit_array<uint16_t>(v, v1n->last_unit_name_id_array,
-								VERSION_1_MAX_UNIT_TYPE);
+	visit_array<int16_t>(v, v1n->raw_count_array);
+	visit_array<uint16_t>(v, v1n->last_unit_name_id_array);
 	visit<int32_t>(v, &v1n->population_rating);
 	visit<int32_t>(v, &v1n->military_rating);
 	visit<int32_t>(v, &v1n->economic_rating);
@@ -1643,7 +1636,7 @@ static void visit_version_1_nation(Visitor *v, Version_1_Nation *v1n)
 	visit<int16_t>(v, &v1n->ai_caravan_count);
 	visit<int16_t>(v, &v1n->ai_ship_count);
 	visit<int16_t>(v, &v1n->ai_base_town_count);
-	visit_array<int16_t>(v, v1n->firm_should_close_array, MAX_FIRM_TYPE);
+	visit_array<int16_t>(v, v1n->firm_should_close_array);
 	
 	for (int n = 0; n < MAX_AI_REGION; n++)
 		visit_ai_region(v, &v1n->ai_region_array[n]);
@@ -1720,14 +1713,14 @@ static void visit_nation(Visitor *v, Nation *nat)
 	visit<int16_t>(v, &nat->king_unit_recno);
 	visit<int8_t>(v, &nat->king_leadership);
 	visit<int32_t>(v, &nat->nation_name_id);
-	visit_array<int8_t>(v, nat->nation_name_str, Nation::NATION_NAME_LEN+1);
+	visit_array<int8_t>(v, nat->nation_name_str);
 	visit<uint32_t>(v, &nat->player_id);
 	visit<int8_t>(v, &nat->next_frame_ready);
 	visit<int16_t>(v, &nat->last_caravan_id);
 	visit<int16_t>(v, &nat->nation_firm_count);
 	visit<int32_t>(v, &nat->last_build_firm_date);
-	visit_array<int8_t>(v, nat->know_base_array, MAX_RACE);
-	visit_array<int8_t>(v, nat->base_count_array, MAX_RACE);
+	visit_array<int8_t>(v, nat->know_base_array);
+	visit_array<int8_t>(v, nat->base_count_array);
 	visit<int8_t>(v, &nat->is_at_war_today);
 	visit<int8_t>(v, &nat->is_at_war_yesterday);
 	visit<int32_t>(v, &nat->last_war_date);
@@ -1746,12 +1739,12 @@ static void visit_nation(Visitor *v, Nation *nat)
 	visit<float>(v, &nat->last_year_fixed_income);
 	visit<float>(v, &nat->cur_year_fixed_expense);
 	visit<float>(v, &nat->last_year_fixed_expense);
-	visit_array<float>(v, nat->cur_year_income_array, INCOME_TYPE_COUNT);
-	visit_array<float>(v, nat->last_year_income_array, INCOME_TYPE_COUNT);
+	visit_array<float>(v, nat->cur_year_income_array);
+	visit_array<float>(v, nat->last_year_income_array);
 	visit<float>(v, &nat->cur_year_income);
 	visit<float>(v, &nat->last_year_income);
-	visit_array<float>(v, nat->cur_year_expense_array, EXPENSE_TYPE_COUNT);
-	visit_array<float>(v, nat->last_year_expense_array, EXPENSE_TYPE_COUNT);
+	visit_array<float>(v, nat->cur_year_expense_array);
+	visit_array<float>(v, nat->last_year_expense_array);
 	visit<float>(v, &nat->cur_year_expense);
 	visit<float>(v, &nat->last_year_expense);
 	visit<float>(v, &nat->cur_year_cheat);
@@ -1768,9 +1761,9 @@ static void visit_nation(Visitor *v, Nation *nat)
 	for (int n = 0; n < MAX_NATION; n++)
 		visit_nation_relation(v, &nat->relation_array[n]);
 
-	visit_array<int8_t>(v, nat->relation_status_array, MAX_NATION);
-	visit_array<int8_t>(v, nat->relation_passable_array, MAX_NATION);
-	visit_array<int8_t>(v, nat->relation_should_attack_array, MAX_NATION);
+	visit_array<int8_t>(v, nat->relation_status_array);
+	visit_array<int8_t>(v, nat->relation_passable_array);
+	visit_array<int8_t>(v, nat->relation_should_attack_array);
 	visit<int8_t>(v, &nat->is_allied_with_player);
 	visit<int32_t>(v, &nat->total_population);
 	visit<int32_t>(v, &nat->total_jobless_population);
@@ -1784,8 +1777,8 @@ static void visit_nation(Visitor *v, Nation *nat)
 	visit<int32_t>(v, &nat->total_ship_combat_level);
 	visit<int16_t>(v, &nat->largest_town_recno);
 	visit<int16_t>(v, &nat->largest_town_pop);
-	visit_array<int16_t>(v, nat->raw_count_array, MAX_RAW);
-	visit_array<uint16_t>(v, nat->last_unit_name_id_array, MAX_UNIT_TYPE);
+	visit_array<int16_t>(v, nat->raw_count_array);
+	visit_array<uint16_t>(v, nat->last_unit_name_id_array);
 	visit<int32_t>(v, &nat->population_rating);
 	visit<int32_t>(v, &nat->military_rating);
 	visit<int32_t>(v, &nat->economic_rating);
@@ -1845,7 +1838,7 @@ static void visit_nation(Visitor *v, Nation *nat)
 	visit<int16_t>(v, &nat->ai_caravan_count);
 	visit<int16_t>(v, &nat->ai_ship_count);
 	visit<int16_t>(v, &nat->ai_base_town_count);
-	visit_array<int16_t>(v, nat->firm_should_close_array, MAX_FIRM_TYPE);
+	visit_array<int16_t>(v, nat->firm_should_close_array);
 	
 	for (int n = 0; n < MAX_AI_REGION; n++)
 		visit_ai_region(v, &nat->ai_region_array[n]);
@@ -2245,7 +2238,7 @@ static void visit_region_array(Visitor *v, RegionArray *ra)
 	visit_pointer(v, &ra->region_stat_array);
 	visit<int32_t>(v, &ra->region_stat_count);
 	visit_pointer(v, &ra->connect_bits);
-	visit_array<uint8_t>(v, ra->region_sorted_array, MAX_REGION);
+	visit_array<uint8_t>(v, ra->region_sorted_array);
 }
 
 enum { REGION_ARRAY_RECORD_SIZE = 279 };

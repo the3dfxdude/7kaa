@@ -189,7 +189,7 @@ static void visit_dyn_array_b(Visitor *v, DynArrayB *dab)
    visit<int32_t>(v, &dab->ele_size);
    visit<int32_t>(v, &dab->sort_offset);
    visit<int8_t>(v, &dab->sort_type);
-	v->skip(4); /* dab->body_buf */
+   v->skip(4); /* dab->body_buf */
 
 	/* Not reading DynArrayB members */
 }

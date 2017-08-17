@@ -63,13 +63,16 @@ public:
    template <typename T>
    bool visit(T **v)
    {
-      return this->reader->read<T>(v);
-   }
+      uint32_t p;
+      if (!reader->read<uint32_t>(&p))
+         return false;
 
-   template <typename FileT, typename MemT>
-   bool visit_array(MemT *array, size_t len)
-   {
-      return this->reader->read_array<FileT, MemT>(array, len);
+      if (p != 0)
+         *v = reinterpret_cast<T *>(uintptr_t(0xdeadbeefUL));
+      else
+         *v = NULL;
+
+      return true;
    }
 };
 
@@ -114,13 +117,8 @@ public:
    template <typename T>
    bool visit(T **v)
    {
-      return this->writer->write<T>(const_cast<const T *>(*v));
-   }
-
-   template <typename FileT, typename MemT>
-   bool visit_array(MemT *array, size_t len)
-   {
-      return this->writer->write_array<FileT, MemT>(array, len);
+      uint32_t p (*v ? 0xdeadbeefUL : 0);
+      return writer->write<uint32_t>(p);
    }
 };
 
@@ -132,10 +130,15 @@ namespace FileIOVisitor
       return vis->template visit<FileT, MemT>(val);
    }
 
-   template <typename FileT, typename MemT, typename Visitor>
-   bool visit_array(Visitor *vis, MemT *array, size_t len)
+   template <typename FileT, typename MemT, typename Visitor, int Size>
+   bool visit_array(Visitor *vis, MemT (&array)[Size])
    {
-      return vis->template visit_array<FileT, MemT>(array, len);
+      for (int i = 0; i < Size; ++i)
+      {
+         if (!vis->template visit<FileT, MemT>(&array[i]))
+            return false;
+      }
+      return true;
    }
 
    template <typename T, typename Visitor>
@@ -146,14 +149,14 @@ namespace FileIOVisitor
 
    template <typename T>
    bool write_with_record_size(File *file, T *obj,
-			       void (*visit_obj)(FileWriterVisitor *v, T *obj),
-			       uint16_t rec_size)
+                               void (*visit_obj)(FileWriterVisitor *v, T *obj),
+                               uint16_t rec_size)
    {
       FileWriter w;
       FileWriterVisitor v;
 
       if (!w.init(file))
-	 return false;
+         return false;
 
       w.write_record_size(rec_size);
       v.init(&w);
@@ -164,14 +167,14 @@ namespace FileIOVisitor
 
    template <typename T>
    bool read_with_record_size(File *file, T *obj,
-			      void (*visit_obj)(FileReaderVisitor *v, T *obj),
-			      uint16_t expected_rec_size)
+                              void (*visit_obj)(FileReaderVisitor *v, T *obj),
+                              uint16_t expected_rec_size)
    {
       FileReader r;
       FileReaderVisitor v;
 
       if (!r.init(file))
-	 return false;
+         return false;
 
       r.check_record_size(expected_rec_size);
       v.init(&r);

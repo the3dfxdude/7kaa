@@ -58,11 +58,6 @@ void FileWriter::deinit()
    this->file = NULL;
 }
 
-bool FileWriter::good() const
-{
-   return this->ok;
-}
-
 bool FileWriter::skip(size_t len)
 {
    const char *chars = "\xc0\xde\xba\xbe";
@@ -73,7 +68,7 @@ bool FileWriter::skip(size_t len)
    for (size_t n = 0; n < len; n++)
    {
       if (!this->write<int8_t>(chars[n & 3]))
-	 break;
+         break;
    }
 
    return this->ok;
