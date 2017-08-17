@@ -1257,12 +1257,8 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 	short	soundEffectVol  = sound_effect_volume;
 	char	helpMode			 = help_mode;
 
-	FileReader r;
-	if (!r.init(filePtr))
-		return 0;
-
-	r.check_record_size(CONFIG_RECORD_SIZE);
-	FileReaderVisitor v(r);
+	FileReaderVisitor v(filePtr);
+	v.with_record_size(CONFIG_RECORD_SIZE);
 	visit_config(&v, this);
 
 	if( keepSysSettings )
@@ -1275,7 +1271,7 @@ int Config::read_file(File* filePtr, int keepSysSettings)
 		help_mode			= helpMode;
 	}
 
-	return r.good();
+	return v.good();
 }
 //--------- End of function Config::read_file ---------------//
 

@@ -48,6 +48,9 @@
 #include <OSKILL.h>
 #endif
 
+class FileReaderVisitor;
+class FileWriterVisitor;
+
 //----------- Define constant ------------//
 
 #define MAX_WORKER         	 8       // maximum no. of workers in a firm
@@ -348,6 +351,8 @@ public:
 			  void toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int setBoth=0);
 			  void toggle_town_link(int linkId, int toggleFlag, char remoteAction, int setBoth=0);
 
+	virtual void accept_file_visitor(FileReaderVisitor* v);
+	virtual void accept_file_visitor(FileWriterVisitor* v);
 	virtual int  write_derived_file(File*); 
 	virtual int  read_derived_file(File*);
 

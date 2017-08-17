@@ -363,18 +363,15 @@ static void visit_sprite(Visitor *v, Sprite *s)
 //
 int Unit::read_file(File* filePtr)
 {
-	FileReader r;
-	if (!r.init(filePtr))
-		return 0;
+	// Note: the visitor is in a scoped block, because it modifies the underlying File type (structured/flat) during its lifetime.
+	{
+		FileReaderVisitor v(filePtr);
+		v.with_record_size(169);
+		visit_unit(&v, this);
 
-	r.check_record_size(169);
-	FileReaderVisitor v(r);
-	visit_unit(&v, this);
-
-	if (!r.good())
-		return 0;
-
-	r.deinit();
+		if (!v.good())
+			return 0;
+	}
 
 	//--------------- read in memory data ----------------//
 
@@ -801,7 +798,7 @@ int Projectile::read_derived_file(File *filePtr)
 //*****//
 
 template <typename Visitor>
-static void visit_firm(Visitor *v, Firm *f)
+static void visit_firm_members(Visitor *v, Firm *f)
 {
 	v->skip(4); /* virtual table pointer */
 
@@ -863,16 +860,26 @@ static void visit_firm(Visitor *v, Firm *f)
 	visit<int8_t>(v, &f->ai_should_build_factory_count);
 }
 
-enum { FIRM_RECORD_SIZE = 254 };
-
-static bool read_firm(File *file, Firm *firm)
+void Firm::accept_file_visitor(FileReaderVisitor* v)
 {
-	return read_with_record_size(file, firm, &visit_firm<FileReaderVisitor>, FIRM_RECORD_SIZE);
+	visit_firm_members(v, this);
 }
 
-static bool write_firm(File *file, Firm *firm)
+void Firm::accept_file_visitor(FileWriterVisitor* v)
 {
-	return write_with_record_size(file, firm, &visit_firm<FileWriterVisitor>, FIRM_RECORD_SIZE);
+	visit_firm_members(v, this);
+}
+
+enum { FIRM_RECORD_SIZE = 254 };
+
+template <typename Visitor>
+static bool visit_firm(File* file, Firm* firm, uint16_t record_size)
+{
+	Visitor v(file);
+	v.with_record_size(record_size);
+	firm->accept_file_visitor(&v);
+
+	return v.good();
 }
 
 //-------- Start of function FirmArray::write_file -------------//
@@ -909,7 +916,7 @@ int FirmArray::write_file(File* filePtr)
 
          //------ write data in base class --------//
 
-			if (!write_firm(filePtr, firmPtr))
+			if (!visit_firm<FileWriterVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
 			  return 0;
 
          //--------- write worker_array ---------//
@@ -966,7 +973,7 @@ int FirmArray::read_file(File* filePtr)
          firmRecno = create_firm( firmId );
          firmPtr   = firm_array[firmRecno];
 
-			if (!read_firm(filePtr, firmPtr))
+			if (!visit_firm<FileReaderVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
 			  return 0;
 
          //---- read data in base class -----//

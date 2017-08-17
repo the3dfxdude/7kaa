@@ -26,12 +26,20 @@
 class FileReaderVisitor
 {
 protected:
-   FileReader& reader;
+   FileReader reader;
 
 public:
-   FileReaderVisitor(FileReader& reader)
-	   : reader(reader)
+   FileReaderVisitor(File* file)
+      : reader()
    {
+      reader.init(file);
+   }
+
+   bool good() const { return reader.good(); }
+
+   void with_record_size(uint16_t expected_record_size)
+   {
+      reader.check_record_size(expected_record_size);
    }
 
    bool skip(size_t len)
@@ -65,12 +73,20 @@ public:
 class FileWriterVisitor
 {
 protected:
-   FileWriter& writer;
+   FileWriter writer;
 
 public:
-   FileWriterVisitor(FileWriter& writer)
-	   : writer(writer)
+   FileWriterVisitor(File* file)
+      : writer()
    {
+      writer.init(file);
+   }
+
+   bool good() const { return writer.good(); }
+
+   void with_record_size(uint16_t record_size)
+   {
+      writer.write_record_size(record_size);
    }
 
    bool skip(size_t len)
@@ -122,15 +138,11 @@ namespace FileIOVisitor
                                void (*visit_obj)(FileWriterVisitor *v, T *obj),
                                uint16_t rec_size)
    {
-      FileWriter w;
-      if (!w.init(file))
-         return false;
-
-      w.write_record_size(rec_size);
-	  FileWriterVisitor v(w);
+      FileWriterVisitor v(file);
+      v.with_record_size(rec_size);
       visit_obj(&v, obj);
 
-      return w.good();
+      return v.good();
    }
 
    template <typename T>
@@ -138,16 +150,13 @@ namespace FileIOVisitor
                               void (*visit_obj)(FileReaderVisitor *v, T *obj),
                               uint16_t expected_rec_size)
    {
-      FileReader r;
-      if (!r.init(file))
-         return false;
-
-      r.check_record_size(expected_rec_size);
-	  FileReaderVisitor v(r);
+      FileReaderVisitor v(file);
+      v.with_record_size(expected_rec_size);
       visit_obj(&v, obj);
 
-      return r.good();
+      return v.good();
    }
+
 } /* namespace FileIOVisitor */
 
 /* vim: set ts=8 sw=3: */
