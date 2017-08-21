@@ -102,6 +102,7 @@ bin_PROGRAMS = 7kaa
 	OGENHILL.cpp \
 	OGENMAP.cpp \
 	OGETA.cpp \
+	OGFILE_BULLETS.cpp \
 	OGFILE_FIRMS.cpp \
 	OGFILE_UNITS.cpp \
 	OGFILE.cpp \
