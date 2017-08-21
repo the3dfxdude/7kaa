@@ -22,167 +22,22 @@
 
 #include <OUNIT.h>
 #include <OU_MARI.h>
+#include <OU_CARA.h>
+#include <OU_CART.h>
+#include <OU_MONS.h>
+#include <OU_VEHI.h>
+#include <OU_GOD.h>
 #include <file_io_visitor.h>
 #include <visit_sprite.h>
 
 using namespace FileIOVisitor;
 
 
-//-------- Start of function UnitArray::write_file -------------//
-//
-int UnitArray::write_file(File* filePtr)
-{
-	int  i;
-	Unit *unitPtr;
-
-	filePtr->file_put_short(restart_recno);  // variable in SpriteArray
-
-	filePtr->file_put_short( size()  );  // no. of units in unit_array
-
-	filePtr->file_put_short( selected_recno );
-	filePtr->file_put_short( selected_count );
-	filePtr->file_put_long ( cur_group_id   );
-	filePtr->file_put_long ( cur_team_id    );
-	filePtr->file_put_short(idle_blocked_unit_reset_count);
-	filePtr->file_put_long (unit_search_tries);
-	filePtr->file_put_short(unit_search_tries_flag);
-
-	filePtr->file_put_short(visible_unit_count);
-	filePtr->file_put_short(mp_first_frame_to_select_caravan);
-	filePtr->file_put_short(mp_first_frame_to_select_ship);
-	filePtr->file_put_short(mp_pre_selected_caravan_recno);
-	filePtr->file_put_short(mp_pre_selected_ship_recno);
-
-	for( i=1; i<=size() ; i++ )
-	{
-		unitPtr = (Unit*) get_ptr(i);
-
-		//----- write unitId or 0 if the unit is deleted -----//
-
-		if( !unitPtr )    // the unit is deleted
-		{
-			filePtr->file_put_short(0);
-		}
-		else
-		{
-			//--------- write unit_id -------------//
-
-			filePtr->file_put_short(unitPtr->unit_id);
-
-			//------ write data in the base class ------//
-
-			if( !unitPtr->write_file(filePtr) )
-				return 0;
-
-			//------ write data in the derived class ------//
-
-			if( !unitPtr->write_derived_file(filePtr) )
-				return 0;
-		}
-	}
-
-	//------- write empty room array --------//
-
-	write_empty_room(filePtr);
-
-	return 1;
-}
-//--------- End of function UnitArray::write_file ---------------//
-
-
-//-------- Start of function UnitArray::read_file -------------//
-//
-int UnitArray::read_file(File* filePtr)
-{
-	Unit*   unitPtr;
-	int     i, unitId, emptyRoomCount=0;
-
-	restart_recno    = filePtr->file_get_short();
-
-	int unitCount    = filePtr->file_get_short();  // get no. of units from file
-
-	selected_recno   = filePtr->file_get_short();
-	selected_count   = filePtr->file_get_short();
-	cur_group_id     = filePtr->file_get_long();
-	cur_team_id      = filePtr->file_get_long();
-	idle_blocked_unit_reset_count = filePtr->file_get_short();
-	unit_search_tries	= filePtr->file_get_long ();
-	unit_search_tries_flag = (char) filePtr->file_get_short();
-
-	visible_unit_count					= filePtr->file_get_short();
-	mp_first_frame_to_select_caravan = (char) filePtr->file_get_short();
-	mp_first_frame_to_select_ship		= (char) filePtr->file_get_short();
-	mp_pre_selected_caravan_recno		= filePtr->file_get_short();
-	mp_pre_selected_ship_recno			= filePtr->file_get_short();
-
-	for( i=1 ; i<=unitCount ; i++ )
-	{
-		unitId = filePtr->file_get_short();
-
-		if( unitId==0 )  // the unit has been deleted
-		{
-			add_blank(1);     // it's a DynArrayB function
-			emptyRoomCount++;
-		}
-		else
-		{
-			//----- create unit object -----------//
-
-			unitPtr = create_unit( unitId );
-			unitPtr->unit_id = unitId;
-
-			//---- read data in base class -----//
-
-			if( !unitPtr->read_file( filePtr ) )
-				return 0;
-
-			//----- read data in derived class -----//
-
-			if( !unitPtr->read_derived_file( filePtr ) )
-				return 0;
-
-			unitPtr->fix_attack_info();
-		}
-	}
-
-	//-------- linkout() those record added by add_blank() ----------//
-	//-- So they will be marked deleted in DynArrayB and can be -----//
-	//-- undeleted and used when a new record is going to be added --//
-
-	for( i=size() ; i>0 ; i-- )
-	{
-		DynArrayB::go(i);             // since UnitArray has its own go() which will call GroupArray::go()
-
-		if( get_ptr() == NULL )       // add_blank() record
-			linkout();
-	}
-
-	//------- read empty room array --------//
-
-	read_empty_room(filePtr);
-
-	//------- verify the empty_room_array loading -----//
-
-#ifdef DEBUG
-	err_when( empty_room_count != emptyRoomCount );
-
-	for( i=0 ; i<empty_room_count ; i++ )
-	{
-		if( !is_deleted( empty_room_array[i].recno ) )
-			err_here();
-	}
-#endif
-
-	return 1;
-}
-//--------- End of function UnitArray::read_file ---------------//
-
-
 template <typename Visitor>
-static void visit_unit(Visitor *v, Unit *u)
+static void visit_unit_members(Visitor *v, Unit *u)
 {
 	/* Sprite */
-	visit_sprite(v, u);
+	visit_sprite_members(v, u);
 
 	/* Unit */
 	visit<int8_t>(v, &u->unit_id);
@@ -264,154 +119,72 @@ static void visit_unit(Visitor *v, Unit *u)
 	visit_pointer(v, &u->team_info);
 }
 
-//--------- Begin of function Unit::write_file ---------//
-//
-// Write data in derived class.
-//
-// If the derived Unit don't have any special data,
-// just use Unit::write_file(), otherwise make its own derived copy of write_file()
-//
-int Unit::write_file(File* filePtr)
+template <typename Visitor>
+static void visit_result_node_members(Visitor* v, ResultNode* c)
 {
-	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_unit<FileWriterVisitor>, 169))
-		return 0;
-
-	//--------------- write memory data ----------------//
-
-	if( result_node_array )
-	{
-		if( !filePtr->file_write( result_node_array, sizeof(ResultNode) * result_node_count ) )
-			return 0;
-	}
-
-	//### begin alex 15/10 ###//
-	if(way_point_array)
-	{
-		err_when(way_point_array_size==0 || way_point_array_size<way_point_count);
-		if(!filePtr->file_write(way_point_array, sizeof(ResultNode)*way_point_array_size))
-			return 0;
-	}
-	//#### end alex 15/10 ####//
-
-	if( team_info )
-	{
-		if( !filePtr->file_write( team_info, sizeof(TeamInfo) ) )
-			return 0;
-	}
-
-	return 1;
+	visit<int16_t>(v, &c->node_x);
+	visit<int16_t>(v, &c->node_y);
 }
-//----------- End of function Unit::write_file ---------//
-
-
-//--------- Begin of function Unit::read_file ---------//
-//
-int Unit::read_file(File* filePtr)
-{
-	// Note: the visitor is in a scoped block, because it modifies the underlying File type (structured/flat) during its lifetime.
-	{
-		FileReaderVisitor v(filePtr);
-		v.with_record_size(169);
-		visit_unit(&v, this);
-
-		if (!v.good())
-			return 0;
-	}
-
-	//--------------- read in memory data ----------------//
-
-	if( result_node_array )
-	{
-		result_node_array = (ResultNode*) mem_add( sizeof(ResultNode) * result_node_count );
-
-		if( !filePtr->file_read( result_node_array, sizeof(ResultNode) * result_node_count ) )
-			return 0;
-	}
-
-	//### begin alex 15/10 ###//
-	if(way_point_array)
-	{
-		way_point_array = (ResultNode*) mem_add(sizeof(ResultNode) * way_point_array_size);
-
-		if(!filePtr->file_read(way_point_array, sizeof(ResultNode)*way_point_array_size))
-			return 0;
-	}
-	//#### end alex 15/10 ####//
-
-	if( team_info )
-	{
-		team_info = (TeamInfo*) mem_add( sizeof(TeamInfo) );
-
-		if( !filePtr->file_read( team_info, sizeof(TeamInfo) ) )
-			return 0;
-	}
-
-	//----------- post-process the data read ----------//
-
-	// attack_info_array = unit_res.attack_info_array+unit_res[unit_id]->first_attack-1;
-	sprite_info       = sprite_res[sprite_id];
-
-	sprite_info->load_bitmap_res();
-
-	//--------- special process of UNIT_MARINE --------//
-
-	// move to read_derived_file
-	//if( unit_res[unit_id]->unit_class == UNIT_CLASS_SHIP )
-	//{
-	//	((UnitMarine*)this)->splash.sprite_info = sprite_res[sprite_id];
-	//	((UnitMarine*)this)->splash.sprite_info->load_bitmap_res();
-	//}
-
-	return 1;
-}
-//----------- End of function Unit::read_file ---------//
-
-
-//--------- Begin of function Unit::write_derived_file ---------//
-//
-int Unit::write_derived_file(File* filePtr)
-{
-	//--- write data in derived class -----//
-
-	int writeSize = unit_array.unit_class_size(unit_id)-sizeof(Unit);
-
-	if( writeSize > 0 )
-	{
-		if( !filePtr->file_write( (char*) this + sizeof(Unit), writeSize ) )
-			return 0;
-	}
-
-	return 1;
-}
-//----------- End of function Unit::write_derived_file ---------//
-
-
-//--------- Begin of function Unit::read_derived_file ---------//
-//
-int Unit::read_derived_file(File* filePtr)
-{
-	//--- read data in derived class -----//
-
-	int readSize = unit_array.unit_class_size(unit_id) - sizeof(Unit);
-
-	if( readSize > 0 )
-	{
-		if( !filePtr->file_read( (char*) this + sizeof(Unit), readSize ) )
-			return 0;
-	}
-
-	return 1;
-}
-//----------- End of function Unit::read_derived_file ---------//
 
 template <typename Visitor>
-static void visit_trade_stop(Visitor *v, TradeStop *ts)
+static void visit_team_info_members(Visitor* v, TeamInfo* c)
+{
+	visit<int8_t>(v, &c->member_count);
+	visit_array<int16_t>(v, c->member_unit_array);
+	visit<int32_t>(v, &c->ai_last_request_defense_date);
+}
+
+template <typename Visitor>
+void visit_unit_members_array(Visitor* v, Unit* unit, bool is_reader_visitor)
+{
+	if( unit->result_node_array )
+	{
+		if (is_reader_visitor)
+			unit->result_node_array = (ResultNode*) mem_add( sizeof(ResultNode) * unit->result_node_count );
+
+		v->with_record_size(unit->result_node_count*sizeof(ResultNode));
+		for (int i = 0; i < unit->result_node_count; ++i) {
+			visit_result_node_members(v, &unit->result_node_array[i]);
+		}
+	}
+
+	//### begin alex 15/10 ###//
+	if( unit->way_point_array )
+	{
+		if (is_reader_visitor)
+			unit->way_point_array = (ResultNode*) mem_add(sizeof(ResultNode) * unit->way_point_array_size);
+
+		v->with_record_size(unit->way_point_array_size*sizeof(ResultNode));
+		for (int i = 0; i < unit->way_point_array_size; ++i) {
+			visit_result_node_members(v, &unit->way_point_array[i]);
+		}
+	}
+	//#### end alex 15/10 ####//
+
+	if( unit->team_info )
+	{
+		if (is_reader_visitor)
+			unit->team_info = (TeamInfo*) mem_add( sizeof(TeamInfo) );
+
+		v->with_record_size(23);
+		visit_team_info_members(v, &*unit->team_info);
+	}
+}
+
+template <typename Visitor>
+static void visit_trade_stop_members(Visitor *v, TradeStop *ts)
 {
 	visit<int16_t>(v, &ts->firm_recno);
 	visit<int16_t>(v, &ts->firm_loc_x1);
 	visit<int16_t>(v, &ts->firm_loc_y1);
 	visit<int8_t>(v, &ts->pick_up_type);
 	visit_array<int8_t>(v, ts->pick_up_array);
+}
+
+template <typename Visitor>
+static void visit_ship_stop_members(Visitor *v, ShipStop *c)
+{
+	visit_trade_stop_members(v, c);
 }
 
 template <typename Visitor>
@@ -435,9 +208,9 @@ static void visit_attack_info(Visitor *v, AttackInfo *ai)
 }
 
 template <typename Visitor>
-static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
+static void visit_unit_marine_members(Visitor *v, UnitMarine *u)
 {
-	visit_sprite(v, &u->splash);
+	visit_sprite_members(v, &u->splash);
 	visit<int8_t>(v, &u->menu_mode);
 	visit<int8_t>(v, &u->extra_move_in_beach);
 	visit<int8_t>(v, &u->in_beach);
@@ -453,10 +226,7 @@ static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
 	visit<int8_t>(v, &u->auto_mode);
 	visit<int16_t>(v, &u->cur_firm_recno);
 	visit<int16_t>(v, &u->carry_goods_capacity);
-
-	for (int n = 0; n < MAX_STOP_FOR_SHIP; n++)
-		visit_trade_stop(v, &u->stop_array[n]);
-
+	visit_array(v, u->stop_array, visit_ship_stop_members<Visitor>);
 	visit_array<int16_t>(v, u->raw_qty_array);
 	visit_array<int16_t>(v, u->product_raw_qty_array);
 	visit_attack_info(v, &u->ship_attack_info);
@@ -464,25 +234,331 @@ static void visit_unit_marine_derived(Visitor *v, UnitMarine *u)
 	visit<int32_t>(v, &u->last_load_goods_date);
 }
 
+template <typename Visitor>
+static void visit_caravan_stop_members(Visitor* v, CaravanStop* c)
+{
+	visit_trade_stop_members(v, c);
+	visit<int8_t>(v, &c->firm_id);
+}
+
+template <typename Visitor>
+static void visit_unit_caravan_members(Visitor* v, UnitCaravan* c)
+{
+	visit<int16_t>(v, &c->caravan_id);
+	visit<int8_t>(v, &c->journey_status);
+	visit<int8_t>(v, &c->dest_stop_id);
+	visit<int8_t>(v, &c->stop_defined_num);
+	visit<int8_t>(v, &c->wait_count);
+	visit<int16_t>(v, &c->stop_x_loc);
+	visit<int16_t>(v, &c->stop_y_loc);
+	visit_array(v, c->stop_array, visit_caravan_stop_members<Visitor>);
+	visit<int32_t>(v, &c->last_set_stop_date);
+	visit<int32_t>(v, &c->last_load_goods_date);
+	visit_array<int16_t>(v, c->raw_qty_array);
+	visit_array<int16_t>(v, c->product_raw_qty_array);
+}
+
+template <typename Visitor>
+static void visit_unit_exp_cart_members(Visitor* v, UnitExpCart* c)
+{
+	visit<int8_t>(v, &c->triggered);
+}
+
+template <typename Visitor>
+static void visit_unit_monster_members(Visitor* v, UnitMonster* c)
+{
+	visit<int8_t>(v, &c->monster_action_mode);
+}
+
+template <typename Visitor>
+static void visit_unit_vehicle_members(Visitor* v, UnitVehicle* c)
+{
+	visit<int16_t>(v, &c->solider_hit_points);
+	visit<int16_t>(v, &c->vehicle_hit_points);
+}
+
+template <typename Visitor>
+static void visit_unit_god_members(Visitor* v, UnitGod* c)
+{
+	visit<int16_t>(v, &c->god_id);
+	visit<int16_t>(v, &c->base_firm_recno);
+	visit<int8_t>(v, &c->cast_power_type);
+	visit<int16_t>(v, &c->cast_origin_x);
+	visit<int16_t>(v, &c->cast_origin_y);
+	visit<int16_t>(v, &c->cast_target_x);
+	visit<int16_t>(v, &c->cast_target_y);
+}
+
+
+// ===============================================================================
+
+void Unit::accept_file_visitor(FileReaderVisitor* v)
+{
+	visit_unit_members(v, this);
+	visit_unit_members_array(v, this, true);
+	
+	//----------- post-process the data read ----------//
+
+	// attack_info_array = unit_res.attack_info_array+unit_res[unit_id]->first_attack-1;
+	sprite_info = sprite_res[sprite_id];
+	sprite_info->load_bitmap_res();
+}
+
+void Unit::accept_file_visitor(FileWriterVisitor* v)
+{
+	visit_unit_members(v, this);
+	visit_unit_members_array(v, this, false);
+}
+
 enum { UNIT_MARINE_DERIVED_RECORD_SIZE = 145 };
 
-//--------- Begin of function UnitMarine::read_derived_file ---------//
-int UnitMarine::read_derived_file(File* filePtr)
+void UnitMarine::accept_file_visitor(FileReaderVisitor* v)
 {
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_unit_marine_derived<FileReaderVisitor>,
-		UNIT_MARINE_DERIVED_RECORD_SIZE))
-		return 0;
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_MARINE_DERIVED_RECORD_SIZE);
+	visit_unit_marine_members(v, this);
 
-	// ------- post-process the data read --------//
+	//----------- post-process the data read ----------//
+
 	splash.sprite_info = sprite_res[splash.sprite_id];
 	splash.sprite_info->load_bitmap_res();
+}
+
+void UnitMarine::accept_file_visitor(FileWriterVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_MARINE_DERIVED_RECORD_SIZE);
+	visit_unit_marine_members(v, this);
+}
+
+enum { UNIT_CARAVAN_DERIVED_RECORD_SIZE = 72 };
+
+void UnitCaravan::accept_file_visitor(FileReaderVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_CARAVAN_DERIVED_RECORD_SIZE);
+	visit_unit_caravan_members(v, this);
+}
+
+void UnitCaravan::accept_file_visitor(FileWriterVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_CARAVAN_DERIVED_RECORD_SIZE);
+	visit_unit_caravan_members(v, this);
+}
+
+enum { UNIT_EXP_CART_DERIVED_RECORD_SIZE = 1 };
+
+void UnitExpCart::accept_file_visitor(FileReaderVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_EXP_CART_DERIVED_RECORD_SIZE);
+	visit_unit_exp_cart_members(v, this);
+}
+
+void UnitExpCart::accept_file_visitor(FileWriterVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_EXP_CART_DERIVED_RECORD_SIZE);
+	visit_unit_exp_cart_members(v, this);
+}
+
+enum { UNIT_MONSTER_DERIVED_RECORD_SIZE = 1 };
+
+void UnitMonster::accept_file_visitor(FileReaderVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_MONSTER_DERIVED_RECORD_SIZE);
+	visit_unit_monster_members(v, this);
+}
+
+void UnitMonster::accept_file_visitor(FileWriterVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_MONSTER_DERIVED_RECORD_SIZE);
+	visit_unit_monster_members(v, this);
+}
+
+enum { UNIT_VEHICLE_DERIVED_RECORD_SIZE = 4 };
+
+void UnitVehicle::accept_file_visitor(FileReaderVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_VEHICLE_DERIVED_RECORD_SIZE);
+	visit_unit_vehicle_members(v, this);
+}
+
+void UnitVehicle::accept_file_visitor(FileWriterVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_VEHICLE_DERIVED_RECORD_SIZE);
+	visit_unit_vehicle_members(v, this);
+}
+
+enum { UNIT_GOD_DERIVED_RECORD_SIZE = 13 };
+
+void UnitGod::accept_file_visitor(FileReaderVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_GOD_DERIVED_RECORD_SIZE);
+	visit_unit_god_members(v, this);
+}
+
+void UnitGod::accept_file_visitor(FileWriterVisitor* v)
+{
+	Unit::accept_file_visitor(v);
+	v->with_record_size(UNIT_GOD_DERIVED_RECORD_SIZE);
+	visit_unit_god_members(v, this);
+}
+
+template <typename Visitor>
+static bool visit_unit(File* file, Unit* unit)
+{
+	enum { UNIT_RECORD_SIZE = 169 };
+
+	Visitor v(file);
+	v.with_record_size(UNIT_RECORD_SIZE);
+	unit->accept_file_visitor(&v);
+
+	return v.good();
+}
+
+
+//-------- Start of function UnitArray::write_file -------------//
+//
+int UnitArray::write_file(File* filePtr)
+{
+	int  i;
+	Unit *unitPtr;
+
+	filePtr->file_put_short(restart_recno);  // variable in SpriteArray
+
+	filePtr->file_put_short( size()  );  // no. of units in unit_array
+
+	filePtr->file_put_short( selected_recno );
+	filePtr->file_put_short( selected_count );
+	filePtr->file_put_long ( cur_group_id   );
+	filePtr->file_put_long ( cur_team_id    );
+	filePtr->file_put_short(idle_blocked_unit_reset_count);
+	filePtr->file_put_long (unit_search_tries);
+	filePtr->file_put_short(unit_search_tries_flag);
+
+	filePtr->file_put_short(visible_unit_count);
+	filePtr->file_put_short(mp_first_frame_to_select_caravan);
+	filePtr->file_put_short(mp_first_frame_to_select_ship);
+	filePtr->file_put_short(mp_pre_selected_caravan_recno);
+	filePtr->file_put_short(mp_pre_selected_ship_recno);
+
+	for( i=1; i<=size() ; i++ )
+	{
+		unitPtr = (Unit*) get_ptr(i);
+
+		//----- write unitId or 0 if the unit is deleted -----//
+
+		if( !unitPtr )    // the unit is deleted
+		{
+			filePtr->file_put_short(0);
+		}
+		else
+		{
+			//--------- write unit_id -------------//
+
+			filePtr->file_put_short(unitPtr->unit_id);
+
+			//------ write data ------//
+
+			if( !visit_unit<FileWriterVisitor>(filePtr, unitPtr) )
+				return 0;
+		}
+	}
+
+	//------- write empty room array --------//
+
+	write_empty_room(filePtr);
 
 	return 1;
 }
-//--------- End of function UnitMarine::read_derived_file ---------//
+//--------- End of function UnitArray::write_file ---------------//
 
-int UnitMarine::write_derived_file(File *filePtr)
+
+//-------- Start of function UnitArray::read_file -------------//
+//
+int UnitArray::read_file(File* filePtr)
 {
-	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_unit_marine_derived<FileWriterVisitor>,
-		UNIT_MARINE_DERIVED_RECORD_SIZE);
+	Unit*   unitPtr;
+	int     i, unitId, emptyRoomCount=0;
+
+	restart_recno    = filePtr->file_get_short();
+
+	int unitCount    = filePtr->file_get_short();  // get no. of units from file
+
+	selected_recno   = filePtr->file_get_short();
+	selected_count   = filePtr->file_get_short();
+	cur_group_id     = filePtr->file_get_long();
+	cur_team_id      = filePtr->file_get_long();
+	idle_blocked_unit_reset_count = filePtr->file_get_short();
+	unit_search_tries	= filePtr->file_get_long ();
+	unit_search_tries_flag = (char) filePtr->file_get_short();
+
+	visible_unit_count					= filePtr->file_get_short();
+	mp_first_frame_to_select_caravan = (char) filePtr->file_get_short();
+	mp_first_frame_to_select_ship		= (char) filePtr->file_get_short();
+	mp_pre_selected_caravan_recno		= filePtr->file_get_short();
+	mp_pre_selected_ship_recno			= filePtr->file_get_short();
+
+	for( i=1 ; i<=unitCount ; i++ )
+	{
+		unitId = filePtr->file_get_short();
+
+		if( unitId==0 )  // the unit has been deleted
+		{
+			add_blank(1);     // it's a DynArrayB function
+			emptyRoomCount++;
+		}
+		else
+		{
+			//----- create unit object -----------//
+
+			unitPtr = create_unit( unitId );
+			unitPtr->unit_id = unitId;
+
+			//---- read data -----//
+
+			if( !visit_unit<FileReaderVisitor>(filePtr, unitPtr) )
+				return 0;
+
+			unitPtr->fix_attack_info();
+		}
+	}
+
+	//-------- linkout() those record added by add_blank() ----------//
+	//-- So they will be marked deleted in DynArrayB and can be -----//
+	//-- undeleted and used when a new record is going to be added --//
+
+	for( i=size() ; i>0 ; i-- )
+	{
+		DynArrayB::go(i);             // since UnitArray has its own go() which will call GroupArray::go()
+
+		if( get_ptr() == NULL )       // add_blank() record
+			linkout();
+	}
+
+	//------- read empty room array --------//
+
+	read_empty_room(filePtr);
+
+	//------- verify the empty_room_array loading -----//
+
+#ifdef DEBUG
+	err_when( empty_room_count != emptyRoomCount );
+
+	for( i=0 ; i<empty_room_count ; i++ )
+	{
+		if( !is_deleted( empty_room_array[i].recno ) )
+			err_here();
+	}
+#endif
+
+	return 1;
 }
+//--------- End of function UnitArray::read_file ---------------//

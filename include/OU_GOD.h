@@ -34,15 +34,16 @@
 
 //----------- Define class God -----------//
 
-#pragma pack(1)
 class UnitGod : public Unit
 {
 public:
 	short god_id;
 	short base_firm_recno;		// recno of the seat of power which creates and supports this god unit
 	char	cast_power_type;
-	short	cast_origin_x, cast_origin_y;
-	short cast_target_x, cast_target_y;
+	short	cast_origin_x;
+	short	cast_origin_y;
+	short	cast_target_x;
+	short	cast_target_y;
 
 public:
 	virtual void init_derived();
@@ -54,6 +55,9 @@ public:
 	bool is_in_build_menu();
 
 	void cast_power(int castXLoc, int castYLoc);
+
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
@@ -99,7 +103,6 @@ private:
 	void think_indian_god();
 	void think_zulu_god();
 };
-#pragma pack()
 
 //--------------------------------------------//
 

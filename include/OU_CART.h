@@ -26,7 +26,6 @@
 
 #include <OUNIT.h>
 
-#pragma pack(1)
 class UnitExpCart : public Unit
 {
 public:
@@ -39,10 +38,12 @@ public:
 	int	process_die();
 	void	trigger_explode();
 
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
-#pragma pack()
 
 #endif

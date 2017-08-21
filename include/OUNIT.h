@@ -52,6 +52,9 @@
 #undef DEBUG
 #endif
 
+class FileReaderVisitor;
+class FileWriterVisitor;
+
 #define GAME_FRAMES_PER_DAY 10
 
 //-------- action code for action_mode ---------//
@@ -188,7 +191,6 @@ enum  {  KEEP_PRESERVE_ACTION = 1,  // used for stop2() to keep preserve action
 
 //----------- Define TeamInfo -------------//
 
-#pragma pack(1)
 struct TeamInfo
 {
 	TeamInfo();
@@ -197,11 +199,9 @@ struct TeamInfo
    short member_unit_array[MAX_TEAM_MEMBER];
    int   ai_last_request_defense_date;
 };
-#pragma pack()
 
 //----------- Define class Unit -----------//
 
-#pragma pack(1)
 class Unit : public Sprite
 {
 public:
@@ -558,11 +558,9 @@ public:
 	void  set_ship_extra_move();
 	void  set_die();
 
-	int   write_file(File* filePtr);
-	int   read_file(File* filePtr);
+	virtual void accept_file_visitor(FileReaderVisitor* v);
+	virtual void accept_file_visitor(FileWriterVisitor* v);
 
-	virtual int write_derived_file(File* filePtr);
-	virtual int read_derived_file(File* filePtr);
 	virtual void fix_attack_info();         // set attack_info_array appropriately
 
 	//-------------- multiplayer checking codes ---------------//
@@ -732,7 +730,6 @@ protected:
 	void  pay_expense();
 	void  process_recover();
 };
-#pragma pack()
 
 //--------------------------------------------------------------------------------------------//
 
@@ -769,7 +766,6 @@ public:
 
 	int   add_unit(int unitId, int nationRecno, int rankId=0, int unitLoyalty=0, int startXLoc= -1, int startYLoc= -1);
 	Unit* create_unit(int unitId);
-	int   unit_class_size(int);
 
 	void  disappear_in_town(int unitRecno, int townRecno);
 	void  disappear_in_firm(int unitRecno);

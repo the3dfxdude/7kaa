@@ -57,7 +57,6 @@ enum	{	NO_EXTRA_MOVE = 0,
 		};
 
 //-------- Define struct ShipStop ----------//
-#pragma pack(1)
 struct ShipStop : public TradeStop
 {
 public:
@@ -66,11 +65,9 @@ public:
 	//----------- multiplayer version --------------//
 	void			mp_pick_up_toggle(int pos);
 };
-#pragma pack()
 
 //------- Define class UnitMarine -------//
 
-#pragma pack(1)
 class UnitMarine : public Unit
 {
 public:
@@ -176,8 +173,9 @@ public:
 
 	int	can_resign();
 
-	int   read_derived_file(File *);
-	int   write_derived_file(File *);
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
 	virtual void fix_attack_info();         // set attack_info_array appropriately
 
 	//------- ai functions --------//
@@ -212,7 +210,6 @@ private:
 
 	int	is_on_coast();
 };
-#pragma pack()
 
 //---------------------------------------//
 

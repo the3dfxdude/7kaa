@@ -187,7 +187,7 @@ int BulletArray::read_file(File* filePtr)
 template <typename Visitor>
 static void visit_bullet(Visitor *v, Bullet *b)
 {
-	visit_sprite(v, b);
+	visit_sprite_members(v, b);
 	visit<int8_t>(v, &b->parent_type);
 	visit<int16_t>(v, &b->parent_recno);
 	visit<int8_t>(v, &b->target_mobile_type);
@@ -273,8 +273,8 @@ template <typename Visitor>
 static void visit_projectile(Visitor *v, Projectile *p)
 {
 	visit<float>(v, &p->z_coff);
-	visit_sprite(v, &p->act_bullet);
-	visit_sprite(v, &p->bullet_shadow);
+	visit_sprite_members(v, &p->act_bullet);
+	visit_sprite_members(v, &p->bullet_shadow);
 }
 
 enum { PROJECTILE_RECORD_SIZE = 72 };
@@ -1345,7 +1345,7 @@ int TornadoArray::read_file(File* filePtr)
 template <typename Visitor>
 static void visit_tornado(Visitor *v, Tornado *t)
 {
-	visit_sprite(v, t);
+	visit_sprite_members(v, t);
    visit<float>(v, &t->attack_damage);
    visit<int16_t>(v, &t->life_time);
    visit<int16_t>(v, &t->dmg_offset_x);

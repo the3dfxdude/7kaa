@@ -171,45 +171,6 @@ Unit* UnitArray::create_unit(int unitId)
 //----------- End of function UnitArray::create_unit ---------//
 
 
-//-------- Begin of function UnitArray::unit_class_size --------//
-//
-// Return the size of the class.
-//
-int UnitArray::unit_class_size(int unitId)
-{
-	UnitInfo* unitInfo = unit_res[unitId];
-
-	switch(unitId)
-	{
-		case UNIT_CARAVAN:
-			return sizeof(UnitCaravan);
-
-		case UNIT_VESSEL:
-		case UNIT_TRANSPORT:
-		case UNIT_CARAVEL:
-		case UNIT_GALLEON:
-			return sizeof(UnitMarine);
-
-		case UNIT_EXPLOSIVE_CART:
-			return sizeof(UnitExpCart);
-
-		default:
-			if( unitInfo->is_monster )
-				return sizeof(UnitMonster);
-
-			else if( unitInfo->solider_id )		// if it is a vehicle unit
-				return sizeof(UnitVehicle);
-
-			else if( god_res.is_god_unit(unitId) )
-				return sizeof(UnitGod);
-
-			else
-				return sizeof(Unit);
-	}
-}
-//----------- End of function UnitArray::unit_class_size ---------//
-
-
 //-------- Begin of function UnitArray::disappear_in_town --------//
 //
 // The unit disappear from the map because it has moved into a town.

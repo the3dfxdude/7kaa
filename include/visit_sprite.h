@@ -26,7 +26,7 @@
 
 
 template <typename Visitor>
-static void visit_sprite(Visitor *v, Sprite *s)
+static void visit_sprite_members(Visitor *v, Sprite *s)
 {
 	using namespace FileIOVisitor;
 

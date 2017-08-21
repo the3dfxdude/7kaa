@@ -123,13 +123,11 @@ public:
 
 //------- Define struct ResultNode --------//
 
-#pragma pack(1)
 struct ResultNode
 {
 public:
 	short node_x, node_y;
 };
-#pragma pack()
 
 //---------- Define class Stack ----------//
 
