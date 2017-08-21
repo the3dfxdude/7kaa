@@ -151,6 +151,7 @@ noinst_HEADERS = \
 	OVGABUF.h \
 	OVGALOCK.h \
 	OVIDEO.h \
+	visit_sprite.h \
 	OVOLUME.h \
 	OVQUEUE.h \
 	OWALLRES.h \
