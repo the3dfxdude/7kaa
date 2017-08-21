@@ -411,18 +411,8 @@ void UnitGod::accept_file_visitor(FileWriterVisitor* v)
 	visit_unit_god_members(v, this);
 }
 
-template <typename Visitor>
-static bool visit_unit(File* file, Unit* unit)
-{
-	enum { UNIT_RECORD_SIZE = 169 };
 
-	Visitor v(file);
-	v.with_record_size(UNIT_RECORD_SIZE);
-	unit->accept_file_visitor(&v);
-
-	return v.good();
-}
-
+enum { UNIT_RECORD_SIZE = 169 };
 
 //-------- Start of function UnitArray::write_file -------------//
 //
@@ -467,7 +457,7 @@ int UnitArray::write_file(File* filePtr)
 
 			//------ write data ------//
 
-			if( !visit_unit<FileWriterVisitor>(filePtr, unitPtr) )
+			if( !polymorphic_visit_with_record_size<FileWriterVisitor>(filePtr, unitPtr, UNIT_RECORD_SIZE) )
 				return 0;
 		}
 	}
@@ -524,7 +514,7 @@ int UnitArray::read_file(File* filePtr)
 
 			//---- read data -----//
 
-			if( !visit_unit<FileReaderVisitor>(filePtr, unitPtr) )
+			if( !polymorphic_visit_with_record_size<FileReaderVisitor>(filePtr, unitPtr, UNIT_RECORD_SIZE) )
 				return 0;
 
 			unitPtr->fix_attack_info();

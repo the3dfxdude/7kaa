@@ -125,18 +125,8 @@ void BulletHoming::accept_file_visitor(FileWriterVisitor* v)
 	visit_bullet_homing_members(v, this);
 }
 
-template <typename Visitor>
-static bool visit_bullet(File* file, Bullet* bullet)
-{
-	enum { BULLET_RECORD_SIZE = 57 };
 
-	Visitor v(file);
-	v.with_record_size(BULLET_RECORD_SIZE);
-	bullet->accept_file_visitor(&v);
-
-	return v.good();
-}
-
+enum { BULLET_RECORD_SIZE = 57 };
 
 //-------- Start of function BulletArray::write_file -------------//
 //
@@ -166,7 +156,7 @@ int BulletArray::write_file(File* filePtr)
 
 			//------ write data ------//
 
-			if( !visit_bullet<FileWriterVisitor>(filePtr, bulletPtr) )
+			if( !polymorphic_visit_with_record_size<FileWriterVisitor>(filePtr, bulletPtr, BULLET_RECORD_SIZE) )
 				return 0;
 		}
 	}
@@ -221,7 +211,7 @@ int BulletArray::read_file(File* filePtr)
 
 			//----- read data --------//
 
-			if( !visit_bullet<FileReaderVisitor>(filePtr, bulletPtr) )
+			if( !polymorphic_visit_with_record_size<FileReaderVisitor>(filePtr, bulletPtr, BULLET_RECORD_SIZE) )
 				return 0;
 		}
 	}

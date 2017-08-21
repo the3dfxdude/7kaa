@@ -153,6 +153,16 @@ namespace FileIOVisitor
       return v.good();
    }
 
+   template <typename Visitor, typename T>
+   bool polymorphic_visit_with_record_size(File* file, T* obj, uint16_t rec_size)
+   {
+      Visitor v(file);
+      v.with_record_size(rec_size);
+	  obj->accept_file_visitor(&v);
+
+      return v.good();
+   }
+
 } /* namespace FileIOVisitor */
 
 /* vim: set ts=8 sw=3: */

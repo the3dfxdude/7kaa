@@ -491,17 +491,8 @@ void FirmWar::accept_file_visitor(FileWriterVisitor* v)
 	visit_firm_war_members(v, this);
 }
 
-template <typename Visitor>
-static bool visit_firm(File* file, Firm* firm)
-{
-	enum { FIRM_RECORD_SIZE = 254 };
 
-	Visitor v(file);
-	v.with_record_size(FIRM_RECORD_SIZE);
-	firm->accept_file_visitor(&v);
-
-	return v.good();
-}
+enum { FIRM_RECORD_SIZE = 254 };
 
 //-------- Start of function FirmArray::write_file -------------//
 //
@@ -537,7 +528,7 @@ int FirmArray::write_file(File* filePtr)
 
 			//------ write data from (derived) class --------//
 
-			if (!visit_firm<FileWriterVisitor>(filePtr, firmPtr))
+			if (!polymorphic_visit_with_record_size<FileWriterVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
 				return 0;
 		}
 	}
@@ -583,7 +574,7 @@ int FirmArray::read_file(File* filePtr)
 
 			//------ read data into (derived) class --------//
 
-			if (!visit_firm<FileReaderVisitor>(filePtr, firmPtr))
+			if (!polymorphic_visit_with_record_size<FileReaderVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
 				return 0;
 
 			//---- fixup version difference between v1 and v2 -----//
