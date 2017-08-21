@@ -24,8 +24,6 @@
 
 #include <OGFILE.h>
 #include <OGF_V1.h>
-#include <OBULLET.h>
-#include <OB_PROJ.h>
 #include <ONATION.h>
 #include <ONEWS.h>
 #include <OREBEL.h>

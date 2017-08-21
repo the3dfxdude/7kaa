@@ -26,7 +26,7 @@
 
 #include <OBULLET.h>
 
-#pragma pack(1)
+
 class BulletHoming : public Bullet
 {
 public:
@@ -34,7 +34,8 @@ public:
 	char	target_type;
 	short	target_recno;
 	short	speed;
-	short origin2_x, origin2_y;
+	short	origin2_x;
+	short	origin2_y;
 
 public:
 	BulletHoming();
@@ -44,13 +45,12 @@ public:
 
 	void	process_move();
 
-	// int	write_derived_file(File *);
-	// int	read_derived_file(File *);
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
-#pragma pack()
 
 #endif

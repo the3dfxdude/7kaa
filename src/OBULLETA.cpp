@@ -82,30 +82,6 @@ int BulletArray::create_bullet(short spriteId, Bullet** bpp)
 //----------- End of function BulletArray::create_bullet -----------//
 
 
-//--------- Begin of function BulletArray::bullet_class_size ---------//
-int BulletArray::bullet_class_size(int spriteId)
-{
-	SpriteInfo *spriteInfo = sprite_res[spriteId];
-	err_when(spriteInfo->sprite_type != 'B');
-	switch(spriteInfo->sprite_sub_type)
-	{
-	case 0:
-	case ' ':
-		return sizeof(Bullet);
-	case 'P':
-		return sizeof(Projectile);
-	case 'H':
-		return sizeof(BulletHoming);
-	case 'F':
-		return sizeof(BulletFlame);
-	default:
-		err_here();			// undefined bullet type
-		return 0;
-	}
-}
-//----------- End of function BulletArray::bullet_class_size -----------//
-
-
 //--------- Begin of function BulletArray::bullet_path_possible ---------//
 // For default bullet:
 //		if the bullet is not blocked by building in its path, this

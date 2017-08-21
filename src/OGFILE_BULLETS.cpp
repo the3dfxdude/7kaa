@@ -20,7 +20,6 @@
 *
 */
 
-#include <OSPRITE.h>
 #include <OBULLET.h>
 #include <OB_FLAME.h>
 #include <OB_HOMIN.h>
@@ -29,6 +28,114 @@
 #include <visit_sprite.h>
 
 using namespace FileIOVisitor;
+
+
+template <typename Visitor>
+static void visit_bullet_members(Visitor *v, Bullet *b)
+{
+	visit_sprite_members(v, b);
+	visit<int8_t>(v, &b->parent_type);
+	visit<int16_t>(v, &b->parent_recno);
+	visit<int8_t>(v, &b->target_mobile_type);
+	visit<float>(v, &b->attack_damage);
+	visit<int16_t>(v, &b->damage_radius);
+	visit<int16_t>(v, &b->nation_recno);
+	visit<int8_t>(v, &b->fire_radius);
+	visit<int16_t>(v, &b->origin_x);
+	visit<int16_t>(v, &b->origin_y);
+	visit<int16_t>(v, &b->target_x_loc);
+	visit<int16_t>(v, &b->target_y_loc);
+	visit<int8_t>(v, &b->cur_step);
+	visit<int8_t>(v, &b->total_step);
+}
+
+template <typename Visitor>
+static void visit_projectile_members(Visitor *v, Projectile *p)
+{
+	visit<float>(v, &p->z_coff);
+	visit_sprite_members(v, &p->act_bullet);
+	visit_sprite_members(v, &p->bullet_shadow);
+}
+
+template <typename Visitor>
+static void visit_bullet_homing_members(Visitor* v, BulletHoming* c)
+{
+	visit<int8_t>(v, &c->max_step);
+	visit<int8_t>(v, &c->target_type);
+	visit<int16_t>(v, &c->target_recno);
+	visit<int16_t>(v, &c->speed);
+	visit<int16_t>(v, &c->origin2_x);
+	visit<int16_t>(v, &c->origin2_y);
+}
+
+
+// ===============================================================================
+
+void Bullet::accept_file_visitor(FileReaderVisitor* v)
+{
+	visit_bullet_members(v, this);
+
+	//------------ post-process the data read ----------//
+
+	sprite_info = sprite_res[sprite_id];
+	sprite_info->load_bitmap_res();
+}
+
+void Bullet::accept_file_visitor(FileWriterVisitor* v)
+{
+	visit_bullet_members(v, this);
+}
+
+enum { BULLET_PROJECTILE_DERIVED_RECORD_SIZE = 72 };
+
+void Projectile::accept_file_visitor(FileReaderVisitor* v)
+{
+	Bullet::accept_file_visitor(v);
+	v->with_record_size(BULLET_PROJECTILE_DERIVED_RECORD_SIZE);
+	visit_projectile_members(v, this);
+
+	//----------- post-process the data read ----------//
+
+	act_bullet.sprite_info = sprite_res[act_bullet.sprite_id];
+	act_bullet.sprite_info->load_bitmap_res();
+	bullet_shadow.sprite_info = sprite_res[bullet_shadow.sprite_id];
+	bullet_shadow.sprite_info->load_bitmap_res();
+}
+
+void Projectile::accept_file_visitor(FileWriterVisitor* v)
+{
+	Bullet::accept_file_visitor(v);
+	v->with_record_size(BULLET_PROJECTILE_DERIVED_RECORD_SIZE);
+	visit_projectile_members(v, this);
+}
+
+enum { BULLET_HOMING_DERIVED_RECORD_SIZE = 10 };
+
+void BulletHoming::accept_file_visitor(FileReaderVisitor* v)
+{
+	Bullet::accept_file_visitor(v);
+	v->with_record_size(BULLET_HOMING_DERIVED_RECORD_SIZE);
+	visit_bullet_homing_members(v, this);
+}
+
+void BulletHoming::accept_file_visitor(FileWriterVisitor* v)
+{
+	Bullet::accept_file_visitor(v);
+	v->with_record_size(BULLET_HOMING_DERIVED_RECORD_SIZE);
+	visit_bullet_homing_members(v, this);
+}
+
+template <typename Visitor>
+static bool visit_bullet(File* file, Bullet* bullet)
+{
+	enum { BULLET_RECORD_SIZE = 57 };
+
+	Visitor v(file);
+	v.with_record_size(BULLET_RECORD_SIZE);
+	bullet->accept_file_visitor(&v);
+
+	return v.good();
+}
 
 
 //-------- Start of function BulletArray::write_file -------------//
@@ -57,14 +164,9 @@ int BulletArray::write_file(File* filePtr)
 		{
 			filePtr->file_put_short(bulletPtr->sprite_id);      // there is a bullet in this record
 
-																//------ write data in the base class ------//
+			//------ write data ------//
 
-			if( !bulletPtr->write_file(filePtr) )
-				return 0;
-
-			//------ write data in the derived class -------//
-
-			if( !bulletPtr->write_derived_file(filePtr) )
+			if( !visit_bullet<FileWriterVisitor>(filePtr, bulletPtr) )
 				return 0;
 		}
 	}
@@ -117,14 +219,9 @@ int BulletArray::read_file(File* filePtr)
 			bulletRecno = create_bullet(spriteId);
 			bulletPtr   = bullet_array[bulletRecno];
 
-			//----- read data in base class --------//
+			//----- read data --------//
 
-			if( !bulletPtr->read_file( filePtr ) )
-				return 0;
-
-			//----- read data in derived class -----//
-
-			if( !bulletPtr->read_derived_file( filePtr ) )
+			if( !visit_bullet<FileReaderVisitor>(filePtr, bulletPtr) )
 				return 0;
 		}
 	}
@@ -160,123 +257,3 @@ int BulletArray::read_file(File* filePtr)
 	return 1;
 }
 //--------- End of function BulletArray::read_file ---------------//
-
-template <typename Visitor>
-static void visit_bullet(Visitor *v, Bullet *b)
-{
-	visit_sprite_members(v, b);
-	visit<int8_t>(v, &b->parent_type);
-	visit<int16_t>(v, &b->parent_recno);
-	visit<int8_t>(v, &b->target_mobile_type);
-	visit<float>(v, &b->attack_damage);
-	visit<int16_t>(v, &b->damage_radius);
-	visit<int16_t>(v, &b->nation_recno);
-	visit<int8_t>(v, &b->fire_radius);
-	visit<int16_t>(v, &b->origin_x);
-	visit<int16_t>(v, &b->origin_y);
-	visit<int16_t>(v, &b->target_x_loc);
-	visit<int16_t>(v, &b->target_y_loc);
-	visit<int8_t>(v, &b->cur_step);
-	visit<int8_t>(v, &b->total_step);
-}
-
-enum { BULLET_RECORD_SIZE = 57 };
-
-//--------- Begin of function Bullet::write_file ---------//
-//
-int Bullet::write_file(File* filePtr)
-{
-	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_bullet<FileWriterVisitor>,
-		BULLET_RECORD_SIZE);
-}
-//----------- End of function Bullet::write_file ---------//
-
-//--------- Begin of function Bullet::read_file ---------//
-//
-int Bullet::read_file(File* filePtr)
-{
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_bullet<FileReaderVisitor>,
-		BULLET_RECORD_SIZE))
-		return 0;
-
-	//------------ post-process the data read ----------//
-
-	sprite_info = sprite_res[sprite_id];
-
-	sprite_info->load_bitmap_res();
-
-	return 1;
-}
-//----------- End of function Bullet::read_file ---------//
-
-
-//----------- Begin of function Bullet::write_derived_file ---------//
-int Bullet::write_derived_file(File *filePtr)
-{
-	//--- write data in derived class -----//
-
-	int writeSize = bullet_array.bullet_class_size(sprite_id)-sizeof(Bullet);
-
-	if( writeSize > 0 )
-	{
-		if( !filePtr->file_write( (char*) this + sizeof(Bullet), writeSize ) )
-			return 0;
-	}
-
-	return 1;
-
-}
-//----------- End of function Bullet::write_derived_file ---------//
-
-
-//----------- Begin of function Bullet::read_derived_file ---------//
-int Bullet::read_derived_file(File *filePtr)
-{
-	//--- read data in derived class -----//
-
-	int readSize = bullet_array.bullet_class_size(sprite_id) - sizeof(Bullet);
-
-	if( readSize > 0 )
-	{
-		if( !filePtr->file_read( (char*) this + sizeof(Bullet), readSize ) )
-			return 0;
-	}
-
-	return 1;
-}
-//----------- End of function Bullet::read_derived_file ---------//
-
-template <typename Visitor>
-static void visit_projectile(Visitor *v, Projectile *p)
-{
-	visit<float>(v, &p->z_coff);
-	visit_sprite_members(v, &p->act_bullet);
-	visit_sprite_members(v, &p->bullet_shadow);
-}
-
-enum { PROJECTILE_RECORD_SIZE = 72 };
-
-//----------- Begin of function Projectile::read_derived_file ---------//
-
-int Projectile::write_derived_file(File *filePtr)
-{
-	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_projectile<FileWriterVisitor>,
-		PROJECTILE_RECORD_SIZE);
-}
-
-int Projectile::read_derived_file(File *filePtr)
-{
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_projectile<FileReaderVisitor>,
-		PROJECTILE_RECORD_SIZE))
-		return 0;
-
-	//----------- post-process the data read ----------//
-	act_bullet.sprite_info = sprite_res[act_bullet.sprite_id];
-	act_bullet.sprite_info->load_bitmap_res();
-	bullet_shadow.sprite_info = sprite_res[bullet_shadow.sprite_id];
-	bullet_shadow.sprite_info->load_bitmap_res();
-
-	return 1;
-}
-//----------- End of function Projectile::read_derived_file ---------//
-
