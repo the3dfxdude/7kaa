@@ -53,6 +53,7 @@ noinst_HEADERS = \
 	OF_MONS.h \
 	OF_RESE.h \
 	OF_WAR.h \
+	OGFILE_DYNARRAYB.inl \
 	OGAME.h \
 	OGAMESET.h \
 	OGAMHALL.h \
@@ -191,4 +192,5 @@ noinst_HEADERS = \
 	vga_base.h \
 	vga_sdl.h \
 	vga_util.h \
+	visitor_functions.h \
 	wav_stream.h

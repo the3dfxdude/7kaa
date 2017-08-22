@@ -28,6 +28,9 @@
 #include <ODYNARR.h>
 #endif
 
+class FileReaderVisitor;
+class FileWriterVisitor;
+
 //------------ Define Constant -------------//
 
 #define DEFAULT_REUSE_INTERVAL_DAYS		3
@@ -45,6 +48,8 @@ struct EmptyRoom
 	int   deleted_game_date;
 };
 #pragma pack()
+
+struct EmptyRoomArrayFileRepresentation;
 
 //---------- Define class DynArrayB -----------//
 
@@ -77,8 +82,10 @@ public:
 	int  write_empty_room(File*);    // Write current dynamic array to file
 	int  read_empty_room(File*);     // Read dynamic array from file
 
-	int  write_ptr_array(File*, int);
-	int  read_ptr_array(File*, int, CreateEleFP);
+	template <typename Visitor, typename T>
+	void accept_visitor_as_ptr_array(Visitor* v, T* (*create_obj)(), void (*visit_obj)(Visitor* v, T* obj), int objectRecordSize);
+	template <typename Visitor>
+	void visit_empty_room_array(Visitor* v);
 };
 #pragma pack()
 

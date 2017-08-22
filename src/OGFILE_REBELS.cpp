@@ -21,15 +21,40 @@
 
 #include <OREBEL.h>
 #include <file_io_visitor.h>
+#include <OGFILE_DYNARRAYB.inl>
 
-static char* create_rebel_func();
+#include <vector>
 
+using namespace FileIOVisitor;
+
+
+template <typename Visitor>
+static void visit_rebel(Visitor* v, Rebel* c)
+{
+	visit<int16_t>(v, &c->rebel_recno);
+	visit<int16_t>(v, &c->leader_unit_recno);
+	visit<int8_t>(v, &c->action_mode);
+	visit<int16_t>(v, &c->action_para);
+	visit<int16_t>(v, &c->action_para2);
+	visit<int16_t>(v, &c->mobile_rebel_count);
+	visit<int16_t>(v, &c->town_recno);
+	visit<int8_t>(v, &c->hostile_nation_bits);
+}
+
+enum { REBEL_RECORD_SIZE = 14 };
+
+static Rebel* create_rebel_func()
+{
+	return new Rebel;
+}
 
 //-------- Start of function RebelArray::write_file -------------//
 //
 int RebelArray::write_file(File* filePtr)
 {
-	return write_ptr_array(filePtr, sizeof(Rebel));
+	FileWriterVisitor v(filePtr);
+	accept_visitor_as_ptr_array(&v, create_rebel_func, visit_rebel<FileWriterVisitor>, REBEL_RECORD_SIZE);
+	return v.good();
 }
 //--------- End of function RebelArray::write_file ---------------//
 
@@ -38,19 +63,8 @@ int RebelArray::write_file(File* filePtr)
 //
 int RebelArray::read_file(File* filePtr)
 {
-	return read_ptr_array(filePtr, sizeof(Rebel), create_rebel_func);
+	FileReaderVisitor v(filePtr);
+	accept_visitor_as_ptr_array(&v, create_rebel_func, visit_rebel<FileReaderVisitor>, REBEL_RECORD_SIZE);
+	return v.good();
 }
 //--------- End of function RebelArray::read_file ---------------//
-
-
-//-------- Start of static function create_rebel_func ---------//
-//
-static char* create_rebel_func()
-{
-	Rebel *rebelPtr = new Rebel;
-
-	rebel_array.linkin(&rebelPtr);
-
-	return (char*) rebelPtr;
-}
-//--------- End of static function create_rebel_func ----------//
