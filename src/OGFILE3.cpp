@@ -41,8 +41,6 @@ DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 //------- declare static functions -------//
 
-static char* create_rebel_func();
-
 static void write_ai_info(File* filePtr, short* aiInfoArray, short aiInfoCount, short aiInfoSize);
 static void read_ai_info(File* filePtr, short** aiInfoArrayPtr, short& aiInfoCount, short& aiInfoSize);
 
@@ -863,40 +861,6 @@ static void read_ai_info(File* filePtr, short** aiInfoArrayPtr, short& aiInfoCou
 	filePtr->file_read( *aiInfoArrayPtr, sizeof(short) * aiInfoCount );
 }
 //----------- End of static function read_ai_info ---------//
-
-
-//*****//
-
-
-//-------- Start of function RebelArray::write_file -------------//
-//
-int RebelArray::write_file(File* filePtr)
-{
-	return write_ptr_array(filePtr, sizeof(Rebel));
-}
-//--------- End of function RebelArray::write_file ---------------//
-
-
-//-------- Start of function RebelArray::read_file -------------//
-//
-int RebelArray::read_file(File* filePtr)
-{
-	return read_ptr_array(filePtr, sizeof(Rebel), create_rebel_func);
-}
-//--------- End of function RebelArray::read_file ---------------//
-
-
-//-------- Start of static function create_rebel_func ---------//
-//
-static char* create_rebel_func()
-{
-	Rebel *rebelPtr = new Rebel;
-
-	rebel_array.linkin(&rebelPtr);
-
-	return (char*) rebelPtr;
-}
-//--------- End of static function create_rebel_func ----------//
 
 
 //*****//

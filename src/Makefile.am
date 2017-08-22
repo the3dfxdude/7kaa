@@ -104,6 +104,7 @@ bin_PROGRAMS = 7kaa
 	OGETA.cpp \
 	OGFILE_BULLETS.cpp \
 	OGFILE_FIRMS.cpp \
+	OGFILE_REBELS.cpp \
 	OGFILE_TORNADO.cpp \
 	OGFILE_TOWN.cpp \
 	OGFILE_UNITS.cpp \
