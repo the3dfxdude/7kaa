@@ -84,7 +84,7 @@
 //-------- Define class Town ----------//
 
 class Unit;
-#pragma pack(1)
+
 class Town
 {
 public:
@@ -109,8 +109,14 @@ public:
 
 	char	is_base_town;		// whether this town is base town or not
 
-	short loc_x1, loc_y1, loc_x2, loc_y2;
-	short abs_x1, abs_y1, abs_x2, abs_y2;
+	short loc_x1;
+	short loc_y1;
+	short loc_x2;
+	short loc_y2;
+	short abs_x1;
+	short abs_y1;
+	short abs_x2;
+	short abs_y2;
 
 	short loc_width()    { return loc_x2-loc_x1+1; }
 	short loc_height()   { return loc_y2-loc_y1+1; }
@@ -203,7 +209,6 @@ public:
 	int 	 closest_own_camp();
 
 	//========== NOTE: The following members are not loaded from/saved to file ==========//
-	enum {SIZEOF_NONSAVED_ELEMENTS = sizeof(int)+sizeof(bool)};
 
 	//--------- town network ----------//
 	int		town_network_recno;						// The recno of the town network this town belongs to. Note: this value can change between saving and loading.
@@ -307,9 +312,6 @@ public:
 	void	add_queue(char skillId, char raceId, int amount = 1);
 	void	remove_queue(char skillId, int amount = 1);
 
-	int   write_file(File*);
-	int   read_file(File*);
-
 	//-------- ai functions ---------//
 
 	void	think_collect_tax();
@@ -407,7 +409,6 @@ private:
 	void  think_rebel();
 	int	think_surrender();
 };
-#pragma pack()
 
 //-------- Begin of class TownArray ------------//
 
