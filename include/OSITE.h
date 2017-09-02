@@ -114,10 +114,8 @@ public:
 	int  is_deleted(int recNo);
 
 	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
-		Site* operator()();            // reference to current Site record
 		Site* operator[](int recNo);
 	#else
-		Site* operator()()  	   	 { return (Site*) get(); }
 		Site* operator[](int recNo)  { return (Site*) get(recNo); }
 	#endif
 };

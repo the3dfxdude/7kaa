@@ -816,19 +816,5 @@ Site* SiteArray::operator[](int recNo)
 }
 //--------- End of function SiteArray::operator[] ----//
 
-
-//------- Begin of function SiteArray::operator() -----//
-
-Site* SiteArray::operator()()
-{
-	Site* sitePtr = (Site*) get();
-
-	if( !sitePtr || sitePtr->site_type==0 )
-		err.run( "SiteArray[recno()] is deleted" );
-
-	return sitePtr;
-}
-//--------- End of function SiteArray::operator() ----//
-
 #endif
 
