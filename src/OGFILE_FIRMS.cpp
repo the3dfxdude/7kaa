@@ -535,7 +535,10 @@ int FirmArray::write_file(File* filePtr)
 
 	//------- write empty room array --------//
 
-	write_empty_room(filePtr);
+	{
+		FileWriterVisitor v(filePtr);
+		visit_empty_room_array(&v);
+	}
 
 	return 1;
 }
@@ -598,7 +601,10 @@ int FirmArray::read_file(File* filePtr)
 
 	//------- read empty room array --------//
 
-	read_empty_room(filePtr);
+	{
+		FileReaderVisitor v(filePtr);
+		visit_empty_room_array(&v);
+	}
 
 	return 1;
 }

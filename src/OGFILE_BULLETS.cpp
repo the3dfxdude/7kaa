@@ -163,7 +163,10 @@ int BulletArray::write_file(File* filePtr)
 
 	//------- write empty room array --------//
 
-	write_empty_room(filePtr);
+	{
+		FileWriterVisitor v(filePtr);
+		visit_empty_room_array(&v);
+	}
 
 	//------- verify the empty_room_array loading -----//
 
@@ -230,7 +233,10 @@ int BulletArray::read_file(File* filePtr)
 
 	//------- read empty room array --------//
 
-	read_empty_room(filePtr);
+	{
+		FileReaderVisitor v(filePtr);
+		visit_empty_room_array(&v);
+	}
 
 	//------- verify the empty_room_array loading -----//
 

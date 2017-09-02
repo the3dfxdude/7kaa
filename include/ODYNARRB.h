@@ -76,9 +76,6 @@ public:
    void linkout(int= -1);
    void zap();
 
-	int  write_empty_room(File*);    // Write current dynamic array to file
-	int  read_empty_room(File*);     // Read dynamic array from file
-
 	template <typename T, typename Visitor>
 	void accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj));
 
