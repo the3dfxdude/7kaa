@@ -53,6 +53,7 @@ noinst_HEADERS = \
 	OF_MONS.h \
 	OF_RESE.h \
 	OF_WAR.h \
+	OGFILE_DYNARRAY.inl \
 	OGFILE_DYNARRAYB.inl \
 	OGAME.h \
 	OGAMESET.h \

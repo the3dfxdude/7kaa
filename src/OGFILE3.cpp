@@ -33,6 +33,7 @@
 #include <OSNOWG.h>
 #include <OSPY.h>
 #include <file_io_visitor.h>
+#include <OGFILE_DYNARRAY.inl>
 #include <OGFILE_DYNARRAYB.inl>
 #include <dbglog.h>
 
@@ -766,7 +767,10 @@ int Nation::write_file(File* filePtr)
 
 	//----------- write AI Action Array ------------//
 
-	action_array.write_file(filePtr);
+	{
+		FileWriterVisitor v(filePtr);
+		action_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, ActionNode>);
+	}
 
 	//------ write AI info array ---------//
 
@@ -835,7 +839,10 @@ int Nation::read_file(File* filePtr)
 
 	//-------------- read AI Action Array --------------//
 
-	action_array.read_file(filePtr);
+	{
+		FileReaderVisitor v(filePtr);
+		action_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, ActionNode>);
+	}
 
 	//------ write AI info array ---------//
 
@@ -1039,7 +1046,9 @@ int NewsArray::write_file(File* filePtr)
 
    //---------- save news data -----------//
 
-   return DynArray::write_file(filePtr);
+   FileWriterVisitor v(filePtr);
+   accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, News>);
+   return v.good();
 }
 //--------- End of function NewsArray::write_file ---------------//
 
@@ -1057,7 +1066,9 @@ int NewsArray::read_file(File* filePtr)
 
    //---------- read news data -----------//
 
-   return DynArray::read_file(filePtr);
+   FileReaderVisitor v(filePtr);
+   accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, News>);
+   return v.good();
 }
 //--------- End of function NewsArray::read_file ---------------//
 /* vim:set ts=3 sw=3: */

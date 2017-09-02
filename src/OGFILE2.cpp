@@ -58,6 +58,7 @@
 #include <OSaveGameArray.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
+#include <OGFILE_DYNARRAY.inl>
 #include <OGFILE_DYNARRAYB.inl>
 
 using namespace FileIOVisitor;
@@ -1086,11 +1087,19 @@ int RawRes::write_file(File* filePtr)
 {
 	for( int i=0 ; i<MAX_RAW ; i++ )
 	{
-		if( !raw_info_array[i].raw_supply_firm_array.write_file(filePtr) )
-			return 0;
+		{
+			FileWriterVisitor v(filePtr);
+			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>);
+			if (!v.good())
+				return 0;
+		}
 
-		if( !raw_info_array[i].product_supply_firm_array.write_file(filePtr) )
-			return 0;
+		{
+			FileWriterVisitor v(filePtr);
+			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>);
+			if (!v.good())
+				return 0;
+		}
 	}
 
 	return 1;
@@ -1104,11 +1113,19 @@ int RawRes::read_file(File* filePtr)
 {
 	for( int i=0 ; i<MAX_RAW ; i++ )
 	{
-		if( !raw_info_array[i].raw_supply_firm_array.read_file(filePtr) )
-			return 0;
+		{
+			FileReaderVisitor v(filePtr);
+			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>);
+			if (!v.good())
+				return 0;
+		}
 
-		if( !raw_info_array[i].product_supply_firm_array.read_file(filePtr) )
-			return 0;
+		{
+			FileReaderVisitor v(filePtr);
+			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>);
+			if (!v.good())
+				return 0;
+		}
 	}
 
 	return 1;

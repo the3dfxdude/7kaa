@@ -18,8 +18,8 @@
 *
 */
 
-#ifndef OGFILE_DYNARRAY_H_INCLUDED
-#define OGFILE_DYNARRAY_H_INCLUDED
+#ifndef OGFILE_DYNARRAYB_H_INCLUDED
+#define OGFILE_DYNARRAYB_H_INCLUDED
 
 #include <ODYNARRB.h>
 #include <file_io_visitor.h>
@@ -59,24 +59,7 @@ template <typename T, typename Visitor>
 void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj))
 {
 	using namespace FileIOVisitor;
-
-	v->with_record_size(DYN_ARRAY_RECORD_SIZE);
-	visit_dyn_array(v, this);
-
-	if (is_reader_visitor(v))
-	{
-		body_buf = mem_resize(body_buf, ele_num * ele_size);
-	}
-
-	if (last_ele > 0)
-	{
-		v->with_record_size(last_ele * ele_size);
-		for (int i = 1; i <= last_ele; ++i)
-		{
-			visit_obj(v, static_cast<T*>(get(i)));
-		}
-	}
-
+	do_visit_as_value_array(v, visit_obj);
 	visit_empty_room_array(v);
 
 	if (is_reader_visitor(v))

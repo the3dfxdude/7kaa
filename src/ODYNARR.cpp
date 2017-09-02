@@ -476,62 +476,6 @@ void DynArray::quick_sort( int(*cmpFun)(const void*, const void*) )
 //------------- End of function DynArray::quick_sort --------------//
 
 
-//---------- Begin of function DynArray::write_file -------------//
-//
-// Write current dynamic array into file,
-// read_file() can be used to retrieve it.
-//
-// <File*> writeFile = the pointer to the writing file
-//
-// Return : 1 - write successfully
-//          0 - writing error
-//
-int DynArray::write_file(File* filePtr)
-{
-	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_dyn_array<FileWriterVisitor>, DYN_ARRAY_RECORD_SIZE))
-		return 0;
-
-   if( last_ele > 0 )
-   {
-      if( !filePtr->file_write( body_buf, ele_size*last_ele ) )
-         return 0;
-   }
-
-   return 1;
-}
-//------------- End of function DynArray::write_file --------------//
-
-
-
-//---------- Begin of function DynArray::read_file -------------//
-//
-// Read a saved dynamic array from file, it must be saved with write_file()
-//
-// <File*> readFile = the pointer to the writing file
-//
-// Return : 1 - read successfully
-//          0 - writing error
-//
-int DynArray::read_file(File* filePtr)
-{
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_dyn_array<FileReaderVisitor>, DYN_ARRAY_RECORD_SIZE))
-		return 0;
-
-   this->body_buf = mem_resize(this->body_buf, this->ele_num*this->ele_size);
-
-	if( last_ele > 0 )
-	{
-		if( !filePtr->file_read( body_buf, ele_size*last_ele ) )
-			return 0;
-	}
-
-	start();    // go top
-
-	return 1;
-}
-//------------- End of function DynArray::read_file --------------//
-
-
 //--------- Begin of function DynArray::init_sort ---------//
 //
 // Initialize sorting parameters before using linkin_sort & resort
