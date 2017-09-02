@@ -192,5 +192,7 @@ noinst_HEADERS = \
 	vga_base.h \
 	vga_sdl.h \
 	vga_util.h \
+	visit_sprite.h \
+	visit_dyn_array.h \
 	visitor_functions.h \
 	wav_stream.h

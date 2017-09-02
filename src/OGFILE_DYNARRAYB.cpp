@@ -21,29 +21,12 @@
 
 #include <ODYNARRB.h>
 #include <file_io_visitor.h>
+#include <visit_dyn_array.h>
 
 #include <vector>
 
 using namespace FileIOVisitor;
 
-
-template <typename Visitor>
-static void visit_dyn_array_b(Visitor *v, DynArrayB *dab)
-{
-	/* DynArray */
-	visit<int32_t>(v, &dab->ele_num);
-	visit<int32_t>(v, &dab->block_num);
-	visit<int32_t>(v, &dab->cur_pos);
-	visit<int32_t>(v, &dab->last_ele);
-	visit<int32_t>(v, &dab->ele_size);
-	visit<int32_t>(v, &dab->sort_offset);
-	visit<int8_t>(v, &dab->sort_type);
-	v->skip(4); /* dab->body_buf */
-
-	/* Not reading DynArrayB members */
-}
-
-enum { DYN_ARRAY_B_RECORD_SIZE = 29 };
 
 //---------- Begin of function DynArrayB::write_file -------------//
 //
@@ -57,7 +40,7 @@ enum { DYN_ARRAY_B_RECORD_SIZE = 29 };
 //
 int DynArrayB::write_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_dyn_array_b<FileWriterVisitor>, DYN_ARRAY_B_RECORD_SIZE))
+	if (!visit_with_record_size<FileWriterVisitor>(filePtr, static_cast<DynArray*>(this), &visit_dyn_array<FileWriterVisitor>, DYN_ARRAY_RECORD_SIZE))
 		return 0;
 
 	//---------- write body_buf ---------//
@@ -88,7 +71,7 @@ int DynArrayB::write_file(File* filePtr)
 //
 int DynArrayB::read_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_dyn_array_b<FileReaderVisitor>, DYN_ARRAY_B_RECORD_SIZE))
+	if (!visit_with_record_size<FileReaderVisitor>(filePtr, static_cast<DynArray*>(this), &visit_dyn_array<FileReaderVisitor>, DYN_ARRAY_RECORD_SIZE))
 		return 0;
 
 	//---------- read body_buf ---------//
@@ -157,7 +140,7 @@ int DynArrayB::read_empty_room(File* filePtr)
 {
 	empty_room_num = empty_room_count = filePtr->file_get_short();		// set both to the same
 
-																		//---------- read empty_room_array ---------//
+	//---------- read empty_room_array ---------//
 
 	if( empty_room_count > 0 )
 	{

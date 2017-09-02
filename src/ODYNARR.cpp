@@ -27,6 +27,7 @@
 #include <ODYNARR.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
+#include <visit_dyn_array.h>
 
 using namespace FileIOVisitor;
 
@@ -474,20 +475,6 @@ void DynArray::quick_sort( int(*cmpFun)(const void*, const void*) )
 }
 //------------- End of function DynArray::quick_sort --------------//
 
-template <typename Visitor>
-static void visit_dyn_array(Visitor *v, DynArray *da)
-{
-   visit<int32_t>(v, &da->ele_num);
-   visit<int32_t>(v, &da->block_num);
-   visit<int32_t>(v, &da->cur_pos);
-   visit<int32_t>(v, &da->last_ele);
-   visit<int32_t>(v, &da->ele_size);
-   visit<int32_t>(v, &da->sort_offset);
-   visit<int8_t>(v, &da->sort_type);
-	v->skip(4); /* da->body_buf */
-}
-
-enum { DYN_ARRAY_RECORD_SIZE = 29 };
 
 //---------- Begin of function DynArray::write_file -------------//
 //
@@ -501,8 +488,7 @@ enum { DYN_ARRAY_RECORD_SIZE = 29 };
 //
 int DynArray::write_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_dyn_array<FileWriterVisitor>,
-										 DYN_ARRAY_RECORD_SIZE))
+	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_dyn_array<FileWriterVisitor>, DYN_ARRAY_RECORD_SIZE))
 		return 0;
 
    if( last_ele > 0 )
@@ -528,8 +514,7 @@ int DynArray::write_file(File* filePtr)
 //
 int DynArray::read_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_dyn_array<FileReaderVisitor>,
-										DYN_ARRAY_RECORD_SIZE))
+	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_dyn_array<FileReaderVisitor>, DYN_ARRAY_RECORD_SIZE))
 		return 0;
 
    this->body_buf = mem_resize(this->body_buf, this->ele_num*this->ele_size);
