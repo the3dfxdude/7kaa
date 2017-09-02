@@ -58,6 +58,7 @@
 #include <OSaveGameArray.h>
 #include <dbglog.h>
 #include <file_io_visitor.h>
+#include <OGFILE_DYNARRAYB.inl>
 
 using namespace FileIOVisitor;
 
@@ -440,19 +441,31 @@ int GameFile::write_file_3(File* filePtr)
 
 	write_book_mark( filePtr, BOOK_MARK+213 );
 
-	if( !rock_array.write_file(filePtr) )
-		return 0;
+	{
+		FileWriterVisitor v(filePtr);
+		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>);
+		if( !v.good() )
+			return 0;
+	}
 
 	write_book_mark( filePtr, BOOK_MARK+214 );
 
-	if( !dirt_array.write_file(filePtr) )
-		return 0;
+	{
+		FileWriterVisitor v(filePtr);
+		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>);
+		if( !v.good() )
+			return 0;
+	}
 
 	// ##### begin Gilbert 2/10 ######//
 	write_book_mark( filePtr, BOOK_MARK+215 );
 
-	if( !firm_die_array.write_file(filePtr) )
-		return 0;
+	{
+		FileWriterVisitor v(filePtr);
+		firm_die_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, FirmDie>);
+		if( !v.good() )
+			return 0;
+	}
 	// ##### end Gilbert 2/10 ######//
 
 	return 1;
@@ -700,20 +713,31 @@ int GameFile::read_file_3(File* filePtr)
 	if( !read_book_mark( filePtr, BOOK_MARK+213 ) )
 		return 0;
 
-	if( !rock_array.read_file(filePtr) )
-		return 0;
+	{
+		FileReaderVisitor v(filePtr);
+		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>);
+		if( !v.good() )
+			return 0;
+	}
 
 	if( !read_book_mark( filePtr, BOOK_MARK+214 ) )
 		return 0;
 
-	if( !dirt_array.read_file(filePtr) )
-		return 0;
+	{
+		FileReaderVisitor v(filePtr);
+		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>);
+		if( !v.good() )
+			return 0;
+	}
 
 	// ##### begin Gilbert 2/10 ######//
 	if( !read_book_mark( filePtr, BOOK_MARK+215 ) )
-
-	if( !firm_die_array.read_file(filePtr) )
-		return 0;
+	{
+		FileReaderVisitor v(filePtr);
+		firm_die_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, FirmDie>);
+		if( !v.good() )
+			return 0;
+	}
 	// ##### end Gilbert 2/10 ######//
 
 	return 1;
@@ -1019,8 +1043,12 @@ int TalkRes::write_file(File* filePtr)
 										 TALK_RES_RECORD_SIZE))
 		return 0;
 
-	if( !talk_msg_array.write_file(filePtr) )
-		return 0;
+	{
+		FileWriterVisitor v(filePtr);
+		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, TalkMsg>);
+		if( !v.good() )
+			return 0;
+	}
 
 	return 1;
 }
@@ -1035,8 +1063,12 @@ int TalkRes::read_file(File* filePtr)
 										TALK_RES_RECORD_SIZE))
 		return 0;
 
-	if( !talk_msg_array.read_file(filePtr) )
-		return 0;
+	{
+		FileReaderVisitor v(filePtr);
+		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, TalkMsg>);
+		if( !v.good() )
+			return 0;
+	}
 
 	this->choice_question = NULL;
 	this->choice_question_second_line = NULL;

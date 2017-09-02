@@ -163,6 +163,19 @@ namespace FileIOVisitor
       return v.good();
    }
 
+   // Note: temporary function; should be superseded by proper visits on objects.
+   template <typename Visitor, typename T>
+   void visit_raw(Visitor* v, T* obj)
+   {
+	   unsigned char buffer[sizeof(T)];
+	   memcpy(buffer, obj, sizeof(buffer));
+	   for (unsigned char& byte : buffer)
+	   {
+		   v->visit<uint8_t>(&byte);
+	   }
+	   memcpy(obj, buffer, sizeof(buffer));
+   }
+
 } /* namespace FileIOVisitor */
 
 /* vim: set ts=8 sw=3: */

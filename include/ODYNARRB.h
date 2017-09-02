@@ -76,13 +76,13 @@ public:
    void linkout(int= -1);
    void zap();
 
-	int  write_file(File*);    	// Write current dynamic array to file
-	int  read_file(File*);   	  	// Read dynamic array from file
-
 	int  write_empty_room(File*);    // Write current dynamic array to file
 	int  read_empty_room(File*);     // Read dynamic array from file
 
-	template <typename Visitor, typename T>
+	template <typename T, typename Visitor>
+	void accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj));
+
+	template < typename T, typename Visitor>
 	void accept_visitor_as_ptr_array(Visitor* v, T* (*create_obj)(), void (*visit_obj)(Visitor* v, T* obj), int objectRecordSize);
 	template <typename Visitor>
 	void visit_empty_room_array(Visitor* v);

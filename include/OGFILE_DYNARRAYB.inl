@@ -24,6 +24,7 @@
 #include <ODYNARRB.h>
 #include <file_io_visitor.h>
 #include <visitor_functions.h>
+#include <visit_dyn_array.h>
 
 
 template <typename Visitor>
@@ -54,7 +55,35 @@ void DynArrayB::visit_empty_room_array(Visitor* v)
 	}
 }
 
-template <typename Visitor, typename T>
+template <typename T, typename Visitor>
+void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj))
+{
+	using namespace FileIOVisitor;
+
+	v->with_record_size(DYN_ARRAY_RECORD_SIZE);
+	visit_dyn_array(v, this);
+
+	if (is_reader_visitor(v))
+	{
+		body_buf = mem_resize(body_buf, ele_num * ele_size);
+	}
+
+	if (last_ele > 0)
+	{
+		v->with_record_size(last_ele * ele_size);
+		for (int i = 1; i <= last_ele; ++i)
+		{
+			visit_obj(v, static_cast<T*>(get(i)));
+		}
+	}
+
+	visit_empty_room_array(v);
+
+	if (is_reader_visitor(v))
+		start();    // go top
+}
+
+template <typename T, typename Visitor>
 void DynArrayB::accept_visitor_as_ptr_array(Visitor* v, T* (*create_obj)(), void (*visit_obj)(Visitor* v, T* obj), int objectRecordSize)
 {
 	using namespace FileIOVisitor;

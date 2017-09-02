@@ -33,6 +33,7 @@
 #include <OSNOWG.h>
 #include <OSPY.h>
 #include <file_io_visitor.h>
+#include <OGFILE_DYNARRAYB.inl>
 #include <dbglog.h>
 
 using namespace FileIOVisitor;
@@ -58,7 +59,9 @@ int SiteArray::write_file(File* filePtr)
 	filePtr->file_put_short(gold_coin_count);
 	filePtr->file_put_short(std_raw_site_count);
 
-	return DynArrayB::write_file( filePtr );
+	FileWriterVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Site>);
+	return v.good();
 }
 //--------- End of function SiteArray::write_file ---------------//
 
@@ -73,7 +76,9 @@ int SiteArray::read_file(File* filePtr)
 	gold_coin_count	 =	filePtr->file_get_short();
 	std_raw_site_count =	filePtr->file_get_short();
 
-	return DynArrayB::read_file( filePtr );
+	FileReaderVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Site>);
+	return v.good();
 }
 //--------- End of function SiteArray::read_file ---------------//
 
@@ -870,7 +875,9 @@ static void read_ai_info(File* filePtr, short** aiInfoArrayPtr, short& aiInfoCou
 //
 int SpyArray::write_file(File* filePtr)
 {
-	return DynArrayB::write_file( filePtr );
+	FileWriterVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Spy>);
+	return v.good();
 }
 //--------- End of function SpyArray::write_file ---------------//
 
@@ -879,7 +886,9 @@ int SpyArray::write_file(File* filePtr)
 //
 int SpyArray::read_file(File* filePtr)
 {
-	return DynArrayB::read_file( filePtr );
+	FileReaderVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Spy>);
+	return v.good();
 }
 //--------- End of function SpyArray::read_file ---------------//
 
