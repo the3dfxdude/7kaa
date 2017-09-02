@@ -48,7 +48,6 @@ enum { SORT_INT=1,
 
 //-------- BEGIN OF CLASS DynArrary ---------//
 
-#pragma pack(1)
 class DynArray
 {
 public :
@@ -126,7 +125,6 @@ protected:
    template <typename T, typename Visitor>
    void do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj));
 };
-#pragma pack()
 
 //--------- END OF CLASS DynArray ---------//
 

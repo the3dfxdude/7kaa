@@ -312,7 +312,6 @@ class Version_1_NationBase
 };
 #pragma pack()
 
-#pragma pack(1)
 class Version_1_Nation : public Version_1_NationBase
 {
 	public:
@@ -421,6 +420,5 @@ class Version_1_Nation : public Version_1_NationBase
 
 		virtual void dummy();
 };
-#pragma pack()
 
 #endif

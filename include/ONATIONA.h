@@ -42,7 +42,6 @@ struct NewNationPara;
 
 //---------- Define class NationArray -----------//
 
-#pragma pack(1)
 class NationArray : public DynArrayB
 {
 public:
@@ -145,7 +144,6 @@ public:
 	void			draw_profile();
 	//#### end alex 12/9 ####//
 };
-#pragma pack()
 
   
 // --------- define struct NewNationPara ----------//

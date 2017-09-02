@@ -41,19 +41,14 @@ typedef char* (*CreateEleFP)();
 
 //--------- Define struct EmptyRoom -----------//
 
-#pragma pack(1)
 struct EmptyRoom
 {
 	short	recno;
 	int   deleted_game_date;
 };
-#pragma pack()
-
-struct EmptyRoomArrayFileRepresentation;
 
 //---------- Define class DynArrayB -----------//
 
-#pragma pack(1)
 class DynArrayB : public DynArray
 {
 public:
@@ -84,7 +79,6 @@ public:
 	template <typename Visitor>
 	void visit_empty_room_array(Visitor* v);
 };
-#pragma pack()
 
 //---------------------------------------------//
 

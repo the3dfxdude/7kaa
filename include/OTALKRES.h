@@ -131,7 +131,6 @@ struct TalkChoice
 
 //------ Define class TalkRes --------//
 
-#pragma pack(1)
 class TalkRes
 {
 public:
@@ -208,7 +207,6 @@ private:
 	void			process_talk_msg();
 
 };
-#pragma pack()
 
 extern TalkRes talk_res;
 

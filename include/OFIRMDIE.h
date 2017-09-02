@@ -84,7 +84,6 @@ public:
 
 // -------- define class FirmDieArray --------//
 
-#pragma pack(1)
 class FirmDieArray : public DynArrayB
 {
 public:
@@ -100,7 +99,6 @@ public:
 
 	FirmDie *operator[](int recNo);
 };
-#pragma pack()
 
 extern FirmDieRes firm_die_res;
 extern FirmDieArray firm_die_array;

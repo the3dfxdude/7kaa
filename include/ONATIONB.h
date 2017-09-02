@@ -136,7 +136,6 @@ struct NationRelation			// many-to-many relationships between nations
 class Unit;
 class Firm;
 
-#pragma pack(1)
 class NationBase
 {
 public:
@@ -437,7 +436,6 @@ public:
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
-#pragma pack()
 
 //--------------------------------------//
 

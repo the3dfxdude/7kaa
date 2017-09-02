@@ -173,7 +173,6 @@ class  Town;
 class  Spy;
 struct TalkMsg;
 
-#pragma pack(1)
 class Nation : public NationBase
 {
 public:
@@ -627,7 +626,6 @@ public:
 	int 			write_file(File* filePtr);
 	int			read_file(File* filePtr);
 };
-#pragma pack()
 
 #ifndef __ONATIONA_H
 #include <ONATIONA.h>
