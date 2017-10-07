@@ -134,7 +134,6 @@ public:
 };
 #pragma pack()
 
-#pragma pack(1)
 class Version_1_NationArray// : public DynArrayB
 {
 	public:
@@ -187,9 +186,7 @@ class Version_1_NationArray// : public DynArrayB
 	public:
 		void	convert_to_version_2(NationArray *nationArrayPtr);
 };
-#pragma pack()
 
-#pragma pack(1)
 class Version_1_NationBase
 {
 	public:
@@ -310,7 +307,6 @@ class Version_1_NationBase
 
 		virtual void dummy();
 };
-#pragma pack()
 
 class Version_1_Nation : public Version_1_NationBase
 {

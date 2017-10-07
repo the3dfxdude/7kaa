@@ -427,11 +427,6 @@ public:
 
 	int		revealed_by_phoenix(int xLoc, int yLoc);
 
-	//--------- file functions -----------//
-
-	int 		write_file(File* filePtr);
-	int		read_file(File* filePtr);
-
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
