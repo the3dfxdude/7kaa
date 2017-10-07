@@ -153,6 +153,7 @@ namespace FileIOVisitor
       return v.good();
    }
 
+   // TODO: This function can be removed as soon as all DynArrayB derived classes use the proper accept_visitor_as_ptr_array, superseded by polymorphic_visit.
    template <typename Visitor, typename T>
    bool polymorphic_visit_with_record_size(File* file, T* obj, uint16_t rec_size)
    {
@@ -161,6 +162,12 @@ namespace FileIOVisitor
 	  obj->accept_file_visitor(&v);
 
       return v.good();
+   }
+
+   template <typename Visitor, typename T>
+   void polymorphic_visit(Visitor* v, T* obj)
+   {
+	   obj->accept_file_visitor(v);
    }
 
    // Note: temporary function; should be superseded by proper visits on objects.

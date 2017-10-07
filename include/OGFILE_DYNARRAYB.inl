@@ -56,10 +56,11 @@ void DynArrayB::visit_empty_room_array(Visitor* v)
 }
 
 template <typename T, typename Visitor>
-void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj))
+void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visitor* v, T* obj))
 {
 	using namespace FileIOVisitor;
-	do_visit_as_value_array(v, visit_obj);
+	do_visit_as_value_array(v, visitObj);
+
 	visit_empty_room_array(v);
 
 	if (is_reader_visitor(v))
@@ -67,7 +68,7 @@ void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visi
 }
 
 template <typename T, typename Visitor>
-void DynArrayB::accept_visitor_as_ptr_array(Visitor* v, T* (*create_obj)(), void (*visit_obj)(Visitor* v, T* obj), int objectRecordSize)
+void DynArrayB::accept_visitor_as_ptr_array(Visitor* v, short (*getObjectId) (T* obj), T* (*createObj)(short), void (*visitObj)(Visitor* v, T* obj), int objectRecordSize)
 {
 	using namespace FileIOVisitor;
 	visit_property<int, int16_t>(v, this, &DynArray::size,
@@ -78,18 +79,24 @@ void DynArrayB::accept_visitor_as_ptr_array(Visitor* v, T* (*create_obj)(), void
 
 	for (int i = 1; i <= size(); ++i)
 	{
-		bool present;
-		visit_property<bool, int16_t>(v, [=, &present]() {return (present = (get_ptr(i) != nullptr));}, [&present](bool visitPresent) {present = visitPresent;});
+		int objectId;
+		visit_property<int, int16_t>(v,
+			[=, &objectId]() {
+				void* const ptr = this->get_ptr(i);
+				objectId = ptr ? getObjectId(static_cast<T*>(ptr)) : 0;
+				return objectId;
+			},
+			[&objectId](int visitObjectId) {objectId = visitObjectId;});
 
-		if (present)
+		if (objectId)
 		{
 			if (is_reader_visitor(v))
 			{
-				*static_cast<T**>(get(i)) = create_obj();
+				*static_cast<T**>(get(i)) = createObj(objectId);
 			}
 			T* object = static_cast<T*>(get_ptr(i));
 			v->with_record_size(objectRecordSize);
-			visit_obj(v, object);
+			visitObj(v, object);
 		}
 	}
 
@@ -107,6 +114,14 @@ void DynArrayB::accept_visitor_as_ptr_array(Visitor* v, T* (*create_obj)(), void
 	}
 
 	visit_empty_room_array(v);
+}
+
+// Helper for getObjectId argument of accept_visitor_as_ptr_array, for DynArrayB's that just need to know if the object was present or not,
+// rather than what ID the object has, in order to recreate the array values.
+template <typename T>
+short yes_or_no_object_id (T* obj)
+{
+	return !!obj;
 }
 
 #endif

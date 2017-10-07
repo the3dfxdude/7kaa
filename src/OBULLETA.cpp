@@ -44,9 +44,7 @@ BulletArray::BulletArray(int initArraySize) : SpriteArray(initArraySize)
 
 //--------- Begin of function BulletArray::create_bullet ---------//
 //
-// return: <int> the recno of the bullet created.
-//
-int BulletArray::create_bullet(short spriteId, Bullet** bpp)
+Bullet* BulletArray::create_bullet(short spriteId)
 {
 	Bullet* bulletPtr;
 	SpriteInfo *spriteInfo = sprite_res[spriteId];
@@ -69,15 +67,10 @@ int BulletArray::create_bullet(short spriteId, Bullet** bpp)
 		break;
 	default:
 		err_here();			// undefined bullet type
-		if( bpp )
-			*bpp = NULL;
-		return 0;
+		return nullptr;
 	}
 
-	add(bulletPtr);
-	if( bpp )
-		*bpp = bulletPtr;
-	return recno();
+	return bulletPtr;
 }
 //----------- End of function BulletArray::create_bullet -----------//
 
@@ -342,8 +335,8 @@ short BulletArray::add_bullet(Unit* parentUnit, Unit* targetUnit)
 		// time is saved 'cos no need to check for bullet_path_possible()
 		//-------------------------------------------------------//
 		short bulletId = (parentUnit->attack_info_array+parentUnit->cur_attack)->bullet_sprite_id;
-		Bullet* bulletPtr;
-		create_bullet( bulletId, &bulletPtr);
+		Bullet* bulletPtr = create_bullet( bulletId );
+		add(bulletPtr);
 		bulletPtr->init(BULLET_BY_UNIT, parentUnit->sprite_recno, attackXLoc, attackYLoc, targetUnit->mobile_type);
 		err_when(parentUnit->cur_dir!=parentUnit->final_dir);
 		//parentUnit->get_dir(parentUnit->next_x_loc(), parentUnit->next_y_loc(), attackXLoc, attackYLoc);
@@ -412,8 +405,8 @@ short BulletArray::add_bullet(Unit* parentUnit, short xLoc, short yLoc)
 		// time is saved 'cos no need to check for bullet_path_possible()
 		//-------------------------------------------------------//
 		short bulletId = (parentUnit->attack_info_array+parentUnit->cur_attack)->bullet_sprite_id;
-		Bullet* bulletPtr;
-		create_bullet( bulletId, &bulletPtr);
+		Bullet* bulletPtr = create_bullet( bulletId );
+		add(bulletPtr);
 		bulletPtr->init(BULLET_BY_UNIT, parentUnit->sprite_recno, attackXLoc, attackYLoc, UNIT_LAND);
 		err_when(parentUnit->cur_dir!=parentUnit->final_dir);
 		//parentUnit->get_dir(parentUnit->next_x_loc(), parentUnit->next_y_loc(), attackXLoc, attackYLoc);

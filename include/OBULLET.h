@@ -97,7 +97,7 @@ class BulletArray : public SpriteArray
 public:
 	BulletArray(int initArraySize);
 
-	int	create_bullet(short spriteId, Bullet** =NULL);
+	static Bullet* create_bullet(short spriteId);
 
 	short add_bullet(Unit* parentUnit, Unit* targetUnit);		// unit attacks unit
 	short add_bullet(Unit* parentUnit, short xLoc, short yLoc);	// unit attacks firm, town

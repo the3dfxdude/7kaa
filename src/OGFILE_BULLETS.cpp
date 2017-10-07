@@ -26,6 +26,7 @@
 #include <OB_PROJ.h>
 #include <file_io_visitor.h>
 #include <visit_sprite.h>
+#include <OGFILE_DYNARRAYB.inl>
 
 using namespace FileIOVisitor;
 
@@ -128,59 +129,22 @@ void BulletHoming::accept_file_visitor(FileWriterVisitor* v)
 
 enum { BULLET_RECORD_SIZE = 57 };
 
+template <typename Visitor>
+static void visit_bullet_array(Visitor* v, BulletArray* b)
+{
+	visit<int16_t>(v, &b->restart_recno);
+	b->accept_visitor_as_ptr_array<Bullet>(v, [] (Bullet* bullet) {return bullet->sprite_id;},
+		BulletArray::create_bullet, polymorphic_visit<Visitor, Bullet>, BULLET_RECORD_SIZE);
+}
+
+
 //-------- Start of function BulletArray::write_file -------------//
 //
 int BulletArray::write_file(File* filePtr)
 {
-	filePtr->file_put_short(restart_recno);  // variable in SpriteArray
-
-	int    i, emptyRoomCount=0;;
-	Bullet *bulletPtr;
-
-	filePtr->file_put_short( size() );  // no. of bullets in bullet_array
-
-	for( i=1; i<=size() ; i++ )
-	{
-		bulletPtr = (Bullet*) get_ptr(i);
-
-		//----- write bulletId or 0 if the bullet is deleted -----//
-
-		if( !bulletPtr )    // the bullet is deleted
-		{
-			filePtr->file_put_short(0);
-			emptyRoomCount++;
-		}
-		else
-		{
-			filePtr->file_put_short(bulletPtr->sprite_id);      // there is a bullet in this record
-
-			//------ write data ------//
-
-			if( !polymorphic_visit_with_record_size<FileWriterVisitor>(filePtr, bulletPtr, BULLET_RECORD_SIZE) )
-				return 0;
-		}
-	}
-
-	//------- write empty room array --------//
-
-	{
-		FileWriterVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	//------- verify the empty_room_array loading -----//
-
-#ifdef DEBUG
-	err_when( empty_room_count != emptyRoomCount );
-
-	for( i=0 ; i<empty_room_count ; i++ )
-	{
-		if( !is_deleted( empty_room_array[i].recno ) )
-			err_here();
-	}
-#endif
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_bullet_array(&v, this);
+	return v.good();
 }
 //--------- End of function BulletArray::write_file -------------//
 
@@ -189,67 +153,8 @@ int BulletArray::write_file(File* filePtr)
 //
 int BulletArray::read_file(File* filePtr)
 {
-	restart_recno    = filePtr->file_get_short();
-
-	int     i, bulletRecno, bulletCount, emptyRoomCount=0, spriteId;
-	Bullet* bulletPtr;
-
-	bulletCount = filePtr->file_get_short();  // get no. of bullets from file
-
-	for( i=1 ; i<=bulletCount ; i++ )
-	{
-		spriteId = filePtr->file_get_short();
-		if( spriteId == 0 )
-		{
-			add_blank(1);     // it's a DynArrayB function
-
-			emptyRoomCount++;
-		}
-		else
-		{
-			//----- create bullet object -----------//
-
-			bulletRecno = create_bullet(spriteId);
-			bulletPtr   = bullet_array[bulletRecno];
-
-			//----- read data --------//
-
-			if( !polymorphic_visit_with_record_size<FileReaderVisitor>(filePtr, bulletPtr, BULLET_RECORD_SIZE) )
-				return 0;
-		}
-	}
-
-	//-------- linkout() those record added by add_blank() ----------//
-	//-- So they will be marked deleted in DynArrayB and can be -----//
-	//-- undeleted and used when a new record is going to be added --//
-
-	for( i=1 ; i<=size() ; i++ )
-	{
-		DynArrayB::go(i);             // since BulletArray has its own go() which will call GroupArray::go()
-
-		if( get_ptr() == NULL )       // add_blank() record
-			linkout();
-	}
-
-	//------- read empty room array --------//
-
-	{
-		FileReaderVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	//------- verify the empty_room_array loading -----//
-
-#ifdef DEBUG
-	err_when( empty_room_count != emptyRoomCount );
-
-	for( i=0 ; i<empty_room_count ; i++ )
-	{
-		if( !is_deleted( empty_room_array[i].recno ) )
-			err_here();
-	}
-#endif
-
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_bullet_array(&v, this);
+	return v.good();
 }
 //--------- End of function BulletArray::read_file ---------------//

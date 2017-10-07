@@ -43,7 +43,7 @@ static void visit_rebel(Visitor* v, Rebel* c)
 
 enum { REBEL_RECORD_SIZE = 14 };
 
-static Rebel* create_rebel_func()
+static Rebel* create_rebel_func(short)
 {
 	return new Rebel;
 }
@@ -53,7 +53,7 @@ static Rebel* create_rebel_func()
 int RebelArray::write_file(File* filePtr)
 {
 	FileWriterVisitor v(filePtr);
-	accept_visitor_as_ptr_array(&v, create_rebel_func, visit_rebel<FileWriterVisitor>, REBEL_RECORD_SIZE);
+	accept_visitor_as_ptr_array(&v, yes_or_no_object_id<Rebel>, create_rebel_func, visit_rebel<FileWriterVisitor>, REBEL_RECORD_SIZE);
 	return v.good();
 }
 //--------- End of function RebelArray::write_file ---------------//
@@ -64,7 +64,7 @@ int RebelArray::write_file(File* filePtr)
 int RebelArray::read_file(File* filePtr)
 {
 	FileReaderVisitor v(filePtr);
-	accept_visitor_as_ptr_array(&v, create_rebel_func, visit_rebel<FileReaderVisitor>, REBEL_RECORD_SIZE);
+	accept_visitor_as_ptr_array(&v, yes_or_no_object_id<Rebel>, create_rebel_func, visit_rebel<FileReaderVisitor>, REBEL_RECORD_SIZE);
 	return v.good();
 }
 //--------- End of function RebelArray::read_file ---------------//
