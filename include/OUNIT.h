@@ -762,7 +762,7 @@ public:
 	void  init();
 
 	int   add_unit(int unitId, int nationRecno, int rankId=0, int unitLoyalty=0, int startXLoc= -1, int startYLoc= -1);
-	Unit* create_unit(int unitId);
+	static Unit* create_unit(short unitId);
 
 	void  disappear_in_town(int unitRecno, int townRecno);
 	void  disappear_in_firm(int unitRecno);

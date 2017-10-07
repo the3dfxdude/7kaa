@@ -114,6 +114,7 @@ int UnitArray::add_unit(int unitId, int nationRecno, int rankId, int unitLoyalty
 	//-------- create and initialize Unit -------//
 
 	Unit* unitPtr = create_unit(unitId);
+	SpriteArray::add(unitPtr); // it sets Sprite::sprite_recno
 
 	//----------- add to SpriteArray ------------//
 
@@ -128,7 +129,7 @@ int UnitArray::add_unit(int unitId, int nationRecno, int rankId, int unitLoyalty
 
 //-------- Begin of function UnitArray::create_unit --------//
 //
-Unit* UnitArray::create_unit(int unitId)
+Unit* UnitArray::create_unit(short unitId)
 {
 	Unit* 	 unitPtr;
 	UnitInfo* unitInfo = unit_res[unitId];
@@ -163,8 +164,6 @@ Unit* UnitArray::create_unit(int unitId)
 			else
 				unitPtr = new Unit;
 	}
-
-	SpriteArray::add(unitPtr);			// it set Sprite::sprite_recno
 
  	return unitPtr;
 }

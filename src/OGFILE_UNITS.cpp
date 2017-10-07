@@ -29,6 +29,7 @@
 #include <OU_GOD.h>
 #include <file_io_visitor.h>
 #include <visit_sprite.h>
+#include <OGFILE_DYNARRAYB.inl>
 
 using namespace FileIOVisitor;
 
@@ -289,6 +290,44 @@ static void visit_unit_god_members(Visitor* v, UnitGod* c)
 	visit<int16_t>(v, &c->cast_target_y);
 }
 
+template <typename Visitor>
+static void polymorphic_visit_unit(Visitor* v, Unit* c)
+{
+	polymorphic_visit(v, c);
+
+	if (is_reader_visitor(v))
+		c->fix_attack_info();
+}
+
+template <typename Visitor>
+static void visit_unit_array(Visitor* v, UnitArray* c)
+{
+	enum { UNIT_RECORD_SIZE = 169 };
+
+	visit<int16_t>(v, &c->restart_recno); // SpriteArray member.
+
+	// Note: they made a complete mess out of UnitArray persistency, mixing member order and including globals into it.
+	//       That's why we can't just use DynArrayB::accept_visitor_as_ptr_array, but have to 'do it in two' (visit_array_size + visit_ptr_array).
+
+	c->visit_array_size(v);
+
+	visit<int16_t>(v, &c->selected_recno);
+	visit<int16_t>(v, &c->selected_count);
+	visit<uint32_t>(v, &c->cur_group_id);
+	visit<uint32_t>(v, &c->cur_team_id);
+	visit<int16_t>(v, &c->idle_blocked_unit_reset_count);
+
+	v->skip(6); // unit_search_tries and unit_search_tries_flag (were globals).
+
+	visit<int16_t>(v, &c->visible_unit_count);
+	visit<int16_t>(v, &c->mp_first_frame_to_select_caravan);
+	visit<int16_t>(v, &c->mp_first_frame_to_select_ship);
+	visit<int16_t>(v, &c->mp_pre_selected_caravan_recno);
+	visit<int16_t>(v, &c->mp_pre_selected_ship_recno);
+
+	c->visit_ptr_array<Unit>(v, [](Unit* unit) -> short {return unit->unit_id;}, UnitArray::create_unit, polymorphic_visit_unit<Visitor>, UNIT_RECORD_SIZE);
+}
+
 
 // ===============================================================================
 
@@ -299,9 +338,9 @@ void Unit::accept_file_visitor(FileReaderVisitor* v)
 	
 	//----------- post-process the data read ----------//
 
-	// attack_info_array = unit_res.attack_info_array+unit_res[unit_id]->first_attack-1;
 	sprite_info = sprite_res[sprite_id];
 	sprite_info->load_bitmap_res();
+	// Note: attack info still needs to be fixed, but this can only be done once all derived classes have finished visiting.
 }
 
 void Unit::accept_file_visitor(FileWriterVisitor* v)
@@ -412,64 +451,13 @@ void UnitGod::accept_file_visitor(FileWriterVisitor* v)
 }
 
 
-enum { UNIT_RECORD_SIZE = 169 };
-
 //-------- Start of function UnitArray::write_file -------------//
 //
 int UnitArray::write_file(File* filePtr)
 {
-	int  i;
-	Unit *unitPtr;
-
-	filePtr->file_put_short(restart_recno);  // variable in SpriteArray
-
-	filePtr->file_put_short( size()  );  // no. of units in unit_array
-
-	filePtr->file_put_short( selected_recno );
-	filePtr->file_put_short( selected_count );
-	filePtr->file_put_long ( cur_group_id   );
-	filePtr->file_put_long ( cur_team_id    );
-	filePtr->file_put_short(idle_blocked_unit_reset_count);
-	filePtr->file_put_long (0 /*unit_search_tries*/);
-	filePtr->file_put_short(0 /*unit_search_tries_flag*/);
-
-	filePtr->file_put_short(visible_unit_count);
-	filePtr->file_put_short(mp_first_frame_to_select_caravan);
-	filePtr->file_put_short(mp_first_frame_to_select_ship);
-	filePtr->file_put_short(mp_pre_selected_caravan_recno);
-	filePtr->file_put_short(mp_pre_selected_ship_recno);
-
-	for( i=1; i<=size() ; i++ )
-	{
-		unitPtr = (Unit*) get_ptr(i);
-
-		//----- write unitId or 0 if the unit is deleted -----//
-
-		if( !unitPtr )    // the unit is deleted
-		{
-			filePtr->file_put_short(0);
-		}
-		else
-		{
-			//--------- write unit_id -------------//
-
-			filePtr->file_put_short(unitPtr->unit_id);
-
-			//------ write data ------//
-
-			if( !polymorphic_visit_with_record_size<FileWriterVisitor>(filePtr, unitPtr, UNIT_RECORD_SIZE) )
-				return 0;
-		}
-	}
-
-	//------- write empty room array --------//
-
-	{
-		FileWriterVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_unit_array(&v, this);
+	return v.good();
 }
 //--------- End of function UnitArray::write_file ---------------//
 
@@ -478,83 +466,8 @@ int UnitArray::write_file(File* filePtr)
 //
 int UnitArray::read_file(File* filePtr)
 {
-	Unit*   unitPtr;
-	int     i, unitId, emptyRoomCount=0;
-
-	restart_recno    = filePtr->file_get_short();
-
-	int unitCount    = filePtr->file_get_short();  // get no. of units from file
-
-	selected_recno   = filePtr->file_get_short();
-	selected_count   = filePtr->file_get_short();
-	cur_group_id     = filePtr->file_get_long();
-	cur_team_id      = filePtr->file_get_long();
-	idle_blocked_unit_reset_count = filePtr->file_get_short();
-	/*unit_search_tries	=*/ filePtr->file_get_long ();
-	/*unit_search_tries_flag = (char)*/ filePtr->file_get_short();
-
-	visible_unit_count					= filePtr->file_get_short();
-	mp_first_frame_to_select_caravan = (char) filePtr->file_get_short();
-	mp_first_frame_to_select_ship		= (char) filePtr->file_get_short();
-	mp_pre_selected_caravan_recno		= filePtr->file_get_short();
-	mp_pre_selected_ship_recno			= filePtr->file_get_short();
-
-	for( i=1 ; i<=unitCount ; i++ )
-	{
-		unitId = filePtr->file_get_short();
-
-		if( unitId==0 )  // the unit has been deleted
-		{
-			add_blank(1);     // it's a DynArrayB function
-			emptyRoomCount++;
-		}
-		else
-		{
-			//----- create unit object -----------//
-
-			unitPtr = create_unit( unitId );
-			unitPtr->unit_id = unitId;
-
-			//---- read data -----//
-
-			if( !polymorphic_visit_with_record_size<FileReaderVisitor>(filePtr, unitPtr, UNIT_RECORD_SIZE) )
-				return 0;
-
-			unitPtr->fix_attack_info();
-		}
-	}
-
-	//-------- linkout() those record added by add_blank() ----------//
-	//-- So they will be marked deleted in DynArrayB and can be -----//
-	//-- undeleted and used when a new record is going to be added --//
-
-	for( i=size() ; i>0 ; i-- )
-	{
-		DynArrayB::go(i);             // since UnitArray has its own go() which will call GroupArray::go()
-
-		if( get_ptr() == NULL )       // add_blank() record
-			linkout();
-	}
-
-	//------- read empty room array --------//
-
-	{
-		FileReaderVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	//------- verify the empty_room_array loading -----//
-
-#ifdef DEBUG
-	err_when( empty_room_count != emptyRoomCount );
-
-	for( i=0 ; i<empty_room_count ; i++ )
-	{
-		if( !is_deleted( empty_room_array[i].recno ) )
-			err_here();
-	}
-#endif
-
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_unit_array(&v, this);
+	return v.good();
 }
 //--------- End of function UnitArray::read_file ---------------//
