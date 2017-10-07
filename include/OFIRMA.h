@@ -35,12 +35,6 @@ class Firm;
 class FirmArray : public DynArrayB
 {
 public:
-	int	 selected_recno;		// the firm current being selected
-
-private:
-	int    process_recno;
-
-public:
    FirmArray();
    ~FirmArray();
 
@@ -48,7 +42,7 @@ public:
    void  deinit();
 
 	int 	build_firm(int xLoc, int yLoc, int nationRecno, int firmId, char* buildCode=NULL, short builderRecno=0);
-	int   create_firm(int);
+	static Firm*   create_firm(short);
    void  del_firm(int);
 
 	int   process();
@@ -76,6 +70,9 @@ public:
 	int   is_deleted(int recNo)    // whether the item is deleted or not
 			{ return get_ptr(recNo) == NULL; }
 
+public:
+	int process_recno;
+	int	selected_recno;		// the firm current being selected
 };
 
 //---------------------------------------------//

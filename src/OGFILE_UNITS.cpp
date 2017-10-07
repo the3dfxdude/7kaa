@@ -450,7 +450,6 @@ void UnitGod::accept_file_visitor(FileWriterVisitor* v)
 	visit_unit_god_members(v, this);
 }
 
-
 //-------- Start of function UnitArray::write_file -------------//
 //
 int UnitArray::write_file(File* filePtr)

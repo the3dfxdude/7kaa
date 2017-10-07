@@ -35,6 +35,7 @@
 #include <OGFILE.h>
 #include <OGF_V1.h>
 #include <file_io_visitor.h>
+#include <OGFILE_DYNARRAYB.inl>
 #include <dbglog.h>
 
 using namespace FileIOVisitor;
@@ -329,6 +330,25 @@ static void visit_firm_war_members(Visitor* v, FirmWar* c)
 	visit<int8_t>(v, &c->build_queue_count);
 }
 
+template <typename Visitor>
+static void visit_firm_array(Visitor* v, FirmArray* c)
+{
+	enum { FIRM_RECORD_SIZE = 254 };
+
+	c->visit_array_size(v);
+
+	visit<int16_t>(v, &c->process_recno);
+	visit<int16_t>(v, &c->selected_recno);
+
+	// Firm statics
+	visit<int16_t>(v, &Firm::firm_menu_mode);
+	visit<int16_t>(v, &Firm::action_spy_recno);
+	visit<int16_t>(v, &Firm::bribe_result);
+	visit<int16_t>(v, &Firm::assassinate_result);
+
+	c->visit_ptr_array<Firm>(v, [](Firm* firm) -> short {return firm->firm_id;}, FirmArray::create_firm, polymorphic_visit<Visitor, Firm>, FIRM_RECORD_SIZE);
+}
+
 void Firm::accept_file_visitor(FileReaderVisitor* v)
 {
 	visit_firm_members(v, this);
@@ -491,56 +511,13 @@ void FirmWar::accept_file_visitor(FileWriterVisitor* v)
 	visit_firm_war_members(v, this);
 }
 
-
-enum { FIRM_RECORD_SIZE = 254 };
-
 //-------- Start of function FirmArray::write_file -------------//
 //
 int FirmArray::write_file(File* filePtr)
 {
-	int  i;
-	Firm *firmPtr;
-
-	filePtr->file_put_short( size()  );  // no. of firms in firm_array
-	filePtr->file_put_short( process_recno );
-	filePtr->file_put_short( selected_recno );
-
-	filePtr->file_put_short( Firm::firm_menu_mode );
-	filePtr->file_put_short( Firm::action_spy_recno );
-	filePtr->file_put_short( Firm::bribe_result );
-	filePtr->file_put_short( Firm::assassinate_result );
-
-	for( i=1; i<=size() ; i++ )
-	{
-		firmPtr = (Firm*) get_ptr(i);
-
-		//----- write firmId or 0 if the firm is deleted -----//
-
-		if( !firmPtr )    // the firm is deleted
-		{
-			filePtr->file_put_short(0);
-		}
-		else
-		{
-			//--------- write firm_id -------------//
-
-			filePtr->file_put_short(firmPtr->firm_id);
-
-			//------ write data from (derived) class --------//
-
-			if (!polymorphic_visit_with_record_size<FileWriterVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
-				return 0;
-		}
-	}
-
-	//------- write empty room array --------//
-
-	{
-		FileWriterVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_firm_array(&v, this);
+	return v.good();
 }
 //--------- End of function FirmArray::write_file ---------------//
 
@@ -548,64 +525,20 @@ int FirmArray::write_file(File* filePtr)
 //
 int FirmArray::read_file(File* filePtr)
 {
-	Firm*   firmPtr;
-	int     i, firmId, firmRecno;
+	FileReaderVisitor v(filePtr);
+	visit_firm_array(&v, this);
 
-	int firmCount      = filePtr->file_get_short();  // get no. of firms from file
-	process_recno      = filePtr->file_get_short();
-	selected_recno     = filePtr->file_get_short();
-
-	Firm::firm_menu_mode  	 = (char) filePtr->file_get_short();
-	Firm::action_spy_recno   = filePtr->file_get_short();
-	Firm::bribe_result    	 = (char) filePtr->file_get_short();
-	Firm::assassinate_result = (char) filePtr->file_get_short();
-
-	for( i=1 ; i<=firmCount ; i++ )
+	if (!GameFile::read_file_same_version)
 	{
-		firmId = filePtr->file_get_short();
-
-		if( firmId==0 )  // the firm has been deleted
+		for (int i = 1; i <= size(); ++i)
 		{
-			add_blank(1);     // it's a DynArrayB function
-		}
-		else
-		{
-			//----- create firm object -----------//
-
-			firmRecno = create_firm( firmId );
-			firmPtr   = firm_array[firmRecno];
-
-			//------ read data into (derived) class --------//
-
-			if (!polymorphic_visit_with_record_size<FileReaderVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
-				return 0;
-
-			//---- fixup version difference between v1 and v2 -----//
-
-			if(!GameFile::read_file_same_version && firmPtr->firm_id > FIRM_BASE)
-				firmPtr->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
+			if (is_deleted(i)) continue;
+			Firm* firm = (Firm*) get_ptr(i);
+			if (firm->firm_id > FIRM_BASE)
+				firm->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
 		}
 	}
 
-	//-------- linkout() those record added by add_blank() ----------//
-	//-- So they will be marked deleted in DynArrayB and can be -----//
-	//-- undeleted and used when a new record is going to be added --//
-
-	for( i=size() ; i>0 ; i-- )
-	{
-		DynArrayB::go(i);             // since FirmArray has its own go() which will call GroupArray::go()
-
-		if( get_ptr() == NULL )       // add_blank() record
-			linkout();
-	}
-
-	//------- read empty room array --------//
-
-	{
-		FileReaderVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	return 1;
+	return v.good();
 }
 //--------- End of function FirmArray::read_file ---------------//
