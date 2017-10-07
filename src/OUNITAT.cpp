@@ -439,9 +439,6 @@ void Unit::unit_auto_guarding(Unit *attackUnit)
 	if( ai_action_id )
 		nation_array[nation_recno]->action_failure(ai_action_id, sprite_recno);
 
-	if(in_auto_defense_mode())
-		set_search_tries(AUTO_DEFENSE_SEARCH_TRIES);
-
 	if(!attackUnit->is_visible())
 		return;
 

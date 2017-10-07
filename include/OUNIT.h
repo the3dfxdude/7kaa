@@ -173,7 +173,6 @@ enum  {  KEEP_PRESERVE_ACTION = 1,  // used for stop2() to keep preserve action
          AUTO_DEFENSE_STAY_OUTSIDE_COUNT = 4, //4 days
          AUTO_DEFENSE_DETECT_COUNT = 3 + GAME_FRAMES_PER_DAY*AUTO_DEFENSE_STAY_OUTSIDE_COUNT,
          EFFECTIVE_AUTO_DEFENSE_DISTANCE = 9,
-         AUTO_DEFENSE_SEARCH_TRIES = 100,
 
          UNIT_DEFEND_TOWN_DISTANCE = 8,
          UNIT_DEFEND_TOWN_STAY_OUTSIDE_COUNT = 4, // 4 days
@@ -589,8 +588,6 @@ private:
 	int   move_to_range_attack(int targetXLoc, int targetYLoc, short miscNo, short searchMode, short maxRange); // move to target for using range attack
 
 	void  abort_searching(int reuseSetNext);
-	void  set_search_tries(int tries);     // set parameters to limit the nodes used in searching
-	void  reset_search_tries();            // reset parameters for using default nodes in searching
 
 	//---------------- handle blocked action ------------------//
 	void  move_to_my_loc(Unit* unitPtr);
@@ -866,8 +863,6 @@ private:
 
 extern UnitArray unit_array;
 extern int unit_search_node_used;
-extern int     unit_search_tries;        // the number of tries used in the current searching
-extern char    unit_search_tries_flag;   // indicate num of tries is set, reset after searching
 #ifdef DEBUG
 extern int check_unit_dir1, check_unit_dir2;
 #endif

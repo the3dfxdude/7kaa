@@ -247,8 +247,6 @@ char debug_seed_status_flag=0;
 int  debug_sim_game_type = 0;
 int  unit_search_node_used=0;
 short nation_hand_over_flag=0;
-int     unit_search_tries = 0;        // the number of tries used in the current searching
-char    unit_search_tries_flag = 0;   // indicate num of tries is set, reset after searching
 
 char 	new_config_dat_flag=0;
 

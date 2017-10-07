@@ -430,8 +430,8 @@ int UnitArray::write_file(File* filePtr)
 	filePtr->file_put_long ( cur_group_id   );
 	filePtr->file_put_long ( cur_team_id    );
 	filePtr->file_put_short(idle_blocked_unit_reset_count);
-	filePtr->file_put_long (unit_search_tries);
-	filePtr->file_put_short(unit_search_tries_flag);
+	filePtr->file_put_long (0 /*unit_search_tries*/);
+	filePtr->file_put_short(0 /*unit_search_tries_flag*/);
 
 	filePtr->file_put_short(visible_unit_count);
 	filePtr->file_put_short(mp_first_frame_to_select_caravan);
@@ -490,8 +490,8 @@ int UnitArray::read_file(File* filePtr)
 	cur_group_id     = filePtr->file_get_long();
 	cur_team_id      = filePtr->file_get_long();
 	idle_blocked_unit_reset_count = filePtr->file_get_short();
-	unit_search_tries	= filePtr->file_get_long ();
-	unit_search_tries_flag = (char) filePtr->file_get_short();
+	/*unit_search_tries	=*/ filePtr->file_get_long ();
+	/*unit_search_tries_flag = (char)*/ filePtr->file_get_short();
 
 	visible_unit_count					= filePtr->file_get_short();
 	mp_first_frame_to_select_caravan = (char) filePtr->file_get_short();

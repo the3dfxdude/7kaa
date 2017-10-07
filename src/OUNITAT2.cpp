@@ -1063,10 +1063,6 @@ void Unit::attack_firm(int firmXLoc, int firmYLoc, int xOffset, int yOffset, int
 	stop();
 	cur_attack = 0;
 
-	int defenseMode = in_auto_defense_mode();
-	if(defenseMode)
-		set_search_tries(AUTO_DEFENSE_SEARCH_TRIES);
-
 	FirmInfo *firmInfo = firm_res[firmPtr->firm_id];
 	int attackDistance = cal_distance(firmXLoc, firmYLoc, firmInfo->loc_width, firmInfo->loc_height);
 	choose_best_attack_mode(attackDistance);
@@ -1162,9 +1158,6 @@ void Unit::attack_firm(int firmXLoc, int firmYLoc, int xOffset, int yOffset, int
 	action_para  = firmPtr->firm_recno;
 	action_x_loc = firmXLoc;
 	action_y_loc = firmYLoc;
-
-	if(defenseMode)
-		reset_search_tries();
 
 	err_when(action_mode==ACTION_ATTACK_FIRM && action_para==0);
 	err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
