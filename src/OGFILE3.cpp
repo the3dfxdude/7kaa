@@ -123,17 +123,21 @@ int SpyArray::read_file(File* filePtr)
 
 //*****//
 
+template <typename Visitor>
+static void visit_snow_ground_array(Visitor* v, SnowGroundArray* c)
+{
+	visit<uint32_t>(v, &c->seed);
+	visit<int32_t>(v, &c->snow_thick);
+	visit<int32_t>(v, &c->snow_pattern);
+}
+
+enum {SNOW_GROUND_ARRAY_RECORD_SIZE = 12};
 
 //-------- Start of function SnowGroundArray::write_file -------------//
 //
 int SnowGroundArray::write_file(File* filePtr)
 {
-	MSG(__FILE__":%d: file_write(this, ...);\n", __LINE__);
-
-   if( !filePtr->file_write( this, sizeof(SnowGroundArray)) )
-      return 0;
-
-   return 1;
+	return visit_with_record_size(filePtr, this, visit_snow_ground_array<FileWriterVisitor>, SNOW_GROUND_ARRAY_RECORD_SIZE);
 }
 //--------- End of function SnowGroundArray::write_file ---------------//
 
@@ -142,12 +146,7 @@ int SnowGroundArray::write_file(File* filePtr)
 //
 int SnowGroundArray::read_file(File* filePtr)
 {
-	MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
-
-   if( !filePtr->file_read( this, sizeof(SnowGroundArray)) )
-      return 0;
-
-   return 1;
+	return visit_with_record_size(filePtr, this, visit_snow_ground_array<FileReaderVisitor>, SNOW_GROUND_ARRAY_RECORD_SIZE);
 }
 //--------- End of function SnowGroundArray::read_file ---------------//
 
