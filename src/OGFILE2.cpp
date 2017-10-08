@@ -444,7 +444,7 @@ int GameFile::write_file_3(File* filePtr)
 
 	{
 		FileWriterVisitor v(filePtr);
-		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>);
+		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>, sizeof(Rock));
 		if( !v.good() )
 			return 0;
 	}
@@ -453,7 +453,7 @@ int GameFile::write_file_3(File* filePtr)
 
 	{
 		FileWriterVisitor v(filePtr);
-		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>);
+		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>, sizeof(Rock));
 		if( !v.good() )
 			return 0;
 	}
@@ -463,7 +463,7 @@ int GameFile::write_file_3(File* filePtr)
 
 	{
 		FileWriterVisitor v(filePtr);
-		firm_die_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, FirmDie>);
+		firm_die_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, FirmDie>, sizeof(FirmDie));
 		if( !v.good() )
 			return 0;
 	}
@@ -716,7 +716,7 @@ int GameFile::read_file_3(File* filePtr)
 
 	{
 		FileReaderVisitor v(filePtr);
-		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>);
+		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>, sizeof(Rock));
 		if( !v.good() )
 			return 0;
 	}
@@ -726,7 +726,7 @@ int GameFile::read_file_3(File* filePtr)
 
 	{
 		FileReaderVisitor v(filePtr);
-		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>);
+		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>, sizeof(Rock));
 		if( !v.good() )
 			return 0;
 	}
@@ -735,7 +735,7 @@ int GameFile::read_file_3(File* filePtr)
 	if( !read_book_mark( filePtr, BOOK_MARK+215 ) )
 	{
 		FileReaderVisitor v(filePtr);
-		firm_die_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, FirmDie>);
+		firm_die_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, FirmDie>, sizeof(FirmDie));
 		if( !v.good() )
 			return 0;
 	}
@@ -1046,7 +1046,7 @@ int TalkRes::write_file(File* filePtr)
 
 	{
 		FileWriterVisitor v(filePtr);
-		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, TalkMsg>);
+		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, TalkMsg>, sizeof(TalkMsg));
 		if( !v.good() )
 			return 0;
 	}
@@ -1066,7 +1066,7 @@ int TalkRes::read_file(File* filePtr)
 
 	{
 		FileReaderVisitor v(filePtr);
-		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, TalkMsg>);
+		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, TalkMsg>, sizeof(TalkMsg));
 		if( !v.good() )
 			return 0;
 	}
@@ -1089,14 +1089,14 @@ int RawRes::write_file(File* filePtr)
 	{
 		{
 			FileWriterVisitor v(filePtr);
-			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>);
+			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>, sizeof(short));
 			if (!v.good())
 				return 0;
 		}
 
 		{
 			FileWriterVisitor v(filePtr);
-			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>);
+			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>, sizeof(short));
 			if (!v.good())
 				return 0;
 		}
@@ -1115,14 +1115,14 @@ int RawRes::read_file(File* filePtr)
 	{
 		{
 			FileReaderVisitor v(filePtr);
-			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>);
+			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>, sizeof(short));
 			if (!v.good())
 				return 0;
 		}
 
 		{
 			FileReaderVisitor v(filePtr);
-			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>);
+			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>, sizeof(short));
 			if (!v.good())
 				return 0;
 		}

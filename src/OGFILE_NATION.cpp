@@ -303,7 +303,7 @@ static void visit_nation(Visitor *v, Nation *nat)
 
 	//-------------- read AI Action Array --------------//
 
-	nat->action_array.accept_visitor_as_value_array(v, visit_raw<Visitor, ActionNode>);
+	nat->action_array.accept_visitor_as_value_array(v, visit_raw<Visitor, ActionNode>, sizeof(ActionNode));
 
 	//------ write AI info array ---------//
 

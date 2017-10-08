@@ -72,7 +72,7 @@ public:
    void zap();
 
 	template <typename T, typename Visitor>
-	void accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visitor* v, T* obj));
+	void accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visitor* v, T* obj), int recordSize);
 
 	template <typename T, typename Visitor>
 	void accept_visitor_as_ptr_array(Visitor* v, short (*getObjectId) (T* obj), T* (*createObj)(short), void (*visitObj)(Visitor* v, T* obj), int objectRecordSize);

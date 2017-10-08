@@ -28,12 +28,12 @@
 
 
 template <typename T, typename Visitor>
-void DynArray::do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj))
+void DynArray::do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj), int elementRecordSize)
 {
 	using namespace FileIOVisitor;
 
 	v->with_record_size(DYN_ARRAY_RECORD_SIZE);
-	visit_dyn_array(v, this);
+	visit_dyn_array(v, this, elementRecordSize);
 
 	if (is_reader_visitor(v))
 	{
@@ -42,7 +42,7 @@ void DynArray::do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v,
 
 	if (last_ele > 0)
 	{
-		v->with_record_size(last_ele * ele_size);
+		v->with_record_size(last_ele * elementRecordSize);
 		for (int i = 1; i <= last_ele; ++i)
 		{
 			visit_obj(v, static_cast<T*>(get(i)));
@@ -51,11 +51,11 @@ void DynArray::do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v,
 }
 
 template <typename T, typename Visitor>
-void DynArray::accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj))
+void DynArray::accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj), int recordSize)
 {
 	using namespace FileIOVisitor;
 
-	do_visit_as_value_array(v, visit_obj);
+	do_visit_as_value_array(v, visit_obj, recordSize);
 
 	if (is_reader_visitor(v))
 		start();    // go top

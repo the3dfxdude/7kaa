@@ -119,11 +119,11 @@ public :
    void  zap(int resizeFlag=1);
 
    template <typename T, typename Visitor>
-   void accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj));
+   void accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj), int recordSize);
 
 protected:
    template <typename T, typename Visitor>
-   void do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj));
+   void do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj), int elementRecordSize);
 };
 
 //--------- END OF CLASS DynArray ---------//

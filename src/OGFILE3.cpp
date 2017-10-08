@@ -3,6 +3,7 @@
  *
  * Copyright 1997,1998 Enlight Software Ltd.
  * Copyright 2010 Unavowed <unavowed@vexillium.org>
+ * Copyright 2017 Richard Dijk <microvirus.multiplying@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,35 +43,54 @@ using namespace FileIOVisitor;
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
 
+template <typename Visitor>
+static void visit_site_members(Visitor* v, Site* c)
+{
+	visit<int16_t>(v, &c->site_recno);
+	visit<int8_t>(v, &c->site_type);
+	visit<int16_t>(v, &c->object_id);
+	visit<int32_t>(v, &c->reserve_qty);
+	visit<int8_t>(v, &c->has_mine);
+	visit<int16_t>(v, &c->map_x_loc);
+	visit<int16_t>(v, &c->map_y_loc);
+	visit<uint8_t>(v, &c->region_id);
+}
+
+template <typename Visitor>
+static void visit_site_array_members(Visitor* v, SiteArray* c)
+{
+	visit<int16_t>(v, &c->selected_recno);
+	visit<int16_t>(v, &c->untapped_raw_count);
+	visit<int16_t>(v, &c->scroll_count);
+	visit<int16_t>(v, &c->gold_coin_count);
+	visit<int16_t>(v, &c->std_raw_site_count);
+}
+
+template <typename Visitor>
+static void visit_site_array(Visitor* v, SiteArray* c)
+{
+	enum {SITE_RECORD_SIZE = 15 };
+
+	visit_site_array_members(v, c);
+	c->accept_visitor_as_value_array(v, visit_site_members<Visitor>, SITE_RECORD_SIZE);
+}
+
 //-------- Start of function SiteArray::write_file -------------//
 //
 int SiteArray::write_file(File* filePtr)
 {
-	filePtr->file_put_short(selected_recno);
-	filePtr->file_put_short(untapped_raw_count);
-	filePtr->file_put_short(scroll_count);
-	filePtr->file_put_short(gold_coin_count);
-	filePtr->file_put_short(std_raw_site_count);
-
 	FileWriterVisitor v(filePtr);
-	accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Site>);
+	visit_site_array(&v, this);
 	return v.good();
 }
 //--------- End of function SiteArray::write_file ---------------//
-
 
 //-------- Start of function SiteArray::read_file -------------//
 //
 int SiteArray::read_file(File* filePtr)
 {
-	selected_recno		 = filePtr->file_get_short();
-	untapped_raw_count =	filePtr->file_get_short();
-	scroll_count		 = filePtr->file_get_short();
-	gold_coin_count	 =	filePtr->file_get_short();
-	std_raw_site_count =	filePtr->file_get_short();
-
 	FileReaderVisitor v(filePtr);
-	accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Site>);
+	visit_site_array(&v, this);
 	return v.good();
 }
 //--------- End of function SiteArray::read_file ---------------//
@@ -84,7 +104,7 @@ int SiteArray::read_file(File* filePtr)
 int SpyArray::write_file(File* filePtr)
 {
 	FileWriterVisitor v(filePtr);
-	accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Spy>);
+	accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Spy>, sizeof(Spy));
 	return v.good();
 }
 //--------- End of function SpyArray::write_file ---------------//
@@ -95,7 +115,7 @@ int SpyArray::write_file(File* filePtr)
 int SpyArray::read_file(File* filePtr)
 {
 	FileReaderVisitor v(filePtr);
-	accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Spy>);
+	accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Spy>, sizeof(Spy));
 	return v.good();
 }
 //--------- End of function SpyArray::read_file ---------------//
@@ -242,7 +262,7 @@ int NewsArray::write_file(File* filePtr)
    //---------- save news data -----------//
 
    FileWriterVisitor v(filePtr);
-   accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, News>);
+   accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, News>, sizeof(News));
    return v.good();
 }
 //--------- End of function NewsArray::write_file ---------------//
@@ -262,7 +282,7 @@ int NewsArray::read_file(File* filePtr)
    //---------- read news data -----------//
 
    FileReaderVisitor v(filePtr);
-   accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, News>);
+   accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, News>, sizeof(News));
    return v.good();
 }
 //--------- End of function NewsArray::read_file ---------------//

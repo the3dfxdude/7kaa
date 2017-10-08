@@ -5,7 +5,7 @@
 
 
 template <typename Visitor>
-static void visit_dyn_array(Visitor *v, DynArray *da)
+static void visit_dyn_array(Visitor *v, DynArray *da, int elementRecordSize)
 {
 	using namespace FileIOVisitor;
 
@@ -13,7 +13,8 @@ static void visit_dyn_array(Visitor *v, DynArray *da)
 	visit<int32_t>(v, &da->block_num);
 	visit<int32_t>(v, &da->cur_pos);
 	visit<int32_t>(v, &da->last_ele);
-	visit<int32_t>(v, &da->ele_size);
+	int eleSize = elementRecordSize;
+	visit<int32_t>(v, &eleSize); // We can't read/write actual ele_size, because it's runtime size; for backwards compatibility, we always write the stored size.
 	visit<int32_t>(v, &da->sort_offset);
 	visit<int8_t>(v, &da->sort_type);
 	v->skip(4); /* da->body_buf */

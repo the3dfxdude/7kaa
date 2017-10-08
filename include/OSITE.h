@@ -42,7 +42,6 @@ enum { SITE_RAW=1,
 
 //--------- Define class Site ----------//
 
-#pragma pack(1)
 class Site
 {
 public:
@@ -72,7 +71,6 @@ public:
 	int   get_site_object(int unitRecno);
 	int  	ai_get_site_object();
 };
-#pragma pack()
 
 //--------- Define class SiteArray ----------//
 

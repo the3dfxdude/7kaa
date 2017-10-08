@@ -24,7 +24,6 @@
 #include <ODYNARRB.h>
 #include <file_io_visitor.h>
 #include <visitor_functions.h>
-#include <visit_dyn_array.h>
 
 
 template <typename Visitor>
@@ -56,10 +55,10 @@ void DynArrayB::visit_empty_room_array(Visitor* v)
 }
 
 template <typename T, typename Visitor>
-void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visitor* v, T* obj))
+void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visitor* v, T* obj), int recordSize)
 {
 	using namespace FileIOVisitor;
-	do_visit_as_value_array(v, visitObj);
+	do_visit_as_value_array(v, visitObj, recordSize);
 
 	visit_empty_room_array(v);
 
