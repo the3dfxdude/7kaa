@@ -153,8 +153,73 @@ int SnowGroundArray::read_file(File* filePtr)
 //*****//
 
 template <typename Visitor>
+static void visit_region_info(Visitor* v, RegionInfo* c)
+{
+	visit<uint8_t>(v, &c->region_id);
+	visit<uint8_t>(v, &c->region_stat_id);
+	visit_enum(v, &c->region_type);
+	visit<int32_t>(v, &c->adj_offset_bit);
+	visit<int32_t>(v, &c->region_size);
+	visit<int16_t>(v, &c->center_x);
+	visit<int16_t>(v, &c->center_y);
+}
+
+template <typename Visitor>
+static void visit_region_path(Visitor* v, RegionPath* c)
+{
+	visit<uint8_t>(v, &c->sea_region_id);
+	visit<uint8_t>(v, &c->land_region_stat_id);
+}
+
+template <typename Visitor>
+static void visit_region_stat(Visitor* v, RegionStat* c)
+{
+	visit<uint8_t>(v, &c->region_id);
+	visit_array<int8_t>(v, c->nation_is_present_array);
+	visit<int8_t>(v, &c->nation_presence_count);
+	visit_array<int16_t>(v, c->firm_type_count_array);
+	visit_array<int16_t>(v, c->firm_nation_count_array);
+	visit_array<int16_t>(v, c->camp_nation_count_array);
+	visit_array<int16_t>(v, c->mine_nation_count_array);
+	visit_array<int16_t>(v, c->harbor_nation_count_array);
+	visit<int16_t>(v, &c->total_firm_count);
+	visit_array<int16_t>(v, c->town_nation_count_array);
+	visit_array<int16_t>(v, c->base_town_nation_count_array);
+	visit<int16_t>(v, &c->independent_town_count);
+	visit<int16_t>(v, &c->total_town_count);
+	visit_array<int16_t>(v, c->nation_population_array);
+	visit_array<int16_t>(v, c->nation_jobless_population_array);
+	visit_array<int16_t>(v, c->unit_nation_count_array);
+	visit<int16_t>(v, &c->independent_unit_count);
+	visit<int16_t>(v, &c->total_unit_count);
+	visit<int16_t>(v, &c->site_count);
+	visit<int16_t>(v, &c->raw_count);
+	visit_array(v, c->reachable_region_array, visit_region_path<Visitor>);
+	visit<int8_t>(v, &c->reachable_region_count);
+}
+
+// Visit a raw, dynamically allocated array of POD types, where the size is stored as an int16_t before the array data chunk.
+template <typename Visitor, typename T, typename SizeT>
+static void visit_raw_value_array(Visitor* v, T*& rawArray, void (*visitValue) (Visitor*, T*), SizeT& arrayElementCount, int valueRecordSize)
+{
+	visit_property<SizeT, int16_t>(v, [arrayElementCount]() {return arrayElementCount;},
+		[&arrayElementCount, &rawArray](SizeT visitSize) {
+		arrayElementCount = visitSize;
+		rawArray = (T*) mem_add(visitSize * sizeof(T));
+	});
+
+	v->with_record_size(arrayElementCount * valueRecordSize);
+	for (SizeT i = 0; i < arrayElementCount; ++i) {
+		visitValue(v, &rawArray[i]);
+	}
+}
+
+template <typename Visitor>
 static void visit_region_array(Visitor *v, RegionArray *ra)
 {
+	enum {REGION_INFO_RECORD_SIZE = 18};
+	enum {REGION_STAT_RECORD_SIZE = 190};
+
 	visit<int32_t>(v, &ra->init_flag);
 	visit_pointer(v, &ra->region_info_array);
 	visit<int32_t>(v, &ra->region_info_count);
@@ -162,6 +227,38 @@ static void visit_region_array(Visitor *v, RegionArray *ra)
 	visit<int32_t>(v, &ra->region_stat_count);
 	visit_pointer(v, &ra->connect_bits);
 	visit_array<uint8_t>(v, ra->region_sorted_array);
+
+	// Note: region_info_count, the size of region_info_array, is already read before.
+	if (is_reader_visitor(v))
+	{
+		ra->region_info_array = ra->region_info_count > 0 ? (RegionInfo *) mem_add(sizeof(RegionInfo)*ra->region_info_count) : nullptr;
+	}
+	v->with_record_size(ra->region_info_count * REGION_INFO_RECORD_SIZE);
+	for (int i = 0; i < ra->region_info_count; ++i)
+	{
+		visit_region_info(v, &ra->region_info_array[i]);
+	}
+
+	// Note: region_stat_count, the size of region_stat_array, is read twice.
+	visit_raw_value_array(v, ra->region_stat_array, visit_region_stat<Visitor>, ra->region_stat_count, REGION_STAT_RECORD_SIZE);
+
+	//--------- read connection bits ----------//
+
+	int connectBitCount = (ra->region_info_count - 1) * (ra->region_info_count) / 2;
+	int connectByteCount = (connectBitCount + 7) / 8;
+
+	if (is_reader_visitor(v))
+	{
+		ra->connect_bits = connectByteCount > 0 ? (unsigned char *)mem_add(connectByteCount) : nullptr;
+	}
+	if (connectByteCount > 0)
+	{
+		v->with_record_size(connectByteCount);
+		for (int i = 0; i < connectByteCount; ++i)
+		{
+			visit<uint8_t>(v, &ra->connect_bits[i]);
+		}
+	}
 }
 
 enum { REGION_ARRAY_RECORD_SIZE = 279 };
@@ -170,32 +267,7 @@ enum { REGION_ARRAY_RECORD_SIZE = 279 };
 //
 int RegionArray::write_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_region_array<FileWriterVisitor>,
-										 REGION_ARRAY_RECORD_SIZE))
-		return 0;
-
-	if( !filePtr->file_write( region_info_array, sizeof(RegionInfo)*region_info_count ) )
-		return 0;
-
-	//-------- write RegionStat ----------//
-
-	filePtr->file_put_short( region_stat_count );
-
-	if( !filePtr->file_write( region_stat_array, sizeof(RegionStat)*region_stat_count ) )
-		return 0;
-
-	//--------- write connection bits ----------//
-
-	int connectBit = (region_info_count -1) * (region_info_count) /2;
-	int connectByte = (connectBit +7) /8;
-
-	if( connectByte > 0)
-	{
-		if( !filePtr->file_write(connect_bits, connectByte) )
-			return 0;
-	}
-
-	return 1;
+	return visit_with_record_size(filePtr, this, &visit_region_array<FileWriterVisitor>, REGION_ARRAY_RECORD_SIZE);
 }
 //--------- End of function RegionArray::write_file ---------------//
 
@@ -204,44 +276,7 @@ int RegionArray::write_file(File* filePtr)
 //
 int RegionArray::read_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_region_array<FileReaderVisitor>,
-										REGION_ARRAY_RECORD_SIZE))
-		return 0;
-
-   if( region_info_count > 0 )
-      region_info_array = (RegionInfo *) mem_add(sizeof(RegionInfo)*region_info_count);
-   else
-      region_info_array = NULL;
-
-   if( !filePtr->file_read( region_info_array, sizeof(RegionInfo)*region_info_count))
-      return 0;
-
-	//-------- read RegionStat ----------//
-
-	region_stat_count = filePtr->file_get_short();
-
-	region_stat_array = (RegionStat*) mem_add( region_stat_count * sizeof(RegionStat) );
-
-	if( !filePtr->file_read( region_stat_array, sizeof(RegionStat)*region_stat_count ) )
-		return 0;
-
-	//--------- read connection bits ----------//
-
-	int connectBit = (region_info_count -1) * (region_info_count) /2;
-	int connectByte = (connectBit +7) /8;
-
-	if( connectByte > 0)
-	{
-		connect_bits = (unsigned char *)mem_add(connectByte);
-		if( !filePtr->file_read(connect_bits, connectByte) )
-			return 0;
-	}
-	else
-	{
-		connect_bits = NULL;
-	}
-
-	return 1;
+	return visit_with_record_size(filePtr, this, &visit_region_array<FileReaderVisitor>, REGION_ARRAY_RECORD_SIZE);
 }
 //--------- End of function RegionArray::read_file ---------------//
 

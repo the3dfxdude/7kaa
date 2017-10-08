@@ -58,6 +58,13 @@ namespace FileIOVisitor
 	{
 		visit_property<FieldT, FileT>(v, std::bind(getter, object), setter);
 	}
+
+	// Helper to visit an enum property (assumed to be backed by an int) as an int32_t FileT.
+	template <typename Visitor, typename EnumT>
+	static void visit_enum(Visitor* v, EnumT* c)
+	{
+		visit_property<int, int32_t>(v, [c]() -> int {return *c;}, [&c](int value) {*c = static_cast<EnumT>(value);});
+	}
 }
 
 #endif // !VISITOR_FUNCTIONS_H_INCLUDED
