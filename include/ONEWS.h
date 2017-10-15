@@ -94,7 +94,6 @@ enum { NEWS_DIPLOMACY=1,
 
 //------- Define struct News ---------//
 
-#pragma pack(1)
 struct News
 {
 public:
@@ -127,7 +126,8 @@ public:
 	char  loc_type;
 	short loc_type_para;
 	uint16_t  loc_type_para2;	// must use uint16_t as it will be used to store unit name id. 
-	short loc_x, loc_y;		// location where the news happens
+	short loc_x;
+	short loc_y;		// location where the news happens
 
 public:
 	int 	put(int y, int detectAction, int& newsHeight);
@@ -175,7 +175,6 @@ public:
 	void  multi_save_game();
 	void  multi_connection_lost();
 };
-#pragma pack()
 
 //-------- Define class NewsArray ----------//
 

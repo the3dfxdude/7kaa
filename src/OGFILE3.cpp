@@ -282,22 +282,49 @@ int RegionArray::read_file(File* filePtr)
 
 //*****//
 
+template <typename Visitor>
+static void visit_news_members(Visitor* v, News* c)
+{
+	visit<int8_t>(v, &c->id);
+	visit<int8_t>(v, &c->type);
+	visit<int32_t>(v, &c->news_date);
+	visit<int8_t>(v, &c->nation_color1);
+	visit<int8_t>(v, &c->nation_color2);
+	visit<int8_t>(v, &c->nation_race_id1);
+	visit<int8_t>(v, &c->nation_race_id2);
+	visit<int32_t>(v, &c->nation_name_id1);
+	visit<int32_t>(v, &c->nation_name_id2);
+	visit<int16_t>(v, &c->short_para1);
+	visit<int16_t>(v, &c->short_para2);
+	visit<int16_t>(v, &c->short_para3);
+	visit<int16_t>(v, &c->short_para4);
+	visit<int16_t>(v, &c->short_para5);
+	visit<int8_t>(v, &c->loc_type);
+	visit<int16_t>(v, &c->loc_type_para);
+	visit<uint16_t>(v, &c->loc_type_para2);
+	visit<int16_t>(v, &c->loc_x);
+	visit<int16_t>(v, &c->loc_y);
+}
+
+template <typename Visitor>
+void visit_news_array(Visitor* v, NewsArray* c) {
+	enum { NEWS_RECORD_SIZE = 37 };
+
+	v->with_record_size(sizeof(int8_t) * sizeof(c->news_type_option)/sizeof(c->news_type_option[0]));
+	visit_array<int8_t>(v, c->news_type_option);
+	visit<int16_t>(v, &c->news_who_option);
+	visit<int32_t>(v, &c->last_clear_recno);
+
+	c->accept_visitor_as_value_array(v, visit_news_members<Visitor>, NEWS_RECORD_SIZE);
+}
+
 //-------- Start of function NewsArray::write_file -------------//
 //
 int NewsArray::write_file(File* filePtr)
 {
-   //----- save news_array parameters -----//
-
-   filePtr->file_write( news_type_option, sizeof(news_type_option) );
-
-   filePtr->file_put_short(news_who_option);
-   filePtr->file_put_long (last_clear_recno);
-
-   //---------- save news data -----------//
-
-   FileWriterVisitor v(filePtr);
-   accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, News>, sizeof(News));
-   return v.good();
+	FileWriterVisitor v(filePtr);
+	visit_news_array(&v, this);
+	return v.good();
 }
 //--------- End of function NewsArray::write_file ---------------//
 
@@ -306,18 +333,8 @@ int NewsArray::write_file(File* filePtr)
 //
 int NewsArray::read_file(File* filePtr)
 {
-   //----- read news_array parameters -----//
-
-   filePtr->file_read( news_type_option, sizeof(news_type_option) );
-
-   news_who_option   = (char) filePtr->file_get_short();
-   last_clear_recno  = filePtr->file_get_long();
-
-   //---------- read news data -----------//
-
-   FileReaderVisitor v(filePtr);
-   accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, News>, sizeof(News));
-   return v.good();
+	FileReaderVisitor v(filePtr);
+	visit_news_array(&v, this);
+	return v.good();
 }
 //--------- End of function NewsArray::read_file ---------------//
-/* vim:set ts=3 sw=3: */
