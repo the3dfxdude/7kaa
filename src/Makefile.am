@@ -102,16 +102,15 @@ bin_PROGRAMS = 7kaa
 	OGENHILL.cpp \
 	OGENMAP.cpp \
 	OGETA.cpp \
+	OGFILE_ARRAYS.cpp \
 	OGFILE_BULLETS.cpp \
 	OGFILE_FIRMS.cpp \
 	OGFILE_NATION.cpp \
-	OGFILE_REBELS.cpp \
 	OGFILE_TORNADO.cpp \
 	OGFILE_TOWN.cpp \
 	OGFILE_UNITS.cpp \
 	OGFILE.cpp \
 	OGFILE2.cpp \
-	OGFILE3.cpp \
 	OGF_V1.cpp \
 	OGODRES.cpp \
 	OGRPSEL.cpp \

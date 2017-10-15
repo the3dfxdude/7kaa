@@ -20,12 +20,11 @@
  *
  */
 
-//Filename    : OGFILE3.CPP
-//Description : Object Game file, save game and restore game, part 3
+//Filename    : OGFILE_ARRAYS.CPP
+//Description : Object Game file, save game and restore game, part 3, various arrays (NewsArray, SiteArray, etc.)
 
 #include <OGFILE.h>
 #include <OGF_V1.h>
-#include <ONATION.h>
 #include <ONEWS.h>
 #include <OREBEL.h>
 #include <OREGION.h>
@@ -41,6 +40,51 @@
 using namespace FileIOVisitor;
 
 DBGLOG_DEFAULT_CHANNEL(GameFile);
+
+
+template <typename Visitor>
+static void visit_rebel(Visitor* v, Rebel* c)
+{
+	visit<int16_t>(v, &c->rebel_recno);
+	visit<int16_t>(v, &c->leader_unit_recno);
+	visit<int8_t>(v, &c->action_mode);
+	visit<int16_t>(v, &c->action_para);
+	visit<int16_t>(v, &c->action_para2);
+	visit<int16_t>(v, &c->mobile_rebel_count);
+	visit<int16_t>(v, &c->town_recno);
+	visit<int8_t>(v, &c->hostile_nation_bits);
+}
+
+enum { REBEL_RECORD_SIZE = 14 };
+
+static Rebel* create_rebel_func(short)
+{
+	return new Rebel;
+}
+
+//-------- Start of function RebelArray::write_file -------------//
+//
+int RebelArray::write_file(File* filePtr)
+{
+	FileWriterVisitor v(filePtr);
+	accept_visitor_as_ptr_array(&v, yes_or_no_object_id<Rebel>, create_rebel_func, visit_rebel<FileWriterVisitor>, REBEL_RECORD_SIZE);
+	return v.good();
+}
+//--------- End of function RebelArray::write_file ---------------//
+
+
+//-------- Start of function RebelArray::read_file -------------//
+//
+int RebelArray::read_file(File* filePtr)
+{
+	FileReaderVisitor v(filePtr);
+	accept_visitor_as_ptr_array(&v, yes_or_no_object_id<Rebel>, create_rebel_func, visit_rebel<FileReaderVisitor>, REBEL_RECORD_SIZE);
+	return v.good();
+}
+//--------- End of function RebelArray::read_file ---------------//
+
+
+//*****//
 
 
 template <typename Visitor>
