@@ -40,20 +40,54 @@
 using namespace FileIOVisitor;
 
 
+template <typename Visitor>
+void visit_race_res(Visitor* v, RaceRes* c)
+{
+	for (int i = 0; i < c->race_count; ++i)
+	{
+		visit<int16_t>(v, &c->race_info_array[i].town_name_used_count);
+	}
+	v->with_record_size(c->name_count);
+	for (int i = 0; i < c->name_count; ++i)
+	{
+		visit<int8_t>(v, &c->name_used_array[i]);
+	}
+}
+
+void visit_version_1_race_res(FileReaderVisitor* v, RaceRes* c)
+{
+	for (int i = 0; i < c->race_count; ++i)
+	{
+		if (i < VERSION_1_MAX_RACE)
+		{
+			visit<int16_t>(v, &c->race_info_array[i].town_name_used_count);
+		}
+		else
+		{
+			c->race_info_array[i].town_name_used_count = 0;
+		}
+	}
+	v->with_record_size(VERSION_1_RACERES_NAME_COUNT);
+	for (int i = 0; i < c->name_count; ++i)
+	{
+		if (i < VERSION_1_RACERES_NAME_COUNT)
+		{
+			visit<int8_t>(v, &c->name_used_array[i]);
+		}
+		else
+		{
+			c->name_used_array[i] = 0;
+		}
+	}
+}
+
 //-------- Start of function RaceRes::write_file -------------//
 //
 int RaceRes::write_file(File* filePtr)
 {
-	//------- write RaceInfo -------//
-
-	RaceInfo* raceInfo = race_info_array;
-
-	for( int i=1 ; i<=race_res.race_count ; i++, raceInfo++ )
-	{
-		filePtr->file_put_short( raceInfo->town_name_used_count );
-	}
-
-	return filePtr->file_write( name_used_array, sizeof(name_used_array[0]) * name_count );
+	FileWriterVisitor v(filePtr);
+	visit_race_res(&v, this);
+	return v.good();
 }
 //--------- End of function RaceRes::write_file ---------------//
 
@@ -62,49 +96,69 @@ int RaceRes::write_file(File* filePtr)
 //
 int RaceRes::read_file(File* filePtr)
 {
-	//------- read RaceInfo -------//
-
-	RaceInfo* raceInfo = race_info_array;
-
-	for( int i=1 ; i<=race_res.race_count ; i++, raceInfo++ )
+	FileReaderVisitor v(filePtr);
+	if (GameFile::read_file_same_version)
 	{
-		raceInfo->town_name_used_count = (!GameFile::read_file_same_version && i>VERSION_1_MAX_RACE) ?
-			0 : filePtr->file_get_short();
-	}
-
-	if(!GameFile::read_file_same_version)
-	{
-		memset(name_used_array, 0, sizeof(name_used_array[0]) * name_count);
-		return filePtr->file_read( name_used_array, sizeof(name_used_array[0]) * VERSION_1_RACERES_NAME_COUNT );
+		visit_race_res(&v, this);
 	}
 	else
-		return filePtr->file_read( name_used_array, sizeof(name_used_array[0]) * name_count );
+	{
+		visit_version_1_race_res(&v, this);
+	}
+	return v.good();
 }
 //--------- End of function RaceRes::read_file ---------------//
 
+
 //***//
+
+template <typename Visitor>
+void visit_unit_res(Visitor* v, UnitRes* c)
+{
+	visit<int16_t>(v, &c->mobile_monster_count);
+	for (UnitInfo* unitInfo = c->unit_info_array; unitInfo < c->unit_info_array + c->unit_info_count; ++unitInfo)
+	{
+		v->with_record_size(sizeof(unitInfo->nation_tech_level_array));
+		visit_array<int8_t>(v, unitInfo->nation_tech_level_array);
+		v->with_record_size(sizeof(unitInfo->nation_unit_count_array));
+		visit_array<int16_t>(v, unitInfo->nation_unit_count_array);
+		v->with_record_size(sizeof(unitInfo->nation_general_count_array));
+		visit_array<int16_t>(v, unitInfo->nation_general_count_array);
+	}
+}
+
+template <typename Visitor>
+void visit_version_1_unit_res(Visitor* v, UnitRes* c)
+{
+	visit<int16_t>(v, &c->mobile_monster_count);
+	for (int i = 0; i < c->unit_info_count; ++i)
+	{
+		UnitInfo* unitInfo = c->unit_info_array + i;
+		if (i < VERSION_1_UNITRES_UNIT_INFO_COUNT)
+		{
+			v->with_record_size(sizeof(unitInfo->nation_tech_level_array));
+			visit_array<int8_t>(v, unitInfo->nation_tech_level_array);
+			v->with_record_size(sizeof(unitInfo->nation_unit_count_array));
+			visit_array<int16_t>(v, unitInfo->nation_unit_count_array);
+			v->with_record_size(sizeof(unitInfo->nation_general_count_array));
+			visit_array<int16_t>(v, unitInfo->nation_general_count_array);
+		}
+		else
+		{
+			memset(unitInfo->nation_tech_level_array, 0, sizeof(unitInfo->nation_tech_level_array));
+			memset(unitInfo->nation_unit_count_array, 0, sizeof(unitInfo->nation_unit_count_array));
+			memset(unitInfo->nation_general_count_array, 0, sizeof(unitInfo->nation_general_count_array));
+		}
+	}
+}
 
 //-------- Start of function UnitRes::write_file -------------//
 //
 int UnitRes::write_file(File* filePtr)
 {
-	filePtr->file_put_short(mobile_monster_count);
-
-	UnitInfo* unitInfo = unit_info_array;
-
-	for( int i=1 ; i<=unit_res.unit_info_count ; i++, unitInfo++ )
-	{
-		if( !filePtr->file_write( unitInfo->nation_tech_level_array, sizeof(unitInfo->nation_tech_level_array) ) )
-			return 0;
-
-		if( !filePtr->file_write( unitInfo->nation_unit_count_array, sizeof(unitInfo->nation_unit_count_array) ) )
-			return 0;
-
-		if( !filePtr->file_write( unitInfo->nation_general_count_array, sizeof(unitInfo->nation_general_count_array) ) )
-			return 0;
-	}
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_unit_res(&v, this);
+	return v.good();
 }
 //--------- End of function UnitRes::write_file ---------------//
 
@@ -113,41 +167,49 @@ int UnitRes::write_file(File* filePtr)
 //
 int UnitRes::read_file(File* filePtr)
 {
-	mobile_monster_count = filePtr->file_get_short();
-
-	UnitInfo* unitInfo = unit_info_array;
-
-	for( int i=1 ; i<=unit_res.unit_info_count ; i++, unitInfo++ )
+	FileReaderVisitor v(filePtr);
+	if (GameFile::read_file_same_version)
 	{
-		if(!GameFile::read_file_same_version && i > VERSION_1_UNITRES_UNIT_INFO_COUNT)
-		{
-			memset(unitInfo->nation_tech_level_array, 0, sizeof(unitInfo->nation_tech_level_array));
-			memset(unitInfo->nation_unit_count_array, 0, sizeof(unitInfo->nation_unit_count_array));
-			memset(unitInfo->nation_general_count_array, 0, sizeof(unitInfo->nation_general_count_array));
-			continue;
-		}
-
-		if( !filePtr->file_read( unitInfo->nation_tech_level_array, sizeof(unitInfo->nation_tech_level_array) ) )
-			return 0;
-
-		if( !filePtr->file_read( unitInfo->nation_unit_count_array, sizeof(unitInfo->nation_unit_count_array) ) )
-			return 0;
-
-		if( !filePtr->file_read( unitInfo->nation_general_count_array, sizeof(unitInfo->nation_general_count_array) ) )
-			return 0;
+		visit_unit_res(&v, this);
 	}
-
-	return 1;
+	else
+	{
+		visit_version_1_unit_res(&v, this);
+	}
+	return v.good();
 }
 //--------- End of function UnitRes::read_file ---------------//
 
 //***//
 
+template <typename Visitor>
+static void visit_firm_info_members(Visitor* v, FirmInfo* c)
+{
+	v->skip(79); // Skip all non-game variables.
+	// Persist game variables
+	visit<int16_t>(v, &c->total_firm_count);
+	visit_array<int16_t>(v, c->nation_firm_count_array);
+	visit_array<int8_t>(v, c->nation_tech_level_array);
+}
+
+template <typename Visitor>
+static void visit_firm_res(Visitor* v, FirmRes* c)
+{
+	enum { FIRM_INFO_RECORD_SIZE = 102 };
+	v->with_record_size(c->firm_count * FIRM_INFO_RECORD_SIZE);
+	for (int i = 0; i < c->firm_count; ++i)
+	{
+		visit_firm_info_members(v, &c->firm_info_array[i]);
+	}
+}
+
 //-------- Start of function FirmRes::write_file -------------//
 //
 int FirmRes::write_file(File* filePtr)
 {
-	return filePtr->file_write( firm_info_array, firm_count * sizeof(FirmInfo) );
+	FileWriterVisitor v(filePtr);
+	visit_firm_res(&v, this);
+	return v.good();
 }
 //--------- End of function FirmRes::write_file ---------------//
 
@@ -156,42 +218,48 @@ int FirmRes::write_file(File* filePtr)
 //
 int FirmRes::read_file(File* filePtr)
 {
-	int arraySize = firm_count * sizeof(FirmInfo);
-
-	//----- save the firm names, so that it won't be overwritten by the saved game file ----//
-
-	FirmInfo* oldFirmInfoArray = (FirmInfo*) mem_add(arraySize);
-
-	memcpy( oldFirmInfoArray, firm_info_array, arraySize );
-
-	int rc = filePtr->file_read( firm_info_array, arraySize );
-
-	for( int i=0 ; i<firm_count ; i++ )
-	{
-		memcpy( firm_info_array[i].name			  , oldFirmInfoArray[i].name			  , FirmInfo::NAME_LEN+1 );
-		memcpy( firm_info_array[i].short_name	  , oldFirmInfoArray[i].short_name	  , FirmInfo::SHORT_NAME_LEN+1 );
-		memcpy( firm_info_array[i].overseer_title, oldFirmInfoArray[i].overseer_title, FirmInfo::TITLE_LEN+1 );
-		memcpy( firm_info_array[i].worker_title  , oldFirmInfoArray[i].worker_title  , FirmInfo::TITLE_LEN+1 );
-
-		// ###### patch begin Gilbert 11/3 ########//
-		firm_info_array[i].first_build_id = oldFirmInfoArray[i].first_build_id;
-		firm_info_array[i].build_count = oldFirmInfoArray[i].build_count;
-		// ###### patch end Gilbert 11/3 ########//
-	}
-
-	mem_del( oldFirmInfoArray );
-
-	return rc;
+	FileReaderVisitor v(filePtr);
+	visit_firm_res(&v, this);
+	return v.good();
 }
 //--------- End of function FirmRes::read_file ---------------//
 
 //***//
 
+template <typename Visitor>
+static void visit_town_res(Visitor* v, TownRes* c)
+{
+	v->with_record_size(c->town_name_count * sizeof(uint8_t));
+	for (int i = 0; i < c->town_name_count; ++i)
+	{
+		visit<uint8_t>(v, &c->town_name_used_array[i]);
+	}
+}
+
+template <typename Visitor>
+static void visit_version_1_town_res(Visitor* v, TownRes* c)
+{
+	v->with_record_size(VERSION_1_TOWNRES_TOWN_NAME_COUNT * sizeof(uint8_t));
+	for (int i = 0; i < c->town_name_count; ++i)
+	{
+		if (i < VERSION_1_TOWNRES_TOWN_NAME_COUNT)
+		{
+			visit<uint8_t>(v, &c->town_name_used_array[i]);
+		}
+		else
+		{
+			c->town_name_used_array[i] = 0;
+		}
+	}
+}
+
 //-------- Start of function TownRes::write_file -------------//
 //
 int TownRes::write_file(File* filePtr)
 {
-	return filePtr->file_write( town_name_used_array, sizeof(town_name_used_array[0]) * town_name_count );
+	FileWriterVisitor v(filePtr);
+	visit_town_res(&v, this);
+	return v.good();
 }
 //--------- End of function TownRes::write_file ---------------//
 
@@ -200,29 +268,89 @@ int TownRes::write_file(File* filePtr)
 //
 int TownRes::read_file(File* filePtr)
 {
-	if(!GameFile::read_file_same_version)
+	FileReaderVisitor v(filePtr);
+	if (GameFile::read_file_same_version)
 	{
-		memset(town_name_used_array, 0, sizeof(town_name_used_array));
-		return filePtr->file_read( town_name_used_array, sizeof(town_name_used_array[0]) * VERSION_1_TOWNRES_TOWN_NAME_COUNT );
+		visit_town_res(&v, this);
 	}
 	else
-		return filePtr->file_read( town_name_used_array, sizeof(town_name_used_array[0]) * town_name_count );
+	{
+		visit_version_1_town_res(&v, this);
+	}
+	return v.good();
 }
 //--------- End of function TownRes::read_file ---------------//
 
 //***//
 
+template <typename Visitor>
+static void visit_tech_class_members(Visitor* v, TechClass* c)
+{
+	v->skip(8);
+	visit_array<int16_t>(v, c->nation_research_firm_recno_array);
+}
+
+
+template <typename Visitor>
+static void visit_tech_info_members(Visitor* v, TechInfo* c)
+{
+	v->skip(19);
+	visit_array<int8_t>(v, c->nation_tech_level_array);
+	visit_array<int8_t>(v, c->nation_is_researching_array);
+	visit_array<float>(v, c->nation_research_progress_array);
+}
+
+enum { TECH_CLASS_RECORD_SIZE = 22, TECH_INFO_RECORD_SIZE = 61 };
+
+template <typename Visitor>
+void visit_tech_res(Visitor* v, TechRes* c)
+{
+	v->with_record_size(c->tech_class_count * TECH_CLASS_RECORD_SIZE);
+	for (TechClass* techClass = c->tech_class_array; techClass < c->tech_class_array + c->tech_class_count; ++techClass)
+	{
+		visit_tech_class_members(v, techClass);
+	}
+
+	v->with_record_size(c->tech_count * TECH_INFO_RECORD_SIZE);
+	for (TechInfo* techInfo = c->tech_info_array; techInfo < c->tech_info_array + c->tech_count; ++techInfo)
+	{
+		visit_tech_info_members(v, techInfo);
+	}
+}
+
+template <typename Visitor>
+void visit_version_1_tech_res(Visitor* v, TechRes* c)
+{
+	v->with_record_size(c->tech_class_count * TECH_CLASS_RECORD_SIZE);
+	for (TechClass* techClass = c->tech_class_array; techClass < c->tech_class_array + c->tech_class_count; ++techClass)
+	{
+		visit_tech_class_members(v, techClass);
+	}
+
+	v->with_record_size(VERSION_1_TECH_COUNT * TECH_INFO_RECORD_SIZE);
+	for (int i = 0; i < c->tech_count; ++i)
+	{
+		TechInfo* techInfo = c->tech_info_array + i;
+		if (i < VERSION_1_TECH_COUNT)
+		{
+			visit_tech_info_members(v, techInfo);
+		}
+		else
+		{
+			memset(techInfo->nation_tech_level_array, 0, sizeof(techInfo->nation_tech_level_array));
+			memset(techInfo->nation_is_researching_array, 0, sizeof(techInfo->nation_is_researching_array));
+			memset(techInfo->nation_research_progress_array, 0, sizeof(techInfo->nation_research_progress_array));
+		}
+	}
+}
+
 //-------- Start of function TechRes::write_file -------------//
 //
 int TechRes::write_file(File* filePtr)
 {
-	if( !filePtr->file_write( tech_class_array, tech_class_count * sizeof(TechClass) ) )
-		return 0;
-
-	if( !filePtr->file_write( tech_info_array, tech_count * sizeof(TechInfo) ) )
-		return 0;
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_tech_res(&v, this);
+	return v.good();
 }
 //--------- End of function TechRes::write_file ---------------//
 
@@ -231,29 +359,16 @@ int TechRes::write_file(File* filePtr)
 //
 int TechRes::read_file(File* filePtr)
 {
-	if( !filePtr->file_read( tech_class_array, tech_class_count * sizeof(TechClass) ) )
-		return 0;
-
-	if(!GameFile::read_file_same_version)
+	FileReaderVisitor v(filePtr);
+	if (GameFile::read_file_same_version)
 	{
-		if(!filePtr->file_read( tech_info_array, VERSION_1_TECH_COUNT * sizeof(TechInfo) ) )
-			return 0;
-
-		TechInfo *techInfoPtr = tech_info_array + VERSION_1_TECH_COUNT;
-		for(int i=VERSION_1_TECH_COUNT; i<tech_count; ++i, techInfoPtr++)
-		{
-			memset(techInfoPtr->nation_tech_level_array, 0, sizeof(techInfoPtr->nation_tech_level_array));
-			memset(techInfoPtr->nation_is_researching_array, 0, sizeof(techInfoPtr->nation_is_researching_array));
-			memset(techInfoPtr->nation_research_progress_array, 0, sizeof(techInfoPtr->nation_research_progress_array));
-		}
+		visit_tech_res(&v, this);
 	}
 	else
 	{
-		if( !filePtr->file_read( tech_info_array, tech_count * sizeof(TechInfo) ) )
-			return 0;
+		visit_version_1_tech_res(&v, this);
 	}
-
-	return 1;
+	return v.good();
 }
 //--------- End of function TechRes::read_file ---------------//
 
@@ -274,25 +389,13 @@ static void visit_talk_msg(Visitor *v, TalkMsg *tm)
 }
 
 template <typename Visitor>
-static void visit_talk_choice(Visitor *v, TalkChoice *tc)
-{
-	visit_pointer(v, &tc->str);
-	visit<int16_t>(v, &tc->para);
-}
-
-template <typename Visitor>
-static void visit_talk_res(Visitor *v, TalkRes *tr)
+static void visit_talk_res_members(Visitor *v, TalkRes *tr)
 {
 	visit<int8_t>(v, &tr->init_flag);
 	visit<int16_t>(v, &tr->reply_talk_msg_recno);
 	visit_talk_msg(v, &tr->cur_talk_msg);
-	visit_pointer(v, &tr->choice_question);
-	visit_pointer(v, &tr->choice_question_second_line);
-	visit<int16_t>(v, &tr->talk_choice_count);
-
-	for (int n = 0; n < MAX_TALK_CHOICE; n++)
-		visit_talk_choice(v, &tr->talk_choice_array[n]);
-
+	v->skip(8); /* choice_question, choice_question_second_line */	
+	v->skip(2 + 20 * 6); /* talk_choice_count, talk_choice_array */
 	visit_array<int8_t>(v, tr->available_talk_id_array);
 	visit<int16_t>(v, &tr->cur_choice_id);
 	visit<int8_t>(v, &tr->save_view_mode);
@@ -300,24 +403,45 @@ static void visit_talk_res(Visitor *v, TalkRes *tr)
 	v->skip(39); /* &tr->talk_msg_array */
 }
 
-enum { TALK_RES_RECORD_SIZE = 214 };
+template <typename Visitor>
+static void visit_talk_msg_members(Visitor* v, TalkMsg* c)
+{
+	visit<int16_t>(v, &c->talk_id);
+	visit<int16_t>(v, &c->talk_para1);
+	visit<int16_t>(v, &c->talk_para2);
+	visit<int32_t>(v, &c->date);
+	visit<int8_t>(v, &c->from_nation_recno);
+	visit<int8_t>(v, &c->to_nation_recno);
+	visit<int8_t>(v, &c->reply_type);
+	visit<int32_t>(v, &c->reply_date);
+	visit<int8_t>(v, &c->relation_status);
+}
+
+template <typename Visitor>
+static void visit_talk_res(Visitor *v, TalkRes *tr)
+{
+	enum { TALK_RES_RECORD_SIZE = 214, TALK_MSG_RECORD_SIZE = 18 };
+
+	v->with_record_size(TALK_RES_RECORD_SIZE);
+	visit_talk_res_members(v, tr);
+	tr->talk_msg_array.accept_visitor_as_value_array(v, visit_talk_msg_members<Visitor>, TALK_MSG_RECORD_SIZE);
+
+	if (is_reader_visitor(v))
+	{
+		tr->choice_question = nullptr;
+		tr->choice_question_second_line = nullptr;
+		tr->talk_choice_count = 0;
+	}
+}
+
 
 //-------- Start of function TalkRes::write_file -------------//
 //
 int TalkRes::write_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_talk_res<FileWriterVisitor>,
-		TALK_RES_RECORD_SIZE))
-		return 0;
-
-	{
-		FileWriterVisitor v(filePtr);
-		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, TalkMsg>, sizeof(TalkMsg));
-		if( !v.good() )
-			return 0;
-	}
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_talk_res(&v, this);
+	return v.good();
 }
 //--------- End of function TalkRes::write_file ---------------//
 
@@ -326,49 +450,39 @@ int TalkRes::write_file(File* filePtr)
 //
 int TalkRes::read_file(File* filePtr)
 {
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_talk_res<FileReaderVisitor>,
-		TALK_RES_RECORD_SIZE))
-		return 0;
-
-	{
-		FileReaderVisitor v(filePtr);
-		talk_msg_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, TalkMsg>, sizeof(TalkMsg));
-		if( !v.good() )
-			return 0;
-	}
-
-	this->choice_question = NULL;
-	this->choice_question_second_line = NULL;
-	this->talk_choice_count = 0;
-
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_talk_res(&v, this);
+	return v.good();
 }
 //--------- End of function TalkRes::read_file ---------------//
 
 //***//
 
+namespace {
+	template <typename Visitor>
+	void visit_supply_firm_array_element(Visitor* v, short* c)
+	{
+		visit<int16_t>(v, c);
+	}
+}
+
+template <typename Visitor>
+static void visit_raw_res(Visitor *v, RawRes *c)
+{
+	for (int i = 0; i < MAX_RAW; i++)
+	{
+		c->raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(v, visit_supply_firm_array_element<Visitor>, sizeof(int16_t));
+		c->raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(v, visit_supply_firm_array_element<Visitor>, sizeof(int16_t));
+	}
+}
+
 //-------- Start of function RawRes::write_file -------------//
 //
 int RawRes::write_file(File* filePtr)
 {
-	for( int i=0 ; i<MAX_RAW ; i++ )
-	{
-		{
-			FileWriterVisitor v(filePtr);
-			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>, sizeof(short));
-			if (!v.good())
-				return 0;
-		}
-
-		{
-			FileWriterVisitor v(filePtr);
-			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, short>, sizeof(short));
-			if (!v.good())
-				return 0;
-		}
-	}
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_raw_res(&v, this);
+	return v.good();
 }
 //--------- End of function RawRes::write_file ---------------//
 
@@ -377,34 +491,57 @@ int RawRes::write_file(File* filePtr)
 //
 int RawRes::read_file(File* filePtr)
 {
-	for( int i=0 ; i<MAX_RAW ; i++ )
-	{
-		{
-			FileReaderVisitor v(filePtr);
-			raw_info_array[i].raw_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>, sizeof(short));
-			if (!v.good())
-				return 0;
-		}
-
-		{
-			FileReaderVisitor v(filePtr);
-			raw_info_array[i].product_supply_firm_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, short>, sizeof(short));
-			if (!v.good())
-				return 0;
-		}
-	}
-
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_raw_res(&v, this);
+	return v.good();
 }
 //--------- End of function RawRes::read_file ---------------//
 
 //***//
 
+template <typename Visitor>
+static void visit_god_info_members(Visitor* v, GodInfo* c)
+{
+	v->skip(9);
+	visit_array<int8_t>(v, c->nation_know_array);
+}
+
+enum { GOD_INFO_RECORD_SIZE = 16 };
+
+template <typename Visitor>
+static void visit_god_res(Visitor* v, GodRes* c)
+{
+	v->with_record_size(c->god_count * GOD_INFO_RECORD_SIZE);
+	for (int i = 0; i < c->god_count; ++i)
+	{
+		visit_god_info_members(v, &c->god_info_array[i]);
+	}
+}
+
+template <typename Visitor>
+static void visit_version_1_god_res(Visitor* v, GodRes* c)
+{
+	v->with_record_size(c->god_count * VERSION_1_GODRES_GOD_COUNT);
+	for (int i = 0; i < c->god_count; ++i)
+	{
+		if (i < VERSION_1_GODRES_GOD_COUNT)
+		{
+			visit_god_info_members(v, &c->god_info_array[i]);
+		}
+		else
+		{
+			memset(&c->god_info_array[i], 0, sizeof(GodInfo));
+		}
+	}
+}
+
 //-------- Start of function GodRes::write_file -------------//
 //
 int GodRes::write_file(File* filePtr)
 {
-	return filePtr->file_write( god_info_array, sizeof(GodInfo) * god_count );
+	FileWriterVisitor v(filePtr);
+	visit_god_res(&v, this);
+	return v.good();
 }
 //--------- End of function GodRes::write_file ---------------//
 
@@ -413,23 +550,34 @@ int GodRes::write_file(File* filePtr)
 //
 int GodRes::read_file(File* filePtr)
 {
-	if(!GameFile::read_file_same_version)
+	FileReaderVisitor v(filePtr);
+	if(GameFile::read_file_same_version)
 	{
-		memset(god_info_array, 0, sizeof(god_info_array));
-		return filePtr->file_read( god_info_array, sizeof(GodInfo) * VERSION_1_GODRES_GOD_COUNT );
+		visit_god_res(&v, this);
 	}
 	else
-		return filePtr->file_read( god_info_array, sizeof(GodInfo) * god_count );
+	{
+		visit_version_1_god_res(&v, this);
+	}
+	return v.good();
 }
 //--------- End of function GodRes::read_file ---------------//
 
 //***//
 
+template <typename Visitor>
+static void visit_monster_res(Visitor* v, MonsterRes* c)
+{
+	visit_array<int16_t>(v, c->active_monster_array);
+}
+
+enum { MONSTER_RES_RECORD_SIZE = 6 };
+
 //-------- Start of function MonsterRes::write_file -------------//
 //
 int MonsterRes::write_file(File* filePtr)
 {
-	return filePtr->file_write( active_monster_array, sizeof(active_monster_array) );
+	return visit_with_record_size(filePtr, this, visit_monster_res<FileWriterVisitor>, MONSTER_RES_RECORD_SIZE);
 }
 //--------- End of function MonsterRes::write_file ---------------//
 
@@ -438,6 +586,6 @@ int MonsterRes::write_file(File* filePtr)
 //
 int MonsterRes::read_file(File* filePtr)
 {
-	return filePtr->file_read( active_monster_array, sizeof(active_monster_array) );
+	return visit_with_record_size(filePtr, this, visit_monster_res<FileReaderVisitor>, MONSTER_RES_RECORD_SIZE);
 }
 //--------- End of function MonsterRes::read_file ---------------//

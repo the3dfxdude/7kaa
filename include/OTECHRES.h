@@ -82,7 +82,6 @@ struct TechRec
 
 //-------- define struct TechClass ----------//
 
-#pragma pack(1)
 class TechClass
 {
 public:
@@ -102,11 +101,9 @@ public:
 	int    get_nation_research_firm_recno(int nationRecno)						{ return nation_research_firm_recno_array[nationRecno-1]; }
 	int	 is_nation_researching(int nationRecno)								   { return nation_research_firm_recno_array[nationRecno-1]; }
 };
-#pragma pack()
 
 //-------- define struct TechInfo ----------//
 
-#pragma pack(1)
 class TechInfo
 {
 public:
@@ -146,7 +143,6 @@ public:
 	int  	 progress(int nationRecno, float progressPoint);
 	float	 get_progress(int nationRecno);
 };
-#pragma pack()
 
 //------ define class TechRes ----------//
 
