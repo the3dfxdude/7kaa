@@ -96,6 +96,8 @@ public:
 	char		map_need_redraw;
 	char		zoom_need_redraw;
 
+	long        loaded_random_seed;   // only when loading a game, the random seed of the saved game; to be set as the seed for misc upon completing loading.
+
 	//------ frame related vars -----//
 
 	int 		day_frame_count;
