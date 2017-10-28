@@ -549,13 +549,20 @@ int Tutor::read_file(File* filePtr)
 //***//
 
 
+template <typename Visitor>
+static void visit_seek_path_members(Visitor* v, SeekPath* c)
+{
+	visit<int16_t>(v, &c->total_node_avail);
+}
+
 //### begin alex 23/9 ###//
 //-------- Start of function SeekPath::write_file -------------//
 //
 int SeekPath::write_file(File* filePtr)
 {
-	filePtr->file_put_short(total_node_avail);
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_seek_path_members(&v, this);
+	return v.good();
 }
 //--------- End of function SeekPath::write_file ---------------//
 
@@ -564,8 +571,9 @@ int SeekPath::write_file(File* filePtr)
 //
 int SeekPath::read_file(File* filePtr)
 {
-	total_node_avail =	filePtr->file_get_short();
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_seek_path_members(&v, this);
+	return v.good();
 }
 //--------- End of function SeekPath::read_file ---------------//
 //#### end alex 23/9 ####//
