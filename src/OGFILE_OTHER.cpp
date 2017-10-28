@@ -512,14 +512,25 @@ int World::read_file(File* filePtr)
 //***//
 
 
+template <typename Visitor>
+static void visit_tutor_members(Visitor* v, Tutor* c)
+{
+	visit_property<short, int16_t>(v, [c] () {return c->cur_tutor_id;},
+		[c] (short tutorId) {
+			if (tutorId > 0) {
+				c->load(tutorId);		// load() will reset cur_text_block_id
+			}
+		});
+	visit<int16_t>(v, &c->cur_text_block_id);
+}
+
 //-------- Start of function Tutor::write_file -------------//
 //
 int Tutor::write_file(File* filePtr)
 {
-	filePtr->file_put_short(cur_tutor_id);
-	filePtr->file_put_short(cur_text_block_id);
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_tutor_members(&v, this);
+	return v.good();
 }
 //--------- End of function Tutor::write_file ---------------//
 
@@ -528,17 +539,15 @@ int Tutor::write_file(File* filePtr)
 //
 int Tutor::read_file(File* filePtr)
 {
-	int curTutorId =	filePtr->file_get_short();
-
-	if( curTutorId > 0 )
-		tutor.load(curTutorId);		// load() will reset cur_text_block_id
-
-	cur_text_block_id	= filePtr->file_get_short();
-	last_text_block_id = 0;
-
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_tutor_members(&v, this);
+	return v.good();
 }
 //--------- End of function Tutor::read_file ---------------//
+
+
+//***//
+
 
 //### begin alex 23/9 ###//
 //-------- Start of function SeekPath::write_file -------------//
