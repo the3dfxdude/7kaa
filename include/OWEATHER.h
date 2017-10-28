@@ -54,11 +54,10 @@ typedef enum _WeatherType
 
 //--------- Define class Weather ----------//
 
-#pragma pack(1)
 class Weather
 {
 private:
-	unsigned seed;
+	unsigned int seed;
 	short	season_phase;			// 0 = early spring, 364 = end of winter
 	short day_to_quake;
 	short avg_temp;
@@ -109,14 +108,15 @@ public:
 
 private:
 	short base_temp();
-	unsigned rand_seed(unsigned);
+	unsigned int rand_seed(unsigned int);
+
+	template <typename Visitor>
+	friend void visit_weather_members(Visitor*, Weather*);
 };
-#pragma pack()
 
 
 // ------- define class MagicWeather -----------//
 
-#pragma pack(1)
 class MagicWeather
 {
 private:
@@ -146,8 +146,9 @@ public:
 	int	read_file(File* filePtr);
 
 	friend class Weather;
+	template <typename Visitor>
+	friend void visit_magic_weather_members(Visitor*, MagicWeather*);
 };
-#pragma pack()
 
 extern Weather weather, weather_forecast[MAX_WEATHER_FORECAST];
 extern MagicWeather magic_weather;

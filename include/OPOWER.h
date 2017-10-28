@@ -72,12 +72,12 @@ enum { MAX_KEY_STR = 5 };       // Maximum 5 different key string
 
 struct Location;
 
-#pragma pack(1)
 class Power
 {
 public:
 	int   		command_id;
-	int   		command_unit_recno, command_para;
+	int   		command_unit_recno;
+	int         command_para;
 
 	char			win_opened;
 	char			enable_flag;
@@ -132,7 +132,6 @@ public:
 	short			select_active_unit(short *selectedArray, short selectedCount);
 	//#### end alex 19/3 ####//
 };
-#pragma pack()
 
 extern Power power;
 

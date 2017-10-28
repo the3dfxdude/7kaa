@@ -316,7 +316,7 @@ int GameFile::write_file_2(File* filePtr)
 
 	write_book_mark( filePtr, BOOK_MARK+102 );
 
-	if( !config.write_file(filePtr) )
+	if( !config.write_file(filePtr, false /* don't include system settings */) )
 		return 0;
 
 	write_book_mark( filePtr, BOOK_MARK+103 );
@@ -555,7 +555,7 @@ int GameFile::read_file_2(File* filePtr)
 	if( !read_book_mark( filePtr, BOOK_MARK+102 ) )
 		return 0;
 
-	if( !config.read_file(filePtr, 1) )		// 1-keep system settings
+	if( !config.read_file(filePtr, false /* don't include system settings */) )
 		return 0;
 
 	if( !read_book_mark( filePtr, BOOK_MARK+103 ) )

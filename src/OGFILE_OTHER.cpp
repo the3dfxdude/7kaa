@@ -38,27 +38,47 @@
 using namespace FileIOVisitor;
 
 
+template <typename Visitor>
+static void visit_color_remap_members(Visitor* v, ColorRemap* c)
+{
+	visit<int8_t>(v, &c->main_color);
+	visit_array<int8_t>(v, c->color_table);
+}
+
+template <typename Visitor>
+static void visit_game_members(Visitor* v, Game* c)
+{
+	visit<int8_t>(v, &c->init_flag);
+	visit<int8_t>(v, &c->started_flag);
+	visit<int8_t>(v, &c->game_mode);
+	visit<int8_t>(v, &c->game_has_ended);
+	visit_array(v, c->color_remap_array, visit_color_remap_members<Visitor>);
+}
+
+enum { GAME_RECORD_SIZE = 2060 };
+
 //-------- Start of function Game::write_file -------------//
 //
 int Game::write_file(File* filePtr)
 {
-	return filePtr->file_write( this, sizeof(Game) );
+	return visit_with_record_size(filePtr, this, visit_game_members<FileWriterVisitor>, GAME_RECORD_SIZE);
 }
 //--------- End of function Game::write_file ---------------//
-
 
 //-------- Start of function Game::read_file -------------//
 //
 int Game::read_file(File* filePtr)
 {
-	return filePtr->file_read( this, sizeof(Game) );
+	return visit_with_record_size(filePtr, this, visit_game_members<FileReaderVisitor>, GAME_RECORD_SIZE);
 }
 //--------- End of function Game::read_file ---------------//
 
+
 //***//
 
+
 template <typename Visitor>
-static void visit_config(Visitor *v, Config *cfg)
+static void visit_config(Visitor *v, Config *cfg, bool includeSystemSettings)
 {
 	visit<int16_t>(v, &cfg->difficulty_rating);
 	visit<int8_t>(v, &cfg->ai_nation_count);
@@ -108,16 +128,28 @@ static void visit_config(Visitor *v, Config *cfg)
 	visit<int8_t>(v, &cfg->disp_news_flag);
 	visit<int16_t>(v, &cfg->scroll_speed);
 	visit<int16_t>(v, &cfg->frame_speed);
-	visit<int8_t>(v, &cfg->help_mode);
+	if (includeSystemSettings)
+	{
+		visit<int8_t>(v, &cfg->help_mode);
+	}
+	else {
+		v->skip(1);
+	}
 	visit<int8_t>(v, &cfg->disp_town_name);
 	visit<int8_t>(v, &cfg->disp_spy_sign);
 	visit<int8_t>(v, &cfg->show_all_unit_icon);
 	visit<int8_t>(v, &cfg->show_unit_path);
-	visit<int8_t>(v, &cfg->music_flag);
-	visit<int16_t>(v, &cfg->cd_music_volume);
-	visit<int16_t>(v, &cfg->wav_music_volume);
-	visit<int8_t>(v, &cfg->sound_effect_flag);
-	visit<int16_t>(v, &cfg->sound_effect_volume);
+	if (includeSystemSettings)
+	{
+		visit<int8_t>(v, &cfg->music_flag);
+		visit<int16_t>(v, &cfg->cd_music_volume);
+		visit<int16_t>(v, &cfg->wav_music_volume);
+		visit<int8_t>(v, &cfg->sound_effect_flag);
+		visit<int16_t>(v, &cfg->sound_effect_volume);
+	}
+	else {
+		v->skip(8);
+	}
 	visit<int8_t>(v, &cfg->pan_control);
 	visit<int8_t>(v, &cfg->lightning_visual);
 	visit<int8_t>(v, &cfg->earthquake_visual);
@@ -145,55 +177,90 @@ enum { CONFIG_RECORD_SIZE = 144 };
 
 //-------- Start of function Config::write_file -------------//
 //
-int Config::write_file(File* filePtr)
+int Config::write_file(File* filePtr, bool includeSysSettings)
 {
-	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_config<FileWriterVisitor>,
-		CONFIG_RECORD_SIZE);
+	FileWriterVisitor v(filePtr);
+	v.with_record_size(CONFIG_RECORD_SIZE);
+	visit_config(&v, this, includeSysSettings);
+	return v.good();
 }
 //--------- End of function Config::write_file ---------------//
 
 //-------- Start of function Config::read_file -------------//
 //
-int Config::read_file(File* filePtr, int keepSysSettings)
+int Config::read_file(File* filePtr, bool includeSysSettings)
 {
-	//--- these settings are not game dependent -----//
-
-	char  musicFlag 		 = music_flag;
-	short cdMusicVol  	 = cd_music_volume;
-	short	wavMusicVol 	 = wav_music_volume;
-	char	soundEffectFlag = sound_effect_flag;
-	short	soundEffectVol  = sound_effect_volume;
-	char	helpMode			 = help_mode;
-
 	FileReaderVisitor v(filePtr);
 	v.with_record_size(CONFIG_RECORD_SIZE);
-	visit_config(&v, this);
-
-	if( keepSysSettings )
-	{
-		music_flag		   = musicFlag;
-		cd_music_volume   = cdMusicVol;
-		wav_music_volume  = wavMusicVol;
-		sound_effect_flag = soundEffectFlag;
-		sound_effect_volume = soundEffectVol;
-		help_mode			= helpMode;
-	}
-
+	visit_config(&v, this, includeSysSettings);
 	return v.good();
 }
 //--------- End of function Config::read_file ---------------//
 
+
 //***//
+
+
+template <typename Visitor>
+static void visit_chat_info_members(Visitor* v, ChatInfo* c)
+{
+	visit<int32_t>(v, &c->received_date);
+	visit<int8_t>(v, &c->from_nation_recno);
+	visit_array<int8_t>(v, c->chat_str);
+}
+
+template <typename Visitor>
+static void visit_info_members(Visitor* v, Info* c)
+{
+	visit<int32_t>(v, &c->game_start_date);
+	visit<int32_t>(v, &c->game_date);
+	visit<int32_t>(v, &c->game_day);
+	visit<int32_t>(v, &c->game_month);
+	visit<int32_t>(v, &c->game_year);
+	visit<int32_t>(v, &c->goal_deadline);
+	visit<int16_t>(v, &c->goal_difficulty);
+	visit<int16_t>(v, &c->goal_score_bonus);
+	visit<int32_t>(v, &c->week_day);
+	visit<int32_t>(v, &c->year_day);
+	visit<int32_t>(v, &c->year_passed);
+	visit<int32_t>(v, &c->random_seed);
+	visit<uint32_t>(v, &c->start_play_time);
+	visit<uint32_t>(v, &c->total_play_time);
+	visit<int16_t>(v, &c->viewing_nation_recno);
+	visit<int16_t>(v, &c->viewing_spy_recno);
+	visit<int16_t>(v, &c->default_viewing_nation_recno);
+	visit<int16_t>(v, &c->browse_nation_recno);
+	visit<int16_t>(v, &c->browse_race_recno);
+	visit<int16_t>(v, &c->browse_firm_recno);
+	visit<int16_t>(v, &c->browse_income_recno);
+	visit<int16_t>(v, &c->browse_expense_recno);
+	visit<int16_t>(v, &c->browse_troop_recno);
+	visit<int16_t>(v, &c->browse_unit_recno);
+	visit<int16_t>(v, &c->browse_tech_recno);
+	visit<int16_t>(v, &c->browse_god_recno);
+	visit<int16_t>(v, &c->browse_town_recno);
+	visit<int16_t>(v, &c->browse_spy_recno);
+	visit<int16_t>(v, &c->browse_caravan_recno);
+	visit<int16_t>(v, &c->browse_ship_recno);
+	visit<int16_t>(v, &c->browse_talk_msg_recno);
+	visit<int16_t>(v, &c->browse_news_recno);
+	visit<int16_t>(v, &c->browse_ai_action_recno);
+	visit<int16_t>(v, &c->browse_ai_attack_recno);
+	visit<int8_t>(v, &c->nation_report_mode);
+	visit<int16_t>(v, &c->last_talk_nation_recno);
+	visit<int8_t>(v, &c->player_reply_mode);
+	visit<int8_t>(v, &c->chat_receiver_type);
+	visit_array<int8_t>(v, c->player_chat_str);
+	visit_array(v, c->remote_chat_array, visit_chat_info_members<Visitor>);
+}
+
+enum {INFO_RECORD_SIZE = 1258 };
 
 //-------- Start of function Info::write_file -------------//
 //
 int Info::write_file(File* filePtr)
 {
-	int writeSize = (char*)(&last_write_offset) - (char*)(this);
-
-	//---------- write the info data -----------//
-
-	return filePtr->file_write( this, writeSize );
+	return visit_with_record_size(filePtr, this, visit_info_members<FileWriterVisitor>, INFO_RECORD_SIZE);
 }
 //--------- End of function Info::write_file ---------------//
 
@@ -202,21 +269,32 @@ int Info::write_file(File* filePtr)
 //
 int Info::read_file(File* filePtr)
 {
-	int readSize = (char*)(&last_write_offset) - (char*)(this);
-
-	//------- read the info data ----------//
-
-	return filePtr->file_read( this, readSize );
+	return visit_with_record_size(filePtr, this, visit_info_members<FileReaderVisitor>, INFO_RECORD_SIZE);
 }
 //--------- End of function Info::read_file ---------------//
 
+
 //***//
+
+
+template <typename Visitor>
+static void visit_power_members(Visitor* v, Power* c)
+{
+	visit<int32_t>(v, &c->command_id);
+	visit<int32_t>(v, &c->command_unit_recno);
+	visit<int32_t>(v, &c->command_para);
+	visit<int8_t>(v, &c->win_opened);
+	visit<int8_t>(v, &c->enable_flag);
+	visit_array<int32_t>(v, c->key_str_pos);
+}
+
+enum { POWER_RECORD_SIZE = 34 };
 
 //-------- Start of function Power::write_file -------------//
 //
 int Power::write_file(File* filePtr)
 {
-	return filePtr->file_write( this, sizeof(Power) );
+	return visit_with_record_size(filePtr, this, visit_power_members<FileWriterVisitor>, POWER_RECORD_SIZE);
 }
 //--------- End of function Power::write_file ---------------//
 
@@ -225,28 +303,33 @@ int Power::write_file(File* filePtr)
 //
 int Power::read_file(File* filePtr)
 {
-	return filePtr->file_read( this, sizeof(Power) );
+	return visit_with_record_size(filePtr, this, visit_power_members<FileReaderVisitor>, POWER_RECORD_SIZE);
 }
 //--------- End of function Power::read_file ---------------//
 
+
 //***//
+
+
+template <typename Visitor>
+static void visit_sys_members(Visitor* v, Sys* c)
+{
+	visit<int32_t>(v, &c->loaded_random_seed);
+	visit<int32_t>(v, &c->day_frame_count);
+	visit<int32_t>(v, &c->frame_count);
+	visit<int16_t>(v, &c->view_mode);
+}
+
 
 //-------- Start of function Sys::write_file -------------//
 //
 int Sys::write_file(File* filePtr)
 {
-	//---- write the current random seed first ----//
+	loaded_random_seed = misc.get_random_seed();
 
-	if( !filePtr->file_put_long(misc.get_random_seed()) )
-		return 0;
-
-	//---------- write some Sys data -----------//
-
-	filePtr->file_put_long(day_frame_count);
-	filePtr->file_put_long(frame_count);
-	filePtr->file_put_short(view_mode);
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_sys_members(&v, this);
+	return v.good();
 }
 //--------- End of function Sys::write_file ---------------//
 
@@ -255,27 +338,44 @@ int Sys::write_file(File* filePtr)
 //
 int Sys::read_file(File* filePtr)
 {
-	//------- read the random seed --------//
-
-	loaded_random_seed = filePtr->file_get_long();
-
-	//--------- read some Sys data -----------//
-
-	day_frame_count = filePtr->file_get_long();
-	frame_count 	 = filePtr->file_get_long();
-	view_mode       = (char) filePtr->file_get_short();
-
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_sys_members(&v, this);
+	return v.good();
 }
 //--------- End of function Sys::read_file ---------------//
 
+
 //***//
+
+
+enum { WEATHER_RECORD_SIZE = 35 };
+
+template <typename Visitor>
+static void visit_weather_members(Visitor* v, Weather* c)
+{
+	visit<uint32_t>(v, &c->seed);
+	visit<int16_t>(v, &c->season_phase);
+	visit<int16_t>(v, &c->day_to_quake);
+	visit<int16_t>(v, &c->avg_temp);
+	visit<int16_t>(v, &c->temp_amp);
+	visit<int16_t>(v, &c->wind_spd);
+	visit<int32_t>(v, &c->high_wind_day);
+	visit<int16_t>(v, &c->wind_dir);
+	visit<int16_t>(v, &c->windy_speed);
+	visit<int16_t>(v, &c->tornado_count);
+	visit<int8_t>(v, &c->cur_cloud_str);
+	visit<int8_t>(v, &c->cur_cloud_len);
+	visit<int8_t>(v, &c->cur_cloud_type);
+	visit<int32_t>(v, &c->quake_frequency);
+	visit<int16_t>(v, &c->quake_x);
+	visit<int16_t>(v, &c->quake_y);
+}
 
 //-------- Start of function Weather::write_file -------------//
 //
 int Weather::write_file(File* filePtr)
 {
-	return filePtr->file_write( this, sizeof(Weather) );
+	return visit_with_record_size(filePtr, this, visit_weather_members<FileWriterVisitor>, WEATHER_RECORD_SIZE);
 }
 //--------- End of function Weather::write_file ---------------//
 
@@ -284,17 +384,32 @@ int Weather::write_file(File* filePtr)
 //
 int Weather::read_file(File* filePtr)
 {
-	return filePtr->file_read( this, sizeof(Weather) );
+	return visit_with_record_size(filePtr, this, visit_weather_members<FileReaderVisitor>, WEATHER_RECORD_SIZE);
 }
 //--------- End of function Weather::read_file ---------------//
 
+
 //***//
+
+
+enum { MAGIC_WEATHER_RECORD_SIZE = 11 };
+
+template <typename Visitor>
+static void visit_magic_weather_members(Visitor* v, MagicWeather* c)
+{
+	visit<int8_t>(v, &c->rain_str);
+	visit<int16_t>(v, &c->wind_spd);
+	visit<int16_t>(v, &c->wind_dir);
+	visit<int16_t>(v, &c->rain_day);
+	visit<int16_t>(v, &c->wind_day);
+	visit<int16_t>(v, &c->lightning_day);
+}
 
 //-------- Start of function MagicWeather::write_file -------------//
 //
 int MagicWeather::write_file(File* filePtr)
 {
-	return filePtr->file_write( this, sizeof(MagicWeather) );
+	return visit_with_record_size(filePtr, this, visit_magic_weather_members<FileWriterVisitor>, MAGIC_WEATHER_RECORD_SIZE);
 }
 //--------- End of function MagicWeahter::write_file ---------------//
 
@@ -303,11 +418,13 @@ int MagicWeather::write_file(File* filePtr)
 //
 int MagicWeather::read_file(File* filePtr)
 {
-	return filePtr->file_read( this, sizeof(MagicWeather) );
+	return visit_with_record_size(filePtr, this, visit_magic_weather_members<FileReaderVisitor>, MAGIC_WEATHER_RECORD_SIZE);
 }
 //--------- End of function MagicWeahter::read_file ---------------//
 
+
 //***//
+
 
 //-------- Start of function World::write_file -------------//
 //

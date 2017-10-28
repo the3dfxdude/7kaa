@@ -49,7 +49,6 @@ enum { SMALL_STARTUP_RESOURCE  = 4000,
 
 //---------- Define class Config -----------//
 
-#pragma pack(1)
 class Config
 {
 public:
@@ -67,8 +66,8 @@ public:
 	int			single_player_difficulty();
 	int			multi_player_difficulty(int remotePlayers);
 
-	int 			write_file(File* filePtr);
-	int			read_file(File* filePtr, int keepSysSettings=0);
+	int 		write_file(File* filePtr, bool includeSysSettings);
+	int			read_file(File* filePtr, bool includeSysSettings);
 	int			save(const char *);		// save to file
 	int			load(const char *);		// load from file
 
@@ -232,7 +231,6 @@ public:
 	char			explore_mask_method;		// 0 for none, 1 for masking, 2 for remapping
 	char			fog_mask_method;			// 1 for fast masking, 2 for slow remapping
 };
-#pragma pack()
 
 //------------------------------------------//
 
