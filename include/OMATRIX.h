@@ -66,7 +66,6 @@ const unsigned char MAX_VISIT_LEVEL = FULL_VISIBILITY;
 
 //------- Define structure Location -------//
 
-#pragma pack(1)
 struct Location
 {
 public:
@@ -291,7 +290,6 @@ public:
 	void	clear_harbor_bit()       { loc_flag &= ~LOCATE_HARBOR_BIT; }
 	int	can_build_whole_harbor() { return loc_flag & LOCATE_HARBOR_BIT; }
 };
-#pragma pack()
 
 //------------ Define class Matrix -----------//
 
@@ -302,23 +300,36 @@ class Matrix
 friend class World;
 
 public:
-   int       max_x_loc, max_y_loc;      // read from map file
-   Location  *loc_matrix;
+	int       max_x_loc;
+	int       max_y_loc;      // read from map file
+	Location  *loc_matrix;
 
-	int       top_x_loc, top_y_loc;              // the top left location of current zoom window
-	int       cur_x_loc, cur_y_loc;
-	int       cur_cargo_width, cur_cargo_height; // cur_x2_loc = cur_x_loc + cur_cargo_width
+	int       top_x_loc;
+	int       top_y_loc;              // the top left location of current zoom window
+	int       cur_x_loc;
+	int       cur_y_loc;
+	int       cur_cargo_width;
+	int       cur_cargo_height; // cur_x2_loc = cur_x_loc + cur_cargo_width
 
-	int       disp_x_loc, disp_y_loc;    // calculated in Matrix()
-	int       loc_width, loc_height;     // passed as para in Matrix()
+	int       disp_x_loc;
+	int       disp_y_loc;    // calculated in Matrix()
+	int       loc_width;
+	int       loc_height;     // passed as para in Matrix()
 
-   int       win_x1, win_y1, win_x2, win_y2;
-	int       image_x1, image_y1, image_x2, image_y2;
-   int       image_width, image_height;
+	int       win_x1;
+	int       win_y1;
+	int       win_x2;
+	int       win_y2;
+	int       image_x1;
+	int       image_y1;
+	int       image_x2;
+	int       image_y2;
+	int       image_width;
+	int       image_height;
 
-   char      own_matrix;
+	char      own_matrix;
 
-   char      *save_image_buf;
+	char      *save_image_buf;
 	char      just_drawn_flag;    // whether the matrix has just been drawn by draw()
 
 public:
@@ -343,7 +354,7 @@ protected:
    virtual void draw_loc(int x,int y,int xLoc,int yLoc,Location* locPtr) {;}
 
    void init_var();
-	int  valid_cur_box(int=1);
+   int  valid_cur_box(int=1);
    void valid_disp_area(int=0);
 };
 

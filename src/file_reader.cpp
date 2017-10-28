@@ -82,7 +82,7 @@ bool FileReader::check_record_size(uint16_t expected_size)
    if (!this->read<uint16_t>(&rec_size))
       return false;
 
-   if (rec_size != expected_size)
+   if (rec_size != 0 && rec_size != expected_size)
    {
       ERR("[FileReader] Bad record size %d in %s at 0x%lx, expecting %d.\n",
 	  rec_size, this->file->file_name, this->is.tell(), expected_size);

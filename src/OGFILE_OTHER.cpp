@@ -34,6 +34,7 @@
 #include <OSPATH.h>
 
 #include <file_io_visitor.h>
+#include <visitor_functions.h>
 
 using namespace FileIOVisitor;
 
@@ -426,41 +427,69 @@ int MagicWeather::read_file(File* filePtr)
 //***//
 
 
+template <typename Visitor>
+static void visit_location_members(Visitor* v, Location* c)
+{
+	visit<uint16_t>(v, &c->loc_flag);
+	visit<int16_t>(v, &c->terrain_id);
+	visit<int16_t>(v, &c->cargo_recno);
+	visit<int16_t>(v, &c->air_cargo_recno);
+	visit<uint8_t>(v, &c->extra_para);
+	visit<int8_t>(v, &c->fire_level);
+	visit<int8_t>(v, &c->flammability);
+	visit<int8_t>(v, &c->power_nation_recno);
+	visit<uint8_t>(v, &c->region_id);
+	visit<uint8_t>(v, &c->visit_level);
+}
+
+template <typename Visitor>
+static void visit_world_members(Visitor* v, World* c)
+{
+	//--------- save map -------------//
+
+	enum { LOCATION_RECORD_SIZE = 14 };
+
+	const int mapSize = World::max_x_loc * World::max_y_loc;
+	if (is_reader_visitor(v))
+	{
+		c->loc_matrix = (Location*) mem_resize(c->loc_matrix, mapSize * sizeof(Location));
+	}
+	v->with_record_size(mapSize * LOCATION_RECORD_SIZE);
+	for (int i = 0; i < mapSize; ++i)
+	{
+		visit_location_members(v, &c->loc_matrix[i]);
+	}
+	if (is_reader_visitor(v))
+	{
+		c->assign_map();
+	}
+
+	//--------- save vars -----------//
+
+	visit<int16_t>(v, &c->scan_fire_x);
+	visit<int16_t>(v, &c->scan_fire_y);
+	visit<int16_t>(v, &c->lightning_signal);
+	visit<int32_t>(v, &c->plant_count);
+	visit<int32_t>(v, &c->plant_limit);
+	visit<int16_t>(v, &c->map_matrix->map_mode);
+	visit<int16_t>(v, &c->map_matrix->power_mode);
+	visit<int32_t>(v, &c->map_matrix->cur_x_loc);
+	visit<int32_t>(v, &c->map_matrix->cur_y_loc);
+	visit<int32_t>(v, &c->zoom_matrix->init_lightning);
+	visit<int32_t>(v, &c->zoom_matrix->vibration);
+	visit<int16_t>(v, &c->zoom_matrix->lightning_x1);
+	visit<int16_t>(v, &c->zoom_matrix->lightning_y1);
+	visit<int16_t>(v, &c->zoom_matrix->lightning_x2);
+	visit<int16_t>(v, &c->zoom_matrix->lightning_y2);
+}
+
 //-------- Start of function World::write_file -------------//
 //
 int World::write_file(File* filePtr)
 {
-	//--------- save map -------------//
-
-	if( !filePtr->file_write(loc_matrix, max_x_loc*max_y_loc*sizeof(Location) ) )
-		return 0;
-
-	//--------- save vars -----------//
-
-	filePtr->file_put_short(scan_fire_x);
-	filePtr->file_put_short(scan_fire_y);
-	filePtr->file_put_short(lightning_signal);
-	// ######## begin Gilbert 18/7 #########//
-	filePtr->file_put_long(plant_count);
-	filePtr->file_put_long(plant_limit);
-	// ######## end Gilbert 18/7 #########//
-
-	map_matrix->last_map_mode = -1;
-
-	filePtr->file_put_short(map_matrix->map_mode);
-	filePtr->file_put_short(map_matrix->power_mode);
-
-	filePtr->file_put_long(map_matrix->cur_x_loc);
-	filePtr->file_put_long(map_matrix->cur_y_loc);
-
-	filePtr->file_put_long(zoom_matrix->init_lightning);
-	filePtr->file_put_long(zoom_matrix->vibration);
-	filePtr->file_put_short(zoom_matrix->lightning_x1);
-	filePtr->file_put_short(zoom_matrix->lightning_y1);
-	filePtr->file_put_short(zoom_matrix->lightning_x2);
-	filePtr->file_put_short(zoom_matrix->lightning_y2);
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_world_members(&v, this);
+	return v.good();
 }
 //--------- End of function World::write_file ---------------//
 
@@ -469,51 +498,19 @@ int World::write_file(File* filePtr)
 //
 int World::read_file(File* filePtr)
 {
-	//-------- read in the map --------//
-
-	loc_matrix = (Location*) mem_resize( loc_matrix, max_x_loc * max_y_loc
-		* sizeof(Location) );
-
-	if( !filePtr->file_read(loc_matrix, max_x_loc*max_y_loc*sizeof(Location) ) )
-		return 0;
-
-	assign_map();
-
-	//--------- read in vars ----------//
-
-	scan_fire_x 	  = (char) filePtr->file_get_short();
-	scan_fire_y 	  = (char) filePtr->file_get_short();
-	lightning_signal = (char) filePtr->file_get_short();
-	// ######## begin Gilbert 18/7 #########//
-	plant_count      = filePtr->file_get_long();
-	plant_limit      = filePtr->file_get_long();
-	// ######## end Gilbert 18/7 #########//
-
+	FileReaderVisitor v(filePtr);
+	visit_world_members(&v, this);
 	map_matrix->last_map_mode = -1;
-
-	map_matrix->map_mode   = (char) filePtr->file_get_short();
-	map_matrix->power_mode = (char) filePtr->file_get_short();
-
-	map_matrix->cur_x_loc = filePtr->file_get_long();
-	map_matrix->cur_y_loc = filePtr->file_get_long();
-
 	zoom_matrix->top_x_loc = map_matrix->cur_x_loc;
 	zoom_matrix->top_y_loc = map_matrix->cur_y_loc;
-
 	sys.zoom_need_redraw = 1;
-
-	zoom_matrix->init_lightning = filePtr->file_get_long();
-	zoom_matrix->vibration = filePtr->file_get_long();
-	zoom_matrix->lightning_x1 = filePtr->file_get_short();
-	zoom_matrix->lightning_y1 = filePtr->file_get_short();
-	zoom_matrix->lightning_x2 = filePtr->file_get_short();
-	zoom_matrix->lightning_y2 = filePtr->file_get_short();
-
-	return 1;
+	return v.good();
 }
 //--------- End of function World::read_file ---------------//
 
+
 //***//
+
 
 //-------- Start of function Tutor::write_file -------------//
 //
