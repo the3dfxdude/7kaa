@@ -48,7 +48,7 @@
 
 //---------- define constant ------------//
 
-#define TUTOR_DB   		"TUT_LIST.TXT"
+#define TUTOR_DB        "TUT_LIST.RES"
 #define TUTOR_TEXT_RES  "TUT_TEXT.RES"
 #define TUTOR_INTRO_RES "TUT_INTR.RES"
 
@@ -178,14 +178,17 @@ void Tutor::deinit()
 //
 void Tutor::load_tutor_info()
 {
+	TutorRec  *tutorRec;
+	TutorInfo *tutorInfo;
+
 	String str;
 
 	str = DIR_RES;
 	str += TUTOR_DB;
 
-	FileTxt fileTxt(str);
+	Database  dbTutor(str, 1);
 
-	tutor_count      = (short) fileTxt.get_num();
+	tutor_count      = (short) dbTutor.rec_count();
 	tutor_info_array = (TutorInfo*) mem_add( sizeof(TutorInfo)*tutor_count );
 
 	//------ read in tutor information array -------//
@@ -194,8 +197,11 @@ void Tutor::load_tutor_info()
 
 	for( int i=0 ; i<tutor_count ; i++ )
 	{
-		fileTxt.read_line( tutor_info_array[i].code, TutorInfo::CODE_LEN );
-		fileTxt.read_line( tutor_info_array[i].des, TutorInfo::DES_LEN );
+		tutorRec  = (TutorRec*) dbTutor.read(i+1);
+		tutorInfo = tutor_info_array+i;
+
+		misc.rtrim_fld( tutorInfo->code, tutorRec->code, tutorRec->CODE_LEN );
+		misc.rtrim_fld( tutorInfo->des , tutorRec->des , tutorRec->DES_LEN );
 	}
 
 	//--- exclude the Fryhtan and Seat of Power tutorials in the demo ---//
@@ -217,23 +223,18 @@ void Tutor::load(int tutorId)
 
 	//------- get the tutor msgs from the resource file -------//
 
-	String str;
+	int   dataSize;
+	File* filePtr = res_tutor_text.get_file( tutor[tutorId]->code, dataSize );
 
-	str = DIR_TUTORIAL;
-	str += tutor[tutorId]->code;
-	str += ".txt";
-
-	//------ Open the file and allocate buffer -----//
-
-	FileTxt fileTxt( str );
-
-	int   dataSize = fileTxt.file_size();
-
-	if( dataSize == 0 )       // if error getting the tutor resource
+	if( !filePtr )       // if error getting the tutor resource
 	{
 		err_here();
 		return;
 	}
+
+	//------ Open the file and allocate buffer -----//
+
+	FileTxt fileTxt( filePtr, dataSize );  // initialize fileTxt with an existing file stream
 
 	if( dataSize > tutor_text_buf_size )
 	{
@@ -278,17 +279,13 @@ void Tutor::load(int tutorId)
 
 		//------- read in the tutorial text -------//
 
-		char text[512] = {0};
-		readLen = fileTxt.read_paragraph(text, tutor_text_buf_size-totalReadLen);
-		// Copy text without gettext markup _("").
-		strncpy(textPtr, text+3, readLen-7);
-		textPtr[readLen-7] = '\0';
+		readLen = fileTxt.read_paragraph(textPtr, tutor_text_buf_size-totalReadLen);
 
 		tutorTextBlock->text_ptr = _(textPtr);
-		tutorTextBlock->text_len = static_cast<short>(strlen(tutorTextBlock->text_ptr));
+		tutorTextBlock->text_len = strlen(textPtr)+1;
 
 		textPtr      += readLen;
-		totalReadLen += readLen;
+		totalReadLen += tutorTextBlock->text_len;
 
 		err_when( totalReadLen>tutor_text_buf_size );
 
@@ -318,23 +315,18 @@ char* Tutor::get_intro(int tutorId)
 {
 	//------- get the tutor msgs from the resource file -------//
 
-	String str;
+	int   dataSize;
+	File* filePtr = res_tutor_intro.get_file( tutor[tutorId]->code, dataSize );
 
-	str = DIR_TUTORIAL;
-	str += tutor[tutorId]->code;
-	str += ".int";
-
-	//------ Open the file and allocate buffer -----//
-
-	FileTxt fileTxt( str );
-
-	int   dataSize = fileTxt.file_size();
-
-	if( dataSize == 0 )       // if error getting the tutor resource
+	if( !filePtr )       // if error getting the tutor resource
 	{
 		err_here();
 		return NULL;
 	}
+
+	//------ Open the file and allocate buffer -----//
+
+	FileTxt fileTxt( filePtr, dataSize );  // initialize fileTxt with an existing file stream
 
 	if( dataSize > tutor_intro_buf_size )
 	{
