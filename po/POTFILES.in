@@ -1,5 +1,4 @@
 # List of source files which contain translatable strings.
-data/resource/help.res
 src/AM.cpp
 src/OBOX.cpp
 src/OCONFIG.cpp
