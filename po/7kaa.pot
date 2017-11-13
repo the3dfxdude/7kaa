@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-12 17:58-0700\n"
+"POT-Creation-Date: 2017-11-12 18:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -309,7 +309,7 @@ msgid "Cannot initialize ENet."
 msgstr ""
 
 #: src/OGAMEMP.cpp:597 src/OGAMEMP.cpp:865
-msgid "Unable to retrieve leader board"
+msgid "Unable to retrieve leaderboard"
 msgstr ""
 
 #: src/OGAMEMP.cpp:612 src/OGAMEMP.cpp:887
@@ -342,7 +342,7 @@ msgstr ""
 
 #: src/OGAMEMP.cpp:1411
 msgid ""
-"It is not recommended to use this save game file name, do you wish to "
+"It is not recommended to use this save game file name. Do you wish to "
 "continue?"
 msgstr ""
 
@@ -416,7 +416,7 @@ msgid "The game host has aborted the game."
 msgstr ""
 
 #: src/OGAMEMP.cpp:3410 src/OGAMEMP.cpp:5188
-msgid "Your game version does not match the host."
+msgid "Your game version does not match the host's version."
 msgstr ""
 
 #: src/OGAMEMP.cpp:3413 src/OGAMEMP.cpp:5191
@@ -442,7 +442,7 @@ msgid ""
 msgstr ""
 
 #: src/OGAMEMP.cpp:3428 src/OGAMEMP.cpp:5206
-msgid "The host refused connection."
+msgid "The host refused the connection."
 msgstr ""
 
 #: src/OGAMEMP.cpp:4159 src/OGAMEMP.cpp:5604
@@ -454,7 +454,7 @@ msgid "Cannot get random seeds from the host."
 msgstr ""
 
 #: src/OGAMEMP.cpp:4172
-msgid "Cannot get game configuration info from the host."
+msgid "Cannot get game configuration information from the host."
 msgstr ""
 
 #: src/OGAMEMP.cpp:4178 src/OGAMEMP.cpp:5611
