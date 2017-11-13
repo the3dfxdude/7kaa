@@ -36,42 +36,83 @@ if (!@ARGV) {
 }
 my ($datadir) = @ARGV;
 
+if (!defined($ENV{DERESX})) {
+	$ENV{DERESX} = File::Spec->catfile($FindBin::Bin, "deresx");
+}
+
+if (! -d stdpath()) {
+	system($ENV{DERESX}, respath("std.set"), stdpath(), ".dbf");
+}
 if (! -d stdpath()) {
 	warn "Error: Expecting std.res unpacked in ", stdpath(), "\n";
+}
+
+if (! -d tut_intr_path()) {
+	system($ENV{DERESX}, respath("tut_intr.res"), tut_intr_path(), ".txt");
+}
+if (! -d tut_intr_path()) {
+	warn "Error: Expecting tut_intr.res unpacked in ", tut_intr_path(), "\n";
+}
+
+if (! -d tut_text_path()) {
+	system($ENV{DERESX}, respath("tut_text.res"), tut_text_path(), ".txt");
+}
+if (! -d tut_text_path()) {
+	warn "Error: Expecting tut_text.res unpacked in ", tut_text_path(), "\n";
 }
 
 my @dbf_list = (
 [
 	respath('tut_list.res'),
-	['DES', 'title'],
+	['DES', ''], # Tutorial|Title
 ],[
 	stdpath('00003-RAW.dbf'),
-	['NAME', 'title'],
+	['NAME', ''], # Raw|Name
 ],[
 	stdpath('00005-UNIT.dbf'),
-	['NAME', 'title'],
+	['NAME', ''], # Unit|Name
 ],[
 	stdpath('00006-RACE.dbf'),
-	['NAME', 'title'],
-	['ADJECTIVE', 'title'],
+	['NAME', ''], # Race|Name
+	['ADJECTIVE', ''], # Race|Adjective
 ],[
 	stdpath('00007-FIRM.dbf'),
-	['NAME', 'title'],
-	['SHORTNAME', 'title'],
-	['OVERTITLE', 'title'],
-	['WORKTITLE', 'title'],
-],[
-	stdpath('00019-UNIT2.dbf'),
-	['NAME', 'title'],
-],[
-	stdpath('00027-MONSTER.dbf'),
-	['NAME', 'title'],
+	['NAME', ''], # Firm|Name
+	['SHORTNAME', ''], # Firm|Shortname
+	['OVERTITLE', ''], # Unit|Occupation
+	['WORKTITLE', ''], # Unit|Occupation
+#],[
+# This is not used in the game anywhere. Probaby an early unit file.
+#	stdpath('00019-UNIT2.dbf'),
+#	['NAME', 'Unit|Name'],
+#],[
+# This just duplicates monster names, so skip this.
+#	stdpath('00027-MONSTER.dbf'),
+#	['NAME', 'Unit|Name'],
 ]);
 
 print "# POT extraction from 7KAA data files\n";
 foreach (@dbf_list) {
 	pot_extract_dbf(@$_);
 }
+
+foreach (glob(tut_intr_path("*.txt"))) {
+	tut_text_extract($_);
+}
+
+foreach (glob(tut_text_path("*.txt"))) {
+	tut_text_extract($_);
+}
+
+foreach (glob(sct1_text_path("*.sct"))) {
+	sct_text_extract($_);
+}
+
+foreach (glob(sct2_text_path("*.sct"))) {
+	sct_text_extract($_);
+}
+
+help_res_extract(help_res_path());
 
 exit 0;
 
@@ -83,11 +124,81 @@ sub stdpath {
 	return File::Spec->catfile($datadir, 'resource', 'std', @_);
 }
 
+sub tut_intr_path {
+	return File::Spec->catfile($datadir, 'resource', 'tut_intr', @_);
+}
+
+sub tut_text_path {
+	return File::Spec->catfile($datadir, 'resource', 'tut_text', @_);
+}
+
+sub sct1_text_path {
+	return File::Spec->catfile($datadir, 'scenario', @_);
+}
+
+sub sct2_text_path {
+	return File::Spec->catfile($datadir, 'scenari2', @_);
+}
+
+sub help_res_path {
+	return File::Spec->catfile($datadir, 'resource', 'help.res');
+}
+
+# implements FileTxt::read_line()
+sub read_line {
+	my $fh;
+
+	($fh) = @_;
+
+	# force scalar context to read one line
+	return dbf::trim(scalar(<$fh>));
+}
+
+sub read_paragraph {
+}
+
+sub get_msgid {
+	my $file;
+	my $msgctxt;
+	my $msgid;
+	my $loc;
+
+	($file, $msgctxt, $msgid, $loc) = @_;
+
+	if (defined($msgctxt) && $msgctxt ne "") {
+		$msgctxt = "msgctxt \"$msgctxt\"\n";
+	} else {
+		$msgctxt = "";
+	}
+	if (defined($loc)) {
+		$loc = ":$loc";
+	} else {
+		$loc = "";
+	}
+	$msgid =~ s/\r\n/ /g; # get_paragraph converts to space
+	#$msgid =~ s/\n/'\\n'/g;
+	$msgid =~ s/"/\\"/g;
+
+	if ($msgid =~ /[\x00-\x1F\x7F-\x9F]/) {
+		print "\n# Next entry has characters that doesn't conform to ISO 8859-1\n";
+	}
+
+	return <<EOF;
+
+# $file$loc
+${msgctxt}msgid "$msgid"
+msgstr ""
+EOF
+}
+
 sub pot_extract_dbf {
 	my $dbf_file;
 	my $dbf;
 	my @fields;
 	my $records;
+	my %msgids;
+	my @ids;
+
 	$dbf_file = shift(@_);
 	$dbf = dbf->read_file($dbf_file);
 	if (!defined($dbf)) {
@@ -112,10 +223,164 @@ sub pot_extract_dbf {
 			if ($value eq '') {
 				next;
 			}
-			print "\n# $dbf_file\n";
-			print "msgctxt \"$_[$i]->[1]\"\n";
-			print "msgid \"$value\"\n";
-			print "msgstr \"\"\n";
+			$msgids{$value} = get_msgid($dbf_file, $_[$i]->[1], $value);
 		}
 	}
+	@ids = sort(keys(%msgids));
+	for (my $i = 0; $i < @ids; $i++) {
+		print $msgids{$ids[$i]};
+	}
+}
+
+# Follows the method used in FileTxt::read_paragraph()
+sub tut_text_extract {
+	my $file;
+	my $fh;
+	my $msgid;
+	my $line_no;
+	my $loc;
+
+	($file) = @_;
+
+	if (!open($fh, $file)) {
+		warn "Error: Can't read $file\n";
+		return;
+	}
+	$msgid = "";
+	$line_no = 0;
+	$loc = $line_no+1;
+	while (my $line = <$fh>) {
+		$line_no++;
+		if ($line =~ /^Button:/) {
+			next;
+		}
+		if ($line =~ /^~/) { # End of paragraph
+			print get_msgid($file, "", $msgid, $loc);
+			$msgid = "";
+			$loc = $line_no+1;
+			next;
+		}
+		if ($line =~ s/([^\x1A]*)\x1A//) { # End of file
+			$msgid .= $1;
+			last;
+		}
+		$msgid .= $line;
+	}
+	close($fh);
+
+	if ($msgid ne "") {
+		print get_msgid($file, "", $msgid, $loc);
+	}
+}
+
+# First line is a title
+# Next three lines skip
+# Follows the method used in FileTxt::read_paragraph()
+sub sct_text_extract {
+	my $file;
+	my $fh;
+	my $msgid;
+	my $line_no;
+	my $loc;
+
+	($file) = @_;
+
+	if (!open($fh, $file)) {
+		warn "Error: Can't read $file\n";
+		return;
+	}
+
+	# Get title
+	$line_no = 0;
+	$msgid = read_line($fh);
+	$line_no++;
+	print get_msgid($file, "", $msgid, $line_no);
+
+	# Skip formatting three lines
+	for (my $i = 0; $i < 3; $i++) {
+		my $line = <$fh>;
+		$line_no++;
+	}
+
+	$msgid = "";
+	$loc = $line_no+1;
+	while (my $line = <$fh>) {
+		$line_no++;
+		if ($line =~ /^Button:/) {
+			next;
+		}
+		if ($line =~ /^~/) { # End of paragraph
+			print get_msgid($file, "", $msgid, $loc);
+			$msgid = "";
+			$loc = $line_no+1;
+			next;
+		}
+		if ($line =~ s/([^\x1A]*)\x1A//) { # End of file
+			$msgid .= $1;
+			last;
+		}
+		$msgid .= $line;
+	}
+	close($fh);
+
+	if ($msgid ne "") {
+		print get_msgid($file, "", $msgid, $loc);
+	}
+}
+
+# First line is a help code or position
+# Second line is a short help title
+# Follows the method used in FileTxt::read_paragraph()
+sub help_res_extract {
+	my $file;
+	my $fh;
+	my $msgid;
+	my $line_no;
+	my $loc;
+	my $at_eof;
+
+	($file) = @_;
+
+	if (!open($fh, $file)) {
+		warn "Error: Can't read $file\n";
+		return;
+	}
+
+	# Get code (skip)
+	$line_no = 0;
+	$at_eof = 0;
+
+	while (!$at_eof) {
+		$msgid = <$fh>;
+		if (!defined($msgid)) {
+			last;
+		}
+		$line_no++;
+
+		# Get help title
+		$msgid = read_line($fh);
+		$line_no++;
+		print get_msgid($file, "", $msgid, $line_no);
+
+		$msgid = "";
+		$loc = $line_no+1;
+		while (my $line = <$fh>) {
+			$line_no++;
+			if ($line =~ /^Button:/) {
+				next;
+			}
+			if ($line =~ /^~/) { # End of paragraph
+				last;
+			}
+			if ($line =~ s/([^\x1A]*)\x1A//) { # End of file
+				$msgid .= $1;
+				$at_eof = 1;
+				last;
+			}
+			$msgid .= $line;
+		}
+		print get_msgid($file, "", $msgid, $loc);
+		$loc = $line_no+1;
+	}
+	close($fh);
 }

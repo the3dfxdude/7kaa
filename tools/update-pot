@@ -1,0 +1,22 @@
+#!/bin/bash
+
+XGETTEXT=xgettext
+DOMAIN=7kaa
+DIR=$(pwd)
+PODIR=po
+DATADIR=data
+XGETTEXT_OPTIONS="--keyword=_ --keyword=N_"
+POTFILES=${PODIR}/POTFILES.in
+
+if [ ! -e data ]; then
+  echo "Please execute from top level source directory"
+  exit 1
+fi
+
+${XGETTEXT} --default-domain=${DOMAIN} --directory=${DIR} \
+    --add-comments=TRANSLATORS: ${XGETTEXT_OPTIONS}  \
+    --files-from=${POTFILES} --output ${PODIR}/${DOMAIN}.src.pot
+
+./tools/genpot ${DATADIR} | msguniq > ${PODIR}/${DOMAIN}.res.pot
+
+msgcat -u ${PODIR}/7kaa.src.pot ${PODIR}/7kaa.res.pot > ${PODIR}/7kaa.pot

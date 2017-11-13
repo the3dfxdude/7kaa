@@ -64,7 +64,11 @@ m4/visibility.m4
 m4/wchar_t.m4
 m4/wint_t.m4
 m4/xsize.m4
-po/7kaa.pot
+data/resource/std/
+data/resource/tut_intr/
+data/resource/tut_text/
+po/7kaa.res.pot
+po/7kaa.src.pot
 po/Makefile.in.in
 po/Makevars.template
 po/Rules-quot
