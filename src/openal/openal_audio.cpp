@@ -449,7 +449,8 @@ int OpenALAudio::play_resided_wav(char *buf, const DsVolume &vol)
 		return 0;
 
 	/* read the wav size from the RIFF header */
-	size = buf[4] | (buf[5] << 8) | (buf[6] << 16) | (buf[7] << 24);
+	unsigned char* ubuf = reinterpret_cast<unsigned char*>(buf);
+	size = uint32_t(ubuf[4]) | (uint32_t(ubuf[5]) << 8) | (uint32_t(ubuf[6]) << 16) | (uint32_t(ubuf[7]) << 24);
 	size += 8;
 
 	in = new MemInputStream;
