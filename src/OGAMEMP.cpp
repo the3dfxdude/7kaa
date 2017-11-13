@@ -594,7 +594,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	if (service_mode == 4)
 	{
 		if (!mp_get_leader_board())
-			box.msg(_("Unable to retrieve leader board"));
+			box.msg(_("Unable to retrieve leaderboard"));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
@@ -862,7 +862,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if (service_mode == 4)
 	{
 		if (!mp_get_leader_board())
-			box.msg(_("Unable to retrieve leader board"));
+			box.msg(_("Unable to retrieve leaderboard"));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
@@ -1408,7 +1408,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 			if( misc.str_icmpx(getSaveFile.input_field, "AUTO") ||
 				misc.str_icmpx(getSaveFile.input_field, "AUTO2") )
 			{
-				if( !box.ask(_("It is not recommended to use this save game file name, do you wish to continue?")) )
+				if( !box.ask(_("It is not recommended to use this save game file name. Do you wish to continue?")) )
 				{
 					rc = 0;
 				}
@@ -3407,7 +3407,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					switch (((MpStructRefuseNewPlayer *)recvPtr)->reason)
 					{
 					case REFUSE_REASON_SKVER_MISMATCH:
-						mp_info_box_show(&info_box, _("Your game version does not match the host."), _("Ok"));
+						mp_info_box_show(&info_box, _("Your game version does not match the host's version."), _("Ok"));
 						break;
 					case REFUSE_REASON_GAME_FULL:
 						mp_info_box_show(&info_box, _("The game you tried to join is currently full."), _("Ok"));
@@ -3425,7 +3425,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						mp_info_box_show(&info_box, _("You cannot join the game because the saved multiplayer game you selected is different."), _("Ok"));
 						break;
 					default:
-						mp_info_box_show(&info_box, _("The host refused connection."), _("Ok"));
+						mp_info_box_show(&info_box, _("The host refused the connection."), _("Ok"));
 						break;
 					}
 					break;
@@ -4169,7 +4169,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 			err_when( recvSeed > 1 );
 			if( !recvConfig )
 			{
-				box.msg( _("Cannot get game configuration info from the host.") );
+				box.msg( _("Cannot get game configuration information from the host.") );
 				return 0;
 			}
 			err_when( recvConfig > 1 );
@@ -5185,7 +5185,7 @@ int Game::mp_select_load_option(char *fileName)
 					switch (((MpStructRefuseNewPlayer *)recvPtr)->reason)
 					{
 					case REFUSE_REASON_SKVER_MISMATCH:
-						mp_info_box_show(&info_box, _("Your game version does not match the host."), _("Ok"));
+						mp_info_box_show(&info_box, _("Your game version does not match the host's version."), _("Ok"));
 						break;
 					case REFUSE_REASON_GAME_FULL:
 						mp_info_box_show(&info_box, _("The game you tried to join is currently full."), _("Ok"));
@@ -5203,7 +5203,7 @@ int Game::mp_select_load_option(char *fileName)
 						mp_info_box_show(&info_box, _("You cannot join the game because the saved multiplayer game you selected is different."), _("Ok"));
 						break;
 					default:
-						mp_info_box_show(&info_box, _("The host refused connection."), _("Ok"));
+						mp_info_box_show(&info_box, _("The host refused the connection."), _("Ok"));
 						break;
 					}
 					break;
