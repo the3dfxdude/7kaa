@@ -318,7 +318,7 @@ int World::detect_scroll()
 
    //----- scroll left -----//
 
-   if( mouse.cur_x == mouse.bound_x1 )
+   if( mouse.cur_x <= mouse.bound_x1 )
    {
       zoom_matrix->scroll(-1,0);
       rc = 1;
@@ -326,7 +326,7 @@ int World::detect_scroll()
 
    //---- scroll right -----//
 
-   if( mouse.cur_x == mouse.bound_x2 )
+   if( mouse.cur_x >= mouse.bound_x2 )
    {
       zoom_matrix->scroll(1,0);
       rc = 1;
@@ -334,7 +334,7 @@ int World::detect_scroll()
 
    //---- scroll top -------//
 
-   if( mouse.cur_y == mouse.bound_y1 )
+   if( mouse.cur_y <= mouse.bound_y1 )
    {
       zoom_matrix->scroll(0,-1);
       rc = 1;
@@ -342,7 +342,7 @@ int World::detect_scroll()
 
    //---- scroll bottom ----//
 
-   if( mouse.cur_y == mouse.bound_y2 )
+   if( mouse.cur_y >= mouse.bound_y2 )
    {
       zoom_matrix->scroll(0,1);
       rc = 1;
