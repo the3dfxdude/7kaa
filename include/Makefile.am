@@ -177,6 +177,7 @@ noinst_HEADERS = \
 	file_reader.h \
 	file_util.h \
 	file_writer.h \
+	FileSystem.h \
 	gettext-gnu.h \
 	gettext.h \
 	input_stream.h \

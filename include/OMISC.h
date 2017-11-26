@@ -108,11 +108,6 @@ public:
    int   rand();
    int   random(int);
 
-   int   is_file_exist(const char*);
-	int   mkpath(char *abs_path);
-   void  change_file_ext(char*,const char*,const char*);
-   void  extract_file_name(char*,const char*);
-
 	void  del_array_rec(void* arrayBody, int arraySize, int recSize, int delRecno);
 
 	void	cal_move_around_a_point(short num, short width, short height, int& xShift, int& yShift);

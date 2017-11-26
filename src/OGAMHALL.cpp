@@ -35,6 +35,7 @@
 #include <OGAME.h>
 #include <ONATION.h>
 #include <dbglog.h>
+#include <FileSystem.h>
 #include "gettext.h"
 #include <FilePath.h>
 
@@ -82,7 +83,7 @@ int HallOfFame::read_hall_of_fame()
 	if( full_path.error_flag )
 		return 0;
 
-	if( !misc.is_file_exist(full_path) )
+	if( !FileSystem::is_file_exist(full_path) )
 		return 0;
 
 	rc = file.file_open(full_path, 0, 1);   // 0=don't handle error itself

@@ -27,6 +27,7 @@
 #include <OUNITRES.h>
 #include <OFIRMRES.h>
 #include <OCONFIG.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 #include "gettext.h"
 #include <FilePath.h>
@@ -422,7 +423,7 @@ int Config::load(const char *filename)
 	if( full_path.error_flag )
 		return 0;
 
-	if( !misc.is_file_exist(full_path) || !configFile.file_open(full_path) )
+	if (!FileSystem::is_file_exist(full_path) || !configFile.file_open(full_path))
 		return 0;
 
 	int retFlag = 0;

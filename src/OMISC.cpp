@@ -21,15 +21,7 @@
 //Filename    : OMISC.CPP
 //Description : Object of Misc useful functions
 
-#ifdef USE_WINDOWS
-#include <windows.h>
-#endif
-#ifdef USE_POSIX
-#include <unistd.h>
-#include <sys/time.h>
-#include <sys/stat.h>
-#include <errno.h>
-#endif 
+#include <OMISC.h>
 
 #include <SDL.h>
 
@@ -42,7 +34,6 @@
 
 #include <ALL.h>
 #include <OSTR.h>
-#include <OMISC.h>
 
 #define	MOVE_AROUND_TABLE_SIZE	900
 
@@ -1159,136 +1150,6 @@ float Misc::round_dec(float inNum)
    return (float)((int)(inNum * 100)) / 100;
 }
 //---------- End of function Misc::round_dec ---------//
-
-
-//------- Begin of function Misc::is_file_exist ---------//
-//
-// Check whether the given file exists in the current directory or not
-//
-// <char*> fileName = the name of the file
-//
-// return : <int> 1 - the file exists
-//                0 - doesn't exist
-//
-int Misc::is_file_exist(const char* fileName)
-{
-#ifdef USE_WINDOWS
-   WIN32_FIND_DATA findData;
-
-   HANDLE findHandle = FindFirstFile( fileName, &findData );
-
-   return findHandle!=INVALID_HANDLE_VALUE;
-#endif
-#ifdef USE_POSIX
-   return !access(fileName, F_OK);
-#endif
-   err.msg("Misc::is_file_exist: stub");
-   return 0;
-}
-//---------- End of function Misc::is_file_exist ---------//
-
-
-// misc_mkdir -- helper function to mkpath
-int misc_mkdir(char *path)
-{
-#ifdef USE_WINDOWS
-   if (!path[2] && path[1] == ':' && isalpha(path[0]))
-   {
-      // don't try to make a drive letter path
-      // this actually works on windows, but not on Wine
-      return 1;
-   }
-   return !CreateDirectory(path, NULL) ?
-       GetLastError() == ERROR_ALREADY_EXISTS : 1;
-#else
-   return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
-#endif
-}
-
-
-//------- Begin of function Misc::mkpath ---------//
-// Given an absolute path to a directory, create the
-// directory, and all intermediate directories if
-// necessary.
-int Misc::mkpath(char *abs_path)
-{
-   char path_copy[FilePath::MAX_FILE_PATH];
-   int count;
-
-   if( strlen(abs_path) >= FilePath::MAX_FILE_PATH )
-      return 0;
-
-   count = 0;
-   while (count < FilePath::MAX_FILE_PATH) {
-     if (!abs_path[count]) {
-        if (count > 0) {
-          path_copy[count] = 0;
-          if (!misc_mkdir(path_copy))
-             return 0;
-        }
-        return 1;
-     } else if (abs_path[count] == PATH_DELIM[0] && count > 0) {
-        path_copy[count] = 0;
-        if (!misc_mkdir(path_copy))
-           return 0;
-     }
-
-     path_copy[count] = abs_path[count];
-     count++;
-   }
-   return 0;
-}
-//-------- End of function Misc::mkpath ----------//
-
-
-//------- Begin of function Misc::change_file_ext ---------//
-//
-// Change file extension.
-//
-// <char*> desFileName = the destination file name to be written
-// <char*> srcFileName = the source file name
-// <char*> newExt      = the new extension.
-//
-void Misc::change_file_ext(char* desFileName, const char* srcFileName, const char* newExt)
-{
-   int nameLen = misc.str_chr(srcFileName, '.');	// include the '.' in the nameLen
-
-   err_when( nameLen<1 || nameLen>9 || strlen(newExt)>3 );
-
-   memcpy( desFileName, srcFileName, nameLen );
-   strcpy( desFileName+nameLen, newExt );        // extension for scenarion text file
-}
-//---------- End of function Misc::change_file_ext ---------//
-
-
-//------- Begin of function Misc::extract_file_name ---------//
-//
-// Extract the file name from a full file path.
-//
-// <char*> desFileName = the destination buffer to be written
-// <char*> srcFileName = the source file name
-//
-void Misc::extract_file_name(char* desFileName, const char* srcFileName)
-{
-	int i;
-
-	for( i=strlen(srcFileName); i>=0 ; i-- )
-	{
-		if( srcFileName[i]==PATH_DELIM[0] )			// get last '\' before the file name
-			break;
-	}
-
-	const char *p = srcFileName+i+1;
-	size_t fileNameLen = strlen(p);
-	if( fileNameLen >= FilePath::MAX_FILE_PATH )
-	{
-		desFileName[0] = 0;
-		return;
-	}
-
-	strncpy(desFileName, p, FilePath::MAX_FILE_PATH);
-}
-//---------- End of function Misc::extract_file_name ---------//
 
 
 //------- Begin of function Misc::num_th ---------//
