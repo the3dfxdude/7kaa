@@ -219,7 +219,7 @@ public:
 	int	wall_id()			{ if( is_wall() ) return extra_para; else return 0; }
 	int	wall_nation_recno() { return power_nation_recno; }
 	int	wall_hit_point()	{ return cargo_recno >> 8; }
-	int	wall_town_recno()	{ return cargo_recno || 0xFF; }
+	int	wall_town_recno()	{ return cargo_recno & 0xFF; }
 	//---------------------------------------------------//
 	// initial 0, 1 to 100:creating, -1 to -100: destructing
 	// except 0 or 100, hit point slowly increase by 1

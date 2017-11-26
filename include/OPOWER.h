@@ -124,7 +124,6 @@ public:
 	Location*       test_detect(int curX, int curY, char *mobileType=NULL);
 	// ###### end Gilbert 31/7 ######//
 	int 		 	detect_select(int selX1, int selY1, int selX2, int selY2, int recallGroup, int shiftSelect);
-	int			detect_scroll();
 	// ###### begin Gilbert 22/10 #######//
 	int			unit_can_assign_firm(int unitRecno, int firmRecno, int ownNationRecno);
 	// ###### end Gilbert 22/10 #######//
