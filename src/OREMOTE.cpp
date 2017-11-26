@@ -35,6 +35,7 @@
 #include <multiplayer.h>
 #include <OERRCTRL.h>
 #include <ReplayFile.h>
+#include <FileSystem.h>
 
 //--------- Begin of function Remote::Remote ----------//
 
@@ -89,8 +90,8 @@ void Remote::init(MultiPlayer *mp)
 	mp_ptr = mp;
 
 	// ###### patch begin Gilbert 22/1 #######//
-	sync_test_level = (misc.is_file_exist("SYNC1.SYS") ? 1 : 0)
-		| (misc.is_file_exist("SYNC2.SYS") ? 2 : 0);
+	sync_test_level = (FileSystem::is_file_exist("SYNC1.SYS") ? 1 : 0)
+		| (FileSystem::is_file_exist("SYNC2.SYS") ? 2 : 0);
 		// 0=disable, bit0= random seed, bit1=crc
 	// ###### patch end Gilbert 22/1 #######//
 
@@ -128,7 +129,7 @@ void Remote::init_replay_save(NewNationPara *mpGame, int playerCount)
 		return;
 
 	char full_path[MAX_PATH+1];
-	if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+	if( FileSystem::path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
 		replay.open_write(full_path, mpGame, playerCount);
 }
 //--------- End of function Remote::init_replay_save ----------//

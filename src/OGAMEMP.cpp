@@ -50,6 +50,7 @@
 #include <OGETA.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 #include "gettext.h"
 
@@ -4201,7 +4202,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		else
 		{
 			char full_path[MAX_PATH+1];
-		        if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+		        if( FileSystem::path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
 			{
 				remote.replay.open_write(full_path, nationPara, playerCount);
 			}

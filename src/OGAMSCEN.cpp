@@ -35,6 +35,7 @@
 #include <OBATTLE.h>
 #include <OGAME.h>
 #include <ONATIONA.h>
+#include <FileSystem.h>
 
 //--------- declare static vars ----------//
 
@@ -78,7 +79,7 @@ int Game::select_run_scenario()
 					scenInfoArray[scenInfoSize].dir_id    = dirId;
 
 					{
-						misc.change_file_ext( txtFileName, gameDir[i]->name, "SCT" );
+						FileSystem::change_file_ext( txtFileName, gameDir[i]->name, "SCT" );
 
 						String str;
 						str  = DIR_SCENARIO_PATH(dirId);
@@ -140,7 +141,7 @@ int Game::run_scenario(ScenInfo* scenInfo)
 	str  = DIR_SCENARIO_PATH(scenInfo->dir_id);
 	str += scenInfo->file_name;
 
-	if( misc.is_file_exist(str) )
+	if( FileSystem::is_file_exist(str) )
 	{
 		// ###### begin Gilbert 1/11 #########//
 		// save the name in the config

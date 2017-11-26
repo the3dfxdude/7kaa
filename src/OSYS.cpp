@@ -87,14 +87,9 @@
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
 // ##### end Gilbert 23/10 ######//
+#include <FileSystem.h>
 
 #include <dbglog.h>
-#ifndef NO_WINDOWS
-#include <direct.h>
-#define chdir _chdir
-#else
-#include <unistd.h>
-#endif
 #include "gettext.h"
 
 DBGLOG_DEFAULT_CHANNEL(Sys);
@@ -187,18 +182,18 @@ int Sys::init()
    //------- initialize basic vars --------//
 
 	#ifdef BETA
-		debug_session       = misc.is_file_exist("DEBUG.SYS");
-		testing_session     = misc.is_file_exist("TESTING.SYS");
-		scenario_cheat_flag = misc.is_file_exist("CHEAT.SYS");
+		debug_session       = FileSystem::is_file_exist("DEBUG.SYS");
+		testing_session     = FileSystem::is_file_exist("TESTING.SYS");
+		scenario_cheat_flag = FileSystem::is_file_exist("CHEAT.SYS");
 	#endif
 
 	#ifdef DEBUG
-		debug_session       = misc.is_file_exist("DEBUG.SYS");
-		testing_session     = misc.is_file_exist("TESTING.SYS");
-		scenario_cheat_flag = misc.is_file_exist("CHEAT.SYS");
+		debug_session       = FileSystem::is_file_exist("DEBUG.SYS");
+		testing_session     = FileSystem::is_file_exist("TESTING.SYS");
+		scenario_cheat_flag = FileSystem::is_file_exist("CHEAT.SYS");
 	#endif
 
-//	debug_session       = misc.is_file_exist("DEBUG.SYS");
+//	debug_session       = FileSystem::is_file_exist("DEBUG.SYS");
 
    // set game directory paths and game version
    if ( !set_game_dir() )
@@ -452,7 +447,7 @@ int Sys::set_config_dir()
    MSG("Game config dir path: %s\n", dir_config);
 
    // create the config directory
-   if (!misc.mkpath(dir_config))
+   if (!FileSystem::mkpath(dir_config))
    {
       show_error_dialog(_("Unable to determine a location for storing the game configuration."));
       dir_config[0] = 0;
@@ -471,7 +466,7 @@ void Sys::run(int isLoadedGame)
    //-*********** simulate aat ************-//
    #ifdef DEBUG
       //--------- enable only when simulation    -------//
-      debug_sim_game_type = (misc.is_file_exist("sim.sys")) ? 2 : 0;
+      debug_sim_game_type = (FileSystem::is_file_exist("sim.sys")) ? 2 : 0;
    #endif
    //-*********** simulate aat ************-//
 
@@ -528,7 +523,7 @@ void Sys::run(int isLoadedGame)
 static void test_lzw()
 {
    // test lzw compress
-   if( misc.is_file_exist("NORMAL.SAV")) // BUGHERE: Should use a full path, using sys.dir_config
+   if( FileSystem::is_file_exist("NORMAL.SAV")) // BUGHERE: Should use a full path, using sys.dir_config
    {
       File f,g;
       Lzw lzw_c, lzw_d;    // one for compress, the other for decompress
@@ -973,8 +968,8 @@ void Sys::auto_save()
 
          char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
 
-         if (misc.path_cat(auto1_path, dir_config, "AUTO.SAV", MAX_PATH+1) == 0 ||
-             misc.path_cat(auto2_path, dir_config, "AUTO2.SAV", MAX_PATH+1) == 0)
+         if (!FileSystem::path_cat(auto1_path, dir_config, "AUTO.SAV", MAX_PATH+1) ||
+             !FileSystem::path_cat(auto2_path, dir_config, "AUTO2.SAV", MAX_PATH+1))
          {
 	        ERR("Path to the savegames too long.\n");
             return;
@@ -982,9 +977,9 @@ void Sys::auto_save()
 
          //--- rename the existing AUTO.SAV to AUTO2.SAV and save a new game ---//
 
-         if( misc.is_file_exist( auto1_path ) )
+         if( FileSystem::is_file_exist( auto1_path ) )
          {
-            if( misc.is_file_exist( auto2_path ) )      // if there is already an AUTO2.SAV, delete it
+            if( FileSystem::is_file_exist( auto2_path ) )      // if there is already an AUTO2.SAV, delete it
                remove( auto2_path );
 
             rename( auto1_path, auto2_path );
@@ -1027,8 +1022,8 @@ void Sys::auto_save()
 
       char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
 
-	  if (misc.path_cat(auto1_path, dir_config, "AUTO.SVM", MAX_PATH+1) == 0 ||
-          misc.path_cat(auto2_path, dir_config, "AUTO2.SVM", MAX_PATH+1) == 0)
+	  if (!FileSystem::path_cat(auto1_path, dir_config, "AUTO.SVM", MAX_PATH+1) ||
+          !FileSystem::path_cat(auto2_path, dir_config, "AUTO2.SVM", MAX_PATH+1))
       {
 	     ERR("Path to the savegames too long.\n");
          return;
@@ -1036,9 +1031,9 @@ void Sys::auto_save()
 
       //--- rename the existing AUTO.SVM to AUTO2.SVM and save a new game ---//
 
-      if( misc.is_file_exist( auto1_path ) )
+      if( FileSystem::is_file_exist( auto1_path ) )
       {
-         if( misc.is_file_exist( auto2_path ) )      // if there is already an AUTO2.SVM, delete it
+         if( FileSystem::is_file_exist( auto2_path ) )      // if there is already an AUTO2.SVM, delete it
             remove( auto2_path );
 
          rename( auto1_path, auto2_path );
@@ -2014,7 +2009,7 @@ int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
          break;
 
       case '[':
-         if(misc.is_file_exist("SYN.SYS"))
+         if(FileSystem::is_file_exist("SYN.SYS"))
          {
             debug_seed_status_flag = DEBUG_SYN_AUTO_SAVE;
             sp_seed_pos_reset();
@@ -2029,7 +2024,7 @@ int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
       case ']':
          if(debug_seed_status_flag==NO_DEBUG_SYN)
          {
-            if(misc.is_file_exist("SYN.SYS"))
+            if(FileSystem::is_file_exist("SYN.SYS"))
             {
                debug_seed_status_flag = DEBUG_SYN_LOAD_AND_COMPARE_ONCE;
                game_file.load_game("syn.sav");
@@ -2572,7 +2567,7 @@ void Sys::capture_screen()
 
 	  strcpy(full_path + path_len, str);
 
-      if( !misc.is_file_exist(full_path) )
+      if( !FileSystem::is_file_exist(full_path) )
          break;
    }
 
@@ -2718,15 +2713,15 @@ int Sys::chdir_to_game_dir()
 
    // test current directory
    test_file = DEFAULT_DIR_IMAGE "HALLFAME.ICN";
-   if (misc.is_file_exist(test_file))
+   if (FileSystem::is_file_exist(test_file))
       return 1;
 
    // test environment variable SKDATA for the path
    env_data_path = getenv("SKDATA");
    if (env_data_path)
    {
-      chdir(env_data_path);
-      if (misc.is_file_exist(test_file))
+      FileSystem::set_current_directory(env_data_path);
+      if (FileSystem::is_file_exist(test_file))
          return 1;
    }
 
@@ -2734,15 +2729,15 @@ int Sys::chdir_to_game_dir()
    std::string bundle_resources_path = get_bundle_resources_path();
    if (!bundle_resources_path.empty())
    {
-      chdir(bundle_resources_path.c_str());
-      if (misc.is_file_exist(test_file))
+      FileSystem::set_current_directory(bundle_resources_path.c_str());
+      if (FileSystem::is_file_exist(test_file))
 	 return 1;
    }
 
    // test compile time path
 #ifdef PACKAGE_DATA_PATH
-   chdir(PACKAGE_DATA_PATH);
-   if (misc.is_file_exist(test_file))
+   FileSystem::set_current_directory(PACKAGE_DATA_PATH);
+   if (FileSystem::is_file_exist(test_file))
       return 1;
 #endif
 

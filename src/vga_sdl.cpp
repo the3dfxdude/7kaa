@@ -28,6 +28,7 @@
 #include <OSYS.h>
 #include <surface.h>
 #include <platform.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 #include <version.h>
 
@@ -844,7 +845,7 @@ void VgaSDL::save_status_report()
    const char *s;
    SDL_version ver;
 
-   if( !misc.path_cat(path, sys.dir_config, "sdl.txt", MAX_PATH) )
+   if( !FileSystem::path_cat(path, sys.dir_config, "sdl.txt", MAX_PATH) )
       return;
 
    file = fopen(path, "w");

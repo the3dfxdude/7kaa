@@ -276,6 +276,7 @@ bin_PROGRAMS = 7kaa
 	file_reader.cpp \
 	file_util.cpp \
 	file_writer.cpp \
+	FileSystem.cpp \
 	input_stream.cpp \
 	mem_input_stream.cpp \
 	misc_uuid.cpp \

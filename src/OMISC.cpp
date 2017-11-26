@@ -21,13 +21,7 @@
 //Filename    : OMISC.CPP
 //Description : Object of Misc useful functions
 
-#ifdef NO_WINDOWS
-#include <sys/time.h>
-#include <sys/stat.h>
-#include <errno.h>
-#else
-#include <Windows.h>
-#endif 
+#include <OMISC.h>
 
 #include <SDL.h>
 
@@ -40,8 +34,6 @@
 
 #include <ALL.h>
 #include <OSTR.h>
-#include <OMISC.h>
-#include <ODIR.h>
 
 #define	MOVE_AROUND_TABLE_SIZE	900
 
@@ -1158,151 +1150,6 @@ float Misc::round_dec(float inNum)
    return (float)((int)(inNum * 100)) / 100;
 }
 //---------- End of function Misc::round_dec ---------//
-
-
-//------- Begin of function Misc::is_file_exist ---------//
-//
-// Check whether the given file exists in the current directory or not
-//
-// <char*> fileName = the name of the file
-//
-// return : <int> 1 - the file exists
-//                0 - doesn't exist
-//
-int Misc::is_file_exist(const char* fileName)
-{
-   Directory dir;
-   return dir.read(fileName, 0) == 1;
-}
-//---------- End of function Misc::is_file_exist ---------//
-
-
-//------- Begin of function Misc::path_cat ---------//
-//
-// Copies src1 to dest, then src2, ensuring the two strings together don't
-// exceed max_len-1. The destination string is always null terminated.
-//
-// The return is 1 on success. If length of src1+src2 is greater than
-// max_len-1, then the return is 0, and the dest string contents is null.
-//
-int Misc::path_cat(char *dest, const char *src1, const char *src2, int max_len)
-{
-   int c = 0;
-   char *d = dest;
-   for (; c < max_len-1; c++) {
-      if (!*src1)
-         break;
-      *d = *src1;
-      d++;
-      src1++;
-   }
-   for (; c < max_len-1; c++) {
-      if (!*src2)
-         break;
-      *d = *src2;
-      d++;
-      src2++;
-   }
-   if (c >= max_len-1) {
-      *dest = 0;
-      return 0;
-   }
-   *d = 0;
-   return 1;
-}
-//---------- End of function Misc::path_cat ---------//
-
-
-// misc_mkdir -- helper function to mkpath
-int misc_mkdir(char *path)
-{
-#ifdef NO_WINDOWS
-   return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
-#else // WINDOWS
-   if (!path[2] && path[1] == ':' && isalpha(path[0]))
-   {
-      // don't try to make a drive letter path
-      // this actually works on windows, but not on Wine
-      return 1;
-   }
-   return !CreateDirectory(path, NULL) ?
-       GetLastError() == ERROR_ALREADY_EXISTS : 1;
-#endif
-}
-
-
-//------- Begin of function Misc::mkpath ---------//
-// Given an absolute path to a directory, create the
-// directory, and all intermediate directories if
-// necessary.
-int Misc::mkpath(char *abs_path)
-{
-   char path_copy[MAX_PATH+1];
-   int count;
-
-   count = 0;
-   while (count < MAX_PATH) {
-     if (!abs_path[count]) {
-        if (count > 0) {
-          path_copy[count] = 0;
-          if (!misc_mkdir(path_copy))
-             return 0;
-        }
-        return 1;
-     } else if (abs_path[count] == PATH_DELIM[0] && count > 0) {
-        path_copy[count] = 0;
-        if (!misc_mkdir(path_copy))
-           return 0;
-     }
-
-     path_copy[count] = abs_path[count];
-     count++;
-   }
-   return 0;
-}
-//-------- End of function Misc::mkpath ----------//
-
-
-//------- Begin of function Misc::change_file_ext ---------//
-//
-// Change file extension.
-//
-// <char*> desFileName = the destination file name to be written
-// <char*> srcFileName = the source file name
-// <char*> newExt      = the new extension.
-//
-void Misc::change_file_ext(char* desFileName, const char* srcFileName, const char* newExt)
-{
-   int nameLen = misc.str_chr(srcFileName, '.');	// include the '.' in the nameLen
-
-   err_when( nameLen<1 || nameLen>9 || strlen(newExt)>3 );
-
-   memcpy( desFileName, srcFileName, nameLen );
-   strcpy( desFileName+nameLen, newExt );        // extension for scenarion text file
-}
-//---------- End of function Misc::change_file_ext ---------//
-
-
-//------- Begin of function Misc::extract_file_name ---------//
-//
-// Extract the file name from a full file path.
-//
-// <char*> desFileName = the destination buffer to be written
-// <char*> srcFileName = the source file name
-//
-void Misc::extract_file_name(char* desFileName, const char* srcFileName)
-{
-	int i;
-	for( i=strlen(srcFileName) ; i>=0 ; i-- )
-	{
-		if( srcFileName[i]=='\\' )			// get last '\' before the file name
-			break;
-	}
-
-	strncpy(desFileName, srcFileName+i+1, MAX_PATH);
-	desFileName[MAX_PATH]='\0';
-}
-//---------- End of function Misc::extract_file_name ---------//
 
 
 //------- Begin of function Misc::num_th ---------//

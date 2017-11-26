@@ -46,6 +46,7 @@
 #include <OBATTLE.h>
 #include <OMOUSECR.h>
 #include <vga_util.h>
+#include <FileSystem.h>
 
 //---------- define static functions -------------//
 
@@ -77,7 +78,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	mouse_cursor.set_icon(CURSOR_WAITING);
 
 #ifdef DEBUG
-	debug_sim_game_type = (misc.is_file_exist("sim.sys")) ? 2 : 0;
+	debug_sim_game_type = (FileSystem::is_file_exist("sim.sys")) ? 2 : 0;
 	if(debug_sim_game_type)
 	{
 		run_sim();
@@ -662,7 +663,7 @@ void Battle::run_replay()
 	game.game_mode = GAME_DEMO;
 	game.game_has_ended = 1;
 
-	if( !misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+	if( !FileSystem::path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
 		return;
 	if( !remote.init_replay_load(full_path, mpGame, &mpPlayerCount) )
 		return;
