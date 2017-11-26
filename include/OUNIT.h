@@ -757,7 +757,7 @@ public:
 	static short   *selected_air_unit_array;
 
 public:
-	UnitArray(int);
+	explicit UnitArray(int);
 
 	void  init();
 

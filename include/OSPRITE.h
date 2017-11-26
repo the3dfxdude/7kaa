@@ -160,7 +160,7 @@ class SpriteArray : public DynArrayB
 public:
 	short		restart_recno; // indicate the unit's sprite_recno to process first in next process_cycle
 	
-	SpriteArray(int initArraySize);
+	explicit SpriteArray(int initArraySize);
 	~SpriteArray();
 
 	void	init();

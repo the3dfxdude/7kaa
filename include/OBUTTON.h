@@ -129,7 +129,7 @@ public:
    Button* button_array;
 
 public:
-	ButtonGroup(int);
+	explicit ButtonGroup(int);
 	~ButtonGroup();
 
    void paint(int= -1);

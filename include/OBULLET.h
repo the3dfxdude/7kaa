@@ -95,7 +95,7 @@ public:
 class BulletArray : public SpriteArray
 {
 public:
-	BulletArray(int initArraySize);
+	explicit BulletArray(int initArraySize);
 
 	static Bullet* create_bullet(short spriteId);
 

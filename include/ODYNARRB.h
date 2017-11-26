@@ -58,7 +58,7 @@ public:
 	short			reuse_interval_days;
 
 public:
-	DynArrayB(int,int=DEF_DYNARRAY_BLOCK_SIZE,int reuseIntervalDays=0);
+   explicit DynArrayB(int,int=DEF_DYNARRAY_BLOCK_SIZE,int reuseIntervalDays=0);
    ~DynArrayB();
 
    // packed_size()  is the size when the array is packed (deleted record are actually removed)
