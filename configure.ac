@@ -98,7 +98,7 @@ AM_GNU_GETTEXT_VERSION([0.19])
 
 # Configuration variables
 
-audio_backend=openal # openal
+audio_backend=openal # openal none
 input_backend=sdl    # sdl
 video_backend=sdl    # sdl
 use_windows=no
@@ -157,6 +157,7 @@ AS_CASE(["$host"],
 ])
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
+AM_CONDITIONAL([AUDIO_NONE],   [test "$audio_backend" = none])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
@@ -291,6 +292,10 @@ AS_CASE(["$audio_backend"],
     AC_DEFINE([USE_OPENAL], [1], [
       Define to 1 if using OpenAL as the audio backend
     ])
+  ],
+  [none], [
+    AC_DEFINE([USE_NOAUDIO], [1],
+      [Define to 1 if building without audio])
   ], [
     AC_ERROR([Unknown audio backend: $audio_backend])
 ])
@@ -336,10 +341,12 @@ AC_CONFIG_FILES([
   src/Makefile
   src/curl/Makefile
   src/enet/Makefile
+  src/audio/Makefile
+  src/audio/none/Makefile
+  src/audio/openal/Makefile
   src/imgfun/Makefile
   src/imgfun/generic/Makefile
   src/imgfun/x86/Makefile
-  src/openal/Makefile
   src/platform/Makefile
   po/Makefile.in
 ])

@@ -29,12 +29,8 @@ class AudioBase
 public:
    bool init_flag;
 
-   bool mid_init_flag;   // whether the midi driver has been installed
    bool wav_init_flag;   // whether the wave driver has been installed
    bool cd_init_flag;
-
-   // flag determing whether MIDI music should be playing
-   bool mid_flag;
 
    // flag determing whether WAV sound effects should be playing
    bool wav_flag;
@@ -52,15 +48,12 @@ public:
 
    virtual void	yield() = 0; // called by sys every some time
 
-   virtual int	play_mid(char *) = 0;
-
    // functions on short wave
    virtual int	play_wav(char *, const DsVolume &) = 0;
    virtual int	play_wav(short resIdx, const DsVolume &) = 0;
    virtual int	play_resided_wav(char *, const DsVolume &) = 0;
    virtual int	get_free_wav_ch() = 0;
    virtual int	stop_wav(int) = 0;
-   virtual int	is_wav_playing(int) = 0;
 
    // functions on long wave
    virtual int	play_long_wav(const char *, const DsVolume &) = 0;
@@ -79,19 +72,14 @@ public:
 
    virtual int	play_cd(int, int retVolume) = 0;
 
-   virtual void	stop_mid() = 0;
    virtual void	stop_wav() = 0;             // and stop also long wav
    virtual void	stop_cd() = 0;
 
-   virtual int	is_mid_playing() = 0;
-   virtual int	is_wav_playing() = 0;
    virtual int	is_cd_playing() = 0;
 
-   virtual void	toggle_mid(bool) = 0;
    virtual void	toggle_wav(bool) = 0;
    virtual void	toggle_cd(bool) = 0;
 
-   virtual void	set_mid_volume(int) = 0;
    virtual void	set_wav_volume(int) = 0;    // 0 to 100
    virtual void	set_cd_volume(int) = 0;
 

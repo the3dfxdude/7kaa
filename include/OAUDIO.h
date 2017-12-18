@@ -23,6 +23,8 @@
 
 #if defined(USE_OPENAL)
 #include <openal_audio.h>
+#elif defined(USE_NOAUDIO)
+#include <audio_none.h>
 #else
 #error "An audio backend must be specified."
 #endif

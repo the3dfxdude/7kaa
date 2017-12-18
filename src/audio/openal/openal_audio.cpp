@@ -172,7 +172,7 @@ OpenALAudio::~OpenALAudio()
 		this->deinit();
 }
 
-// Initialize the mid driver
+// Initialize the sound driver
 //
 // return : <int> 1 - initialized successfully
 //                0 - init fail
@@ -180,12 +180,11 @@ OpenALAudio::~OpenALAudio()
 int OpenALAudio::init()
 {
 	this->wav_flag = true;
-	this->mid_flag = true;
 	this->cd_flag = true;
 
 	this->init_wav();
 
-	this->init_flag = this->wav_init_flag || this->mid_init_flag || this->cd_init_flag;
+	this->init_flag = this->wav_init_flag || this->cd_init_flag;
 
 	return this->init_flag;
 }
@@ -194,7 +193,6 @@ void OpenALAudio::deinit()
 {
 	this->init_flag = 0;
 	this->deinit_wav();
-	this->deinit_mid();
 	this->deinit_cd();
 }
 
@@ -305,21 +303,6 @@ void OpenALAudio::deinit_wav()
 	}
 }
 
-// Initialize MIDI mid driver
-//
-// return : <int> 1 - initialized successfully
-//                0 - init fail
-//
-int OpenALAudio::init_mid()
-{
-	this->mid_init_flag = 0;
-	return this->mid_init_flag;
-}
-
-void OpenALAudio::deinit_mid()
-{
-}
-
 // Initialize the audio CD player
 //
 // return : <int> 1 - initialized successfully
@@ -333,24 +316,6 @@ int OpenALAudio::init_cd()
 
 void OpenALAudio::deinit_cd()
 {
-}
-
-// Play a midi mid from the mid resource file
-//
-// <char*> midName = name of the mid in the resource file
-//
-// return : <int> 1 - mid loaded and is playing
-//                0 - mid not played
-//
-int OpenALAudio::play_mid(char *midName)
-{
-	WARN_UNIMPLEMENTED("play_mid");
-	return 0;
-}
-
-void OpenALAudio::stop_mid()
-{
-	WARN_UNIMPLEMENTED("stop_mid");
 }
 
 // Play digitized wav from the wav resource file
@@ -481,15 +446,6 @@ int OpenALAudio::get_free_wav_ch()
 int OpenALAudio::stop_wav(int id)
 {
 	return this->stop_any_wav(id);
-}
-
-// return wheather a short sound effect is stopped
-//
-// <int>        the serial no returned by play_wav or play_resided_wav
-//
-int OpenALAudio::is_wav_playing(int id)
-{
-	return this->is_long_wav_playing(id);
 }
 
 int OpenALAudio::play_long_wav(const char *file_name, const DsVolume &vol)
@@ -856,29 +812,11 @@ void OpenALAudio::stop_cd()
 	WARN_UNIMPLEMENTED("stop_cd");
 }
 
-int OpenALAudio::is_mid_playing()
-{
-	WARN_UNIMPLEMENTED("is_mid_playing");
-	return 0;
-}
-
-int OpenALAudio::is_wav_playing()
-{
-	if (!this->wav_init_flag)
-		return false;
-
-	return (!this->streams.empty());
-}
 
 int OpenALAudio::is_cd_playing()
 {
 	WARN_UNIMPLEMENTED("is_cd_playing");
 	return 0;
-}
-
-void OpenALAudio::toggle_mid(bool midFlag)
-{
-	WARN_UNIMPLEMENTED("toggle_mid");
 }
 
 void OpenALAudio::toggle_wav(bool wav_flag)
@@ -892,15 +830,6 @@ void OpenALAudio::toggle_wav(bool wav_flag)
 void OpenALAudio::toggle_cd(bool cdFlag)
 {
 	WARN_UNIMPLEMENTED("toggle_cd");
-}
-
-// Set mid volume
-//
-// <int> midVolume = mid volume, 0-100
-//
-void OpenALAudio::set_mid_volume(int midVolume)
-{
-	WARN_UNIMPLEMENTED("set_mid_volume");
 }
 
 // Set wav volume

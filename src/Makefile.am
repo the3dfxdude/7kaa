@@ -1,4 +1,4 @@
-SUBDIRS = enet imgfun openal platform
+SUBDIRS = enet imgfun audio platform
 if USE_CURL
 SUBDIRS += curl
 endif
@@ -290,7 +290,10 @@ bin_PROGRAMS = 7kaa
 7kaa_LDADD =
 
 if AUDIO_OPENAL
-7kaa_LDADD += ./openal/libaudio_openal.a
+7kaa_LDADD += ./audio/openal/libaudio_openal.a
+endif
+if AUDIO_NONE
+7kaa_LDADD += ./audio/none/libaudio_none.a
 endif
 
 

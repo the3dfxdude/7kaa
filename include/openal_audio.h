@@ -93,15 +93,12 @@ public:
 
 	void yield(); // called by sys every some time
 
-	int	play_mid(char*);
-
 	// functions on short wave
 	int play_wav(char*, const DsVolume &);
 	int play_wav(short resIdx, const DsVolume &);
 	int play_resided_wav(char *, const DsVolume &);
 	int get_free_wav_ch();
 	int stop_wav(int);
-	int is_wav_playing(int);
 
 	// functions on long wave
 	int play_long_wav(const char*, const DsVolume &);
@@ -121,19 +118,14 @@ public:
 
 	int play_cd(int, int retVolume);
 
-	void stop_mid();
 	void stop_wav();             // and stop also long wav
 	void stop_cd();
 
-	int is_mid_playing();
-	int is_wav_playing();
 	int is_cd_playing();
 
-	void toggle_mid(bool);
 	void toggle_wav(bool);
 	void toggle_cd(bool);
 
-	void set_mid_volume(int);
 	void set_wav_volume(int);    // 0 to 100
 	void set_cd_volume(int);
 
@@ -156,11 +148,9 @@ private:
 	int	wav_volume; // -10000 to 0
 
 private:
-	int init_mid();
 	int init_wav();
 	int init_cd();
 
-	void deinit_mid();
 	void deinit_wav();
 	void deinit_cd();
 

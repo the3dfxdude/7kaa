@@ -164,6 +164,7 @@ noinst_HEADERS = \
 	WebService.h \
 	asmfun.h \
 	audio_base.h \
+	audio_none.h \
 	audio_stream.h \
 	c99_printf.h \
 	dbglog.h \
