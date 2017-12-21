@@ -210,15 +210,11 @@ AS_IF([test "$audio_backend" = openal], [
   LIBS="$OPENAL_LIBS $LIBS"
 ])
 
-AS_IF([test "$input_backend" = sdl \
-       || test "$video_backend" = sdl], [
-  AM_PATH_SDL2([], [], [
-    AC_ERROR([SDL not found])
-  ])
-
-  CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
-  LIBS="$SDL_LIBS $LIBS"
+AM_PATH_SDL2([], [], [
+  AC_ERROR([SDL not found])
 ])
+CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
+LIBS="$SDL_LIBS $LIBS"
 
 AS_IF([test "$enable_enet" = yes], [
   PKG_CHECK_MODULES([ENET], [libenet], [], [
