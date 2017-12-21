@@ -53,6 +53,7 @@ static unsigned long click_threshold = (long)(0.3 * 1000);
 //
 MouseSDL::MouseSDL()
 {
+	init_flag = 0;
 	handle_flicking = 0;
 	vga_update_buf = NULL;
 	cur_x = cur_y = 0;
