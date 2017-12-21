@@ -289,16 +289,6 @@ static void extra_error_handler();
 # endif
 #endif
 
-#if (!defined(NO_WINDOWS) && !USE_SDL)
-// Prototype main since the runtime does not do that for us
-int main(int, char**);
-
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
-{
-	return main(__argc, __argv);
-}
-#endif
-
 //---------- Begin of function main ----------//
 //
 // Compilation constants:
