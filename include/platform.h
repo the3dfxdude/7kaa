@@ -25,11 +25,8 @@
 #ifndef __PLATFORM_H
 #define __PLATFORM_H
 
-#ifdef USE_WINDOWS
-extern void WIN_InitDPI();
-#define InitDPI WIN_InitDPI
-#else
-#define InitDPI()
-#endif
+namespace Platform {
+	void InitDPI();
+}
 
 #endif

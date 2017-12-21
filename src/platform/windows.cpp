@@ -23,8 +23,10 @@
 
 #ifdef USE_WINDOWS
 
-#include <SDL2/SDL.h>
 #include <windows.h>
+#include <SDL.h>
+
+namespace Platform {
 
 typedef enum PROCESS_DPI_AWARENESS {
 	PROCESS_DPI_UNAWARE = 0,
@@ -32,12 +34,12 @@ typedef enum PROCESS_DPI_AWARENESS {
 	PROCESS_PER_MONITOR_DPI_AWARE = 2
 } PROCESS_DPI_AWARENESS;
 
-BOOL(WINAPI *SetProcessDPIAware)(void); // Vista and later
-HRESULT(WINAPI *SetProcessDpiAwareness)(PROCESS_DPI_AWARENESS dpiAwareness); // Windows 8.1 and later
+BOOL(WINAPI *SetProcessDPIAwarePtr)(void); // Vista and later
+HRESULT(WINAPI *SetProcessDpiAwarenessPtr)(PROCESS_DPI_AWARENESS dpiAwareness); // Windows 8.1 and later
 
 // Based on the example provided by Eric Wasylishen
 // https://discourse.libsdl.org/t/sdl-getdesktopdisplaymode-resolution-reported-in-windows-10-when-using-app-scaling/22389
-void WIN_InitDPI()
+void InitDPI()
 {
 	void* userDLL;
 	void* shcoreDLL;
@@ -45,29 +47,30 @@ void WIN_InitDPI()
 	shcoreDLL = SDL_LoadObject("SHCORE.DLL");
 	if (shcoreDLL)
 	{
-		SetProcessDpiAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "SetProcessDpiAwareness");
+		SetProcessDpiAwarenessPtr = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "SetProcessDpiAwareness");
 	}
 
-	if (SetProcessDpiAwareness)
+	if (SetProcessDpiAwarenessPtr)
 	{
 		/* Try Windows 8.1+ version */
-		HRESULT result = SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
+		HRESULT result = SetProcessDpiAwarenessPtr(PROCESS_PER_MONITOR_DPI_AWARE);
 		return;
 	}
 
 	userDLL = SDL_LoadObject("USER32.DLL");
 	if (userDLL)
 	{
-		SetProcessDPIAware = (BOOL(WINAPI *)(void)) SDL_LoadFunction(userDLL, "SetProcessDPIAware");
+		SetProcessDPIAwarePtr = (BOOL(WINAPI *)(void)) SDL_LoadFunction(userDLL, "SetProcessDPIAware");
 	}
 
-	if (SetProcessDPIAware)
+	if (SetProcessDPIAwarePtr)
 	{
 		/* Try Vista - Windows 8 version.
 		This has a constant scale factor for all monitors.
 		*/
-		BOOL success = SetProcessDPIAware();
+		BOOL success = SetProcessDPIAwarePtr();
 	}
 }
 
+}
 #endif

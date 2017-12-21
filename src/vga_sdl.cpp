@@ -73,7 +73,7 @@ int VgaSDL::init()
 {
    SDL_Surface *icon;
 
-   InitDPI();
+   Platform::InitDPI();
 
    win_grab_forced = 0;
    win_grab_user_mode = 0;

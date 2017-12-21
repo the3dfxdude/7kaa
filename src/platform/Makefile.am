@@ -1,2 +1,2 @@
 noinst_LIBRARIES = libplatform.a
-libplatform_a_SOURCES = windows.cpp
+libplatform_a_SOURCES = windows.cpp posix.cpp
