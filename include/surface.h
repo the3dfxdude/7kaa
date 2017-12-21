@@ -25,8 +25,10 @@
 #ifndef __SURFACE_H
 #define __SURFACE_H
 
-#if defined(USE_SDL)
+#if defined(USE_SDLVIDEO)
 #include <surface_sdl.h>
+#elif defined(USE_NOVIDEO)
+#include <surface_none.h>
 #else
 #error "A video backend must be specified."
 #endif

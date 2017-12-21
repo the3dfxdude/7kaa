@@ -99,8 +99,7 @@ AM_GNU_GETTEXT_VERSION([0.19])
 # Configuration variables
 
 audio_backend=openal # openal none
-input_backend=sdl    # sdl
-video_backend=sdl    # sdl
+ui_backend=sdl       # sdl none
 use_windows=no
 use_mingw=no
 jwasm_fmt="-elf -zt0"
@@ -158,8 +157,8 @@ AS_CASE(["$host"],
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([AUDIO_NONE],   [test "$audio_backend" = none])
-AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
-AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
+AM_CONDITIONAL([UI_SDL],       [test "$ui_backend"    = sdl])
+AM_CONDITIONAL([UI_NONE],      [test "$ui_backend"    = none])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
 AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
@@ -276,11 +275,21 @@ AS_IF([test "$use_windows" != yes], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
 ])
 
-AS_CASE(["$video_backend"],
+AS_CASE(["$ui_backend"],
   [sdl], [
-    # Define later
+    AC_DEFINE([USE_SDLVIDEO], [1],
+      [Define to 1 if using SDL as the video backend]),
+    AC_DEFINE([USE_SDLINPUT], [1],
+      [Define to 1 if using SDL as the input backend])
+  ],
+  [none], [
+    AC_DEFINE([USE_NOVIDEO], [1],
+      [Define to 1 if building without a graphical display]),
+    AC_DEFINE([USE_NOINPUT], [1], [
+      Define to 1 if building without input support
+    ])
   ], [
-    AC_ERROR([Unknown video backend: $video_backend])
+    AC_ERROR([Unknown ui backend: $ui_backend])
 ])
 
 AS_CASE(["$audio_backend"],
@@ -294,18 +303,6 @@ AS_CASE(["$audio_backend"],
       [Define to 1 if building without audio])
   ], [
     AC_ERROR([Unknown audio backend: $audio_backend])
-])
-
-AS_CASE(["$input_backend"],
-  [sdl], [
-    # Define later
-  ], [
-    AC_ERROR([Unknown input backend: $input_backend])
-])
-
-AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
-  AC_DEFINE([USE_SDL], [1],
-	    [Define to 1 if using SDL as the video/input backend])
 ])
 
 AS_IF([test "$enable_curl" = yes], [
@@ -344,14 +341,16 @@ AC_CONFIG_FILES([
   src/imgfun/generic/Makefile
   src/imgfun/x86/Makefile
   src/platform/Makefile
+  src/ui/Makefile
+  src/ui/none/Makefile
+  src/ui/sdl/Makefile
   po/Makefile.in
 ])
 
 AC_OUTPUT
 echo
+AC_MSG_NOTICE([ui backend: $ui_backend])
 AC_MSG_NOTICE([audio backend: $audio_backend])
-AC_MSG_NOTICE([video backend: $video_backend])
-AC_MSG_NOTICE([input backend: $input_backend])
 echo
 AC_MSG_NOTICE([x86 asm: $enable_asm])
 AC_MSG_NOTICE([debugging features: $enable_debug])

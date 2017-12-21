@@ -1,4 +1,4 @@
-SUBDIRS = enet imgfun audio platform
+SUBDIRS = enet imgfun audio platform ui
 if USE_CURL
 SUBDIRS += curl
 endif
@@ -122,7 +122,6 @@ bin_PROGRAMS = 7kaa
 	OMEM.cpp \
 	OMISC.cpp \
 	OMONSRES.cpp \
-	OMOUSE.cpp \
 	OMOUSECR.cpp \
 	OMP_CRC.cpp \
 	OMUSIC.cpp \
@@ -282,13 +281,18 @@ bin_PROGRAMS = 7kaa
 	misc_uuid.cpp \
 	output_stream.cpp \
 	player_desc.cpp \
-	surface_sdl.cpp \
-	vga_sdl.cpp \
 	vgautil.cpp \
 	vgautil2.cpp
 
 
 7kaa_LDADD =
+
+if UI_SDL
+7kaa_LDADD += ./ui/sdl/libui_sdl.a
+endif
+if UI_NONE
+7kaa_LDADD += ./ui/none/libui_none.a
+endif
 
 if AUDIO_OPENAL
 7kaa_LDADD += ./audio/openal/libaudio_openal.a

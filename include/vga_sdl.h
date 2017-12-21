@@ -26,27 +26,12 @@
 #define __VGA_SDL_H
 
 #include <OVGABUF.h>
-#include <COLOR.h>
 #include <SDL.h>
 
 //----------- define constants ----------//
 
-#define VGA_WIDTH             800
-#define VGA_HEIGHT            600
 #define VGA_BPP                 8
 #define VGA_PALETTE_SIZE      256
-
-#define MAX_BRIGHTNESS_ADJUST_DEGREE 10
-
-#define IF_LIGHT_BORDER_COLOR     V_WHITE
-#define IF_DARK_BORDER_COLOR      V_BLACK
-#define IF_UP_BRIGHTNESS_ADJUST   5
-#define IF_DOWN_BRIGHTNESS_ADJUST 6
-
-//-------- Define macro functions ---------//
-
-#define get_bitmap_width(bitmapPtr)  (*(short*)bitmapPtr)
-#define get_bitmap_height(bitmapPtr) (*((short*)bitmapPtr+1))
 
 //-------- Define modes --------//
 

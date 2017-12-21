@@ -91,6 +91,11 @@
 
 #include <dbglog.h>
 #include "gettext.h"
+#include <cstdarg>
+
+#ifdef USE_NOVIDEO
+#include <iostream>
+#endif
 
 DBGLOG_DEFAULT_CHANNEL(Sys);
 
@@ -1094,7 +1099,13 @@ void Sys::show_error_dialog(const char *formatStr, ...)
    vsnprintf( resultStr, RESULT_STR_LEN, formatStr, argPtr );
    va_end( argPtr );
 
+#ifdef USE_SDLVIDEO
    SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Seven Kingdoms", resultStr, NULL );
+#elif defined(USE_NOVIDEO)
+   std::cerr << "Error dialog message: " << resultStr << std::endl;
+#else
+#  error Unknown video backend
+#endif
 }
 //----------- End of function Sys::show_error_dialog ----------//
 
