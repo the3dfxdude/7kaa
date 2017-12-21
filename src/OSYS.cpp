@@ -193,8 +193,6 @@ int Sys::init()
 		scenario_cheat_flag = FileSystem::is_file_exist("CHEAT.SYS");
 	#endif
 
-//	debug_session       = FileSystem::is_file_exist("DEBUG.SYS");
-
    // set game directory paths and game version
    if ( !set_game_dir() )
       return 0;
@@ -428,20 +426,16 @@ void Sys::deinit_objects()
 //
 int Sys::set_config_dir()
 {
-   // Get the path for the config directory from SDL. Guaranteed to end with a path separator
-   char *home;
-
-   home = getenv("SKCONFIG");
-   if( home )
+   // Get the path for the config directory and guaranteed that it ends with a path separator.
+   if (char* configDir = getenv("SKCONFIG"))
    {
-      strcpy(dir_config, home);
+      strcpy(dir_config, configDir);
       strcat(dir_config, "//");
    }
    else
    {
-      home = SDL_GetPrefPath(CONFIG_ORGANIZATION_NAME, CONFIG_APPLICATION_NAME);
-      strcpy(dir_config, home);
-      SDL_free(home);
+	   // Use the path for the home directory. Guaranteed to end with a path separator.
+	   strcpy(dir_config, FileSystem::get_home_directory(CONFIG_ORGANIZATION_NAME, CONFIG_APPLICATION_NAME));
    }
 
    MSG("Game config dir path: %s\n", dir_config);

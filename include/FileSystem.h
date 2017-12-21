@@ -13,5 +13,8 @@ public:
 	static void change_file_ext(char* dest, const char* src, const char* newExt);
 	static const char* get_file_name(const char*);
 
+	// Returns the configuration/home path, if available, terminated with a path separator, or else an empty string (i.e. the current working directory).
+	static const char* get_home_directory(const char* organisationName, const char* applicationName);
+
 	static const char PATH_DELIMITER;
 };

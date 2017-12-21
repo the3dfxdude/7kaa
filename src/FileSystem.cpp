@@ -14,6 +14,8 @@
 #define getcwd _getcwd
 #endif
 
+#include <SDL.h> // For SDL_GetPrefPath
+
 const char FileSystem::PATH_DELIMITER = PATH_DELIM[0];
 
 
@@ -187,5 +189,17 @@ const char* FileSystem::get_file_name(const char* srcFileName)
 	}
 
 	return srcFileName+i+1;
+}
+
+const char* FileSystem::get_home_directory(const char* organisationName, const char* applicationName)
+{
+	static char homeDirectory[MAX_PATH];
+
+	// Get the path for the config directory from SDL. Guaranteed to end with a path separator
+	char *home = SDL_GetPrefPath(organisationName, applicationName);
+	strcpy(homeDirectory, home);
+	SDL_free(home);
+
+	return homeDirectory;
 }
 //---------- End of function FileSystem::extract_file_name ---------//
