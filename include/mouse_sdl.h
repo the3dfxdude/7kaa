@@ -98,6 +98,7 @@ struct MouseClick               // MultiClick buffer structure
 class MouseSDL
 {
 private:
+	char  init_flag;
 	char* vga_update_buf;
 
 	// ------ mouse setting ---------- //

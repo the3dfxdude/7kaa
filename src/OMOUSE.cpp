@@ -92,6 +92,9 @@ MouseSDL::~MouseSDL()
 //
 void MouseSDL::init()
 {
+	if( !SDL_WasInit(SDL_INIT_VIDEO) )
+		return;
+
 	update_skey_state();
 
 	//------- initialize VGA update buffer -------//
@@ -107,6 +110,8 @@ void MouseSDL::init()
 	SDL_StopTextInput();
 	SDL_ShowCursor(SDL_DISABLE);
 	SDL_GetMouseState(&cur_x, &cur_y);
+
+	init_flag = 1;
 }
 //------------- End of MouseSDL::init -------------//
 
@@ -121,7 +126,7 @@ void MouseSDL::deinit()
 		vga_update_buf = NULL;
 	}
 
-	SDL_ShowCursor(SDL_DISABLE);
+	init_flag = 0;
 }
 //------------- End of MouseSDL::deinit -------------//
 
@@ -728,6 +733,9 @@ int MouseSDL::release_click(int x1, int y1, int x2, int y2,int buttonId)
 //
 void MouseSDL::poll_event()
 {
+	if( !init_flag )
+		return;
+
 	SDL_Event event;
 	int moveFlag;
 
