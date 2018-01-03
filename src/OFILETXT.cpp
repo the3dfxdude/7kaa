@@ -28,7 +28,7 @@
 #include <OFILETXT.h>
 
 
-//---- marco function for advancing to next token, bypassing space, ',' and ':' ---//
+//---- macro function for advancing to next token, bypassing space, ',' and ':' ---//
 
 #define next_token()  for( ; *data_ptr==' ' || *data_ptr==',' || *data_ptr==':' ; data_ptr++ )
 
