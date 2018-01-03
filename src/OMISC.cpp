@@ -48,21 +48,6 @@ static short	move_around_table_size = 0;
 	#define THOUSAND_SEPARATOR ','
 	#define DECIMAL_SEPARATOR '.'
 #endif
-//-------- Start of function Misc::delay -------------//
-//
-// Misc::delay for specified seconds
-//
-// float wait = the no. of second to wait
-//
-void Misc::delay(float wait)
-{
-   clock_t stopTime;
-
-   stopTime = (long) (clock() + (wait * CLOCKS_PER_SEC));
-
-   while( clock() < stopTime );
-}
-//--------- End of function Misc::delay ---------------//
 
 
 //-------- BEGIN OF FUNCTION Misc::str_shorten --------//
