@@ -52,21 +52,3 @@ PlayerDesc::PlayerDesc(const char *name)
 	address.port = 0;
 	authorized = 0;
 }
-
-uint32_t PlayerDesc::pid()
-{
-	return id;
-}
-
-char *PlayerDesc::friendly_name_str()
-{
-	return name;
-}
-
-ENetAddress *PlayerDesc::get_address()
-{
-	if (address.host == ENET_HOST_ANY)
-		return NULL;
-
-	return &this->address;
-}
