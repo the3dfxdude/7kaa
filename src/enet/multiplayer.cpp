@@ -50,14 +50,24 @@ inline bool cmp_addr(ENetAddress *a, ENetAddress *b)
 // user to select, call init and pass the guid of the selected
 // service; create_session or poll_sessions+join_session;
 
+namespace {
+	ENetAddress empty_address()
+	{
+		ENetAddress address;
+		address.host = ENET_HOST_ANY;
+		address.port = ENET_PORT_ANY;
+		return address;
+	}
+}
+
 MultiPlayer::MultiPlayer() :
-	current_sessions(sizeof(SessionDesc), 10)
+	current_sessions(sizeof(SessionDesc), 10),
+	my_player("?my_player?", empty_address())
 {
 	init_flag = 0;
 	lobbied_flag = 0;
 	supported_protocols = TCPIP;
 	my_player_id = 0;
-	my_player = NULL;
 	joined_session.flags = 0;
 	recv_buf = NULL;
 }
@@ -74,7 +84,6 @@ void MultiPlayer::init(ProtocolType protocol_type)
 
 	lobbied_flag = 0;
 	my_player_id = 0;
-	my_player = NULL;
 	service_provider.host = ENET_HOST_ANY;
 	misc.uuid_clear(service_login_id);
 	update_available = -1;
@@ -133,10 +142,6 @@ void MultiPlayer::deinit()
 		if (pending_pool[i]) {
 			delete pending_pool[i];
 		}
-	}
-	if (my_player) {
-		delete my_player;
-		my_player = NULL;
 	}
 
 	close_port();
@@ -342,10 +347,7 @@ int MultiPlayer::poll_sessions()
 					break;
 				}
 
-				ENetAddress anyAddress;
-				anyAddress.host = ENET_HOST_ANY;
-				anyAddress.port = ENET_PORT_ANY;
-				SessionDesc desc(m->session_name, m->session_id, m->flags, anyAddress);
+				SessionDesc desc(m->session_name, m->session_id, m->flags, empty_address());
 				current_sessions.linkin(&desc);
 			}
 
@@ -447,7 +449,7 @@ int MultiPlayer::create_session(char *sessionName, char *password, int maxPlayer
 	joined_session.address.port = host->address.port;
 
 	set_my_player_id(1);
-	player_pool[0] = my_player; // can we skip polling players?
+	player_pool[0] = &my_player; // can we skip polling players?
 
 	return 1;
 }
@@ -468,7 +470,7 @@ int MultiPlayer::connect_host()
 	if (!peer)
 		return 0;
 
-	game_host = new PlayerDesc(&joined_session.address);
+	game_host = new PlayerDesc("?Anonymous?", joined_session.address);
 	game_host->id = 1;
 	game_host->authorized = 1;
 	peer->data = game_host;
@@ -639,12 +641,14 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 		player = (PlayerDesc *)peer->data;
 	}
 	if (!player) {
-		player = new PlayerDesc(address);
+		player = new PlayerDesc(name, *address);
+	}
+	else {
+		strncpy(player->name, name, MP_FRIENDLY_NAME_LEN);
+		player->name[MP_FRIENDLY_NAME_LEN] = 0;
 	}
 
 	player->id = playerId;
-	strncpy(player->name, name, MP_FRIENDLY_NAME_LEN);
-	player->name[MP_FRIENDLY_NAME_LEN] = 0;
 	player->authorized = 1;
 
 	if (peer) {
@@ -720,17 +724,15 @@ void MultiPlayer::create_my_player(char *playerName)
 		name = playerName;
 	else
 		name = "?Anonymous?";
-	if (my_player)
-		strcpy(my_player->name, name);
-	else
-		my_player = new PlayerDesc(name);
+
+	my_player = PlayerDesc(name, empty_address());
 }
 
 int MultiPlayer::set_my_player_id(uint32_t playerId)
 {
 	my_player_id = playerId;
-	my_player->id = playerId;
-	my_player->authorized = 1;
+	my_player.id = playerId;
+	my_player.authorized = 1;
 
 	MSG("You have been assigned id=%d\n", playerId);
 
@@ -895,7 +897,7 @@ void MultiPlayer::update_player_pool()
 	ENetPeer *peer;
 	int i;
 
-	player_pool[0] = my_player;
+	player_pool[0] = &my_player;
 	i = 1;
 	for (peer = host->peers; peer < &host->peers[host->peerCount]; ++peer) {
 		if (i >= joined_session.max_players)
@@ -1102,7 +1104,7 @@ void MultiPlayer::send_req_login_id()
 	b.dataLength = sizeof(MpMsgReqLoginId);
 
 	m.msg_id = MPMSG_REQ_LOGIN_ID;
-	strncpy(m.name, my_player->name, MP_FRIENDLY_NAME_LEN);
+	strncpy(m.name, my_player.name, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
 }
@@ -1287,7 +1289,7 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 				enet_peer_disconnect(event.peer, 0);
 				break;
 			}
-			player = new PlayerDesc(&event.peer->address);
+			player = new PlayerDesc("?Anonymous?", event.peer->address);
 			if (joined_session.flags & SessionFlags::Hosting) {
 				player->id = get_avail_player_id();
 			}

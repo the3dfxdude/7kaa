@@ -26,29 +26,11 @@
 #include <player_desc.h>
 #include <string.h>
 
-PlayerDesc::PlayerDesc()
+PlayerDesc::PlayerDesc(const char* name, const ENetAddress& address)
+	: id(0),
+	  authorized(0),
+	  address(address)
 {
-	id = 0;
-	strcpy(name, "?Anonymous?");
-	address.host = ENET_HOST_ANY;
-	address.port = 0;
-	authorized = 0;
-}
-
-PlayerDesc::PlayerDesc(ENetAddress *address)
-{
-	id = 0;
-	strcpy(name, "?Anonymous?");
-	this->address.host = address->host;
-	this->address.port = address->port;
-	authorized = 0;
-}
-
-PlayerDesc::PlayerDesc(const char *name)
-{
-	id = 0;
-	strcpy(this->name, name);
-	address.host = ENET_HOST_ANY;
-	address.port = 0;
-	authorized = 0;
+	strncpy(this->name, name, MP_FRIENDLY_NAME_LEN + 1);
+	this->name[MP_FRIENDLY_NAME_LEN] = '\0';
 }

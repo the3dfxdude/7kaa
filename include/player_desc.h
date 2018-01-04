@@ -36,9 +36,7 @@ public:
 	char authorized;
 	ENetAddress address;
 
-	PlayerDesc();
-	PlayerDesc(ENetAddress *address);
-	PlayerDesc(const char *name);
+	PlayerDesc(const char* name, const ENetAddress& address);
 };
 
 #endif // __PLAYER_DESC_H
