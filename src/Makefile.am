@@ -280,6 +280,7 @@ bin_PROGRAMS = 7kaa
 	mem_input_stream.cpp \
 	misc_uuid.cpp \
 	output_stream.cpp \
+	session_desc.cpp \
 	player_desc.cpp \
 	vgautil.cpp \
 	vgautil2.cpp

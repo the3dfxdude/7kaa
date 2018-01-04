@@ -1908,7 +1908,7 @@ int Game::mp_select_session()
 				choice = 0;
 				for( s = 1; mp_obj.get_session(s); ++s )
 				{
-					if( misc.uuid_compare(sessionGuid, mp_obj.get_session(s)->session_id()) )
+					if( misc.uuid_compare(sessionGuid, mp_obj.get_session(s)->session_id) )
 						choice = s;
 				}
 				if( choice > 0)
@@ -1940,7 +1940,7 @@ int Game::mp_select_session()
 					{
 						// display session description
 						font_san.put( SESSION_DESC_X1, SESSION_DESC_Y1 + b*SESSION_BUTTON_Y_SPACING,
-							mp_obj.get_session(s)->name_str(), 0, SESSION_DESC_X2 );
+							mp_obj.get_session(s)->session_name, 0, SESSION_DESC_X2 );
 
 						// display cursor 
 						if( s == choice )
@@ -2019,7 +2019,7 @@ int Game::mp_select_session()
 					SESSION_DESC_X2, SESSION_BUTTON_Y1 + (b+1)*SESSION_BUTTON_Y_SPACING -1 ) )
 				{
 					choice = s;
-					misc.uuid_copy(sessionGuid, mp_obj.get_session(s)->session_id());
+					misc.uuid_copy(sessionGuid, mp_obj.get_session(s)->session_id);
 					refreshFlag |= SSOPTION_DISP_SESSION;
 					joinButton.enable();
 
@@ -2086,7 +2086,7 @@ int Game::mp_join_session(int session_id)
 	err_when(session == NULL);
  
 	password[0] = 0;
-	if( (session->flags & SESSION_PASSWORD) &&
+	if( (session->flags & SessionFlags::Password) &&
 		!input_box(_("Enter the game's password:"), password, MP_FRIENDLY_NAME_LEN+1, 1) )
 	{
 		return 0;

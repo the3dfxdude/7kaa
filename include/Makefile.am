@@ -186,6 +186,7 @@ noinst_HEADERS = \
 	openal_audio.h \
 	output_stream.h \
 	platform.h \
+	session_desc.h \
 	player_desc.h \
 	surface.h \
 	surface_base.h \
