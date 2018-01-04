@@ -34,26 +34,6 @@
 #include <enet/enet.h>
 
 
-enum ProtocolType
-{
-	None = 0,
-	IPX = 1,
-	TCPIP = 2,
-	Modem = 4,
-	Serial = 8
-};
-
-enum
-{
-	MP_POLL_NO_UPDATE,
-	MP_POLL_UPDATE,
-	MP_POLL_LOGIN_PENDING,
-	MP_POLL_LOGIN_FAILED,
-	MP_POLL_NO_SOCKET,
-	MP_POLL_NO_SESSION,
-};
-
-
 class MultiPlayer
 {
 private:
@@ -97,7 +77,6 @@ public:
 	char * get_lobbied_name(); // return 0 if not available
 
 	// ------- functions on network protocols ------ //
-	void   poll_supported_protocols(); // can be called before init
 	bool   is_protocol_supported(ProtocolType);
 	int    is_update_available();
 	void   game_starting();
@@ -124,7 +103,6 @@ public:
 	PlayerDesc* get_player(int i);
 	PlayerDesc* search_player(uint32_t playerId);
 	int         is_player_connecting(uint32_t playerId);
-	int         get_player_count();
 	uint32_t    get_my_player_id() const { return my_player_id; }
 
 	// ------- functions on message passing ------//

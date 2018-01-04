@@ -21,8 +21,30 @@
 #ifndef __MULTIPLAYER_H
 #define __MULTIPLAYER_H
 
+enum ProtocolType
+{
+	None = 0,
+	IPX = 1,
+	TCPIP = 2,
+	Modem = 4,
+	Serial = 8
+};
+
+enum
+{
+	MP_POLL_NO_UPDATE,
+	MP_POLL_UPDATE,
+	MP_POLL_LOGIN_PENDING,
+	MP_POLL_LOGIN_FAILED,
+	MP_POLL_NO_SOCKET,
+	MP_POLL_NO_SESSION,
+};
+
+
 #if defined(USE_ENET)
 #include <multiplayer_enet.h>
+#elif defined(USE_NOMULTIPLAYER)
+#include <multiplayer_none.h>
 #else
 #error "A multiplayer backend must be specified."
 #endif

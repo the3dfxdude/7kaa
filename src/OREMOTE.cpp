@@ -213,18 +213,6 @@ int Remote::can_start_game()
 //--------- End of function Remote::can_start_game ----------//
 */
 
-//-------- Begin of function Remote::number_of_opponent ---------//
-//
-int Remote::number_of_opponent()
-{
-	err_when(connectivity_mode != MODE_MP_ENABLED);
-
-	//return wsock_ptr->number_of_player;
-	return mp_ptr->get_player_count()-1;
-}
-//--------- End of function Remote::number_of_opponent ----------//
-
-
 //-------- Begin of function Remote::self_player_id ---------//
 //
 PID_TYPE Remote::self_player_id()

@@ -100,7 +100,7 @@ AM_GNU_GETTEXT_VERSION([0.19])
 
 audio_backend=openal     # openal none
 ui_backend=sdl           # sdl none
-multiplayer_backend=enet # enet
+multiplayer_backend=enet # enet none
 use_windows=no
 use_mingw=no
 jwasm_fmt="-elf -zt0"
@@ -160,6 +160,7 @@ AM_CONDITIONAL([AUDIO_NONE],   [test "$audio_backend" = none])
 AM_CONDITIONAL([UI_SDL],       [test "$ui_backend"    = sdl])
 AM_CONDITIONAL([UI_NONE],      [test "$ui_backend"    = none])
 AM_CONDITIONAL([MULTIPLAYER_ENET], [test "$multiplayer_backend" = enet])
+AM_CONDITIONAL([MULTIPLAYER_NONE], [test "$multiplayer_backend" = none])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
 AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
@@ -311,6 +312,11 @@ AS_CASE(["$multiplayer_backend"],
     AC_DEFINE([USE_ENET], [1], [
       Define to 1 if using ENet as the multiplayer backend
     ])
+  ],
+  [none], [
+    AC_DEFINE([USE_NOMULTIPLAYER], [1], [
+      Define to 1 if building without multiplayer
+    ])
   ], [
     AC_ERROR([Unknown multiplayer backend: $multiplayer_backend])
 ])
@@ -345,6 +351,7 @@ AC_CONFIG_FILES([
   src/curl/Makefile
   src/multiplayer/Makefile
   src/multiplayer/enet/Makefile
+  src/multiplayer/none/Makefile
   src/audio/Makefile
   src/audio/none/Makefile
   src/audio/openal/Makefile

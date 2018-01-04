@@ -184,6 +184,7 @@ noinst_HEADERS = \
 	mouse_none.h \
 	multiplayer.h \
 	multiplayer_enet.h \
+	multiplayer_none.h \
 	openal_audio.h \
 	output_stream.h \
 	platform.h \

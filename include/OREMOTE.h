@@ -407,7 +407,6 @@ public:
 	int			is_replay();
 	int			is_replay_end();
 	// int			can_start_game();
-	int				number_of_opponent();
 	PID_TYPE    	self_player_id();
 	// void			set_disconnect_handler(DisconnectFP disconnectFP);
 

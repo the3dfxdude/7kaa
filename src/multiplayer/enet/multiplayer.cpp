@@ -310,10 +310,6 @@ char *MultiPlayer::get_lobbied_name()
 	return NULL;
 }
 
-void MultiPlayer::poll_supported_protocols()
-{
-}
-
 bool MultiPlayer::is_protocol_supported(ProtocolType protocol)
 {
 	return (protocol & supported_protocols) != 0;
@@ -1130,11 +1126,6 @@ int MultiPlayer::is_player_connecting(uint32_t playerId)
 		return 0;
 
 	return peer->state == ENET_PEER_STATE_CONNECTED;
-}
-
-int MultiPlayer::get_player_count()
-{
-	return joined_session.player_count;
 }
 
 // send udp message

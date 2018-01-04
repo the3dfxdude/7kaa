@@ -305,6 +305,9 @@ endif
 if MULTIPLAYER_ENET
 7kaa_LDADD += ./multiplayer/enet/libmultiplayer_enet.a
 endif
+if MULTIPLAYER_NONE
+7kaa_LDADD += ./multiplayer/none/libmultiplayer_none.a
+endif
 
 if USE_ASM
 7kaa_LDADD += ./imgfun/x86/libimgfun_x86.a

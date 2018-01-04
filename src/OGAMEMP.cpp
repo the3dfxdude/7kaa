@@ -837,7 +837,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg(_("Cannot initialize ENet."));
+		box.msg(_("Cannot initialize multiplayer library."));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
