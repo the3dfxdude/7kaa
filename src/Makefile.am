@@ -1,4 +1,4 @@
-SUBDIRS = enet imgfun audio platform ui
+SUBDIRS = multiplayer imgfun audio platform ui
 if USE_CURL
 SUBDIRS += curl
 endif
@@ -302,9 +302,9 @@ if AUDIO_NONE
 7kaa_LDADD += ./audio/none/libaudio_none.a
 endif
 
-
-7kaa_LDADD += ./enet/libmultiplayer.a
-
+if MULTIPLAYER_ENET
+7kaa_LDADD += ./multiplayer/enet/libmultiplayer_enet.a
+endif
 
 if USE_ASM
 7kaa_LDADD += ./imgfun/x86/libimgfun_x86.a

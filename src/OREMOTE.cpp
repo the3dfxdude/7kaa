@@ -32,7 +32,7 @@
 #include <OPOWER.h>
 #include <ONATION.h>
 #include <OREMOTE.h>
-#include <multiplayer_enet.h>
+#include <multiplayer.h>
 #include <OERRCTRL.h>
 #include <ReplayFile.h>
 #include <FileSystem.h>

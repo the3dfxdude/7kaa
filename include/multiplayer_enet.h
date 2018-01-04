@@ -160,7 +160,5 @@ private:
 	ENetPeer *get_peer(ENetAddress *address);
 };
 
-extern MultiPlayer mp_obj;
-
 #endif // __MULTIPLAYER_ENET_H
 

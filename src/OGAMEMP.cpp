@@ -35,7 +35,7 @@
 #include <OREMOTE.h>
 #include <OBATTLE.h>
 #include <OGAME.h>
-#include <multiplayer_enet.h>
+#include <multiplayer.h>
 #ifdef HAVE_LIBCURL
 #include <WebService.h>
 #endif

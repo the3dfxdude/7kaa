@@ -1,0 +1,5 @@
+SUBDIRS = 
+
+if MULTIPLAYER_ENET
+  SUBDIRS += enet
+endif

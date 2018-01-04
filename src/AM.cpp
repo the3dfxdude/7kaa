@@ -92,7 +92,7 @@
 #include <OEXPMASK.h>
 #include <OREGION.h>
 #include <OWARPT.h>
-#include <multiplayer_enet.h>
+#include <multiplayer.h>
 #ifdef HAVE_LIBCURL
 #include <WebService.h>
 #endif

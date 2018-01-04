@@ -22,7 +22,7 @@
 // Descrition : Error control
 
 #include <OERRCTRL.h>
-#include <multiplayer_enet.h>
+#include <multiplayer.h>
 #include <CRC.h>
 #include <ALL.h>
 #include <stdint.h>

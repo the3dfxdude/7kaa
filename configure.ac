@@ -98,12 +98,12 @@ AM_GNU_GETTEXT_VERSION([0.19])
 
 # Configuration variables
 
-audio_backend=openal # openal none
-ui_backend=sdl       # sdl none
+audio_backend=openal     # openal none
+ui_backend=sdl           # sdl none
+multiplayer_backend=enet # enet
 use_windows=no
 use_mingw=no
 jwasm_fmt="-elf -zt0"
-enable_enet=yes
 
 # Set in argument handlers:
 # enable_asm=no
@@ -159,6 +159,7 @@ AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([AUDIO_NONE],   [test "$audio_backend" = none])
 AM_CONDITIONAL([UI_SDL],       [test "$ui_backend"    = sdl])
 AM_CONDITIONAL([UI_NONE],      [test "$ui_backend"    = none])
+AM_CONDITIONAL([MULTIPLAYER_ENET], [test "$multiplayer_backend" = enet])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
 AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
@@ -215,7 +216,7 @@ AM_PATH_SDL2([], [], [
 CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
 LIBS="$SDL_LIBS $LIBS"
 
-AS_IF([test "$enable_enet" = yes], [
+AS_IF([test "$multiplayer_backend" = enet], [
   PKG_CHECK_MODULES([ENET], [libenet], [], [
     SEARCH_LIB_FLAGS([enet_initialize], ["-lenet -lws2_32 -lwinmm" -lenet],, [
       AC_ERROR([enet not found])
@@ -305,6 +306,15 @@ AS_CASE(["$audio_backend"],
     AC_ERROR([Unknown audio backend: $audio_backend])
 ])
 
+AS_CASE(["$multiplayer_backend"],
+  [enet], [
+    AC_DEFINE([USE_ENET], [1], [
+      Define to 1 if using ENet as the multiplayer backend
+    ])
+  ], [
+    AC_ERROR([Unknown multiplayer backend: $multiplayer_backend])
+])
+
 AS_IF([test "$enable_curl" = yes], [
   AC_DEFINE([HAVE_LIBCURL], [1],
 	    [Define to 1 if using libcurl])
@@ -333,7 +343,8 @@ AC_CONFIG_FILES([
   include/Makefile
   src/Makefile
   src/curl/Makefile
-  src/enet/Makefile
+  src/multiplayer/Makefile
+  src/multiplayer/enet/Makefile
   src/audio/Makefile
   src/audio/none/Makefile
   src/audio/openal/Makefile
@@ -351,6 +362,7 @@ AC_OUTPUT
 echo
 AC_MSG_NOTICE([ui backend: $ui_backend])
 AC_MSG_NOTICE([audio backend: $audio_backend])
+AC_MSG_NOTICE([multiplayer backend: $multiplayer_backend])
 echo
 AC_MSG_NOTICE([x86 asm: $enable_asm])
 AC_MSG_NOTICE([debugging features: $enable_debug])
