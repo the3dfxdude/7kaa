@@ -182,7 +182,7 @@ noinst_HEADERS = \
 	misc_uuid.h \
 	mouse_sdl.h \
 	mouse_none.h \
-	multiplayer.h \
+	multiplayer_enet.h \
 	openal_audio.h \
 	output_stream.h \
 	platform.h \

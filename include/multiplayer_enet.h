@@ -20,11 +20,11 @@
  *
  */
 
-// Filename    : multiplayer.h
+// Filename    : multiplayer_enet.h
 // Description : Multiplayer game support.
 
-#ifndef __MULTIPLAYER_H
-#define __MULTIPLAYER_H
+#ifndef __MULTIPLAYER_ENET_H
+#define __MULTIPLAYER_ENET_H
 
 #include <MPTYPES.h>
 #include <session_desc.h>
@@ -162,5 +162,5 @@ private:
 
 extern MultiPlayer mp_obj;
 
-#endif // __MULTIPLAYER_H
+#endif // __MULTIPLAYER_ENET_H
 

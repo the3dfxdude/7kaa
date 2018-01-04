@@ -21,9 +21,9 @@
  */
 
 // Filename    : multiplayer.cpp
-// Description : Multiplayer game support.
+// Description : Multiplayer game support using ENet.
 
-#include <multiplayer.h>
+#include <multiplayer_enet.h>
 #include <ALL.h>
 #include <version.h>
 #include <string.h>
