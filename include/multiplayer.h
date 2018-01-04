@@ -32,15 +32,7 @@
 #include <ODYNARRB.h>
 #include <stdint.h>
 #include <enet/enet.h>
-#include <OMISC.h>
 
-
-#define MP_SERVICE_PROVIDER_NAME_LEN 64
-#define MP_SESSION_NAME_LEN 64
-#define MP_PASSWORD_LEN 32
-#define MP_RECV_BUFFER_SIZE 0x2000
-#define MP_GAME_LIST_SIZE 10
-#define MP_LADDER_LIST_SIZE 6
 
 enum ProtocolType
 {
@@ -53,93 +45,12 @@ enum ProtocolType
 
 enum
 {
-	MPMSG_USER_SESSION_STATUS = 0x1f960001,
-	MPMSG_REQ_LOGIN_ID,
-	MPMSG_LOGIN_ID,
-	MPMSG_REQ_SESSION_ID,
-	MPMSG_SESSION_ID,
-	MPMSG_POLL_SESSIONS,
-	MPMSG_SESSION,
-	MPMSG_REQ_SESSION_ADDR,
-	MPMSG_SESSION_ADDR,
-	MPMSG_PING,
-	MPMSG_REQ_HOST_NAT_PUNCH,
-	MPMSG_HOST_NAT_PUNCH,
-};
-
-enum
-{
 	MP_POLL_NO_UPDATE,
 	MP_POLL_UPDATE,
 	MP_POLL_LOGIN_PENDING,
 	MP_POLL_LOGIN_FAILED,
 	MP_POLL_NO_SOCKET,
 	MP_POLL_NO_SESSION,
-};
-
-struct MpMsgUserSessionStatus {
-	uint32_t msg_id;
-	guuid_t login_id;
-	guuid_t session_id;
-	uint32_t player_id;
-	uint32_t flags;
-	char session_name[MP_FRIENDLY_NAME_LEN];
-};
-struct MpMsgReqLoginId {
-	uint32_t msg_id;
-	char name[MP_FRIENDLY_NAME_LEN];
-};
-struct MpMsgLoginId {
-	uint32_t msg_id;
-	guuid_t login_id;
-};
-struct MpMsgReqSessionId {
-	uint32_t msg_id;
-	guuid_t login_id;
-	char session_name[MP_FRIENDLY_NAME_LEN];
-	char session_password[MP_FRIENDLY_NAME_LEN];
-};
-struct MpMsgSessionId {
-	uint32_t msg_id;
-	guuid_t session_id;
-};
-struct MpMsgPollSessions {
-	uint32_t msg_id;
-	guuid_t login_id;
-};
-struct MpMsgSession {
-	uint32_t msg_id;
-	guuid_t session_id;
-	uint32_t flags;
-	char session_name[MP_FRIENDLY_NAME_LEN];
-};
-struct MpMsgReqSessionAddr {
-	uint32_t msg_id;
-	guuid_t login_id;
-	guuid_t session_id;
-	char session_password[MP_FRIENDLY_NAME_LEN];
-};
-struct MpMsgSessionAddr {
-	uint32_t msg_id;
-	guuid_t session_id;
-	uint32_t host;
-	uint16_t port;
-	uint16_t reserved0;
-};
-struct MpMsgPing {
-	uint32_t msg_id;
-};
-struct MpMsgReqHostNatPunch {
-	uint32_t msg_id;
-	guuid_t login_id;
-	guuid_t session_id;
-	char session_password[MP_FRIENDLY_NAME_LEN];
-};
-struct MpMsgHostNatPunch {
-	uint32_t msg_id;
-	uint32_t host;
-	uint16_t port;
-	uint16_t reserved0;
 };
 
 
@@ -236,7 +147,7 @@ private:
 	void send_ping(ENetSocket s, ENetAddress *a);
 	void send_req_host_nat_punch();
 	void send_service_ping();
-	void do_host_nat_punch(MpMsgHostNatPunch *in);
+	void do_host_nat_punch(ENetAddress *address);
 
 	SessionDesc* get_session_from_address(const ENetAddress &address);
 

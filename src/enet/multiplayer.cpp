@@ -33,9 +33,93 @@
 DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
 #define MP_UDP_MAX_PACKET_SIZE 800
+#define MP_RECV_BUFFER_SIZE 0x2000
 
 const uint16_t UDP_GAME_PORT = 19255;
 const uint16_t UDP_MONITOR_PORT = 19383;
+
+
+struct MpMsgUserSessionStatus {
+	uint32_t msg_id;
+	guuid_t login_id;
+	guuid_t session_id;
+	uint32_t player_id;
+	uint32_t flags;
+	char session_name[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgReqLoginId {
+	uint32_t msg_id;
+	char name[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgLoginId {
+	uint32_t msg_id;
+	guuid_t login_id;
+};
+struct MpMsgReqSessionId {
+	uint32_t msg_id;
+	guuid_t login_id;
+	char session_name[MP_FRIENDLY_NAME_LEN];
+	char session_password[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgSessionId {
+	uint32_t msg_id;
+	guuid_t session_id;
+};
+struct MpMsgPollSessions {
+	uint32_t msg_id;
+	guuid_t login_id;
+};
+struct MpMsgSession {
+	uint32_t msg_id;
+	guuid_t session_id;
+	uint32_t flags;
+	char session_name[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgReqSessionAddr {
+	uint32_t msg_id;
+	guuid_t login_id;
+	guuid_t session_id;
+	char session_password[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgSessionAddr {
+	uint32_t msg_id;
+	guuid_t session_id;
+	uint32_t host;
+	uint16_t port;
+	uint16_t reserved0;
+};
+struct MpMsgPing {
+	uint32_t msg_id;
+};
+struct MpMsgReqHostNatPunch {
+	uint32_t msg_id;
+	guuid_t login_id;
+	guuid_t session_id;
+	char session_password[MP_FRIENDLY_NAME_LEN];
+};
+struct MpMsgHostNatPunch {
+	uint32_t msg_id;
+	uint32_t host;
+	uint16_t port;
+	uint16_t reserved0;
+};
+
+enum
+{
+	MPMSG_USER_SESSION_STATUS = 0x1f960001,
+	MPMSG_REQ_LOGIN_ID,
+	MPMSG_LOGIN_ID,
+	MPMSG_REQ_SESSION_ID,
+	MPMSG_SESSION_ID,
+	MPMSG_POLL_SESSIONS,
+	MPMSG_SESSION,
+	MPMSG_REQ_SESSION_ADDR,
+	MPMSG_SESSION_ADDR,
+	MPMSG_PING,
+	MPMSG_REQ_HOST_NAT_PUNCH,
+	MPMSG_HOST_NAT_PUNCH,
+};
+
 
 inline bool cmp_addr(const ENetAddress &a, const ENetAddress &b)
 {
@@ -901,7 +985,10 @@ int MultiPlayer::poll_players()
 					if (!(joined_session.flags & SessionFlags::Hosting))
 						break;
 
-					do_host_nat_punch(m);
+					ENetAddress address;
+					address.host = m->host;
+					address.port = m->port;
+					do_host_nat_punch(&address);
 					break;
 					}
 				}
@@ -1243,19 +1330,12 @@ void MultiPlayer::send_service_ping()
 	send_ping(session_monitor, &service_provider);
 }
 
-void MultiPlayer::do_host_nat_punch(MpMsgHostNatPunch *in)
+void MultiPlayer::do_host_nat_punch(ENetAddress *address)
 {
-	ENetAddress a;
-	ENetBuffer b;
-	MpMsgPing m;
-
 	if (!host)
 		return;
 
-	a.host = in->host;
-	a.port = in->port;
-
-	send_ping(host->socket, &a);
+	send_ping(host->socket, address);
 }
 
 // Returns pointer to the recv_buf when a message is received, with size set.
