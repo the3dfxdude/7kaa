@@ -154,7 +154,7 @@ private:
 	SessionDesc       joined_session;
 
 	uint32_t          my_player_id;
-	PlayerDesc        *my_player;
+	PlayerDesc        my_player;
 
 	PlayerDesc        *player_pool[MAX_NATION];
 	PlayerDesc        *pending_pool[MAX_NATION];
