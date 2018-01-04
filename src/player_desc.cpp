@@ -26,7 +26,7 @@
 #include <player_desc.h>
 #include <string.h>
 
-PlayerDesc::PlayerDesc(const char* name, const ENetAddress& address)
+PlayerDesc::PlayerDesc(const char* name, const NetworkAddress& address)
 	: id(0),
 	  authorized(0),
 	  address(address)

@@ -24,7 +24,6 @@
 
 #include <MPTYPES.h>
 #include <misc_uuid.h>
-#include <enet/enet.h>
 
 struct SessionFlags {
 	enum {
@@ -43,10 +42,10 @@ struct SessionDesc
 	uint32_t flags;
 	int max_players;
 	int player_count;
-	ENetAddress address;
+	NetworkAddress address;
 
 	SessionDesc() = default;
-	SessionDesc(const char* session_name, const guuid_t& session_id, uint32_t flags, const ENetAddress& address);
+	SessionDesc(const char* session_name, const guuid_t& session_id, uint32_t flags, const NetworkAddress& address);
 };
 
 #endif

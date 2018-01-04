@@ -3,6 +3,7 @@
  *
  * Copyright 1997,1998 Enlight Software Ltd.
  * Copyright 2010,2011,2013,2015 Jesse Allen
+ * Copyright 2018 Richard Dijk <microvirus.multiplying@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -199,12 +200,11 @@ public:
 	int    join_session(SessionDesc *session);
 	int    close_session();
 	SessionDesc* get_session(int i);
-	SessionDesc* get_session(ENetAddress *address);
 	SessionDesc* get_session(guuid_t id);
 	SessionDesc* get_current_session();
 
 	// -------- functions on player management -------//
-	int         add_player(uint32_t playerId, char *name, ENetAddress *address, char contact);
+	int         add_player(uint32_t playerId, char *name, const NetworkAddress &address, char contact);
 	int         auth_player(uint32_t playerId, char *name, char *password);
 	void        create_my_player(char *playerName);
 	int         set_my_player_id(uint32_t playerId);
@@ -238,11 +238,13 @@ private:
 	void send_service_ping();
 	void do_host_nat_punch(MpMsgHostNatPunch *in);
 
+	SessionDesc* get_session_from_address(const ENetAddress &address);
+
 	void update_player_pool();
 	uint32_t get_avail_player_id();
 	int add_pending_player(PlayerDesc *player);
 	PlayerDesc* yank_pending_player(uint32_t playerId);
-	PlayerDesc* yank_pending_player(ENetAddress *address);
+	PlayerDesc* yank_pending_player(const ENetAddress &address);
 	ENetPeer *get_peer(uint32_t playerId);
 	ENetPeer *get_peer(ENetAddress *address);
 };

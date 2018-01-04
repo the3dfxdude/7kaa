@@ -238,9 +238,9 @@ struct MpStructAcceptNewPlayer : public MpStructBase
 {
 	PID_TYPE player_id;
 	char player_name[MP_FRIENDLY_NAME_LEN+1];
-	ENetAddress address;
+	NetworkAddress address;
 	char make_contact;
-	MpStructAcceptNewPlayer(PID_TYPE p, char *name, const ENetAddress& address, char contact) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p), address(address), make_contact(contact)
+	MpStructAcceptNewPlayer(PID_TYPE p, char *name, const NetworkAddress& address, char contact) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p), address(address), make_contact(contact)
 	{
 		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
 	}
@@ -569,7 +569,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg(_("Cannot initialize ENet."));
+		box.msg(_("Cannot initialize multiplayer library."));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
@@ -3243,7 +3243,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
 						mp_obj.add_player(newb->player_id,
 							newb->player_name,
-							&newb->address,
+							newb->address,
 							newb->make_contact);
 
 						// search if this player has existed
@@ -5125,7 +5125,7 @@ int Game::mp_select_load_option(char *fileName)
 						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
 						mp_obj.add_player(newb->player_id,
 							newb->player_name,
-							&newb->address,
+							newb->address,
 							newb->make_contact);
 
 						// search if this player has existed

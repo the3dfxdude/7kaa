@@ -25,8 +25,9 @@
 #include <GAMEDEF.h>
 #include <cstring>
 
+#include <cstring>
 
-SessionDesc::SessionDesc(const char* session_name, const guuid_t& session_id, uint32_t flags, const ENetAddress& address)
+SessionDesc::SessionDesc(const char* session_name, const guuid_t& session_id, uint32_t flags, const NetworkAddress& address)
 	: /*session_name*/
 	  password{},
 	  /*session_id*/
