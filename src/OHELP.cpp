@@ -62,8 +62,6 @@ Help::Help()
 {
 	memset( this, 0, sizeof(Help) );
 
-	help_info_array = (HelpInfo*) mem_add( sizeof(HelpInfo) * MAX_HELP_INFO );
-
 	save_scr_x1 = -1;
 }
 //------- Begin of function Help::Help ----------//
@@ -82,8 +80,9 @@ Help::~Help()
 
 void Help::init(const char* resName)
 {
-	String str;
+	help_info_array = (HelpInfo*) mem_add( sizeof(HelpInfo) * MAX_HELP_INFO );
 
+	String str;
 	str  = DIR_RES;
 	str += resName;
 
@@ -114,6 +113,7 @@ void Help::deinit()
 	{
 		mem_del( help_text_buf );
 		help_text_buf = NULL;
+		help_text_buf_size = 0;
 	}
 }
 //------- Begin of function Help::deinit ----------//
