@@ -31,8 +31,6 @@
 
 class VgaNone
 {
-private:
-
 public:
 	ColorTable*    vga_color_table;
 	unsigned char  gray_remap_table[256];
@@ -40,6 +38,9 @@ public:
 	static VgaBuf* active_buf;
 	static char    use_back_buf;
 	static char    opaque_flag;
+
+private:
+	char game_pal[256 * 3];
 
 public:
 	VgaNone();

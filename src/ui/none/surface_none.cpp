@@ -26,7 +26,10 @@
 
 //-------- Begin of function SurfaceNone::SurfaceNone ----------//
 
-SurfaceNone::SurfaceNone()
+SurfaceNone::SurfaceNone(int width, int height)
+	: width(width),
+	  height(height),
+	  buffer(new char[width * height])
 {
 }
 //-------- End of function SurfaceNone::SurfaceNone ----------//
@@ -36,6 +39,7 @@ SurfaceNone::SurfaceNone()
 
 SurfaceNone::~SurfaceNone()
 {
+	delete buffer;
 }
 //-------- End of function SurfaceNone::~SurfaceNone ----------//
 

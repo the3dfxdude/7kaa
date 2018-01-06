@@ -33,6 +33,8 @@ VgaBuf* VgaNone::active_buf   = &vga_front;      // default: front buffer
 //-------- Begin of function VgaNone::VgaNone ----------//
 
 VgaNone::VgaNone()
+   : game_pal{},
+     vga_color_table(nullptr)
 {
 }
 //-------- End of function VgaNone::VgaNone ----------//
@@ -51,6 +53,12 @@ VgaNone::~VgaNone()
 
 int VgaNone::init()
 {
+   PalDesc palDesc( (unsigned char*) game_pal, 3, 256, 8);
+   vga_color_table = new ColorTable;
+   vga_color_table->generate_table( MAX_BRIGHTNESS_ADJUST_DEGREE, palDesc, ColorTable::bright_func );
+
+   vga_front.init(new Surface(VGA_WIDTH, VGA_HEIGHT), 0);
+   vga_back.init(new Surface(VGA_WIDTH, VGA_HEIGHT), 0);
    return 1;
 }
 //-------- End of function VgaNone::init ----------//
@@ -60,6 +68,10 @@ int VgaNone::init()
 
 void VgaNone::deinit()
 {
+   vga_front.deinit();
+   vga_back.deinit();
+   delete vga_color_table;
+   vga_color_table = nullptr;
 }
 //-------- End of function VgaNone::deinit ----------//
 

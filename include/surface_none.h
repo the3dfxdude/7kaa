@@ -29,19 +29,20 @@
 class SurfaceNone
 {
 private:
-
-protected:
+	int width;
+	int height;
+	char* buffer;
 
 public:
-	SurfaceNone();
+	explicit SurfaceNone(int width, int height);
 	~SurfaceNone();
 
-	char* buf_ptr()             { return NULL; }
-	char* buf_ptr(int x, int y) { return NULL; }
-	int   buf_pitch()           { return 0; }
-	int   buf_size()            { return 0; }
-	int   buf_width()           { return 0; }
-	int   buf_height()          { return 0; }
+	char* buf_ptr()             { return buffer; }
+	char* buf_ptr(int x, int y) { return buffer + buf_pitch() * y + x; }
+	int   buf_pitch()           { return width; }
+	int   buf_size()            { return width * height; }
+	int   buf_width()           { return width; }
+	int   buf_height()          { return height; }
 
 	int   lock_buf();
 	int   unlock_buf();
