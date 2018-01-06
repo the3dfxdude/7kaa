@@ -57,11 +57,6 @@
 #include <OWORLD.h>
 #include <OSaveGameArray.h>
 #include <dbglog.h>
-#include <file_io_visitor.h>
-#include <OGFILE_DYNARRAY.inl>
-#include <OGFILE_DYNARRAYB.inl>
-
-using namespace FileIOVisitor;
 
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
@@ -440,21 +435,13 @@ int GameFile::write_file_3(File* filePtr)
 
 	write_book_mark( filePtr, BOOK_MARK+213 );
 
-	{
-		FileWriterVisitor v(filePtr);
-		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>, sizeof(Rock));
-		if( !v.good() )
-			return 0;
-	}
+	if( !rock_array.write_file(filePtr) )
+		return 0;
 
 	write_book_mark( filePtr, BOOK_MARK+214 );
 
-	{
-		FileWriterVisitor v(filePtr);
-		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Rock>, sizeof(Rock));
-		if( !v.good() )
-			return 0;
-	}
+	if( !dirt_array.write_file(filePtr) )
+		return 0;
 
 	// ##### begin Gilbert 2/10 ######//
 	write_book_mark( filePtr, BOOK_MARK+215 );
@@ -708,22 +695,14 @@ int GameFile::read_file_3(File* filePtr)
 	if( !read_book_mark( filePtr, BOOK_MARK+213 ) )
 		return 0;
 
-	{
-		FileReaderVisitor v(filePtr);
-		rock_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>, sizeof(Rock));
-		if( !v.good() )
-			return 0;
-	}
+	if( !rock_array.read_file(filePtr) )
+		return 0;
 
 	if( !read_book_mark( filePtr, BOOK_MARK+214 ) )
 		return 0;
 
-	{
-		FileReaderVisitor v(filePtr);
-		dirt_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Rock>, sizeof(Rock));
-		if( !v.good() )
-			return 0;
-	}
+	if( !dirt_array.read_file(filePtr) )
+		return 0;
 
 	// ##### begin Gilbert 2/10 ######//
 	if( !read_book_mark( filePtr, BOOK_MARK+215 ) )

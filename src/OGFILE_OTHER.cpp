@@ -32,9 +32,11 @@
 #include <OTUTOR.h>
 #include <OWEATHER.h>
 #include <OSPATH.h>
+#include <OROCK.h>
 
 #include <file_io_visitor.h>
 #include <visitor_functions.h>
+#include <OGFILE_DYNARRAYB.inl>
 
 using namespace FileIOVisitor;
 
@@ -580,3 +582,34 @@ int SeekPath::read_file(File* filePtr)
 }
 //--------- End of function SeekPath::read_file ---------------//
 //#### end alex 23/9 ####//
+
+
+//***//
+
+
+template <typename Visitor>
+static void visit_rock_members(Visitor* v, Rock* c)
+{
+	visit<int16_t>(v, &c->rock_recno);
+	visit<int8_t>(v, &c->cur_frame);
+	visit<int8_t>(v, &c->delay_remain);
+	visit<int16_t>(v, &c->loc_x);
+	visit<int16_t>(v, &c->loc_y);
+	visit<uint32_t>(v, &c->seed);
+}
+
+enum { ROCK_RECORD_SIZE = 12 };
+
+int RockArray::write_file(File* filePtr)
+{
+	FileWriterVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_rock_members<FileWriterVisitor>, ROCK_RECORD_SIZE);
+	return v.good();
+}
+
+int RockArray::read_file(File* filePtr)
+{
+	FileReaderVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_rock_members<FileReaderVisitor>, ROCK_RECORD_SIZE);
+	return v.good();
+}
