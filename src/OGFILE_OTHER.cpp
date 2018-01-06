@@ -285,7 +285,7 @@ static void visit_power_members(Visitor* v, Power* c)
 	visit<int32_t>(v, &c->command_unit_recno);
 	visit<int32_t>(v, &c->command_para);
 	visit<int8_t>(v, &c->win_opened);
-	visit<int8_t>(v, &c->enable_flag);
+	v->skip(1); // enable_flag
 	visit_array<int32_t>(v, c->key_str_pos);
 }
 
