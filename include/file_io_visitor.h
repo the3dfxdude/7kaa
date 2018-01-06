@@ -37,7 +37,7 @@ public:
 
    bool good() const { return reader.good(); }
 
-   void with_record_size(uint16_t expected_record_size)
+   void with_record_size(int expected_record_size)
    {
       reader.check_record_size(expected_record_size);
    }
@@ -84,7 +84,7 @@ public:
 
    bool good() const { return writer.good(); }
 
-   void with_record_size(uint16_t record_size)
+   void with_record_size(int record_size)
    {
       writer.write_record_size(record_size);
    }
@@ -144,7 +144,7 @@ namespace FileIOVisitor
    }
 
    template <typename Visitor, typename T>
-   bool visit_with_record_size(File* file, T* obj, void (*visit_obj)(Visitor* v, T* obj), uint16_t rec_size)
+   bool visit_with_record_size(File* file, T* obj, void (*visit_obj)(Visitor* v, T* obj), int rec_size)
    {
       Visitor v(file);
       v.with_record_size(rec_size);
@@ -155,7 +155,7 @@ namespace FileIOVisitor
 
    // TODO: This function can be removed as soon as all DynArrayB derived classes use the proper accept_visitor_as_ptr_array, superseded by polymorphic_visit.
    template <typename Visitor, typename T>
-   bool polymorphic_visit_with_record_size(File* file, T* obj, uint16_t rec_size)
+   bool polymorphic_visit_with_record_size(File* file, T* obj, int rec_size)
    {
       Visitor v(file);
       v.with_record_size(rec_size);

@@ -37,7 +37,7 @@ public:
    void deinit();
    bool good() const { return ok; }
    bool skip(size_t len);
-   bool check_record_size(uint16_t expected_size);
+   bool check_record_size(int expected_size);
 
    template <typename FileT, typename MemT>
    bool read(MemT *v)

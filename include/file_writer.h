@@ -37,7 +37,7 @@ public:
    void deinit();
    bool good() const { return ok; }
    bool skip(size_t len);
-   bool write_record_size(uint16_t size);
+   bool write_record_size(int size);
 
    template <typename FileT, typename MemT>
    bool write(MemT val)

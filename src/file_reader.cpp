@@ -72,7 +72,7 @@ bool FileReader::skip(size_t len)
    return this->ok;
 }
 
-bool FileReader::check_record_size(uint16_t expected_size)
+bool FileReader::check_record_size(int expected_size)
 {
    uint16_t rec_size;
 
