@@ -520,6 +520,9 @@ static void visit_tutor_members(Visitor* v, Tutor* c)
 			if (tutorId > 0) {
 				c->load(tutorId);		// load() will reset cur_text_block_id
 			}
+			else {
+				c->cur_tutor_id = 0;
+			}
 		});
 	visit<int16_t>(v, &c->cur_text_block_id);
 }
