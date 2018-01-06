@@ -24,6 +24,7 @@
 #include <ODYNARRB.h>
 #include <file_io_visitor.h>
 #include <visitor_functions.h>
+#include <OGFILE_DYNARRAY.inl>
 
 
 template <typename Visitor>

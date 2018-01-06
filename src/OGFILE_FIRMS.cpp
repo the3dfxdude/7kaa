@@ -32,6 +32,7 @@
 #include <OF_MONS.h>
 #include <OF_RESE.h>
 #include <OF_WAR.h>
+#include <OFIRMDIE.h>
 #include <OGFILE.h>
 #include <OGF_V1.h>
 #include <file_io_visitor.h>
@@ -542,3 +543,34 @@ int FirmArray::read_file(File* filePtr)
 	return v.good();
 }
 //--------- End of function FirmArray::read_file ---------------//
+
+
+template <typename Visitor>
+static void visit_firm_die_members(Visitor* v, FirmDie* c)
+{
+	visit<int16_t>(v, &c->firm_id);
+	visit<int16_t>(v, &c->firm_build_id);
+	visit<int16_t>(v, &c->nation_recno);
+	visit<int16_t>(v, &c->frame);
+	visit<int16_t>(v, &c->frame_delay_count);
+	visit<int16_t>(v, &c->loc_x1);
+	visit<int16_t>(v, &c->loc_y1);
+	visit<int16_t>(v, &c->loc_x2);
+	visit<int16_t>(v, &c->loc_y2);
+}
+
+enum { FIRM_DIE_RECORD_SIZE = 18 };
+
+int FirmDieArray::write_file(File* filePtr)
+{
+	FileWriterVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_firm_die_members<FileWriterVisitor>, FIRM_DIE_RECORD_SIZE);
+	return v.good();
+}
+
+int FirmDieArray::read_file(File* filePtr)
+{
+	FileReaderVisitor v(filePtr);
+	accept_visitor_as_value_array(&v, visit_firm_die_members<FileReaderVisitor>, FIRM_DIE_RECORD_SIZE);
+	return v.good();
+}
