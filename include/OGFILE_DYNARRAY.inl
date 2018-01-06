@@ -56,9 +56,6 @@ void DynArray::accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visit
 	using namespace FileIOVisitor;
 
 	do_visit_as_value_array(v, visit_obj, recordSize);
-
-	if (is_reader_visitor(v))
-		start();    // go top
 }
 
 #endif

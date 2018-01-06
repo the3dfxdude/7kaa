@@ -61,9 +61,6 @@ void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visit
 	do_visit_as_value_array(v, visitObj, recordSize);
 
 	visit_empty_room_array(v);
-
-	if (is_reader_visitor(v))
-		start();    // go top
 }
 
 template <typename T, typename Visitor>
@@ -123,9 +120,9 @@ void DynArrayB::visit_array_size(Visitor* v)
 	using namespace FileIOVisitor;
 	visit_property<int, int16_t>(v, this, &DynArray::size,
 		[this](int size) {
-		err_when(this->size() != 0); // i.e. visit should only be done on a 'fresh' instance
-		add_blank(size);
-	});
+			err_when(this->size() != 0); // i.e. visit should only be done on a 'fresh' instance
+			add_blank(size);
+		});
 }
 
 
