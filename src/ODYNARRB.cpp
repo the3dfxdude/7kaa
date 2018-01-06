@@ -69,8 +69,8 @@ DynArrayB::DynArrayB(int eleSize,int blockNum,int reuseIntervalDays) : DynArray(
 //
 DynArrayB::~DynArrayB()
 {
-   if( empty_room_array )
-      mem_del( empty_room_array );
+	if( empty_room_array )
+		mem_del( empty_room_array );
 }
 //----------- END OF FUNCTION DynArrayB::DynArrayB -----//
 
@@ -131,13 +131,13 @@ void DynArrayB::linkin(const void* ent)
 
 	//---------- regular link in -----------//
 
-   if ( last_ele > ele_num ) // not enough empty element left to hold the new entity
-      resize( ele_num + block_num );
+	if ( last_ele > ele_num ) // not enough empty element left to hold the new entity
+		resize( ele_num + block_num );
 
-   if ( ent )
-      memcpy(body_buf+(cur_pos-1)*ele_size, ent, ele_size );
-   else
-      *(body_buf+(cur_pos-1)*ele_size) = '\0';
+	if ( ent )
+		memcpy(body_buf+(cur_pos-1)*ele_size, ent, ele_size );
+	else
+		*(body_buf+(cur_pos-1)*ele_size) = '\0';
 }
 //---------- END OF FUNCTION DynArrayB::linkin ------------//
 
@@ -192,15 +192,15 @@ void DynArrayB::linkout(int delPos)
 //
 int DynArrayB::packed_recno(int recNo) const
 {
-   int i, packedRecno = recNo;
+	int i, packedRecno = recNo;
 
-   for( i=0 ; i<empty_room_count ; i++ )
-   {
-      if( empty_room_array[i].recno < recNo )
-         packedRecno--;
+	for( i=0 ; i<empty_room_count ; i++ )
+	{
+		if( empty_room_array[i].recno < recNo )
+			packedRecno--;
 	}
 
-   return packedRecno;
+	return packedRecno;
 }
 //------------- End of function DynArrayB::packed_recno --------------//
 
@@ -211,7 +211,7 @@ int DynArrayB::packed_recno(int recNo) const
 //
 void DynArrayB::zap()
 {
-   DynArray::zap();
+	DynArray::zap();
 
 	empty_room_count=0;	    // reset empty rooms
 }
