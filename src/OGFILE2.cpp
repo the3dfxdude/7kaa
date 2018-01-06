@@ -731,6 +731,8 @@ int GameFile::read_file_3(File* filePtr)
 
 	// ##### begin Gilbert 2/10 ######//
 	if( !read_book_mark( filePtr, BOOK_MARK+215 ) )
+		return 0;
+
 	{
 		FileReaderVisitor v(filePtr);
 		firm_die_array.accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, FirmDie>, sizeof(FirmDie));
