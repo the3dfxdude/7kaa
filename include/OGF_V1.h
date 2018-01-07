@@ -42,7 +42,6 @@
 #define	VERSION_1_GODRES_GOD_COUNT				7
 #define	VERSION_1_TECH_COUNT						7
 
-#pragma pack(1)
 class Version_1_Town
 {
 public:
@@ -58,8 +57,14 @@ public:
 	char	has_linked_own_camp;					 // whether the town has linked military camps of the same nation
 	char	has_linked_enemy_camp;				 // whether the town has linked military camps of the same nation
 	char	is_base_town;		// whether this town is base town or not
-	short loc_x1, loc_y1, loc_x2, loc_y2;
-	short abs_x1, abs_y1, abs_x2, abs_y2;
+	short loc_x1;
+	short loc_y1;
+	short loc_x2;
+	short loc_y2;
+	short abs_x1;
+	short abs_y1;
+	short abs_x2;
+	short abs_y2;
 	short center_x;
 	short center_y;
 	uint8_t	region_id;
@@ -132,7 +137,6 @@ public:
 public:
 	void	convert_to_version_2(Town *townPtr);
 };
-#pragma pack()
 
 class Version_1_NationArray// : public DynArrayB
 {

@@ -105,6 +105,80 @@ static void visit_town(Visitor* v, Town* c)
 	//visit<int8_t>(v, &c->town_network_pulsed);
 }
 
+template <typename Visitor>
+static void visit_version_1_town_members(Visitor* v, Version_1_Town* c)
+{
+	visit<int16_t>(v, &c->town_recno);
+	visit<int16_t>(v, &c->town_name_id);
+	visit<int16_t>(v, &c->nation_recno);
+	visit<int16_t>(v, &c->rebel_recno);
+	visit<int8_t>(v, &c->race_id);
+	visit<int32_t>(v, &c->setup_date);
+	visit<int8_t>(v, &c->ai_town);
+	visit<int8_t>(v, &c->ai_link_checked);
+	visit<int8_t>(v, &c->independ_town_nation_relation);
+	visit<int8_t>(v, &c->has_linked_own_camp);
+	visit<int8_t>(v, &c->has_linked_enemy_camp);
+	visit<int8_t>(v, &c->is_base_town);
+	visit<int16_t>(v, &c->loc_x1);
+	visit<int16_t>(v, &c->loc_y1);
+	visit<int16_t>(v, &c->loc_x2);
+	visit<int16_t>(v, &c->loc_y2);
+	visit<int16_t>(v, &c->abs_x1);
+	visit<int16_t>(v, &c->abs_y1);
+	visit<int16_t>(v, &c->abs_x2);
+	visit<int16_t>(v, &c->abs_y2);
+	visit<int16_t>(v, &c->center_x);
+	visit<int16_t>(v, &c->center_y);
+	visit<uint8_t>(v, &c->region_id);
+	visit<int16_t>(v, &c->layout_id);
+	visit<int16_t>(v, &c->first_slot_id);
+	visit_array<int16_t>(v, c->slot_object_id_array);
+	visit<int16_t>(v, &c->population);
+	visit<int16_t>(v, &c->jobless_population);
+	visit_array<int16_t>(v, c->max_race_pop_array);
+	visit_array<int16_t>(v, c->race_pop_array);
+	visit_array<uint8_t>(v, c->race_pop_growth_array);
+	visit_array<int16_t>(v, c->jobless_race_pop_array);
+	visit_array<float>(v, c->race_loyalty_array);
+	visit_array<int8_t>(v, c->race_target_loyalty_array);
+	visit_array<int16_t>(v, c->race_spy_count_array);
+	for (int i = 0; i < VERSION_1_MAX_RACE; ++i) {
+		visit_array<float>(v, c->race_resistance_array[i]);
+	}
+	for (int i = 0; i < VERSION_1_MAX_RACE; ++i) {
+		visit_array<int8_t>(v, c->race_target_resistance_array[i]);
+	}
+	visit<int16_t>(v, &c->town_defender_count);
+	visit<int32_t>(v, &c->last_being_attacked_date);
+	visit<float>(v, &c->received_hit_count);
+	visit_array<int8_t>(v, c->train_queue_skill_array);
+	visit_array<int8_t>(v, c->train_queue_race_array);
+	visit<int8_t>(v, &c->train_queue_count);
+	visit<int16_t>(v, &c->train_unit_recno);
+	visit<int32_t>(v, &c->train_unit_action_id);
+	visit<uint32_t>(v, &c->start_train_frame_no);
+	visit<int16_t>(v, &c->defend_target_recno);
+	visit<int32_t>(v, &c->accumulated_collect_tax_penalty);
+	visit<int32_t>(v, &c->accumulated_reward_penalty);
+	visit<int32_t>(v, &c->accumulated_recruit_penalty);
+	visit<int32_t>(v, &c->accumulated_enemy_grant_penalty);
+	visit<int32_t>(v, &c->last_rebel_date);
+	visit<int16_t>(v, &c->independent_unit_join_nation_min_rating);
+	visit<int16_t>(v, &c->quality_of_life);
+	visit<int16_t>(v, &c->auto_collect_tax_loyalty);
+	visit<int16_t>(v, &c->auto_grant_loyalty);
+	visit<int8_t>(v, &c->town_combat_level);
+	visit_array<int8_t>(v, c->has_product_supply);
+	visit<int8_t>(v, &c->no_neighbor_space);
+	visit<int16_t>(v, &c->linked_firm_count);
+	visit<int16_t>(v, &c->linked_town_count);
+	visit_array<int16_t>(v, c->linked_firm_array);
+	visit_array<int16_t>(v, c->linked_town_array);
+	visit_array<int8_t>(v, c->linked_firm_enable_array);
+	visit_array<int8_t>(v, c->linked_town_enable_array);
+}
+
 enum { TOWN_RECORD_SIZE = 812 };
 
 //-------- Start of function TownArray::write_file -------------//
@@ -191,8 +265,9 @@ int TownArray::read_file(File* filePtr)
 
 			if(!GameFile::read_file_same_version)
 			{
+				enum { VERSION_1_TOWN_RECORD_SIZE = 665 };
 				Version_1_Town *oldTown = (Version_1_Town*) mem_add(sizeof(Version_1_Town));
-				if(!filePtr->file_read(oldTown, sizeof(Version_1_Town)))
+				if( !visit_with_record_size<FileReaderVisitor>(filePtr, oldTown, visit_version_1_town_members<FileReaderVisitor>, VERSION_1_TOWN_RECORD_SIZE) )
 				{
 					mem_del(oldTown);
 					return 0;
