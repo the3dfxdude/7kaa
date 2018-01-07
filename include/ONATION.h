@@ -152,7 +152,6 @@ struct ActionNode
 
 #define MAX_SUITABLE_ATTACK_CAMP    30    // total no. of useful camps
 
-#pragma pack(1)
 struct AttackCamp
 {
 	short firm_recno;
@@ -160,7 +159,6 @@ struct AttackCamp
 	short distance;
 	int   patrol_date;
 };
-#pragma pack()
 
 //--------- Define class Nation ---------//
 

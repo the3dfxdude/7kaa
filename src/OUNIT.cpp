@@ -72,6 +72,7 @@ Unit::Unit()
 {
 	// ##### patch begin Gilbert 21/1 ######//
    // unit_id = 0;
+	// TODO: Don't do this ...
 	memset( sizeof(Sprite) + (char *)this, 0, sizeof(Unit) - sizeof(Sprite));
 	// ##### patch end Gilbert 21/1 ######//
 }

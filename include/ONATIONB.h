@@ -87,11 +87,10 @@ enum { EXPENSE_GENERAL,
 		 EXPENSE_IMPORTS,
 		 EXPENSE_TRIBUTE,
 		 EXPENSE_BRIBE,
-	  };
+	};
 
 //----- Define struct NationRelation -------//
 
-#pragma pack(1)
 struct NationRelation			// many-to-many relationships between nations
 {
 	char  has_contact;			// whether this nation has been contacted or not
@@ -103,7 +102,7 @@ struct NationRelation			// many-to-many relationships between nations
 	const char* status_str();
 
 	int	last_change_status_date;
-   char* status_duration_str();
+	char* status_duration_str();
 
 	char  ai_relation_level;		// AI's subjectively relation levels towards the others, the opposite nation's relation level is not the same as this
 	char	ai_secret_attack;
@@ -129,7 +128,6 @@ struct NationRelation			// many-to-many relationships between nations
 
 	static const char* relation_status_str_array[5];
 };
-#pragma pack()
 
 //---------- Define class Nation -----------//
 

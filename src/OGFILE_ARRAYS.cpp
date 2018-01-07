@@ -113,7 +113,7 @@ static void visit_site_array_members(Visitor* v, SiteArray* c)
 template <typename Visitor>
 static void visit_site_array(Visitor* v, SiteArray* c)
 {
-	enum {SITE_RECORD_SIZE = 15 };
+	enum { SITE_RECORD_SIZE = 15 };
 
 	visit_site_array_members(v, c);
 	c->accept_visitor_as_value_array(v, visit_site_members<Visitor>, SITE_RECORD_SIZE);
@@ -142,13 +142,31 @@ int SiteArray::read_file(File* filePtr)
 
 //*****//
 
+template <typename Visitor>
+static void visit_spy_members(Visitor* v, Spy* c)
+{
+	visit<int16_t>(v, &c->spy_recno);
+	visit<int8_t>(v, &c->spy_place);
+	visit<int16_t>(v, &c->spy_place_para);
+	visit<int8_t>(v, &c->spy_skill);
+	visit<int8_t>(v, &c->spy_loyalty);
+	visit<int8_t>(v, &c->true_nation_recno);
+	visit<int8_t>(v, &c->cloaked_nation_recno);
+	visit<int8_t>(v, &c->notify_cloaked_nation_flag);
+	visit<int8_t>(v, &c->exposed_flag);
+	visit<int8_t>(v, &c->race_id);
+	visit<uint16_t>(v, &c->name_id);
+	visit<int8_t>(v, &c->action_mode);
+}
+
+enum { SPY_RECORD_SIZE = 15 };
 
 //-------- Start of function SpyArray::write_file -------------//
 //
 int SpyArray::write_file(File* filePtr)
 {
 	FileWriterVisitor v(filePtr);
-	accept_visitor_as_value_array(&v, visit_raw<FileWriterVisitor, Spy>, sizeof(Spy));
+	accept_visitor_as_value_array(&v, visit_spy_members<FileWriterVisitor>, SPY_RECORD_SIZE);
 	return v.good();
 }
 //--------- End of function SpyArray::write_file ---------------//
@@ -159,7 +177,7 @@ int SpyArray::write_file(File* filePtr)
 int SpyArray::read_file(File* filePtr)
 {
 	FileReaderVisitor v(filePtr);
-	accept_visitor_as_value_array(&v, visit_raw<FileReaderVisitor, Spy>, sizeof(Spy));
+	accept_visitor_as_value_array(&v, visit_spy_members<FileReaderVisitor>, SPY_RECORD_SIZE);
 	return v.good();
 }
 //--------- End of function SpyArray::read_file ---------------//
