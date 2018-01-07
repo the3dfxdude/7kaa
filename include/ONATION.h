@@ -110,18 +110,15 @@ enum  {  SEA_ACTION_SETTLE=1, 			// for AI marine actions
 
 //--------- define AIRegion ---------//
 
-#pragma pack(1)
 struct AIRegion
 {
 	uint8_t	region_id;
 	char  town_count;
 	char  base_town_count;
 };
-#pragma pack()
 
 //-------- define ActionNode structure -------//
 
-#pragma pack(1)
 struct ActionNode
 {
 	enum { MAX_ACTION_GROUP_UNIT = 9 };
@@ -150,7 +147,6 @@ struct ActionNode
 
 	int32_t next_retry_date; 				// continue processing this action after this date, this is used when training a unit for construction
 };
-#pragma pack()
 
 //------- Define struct AttackCamp --------//
 

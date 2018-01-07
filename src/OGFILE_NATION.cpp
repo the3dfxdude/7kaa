@@ -279,6 +279,28 @@ static void visit_nation_members(Visitor *v, Nation *nat)
 }
 
 template <typename Visitor>
+static void visit_action_node_members(Visitor* v, ActionNode* c)
+{
+	visit<int8_t>(v, &c->action_mode);
+	visit<int8_t>(v, &c->action_type);
+	visit<int16_t>(v, &c->action_para);
+	visit<int16_t>(v, &c->action_para2);
+	visit<uint16_t>(v, &c->action_id);
+	visit<int32_t>(v, &c->add_date);
+	visit<int16_t>(v, &c->unit_recno);
+	visit<int16_t>(v, &c->action_x_loc);
+	visit<int16_t>(v, &c->action_y_loc);
+	visit<int16_t>(v, &c->ref_x_loc);
+	visit<int16_t>(v, &c->ref_y_loc);
+	visit<int8_t>(v, &c->retry_count);
+	visit<int8_t>(v, &c->instance_count);
+	visit_array<int16_t>(v, c->group_unit_array);
+	visit<int8_t>(v, &c->processing_instance_count);
+	visit<int8_t>(v, &c->processed_instance_count);
+	visit<int32_t>(v, &c->next_retry_date);
+}
+
+template <typename Visitor>
 static void visit_ai_info(Visitor* v, short*& aiInfoArray, short& aiInfoCount, short& aiInfoSize)
 {
 	visit<int16_t>(v, &aiInfoCount);
@@ -303,7 +325,8 @@ static void visit_nation(Visitor *v, Nation *nat)
 
 	//-------------- read AI Action Array --------------//
 
-	nat->action_array.accept_visitor_as_value_array(v, visit_raw<Visitor, ActionNode>, sizeof(ActionNode));
+	enum { ACTION_NODE_RECORD_SIZE = 48 };
+	nat->action_array.accept_visitor_as_value_array(v, visit_action_node_members<Visitor>, ACTION_NODE_RECORD_SIZE);
 
 	//------ write AI info array ---------//
 
