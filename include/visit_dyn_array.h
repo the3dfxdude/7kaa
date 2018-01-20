@@ -5,7 +5,7 @@
 
 
 template <typename Visitor>
-static void visit_dyn_array(Visitor *v, DynArray *da, int elementRecordSize)
+void visit_dyn_array(Visitor *v, DynArray *da, int elementRecordSize)
 {
 	using namespace FileIOVisitor;
 

@@ -58,9 +58,7 @@ void DynArrayB::visit_empty_room_array(Visitor* v)
 template <typename T, typename Visitor>
 void DynArrayB::accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visitor* v, T* obj), int recordSize)
 {
-	using namespace FileIOVisitor;
 	do_visit_as_value_array(v, visitObj, recordSize);
-
 	visit_empty_room_array(v);
 }
 
@@ -69,6 +67,17 @@ void DynArrayB::accept_visitor_as_ptr_array(Visitor* v, short (*getObjectId) (T*
 {
 	visit_array_size(v);
 	visit_ptr_array(v, getObjectId, createObj, visitObj, objectRecordSize);
+}
+
+template <typename Visitor>
+void DynArrayB::visit_array_size(Visitor* v)
+{
+	using namespace FileIOVisitor;
+	visit_property<int, int16_t>(v, this, &DynArray::size,
+		[this](int size) {
+			err_when(this->size() != 0); // i.e. visit should only be done on a 'fresh' instance
+			add_blank(size);
+		});
 }
 
 template <typename T, typename Visitor>
@@ -107,7 +116,7 @@ void DynArrayB::visit_ptr_array(Visitor* v, short (*getObjectId) (T* obj), T* (*
 
 		for (int i = size(); i > 0; --i)
 		{
-			if (get_ptr(i) == nullptr) // (add_blank() record)
+			if (!get_ptr(i)) // (add_blank() record)
 				linkout(i);
 		}
 	}
@@ -115,22 +124,10 @@ void DynArrayB::visit_ptr_array(Visitor* v, short (*getObjectId) (T* obj), T* (*
 	visit_empty_room_array(v);
 }
 
-template <typename Visitor>
-void DynArrayB::visit_array_size(Visitor* v)
-{
-	using namespace FileIOVisitor;
-	visit_property<int, int16_t>(v, this, &DynArray::size,
-		[this](int size) {
-			err_when(this->size() != 0); // i.e. visit should only be done on a 'fresh' instance
-			add_blank(size);
-		});
-}
-
-
 // Helper for getObjectId argument of accept_visitor_as_ptr_array, for DynArrayB's that just need to know if the object was present or not,
 // rather than what ID the object has, in order to recreate the array values.
 template <typename T>
-short yes_or_no_object_id (T* obj)
+short yes_or_no_object_id(T* obj)
 {
 	return !!obj;
 }
