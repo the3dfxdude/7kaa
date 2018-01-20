@@ -63,11 +63,6 @@ public:
 
    short damage_x_loc()    { return (cur_x + dmg_offset_x) >> ZOOM_X_SHIFT_COUNT; }
    short damage_y_loc()    { return (cur_y + dmg_offset_y) >> ZOOM_Y_SHIFT_COUNT; }
-
-	//--------- file functions -----------//
-
-	int 	write_file(File* filePtr);
-	int	read_file(File* filePtr);
 };
 
 //------- Define class TornadoArray ---------//

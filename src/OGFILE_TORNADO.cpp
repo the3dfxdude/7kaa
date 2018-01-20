@@ -22,6 +22,8 @@
 #include <OTORNADO.h>
 #include <file_io_visitor.h>
 #include <visit_sprite.h>
+#include <visitor_functions.h>
+#include <OGFILE_DYNARRAYB.inl>
 
 using namespace FileIOVisitor;
 
@@ -34,78 +36,29 @@ static void visit_tornado(Visitor *v, Tornado *t)
 	visit<int16_t>(v, &t->life_time);
 	visit<int16_t>(v, &t->dmg_offset_x);
 	visit<int16_t>(v, &t->dmg_offset_y);
+
+	if (is_reader_visitor(v))
+	{
+		t->sprite_info = sprite_res[t->sprite_id];
+		t->sprite_info->load_bitmap_res();
+	}
 }
 
-enum { TORNADO_RECORD_SIZE = 44 };
-
-//--------- Begin of function Tornado::write_file ---------//
-//
-int Tornado::write_file(File* filePtr)
+template <typename Visitor>
+static void visit_tornado_array(Visitor *v, TornadoArray *c)
 {
-	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_tornado<FileWriterVisitor>,
-		TORNADO_RECORD_SIZE);
+	enum { TORNADO_RECORD_SIZE = 44 };
+	visit<int16_t>(v, &c->restart_recno);
+	c->accept_visitor_as_ptr_array<Tornado>(v, yes_or_no_object_id<Tornado>, [](short) {return new Tornado;}, visit_tornado<Visitor>, TORNADO_RECORD_SIZE);
 }
-//----------- End of function Tornado::write_file ---------//
-
-//--------- Begin of function Tornado::read_file ---------//
-//
-int Tornado::read_file(File* filePtr)
-{
-	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_tornado<FileReaderVisitor>,
-		TORNADO_RECORD_SIZE))
-		return 0;
-
-	//------------ post-process the data read ----------//
-
-	sprite_info = sprite_res[sprite_id];
-	sprite_info->load_bitmap_res();
-
-	return 1;
-}
-//----------- End of function Tornado::read_file ---------//
-
-
 
 //-------- Start of function TornadoArray::write_file -------------//
 //
 int TornadoArray::write_file(File* filePtr)
 {
-	filePtr->file_put_short(restart_recno);  // variable in SpriteArray
-
-	int    i;
-	Tornado *tornadoPtr;
-
-	filePtr->file_put_short( size() );  // no. of tornados in tornado_array
-
-	for( i=1; i<=size() ; i++ )
-	{
-		tornadoPtr = (Tornado*) get_ptr(i);
-
-		//----- write tornadoId or 0 if the tornado is deleted -----//
-
-		if( !tornadoPtr )    // the tornado is deleted
-		{
-			filePtr->file_put_short(0);
-		}
-		else
-		{
-			filePtr->file_put_short(1);      // there is a tornado in this record
-
-											 //------ write data in the base class ------//
-
-			if( !tornadoPtr->write_file(filePtr) )
-				return 0;
-		}
-	}
-
-	//------- write empty room array --------//
-
-	{
-		FileWriterVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	return 1;
+	FileWriterVisitor v(filePtr);
+	visit_tornado_array(&v, this);
+	return v.good();
 }
 //--------- End of function TornadoArray::write_file -------------//
 
@@ -114,52 +67,8 @@ int TornadoArray::write_file(File* filePtr)
 //
 int TornadoArray::read_file(File* filePtr)
 {
-	restart_recno    = filePtr->file_get_short();
-
-	int     i, tornadoRecno, tornadoCount;
-	Tornado* tornadoPtr;
-
-	tornadoCount = filePtr->file_get_short();  // get no. of tornados from file
-
-	for( i=1 ; i<=tornadoCount ; i++ )
-	{
-		if( filePtr->file_get_short() == 0 )
-		{
-			add_blank(1);     // it's a DynArrayB function
-		}
-		else
-		{
-			//----- create tornado object -----------//
-
-			tornadoRecno = tornado_array.create_tornado();
-			tornadoPtr   = tornado_array[tornadoRecno];
-
-			//----- read data in base class --------//
-
-			if( !tornadoPtr->read_file( filePtr ) )
-				return 0;
-		}
-	}
-
-	//-------- linkout() those record added by add_blank() ----------//
-	//-- So they will be marked deleted in DynArrayB and can be -----//
-	//-- undeleted and used when a new record is going to be added --//
-
-	for( i=size() ; i>0 ; i-- )
-	{
-		DynArrayB::go(i);             // since TornadoArray has its own go() which will call GroupArray::go()
-
-		if( get_ptr() == NULL )       // add_blank() record
-			linkout();
-	}
-
-	//------- read empty room array --------//
-
-	{
-		FileReaderVisitor v(filePtr);
-		visit_empty_room_array(&v);
-	}
-
-	return 1;
+	FileReaderVisitor v(filePtr);
+	visit_tornado_array(&v, this);
+	return v.good();
 }
 //--------- End of function TornadoArray::read_file ---------------//
