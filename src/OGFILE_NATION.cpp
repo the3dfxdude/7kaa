@@ -346,7 +346,7 @@ static void visit_nation(Visitor *v, Nation *nat)
 }
 
 template <typename Visitor>
-static void visit_nation_array(Visitor *v, NationArray *na)
+static void visit_nation_array_members(Visitor *v, NationArray *na)
 {
 	/* DynArray and DynArrayB skipped */
 
@@ -389,44 +389,40 @@ static void visit_nation_array(Visitor *v, NationArray *na)
 		visit_array<int8_t>(v, na->human_name_array[n]);
 }
 
+template <typename Visitor>
+static void visit_nation_array(Visitor *v, NationArray *na)
+{
+	visit_nation_array_members(v, na);
+
+	enum { NATION_RECORD_SIZE = 2202 };
+	na->accept_visitor_as_ptr_array<Nation>(v, yes_or_no_object_id<Nation>, [](short) {return new Nation ();}, visit_nation<Visitor>, NATION_RECORD_SIZE);
+
+	if (is_reader_visitor(v))
+		na->player_ptr = (*na)[na->player_recno];
+}
 
 enum { NATION_ARRAY_RECORD_SIZE = 288 };
-enum { NATION_RECORD_SIZE = 2202 };
 
 //-------- Start of function NationArray::write_file -------------//
 //
 int NationArray::write_file(File* filePtr)
 {
-	FileWriterVisitor v(filePtr);
-
-	//------ write info in NationArray ------//
-
-	v.with_record_size(NATION_ARRAY_RECORD_SIZE);
-	visit_nation_array(&v, this);
-	if (!v.good())
-		return 0;
-
-	//---------- write Nations --------------//
-
-	accept_visitor_as_ptr_array<Nation>(&v, yes_or_no_object_id<Nation>, [](short) {return new Nation ();}, visit_nation<FileWriterVisitor>, NATION_RECORD_SIZE);
-
-	return v.good();
+	return visit_with_record_size(filePtr, this, visit_nation_array<FileWriterVisitor>, NATION_ARRAY_RECORD_SIZE);
 }
 //--------- End of function NationArray::write_file -------------//
 
-
-enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
-enum { VERSION_1_NATION_RECORD_SIZE = 2182 };
 
 //-------- Start of function NationArray::read_file -------------//
 //
 int NationArray::read_file(File* filePtr)
 {
-	FileReaderVisitor v(filePtr);
-
 	//------ read info in NationArray ------//
 	if(!GameFile::read_file_same_version)
 	{
+		enum { VERSION_1_NATION_ARRAY_RECORD_SIZE = 282 };
+		enum { VERSION_1_NATION_RECORD_SIZE = 2182 };
+
+		FileReaderVisitor v(filePtr);
 		Version_1_NationArray *oldNationArrayPtr = (Version_1_NationArray*) mem_add(sizeof(Version_1_NationArray));
 		if (!visit_with_record_size<FileReaderVisitor>(filePtr, oldNationArrayPtr,
 			&visit_version_1_nation_array<FileReaderVisitor>,
@@ -439,20 +435,15 @@ int NationArray::read_file(File* filePtr)
 		mem_del(oldNationArrayPtr);
 
 		accept_visitor_as_ptr_array<Nation>(&v, yes_or_no_object_id<Nation>, [](short) {return new Nation ();}, visit_version_1_nation, VERSION_1_NATION_RECORD_SIZE);
+
+		player_ptr = nation_array[player_recno];
+
+		return v.good();
 	}
 	else
 	{
-		v.with_record_size(NATION_ARRAY_RECORD_SIZE);
-		visit_nation_array(&v, this);
-		if (!v.good())
-			return 0;
-
-		accept_visitor_as_ptr_array<Nation>(&v, yes_or_no_object_id<Nation>, [](short) {return new Nation ();}, visit_nation<FileReaderVisitor>, NATION_RECORD_SIZE);
+		return visit_with_record_size(filePtr, this, visit_nation_array<FileReaderVisitor>, NATION_ARRAY_RECORD_SIZE);
 	}
-
-	player_ptr = nation_array[player_recno];
-
-	return v.good();
 }
 //--------- End of function NationArray::read_file ---------------//
 
