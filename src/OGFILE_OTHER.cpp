@@ -445,7 +445,7 @@ static void visit_location_members(Visitor* v, Location* c)
 }
 
 template <typename Visitor>
-static void visit_world_members(Visitor* v, World* c)
+static void visit_world(Visitor* v, World* c)
 {
 	//--------- save map -------------//
 
@@ -483,6 +483,13 @@ static void visit_world_members(Visitor* v, World* c)
 	visit<int16_t>(v, &c->zoom_matrix->lightning_y1);
 	visit<int16_t>(v, &c->zoom_matrix->lightning_x2);
 	visit<int16_t>(v, &c->zoom_matrix->lightning_y2);
+
+	if (is_reader_visitor(v))
+	{
+		c->map_matrix->last_map_mode = -1;
+		c->zoom_matrix->top_x_loc = c->map_matrix->cur_x_loc;
+		c->zoom_matrix->top_y_loc = c->map_matrix->cur_y_loc;
+	}
 }
 
 //-------- Start of function World::write_file -------------//
@@ -490,7 +497,7 @@ static void visit_world_members(Visitor* v, World* c)
 int World::write_file(File* filePtr)
 {
 	FileWriterVisitor v(filePtr);
-	visit_world_members(&v, this);
+	visit_world(&v, this);
 	return v.good();
 }
 //--------- End of function World::write_file ---------------//
@@ -501,10 +508,7 @@ int World::write_file(File* filePtr)
 int World::read_file(File* filePtr)
 {
 	FileReaderVisitor v(filePtr);
-	visit_world_members(&v, this);
-	map_matrix->last_map_mode = -1;
-	zoom_matrix->top_x_loc = map_matrix->cur_x_loc;
-	zoom_matrix->top_y_loc = map_matrix->cur_y_loc;
+	visit_world(&v, this);
 	sys.zoom_need_redraw = 1;
 	return v.good();
 }
