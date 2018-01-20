@@ -266,9 +266,9 @@ static void visit_raw_value_array(Visitor* v, T*& rawArray, void (*visitValue) (
 {
 	visit_property<SizeT, int16_t>(v, [arrayElementCount]() {return arrayElementCount;},
 		[&arrayElementCount, &rawArray](SizeT visitSize) {
-		arrayElementCount = visitSize;
-		rawArray = (T*) mem_add(visitSize * sizeof(T));
-	});
+			arrayElementCount = visitSize;
+			rawArray = (T*) mem_add(visitSize * sizeof(T));
+		});
 
 	v->with_record_size(arrayElementCount * valueRecordSize);
 	for (SizeT i = 0; i < arrayElementCount; ++i) {

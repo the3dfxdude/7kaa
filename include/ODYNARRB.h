@@ -77,7 +77,7 @@ public:
 	template <typename T, typename Visitor>
 	void accept_visitor_as_ptr_array(Visitor* v, short (*getObjectId) (T* obj), T* (*createObj)(short), void (*visitObj)(Visitor* v, T* obj), int objectRecordSize);
 
-	// Note: the below two functions are helpers for accept_visitor_as_ptr_array and, unfortunately, also called by UnitArray, because it uniquely has visits between the size() and the array visits.
+	// Note: the below two functions are helpers for accept_visitor_as_ptr_array and, unfortunately, also called by UnitArray and TownArray, because these have fields stored between the size() and the array visits.
 	template <typename Visitor>
 	void visit_array_size(Visitor* v);
 	template <typename T, typename Visitor>
