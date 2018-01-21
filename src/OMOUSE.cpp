@@ -20,7 +20,7 @@
  */
 
 //Filename    : OMOUSE.CPP
-//Description : Mouse handling Object
+//Description : Input event class
 
 #include <OMOUSE.h>
 #include <OMOUSECR.h>
@@ -49,9 +49,9 @@ static int update_x1, update_y1, update_x2, update_y2;          // coordination 
 static unsigned long click_threshold = (long)(0.3 * 1000);
 
 
-//--------- Start of MouseSDL::MouseSDL ---------//
+//--------- Start of Mouse::Mouse ---------//
 //
-MouseSDL::MouseSDL()
+Mouse::Mouse()
 {
 	init_flag = 0;
 	handle_flicking = 0;
@@ -75,23 +75,23 @@ MouseSDL::MouseSDL()
 	double_speed_threshold = DEFAULT_DOUBLE_SPEED_THRESHOLD;
 	triple_speed_threshold = DEFAULT_TRIPLE_SPEED_THRESHOLD;
 }
-//---------- End of MouseSDL::MouseSDL ---------//
+//---------- End of Mouse::Mouse ---------//
 
 
-//---------- Begin of MouseSDL::~MouseSDL --------//
+//---------- Begin of Mouse::~Mouse --------//
 //
 // Deinitialize the mouse driver, reset event handler
 //
-MouseSDL::~MouseSDL()
+Mouse::~Mouse()
 {
 	deinit();
 }
-//------------ End of MouseSDL::~MouseSDL --------//
+//------------ End of Mouse::~Mouse --------//
 
 
-//------------ Start of MouseSDL::init ------------//
+//------------ Start of Mouse::init ------------//
 //
-void MouseSDL::init()
+void Mouse::init()
 {
 	if( !SDL_WasInit(SDL_INIT_VIDEO) )
 		return;
@@ -114,12 +114,12 @@ void MouseSDL::init()
 
 	init_flag = 1;
 }
-//------------- End of MouseSDL::init -------------//
+//------------- End of Mouse::init -------------//
 
 
-//------------ Start of MouseSDL::deinit ------------//
+//------------ Start of Mouse::deinit ------------//
 //
-void MouseSDL::deinit()
+void Mouse::deinit()
 {
 	if( vga_update_buf )
 	{
@@ -129,38 +129,38 @@ void MouseSDL::deinit()
 
 	init_flag = 0;
 }
-//------------- End of MouseSDL::deinit -------------//
+//------------- End of Mouse::deinit -------------//
 
 
-//--------- Start of MouseSDL::hide -------//
+//--------- Start of Mouse::hide -------//
 //
 // Suspend the mouse function, use resume() to resume to function
 //
-void MouseSDL::hide()
+void Mouse::hide()
 {
 	mouse_cursor.hide_all_flag=1;
 
 	mouse_cursor.process(cur_x, cur_y);
 }
-//---------- End of MouseSDL::hide --------//
+//---------- End of Mouse::hide --------//
 
 
-//--------- Start of MouseSDL::show -------//
+//--------- Start of Mouse::show -------//
 //
 // Resume the mouse function which is previously hidden by hide()
 //
-void MouseSDL::show()
+void Mouse::show()
 {
 	mouse_cursor.hide_all_flag=0;
 
 	mouse_cursor.process(cur_x, cur_y);
 }
-//---------- End of MouseSDL::show --------//
+//---------- End of Mouse::show --------//
 
 
-//--------- Begin of MouseSDL::hide_area ----------//
+//--------- Begin of Mouse::hide_area ----------//
 //
-void MouseSDL::hide_area(int x1, int y1, int x2, int y2)
+void Mouse::hide_area(int x1, int y1, int x2, int y2)
 {
 	mouse_cursor.hide_area_flag++;
 
@@ -212,12 +212,12 @@ void MouseSDL::hide_area(int x1, int y1, int x2, int y2)
 		mouse_cursor.process(cur_x, cur_y);
 	}
 }
-//--------- End of MouseSDL::hide_area --------------//
+//--------- End of Mouse::hide_area --------------//
 
 
-//--------- Begin of MouseSDL::show_area ----------//
+//--------- Begin of Mouse::show_area ----------//
 //
-void MouseSDL::show_area()
+void Mouse::show_area()
 {
 	mouse_cursor.hide_area_flag--;
 
@@ -253,14 +253,14 @@ void MouseSDL::show_area()
 		}
 	}
 }
-//--------- End of MouseSDL::show_area --------------//
+//--------- End of Mouse::show_area --------------//
 
 
-//--------- Start of MouseSDL::add_event ---------//
+//--------- Start of Mouse::add_event ---------//
 //
 // Called by handler interrupt to procss the state
 //
-void MouseSDL::add_event(MouseEvent *mouseEvent)
+void Mouse::add_event(MouseEvent *mouseEvent)
 {
 	//---- call the game object to see if the mouse cursor icon needs to be changed, or if the nation selection square needs to be activated ----//
 
@@ -283,14 +283,14 @@ void MouseSDL::add_event(MouseEvent *mouseEvent)
 	if(++head_ptr >= EVENT_BUFFER_SIZE)       // increment the head ptr
 		head_ptr = 0;
 }
-//----------- End of MouseSDL::add_event ----------//
+//----------- End of Mouse::add_event ----------//
 
 
-//--------- Start of MouseSDL::add_key_event ---------//
+//--------- Start of Mouse::add_key_event ---------//
 //
 // Called by key handler to save the key pressed
 //
-void MouseSDL::add_key_event(unsigned scanCode, unsigned long timeStamp)
+void Mouse::add_key_event(unsigned scanCode, unsigned long timeStamp)
 {
 	if((head_ptr == tail_ptr-1) ||               // see if the buffer is full
 		(head_ptr == EVENT_BUFFER_SIZE-1 && tail_ptr == 0))
@@ -313,10 +313,10 @@ void MouseSDL::add_key_event(unsigned scanCode, unsigned long timeStamp)
 	if(++head_ptr >= EVENT_BUFFER_SIZE)  // increment the head ptr
 		head_ptr = 0;
 }
-//----------- End of MouseSDL::add_key_event ----------//
+//----------- End of Mouse::add_key_event ----------//
 
 
-//--------- Start of MouseSDL::get_event ---------//
+//--------- Start of Mouse::get_event ---------//
 //
 // Get next event from the event buffer
 //
@@ -330,7 +330,7 @@ void MouseSDL::add_key_event(unsigned scanCode, unsigned long timeStamp)
 //			if( RIGHT_BUTTON or RIGHT_BUTTON_RELEASE, read click_buffer[RIGHT_BUTTON]
 // 3. if is_key_event(), check event_skey_state, scan_code and key_code 
 //
-int MouseSDL::get_event()
+int Mouse::get_event()
 {
 	if(head_ptr == tail_ptr)     // no event queue left in the buffer
 	{
@@ -399,10 +399,10 @@ int MouseSDL::get_event()
 
    return 1;
 }
-//----------- End of MouseSDL::get_event ----------//
+//----------- End of Mouse::get_event ----------//
 
 
-//--------- Begin of MouseSDL::in_area ----------//
+//--------- Begin of Mouse::in_area ----------//
 //
 // <Real-time access>
 //
@@ -413,14 +413,14 @@ int MouseSDL::get_event()
 // Return : 1 - if the mouse cursor is in the area
 //          0 - if not
 //
-int MouseSDL::in_area(int x1, int y1, int x2, int y2)
+int Mouse::in_area(int x1, int y1, int x2, int y2)
 {
 	return( cur_x >= x1 && cur_y >= y1 && cur_x <= x2 && cur_y <= y2 );
 }
-//--------- End of MouseSDL::in_area --------------//
+//--------- End of Mouse::in_area --------------//
 
 
-//--------- Begin of MouseSDL::press_area ----------//
+//--------- Begin of Mouse::press_area ----------//
 //
 // <Real-time access>
 //
@@ -433,7 +433,7 @@ int MouseSDL::in_area(int x1, int y1, int x2, int y2)
 //			   1 - if the area has been pressed (right button)
 //          0 - if not
 //
-int MouseSDL::press_area(int x1, int y1, int x2, int y2, int buttonId)
+int Mouse::press_area(int x1, int y1, int x2, int y2, int buttonId)
 {
 	if( cur_x >= x1 && cur_y >= y1 && cur_x <= x2 && cur_y <= y2 )
 	{
@@ -446,14 +446,14 @@ int MouseSDL::press_area(int x1, int y1, int x2, int y2, int buttonId)
 
 	return 0;
 }
-//--------- End of MouseSDL::press_area --------------//
+//--------- End of Mouse::press_area --------------//
 
 
-//--------- Begin of MouseSDL::set_boundary ----------//
+//--------- Begin of Mouse::set_boundary ----------//
 //
 // for each parameter, put -1 to mean unchange
 //
-void MouseSDL::set_boundary(int x1, int y1, int x2, int y2)
+void Mouse::set_boundary(int x1, int y1, int x2, int y2)
 {
 	if( x1 >= 0)
 		bound_x1 = x1;
@@ -464,21 +464,21 @@ void MouseSDL::set_boundary(int x1, int y1, int x2, int y2)
 	if( y2 >= 0)
 		bound_y2 = y2 > MOUSE_Y_UPPER_LIMIT ? MOUSE_Y_UPPER_LIMIT : y2;
 }
-//--------- End of MouseSDL::set_boundary ----------//
+//--------- End of Mouse::set_boundary ----------//
 
 
-//--------- Begin of MouseSDL::reset_boundary ----------//
-void MouseSDL::reset_boundary()
+//--------- Begin of Mouse::reset_boundary ----------//
+void Mouse::reset_boundary()
 {
 	bound_x1 = 0;
 	bound_y1 = 0;
 	bound_x2 = MOUSE_X_UPPER_LIMIT;
 	bound_y2 = MOUSE_Y_UPPER_LIMIT;
 }
-//--------- End of MouseSDL::set_boundary ----------//
+//--------- End of Mouse::set_boundary ----------//
 
 
-//--------- Begin of MouseSDL::single_click ----------//
+//--------- Begin of Mouse::single_click ----------//
 //
 // <Event queue access>
 //
@@ -492,7 +492,7 @@ void MouseSDL::reset_boundary()
 //				2 - if the area has been clicked (right click)
 //          0 - if not
 //
-int MouseSDL::single_click(int x1, int y1, int x2, int y2,int buttonId)
+int Mouse::single_click(int x1, int y1, int x2, int y2,int buttonId)
 {
 	if( !has_mouse_event )
 		return 0;
@@ -527,10 +527,10 @@ int MouseSDL::single_click(int x1, int y1, int x2, int y2,int buttonId)
 
    return 0;
 }
-//--------- End of MouseSDL::single_click --------------//
+//--------- End of Mouse::single_click --------------//
 
 
-//--------- Begin of MouseSDL::double_click ----------//
+//--------- Begin of Mouse::double_click ----------//
 //
 // <Event queue access>
 //
@@ -548,7 +548,7 @@ int MouseSDL::single_click(int x1, int y1, int x2, int y2,int buttonId)
 //				2 - if the area has been clicked (right click)
 //          0 - if not
 //
-int MouseSDL::double_click(int x1, int y1, int x2, int y2,int buttonId)
+int Mouse::double_click(int x1, int y1, int x2, int y2,int buttonId)
 {
 	if( !has_mouse_event )
       return 0;
@@ -583,10 +583,10 @@ int MouseSDL::double_click(int x1, int y1, int x2, int y2,int buttonId)
 
    return 0;
 }
-//--------- End of MouseSDL::double_click --------------//
+//--------- End of Mouse::double_click --------------//
 
 
-//--------- Begin of MouseSDL::any_click ----------//
+//--------- Begin of Mouse::any_click ----------//
 //
 // <Event queue access>
 //
@@ -599,7 +599,7 @@ int MouseSDL::double_click(int x1, int y1, int x2, int y2,int buttonId)
 // Return : >0 - the no. of click if the area has been clicked
 //          0  - if not
 //
-int MouseSDL::any_click(int x1, int y1, int x2, int y2,int buttonId)
+int Mouse::any_click(int x1, int y1, int x2, int y2,int buttonId)
 {
    if( !has_mouse_event )
       return 0;
@@ -634,10 +634,10 @@ int MouseSDL::any_click(int x1, int y1, int x2, int y2,int buttonId)
 
 	return 0;
 }
-//--------- End of MouseSDL::any_click --------------//
+//--------- End of Mouse::any_click --------------//
 
 
-//--------- Begin of MouseSDL::any_click ----------//
+//--------- Begin of Mouse::any_click ----------//
 //
 // <Event queue access>
 //
@@ -650,7 +650,7 @@ int MouseSDL::any_click(int x1, int y1, int x2, int y2,int buttonId)
 // Return : >0 - the no. of click if the area has been clicked
 //          0  - if not
 //
-int MouseSDL::any_click(int buttonId)
+int Mouse::any_click(int buttonId)
 {
 	if( !has_mouse_event )
       return 0;
@@ -675,10 +675,10 @@ int MouseSDL::any_click(int buttonId)
 
 	return 0;
 }
-//--------- End of MouseSDL::any_click --------------//
+//--------- End of Mouse::any_click --------------//
 
 
-//--------- Begin of MouseSDL::release_click ----------//
+//--------- Begin of Mouse::release_click ----------//
 //
 // <Event queue access>
 //
@@ -692,7 +692,7 @@ int MouseSDL::any_click(int buttonId)
 //				2 - if the area has been clicked (right click)
 //          0 - if not
 //
-int MouseSDL::release_click(int x1, int y1, int x2, int y2,int buttonId)
+int Mouse::release_click(int x1, int y1, int x2, int y2,int buttonId)
 {
 	if( !has_mouse_event )
 		return 0;
@@ -725,14 +725,14 @@ int MouseSDL::release_click(int x1, int y1, int x2, int y2,int buttonId)
 
    return 0;
 }
-//--------- End of MouseSDL::release_click --------------//
+//--------- End of Mouse::release_click --------------//
 
 
-//--------- Begin of MouseSDL::poll_event ----------//
+//--------- Begin of Mouse::poll_event ----------//
 //
 // Poll mouse events from the direct mouse VXD.
 //
-void MouseSDL::poll_event()
+void Mouse::poll_event()
 {
 	if( !init_flag )
 		return;
@@ -865,13 +865,13 @@ void MouseSDL::poll_event()
 		power.mouse_handler();
 	}
 }
-//--------- End of MouseSDL::poll_event --------------//
+//--------- End of Mouse::poll_event --------------//
 
 
 // ####### begin Gilbert 31/10 #########//
-//--------- Begin of MouseSDL::update_skey_state ----------//
+//--------- Begin of Mouse::update_skey_state ----------//
 // called after task switch to get the lastest state of ctrl/alt/shift key
-void MouseSDL::update_skey_state()
+void Mouse::update_skey_state()
 {
 	int modstate = SDL_GetModState();
 
@@ -900,11 +900,11 @@ void MouseSDL::update_skey_state()
 		skey_state |= GRAPH_KEY_MASK;
 	skey_state |= INSERT_STATE_MASK; // enable insert mode by default
 }
-//--------- End of MouseSDL::update_skey_state ----------//
+//--------- End of Mouse::update_skey_state ----------//
 // ####### end Gilbert 31/10 #########//
 
 
-//--------- Begin of MouseSDL::wait_press ----------//
+//--------- Begin of Mouse::wait_press ----------//
 //
 // Wait until one of the mouse buttons is pressed.
 //
@@ -914,7 +914,7 @@ void MouseSDL::update_skey_state()
 // return: <int> 1-left mouse button
 //					  2-right mouse button
 //
-int MouseSDL::wait_press(int timeOutSecond)
+int Mouse::wait_press(int timeOutSecond)
 {
 	while( mouse.left_press || mouse.any_click() || mouse.key_code )		// avoid repeat clicking
 	{
@@ -965,30 +965,30 @@ int MouseSDL::wait_press(int timeOutSecond)
 
 	return rc;
 }
-//--------- End of MouseSDL::wait_press --------------//
+//--------- End of Mouse::wait_press --------------//
 
 
-//--------- Begin of MouseSDL::reset_click ----------//
+//--------- Begin of Mouse::reset_click ----------//
 //
 // Reset queued mouse clicks.
 //
-void MouseSDL::reset_click()
+void Mouse::reset_click()
 {
 	click_buffer[0].count=0;
 	click_buffer[1].count=0;
 }
-//--------- End of MouseSDL::reset_click --------------//
+//--------- End of Mouse::reset_click --------------//
 
 
-// ------ Begin of MouseSDL::micky_to_displacement -------//
-int MouseSDL::micky_to_displacement(int d)
+// ------ Begin of Mouse::micky_to_displacement -------//
+int Mouse::micky_to_displacement(int d)
 {
 	return abs(d) >= double_speed_threshold ? d+d : d;
 }
-// ------ End of MouseSDL::micky_to_displacement -------//
+// ------ End of Mouse::micky_to_displacement -------//
 
 
-// ------ Begin of MouseSDL::is_key -------//
+// ------ Begin of Mouse::is_key -------//
 // compare key with key code
 // e.g. to test a key is alt-a,
 // call mouse.is_key(mouse.scan_code, mouse.event_skey_state, 'a', K_CHAR_KEY | K_IS_ALT)
@@ -1000,7 +1000,7 @@ int MouseSDL::micky_to_displacement(int d)
 // the same function call returns 0
 // use mouse.is_key(mouse.scan_code, mouse.event_skey_state, (unsigned short) 0, K_CHAR_KEY | K_IS_ALT ) instead
 //
-int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short charValue, unsigned flags)
+int Mouse::is_key(unsigned scanCode, unsigned short skeyState, unsigned short charValue, unsigned flags)
 {
 	unsigned short priChar = 0, shiftChar = 0, capitalChar = 0;
 #if(defined(FRENCH)||defined(GERMAN)||defined(SPANISH))
@@ -1330,11 +1330,11 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, unsigned short
 	else
 		return 0;
 }
-// ------ End of MouseSDL::is_key -------//
+// ------ End of Mouse::is_key -------//
 
 
-// ------ Begin of MouseSDL::is_key -------//
-int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, unsigned flags)
+// ------ Begin of Mouse::is_key -------//
+int Mouse::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, unsigned flags)
 {
 	int len = strlen(keyStr);
 
@@ -1460,20 +1460,20 @@ int MouseSDL::is_key(unsigned scanCode, unsigned short skeyState, char *keyStr, 
 
 	return retFlag && retFlag2;
 }
-// ------ End of MouseSDL::is_key -------//
+// ------ End of Mouse::is_key -------//
 
 
-// ------ Begin of MouseDInput::disp_count_start -------//
-void MouseSDL::disp_count_start()
+// ------ Begin of Mouse::disp_count_start -------//
+void Mouse::disp_count_start()
 {
 	// unimplemented
 }
-// ------ End of MouseDInput::disp_count_start -------//
+// ------ End of Mouse::disp_count_start -------//
 
 
-// ------ Begin of MouseDInput::disp_count_end -------//
-void MouseSDL::disp_count_end()
+// ------ Begin of Mouse::disp_count_end -------//
+void Mouse::disp_count_end()
 {
 	// unimplemented
 }
-// ------ End of MouseDInput::disp_count_end -------//
+// ------ End of Mouse::disp_count_end -------//

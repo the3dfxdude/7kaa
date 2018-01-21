@@ -177,7 +177,6 @@ noinst_HEADERS = \
 	input_stream.h \
 	mem_input_stream.h \
 	misc_uuid.h \
-	mouse_sdl.h \
 	multiplayer.h \
 	openal_audio.h \
 	output_stream.h \
