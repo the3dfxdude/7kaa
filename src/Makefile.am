@@ -252,6 +252,7 @@ bin_PROGRAMS = 7kaa
 	OU_VEHI.cpp \
 	OVBROWIF.cpp \
 	OVBROWSE.cpp \
+	OVGA.cpp \
 	OVGABUF.cpp \
 	OVGABUF2.cpp \
 	OVGALOCK.cpp \
@@ -281,7 +282,6 @@ bin_PROGRAMS = 7kaa
 	output_stream.cpp \
 	player_desc.cpp \
 	surface_sdl.cpp \
-	vga_sdl.cpp \
 	vgautil.cpp \
 	vgautil2.cpp
 

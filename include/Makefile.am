@@ -187,7 +187,5 @@ noinst_HEADERS = \
 	surface_base.h \
 	surface_sdl.h \
 	version.h \
-	vga_base.h \
-	vga_sdl.h \
 	vga_util.h \
 	wav_stream.h

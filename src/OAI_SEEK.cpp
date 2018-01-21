@@ -455,7 +455,7 @@ int Nation::find_best_firm_loc(short buildFirmId, short refXLoc, short refYLoc, 
 	Firm* firmPtr;
 	Town* townPtr;
 
-	BYTE buildRegionId  = locPtr->region_id;
+	uint8_t buildRegionId  = locPtr->region_id;
 	int  buildIsPlateau = locPtr->is_plateau();
 
 	if( locPtr->is_firm() )
