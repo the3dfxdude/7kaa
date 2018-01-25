@@ -260,6 +260,8 @@ void Mouse::show_area()
 //
 // Called by handler interrupt to procss the state
 //
+// This assumes a mouse button event, even though it copies any event data
+// passed in.
 void Mouse::add_event(MouseEvent *mouseEvent)
 {
 	//---- call the game object to see if the mouse cursor icon needs to be changed, or if the nation selection square needs to be activated ----//
@@ -286,10 +288,66 @@ void Mouse::add_event(MouseEvent *mouseEvent)
 //----------- End of Mouse::add_event ----------//
 
 
+//--------- Start of Mouse::add_event ---------//
+//
+// Called by handler interrupt to procss the state
+//
+// This assumes a mouse button event.
+void Mouse::add_event(MouseEventType type)
+{
+	//---- call the game object to see if the mouse cursor icon needs to be changed, or if the nation selection square needs to be activated ----//
+
+	power.mouse_handler();
+
+	//--------- update the mouse cursor ----------//
+
+	mouse_cursor.process(cur_x, cur_y);     // repaint mouse cursor
+
+	//-------- save state into the event queue --------//
+
+	if((head_ptr == tail_ptr-1) ||            // see if the buffer is full
+		(head_ptr == EVENT_BUFFER_SIZE-1 && tail_ptr == 0))
+	{
+		return;
+	}
+
+	MouseEvent *ev = event_buffer + head_ptr;
+
+	ev->event_type = type;
+	ev->scan_code = 0;
+	ev->skey_state = skey_state;
+	ev->time = misc.get_time();
+
+	ev->x = cur_x;
+	ev->y = cur_y;
+
+	switch(type)
+	{
+	case LEFT_BUTTON:
+		left_press = LEFT_BUTTON_MASK;
+		break;
+	case LEFT_BUTTON_RELEASE:
+		left_press = 0;
+		break;
+	case RIGHT_BUTTON:
+		right_press = RIGHT_BUTTON_MASK;
+		break;
+	case RIGHT_BUTTON_RELEASE:
+		right_press = 0;
+		break;
+	}
+
+	if(++head_ptr >= EVENT_BUFFER_SIZE)       // increment the head ptr
+		head_ptr = 0;
+}
+//----------- End of Mouse::add_event ----------//
+
+
 //--------- Start of Mouse::add_key_event ---------//
 //
 // Called by key handler to save the key pressed
 //
+// This assumes a keyboard button down event.
 void Mouse::add_key_event(unsigned scanCode, unsigned long timeStamp)
 {
 	if((head_ptr == tail_ptr-1) ||               // see if the buffer is full
@@ -734,139 +792,41 @@ int Mouse::release_click(int x1, int y1, int x2, int y2,int buttonId)
 //
 void Mouse::poll_event()
 {
-	if( !init_flag )
-		return;
-
-	SDL_Event event;
-	int moveFlag;
-
-	moveFlag = 0;
-
-	while (SDL_PeepEvents(&event,
-			1,
-			SDL_GETEVENT,
-			SDL_KEYDOWN,
-			SDL_JOYBUTTONUP)) {
-
-		MouseEvent ev;
-
-		switch (event.type) {
-		case SDL_MOUSEMOTION:
-			if(vga.is_input_grabbed()) {
-#ifdef MOUSE_ACCEL
-				cur_x += micky_to_displacement(event.motion.xrel);
-				cur_y += micky_to_displacement(event.motion.yrel);
-#else
-				cur_x += event.motion.xrel;
-				cur_y += event.motion.yrel;
-#endif
-				if(cur_x < bound_x1)
-					cur_x = bound_x1;
-				else if(cur_x > bound_x2)
-					cur_x = bound_x2;
-				if(cur_y < bound_y1)
-					cur_y = bound_y1;
-				else if(cur_y > bound_y2)
-					cur_y = bound_y2;
-			} else {
-				cur_x = event.motion.x;
-				cur_y = event.motion.y;
-			}
-			moveFlag = 1;
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			ev.x = cur_x;
-			ev.y = cur_y;
-			ev.time = misc.get_time(); //mouseMsg->dwTimeStamp;
-			ev.scan_code = 0;
-			ev.skey_state = skey_state;
-
-			if (event.button.button == SDL_BUTTON_LEFT) {
-	//			left_press = (event.button.state == SDL_PRESSED);
-				left_press = LEFT_BUTTON_MASK;
-				ev.event_type = LEFT_BUTTON;
-				add_event(&ev);
-			} else if (event.button.button == SDL_BUTTON_RIGHT) {
-				//right_press = (event.button.state == SDL_PRESSED);
-				right_press = RIGHT_BUTTON_MASK;
-				ev.event_type = RIGHT_BUTTON;
-				add_event(&ev);
-			}
-			break;
-		case SDL_MOUSEBUTTONUP:
-			ev.x = cur_x;
-			ev.y = cur_y;
-			ev.time = misc.get_time(); //mouseMsg->dwTimeStamp;
-			ev.scan_code = 0;
-			ev.skey_state = skey_state;
-
-			if (event.button.button == SDL_BUTTON_LEFT) {
-//				left_press = !(event.button.state == SDL_RELEASED);
-				left_press = 0;
-				ev.event_type = LEFT_BUTTON_RELEASE;
-				add_event(&ev);
-				reset_boundary();
-			} else if (event.button.button == SDL_BUTTON_RIGHT) {
-				//right_press = !(event.button.state == SDL_RELEASED);
-				right_press = 0;
-				ev.event_type = RIGHT_BUTTON_RELEASE;
-				add_event(&ev);
-			}
-			break;
-		case SDL_KEYDOWN:
-		{
-			int bypass = 0;
-			int mod = event.key.keysym.mod &
-					(KMOD_CTRL|KMOD_SHIFT|KMOD_ALT);
-			if (mod == KMOD_LALT || mod == KMOD_RALT) {
-				if (event.key.keysym.sym == SDLK_RETURN) {
-					bypass = 1;
-					sys.toggle_full_screen_flag = 1;
-				} else if (event.key.keysym.sym == SDLK_F4) {
-					bypass = 1;
-					sys.signal_exit_flag = 1;
-				} else if (event.key.keysym.sym == SDLK_TAB) {
-					bypass = 1;
-					SDL_Window *window = SDL_GetWindowFromID(event.key.windowID);
-					SDL_MinimizeWindow(window);
-				}
-			} else if (mod == KMOD_LCTRL || mod == KMOD_RCTRL) {
-				if (event.key.keysym.sym == SDLK_g) {
-					bypass = 1;
-					vga.set_window_grab(-1);
-				}
-			}
-			if (!bypass) {
-				update_skey_state();
-				add_key_event(event.key.keysym.sym,
-					      misc.get_time());
-			}
-			break;
-		}
-		case SDL_KEYUP:
-			update_skey_state();
-			break;
-		case SDL_TEXTINPUT:
-		case SDL_JOYAXISMOTION:
-		case SDL_JOYBALLMOTION:
-		case SDL_JOYHATMOTION:
-		case SDL_JOYBUTTONDOWN:
-		case SDL_JOYBUTTONUP:
-		default:
-			ERR("unhandled event %d\n", event.type);
-			break;
-		}
-	}
-
-
-	if(moveFlag)
-	{
-		mouse_cursor.process(cur_x, cur_y);     // repaint mouse cursor
-		power.mouse_handler();
-	}
 }
 //--------- End of Mouse::poll_event --------------//
 
+
+//--------- Begin of Mouse::process_mouse_motion ---------//
+void Mouse::process_mouse_motion(int x, int y)
+{
+	if( vga.is_input_grabbed() )
+	{
+#ifdef MOUSE_ACCEL
+		cur_x += micky_to_displacement(x);
+		cur_y += micky_to_displacement(y);
+#else
+		cur_x += x;
+		cur_y += y;
+#endif
+		if( cur_x < bound_x1 )
+			cur_x = bound_x1;
+		else if( cur_x > bound_x2 )
+			cur_x = bound_x2;
+		if( cur_y < bound_y1 )
+			cur_y = bound_y1;
+		else if( cur_y > bound_y2 )
+			cur_y = bound_y2;
+	}
+	else
+	{
+		cur_x = x;
+		cur_y = y;
+	}
+
+	mouse_cursor.process(cur_x, cur_y);     // repaint mouse cursor
+	power.mouse_handler();
+}
+//--------- End of Mouse::process_mouse_motion ---------//
 
 // ####### begin Gilbert 31/10 #########//
 //--------- Begin of Mouse::update_skey_state ----------//

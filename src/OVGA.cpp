@@ -451,53 +451,126 @@ void Vga::handle_messages()
 {
    SDL_Event event;
 
-   SDL_PumpEvents();
-
-   while (SDL_PeepEvents(&event,
-                         1,
-                         SDL_GETEVENT,
-                         SDL_QUIT,
-                         SDL_SYSWMEVENT)) {
-
+   while( SDL_PollEvent(&event) )
+   {
       switch (event.type)
-	  {
-	  case SDL_WINDOWEVENT:
-		  switch (event.window.event)
-		  {
-		  //case SDL_WINDOWEVENT_ENTER: // Do not respond to mouse focus
-		  case SDL_WINDOWEVENT_FOCUS_GAINED:
-		  case SDL_WINDOWEVENT_RESTORED:
-			 sys.need_redraw_flag = 1;
-			 if (!sys.is_mp_game)
-				sys.unpause();
-
-			 // update ctrl/shift/alt key state
-			 mouse.update_skey_state();
-			 SDL_ShowCursor(SDL_DISABLE);
-			 break;
-
-		  //case SDL_WINDOWEVENT_LEAVE: // Do not respond to mouse focus
-		  case SDL_WINDOWEVENT_FOCUS_LOST:
-		  case SDL_WINDOWEVENT_MINIMIZED:
-			 if (!sys.is_mp_game)
-				sys.pause();
-			 // turn the system cursor back on to get around a fullscreen
-			 // mouse grabbed problem on windows
-			 SDL_ShowCursor(SDL_ENABLE);
-			 break;
-			 
-		  case SDL_WINDOWEVENT_EXPOSED:
-			  sys.need_redraw_flag = 1;
-			  break;
-		  }
-		  break;
-
-	  case SDL_QUIT:
+      {
+      case SDL_QUIT:
          sys.signal_exit_flag = 1;
          break;
 
-	  default:
-         ERR("unhandled event %d\n", event.type);
+      case SDL_WINDOWEVENT:
+         switch (event.window.event)
+         {
+            //case SDL_WINDOWEVENT_ENTER: // Do not respond to mouse focus
+            case SDL_WINDOWEVENT_FOCUS_GAINED:
+            case SDL_WINDOWEVENT_RESTORED:
+               sys.need_redraw_flag = 1;
+               if( !sys.is_mp_game )
+                  sys.unpause();
+
+               // update ctrl/shift/alt key state
+               mouse.update_skey_state();
+               SDL_ShowCursor(SDL_DISABLE);
+               break;
+
+            //case SDL_WINDOWEVENT_LEAVE: // Do not respond to mouse focus
+            case SDL_WINDOWEVENT_FOCUS_LOST:
+            case SDL_WINDOWEVENT_MINIMIZED:
+               if( !sys.is_mp_game )
+                  sys.pause();
+               // turn the system cursor back on to get around a fullscreen
+               // mouse grabbed problem on windows
+               SDL_ShowCursor(SDL_ENABLE);
+               break;
+
+            case SDL_WINDOWEVENT_EXPOSED:
+               sys.need_redraw_flag = 1;
+               break;
+         }
+         break;
+
+      case SDL_MOUSEMOTION:
+         if( is_input_grabbed() )
+         {
+            mouse.process_mouse_motion(event.motion.xrel, event.motion.yrel);
+         }
+         else
+         {
+            mouse.process_mouse_motion(event.motion.x, event.motion.y);
+         }
+         break;
+      case SDL_MOUSEBUTTONDOWN:
+         if( event.button.button == SDL_BUTTON_LEFT )
+         {
+            mouse.add_event(LEFT_BUTTON);
+         }
+         else if( event.button.button == SDL_BUTTON_RIGHT )
+         {
+            mouse.add_event(RIGHT_BUTTON);
+         }
+         break;
+      case SDL_MOUSEBUTTONUP:
+         if( event.button.button == SDL_BUTTON_LEFT )
+         {
+            mouse.add_event(LEFT_BUTTON_RELEASE);
+            mouse.reset_boundary();
+         }
+         else if( event.button.button == SDL_BUTTON_RIGHT )
+         {
+            mouse.add_event(RIGHT_BUTTON_RELEASE);
+         }
+         break;
+      case SDL_KEYDOWN:
+      {
+         int bypass = 0;
+         int mod = event.key.keysym.mod &
+            (KMOD_CTRL|KMOD_SHIFT|KMOD_ALT);
+         if( mod == KMOD_LALT || mod == KMOD_RALT )
+         {
+            if( event.key.keysym.sym == SDLK_RETURN )
+            {
+               bypass = 1;
+               sys.toggle_full_screen_flag = 1;
+            }
+            else if( event.key.keysym.sym == SDLK_F4 )
+            {
+               bypass = 1;
+               sys.signal_exit_flag = 1;
+            }
+            else if( event.key.keysym.sym == SDLK_TAB )
+            {
+               bypass = 1;
+               SDL_Window *window = SDL_GetWindowFromID(event.key.windowID);
+               SDL_MinimizeWindow(window);
+            }
+         }
+         else if( mod == KMOD_LCTRL || mod == KMOD_RCTRL )
+         {
+            if( event.key.keysym.sym == SDLK_g )
+            {
+               bypass = 1;
+               set_window_grab(-1);
+            }
+         }
+         if( !bypass )
+         {
+            mouse.update_skey_state();
+            mouse.add_key_event(event.key.keysym.sym, misc.get_time());
+         }
+         break;
+      }
+      case SDL_KEYUP:
+         mouse.update_skey_state();
+         break;
+      case SDL_TEXTINPUT:
+      case SDL_JOYAXISMOTION:
+      case SDL_JOYBALLMOTION:
+      case SDL_JOYHATMOTION:
+      case SDL_JOYBUTTONDOWN:
+      case SDL_JOYBUTTONUP:
+      default:
+         MSG("unhandled event %d\n", event.type);
          break;
       }
    }

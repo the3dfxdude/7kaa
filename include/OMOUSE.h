@@ -156,9 +156,11 @@ public:
 	void	deinit();
 
 	void 	add_event(MouseEvent *);
+	void 	add_event(MouseEventType type);
 	void 	add_key_event(unsigned, unsigned long);
 	int  	get_event();
 	void	poll_event();
+	void    process_mouse_motion(int x, int y);
 	// #### begin Gilbert 31/10 #########//
 	void	update_skey_state();
 	// #### end Gilbert 31/10 #########//
