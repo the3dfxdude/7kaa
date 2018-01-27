@@ -48,6 +48,15 @@
 #define get_bitmap_width(bitmapPtr)  (*(short*)bitmapPtr)
 #define get_bitmap_height(bitmapPtr) (*((short*)bitmapPtr+1))
 
+enum WinGrab
+{
+	WINGRAB_OFF,
+	WINGRAB_ON,
+	WINGRAB_TOGGLE,
+	WINGRAB_FORCE,
+	WINGRAB_RESTORE,
+};
+
 //-------- Define class Vga ----------------//
 
 class ColorTable;
@@ -62,6 +71,9 @@ private:
 	SDL_Surface*   target;
 	SDL_Color      game_pal[VGA_PALETTE_SIZE];
 	SDL_Color*     custom_pal;
+
+	int win_grab_forced;
+	int win_grab_user_mode;
 
 public:
 	ColorTable*    vga_color_table;
@@ -92,7 +104,7 @@ public:
 	int    is_full_screen();
 	int    is_input_grabbed();
 	void   set_full_screen_mode(int mode);
-	void   set_window_grab(int mode);
+	void   set_window_grab(WinGrab mode);
 	void   flip();
 
 private:

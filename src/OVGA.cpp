@@ -52,6 +52,8 @@ Vga::Vga()
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
    custom_pal = NULL;
    vga_color_table = NULL;
+   win_grab_forced = 0;
+   win_grab_user_mode = 0;
 }
 //-------- End of function Vga::Vga ----------//
 
@@ -550,7 +552,7 @@ void Vga::handle_messages()
             if( event.key.keysym.sym == SDLK_g )
             {
                bypass = 1;
-               set_window_grab(-1);
+               set_window_grab(WINGRAB_TOGGLE);
             }
          }
          if( !bypass )
@@ -634,35 +636,92 @@ void Vga::set_full_screen_mode(int mode)
 
    refresh_palette();
    sys.need_redraw_flag = 1;
-   set_window_grab(flags == SDL_WINDOW_FULLSCREEN_DESKTOP);
+   if( flags == SDL_WINDOW_FULLSCREEN_DESKTOP )
+      set_window_grab(WINGRAB_ON);
+   else
+      set_window_grab(WINGRAB_OFF);
 }
 //-------- End of function Vga::set_full_screen_mode ----------//
 
 
 //-------- Begin of function Vga::set_window_grab --------//
 //
-// mode -1: toggle
-// mode  0: unset grab
-// mode  1: set grab
-void Vga::set_window_grab(int mode)
+// WINGRAB_OFF = Turn window grab off, except when forced on
+// WINGRAB_ON = Turn window grab on
+// WINGRAB_TOGGLE = Toggle window grab, used for the grab key
+// WINGRAB_FORCE = Force grab on, even if user has it off
+// WINGRAB_RESTORE = Disable forcing, and user's option
+void Vga::set_window_grab(WinGrab mode)
 {
-   SDL_bool grabbed = SDL_FALSE;
-
-   switch (mode)
+   switch( mode )
    {
-      case -1:
-         grabbed = is_input_grabbed() ? SDL_FALSE : SDL_TRUE;
-         break;
-      case 0:
-         break;
-      case 1:
-         grabbed = SDL_TRUE;
-         break;
-      default:
-         err_now("invalid mode");
+   case WINGRAB_OFF:
+      if( win_grab_user_mode )
+      {
+         win_grab_user_mode = 0;
+         if( !win_grab_forced )
+         {
+            SDL_SetWindowGrab(window, SDL_FALSE);
+            SDL_SetRelativeMouseMode(SDL_FALSE);
+         }
+      }
+      break;
+   case WINGRAB_ON:
+      if( !win_grab_user_mode )
+      {
+         win_grab_user_mode = 1;
+         if( !win_grab_forced )
+         {
+            SDL_SetWindowGrab(window, SDL_TRUE);
+            SDL_SetRelativeMouseMode(SDL_TRUE);
+         }
+      }
+      break;
+   case WINGRAB_TOGGLE:
+      if( win_grab_user_mode )
+      {
+         win_grab_user_mode = 0;
+         if( !win_grab_forced )
+         {
+            SDL_SetWindowGrab(window, SDL_FALSE);
+            SDL_SetRelativeMouseMode(SDL_FALSE);
+         }
+      }
+      else
+      {
+         win_grab_user_mode = 1;
+         if( !win_grab_forced )
+         {
+            SDL_SetWindowGrab(window, SDL_TRUE);
+            SDL_SetRelativeMouseMode(SDL_TRUE);
+         }
+      }
+      break;
+   case WINGRAB_FORCE:
+      if( !win_grab_forced )
+      {
+         win_grab_forced = 1;
+         if( !win_grab_user_mode )
+         {
+            SDL_SetWindowGrab(window, SDL_TRUE);
+            SDL_SetRelativeMouseMode(SDL_TRUE);
+         }
+      }
+      break;
+   case WINGRAB_RESTORE:
+      if( win_grab_forced )
+      {
+         win_grab_forced = 0;
+         if( !win_grab_user_mode )
+         {
+            SDL_SetWindowGrab(window, SDL_FALSE);
+            SDL_SetRelativeMouseMode(SDL_FALSE);
+         }
+      }
+      break;
+   default:
+      err_now("invalid mode");
    }
-   SDL_SetWindowGrab(window, grabbed);
-   SDL_SetRelativeMouseMode(grabbed);
 }
 //-------- End of function Vga::set_window_grab ----------//
 
