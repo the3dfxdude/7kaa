@@ -52,8 +52,6 @@ Vga::Vga()
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
    custom_pal = NULL;
    vga_color_table = NULL;
-   win_grab_forced = 0;
-   win_grab_user_mode = 0;
 }
 //-------- End of function Vga::Vga ----------//
 
@@ -75,6 +73,10 @@ int Vga::init()
    SDL_Surface *icon;
 
    InitDPI();
+
+   win_grab_forced = 0;
+   win_grab_user_mode = 0;
+   mouse_mode = MOUSE_INPUT_ABS;
 
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
@@ -493,13 +495,13 @@ void Vga::handle_messages()
          break;
 
       case SDL_MOUSEMOTION:
-         if( is_input_grabbed() )
+         if( mouse_mode == MOUSE_INPUT_ABS )
          {
-            mouse.process_mouse_motion(event.motion.xrel, event.motion.yrel);
+            mouse.process_mouse_motion(event.motion.x, event.motion.y);
          }
          else
          {
-            mouse.process_mouse_motion(event.motion.x, event.motion.y);
+            mouse.process_mouse_motion(event.motion.xrel, event.motion.yrel);
          }
          break;
       case SDL_MOUSEBUTTONDOWN:
@@ -644,6 +646,33 @@ void Vga::set_full_screen_mode(int mode)
 //-------- End of function Vga::set_full_screen_mode ----------//
 
 
+//-------- Begin of function Vga::set_mouse_mode --------//
+void Vga::set_mouse_mode(MouseInputMode mode)
+{
+   switch( mode )
+   {
+   case MOUSE_INPUT_REL:
+      if( mouse_mode == MOUSE_INPUT_ABS )
+         SDL_SetRelativeMouseMode(SDL_TRUE);
+      SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP, "0");
+      mouse_mode = MOUSE_INPUT_REL;
+      break;
+   case MOUSE_INPUT_REL_WARP:
+      if( mouse_mode == MOUSE_INPUT_ABS )
+         SDL_SetRelativeMouseMode(SDL_TRUE);
+      SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP, "1");
+      mouse_mode = MOUSE_INPUT_REL_WARP;
+      break;
+   default:
+      // absolute mode
+      if( mouse_mode != MOUSE_INPUT_ABS )
+         SDL_SetRelativeMouseMode(SDL_FALSE);
+      mouse_mode = MOUSE_INPUT_ABS;
+   }
+}
+//-------- End of function Vga::set_mouse_mode --------//
+
+
 //-------- Begin of function Vga::set_window_grab --------//
 //
 // WINGRAB_OFF = Turn window grab off, except when forced on
@@ -662,7 +691,7 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_FALSE);
-            SDL_SetRelativeMouseMode(SDL_FALSE);
+            set_mouse_mode(MOUSE_INPUT_ABS);
          }
       }
       break;
@@ -673,7 +702,7 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_TRUE);
-            SDL_SetRelativeMouseMode(SDL_TRUE);
+            set_mouse_mode(MOUSE_INPUT_REL_WARP);
          }
       }
       break;
@@ -684,7 +713,7 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_FALSE);
-            SDL_SetRelativeMouseMode(SDL_FALSE);
+            set_mouse_mode(MOUSE_INPUT_ABS);
          }
       }
       else
@@ -693,7 +722,7 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_TRUE);
-            SDL_SetRelativeMouseMode(SDL_TRUE);
+            set_mouse_mode(MOUSE_INPUT_REL_WARP);
          }
       }
       break;
@@ -704,7 +733,7 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_user_mode )
          {
             SDL_SetWindowGrab(window, SDL_TRUE);
-            SDL_SetRelativeMouseMode(SDL_TRUE);
+            set_mouse_mode(MOUSE_INPUT_REL_WARP);
          }
       }
       break;
@@ -715,7 +744,7 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_user_mode )
          {
             SDL_SetWindowGrab(window, SDL_FALSE);
-            SDL_SetRelativeMouseMode(SDL_FALSE);
+            set_mouse_mode(MOUSE_INPUT_ABS);
          }
       }
       break;

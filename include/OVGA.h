@@ -48,6 +48,15 @@
 #define get_bitmap_width(bitmapPtr)  (*(short*)bitmapPtr)
 #define get_bitmap_height(bitmapPtr) (*((short*)bitmapPtr+1))
 
+//-------- Define modes --------//
+
+enum MouseInputMode
+{
+	MOUSE_INPUT_ABS,
+	MOUSE_INPUT_REL,
+	MOUSE_INPUT_REL_WARP,
+};
+
 enum WinGrab
 {
 	WINGRAB_OFF,
@@ -83,6 +92,8 @@ public:
 	static char    use_back_buf;
 	static char    opaque_flag;
 
+	MouseInputMode mouse_mode;
+
 public:
 	Vga();
 	~Vga();
@@ -104,6 +115,7 @@ public:
 	int    is_full_screen();
 	int    is_input_grabbed();
 	void   set_full_screen_mode(int mode);
+	void   set_mouse_mode(MouseInputMode mode);
 	void   set_window_grab(WinGrab mode);
 	void   flip();
 

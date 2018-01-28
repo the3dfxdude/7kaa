@@ -799,7 +799,12 @@ void Mouse::poll_event()
 //--------- Begin of Mouse::process_mouse_motion ---------//
 void Mouse::process_mouse_motion(int x, int y)
 {
-	if( vga.is_input_grabbed() )
+	if( vga.mouse_mode == MOUSE_INPUT_ABS )
+	{
+		cur_x = x;
+		cur_y = y;
+	}
+	else
 	{
 #ifdef MOUSE_ACCEL
 		cur_x += micky_to_displacement(x);
@@ -808,6 +813,10 @@ void Mouse::process_mouse_motion(int x, int y)
 		cur_x += x;
 		cur_y += y;
 #endif
+	}
+
+	if( vga.is_input_grabbed() )
+	{
 		if( cur_x < bound_x1 )
 			cur_x = bound_x1;
 		else if( cur_x > bound_x2 )
@@ -816,11 +825,6 @@ void Mouse::process_mouse_motion(int x, int y)
 			cur_y = bound_y1;
 		else if( cur_y > bound_y2 )
 			cur_y = bound_y2;
-	}
-	else
-	{
-		cur_x = x;
-		cur_y = y;
 	}
 
 	mouse_cursor.process(cur_x, cur_y);     // repaint mouse cursor
