@@ -521,6 +521,7 @@ void Mouse::set_boundary(int x1, int y1, int x2, int y2)
 		bound_x2 = x2 > MOUSE_X_UPPER_LIMIT ? MOUSE_X_UPPER_LIMIT : x2;
 	if( y2 >= 0)
 		bound_y2 = y2 > MOUSE_Y_UPPER_LIMIT ? MOUSE_Y_UPPER_LIMIT : y2;
+	vga.update_boundary();
 }
 //--------- End of Mouse::set_boundary ----------//
 
@@ -532,6 +533,7 @@ void Mouse::reset_boundary()
 	bound_y1 = 0;
 	bound_x2 = MOUSE_X_UPPER_LIMIT;
 	bound_y2 = MOUSE_Y_UPPER_LIMIT;
+	vga.update_boundary();
 }
 //--------- End of Mouse::set_boundary ----------//
 

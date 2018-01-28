@@ -77,6 +77,8 @@ int Vga::init()
    win_grab_forced = 0;
    win_grab_user_mode = 0;
    mouse_mode = MOUSE_INPUT_ABS;
+   bound_x1, bound_y1, bound_x2, bound_y2 = 0;
+   boundary_set = 0;
 
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
@@ -497,7 +499,46 @@ void Vga::handle_messages()
       case SDL_MOUSEMOTION:
          if( mouse_mode == MOUSE_INPUT_ABS )
          {
-            mouse.process_mouse_motion(event.motion.x, event.motion.y);
+            int logical_x, logical_y;
+            logical_x = event.motion.x;
+            logical_y = event.motion.y;
+            if( win_grab_user_mode || win_grab_forced )
+            {
+               int real_x, real_y, do_warp;
+               SDL_GetMouseState(&real_x, &real_y);
+               do_warp = 0;
+               if( !boundary_set )
+                  update_boundary();
+               if( real_x < bound_x1 )
+               {
+                  do_warp = 1;
+                  real_x = bound_x1;
+                  logical_x = mouse.bound_x1;
+               }
+               else if( real_x >= bound_x2 )
+               {
+                  do_warp = 1;
+                  real_x = bound_x2;
+                  logical_x = mouse.bound_x2;
+               }
+               if( real_y < bound_y1 )
+               {
+                  do_warp = 1;
+                  real_y = bound_y1;
+                  logical_y = mouse.bound_y1;
+               }
+               else if( real_y >= bound_y2 )
+               {
+                  do_warp = 1;
+                  real_y = bound_y2;
+                  logical_y = mouse.bound_y2;
+               }
+               if( do_warp )
+               {
+                  SDL_WarpMouseInWindow(window, real_x, real_y);
+               }
+            }
+            mouse.process_mouse_motion(logical_x, logical_y);
          }
          else
          {
@@ -606,6 +647,24 @@ int Vga::is_input_grabbed()
 //-------- End of function Vga::is_input_grabbed ----------//
 
 
+//-------- Begin of function Vga::update_boundary --------//
+// Uses logical boundary coordinates and scales them to the actual boundary in
+// the scaled window.
+void Vga::update_boundary()
+{
+   float xscale, yscale;
+   SDL_Rect rect;
+   SDL_RenderGetScale(renderer, &xscale, &yscale);
+   SDL_RenderGetViewport(renderer, &rect);
+   bound_x1 = ((float)(mouse.bound_x1 + rect.x) * xscale);
+   bound_x2 = ((float)(mouse.bound_x2 + rect.x) * xscale);
+   bound_y1 = ((float)(mouse.bound_y1 + rect.y) * yscale);
+   bound_y2 = ((float)(mouse.bound_y2 + rect.y) * yscale);
+   boundary_set = 1;
+}
+//-------- End of function Vga::update_boundary --------//
+
+
 //-------- Begin of function Vga::set_full_screen_mode --------//
 //
 // mode -1: toggle
@@ -638,6 +697,7 @@ void Vga::set_full_screen_mode(int mode)
 
    refresh_palette();
    sys.need_redraw_flag = 1;
+   boundary_set = 0;
    if( flags == SDL_WINDOW_FULLSCREEN_DESKTOP )
       set_window_grab(WINGRAB_ON);
    else
