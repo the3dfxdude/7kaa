@@ -599,6 +599,14 @@ void Vga::handle_messages()
                bypass = 1;
                set_window_grab(WINGRAB_TOGGLE);
             }
+            else if( event.key.keysym.sym == SDLK_m )
+            {
+               bypass = 1;
+               if( mouse_mode == MOUSE_INPUT_ABS && !is_input_grabbed() )
+                  set_mouse_mode( MOUSE_INPUT_REL_WARP );
+               else if( mouse_mode != MOUSE_INPUT_ABS )
+                  set_mouse_mode( MOUSE_INPUT_ABS );
+            }
          }
          if( !bypass )
          {
@@ -753,7 +761,8 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_FALSE);
-            set_mouse_mode(MOUSE_INPUT_ABS);
+            if( mouse_mode != MOUSE_INPUT_ABS )
+               set_mouse_mode(MOUSE_INPUT_ABS);
          }
       }
       break;
@@ -764,7 +773,6 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_TRUE);
-            set_mouse_mode(MOUSE_INPUT_REL_WARP);
          }
       }
       break;
@@ -775,7 +783,8 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_FALSE);
-            set_mouse_mode(MOUSE_INPUT_ABS);
+            if( mouse_mode != MOUSE_INPUT_ABS )
+               set_mouse_mode(MOUSE_INPUT_ABS);
          }
       }
       else
@@ -784,7 +793,6 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_forced )
          {
             SDL_SetWindowGrab(window, SDL_TRUE);
-            set_mouse_mode(MOUSE_INPUT_REL_WARP);
          }
       }
       break;
@@ -795,7 +803,6 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_user_mode )
          {
             SDL_SetWindowGrab(window, SDL_TRUE);
-            set_mouse_mode(MOUSE_INPUT_REL_WARP);
          }
       }
       break;
@@ -806,7 +813,8 @@ void Vga::set_window_grab(WinGrab mode)
          if( !win_grab_user_mode )
          {
             SDL_SetWindowGrab(window, SDL_FALSE);
-            set_mouse_mode(MOUSE_INPUT_ABS);
+            if( mouse_mode != MOUSE_INPUT_ABS )
+               set_mouse_mode(MOUSE_INPUT_ABS);
          }
       }
       break;
