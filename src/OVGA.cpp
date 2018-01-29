@@ -554,6 +554,7 @@ void Vga::handle_messages()
          {
             mouse.add_event(RIGHT_BUTTON);
          }
+         set_window_grab(WINGRAB_FORCE);
          break;
       case SDL_MOUSEBUTTONUP:
          if( event.button.button == SDL_BUTTON_LEFT )
@@ -565,6 +566,7 @@ void Vga::handle_messages()
          {
             mouse.add_event(RIGHT_BUTTON_RELEASE);
          }
+         set_window_grab(WINGRAB_RESTORE);
          break;
       case SDL_KEYDOWN:
       {
