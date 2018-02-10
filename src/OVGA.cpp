@@ -52,6 +52,12 @@ Vga::Vga()
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
    custom_pal = NULL;
    vga_color_table = NULL;
+
+   target = NULL;
+   front = NULL;
+   texture = NULL;
+   renderer = NULL;
+   window = NULL;
 }
 //-------- End of function Vga::Vga ----------//
 
@@ -60,8 +66,7 @@ Vga::Vga()
 
 Vga::~Vga()
 {
-   if (window != NULL)
-      deinit();
+   deinit();
 }
 //-------- End of function Vga::~Vga ----------//
 
@@ -98,7 +103,6 @@ int Vga::init()
    else
    {
       ERR("Could not get desktop display mode: %s\n", SDL_GetError());
-      SDL_Quit();
       return 0;
    }
 
@@ -109,7 +113,6 @@ int Vga::init()
                                    &renderer) < 0)
    {
       ERR("Could not create window and renderer: %s\n", SDL_GetError());
-      SDL_Quit();
       return 0;
    }
 
@@ -133,7 +136,6 @@ int Vga::init()
    if (window_pixel_format == SDL_PIXELFORMAT_UNKNOWN)
    {
       ERR("Unknown pixel format: %s\n", SDL_GetError());
-      SDL_Quit();
       return 0;
    }
    MSG("Pixel format: %s\n", SDL_GetPixelFormatName(window_pixel_format));
@@ -150,7 +152,6 @@ int Vga::init()
    if (!texture)
    {
       ERR("Could not create texture: %s\n", SDL_GetError());
-      SDL_Quit();
       return 0;
    }
 
@@ -161,7 +162,6 @@ int Vga::init()
                                 0, 0, 0, 0);
    if (!front)
    {
-      SDL_Quit();
       return 0;
    }
 
@@ -181,7 +181,6 @@ int Vga::init()
    else
    {
       ERR("Unsupported pixel type\n");
-      SDL_Quit();
       return 0;
    }
 
@@ -192,7 +191,6 @@ int Vga::init()
                                  0, 0, 0, 0);
    if (!target)
    {
-      SDL_Quit();
       return 0;
    }
 
@@ -273,24 +271,36 @@ int Vga::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 void Vga::deinit()
 {
    SDL_SetRelativeMouseMode(SDL_FALSE);
+   mouse_mode = MOUSE_INPUT_ABS;
 
    vga_back.deinit();
    if (sys.debug_session)
       vga_true_front.deinit();
    vga_front.deinit();
 
-   if (vga_color_table) delete vga_color_table;
-   SDL_FreeSurface(target);
+   if (vga_color_table)
+      delete vga_color_table;
+   vga_color_table = NULL;
+   if( custom_pal )
+      mem_del(custom_pal);
+   custom_pal = NULL;
+
+   if( target )
+      SDL_FreeSurface(target);
    target = NULL;
-   SDL_FreeSurface(front);
+   if( front )
+      SDL_FreeSurface(front);
    front = NULL;
-   SDL_DestroyTexture(texture);
+   if( texture )
+      SDL_DestroyTexture(texture);
    texture = NULL;
-   window_pitch = 0;
-   SDL_DestroyRenderer(renderer);
+   if( renderer )
+      SDL_DestroyRenderer(renderer);
    renderer = NULL;
-   SDL_DestroyWindow(window);
+   if( window )
+      SDL_DestroyWindow(window);
    window = NULL;
+
    SDL_Quit();
 }
 //-------- End of function Vga::deinit ----------//
