@@ -39,11 +39,6 @@ char    Vga::use_back_buf = 0;
 char    Vga::opaque_flag  = 0;
 VgaBuf* Vga::active_buf   = &vga_front;      // default: front buffer
 
-namespace
-{
-   int window_pitch;
-}  // namespace
-
 //-------- Begin of function Vga::Vga ----------//
 
 Vga::Vga()
@@ -139,8 +134,6 @@ int Vga::init()
       return 0;
    }
    MSG("Pixel format: %s\n", SDL_GetPixelFormatName(window_pixel_format));
-
-   window_pitch = VGA_WIDTH * SDL_BYTESPERPIXEL(window_pixel_format);
 
    // Cannot use SDL_PIXELFORMAT_INDEX8:
    //   Palettized textures are not supported
@@ -845,7 +838,7 @@ void Vga::flip()
       SDL_Surface *src = tmp->get_surface();
       ticks = cur_ticks;
       SDL_BlitSurface(src, NULL, target, NULL);
-      SDL_UpdateTexture(texture, NULL, target->pixels, window_pitch);
+      SDL_UpdateTexture(texture, NULL, target->pixels, target->pitch);
       SDL_RenderClear(renderer);
       SDL_RenderCopy(renderer, texture, NULL, NULL);
       SDL_RenderPresent(renderer);
