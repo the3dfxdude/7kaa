@@ -121,6 +121,7 @@ public:
 	void   set_mouse_mode(MouseInputMode mode);
 	void   set_window_grab(WinGrab mode);
 	void   flip();
+	void   save_status_report();
 
 private:
 	int    init_front(VgaBuf*);

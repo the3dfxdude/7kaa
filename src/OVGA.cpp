@@ -29,6 +29,7 @@
 #include <surface.h>
 #include <platform.h>
 #include <dbglog.h>
+#include <version.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
 
@@ -115,25 +116,12 @@ int Vga::init()
    SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP, "1");
    SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
 
-   SDL_RendererInfo info;
-   if (SDL_GetRendererInfo(renderer, &info) == 0)
-   {
-      MSG("Name of renderer: %s\n", info.name);
-      MSG("Using software fallback: %s\n", info.flags & SDL_RENDERER_SOFTWARE ? "yes" : "no");
-      MSG("Using hardware acceleration: %s\n", info.flags & SDL_RENDERER_ACCELERATED ? "yes" : "no");
-      MSG("V-sync: %s\n", info.flags & SDL_RENDERER_PRESENTVSYNC ? "on" : "off");
-      MSG("Rendering to texture support: %s\n", info.flags & SDL_RENDERER_TARGETTEXTURE ? "yes" : "no");
-      MSG("Maximum texture width: %d\n", info.max_texture_width);
-      MSG("Maximum texture height: %d\n", info.max_texture_height);
-   }
-
    Uint32 window_pixel_format = SDL_GetWindowPixelFormat(window);
    if (window_pixel_format == SDL_PIXELFORMAT_UNKNOWN)
    {
       ERR("Unknown pixel format: %s\n", SDL_GetError());
       return 0;
    }
-   MSG("Pixel format: %s\n", SDL_GetPixelFormatName(window_pixel_format));
 
    // Cannot use SDL_PIXELFORMAT_INDEX8:
    //   Palettized textures are not supported
@@ -845,3 +833,124 @@ void Vga::flip()
    }
 }
 //-------- End of function Vga::flip ----------//
+
+
+//-------- Beginning of function Vga::save_status_report ----------//
+void Vga::save_status_report()
+{
+   char path[MAX_PATH+1];
+   FILE *file;
+   int num, i;
+   const char *s;
+   SDL_version ver;
+
+   if( !misc.path_cat(path, sys.dir_config, "sdl.txt", MAX_PATH) )
+      return;
+
+   file = fopen(path, "w");
+   if( !file )
+      return;
+
+   fprintf(file, "=== Seven Kingdoms " SKVERSION " ===\n");
+   s = SDL_GetPlatform();
+   fprintf(file, "Platform: %s\n", s);
+   if( SDL_BYTEORDER == SDL_BIG_ENDIAN )
+      fprintf(file, "Big endian\n");
+   else
+      fprintf(file, "Little endian\n");
+
+   s = SDL_GetCurrentVideoDriver();
+   fprintf(file, "Current SDL video driver: %s\n", s);
+   SDL_GetVersion(&ver);
+   fprintf(file, "SDL version: %d.%d.%d\n", ver.major, ver.minor, ver.patch);
+   SDL_VERSION(&ver);
+   fprintf(file, "Compiled SDL version: %d.%d.%d\n\n", ver.major, ver.minor, ver.patch);
+
+   fprintf(file, "-- Video drivers --\n");
+   num = SDL_GetNumVideoDrivers();
+   for( i=0; i<num; i++ )
+   {
+      s = SDL_GetVideoDriver(i);
+      fprintf(file, "%d: %s\n", i, s);
+   }
+   fprintf(file, "\n");
+
+   if( window )
+   {
+      int x, y, w, h = 0;
+      SDL_RendererInfo info;
+      SDL_Renderer *r = SDL_GetRenderer(window);
+
+      fprintf(file, "-- Current window --\n");
+      fprintf(file, "Active on display: %d\n", SDL_GetWindowDisplayIndex(window));
+      SDL_GetWindowPosition(window, &x, &y);
+      SDL_GetWindowSize(window, &w, &h);
+      fprintf(file, "Geometry: %dx%d @ (%d, %d)\n", w, h, x, y);
+      fprintf(file, "Pixel format: %s\n", SDL_GetPixelFormatName(SDL_GetWindowPixelFormat(window)));
+      fprintf(file, "Input grabbed: %s\n\n", SDL_GetWindowGrab(window) ? "yes" : "no");
+      if( r )
+      {
+         SDL_RendererInfo info;
+         SDL_GetRendererInfo(r, &info);
+         fprintf(file, "-- Current renderer: %s --\n", info.name);
+         fprintf(file, "Capabilities: %s\n", info.flags & SDL_RENDERER_ACCELERATED ? "hardware accelerated" : "software fallback");
+         fprintf(file, "V-sync: %s\n", info.flags & SDL_RENDERER_PRESENTVSYNC ? "on" : "off");
+         fprintf(file, "Rendering to texture supported: %s\n", info.flags & SDL_RENDERER_TARGETTEXTURE ? "yes" : "no");
+         if( info.max_texture_width || info.max_texture_height )
+            fprintf(file, "Maximum texture size: %dx%d\n", info.max_texture_width, info.max_texture_height);
+         fprintf(file, "Pixel formats:\n");
+         for( i=0; i<info.num_texture_formats; i++ )
+            fprintf(file, "\t%s\n", SDL_GetPixelFormatName(info.texture_formats[i]));
+      }
+   }
+   fprintf(file, "\n");
+
+   if( texture )
+   {
+      uint32_t format = 0;
+      int w, h = 0;
+      SDL_QueryTexture(texture, &format, NULL, &w, &h);
+      fprintf(file, "-- Streaming texture --\n");
+      fprintf(file, "Size: %dx%d\n", w, h);
+      fprintf(file, "Pixel format: %s\n\n", SDL_GetPixelFormatName(format));
+   }
+
+   num = SDL_GetNumVideoDisplays();
+   for( i=0; i<num; i++ )
+   {
+      SDL_Rect rect;
+      SDL_DisplayMode mode;
+      float ddpi, hdpi, vdpi;
+      fprintf(file, "-- Display %d --\n", i);
+      if( !SDL_GetCurrentDisplayMode(i, &mode) )
+         fprintf(file, "Mode: %dx%dx%ubpp %dHz format=%s driver=%p\n", mode.w, mode.h, SDL_BITSPERPIXEL(mode.format), mode.refresh_rate, SDL_GetPixelFormatName(mode.format), mode.driverdata);
+      if( !SDL_GetDisplayDPI(i, &ddpi, &hdpi, &vdpi) )
+         fprintf(file, "DPI: diag=%f horiz=%f vert=%f\n", ddpi, hdpi, vdpi);
+      if( !SDL_GetDisplayBounds(i, &rect) )
+         fprintf(file, "Bounds: x=%d y=%d w=%d h=%d\n", rect.x, rect.y, rect.w, rect.h);
+      if( !SDL_GetDisplayUsableBounds(i, &rect) )
+         fprintf(file, "Usable bounds: x=%d y=%d w=%d h=%d\n", rect.x, rect.y, rect.w, rect.h);
+      fprintf(file, "\n");
+   }
+
+   num = SDL_GetNumRenderDrivers();
+   for( i=0; i<num; i++ )
+   {
+      SDL_RendererInfo info;
+      SDL_GetRenderDriverInfo(i, &info);
+      fprintf(file, "-- Renderer %s (%d) --\n", info.name, i);
+      fprintf(file, "Capabilities: %s\n", info.flags & SDL_RENDERER_ACCELERATED ? "hardware accelerated" : "software fallback");
+      fprintf(file, "V-sync capable: %s\n", info.flags & SDL_RENDERER_PRESENTVSYNC ? "on" : "off");
+      fprintf(file, "Rendering to texture supported: %s\n", info.flags & SDL_RENDERER_TARGETTEXTURE ? "yes" : "no");
+      if( info.max_texture_width || info.max_texture_height )
+         fprintf(file, "Maximum texture size: %dx%d\n", info.max_texture_width, info.max_texture_height);
+      fprintf(file, "Pixel formats:\n");
+      for( int j=0; j<info.num_texture_formats; j++ )
+         fprintf(file, "\t%s\n", SDL_GetPixelFormatName(info.texture_formats[j]));
+      fprintf(file, "\n");
+   }
+
+   fclose(file);
+   return;
+}
+//-------- End of function Vga::save_status_report ----------//

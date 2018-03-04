@@ -426,7 +426,10 @@ int main(int argc, char **argv)
 #endif // ENABLE_INTRO_VIDEO
 
 	if( !sys.init() )
+	{
+		vga.save_status_report();
 		return 1;
+	}
 
 	err.set_extra_handler( extra_error_handler );   // set extra error handler, save the game when a error happens
 

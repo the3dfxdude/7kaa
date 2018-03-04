@@ -289,6 +289,7 @@ void Sys::deinit_directx()
 
    //------------------------------//
 
+   vga.save_status_report();
    DEBUG_LOG("Attempt vga.deinit()");
    vga.deinit();
    DEBUG_LOG("vga.deinit() finish");
