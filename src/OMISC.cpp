@@ -1032,7 +1032,7 @@ void Misc::randomize()
 
 //------- Begin of function Misc::set_random_seed --------//
 //
-void Misc::set_random_seed(long randomSeed)
+void Misc::set_random_seed(int32_t randomSeed)
 {
 	// ###### begin Gilbert 19/6 ######//
 	err_when( is_seed_locked() );

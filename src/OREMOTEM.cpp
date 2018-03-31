@@ -263,7 +263,7 @@ void RemoteMsg::new_nation()
 //
 // structure of data_buf:
 //
-// <long>     - random seed
+// <int32_t>  - random seed
 // <short>    - The number of nations joined
 // <Nation..> - An array of nation objects
 //
@@ -275,8 +275,8 @@ void RemoteMsg::update_game_setting()
 
 	//------- set random seed -----------//
 
-	misc.set_random_seed(*(long*)dataPtr);
-	dataPtr 		    += sizeof(long);
+	misc.set_random_seed(*(int32_t*)dataPtr);
+	dataPtr += sizeof(int32_t);
 
 	//------- update nation_array -----------//
 
@@ -416,7 +416,7 @@ void RemoteMsg::set_speed()
 // structure of data_buf:
 //
 // <short>  - nation recno
-// <long>   - random seed
+// <int32_t> - random seed
 //
 void RemoteMsg::tell_random_seed()
 {
@@ -424,7 +424,7 @@ void RemoteMsg::tell_random_seed()
 	char *p = data_buf;
 	short nationRecno = *(short *)p;
 	p += sizeof(short);
-	long remoteSeed = *(long *)p;
+	int32_t remoteSeed = *(int32_t *)p;
 
 #if defined(DEBUG) && defined(ENABLE_LOG)
 	String logLine("remote random seed ");
@@ -438,7 +438,7 @@ void RemoteMsg::tell_random_seed()
 	// it assume random seed of each nation come in sequence
 	// if may fails when connection lost
 
-	static long lastRemoteSeed = -1;
+	static int32_t lastRemoteSeed = -1;
 	static short lastNation = 0x7fff;
 	if( nationRecno <= lastNation)
 	{

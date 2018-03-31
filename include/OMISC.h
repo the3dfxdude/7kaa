@@ -103,7 +103,7 @@ public:
 	unsigned long get_time();
 
    void  randomize();
-   void  set_random_seed(long);
+   void  set_random_seed(int32_t);
    long  get_random_seed();
    int   rand();
    int   random(int);

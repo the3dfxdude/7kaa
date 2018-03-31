@@ -158,8 +158,8 @@ struct MpStructBase
 
 struct MpStructSeed : public MpStructBase
 {
-	long	seed;
-	MpStructSeed(long s) : MpStructBase(MPMSG_RANDOM_SEED), seed(s) {}
+	int32_t seed;
+	MpStructSeed(int32_t s) : MpStructBase(MPMSG_RANDOM_SEED), seed(s) {}
 };
 
 struct MpStructSeedStr : public MpStructBase
@@ -174,9 +174,9 @@ struct MpStructSeedStr : public MpStructBase
 			seed_str[0] = '\0';
 	}
 
-	MpStructSeedStr(long l) : MpStructBase(MPMSG_RANDOM_SEED_STR)
+	MpStructSeedStr(int32_t l) : MpStructBase(MPMSG_RANDOM_SEED_STR)
 	{
-		sprintf(seed_str,"%ld",l);
+		sprintf(seed_str,"%d",l);
 	}
 };
 
@@ -335,11 +335,11 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 	short color_scheme_id;
 	short race_id;
 	uint32_t frame_count;			// detail to test save game from the same game
-	long  random_seed;
+	int32_t random_seed;
 	char  name[MP_FRIENDLY_NAME_LEN+1];
 	char  pass[MP_FRIENDLY_NAME_LEN+1];
 
-	MpStructLoadGameNewPlayer(Nation *n, uint32_t frame, long seed, char *name, char *pass) :
+	MpStructLoadGameNewPlayer(Nation *n, uint32_t frame, int32_t seed, char *name, char *pass) :
 		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
 		race_id(n->race_id), frame_count(frame), random_seed(seed),
@@ -436,7 +436,7 @@ void Game::mp_disp_players()
 //
 void Game::mp_broadcast_setting()
 {
-	// send (long) random seed
+	// send (int32_t) random seed
 	// send (short) no. of nations
 	// for each nation, send :
 	//	(short) nation recno
@@ -445,14 +445,14 @@ void Game::mp_broadcast_setting()
 	// (short) race id
 	//
 	short i;
-	int msgSize = sizeof(long)	+sizeof(short) + 
+	int msgSize = sizeof(int32_t)+sizeof(short)+
 		nation_array.size()*(3*sizeof(short)+sizeof(PID_TYPE));
 	RemoteMsg *remoteMsg = remote.new_msg( MSG_UPDATE_GAME_SETTING, msgSize );
 
 	char* dataPtr = remoteMsg->data_buf;
 
-	*(long*)dataPtr   = misc.get_random_seed();
-	dataPtr 		      += sizeof(long);
+	*(int32_t*)dataPtr = misc.get_random_seed();
+	dataPtr            += sizeof(int32_t);
 
 	*(short*)dataPtr  = nation_array.size();
 	dataPtr           += sizeof(short);
