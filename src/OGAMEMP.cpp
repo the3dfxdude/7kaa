@@ -4198,6 +4198,14 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		{
 			remote.set_alternating_send(playerCount > 4 ? 4 : playerCount);		// automatic setting
 		}
+		else
+		{
+			char full_path[MAX_PATH+1];
+		        if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+			{
+				remote.replay.open(full_path, ReplayFile::WRITE);
+			}
+		}
 
 		{
 			// ------- broadcast end setting string ------- //
@@ -5635,6 +5643,14 @@ int Game::mp_select_load_option(char *fileName)
 		if( remote.sync_test_level == 0)
 		{
 			remote.set_alternating_send(playerCount > 4 ? 4 : playerCount);		// automatic setting
+		}
+		else
+		{
+			char full_path[MAX_PATH+1];
+		        if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+			{
+				remote.replay.open(full_path, ReplayFile::WRITE);
+			}
 		}
 
 		{

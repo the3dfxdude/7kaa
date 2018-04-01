@@ -270,6 +270,7 @@ bin_PROGRAMS = 7kaa
 	OW_ROCK.cpp \
 	OW_SOUND.cpp \
 	OW_WALL.cpp \
+	ReplayFile.cpp \
 	dbglog.cpp \
 	file_input_stream.cpp \
 	file_output_stream.cpp \

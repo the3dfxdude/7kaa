@@ -410,8 +410,11 @@ void Remote::process_receive_queue()
 		for( rqt.traverse_set_start(); !rqt.traverse_finish(); rqt.traverse_next() )
 		{
 			err_when( ++loopCount > 1000 );
-			RemoteMsg* remoteMsgPtr = rqt.get_remote_msg();
+			uint16_t size;
+			RemoteMsg* remoteMsgPtr = rqt.get_remote_msg(&size);
 			remoteMsgPtr->process_msg();
+			if( replay.mode == ReplayFile::WRITE )
+				replay.write(remoteMsgPtr->id, remoteMsgPtr->data_buf, size);
 		}
 	}
 	else //--------- process in the order of nation recno --------//
@@ -431,7 +434,8 @@ void Remote::process_receive_queue()
 			for( rqt.traverse_set_start(); !rqt.traverse_finish(); rqt.traverse_next() )
 			{
 				err_when( ++loopCount > 1000 );
-				RemoteMsg* remoteMsgPtr = rqt.get_remote_msg();
+				uint16_t size;
+				RemoteMsg* remoteMsgPtr = rqt.get_remote_msg(&size);
 
 				//--- check if this message indicates the start of a new message queue ---//
 
@@ -474,6 +478,8 @@ void Remote::process_receive_queue()
 						LOG_MSG(logStr);
 #endif                  
 						remoteMsgPtr->process_msg();
+						if( replay.mode == ReplayFile::WRITE )
+							replay.write(remoteMsgPtr->id, remoteMsgPtr->data_buf, size);
 						LOG_MSG("end process remote message");
 						LOG_MSG(misc.get_random_seed());
 					}
@@ -521,10 +527,13 @@ void Remote::process_specific_msg(uint32_t msgId)
 	for( rqt.traverse_set_start(); !rqt.traverse_finish(); rqt.traverse_next() )
 	{
 		err_when( ++loopCount > 1000 );
-		RemoteMsg* remoteMsgPtr = rqt.get_remote_msg();
+		uint16_t size;
+		RemoteMsg* remoteMsgPtr = rqt.get_remote_msg(&size);
 		if( remoteMsgPtr->id == msgId )
 		{
 			remoteMsgPtr->process_msg();
+			if( replay.mode == ReplayFile::WRITE )
+				replay.write(remoteMsgPtr->id, remoteMsgPtr->data_buf, size);
 			remoteMsgPtr->id = 0;
 		}
 	}

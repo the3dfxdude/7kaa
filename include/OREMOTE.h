@@ -26,6 +26,7 @@
 
 #include <MPTYPES.h>
 #include <OREMOTEQ.h>
+#include <ReplayFile.h>
 
 #include <storage_constants.h>
 
@@ -387,6 +388,8 @@ public:
 
 	// --------- alternating send frame --------//
 	int				alternating_send_rate;	// 1=every frame, 2=send one frame per two frames...
+
+	ReplayFile			replay;
 
 public:
 	Remote();

@@ -159,6 +159,7 @@ noinst_HEADERS = \
 	OWORLD.h \
 	OWORLDMT.h \
 	RESOURCE.h \
+	ReplayFile.h \
 	WALLTILE.h \
 	WebService.h \
 	asmfun.h \

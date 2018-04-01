@@ -34,6 +34,7 @@
 #include <OREMOTE.h>
 #include <multiplayer.h>
 #include <OERRCTRL.h>
+#include <ReplayFile.h>
 
 //--------- Begin of function Remote::Remote ----------//
 
@@ -111,6 +112,7 @@ void Remote::deinit()
 	// ###### patch begin Gilbert 22/1 #######//
 	sync_test_level = 0;			// 0=disable, bit0= random seed, bit1=crc
 	// ###### patch end Gilbert 22/1 #######//
+	replay.close();
 }
 //--------- End of function Remote::deinit ----------//
 
