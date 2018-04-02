@@ -140,6 +140,8 @@ void ReplayFile::write(uint32_t id, char *data, uint16_t size)
 {
 	if( mode != ReplayFile::WRITE )
 		return;
+	if( !id )
+		return; // not a processed message, so don't save
 	err_when( size<4 );
 	size -= 4; // don't include size of id, only data
 	file.file_write(&size, sizeof(uint16_t));
