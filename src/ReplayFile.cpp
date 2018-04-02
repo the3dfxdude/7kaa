@@ -131,13 +131,17 @@ void ReplayFile::read(uint32_t *id, char *data, uint16_t max_size)
 	if( size > max_size )
 		err.run("msg size too large");
 	file.file_read(id, sizeof(uint32_t));
-	file.file_read(data, size);
+	if( size )
+		file.file_read(data, size);
 }
 
+// size = sizeof(id) + data buf size
 void ReplayFile::write(uint32_t id, char *data, uint16_t size)
 {
 	if( mode != ReplayFile::WRITE )
 		return;
+	err_when( size<4 );
+	size -= 4; // don't include size of id, only data
 	file.file_write(&size, sizeof(uint16_t));
 	file.file_write(&id, sizeof(uint32_t));
 	if( size )
