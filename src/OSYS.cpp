@@ -434,10 +434,20 @@ void Sys::deinit_objects()
 int Sys::set_config_dir()
 {
    // Get the path for the config directory from SDL. Guaranteed to end with a path separator
-   char *home = SDL_GetPrefPath(CONFIG_ORGANIZATION_NAME, CONFIG_APPLICATION_NAME);
-   strcpy(dir_config, home);
-   SDL_free(home);
-   home = NULL;
+   char *home;
+
+   home = getenv("SKCONFIG");
+   if( home )
+   {
+      strcpy(dir_config, home);
+      strcat(dir_config, "//");
+   }
+   else
+   {
+      home = SDL_GetPrefPath(CONFIG_ORGANIZATION_NAME, CONFIG_APPLICATION_NAME);
+      strcpy(dir_config, home);
+      SDL_free(home);
+   }
 
    MSG("Game config dir path: %s\n", dir_config);
 
