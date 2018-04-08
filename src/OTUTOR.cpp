@@ -252,6 +252,9 @@ void Tutor::load(int tutorId)
 
 	text_block_count=0;
 
+	fileTxt.next_line();    // by pass the first two lines of file description
+	fileTxt.next_line();
+
 	while( !fileTxt.is_eof() )
 	{
 		err_when( loopCount++ > 10000 );

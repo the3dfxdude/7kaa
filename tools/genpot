@@ -97,11 +97,11 @@ foreach (@dbf_list) {
 }
 
 foreach (glob(tut_intr_path("*.txt"))) {
-	tut_text_extract($_);
+	tut_text_extract($_, 0);
 }
 
 foreach (glob(tut_text_path("*.txt"))) {
-	tut_text_extract($_);
+	tut_text_extract($_, 1);
 }
 
 foreach (glob(sct1_text_path("*.sct"))) {
@@ -232,22 +232,31 @@ sub pot_extract_dbf {
 	}
 }
 
-# Follows the method used in FileTxt::read_paragraph()
+# Extract tut_text and tut_intr files.
+# tut_text files have the first two lines as a file description.
+# After, it follows the method used in FileTxt::read_paragraph()
 sub tut_text_extract {
 	my $file;
+	my $is_tut_text;
 	my $fh;
 	my $msgid;
 	my $line_no;
 	my $loc;
 
-	($file) = @_;
+	($file, $is_tut_text) = @_;
 
 	if (!open($fh, $file)) {
 		warn "Error: Can't read $file\n";
 		return;
 	}
-	$msgid = "";
 	$line_no = 0;
+	if ($is_tut_text) {
+		# skip first two lines
+		my $line = <$fh>;
+		$line = <$fh>;
+		$line_no += 2;
+	}
+	$msgid = "";
 	$loc = $line_no+1;
 	while (my $line = <$fh>) {
 		$line_no++;
