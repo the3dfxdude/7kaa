@@ -510,6 +510,12 @@ void Sys::run(int isLoadedGame)
 
    //-----------------------------------------//
 
+   //------ reset mouse ---------//
+
+   mouse.reset_click();
+   mouse.reset_boundary();
+   mouse_cursor.set_frame(0);
+
    misc.unlock_seed();
 
    sys_flag = SYS_PREGAME;
