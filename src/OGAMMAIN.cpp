@@ -259,6 +259,15 @@ void Game::main_menu()
 			}
 		}
 
+		// method to start a game replay at this time
+		if( mouse.is_key_event() && mouse.scan_code == 'r')
+		{
+			init();
+			battle.run_replay();
+			deinit();
+			refreshFlag=1;
+		}
+
 		//-------------------------------------//
 
 		if( sys.signal_exit_flag == 1 || i == MAIN_OPTION_COUNT-1 )			// quit the system now
