@@ -208,10 +208,12 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 
 	//------- enable/disable sound effects -------//
 
-#ifndef HEADLESS_SIM
-	int songId = (~nation_array)->race_id <= 7 ? (~nation_array)->race_id+1 : music.random_bgm_track();
+	int songId;
+	if( (~nation_array) && (~nation_array)->race_id <= 7 )
+		songId = (~nation_array)->race_id+1;
+	else
+		songId = music.random_bgm_track();
 	music.play(songId, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0 );
-#endif
 
 	mouse_cursor.restore_icon(oldCursor);
 
