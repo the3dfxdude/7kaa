@@ -651,6 +651,28 @@ void Battle::run_loaded()
 //--------- End of function Battle::run_loaded ---------//
 
 
+//-------- Begin of function Battle::run_replay --------//
+//
+void Battle::run_replay()
+{
+	NewNationPara *mpGame = (NewNationPara *)mem_add(sizeof(NewNationPara)*MAX_NATION);
+	int mpPlayerCount = 0;
+	char full_path[MAX_PATH+1];
+
+	game.game_mode = GAME_DEMO;
+	game.game_has_ended = 1;
+
+	if( !misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+		return;
+	if( !remote.init_replay_load(full_path, mpGame, &mpPlayerCount) )
+		return;
+	battle.run(mpGame, mpPlayerCount);
+	mem_del(mpGame);
+	remote.deinit();
+}
+//--------- End of function Battle::run_replay ---------//
+
+
 //-------- Begin of function Battle::run_test --------//
 //
 void Battle::run_test()

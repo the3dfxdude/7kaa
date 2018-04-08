@@ -398,6 +398,8 @@ public:
 	~Remote();
 
 	void			init(MultiPlayer *mp);
+	int 			init_replay_load(char *full_path, NewNationPara *mpGame, int *playerCount);
+	void			init_replay_save(NewNationPara *mpGame, int playerCount);
 	void			deinit();
 
 	void			init_start_mp();

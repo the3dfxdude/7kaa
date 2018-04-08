@@ -101,6 +101,39 @@ void Remote::init(MultiPlayer *mp)
 //--------- End of function Remote::init ----------//
 
 
+//--------- Begin of function Remote::init_replay_load ----------//
+// Can be called independently.
+int Remote::init_replay_load(char *full_path, NewNationPara *mpGame, int *playerCount)
+{
+	if( connectivity_mode )
+		deinit();
+
+	if (!replay.open_read(full_path, mpGame, playerCount))
+		return 0;
+
+	remote.connectivity_mode = Remote::MODE_REPLAY;
+
+	return 1;
+}
+//--------- End of function Remote::init_replay_save ----------//
+
+
+//--------- Begin of function Remote::init_replay_save ----------//
+// Call this after init(). Uses a default filename.
+void Remote::init_replay_save(NewNationPara *mpGame, int playerCount)
+{
+	err_when( connectivity_mode != MODE_MP_ENABLED );
+
+	if( !sync_test_level )
+		return;
+
+	char full_path[MAX_PATH+1];
+	if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+		replay.open_write(full_path, mpGame, playerCount);
+}
+//--------- End of function Remote::init_replay_save ----------//
+
+
 //--------- Begin of function Remote::deinit ----------//
 
 void Remote::deinit()

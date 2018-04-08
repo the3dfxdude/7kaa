@@ -45,6 +45,7 @@ public:
 	#endif
 
 	void	run_loaded();
+	void	run_replay();
 	void	run_test();
 
 private:

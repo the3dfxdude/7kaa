@@ -736,6 +736,13 @@ void Sys::main_loop(int isLoadedGame)
                rc = is_mp_sync(&unreadyPlayerFlag);         // if all players are synchronized
                misc.lock_seed();
             }
+            else if( remote.is_replay() && should_next_frame() )
+            {
+               remote.process_receive_queue();
+               rc = 1;
+            }
+            else if( remote.is_replay_end() )
+               signal_exit_flag = 2;
             else
                rc = should_next_frame();
 
