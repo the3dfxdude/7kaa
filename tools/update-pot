@@ -19,4 +19,8 @@ ${XGETTEXT} --default-domain=${DOMAIN} --directory=${DIR} \
 
 ./tools/genpot ${DATADIR} | msguniq > ${PODIR}/${DOMAIN}.res.pot
 
-msgcat -u ${PODIR}/7kaa.src.pot ${PODIR}/7kaa.res.pot > ${PODIR}/7kaa.pot
+msgcat ${PODIR}/7kaa.src.pot ${PODIR}/7kaa.res.pot > ${PODIR}/7kaa.pot
+
+# NOTE: Downstream translations will need this after po template is updated
+# if "fr" then
+#msgmerge --lang=fr fr.po 7kaa.pot -o fr.new.po
