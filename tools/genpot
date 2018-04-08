@@ -268,7 +268,7 @@ sub tut_text_extract {
 	}
 	close($fh);
 
-	if ($msgid ne "") {
+	if ($msgid !~ /^\s*$/) {
 		print get_msgid($file, "", $msgid, $loc);
 	}
 }
@@ -323,7 +323,7 @@ sub sct_text_extract {
 	}
 	close($fh);
 
-	if ($msgid ne "") {
+	if ($msgid !~ /^\s*$/) {
 		print get_msgid($file, "", $msgid, $loc);
 	}
 }
