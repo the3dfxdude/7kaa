@@ -26,6 +26,9 @@
 
 #include <OFILE.h>
 
+struct NewNationPara;
+class RemoteQueue;
+
 class ReplayFile
 {
 public:
@@ -37,6 +40,7 @@ public:
 
 private:
 	File file;
+	long file_size;
 
 public:
 	int mode;
@@ -46,9 +50,10 @@ public:
 	~ReplayFile();
 
 	void close();
-	int open(const char *filePath, int open_mode);
-	void read(uint32_t *id, char *data, uint16_t max_size);
-	void write(uint32_t id, char *data, uint16_t size);
+	int open_read(const char *filePath, NewNationPara *mpGame, int *mpPlayerCount);
+	int open_write(const char *filePath, NewNationPara *mpGame, int mpPlayerCount);
+	int read_queue(RemoteQueue *rq);
+	void write_queue(RemoteQueue *rq);
 };
 
 //-----------------------------------------------//

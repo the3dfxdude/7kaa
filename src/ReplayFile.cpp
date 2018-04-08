@@ -26,6 +26,8 @@
 #include <ReplayFile.h>
 #include <OCONFIG.h>
 #include <OERROR.h>
+#include <ONATIONA.h>
+#include <OREMOTEQ.h>
 #include <version.h>
 
 const char file_magic[] = "7KRP";
@@ -76,76 +78,108 @@ void ReplayFile::close()
 	mode = ReplayFile::DISABLE;
 }
 
-int ReplayFile::open(const char* filePath, int open_mode)
+int ReplayFile::open_read(const char* filePath, NewNationPara *mpGame, int *mpPlayerCount)
 {
-	GameVer current_version;
-	current_version.set_current_version();
 	if( mode != ReplayFile::DISABLE )
 		return 0;
-	if( open_mode == ReplayFile::READ )
-	{
-		char magic[4];
-		int32_t file_version;
-		GameVer version;
-		if( !file.file_open(filePath, 0) )
-			return 0;
-		if( !file.file_read(&magic, 4) )
-			goto out;
-		if( memcmp(magic, file_magic, 4) )
-			goto out;
-		if( file_version != replay_version )
-			goto out;
-		if( !file.file_read(&version, sizeof(GameVer)) )
-			goto out;
+
+	GameVer current_version;
+	char magic[4];
+	int32_t file_version;
+	GameVer version;
+	current_version.set_current_version();
+	int random_seed;
+
+	if( !file.file_open(filePath, 0) )
+		return 0;
+	if( !file.file_read(&magic, 4) )
+		goto out;
+	if( memcmp(magic, file_magic, 4) )
+		goto out;
+	file_version = file.file_get_long();
+	if( file_version != replay_version )
+		goto out;
+	if( !file.file_read(&version, sizeof(GameVer)) )
+		goto out;
 // Can warn user of version mismatch
-//		if( !current_version.cmp(&version) )
-//			box.msg();
-		if( !config.read_file(&file, 1) ) // 1-keep system settings
-			goto out;
-		mode = ReplayFile::READ;
-		return 1;
-	}
-	if( open_mode == ReplayFile::WRITE )
+//	if( !current_version.cmp(&version) )
+//		box.msg();
+	random_seed = file.file_get_long();
+	if( !config.read_file(&file, 1) ) // 1-keep system settings
+		goto out;
+	*mpPlayerCount = file.file_get_short();
+	for( int i = 0; i < *mpPlayerCount; ++i )
 	{
-		if( !file.file_create(filePath, 0) )
-			return 0;
-		file.file_write((void *)file_magic, 4);
-		file.file_put_long(replay_version);
-		file.file_write(&current_version, sizeof(GameVer));
-		config.write_file(&file);
-		mode = ReplayFile::WRITE;
-		return 1;
+		mpGame[i].nation_recno = file.file_get_short();
+		mpGame[i].dp_player_id = 0;
+		mpGame[i].color_scheme = file.file_get_short();
+		mpGame[i].race_id      = file.file_get_short();
+		file.file_read(&mpGame[i].player_name, HUMAN_NAME_LEN+1);
 	}
+
+	info.init_random_seed(random_seed);
+
+	file_size = file.file_size();
+
+	mode = ReplayFile::READ;
 	return 1;
 out:
 	file.file_close();
 	return 0;
 }
 
-void ReplayFile::read(uint32_t *id, char *data, uint16_t max_size)
+int ReplayFile::open_write(const char* filePath, NewNationPara *mpGame, int mpPlayerCount)
 {
-	if( mode != ReplayFile::READ )
-		return;
-	uint16_t size;
-	file.file_read(&size, sizeof(uint16_t));
-	if( size > max_size )
-		err.run("msg size too large");
-	file.file_read(id, sizeof(uint32_t));
-	if( size )
-		file.file_read(data, size);
+	if( mode != ReplayFile::DISABLE )
+		return 0;
+
+	GameVer current_version;
+	current_version.set_current_version();
+
+	if( !file.file_create(filePath, 0) )
+		return 0;
+	file.file_write((void *)file_magic, 4);
+	file.file_put_long(replay_version);
+	file.file_write(&current_version, sizeof(GameVer));
+	file.file_put_long(info.random_seed);
+	config.write_file(&file);
+	file.file_put_short(mpPlayerCount);
+	for( int i = 0; i < mpPlayerCount; ++i )
+	{
+		file.file_put_short(mpGame[i].nation_recno);
+		file.file_put_short(mpGame[i].color_scheme);
+		file.file_put_short(mpGame[i].race_id);
+		file.file_write(&mpGame[i].player_name, HUMAN_NAME_LEN+1);
+	}
+
+	mode = ReplayFile::WRITE;
+	return 1;
 }
 
-// size = sizeof(id) + data buf size
-void ReplayFile::write(uint32_t id, char *data, uint16_t size)
+// returns number of bytes read into queue
+int ReplayFile::read_queue(RemoteQueue *rq)
+{
+	if( mode != ReplayFile::READ )
+		return 0;
+	if( file.file_pos() >= file_size )
+		return 0;
+	int size = file.file_get_unsigned_short();
+	if( size <= 0 )
+		return 0;
+	if( size > rq->queue_buf_size )
+		rq->reserve(size - rq->queue_buf_size);
+	file.file_read(rq->queue_buf, size);
+	rq->queue_ptr = rq->queue_buf + size;
+        rq->queued_size = size;
+	return size;
+}
+
+void ReplayFile::write_queue(RemoteQueue *rq)
 {
 	if( mode != ReplayFile::WRITE )
 		return;
-	if( !id )
-		return; // not a processed message, so don't save
-	err_when( size<4 );
-	size -= 4; // don't include size of id, only data
-	file.file_write(&size, sizeof(uint16_t));
-	file.file_write(&id, sizeof(uint32_t));
-	if( size )
-		file.file_write(data, size);
+	if( rq->queued_size <= 0 )
+		return;
+	file.file_put_unsigned_short(rq->queued_size);
+	file.file_write(rq->queue_buf, rq->queued_size);
 }

@@ -50,7 +50,7 @@ Remote::Remote()
 	common_msg_buf    = mem_add( COMMON_MSG_BUF_SIZE );
 
 	mp_ptr				= NULL;
-	connectivity_mode = 0;
+	connectivity_mode = MODE_DISABLED;
 	//	handle_vga_lock   = 1;
 	handle_vga_lock   = 0;			// lock vga front in MulitPlayerDP
 	process_queue_flag = 0;
@@ -84,7 +84,7 @@ void Remote::init(MultiPlayer *mp)
 	if( connectivity_mode )
 		deinit();
 
-	connectivity_mode = 1;
+	connectivity_mode = MODE_MP_ENABLED;
 	poll_msg_flag = 0;
 	mp_ptr = mp;
 
@@ -107,7 +107,7 @@ void Remote::deinit()
 {
 	if( connectivity_mode )
 	{
-		connectivity_mode = 0;
+		connectivity_mode = MODE_DISABLED;
 	}
 	// ###### patch begin Gilbert 22/1 #######//
 	sync_test_level = 0;			// 0=disable, bit0= random seed, bit1=crc
@@ -144,16 +144,35 @@ int Remote::connect_game()
 //
 int Remote::is_enable()
 {
-	return connectivity_mode;
+	return connectivity_mode == MODE_MP_ENABLED;
 }
 //--------- End of function Remote::is_enable ----------//
+
+
+//-------- Begin of function Remote::is_replay ---------//
+//
+int Remote::is_replay()
+{
+	return connectivity_mode == MODE_REPLAY;
+}
+//--------- End of function Remote::is_replay ----------//
+
+
+//-------- Begin of function Remote::is_replay_end ---------//
+//
+int Remote::is_replay_end()
+{
+	return connectivity_mode == MODE_REPLAY_END;
+}
+//--------- End of function Remote::is_replay_end ----------//
+
 
 /*
 //-------- Begin of function Remote::can_start_game ---------//
 //
 int Remote::can_start_game()
 {
-	err_when(!connectivity_mode);
+	err_when(connectivity_mode != MODE_MP_ENABLED);
 
 	return wsock_ptr->can_start_game();
 }
@@ -164,7 +183,7 @@ int Remote::can_start_game()
 //
 int Remote::number_of_opponent()
 {
-	err_when(!connectivity_mode);
+	err_when(connectivity_mode != MODE_MP_ENABLED);
 
 	//return wsock_ptr->number_of_player;
 	return mp_ptr->get_player_count()-1;
@@ -176,7 +195,7 @@ int Remote::number_of_opponent()
 //
 PID_TYPE Remote::self_player_id()
 {
-	err_when(!connectivity_mode);
+	err_when(connectivity_mode != MODE_MP_ENABLED);
 
 	// return wsock_ptr->self_player_id;
 	return mp_ptr->get_my_player_id();
@@ -188,7 +207,7 @@ PID_TYPE Remote::self_player_id()
 //
 void Remote::set_disconnect_handler(DisconnectFP disconnectFP)
 {
-	err_when(!connectivity_mode);
+	err_when(connectivity_mode != MODE_MP_ENABLED);
 
 	wsock_ptr->set_disconnect_handler(disconnectFP);
 }
@@ -200,7 +219,7 @@ void Remote::set_disconnect_handler(DisconnectFP disconnectFP)
 //
 void Remote::start_game()
 {
-	err_when(!connectivity_mode);
+	err_when(connectivity_mode != MODE_MP_ENABLED);
 
 	// wsock_ptr->start_game();
 }

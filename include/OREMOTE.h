@@ -325,6 +325,8 @@ public:
 			 RECEIVE_QUEUE_BACKUP = (MAX_PROCESS_FRAME_DELAY+1)*2,
 		  };
 
+	enum { MODE_DISABLED = 0, MODE_MP_ENABLED, MODE_REPLAY, MODE_REPLAY_END };
+
 public:
 	char				is_host;
 	char				handle_vga_lock;
@@ -400,6 +402,8 @@ public:
 
 	void			init_start_mp();
 	int				is_enable();
+	int			is_replay();
+	int			is_replay_end();
 	// int			can_start_game();
 	int				number_of_opponent();
 	PID_TYPE    	self_player_id();
