@@ -402,8 +402,12 @@ void Remote::process_receive_queue()
 
 	if( connectivity_mode == MODE_REPLAY )
 	{
-		if( !replay.read_queue(&rq) )
+		replay.read_queue(&rq);
+		if( replay.at_eof() )
+		{
 			connectivity_mode = MODE_REPLAY_END;
+			sys.signal_exit_flag = 2;
+		}
 	}
 	else
 		replay.write_queue(&rq);

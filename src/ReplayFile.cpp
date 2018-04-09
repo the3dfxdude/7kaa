@@ -63,6 +63,7 @@ struct GameVer {
 
 ReplayFile::ReplayFile()
 {
+	file_size = 0;
 	mode = ReplayFile::DISABLE;
 }
 
@@ -70,11 +71,17 @@ ReplayFile::~ReplayFile()
 {
 }
 
+int ReplayFile::at_eof()
+{
+	return mode != ReplayFile::READ || file.file_pos() >= file_size;
+}
+
 void ReplayFile::close()
 {
 	if( mode == ReplayFile::DISABLE )
 		return;
 	file.file_close();
+	file_size = 0;
 	mode = ReplayFile::DISABLE;
 }
 
@@ -159,9 +166,7 @@ int ReplayFile::open_write(const char* filePath, NewNationPara *mpGame, int mpPl
 // returns number of bytes read into queue
 int ReplayFile::read_queue(RemoteQueue *rq)
 {
-	if( mode != ReplayFile::READ )
-		return 0;
-	if( file.file_pos() >= file_size )
+	if( at_eof() )
 		return 0;
 	int size = file.file_get_unsigned_short();
 	if( size <= 0 )

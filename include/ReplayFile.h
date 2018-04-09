@@ -49,6 +49,7 @@ public:
 	ReplayFile();
 	~ReplayFile();
 
+	int at_eof();
 	void close();
 	int open_read(const char *filePath, NewNationPara *mpGame, int *mpPlayerCount);
 	int open_write(const char *filePath, NewNationPara *mpGame, int mpPlayerCount);
