@@ -684,7 +684,7 @@ int SaveGameArray::process_action(int saveNew)
 		}
 		else           // save on existing slot
 		{
-			if( !box.ask( _("It will overwrite the existing saved game, proceed ?") ) )
+			if( !box.ask( _("It will overwrite the existing saved game. Proceed?") ) )
 				return 0;
 
 			SaveGameInfo* saveGameInfo = (*this)[browse_recno];
@@ -886,7 +886,7 @@ void SaveGameArray::del_game()
 {
 	int recNo = browse_recno;
 
-	if( !box.ask( _("This saved game will be deleted, proceed ?") ) )
+	if( !box.ask( _("This saved game will be deleted. Proceed?") ) )
 		return;
 
 	SaveGameProvider::delete_savegame((*this)[recNo]->file_name);

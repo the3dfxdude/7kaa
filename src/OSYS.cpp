@@ -2636,7 +2636,7 @@ void Sys::load_game()
    //-----------------------------------//
    if( rc == -1)
    {
-      box.msg( _("Fail Loading Game") );
+      box.msg( _("Failed Loading Game") );
       return;
    }
 

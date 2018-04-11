@@ -848,7 +848,7 @@ void Town::disp_train_menu(int refreshFlag)
 	}
 	else if( refreshFlag == INFO_REPAINT )
 	{
-		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+18, _("Train (Cost:$30, Skill:20)") );
+		font_san.d3_put( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+18, _("Train (Cost: $30, Skill: 20)") );
 		int x=INFO_X1, y=INFO_Y1+24;
 
 		for(int i=1; i<=MAX_TRAINABLE_SKILL; i++)

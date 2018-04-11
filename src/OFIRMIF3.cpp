@@ -113,13 +113,13 @@ void Firm::disp_bribe_menu(int refreshFlag)
 		{
 			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+24 );
 
-			font_san.center_put( INFO_X1, y, INFO_X2, y2, _("Bribing Succeeded.") );
+			font_san.center_put( INFO_X1, y, INFO_X2, y2, _("Bribe Succeeded.") );
 		}
 		else
 		{
 			vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+62 );
 
-			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, _("Bribing Failed.") );
+			font_san.center_put( INFO_X1, y	  , INFO_X2, y2, _("Bribe Failed.") );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("Your Spy Was Caught") );
 			font_san.center_put( INFO_X1, y+=18, INFO_X2, y2+=18, _("And Executed.") );
 		}
