@@ -50,7 +50,6 @@ public:
 	int 	build_firm(int xLoc, int yLoc, int nationRecno, int firmId, char* buildCode=NULL, short builderRecno=0);
 	int   create_firm(int);
    void  del_firm(int);
-   int   firm_class_size(int);
 
 	int   process();
 	void  next_day();

@@ -127,6 +127,16 @@ namespace FileIOVisitor
       return true;
    }
 
+   template <typename ClassT, typename Visitor, int Size>
+   bool visit_array(Visitor *vis, ClassT (&array)[Size], void (*visit_obj)(Visitor* v, ClassT* obj))
+   {
+	   for (int i = 0; i < Size; ++i)
+	   {
+		   visit_obj(vis, &array[i]);
+	   }
+	   return vis->good();
+   }
+
    template <typename T, typename Visitor>
    bool visit_pointer(Visitor *vis, T **ptr)
    {

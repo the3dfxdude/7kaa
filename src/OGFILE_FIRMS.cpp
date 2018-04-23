@@ -22,6 +22,16 @@
 
 
 #include <OFIRM.h>
+#include <OF_BASE.h>
+#include <OF_CAMP.h>
+#include <OF_FACT.h>
+#include <OF_HARB.h>
+#include <OF_INN.h>
+#include <OF_MARK.h>
+#include <OF_MINE.h>
+#include <OF_MONS.h>
+#include <OF_RESE.h>
+#include <OF_WAR.h>
 #include <OGFILE.h>
 #include <OGF_V1.h>
 #include <file_io_visitor.h>
@@ -95,23 +105,399 @@ static void visit_firm_members(Visitor *v, Firm *f)
 	visit<int8_t>(v, &f->ai_should_build_factory_count);
 }
 
+template <typename Visitor>
+static void visit_worker_members(Visitor* vis, Worker* c)
+{
+	visit<int8_t>(vis, &c->race_id);
+	visit<int8_t>(vis, &c->unit_id);
+	visit<int16_t>(vis, &c->town_recno);
+	visit<uint16_t>(vis, &c->name_id);
+	visit<int8_t>(vis, &c->skill_id);
+	visit<int8_t>(vis, &c->skill_level);
+	visit<int8_t>(vis, &c->skill_level_minor);
+	visit<int8_t>(vis, &c->skill_potential);
+	visit<int8_t>(vis, &c->combat_level);
+	visit<int8_t>(vis, &c->combat_level_minor);
+	visit<int16_t>(vis, &c->spy_recno);
+	visit<int8_t>(vis, &c->rank_id);
+	visit<int8_t>(vis, &c->worker_loyalty);
+	visit<int16_t>(vis, &c->hit_points);
+	visit<int16_t>(vis, &c->extra_para);
+}
+
+template <typename Visitor>
+static void visit_firm_worker_array(Visitor* v, Firm* firm, bool is_reader_visitor)
+{
+	// Handle presence or absence of worker array following the regular Firm members
+	if( firm_res[firm->firm_id]->need_worker )
+	{
+		if (is_reader_visitor)
+			firm->worker_array = (Worker*) mem_add( MAX_WORKER*sizeof(Worker) );
+
+		v->with_record_size(MAX_WORKER*sizeof(Worker));
+		for (int i = 0; i < MAX_WORKER; ++i) {
+			visit_worker_members(v, &firm->worker_array[i]);
+		}
+	}
+}
+
+template <typename Visitor>
+static void visit_firm_base_members(Visitor* v, FirmBase* c)
+{
+	visit<int16_t>(v, &c->god_id);
+	visit<int16_t>(v, &c->god_unit_recno);
+	visit<float>(v, &c->pray_points);
+}
+
+template <typename Visitor>
+static void visit_defense_unit_members(Visitor* v, DefenseUnit* c)
+{
+	visit<int16_t>(v, &c->unit_recno);
+	visit<int8_t>(v, &c->status);
+}
+
+template <typename Visitor>
+static void visit_firm_camp_members(Visitor* v, FirmCamp* c)
+{
+	visit_array(v, c->defense_array, visit_defense_unit_members<Visitor>);
+	visit<int8_t>(v, &c->employ_new_worker);
+	visit<int16_t>(v, &c->defend_target_recno);
+	visit<int8_t>(v, &c->defense_flag);
+	visit<int8_t>(v, &c->patrol_unit_count);
+	visit_array<int16_t>(v, c->patrol_unit_array);
+	visit<int8_t>(v, &c->coming_unit_count);
+	visit_array<int16_t>(v, c->coming_unit_array);
+	visit<int16_t>(v, &c->ai_capture_town_recno);
+	visit<int8_t>(v, &c->ai_recruiting_soldier);
+	visit<int8_t>(v, &c->is_attack_camp);
+}
+
+template <typename Visitor>
+static void visit_firm_factory_members(Visitor* v, FirmFactory* c)
+{
+	visit<int32_t>(v, &c->product_raw_id);
+	visit<float>(v, &c->stock_qty);
+	visit<float>(v, &c->max_stock_qty);
+	visit<float>(v, &c->raw_stock_qty);
+	visit<float>(v, &c->max_raw_stock_qty);
+	visit<float>(v, &c->cur_month_production);
+	visit<float>(v, &c->last_month_production);
+	visit<int16_t>(v, &c->next_output_link_id);
+	visit<int16_t>(v, &c->next_output_firm_recno);
+}
+
+template <typename Visitor>
+static void visit_firm_harbor_members(Visitor* v, FirmHarbor* c)
+{
+	visit_array<int16_t>(v, c->ship_recno_array);
+	visit<int16_t>(v, &c->ship_count);
+	visit<int16_t>(v, &c->build_unit_id);
+	visit<uint32_t>(v, &c->start_build_frame_no);
+	visit_array<int8_t>(v, c->build_queue_array);
+	visit<int8_t>(v, &c->build_queue_count);
+	visit<uint8_t>(v, &c->land_region_id);
+	visit<uint8_t>(v, &c->sea_region_id);
+	visit<int8_t>(v, &c->link_checked);
+	visit<int8_t>(v, &c->linked_mine_num);
+	visit<int8_t>(v, &c->linked_factory_num);
+	visit<int8_t>(v, &c->linked_market_num);
+	visit_array<int16_t>(v, c->linked_mine_array);
+	visit_array<int16_t>(v, c->linked_factory_array);
+	visit_array<int16_t>(v, c->linked_market_array);
+}
+
+template <typename Visitor>
+static void visit_skill_members(Visitor* v, Skill* c)
+{
+	visit<int8_t>(v, &c->combat_level);
+	visit<int8_t>(v, &c->skill_id);
+	visit<int8_t>(v, &c->skill_level);
+	visit<uint8_t>(v, &c->combat_level_minor);
+	visit<uint8_t>(v, &c->skill_level_minor);
+	visit<uint8_t>(v, &c->skill_potential);
+}
+
+
+template <typename Visitor>
+static void visit_inn_unit_members(Visitor* v, InnUnit* c)
+{
+	visit<int8_t>(v, &c->unit_id);
+	visit_skill_members(v, &c->skill);
+	visit<int16_t>(v, &c->hire_cost);
+	visit<int16_t>(v, &c->stay_count);
+	visit<int16_t>(v, &c->spy_recno);
+}
+
+template <typename Visitor>
+static void visit_firm_inn_members(Visitor* v, FirmInn* c)
+{
+	visit<int16_t>(v, &c->next_skill_id);
+	visit_array(v, c->inn_unit_array, visit_inn_unit_members<Visitor>);
+	visit<int16_t>(v, &c->inn_unit_count);
+}
+
+template <typename Visitor>
+static void visit_market_goods_members(Visitor* v, MarketGoods* c)
+{
+	visit<int8_t>(v, &c->raw_id);
+	visit<int8_t>(v, &c->product_raw_id);
+	visit<int16_t>(v, &c->input_firm_recno);
+	visit<float>(v, &c->stock_qty);
+	visit<float>(v, &c->cur_month_supply);
+	visit<float>(v, &c->last_month_supply);
+	visit<float>(v, &c->month_demand);
+	visit<float>(v, &c->cur_month_sale_qty);
+	visit<float>(v, &c->last_month_sale_qty);
+	visit<float>(v, &c->cur_year_sales);
+	visit<float>(v, &c->last_year_sales);
+}
+
+template <typename Visitor>
+static void visit_firm_market_members(Visitor* v, FirmMarket* c)
+{
+	visit<float>(v, &c->max_stock_qty);
+	visit_array(v, c->market_goods_array, visit_market_goods_members<Visitor>);
+	for (int i = 0; i < MAX_RAW; ++i) v->skip(4); // Skip market_raw_array
+	for (int i = 0; i < MAX_PRODUCT; ++i) v->skip(4); // Skip market_product_array
+	visit<int16_t>(v, &c->next_output_link_id);
+	visit<int16_t>(v, &c->next_output_firm_recno);
+	visit<int32_t>(v, &c->no_linked_town_since_date);
+	visit<int32_t>(v, &c->last_import_new_goods_date);
+	visit<int8_t>(v, &c->is_retail_market);
+}
+
+template <typename Visitor>
+static void visit_firm_mine_members(Visitor* v, FirmMine* c)
+{
+	visit<int16_t>(v, &c->raw_id);
+	visit<int16_t>(v, &c->site_recno);
+	visit<float>(v, &c->reserve_qty);
+	visit<float>(v, &c->stock_qty);
+	visit<float>(v, &c->max_stock_qty);
+	visit<int16_t>(v, &c->next_output_link_id);
+	visit<int16_t>(v, &c->next_output_firm_recno);
+	visit<float>(v, &c->cur_month_production);
+	visit<float>(v, &c->last_month_production);
+}
+
+template <typename Visitor>
+static void visit_monster_in_firm_members(Visitor* v, MonsterInFirm* c)
+{
+	visit<int8_t>(v, &c->monster_id);
+	visit<int8_t>(v, &c->_unused);
+	visit<int16_t>(v, &c->mobile_unit_recno);
+	visit<int8_t>(v, &c->combat_level);
+	visit<int16_t>(v, &c->hit_points);
+	visit<int16_t>(v, &c->max_hit_points);
+	visit<int8_t>(v, &c->soldier_monster_id);
+	visit<int8_t>(v, &c->soldier_count);
+}
+
+template <typename Visitor>
+static void visit_firm_monster_members(Visitor* v, FirmMonster* c)
+{
+	visit<int16_t>(v, &c->monster_id);
+	visit<int16_t>(v, &c->monster_general_count);
+	visit<int8_t>(v, &c->monster_aggressiveness);
+	visit<int8_t>(v, &c->defending_king_count);
+	visit<int8_t>(v, &c->defending_general_count);
+	visit<int8_t>(v, &c->defending_soldier_count);
+	visit_monster_in_firm_members(v, &c->monster_king);
+	visit_array(v, c->monster_general_array, visit_monster_in_firm_members<Visitor>);
+	visit<int8_t>(v, &c->waiting_soldier_count);
+	visit_array<int16_t>(v, c->waiting_soldier_array);
+	visit<int8_t>(v, &c->monster_nation_relation);
+	visit<int16_t>(v, &c->defend_target_recno);
+	visit<int8_t>(v, &c->patrol_unit_count);
+	visit_array<int16_t>(v, c->patrol_unit_array);
+}
+
+template <typename Visitor>
+static void visit_firm_research_members(Visitor* v, FirmResearch* c)
+{
+	visit<int16_t>(v, &c->tech_id);
+	visit<float>(v, &c->complete_percent);
+}
+
+template <typename Visitor>
+static void visit_firm_war_members(Visitor* v, FirmWar* c)
+{
+	visit<int16_t>(v, &c->build_unit_id);
+	visit<uint32_t>(v, &c->last_process_build_frame_no);
+	visit<float>(v, &c->build_progress_days);
+	visit_array<int8_t>(v, c->build_queue_array);
+	visit<int8_t>(v, &c->build_queue_count);
+}
+
 void Firm::accept_file_visitor(FileReaderVisitor* v)
 {
 	visit_firm_members(v, this);
+	visit_firm_worker_array(v, this, true);
+
+	// Hack: the derived part is written separately with its own record size (if sizeof(DerivedFirm)-sizeof(Firm)>0),
+	//       but since any Firm is a derived instance with at least one member, we can consume the record size here.
+	uint16_t derivedRecordSize;
+	v->visit<uint16_t>(&derivedRecordSize);
 }
 
 void Firm::accept_file_visitor(FileWriterVisitor* v)
 {
 	visit_firm_members(v, this);
+	visit_firm_worker_array(v, this, false);
+
+	// Hack: the derived part is written separately with its own record size (if sizeof(DerivedFirm)-sizeof(Firm)>0),
+	//       but since any Firm is a derived instance with at least one member, we can produce the record size here.
+	uint16_t derivedRecordSize = 0; // 0 means don't use stored record size, and just go with the expected record size.
+	v->visit<uint16_t>(&derivedRecordSize);
 }
 
-enum { FIRM_RECORD_SIZE = 254 };
+void FirmBase::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_base_members(v, this);
+}
+
+void FirmBase::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_base_members(v, this);
+}
+
+void FirmCamp::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_camp_members(v, this);
+}
+
+void FirmCamp::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_camp_members(v, this);
+}
+
+void FirmFactory::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_factory_members(v, this);
+}
+
+void FirmFactory::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_factory_members(v, this);
+}
+
+void FirmHarbor::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_harbor_members(v, this);
+}
+
+void FirmHarbor::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_harbor_members(v, this);
+}
+
+void FirmInn::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_inn_members(v, this);
+}
+
+void FirmInn::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_inn_members(v, this);
+}
+
+void FirmMarket::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_market_members(v, this);
+
+	//----- rebuild market_raw_array[] & market_product_array[] ----//
+
+	for( int i=0 ; i<MAX_RAW ; i++ )
+	{
+		market_raw_array[i]	   = NULL;
+		market_product_array[i] = NULL;
+	}
+
+	for( int i=0 ; i<MAX_MARKET_GOODS ; i++ )
+	{
+		int rawId 	 = market_goods_array[i].raw_id;
+		int productId = market_goods_array[i].product_raw_id;
+
+		if( rawId )
+			market_raw_array[rawId-1] = market_goods_array + i;
+
+		if( productId )
+			market_product_array[productId-1] = market_goods_array + i;
+	}
+}
+
+void FirmMarket::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_market_members(v, this);
+}
+
+void FirmMine::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_mine_members(v, this);
+}
+
+void FirmMine::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_mine_members(v, this);
+}
+
+void FirmMonster::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_monster_members(v, this);
+}
+
+void FirmMonster::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_monster_members(v, this);
+}
+
+void FirmResearch::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_research_members(v, this);
+}
+
+void FirmResearch::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_research_members(v, this);
+}
+
+void FirmWar::accept_file_visitor(FileReaderVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_war_members(v, this);
+}
+
+void FirmWar::accept_file_visitor(FileWriterVisitor* v)
+{
+	Firm::accept_file_visitor(v);
+	visit_firm_war_members(v, this);
+}
 
 template <typename Visitor>
-static bool visit_firm(File* file, Firm* firm, uint16_t record_size)
+static bool visit_firm(File* file, Firm* firm)
 {
+	enum { FIRM_RECORD_SIZE = 254 };
+
 	Visitor v(file);
-	v.with_record_size(record_size);
+	v.with_record_size(FIRM_RECORD_SIZE);
 	firm->accept_file_visitor(&v);
 
 	return v.good();
@@ -149,22 +535,9 @@ int FirmArray::write_file(File* filePtr)
 
 			filePtr->file_put_short(firmPtr->firm_id);
 
-			//------ write data in base class --------//
+			//------ write data from (derived) class --------//
 
-			if (!visit_firm<FileWriterVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
-				return 0;
-
-			//--------- write worker_array ---------//
-
-			if( firmPtr->worker_array )
-			{
-				if( !filePtr->file_write( firmPtr->worker_array, MAX_WORKER*sizeof(Worker) ) )
-					return 0;
-			}
-
-			//------ write data in derived class ------//
-
-			if( !firmPtr->write_derived_file(filePtr) )
+			if (!visit_firm<FileWriterVisitor>(filePtr, firmPtr))
 				return 0;
 		}
 	}
@@ -208,28 +581,15 @@ int FirmArray::read_file(File* filePtr)
 			firmRecno = create_firm( firmId );
 			firmPtr   = firm_array[firmRecno];
 
-			if (!visit_firm<FileReaderVisitor>(filePtr, firmPtr, FIRM_RECORD_SIZE))
+			//------ read data into (derived) class --------//
+
+			if (!visit_firm<FileReaderVisitor>(filePtr, firmPtr))
 				return 0;
 
-			//---- read data in base class -----//
+			//---- fixup version difference between v1 and v2 -----//
 
 			if(!GameFile::read_file_same_version && firmPtr->firm_id > FIRM_BASE)
 				firmPtr->firm_build_id += MAX_RACE - VERSION_1_MAX_RACE;
-
-			//--------- read worker_array ---------//
-
-			if( firm_res[firmId]->need_worker )
-			{
-				firmPtr->worker_array = (Worker*) mem_add( MAX_WORKER*sizeof(Worker) );
-
-				if( !filePtr->file_read( firmPtr->worker_array, MAX_WORKER*sizeof(Worker) ) )
-					return 0;
-			}
-
-			//----- read data in derived class -----//
-
-			if( !firmPtr->read_derived_file( filePtr ) )
-				return 0;
 		}
 	}
 
@@ -252,53 +612,3 @@ int FirmArray::read_file(File* filePtr)
 	return 1;
 }
 //--------- End of function FirmArray::read_file ---------------//
-
-
-//--------- Begin of function Firm::write_derived_file ---------//
-//
-// Write data in derived class.
-//
-// If the derived Firm don't have any special data,
-// just use Firm::write_file(), otherwise make its own derived copy of write_file()
-//
-int Firm::write_derived_file(File* filePtr)
-{
-	//--- write data in derived class -----//
-
-	int writeSize = firm_array.firm_class_size(firm_id)-sizeof(Firm);
-
-	if( writeSize > 0 )
-	{
-		if( !filePtr->file_write( (char*) this + sizeof(Firm), writeSize ) )
-			return 0;
-	}
-
-	return 1;
-}
-//----------- End of function Firm::write_derived_file ---------//
-
-
-//--------- Begin of function Firm::read_derived_file ---------//
-//
-// Read data in derived class.
-//
-// If the derived Firm don't have any special data,
-// just use Firm::read_file(), otherwise make its own derived copy of read_file()
-//
-int Firm::read_derived_file(File* filePtr)
-{
-	//--- read data in derived class -----//
-
-	int readSize = firm_array.firm_class_size(firm_id)-sizeof(Firm);
-
-	if( readSize > 0 )
-	{
-		MSG(__FILE__":%d: file_read(this, ...);\n", __LINE__);
-
-		if( !filePtr->file_read( (char*) this + sizeof(Firm), readSize ) )
-			return 0;
-	}
-
-	return 1;
-}
-//----------- End of function Firm::read_derived_file ---------//

@@ -244,56 +244,6 @@ int FirmArray::create_firm(int firmId)
 //----------- End of function FirmArray::create_firm ---------//
 
 
-//--------- Begin of function FirmArray::firm_class_size ---------//
-//
-// Return the size of the specified class.
-// This function will be called by FirmArray::write_file()
-//
-// <int> id    = the id of the job
-//
-int FirmArray::firm_class_size(int id)
-{
-	switch(id)
-	{
-		case FIRM_BASE:
-			return sizeof(FirmBase);
-
-		case FIRM_CAMP:
-			return sizeof(FirmCamp);
-
-		case FIRM_FACTORY:
-			return sizeof(FirmFactory);
-
-		case FIRM_INN:
-			return sizeof(FirmInn);
-
-		case FIRM_MARKET:
-			return sizeof(FirmMarket);
-
-		case FIRM_MINE:
-			return sizeof(FirmMine);
-
-		case FIRM_RESEARCH:
-			return sizeof(FirmResearch);
-
-		case FIRM_WAR_FACTORY:
-			return sizeof(FirmWar);
-
-		case FIRM_HARBOR:
-			return sizeof(FirmHarbor);
-
-		case FIRM_MONSTER:
-			return sizeof(FirmMonster);
-
-		default:
-			err_now( "FirmArray::firm_class_size" );
-	}
-
-	return 0;
-}
-//----------- End of function FirmArray::firm_class_size ---------//
-
-
 //--------- Begin of function FirmArray::del_firm ---------//
 //
 // Warning : After calling this function, the recno() is still

@@ -31,7 +31,6 @@
 
 //------- Define class FirmResearch --------//
 
-#pragma pack(1)
 class FirmResearch : public Firm
 {
 public:
@@ -65,7 +64,10 @@ public:
 
 	void 	change_nation(int newNationRecno);
 
-	virtual FirmResearch* cast_to_FirmResearch() { return this; };
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
+	virtual FirmResearch* cast_to_FirmResearch() { return this; }
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
@@ -80,7 +82,6 @@ private:
 	void		think_new_research();
 	int		think_del();
 };
-#pragma pack()
 
 //--------------------------------------//
 

@@ -51,7 +51,6 @@
 
 //------- Define class MarketInfo --------//
 
-#pragma pack(1)
 struct MarketGoods
 {
 	char		raw_id;
@@ -75,11 +74,9 @@ struct MarketGoods
 	float		sales_365days()		{ return last_year_sales*(365-info.year_day)/365 +
 											  cur_year_sales; }
 };
-#pragma pack()
 
 //------- Define class FirmMarket --------//
 
-#pragma pack(1)
 class FirmMarket : public Firm
 {
 public:
@@ -125,11 +122,12 @@ public:
 
 	int 		is_market_linked_to_town(int ownBaseTownOnly=0);
 
-	virtual 	FirmMarket*	cast_to_FirmMarket() { return this; };
+	virtual 	FirmMarket*	cast_to_FirmMarket() { return this; }
 
 	void		process_ai();	// ai process entry point
 
-	int		read_derived_file(File* filePtr);
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
@@ -157,7 +155,6 @@ private:
 	void 		think_market_build_factory();
 	int		ai_create_new_trade(Firm* firmPtr, int stop1PickUpType, int stop2PickUpType);
 };
-#pragma pack()
 
 //--------------------------------------//
 

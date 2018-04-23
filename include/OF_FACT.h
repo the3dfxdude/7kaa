@@ -30,7 +30,6 @@
 
 //------- Define class FirmFactory --------//
 
-#pragma pack(1)
 class FirmFactory : public Firm
 {
 public:
@@ -66,9 +65,12 @@ public:
 	void		next_day();
 	void		next_month();
 
-	void		set_product(int rawId)	{ product_raw_id = rawId; };
+	void		set_product(int rawId)	{ product_raw_id = rawId; }
 
-	virtual	FirmFactory* cast_to_FirmFactory() { return this; };
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
+	virtual	FirmFactory* cast_to_FirmFactory() { return this; }
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
@@ -91,7 +93,6 @@ private:
 	int 		think_inc_productivity();
 	int 		think_change_production();
 };
-#pragma pack()
 
 //--------------------------------------//
 
