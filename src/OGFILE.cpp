@@ -148,7 +148,7 @@ int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo
 	SaveGameHeader saveGameHeader;
 	if( rc )
 	{
-		if( !read_with_record_size(&file, &saveGameHeader, visit_game_header<FileReaderVisitor>, GAME_HEADER_RECORD_SIZE) )
+		if( !visit_with_record_size<FileReaderVisitor>(&file, &saveGameHeader, visit_game_header<FileReaderVisitor>, GAME_HEADER_RECORD_SIZE) )
 		{
 			rc = 0;
 			errorMessage = _("Cannot read file header");
@@ -219,7 +219,7 @@ bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameI
 	File file;
 	SaveGameHeader saveGameHeader;
 	if( file.file_open(filePath, 0, 1)      // last 1=use structured file format
-		&& read_with_record_size(&file, &saveGameHeader, visit_game_header<FileReaderVisitor>, GAME_HEADER_RECORD_SIZE) )
+		&& visit_with_record_size<FileReaderVisitor>(&file, &saveGameHeader, visit_game_header<FileReaderVisitor>, GAME_HEADER_RECORD_SIZE) )
 	{
 		if( !validate_header(&saveGameHeader) )
 		{
@@ -309,7 +309,7 @@ int GameFile::write_game_header(const SaveGameInfo& saveGameInfo, File* filePtr)
 	SaveGameHeader saveGameHeader;
 	saveGameHeader.class_size = GAME_HEADER_RECORD_SIZE;
 	saveGameHeader.info = saveGameInfo;
-	return write_with_record_size(filePtr, &saveGameHeader, &visit_game_header<FileWriterVisitor>, GAME_HEADER_RECORD_SIZE);
+	return visit_with_record_size<FileWriterVisitor>(filePtr, &saveGameHeader, &visit_game_header<FileWriterVisitor>, GAME_HEADER_RECORD_SIZE);
 }
 //--------- End of function GameFile::write_game_header -------//
 

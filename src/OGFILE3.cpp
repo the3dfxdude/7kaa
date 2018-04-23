@@ -303,7 +303,7 @@ static void visit_unit(Visitor *v, Unit *u)
 //
 int Unit::write_file(File* filePtr)
 {
-	if (!write_with_record_size(filePtr, this, &visit_unit<FileWriterVisitor>, 169))
+	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_unit<FileWriterVisitor>, 169))
 		return 0;
 
    //--------------- write memory data ----------------//
@@ -524,7 +524,7 @@ enum { UNIT_MARINE_DERIVED_RECORD_SIZE = 145 };
 //--------- Begin of function UnitMarine::read_derived_file ---------//
 int UnitMarine::read_derived_file(File* filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_unit_marine_derived<FileReaderVisitor>,
+	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_unit_marine_derived<FileReaderVisitor>,
 										UNIT_MARINE_DERIVED_RECORD_SIZE))
 		return 0;
 
@@ -538,7 +538,7 @@ int UnitMarine::read_derived_file(File* filePtr)
 
 int UnitMarine::write_derived_file(File *filePtr)
 {
-	return write_with_record_size(filePtr, this, &visit_unit_marine_derived<FileWriterVisitor>,
+	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_unit_marine_derived<FileWriterVisitor>,
 											UNIT_MARINE_DERIVED_RECORD_SIZE);
 }
 
@@ -701,7 +701,7 @@ enum { BULLET_RECORD_SIZE = 57 };
 //
 int Bullet::write_file(File* filePtr)
 {
-	return write_with_record_size(filePtr, this, &visit_bullet<FileWriterVisitor>,
+	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_bullet<FileWriterVisitor>,
 											BULLET_RECORD_SIZE);
 }
 //----------- End of function Bullet::write_file ---------//
@@ -710,7 +710,7 @@ int Bullet::write_file(File* filePtr)
 //
 int Bullet::read_file(File* filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_bullet<FileReaderVisitor>,
+	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_bullet<FileReaderVisitor>,
 										BULLET_RECORD_SIZE))
 		return 0;
 
@@ -775,13 +775,13 @@ enum { PROJECTILE_RECORD_SIZE = 72 };
 
 int Projectile::write_derived_file(File *filePtr)
 {
-	return write_with_record_size(filePtr, this, &visit_projectile<FileWriterVisitor>,
+	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_projectile<FileWriterVisitor>,
 											PROJECTILE_RECORD_SIZE);
 }
 
 int Projectile::read_derived_file(File *filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_projectile<FileReaderVisitor>,
+	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_projectile<FileReaderVisitor>,
 										PROJECTILE_RECORD_SIZE))
 		return 0;
 
@@ -1280,7 +1280,7 @@ enum { NATION_ARRAY_RECORD_SIZE = 288 };
 
 static bool read_nation_array(File *file, NationArray *na)
 {
-	return read_with_record_size(file, na, &visit_nation_array<FileReaderVisitor>,
+	return visit_with_record_size<FileReaderVisitor>(file, na, &visit_nation_array<FileReaderVisitor>,
 										  NATION_ARRAY_RECORD_SIZE);
 }
 
@@ -1290,7 +1290,7 @@ int NationArray::write_file(File* filePtr)
 {
 	//------ write info in NationArray ------//
 	
-	if (!write_with_record_size(filePtr, this, &visit_nation_array<FileWriterVisitor>,
+	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_nation_array<FileWriterVisitor>,
 										 NATION_ARRAY_RECORD_SIZE))
 		return 0;
 
@@ -1382,7 +1382,7 @@ int NationArray::read_file(File* filePtr)
 	if(!GameFile::read_file_same_version)
 	{
 		Version_1_NationArray *oldNationArrayPtr = (Version_1_NationArray*) mem_add(sizeof(Version_1_NationArray));
-		if (!read_with_record_size(filePtr, oldNationArrayPtr,
+		if (!visit_with_record_size<FileReaderVisitor>(filePtr, oldNationArrayPtr,
 											&visit_version_1_nation_array<FileReaderVisitor>,
 											VERSION_1_NATION_ARRAY_RECORD_SIZE))
 		{
@@ -1696,7 +1696,7 @@ enum { VERSION_1_NATION_RECORD_SIZE = 2182 };
 
 static bool read_version_1_nation(File *file, Version_1_Nation *v1n)
 {
-	if (!read_with_record_size(file, v1n, &visit_version_1_nation<FileReaderVisitor>,
+	if (!visit_with_record_size<FileReaderVisitor>(file, v1n, &visit_version_1_nation<FileReaderVisitor>,
 										VERSION_1_NATION_RECORD_SIZE))
 		return false;
 
@@ -1900,7 +1900,7 @@ enum { NATION_RECORD_SIZE = 2202 };
 //
 int Nation::write_file(File* filePtr)
 {
-	if (!write_with_record_size(filePtr, this, &visit_nation<FileWriterVisitor>,
+	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_nation<FileWriterVisitor>,
 										 NATION_RECORD_SIZE))
 		return 0;
 
@@ -1943,7 +1943,7 @@ static void write_ai_info(File* filePtr, short* aiInfoArray, short aiInfoCount, 
 
 static bool read_nation(File *file, Nation *nat)
 {
-	if (!read_with_record_size(file, nat, &visit_nation<FileReaderVisitor>, NATION_RECORD_SIZE))
+	if (!visit_with_record_size<FileReaderVisitor>(file, nat, &visit_nation<FileReaderVisitor>, NATION_RECORD_SIZE))
 		return false;
 
 	memset(&nat->action_array, 0, sizeof(nat->action_array));
@@ -2123,7 +2123,7 @@ enum { TORNADO_RECORD_SIZE = 44 };
 //
 int Tornado::write_file(File* filePtr)
 {
-	return write_with_record_size(filePtr, this, &visit_tornado<FileWriterVisitor>,
+	return visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_tornado<FileWriterVisitor>,
 											TORNADO_RECORD_SIZE);
 }
 //----------- End of function Tornado::write_file ---------//
@@ -2132,7 +2132,7 @@ int Tornado::write_file(File* filePtr)
 //
 int Tornado::read_file(File* filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_tornado<FileReaderVisitor>,
+	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_tornado<FileReaderVisitor>,
 										TORNADO_RECORD_SIZE))
 		return 0;
 
@@ -2252,7 +2252,7 @@ enum { REGION_ARRAY_RECORD_SIZE = 279 };
 //
 int RegionArray::write_file(File* filePtr)
 {
-	if (!write_with_record_size(filePtr, this, &visit_region_array<FileWriterVisitor>,
+	if (!visit_with_record_size<FileWriterVisitor>(filePtr, this, &visit_region_array<FileWriterVisitor>,
 										 REGION_ARRAY_RECORD_SIZE))
 		return 0;
 
@@ -2286,7 +2286,7 @@ int RegionArray::write_file(File* filePtr)
 //
 int RegionArray::read_file(File* filePtr)
 {
-	if (!read_with_record_size(filePtr, this, &visit_region_array<FileReaderVisitor>,
+	if (!visit_with_record_size<FileReaderVisitor>(filePtr, this, &visit_region_array<FileReaderVisitor>,
 										REGION_ARRAY_RECORD_SIZE))
 		return 0;
 

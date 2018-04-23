@@ -133,25 +133,11 @@ namespace FileIOVisitor
       return vis->visit(ptr);
    }
 
-   template <typename T>
-   bool write_with_record_size(File *file, T *obj,
-                               void (*visit_obj)(FileWriterVisitor *v, T *obj),
-                               uint16_t rec_size)
+   template <typename Visitor, typename T>
+   bool visit_with_record_size(File* file, T* obj, void (*visit_obj)(Visitor* v, T* obj), uint16_t rec_size)
    {
-      FileWriterVisitor v(file);
+      Visitor v(file);
       v.with_record_size(rec_size);
-      visit_obj(&v, obj);
-
-      return v.good();
-   }
-
-   template <typename T>
-   bool read_with_record_size(File *file, T *obj,
-                              void (*visit_obj)(FileReaderVisitor *v, T *obj),
-                              uint16_t expected_rec_size)
-   {
-      FileReaderVisitor v(file);
-      v.with_record_size(expected_rec_size);
       visit_obj(&v, obj);
 
       return v.good();
