@@ -928,8 +928,10 @@ void Vga::save_status_report()
          fprintf(file, "DPI: diag=%f horiz=%f vert=%f\n", ddpi, hdpi, vdpi);
       if( !SDL_GetDisplayBounds(i, &rect) )
          fprintf(file, "Bounds: x=%d y=%d w=%d h=%d\n", rect.x, rect.y, rect.w, rect.h);
-      if( !SDL_GetDisplayUsableBounds(i, &rect) )
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+      if( !SDL_GetDisplayUsableBounds(i, &rect) ) // Note: requires SDL 2.0.5+
          fprintf(file, "Usable bounds: x=%d y=%d w=%d h=%d\n", rect.x, rect.y, rect.w, rect.h);
+#endif
       fprintf(file, "\n");
    }
 
