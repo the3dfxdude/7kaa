@@ -36,7 +36,6 @@ enum	{	MONSTER_ACTION_STOP = 0,
 
 //----------- Define class Monster -----------//
 
-#pragma pack(1)
 class UnitMonster : public Unit
 {
 public:
@@ -52,6 +51,9 @@ public:
 	void	process_ai();
 	void 	die();
 
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
@@ -62,7 +64,6 @@ private:
 	void 	group_order_monster(int destXLoc, int destYLoc, int actionType);
 	void 	king_leave_scroll();
 };
-#pragma pack()
 
 //--------------------------------------------//
 

@@ -28,6 +28,9 @@
 #include <ODYNARR.h>
 #endif
 
+class FileReaderVisitor;
+class FileWriterVisitor;
+
 //------------ Define Constant -------------//
 
 #define DEFAULT_REUSE_INTERVAL_DAYS		3
@@ -38,17 +41,14 @@ typedef char* (*CreateEleFP)();
 
 //--------- Define struct EmptyRoom -----------//
 
-#pragma pack(1)
 struct EmptyRoom
 {
 	short	recno;
 	int   deleted_game_date;
 };
-#pragma pack()
 
 //---------- Define class DynArrayB -----------//
 
-#pragma pack(1)
 class DynArrayB : public DynArray
 {
 public:
@@ -58,7 +58,7 @@ public:
 	short			reuse_interval_days;
 
 public:
-	DynArrayB(int,int=DEF_DYNARRAY_BLOCK_SIZE,int reuseIntervalDays=0);
+   explicit DynArrayB(int,int=DEF_DYNARRAY_BLOCK_SIZE,int reuseIntervalDays=0);
    ~DynArrayB();
 
    // packed_size()  is the size when the array is packed (deleted record are actually removed)
@@ -71,16 +71,21 @@ public:
    void linkout(int= -1);
    void zap();
 
-	int  write_file(File*);    	// Write current dynamic array to file
-	int  read_file(File*);   	  	// Read dynamic array from file
+	template <typename T, typename Visitor>
+	void accept_visitor_as_value_array(Visitor* v, void (*visitObj)(Visitor* v, T* obj), int recordSize);
 
-	int  write_empty_room(File*);    // Write current dynamic array to file
-	int  read_empty_room(File*);     // Read dynamic array from file
+	template <typename T, typename Visitor>
+	void accept_visitor_as_ptr_array(Visitor* v, short (*getObjectId) (T* obj), T* (*createObj)(short), void (*visitObj)(Visitor* v, T* obj), int objectRecordSize);
 
-	int  write_ptr_array(File*, int);
-	int  read_ptr_array(File*, int, CreateEleFP);
+	// Note: the below two functions are helpers for accept_visitor_as_ptr_array and, unfortunately, also called by UnitArray and TownArray, because these have fields stored between the size() and the array visits.
+	template <typename Visitor>
+	void visit_array_size(Visitor* v);
+	template <typename T, typename Visitor>
+	void visit_ptr_array(Visitor* v, short (*getObjectId) (T* obj), T* (*createObj)(short), void (*visitObj)(Visitor* v, T* obj), int objectRecordSize);
+
+	template <typename Visitor>
+	void visit_empty_room_array(Visitor* v);
 };
-#pragma pack()
 
 //---------------------------------------------//
 

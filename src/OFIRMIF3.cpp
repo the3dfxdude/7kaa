@@ -293,7 +293,7 @@ int Firm::can_spy_bribe(int bribeWorkerId, int briberNationRecno)
 // The money the spy offers to bribe the unit.
 //
 // <int>   bribeAmount	  - the amount offered
-// <short> birberSpyRecno - spy recno of the briber
+// <short> briberSpyRecno - spy recno of the briber
 // <short> workerId		  - if 0, then bribe the overseer,
 //									 if >0, then bribe a worker.
 //
@@ -382,12 +382,12 @@ int Firm::spy_bribe(int bribeAmount, short briberSpyRecno, short workerId)
 //----------- End of function Firm::spy_bribe -----------//
 
 
-//--------- Begin of function Firm::spy_birbe_succeed_chance ---------//
+//--------- Begin of function Firm::spy_bribe_succeed_chance ---------//
 //
 // The money the spy offers to bribe the unit.
 //
 // <int>   bribeAmount	  - the amount offered
-// <short> birberSpyRecno - spy recno of the briber
+// <short> briberSpyRecno - spy recno of the briber
 // <short> workerId		  - if 0, then bribe the overseer,
 //									 if >0, then bribe a worker.
 //
@@ -469,7 +469,7 @@ int Firm::spy_bribe_succeed_chance(int bribeAmount, short briberSpyRecno, short 
 
 	return succeedChance;
 }
-//----------- End of function Firm::spy_birbe_succeed_chance -----------//
+//----------- End of function Firm::spy_bribe_succeed_chance -----------//
 
 
 //--------- Begin of function Firm::disp_bribe_unit ---------//

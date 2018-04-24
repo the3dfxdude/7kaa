@@ -114,6 +114,7 @@ int UnitArray::add_unit(int unitId, int nationRecno, int rankId, int unitLoyalty
 	//-------- create and initialize Unit -------//
 
 	Unit* unitPtr = create_unit(unitId);
+	SpriteArray::add(unitPtr); // it sets Sprite::sprite_recno
 
 	//----------- add to SpriteArray ------------//
 
@@ -128,7 +129,7 @@ int UnitArray::add_unit(int unitId, int nationRecno, int rankId, int unitLoyalty
 
 //-------- Begin of function UnitArray::create_unit --------//
 //
-Unit* UnitArray::create_unit(int unitId)
+Unit* UnitArray::create_unit(short unitId)
 {
 	Unit* 	 unitPtr;
 	UnitInfo* unitInfo = unit_res[unitId];
@@ -164,50 +165,9 @@ Unit* UnitArray::create_unit(int unitId)
 				unitPtr = new Unit;
 	}
 
-	SpriteArray::add(unitPtr);			// it set Sprite::sprite_recno
-
  	return unitPtr;
 }
 //----------- End of function UnitArray::create_unit ---------//
-
-
-//-------- Begin of function UnitArray::unit_class_size --------//
-//
-// Return the size of the class.
-//
-int UnitArray::unit_class_size(int unitId)
-{
-	UnitInfo* unitInfo = unit_res[unitId];
-
-	switch(unitId)
-	{
-		case UNIT_CARAVAN:
-			return sizeof(UnitCaravan);
-
-		case UNIT_VESSEL:
-		case UNIT_TRANSPORT:
-		case UNIT_CARAVEL:
-		case UNIT_GALLEON:
-			return sizeof(UnitMarine);
-
-		case UNIT_EXPLOSIVE_CART:
-			return sizeof(UnitExpCart);
-
-		default:
-			if( unitInfo->is_monster )
-				return sizeof(UnitMonster);
-
-			else if( unitInfo->solider_id )		// if it is a vehicle unit
-				return sizeof(UnitVehicle);
-
-			else if( god_res.is_god_unit(unitId) )
-				return sizeof(UnitGod);
-
-			else
-				return sizeof(Unit);
-	}
-}
-//----------- End of function UnitArray::unit_class_size ---------//
 
 
 //-------- Begin of function UnitArray::disappear_in_town --------//

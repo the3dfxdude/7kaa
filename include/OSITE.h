@@ -42,7 +42,6 @@ enum { SITE_RAW=1,
 
 //--------- Define class Site ----------//
 
-#pragma pack(1)
 class Site
 {
 public:
@@ -72,11 +71,9 @@ public:
 	int   get_site_object(int unitRecno);
 	int  	ai_get_site_object();
 };
-#pragma pack()
 
 //--------- Define class SiteArray ----------//
 
-#pragma pack(1)
 class SiteArray : public DynArrayB
 {
 public:
@@ -114,14 +111,11 @@ public:
 	int  is_deleted(int recNo);
 
 	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
-		Site* operator()();            // reference to current Site record
 		Site* operator[](int recNo);
 	#else
-		Site* operator()()  	   	 { return (Site*) get(); }
 		Site* operator[](int recNo)  { return (Site*) get(recNo); }
 	#endif
 };
-#pragma pack()
 
 extern SiteArray site_array;
 

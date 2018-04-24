@@ -28,77 +28,11 @@
 #include <OWORLDMT.h>
 
 // ------- Define constant --------//
-#define SCAN_DENSITY 4
 #define INC_SNOW_CONSTANT 8
 #define INC_SNOW_RATE 8
 #define MAX_SNOW_THICKNESS 0x1800
 #define DEC_SNOW_RATE 10
 #define SNOW_GRADE_FACTOR 0x200
-
-// ------- Begin of function SnowGround::init --------//
-//
-// initialize a snowGround
-// <short> absX,absY		absolute coordinate (pixels on the map)
-// [short] snowMapId		snow bitmap id, (default : choose randomly)
-//
-void SnowGround::init(short absX, short absY, int snowMapId)
-{
-	abs_x = absX;
-	abs_y = absY;
-	snow_map_id = snowMapId ? snowMapId : snow_res.rand_root(misc.random(1000));
-	minor_hp = 0;
-	SnowInfo *snowInfo = snow_res[snow_map_id];
-	abs_x1 = abs_x + snowInfo->offset_x;
-	abs_y1 = abs_y + snowInfo->offset_y;
-	abs_x2 = abs_x1 + snowInfo->bitmap_width()-1;
-	abs_y2 = abs_y1 + snowInfo->bitmap_height()-1;
-}
-// ------- End of function SnowGround::init --------//
-
-
-// ------- Begin of function SnowGround::grow --------//
-void SnowGround::grow(int rate)
-{
-	minor_hp += rate;
-	if( minor_hp > 100)
-	{
-		minor_hp -= 100;
-		snow_map_id = snow_res[snow_map_id]->rand_next(misc.random(1000));
-		SnowInfo *snowInfo = snow_res[snow_map_id];
-		abs_x1 = abs_x + snowInfo->offset_x;
-		abs_x1 = abs_y + snowInfo->offset_y;
-		abs_x2 = abs_x1 + snowInfo->bitmap_width()-1;
-		abs_y2 = abs_y1 + snowInfo->bitmap_height()-1;
-	}
-}
-// ------- End of function SnowGround::grow --------//
-
-
-// ------- Begin of function SnowGround::dying --------//
-int SnowGround::dying(int rate)
-{
-	minor_hp -= rate;
-	if( minor_hp < 0)
-	{
-		if( snow_res[snow_map_id]->is_root() )
-		{
-			snow_map_id = 0;
-			return 1;
-		}
-		else
-		{
-			minor_hp += 100;
-			snow_map_id = snow_res[snow_map_id]->rand_prev(misc.random(1000));
-			SnowInfo *snowInfo = snow_res[snow_map_id];
-			abs_x1 = abs_x + snowInfo->offset_x;
-			abs_x1 = abs_y + snowInfo->offset_y;
-			abs_x2 = abs_x1 + snowInfo->bitmap_width()-1;
-			abs_y2 = abs_y1 + snowInfo->bitmap_height()-1;
-		}
-	}
-	return 0;
-}
-// ------- End of function SnowGround::dying --------//
 
 
 // ------- Begin of function SnowGroundArray::init ------//

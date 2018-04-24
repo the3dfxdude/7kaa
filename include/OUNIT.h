@@ -52,6 +52,9 @@
 #undef DEBUG
 #endif
 
+class FileReaderVisitor;
+class FileWriterVisitor;
+
 #define GAME_FRAMES_PER_DAY 10
 
 //-------- action code for action_mode ---------//
@@ -170,7 +173,6 @@ enum  {  KEEP_PRESERVE_ACTION = 1,  // used for stop2() to keep preserve action
          AUTO_DEFENSE_STAY_OUTSIDE_COUNT = 4, //4 days
          AUTO_DEFENSE_DETECT_COUNT = 3 + GAME_FRAMES_PER_DAY*AUTO_DEFENSE_STAY_OUTSIDE_COUNT,
          EFFECTIVE_AUTO_DEFENSE_DISTANCE = 9,
-         AUTO_DEFENSE_SEARCH_TRIES = 100,
 
          UNIT_DEFEND_TOWN_DISTANCE = 8,
          UNIT_DEFEND_TOWN_STAY_OUTSIDE_COUNT = 4, // 4 days
@@ -188,7 +190,6 @@ enum  {  KEEP_PRESERVE_ACTION = 1,  // used for stop2() to keep preserve action
 
 //----------- Define TeamInfo -------------//
 
-#pragma pack(1)
 struct TeamInfo
 {
 	TeamInfo();
@@ -197,11 +198,9 @@ struct TeamInfo
    short member_unit_array[MAX_TEAM_MEMBER];
    int   ai_last_request_defense_date;
 };
-#pragma pack()
 
 //----------- Define class Unit -----------//
 
-#pragma pack(1)
 class Unit : public Sprite
 {
 public:
@@ -558,11 +557,9 @@ public:
 	void  set_ship_extra_move();
 	void  set_die();
 
-	int   write_file(File* filePtr);
-	int   read_file(File* filePtr);
+	virtual void accept_file_visitor(FileReaderVisitor* v);
+	virtual void accept_file_visitor(FileWriterVisitor* v);
 
-	virtual int write_derived_file(File* filePtr);
-	virtual int read_derived_file(File* filePtr);
 	virtual void fix_attack_info();         // set attack_info_array appropriately
 
 	//-------------- multiplayer checking codes ---------------//
@@ -591,8 +588,6 @@ private:
 	int   move_to_range_attack(int targetXLoc, int targetYLoc, short miscNo, short searchMode, short maxRange); // move to target for using range attack
 
 	void  abort_searching(int reuseSetNext);
-	void  set_search_tries(int tries);     // set parameters to limit the nodes used in searching
-	void  reset_search_tries();            // reset parameters for using default nodes in searching
 
 	//---------------- handle blocked action ------------------//
 	void  move_to_my_loc(Unit* unitPtr);
@@ -732,7 +727,6 @@ protected:
 	void  pay_expense();
 	void  process_recover();
 };
-#pragma pack()
 
 //--------------------------------------------------------------------------------------------//
 
@@ -763,13 +757,12 @@ public:
 	static short   *selected_air_unit_array;
 
 public:
-	UnitArray(int);
+	explicit UnitArray(int);
 
 	void  init();
 
 	int   add_unit(int unitId, int nationRecno, int rankId=0, int unitLoyalty=0, int startXLoc= -1, int startYLoc= -1);
-	Unit* create_unit(int unitId);
-	int   unit_class_size(int);
+	static Unit* create_unit(short unitId);
 
 	void  disappear_in_town(int unitRecno, int townRecno);
 	void  disappear_in_firm(int unitRecno);
@@ -870,8 +863,6 @@ private:
 
 extern UnitArray unit_array;
 extern int unit_search_node_used;
-extern int     unit_search_tries;        // the number of tries used in the current searching
-extern char    unit_search_tries_flag;   // indicate num of tries is set, reset after searching
 #ifdef DEBUG
 extern int check_unit_dir1, check_unit_dir2;
 #endif

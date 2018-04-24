@@ -51,7 +51,6 @@ enum { SPY_IDLE,
 
 //---------- Define class Spy ---------//
 
-#pragma pack(1)
 class Spy
 {
 public:
@@ -142,7 +141,6 @@ public:
 	void	clear_ptr();
 	// #### patch end Gilbert 20/1 ######//
 };
-#pragma pack()
 
 //-------- Define class SpyArray -------//
 

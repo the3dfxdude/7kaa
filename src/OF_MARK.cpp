@@ -901,43 +901,6 @@ int FirmMarket::free_slot_count()
 //----------- End of function FirmMarket::free_slot_count -----------//
 
 
-//--------- Begin of function FirmMarket::read_derived_file ---------//
-//
-int FirmMarket::read_derived_file(File* filePtr)
-{
-	if( !Firm::read_derived_file(filePtr) )
-		return 0;
-
-	//----- reset market_raw_array[] & market_product_array[] ----//
-
-	int i;
-	for( i=0 ; i<MAX_RAW ; i++ )
-	{
-		market_raw_array[i]	   = NULL;
-		market_product_array[i] = NULL;
-	}
-
-	//------- rebuild market_product_array --------//
-
-	int rawId, productId;
-
-	for( i=0 ; i<MAX_MARKET_GOODS ; i++ )
-	{
-		rawId 	 = market_goods_array[i].raw_id;
-		productId = market_goods_array[i].product_raw_id;
-
-		if( rawId )
-			market_raw_array[rawId-1] = market_goods_array + i;
-
-		if( productId )
-			market_product_array[productId-1] = market_goods_array + i;
-	}
-
-	return 1;
-}
-//----------- End of function FirmMarket::read_derived_file -----------//
-
-
 //----- Begin of function FirmMarket::update_trade_link -----//
 //
 // Update the status of links to harbors and towns based

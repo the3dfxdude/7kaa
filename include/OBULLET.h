@@ -45,8 +45,9 @@ enum	{	BULLET_BY_UNIT = 1,
 //----------- Define class Bullet -----------//
 
 class Unit;
+class FileReaderVisitor;
+class FileWriterVisitor;
 
-#pragma pack(1)
 class Bullet : public Sprite
 {
 public:
@@ -60,9 +61,12 @@ public:
 	short nation_recno;
 	char	fire_radius;
 
-	short	origin_x, origin_y;
-	short target_x_loc, target_y_loc;
-	char  cur_step, total_step;
+	short	origin_x;
+	short	origin_y;
+	short	target_x_loc;
+	short	target_y_loc;
+	char	cur_step;
+	char	total_step;
 
 public:
 	Bullet();
@@ -78,26 +82,22 @@ public:
 	int	warn_target();
 	virtual char display_layer();
 
-	int 	write_file(File* filePtr);
-	int	read_file(File* filePtr);
-
-	virtual int	write_derived_file(File* filePtr);
-	virtual int	read_derived_file(File* filePtr);
+	virtual void accept_file_visitor(FileReaderVisitor* v);
+	virtual void accept_file_visitor(FileWriterVisitor* v);
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
-#pragma pack()
 
 //------- Define class BulletArray ---------//
 
 class BulletArray : public SpriteArray
 {
 public:
-	BulletArray(int initArraySize);
+	explicit BulletArray(int initArraySize);
 
-	int	create_bullet(short spriteId, Bullet** =NULL);
+	static Bullet* create_bullet(short spriteId);
 
 	short add_bullet(Unit* parentUnit, Unit* targetUnit);		// unit attacks unit
 	short add_bullet(Unit* parentUnit, short xLoc, short yLoc);	// unit attacks firm, town
@@ -112,10 +112,8 @@ public:
 										short destXLoc, short destYLoc, char targetMobileType,
 										char bulletSpeed, short bulletSpriteId);
 
-	int 	write_file(File* filePtr);
+	int	write_file(File* filePtr);
 	int	read_file(File* filePtr);
-
-	int	bullet_class_size(int spriteId);
 
 	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Bullet* operator[](int recNo);

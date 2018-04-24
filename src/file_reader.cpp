@@ -61,11 +61,6 @@ void FileReader::deinit()
    this->file = NULL;
 }
 
-bool FileReader::good() const
-{
-   return this->ok;
-}
-
 bool FileReader::skip(size_t len)
 {
    if (!this->ok)
@@ -77,7 +72,7 @@ bool FileReader::skip(size_t len)
    return this->ok;
 }
 
-bool FileReader::check_record_size(uint16_t expected_size)
+bool FileReader::check_record_size(int expected_size)
 {
    uint16_t rec_size;
 
@@ -87,7 +82,7 @@ bool FileReader::check_record_size(uint16_t expected_size)
    if (!this->read<uint16_t>(&rec_size))
       return false;
 
-   if (rec_size != expected_size)
+   if (rec_size != 0 && rec_size != expected_size)
    {
       ERR("[FileReader] Bad record size %d in %s at 0x%lx, expecting %d.\n",
 	  rec_size, this->file->file_name, this->is.tell(), expected_size);

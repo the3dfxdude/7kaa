@@ -48,7 +48,6 @@ enum { SORT_INT=1,
 
 //-------- BEGIN OF CLASS DynArrary ---------//
 
-#pragma pack(1)
 class DynArray
 {
 public :
@@ -117,12 +116,15 @@ public :
 
    void  clean_up(int* =0);
    void  free_ptr(void*,int*);
-	void  zap(int resizeFlag=1);
+   void  zap(int resizeFlag=1);
 
-   int   write_file(File*);    // Write current dynamic array to file
-   int   read_file(File*);     // Read dynamic array from file
+   template <typename T, typename Visitor>
+   void accept_visitor_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj), int recordSize);
+
+protected:
+   template <typename T, typename Visitor>
+   void do_visit_as_value_array(Visitor* v, void (*visit_obj)(Visitor* v, T* obj), int elementRecordSize);
 };
-#pragma pack()
 
 //--------- END OF CLASS DynArray ---------//
 

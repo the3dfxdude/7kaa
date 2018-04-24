@@ -18,6 +18,7 @@
  *
  */
 #include <input_stream.h>
+#include <cstring>
 
 /*
  * Reads a non-integer little-endian value of the same size as the integer
@@ -26,12 +27,13 @@
 template <typename T, typename AliasT>
 bool read_le_alias(InputStream *is, T *valp)
 {
-   union { T val; AliasT al; } u;
+   static_assert(sizeof(T) == sizeof(AliasT), "read_le_alias requires types that have same underlying storage size");
 
-   if (!read_le_integer<AliasT>(is, &u.al))
+   AliasT aliasValue;
+   if (!read_le_integer<AliasT>(is, &aliasValue))
       return false;
 
-   *valp = u.val;
+   std::memcpy(valp, &aliasValue, sizeof(aliasValue));
    return true;
 }
 

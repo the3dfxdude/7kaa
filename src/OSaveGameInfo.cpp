@@ -31,7 +31,7 @@
 #endif
 
 
-SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
+SaveGameInfo save_game_info_from_current_game(const char* newFileName)
 {
 	SaveGameInfo saveGameInfo;
 

@@ -69,8 +69,8 @@ DynArrayB::DynArrayB(int eleSize,int blockNum,int reuseIntervalDays) : DynArray(
 //
 DynArrayB::~DynArrayB()
 {
-   if( empty_room_array )
-      mem_del( empty_room_array );
+	if( empty_room_array )
+		mem_del( empty_room_array );
 }
 //----------- END OF FUNCTION DynArrayB::DynArrayB -----//
 
@@ -131,13 +131,13 @@ void DynArrayB::linkin(const void* ent)
 
 	//---------- regular link in -----------//
 
-   if ( last_ele > ele_num ) // not enough empty element left to hold the new entity
-      resize( ele_num + block_num );
+	if ( last_ele > ele_num ) // not enough empty element left to hold the new entity
+		resize( ele_num + block_num );
 
-   if ( ent )
-      memcpy(body_buf+(cur_pos-1)*ele_size, ent, ele_size );
-   else
-      *(body_buf+(cur_pos-1)*ele_size) = '\0';
+	if ( ent )
+		memcpy(body_buf+(cur_pos-1)*ele_size, ent, ele_size );
+	else
+		*(body_buf+(cur_pos-1)*ele_size) = '\0';
 }
 //---------- END OF FUNCTION DynArrayB::linkin ------------//
 
@@ -178,166 +178,6 @@ void DynArrayB::linkout(int delPos)
 }
 //------------ END OF FUNCTION DynArrayB::linkout ----------//
 
-template <typename Visitor>
-static void visit_dyn_array_b(Visitor *v, DynArrayB *dab)
-{
-	/* DynArray */
-   visit<int32_t>(v, &dab->ele_num);
-   visit<int32_t>(v, &dab->block_num);
-   visit<int32_t>(v, &dab->cur_pos);
-   visit<int32_t>(v, &dab->last_ele);
-   visit<int32_t>(v, &dab->ele_size);
-   visit<int32_t>(v, &dab->sort_offset);
-   visit<int8_t>(v, &dab->sort_type);
-	v->skip(4); /* dab->body_buf */
-
-	/* Not reading DynArrayB members */
-}
-
-enum { DYN_ARRAY_B_RECORD_SIZE = 29 };
-
-//---------- Begin of function DynArrayB::write_file -------------//
-//
-// Write current dynamic array into file,
-// read_file() can be used to retrieve it.
-//
-// <File*> writeFile = the pointer to the writing file
-//
-// Return : 1 - write successfully
-//          0 - writing error
-//
-int DynArrayB::write_file(File* filePtr)
-{
-	if (!write_with_record_size(filePtr, this, &visit_dyn_array_b<FileWriterVisitor>,
-										 DYN_ARRAY_B_RECORD_SIZE))
-		return 0;
-
-	//---------- write body_buf ---------//
-
-	if( last_ele > 0 )
-	{
-		if( !filePtr->file_write( body_buf, ele_size*last_ele ) )
-			return 0;
-	}
-
-	//---------- write empty_room_array ---------//
-
-	write_empty_room(filePtr);
-
-	return 1;
-}
-//------------- End of function DynArrayB::write_file --------------//
-
-
-//---------- Begin of function DynArrayB::read_file -------------//
-//
-// Read a saved dynamic array from file, it must be saved with write_file()
-//
-// <File*> readFile = the pointer to the writing file
-//
-// Return : 1 - read successfully
-//          0 - writing error
-//
-int DynArrayB::read_file(File* filePtr)
-{
-	if (!read_with_record_size(filePtr, this, &visit_dyn_array_b<FileReaderVisitor>,
-										DYN_ARRAY_B_RECORD_SIZE))
-		return 0;
-
-   //---------- read body_buf ---------//
-
-   this->body_buf = mem_resize(this->body_buf, this->ele_num*this->ele_size);
-
-   if( last_ele > 0 )
-	{
-      if( !filePtr->file_read( body_buf, ele_size*last_ele ) )
-         return 0;
-   }
-
-   //---------- read empty_room_array ---------//
-
-	read_empty_room(filePtr);
-
-	//------------------------------------------//
-
-	start();    // go top
-
-	return 1;
-}
-//------------- End of function DynArrayB::read_file --------------//
-
-
-//---------- Begin of function DynArrayB::write_empty_room -------------//
-//
-// Write current dynamic array into file,
-// read_file() can be used to retrieve it.
-//
-// <File*> writeFile = the pointer to the writing file
-//
-// Return : 1 - write successfully
-//          0 - writing error
-//
-int DynArrayB::write_empty_room(File* filePtr)
-{
-	filePtr->file_put_short( empty_room_count );
-
-	//---------- write empty_room_array ---------//
-
-	if( empty_room_count > 0 )
-	{
-		if( !filePtr->file_write( empty_room_array,
-			 sizeof(EmptyRoom) * empty_room_count ) )
-		{
-			return 0;
-		}
-	}
-
-	return 1;
-}
-//------------- End of function DynArrayB::write_empty_room --------------//
-
-
-//---------- Begin of function DynArrayB::read_empty_room -------------//
-//
-// Read a saved dynamic array from file, it must be saved with write_file()
-//
-// <File*> readFile = the pointer to the writing file
-//
-// Return : 1 - read successfully
-//          0 - writing error
-//
-int DynArrayB::read_empty_room(File* filePtr)
-{
-	empty_room_num = empty_room_count = filePtr->file_get_short();		// set both to the same
-
-	//---------- read empty_room_array ---------//
-
-	if( empty_room_count > 0 )
-	{
-		empty_room_array = (EmptyRoom*) mem_resize( empty_room_array,
-								 sizeof(EmptyRoom) * empty_room_count );
-
-		if( !filePtr->file_read( empty_room_array,
-			 sizeof(*empty_room_array) * empty_room_count ) )
-		{
-			return 0;
-		}
-	}
-	else // when empty_room_count == 0
-	{
-		if( empty_room_array )
-		{
-			mem_del( empty_room_array );
-			empty_room_array = NULL;
-		}
-	}
-
-	//------------------------------------------//
-
-	return 1;
-}
-//------------- End of function DynArrayB::read_empty_room --------------//
-
 
 //---------- Begin of function DynArrayB::packed_recno -------------//
 //
@@ -352,15 +192,15 @@ int DynArrayB::read_empty_room(File* filePtr)
 //
 int DynArrayB::packed_recno(int recNo) const
 {
-   int i, packedRecno = recNo;
+	int i, packedRecno = recNo;
 
-   for( i=0 ; i<empty_room_count ; i++ )
-   {
-      if( empty_room_array[i].recno < recNo )
-         packedRecno--;
+	for( i=0 ; i<empty_room_count ; i++ )
+	{
+		if( empty_room_array[i].recno < recNo )
+			packedRecno--;
 	}
 
-   return packedRecno;
+	return packedRecno;
 }
 //------------- End of function DynArrayB::packed_recno --------------//
 
@@ -371,102 +211,8 @@ int DynArrayB::packed_recno(int recNo) const
 //
 void DynArrayB::zap()
 {
-   DynArray::zap();
+	DynArray::zap();
 
 	empty_room_count=0;	    // reset empty rooms
 }
 //------------- End of function DynArrayB::zap --------------//
-
-
-//-------- Start of function DynArrayB::write_ptr_array --------//
-//
-// Write a DynArrayB with pointer data elements.
-//
-// <File*> filePtr 	 - pointer to the file object.
-// <int>   objectSize - size of the objects pointed to by the pointers.
-//
-int DynArrayB::write_ptr_array(File* filePtr, int objectSize)
-{
-	int   i;
-	char* elePtr;
-
-	filePtr->file_put_short( size() );
-
-	for( i=1; i<=size() ; i++ )
-	{
-		elePtr = (char*) get_ptr(i);
-
-		//----- write 0 if the monster is deleted -----//
-
-		if( !elePtr )    // the monster is deleted
-		{
-			filePtr->file_put_short(0);
-		}
-		else
-		{
-			filePtr->file_put_short(1);      // the monster exists
-
-			if( !filePtr->file_write(elePtr, objectSize) )
-				return 0;
-		}
-	}
-
-	//------- write empty room array --------//
-
-	write_empty_room(filePtr);
-
-	return 1;
-}
-//--------- End of function DynArrayB::write_ptr_array ---------------//
-
-
-//-------- Start of function DynArrayB::read_ptr_array -------------//
-//
-// Read a DynArrayB with pointer data elements previously saved by
-// write_ptr_array().
-//
-// <File*> filePtr 	 			 - pointer to the file object.
-// <int>   objectSize 			 - size of the objects pointed to by the pointers.
-// <CreateEleFP> createEleFunc - function for creating a blank object.
-//
-int DynArrayB::read_ptr_array(File* filePtr, int objectSize, CreateEleFP createEleFunc)
-{
-	int   i;
-	char* elePtr;
-
-	int eleCount = filePtr->file_get_short();  // get no. of monsters from file
-
-	for( i=1 ; i<=eleCount ; i++ )
-	{
-		if( filePtr->file_get_short()==0 )  // the monster has been deleted
-		{
-			add_blank(1);     // it's a DynArrayB function
-		}
-		else
-		{
-			elePtr = (*createEleFunc)();
-
-			if( !filePtr->file_read(elePtr, objectSize) )
-				return 0;
-		}
-	}
-
-	//-------- linkout() those record added by add_blank() ----------//
-	//-- So they will be marked deleted in DynArrayB and can be -----//
-	//-- undeleted and used when a new record is going to be added --//
-
-	for( i=size() ; i>0 ; i-- )
-	{
-		DynArrayB::go(i);             // since DynArrayB has its own go() which will call GroupArray::go()
-
-		if( get_ptr() == NULL )       // add_blank() record
-			linkout();
-	}
-
-	//------- read empty room array --------//
-
-	read_empty_room(filePtr);
-
-	return 1;
-}
-//--------- End of function DynArrayB::read_ptr_array ---------------//

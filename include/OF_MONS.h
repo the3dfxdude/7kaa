@@ -42,7 +42,6 @@
 //
 // Monster generals who live in monster firms.
 //
-#pragma pack(1)
 struct MonsterInFirm
 {
 public:
@@ -60,11 +59,9 @@ public:
 public:
 	void	set_combat_level(int combatLevel);
 };
-#pragma pack()
 
 //------- Define class FirmMonster --------//
 
-#pragma pack(1)
 class FirmMonster : public Firm
 {
 public:
@@ -129,6 +126,9 @@ public:
 	void	reset_hostile_nation(int nationRecno);
 	int	is_hostile_nation(int nationRecno);
 
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
@@ -145,7 +145,6 @@ private:
 	int	think_attack_human();
 	int 	think_expansion();
 };
-#pragma pack()
 
 //--------------------------------------//
 

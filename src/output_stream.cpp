@@ -18,6 +18,7 @@
  *
  */
 #include <output_stream.h>
+#include <cstring>
 
 /*
  * Writes a non-integer little-endian value of the same size as the integer
@@ -26,9 +27,11 @@
 template <typename T, typename AliasT>
 bool write_le_alias(OutputStream *os, T val)
 {
-   union { T val; AliasT al; } u;
-   u.val = val;
-   return write_le_integer<AliasT>(os, u.al);
+   static_assert(sizeof(T) == sizeof(AliasT), "write_le_alias requires types that have same underlying storage size");
+
+   AliasT aliasValue;
+   std::memcpy(&aliasValue, &val, sizeof(val));
+   return write_le_integer<AliasT>(os, aliasValue);
 }
 
 template <>

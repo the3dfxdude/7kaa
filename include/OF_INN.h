@@ -42,7 +42,6 @@
 
 //------- define struct InnUnit ---------//
 
-#pragma pack(1)
 struct InnUnit
 {
 public:
@@ -55,11 +54,9 @@ public:
 public:
 	void	set_hire_cost();
 };
-#pragma pack()
 
 //------- Define class FirmInn --------//
 
-#pragma pack(1)
 class FirmInn : public Firm
 {
 public:
@@ -84,7 +81,11 @@ public:
 	int		hire(short recNo);
 
 	virtual	void auto_defense(short targetRecno);
-	virtual	FirmInn* cast_to_FirmInn() { return this; };
+
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
+	virtual	FirmInn* cast_to_FirmInn() { return this; }
 
 	void		process_ai();
 
@@ -111,7 +112,6 @@ private:
 	int 		think_hire_general();
 	int 		think_assign_general_to(int raceId, int innUnitRecno);
 };
-#pragma pack()
 
 //--------------------------------------//
 

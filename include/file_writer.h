@@ -35,43 +35,18 @@ public:
    ~FileWriter();
    bool init(File *file);
    void deinit();
-   bool good() const;
+   bool good() const { return ok; }
    bool skip(size_t len);
-   bool write_record_size(uint16_t size);
+   bool write_record_size(int size);
 
    template <typename FileT, typename MemT>
    bool write(MemT val)
    {
       if (!this->ok)
-	 return false;
+         return false;
 
       if (!write_le<FileT>(&this->os, val))
-	 this->ok = false;
-
-      return this->ok;
-   }
-
-   template <typename T>
-   bool write(const T *v)
-   {
-      uint32_t p;
-
-      if (v == NULL)
-	 p = 0;
-      else
-	 p = 0xdeadbeef;
-
-      return this->write<uint32_t>(p);
-   }
-
-   template <typename FileT, typename MemT>
-   bool write_array(const MemT *array, size_t len)
-   {
-      for (size_t n = 0; n < len; n++)
-      {
-	 if (!this->write<FileT>(array[n]))
-	    break;
-      }
+         this->ok = false;
 
       return this->ok;
    }

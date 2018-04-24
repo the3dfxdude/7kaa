@@ -38,7 +38,6 @@
 
 //------- Define class FirmMine --------//
 
-#pragma pack(1)
 class FirmMine : public Firm
 {
 public:
@@ -78,7 +77,10 @@ public:
 	void		next_day();
 	void		next_month();
 
-	virtual	FirmMine* cast_to_FirmMine() { return this; };
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
+	virtual	FirmMine* cast_to_FirmMine() { return this; }
 
 	void		process_ai();
 
@@ -96,7 +98,6 @@ private:
 	int		think_build_market();
 	int		think_inc_productivity();
 };
-#pragma pack()
 
 //--------------------------------------//
 

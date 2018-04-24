@@ -138,7 +138,7 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 
 	power.win_opened=1;				// to disable power.mouse_handler()
 
-	SaveGameInfo newSaveGameInfo = SaveGameInfoFromCurrentGame(newFileName);
+	SaveGameInfo newSaveGameInfo = save_game_info_from_current_game(newFileName);
 	success = success && GameFile::save_game(full_path, newSaveGameInfo, /*out*/ errorMessage);
 
 	power.win_opened=0;

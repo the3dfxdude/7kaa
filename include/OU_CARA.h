@@ -77,7 +77,6 @@ enum { NO_STOP_DEFINED = 0,	// used for journey_status
 #define MIN_FIRM_STOCK_QTY					100
 
 //-------- Define struct TradeStop ----------//
-#pragma pack(1)
 struct TradeStop
 {
 public:
@@ -99,10 +98,8 @@ public:
 	void			mp_pick_up_set_auto(char *enableTable);
 	void			mp_pick_up_set_none(char *enableTable);
 };
-#pragma pack()
 
 //-------- Define struct CaravanStop ----------//
-#pragma pack(1)
 struct CaravanStop : public TradeStop
 {
 public:
@@ -114,11 +111,9 @@ public:
 	//----------- multiplayer version --------------//
 	void			mp_pick_up_toggle(int pos);
 };
-#pragma pack()
 
 //----------- Define class Caravan -----------//
 
-#pragma pack(1)
 class UnitCaravan : public Unit
 {
 public:
@@ -173,6 +168,9 @@ public:
 	void	think_set_pick_up_type();
 	void	think_set_pick_up_type2(int fromStopId, int toStopId);
 
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
@@ -201,7 +199,6 @@ private:
 
 	int	appear_in_firm_surround(int& xLoc, int& yLoc, Firm* firmPtr);	// select a suitable location to leave the stop
 };
-#pragma pack()
 
 //------------------------------------------//
 

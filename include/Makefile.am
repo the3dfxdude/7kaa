@@ -53,6 +53,8 @@ noinst_HEADERS = \
 	OF_MONS.h \
 	OF_RESE.h \
 	OF_WAR.h \
+	OGFILE_DYNARRAY.inl \
+	OGFILE_DYNARRAYB.inl \
 	OGAME.h \
 	OGAMESET.h \
 	OGAMHALL.h \
@@ -151,6 +153,7 @@ noinst_HEADERS = \
 	OVGABUF.h \
 	OVGALOCK.h \
 	OVIDEO.h \
+	visit_sprite.h \
 	OVOLUME.h \
 	OVQUEUE.h \
 	OWALLRES.h \
@@ -188,4 +191,7 @@ noinst_HEADERS = \
 	surface_sdl.h \
 	version.h \
 	vga_util.h \
+	visit_sprite.h \
+	visit_dyn_array.h \
+	visitor_functions.h \
 	wav_stream.h

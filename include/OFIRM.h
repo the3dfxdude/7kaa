@@ -48,6 +48,9 @@
 #include <OSKILL.h>
 #endif
 
+class FileReaderVisitor;
+class FileWriterVisitor;
+
 //----------- Define constant ------------//
 
 #define MAX_WORKER         	 8       // maximum no. of workers in a firm
@@ -90,7 +93,6 @@ enum { ASSASSINATE_FAIL,
 
 //------------- Define struct Worker ------------//
 
-#pragma pack(1)
 struct Worker
 {
 public:
@@ -128,7 +130,6 @@ public:
 	void	change_hit_points(int changePoints);
 	int	max_attack_range();
 };
-#pragma pack()
 
 class FirmBase;
 class FirmMine;
@@ -143,7 +144,6 @@ class FirmHarbor;
 
 //----------- Define class Firm ------------//
 
-#pragma pack(1)
 class Firm
 {
 public:
@@ -348,8 +348,8 @@ public:
 			  void toggle_firm_link(int linkId, int toggleFlag, char remoteAction, int setBoth=0);
 			  void toggle_town_link(int linkId, int toggleFlag, char remoteAction, int setBoth=0);
 
-	virtual int  write_derived_file(File*); 
-	virtual int  read_derived_file(File*);
+	virtual void accept_file_visitor(FileReaderVisitor* v) = 0;
+	virtual void accept_file_visitor(FileWriterVisitor* v) = 0;
 
 	virtual FirmBase*		cast_to_FirmBase() { return 0; };
 	virtual FirmMine*		cast_to_FirmMine() { return 0; };
@@ -432,7 +432,6 @@ protected:
 			  int	construction_frame();			// for under construction only
 			  // ##### end Gilbert 18/10 #######//
 };
-#pragma pack()
 
 //------------------------------------------//
 

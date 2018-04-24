@@ -34,7 +34,6 @@
 
 //------- Define class FirmWar --------//
 
-#pragma pack(1)
 class FirmWar : public Firm
 {
 public:
@@ -65,7 +64,11 @@ public:
 	void	next_day();
 	void	process_ai();
 
-	virtual	FirmWar* cast_to_FirmWar() { return this; };
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
+	virtual	FirmWar* cast_to_FirmWar() { return this; }
+
 	void	add_queue(int unitId, int amount = 1);
 	void	remove_queue(int unitId, int amount = 1);
 	void	cancel_build_unit();
@@ -90,7 +93,6 @@ private:
 	int 	should_build_new_weapon();
 	int	think_del();
 };
-#pragma pack()
 
 //--------------------------------------//
 

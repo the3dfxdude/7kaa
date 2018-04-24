@@ -29,18 +29,16 @@
 
 // --------- define class Rock -----------//
 
-#pragma pack(1)
 class Rock
 {
 public:
 	short	rock_recno;
 	char	cur_frame;
 	char	delay_remain;
-	short loc_x;
-	short loc_y;
+	short	loc_x;
+	short	loc_y;
 
-private:
-	unsigned seed;
+	unsigned int seed;
 
 public:
 	Rock(short rockRecno, short xLoc, short yLoc);
@@ -50,10 +48,8 @@ public:
 	void	draw_block(short xLoc, short yLoc);
 
 private:
-	unsigned random(unsigned);
+	unsigned int random(unsigned int);
 };
-#pragma pack()
-
 
 
 // --------- define class RockArray -----------//
@@ -66,8 +62,12 @@ public:
 	void	deinit();
 
 	void	process();
-	int	add(Rock *r)				{ linkin(r); return recno();}
+	int		add(Rock *r)				{ linkin(r); return recno();}
 	void	del(int i)					{ linkout(i); }
+
+	int		write_file(File*);
+	int		read_file(File*);
+
 	Rock* operator[](int n)			{ return (Rock *)get(n); }
 };
 

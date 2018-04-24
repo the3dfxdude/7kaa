@@ -36,20 +36,17 @@ enum	{	INSIDE_CAMP=0,
 
 //-------- Define struct DefenseUnit ----------//
 
-#pragma pack(1)
 struct DefenseUnit
 {
 	short	unit_recno;
 	char	status;	// inside / outside the camp
 };
-#pragma pack()
 
 //------- Define class FirmCamp --------//
 
 class Town;
 class Unit;
 
-#pragma pack(1)
 class FirmCamp : public Firm
 {
 public:
@@ -111,7 +108,10 @@ public:
 	void		update_defense_unit(short unitRecno);
 	void		set_employ_worker(char flag);
 
-	virtual	FirmCamp *cast_to_FirmCamp() { return this; };
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
+	virtual	FirmCamp *cast_to_FirmCamp() { return this; }
 
 	//----------- AI functions ----------//
 
@@ -168,7 +168,6 @@ private:
 	int 		think_assign_better_commander();
 	int 		best_commander_race();
 };
-#pragma pack()
 
 //--------------------------------------//
 

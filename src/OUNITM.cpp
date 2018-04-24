@@ -306,45 +306,15 @@ void Unit::stop2(int preserveAction)
 }
 //----------- End of function Unit::stop2 -----------//
 
-//######## begin trevor 26/4 ###########//
-
-//--------- Begin of function Unit::set_search_tries ---------//
-// used to limit the number of nodes in searching
-//
-// <int> tries	-	number of nodes used in searhcing
-//
-void Unit::set_search_tries(int tries)
-{
-	unit_search_tries = tries;
-	unit_search_tries_flag++;
-}
-//----------- End of function Unit::set_search_tries -----------//
-
-
-//--------- Begin of function Unit::reset_search_tries ---------//
-// reset the number of node to default value
-//
-void Unit::reset_search_tries()
-{
-	unit_search_tries = 0;		// 0 for reset
-	unit_search_tries_flag = 0;
-}
-//----------- End of function Unit::reset_search_tries -----------//
-
-//######## end trevor 26/4 ###########//
-
 //-------- Begin of function Unit::abort_searching --------//
 //
 // <int> reuseSetNext	-	condition flag for updating parameters
 //									of path_reuse
 //
-void	Unit::abort_searching(int reuseSetNext)
+void Unit::abort_searching(int reuseSetNext)
 {
 	if(reuseSetNext)	// to avoid error in path-reuse
 		seek_path_reuse.set_next_cur_path_num();
-
-	if(unit_search_tries_flag)
-		reset_search_tries();
 }
 //-------- End of function Unit::abort_searching ---------//
 
@@ -778,7 +748,7 @@ int Unit::searching(int destXLoc, int destYLoc, int preserveAction, short search
 						if(mobile_type==UNIT_LAND)
 							select_search_sub_mode(startXLocLoc, startYLocLoc, destXLoc, destYLoc, nation_recno, searchMode);
 						seekResult = seek_path.seek(startXLocLoc, startYLocLoc, destXLoc, destYLoc, unit_group_id,
-															mobile_type, searchMode, miscNo, numOfPath, unit_search_tries);
+															mobile_type, searchMode, miscNo, numOfPath);
 
 						result_node_array = seek_path.get_result(result_node_count, result_path_dist);
 						seek_path.set_sub_mode(); // reset sub_mode searching

@@ -61,7 +61,6 @@ private:
 
 // -------- define class FirmDie --------//
 
-#pragma pack(1)
 class FirmDie
 {
 public:
@@ -70,21 +69,22 @@ public:
 	short	nation_recno;
 	short	frame;
 	short	frame_delay_count;
-	short	loc_x1, loc_y1, loc_x2, loc_y2;
+	short	loc_x1;
+	short	loc_y1;
+	short	loc_x2;
+	short	loc_y2;
 
 public:
 	void	init(short firmId, short firmBuildId, short nationRecno, 
-		short	locX1, short locY1, short locX2, short locY2);
+				 short locX1, short locY1, short locX2, short locY2);
 	void	init(Firm *firmPtr);	
 	void	pre_process();
-	int	process();
+	int		process();
 	void	draw(int displayLayer);
 };
-#pragma pack()
 
 // -------- define class FirmDieArray --------//
 
-#pragma pack(1)
 class FirmDieArray : public DynArrayB
 {
 public:
@@ -93,14 +93,16 @@ public:
 	void	init();
 	void	deinit();
 
-	int	add(FirmDie *r);
+	int		add(FirmDie *r);
 	void	del(int i);
-	int	is_deleted(int recno);
+	int		is_deleted(int recno);
 	void	process();
+
+	int		write_file(File*);
+	int		read_file(File*);
 
 	FirmDie *operator[](int recNo);
 };
-#pragma pack()
 
 extern FirmDieRes firm_die_res;
 extern FirmDieArray firm_die_array;

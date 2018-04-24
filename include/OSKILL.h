@@ -48,7 +48,6 @@ enum { SKILL_CONSTRUCTION=1,
 
 //-------- Define struct Skill ----------//
 
-#pragma pack(1)
 class Skill
 {
 public:
@@ -72,7 +71,6 @@ public:
 	int 	get_skill(int skillId);
 	void	set_skill(int skillId)		{ skill_id = skillId; }
 };
-#pragma pack()
 
 //---------------------------------------//
 

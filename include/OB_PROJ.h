@@ -26,7 +26,7 @@
 
 #include <OBULLET.h>
 
-#pragma pack(1)
+
 class Projectile : public Bullet
 {
 public:
@@ -42,13 +42,12 @@ public:
 	char	display_layer();
 	void	draw();
 
-	int	write_derived_file(File *);
-	int	read_derived_file(File *);
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
-#pragma pack()
 
 #endif

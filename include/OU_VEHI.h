@@ -30,7 +30,6 @@
 
 //----------- Define class UnitVehicle -----------//
 
-#pragma pack(1)
 class UnitVehicle : public Unit
 {
 public:
@@ -41,11 +40,13 @@ public:
 	void	set_combat_level(int);
 	void	dismount();
 
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
-#pragma pack()
 
 //--------------------------------------------//
 

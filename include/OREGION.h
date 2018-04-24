@@ -48,7 +48,6 @@ enum RegionType
 
 //------- Define struct RegionInfo ----------//
 
-#pragma pack(1)
 struct RegionInfo
 {
 	uint8_t				region_id;
@@ -58,15 +57,14 @@ struct RegionInfo
 	int				adj_offset_bit;
 	int				region_size;
 
-	short				center_x, center_y;		// the center locatino of the region
+	short			center_x;
+	short			center_y;		// the center location of the region
 };
-#pragma pack()
 
 //------- Define class RegionArray ----------//
 
 class RegionStat;
 
-#pragma pack(1)
 class RegionArray
 {
 public:
@@ -134,7 +132,6 @@ public:
 					{ return operator[]( region_sorted_array[recNo-1] ); }
 	#endif
 };
-#pragma pack()
 
 extern RegionArray region_array;
 

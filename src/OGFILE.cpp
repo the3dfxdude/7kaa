@@ -39,21 +39,40 @@
 #include <OMUSIC.h>
 #include <OSaveGameInfo.h>
 #include <dbglog.h>
+#include <file_io_visitor.h>
 #include "gettext.h"
+
+using namespace FileIOVisitor;
 
 DBGLOG_DEFAULT_CHANNEL(GameFile);
 
-#pragma pack(1)
 struct GameFile::SaveGameHeader
 {
 	uint32_t class_size;    // for version compare
 	SaveGameInfo info;
 };
-#pragma pack()
 
 typedef GameFile::SaveGameHeader SaveGameHeader;
-enum {CLASS_SIZE = 302};
-static_assert(sizeof(SaveGameHeader) == CLASS_SIZE, "Savegame header size mismatch"); // (no packing)
+enum {GAME_HEADER_RECORD_SIZE = 302};
+
+template <typename Visitor>
+static void visit_game_header(Visitor *v, SaveGameHeader *gh)
+{
+	visit<uint32_t>(v, &gh->class_size);
+
+	SaveGameInfo* gi = &gh->info;
+
+	visit_array<int8_t>(v, gi->file_name);
+	visit_array<int8_t>(v, gi->player_name);
+
+	visit<int8_t>(v, &gi->race_id);
+	visit<int8_t>(v, &gi->nation_color);
+
+	visit<int32_t>(v, &gi->game_date);
+	visit<uint64_t>(v, &gi->file_date);
+
+	visit<int16_t>(v, &gi->terrain_set);
+}
 
 
 //-------- Begin of function GameFile::save_game --------//
@@ -67,7 +86,7 @@ bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo,
 	bool fileOpened = false;
 
 	int rc = file.file_create(filePath, 0, 1); // 0=tell File don't handle error itself
-												// 1=allow the writing size and the read size to be different
+												// 1=use structured file format
 	if( !rc )
 		errorMessage = _("Error creating saved game file.");
 	else
@@ -129,7 +148,7 @@ int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo
 	SaveGameHeader saveGameHeader;
 	if( rc )
 	{
-		if( !file.file_read(&saveGameHeader, CLASS_SIZE) )	// read the whole object from the saved game file
+		if( !visit_with_record_size<FileReaderVisitor>(&file, &saveGameHeader, visit_game_header<FileReaderVisitor>, GAME_HEADER_RECORD_SIZE) )
 		{
 			rc = 0;
 			errorMessage = _("Cannot read file header");
@@ -199,8 +218,8 @@ bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameI
 	bool success;
 	File file;
 	SaveGameHeader saveGameHeader;
-	if( file.file_open(filePath, 0, 1)      // last 1=allow varying read & write size
-		&& file.file_read(&saveGameHeader, sizeof(SaveGameHeader)) )
+	if( file.file_open(filePath, 0, 1)      // last 1=use structured file format
+		&& visit_with_record_size<FileReaderVisitor>(&file, &saveGameHeader, visit_game_header<FileReaderVisitor>, GAME_HEADER_RECORD_SIZE) )
 	{
 		if( !validate_header(&saveGameHeader) )
 		{
@@ -278,7 +297,6 @@ void GameFile::load_process()
 }
 //--------- End of function GameFile::load_process -------//
 
-
 //------- Begin of function GameFile::write_game_header -------//
 //
 // Write saved game header info to the saved game file.
@@ -289,9 +307,9 @@ void GameFile::load_process()
 int GameFile::write_game_header(const SaveGameInfo& saveGameInfo, File* filePtr)
 {
 	SaveGameHeader saveGameHeader;
-	saveGameHeader.class_size = CLASS_SIZE;
+	saveGameHeader.class_size = GAME_HEADER_RECORD_SIZE;
 	saveGameHeader.info = saveGameInfo;
-	return filePtr->file_write( &saveGameHeader, sizeof(SaveGameHeader) );     // write the whole object to the saved game file
+	return visit_with_record_size<FileWriterVisitor>(filePtr, &saveGameHeader, &visit_game_header<FileWriterVisitor>, GAME_HEADER_RECORD_SIZE);
 }
 //--------- End of function GameFile::write_game_header -------//
 
@@ -299,6 +317,6 @@ int GameFile::write_game_header(const SaveGameInfo& saveGameInfo, File* filePtr)
 //--------- Begin of function GameFile::validate_header -------//
 bool GameFile::validate_header(const SaveGameHeader* saveGameHeader)
 {
-	return saveGameHeader->class_size == CLASS_SIZE && saveGameHeader->info.terrain_set > 0;
+	return saveGameHeader->class_size == GAME_HEADER_RECORD_SIZE && saveGameHeader->info.terrain_set > 0;
 }
 //--------- End of function GameFile::validate_header -------//

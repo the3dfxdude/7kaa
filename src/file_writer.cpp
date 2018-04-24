@@ -18,6 +18,7 @@
  *
  */
 #include <file_writer.h>
+#include <limits>
 
 FileWriter::FileWriter()
 {
@@ -58,11 +59,6 @@ void FileWriter::deinit()
    this->file = NULL;
 }
 
-bool FileWriter::good() const
-{
-   return this->ok;
-}
-
 bool FileWriter::skip(size_t len)
 {
    const char *chars = "\xc0\xde\xba\xbe";
@@ -73,13 +69,13 @@ bool FileWriter::skip(size_t len)
    for (size_t n = 0; n < len; n++)
    {
       if (!this->write<int8_t>(chars[n & 3]))
-	 break;
+         break;
    }
 
    return this->ok;
 }
 
-bool FileWriter::write_record_size(uint16_t size)
+bool FileWriter::write_record_size(int size)
 {
    if (!this->ok)
       return false;
@@ -87,7 +83,10 @@ bool FileWriter::write_record_size(uint16_t size)
    if (this->original_type != File::STRUCTURED)
       return true;
 
-   return this->write<uint16_t>(size);
+   if (static_cast<unsigned int>(size) > std::numeric_limits<uint16_t>::max())
+      return this->write<uint16_t>(0);
+   else
+      return this->write<uint16_t>(size);
 }
 
 /* vim: set ts=8 sw=3: */

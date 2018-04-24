@@ -48,7 +48,6 @@ enum { SPRITE_IDLE=1,
 
 //---------- Define class Sprite -----------//
 
-#pragma pack(1)
 class Sprite
 {
 public:
@@ -151,7 +150,6 @@ public:
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
 };
-#pragma pack()
 
 //------- Define class SpriteArray ---------//
 
@@ -160,7 +158,7 @@ class SpriteArray : public DynArrayB
 public:
 	short		restart_recno; // indicate the unit's sprite_recno to process first in next process_cycle
 	
-	SpriteArray(int initArraySize);
+	explicit SpriteArray(int initArraySize);
 	~SpriteArray();
 
 	void	init();

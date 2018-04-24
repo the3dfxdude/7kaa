@@ -401,7 +401,7 @@ int Config::save(const char *filename)
 	if( !configFile.file_create(full_path) )
 		return 0;
 
-	int retFlag = write_file(&configFile);
+	int retFlag = write_file(&configFile, true /* include system settings */);
 
 	configFile.file_close();
 
@@ -435,7 +435,7 @@ int Config::load(const char *filename)
 	// check file size is the same
 	if( configFile.file_size() == 144 )
 	{
-		retFlag = read_file(&configFile);
+		retFlag = read_file(&configFile, true /* include system settings */);
 	}
 
 	configFile.file_close();

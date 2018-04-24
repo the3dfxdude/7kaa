@@ -30,7 +30,6 @@
 
 
 // The basic information ('header') of a savegame.
-#pragma pack(1)
 struct SaveGameInfo
 {
 	char     file_name[MAX_PATH+1];
@@ -43,9 +42,7 @@ struct SaveGameInfo
 	std::uint64_t file_date;      // saving game date (FILETIME)
 	short         terrain_set;
 };
-#pragma pack()
 
-
-SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName);
+SaveGameInfo save_game_info_from_current_game(const char* newFileName);
 
 #endif // ! __OSAVEGAMEINFO_H

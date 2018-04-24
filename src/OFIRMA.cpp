@@ -153,9 +153,11 @@ int FirmArray::build_firm(int xLoc, int yLoc, int nationRecno, int firmId, char*
 
 	//---------- create and build the firm -------------//
 
-	int firmRecno = create_firm(firmId);
+	Firm* firmPtr = create_firm(firmId);
+	linkin(&firmPtr);
+	firmPtr->firm_recno = recno();
 
-	firm_array[firmRecno]->init( xLoc, yLoc, nationRecno, firmId, buildCode, builderRecno);
+	firmPtr->init( xLoc, yLoc, nationRecno, firmId, buildCode, builderRecno);
 
 	// Firm::init() will set world matrix, it will use Firm::firm_recno to set the location cargo
 
@@ -168,7 +170,7 @@ int FirmArray::build_firm(int xLoc, int yLoc, int nationRecno, int firmId, char*
 		nationPtr->add_expense( EXPENSE_FIRM, (float)firm_res[firmId]->setup_cost);		// setup cost of the firm
 	}
 
-	return firmRecno;
+	return firmPtr->firm_recno;
 }
 //---------- End of function FirmArray::build_firm ---------//
 
@@ -180,11 +182,11 @@ int FirmArray::build_firm(int xLoc, int yLoc, int nationRecno, int firmId, char*
 // 1. FirmArray::build_firm()  for setting up a new firm
 // 2. FirmArray::read_file() when loading game.
 //
-// <int> firmId = firm type id
+// <short> firmId = firm type id
 //
-// Return : <int> the record no. of the newly added firm
+// Return : the newly created firm
 //
-int FirmArray::create_firm(int firmId)
+Firm* FirmArray::create_firm(short firmId)
 {
 	Firm* firmPtr;
 
@@ -232,66 +234,12 @@ int FirmArray::create_firm(int firmId)
 
 		default:
 			err_now("FirmArray::create_firm()");
+			firmPtr = nullptr;
 	}
 
-	//----------------------------------------//
-
-	linkin(&firmPtr);
-	firmPtr->firm_recno = recno();
-
-	return firmPtr->firm_recno;
+	return firmPtr;
 }
 //----------- End of function FirmArray::create_firm ---------//
-
-
-//--------- Begin of function FirmArray::firm_class_size ---------//
-//
-// Return the size of the specified class.
-// This function will be called by FirmArray::write_file()
-//
-// <int> id    = the id of the job
-//
-int FirmArray::firm_class_size(int id)
-{
-	switch(id)
-	{
-		case FIRM_BASE:
-			return sizeof(FirmBase);
-
-		case FIRM_CAMP:
-			return sizeof(FirmCamp);
-
-		case FIRM_FACTORY:
-			return sizeof(FirmFactory);
-
-		case FIRM_INN:
-			return sizeof(FirmInn);
-
-		case FIRM_MARKET:
-			return sizeof(FirmMarket);
-
-		case FIRM_MINE:
-			return sizeof(FirmMine);
-
-		case FIRM_RESEARCH:
-			return sizeof(FirmResearch);
-
-		case FIRM_WAR_FACTORY:
-			return sizeof(FirmWar);
-
-		case FIRM_HARBOR:
-			return sizeof(FirmHarbor);
-
-		case FIRM_MONSTER:
-			return sizeof(FirmMonster);
-
-		default:
-			err_now( "FirmArray::firm_class_size" );
-	}
-
-	return 0;
-}
-//----------- End of function FirmArray::firm_class_size ---------//
 
 
 //--------- Begin of function FirmArray::del_firm ---------//

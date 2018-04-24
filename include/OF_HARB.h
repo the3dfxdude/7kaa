@@ -37,7 +37,6 @@
 
 class UnitMarine;
 
-#pragma pack(1)
 class FirmHarbor : public Firm
 {
 public:
@@ -103,7 +102,10 @@ public:
 
 	//--------------------------------------//
 
-	virtual FirmHarbor*     cast_to_FirmHarbor() { return this; };
+	virtual void accept_file_visitor(FileReaderVisitor* v) override;
+	virtual void accept_file_visitor(FileWriterVisitor* v) override;
+
+	virtual FirmHarbor*     cast_to_FirmHarbor() { return this; }
 	void	add_queue(int unitId, int amount = 1);
 	void	remove_queue(int unitId, int amount = 1);
 	void	cancel_build_unit();
@@ -139,7 +141,6 @@ private:
 	void	process_queue();
 	void 	repair_ship();
 };
-#pragma pack()
 
 //--------------------------------------//
 
