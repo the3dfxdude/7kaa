@@ -79,10 +79,11 @@ int UnitArray::write_file(File* filePtr)
 	filePtr->file_put_short(unit_search_tries_flag);
 
 	filePtr->file_put_short(visible_unit_count);
-	filePtr->file_put_short(mp_first_frame_to_select_caravan);
-	filePtr->file_put_short(mp_first_frame_to_select_ship);
-	filePtr->file_put_short(mp_pre_selected_caravan_recno);
-	filePtr->file_put_short(mp_pre_selected_ship_recno);
+	// unused short*4
+	filePtr->file_put_short(0);
+	filePtr->file_put_short(0);
+	filePtr->file_put_short(0);
+	filePtr->file_put_short(0);
 
 	for( i=1; i<=size() ; i++ )
    {
@@ -141,10 +142,11 @@ int UnitArray::read_file(File* filePtr)
 	unit_search_tries_flag = (char) filePtr->file_get_short();
 
    visible_unit_count					= filePtr->file_get_short();
-	mp_first_frame_to_select_caravan = (char) filePtr->file_get_short();
-	mp_first_frame_to_select_ship		= (char) filePtr->file_get_short();
-	mp_pre_selected_caravan_recno		= filePtr->file_get_short();
-	mp_pre_selected_ship_recno			= filePtr->file_get_short();
+	// unused short*4
+	filePtr->file_get_short();
+	filePtr->file_get_short();
+	filePtr->file_get_short();
+	filePtr->file_get_short();
 
    for( i=1 ; i<=unitCount ; i++ )
    {

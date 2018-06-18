@@ -750,10 +750,6 @@ public:
 	short idle_blocked_unit_reset_count; // used to improve performance for searching related to attack
 
 	short visible_unit_count;
-	char	mp_first_frame_to_select_caravan;	// for multiplayer, true if 1st frame to select caravan
-	char	mp_first_frame_to_select_ship;		// ditto for ship
-	short	mp_pre_selected_caravan_recno;		// for multiplayer, 0 or recno that caravan selected in previous frame
-	short	mp_pre_selected_ship_recno;			// ditto for ship
 
 	static short   selected_land_unit_count;
 	static short   selected_sea_unit_count;
@@ -811,21 +807,6 @@ public:
 
 	//--------- unit filter function ----------//
 	int   divide_attack_by_nation(short nationRecno, short *selectedArray, int selectedCount);
-
-	//--------- for multiplayers' caravan and ship ---------//
-	void	mp_mark_selected_caravan();
-	int	mp_get_selected_caravan_count();
-	void	mp_reset_selected_caravan_count();
-	void	mp_add_selected_caravan(short unitRecno);
-	int	mp_is_selected_caravan(short unitRecno);
-
-	void	mp_mark_selected_ship();
-	int	mp_get_selected_ship_count();
-	void	mp_reset_selected_ship_count();
-	void	mp_add_selected_ship(short unitRecno);
-	int	mp_is_selected_ship(short unitRecno);
-
-	void	update_selected_trade_unit_info();
 
 	int   write_file(File* filePtr);
 	int   read_file(File* filePtr);

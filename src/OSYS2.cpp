@@ -245,11 +245,6 @@ void Sys::process()
 		day_frame_count = 0;
 	}
 
-	//### begin alex 12/9 ###//
-	//---------- update data structure of selected trading unit ------------//
-	unit_array.update_selected_trade_unit_info();
-	//#### end alex 12/9 ####//
-
 	//------ display the current frame ------//
 
 	LOG_MSG("begin sys.disp_frame");
@@ -260,12 +255,6 @@ void Sys::process()
 	misc.unlock_seed();
 	LOG_MSG("end sys.disp_frame");
 	LOG_MSG(misc.get_random_seed() );
-
-	//### begin alex 12/9 ###//
-	//--------- send message for selected trading unit in multiplayer game -------//
-	unit_array.mp_mark_selected_caravan();
-	unit_array.mp_mark_selected_ship();
-	//#### end alex 12/9 ####//
 
 	//-----------------------------------------//
 

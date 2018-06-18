@@ -84,10 +84,6 @@ void UnitArray::init()
 	selected_air_unit_array = NULL;
 
 	visible_unit_count = 0;
-	mp_first_frame_to_select_caravan = 0;
-	mp_first_frame_to_select_ship = 0;
-	mp_pre_selected_caravan_recno = 0;
-	mp_pre_selected_ship_recno = 0;
 
 	//------------ init sprite_array ------------//
 
@@ -611,69 +607,6 @@ void UnitArray::process()
 	SpriteArray::process();
 }
 //----------- End of function UnitArray::process -----------//
-
-
-//--------- Begin of function UnitArray::update_selected_trade_unit_info ---------//
-// update trade information of trading units if these units are selected
-//
-void UnitArray::update_selected_trade_unit_info()
-{
-	short playerNationRecno = nation_array.player_recno;
-
-	Unit *unitPtr;
-	UnitMarine *marinePtr;
-	if(remote.is_enable())
-	{
-		for(int i=size(); i>0; --i)
-		{
-			if(is_deleted(i))
-				continue;
-
-			unitPtr = (Unit*)get_ptr(i);
-			if(!unitPtr->is_visible())
-				continue;
-
-			switch(unitPtr->unit_id)
-			{
-				case UNIT_CARAVAN:
-						if(mp_is_selected_caravan(i))
-							((UnitCaravan*) unitPtr)->update_stop_and_goods_info();
-						break;
-
-				case UNIT_VESSEL: case UNIT_CARAVEL: case UNIT_GALLEON:
-						marinePtr = ((UnitMarine*) unitPtr);
-						if(marinePtr->auto_mode && mp_is_selected_ship(i))
-							marinePtr->update_stop_and_goods_info();
-						break;
-
-				default: break;
-			}
-		}
-	}
-	else if(selected_recno && !is_deleted(selected_recno))
-	{
-		unitPtr = (Unit*)get_ptr(selected_recno);
-		if(unitPtr->nation_recno==playerNationRecno || config.show_ai_info)
-		{
-			switch(unitPtr->unit_id)
-			{
-				case UNIT_CARAVAN:
-					((UnitCaravan*) unitPtr)->update_stop_and_goods_info();
-					break;
-
-				case UNIT_VESSEL: case UNIT_CARAVEL: case UNIT_GALLEON:
-					marinePtr = ((UnitMarine*) unitPtr);
-					if(marinePtr->auto_mode)
-						marinePtr->update_stop_and_goods_info();
-					break;
-
-				default:
-					break;
-			}
-		}
-	}
-}
-//----------- End of function UnitArray::update_selected_trade_unit_info -----------//
 
 
 //----------- Begin of function UnitArray::return_camp -----------//

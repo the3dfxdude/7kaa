@@ -60,27 +60,8 @@ static Button 			button_go_stop[MAX_STOP_FOR_SHIP];
 static Button 			button_cancel_stop[MAX_STOP_FOR_SHIP];
 //static Button			button_select_attack;
 static ButtonCustom	button_select_array[MAX_STOP_FOR_SHIP][MAX_GOODS_SELECT_BUTTON];
-static char				button_select_enable_flag[MAX_STOP_FOR_SHIP][MAX_GOODS_SELECT_BUTTON];
-static char				ship_goods_num[MAX_STOP_FOR_SHIP];
 
 static void				i_disp_marine_select_button(ButtonCustom *button, int repaintBody);
-
-static char				dummyShipEnableFlag[MAX_STOP_FOR_CARAVAN][MAX_GOODS_SELECT_BUTTON];
-static char				dummyShipGoodsNum[MAX_STOP_FOR_CARAVAN];
-
-//------------ define static function -------------//
-static void update_ship_stop_and_goods_info_to_dummy(UnitMarine *shipPtr)
-{
-	ShipStop *stopPtr = shipPtr->stop_array;
-	for(int i=0; i<MAX_STOP_FOR_SHIP; i++, stopPtr++)
-	{
-		if(!stopPtr->firm_recno)
-			continue;
-
-		err_when(firm_array.is_deleted(stopPtr->firm_recno));
-		dummyShipGoodsNum[i] = stopPtr->update_pick_up(dummyShipEnableFlag[i]);
-	}
-}
 
 //--------- Begin of function UnitMarine::disp_info ---------//
 //
@@ -111,17 +92,6 @@ void UnitMarine::disp_info(int refreshFlag)
 		}
 
 		y += 25;
-	}
-
-	//----- for multiplayer game, skip displaying information for the first frame --------//
-	if(remote.is_enable())
-	{
-		if(unit_array.mp_first_frame_to_select_ship && // first frame
-			unit_array.mp_pre_selected_ship_recno==sprite_recno) // is selected
-		{
-			err_when(!auto_mode);
-			return;
-		}
 	}
 
 	//-------------------------------------------------------------//
@@ -693,11 +663,9 @@ void UnitMarine::disp_goods_select_button(int stopNum, int dispY1, int refreshFl
 	#define SELECT_BUTTON_HEIGHT	16
 
 	ShipStop	*stopPtr = &stop_array[stopNum];
+	Firm *harborPtr = firm_array[stopPtr->firm_recno];
 
-	if(!ship_goods_num[stopNum])
-		return;
-
-	int	x=INFO_X1+SHIFT_X_OFFSET, y=dispY1+1, x1;
+	int  x=INFO_X1+SHIFT_X_OFFSET, y=dispY1+1, x1, pick_up_goods = 0;
 	char *pickUpArray = stopPtr->pick_up_array;
 	char isPush;
 
@@ -705,9 +673,66 @@ void UnitMarine::disp_goods_select_button(int stopNum, int dispY1, int refreshFl
 
 	for(int i=1 ;i<=MAX_PICK_UP_GOODS; ++i, pickUpArray++)
 	{
+		int rawId = i;
+		if( rawId < 1 || rawId > MAX_RAW )
+			rawId = 0;
+		int productId = i-MAX_RAW;
+		if( productId < 1 || productId > MAX_PRODUCT )
+			productId = 0;
+
+		int stock = -1;
+
+		for(int j=harborPtr->linked_firm_count-1; j>=0 && stock<0; --j)
+		{
+			err_when(firm_array.is_deleted(harborPtr->linked_firm_array[j]));
+			Firm *firmPtr = firm_array[harborPtr->linked_firm_array[j]];
+			if( FirmMarket *firmMarket = firmPtr->cast_to_FirmMarket() )
+			{
+				MarketGoods *marketGoods;
+				if( rawId )
+				{
+					marketGoods = firmMarket->market_raw_array[rawId-1];
+					err_when( marketGoods && marketGoods->raw_id != rawId );
+				}
+				else if( productId )
+				{
+					marketGoods = firmMarket->market_product_array[productId-1];
+					err_when( marketGoods && marketGoods->product_raw_id != productId );
+				}
+				else
+				{
+					err_here();
+					marketGoods = NULL;
+				}
+
+				if( marketGoods )
+				{
+					stock = (int) marketGoods->stock_qty;
+				}
+			}
+			else if( FirmMine *firmMine = firmPtr->cast_to_FirmMine() )
+			{
+				if( rawId && firmMine->raw_id == rawId )
+				{
+					stock = (int) firmMine->stock_qty;
+				}
+			}
+			else if( FirmFactory *firmFactory = firmPtr->cast_to_FirmFactory() )
+			{
+				if( productId && firmFactory->product_raw_id == productId )
+				{
+					stock = (int) firmFactory->stock_qty;
+				}
+				//else if( rawId && firmFactory->product_raw_id == rawId )
+				//{
+				//	stock = (int) firmFactory->raw_stock_qty;
+				//}
+			}
+		}
+
 		x1 = x + i*SELECT_BUTTON_WIDTH;
 
-		if(button_select_enable_flag[stopNum][i])
+		if( stock >= 0 )
 		{
 			isPush = stopPtr->pick_up_array[i-1];
 			err_when(isPush && (stopPtr->pick_up_type==AUTO_PICK_UP || stopPtr->pick_up_type==NO_PICK_UP));
@@ -715,6 +740,7 @@ void UnitMarine::disp_goods_select_button(int stopNum, int dispY1, int refreshFl
 			button_select_array[stopNum][i].paint(x1, y, x1+SELECT_BUTTON_WIDTH,
 				y+SELECT_BUTTON_HEIGHT, i_disp_marine_select_button, ButtonCustomPara(this, i),
 				0, isPush); // 0 for inelastic
+			pick_up_goods++;
 		}
 		else
 		{
@@ -724,17 +750,15 @@ void UnitMarine::disp_goods_select_button(int stopNum, int dispY1, int refreshFl
 
 	//---------------- draw the buttons for auto_pick_up and no_pick_up -------------//
 
-	if(ship_goods_num[stopNum]>1)
+	if( pick_up_goods>1 )
 	{
 		x1 = x;
 		isPush = (stopPtr->pick_up_type==AUTO_PICK_UP);
-		button_select_enable_flag[stopNum][AUTO_PICK_UP] = 1;
 		button_select_array[stopNum][AUTO_PICK_UP].paint(x1, y, x1+SELECT_BUTTON_WIDTH,
 			y+SELECT_BUTTON_HEIGHT, i_disp_marine_select_button, ButtonCustomPara(this, AUTO_PICK_UP),
 			0, isPush); // 0 for inelastic
 
 		x1 = x+SELECT_BUTTON_WIDTH*NO_PICK_UP;
-		button_select_enable_flag[stopNum][NO_PICK_UP] = 1;
 		button_select_array[stopNum][NO_PICK_UP].paint(x1, y, x1+SELECT_BUTTON_WIDTH,
 			y+SELECT_BUTTON_HEIGHT, i_disp_marine_select_button, ButtonCustomPara(this, NO_PICK_UP));
 	}
@@ -779,9 +803,6 @@ void UnitMarine::detect_stop()
 
 		for(int b=0; b<MAX_GOODS_SELECT_BUTTON; ++b)
 		{
-			if(!button_select_enable_flag[i][b])
-				continue;
-
 			if(button_select_array[i][b].detect())
 			{
 				// ###### begin Gilbert 25/9 #######//
@@ -813,7 +834,6 @@ void UnitMarine::detect_stop()
 //
 void UnitMarine::set_stop_pick_up(int stopId, int newPickUpType, int remoteAction)
 {
-	int remoteEnable = 0;
 	if(remote.is_enable())
 	{
 		if(!remoteAction)
@@ -885,44 +905,27 @@ void UnitMarine::set_stop_pick_up(int stopId, int newPickUpType, int remoteActio
 			//-*******************************************************-//
 			#endif
 		}
-
-		remoteEnable = 1;
 	}
 
 	switch(newPickUpType)
 	{
-		case AUTO_PICK_UP:
-				if(remoteEnable)
-				{
-					update_ship_stop_and_goods_info_to_dummy(this);
-					stop_array[stopId-1].mp_pick_up_set_auto(dummyShipEnableFlag[stopId-1]);
-				}
-				else
-					stop_array[stopId-1].pick_up_set_auto();
-				break;
+	case AUTO_PICK_UP:
+		stop_array[stopId-1].pick_up_set_auto();
+		break;
 
-		case NO_PICK_UP:
-				if(remoteEnable)
-				{
-					update_ship_stop_and_goods_info_to_dummy(this);
-					stop_array[stopId-1].mp_pick_up_set_none(dummyShipEnableFlag[stopId-1]);
-				}
-				else
-					stop_array[stopId-1].pick_up_set_none();
-				break;
+	case NO_PICK_UP:
+		stop_array[stopId-1].pick_up_set_none();
+		break;
 
-		default:
-				err_when(newPickUpType<PICK_UP_RAW_FIRST || newPickUpType>PICK_UP_PRODUCT_LAST);
-				if(remoteEnable)
-					stop_array[stopId-1].mp_pick_up_toggle(newPickUpType);
-				else
-					stop_array[stopId-1].pick_up_toggle(newPickUpType);
-				break;
+	default:
+		err_when(newPickUpType<PICK_UP_RAW_FIRST || newPickUpType>PICK_UP_PRODUCT_LAST);
+		stop_array[stopId-1].pick_up_toggle(newPickUpType);
+		break;
 	}
 
 	if( unit_array.selected_recno == sprite_recno )
 	{
-		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
 		{
 			int y=INFO_Y1+54;
 			UnitInfo* unitInfo = unit_res[unit_id];
@@ -934,23 +937,6 @@ void UnitMarine::set_stop_pick_up(int stopId, int newPickUpType, int remoteActio
 	}
 }
 //---------- End of function UnitMarine::set_stop_pick_up ----------//
-
-
-//--------- Begin of function UnitMarine::update_stop_and_goods_info ---------//
-void UnitMarine::update_stop_and_goods_info()
-{
-	err_when(!auto_mode);
-	update_stop_list();
-	update_ship_stop_and_goods_info_to_dummy(this);
-
-	if(sprite_recno==unit_array.selected_recno && ((nation_array.player_recno && nation_recno==nation_array.player_recno) ||
-		config.show_ai_info))
-	{
-		memcpy(ship_goods_num, dummyShipGoodsNum, sizeof(char)*MAX_STOP_FOR_SHIP);
-		memcpy(button_select_enable_flag, dummyShipEnableFlag, sizeof(char)*MAX_STOP_FOR_SHIP*MAX_GOODS_SELECT_BUTTON);
-	}
-}
-//----------- End of function UnitMarine::update_stop_and_goods_info -----------//
 
 
 //--------- Begin of function UnitMarine::disp_goods ---------//
@@ -1127,9 +1113,6 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 		return; // same stop as before
 	}
 
-	memset(button_select_enable_flag[stopId-1], 0, sizeof(char)*MAX_GOODS_SELECT_BUTTON);
-	ship_goods_num[stopId-1] = 0;
-
 	short oldStopFirmRecno = dest_stop_id ? stop_array[dest_stop_id-1].firm_recno : 0; 
 	stopPtr->firm_recno		= firmPtr->firm_recno;
 	stopPtr->firm_loc_x1		= firmPtr->loc_x1;
@@ -1161,7 +1144,7 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 	//-------------------------------------------------------//
 	if(unit_array.selected_recno==sprite_recno)
 	{
-		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
 			info.disp();
 	}
 }

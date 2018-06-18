@@ -2779,24 +2779,6 @@ void RemoteMsg::caravan_selected()
 	err_when( id != MSG_U_CARA_SELECTED );
 	// packet structure : <sprite_recno>
 	short *shortPtr = (short *)data_buf;
-	
-	short unitCount =1;
-	validate_selected_unit_array(shortPtr, unitCount);
-
-	if( unitCount <= 0)
-		return;
-	
-	#ifdef DEBUG
-		Unit *unitPtr = unit_array[*shortPtr];
-		err_when( unitPtr->unit_id != UNIT_CARAVAN);
-	#endif
-
-	//------ help to check syn. for multiplayer ------//
-	#ifdef DEBUG
-		misc.random(100);
-	#endif
-
-	unit_array.mp_add_selected_caravan(*shortPtr);
 }
 // ------- End of function RemoteMsg::caravan_selected -------//
 
@@ -2807,24 +2789,6 @@ void RemoteMsg::ship_selected()
 	err_when( id != MSG_U_SHIP_SELECTED );
 	// packet structure : <sprite_recno>
 	short *shortPtr = (short *)data_buf;
-
-	short unitCount =1;
-	validate_selected_unit_array(shortPtr, unitCount);
-
-	if(unitCount <= 0)
-		return;
-
-	#ifdef DEBUG
-		Unit *unitPtr = unit_array[*shortPtr];
-		err_when(unit_res[unitPtr->unit_id]->unit_class != UNIT_CLASS_SHIP || unitPtr->unit_id==UNIT_TRANSPORT);
-	#endif
-
-	//------ help to check syn. for multiplayer ------//
-	#ifdef DEBUG
-		misc.random(100);
-	#endif
-
-	unit_array.mp_add_selected_ship(*shortPtr);
 }
 // ------- End of function RemoteMsg::ship_selected -------//
 

@@ -48,26 +48,8 @@ static Button 			button_set_stop[MAX_STOP_FOR_CARAVAN];
 static Button 			button_go_stop[MAX_STOP_FOR_CARAVAN];
 static Button 			button_cancel_stop[MAX_STOP_FOR_CARAVAN];
 static ButtonCustom	button_select_array[MAX_STOP_FOR_CARAVAN][MAX_GOODS_SELECT_BUTTON];
-static char				button_select_enable_flag[MAX_STOP_FOR_CARAVAN][MAX_GOODS_SELECT_BUTTON];
 
 static void				i_disp_caravan_select_button(ButtonCustom *button, int repaintBody);
-static char				goods_num[MAX_STOP_FOR_CARAVAN];
-
-static char				dummyCaravanEnableFlag[MAX_STOP_FOR_CARAVAN][MAX_GOODS_SELECT_BUTTON];
-static char				dummyCaravanGoodsNum[MAX_STOP_FOR_CARAVAN];
-//------------- define static function ------------//
-static void update_caravan_stop_and_goods_to_dummy(UnitCaravan *caravanPtr)
-{
-	CaravanStop *stopPtr = caravanPtr->stop_array;
-	for(int i=0; i<MAX_STOP_FOR_CARAVAN; i++, stopPtr++)
-	{
-		if(!stopPtr->firm_recno)
-			continue;
-
-		err_when(firm_array.is_deleted(stopPtr->firm_recno));
-		dummyCaravanGoodsNum[i] = stopPtr->update_pick_up(dummyCaravanEnableFlag[i]);
-	}
-}
 
 //--------- Begin of function UnitCaravan::UnitCaravan ---------//
 //
@@ -92,14 +74,6 @@ UnitCaravan::UnitCaravan()
 //
 void UnitCaravan::disp_info(int refreshFlag)
 {
-	//----- for multiplayer game, skip displaying information for the first frame --------//
-	if(remote.is_enable())
-	{
-		if(unit_array.mp_first_frame_to_select_caravan && // first frame
-			unit_array.mp_pre_selected_caravan_recno==sprite_recno) // is selected
-			return;
-	}
-
 	disp_basic_info(INFO_Y1, refreshFlag);
 
 	if( !config.show_ai_info && !is_own() )
@@ -256,9 +230,6 @@ void UnitCaravan::detect_stop()
 
 		for(int b=0; b<MAX_GOODS_SELECT_BUTTON; ++b)
 		{
-			if(!button_select_enable_flag[i][b])
-				continue;
-
 			if(button_select_array[i][b].detect())
 			{
 				// ###### begin Gilbert 26/9 ######//
@@ -293,11 +264,9 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 	#define SELECT_BUTTON_HEIGHT	16
 
 	CaravanStop	*stopPtr = &stop_array[stopNum];
+	Firm *firmPtr = firm_array[stopPtr->firm_recno];
 
-	if( !goods_num[stopNum] )
-		return;
-
-	int  x=INFO_X1+SHIFT_X_OFFSET, y=dispY1+17, x1;
+	int  x=INFO_X1+SHIFT_X_OFFSET, y=dispY1+17, x1, pick_up_goods = 0;
 	char *pickUpArray = stopPtr->pick_up_array;
 	char isPush;
 
@@ -307,9 +276,61 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 
 	for(int i=1 ;i<=MAX_PICK_UP_GOODS; ++i, pickUpArray++)
 	{
+		int rawId = i;
+		if( rawId < 1 || rawId > MAX_RAW )
+			rawId = 0;
+		int productId = i-MAX_RAW;
+		if( productId < 1 || productId > MAX_PRODUCT )
+			productId = 0;
+
+		int stock = -1;
+
+		if( FirmMarket *firmMarket = firmPtr->cast_to_FirmMarket() )
+		{
+			MarketGoods *marketGoods;
+			if( rawId )
+			{
+				marketGoods = firmMarket->market_raw_array[rawId-1];
+				err_when( marketGoods && marketGoods->raw_id != rawId );
+			}
+			else if( productId )
+			{
+				marketGoods = firmMarket->market_product_array[productId-1];
+				err_when( marketGoods && marketGoods->product_raw_id != productId );
+			}
+			else
+			{
+				err_here();
+				marketGoods = NULL;
+			}
+
+			if( marketGoods )
+			{
+				stock = (int) marketGoods->stock_qty;
+			}
+		}
+		else if( FirmMine *firmMine = firmPtr->cast_to_FirmMine() )
+		{
+			if( rawId && firmMine->raw_id == rawId )
+			{
+				stock = (int) firmMine->stock_qty;
+			}
+		}
+		else if( FirmFactory *firmFactory = firmPtr->cast_to_FirmFactory() )
+		{
+			if( productId && firmFactory->product_raw_id == productId )
+			{
+				stock = (int) firmFactory->stock_qty;
+			}
+			//else if( rawId && firmFactory->product_raw_id == rawId )
+			//{
+			//	stock = (int) firmFactory->raw_stock_qty;
+			//}
+		}
+
 		x1 = x + i*SELECT_BUTTON_WIDTH;
 
-		if(button_select_enable_flag[stopNum][i])
+		if( stock >= 0 )
 		{
 			isPush = stopPtr->pick_up_array[i-1];
 			err_when(isPush && (stopPtr->pick_up_type==AUTO_PICK_UP || stopPtr->pick_up_type==NO_PICK_UP));
@@ -317,6 +338,7 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 			button_select_array[stopNum][i].paint(x1, y, x1+SELECT_BUTTON_WIDTH,
 				y+SELECT_BUTTON_HEIGHT, i_disp_caravan_select_button, ButtonCustomPara(this, i),
 				0, isPush); // 0 for inelastic
+			pick_up_goods++;
 		}
 		else
 		{
@@ -326,17 +348,15 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 
 	//---------------- draw the buttons for auto_pick_up and no_pick_up -------------//
 
-	if(goods_num[stopNum]>1)
+	if( pick_up_goods>1 )
 	{
 		x1 = x;
 		isPush = (stopPtr->pick_up_type==AUTO_PICK_UP);
-		button_select_enable_flag[stopNum][AUTO_PICK_UP] = 1;
 		button_select_array[stopNum][AUTO_PICK_UP].paint(x1, y, x1+SELECT_BUTTON_WIDTH,
 			y+SELECT_BUTTON_HEIGHT, i_disp_caravan_select_button, ButtonCustomPara(this, AUTO_PICK_UP),
 			0, isPush); // 0 for inelastic
 
 		x1 = x+SELECT_BUTTON_WIDTH*NO_PICK_UP;
-		button_select_enable_flag[stopNum][NO_PICK_UP] = 1;
 		button_select_array[stopNum][NO_PICK_UP].paint(x1, y, x1+SELECT_BUTTON_WIDTH,
 			y+SELECT_BUTTON_HEIGHT, i_disp_caravan_select_button, ButtonCustomPara(this, NO_PICK_UP));
 	}
@@ -364,7 +384,6 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 //
 void UnitCaravan::set_stop_pick_up(int stopId, int newPickUpType, int remoteAction)
 {
-	int remoteEnable = 0;
 	if(remote.is_enable())
 	{
 		if(!remoteAction)
@@ -430,45 +449,27 @@ void UnitCaravan::set_stop_pick_up(int stopId, int newPickUpType, int remoteActi
 			//-*******************************************************-//
 			#endif
 		}
-
-		remoteEnable = 1;
 	}
 
 	switch(newPickUpType)
 	{
-		case AUTO_PICK_UP:
-				if(remoteEnable)
-				{
-					update_caravan_stop_and_goods_to_dummy(this);
-					stop_array[stopId-1].mp_pick_up_set_auto(dummyCaravanEnableFlag[stopId-1]);
-				}
-				else
-					stop_array[stopId-1].pick_up_set_auto();
-				break;
+	case AUTO_PICK_UP:
+		stop_array[stopId-1].pick_up_set_auto();
+		break;
 
-		case NO_PICK_UP:
-				// if(remoteEnable)
-				if(remoteEnable)
-				{
-					update_caravan_stop_and_goods_to_dummy(this);
-					stop_array[stopId-1].mp_pick_up_set_none(dummyCaravanEnableFlag[stopId-1]);
-				}
-				else
-					stop_array[stopId-1].pick_up_set_none();
-				break;
+	case NO_PICK_UP:
+		stop_array[stopId-1].pick_up_set_none();
+		break;
 
-		default:
-				err_when(newPickUpType<PICK_UP_RAW_FIRST || newPickUpType>PICK_UP_PRODUCT_LAST);
-				if(remoteEnable)
-					stop_array[stopId-1].mp_pick_up_toggle(newPickUpType);
-				else
-					stop_array[stopId-1].pick_up_toggle(newPickUpType);
-				break;
+	default:
+		err_when(newPickUpType<PICK_UP_RAW_FIRST || newPickUpType>PICK_UP_PRODUCT_LAST);
+		stop_array[stopId-1].pick_up_toggle(newPickUpType);
+		break;
 	}
 
 	if(unit_array.selected_recno==sprite_recno)
 	{
-		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
 			disp_stop(INFO_Y1+54, INFO_UPDATE);
 	}
 }
@@ -569,9 +570,6 @@ void UnitCaravan::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAc
 	//-------------- reset ignore_power_nation -------------//
 	ignore_power_nation = 0;
 
-	memset(button_select_enable_flag[stopId-1], 0, sizeof(char)*MAX_GOODS_SELECT_BUTTON);
-	goods_num[stopId-1] = 0;
-
 	short oldStopFirmRecno = dest_stop_id ? stop_array[dest_stop_id-1].firm_recno : 0;
 	short newStopFirmRecno;
 	memset(stopPtr->pick_up_array, 0, sizeof(char)*MAX_PICK_UP_GOODS);
@@ -658,7 +656,7 @@ void UnitCaravan::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAc
 
 	if( unit_array.selected_recno == sprite_recno )
 	{
-		if(!remote.is_enable() || nation_recno==nation_array.player_recno || config.show_ai_info)
+		if(nation_recno==nation_array.player_recno || config.show_ai_info)
 			info.disp();
 	}
 }
@@ -894,22 +892,6 @@ void UnitCaravan::update_stop_list()
 	err_when(dest_stop_id<0 || dest_stop_id>MAX_STOP_FOR_CARAVAN);
 }
 //----------- End of function UnitCaravan::update_stop_list -----------//
-
-
-//--------- Begin of function UnitCaravan::update_stop_and_goods_info ---------//
-void UnitCaravan::update_stop_and_goods_info()
-{
-	update_stop_list();
-	update_caravan_stop_and_goods_to_dummy(this);
-
-	if(sprite_recno==unit_array.selected_recno && ((nation_array.player_recno && nation_recno==nation_array.player_recno) ||
-		config.show_ai_info))
-	{
-		memcpy(goods_num, dummyCaravanGoodsNum, sizeof(char)*MAX_STOP_FOR_CARAVAN);
-		memcpy(button_select_enable_flag, dummyCaravanEnableFlag, sizeof(char)*MAX_STOP_FOR_CARAVAN*MAX_GOODS_SELECT_BUTTON);
-	}
-}
-//----------- End of function UnitCaravan::update_stop_and_goods_info -----------//
 
 
 //--------- Begin of function UnitCaravan::can_set_stop ---------//
@@ -1257,21 +1239,6 @@ void UnitCaravan::caravan_on_way()
 		  (nextXLoc>=firmPtr->loc_x1-1 && nextXLoc<=firmPtr->loc_x2+1 &&
 			nextYLoc>=firmPtr->loc_y1-1 && nextYLoc<=firmPtr->loc_y2+1) )) // in the surrounding of the firm
 	{
-		//-*************************************************************-//
-		/*if(nation_recno==nation_array.player_recno)
-		{
-			OutputDebugString("surround firm\r\n");
-			for(int type = 0; type<MAX_GOODS_SELECT_BUTTON; type++)
-			{
-				if(button_select_enable_flag[0][type])
-					break;
-			}
-
-			stop_array[0].pick_up_array[type] ^= 1;
-			set_stop_pick_up(1, type, COMMAND_PLAYER);
-		}*/
-		//-*************************************************************-//
-
 		//-------------------- update pick_up_array --------------------//
 		stopPtr->update_pick_up();
 

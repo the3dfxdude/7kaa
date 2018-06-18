@@ -222,7 +222,6 @@ bin_PROGRAMS = 7kaa
 	OUNITAC.cpp \
 	OUNITAI.cpp \
 	OUNITAM.cpp \
-	OUNITAMT.cpp \
 	OUNITAT.cpp \
 	OUNITAT2.cpp \
 	OUNITAT3.cpp \
