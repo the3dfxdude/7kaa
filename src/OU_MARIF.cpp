@@ -665,7 +665,7 @@ void UnitMarine::disp_goods_select_button(int stopNum, int dispY1, int refreshFl
 	ShipStop	*stopPtr = &stop_array[stopNum];
 	Firm *harborPtr = firm_array[stopPtr->firm_recno];
 
-	int  x=INFO_X1+SHIFT_X_OFFSET, y=dispY1+1, x1, pick_up_goods = 0;
+	int  x=INFO_X1+SHIFT_X_OFFSET, y=dispY1+17, x1, pick_up_goods = 0;
 	char *pickUpArray = stopPtr->pick_up_array;
 	char isPush;
 

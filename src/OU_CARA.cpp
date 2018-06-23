@@ -81,7 +81,7 @@ void UnitCaravan::disp_info(int refreshFlag)
 
 	disp_stop(INFO_Y1+54, refreshFlag);
 
-	disp_goods(INFO_Y1+235, refreshFlag);
+	disp_goods(INFO_Y1+234, refreshFlag);
 }
 //---------- End of function UnitCaravan::disp_info ----------//
 
@@ -259,7 +259,7 @@ void UnitCaravan::disp_goods_select_button(int stopNum, int dispY1, int refreshF
 	if(refreshFlag!=INFO_REPAINT && refreshFlag!=INFO_UPDATE)
 		return;
 
-	#define SHIFT_X_OFFSET	60
+	#define SHIFT_X_OFFSET	73
 	#define SELECT_BUTTON_WIDTH	16
 	#define SELECT_BUTTON_HEIGHT	16
 
