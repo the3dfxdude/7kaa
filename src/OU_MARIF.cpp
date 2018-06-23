@@ -1117,7 +1117,73 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 	stopPtr->firm_recno		= firmPtr->firm_recno;
 	stopPtr->firm_loc_x1		= firmPtr->loc_x1;
 	stopPtr->firm_loc_y1		= firmPtr->loc_y1;
+
+	//-------------------------------------------------------//
+	// set pick up selection based on availability
+	//-------------------------------------------------------//
 	stopPtr->pick_up_set_auto();
+
+	int goodsId, goodsNum = 0;
+	for(int i=harborPtr->linked_firm_count-1; i>=0 && goodsNum<2; --i)
+	{
+		MarketGoods *goodsPtr;
+		int id = 0;
+		err_when(firm_array.is_deleted(harborPtr->linked_firm_array[i]));
+		firmPtr = firm_array[harborPtr->linked_firm_array[i]];
+
+		switch(firmPtr->firm_id)
+		{
+		case FIRM_MINE:
+			id = ((FirmMine*)firmPtr)->raw_id;
+			if(id)
+			{
+				if(!goodsNum)
+					goodsId = id;
+				goodsNum++;
+			}
+			break;
+		case FIRM_FACTORY:
+			id = ((FirmFactory*)firmPtr)->product_raw_id+MAX_RAW;
+			if(id)
+			{
+				if(!goodsNum)
+					goodsId = id;
+				goodsNum++;
+			}
+			break;
+		case FIRM_MARKET:
+			goodsPtr = ((FirmMarket*) firmPtr)->market_goods_array;
+
+			for(int j=0; j<MAX_MARKET_GOODS; ++j && goodsNum<2, goodsPtr++)
+			{
+				if(goodsPtr->raw_id)
+				{
+					id = goodsPtr->raw_id;
+
+					if(!goodsNum)
+						goodsId = id;
+					goodsNum++;
+				}
+				else if(goodsPtr->product_raw_id)
+				{
+					id = goodsPtr->product_raw_id+MAX_RAW;
+
+					if(!goodsNum)
+						goodsId = id;
+					goodsNum++;
+				}
+			}
+			break;
+		default:
+			err_here();
+			break;
+		}
+	}
+
+	if(goodsNum==1)
+		stopPtr->pick_up_toggle(goodsId); // cancel auto_pick_up
+	else if(!goodsNum)
+		stopPtr->pick_up_set_none();
 
 	//-------------------------------------------------------//
 	// remove duplicate stop or stop change nation
