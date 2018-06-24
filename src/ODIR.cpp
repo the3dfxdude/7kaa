@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ODIR.h>
+#include <FileSystem.h>
 
 #ifdef NO_WINDOWS
 #include <dirent.h>
@@ -66,9 +67,9 @@ Directory::Directory() : DynArray( sizeof(FileInfo), 20 )
 //
 int Directory::read(const char *fileSpec, int sortName)
 {
-   FileInfo				fileInfo;
+   FileInfo fileInfo;
 #ifndef NO_WINDOWS
-	WIN32_FIND_DATA	findData;
+    WIN32_FIND_DATA	findData;
    
    //----------- get the file list -------------//
 
@@ -76,7 +77,7 @@ int Directory::read(const char *fileSpec, int sortName)
 
    while(findHandle!=INVALID_HANDLE_VALUE)
    {
-      misc.extract_file_name( fileInfo.name, findData.cFileName ); // get the file name only from a full path string
+      strcpy(fileInfo.name, FileSystem::get_file_name(findData.cFileName)); // get the file name only from a full path string
 
       fileInfo.size = findData.nFileSizeLow;
       fileInfo.time = static_cast<std::uint64_t>(findData.ftLastWriteTime.dwHighDateTime) << 32 | findData.ftLastWriteTime.dwLowDateTime;
@@ -84,10 +85,10 @@ int Directory::read(const char *fileSpec, int sortName)
       linkin( &fileInfo );
 
       if( !FindNextFile( findHandle, &findData ) )
-			break;
+          break;
    }
 
-	FindClose(findHandle);
+    FindClose(findHandle);
 
 #else
 

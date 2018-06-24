@@ -42,6 +42,7 @@
 // ####### begin Gilbert 4/11 #######//
 #include <OMUSIC.h>
 // ####### end Gilbert 4/11 #######//
+#include <FileSystem.h>
 #include "gettext.h"
 
 // --------- declare static funtion --------//
@@ -228,8 +229,8 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 			refreshFlag = TUOPTION_ALL;
 #endif
 			scenFileName = scenInfoArray[browseRecno-1].file_name;
-			misc.change_file_ext( pictName, scenFileName, "SCP" );
-			misc.change_file_ext( textName, scenFileName, "SCT" );
+			FileSystem::change_file_ext( pictName, scenFileName, "SCP" );
+			FileSystem::change_file_ext( textName, scenFileName, "SCT" );
 			pathName = DIR_SCENARIO_PATH(scenInfoArray[browseRecno-1].dir_id);
 			err_when( ! *pathName );
 			if( refreshFlag & TUOPTION_PAGE )
@@ -287,7 +288,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 				str = pathName;
 				str += pictName;
 
-				if( browseRecno && misc.is_file_exist(str) )
+				if( browseRecno && FileSystem::is_file_exist(str) )
 				{
 					File pictFile;
 					pictFile.file_open(str);
@@ -311,7 +312,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 				str = pathName;
 				str += textName;
 
-				if( browseRecno && misc.is_file_exist(str) )
+				if( browseRecno && FileSystem::is_file_exist(str) )
 				{
 					File textFile;
 					int dataSize;

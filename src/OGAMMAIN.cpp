@@ -37,6 +37,7 @@
 #include <OMUSIC.h>
 #include <OGAME.h>
 #include <OVGALOCK.h>
+#include <FileSystem.h>
 #include "gettext.h"
 
 #ifdef DEMO
@@ -337,7 +338,7 @@ void Game::run_main_menu_option(int optionId)
 	// ####### begin Gilbert 2/9 #######//
 	if( optionId==5 )
 	{
-		if( misc.is_file_exist("TESTING2.SYS") )
+		if( FileSystem::is_file_exist("TESTING2.SYS") )
 		{
 			game_mode = GAME_TEST;          // testing game instead
 			test_game();

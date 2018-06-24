@@ -30,10 +30,12 @@
 #include <OGFILE.h>
 #include <OPOWER.h> // TODO: There might be an even better (higher-level / UI) place to do this (power.win_opened)
 #include <OMOUSECR.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 
 #include "gettext.h"
 
+// For unlink:
 #ifdef NO_WINDOWS
 #include <unistd.h>
 #else
@@ -52,7 +54,7 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 	const char* const directory = sys.dir_config;
 
 	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, directory, filenameWildcard, MAX_PATH))
+	if (!FileSystem::path_cat(full_path, directory, filenameWildcard, MAX_PATH))
 	{
 		ERR("Path to the config directory too long.\n");
 		return;
@@ -68,7 +70,7 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 		const char* const saveGameName = saveGameDirectory[i]->name;
 		String errorMessage;
 		char save_game_path[MAX_PATH+1];
-		if (!misc.path_cat(save_game_path, directory, saveGameName, MAX_PATH))
+		if (!FileSystem::path_cat(save_game_path, directory, saveGameName, MAX_PATH))
 		{
 			ERR("Path to saved game '%s' too long\n", saveGameName);
 			continue;
@@ -96,7 +98,7 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 //
 void SaveGameProvider::delete_savegame(const char* saveGameName) {
 	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, saveGameName, MAX_PATH))
+	if (!FileSystem::path_cat(full_path, sys.dir_config, saveGameName, MAX_PATH))
 	{
 		ERR("Path to the saved game too long.\n");
 		return;
@@ -130,7 +132,7 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 	bool success = true;
 
 	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, newFileName, MAX_PATH))
+	if (!FileSystem::path_cat(full_path, sys.dir_config, newFileName, MAX_PATH))
 	{
 		success = false;
 		errorMessage = _("Path too long to the saved game.");
@@ -165,7 +167,7 @@ int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ save
 
 	int rc = 1;
 	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, fileName, MAX_PATH))
+	if (!FileSystem::path_cat(full_path, sys.dir_config, fileName, MAX_PATH))
 	{
 		rc = 0;
 		errorMessage = _("Path too long to the saved game");

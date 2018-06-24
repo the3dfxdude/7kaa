@@ -19,7 +19,7 @@
  *
  */
 
-//Filename    : OVGA.cpp
+//Filename    : vga_sdl.cpp
 //Description : VGA management class (SDL version)
 
 #include <OVGA.h>
@@ -28,6 +28,7 @@
 #include <OSYS.h>
 #include <surface.h>
 #include <platform.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 #include <version.h>
 
@@ -36,13 +37,13 @@ DBGLOG_DEFAULT_CHANNEL(Vga);
 
 //------ Define static class member vars ---------//
 
-char    Vga::use_back_buf = 0;
-char    Vga::opaque_flag  = 0;
-VgaBuf* Vga::active_buf   = &vga_front;      // default: front buffer
+char    VgaSDL::use_back_buf = 0;
+char    VgaSDL::opaque_flag  = 0;
+VgaBuf* VgaSDL::active_buf   = &vga_front;      // default: front buffer
 
-//-------- Begin of function Vga::Vga ----------//
+//-------- Begin of function VgaSDL::VgaSDL ----------//
 
-Vga::Vga()
+VgaSDL::VgaSDL()
 {
    front = NULL;
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
@@ -55,25 +56,25 @@ Vga::Vga()
    renderer = NULL;
    window = NULL;
 }
-//-------- End of function Vga::Vga ----------//
+//-------- End of function VgaSDL::VgaSDL ----------//
 
 
-//-------- Begin of function Vga::~Vga ----------//
+//-------- Begin of function VgaSDL::~VgaSDL ----------//
 
-Vga::~Vga()
+VgaSDL::~VgaSDL()
 {
    deinit();
 }
-//-------- End of function Vga::~Vga ----------//
+//-------- End of function VgaSDL::~VgaSDL ----------//
 
 
-//-------- Begin of function Vga::init ----------//
+//-------- Begin of function VgaSDL::init ----------//
 
-int Vga::init()
+int VgaSDL::init()
 {
    SDL_Surface *icon;
 
-   InitDPI();
+   Platform::InitDPI();
 
    win_grab_forced = 0;
    win_grab_user_mode = 0;
@@ -203,7 +204,7 @@ int Vga::init()
 
    return 1;
 }
-//-------- End of function Vga::init ----------//
+//-------- End of function VgaSDL::init ----------//
 
 
 //-------- Begin of function VgaBuf::init_front ----------//
@@ -211,7 +212,7 @@ int Vga::init()
 // Inform the front buffer of the actual surface.  This function retains
 // compatibility with old direct draw code.
 //
-int Vga::init_front(VgaBuf *b)
+int VgaSDL::init_front(VgaBuf *b)
 {
    b->init(new SurfaceSDL(front), 1);
    refresh_palette();
@@ -227,7 +228,7 @@ int Vga::init_front(VgaBuf *b)
 // [DWORD] w      : width of the surface [default 0 : VGA_WIDTH]
 // [DWORD] h      : height of the surface [default 0 : VGA_HEIGHT]
 //
-int Vga::init_back(VgaBuf *b, unsigned long w, unsigned long h)
+int VgaSDL::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 {
    SDL_Surface *surface = SDL_CreateRGBSurface(0,
                                                VGA_WIDTH,
@@ -247,9 +248,9 @@ int Vga::init_back(VgaBuf *b, unsigned long w, unsigned long h)
 //-------- End of function VgaBuf::init_back ----------//
 
 
-//-------- Begin of function Vga::deinit ----------//
+//-------- Begin of function VgaSDL::deinit ----------//
 
-void Vga::deinit()
+void VgaSDL::deinit()
 {
    SDL_SetRelativeMouseMode(SDL_FALSE);
    mouse_mode = MOUSE_INPUT_ABS;
@@ -284,15 +285,15 @@ void Vga::deinit()
 
    SDL_Quit();
 }
-//-------- End of function Vga::deinit ----------//
+//-------- End of function VgaSDL::deinit ----------//
 
 
-//--------- Start of function Vga::init_pal ----------//
+//--------- Start of function VgaSDL::init_pal ----------//
 //
 // Loads the default game palette specified by fileName. Creates the ddraw
 // palette.
 //
-int Vga::init_pal(const char* fileName)
+int VgaSDL::init_pal(const char* fileName)
 {
    char palBuf[VGA_PALETTE_SIZE][3];
    File palFile;
@@ -317,13 +318,13 @@ int Vga::init_pal(const char* fileName)
 
    return 1;
 }
-//----------- End of function Vga::init_pal ----------//
+//----------- End of function VgaSDL::init_pal ----------//
 
-//--------- Start of function Vga::refresh_palette ----------//
+//--------- Start of function VgaSDL::refresh_palette ----------//
 //
 // Update front buffers with the current palette.
 //
-void Vga::refresh_palette()
+void VgaSDL::refresh_palette()
 {
    SurfaceSDL *fake_front = vga_front.get_buf();
    if (custom_pal) {
@@ -340,24 +341,24 @@ void Vga::refresh_palette()
                            VGA_PALETTE_SIZE);
    }
 }
-//----------- End of function Vga::refresh_palette ----------//
+//----------- End of function VgaSDL::refresh_palette ----------//
 
 
-//-------- Begin of function Vga::activate_pal ----------//
+//-------- Begin of function VgaSDL::activate_pal ----------//
 //
 // we are getting the palette focus, select our palette
 //
-void Vga::activate_pal(VgaBuf* vgaBufPtr)
+void VgaSDL::activate_pal(VgaBuf* vgaBufPtr)
 {
 }
-//--------- End of function Vga::activate_pal ----------//
+//--------- End of function VgaSDL::activate_pal ----------//
 
 
-//-------- Begin of function Vga::set_custom_palette ----------//
+//-------- Begin of function VgaSDL::set_custom_palette ----------//
 //
 // Read the custom palette specified by fileName and set to display.
 //
-int Vga::set_custom_palette(char *fileName)
+int VgaSDL::set_custom_palette(char *fileName)
 {
    if (!custom_pal)
       custom_pal = (SDL_Color*)mem_add(sizeof(SDL_Color)*VGA_PALETTE_SIZE);
@@ -381,14 +382,14 @@ int Vga::set_custom_palette(char *fileName)
 
    return 1;
 }
-//--------- End of function Vga::set_custom_palette ----------//
+//--------- End of function VgaSDL::set_custom_palette ----------//
 
 
-//--------- Begin of function Vga::free_custom_palette ----------//
+//--------- Begin of function VgaSDL::free_custom_palette ----------//
 //
 // Frees the custom palette and restores the game palette.
 //
-void Vga::free_custom_palette()
+void VgaSDL::free_custom_palette()
 {
    if (custom_pal)
    {
@@ -397,10 +398,10 @@ void Vga::free_custom_palette()
    }
    refresh_palette();
 }
-//--------- End of function Vga::free_custom_palette ----------//
+//--------- End of function VgaSDL::free_custom_palette ----------//
 
 
-//-------- Begin of function Vga::adjust_brightness ----------//
+//-------- Begin of function VgaSDL::adjust_brightness ----------//
 //
 // <int> changeValue - the value to add to the RGB values of
 //                     all the colors in the palette.
@@ -408,7 +409,7 @@ void Vga::free_custom_palette()
 //
 // <int> preserveContrast - whether preserve the constrast or not
 //
-void Vga::adjust_brightness(int changeValue)
+void VgaSDL::adjust_brightness(int changeValue)
 {
    //---- find out the maximum rgb value can change without affecting the contrast ---//
 
@@ -440,11 +441,11 @@ void Vga::adjust_brightness(int changeValue)
 
    vga_front.temp_restore_lock();
 }
-//--------- End of function Vga::adjust_brightness ----------//
+//--------- End of function VgaSDL::adjust_brightness ----------//
 
 
-//-------- Begin of function Vga::handle_messages --------//
-void Vga::handle_messages()
+//-------- Begin of function VgaSDL::handle_messages --------//
+void VgaSDL::handle_messages()
 {
    SDL_Event event;
 
@@ -621,37 +622,37 @@ void Vga::handle_messages()
       }
    }
 }
-//-------- End of function Vga::handle_messages --------//
+//-------- End of function VgaSDL::handle_messages --------//
 
-//-------- Begin of function Vga::flag_redraw --------//
-void Vga::flag_redraw()
+//-------- Begin of function VgaSDL::flag_redraw --------//
+void VgaSDL::flag_redraw()
 {
 }
-//-------- End of function Vga::flag_redraw ----------//
+//-------- End of function VgaSDL::flag_redraw ----------//
 
 
-//-------- Begin of function Vga::is_full_screen --------//
+//-------- Begin of function VgaSDL::is_full_screen --------//
 //
-int Vga::is_full_screen()
+int VgaSDL::is_full_screen()
 {
    return ((SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN_DESKTOP) != 0);
 }
-//-------- End of function Vga::is_full_screen ----------//
+//-------- End of function VgaSDL::is_full_screen ----------//
 
 
-//-------- Begin of function Vga::is_input_grabbed --------//
+//-------- Begin of function VgaSDL::is_input_grabbed --------//
 //
-int Vga::is_input_grabbed()
+int VgaSDL::is_input_grabbed()
 {
    return ((SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_GRABBED) != 0);
 }
-//-------- End of function Vga::is_input_grabbed ----------//
+//-------- End of function VgaSDL::is_input_grabbed ----------//
 
 
-//-------- Begin of function Vga::update_boundary --------//
+//-------- Begin of function VgaSDL::update_boundary --------//
 // Uses logical boundary coordinates and scales them to the actual boundary in
 // the scaled window.
-void Vga::update_boundary()
+void VgaSDL::update_boundary()
 {
    float xscale, yscale;
    SDL_Rect rect;
@@ -663,15 +664,15 @@ void Vga::update_boundary()
    bound_y2 = ((float)(mouse.bound_y2 + rect.y) * yscale);
    boundary_set = 1;
 }
-//-------- End of function Vga::update_boundary --------//
+//-------- End of function VgaSDL::update_boundary --------//
 
 
-//-------- Begin of function Vga::set_full_screen_mode --------//
+//-------- Begin of function VgaSDL::set_full_screen_mode --------//
 //
 // mode -1: toggle
 // mode  0: windowed
 // mode  1: full screen without display mode change (stretched to desktop)
-void Vga::set_full_screen_mode(int mode)
+void VgaSDL::set_full_screen_mode(int mode)
 {
    int result = 0;
    uint32_t flags = 0;
@@ -704,11 +705,11 @@ void Vga::set_full_screen_mode(int mode)
    else
       set_window_grab(WINGRAB_OFF);
 }
-//-------- End of function Vga::set_full_screen_mode ----------//
+//-------- End of function VgaSDL::set_full_screen_mode ----------//
 
 
-//-------- Begin of function Vga::set_mouse_mode --------//
-void Vga::set_mouse_mode(MouseInputMode mode)
+//-------- Begin of function VgaSDL::set_mouse_mode --------//
+void VgaSDL::set_mouse_mode(MouseInputMode mode)
 {
    switch( mode )
    {
@@ -731,17 +732,17 @@ void Vga::set_mouse_mode(MouseInputMode mode)
       mouse_mode = MOUSE_INPUT_ABS;
    }
 }
-//-------- End of function Vga::set_mouse_mode --------//
+//-------- End of function VgaSDL::set_mouse_mode --------//
 
 
-//-------- Begin of function Vga::set_window_grab --------//
+//-------- Begin of function VgaSDL::set_window_grab --------//
 //
 // WINGRAB_OFF = Turn window grab off, except when forced on
 // WINGRAB_ON = Turn window grab on
 // WINGRAB_TOGGLE = Toggle window grab, used for the grab key
 // WINGRAB_FORCE = Force grab on, even if user has it off
 // WINGRAB_RESTORE = Disable forcing, and user's option
-void Vga::set_window_grab(WinGrab mode)
+void VgaSDL::set_window_grab(WinGrab mode)
 {
    switch( mode )
    {
@@ -813,11 +814,11 @@ void Vga::set_window_grab(WinGrab mode)
       err_now("invalid mode");
    }
 }
-//-------- End of function Vga::set_window_grab ----------//
+//-------- End of function VgaSDL::set_window_grab ----------//
 
 
-//-------- Beginning of function Vga::flip ----------//
-void Vga::flip()
+//-------- Beginning of function VgaSDL::flip ----------//
+void VgaSDL::flip()
 {
    static Uint32 ticks = 0;
    Uint32 cur_ticks = SDL_GetTicks();
@@ -832,11 +833,11 @@ void Vga::flip()
       SDL_RenderPresent(renderer);
    }
 }
-//-------- End of function Vga::flip ----------//
+//-------- End of function VgaSDL::flip ----------//
 
 
-//-------- Beginning of function Vga::save_status_report ----------//
-void Vga::save_status_report()
+//-------- Beginning of function VgaSDL::save_status_report ----------//
+void VgaSDL::save_status_report()
 {
    char path[MAX_PATH+1];
    FILE *file;
@@ -844,7 +845,7 @@ void Vga::save_status_report()
    const char *s;
    SDL_version ver;
 
-   if( !misc.path_cat(path, sys.dir_config, "sdl.txt", MAX_PATH) )
+   if( !FileSystem::path_cat(path, sys.dir_config, "sdl.txt", MAX_PATH) )
       return;
 
    file = fopen(path, "w");
@@ -928,8 +929,10 @@ void Vga::save_status_report()
          fprintf(file, "DPI: diag=%f horiz=%f vert=%f\n", ddpi, hdpi, vdpi);
       if( !SDL_GetDisplayBounds(i, &rect) )
          fprintf(file, "Bounds: x=%d y=%d w=%d h=%d\n", rect.x, rect.y, rect.w, rect.h);
-      if( !SDL_GetDisplayUsableBounds(i, &rect) )
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+      if( !SDL_GetDisplayUsableBounds(i, &rect) ) // Note: requires SDL 2.0.5+
          fprintf(file, "Usable bounds: x=%d y=%d w=%d h=%d\n", rect.x, rect.y, rect.w, rect.h);
+#endif
       fprintf(file, "\n");
    }
 
@@ -953,4 +956,4 @@ void Vga::save_status_report()
    fclose(file);
    return;
 }
-//-------- End of function Vga::save_status_report ----------//
+//-------- End of function VgaSDL::save_status_report ----------//

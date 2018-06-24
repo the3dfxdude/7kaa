@@ -331,16 +331,16 @@ void Game::init_remap_table()
 
 	static ColorRemapMethod remap_method_array[] =
 	{
-      { 0xBC, 0xDC },   // the first remap table is for independent units
-      { 0xA0, 0xC0 },   // following are eight remap table for each color code
-      { 0xA4, 0xC4 },
-      { 0xA8, 0xC8 },
-      { 0xAC, 0xCC },
-      { 0xB0, 0xD0 },
+		{ 0xBC, 0xDC },   // the first remap table is for independent units
+		{ 0xA0, 0xC0 },   // following are eight remap table for each color code
+		{ 0xA4, 0xC4 },
+		{ 0xA8, 0xC8 },
+		{ 0xAC, 0xCC },
+		{ 0xB0, 0xD0 },
 		{ 0xB4, 0xD4 },
-      { 0xB8, 0xD8 },
-      { 0xBC, 0xDC },
-   };
+		{ 0xB8, 0xD8 },
+		{ 0xBC, 0xDC },
+	};
 
    //---- define the main color code for each color scheme ----//
 

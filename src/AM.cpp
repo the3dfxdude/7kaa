@@ -115,7 +115,7 @@
 
 //------- define game version constant --------//
 
-	const char *GAME_VERSION_STR = SKVERSION;
+	const char* const GAME_VERSION_STR = SKVERSION;
 	const int GAME_VERSION = 212;	// Version 2.00, don't change it unless the format of save game files has been changed
 
 //-------- System class ----------//
@@ -289,16 +289,6 @@ static void extra_error_handler();
 # endif
 #endif
 
-#if (!defined(NO_WINDOWS) && !USE_SDL)
-// Prototype main since the runtime does not do that for us
-int main(int, char**);
-
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
-{
-	return main(__argc, __argv);
-}
-#endif
-
 //---------- Begin of function main ----------//
 //
 // Compilation constants:
@@ -402,7 +392,7 @@ int main(int argc, char **argv)
 		video.set_skip_on_fail();
 
 		// ###### begin Gilbert 29/10 #####//
-		if( !misc.is_file_exist("SKIPAVI.SYS") && misc.is_file_exist(movieFileStr) )
+		if( !FileSystem::is_file_exist("SKIPAVI.SYS") && FileSystem::is_file_exist(movieFileStr) )
 		// ###### end Gilbert 29/10 #####//
 		{
 			//---------- play the movie now ---------//

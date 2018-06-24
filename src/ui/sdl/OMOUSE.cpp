@@ -50,7 +50,6 @@ static unsigned long click_threshold = (long)(0.3 * 1000);
 
 
 //--------- Start of Mouse::Mouse ---------//
-//
 Mouse::Mouse()
 {
 	init_flag = 0;

@@ -40,6 +40,7 @@
 #include <OFILETXT.h>
 #include <OTUTOR.h>
 #include <OBOX.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 
 #include <posix_string_compat.h>
@@ -382,7 +383,7 @@ void Tutor::run(int tutorId, int inGameCall)
 
 		String errorMessage;
 		int rc = 0;
-		if( misc.is_file_exist(str) )
+		if( FileSystem::is_file_exist(str) )
 		{
 			rc = SaveGameProvider::load_scenario(str, /*out*/ errorMessage);
 			ERR("Failed to load tutortial '%s'; retrying with default. Reason: %s", (const char*)str, (const char*)errorMessage);
@@ -392,7 +393,7 @@ void Tutor::run(int tutorId, int inGameCall)
 			str = DIR_TUTORIAL;
 			str += "STANDARD.TUT";
 
-			if( misc.is_file_exist(str) )
+			if( FileSystem::is_file_exist(str) )
 				rc = SaveGameProvider::load_scenario(str, /*out*/ errorMessage);
 		}
 
@@ -542,7 +543,7 @@ void Tutor::play_speech()
 
 	str += cur_text_block_id;
 
-	if( !misc.is_file_exist(str) )
+	if( !FileSystem::is_file_exist(str) )
 		return;
 
 	// ##### begin Gilbert 25/9 ######//

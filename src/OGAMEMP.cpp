@@ -50,6 +50,7 @@
 #include <OGETA.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 #include "gettext.h"
 
@@ -237,21 +238,11 @@ struct MpStructAcceptNewPlayer : public MpStructBase
 {
 	PID_TYPE player_id;
 	char player_name[MP_FRIENDLY_NAME_LEN+1];
-	ENetAddress address;
+	NetworkAddress address;
 	char make_contact;
-	MpStructAcceptNewPlayer(PID_TYPE p, char *name, ENetAddress *address, char contact) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p), make_contact(contact)
+	MpStructAcceptNewPlayer(PID_TYPE p, char *name, const NetworkAddress& address, char contact) : MpStructBase(MPMSG_ACCEPT_NEW_PLAYER), player_id(p), address(address), make_contact(contact)
 	{
 		strncpy(player_name, name, MP_FRIENDLY_NAME_LEN);
-		if (address == NULL)
-		{
-			this->address.host = ENET_HOST_ANY;
-			this->address.host = 0;
-		}
-		else
-		{
-			this->address.host = address->host;
-			this->address.port = address->port;
-		}
 	}
 };
 
@@ -578,7 +569,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg(_("Cannot initialize ENet."));
+		box.msg(_("Cannot initialize multiplayer library."));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
@@ -846,7 +837,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg(_("Cannot initialize ENet."));
+		box.msg(_("Cannot initialize multiplayer library."));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
@@ -1907,7 +1898,7 @@ int Game::mp_select_session()
 				choice = 0;
 				for( s = 1; mp_obj.get_session(s); ++s )
 				{
-					if( misc.uuid_compare(sessionGuid, mp_obj.get_session(s)->session_id()) )
+					if( misc.uuid_compare(sessionGuid, mp_obj.get_session(s)->session_id) )
 						choice = s;
 				}
 				if( choice > 0)
@@ -1939,7 +1930,7 @@ int Game::mp_select_session()
 					{
 						// display session description
 						font_san.put( SESSION_DESC_X1, SESSION_DESC_Y1 + b*SESSION_BUTTON_Y_SPACING,
-							mp_obj.get_session(s)->name_str(), 0, SESSION_DESC_X2 );
+							mp_obj.get_session(s)->session_name, 0, SESSION_DESC_X2 );
 
 						// display cursor 
 						if( s == choice )
@@ -2018,7 +2009,7 @@ int Game::mp_select_session()
 					SESSION_DESC_X2, SESSION_BUTTON_Y1 + (b+1)*SESSION_BUTTON_Y_SPACING -1 ) )
 				{
 					choice = s;
-					misc.uuid_copy(sessionGuid, mp_obj.get_session(s)->session_id());
+					misc.uuid_copy(sessionGuid, mp_obj.get_session(s)->session_id);
 					refreshFlag |= SSOPTION_DISP_SESSION;
 					joinButton.enable();
 
@@ -2085,7 +2076,7 @@ int Game::mp_join_session(int session_id)
 	err_when(session == NULL);
  
 	password[0] = 0;
-	if( (session->flags & SESSION_PASSWORD) &&
+	if( (session->flags & SessionFlags::Password) &&
 		!input_box(_("Enter the game's password:"), password, MP_FRIENDLY_NAME_LEN+1, 1) )
 	{
 		return 0;
@@ -2963,7 +2954,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						image_menu.put_front( tickX[p]+3, tickY[p]+3, "NMPG-RCH" );
 					}
 					PlayerDesc *dispPlayer = mp_obj.search_player(regPlayerId[p]);
-					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)_("?anonymous?") );
+					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->name:(char*)_("?anonymous?") );
 				}
 			}
 
@@ -3154,17 +3145,17 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							// notify all players of the new player
 							MpStructAcceptNewPlayer msgAccept(from,
 								newPlayerMsg->name,
-								mp_obj.search_player(from)->get_address(),
+								mp_obj.search_player(from)->address,
 								1);
 							mp_obj.send( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
 
 							// send the new player the list of players
 							for (int i = 1; i <= MAX_NATION; i++) {
 								PlayerDesc *desc = mp_obj.get_player(i);
-								if (desc && desc->pid() != from) {
-									MpStructAcceptNewPlayer msgNewb(desc->pid(),
-										desc->friendly_name_str(),
-										desc->get_address(),
+								if (desc && desc->id != from) {
+									MpStructAcceptNewPlayer msgNewb(desc->id,
+										desc->name,
+										desc->address,
 										0);
 									mp_obj.send(from, &msgNewb, sizeof(msgNewb));
 								}
@@ -3252,7 +3243,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
 						mp_obj.add_player(newb->player_id,
 							newb->player_name,
-							&newb->address,
+							newb->address,
 							newb->make_contact);
 
 						// search if this player has existed
@@ -4052,9 +4043,9 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 				if( !playerId || !player || !mp_obj.is_player_connecting(player->id) )
 					continue;
 
-				nationPara[playerCount].init(playerCount+1, playerId, playerColor[p], playerRace[p], player->friendly_name_str());
+				nationPara[playerCount].init(playerCount+1, playerId, playerColor[p], playerRace[p], player->name);
 				((MpStructNation *)setupString.reserve(sizeof(MpStructNation)))->init(
-					playerCount+1, playerId, playerColor[p], playerRace[p], player->friendly_name_str());
+					playerCount+1, playerId, playerColor[p], playerRace[p], player->name);
 
 				playerCount++;
 			}
@@ -4201,7 +4192,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		else
 		{
 			char full_path[MAX_PATH+1];
-		        if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+		        if( FileSystem::path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
 			{
 				remote.replay.open_write(full_path, nationPara, playerCount);
 			}
@@ -4870,7 +4861,7 @@ int Game::mp_select_load_option(char *fileName)
 						image_menu.put_front( tickX[p]+3, tickY[p]+3, "NMPG-RCH" );
 					}
 					PlayerDesc *dispPlayer = mp_obj.search_player(regPlayerId[p]);
-					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->friendly_name_str():(char*)_("?anonymous?") );
+					font_san.put( tickX[p]+nameOffsetX, tickY[p]+nameOffsetY, dispPlayer?dispPlayer->name:(char*)_("?anonymous?") );
 				}
 			}
 
@@ -5087,17 +5078,17 @@ int Game::mp_select_load_option(char *fileName)
 							// notify all players of the new player
 							MpStructAcceptNewPlayer msgAccept(from,
 								newPlayerMsg->name,
-								mp_obj.search_player(from)->get_address(),
+								mp_obj.search_player(from)->address,
 								1);
 							mp_obj.send( BROADCAST_PID, &msgAccept, sizeof(msgAccept) );
 
 							// send the new player the list of players
 						        for (int i = 1; i <= MAX_NATION; i++) {
 								PlayerDesc *desc = mp_obj.get_player(i);
-								if (desc && desc->pid() != from) {
-									MpStructAcceptNewPlayer msgNewb(desc->pid(),
-										desc->friendly_name_str(),
-										desc->get_address(),
+								if (desc && desc->id != from) {
+									MpStructAcceptNewPlayer msgNewb(desc->id,
+										desc->name,
+										desc->address,
 										0);
 									mp_obj.send(from, &msgNewb, sizeof(msgNewb));
 								}
@@ -5134,7 +5125,7 @@ int Game::mp_select_load_option(char *fileName)
 						MpStructAcceptNewPlayer *newb = (MpStructAcceptNewPlayer *)recvPtr;
 						mp_obj.add_player(newb->player_id,
 							newb->player_name,
-							&newb->address,
+							newb->address,
 							newb->make_contact);
 
 						// search if this player has existed
@@ -5455,7 +5446,7 @@ int Game::mp_select_load_option(char *fileName)
 						nationPtr->next_frame_ready = 0;
 						((MpStructNation *)setupString.reserve(sizeof(MpStructNation)))->init(
 							nationRecno, nationPtr->player_id,
-							nationPtr->color_scheme_id, nationPtr->race_id, player->friendly_name_str());
+							nationPtr->color_scheme_id, nationPtr->race_id, player->name);
 						playerCount++;
 						break;
 					}
@@ -5466,7 +5457,7 @@ int Game::mp_select_load_option(char *fileName)
 			{
 				// ensure it is a valid player
 				PlayerDesc *player = mp_obj.get_player(d);
-				PID_TYPE playerId = player ? player->pid() : 0;
+				PID_TYPE playerId = player ? player->id : 0;
 				if( !playerId || !mp_obj.is_player_connecting(player->id) )
 					continue;
 				for( p = 0; p < regPlayerCount && regPlayerId[p] != playerId; ++p);
@@ -5485,7 +5476,7 @@ int Game::mp_select_load_option(char *fileName)
 						nationPtr->next_frame_ready = 0;
 						((MpStructNation *)setupString.reserve(sizeof(MpStructNation)))->init(
 							nationRecno, nationPtr->player_id,
-							nationPtr->color_scheme_id, nationPtr->race_id, player->friendly_name_str());
+							nationPtr->color_scheme_id, nationPtr->race_id, player->name);
 						playerCount++;
 						break;
 					}

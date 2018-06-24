@@ -164,6 +164,7 @@ noinst_HEADERS = \
 	WebService.h \
 	asmfun.h \
 	audio_base.h \
+	audio_none.h \
 	audio_stream.h \
 	c99_printf.h \
 	dbglog.h \
@@ -173,19 +174,28 @@ noinst_HEADERS = \
 	file_reader.h \
 	file_util.h \
 	file_writer.h \
+	FileSystem.h \
 	gettext.h \
 	gettext-gnu.h \
 	input_stream.h \
 	mem_input_stream.h \
 	misc_uuid.h \
+	mouse_sdl.h \
+	mouse_none.h \
 	multiplayer.h \
+	multiplayer_enet.h \
+	multiplayer_none.h \
 	openal_audio.h \
 	output_stream.h \
 	platform.h \
+	session_desc.h \
 	player_desc.h \
 	surface.h \
 	surface_base.h \
 	surface_sdl.h \
+	surface_none.h \
 	version.h \
+	vga_sdl.h \
+	vga_none.h \
 	vga_util.h \
 	wav_stream.h

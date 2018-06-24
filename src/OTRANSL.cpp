@@ -29,6 +29,7 @@
 #include <OSYS.h>
 #include <OFILETXT.h>
 #include <OTRANSL.h>
+#include <FileSystem.h>
 
 
 //--------- Define constant ---------//
@@ -64,7 +65,7 @@ void Translate::init()
 {
    //---- read the whole file into the buf --------//
 
-   if( !misc.is_file_exist(TRANSLATE_FILE_NAME) )
+   if( !FileSystem::is_file_exist(TRANSLATE_FILE_NAME) )
       return;
 
 	File fileTranslate;

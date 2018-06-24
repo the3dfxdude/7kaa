@@ -1,0 +1,8 @@
+SUBDIRS = 
+
+if MULTIPLAYER_ENET
+  SUBDIRS += enet
+endif
+if MULTIPLAYER_NONE
+  SUBDIRS += none
+endif
