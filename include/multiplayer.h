@@ -26,11 +26,13 @@
 #define __MULTIPLAYER_H
 
 #include <MPTYPES.h>
+#include <session_desc.h>
 #include <player_desc.h>
 #include <ODYNARRB.h>
 #include <stdint.h>
 #include <enet/enet.h>
 #include <OMISC.h>
+
 
 #define MP_SERVICE_PROVIDER_NAME_LEN 64
 #define MP_SESSION_NAME_LEN 64
@@ -137,33 +139,6 @@ struct MpMsgHostNatPunch {
 	uint32_t host;
 	uint16_t port;
 	uint16_t reserved0;
-};
-
-#define SESSION_HOSTING         1
-#define SESSION_FULL            2
-#define SESSION_PASSWORD        4
-#define SESSION_LOADING_SAVE    8
-#define SESSION_PREGAME         16
-
-struct SessionDesc
-{
-	char session_name[MP_FRIENDLY_NAME_LEN+1];
-	char password[MP_FRIENDLY_NAME_LEN+1];
-	guuid_t id;
-	uint32_t flags;
-	int max_players;
-	int player_count;
-	ENetAddress address;
-
-	SessionDesc();
-	SessionDesc(const SessionDesc &);
-	SessionDesc& operator= (const SessionDesc &);
-	SessionDesc(const char *name, const char *pass, ENetAddress *address);
-	SessionDesc(MpMsgUserSessionStatus *m, ENetAddress *address);
-	SessionDesc(MpMsgSession *m);
-
-	char *name_str() { return session_name; };
-	guuid_t &session_id() { return id; }
 };
 
 
