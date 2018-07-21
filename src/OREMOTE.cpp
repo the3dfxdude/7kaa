@@ -89,8 +89,8 @@ void Remote::init(MultiPlayer *mp)
 	mp_ptr = mp;
 
 	// ###### patch begin Gilbert 22/1 #######//
-	sync_test_level = (misc.is_file_exist("SYNC1.SYS") ? 1 : 0)
-		| (misc.is_file_exist("SYNC2.SYS") ? 2 : 0);
+	sync_test_level = (misc.is_file_exist("NOSYNC1.SYS") ? 0 : 1)
+		| (misc.is_file_exist("NOSYNC2.SYS") ? 0 : 2);
 		// 0=disable, bit0= random seed, bit1=crc
 	// ###### patch end Gilbert 22/1 #######//
 
@@ -115,7 +115,7 @@ int Remote::init_replay_load(char *full_path, NewNationPara *mpGame, int *player
 
 	return 1;
 }
-//--------- End of function Remote::init_replay_save ----------//
+//--------- End of function Remote::init_replay_load ----------//
 
 
 //--------- Begin of function Remote::init_replay_save ----------//
@@ -123,9 +123,6 @@ int Remote::init_replay_load(char *full_path, NewNationPara *mpGame, int *player
 void Remote::init_replay_save(NewNationPara *mpGame, int playerCount)
 {
 	err_when( connectivity_mode != MODE_MP_ENABLED );
-
-	if( !sync_test_level )
-		return;
 
 	char full_path[MAX_PATH+1];
 	if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )

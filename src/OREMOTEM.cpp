@@ -2834,9 +2834,9 @@ void	RemoteMsg::compare_remote_object()
 	{
 		remote.sync_test_level = ~remote.sync_test_level;	// signal error encountered
 		if( sys.debug_session )
-			err.run( "Multiplayer Random Seed Sync Error." );
+			err.run( "Multiplayer Object Sync Error." );
 		else
-			box.msg( "Multiplayer Random Seed Sync Error." );
+			box.msg( "Multiplayer Object Sync Error." );
 	}
 	// ###### patch end Gilbert 20/1 #######//
 }
