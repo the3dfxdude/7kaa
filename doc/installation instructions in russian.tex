@@ -1,0 +1,150 @@
+%*
+%* Seven Kingdoms: Ancient Adversaries
+%*
+%* Copyright 1997,1998 Enlight Software Ltd.
+%* Copyright 2018 Timothy Rink
+%*
+%* This program is free software: you can redistribute it and/or modify
+%* it under the terms of the GNU General Public License as published by
+%* the Free Software Foundation, either version 2 of the License, or
+%* (at your option) any later version.
+%*
+%* This program is distributed in the hope that it will be useful,
+%* but WITHOUT ANY WARRANTY; without even the implied warranty of
+%* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%* GNU General Public License for more details.
+%*
+%* You should have received a copy of the GNU General Public License
+%* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%*
+%*
+
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{setspace}
+\author{Timothy Rink}
+\title{Installation Instructions in Russian}
+\begin{document}
+	
+\chapter{Installation and Start-up}
+	
+	\section{Minimum Requirements}
+	
+	To play 7kaa, the following hardware and software is required:
+	
+	\begin{adjustwidth}{1cm}{}
+		x86 or x86\_64 processor, Pentium or better \\
+		SDL2.0 with accelerated OpenGl or DirectX compliant video drivers \\
+		32 MB of RAM
+	\end{adjustwidth}
+	
+	\subsection{Optional Requirements}
+	
+	UDP/IP connection for LAN and Internet play
+	
+	\section{Installation and Update}
+	
+	% NOTE: MacOs and BSD are not supported by this manual yet. You may find additional information regarding 7kaa on these operating systems on the internet. There are BSD ports of 7kaa, and 7kaa is known to install on MacOs.
+	
+	Most Gnu/Linux distributions have a package for 7kaa. Use the package manager that comes with your distribution to install and update 7kaa. If your are unable to find the package in your distribution’s repository, try searching for 7kaa.
+	
+	NOTE: distributions that are not rolling release may have older packages in their stable branch. The official releases from 7kfans.com may be different. 
+	% sounds stupid here: may be different
+	Althought bugs may appear, the new releases usually have important updates and fixes.
+	
+	A Windows 32-bit installer is provided on the download page. It includes the required dependencies to play. 
+	% give specifics
+	Follow the prompts that you will see as the installation progresses and choose your options. Occasionally, an .exe is released for a development branch on the download page.
+	% add link?
+	
+	\section{Building the game on Gnu/Linux}
+	
+	If you want to play the development branch or compile the official release from source. Make sure you have these installed: 
+	\begin{adjustwidth}{1cm}{}
+		make \\
+		autoconf \\
+		autopoint \\
+		GCC 4.6+ or later (or other C++11 compliant compiler) \\
+		git
+	\end{adjustwidth}
+	
+	Then, Install these:
+	
+	Required dependencies
+	\begin{adjustwidth}{1cm}{}
+		SDL 2.0.2 or later \\
+		enet 1.3.xx \\
+		OpenAL-soft or equivalent driver
+	\end{adjustwidth}
+	
+	Optional dependencies
+	\begin{adjustwidth}{1cm}{}
+		Autoconf 2.65 (when using git snapshot) \\
+		libcurl the URL transfer library, for full 7kfans multiplayer integration \\
+		gettext 0.18 or later \\
+		Game music bundle
+	\end{adjustwidth}
+	
+	\begin{lstlisting}[language=bash]
+	
+	To begin the process of compiling, download the source code:
+	
+	$ git clone git://www.7kfans.com/7kaa.git
+	
+	Run the following program in the root folder of the source tree to 
+	generate the build configurations: 
+	
+	$ autoreconf -vif
+	
+	Then run the configure script:
+	
+	$ ./configure
+	
+	Compile the source using:
+	
+	$ make
+	
+	Install the game using:
+	
+	$ make install
+	
+	\end{lstlisting}
+	
+	%\subsection{Compile with Translations}
+	
+	\subsection{How to install music}
+	
+	Some packages require manually downloading the music from the download page. To install music, copy music into data folder or use PACKAGE\_DATA\_PATH.
+	
+	\section{Troubleshooting}
+	
+	\begin{tabular}{ | l | p{6cm} |}
+		\hline
+		Problem	& Solution \\ \hline
+		There is no music. & The music files are not included in the git snapshot, nor are they included in many distributions. Ensure you have downloaded and installed the music. \\ \hline
+		Errors during compile & Ensure you have the required dependencies. If you are unable to find the dependency in your distribution's package repository, ensure you have the correct package name for your distribution \\
+		\hline
+	\end{tabular}
+	
+	\section{Start up}
+	
+	\subsection{Git Snapshot}
+	
+	To run the game from the build directory, you need to point to the game data folder. The game data folder is set by the environment variable SKDATA. In a bash shell, this can be accomplished by \$ SKDATA=data src/7kaa
+	
+	% add info about where /src is
+	
+	\subsection{Windows}
+	
+	if selected to install Start Menu Shortcuts, Seven Kingdoms AA start menu folder will be installed. 
+	
+	A 7kaa.exe desktop shortcut will be installed % add icon image
+	
+	You have the option of creating shortcut on the desktop with a 7kaa icon. Click on the shortcut to start 7kaa. Otherwise, an entry will be created in the menu as Seven Kingdoms AA with the same icon.
+	
+	% add icon image
+\end{document}

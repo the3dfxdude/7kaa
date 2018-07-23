@@ -1,0 +1,115 @@
+%*
+%* Seven Kingdoms: Ancient Adversaries
+%*
+%* Copyright 1997,1998 Enlight Software Ltd.
+%* Copyright 2018 Timothy Rink
+%*
+%* This program is free software: you can redistribute it and/or modify
+%* it under the terms of the GNU General Public License as published by
+%* the Free Software Foundation, either version 2 of the License, or
+%* (at your option) any later version.
+%*
+%* This program is distributed in the hope that it will be useful,
+%* but WITHOUT ANY WARRANTY; without even the implied warranty of
+%* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%* GNU General Public License for more details.
+%*
+%* You should have received a copy of the GNU General Public License
+%* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%*
+%*
+
+\documentclass[openany,a4paper,12pt]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{titlepic}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{changepage} % 1cm 2 characters longer indentation than original, plus extra vertical spacing
+\usepackage{tabu} % add color to tables?
+\usepackage{makeidx}
+
+% copy from original manual: noindent, \parskip different.
+\setlength{\parskip}{1.5ex plus.05ex minus.05ex}
+\setlength{\parindent}{0pt}
+
+\makeindex
+
+\begin{document}
+
+\begin{titlepage}
+	\title{Seven Kingdoms: Ancient Adversaries Instruction Manual 2.0}
+	\date{}
+	\titlepic{\includegraphics[width=0.7\linewidth]{7klogo}}
+\end{titlepage}
+\frontmatter
+\maketitle
+
+\section{Copyright Notice}
+
+Seven Kingdoms: Ancient Adversaries Instruction Manual
+
+Copyright 1997,1998 Enlight Software Ltd.
+
+This manual is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
+
+This manual is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this manual.  If not, see \href{<http://www.gnu.org/licenses/>}{http://www.gnu.org/licenses/} .
+
+\section{Other Copyright}
+
+The music is the work of Bjørn Lynne Copyright (c) 1997, and is not provided under the GPL. It may be freely downloaded and used with Seven Kingdoms: Ancient Adversaries, but not modified or repurposed into derivative works. 
+
+\section{Introduction}
+% 7kaa usage vs \textit{Seven Kingdoms: Ancient Adversaries}
+In 2009, Trevor Chan from Enlight Software released the source code for \textit{Seven Kingdoms: Ancient Adversaries}. He released it under a community project so that developers can provide some long awaited bug fixes and address some other game-play issues. The official website for \textit{Seven Kingdoms: Ancient Adversaries} is at \href{<https://7kfans.com/>}{https://7kfans.com/}. Here you will find the \href{<https://www.7kfans.com/forums/>}{\textbf{Forums}}, \href{<https://www.7kfans.com/wiki/index.php/Main_Page>}{\textbf{Wiki}}, and \href{<https://www.7kfans.com/wiki/index.php/Download>}{\textbf{Download Page}}. \textit{Seven Kingdoms: Ancient Adversaries} has been under active development since its 2009 release. If you want to see what has been fixed or changed, see the changelogs for the official releases under \href{<https://7kfans.com/>}{News}. 
+
+This manual is part of the community project. It has been updated to reflect the current status of \textit{Seven Kingdoms: Ancient Adversaries}. This manual is current with the 2.14.7 release.
+
+\section{Registration}
+
+Register for a forums account. An account in needed to post on the forums and to play using the 7kfans.com multiplayer service.
+
+\section{Questions or Problems}
+
+If you have difficulties with this game and cannot find the solution in this manual, please post your question or problem on the forums and a member of the community will assist you. There may also be additional information on the wiki not found in this manual.
+
+\tableofcontents
+
+\mainmatter
+\include{introduction}
+\include{installation_start-up}
+\include{mouse_keyboard_commands_cheat_codes}
+\include{starting_new_game}
+\include{information_interface}
+\include{villiage}
+\include{buildings_workers_links}
+\include{force_and_its_use}
+\include{developing_your_economy}
+\include{developing_weapons}
+\include{harbors_ships}
+\include{mercanaries}
+\include{diplomacy}
+\include{creating_empire}
+\include{spies_espionage}
+\include{nationalities}
+\include{fryhtans_their_ways}
+\include{seats_of_powers_and_greater_beings}
+\include{rebellion_rebels}
+\include{fire_forces_nature}
+\include{assorted_costs_amounts}
+\include{strategy_tips}
+\include{faq}
+\include{credits}
+\include{gpl-2.0}
+
+\backmatter
+% bibliography, glossary and index would go here.
+
+\printindex
+
+\end{document}
