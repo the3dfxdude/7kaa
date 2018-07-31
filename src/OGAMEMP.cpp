@@ -1460,7 +1460,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 			}
 			else
 			{
-				box.msg(_("Unable to contact, or an error occurred trying to reach 7kfans.com."));
+				box.msg(_("Unable to contact, or an error occurred trying to reach, 7kfans.com."));
 				rc = 0;
 			}
 		}

@@ -998,7 +998,7 @@ void News::unit_assassinated()
 	}
 
 	if( short_para4 )
-		str += _(" The enemy spy has been killed.");
+		str += _("The enemy spy has been killed.");
 }
 //------- End of function News::unit_assassinated -----//
 
