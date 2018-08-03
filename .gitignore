@@ -81,3 +81,9 @@ po/quot.sed
 po/remove-potcdate.sin
 po/*.gmo
 po/stamp-po
+doc/*.aux
+doc/*.pdf
+doc/main.idx
+doc/main.log
+doc/main.out
+doc/main.toc
