@@ -99,7 +99,9 @@ bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo,
 	{
 		if (fileOpened) remove( filePath );         // delete the file as it is not complete
 
-		errorMessage += _(" The game is not saved.");      // Also explicitly inform the user that the game has not been saved.
+		// Also explicitly inform the user that the game has not been saved.
+		errorMessage += " ";
+		errorMessage += _("The game is not saved.");
 	}
 
 	return rc != 0;
@@ -137,7 +139,7 @@ int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo
 		else if( !validate_header(&saveGameHeader) )
 		{
 			rc = 0;
-			errorMessage = _("Save game incompatible");
+			errorMessage = _("Incompatible save game");
 		}
 	}
 
