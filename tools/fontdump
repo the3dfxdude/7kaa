@@ -1,0 +1,132 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2018 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+use File::Path qw(make_path);
+use icn;
+
+my @FontHeaderVars = qw(
+	max_width
+	max_height
+	std_height
+	first_char
+	last_char
+);
+my $FontHeaderPacking = 'SSSSS';
+my $FontHeaderSize = 10;
+my @FontInfoVars = qw(
+	offset_y
+	width
+	height
+	bitmap_offset
+);
+my $FontInfoPacking = 'cCCL';
+my $FontInfoSize = 7;
+
+
+if (!@ARGV) {
+	print "Usage: $0 fnt.res outdir\n";
+	print "Dump information from font.res and optionally write data to outdir.\n";
+	exit 0;
+}
+my ($font_file, $outdir) = @ARGV;
+
+my $dumping_font = 0;
+if (defined($outdir)) {
+	eval { make_path($outdir) };
+	if ($@) {
+		print "Error: Cannot create $outdir\n";
+		exit 1;
+	}
+	$dumping_font = 1;
+}
+
+my $font_fh;
+if (!open($font_fh, '<', $font_file)) {
+	print "Error: Unable to open $font_file\n";
+	exit 1;
+}
+
+my $buf;
+my @elements;
+read($font_fh, $buf, $FontHeaderSize);
+@elements = unpack($FontHeaderPacking, $buf);
+my %header = map { $FontHeaderVars[$_] => $elements[$_] } 0..$#FontHeaderVars;
+
+print "font header: max_width=$header{max_width} max_height=$header{max_height} std_height=$header{std_height} first_char=$header{first_char} last_char=$header{last_char}\n";
+if ($dumping_font) {
+	write_file(\%header, File::Spec->catfile($outdir, "header.txt"));
+}
+
+my @info;
+for (my $i = $header{first_char}; $i <= $header{last_char}; $i++) {
+	read($font_fh, $buf, $FontInfoSize);
+	@elements = unpack($FontInfoPacking, $buf);
+	my %font_info = map { $FontInfoVars[$_] => $elements[$_] } 0..$#FontInfoVars;
+	push(@info, \%font_info);
+
+	print "font info $i: offset_y=$font_info{offset_y} width=$font_info{width} height=$font_info{height} bitmap_offset=$font_info{bitmap_offset}\n";
+	if ($dumping_font) {
+		write_file(\%font_info, File::Spec->catfile($outdir, "$i.txt"));
+	}
+}
+
+for (my $i = $header{first_char}; $i <= $header{last_char}; $i++) {
+	if (eof($font_fh)) {
+		print "bad end of file\n";
+		exit 1;
+	}
+	my $icn = icn->read_file($font_fh);
+	print "char $i bmp of h=", $icn->height(), " w=", $icn->width(), "\n";
+	$icn->print_ascii(*STDOUT);
+	if ($dumping_font) {
+		my $outfile = File::Spec->catfile($outdir, "$i.icn");
+		my $out_fh;
+		if (!open($out_fh, '>', $outfile)) {
+			print "Error: Cannot open $outfile\n";
+			exit 1;
+		}
+		$icn->write_file($out_fh);
+		close($out_fh);
+	}
+}
+
+close($font_fh);
+
+exit 0;
+
+sub write_file {
+	my $h;
+	my $filename;
+	($h, $filename) = @_;
+	my $fh;
+	if (!open($fh, '>', $filename)) {
+		print "Error: Cannot open $filename\n";
+		exit 1;
+	}
+	print $fh map {"$_=$h->{$_}\n"} keys(%$h);
+	close($fh);
+}

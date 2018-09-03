@@ -1,0 +1,119 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2018 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+use File::Path qw(make_path);
+use icn;
+
+my @FontHeaderVars = qw(
+	max_width
+	max_height
+	std_height
+	first_char
+	last_char
+);
+my $FontHeaderPacking = 'SSSSS';
+my $FontHeaderSize = 10;
+my @FontInfoVars = qw(
+	offset_y
+	width
+	height
+	bitmap_offset
+);
+my $FontInfoPacking = 'cCCL';
+my $FontInfoSize = 7;
+
+if (!@ARGV) {
+	print "Usage: $0 fnt.res indir\n";
+	print "Reconstructs dumped font directory into a fnt.res\n";
+	exit 1;
+}
+my ($font_file, $indir) = @ARGV;
+
+if (!defined($indir)) {
+	print "Please define input directory\n";
+	exit 1;
+}
+
+my $font_fh;
+if (!open($font_fh, '>', $font_file)) {
+	print "Error: Unable to open $font_file\n";
+	exit 1;
+}
+
+my $buf;
+my %header;
+read_file(\%header, File::Spec->catfile($indir, "header.txt"));
+$buf = pack($FontHeaderPacking, map {$header{$_}} @FontHeaderVars);
+print $font_fh $buf;
+
+my @info;
+my $offset = 0;
+for (my $i = $header{first_char}; $i <= $header{last_char}; $i++) {
+	my %font_info;
+	read_file(\%font_info, File::Spec->catfile($indir, "$i.txt"));
+	$font_info{bitmap_offset} = $offset;
+	$buf = pack($FontInfoPacking, map {$font_info{$_}} @FontInfoVars);
+	print $font_fh $buf;
+	$offset += $font_info{height} * $font_info{width} + 4;
+}
+
+for (my $i = $header{first_char}; $i <= $header{last_char}; $i++) {
+	my $icn_fh;
+	my $infile = File::Spec->catfile($indir, "$i.icn");
+	if (!open($icn_fh, '<', $infile)) {
+		print "Error: Cannot open $infile\n";
+		exit 1;
+	}
+	my $icn = icn->read_file($icn_fh);
+	$icn->write_file($font_fh);
+	close($icn_fh);
+}
+
+close($font_fh);
+
+exit 0;
+
+sub read_file {
+	my $h;
+	my $filename;
+	($h, $filename) = @_;
+	my $fh;
+	if (!open($fh, '<', $filename)) {
+		print "Error: Cannot open $filename\n";
+		exit 1;
+	}
+	while (my $line = <$fh>) {
+		chomp($line);
+		my @parts = split(/=/, $line);
+		if (@parts != 2) {
+			print "Syntax error in $filename\n";
+			exit 1;
+		}
+		$h->{$parts[0]} = $parts[1];
+	}
+	close($fh);
+}

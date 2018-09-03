@@ -1,0 +1,75 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2018 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+
+my $PaletteHeaderSize = 8;
+my @pal;
+
+if (@ARGV < 1) {
+	print "Usage: $0 pal.res pal.txt\n";
+	print "Dumps palette colors, and optionally write pal.txt\n";
+	exit 0;
+}
+my ($pal_file, $out_file) = @ARGV;
+
+my $pal_fh;
+if (!open($pal_fh, '<', $pal_file)) {
+        print "Unable to open $pal_file\n";
+        exit 1;
+}
+
+my $buf;
+my $out_fh;
+read($pal_fh, $buf, $PaletteHeaderSize);
+
+if (defined($out_file)) {
+	if (!open($out_fh, '>', $out_file)) {
+		print "Unable to open $out_file\n";
+		exit 1;
+	}
+}
+
+my $i = 0;
+while (!eof($pal_fh)) {
+	read($pal_fh, $buf, 3);
+	my ($r, $g, $b) = unpack('CCC', $buf);
+	printf("%2x: r=%3d g=%3d b=%3d\n", $i, $r, $g, $b);
+	if (defined($out_file)) {
+		printf $out_fh ("%2x: %3d %3d %3d\n", $i, $r, $g, $b);
+	}
+	push(@pal, [$r, $g, $b]);
+
+	$i++;
+}
+
+close($pal_fh);
+
+if (defined($out_file)) {
+	close($out_fh);
+}
+
+exit 0;

@@ -1,0 +1,67 @@
+#!/usr/bin/perl
+#
+# Seven Kingdoms: Ancient Adversaries
+#
+# Copyright 1997,1998 Enlight Software Ltd.
+# Copyright 2018 Jesse Allen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+use warnings;
+use strict;
+
+use FindBin;
+use lib $FindBin::Bin;
+
+my $PaletteHeaderSize = 8;
+my @pal;
+
+if (@ARGV < 2) {
+	print "Usage: $0 pal.res pal.txt\n";
+	print "Reconstructs pal.txt into pal.res file.\n";
+	exit 0;
+}
+my ($pal_file, $in_file) = @ARGV;
+
+my $pal_fh;
+my $buf;
+my $in_fh;
+
+if (!open($pal_fh, '>', $pal_file)) {
+        print "Unable to open $pal_file\n";
+        exit 1;
+}
+
+if (!open($in_fh, '<', $in_file)) {
+	print "Unable to open $in_file\n";
+	exit 1;
+}
+
+$buf = pack('C*', 0,0,0,0,0,0,0,0);
+print $pal_fh $buf;
+
+my $i = 0;
+while (my $line = <$in_fh>) {
+	$line =~ s/^\s*//;
+        my ($entry, $r, $g, $b) = split(/[\s:]+/, $line);
+	$buf = pack('CCC', $r, $g, $b);
+	print $pal_fh $buf;
+}
+
+close($pal_fh);
+close($in_fh);
+
+exit 0;
