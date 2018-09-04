@@ -125,8 +125,10 @@ void Error::internal(char* errMsg,const char* fileName,int lineNum)
 	OutputDebugString( strBuf );
 #endif
 
-	if( vga.is_inited() )
+	if( sys.init_flag )
 		box.msg( strBuf, 0 );
+	else
+		sys.show_error_dialog( "%s\n", strBuf );
 
 	sys.deinit_directx();
 
@@ -166,8 +168,10 @@ void Error::mem()
 	OutputDebugString( strBuf );
 #endif
 
-	if( vga.is_inited() )
+	if( sys.init_flag )
 		box.msg( strBuf, 0 );
+	else
+		sys.show_error_dialog( "%s\n", strBuf );
 
 	sys.deinit_directx();
 
@@ -208,8 +212,10 @@ void Error::msg( const char *format, ... )
 	OutputDebugString( strBuf );
 #endif
 
-	if( vga.is_inited() )
+	if( sys.init_flag )
 		box.msg( strBuf, 0 );
+	else
+		sys.show_error_dialog( "%s\n", strBuf );
 
 	sys.deinit_directx();
 
@@ -258,8 +264,10 @@ void Error::run( const char *format, ... )
 	OutputDebugString( strBuf );
 #endif
 
-	if( vga.is_inited() )
+	if( sys.init_flag )
 		box.msg( strBuf, 0 );
+	else
+		sys.show_error_dialog( "%s\n", strBuf );
 
 	// Richard 17-1-2014: Set exit flag to signal termination (for atexit cleanup)
 	sys.signal_exit_flag = 1;

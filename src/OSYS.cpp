@@ -1091,7 +1091,7 @@ void Sys::unpause()
 //-------- Begin of function Sys::show_error_dialog ----------//
 //
 // Show SDL error dialog that does not depend on video init. This is a blocking
-// routine, and never should be used after init.
+// routine, and never should be used after Sys::init.
 //
 void Sys::show_error_dialog(const char *formatStr, ...)
 {
@@ -1105,6 +1105,7 @@ void Sys::show_error_dialog(const char *formatStr, ...)
    vsnprintf( resultStr, RESULT_STR_LEN, formatStr, argPtr );
    va_end( argPtr );
 
+   deinit_directx(); // in case vga is full screen, destroy game window to ensure dialog is visible
    SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "Seven Kingdoms", resultStr, NULL );
 }
 //----------- End of function Sys::show_error_dialog ----------//
