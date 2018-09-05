@@ -305,7 +305,7 @@ endif
 
 7kaa_LDADD += ./platform/libplatform.a
 
-7kaa_LDADD += @LIBINTL@
+7kaa_LDADD += @LIBINTL@ @LIBICONV@
 
 if USE_CURL
 7kaa_LDADD += ./curl/libWebService.a

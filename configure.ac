@@ -95,6 +95,7 @@ AC_CHECK_FUNCS([_NSGetExecutablePath])
 
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19])
+AM_ICONV
 
 # Configuration variables
 
