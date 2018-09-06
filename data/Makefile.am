@@ -180,6 +180,12 @@ nobase_dist_resdata_DATA = \
 	resource/fnt_san.res \
 	resource/fnt_smal.res \
 	resource/fnt_std.res \
+	resource/fnt_casa_88595.res \
+	resource/fnt_mid_88595.res \
+	resource/fnt_news_88595.res \
+	resource/fnt_san_88595.res \
+	resource/fnt_smal_88595.res \
+	resource/fnt_std_88595.res \
 	resource/help.res \
 	resource/hill1.res \
 	resource/hill2.res \
