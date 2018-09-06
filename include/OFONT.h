@@ -32,6 +32,10 @@
 #include <OVGABUF.h>
 #endif
 
+#ifdef ENABLE_NLS
+#include <iconv.h>
+#endif
+
 //------- Define constant ------------//
 
 #define DEFAULT_LINE_SPACE  2   // 2 pixels space between lines
@@ -89,6 +93,10 @@ public:
 
 	FontInfo* font_info_array;
 	char* 	 font_bitmap_buf;        // pointer to the buffer of the font
+
+#ifdef ENABLE_NLS
+	iconv_t cd;
+#endif
 
 public:
 	static short      hyper_field_count;

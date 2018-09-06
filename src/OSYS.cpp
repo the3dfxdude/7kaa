@@ -87,6 +87,7 @@
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
 // ##### end Gilbert 23/10 ######//
+#include <LocaleRes.h>
 
 #include <dbglog.h>
 #ifndef NO_WINDOWS
@@ -313,20 +314,54 @@ int Sys::init_objects()
 
    //------- init resource class ----------//
 
-	#if( defined(GERMAN) || defined(FRENCH) || defined(SPANISH) )
-		font_std.init("SAN", 1);
-		font_hall.init("HALL", 1);
-	#else
-		font_std.init("STD", 2);
-	#endif
+   if( locale_res.fontset[0] )
+   {
+      String font;
 
-	font_san.init("SAN", 0);      // 0-zero inter-character space
-	font_mid.init("MID");
-	font_small.init("SMAL");
-	font_news.init("NEWS");
-	font_hitpoint.init("HITP");
-	font_bible.init("CASA", 1, 3);
-	font_bard.init("CASA", 0);
+      font = "STD_";
+      font += locale_res.fontset;
+      font_std.init(font, 1);
+
+      font = "SAN_";
+      font += locale_res.fontset;
+      font_san.init(font, 0);
+
+      font = "MID_";
+      font += locale_res.fontset;
+      font_mid.init(font);
+
+      font = "SMAL_";
+      font += locale_res.fontset;
+      font_small.init(font);
+
+      font = "NEWS_";
+      font += locale_res.fontset;
+      font_news.init(font);
+
+      font = "CASA_";
+      font += locale_res.fontset;
+      font_bible.init(font, 1, 1);
+      font_bard.init(font, 0);
+   }
+   else
+   {
+      // fall back to original fonts
+      font_std.init("STD", 2);
+      font_san.init("SAN", 0);      // 0-zero inter-character space
+      font_mid.init("MID");
+      font_small.init("SMAL");
+      font_news.init("NEWS");
+      font_bible.init("CASA", 1, 3);
+      font_bard.init("CASA", 0);
+   }
+
+   // non-localized fonts
+   font_hitpoint.init("HITP");
+
+   #ifdef ENABLE_NLS
+      // use correct conversion for non-localized fonts
+      font_hitpoint.cd = locale_res.cd_latin;
+   #endif
 
    image_icon.init(DIR_RES"I_ICON.RES",1,0);       // 1-read into buffer
    image_interface.init(DIR_RES"I_IF.RES",0,0);    // 0-don't read into the buffer, don't use common buffer
@@ -395,10 +430,6 @@ void Sys::deinit_objects()
    font_hitpoint.deinit();
    font_bible.deinit();
 	font_bard.deinit();
-
-	#if( defined(GERMAN) || defined(FRENCH) || defined(SPANISH) )
-		font_hall.deinit();
-	#endif
 
    image_icon.deinit();
    image_interface.deinit();

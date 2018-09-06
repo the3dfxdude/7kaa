@@ -36,6 +36,7 @@
 #include <ONATION.h>
 #include <OGAME.h>
 #include <OHELP.h>
+#include <LocaleRes.h>
 #include <OFONT.h>
 
 //--------------------------------------------------------//
@@ -212,6 +213,10 @@ void Font::init(const char* fontName, int interCharSpace, int italicShift)
 
 	fontFile.file_close();
 
+#ifdef ENABLE_NLS
+	cd = locale_res.cd;
+#endif
+
 	init_flag = 1;
 }
 //---------- End of function Font::init ----------//
@@ -257,6 +262,10 @@ int Font::put(int x,int y,const char* textPtr, char clearBack, int x2 )
 
 	if( !init_flag )
 		return x;
+
+#ifdef ENABLE_NLS
+	textPtr = locale_res.conv_str(cd, textPtr);
+#endif
 
 	//-------- process translation ---------//
 
@@ -459,6 +468,9 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 	if( !init_flag )
 		return x;
 
+#ifdef ENABLE_NLS
+	textPtr = locale_res.conv_str(cd, textPtr);
+#endif
 	if( textPtrLen < 0 )
 		textPtrLen = strlen(textPtr);
 	if( textPtrLen < 1 )
@@ -613,6 +625,10 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 {
 	if( !init_flag || y1+font_height-1 > y2 )
 		return;
+
+#ifdef ENABLE_NLS
+	textPtr = locale_res.conv_str(cd, textPtr);
+#endif
 
 	//--------- define vars ---------------//
 
@@ -1333,6 +1349,9 @@ void Font::put_char_to_buffer(char* dest, int destPitch, int x, int y, unsigned 
 void Font::put_to_buffer(char* dest, int destPitch, int x1, int y1, const char *text)
 {
 	int x2 = destPitch;			// width of buffer
+#ifdef ENABLE_NLS
+	text = locale_res.conv_str(cd, text);
+#endif
 	while( *text != '\0' && x1 < x2)
 	{
 		int charSize = sizeof(unsigned char);		// 1 for byte character, 2 for word character
