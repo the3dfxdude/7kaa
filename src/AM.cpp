@@ -110,7 +110,7 @@
 #include <OINGMENU.h>
 // ###### end Gilbert 23/10 #######//
 #include <dbglog.h>
-#include <locale.h>
+#include <LocaleRes.h>
 #include "gettext.h"
 
 //------- define game version constant --------//
@@ -196,6 +196,7 @@ RockRes           rock_res;
 ExploredMask      explored_mask;
 Help              help;
 Tutor             tutor;
+LocaleRes         locale_res;
 
 //-------- Game Data class -----------//
 
@@ -310,12 +311,6 @@ static void extra_error_handler();
 //
 int main(int argc, char **argv)
 {
-#ifdef ENABLE_NLS
-	setlocale(LC_ALL, "");
-	bindtextdomain(PACKAGE, LOCALE_PATH);
-	textdomain(PACKAGE);
-#endif
-
 	const char *lobbyJoinCmdLine = "-join";
 	const char *lobbyHostCmdLine = "-host";
 	const char *lobbyNameCmdLine = "-name";
@@ -326,6 +321,9 @@ int main(int argc, char **argv)
 	int demoSelection = 0;
 	int demoSpeed = 99;
 
+	if (!sys.set_game_dir())
+		return 1;
+	locale_res.init("");
 	sys.set_config_dir();
 
 	//try to read from CONFIG.DAT, moved to AM.CPP
@@ -379,9 +377,6 @@ int main(int argc, char **argv)
 
 #ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//
-
-	if (!sys.set_game_dir())
-		return 1;
 
 	if (!lobbied && !demoSelection)
 	{

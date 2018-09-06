@@ -7,6 +7,7 @@ noinst_HEADERS = \
 	GAMEDEF.h \
 	IMGFUN.h \
 	KEY.h \
+	LocaleRes.h \
 	MPTYPES.h \
 	OANLINE.h \
 	OAUDIO.h \

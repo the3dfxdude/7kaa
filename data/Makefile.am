@@ -224,6 +224,7 @@ nobase_dist_resdata_DATA = \
 	resource/i_unitti.res \
 	resource/i_unitui.res \
 	resource/i_wall.res \
+	resource/locale.res \
 	resource/pal_enc.res \
 	resource/pal_menu.res \
 	resource/pal_std.res \
