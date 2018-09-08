@@ -40,7 +40,7 @@ This shows the amount of treasure in your kingdom.
 ~
 460, 6, 564, 25
 Date
-This shows current Date.
+This shows the current Date.
 ~
 447, 25, 540, 47
 Reputation
@@ -48,7 +48,7 @@ This shows your kingdom's reputation.
 ~
 587, 8, 625, 45
 Terrain Map
-This map shows the world's natural features & the location of villages & units.
+This map shows the world's natural features and the location of villages and units.
 ~
 629, 8, 668, 45
 Kingdom Power Map
@@ -60,27 +60,27 @@ This map mode shows the location of villages and units.
 ~
 BRIBE
 Bribe
-This will take you to a menu where you can select a bribe to offer to the selected person.
+This takes you to a menu where you can select a bribe to offer to the selected person.
 ~
 BUILD
 Build
-This will enable you to choose a structure to build. If you do not have enough money to build a structure, this tile will be disabled.
+This enables you to choose a structure to build. If you do not have enough money to build a structure, this tile will be disabled.
 ~
 CANCEL
 Cancel
-This will cancel your present action.
+This cancels your present action.
 ~
 CAPTURE
 Capture
-This will capture the selected structure for your kingdom.
+This captures the selected structure for your kingdom.
 ~
 CHGPROD
 Change Production
-This will toggle production in this factory between iron, copper and clay products.
+This toggles production in this factory between iron, copper, and clay products.
 ~
 COLLTAX
 Collect Tax
-This will collect tax from the selected village. If you right-click on this you will be able to tax your villagers automatically.
+This collects tax from the selected village. If you right-click on this, you will be able to tax your villagers automatically.
 ~
 CONTINUE
 Continue
@@ -95,19 +95,19 @@ This orders your troops to sortie whenever the fort or linked structures are att
 ~
 DEMOTE
 Demote Unit
-This will demote the selected General to a common soldier.
+This demotes the selected General to a common soldier.
 ~
 GRANT
 Grant
-This will grant money to the selected village. If you right-click on this you will be able to grant money automatically.
+This grants money to the selected village. If you right-click on this, you will be able to grant money automatically.
 ~
 GRANT2
 Grant
-This will grant money to the selected village to lower the villagers' loyalty or resistance.
+This grants money to the selected village to lower the villagers' loyalty or resistance.
 ~
 HIRECARA
 Hire Caravan
-This will hire a caravan from this market so that you can conduct trade. It will be disabled if you have too few villagers to support any more caravans. 10 villagers are needed to support each caravan.
+This hires a caravan from this market so that you can conduct trade. It is disabled if you have too few villagers to support any more caravans. 10 villagers are needed to support each caravan.
 ~
 HIREUNIT
 Hire Person
@@ -115,7 +115,7 @@ This hires the selected mercenary. He will then join your service.
 ~
 INVOKE
 Invoke Greater Being
-This will invoke a Greater Being who will then appear over your Seat of Power. This tile will be disabled until you have enough praying points to make invocation possible.
+This invokes a Greater Being who will then appear over your Seat of Power. This tile is disabled until you have enough praying points to make invocation possible.
 ~
 MAKESHIP
 Build a Ship
@@ -127,51 +127,51 @@ This takes you to a menu where you can select weapons to make in this war factor
 ~
 MOBILIZE
 Mobilize Workers
-This will cause all workers to exit the building immediately.
+This causes all workers to exit the building immediately.
 ~
 MOBILSPY
 Mobilize Spy
-This will send the selected spy out of the place where he has been infiltrated.
+This sends the selected spy out of the place where he has infiltrated.
 ~
 OUTSHIP
 Disembark from Ship
-The will disembark all of the units from this ship. This tile will be disabled if your ship is not close enough to the shore.
+The disembarks all of the units from this ship. This tile is disabled if your ship is not close enough to the shore.
 ~
 PATROL
 Sortie
-This will sortie the troop from this fort.
+This sorties the troop from this fort.
 ~
 RETCAMP
 Withdraw
-This will immediately withdraw your troop to its home fort.
+This immediately withdraws your troop to its home fort.
 ~
 PREVMENU
 Previous Menu
-This will return you to the previous menu.
+This returns you to the previous menu.
 ~
 PROMOTE
 Promote
-This will promote the selected common soldier to General.
+This promotes the selected common soldier to a General.
 ~
 RECRUIT
 Recruit
-This will recruit a peasant from the selected village. For each click, one peasant will exit. This tile will be disabled if there are no more peasants in the village.
+This recruits a peasant from the selected village. For each click, one peasant exits. This tile is disabled if there are no more peasants in the village.
 ~
 RESEARCH
 Conduct Research
-This orders the start of a research project. This will be disabled if all possible research has been completed.
+This orders the start of a research project. This is disabled if all possible research has been completed.
 ~
 REWARD
 Honors
-This will award an honor to the selected person. For each honor, the person's loyalty will increase by 10 points. This will be disabled for the King.
+This awards an honor to the selected person. For each honor, the person's loyalty increases by 10 points. This is disabled for the King.
 ~
 REWARDCB
 Honors
-This will award an honor to the selected General or soldier in this fort. For each honor, the unit's loyalty will increase by 10 points. This will be disabled for the King.
+This awards an honor to the selected General or soldier in this fort. For each honor, the unit's loyalty increases by 10 points. This is disabled for the King.
 ~
 REWARDSP
 Honors
-This will award an honor to the selected General or prayer in this Seat of Power. For each honor, the unit's loyalty will increase by 10 points. This will be disabled for the King.
+This awards an honor to the selected General or prayer in this Seat of Power. For each honor, the unit's loyalty increases by 10 points. This is disabled for the King.
 ~
 SAILOUT
 Sail out of Harbor
@@ -199,39 +199,39 @@ This orders your spy to change his task.
 ~
 SPYNOTI0
 Notification currently disabled. Click to enable.
-When this is disabled, it will keep your spy's change of color a secret. You will retain the ability to control your spy's movement.
+When this is disabled, it keeps your spy's change of color a secret. You retain the ability to control your spy's movement.
 ~
 SPYNOTI1
 Notification currently enabled. Click to disable.
-When this is enabled, it will announce your spy's change of color to the kingdom that he is joining. You will lose your ability to control your spy's movement.
+When this is enabled, it announces your spy's change of color to the kingdom that he is joining. You lose your ability to control your spy's movement.
 ~
 SUCCEED
 Succeed to the Crown
-This will elevate the selected person to the Crown.
+This elevates the selected person to the Crown.
 ~
 TRAIN
 Train
-This will train a villager in a selected skill.  This tile will be disabled if there are no more peasants in the village or if you do not have a General in a fort linked to the village.
+This trains a villager in a selected skill.  This tile is disabled if there are no more peasants in the village or if you do not have a General in a fort linked to the village.
 ~
 VSECRET
 View Secrets
-This will take you to a menu where you can select the type of this kingdom's secrets to view. The secrets that you can view will depend on the skill level of your spy.
+This takes you to a menu where you can select the type of this kingdom's secrets to view. The secrets that you can view depends on the skill level of your spy.
 ~
 NOSPY
 Drop spy identity
-This will cause the spy to give up his spying identity.
+This causes the spy to give up his spying identity.
 ~
 AUTOPICK
 Automatic
-With this set your caravans and ships will automatically pick up the surplus goods from this market or harbor.
+With this set, your caravans and ships will automatically pick up the surplus goods from this market or harbor.
 ~
 NOPICK
 Nothing
-With this set your caravans and ships will not pick up anything from this market or harbor.
+With this set, your caravans and ships will not pick up anything from this market or harbor.
 ~
 RESIGN
 Disband a unit
-This will disband the selected unit. If the selected unit is a foreign spy, this will execute him.
+This disbands the selected unit. If the selected unit is a foreign spy, this executes him.
 ~
 CSETSTOP
 Set a caravan's trade stop
@@ -239,11 +239,11 @@ After you press this button, click your cursor on the location where you want yo
 ~
 CGOSTOP
 View a caravan's trade stop
-This will center your screen over this caravan stop.
+This centers your screen over this caravan stop.
 ~
 CDELSTOP
 Delete a caravan's trade stop
-Clicking here will delete this caravan trade stop.
+Clicking here deletes this caravan trade stop.
 ~
 SSETSTOP
 Set a ship's trade stop
@@ -251,19 +251,19 @@ After you press this button, click your cursor on the harbor where you want your
 ~
 SGOSTOP
 View a ship's trade stop
-This will center your screen over this ship's trading stop.
+This centers your screen over this ship's trading stop.
 ~
 SDELSTOP
 Delete a ship's trade stop
-Clicking here will delete this ship's trade stop.
+Clicking here deletes this ship's trade stop.
 ~
 DESTFIRM
 Demolish a structure
-Clicking here will demolish this structure.
+Clicking here demolishs this structure.
 ~
 SELLFIRM
 Sell a structure
-Clicking here will sell this structure.
+Clicking here sells this structure.
 ~
 REPAIR
 Structure repair icon
@@ -331,7 +331,7 @@ Click on this to cancel the training of the unit.
 ~
 CANCELBLD
 Cancel building this structure.
-Clicking here will cancel the building of this structure.
+Clicking here cancels the building of this structure.
 ~
 MN_PROD
 Monthly Production
@@ -367,11 +367,11 @@ If this is set to 'Yes', you will be able to target and attack the units and str
 ~
 AGGRESS0
 Passive Mode Enabled. Click for Aggressive Mode
-When toggled to this mode your units will not fight unless attacked. If ordered to change location, they will not stop to fight off an attack.
+When toggled to this mode, your units will not fight unless attacked. If ordered to change location, they will not stop to fight off an attack.
 ~
 AGGRESS1
 Aggressive Mode Enabled. Click for Passive Mode
-When toggled to this mode your units will automatically attack an enemy in their area, but will not follow it out of the area. If ordered to change location, they will stop to fight off an attack and then continue.
+When toggled to this mode, your units will automatically attack an enemy in their area, but they will not follow it out of the area. If ordered to change location, they will stop to fight off an attack and then continue.
 ~
 ASSASSIN
 Assassinate
@@ -383,16 +383,16 @@ When you Click on this tile your cursor will change into a large white circle. P
 ~
 GODMIND
 Change Loyalty
-When you Click on this tile your cursor will change into a large white circle. Place this circle over your target and Click again. Repeat until the Mind Turner's power has been depleted.
+When you Click on this tile, your cursor will change into a large white circle. Place this circle over your target and Click again. Repeat until the Mind Turner's power has been depleted.
 ~
 GODINCCL
 Increase power of Maya Soldiers
-When you Click on this tile your cursor will change into a large white circle. Place this circle over your soldiers and Click again. Repeat until Kukulcan's power has been depleted.
+When you Click on this tile, your cursor will change into a large white circle. Place this circle over your soldiers and Click again. Repeat until Kukulcan's power has been depleted.
 ~
 GODRAIN
 Summon Rain
-When you Click on this tile it will cause the rains to come to the whole world. Repeat until Thor's power has been depleted.
+When you Click on this tile, it will cause the rains to come to the whole world. Repeat until Thor's power has been depleted.
 ~
 GODTORNA
 Summon Tornadoes
-When you Click on this tile your cursor will change into a small square. Place this square over your target and Click again. Repeat until Thor's power has been depleted.
+When you Click on this, tile your cursor will change into a small square. Place this square over your target and Click again. Repeat until Thor's power has been depleted.
