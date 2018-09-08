@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-10 20:48-0700\n"
-"PO-Revision-Date: 2018-07-03 02:13+0500\n"
+"PO-Revision-Date: 2018-08-17 10:53-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.9\n"
 
 #: src/AM.cpp:358 src/AM.cpp:370
 msgid "You cannot specify multiple -host or -join options."
@@ -2153,7 +2153,7 @@ msgstr "Итого крестьян: %s"
 #: src/OR_TOWN.cpp:227
 #, c-format
 msgid "Total Other Human Units: %s"
-msgstr "Всего человеческих единиц:%s"
+msgstr "Всего человеческих единиц: %s"
 
 #: src/OR_TOWN.cpp:231
 #, c-format
@@ -2192,7 +2192,7 @@ msgstr "Корабль"
 #: src/OR_TRADE.cpp:192
 #, c-format
 msgid "Total Caravans: %s"
-msgstr "Всего караванов:%s"
+msgstr "Всего караванов: %s"
 
 #: src/OR_TRADE.cpp:203
 #, c-format
@@ -2348,7 +2348,7 @@ msgstr "Быстрое строительство включено"
 #: src/OSYS.cpp:2598
 #, c-format
 msgid "The current screen has been written to file %s."
-msgstr "Текущий файл был записан в файл% s."
+msgstr "Текущий файл был записан в файл %s."
 
 #: src/OSYS.cpp:2639
 #, fuzzy
@@ -2414,19 +2414,19 @@ msgstr "Путь слишком длинный для сохраненной и�
 #: src/OTALKENG.cpp:185
 #, c-format
 msgid "You propose a trade treaty to %s."
-msgstr "Вы предлагаете торговый договор для% s."
+msgstr "Вы предлагаете торговый договор для %s."
 
 #. TRANSLATORS: You propose a friendly treaty to <King's Kingdom>.
 #: src/OTALKENG.cpp:190
 #, c-format
 msgid "You propose a friendly treaty to %s."
-msgstr "Вы предлагаете дружеский договор для% s."
+msgstr "Вы предлагаете дружеский договор для %s."
 
 #. TRANSLATORS: You propose an alliance treaty to <King's Kingdom>.
 #: src/OTALKENG.cpp:195
 #, c-format
 msgid "You propose an alliance treaty to %s."
-msgstr "Вы предлагаете договор о союзе для% s."
+msgstr "Вы предлагаете договор о союзе для %s."
 
 #. TRANSLATORS: <King's Kingdom> proposes a trade treaty to you.
 #: src/OTALKENG.cpp:203
@@ -2450,109 +2450,109 @@ msgstr "%s предлагает Вам военное соглашение."
 #: src/OTALKENG.cpp:226
 #, c-format
 msgid "%s accepts your proposed trade treaty."
-msgstr "% s принимает предложенный вами торговый договор."
+msgstr "%s принимает предложенный вами торговый договор."
 
 #. TRANSLATORS: <King's Kingdom> accepts your proposed friendly treaty.
 #: src/OTALKENG.cpp:231
 #, c-format
 msgid "%s accepts your proposed friendly treaty."
-msgstr "% s принимает предложенный вами торговый договор."
+msgstr "%s принимает предложенный вами торговый договор."
 
 #. TRANSLATORS: <King's Kingdom> accepts your proposed alliance treaty.
 #: src/OTALKENG.cpp:236
 #, c-format
 msgid "%s accepts your proposed alliance treaty."
-msgstr "% s принимает ваш предложенный договор о союзе."
+msgstr "%s принимает ваш предложенный договор о союзе."
 
 #. TRANSLATORS: <King's Kingdom> rejects your proposed trade treaty.
 #: src/OTALKENG.cpp:244
 #, c-format
 msgid "%s rejects your proposed trade treaty."
-msgstr "% s принимает предложенный вами торговый договор."
+msgstr "%s принимает предложенный вами торговый договор."
 
 #. TRANSLATORS: <King's Kingdom> rejects your proposed friendly treaty.
 #: src/OTALKENG.cpp:249
 #, c-format
 msgid "%s rejects your proposed friendly treaty."
-msgstr "% s отклоняет предложенный вами дружественный договор."
+msgstr "%s отклоняет предложенный вами дружественный договор."
 
 #. TRANSLATORS: <King's Kingdom> rejects your proposed alliance treaty.
 #: src/OTALKENG.cpp:254
 #, c-format
 msgid "%s rejects your proposed alliance treaty."
-msgstr "% s принимает ваш предложенный договор о союзе."
+msgstr "%s принимает ваш предложенный договор о союзе."
 
 #. TRANSLATORS: You accept the trade treaty proposed by <King's Kingdom>.
 #: src/OTALKENG.cpp:265
 #, c-format
 msgid "You accept the trade treaty proposed by %s."
-msgstr "Вы принимаете торговый договор, предложенный% s."
+msgstr "Вы принимаете торговый договор, предложенный %s."
 
 #. TRANSLATORS: You accept the friendly treaty proposed by <King's Kingdom>.
 #: src/OTALKENG.cpp:270
 #, c-format
 msgid "You accept the friendly treaty proposed by %s."
-msgstr "Вы принимаете дружественный договор, предложенный% s."
+msgstr "Вы принимаете дружественный договор, предложенный %s."
 
 #. TRANSLATORS: You accept the alliance treaty proposed by <King's Kingdom>.
 #: src/OTALKENG.cpp:275
 #, c-format
 msgid "You accept the alliance treaty proposed by %s."
-msgstr "Вы принимаете договор о союзе, предложенный% s."
+msgstr "Вы принимаете договор о союзе, предложенный %s."
 
 #. TRANSLATORS: You reject the trade treaty proposed by <King's Kingdom>.
 #: src/OTALKENG.cpp:283
 #, c-format
 msgid "You reject the trade treaty proposed by %s."
-msgstr "Вы отклоняете торговый договор, предложенный% s."
+msgstr "Вы отклоняете торговый договор, предложенный %s."
 
 #. TRANSLATORS: You reject the friendly treaty proposed by <King's Kingdom>.
 #: src/OTALKENG.cpp:288
 #, c-format
 msgid "You reject the friendly treaty proposed by %s."
-msgstr "Вы отвергаете дружественный договор, предложенный% s."
+msgstr "Вы отвергаете дружественный договор, предложенный %s."
 
 #. TRANSLATORS: You reject the alliance treaty proposed by <King's Kingdom>.
 #: src/OTALKENG.cpp:293
 #, c-format
 msgid "You reject the alliance treaty proposed by %s."
-msgstr "Вы отклоняете договор о союзе, предложенный% s."
+msgstr "Вы отклоняете договор о союзе, предложенный %s."
 
 #. TRANSLATORS: You terminate your trade treaty with <King's Kingdom>.
 #: src/OTALKENG.cpp:321
 #, c-format
 msgid "You terminate your trade treaty with %s."
-msgstr "Вы прекратите свой торговый договор с% s."
+msgstr "Вы прекратите свой торговый договор с %s."
 
 #. TRANSLATORS: You terminate your friendly treaty with <King's Kingdom>.
 #: src/OTALKENG.cpp:326
 #, c-format
 msgid "You terminate your friendly treaty with %s."
-msgstr "Вы расторгнете свой дружественный договор с%s."
+msgstr "Вы расторгнете свой дружественный договор с %s."
 
 #. TRANSLATORS: You terminate your alliance treaty with <King's Kingdom>.
 #: src/OTALKENG.cpp:331
 #, c-format
 msgid "You terminate your alliance treaty with %s."
-msgstr "Вы расторгнете договор о союзе с% s."
+msgstr "Вы расторгнете договор о союзе с %s."
 
 #. TRANSLATORS: <King's Kingdom> terminates its trade treaty with you.
 #: src/OTALKENG.cpp:339
 #, c-format
 msgid "%s terminates its trade treaty with you."
-msgstr "% s прекращает с вами договор о торговле."
+msgstr "%s прекращает с вами договор о торговле."
 
 #. TRANSLATORS: <King's Kingdom> terminates its friendly treaty with you.
 #: src/OTALKENG.cpp:344
 #, c-format
 msgid "%s terminates its friendly treaty with you."
-msgstr "% s прекращает с вами дружеский договор."
+msgstr "%s прекращает с вами дружеский договор."
 
 #. TRANSLATORS: <King's Kingdom> terminates its alliance treaty with you.
 #: src/OTALKENG.cpp:349
 #, c-format
 msgid "%s terminates its alliance treaty with you."
-msgstr "% s прекращает с вами договор о союзе."
+msgstr "%s прекращает с вами договор о союзе."
 
 #. TRANSLATORS: You request a cease-fire with <King's Kingdom>.
 #: src/OTALKENG.cpp:379
@@ -2570,31 +2570,31 @@ msgstr "%s просит о прекращении военных действи�
 #: src/OTALKENG.cpp:393
 #, c-format
 msgid "%s agrees to a cease-fire."
-msgstr "% s соглашается на прекращение огня."
+msgstr "%s соглашается на прекращение огня."
 
 #. TRANSLATORS: <King's Kingdom> refuses a cease-fire.
 #: src/OTALKENG.cpp:396
 #, c-format
 msgid "%s refuses a cease-fire."
-msgstr "% s отказывается от прекращения огня."
+msgstr "%s отказывается от прекращения огня."
 
 #. TRANSLATORS: You agree to a cease-fire with <King's Kingdom>.
 #: src/OTALKENG.cpp:402
 #, c-format
 msgid "You agree to a cease-fire with %s."
-msgstr "Вы соглашаетесь на прекращение огня с%s."
+msgstr "Вы соглашаетесь на прекращение огня с %s."
 
 #. TRANSLATORS: You refuse a cease-fire with <King's Kingdom>.
 #: src/OTALKENG.cpp:405
 #, c-format
 msgid "You refuse a cease-fire with %s."
-msgstr "Вы отказываетесь от прекращения огня с%s."
+msgstr "Вы отказываетесь от прекращения огня с %s."
 
 #. TRANSLATORS: You request <King 1's Kingdom> to declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:435
 #, c-format
 msgid "You request %s to declare war on %s%s."
-msgstr "Вы просите%s объявить войну%s%s."
+msgstr "Вы просите%s объявить войну %s%s."
 
 #. TRANSLATORS: <King 1's Kingdom> requests that you declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:440
@@ -2606,67 +2606,67 @@ msgstr "%s просит, чтобы Вы объявили %s%s войну."
 #: src/OTALKENG.cpp:449
 #, c-format
 msgid "%s agrees to declare war on %s%s."
-msgstr "% s соглашается объявить войну% s% s."
+msgstr "%s соглашается объявить войну %s%s."
 
 #. TRANSLATORS: <King 1's Kingdom> refuses to declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:452
 #, c-format
 msgid "%s refuses to declare war on %s%s."
-msgstr "% s отказывается объявить войну% s% s."
+msgstr "%s отказывается объявить войну %s%s."
 
 #. TRANSLATORS: You agree to declare war on <King's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:458
 #, c-format
 msgid "You agree to declare war on %s%s."
-msgstr "Вы соглашаетесь объявить войну% s% s."
+msgstr "Вы соглашаетесь объявить войну %s%s."
 
 #. TRANSLATORS: You refuse to declare war on <King's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:461
 #, c-format
 msgid "You refuse to declare war on %s%s."
-msgstr "Вы отказываетесь объявлять войну% s% s."
+msgstr "Вы отказываетесь объявлять войну %s%s."
 
 #. TRANSLATORS: <King's Kingdom> offers <Amount> for 10 units of food.
 #: src/OTALKENG.cpp:484
 #, c-format
 msgid "%s offers %s for 10 units of food."
-msgstr "% s предлагает% s для 10 единиц пищи."
+msgstr "%s предлагает %s для 10 единиц пищи."
 
 #. TRANSLATORS: You request to purchase <Number> units of food from <King's Kingdom>.
 #: src/OTALKENG.cpp:512
 #, c-format
 msgid "You request to purchase %s units of food from %s."
-msgstr "Вы запрашиваете покупку% s единиц продуктов из% s."
+msgstr "Вы запрашиваете покупку %s единиц продуктов из %s."
 
 #. TRANSLATORS: <King's Kingdom> requests to purchase <Number> units of food from you.
 #: src/OTALKENG.cpp:517
 #, c-format
 msgid "%s requests to purchase %s units of food from you."
-msgstr "% s просит купить у вас% s единиц продуктов."
+msgstr "%s просит купить у вас %s единиц продуктов."
 
 #. TRANSLATORS: <King's Kingdom> agrees to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:526
 #, c-format
 msgid "%s agrees to sell %s units of food to you."
-msgstr "% s соглашается продать вам% s единиц продуктов."
+msgstr "%s соглашается продать вам %s единиц продуктов."
 
 #. TRANSLATORS: <King's Kingdom> refuses to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:529
 #, c-format
 msgid "%s refuses to sell %s units of food to you."
-msgstr "% s отказывается продавать вам единицы% s."
+msgstr "%s отказывается продавать вам единицы %s."
 
 #. TRANSLATORS: You agree to sell <Number> units of food to <King's Kingdom>.
 #: src/OTALKENG.cpp:535
 #, c-format
 msgid "You agree to sell %s units of food to %s."
-msgstr "Вы соглашаетесь продавать% s единиц продуктов питания% s."
+msgstr "Вы соглашаетесь продавать %s единиц продуктов питания %s."
 
 #. TRANSLATORS: You refuse to sell <Number> units of food to <King's Kingdom>.
 #: src/OTALKENG.cpp:538
 #, c-format
 msgid "You refuse to sell %s units of food to %s."
-msgstr "Вы отказываетесь продавать% s единиц продуктов питания% s."
+msgstr "Вы отказываетесь продавать %s единиц продуктов питания %s."
 
 #. TRANSLATORS: You declare war on <King's Kingdom>.
 #: src/OTALKENG.cpp:560
@@ -2684,19 +2684,19 @@ msgstr "%s объявляет войну Вам."
 #: src/OTALKENG.cpp:605
 #, c-format
 msgid "You offer %s %s in aid."
-msgstr "Вы предлагаете% s% s в помощь."
+msgstr "Вы предлагаете %s %s в помощь."
 
 #. TRANSLATORS: You offer <King's Kingdom> <Amount> in tribute.
 #: src/OTALKENG.cpp:610
 #, c-format
 msgid "You offer %s %s in tribute."
-msgstr "Вы даете проценты% s% s."
+msgstr "Вы даете проценты %s %s."
 
 #. TRANSLATORS: <King's Kingdom> offers you <Amount> in aid.
 #: src/OTALKENG.cpp:618
 #, c-format
 msgid "%s offers you %s in aid."
-msgstr "% s предлагает вам% s в помощь."
+msgstr "%s предлагает вам %s в помощь."
 
 #. TRANSLATORS: <King's Kingdom> offers you <Amount> in tribute.
 #: src/OTALKENG.cpp:623
@@ -2708,19 +2708,19 @@ msgstr "%s предлагает вам %s в дань."
 #: src/OTALKENG.cpp:636
 #, c-format
 msgid "%s accepts your aid of %s."
-msgstr "% s принимает вашу помощь% s."
+msgstr "%s принимает вашу помощь %s."
 
 #. TRANSLATORS: <King's Kingdom> accepts your tribute of <Amount>.
 #: src/OTALKENG.cpp:641
 #, c-format
 msgid "%s accepts your tribute of %s."
-msgstr "% s принимает вашу дань% s."
+msgstr "%s принимает вашу дань %s."
 
 #. TRANSLATORS: <King's Kingdom> rejects your aid of <Amount>.
 #: src/OTALKENG.cpp:649
 #, c-format
 msgid "%s rejects your aid of %s."
-msgstr "% s отклоняет вашу помощь% s."
+msgstr "%s отклоняет вашу помощь %s."
 
 #. TRANSLATORS: <King's Kingdom> rejects your tribute of <Amount>.
 #: src/OTALKENG.cpp:654
@@ -2756,19 +2756,19 @@ msgstr "Вы отклоняете %s в дани из %s."
 #: src/OTALKENG.cpp:724
 #, c-format
 msgid "You request %s in aid from %s."
-msgstr "Вы запрашиваете% s с помощью% s."
+msgstr "Вы запрашиваете %s с помощью %s."
 
 #. TRANSLATORS: You demand <Amount> in tribute from <King's Kingdom>.
 #: src/OTALKENG.cpp:727
 #, c-format
 msgid "You demand %s in tribute from %s."
-msgstr "Вы требуете% s в подаче от% s."
+msgstr "Вы требуете %s в подаче от %s."
 
 #. TRANSLATORS: <King's Kingdom> requests <Amount> in aid from you.
 #: src/OTALKENG.cpp:733
 #, c-format
 msgid "%s requests %s in aid from you."
-msgstr "% s запрашивает% s в помощи от вас."
+msgstr "%s запрашивает %s в помощи от вас."
 
 #. TRANSLATORS: <King's Kingdom> demands <Amount> in tribute from you.
 #: src/OTALKENG.cpp:736
@@ -3194,9 +3194,8 @@ msgid "Controlled by Rebels"
 msgstr "Контролируется мятежниками"
 
 #: src/OTOWNIF.cpp:851
-#, fuzzy
 msgid "Train (Cost: $30, Skill: 20)"
-msgstr "Тренировка (Цена:$30, Навыки:20)"
+msgstr "Тренировка (Цена: $30, Навыки: 20)"
 
 #: src/OTOWNIF.cpp:921
 msgid "Manufacturing"
