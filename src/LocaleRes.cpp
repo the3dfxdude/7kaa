@@ -61,8 +61,8 @@ LocaleRes::~LocaleRes()
 void LocaleRes::init(const char *locale)
 {
 #ifdef ENABLE_NLS
-	char *all = setlocale(LC_ALL, locale);
-	char *ctype = setlocale(LC_CTYPE, "");
+	setlocale(LC_ALL, locale);
+	char *ctype = setlocale(LC_CTYPE, NULL);
 	if( !ctype )
 		return;
 
