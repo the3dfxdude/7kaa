@@ -61,38 +61,38 @@ LocaleRes::~LocaleRes()
 void LocaleRes::init(const char *locale)
 {
 #ifdef ENABLE_NLS
-        char *all = setlocale(LC_ALL, locale);
+	char *all = setlocale(LC_ALL, locale);
 	char *ctype = setlocale(LC_CTYPE, "");
 	if( !ctype )
 		return;
 
-        bindtextdomain(PACKAGE, LOCALE_PATH);
-        textdomain(PACKAGE);
+	bindtextdomain(PACKAGE, LOCALE_PATH);
+	textdomain(PACKAGE);
 
 	LocaleRec *localeRec;
-        String localeDbName;
-        localeDbName = DIR_RES;
-        localeDbName += "LOCALE.RES";
-        Database localeDbObj(localeDbName, 1);
-        Database *dbLocale = &localeDbObj;
+	String localeDbName;
+	localeDbName = DIR_RES;
+	localeDbName += "LOCALE.RES";
+	Database localeDbObj(localeDbName, 1);
+	Database *dbLocale = &localeDbObj;
 
-        short locale_count = (short) dbLocale->rec_count();
+	short locale_count = (short) dbLocale->rec_count();
 
-        //------ read in locale information -------//
+	//------ read in locale information -------//
 
 	int i;
-        for( i=0 ; i<locale_count ; i++ )
-        {
-                localeRec = (LocaleRec*) dbLocale->read(i+1);
+	for( i=0 ; i<locale_count ; i++ )
+	{
+		localeRec = (LocaleRec*) dbLocale->read(i+1);
 
-                misc.rtrim_fld( lang, localeRec->lang, localeRec->LANG_LEN );
+		misc.rtrim_fld( lang, localeRec->lang, localeRec->LANG_LEN );
 		if( !misc.str_icmpx(ctype, lang) )
 			continue;
 
-                misc.rtrim_fld( fontset, localeRec->fontset, localeRec->FONTSET_LEN );
-                misc.rtrim_fld( codeset, localeRec->codeset, localeRec->CODESET_LEN );
+		misc.rtrim_fld( fontset, localeRec->fontset, localeRec->FONTSET_LEN );
+		misc.rtrim_fld( codeset, localeRec->codeset, localeRec->CODESET_LEN );
 		break;
-        }
+	}
 
 	if( i >= locale_count )
 	{
