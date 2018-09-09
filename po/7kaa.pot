@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-10 20:48-0700\n"
+"POT-Creation-Date: 2018-09-09 15:39-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,31 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: src/AM.cpp:358 src/AM.cpp:370
+#: src/AM.cpp:342 src/AM.cpp:354
 msgid "You cannot specify multiple -host or -join options."
 msgstr ""
 
-#: src/AM.cpp:362 src/AM.cpp:376 src/AM.cpp:386
+#: src/AM.cpp:346 src/AM.cpp:360 src/AM.cpp:370
 #, c-format
 msgid "Expected argument after %s."
 msgstr ""
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
-#: src/OGAMEMP.cpp:1536 src/OGAMEMP.cpp:1636 src/OGAMEMP.cpp:3039
-#: src/OGAMEMP.cpp:3104 src/OGAMEMP.cpp:3410 src/OGAMEMP.cpp:3413
-#: src/OGAMEMP.cpp:3416 src/OGAMEMP.cpp:3419 src/OGAMEMP.cpp:3422
-#: src/OGAMEMP.cpp:3425 src/OGAMEMP.cpp:3428 src/OGAMEMP.cpp:4947
-#: src/OGAMEMP.cpp:5013 src/OGAMEMP.cpp:5196 src/OGAMEMP.cpp:5199
-#: src/OGAMEMP.cpp:5202 src/OGAMEMP.cpp:5205 src/OGAMEMP.cpp:5208
-#: src/OGAMEMP.cpp:5211 src/OGAMEMP.cpp:5214
+#: src/OGAMEMP.cpp:1526 src/OGAMEMP.cpp:1626 src/OGAMEMP.cpp:3029
+#: src/OGAMEMP.cpp:3094 src/OGAMEMP.cpp:3400 src/OGAMEMP.cpp:3403
+#: src/OGAMEMP.cpp:3406 src/OGAMEMP.cpp:3409 src/OGAMEMP.cpp:3412
+#: src/OGAMEMP.cpp:3415 src/OGAMEMP.cpp:3418 src/OGAMEMP.cpp:4937
+#: src/OGAMEMP.cpp:5003 src/OGAMEMP.cpp:5186 src/OGAMEMP.cpp:5189
+#: src/OGAMEMP.cpp:5192 src/OGAMEMP.cpp:5195 src/OGAMEMP.cpp:5198
+#: src/OGAMEMP.cpp:5201 src/OGAMEMP.cpp:5204
 msgid "Ok"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:70
 #: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:278
-#: src/OGAMEMP.cpp:1537 src/OGAMEMP.cpp:1637 src/OGAMEMP.cpp:2101
-#: src/OGAMEMP.cpp:2203 src/OGAMEMP.cpp:2266 src/OSPYA.cpp:351
+#: src/OGAMEMP.cpp:1527 src/OGAMEMP.cpp:1627 src/OGAMEMP.cpp:2091
+#: src/OGAMEMP.cpp:2193 src/OGAMEMP.cpp:2256 src/OSPYA.cpp:351
 #: src/OTOWNIF.cpp:1118 src/OUNITIF.cpp:1021 src/OUNITIF.cpp:1057
 msgid "Cancel"
 msgstr ""
@@ -177,23 +177,23 @@ msgstr ""
 #: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:402 src/OF_CAMP.cpp:592
 #: src/OINFO.cpp:775 src/OR_MIL.cpp:96 src/OR_SPY.cpp:77 src/OR_TOWN.cpp:87
 #: src/OTOWNIF.cpp:267 src/OTOWNIF.cpp:1263 src/OUNITIF.cpp:1133
-#: src/OU_MARIF.cpp:537
+#: src/OU_MARIF.cpp:507
 msgid "Loyalty"
 msgstr ""
 
 #: src/OFIRMIF.cpp:623 src/OFIRMIF.cpp:630 src/OFIRMIF.cpp:642
-#: src/OFIRMIF.cpp:656 src/OU_MARIF.cpp:537
+#: src/OFIRMIF.cpp:656 src/OU_MARIF.cpp:507
 msgid "N/A"
 msgstr ""
 
 #: src/OFIRMIF.cpp:658 src/OFIRMIF.cpp:706 src/OF_INN.cpp:391
-#: src/OF_INN.cpp:442 src/OUNITIF.cpp:1145 src/OU_MARIF.cpp:541
+#: src/OF_INN.cpp:442 src/OUNITIF.cpp:1145 src/OU_MARIF.cpp:511
 msgid "Combat"
 msgstr ""
 
 #: src/OFIRMIF.cpp:667 src/OFIRMIF.cpp:715 src/OR_MIL.cpp:97
 #: src/OR_TECH.cpp:152 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:117
-#: src/OU_MARIF.cpp:551
+#: src/OU_MARIF.cpp:521
 msgid "Hit Points"
 msgstr ""
 
@@ -283,11 +283,11 @@ msgstr ""
 msgid "Product Stock"
 msgstr ""
 
-#: src/OF_HARB.cpp:453 src/OU_MARIF.cpp:106
+#: src/OF_HARB.cpp:453 src/OU_MARIF.cpp:87
 msgid "Units"
 msgstr ""
 
-#: src/OF_HARB.cpp:454 src/OU_MARIF.cpp:107
+#: src/OF_HARB.cpp:454 src/OU_MARIF.cpp:88
 msgid "Goods"
 msgstr ""
 
@@ -372,180 +372,180 @@ msgctxt "FirmUI|Name"
 msgid "%s Lair"
 msgstr ""
 
-#: src/OGAMEMP.cpp:574 src/OGAMEMP.cpp:842
+#: src/OGAMEMP.cpp:564 src/OGAMEMP.cpp:832
 msgid "Unable to connect from lobby."
 msgstr ""
 
-#: src/OGAMEMP.cpp:581 src/OGAMEMP.cpp:849
+#: src/OGAMEMP.cpp:571 src/OGAMEMP.cpp:839
 msgid "Cannot initialize ENet."
 msgstr ""
 
-#: src/OGAMEMP.cpp:597 src/OGAMEMP.cpp:865
+#: src/OGAMEMP.cpp:587 src/OGAMEMP.cpp:855
 msgid "Unable to retrieve leaderboard"
 msgstr ""
 
-#: src/OGAMEMP.cpp:612 src/OGAMEMP.cpp:887
+#: src/OGAMEMP.cpp:602 src/OGAMEMP.cpp:877
 msgid "Enter a name for your game session."
 msgstr ""
 
-#: src/OGAMEMP.cpp:613 src/OGAMEMP.cpp:888
+#: src/OGAMEMP.cpp:603 src/OGAMEMP.cpp:878
 msgid "Session Name:"
 msgstr ""
 
-#: src/OGAMEMP.cpp:614 src/OGAMEMP.cpp:889 src/OGAMEMP.cpp:1451
+#: src/OGAMEMP.cpp:604 src/OGAMEMP.cpp:879 src/OGAMEMP.cpp:1441
 msgid "Password:"
 msgstr ""
 
-#: src/OGAMEMP.cpp:631 src/OGAMEMP.cpp:906
+#: src/OGAMEMP.cpp:621 src/OGAMEMP.cpp:896
 msgid "Invalid game name."
 msgstr ""
 
-#: src/OGAMEMP.cpp:640 src/OGAMEMP.cpp:915
+#: src/OGAMEMP.cpp:630 src/OGAMEMP.cpp:905
 msgid "Cannot create the game."
 msgstr ""
 
-#: src/OGAMEMP.cpp:669 src/OGAMEMP.cpp:944
+#: src/OGAMEMP.cpp:659 src/OGAMEMP.cpp:934
 msgid "Enter the game's address:"
 msgstr ""
 
-#: src/OGAMEMP.cpp:677 src/OGAMEMP.cpp:952
+#: src/OGAMEMP.cpp:667 src/OGAMEMP.cpp:942
 msgid "Service not supported"
 msgstr ""
 
-#: src/OGAMEMP.cpp:1411
+#: src/OGAMEMP.cpp:1401
 msgid ""
 "It is not recommended to use this save game file name. Do you wish to "
 "continue?"
 msgstr ""
 
-#: src/OGAMEMP.cpp:1449
+#: src/OGAMEMP.cpp:1439
 msgid ""
 "Enter your 7kfans.com/forums account credentials to continue.\n"
 "TIP: If you have just previously logged in using the same username, you can "
 "leave your password blank, and the previous session is used."
 msgstr ""
 
-#: src/OGAMEMP.cpp:1450
+#: src/OGAMEMP.cpp:1440
 msgid "Username:"
 msgstr ""
 
-#: src/OGAMEMP.cpp:1473
-msgid "Unable to contact, or an error occurred trying to reach 7kfans.com."
+#: src/OGAMEMP.cpp:1463
+msgid "Unable to connect to 7kfans.com."
 msgstr ""
 
-#: src/OGAMEMP.cpp:1957
+#: src/OGAMEMP.cpp:1947
 msgid "Unable to communicate with the network"
 msgstr ""
 
-#: src/OGAMEMP.cpp:1960
+#: src/OGAMEMP.cpp:1950
 msgid "Trying to connect to the service provider"
 msgstr ""
 
-#: src/OGAMEMP.cpp:1975
+#: src/OGAMEMP.cpp:1965
 msgid ""
 "There is a new version of Seven Kingdoms: Ancient Adversaries at www.7kfans."
 "com"
 msgstr ""
 
-#: src/OGAMEMP.cpp:2089
+#: src/OGAMEMP.cpp:2079
 msgid "Enter the game's password:"
 msgstr ""
 
-#: src/OGAMEMP.cpp:2096
+#: src/OGAMEMP.cpp:2086
 msgid "Attempting to connect"
 msgstr ""
 
-#: src/OGAMEMP.cpp:2165
+#: src/OGAMEMP.cpp:2155
 msgid "The session you selected no longer exists."
 msgstr ""
 
-#: src/OGAMEMP.cpp:2171
+#: src/OGAMEMP.cpp:2161
 msgid "Unable to connect"
 msgstr ""
 
-#: src/OGAMEMP.cpp:2176
+#: src/OGAMEMP.cpp:2166
 msgid "Failed to initiate connection"
 msgstr ""
 
-#: src/OGAMEMP.cpp:2198
+#: src/OGAMEMP.cpp:2188
 msgid "Please wait while disconnecting..."
 msgstr ""
 
-#: src/OGAMEMP.cpp:2261
+#: src/OGAMEMP.cpp:2251
 msgid "Retrieving leaderboard"
 msgstr ""
 
-#: src/OGAMEMP.cpp:2966 src/OGAMEMP.cpp:4873
+#: src/OGAMEMP.cpp:2956 src/OGAMEMP.cpp:4863
 msgid "?anonymous?"
 msgstr ""
 
-#: src/OGAMEMP.cpp:3039 src/OGAMEMP.cpp:4947
+#: src/OGAMEMP.cpp:3029 src/OGAMEMP.cpp:4937
 msgid "The game host has disconnected."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3104 src/OGAMEMP.cpp:5013
+#: src/OGAMEMP.cpp:3094 src/OGAMEMP.cpp:5003
 msgid "The game host has aborted the game."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3410 src/OGAMEMP.cpp:5196
+#: src/OGAMEMP.cpp:3400 src/OGAMEMP.cpp:5186
 msgid "Your game version does not match the host's version."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3413 src/OGAMEMP.cpp:5199
+#: src/OGAMEMP.cpp:3403 src/OGAMEMP.cpp:5189
 msgid "The game you tried to join is currently full."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3416 src/OGAMEMP.cpp:5202
+#: src/OGAMEMP.cpp:3406 src/OGAMEMP.cpp:5192
 msgid "The host refused to authorize your connection."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3419 src/OGAMEMP.cpp:5205
+#: src/OGAMEMP.cpp:3409 src/OGAMEMP.cpp:5195
 msgid "You cannot join the game because the host is loading a save."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3422 src/OGAMEMP.cpp:5208
+#: src/OGAMEMP.cpp:3412 src/OGAMEMP.cpp:5198
 msgid "You cannot join the game because the host is not loading a save."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3425 src/OGAMEMP.cpp:5211
+#: src/OGAMEMP.cpp:3415 src/OGAMEMP.cpp:5201
 msgid ""
 "You cannot join the game because the saved multiplayer game you selected is "
 "different."
 msgstr ""
 
-#: src/OGAMEMP.cpp:3428 src/OGAMEMP.cpp:5214
+#: src/OGAMEMP.cpp:3418 src/OGAMEMP.cpp:5204
 msgid "The host refused the connection."
 msgstr ""
 
-#: src/OGAMEMP.cpp:4159 src/OGAMEMP.cpp:5612
+#: src/OGAMEMP.cpp:4149 src/OGAMEMP.cpp:5602
 msgid "Connection string from host is corrupted"
 msgstr ""
 
-#: src/OGAMEMP.cpp:4166
+#: src/OGAMEMP.cpp:4156
 msgid "Cannot get random seeds from the host."
 msgstr ""
 
-#: src/OGAMEMP.cpp:4172
+#: src/OGAMEMP.cpp:4162
 msgid "Cannot get game configuration information from the host."
 msgstr ""
 
-#: src/OGAMEMP.cpp:4178 src/OGAMEMP.cpp:5619
+#: src/OGAMEMP.cpp:4168 src/OGAMEMP.cpp:5609
 msgid "Cannot get kingdom information from the host."
 msgstr ""
 
-#: src/OGAMEMP.cpp:4184 src/OGAMEMP.cpp:5625
+#: src/OGAMEMP.cpp:4174 src/OGAMEMP.cpp:5615
 msgid "The host cannot recognize your machine."
 msgstr ""
 
-#: src/OGAMEMP.cpp:4190 src/OGAMEMP.cpp:5631
+#: src/OGAMEMP.cpp:4180 src/OGAMEMP.cpp:5621
 msgid "Cannot receive important information from the host"
 msgstr ""
 
-#: src/OGAMEMP.cpp:4243 src/OGAMEMP.cpp:5677
+#: src/OGAMEMP.cpp:4233 src/OGAMEMP.cpp:5667
 msgid "Some player(s) encountered errors when initializing the game."
 msgstr ""
 
-#: src/OGAMEMP.cpp:5348 src/OGAMEMP.cpp:5504
+#: src/OGAMEMP.cpp:5338 src/OGAMEMP.cpp:5494
 #, c-format
 msgid ""
 "This multiplayer saved game needs %d human players while now there is only "
@@ -556,14 +556,14 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/OGAMEMP.cpp:5521
+#: src/OGAMEMP.cpp:5511
 #, c-format
 msgid ""
 "This multiplayer saved game can only support %d human players while now "
 "there are %d human players. The game cannot start."
 msgstr ""
 
-#: src/OGAMEMP.cpp:5581
+#: src/OGAMEMP.cpp:5571
 msgid "Incorrect kingdom information received from the host."
 msgstr ""
 
@@ -835,35 +835,31 @@ msgstr ""
 msgid "Error writing saved game data."
 msgstr ""
 
-#: src/OGFILE.cpp:102
-msgid " The game is not saved."
+#: src/OGFILE.cpp:104
+msgid "The game is not saved."
 msgstr ""
 
-#: src/OGFILE.cpp:124
+#: src/OGFILE.cpp:126
 msgid "Cannot open save game file"
 msgstr ""
 
-#: src/OGFILE.cpp:135
+#: src/OGFILE.cpp:137
 msgid "Cannot read file header"
 msgstr ""
 
-#: src/OGFILE.cpp:140
-msgid "Save game incompatible"
-msgstr ""
-
-#: src/OGFILE.cpp:162
+#: src/OGFILE.cpp:142 src/OGFILE.cpp:164
 msgid "Incompatible save game"
 msgstr ""
 
-#: src/OGFILE.cpp:167
+#: src/OGFILE.cpp:169
 msgid "Load game error"
 msgstr ""
 
-#: src/OGFILE.cpp:207
+#: src/OGFILE.cpp:209
 msgid "Invalid header"
 msgstr ""
 
-#: src/OGFILE.cpp:217
+#: src/OGFILE.cpp:219
 msgid "Could not open file"
 msgstr ""
 
@@ -981,8 +977,8 @@ msgid "Alliance"
 msgstr ""
 
 #. TRANSLATORS: <Name>'s Kingdom
-#: src/ONATIONB.cpp:550 src/ONEWSENG.cpp:1478 src/ONEWSENG.cpp:1480
-#: src/ONEWSENG.cpp:1502 src/ONEWSENG.cpp:1504
+#: src/ONATIONB.cpp:550 src/ONEWSENG.cpp:1481 src/ONEWSENG.cpp:1483
+#: src/ONEWSENG.cpp:1505 src/ONEWSENG.cpp:1507
 #, c-format
 msgid "%s's Kingdom"
 msgstr ""
@@ -1383,112 +1379,112 @@ msgstr ""
 msgid "Your general, %s, has been assassinated by an enemy spy."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1001
-msgid " The enemy spy has been killed."
+#: src/ONEWSENG.cpp:1003
+msgid "The enemy spy has been killed."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1020
+#: src/ONEWSENG.cpp:1023
 msgid "An enemy spy has been killed while attempting to assassinate your King."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1022
+#: src/ONEWSENG.cpp:1025
 msgid ""
 "An enemy spy has been killed while attempting to assassinate your General."
 msgstr ""
 
 #. TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
-#: src/ONEWSENG.cpp:1040
+#: src/ONEWSENG.cpp:1043
 #, c-format
 msgid "Your %s Mine has exhausted its %s deposit."
 msgstr ""
 
 #. TRANSLATORS: Your scientists have finished their <Tech> Mark <Level> research.
-#: src/ONEWSENG.cpp:1062
+#: src/ONEWSENG.cpp:1065
 #, c-format
 msgid "Your scientists have finished their %s Mark %s research."
 msgstr ""
 
 #. TRANSLATORS: Your scientists have finished their <Tech> research.
-#: src/ONEWSENG.cpp:1067
+#: src/ONEWSENG.cpp:1070
 #, c-format
 msgid "Your scientists have finished their %s research."
 msgstr ""
 
 #. TRANSLATORS: Your General <Name> has been struck and killed by lightning.
-#: src/ONEWSENG.cpp:1102
+#: src/ONEWSENG.cpp:1105
 #, c-format
 msgid "Your General %s has been struck and killed by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your General <Name> has been struck and injured by lightning.
-#: src/ONEWSENG.cpp:1107
+#: src/ONEWSENG.cpp:1110
 #, c-format
 msgid "Your General %s has been struck and injured by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your King <Name> has been struck and killed by lightning.
-#: src/ONEWSENG.cpp:1115
+#: src/ONEWSENG.cpp:1118
 #, c-format
 msgid "Your King %s has been struck and killed by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your King <Name> has been struck and injured by lightning.
-#: src/ONEWSENG.cpp:1120
+#: src/ONEWSENG.cpp:1123
 #, c-format
 msgid "Your King %s has been struck and injured by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your unit <Name> has been struck and killed by lightning.
-#: src/ONEWSENG.cpp:1128
+#: src/ONEWSENG.cpp:1131
 #, c-format
 msgid "Your unit %s has been struck and killed by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your unit <Name> has been struck and injured by lightning.
-#: src/ONEWSENG.cpp:1133
+#: src/ONEWSENG.cpp:1136
 #, c-format
 msgid "Your unit %s has been struck and injured by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
-#: src/ONEWSENG.cpp:1144
+#: src/ONEWSENG.cpp:1147
 #, c-format
 msgid "Your %s near %s has been destroyed by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
-#: src/ONEWSENG.cpp:1149
+#: src/ONEWSENG.cpp:1152
 #, c-format
 msgid "Your %s near %s has been struck by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your <Firm> has been destroyed by lightning.
-#: src/ONEWSENG.cpp:1157
+#: src/ONEWSENG.cpp:1160
 #, c-format
 msgid "Your %s has been destroyed by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your <Firm> has been struck by lightning.
-#: src/ONEWSENG.cpp:1162
+#: src/ONEWSENG.cpp:1165
 #, c-format
 msgid "Your %s has been struck by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your village <Town> has been destroyed by lightning.
-#: src/ONEWSENG.cpp:1171
+#: src/ONEWSENG.cpp:1174
 #, c-format
 msgid "Your village %s has been destroyed by lightning."
 msgstr ""
 
 #. TRANSLATORS: Your village <Town> has been struck by lightning.
-#: src/ONEWSENG.cpp:1176
+#: src/ONEWSENG.cpp:1179
 #, c-format
 msgid "Your village %s has been struck by lightning."
 msgstr ""
 
 #. TRANSLATORS: <Number> of your units has been injured and <Number> killed in an earthquake.
 #. <Number> of your units have been injured and <Number> killed in an earthquake.
-#: src/ONEWSENG.cpp:1214
+#: src/ONEWSENG.cpp:1217
 #, c-format
 msgid "%d of your units has been injured and %d killed in an earthquake."
 msgid_plural ""
@@ -1498,7 +1494,7 @@ msgstr[1] ""
 
 #. TRANSLATORS: <Number> of your units has been injured in an earthquake.
 #. <Number> of your units have been injured in an earthquake.
-#: src/ONEWSENG.cpp:1226
+#: src/ONEWSENG.cpp:1229
 #, c-format
 msgid "%d of your units has been injured in an earthquake."
 msgid_plural "%d of your units have been injured in an earthquake."
@@ -1507,7 +1503,7 @@ msgstr[1] ""
 
 #. TRANSLATORS: <Number> of your villagers has been killed in an earthquake.
 #. <Number> of your villagers have been killed in an earthquake.
-#: src/ONEWSENG.cpp:1240
+#: src/ONEWSENG.cpp:1243
 #, c-format
 msgid "%d of your villagers has been killed in an earthquake."
 msgid_plural "%d of your villagers have been killed in an earthquake."
@@ -1516,7 +1512,7 @@ msgstr[1] ""
 
 #. TRANSLATORS: <Number> of your buildings has been damaged and <Number> destroyed in an earthquake.
 #. <Number> of your buildings have been damaged and <Number> destroyed in an earthquake.
-#: src/ONEWSENG.cpp:1254
+#: src/ONEWSENG.cpp:1257
 #, c-format
 msgid ""
 "%d of your buildings has been damaged and %d destroyed in an earthquake."
@@ -1527,65 +1523,65 @@ msgstr[1] ""
 
 #. TRANSLATORS: <Number> of your buildings has been damaged in an earthquake.
 #. TRANSLATORS: <Number> of your buildings have been damaged in an earthquake.
-#: src/ONEWSENG.cpp:1266
+#: src/ONEWSENG.cpp:1269
 #, c-format
 msgid "%d of your buildings has been damaged in an earthquake."
 msgid_plural "%d of your buildings have been damaged in an earthquake."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/ONEWSENG.cpp:1297
+#: src/ONEWSENG.cpp:1300
 #, c-format
 msgid ""
 "Make haste! You have only %d years and %d months left to achieve your goal."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1301
+#: src/ONEWSENG.cpp:1304
 #, c-format
 msgid ""
 "Make haste! You have only %d years and %d month left to achieve your goal."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1305
+#: src/ONEWSENG.cpp:1308
 #, c-format
 msgid "Make haste! You have only %d years left to achieve your goal."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1309
+#: src/ONEWSENG.cpp:1312
 #, c-format
 msgid ""
 "Make haste! You have only %d year and %d months left to achieve your goal."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1313
+#: src/ONEWSENG.cpp:1316
 #, c-format
 msgid ""
 "Make haste! You have only %d year and %d month left to achieve your goal."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1317
+#: src/ONEWSENG.cpp:1320
 #, c-format
 msgid "Make haste! You have only %d year left to achieve your goal."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1321
+#: src/ONEWSENG.cpp:1324
 #, c-format
 msgid "Make haste! You have only %d months left to achieve your goal."
 msgstr ""
 
-#: src/ONEWSENG.cpp:1325
+#: src/ONEWSENG.cpp:1328
 #, c-format
 msgid "Make haste! You have only %d month left to achieve your goal."
 msgstr ""
 
 #. TRANSLATORS: A <Weapon/Ship> of yours has broken down due to the lack of maintenance funds.
-#: src/ONEWSENG.cpp:1359
+#: src/ONEWSENG.cpp:1362
 #, c-format
 msgid "A %s of yours has broken down due to the lack of maintenance funds."
 msgstr ""
 
 #. TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
-#: src/ONEWSENG.cpp:1379
+#: src/ONEWSENG.cpp:1382
 #, c-format
 msgid ""
 "Your %s near %s has fallen into disrepair due to the lack of maintenance "
@@ -1593,25 +1589,25 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: <King's Kingdom> has retired and quit the game.
-#: src/ONEWSENG.cpp:1412
+#: src/ONEWSENG.cpp:1415
 #, c-format
 msgid "%s has retired and quit the game."
 msgstr ""
 
 #. TRANSLATORS: <King's Kingdom> has quit the game.
-#: src/ONEWSENG.cpp:1430
+#: src/ONEWSENG.cpp:1433
 #, c-format
 msgid "%s has quit the game."
 msgstr ""
 
 #. TRANSLATORS: The current game has been saved to <File>.
-#: src/ONEWSENG.cpp:1448
+#: src/ONEWSENG.cpp:1451
 #, c-format
 msgid "The current game has been saved to %s."
 msgstr ""
 
 #. TRANSLATORS: The connection with <King's Kingdom> has been lost.
-#: src/ONEWSENG.cpp:1466
+#: src/ONEWSENG.cpp:1469
 #, c-format
 msgid "The connection with %s has been lost."
 msgstr ""
@@ -2251,68 +2247,68 @@ msgstr ""
 msgid "Steal which type of secrets?"
 msgstr ""
 
-#: src/OSYS.cpp:457
+#: src/OSYS.cpp:488
 msgid "Unable to determine a location for storing the game configuration."
 msgstr ""
 
 #. TRANSLATORS: Waiting for <King's Kingdom>
-#: src/OSYS.cpp:829
+#: src/OSYS.cpp:860
 #, c-format
 msgid "Waiting for %s"
 msgstr ""
 
-#: src/OSYS.cpp:1488
+#: src/OSYS.cpp:1520
 msgid "Cheat Mode Enabled."
 msgstr ""
 
-#: src/OSYS.cpp:1556
+#: src/OSYS.cpp:1588
 msgid "Opaque report mode."
 msgstr ""
 
-#: src/OSYS.cpp:1558
+#: src/OSYS.cpp:1590
 msgid "Transparent report mode."
 msgstr ""
 
-#: src/OSYS.cpp:1774
+#: src/OSYS.cpp:1806
 msgid ""
 "Your technology has advanced.\n"
 "You can now invoke all Greater Beings."
 msgstr ""
 
-#: src/OSYS.cpp:1806
+#: src/OSYS.cpp:1838
 msgid "Your king is now immortal."
 msgstr ""
 
-#: src/OSYS.cpp:1808
+#: src/OSYS.cpp:1840
 msgid "King immortal mode is now disabled."
 msgstr ""
 
-#: src/OSYS.cpp:1836
+#: src/OSYS.cpp:1868
 msgid "Fast build is now disabled"
 msgstr ""
 
-#: src/OSYS.cpp:1838
+#: src/OSYS.cpp:1870
 msgid "Fast build is now enabled"
 msgstr ""
 
-#: src/OSYS.cpp:2598
+#: src/OSYS.cpp:2630
 #, c-format
 msgid "The current screen has been written to file %s."
 msgstr ""
 
-#: src/OSYS.cpp:2639
+#: src/OSYS.cpp:2671
 msgid "Failed Loading Game"
 msgstr ""
 
-#: src/OSYS.cpp:2650
+#: src/OSYS.cpp:2682
 msgid "Game Loaded Successfully"
 msgstr ""
 
-#: src/OSYS.cpp:2677
+#: src/OSYS.cpp:2709
 msgid "Game Saved Successfully"
 msgstr ""
 
-#: src/OSYS.cpp:2749
+#: src/OSYS.cpp:2781
 msgid "Unable to locate the game resources."
 msgstr ""
 
@@ -3248,16 +3244,16 @@ msgstr ""
 msgid "Spy Cloak:"
 msgstr ""
 
-#: src/OU_CARA.cpp:184 src/OU_CARA.cpp:205 src/OU_MARIF.cpp:640
-#: src/OU_MARIF.cpp:660
+#: src/OU_CARA.cpp:158 src/OU_CARA.cpp:179 src/OU_MARIF.cpp:610
+#: src/OU_MARIF.cpp:630
 msgid "Set Stop"
 msgstr ""
 
-#: src/OU_CARA.cpp:200 src/OU_MARIF.cpp:655
+#: src/OU_CARA.cpp:174 src/OU_MARIF.cpp:625
 msgid "Pick up: "
 msgstr ""
 
-#: src/OU_CARA.cpp:213 src/OU_MARIF.cpp:668
+#: src/OU_CARA.cpp:187 src/OU_MARIF.cpp:638
 msgid "View Stop"
 msgstr ""
 
@@ -6123,7 +6119,7 @@ msgid "Date"
 msgstr ""
 
 # data/resource/help.res:43
-msgid "This shows current Date. "
+msgid "This shows the current Date. "
 msgstr ""
 
 # data/resource/help.res:47
@@ -6136,7 +6132,7 @@ msgstr ""
 
 # data/resource/help.res:51
 msgid ""
-"This map shows the world's natural features & the location of villages & "
+"This map shows the world's natural features and the location of villages and "
 "units. "
 msgstr ""
 
@@ -6160,7 +6156,7 @@ msgstr ""
 
 # data/resource/help.res:63
 msgid ""
-"This will take you to a menu where you can select a bribe to offer to the "
+"This takes you to a menu where you can select a bribe to offer to the "
 "selected person. "
 msgstr ""
 
@@ -6170,12 +6166,12 @@ msgstr ""
 
 # data/resource/help.res:67
 msgid ""
-"This will enable you to choose a structure to build. If you do not have "
-"enough money to build a structure, this tile will be disabled. "
+"This enables you to choose a structure to build. If you do not have enough "
+"money to build a structure, this tile will be disabled. "
 msgstr ""
 
 # data/resource/help.res:71
-msgid "This will cancel your present action. "
+msgid "This cancels your present action. "
 msgstr ""
 
 # data/resource/help.res:74
@@ -6183,7 +6179,7 @@ msgid "Capture"
 msgstr ""
 
 # data/resource/help.res:75
-msgid "This will capture the selected structure for your kingdom. "
+msgid "This captures the selected structure for your kingdom. "
 msgstr ""
 
 # data/resource/help.res:78
@@ -6192,7 +6188,7 @@ msgstr ""
 
 # data/resource/help.res:79
 msgid ""
-"This will toggle production in this factory between iron, copper and clay "
+"This toggles production in this factory between iron, copper, and clay "
 "products. "
 msgstr ""
 
@@ -6202,8 +6198,8 @@ msgstr ""
 
 # data/resource/help.res:83
 msgid ""
-"This will collect tax from the selected village. If you right-click on this "
-"you will be able to tax your villagers automatically. "
+"This collects tax from the selected village. If you right-click on this, you "
+"will be able to tax your villagers automatically. "
 msgstr ""
 
 # data/resource/help.res:89
@@ -6229,7 +6225,7 @@ msgid "Demote Unit"
 msgstr ""
 
 # data/resource/help.res:98
-msgid "This will demote the selected General to a common soldier. "
+msgid "This demotes the selected General to a common soldier. "
 msgstr ""
 
 # #-#-#-#-#  -  #-#-#-#-#
@@ -6241,14 +6237,14 @@ msgstr ""
 
 # data/resource/help.res:102
 msgid ""
-"This will grant money to the selected village. If you right-click on this "
-"you will be able to grant money automatically. "
+"This grants money to the selected village. If you right-click on this, you "
+"will be able to grant money automatically. "
 msgstr ""
 
 # data/resource/help.res:106
 msgid ""
-"This will grant money to the selected village to lower the villagers' "
-"loyalty or resistance. "
+"This grants money to the selected village to lower the villagers' loyalty or "
+"resistance. "
 msgstr ""
 
 # data/resource/help.res:109
@@ -6257,9 +6253,9 @@ msgstr ""
 
 # data/resource/help.res:110
 msgid ""
-"This will hire a caravan from this market so that you can conduct trade. It "
-"will be disabled if you have too few villagers to support any more caravans. "
-"10 villagers are needed to support each caravan. "
+"This hires a caravan from this market so that you can conduct trade. It is "
+"disabled if you have too few villagers to support any more caravans. 10 "
+"villagers are needed to support each caravan. "
 msgstr ""
 
 # data/resource/help.res:113
@@ -6276,9 +6272,9 @@ msgstr ""
 
 # data/resource/help.res:118
 msgid ""
-"This will invoke a Greater Being who will then appear over your Seat of "
-"Power. This tile will be disabled until you have enough praying points to "
-"make invocation possible. "
+"This invokes a Greater Being who will then appear over your Seat of Power. "
+"This tile is disabled until you have enough praying points to make "
+"invocation possible. "
 msgstr ""
 
 # data/resource/help.res:121
@@ -6305,7 +6301,7 @@ msgid "Mobilize Workers"
 msgstr ""
 
 # data/resource/help.res:130
-msgid "This will cause all workers to exit the building immediately. "
+msgid "This causes all workers to exit the building immediately. "
 msgstr ""
 
 # data/resource/help.res:133
@@ -6313,9 +6309,7 @@ msgid "Mobilize Spy"
 msgstr ""
 
 # data/resource/help.res:134
-msgid ""
-"This will send the selected spy out of the place where he has been "
-"infiltrated. "
+msgid "This sends the selected spy out of the place where he has infiltrated. "
 msgstr ""
 
 # data/resource/help.res:137
@@ -6324,8 +6318,8 @@ msgstr ""
 
 # data/resource/help.res:138
 msgid ""
-"The will disembark all of the units from this ship. This tile will be "
-"disabled if your ship is not close enough to the shore. "
+"The disembarks all of the units from this ship. This tile is disabled if "
+"your ship is not close enough to the shore. "
 msgstr ""
 
 # data/resource/help.res:141
@@ -6333,7 +6327,7 @@ msgid "Sortie"
 msgstr ""
 
 # data/resource/help.res:142
-msgid "This will sortie the troop from this fort. "
+msgid "This sorties the troop from this fort. "
 msgstr ""
 
 # data/resource/help.res:145
@@ -6341,7 +6335,7 @@ msgid "Withdraw"
 msgstr ""
 
 # data/resource/help.res:146
-msgid "This will immediately withdraw your troop to its home fort. "
+msgid "This immediately withdraws your troop to its home fort. "
 msgstr ""
 
 # data/resource/help.res:149
@@ -6349,7 +6343,7 @@ msgid "Previous Menu"
 msgstr ""
 
 # data/resource/help.res:150
-msgid "This will return you to the previous menu. "
+msgid "This returns you to the previous menu. "
 msgstr ""
 
 # data/resource/help.res:153
@@ -6357,7 +6351,7 @@ msgid "Promote"
 msgstr ""
 
 # data/resource/help.res:154
-msgid "This will promote the selected common soldier to General. "
+msgid "This promotes the selected common soldier to a General. "
 msgstr ""
 
 # data/resource/help.res:157
@@ -6366,9 +6360,9 @@ msgstr ""
 
 # data/resource/help.res:158
 msgid ""
-"This will recruit a peasant from the selected village. For each click, one "
-"peasant will exit. This tile will be disabled if there are no more peasants "
-"in the village. "
+"This recruits a peasant from the selected village. For each click, one "
+"peasant exits. This tile is disabled if there are no more peasants in the "
+"village. "
 msgstr ""
 
 # data/resource/help.res:161
@@ -6377,7 +6371,7 @@ msgstr ""
 
 # data/resource/help.res:162
 msgid ""
-"This orders the start of a research project. This will be disabled if all "
+"This orders the start of a research project. This is disabled if all "
 "possible research has been completed. "
 msgstr ""
 
@@ -6392,23 +6386,22 @@ msgstr ""
 
 # data/resource/help.res:166
 msgid ""
-"This will award an honor to the selected person. For each honor, the "
-"person's loyalty will increase by 10 points. This will be disabled for the "
-"King. "
+"This awards an honor to the selected person. For each honor, the person's "
+"loyalty increases by 10 points. This is disabled for the King. "
 msgstr ""
 
 # data/resource/help.res:170
 msgid ""
-"This will award an honor to the selected General or soldier in this fort. "
-"For each honor, the unit's loyalty will increase by 10 points. This will be "
-"disabled for the King. "
+"This awards an honor to the selected General or soldier in this fort. For "
+"each honor, the unit's loyalty increases by 10 points. This is disabled for "
+"the King. "
 msgstr ""
 
 # data/resource/help.res:174
 msgid ""
-"This will award an honor to the selected General or prayer in this Seat of "
-"Power. For each honor, the unit's loyalty will increase by 10 points. This "
-"will be disabled for the King. "
+"This awards an honor to the selected General or prayer in this Seat of "
+"Power. For each honor, the unit's loyalty increases by 10 points. This is "
+"disabled for the King. "
 msgstr ""
 
 # data/resource/help.res:177
@@ -6474,8 +6467,8 @@ msgstr ""
 
 # data/resource/help.res:202
 msgid ""
-"When this is disabled, it will keep your spy's change of color a secret. You "
-"will retain the ability to control your spy's movement. "
+"When this is disabled, it keeps your spy's change of color a secret. You "
+"retain the ability to control your spy's movement. "
 msgstr ""
 
 # data/resource/help.res:205
@@ -6484,9 +6477,8 @@ msgstr ""
 
 # data/resource/help.res:206
 msgid ""
-"When this is enabled, it will announce your spy's change of color to the "
-"kingdom that he is joining. You will lose your ability to control your spy's "
-"movement. "
+"When this is enabled, it announces your spy's change of color to the kingdom "
+"that he is joining. You lose your ability to control your spy's movement. "
 msgstr ""
 
 # data/resource/help.res:209
@@ -6494,7 +6486,7 @@ msgid "Succeed to the Crown"
 msgstr ""
 
 # data/resource/help.res:210
-msgid "This will elevate the selected person to the Crown. "
+msgid "This elevates the selected person to the Crown. "
 msgstr ""
 
 # data/resource/help.res:213
@@ -6503,9 +6495,9 @@ msgstr ""
 
 # data/resource/help.res:214
 msgid ""
-"This will train a villager in a selected skill.  This tile will be disabled "
-"if there are no more peasants in the village or if you do not have a General "
-"in a fort linked to the village. "
+"This trains a villager in a selected skill.  This tile is disabled if there "
+"are no more peasants in the village or if you do not have a General in a "
+"fort linked to the village. "
 msgstr ""
 
 # data/resource/help.res:217
@@ -6514,9 +6506,9 @@ msgstr ""
 
 # data/resource/help.res:218
 msgid ""
-"This will take you to a menu where you can select the type of this kingdom's "
-"secrets to view. The secrets that you can view will depend on the skill "
-"level of your spy. "
+"This takes you to a menu where you can select the type of this kingdom's "
+"secrets to view. The secrets that you can view depends on the skill level of "
+"your spy. "
 msgstr ""
 
 # data/resource/help.res:221
@@ -6524,7 +6516,7 @@ msgid "Drop spy identity"
 msgstr ""
 
 # data/resource/help.res:222
-msgid "This will cause the spy to give up his spying identity. "
+msgid "This causes the spy to give up his spying identity. "
 msgstr ""
 
 # data/resource/help.res:225
@@ -6533,8 +6525,8 @@ msgstr ""
 
 # data/resource/help.res:226
 msgid ""
-"With this set your caravans and ships will automatically pick up the surplus "
-"goods from this market or harbor. "
+"With this set, your caravans and ships will automatically pick up the "
+"surplus goods from this market or harbor. "
 msgstr ""
 
 # data/resource/help.res:229
@@ -6543,7 +6535,7 @@ msgstr ""
 
 # data/resource/help.res:230
 msgid ""
-"With this set your caravans and ships will not pick up anything from this "
+"With this set, your caravans and ships will not pick up anything from this "
 "market or harbor. "
 msgstr ""
 
@@ -6553,8 +6545,8 @@ msgstr ""
 
 # data/resource/help.res:234
 msgid ""
-"This will disband the selected unit. If the selected unit is a foreign spy, "
-"this will execute him. "
+"This disbands the selected unit. If the selected unit is a foreign spy, this "
+"executes him. "
 msgstr ""
 
 # data/resource/help.res:237
@@ -6572,7 +6564,7 @@ msgid "View a caravan's trade stop"
 msgstr ""
 
 # data/resource/help.res:242
-msgid "This will center your screen over this caravan stop. "
+msgid "This centers your screen over this caravan stop. "
 msgstr ""
 
 # data/resource/help.res:245
@@ -6580,7 +6572,7 @@ msgid "Delete a caravan's trade stop"
 msgstr ""
 
 # data/resource/help.res:246
-msgid "Clicking here will delete this caravan trade stop. "
+msgid "Clicking here deletes this caravan trade stop. "
 msgstr ""
 
 # data/resource/help.res:249
@@ -6598,7 +6590,7 @@ msgid "View a ship's trade stop"
 msgstr ""
 
 # data/resource/help.res:254
-msgid "This will center your screen over this ship's trading stop. "
+msgid "This centers your screen over this ship's trading stop. "
 msgstr ""
 
 # data/resource/help.res:257
@@ -6606,7 +6598,7 @@ msgid "Delete a ship's trade stop"
 msgstr ""
 
 # data/resource/help.res:258
-msgid "Clicking here will delete this ship's trade stop. "
+msgid "Clicking here deletes this ship's trade stop. "
 msgstr ""
 
 # data/resource/help.res:261
@@ -6614,7 +6606,7 @@ msgid "Demolish a structure"
 msgstr ""
 
 # data/resource/help.res:262
-msgid "Clicking here will demolish this structure. "
+msgid "Clicking here demolishs this structure. "
 msgstr ""
 
 # data/resource/help.res:265
@@ -6622,7 +6614,7 @@ msgid "Sell a structure"
 msgstr ""
 
 # data/resource/help.res:266
-msgid "Clicking here will sell this structure. "
+msgid "Clicking here sells this structure. "
 msgstr ""
 
 # data/resource/help.res:269
@@ -6752,7 +6744,7 @@ msgid "Cancel building this structure."
 msgstr ""
 
 # data/resource/help.res:334
-msgid "Clicking here will cancel the building of this structure. "
+msgid "Clicking here cancels the building of this structure. "
 msgstr ""
 
 # data/resource/help.res:342
@@ -6822,7 +6814,7 @@ msgstr ""
 
 # data/resource/help.res:370
 msgid ""
-"When toggled to this mode your units will not fight unless attacked. If "
+"When toggled to this mode, your units will not fight unless attacked. If "
 "ordered to change location, they will not stop to fight off an attack. "
 msgstr ""
 
@@ -6832,9 +6824,9 @@ msgstr ""
 
 # data/resource/help.res:374
 msgid ""
-"When toggled to this mode your units will automatically attack an enemy in "
-"their area, but will not follow it out of the area. If ordered to change "
-"location, they will stop to fight off an attack and then continue. "
+"When toggled to this mode, your units will automatically attack an enemy in "
+"their area, but they will not follow it out of the area. If ordered to "
+"change location, they will stop to fight off an attack and then continue. "
 msgstr ""
 
 # data/resource/help.res:377
@@ -6864,7 +6856,7 @@ msgstr ""
 
 # data/resource/help.res:386
 msgid ""
-"When you Click on this tile your cursor will change into a large white "
+"When you Click on this tile, your cursor will change into a large white "
 "circle. Place this circle over your target and Click again. Repeat until the "
 "Mind Turner's power has been depleted. "
 msgstr ""
@@ -6875,7 +6867,7 @@ msgstr ""
 
 # data/resource/help.res:390
 msgid ""
-"When you Click on this tile your cursor will change into a large white "
+"When you Click on this tile, your cursor will change into a large white "
 "circle. Place this circle over your soldiers and Click again. Repeat until "
 "Kukulcan's power has been depleted. "
 msgstr ""
@@ -6886,7 +6878,7 @@ msgstr ""
 
 # data/resource/help.res:394
 msgid ""
-"When you Click on this tile it will cause the rains to come to the whole "
+"When you Click on this tile, it will cause the rains to come to the whole "
 "world. Repeat until Thor's power has been depleted. "
 msgstr ""
 
@@ -6896,7 +6888,7 @@ msgstr ""
 
 # data/resource/help.res:398
 msgid ""
-"When you Click on this tile your cursor will change into a small square. "
+"When you Click on this, tile your cursor will change into a small square. "
 "Place this square over your target and Click again. Repeat until Thor's "
 "power has been depleted. "
 msgstr ""

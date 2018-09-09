@@ -21,6 +21,8 @@ ${XGETTEXT} --default-domain=${DOMAIN} --directory=${DIR} \
 
 msgcat ${PODIR}/7kaa.src.pot ${PODIR}/7kaa.res.pot > ${PODIR}/7kaa.pot
 
-# NOTE: Downstream translations will need this after po template is updated
-# if "fr" then
-#msgmerge --lang=fr fr.po 7kaa.pot -o fr.new.po
+# NOTE: Downstream translations will need this after po template is updated.
+for i in `grep -v '^#' po/LINGUAS`; do
+  echo Updating $i.po;
+  msgmerge --update --lang=$i ${PODIR}/$i.po ${PODIR}/7kaa.pot
+done
