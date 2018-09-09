@@ -388,6 +388,9 @@ sub help_res_extract {
 			}
 			$msgid .= $line;
 		}
+		if ($msgid eq "") {
+			next;
+		}
 		print get_msgid($file, "", $msgid, $loc);
 		$loc = $line_no+1;
 	}
