@@ -1,6 +1,5 @@
 noinst_HEADERS = \
 	ALL.h \
-	storage_constants.h \
 	COLCODE.h \
 	COLOR.h \
 	CRC.h \
@@ -104,9 +103,6 @@ noinst_HEADERS = \
 	ORESX.h \
 	OROCK.h \
 	OROCKRES.h \
-	OSaveGameArray.h \
-	OSaveGameInfo.h \
-	OSaveGameProvider.h \
 	OSCROLL.h \
 	OSE.h \
 	OSERES.h \
@@ -126,17 +122,20 @@ noinst_HEADERS = \
 	OSPY.h \
 	OSTR.h \
 	OSYS.h \
+	OSaveGameArray.h \
+	OSaveGameInfo.h \
+	OSaveGameProvider.h \
 	OTALKMSG.h \
 	OTALKRES.h \
 	OTARRAY.h \
 	OTECHRES.h \
 	OTERRAIN.h \
 	OTORNADO.h \
-	OTownNetwork.h \
 	OTOWN.h \
 	OTOWNREC.h \
 	OTOWNRES.h \
 	OTUTOR.h \
+	OTownNetwork.h \
 	OUNIT.h \
 	OUNITALL.h \
 	OUNITRES.h \
@@ -174,8 +173,8 @@ noinst_HEADERS = \
 	file_reader.h \
 	file_util.h \
 	file_writer.h \
-	gettext.h \
 	gettext-gnu.h \
+	gettext.h \
 	input_stream.h \
 	mem_input_stream.h \
 	misc_uuid.h \
@@ -183,8 +182,10 @@ noinst_HEADERS = \
 	openal_audio.h \
 	output_stream.h \
 	platform.h \
-	session_desc.h \
 	player_desc.h \
+	posix_string_compat.h \
+	session_desc.h \
+	storage_constants.h \
 	surface.h \
 	surface_base.h \
 	surface_sdl.h \
