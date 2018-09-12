@@ -210,7 +210,7 @@ AS_IF([test "$audio_backend" = openal], [
   LIBS="$OPENAL_LIBS $LIBS"
 ])
 
-AM_PATH_SDL2([], [], [
+AM_PATH_SDL2([2.0.4], [], [
   AC_ERROR([SDL not found])
 ])
 CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
