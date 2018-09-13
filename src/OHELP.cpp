@@ -302,8 +302,9 @@ void Help::disp()
 			if( helpInfo->help_code[0] == help_code[0] &&
 				 strcmp( helpInfo->help_code, help_code )==0 )
 			{
+				const char *text_ptr = *helpInfo->help_text_ptr ? _(helpInfo->help_text_ptr) : helpInfo->help_text_ptr;
 				disp_help( help_x, help_y,
-							  _(helpInfo->help_title), _(helpInfo->help_text_ptr) );
+							  _(helpInfo->help_title), text_ptr );
 				break;
 			}
 		}
@@ -336,9 +337,10 @@ void Help::disp()
 			if( spotX >= helpInfo->area_x1 && spotY >= helpInfo->area_y1 &&
 				 spotX <= helpInfo->area_x2 && spotY <= helpInfo->area_y2 )
 			{
+				const char *text_ptr = *helpInfo->help_text_ptr ? _(helpInfo->help_text_ptr) : helpInfo->help_text_ptr;
 				disp_help( (helpInfo->area_x1+helpInfo->area_x2)/2,
 							  (helpInfo->area_y1+helpInfo->area_y2)/2,
-							  _(helpInfo->help_title), _(helpInfo->help_text_ptr) );
+							  _(helpInfo->help_title), text_ptr );
 				break;
 			}
 		}
