@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-09 15:18-0700\n"
-"PO-Revision-Date: 2018-08-17 10:53-0500\n"
+"POT-Creation-Date: 2018-09-09 15:39-0700\n"
+"PO-Revision-Date: 2018-09-13 12:36-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: src/AM.cpp:342 src/AM.cpp:354
 msgid "You cannot specify multiple -host or -join options."
@@ -194,28 +194,25 @@ msgstr "Бой"
 #: src/OR_TECH.cpp:152 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:117
 #: src/OU_MARIF.cpp:521
 msgid "Hit Points"
-msgstr "Здоровье"
+msgstr "здоровье"
 
 #: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1262
 msgid "Spy Skill"
-msgstr "Шпионские навыки"
+msgstr "навыки"
 
 #: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1264
 msgid "Action"
 msgstr "Действие"
 
 #: src/OFIRMIF3.cpp:88
-#, fuzzy
 msgid "Bribe"
-msgstr "Взятки"
+msgstr "Взятка"
 
 #: src/OFIRMIF3.cpp:116
-#, fuzzy
 msgid "Bribe Succeeded."
 msgstr "Подкуп удался."
 
 #: src/OFIRMIF3.cpp:122
-#, fuzzy
 msgid "Bribe Failed."
 msgstr "Подкуп провалился."
 
@@ -233,7 +230,7 @@ msgstr "И казнен."
 #: src/OFIRMIF3.cpp:247
 #, c-format
 msgid "Offer %s"
-msgstr "Предложить  %s"
+msgstr "Предложить %s"
 
 #: src/OFIRMIF3.cpp:545 src/OFIRMIF3.cpp:560
 msgid "Assassination Succeeded."
@@ -260,13 +257,12 @@ msgstr "Лидерство"
 #: src/OF_FACT.cpp:371
 #, c-format
 msgid "Producing %s Products"
-msgstr "Производится %s продуктов"
+msgstr "%s продуктов"
 
 # data/resource/help.res:78
 #: src/OF_FACT.cpp:383 src/OF_MINE.cpp:287
-#, fuzzy
 msgid "Monthly Production"
-msgstr "Сменить профиль производства"
+msgstr "Ежемесячное про-во"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:313
@@ -278,7 +274,7 @@ msgstr "Запасы сырья"
 # data/resource/help.res:317
 #: src/OF_FACT.cpp:396
 msgid "Product Stock"
-msgstr "Количество на складе"
+msgstr "Кол-во продуктов"
 
 #: src/OF_HARB.cpp:453 src/OU_MARIF.cpp:87
 msgid "Units"
@@ -352,11 +348,11 @@ msgstr "Добывается %s"
 # data/resource/help.res:341
 #: src/OF_MINE.cpp:294
 msgid "Mined Stock"
-msgstr "Промежуточный запас"
+msgstr "Промеж. запас"
 
 #: src/OF_MINE.cpp:297
 msgid "Untapped Reserve"
-msgstr "Неограниченный запас"
+msgstr "Неогр. запас"
 
 #. TRANSLATORS: <Fryhtan Type> Lair
 #: src/OF_MONS.cpp:137
@@ -428,9 +424,8 @@ msgid "Username:"
 msgstr "Логин:"
 
 #: src/OGAMEMP.cpp:1463
-#, fuzzy
 msgid "Unable to connect to 7kfans.com."
-msgstr "Невозможно соединиться из гостевой."
+msgstr "нет соединения с 7kfans.com."
 
 #: src/OGAMEMP.cpp:1947
 msgid "Unable to communicate with the network"
@@ -477,7 +472,7 @@ msgstr "Загружается таблица лидеров"
 
 #: src/OGAMEMP.cpp:2956 src/OGAMEMP.cpp:4863
 msgid "?anonymous?"
-msgstr "?anonymous?"
+msgstr "?аноним?"
 
 #: src/OGAMEMP.cpp:3029 src/OGAMEMP.cpp:4937
 msgid "The game host has disconnected."
@@ -599,17 +594,17 @@ msgstr "Нет"
 
 #: src/OGAMEND.cpp:264
 msgid "All Fryhtans have been Destroyed !"
-msgstr "Все Фрихтаны были уничтожены!"
+msgstr "Все Фрихтаны были уничтожены !"
 
 #: src/OGAMEND.cpp:267
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
-msgstr "Ваше королевство достигло наивысших боевых очков Фрихтанов!"
+msgstr "Ваше королевство достигло наивысших боевых очков Фрихтанов !"
 
 #. TRANSLATORS: <King's Kingdom> has Achieved the Highest Fryhtan Battling Score !
 #: src/OGAMEND.cpp:272
 #, c-format
 msgid "%s has Achieved the Highest Fryhtan Battling Score !"
-msgstr "%s has Achieved the Highest Fryhtan Battling Score !"
+msgstr "%s достигло наивысших боевых очков Фрихтанов ! "
 
 #. TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
 #: src/OGAMEND.cpp:283 src/OGAMEND.cpp:301 src/OGAMEND.cpp:319
@@ -638,21 +633,21 @@ msgstr "целевой отметки очков экономики %s !"
 #: src/OGAMEND.cpp:327
 #, c-format
 msgid "its Total Score Goal of %s !"
-msgstr "целевой отметки игровых очков  %s !"
+msgstr "целевой отметки игровых очков %s !"
 
 #: src/OGAMEND.cpp:336
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
-msgstr "Ваше королевство одержало победу над другими королевствами!"
+msgstr "Ваше королевство одержало победу над другими королевствами !"
 
 #. TRANSLATORS: <King's Kingdom> has Defeated All Other Kingdoms !
 #: src/OGAMEND.cpp:341
 #, c-format
 msgid "%s has Defeated All Other Kingdoms !"
-msgstr "%s одержал победу над другими королевствами!"
+msgstr "%s одержал победу над другими королевствами !"
 
 #: src/OGAMEND.cpp:351
 msgid "You Have Lost the Game !"
-msgstr "Вы проиграли!"
+msgstr "Вы проиграли !"
 
 #. TRANSLATORS: You Surrendered to <King's Kingdom> on <Date>.
 #: src/OGAMEND.cpp:370
@@ -667,7 +662,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:381
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
-msgstr "Ваше королевство постигло бесславное поражение!"
+msgstr "Ваше королевство постигло бесславное поражение !"
 
 #. TRANSLATORS: You Retired on <Date>.
 #: src/OGAMEND.cpp:396
@@ -724,7 +719,6 @@ msgid "King's Buildings Cleared"
 msgstr "Королевские строения зачищены"
 
 #: src/OGAMEND.cpp:429
-#, fuzzy
 msgid "Enemy Civilians Collaterally Damaged"
 msgstr "Гражданские противника понесли ущерб"
 
@@ -742,18 +736,16 @@ msgid "Population"
 msgstr "Население"
 
 #: src/OGAMEND.cpp:465 src/OR_RANK.cpp:84 src/OSPYA.cpp:45
-#, fuzzy
 msgid "Military"
-msgstr "Очки военного дела"
+msgstr "Армия"
 
 #: src/OGAMEND.cpp:466 src/OR_RANK.cpp:85 src/OSPYA.cpp:45
 msgid "Economy"
 msgstr "Экономика"
 
 #: src/OGAMEND.cpp:467 src/OR_NAT.cpp:131 src/OR_RANK.cpp:86
-#, fuzzy
 msgid "Reputation"
-msgstr "Очки репутации"
+msgstr "Репутация"
 
 #. TRANSLATORS: Part of "Fryhtan Battling"
 #: src/OGAMEND.cpp:474 src/OR_RANK.cpp:88
@@ -763,7 +755,7 @@ msgstr "Фрихтан"
 #. TRANSLATORS: Part of "Fryhtan Battling"
 #: src/OGAMEND.cpp:476 src/OR_RANK.cpp:90
 msgid "Battling"
-msgstr "Воинственность"
+msgstr "агрессия"
 
 #: src/OGAMEND.cpp:524 src/OR_RANK.cpp:135
 msgid "Population Score"
@@ -771,7 +763,7 @@ msgstr "Очки населения"
 
 #: src/OGAMEND.cpp:524 src/OR_RANK.cpp:135
 msgid "Military Score"
-msgstr "Очки военного дела"
+msgstr "Очки армии"
 
 #: src/OGAMEND.cpp:524 src/OR_RANK.cpp:135
 msgid "Economic Score"
@@ -799,7 +791,7 @@ msgstr "Финальный счет:  %s X "
 #: src/OGAMEND.cpp:565 src/OR_RANK.cpp:178
 #, c-format
 msgid "%s (Difficulty Rating)"
-msgstr "%s (Коэффициент сложности)"
+msgstr "%s (Коэф. сложности)"
 
 #. TRANSLATORS: +  <Number> (Bonus)  =  <Number>
 #: src/OGAMEND.cpp:580
@@ -817,7 +809,7 @@ msgstr "Очки : "
 
 #: src/OGAMHALL.cpp:285
 msgid "Period : "
-msgstr "Длительность : "
+msgstr "Время : "
 
 #: src/OGAMHALL.cpp:294 src/OGAMSCE2.cpp:410
 msgid "Difficulty : "
@@ -850,9 +842,8 @@ msgid "Error writing saved game data."
 msgstr "Ошибка записи данных сохранения."
 
 #: src/OGFILE.cpp:104
-#, fuzzy
 msgid "The game is not saved."
-msgstr " Игра не сохранена."
+msgstr "Игра не сохранена."
 
 #: src/OGFILE.cpp:126
 msgid "Cannot open save game file"
@@ -974,17 +965,17 @@ msgstr "Война"
 #. TRANSLATORS: Part of "Duration of Tense Status"
 #: src/ONATIONB.cpp:58
 msgid "Tense"
-msgstr "Напряженный"
+msgstr "Напряжен"
 
 #. TRANSLATORS: Part of "Duration of Neutral Status"
 #: src/ONATIONB.cpp:60
 msgid "Neutral"
-msgstr "Нейтральный"
+msgstr "Нейтраль"
 
 #. TRANSLATORS: Part of "Duration of Friendly Status"
 #: src/ONATIONB.cpp:62
 msgid "Friendly"
-msgstr "Дружественный"
+msgstr "Друг"
 
 #. TRANSLATORS: Par of "Duration of Alliance Status"
 #: src/ONATIONB.cpp:64
@@ -1116,7 +1107,7 @@ msgstr[2] "%d %s %s эмигрировали из %s в вашу деревню 
 #, c-format
 msgid "%d %s Peasant has immigrated from %s to your village of %s."
 msgid_plural "%d %s Peasants have immigrated from %s to your village of %s."
-msgstr[0] "%d %s крестьянин эмигрировал из %s  в вашу деревню %s."
+msgstr[0] "%d %s крестьянин эмигрировал из %s в вашу деревню %s."
 msgstr[1] "%d %s крестьян эмигрировали из %s в вашу деревню %s."
 msgstr[2] "%d %s крестьян эмигрировали из %s в вашу деревню %s."
 
@@ -1405,9 +1396,8 @@ msgid "Your general, %s, has been assassinated by an enemy spy."
 msgstr "Ваш Генерал, %s, был убит шпионом противника."
 
 #: src/ONEWSENG.cpp:1003
-#, fuzzy
 msgid "The enemy spy has been killed."
-msgstr " Шпион противника был убит."
+msgstr "Шпион противника был убит."
 
 #: src/ONEWSENG.cpp:1023
 msgid "An enemy spy has been killed while attempting to assassinate your King."
@@ -1699,9 +1689,8 @@ msgid "Recovered Treasure"
 msgstr "Добытые сокровища"
 
 #: src/OR_ECO.cpp:205
-#, fuzzy
 msgid "Worker Income"
-msgstr "Плата рабочим"
+msgstr "доход рабочим"
 
 #: src/OR_ECO.cpp:206
 msgid "Sale of Buildings"
@@ -1712,49 +1701,48 @@ msgid "Aid/Tribute from Other Kingdoms"
 msgstr "Помощь/Дань от других королевств"
 
 #: src/OR_ECO.cpp:208
-#, fuzzy
 msgid "Cheating"
 msgstr "Читерство"
 
 #: src/OR_ECO.cpp:232
 msgid "General Costs"
-msgstr "Общая стоимость"
+msgstr "стоимость Генералей"
 
 #: src/OR_ECO.cpp:233
 msgid "Spy Costs"
-msgstr "На шпионов"
+msgstr "стоимость шпионов"
 
 #: src/OR_ECO.cpp:234
 msgid "Other Mobile Human Unit Costs"
-msgstr "На другие передвижные отряды людей"
+msgstr "Стоимость других передвижных отрядов людей"
 
 #: src/OR_ECO.cpp:235
 msgid "Caravan Costs"
-msgstr "На караваны"
+msgstr "стоимость караванов"
 
 #: src/OR_ECO.cpp:236
 msgid "Weapons Costs"
-msgstr "На вооружение"
+msgstr "стоимость оружия"
 
 #: src/OR_ECO.cpp:237
 msgid "Ship Costs"
-msgstr "На корабли"
+msgstr "стоимость кораблей"
 
 #: src/OR_ECO.cpp:238
 msgid "Buildings Costs"
-msgstr "На постройки"
+msgstr "стоимость постройки"
 
 #: src/OR_ECO.cpp:239
 msgid "Training Units"
-msgstr "Тренировка"
+msgstr "Тренировка отрядов"
 
 #: src/OR_ECO.cpp:240
 msgid "Hiring Units"
-msgstr "На наем отрядов"
+msgstr "Наём отрядов"
 
 #: src/OR_ECO.cpp:241
 msgid "Honoring Units"
-msgstr "На награды отрядам"
+msgstr "Награждение отрядов"
 
 #: src/OR_ECO.cpp:242
 msgid "Foreign Worker Salaries"
@@ -1786,9 +1774,8 @@ msgstr "Командор"
 
 #. TRANSLATORS: Part of "Commanded Soldiers"
 #: src/OR_MIL.cpp:99
-#, fuzzy
 msgid "Commanded"
-msgstr "Под командованием"
+msgstr "под комвнд."
 
 #. TRANSLATORS: Part of "Commanded Soldiers"
 #: src/OR_MIL.cpp:101
@@ -1801,7 +1788,7 @@ msgstr "Статус"
 
 #: src/OR_MIL.cpp:127
 msgid "Unit Type"
-msgstr "Тип отряда"
+msgstr "Тип юнита"
 
 #: src/OR_MIL.cpp:128
 msgid "No. of Units"
@@ -1828,7 +1815,6 @@ msgid "Total Units: %s"
 msgstr "Итого отрядов: %s"
 
 #: src/OR_MIL.cpp:376
-#, fuzzy
 msgid "In Fort"
 msgstr "В форте"
 
@@ -1841,9 +1827,8 @@ msgid "On Ship"
 msgstr "На корабле"
 
 #: src/OR_MIL.cpp:390 src/OR_SPY.cpp:270
-#, fuzzy
 msgid "Mobile"
-msgstr "В пути"
+msgstr "в походе"
 
 #: src/OR_MIL.cpp:468
 msgid "Human General"
@@ -1948,7 +1933,7 @@ msgstr "Продолжительность %s"
 #: src/OR_NAT.cpp:546
 #, c-format
 msgid "Allow Your Units to Attack %s's Kingdom"
-msgstr "Позволить вашим отрядам атаковать королевство %s"
+msgstr "Позволить вашим отрядам атаковать %s"
 
 #. TRANSLATORS: <King>'s Kingdom's Treasure
 #: src/OR_NAT.cpp:561
@@ -1966,7 +1951,7 @@ msgstr "Еда королевства %s"
 #: src/OR_NAT.cpp:583
 #, c-format
 msgid "%s's Kingdom's Diplomatic Status with Other Kingdoms:"
-msgstr "Дипломатическое состояние королевства %s с другими королевствами :"
+msgstr "Дипломатическое состояние королевства %s с другими королевствами:"
 
 #: src/OR_NAT.cpp:606
 msgid "Trade Treaty"
@@ -2049,9 +2034,8 @@ msgid "Spy Name"
 msgstr "Имя шпиона"
 
 #: src/OR_SPY.cpp:74
-#, fuzzy
 msgid "Cloak"
-msgstr "Прикрытие"
+msgstr "плащ"
 
 #: src/OR_SPY.cpp:75
 msgid "Location"
@@ -2082,7 +2066,7 @@ msgstr "Исследуется"
 
 #: src/OR_TECH.cpp:119
 msgid "Research Progress"
-msgstr "Прогресс исследования"
+msgstr "Прогресс"
 
 #. TRANSLATORS: Part of "Tower of Science"
 #: src/OR_TECH.cpp:122
@@ -2128,7 +2112,7 @@ msgstr "Здание"
 
 #: src/OR_TOWN.cpp:113
 msgid "Unit Cost"
-msgstr "Стоимость отряда"
+msgstr "Стоимость юнита"
 
 #: src/OR_TOWN.cpp:117
 msgid "No. of Structures"
@@ -2170,19 +2154,19 @@ msgstr "Караван"
 
 #: src/OR_TRADE.cpp:88 src/OR_TRADE.cpp:119
 msgid "Stop 1"
-msgstr "Остановка 1"
+msgstr "один"
 
 #: src/OR_TRADE.cpp:89 src/OR_TRADE.cpp:120
 msgid "Stop 2"
-msgstr "Остановка 2"
+msgstr "два"
 
 #: src/OR_TRADE.cpp:90 src/OR_TRADE.cpp:121
 msgid "Stop 3"
-msgstr "Остановка 3"
+msgstr "три"
 
 #: src/OR_TRADE.cpp:91 src/OR_TRADE.cpp:122
 msgid "Goods Carried"
-msgstr "Товары/груз перенесены"
+msgstr "Товары перенесены"
 
 #: src/OR_TRADE.cpp:113
 msgid "Ship"
@@ -2216,7 +2200,7 @@ msgstr "Скролить Силу"
 
 #: src/OSITEDRW.cpp:67
 msgid "Nationality"
-msgstr "Национальность"
+msgstr "Раса"
 
 #: src/OSITEDRW.cpp:68
 msgid "Invoke"
@@ -2227,34 +2211,30 @@ msgid "Treasure"
 msgstr "Сокровища"
 
 #: src/OSITEDRW.cpp:80
-#, fuzzy
 msgid "Worth"
-msgstr "Цена/Сумма"
+msgstr "Сумма"
 
 #: src/OSKILL.cpp:34
-#, fuzzy
 msgid "Construction"
-msgstr "Строится/Строительство"
+msgstr "Строительство"
 
 #: src/OSKILL.cpp:36
 msgid "Mining"
-msgstr "Горная промышленность"
+msgstr "Горная пром."
 
 #: src/OSKILL.cpp:37
 msgid "Manufacture"
 msgstr "Производство"
 
 #: src/OSKILL.cpp:38
-#, fuzzy
 msgid "Research"
-msgstr "Исследуется"
+msgstr "Исследство"
 
 #: src/OSKILL.cpp:39 src/OUNITIF.cpp:1165
 msgid "Spying"
-msgstr "Слежка"
+msgstr "шпионство"
 
 #: src/OSKILL.cpp:40
-#, fuzzy
 msgid "Praying"
 msgstr "Моление"
 
@@ -2268,7 +2248,7 @@ msgstr "Сон"
 
 #: src/OSPY.cpp:598
 msgid "Sow Dissent"
-msgstr "Подстрекать неверующих"
+msgstr "Посеять раздор"
 
 #: src/OSPY.cpp:601
 msgid "Sabotage"
@@ -2283,15 +2263,13 @@ msgid "Villages"
 msgstr "Деревни"
 
 #: src/OSPYA.cpp:45
-#, fuzzy
 msgid "Trade"
 msgstr "Торговля"
 
 # data/resource/help.res:26
 #: src/OSPYA.cpp:45
-#, fuzzy
 msgid "Espionage"
-msgstr "Отчет о шпионаже"
+msgstr "шпионаж"
 
 #: src/OSPYA.cpp:328
 msgid "Steal which type of secrets?"
@@ -2303,7 +2281,7 @@ msgstr "Невозможно определить местоположение �
 
 #. TRANSLATORS: Waiting for <King's Kingdom>
 #: src/OSYS.cpp:860
-#, fuzzy, c-format
+#, c-format
 msgid "Waiting for %s"
 msgstr "Ожидается %s"
 
@@ -2332,7 +2310,6 @@ msgid "Your king is now immortal."
 msgstr "Теперь Ваш король бессмертен."
 
 #: src/OSYS.cpp:1840
-#, fuzzy
 msgid "King immortal mode is now disabled."
 msgstr "Бессмертие короля более недоступно."
 
@@ -2350,7 +2327,6 @@ msgid "The current screen has been written to file %s."
 msgstr "Текущий файл был записан в файл %s."
 
 #: src/OSYS.cpp:2671
-#, fuzzy
 msgid "Failed Loading Game"
 msgstr "Ошибка загрузки"
 
@@ -2371,7 +2347,6 @@ msgid "You haven't saved any games yet."
 msgstr "У Вас нет сохранённых игр."
 
 #: src/OSaveGameArray.cpp:386
-#, fuzzy
 msgid "Empty Game Slot"
 msgstr "Пустая ячейка"
 
@@ -2385,21 +2360,19 @@ msgstr "Время игры: "
 
 #: src/OSaveGameArray.cpp:623
 msgid "File Name: "
-msgstr "Название файла: "
+msgstr "имя файла: "
 
 #: src/OSaveGameArray.cpp:649
 msgid "File Date: "
 msgstr "Время файла: "
 
 #: src/OSaveGameArray.cpp:687
-#, fuzzy
 msgid "It will overwrite the existing saved game. Proceed?"
-msgstr "Данная игра будет перезаписана, продолжить?"
+msgstr "Данная игра будет перезаписана. продолжить?"
 
 #: src/OSaveGameArray.cpp:889
-#, fuzzy
 msgid "This saved game will be deleted. Proceed?"
-msgstr "Эта игра будет удалена, продолжить?"
+msgstr "Эта игра будет удалена. продолжить?"
 
 #: src/OSaveGameProvider.cpp:136
 msgid "Path too long to the saved game."
@@ -2443,7 +2416,7 @@ msgstr "%s предлагает Вам дружеское соглашение."
 #: src/OTALKENG.cpp:213
 #, c-format
 msgid "%s proposes an alliance treaty to you."
-msgstr "%s предлагает Вам военное соглашение."
+msgstr "%s предлагает Вам союзное соглашение."
 
 #. TRANSLATORS: <King's Kingdom> accepts your proposed trade treaty.
 #: src/OTALKENG.cpp:226
@@ -2557,7 +2530,7 @@ msgstr "%s прекращает с вами договор о союзе."
 #: src/OTALKENG.cpp:379
 #, c-format
 msgid "You request a cease-fire with %s."
-msgstr "Вы запрашиваете перемирие с%s."
+msgstr "Вы запрашиваете перемирие с %s."
 
 #. TRANSLATORS: <King's Kingdom> requests a cease-fire.
 #: src/OTALKENG.cpp:384
@@ -2593,7 +2566,7 @@ msgstr "Вы отказываетесь от прекращения огня с 
 #: src/OTALKENG.cpp:435
 #, c-format
 msgid "You request %s to declare war on %s%s."
-msgstr "Вы просите%s объявить войну %s%s."
+msgstr "Вы просите %s объявить войну %s%s."
 
 #. TRANSLATORS: <King 1's Kingdom> requests that you declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:440
@@ -2773,7 +2746,7 @@ msgstr "%s запрашивает %s в помощи от вас."
 #: src/OTALKENG.cpp:736
 #, c-format
 msgid "%s demands %s in tribute from you."
-msgstr "%s требует от вас %s."
+msgstr "%s требует в подаче от вас %s."
 
 #. TRANSLATORS: <King's Kingdom> agrees to give you <Amount> in aid.
 #: src/OTALKENG.cpp:748
@@ -2947,39 +2920,39 @@ msgstr "Вы отказываетесь посылать военную помо
 #: src/OTALKENG.cpp:1043
 #, c-format
 msgid "You request %s to join an embargo on trade with %s%s."
-msgstr "Вы просите %s присоединиться к эмбарго на торговлю с %s %s."
+msgstr "Вы просите %s присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: <King 1's Kingdom> requests you to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:1048
 #, c-format
 msgid "%s requests you to join an embargo on trade with %s%s."
-msgstr "%s просит присоединиться к эмбарго на торговлю с %s %s."
+msgstr "%s просит присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: <King 1's Kingdom> agrees to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:1057
 #, c-format
 msgid "%s agrees to join an embargo on trade with %s%s."
-msgstr "%s соглашается присоединиться к эмбарго на торговлю с %s %s."
+msgstr "%s соглашается присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: <King 1's Kingdom> refuses to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:1060
 #, c-format
 msgid "%s refuses to join an embargo on trade with %s%s."
-msgstr "%s отказывается присоединиться к эмбарго на торговлю с %s %s."
+msgstr "%s отказывается присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: You agree to join an embargo on trade with <King 1's Kingdom><Kingdom color> as requested by <King 2's Kingdom>.
 #: src/OTALKENG.cpp:1066
 #, c-format
 msgid "You agree to join an embargo on trade with %s%s as requested by %s."
 msgstr ""
-"Вы соглашаетесь присоединиться к эмбарго на торговлю с %s %s по запросу %s."
+"Вы соглашаетесь присоединиться к эмбарго на торговлю с %s%s по запросу %s."
 
 #. TRANSLATORS: You refuse to join an embargo on trade with <King 1's Kingdom><Kingdom color> as requested by <King 2's Kingdom>.
 #: src/OTALKENG.cpp:1069
 #, c-format
 msgid "You refuse to join an embargo on trade with %s%s as requested by %s."
 msgstr ""
-"Вы отказываетесь присоединиться к эмбарго на торговлю с %s %s по запросу %s."
+"Вы отказываетесь присоединиться к эмбарго на торговлю с %s%s по запросу %s."
 
 #. TRANSLATORS: You offer <Amount> for the throne of <King's Kingdom>.
 #: src/OTALKENG.cpp:1108
@@ -3030,7 +3003,7 @@ msgstr "Сообщение отправлено."
 
 #: src/OTALKRES.cpp:163
 msgid "How much tribute?"
-msgstr "Сколько Вы предлагаете?"
+msgstr "Сколько дани?"
 
 #: src/OTALKRES.cpp:170
 msgid "How much aid?"
@@ -3050,7 +3023,7 @@ msgstr "Предложить дружественное соглашение."
 
 #: src/OTALKRES.cpp:206
 msgid "Propose an alliance treaty."
-msgstr "Предложить военный союз."
+msgstr "Предложить союз соглашение."
 
 #: src/OTALKRES.cpp:207
 msgid "Terminate our trade treaty."
@@ -3062,7 +3035,7 @@ msgstr "Расторгнуть наше дружественное соглаш�
 
 #: src/OTALKRES.cpp:209
 msgid "Terminate our alliance treaty."
-msgstr "Расторгнуть наше военное соглашение."
+msgstr "Расторгнуть наше союзное соглашение."
 
 #: src/OTALKRES.cpp:210
 msgid "Request immediate military aid."
@@ -3133,7 +3106,6 @@ msgid "How much food do you want to purchase?"
 msgstr "Сколько продовольствия Вы хотите закупить?"
 
 #: src/OTALKRES.cpp:364
-#, fuzzy
 msgid "How much do you offer for 10 units of food?"
 msgstr "Сколько Вы предложите за 10 единиц продовольствия?"
 
@@ -3143,7 +3115,7 @@ msgstr "Какую технолонию?"
 
 #: src/OTALKRES.cpp:440
 msgid "Which version?"
-msgstr "Какой вариант?"
+msgstr "Какую вариантю?"
 
 #: src/OTALKRES.cpp:466
 msgid "How much do you offer?"
@@ -3159,7 +3131,6 @@ msgid "Confirm."
 msgstr "Подтвердить."
 
 #: src/OTALKRES.cpp:901
-#, fuzzy
 msgid ""
 "You've sent too many messages to this kingdom. You cannot send any new "
 "messages until the existing ones are processed."
@@ -3168,9 +3139,8 @@ msgstr ""
 "посылать сообщения, пока не будут обработаны ранние."
 
 #: src/OTALKRES.cpp:1090
-#, fuzzy
 msgid "Continue"
-msgstr "Контрибуция"
+msgstr "Продолжать"
 
 #: src/OTALKRES.cpp:1339
 msgid "Accept."
@@ -3186,7 +3156,7 @@ msgstr "Сопротивление"
 
 #: src/OTOWNIF.cpp:291
 msgid "Avg"
-msgstr "Среднее значение"
+msgstr "С/з"
 
 #: src/OTOWNIF.cpp:325
 msgid "Controlled by Rebels"
@@ -3203,21 +3173,18 @@ msgstr "Производство"
 #: src/OTOWNIF.cpp:1098
 msgid "Automatically Collect Tax from Villagers when their Loyalty reaches:"
 msgstr ""
-"Автоматически осуществлять сбор налога с жителей, когда их преданность "
-"достигнет:"
+"Автоматически осуществлять сбор налога, когда их преданность достигнет:"
 
 #: src/OTOWNIF.cpp:1100
 msgid "Automatically Grant Money to Villagers when their Loyalty drops below:"
-msgstr ""
-"Автоматически выделять деньги населению, когда их лояльность падает ниже:"
+msgstr "Автоматически выделять, когда их лояльность падает ниже:"
 
 #: src/OTOWNIF.cpp:1102
 msgid ""
 "(Left-click below to apply to this village. Right-click below to apply to "
 "all your villages.)"
 msgstr ""
-"(Щелкните левой кнопкой мыши, чтобы применить к данной деревне. Щелкните "
-"правой кнопкой мыши, чтобы применить ко всем Вашим деревням.)"
+"(Левый щелчек для данной деревни. Правый щелчек для всех ваших деревней.)"
 
 #: src/OTOWNIF.cpp:1115
 msgid "Disabled"
@@ -3225,7 +3192,7 @@ msgstr "Недоступно"
 
 #: src/OTUTOR.cpp:481
 msgid "Next Training"
-msgstr "Следующая тренировка"
+msgstr "Следующ"
 
 #: src/OTUTOR.cpp:482
 msgid "Quit Training"
@@ -3237,7 +3204,7 @@ msgstr "Учебные материалы не найдены."
 
 #: src/OUNIT.cpp:752 src/OUNITIF.cpp:1211
 msgid "Rebel Leader"
-msgstr "Предводитель мятежников"
+msgstr "Лидер мятежников"
 
 #: src/OUNIT.cpp:765 src/OUNITIF.cpp:1213
 msgid "General"
@@ -3247,7 +3214,7 @@ msgstr "Генерал"
 #: src/OUNITIF.cpp:1015
 #, c-format
 msgid "Please select a location to build the %s."
-msgstr "Пожалуйста, выберите место, чтобы построить %s."
+msgstr "выберите место, чтобы построить %s."
 
 #: src/OUNITIF.cpp:1055
 msgid "Please select a location to settle."
@@ -3304,12 +3271,12 @@ msgstr "Ближайшие враги"
 
 #: src/OUNITIF.cpp:1363
 msgid "Spy Cloak:"
-msgstr "Шпионский плащ:"
+msgstr "плащ:"
 
 #: src/OU_CARA.cpp:158 src/OU_CARA.cpp:179 src/OU_MARIF.cpp:610
 #: src/OU_MARIF.cpp:630
 msgid "Set Stop"
-msgstr "Задать остановку"
+msgstr "Задать стопу"
 
 #: src/OU_CARA.cpp:174 src/OU_MARIF.cpp:625
 msgid "Pick up: "
@@ -3317,7 +3284,7 @@ msgstr "Подобрать: "
 
 #: src/OU_CARA.cpp:187 src/OU_MARIF.cpp:638
 msgid "View Stop"
-msgstr "Просмотр остановки"
+msgstr "Просмотр"
 
 #: src/OU_MONS.cpp:65
 #, c-format
@@ -3387,7 +3354,6 @@ msgid "Ballista"
 msgstr "Баллиста"
 
 # data/resource/std/00005-UNIT.dbf
-#, fuzzy
 msgid "Broosken"
 msgstr "Брускен"
 
@@ -3411,9 +3377,8 @@ msgid "Chinese"
 msgstr "Китаец"
 
 # data/resource/std/00005-UNIT.dbf
-#, fuzzy
 msgid "Deezboanz"
-msgstr "Дизбонс"
+msgstr "Дизбонз"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Djini"
@@ -3428,7 +3393,6 @@ msgid "Dragon"
 msgstr "Дракон"
 
 # data/resource/std/00005-UNIT.dbf
-#, fuzzy
 msgid "Droog"
 msgstr "Друк"
 
@@ -3451,17 +3415,16 @@ msgid "Greek"
 msgstr "Грек"
 
 # data/resource/std/00005-UNIT.dbf
-#, fuzzy
 msgid "Haubudam"
-msgstr "Хабудам (Габудам)"
+msgstr "Хабудам"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Holgh"
-msgstr "Холг (Голг)"
+msgstr "Холг"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Ick"
-msgstr "Мерзкий монстр"
+msgstr "Ик"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Isis"
@@ -3476,7 +3439,7 @@ msgstr "Японец"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Jing Nung"
-msgstr "Цинг Нунг/Джинг Нунг"
+msgstr "Джинг Нунг"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Karrotten"
@@ -3524,7 +3487,7 @@ msgstr "Перс"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Pfith"
-msgstr "Пфиф"
+msgstr "Пиф"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "Phoenix"
@@ -3586,7 +3549,7 @@ msgstr "Зулу"
 
 # data/resource/std/00005-UNIT.dbf
 msgid "uNkulunkulu"
-msgstr "uNkulunkulu"
+msgstr "ункулункулу"
 
 # data/resource/std/00006-RACE.dbf
 msgid "Mayan"
@@ -3673,7 +3636,7 @@ msgstr ""
 "далекими королевствами или для соединения отдаленных частей вашей империи. "
 "Вы также узнаете, как устанавливать порты захода и как управлять грузом для "
 "своих кораблей, а также как переключаться между режимом автоматической "
-"торговли и режимом управления. "
+"торговли и управления"
 
 # data/resource/tut_intr/00003-8FRYHTAN.txt:1
 msgid ""
@@ -3698,7 +3661,7 @@ msgstr ""
 "В этом уроке вы научитесь использовать свое исследование оружия путем "
 "строительства военных заводов и производства оружия. Вы также узнаете, как "
 "управлять этим оружием в поле и как максимизировать его эффективность. "
-"Особое внимание будет уделено самому необычному оружию, Поркупайн. "
+"Внимание уделяется самому необычному оружию, Поркупайн"
 
 # data/resource/tut_intr/00005-5BAS_NAV.txt:1
 msgid ""
@@ -4530,7 +4493,7 @@ msgid ""
 msgstr ""
 "В этих учебных уроках для семи королей мы рассмотрим все основные аспекты "
 "игры. Чтобы перейти к следующей или предыдущей странице урока, вы можете "
-"щёлкнуть на кнопки со стрелками на экране или нажать клавиши «<» и «>» на "
+"щёлкнуть на кнопки со стрелками на экране или нажать клавиши < и > на "
 "клавиатуре. Каждый урок начнётся с игры, работающей со скоростью 3. "
 "Нажимайте более высокие цифры на клавиатуре, чтобы ускорить движение, или "
 "нажмите более низкие цифры, чтобы замедлить работу. Нажатие 0 "
@@ -5437,9 +5400,9 @@ msgid ""
 "cause their loyalty to decrease, so taxing too much can be a dangerous "
 "proposition. "
 msgstr ""
-"Это немедленно освободит 5 долларов США от каждого жителя деревни. Это также "
-"приведёт к снижению их лояльности, поэтому слишком много налогов может быть "
-"опасным предложением. "
+"Это немедленно освободит $5 от каждого жителя деревни. Это также приведёт к "
+"снижению их лояльности, поэтому слишком много налогов может быть опасным "
+"предложением. "
 
 # data/resource/tut_text/00008-2BAS_ECO.txt:119
 msgid ""
@@ -5912,7 +5875,7 @@ msgid ""
 ". . . or build your own Markets within Linking distance of their Villages. "
 "Then you can send Caravans to drop your goods off near a foreign Village. "
 msgstr ""
-"...или строить свои собственные рынки в пределах расстояния между их "
+". . . или строить свои собственные рынки в пределах расстояния между их "
 "деревнями. Затем вы можете отправить караванов, чтобы бросить товары рядом с "
 "чужой деревней. "
 
@@ -7202,7 +7165,7 @@ msgstr ""
 
 # data/resource/help.res:30
 msgid "Ranking Report"
-msgstr "Рейтинг"
+msgstr "Отчет о Рейтинг"
 
 # data/resource/help.res:31
 msgid ""
@@ -7229,7 +7192,6 @@ msgid "Date"
 msgstr "Дата"
 
 # data/resource/help.res:43
-#, fuzzy
 msgid "This shows the current Date. "
 msgstr "Показывает текущую дату. "
 
@@ -7242,7 +7204,6 @@ msgid "Terrain Map"
 msgstr "Карта местности"
 
 # data/resource/help.res:51
-#, fuzzy
 msgid ""
 "This map shows the world's natural features and the location of villages and "
 "units. "
@@ -7271,7 +7232,6 @@ msgid "This map mode shows the location of villages and units. "
 msgstr "Показывает местоположение деревень и других объектов. "
 
 # data/resource/help.res:63
-#, fuzzy
 msgid ""
 "This takes you to a menu where you can select a bribe to offer to the "
 "selected person. "
@@ -7283,7 +7243,6 @@ msgid "Build"
 msgstr "Строить"
 
 # data/resource/help.res:67
-#, fuzzy
 msgid ""
 "This enables you to choose a structure to build. If you do not have enough "
 "money to build a structure, this tile will be disabled. "
@@ -7292,7 +7251,6 @@ msgstr ""
 "счету не достаточно золота, данная функция будет недоступна. "
 
 # data/resource/help.res:71
-#, fuzzy
 msgid "This cancels your present action. "
 msgstr "Позволяет отменить предыдущее действие. "
 
@@ -7301,7 +7259,6 @@ msgid "Capture"
 msgstr "Захватить"
 
 # data/resource/help.res:75
-#, fuzzy
 msgid "This captures the selected structure for your kingdom. "
 msgstr ""
 "Позволяет захватить выбранное строение и сделать своей собственностью. "
@@ -7311,7 +7268,6 @@ msgid "Change Production"
 msgstr "Сменить профиль производства"
 
 # data/resource/help.res:79
-#, fuzzy
 msgid ""
 "This toggles production in this factory between iron, copper, and clay "
 "products. "
@@ -7324,7 +7280,6 @@ msgid "Collect Tax"
 msgstr "Собрать налоги"
 
 # data/resource/help.res:83
-#, fuzzy
 msgid ""
 "This collects tax from the selected village. If you right-click on this, you "
 "will be able to tax your villagers automatically. "
@@ -7356,7 +7311,6 @@ msgid "Demote Unit"
 msgstr "Понизить в должности"
 
 # data/resource/help.res:98
-#, fuzzy
 msgid "This demotes the selected General to a common soldier. "
 msgstr "Позволяет понизить Генерала до рядового солдата. "
 
@@ -7368,7 +7322,6 @@ msgid "Grant"
 msgstr "Пожертвовать"
 
 # data/resource/help.res:102
-#, fuzzy
 msgid ""
 "This grants money to the selected village. If you right-click on this, you "
 "will be able to grant money automatically. "
@@ -7377,7 +7330,6 @@ msgstr ""
 "включает функцию автоматического пожертвования. "
 
 # data/resource/help.res:106
-#, fuzzy
 msgid ""
 "This grants money to the selected village to lower the villagers' loyalty or "
 "resistance. "
@@ -7390,7 +7342,6 @@ msgid "Hire Caravan"
 msgstr "Нанять караван"
 
 # data/resource/help.res:110
-#, fuzzy
 msgid ""
 "This hires a caravan from this market so that you can conduct trade. It is "
 "disabled if you have too few villagers to support any more caravans. 10 "
@@ -7413,7 +7364,6 @@ msgid "Invoke Greater Being"
 msgstr "Призвать Всевышнего"
 
 # data/resource/help.res:118
-#, fuzzy
 msgid ""
 "This invokes a Greater Being who will then appear over your Seat of Power. "
 "This tile is disabled until you have enough praying points to make "
@@ -7451,7 +7401,6 @@ msgid "Mobilize Workers"
 msgstr "Мобилизовать рабочих"
 
 # data/resource/help.res:130
-#, fuzzy
 msgid "This causes all workers to exit the building immediately. "
 msgstr "Принуждает всех рабочих немедленно покинуть здание "
 
@@ -7460,7 +7409,6 @@ msgid "Mobilize Spy"
 msgstr "Мобилизовать шпиона"
 
 # data/resource/help.res:134
-#, fuzzy
 msgid "This sends the selected spy out of the place where he has infiltrated. "
 msgstr "Заставляет выбранного шпиона покинуть место, в которое он проник. "
 
@@ -7469,7 +7417,6 @@ msgid "Disembark from Ship"
 msgstr "Разгрузить корабль"
 
 # data/resource/help.res:138
-#, fuzzy
 msgid ""
 "The disembarks all of the units from this ship. This tile is disabled if "
 "your ship is not close enough to the shore. "
@@ -7482,7 +7429,6 @@ msgid "Sortie"
 msgstr "Покинуть место"
 
 # data/resource/help.res:142
-#, fuzzy
 msgid "This sorties the troop from this fort. "
 msgstr "Принуждает войска покинуть границы форта. "
 
@@ -7491,7 +7437,6 @@ msgid "Withdraw"
 msgstr "Отозвать"
 
 # data/resource/help.res:146
-#, fuzzy
 msgid "This immediately withdraws your troop to its home fort. "
 msgstr "Принуждает войска вернуть в свой форт. "
 
@@ -7500,7 +7445,6 @@ msgid "Previous Menu"
 msgstr "Предыдущее меню"
 
 # data/resource/help.res:150
-#, fuzzy
 msgid "This returns you to the previous menu. "
 msgstr "Откроет предыдущее меню. "
 
@@ -7509,7 +7453,6 @@ msgid "Promote"
 msgstr "Повысить"
 
 # data/resource/help.res:154
-#, fuzzy
 msgid "This promotes the selected common soldier to a General. "
 msgstr "Позволяет повысить рядового солдата до генерала. "
 
@@ -7518,7 +7461,6 @@ msgid "Recruit"
 msgstr "Нанять новобранца"
 
 # data/resource/help.res:158
-#, fuzzy
 msgid ""
 "This recruits a peasant from the selected village. For each click, one "
 "peasant exits. This tile is disabled if there are no more peasants in the "
@@ -7533,7 +7475,6 @@ msgid "Conduct Research"
 msgstr "Начать исследование"
 
 # data/resource/help.res:162
-#, fuzzy
 msgid ""
 "This orders the start of a research project. This is disabled if all "
 "possible research has been completed. "
@@ -7551,7 +7492,6 @@ msgid "Honors"
 msgstr "Оказать честь"
 
 # data/resource/help.res:166
-#, fuzzy
 msgid ""
 "This awards an honor to the selected person. For each honor, the person's "
 "loyalty increases by 10 points. This is disabled for the King. "
@@ -7561,7 +7501,6 @@ msgstr ""
 "короля. "
 
 # data/resource/help.res:170
-#, fuzzy
 msgid ""
 "This awards an honor to the selected General or soldier in this fort. For "
 "each honor, the unit's loyalty increases by 10 points. This is disabled for "
@@ -7572,7 +7511,6 @@ msgstr ""
 "10 очков. Данная функция не доступна для короля. "
 
 # data/resource/help.res:174
-#, fuzzy
 msgid ""
 "This awards an honor to the selected General or prayer in this Seat of "
 "Power. For each honor, the unit's loyalty increases by 10 points. This is "
@@ -7653,7 +7591,6 @@ msgid "Notification currently disabled. Click to enable."
 msgstr "Уведомление отключено. Нажмите, чтобы включить."
 
 # data/resource/help.res:202
-#, fuzzy
 msgid ""
 "When this is disabled, it keeps your spy's change of color a secret. You "
 "retain the ability to control your spy's movement. "
@@ -7666,7 +7603,6 @@ msgid "Notification currently enabled. Click to disable."
 msgstr "Уведомление в настоящее время включено. Нажмите, чтобы отключить."
 
 # data/resource/help.res:206
-#, fuzzy
 msgid ""
 "When this is enabled, it announces your spy's change of color to the kingdom "
 "that he is joining. You lose your ability to control your spy's movement. "
@@ -7680,7 +7616,6 @@ msgid "Succeed to the Crown"
 msgstr "Наследовать престол"
 
 # data/resource/help.res:210
-#, fuzzy
 msgid "This elevates the selected person to the Crown. "
 msgstr "Это поднимет выбранного человека до престола. "
 
@@ -7689,13 +7624,12 @@ msgid "Train"
 msgstr "Тренировка"
 
 # data/resource/help.res:214
-#, fuzzy
 msgid ""
 "This trains a villager in a selected skill.  This tile is disabled if there "
 "are no more peasants in the village or if you do not have a General in a "
 "fort linked to the village. "
 msgstr ""
-"Это будет обучать сельского жителя в выбранном навыке. Эта плитка будет "
+"Это буд обучатет сельского жителя в выбранном навыке. Эта плитка будет "
 "отключена, если в деревне больше нет крестьянина, или если у вас нет "
 "генерала в крепости, связанной с деревней. "
 
@@ -7704,7 +7638,6 @@ msgid "View Secrets"
 msgstr "Показать секреты"
 
 # data/resource/help.res:218
-#, fuzzy
 msgid ""
 "This takes you to a menu where you can select the type of this kingdom's "
 "secrets to view. The secrets that you can view depends on the skill level of "
@@ -7719,7 +7652,6 @@ msgid "Drop spy identity"
 msgstr "Падение шпионской внешности"
 
 # data/resource/help.res:222
-#, fuzzy
 msgid "This causes the spy to give up his spying identity. "
 msgstr "Это заставит шпиона отказаться от своей шпионской внешности. "
 
@@ -7728,7 +7660,6 @@ msgid "Automatic"
 msgstr "Автоматический"
 
 # data/resource/help.res:226
-#, fuzzy
 msgid ""
 "With this set, your caravans and ships will automatically pick up the "
 "surplus goods from this market or harbor. "
@@ -7741,7 +7672,6 @@ msgid "Nothing"
 msgstr "Ничего"
 
 # data/resource/help.res:230
-#, fuzzy
 msgid ""
 "With this set, your caravans and ships will not pick up anything from this "
 "market or harbor. "
@@ -7754,7 +7684,6 @@ msgid "Disband a unit"
 msgstr "Расформировать юнит"
 
 # data/resource/help.res:234
-#, fuzzy
 msgid ""
 "This disbands the selected unit. If the selected unit is a foreign spy, this "
 "executes him. "
@@ -7779,7 +7708,6 @@ msgid "View a caravan's trade stop"
 msgstr "Посмотреть торговую остановку каравана"
 
 # data/resource/help.res:242
-#, fuzzy
 msgid "This centers your screen over this caravan stop. "
 msgstr "Это остановит ваш экран над этой остановкой каравана. "
 
@@ -7788,7 +7716,6 @@ msgid "Delete a caravan's trade stop"
 msgstr "Удалить торговую остановку каравана"
 
 # data/resource/help.res:246
-#, fuzzy
 msgid "Clicking here deletes this caravan trade stop. "
 msgstr "Щелчок здесь удалит эту остановку каравана. "
 
@@ -7809,7 +7736,6 @@ msgid "View a ship's trade stop"
 msgstr "Посмотреть торговую остановку коробля"
 
 # data/resource/help.res:254
-#, fuzzy
 msgid "This centers your screen over this ship's trading stop. "
 msgstr "Это центрирует ваш экран над торговой остановкой этого корабля. "
 
@@ -7818,7 +7744,6 @@ msgid "Delete a ship's trade stop"
 msgstr "Отменить торговую остановку коробля"
 
 # data/resource/help.res:258
-#, fuzzy
 msgid "Clicking here deletes this ship's trade stop. "
 msgstr "Щелчок здесь удалит торговую остановку этого корабля. "
 
@@ -7827,7 +7752,6 @@ msgid "Demolish a structure"
 msgstr "Снести сооружение"
 
 # data/resource/help.res:262
-#, fuzzy
 msgid "Clicking here demolishs this structure. "
 msgstr "Щелчок здесь разрушит это сооружение. "
 
@@ -7836,7 +7760,6 @@ msgid "Sell a structure"
 msgstr "Продать сооружение"
 
 # data/resource/help.res:266
-#, fuzzy
 msgid "Clicking here sells this structure. "
 msgstr "Щелкнув здесь вы продадите это сооружение. "
 
@@ -7988,7 +7911,6 @@ msgid "Cancel building this structure."
 msgstr "Отмените строительство этой структуры."
 
 # data/resource/help.res:334
-#, fuzzy
 msgid "Clicking here cancels the building of this structure. "
 msgstr "Щелчок здесь отменяет здание этой структуры. "
 
@@ -8070,10 +7992,9 @@ msgstr ""
 
 # data/resource/help.res:369
 msgid "Passive Mode Enabled. Click for Aggressive Mode"
-msgstr "Пассивный режим включен. Нажмите для агрессивного режима"
+msgstr "Пассивный режим включен. Нажмите для Агрессия"
 
 # data/resource/help.res:370
-#, fuzzy
 msgid ""
 "When toggled to this mode, your units will not fight unless attacked. If "
 "ordered to change location, they will not stop to fight off an attack. "
@@ -8084,10 +8005,9 @@ msgstr ""
 
 # data/resource/help.res:373
 msgid "Aggressive Mode Enabled. Click for Passive Mode"
-msgstr "Агрессивный режим включен. Нажмите для пассивного режима"
+msgstr "Агрессивный режим включен. Нажмите для Пассивность"
 
 # data/resource/help.res:374
-#, fuzzy
 msgid ""
 "When toggled to this mode, your units will automatically attack an enemy in "
 "their area, but they will not follow it out of the area. If ordered to "
@@ -8128,7 +8048,6 @@ msgid "Change Loyalty"
 msgstr "Изменение лояльности"
 
 # data/resource/help.res:386
-#, fuzzy
 msgid ""
 "When you Click on this tile, your cursor will change into a large white "
 "circle. Place this circle over your target and Click again. Repeat until the "
@@ -8143,7 +8062,6 @@ msgid "Increase power of Maya Soldiers"
 msgstr "Увеличивает силу солдат Майя"
 
 # data/resource/help.res:390
-#, fuzzy
 msgid ""
 "When you Click on this tile, your cursor will change into a large white "
 "circle. Place this circle over your soldiers and Click again. Repeat until "
@@ -8158,7 +8076,6 @@ msgid "Summon Rain"
 msgstr "Призыв дождя"
 
 # data/resource/help.res:394
-#, fuzzy
 msgid ""
 "When you Click on this tile, it will cause the rains to come to the whole "
 "world. Repeat until Thor's power has been depleted. "
@@ -8171,7 +8088,6 @@ msgid "Summon Tornadoes"
 msgstr "Призыв торнадо"
 
 # data/resource/help.res:398
-#, fuzzy
 msgid ""
 "When you Click on this, tile your cursor will change into a small square. "
 "Place this square over your target and Click again. Repeat until Thor's "
