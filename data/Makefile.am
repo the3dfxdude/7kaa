@@ -1,4 +1,4 @@
-resdatadir = $(datadir)/7kaa
+resdatadir = $(pkgdatadir)
 nobase_dist_resdata_DATA = \
 	encyc/firm/factory.col \
 	encyc/firm/factory.icn \

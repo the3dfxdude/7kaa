@@ -35,21 +35,6 @@ AC_DEFUN([SEARCH_LIB_FLAGS], [
   ])
 ])
 
-dnl EVAL_SHELL_VAR(NAME)
-dnl Recursively does "eval NAME=$NAME" until $NAME stays the same
-AC_DEFUN([EVAL_SHELL_VAR], [
-  AS_VAR_PUSHDEF([prev], [ac_previous_$1])
-  AS_VAR_SET([prev], [$$1])
-  while true; do
-    eval $1="\"$$1\""
-    AS_VAR_IF([prev], ["$$1"], [
-      break
-    ])
-    AS_VAR_SET([prev], [$$1])
-  done
-  AS_VAR_POPDEF([prev])
-])
-
 # Checks for programs.
 CXXFLAGS="$CXXFLAGS -fsigned-char"
 AC_LANG(C++)
@@ -141,10 +126,9 @@ AC_ARG_ENABLE([network],
 #  [], [with_wine=no]
 #)
 
-AC_ARG_ENABLE([dynamic-support-libs],
-  AS_HELP_STRING([--enable-dynamic-suppport-libs],
-		 [do not link statically with libgcc and libstdc++ on mingw]),
-  [], [enable_dynamic_support_libs=no]
+AC_ARG_ENABLE([dynamic-mingw-gnulibs],
+  AS_HELP_STRING([--enable-dynamic-mingw-gnulibs], [enable dynamic linking to gnu libs on mingw]),
+  [], [enable_dynamic_mingw_gnulibs=no]
 )
 
 
@@ -247,30 +231,18 @@ AS_IF([test "$use_windows" = yes], [
 ])
 
 AS_IF([test "$use_mingw" = yes], [
-  AS_IF([test "$enable_dynamic_support_libs" = no], [
-    # Static linking on windows, plus a thread library work-around:
-    # The --whole-archive switch makes the linker try to static link anyway,
-    # even though the application does not call the library.
+  AS_IF([test "$enable_dynamic_mingw_gnulibs" = no], [
+    dnl Static linking on windows, plus a thread library work-around:
+    dnl The --whole-archive switch makes the linker try to static link anyway,
+    dnl even though the application does not call the library.
     LIBS="$LIBS -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive"
   ])
 ])
+dnl Note if mingw static is on, this is statically linked too
+LIBS="$LIBS $LIBINTL $LIBICONV"
+
 
 # Defines
-
-# Ensure the prefix is set
-test "x$prefix" = xNONE && prefix=$ac_default_prefix
-
-AS_IF([test "$use_mingw" != yes], [
-  pkgdatadir='${datadir}/${PACKAGE_TARNAME}'
-  EVAL_SHELL_VAR([pkgdatadir])
-  AC_DEFINE_UNQUOTED([PACKAGE_DATA_PATH], ["$pkgdatadir"],
-		     [Define to the path to the game data])
-])
-
-EVAL_SHELL_VAR([localedir])
-AC_DEFINE_UNQUOTED([LOCALE_PATH], ["$localedir"], [
-  Define to the locale path
-])
 
 AS_IF([test "$use_windows" != yes], [
   AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])

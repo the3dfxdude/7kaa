@@ -287,6 +287,9 @@ bin_PROGRAMS = 7kaa
 	vgautil.cpp \
 	vgautil2.cpp
 
+7kaa_CPPFLAGS = \
+	-DPACKAGE_DATA_DIR=\"$(pkgdatadir)\" \
+	-DLOCALE_DIR=\"$(localedir)\"
 
 7kaa_LDADD =
 
@@ -305,8 +308,6 @@ else
 endif
 
 7kaa_LDADD += ./platform/libplatform.a
-
-7kaa_LDADD += @LIBINTL@ @LIBICONV@
 
 if USE_CURL
 7kaa_LDADD += ./curl/libWebService.a
