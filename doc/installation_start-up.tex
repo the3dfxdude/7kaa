@@ -23,7 +23,7 @@
 
 \section{Minimum Requirements}
 
-To play 7kaa, the following hardware and software is required:
+To play \textit{Seven Kingdoms: Ancient Adversaries}, the following hardware and software is required:
 
 \begin{adjustwidth}{1cm}{}
 x86 or x86\_64 processor, Pentium or better \\
@@ -33,9 +33,11 @@ SDL2.0 with accelerated OpenGl or DirectX compliant video drivers \\
 
 \subsection{Optional Requirements}
 
+\begin{adjustwidth}{1cm}{}
 UDP/IP connection for LAN and Internet play
+\end{adjustwidth}
 
-\section{Installation and Update}
+%\section{Installation and Update}
 
 % NOTE: MacOs and BSD are not supported by this manual yet. You may find additional information regarding 7kaa on these operating systems on the internet. There are BSD ports of 7kaa, and 7kaa is known to install on MacOs.
 
@@ -43,89 +45,70 @@ UDP/IP connection for LAN and Internet play
 
 %Most Gnu/Linux distributions have a package for 7kaa. Use the package manager that comes with your distribution to install and update 7kaa. If your are unable to find the package in your distribution’s repository, try searching for 7kaa.
 
-\textbf{NOTE}: distributions that are not rolling release may have older packages in their stable branch. The official releases from 7kfans.com may be different. Although bugs may appear, the new releases usually have important updates and fixes. 
+%\textbf{NOTE}: distributions that are not rolling release may have older packages in their stable branch. The official releases from 7kfans.com may be different. Although bugs may appear, the new releases usually have important updates and fixes.
 
 %A Windows 32-bit installer is provided on the download page. It includes the required dependencies to play. 
 % give specifics
 %Follow the prompts that you will see as the installation progresses and choose your options. 
 
-Occasionally, an .exe is released for a development branch on the download page. 
+%Occasionally, an .exe is released for a development branch on the download page.
 %why?
-Only prebuilt Windows binaries are released via the Downloads page. For a development version on Linux, compile the git snapshot.
+%Only prebuilt Windows binaries are released via the Downloads page. For a development version on Linux, compile the git snapshot.
 
 \section{Building the Game on GNU/Linux}
 
-Make sure you have these installed: 
+Make sure you have these programs installed:
 
 \begin{adjustwidth}{1cm}{}
 make \\
-autopoint \\
+autoconf \\
 GCC 4.6+ or later (or other C++11 compliant compiler) \\
 git
 \end{adjustwidth}
+
+\clearpage
 	
 Then, install these:
 
 Required dependencies
 
 \begin{adjustwidth}{1cm}{}
-SDL 2.0.2 or later \\
+SDL 2.0.4 or later \\
 enet 1.3.xx \\
-OpenAL-soft or equivalent driver
+OpenAL-soft or equivalent driver \\
+Autoconf 2.65
 \end{adjustwidth}
 
 Optional dependencies
 
 \begin{adjustwidth}{1cm}{}
-Autoconf 2.65 (when using git snapshot.) \\
 libcurl (the URL transfer library, for full 7kfans multiplayer integration) \\
 gettext 0.18 or later \\
 Game music bundle
 \end{adjustwidth}
 
-To begin the process of compiling, download the source code:
+To compile, run:
 
 \begin{lstlisting}[language=bash]
 $ git clone git://www.7kfans.com/7kaa.git
-\end{lstlisting}
-	
-Run the following program in the root folder of the source tree to generate the build configurations: 
-
-\begin{lstlisting}[language=bash]
 $ autogen.sh
-\end{lstlisting}
-	
-Then, run the configure script:
-
-\begin{lstlisting}[language=bash]
 $ ./configure
-\end{lstlisting}
-	
-Compile the source using:
-
-\begin{lstlisting}[language=bash]
 $ make
-\end{lstlisting}
-
-	
-Install the game using:
-
-\begin{lstlisting}[language=bash]
-$ make install
+# make install
 \end{lstlisting}
 
 %\subsection{Compile with Translations}
 
 \subsection{How to Install the Music}
 
-Some packages require manually downloading the music from the download page. To install music, copy music into data folder or use PACKAGE\_DATA\_PATH.
+To install music, copy music into data folder or use PACKAGE\_DATA\_PATH.
 
 From the build directory, run:
 
 \begin{lstlisting}[language=bash]
 $ wget https://www.7kfans.com/downloads/7kaa-music.tar.bz2
 $ bzip2 -cd 7kaa-music.tar.bz2 | tar xvf -
-$ mv 7kaa-music data/ 
+$ mv 7kaa-music/music data/music
 \end{lstlisting}
 
 \section{Troubleshooting}
@@ -140,9 +123,21 @@ Errors during compile & Ensure you have the required dependencies. If you are un
 
 \section{Start up}
 
-\subsection{Git Snapshot}
+In the terminal, make install will allow you to invoke:
 
-To run the game from the build directory, you need to point to the game data folder. The game data folder is set by the environment variable SKDATA. In a bash shell, this can be accomplished by \$ SKDATA=data src/7kaa (where src/7kaa is in the 7kaa directory downloaded via git or in .zip / tar.bz2 form).
+\begin{lstlisting}[language=bash]
+$ 7kaa
+\end{lstlisting}
+
+%\subsection{Git Snapshot}
+
+To run the game from the build directory, you need to point to the game data folder. The game data folder is set by the environment variable SKDATA. In a bash shell, this can be accomplished by
+
+\begin{lstlisting}[language=bash]
+$ SKDATA=data src/7kaa
+\end{lstlisting}
+
+(where src/7kaa is in the 7kaa directory downloaded via git or in .zip / tar.bz2 form).
 
 %\subsection{Windows}
 
