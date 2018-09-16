@@ -1,6 +1,9 @@
-; install.nsi (v0.1)
+; install.nsi
 ; Written by Thomas Atkinson 12/4/2012
 ; Licensed under the gpl
+;
+; Updated by Jesse Allen for 2.14.xx and 2.15.xx
+;
 ; Requires NSIS to compile
 ;
 ; Installs 7kaa in a directory the user selects and creates an uninstaller
@@ -10,7 +13,7 @@
 
 ; You can achieve this with /NOCD, but this might get rolled into Makefile
 ; and this makes more sense.
-!cd ..\..
+!cd ..\..\dest
 
 ;--------------------------------
 ;Include Modern UI
@@ -99,17 +102,19 @@ Section "7kaa (required)" 7kaareq
   Rename "$INSTDIR\README" "$INSTDIR\README.txt"
   File ".\COPYING"
   Rename "$INSTDIR\COPYING" "$INSTDIR\COPYING.txt"
-  File ".\doc\7kaa-hotkeys-2.14.5.png"
-  File /r ".\data\encyc"
-  File /r ".\data\encyc2"
-  File /r ".\data\image"
-  File /r ".\data\resource"
-  File /r ".\data\scenari2"
-  File /r ".\data\scenario"
-  File /r ".\data\sound"
-  File /r ".\data\sprite"
-  File /r ".\data\tutorial"
-  File .\src\7kaa.exe
+  File ".\7kaa-hotkeys-2.14.5.png"
+  File ".\7kaa-manual.pdf"
+  File /r ".\encyc"
+  File /r ".\encyc2"
+  File /r ".\image"
+  File /r ".\locale"
+  File /r ".\resource"
+  File /r ".\scenari2"
+  File /r ".\scenario"
+  File /r ".\sound"
+  File /r ".\sprite"
+  File /r ".\tutorial"
+  File .\7kaa.exe
   File ".\SDL2.dll"
   File ".\libcurl.dll"
   
@@ -134,7 +139,7 @@ Section "Music" music
   SetOutPath "$INSTDIR"
   File ".\README-music.txt"
   File ".\COPYING-music.txt"
-  File /r ".\data\music"
+  File /r ".\music"
 
 SectionEnd
 
@@ -155,6 +160,7 @@ Section "Start Menu Shortcuts" startshort
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Seven Kingdoms AA.lnk" "$INSTDIR\7kaa.exe"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Hotkeys.lnk" "$INSTDIR\7kaa-hotkeys-2.14.5.png"
+  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Manual.lnk" "$INSTDIR\7kaa-manual.pdf"
   
   !insertmacro MUI_STARTMENU_WRITE_END
   
@@ -206,6 +212,7 @@ Section "Uninstall"
   Delete "$INSTDIR\COPYING.txt"
   Delete "$INSTDIR\README.txt"
   Delete "$INSTDIR\7kaa-hotkeys-2.14.5.png"
+  Delete "$INSTDIR\7kaa-manual.pdf"
   Delete "$INSTDIR\COPYING-music.txt"
   Delete "$INSTDIR\README-music.txt"
   Delete "$INSTDIR\OpenAL32.dll"
