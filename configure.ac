@@ -80,7 +80,6 @@ AC_CHECK_FUNCS([_NSGetExecutablePath])
 
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19])
-AM_ICONV
 
 # Configuration variables
 
@@ -178,6 +177,34 @@ AS_IF([test "$enable_asm" = yes], [
 
 # Library dependencies
 
+AS_IF([test "$USE_NLS" = "yes"], [
+  found_gettext=no
+  found_iconv=no
+  AC_CHECK_FUNC([gettext], [found_gettext=builtin])
+  AS_IF([test "$found_gettext" = no], [
+    AC_CHECK_LIB([intl], [gettext], [
+      found_gettext=libintl
+    ])
+  ])
+  AS_IF([test "$found_gettext" = no], [
+    AC_MSG_ERROR([gettext is required for NLS])
+  ])
+  AC_CHECK_FUNC([iconv], [found_iconv=builtin])
+  AS_IF([test "$found_iconv" = no], [
+    AC_CHECK_LIB([iconv], [iconv], [
+      found_iconv=libiconv
+    ])
+  ])
+  AS_IF([test "$found_iconv" = no], [
+    AC_CHECK_LIB([iconv], [libiconv], [
+      found_iconv=libiconv
+    ])
+  ])
+  AS_IF([test "$found_iconv" = no], [
+    AC_MSG_ERROR([iconv is required for NLS])
+  ])
+])
+
 AS_IF([test "$audio_backend" = openal], [
   PKG_CHECK_MODULES([OPENAL], [openal], [
     AC_DEFINE_UNQUOTED([OPENAL_AL_H], [<AL/al.h>],
@@ -198,6 +225,7 @@ AM_PATH_SDL2([2.0.4], [], [
   AC_ERROR([SDL not found])
 ])
 CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
+dnl FIXME: SDLmain can screw up some autoconf macros
 LIBS="$SDL_LIBS $LIBS"
 
 AS_IF([test "$enable_enet" = yes], [
@@ -238,8 +266,14 @@ AS_IF([test "$use_mingw" = yes], [
     LIBS="$LIBS -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive"
   ])
 ])
+
 dnl Note if mingw static is on, this is statically linked too
-LIBS="$LIBS $LIBINTL $LIBICONV"
+AS_IF([test "$found_gettext" = libintl], [
+  LIBS="$LIBS -lintl"
+])
+AS_IF([test "$found_iconv" = libiconv], [
+  LIBS="$LIBS -liconv"
+])
 
 
 # Defines

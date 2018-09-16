@@ -287,7 +287,7 @@ bin_PROGRAMS = 7kaa
 	vgautil.cpp \
 	vgautil2.cpp
 
-7kaa_CPPFLAGS = \
+AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\"$(pkgdatadir)\" \
 	-DLOCALE_DIR=\"$(localedir)\"
 
