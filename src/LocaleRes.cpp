@@ -66,7 +66,7 @@ void LocaleRes::init(const char *locale)
 	if( !ctype )
 		return;
 
-	bindtextdomain(PACKAGE, LOCALE_PATH);
+	bindtextdomain(PACKAGE, LOCALE_DIR);
 	textdomain(PACKAGE);
 
 	LocaleRec *localeRec;

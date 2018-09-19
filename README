@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.15.0-dev
+Release version 2.15.0
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -11,30 +11,23 @@ details of the license. We are indebted to Enlight for making the 7kfans
 project possible and giving a new chance to build a community for fans
 of the game.
 
-Summary of changes in this release
+Summary of changes from 2.14.7 to 2.15.0
 ---------
- * Fixed the visibly fake spy loyalty, leading to easy spy detection
- * Increased the rate of fryhtan attacks, based on the number of lairs (MicroVirus)
- * Fixed the greater being mana exploit (sraboy)
- * Implement better penalty levels for killing civilians
- * Fixed a number of AI bugs
- * Fixed bugs and crashes
- * Improved platform compatibility
- * Disabled virtualized window scaling in Windows, which may fix strange mouse behavior
- * Added a login dialog for using 7kfans multiplayer service
- * Added support for NAT punch-through
+ * Enabed multiplayer sync checking by default
+ * Added experimental multiplayer game recording and replay (use 'r' at main
+   menu screen after playing a match)
+ * Enhanced localization support
+ * Enabled translation support on Windows
+ * Properly support system locales including UTF-8 codesets
+ * Added Russian fonts
+ * Added Russian translation
+ * Improved 64-bit platform support
+ * Upgraded to SDL 2.0.8 to work around Windows 10 1709 bug
+ * Improved mouse control and full-screen interaction
+ * Fixed obscure crashing bug with the Caravan interface
+ * Added game manual
 
 Thanks to all who made this release possible.
-
-
-What is missing from the open source version of the game
----------
-* The original game music. The music is provided by 7kfans, but separately
-  from the source tree. It is not under the GPL license, but it is free to
-  download and use with 7KAA.
-* The original game intro video. Support may be restored in future releases.
-* Any other content from original game CDs, game manual, including the version
-  2.12b game binary or older. This also includes the I*Magic Online service.
 
 
 System Requirements
@@ -56,20 +49,20 @@ Building the game
 ---------
 
 Required dependencies
-* GCC 4.6+ or later (or other C++11 compliant compiler)
-* SDL 2.0.2 or later (http://libsdl.org/)
+* GCC 4.6+ (C++11 compliant compiler)
+* SDL 2.0.8 (http://libsdl.org/)
 * enet 1.3.xx (http://enet.bespin.org/)
 * OpenAL-soft or equivalent driver (http://kcat.strangesoft.net/openal.html)
 
 Optional dependencies
 * Autoconf 2.65 (when using git snapshot)
-* libcurl the URL transfer library, for full 7kfans multiplayer integration
-* gettext 0.18 or later
-* Game music bundle (copy music into data folder or PACKAGE_DATA_PATH)
+* libcurl for full 7kfans multiplayer integration
+* gettext 0.19
+* Game music bundle (copy music into program data folder or PACKAGE_DATA_PATH)
 * NSIS for building a Windows installer
 
 
-Running
+Running locally from source build
 --------
 
 To run the game from the build directory, you need to point to the game data
