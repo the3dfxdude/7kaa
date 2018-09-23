@@ -119,7 +119,7 @@ public:
 	short	max_hit_points();
 	int   loyalty();
 	int	target_loyalty(int firmRecno);
-	int	is_nation(int firmRecno, int nationRecno);
+	int	is_nation(int firmRecno, int nationRecno, int checkSpy=0);
 
 public:
 	void	init_potential();

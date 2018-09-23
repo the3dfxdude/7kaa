@@ -1719,7 +1719,7 @@ void RemoteMsg::firm_set_worker_home()
 	// packet structure : <firm recno> <town recno> <workerId>
 	short *shortPtr = (short *)data_buf;
 
-	if( validate_firm(*shortPtr) && validate_town(shortPtr[1]) )
+	if( validate_firm(*shortPtr) && validate_town(shortPtr[1], 1) )
 	{
 #ifdef DEBUG_LONG_LOG
 		long_log->printf("firm %d workder %d migrate to town %d\n", shortPtr[0], shortPtr[2], shortPtr[1]);
