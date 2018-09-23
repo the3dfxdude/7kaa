@@ -2885,6 +2885,17 @@ void Firm::set_worker_home_town(int townRecno, char remoteAction, int workerId)
 	if( !workerId || workerId > worker_count )
 		return;
 
+	Town *townPtr = town_array[townRecno];
+	Worker* workerPtr = worker_array+workerId-1;
+
+	if( workerPtr->town_recno != townRecno )
+	{
+		if( !workerPtr->is_nation(firm_recno, nation_recno) )
+			return;
+		if( townPtr->population >= MAX_TOWN_POPULATION )
+			return;
+	}
+
 	if(!remoteAction && remote.is_enable() )
 	{
 		// packet structure : <firm recno> <town recno> <workderId>
@@ -2898,8 +2909,6 @@ void Firm::set_worker_home_town(int townRecno, char remoteAction, int workerId)
 	err_when( workerId<1 || workerId>worker_count );
 
 	//-------------------------------------------------//
-
-	Worker* workerPtr = worker_array+workerId-1;
 
    err_when( !workerPtr->race_id );
 
@@ -2915,7 +2924,7 @@ void Firm::set_worker_home_town(int townRecno, char remoteAction, int workerId)
 		int workerLoyalty = workerPtr->loyalty();
 
 		town_array[workerPtr->town_recno]->dec_pop(workerPtr->race_id, 1);
-		town_array[townRecno]->inc_pop(workerPtr->race_id, 1, workerLoyalty);
+		townPtr->inc_pop(workerPtr->race_id, 1, workerLoyalty);
 
 		workerPtr->town_recno = townRecno;
 	}

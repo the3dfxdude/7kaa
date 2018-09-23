@@ -452,9 +452,6 @@ int Firm::draw_detect_link_line(int actionDetect)
 				if( firm_res[firm_id]->live_in_town &&
 					 worker_array[selected_worker_id-1].is_nation(firm_recno, nation_array.player_recno) )
 				{
-					if(townPtr->population>=MAX_TOWN_POPULATION)
-						return 0;
-
 					set_worker_home_town(townPtr->town_recno, COMMAND_PLAYER);
 					se_ctrl.immediate_sound("PULL_MAN");
 					return 1;
