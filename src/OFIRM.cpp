@@ -2596,10 +2596,11 @@ void Firm::mobilize_all_workers(char remoteAction)
 		if(!unitRecno)
 			break; // keep the rest workers as there is no space for creating the unit
 
+		Unit* unitPtr = unit_array[unitRecno];
+		unitPtr->team_id = unit_array.cur_team_id;
+
 		if( nation_recno == nation_array.player_recno )
 		{
-			Unit* unitPtr = unit_array[unitRecno];
-			unitPtr->team_id = unit_array.cur_team_id;
 			unitPtr->selected_flag = 1;
 			unit_array.selected_count++;
 			if ( !unit_array.selected_recno )
