@@ -3722,7 +3722,7 @@ int Worker::max_attack_range()
 //
 // <int> firmRecno - the recno of the firm the worker works in
 // <int> nationRecno - the recno of the nation to check against.
-// <int> checkSpy - check spy against true nation
+// <int> checkSpy - check spy against true nation (default : 0)
 //
 int Worker::is_nation(int firmRecno, int nationRecno, int checkSpy)
 {
@@ -3771,13 +3771,8 @@ int Firm::should_show_info()
 
 	//----- if any of the workers belong to the player, show the info of this firm -----//
 
-	Worker* workerPtr = worker_array;
-
-	for( int i=0 ; i<worker_count ; i++, workerPtr++ )
-	{
-		if( workerPtr->is_nation(firm_recno, nation_array.player_recno, 1) )
-			return 1;
-	}
+	if( have_own_workers(1) )
+		return 1;
 
 	//---- if there is a phoenix of the player over this firm ----//
 
@@ -3922,4 +3917,23 @@ void Firm::reward(int workerId, int remoteAction)
 }
 //----------- End of function Firm::reward -----------//
 
+
+//--------- Begin of function Firm::have_own_workers ---------//
+//
+// if player has any workers in the building
+//
+// <int> checkSpy - optionally check for cloaked spies as well (default : 0)
+//
+int Firm::have_own_workers(int checkSpy)
+{
+	Worker* workerPtr = worker_array;
+
+	for( int i=0 ; i<worker_count ; i++, workerPtr++ )
+	{
+		if( workerPtr->is_nation(firm_recno, nation_array.player_recno, checkSpy) )
+			return 1;
+	}
+	return 0;
+}
+//----------- End of function Firm::have_own_workers -----------//
 

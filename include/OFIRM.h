@@ -297,6 +297,7 @@ public:
 	int		can_assign_capture();
 	int		can_worker_capture(int captureNationRecno);
 	virtual int	 is_worker_full();
+	int		have_own_workers(int checkSpy=0);
 
 	void 		set_worker_home_town(int townRecno, char remoteAction, int workerId=0);
 	int 		can_spy_bribe(int bribeWorkerId, int briberNationRecno);

@@ -219,7 +219,7 @@ void FirmBase::put_info(int refreshFlag)
 			button_reward.disable();
 		}
 
-		if (worker_count)
+		if( have_own_workers() )
 			button_vacate_firm.enable();
 		else
 			button_vacate_firm.disable();

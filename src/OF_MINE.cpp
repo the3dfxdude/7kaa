@@ -204,7 +204,7 @@ void FirmMine::put_info(int refreshFlag)
 			button_vacate_firm.set_help_code("MOBILIZE");
 		}
 
-		if (worker_count)
+		if( have_own_workers() )
 			button_vacate_firm.enable();
 		else
 			button_vacate_firm.disable();
