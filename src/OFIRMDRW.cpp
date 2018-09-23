@@ -447,10 +447,7 @@ int Firm::draw_detect_link_line(int actionDetect)
 
 			else if( rc==2 && selected_worker_id > 0 )
 			{
-				//--- only when this worker is ours ----//
-
-				if( firm_res[firm_id]->live_in_town &&
-					 worker_array[selected_worker_id-1].is_nation(firm_recno, nation_array.player_recno) )
+				if( firm_res[firm_id]->live_in_town )
 				{
 					set_worker_home_town(townPtr->town_recno, COMMAND_PLAYER);
 					se_ctrl.immediate_sound("PULL_MAN");
