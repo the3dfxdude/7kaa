@@ -60,6 +60,9 @@ void WebService::init()
 	// Use a hard timeout at 10 seconds. This is not foolproof, but it is
 	// somewhat necessary while we are using the blocking API.
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10L);
+#ifndef ENABLE_IPV6
+	curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+#endif
 
 	init_flag = 1;
 }
