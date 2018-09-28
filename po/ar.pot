@@ -49,105 +49,105 @@ msgstr ""
 
 #: src/OCONFIG.cpp:151
 msgid "New Player"
-msgstr ""
+msgstr "لاعب جديد"
 
 #: src/ODATE.cpp:40
 msgid "January"
-msgstr ""
+msgstr "يناير"
 
 #: src/ODATE.cpp:41
 msgid "February"
-msgstr ""
+msgstr "فبراير"
 
 #: src/ODATE.cpp:42
 msgid "March"
-msgstr ""
+msgstr "مارس"
 
 #: src/ODATE.cpp:43
 msgid "April"
-msgstr ""
+msgstr "إبريل"
 
 #: src/ODATE.cpp:44 src/ODATE.cpp:60
 msgid "May"
-msgstr ""
+msgstr "مايو"
 
 #: src/ODATE.cpp:45
 msgid "June"
-msgstr ""
+msgstr "يونيو"
 
 #: src/ODATE.cpp:46
 msgid "July"
-msgstr ""
+msgstr "يوليو"
 
 #: src/ODATE.cpp:47
 msgid "August"
-msgstr ""
+msgstr "أغسطس"
 
 #: src/ODATE.cpp:48
 msgid "September"
-msgstr ""
+msgstr "سبتمبر"
 
 #: src/ODATE.cpp:49
 msgid "October"
-msgstr ""
+msgstr "أكتوبر"
 
 #: src/ODATE.cpp:50
 msgid "November"
-msgstr ""
+msgstr "نوفمبر"
 
 #: src/ODATE.cpp:51
 msgid "December"
-msgstr ""
+msgstr "ديسمبر"
 
 #: src/ODATE.cpp:56
 msgid "Jan"
-msgstr ""
+msgstr "يناير"
 
 #: src/ODATE.cpp:57
 msgid "Feb"
-msgstr ""
+msgstr "فبراير"
 
 #: src/ODATE.cpp:58
 msgid "Mar"
-msgstr ""
+msgstr "مارس"
 
 #: src/ODATE.cpp:59
 msgid "Apr"
-msgstr ""
+msgstr "إبريل"
 
 #: src/ODATE.cpp:61
 msgid "Jun"
-msgstr ""
+msgstr "مايو"
 
 #: src/ODATE.cpp:62
 msgid "Jul"
-msgstr ""
+msgstr "يونيو"
 
 #: src/ODATE.cpp:63
 msgid "Aug"
-msgstr ""
+msgstr "أغسطس"
 
 #: src/ODATE.cpp:64
 msgid "Sep"
-msgstr ""
+msgstr "سبتمبر"
 
 #: src/ODATE.cpp:65
 msgid "Oct"
-msgstr ""
+msgstr "أكتوبر"
 
 #: src/ODATE.cpp:66
 msgid "Nov"
-msgstr ""
+msgstr "نوفمبر"
 
 #: src/ODATE.cpp:67
 msgid "Dec"
-msgstr ""
+msgstr "ديسمبر"
 
 #. TRANSLATORS: <Month> <Day>, <Year>
 #: src/ODATE.cpp:248 src/ODATE.cpp:252
 #, c-format
 msgid "%s %d, %d"
-msgstr ""
+msgstr "%s %d، %d"
 
 #. TRANSLATORS: <Town> <Short Firm Name> <Firm #>
 #. This is the name of the firm when there are multiple linked firms to a town.
@@ -155,7 +155,7 @@ msgstr ""
 #, c-format
 msgctxt "FirmUI|Name"
 msgid "%s %s %d"
-msgstr ""
+msgstr "%s %s %d"
 
 #. TRANSLATORS: <Town> <Short Firm Name>
 #. This is the name of the firm.
@@ -163,11 +163,11 @@ msgstr ""
 #, c-format
 msgctxt "FirmUI|Name"
 msgid "%s %s"
-msgstr ""
+msgstr "%s %s"
 
 #: src/OFIRMIF.cpp:83
 msgid "Under Construction"
-msgstr ""
+msgstr "تحت الإنشاء"
 
 #: src/OFIRMIF.cpp:614
 msgid "Residence"
@@ -179,88 +179,88 @@ msgstr ""
 #: src/OTOWNIF.cpp:267 src/OTOWNIF.cpp:1263 src/OUNITIF.cpp:1133
 #: src/OU_MARIF.cpp:507
 msgid "Loyalty"
-msgstr ""
+msgstr "الولاء"
 
 #: src/OFIRMIF.cpp:623 src/OFIRMIF.cpp:630 src/OFIRMIF.cpp:642
 #: src/OFIRMIF.cpp:656 src/OU_MARIF.cpp:507
 msgid "N/A"
-msgstr ""
+msgstr "غير معروف"
 
 #: src/OFIRMIF.cpp:658 src/OFIRMIF.cpp:706 src/OF_INN.cpp:391
 #: src/OF_INN.cpp:442 src/OUNITIF.cpp:1145 src/OU_MARIF.cpp:511
 msgid "Combat"
-msgstr ""
+msgstr "القتال"
 
 #: src/OFIRMIF.cpp:667 src/OFIRMIF.cpp:715 src/OR_MIL.cpp:97
 #: src/OR_TECH.cpp:152 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:117
 #: src/OU_MARIF.cpp:521
 msgid "Hit Points"
-msgstr ""
+msgstr "نقاط الإصابة"
 
 #: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1262
 msgid "Spy Skill"
-msgstr ""
+msgstr "مهارة التجسس"
 
 #: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1264
 msgid "Action"
-msgstr ""
+msgstr "الفعل"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:62
 #: src/OFIRMIF3.cpp:88
 msgid "Bribe"
-msgstr ""
+msgstr "رشوة"
 
 #: src/OFIRMIF3.cpp:116
 msgid "Bribe Succeeded."
-msgstr ""
+msgstr "نجحت الرشوة."
 
 #: src/OFIRMIF3.cpp:122
 msgid "Bribe Failed."
-msgstr ""
+msgstr "فشلت الرشوة."
 
 #. TRANSLATORS: Part of "Your Spy Was Caught And Executed."
 #: src/OFIRMIF3.cpp:123 src/OFIRMIF3.cpp:562 src/OFIRMIF3.cpp:581
 msgid "Your Spy Was Caught"
-msgstr ""
+msgstr "جاسوسك تم القبض عليه"
 
 #. TRANSLATORS: Part of "Your Spy Was Caught And Executed."
 #: src/OFIRMIF3.cpp:124 src/OFIRMIF3.cpp:564 src/OFIRMIF3.cpp:583
 msgid "And Executed."
-msgstr ""
+msgstr "وأعدم"
 
 #. TRANSLATORS: Offer <Amount>
 #: src/OFIRMIF3.cpp:247
 #, c-format
 msgid "Offer %s"
-msgstr ""
+msgstr "قدم %s"
 
 #: src/OFIRMIF3.cpp:545 src/OFIRMIF3.cpp:560
 msgid "Assassination Succeeded."
-msgstr ""
+msgstr "نجح الإغتيال."
 
 #: src/OFIRMIF3.cpp:546
 msgid "Your Spy Escaped."
-msgstr ""
+msgstr "جاسوسك هرب."
 
 #: src/OFIRMIF3.cpp:579
 msgid "Assassination Failed."
-msgstr ""
+msgstr "فشل الإغتيال."
 
 #: src/OF_BASE.cpp:377 src/OF_CAMP.cpp:567 src/OGAMHALL.cpp:258
 #: src/OSaveGameArray.cpp:608 src/OUNIT.cpp:760 src/OUNITIF.cpp:1205
 msgid "King"
-msgstr ""
+msgstr "الملك"
 
 #: src/OF_BASE.cpp:391 src/OF_CAMP.cpp:581 src/OR_MIL.cpp:95 src/OSKILL.cpp:35
 msgid "Leadership"
-msgstr ""
+msgstr "القيادة"
 
 #. TRANSLATORS: Producing <Clay/Copper/Iron> Products
 #: src/OF_FACT.cpp:371
 #, c-format
 msgid "Producing %s Products"
-msgstr ""
+msgstr "يُنتج %s منتج"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # #-#-#-#-#  -  #-#-#-#-#
@@ -269,95 +269,95 @@ msgstr ""
 # data/resource/help.res:337
 #: src/OF_FACT.cpp:383 src/OF_MINE.cpp:287
 msgid "Monthly Production"
-msgstr ""
+msgstr "الإنتاج الشهري"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:313
 #: src/OF_FACT.cpp:389
 msgid "Raw Material Stock"
-msgstr ""
+msgstr "مخزن المواد الخام"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:317
 #: src/OF_FACT.cpp:396
 msgid "Product Stock"
-msgstr ""
+msgstr "مخزن المنتجات"
 
 #: src/OF_HARB.cpp:453 src/OU_MARIF.cpp:87
 msgid "Units"
-msgstr ""
+msgstr "الوحدات"
 
 #: src/OF_HARB.cpp:454 src/OU_MARIF.cpp:88
 msgid "Goods"
-msgstr ""
+msgstr "السلع"
 
 #: src/OF_HARB.cpp:624 src/OF_WAR.cpp:283 src/OTOWNIF.cpp:870
 msgid "Done"
-msgstr ""
+msgstr "تم"
 
 #: src/OF_INN.cpp:406
 msgid "Hiring Cost"
-msgstr ""
+msgstr "سعر التأجير"
 
 #. TRANSLATORS: Part of "You're not permitted to trade with this market."
 #: src/OF_MARK.cpp:408
 msgid "You're not permitted to"
-msgstr ""
+msgstr "أنت لست مؤهلاً لـ"
 
 #. TRANSLATORS: Part of "You're not permitted to trade with this market."
 #: src/OF_MARK.cpp:410
 msgid "trade with this market."
-msgstr ""
+msgstr "تاجر مع هذا المتجر."
 
 #. TRANSLATORS: <Clay/Copper/Iron> Products
 #: src/OF_MARK.cpp:437 src/ORAWRES.cpp:276
 #, c-format
 msgid "%s Products"
-msgstr ""
+msgstr "%s منتج"
 
 #: src/OF_MARK.cpp:465
 msgid "Clear"
-msgstr ""
+msgstr "إخلاء"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:289
 #: src/OF_MARK.cpp:477
 msgid "Stock"
-msgstr ""
+msgstr "المخزن"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:293
 #: src/OF_MARK.cpp:479
 msgid "Sales"
-msgstr ""
+msgstr "المبيعات"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:297
 #: src/OF_MARK.cpp:487
 msgid "Demand"
-msgstr ""
+msgstr "الطلب"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:301
 #: src/OF_MARK.cpp:506 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
 msgid "Yearly Income"
-msgstr ""
+msgstr "الدخل السنوي"
 
 #: src/OF_MINE.cpp:269
 msgid "No Natural Resources"
-msgstr ""
+msgstr "لا موارد طبيعية"
 
 #. TRANSLATORS: Mining <Clay/Copper/Iron>
 #: src/OF_MINE.cpp:282
 #, c-format
 msgid "Mining %s"
-msgstr ""
+msgstr "يُنجم %s"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:341
 #: src/OF_MINE.cpp:294
 msgid "Mined Stock"
-msgstr ""
+msgstr "مخزن التعدين"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:345
@@ -374,7 +374,7 @@ msgstr ""
 
 #: src/OGAMEMP.cpp:564 src/OGAMEMP.cpp:832
 msgid "Unable to connect from lobby."
-msgstr ""
+msgstr "غير قادر علي الإتصال إلي الردهة."
 
 #: src/OGAMEMP.cpp:571 src/OGAMEMP.cpp:839
 msgid "Cannot initialize ENet."
@@ -382,7 +382,7 @@ msgstr ""
 
 #: src/OGAMEMP.cpp:587 src/OGAMEMP.cpp:855
 msgid "Unable to retrieve leaderboard"
-msgstr ""
+msgstr "غير قادر علي الحصول علي قائمة المراكز"
 
 #: src/OGAMEMP.cpp:602 src/OGAMEMP.cpp:877
 msgid "Enter a name for your game session."
@@ -390,15 +390,15 @@ msgstr ""
 
 #: src/OGAMEMP.cpp:603 src/OGAMEMP.cpp:878
 msgid "Session Name:"
-msgstr ""
+msgstr "أسم الجلسة:"
 
 #: src/OGAMEMP.cpp:604 src/OGAMEMP.cpp:879 src/OGAMEMP.cpp:1441
 msgid "Password:"
-msgstr ""
+msgstr "كلمة السر:"
 
 #: src/OGAMEMP.cpp:621 src/OGAMEMP.cpp:896
 msgid "Invalid game name."
-msgstr ""
+msgstr "أسم لعبة غير صالح."
 
 #: src/OGAMEMP.cpp:630 src/OGAMEMP.cpp:905
 msgid "Cannot create the game."
@@ -406,11 +406,11 @@ msgstr ""
 
 #: src/OGAMEMP.cpp:659 src/OGAMEMP.cpp:934
 msgid "Enter the game's address:"
-msgstr ""
+msgstr "أدخل عنوان اللعبة:"
 
 #: src/OGAMEMP.cpp:667 src/OGAMEMP.cpp:942
 msgid "Service not supported"
-msgstr ""
+msgstr "الخدمة غير مدعومة"
 
 #: src/OGAMEMP.cpp:1401
 msgid ""
@@ -427,7 +427,7 @@ msgstr ""
 
 #: src/OGAMEMP.cpp:1440
 msgid "Username:"
-msgstr ""
+msgstr "أسم المستخدم:"
 
 #: src/OGAMEMP.cpp:1463
 msgid "Unable to connect to 7kfans.com."
@@ -6790,7 +6790,7 @@ msgstr ""
 
 # data/resource/help.res:361
 msgid "Continuous Peace"
-msgstr ""
+msgstr "السلام المتتابع"
 
 # data/resource/help.res:362
 msgid ""
@@ -6800,7 +6800,7 @@ msgstr ""
 
 # data/resource/help.res:365
 msgid "Allow Attack"
-msgstr ""
+msgstr "أسمح بالهجوم"
 
 # data/resource/help.res:366
 msgid ""
@@ -6831,7 +6831,7 @@ msgstr ""
 
 # data/resource/help.res:377
 msgid "Assassinate"
-msgstr ""
+msgstr "إغتيال"
 
 # data/resource/help.res:378
 msgid ""
@@ -6852,7 +6852,7 @@ msgstr ""
 
 # data/resource/help.res:385
 msgid "Change Loyalty"
-msgstr ""
+msgstr "غير الولاء"
 
 # data/resource/help.res:386
 msgid ""
@@ -6874,7 +6874,7 @@ msgstr ""
 
 # data/resource/help.res:393
 msgid "Summon Rain"
-msgstr ""
+msgstr "إستدعاء مطر"
 
 # data/resource/help.res:394
 msgid ""
@@ -6884,7 +6884,7 @@ msgstr ""
 
 # data/resource/help.res:397
 msgid "Summon Tornadoes"
-msgstr ""
+msgstr "إستدعاء أعاصير"
 
 # data/resource/help.res:398
 msgid ""
