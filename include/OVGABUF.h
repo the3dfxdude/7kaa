@@ -19,13 +19,13 @@
  */
 
 //Filename    : VGABUF.H
-//Description : Header file for class VgaBuffer, Direct Draw Buffer.
+//Description : Header file for class VgaBuffer, SDL_Surface version
 
 #ifndef __VGABUF_H
 #define __VGABUF_H
 
 #include <IMGFUN.h>
-#include <surface.h>
+#include <SDL.h>
 
 //-------- Define class VgaBuf ----------------//
 
@@ -33,22 +33,22 @@ class File;
 
 class VgaBuf
 {
-protected:
-	Surface *surface;
-
 public:
+	SDL_Surface*					surface;
+	char*						cur_buf_ptr;
 	int						buf_locked;			// whether the and back buffers have been locked or not.
 	char						is_front;			// whether it's the front buffer or not
 	char                                            save_locked_flag;
 
+public:
 	//--------- back buffer ----------//
 
-	char* buf_ptr()             { return surface->buf_ptr(); }
-	char* buf_ptr(int x, int y) { return surface->buf_ptr(x,y); }
-	int   buf_pitch()           { return surface->buf_pitch(); }
-	int   buf_size()            { return surface->buf_size(); }
-	int   buf_width()           { return surface->buf_width(); }
-	int   buf_height()          { return surface->buf_height(); }
+	char* buf_ptr()             { return cur_buf_ptr; }
+	char* buf_ptr(int x, int y) { return cur_buf_ptr + surface->pitch*y + x;  }
+	int   buf_pitch()           { return surface->pitch; }
+	int   buf_size()            { return surface->h * surface->w; }
+	int   buf_width()           { return surface->w; }
+	int   buf_height()          { return surface->h; }
 
 	//---- GUI colors -----//
 
@@ -65,23 +65,24 @@ public:
 
 	//---------- system functions ----------//
 
-	void            init(Surface *s, char front);
+	void            init(char front, int w=0, int h=0);
 	void		deinit();
 
-	int		is_buf_lost() { return surface->is_buf_lost(); }
-	int		restore_buf() { return surface->restore_buf(); }
+	int		is_buf_lost()					 { return 0; }
+	int		restore_buf()					 { return 1; }
 
-	Surface*        get_buf() { return surface; }
+	void		activate_pal(SDL_Color *pal);
+
 	void		lock_buf();
 	void		unlock_buf();
 
 	void		temp_unlock();
 	void		temp_restore_lock();
 
-	void set_buf_ptr(char* bufPtr) { surface->set_buf_ptr(bufPtr); }
-	void set_default_buf_ptr()     { surface->set_default_buf_ptr(); }
+	void		set_buf_ptr(char* bufPtr)			{ cur_buf_ptr = bufPtr; }
+	void		set_default_buf_ptr()				{ cur_buf_ptr = (char*)surface->pixels; }
 
-	int  write_bmp_file(char* fileName) { return surface->write_bmp_file(fileName); }
+	int		write_bmp_file(char* fileName)			{ return !SDL_SaveBMP(surface, fileName); }
 
 	//---------- painting functions ----------//
 
@@ -253,7 +254,7 @@ public:
 
 	// --------- VgaBuf to VgaBuf copy ------------ //
 	void		blt_buf( VgaBuf *srcBuf, int x1, int y1 );
-	void blt_virtual_buf( VgaBuf *source ) { surface->blt_virtual_buf(source->surface); }
+	void 		blt_virtual_buf( VgaBuf *source ) { }
 };
 
 extern VgaBuf vga_front, vga_back, vga_true_front;

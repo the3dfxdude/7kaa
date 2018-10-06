@@ -20,7 +20,7 @@
  */
 
 //Filename    : OVGABUF.CPP
-//Description : OVGABUF direct draw surface class
+//Description : VgaBuf class, SDL_Surface version
 
 #include <ALL.h>
 #include <OMOUSE.h>
@@ -29,12 +29,14 @@
 #include <OWORLD.h>
 #include <OVGA.h>
 #include <OVGABUF.h>
+#include <gettext.h>
 
 //-------- Begin of function VgaBuf::VgaBuf ----------//
 
 VgaBuf::VgaBuf()
 {
 	surface = NULL;
+	cur_buf_ptr = NULL;
 	buf_locked = 0;
 	is_front = 0;
 	save_locked_flag = 0;
@@ -52,10 +54,28 @@ VgaBuf::~VgaBuf()
 
 
 //------ Begin of function VgaBuf::init --------//
-
-void VgaBuf::init(Surface *s, char front)
+//
+// Create a direct draw back buffer.
+//
+// [int] w : width of the surface [default 0 : VGA_WIDTH]
+// [int] h : height of the surface [default 0 : VGA_HEIGHT]
+//
+void VgaBuf::init(char front, int w, int h)
 {
-	surface = s;
+	if( !w )
+		w = VGA_WIDTH;
+	if( !h )
+		h = VGA_HEIGHT;
+	surface = SDL_CreateRGBSurface(0, w, h, VGA_BPP, 0, 0, 0, 0);
+	if( !surface )
+	{
+		if( front )
+			sys.show_error_dialog(_("An error occurred creating the front surface!"));
+		else
+			sys.show_error_dialog(_("An error occurred creating the back surface!"));
+		return;
+	}
+	cur_buf_ptr = (char*)surface->pixels;
 	is_front = front;
 }
 //-------- End of function VgaBuf::init ----------//
@@ -67,11 +87,23 @@ void VgaBuf::deinit()
 {
 	if( surface )
 	{
-		delete surface;
+		SDL_FreeSurface(surface);
 		surface = NULL;
 	}
+	cur_buf_ptr = NULL;
 }
 //-------- End of function VgaBuf::deinit ----------//
+
+
+//------- Begin of function VgaBuf::activate_pal ----------//
+//
+// Set a palette for the current surface.
+//
+void VgaBuf::activate_pal(SDL_Color *pal)
+{
+	SDL_SetPaletteColors(surface->format->palette, pal, 0, 256);
+}
+//--------- End of function VgaBuf::activate_pal ----------//
 
 
 //------------- Begin of function VgaBuf::lock_buf --------------//
@@ -81,7 +113,7 @@ void VgaBuf::lock_buf()
 	err_if( buf_locked )
 		err_now( "VgaBuf::lock_buf() error, buffer already locked." );
 
-	if( surface->lock_buf() )
+	if( 1 )
 		buf_locked = 1;
 	else
 	{
@@ -104,7 +136,7 @@ void VgaBuf::unlock_buf()
 	// ####### end Gilbert 16/9 #####//
 	err_when( !buf_locked );
 
-	if( surface->unlock_buf() )
+	if( 1 )
 		buf_locked = 0;
 	else
 	{
@@ -450,4 +482,3 @@ void VgaBuf::convert_gray(int x1, int y1, int x2, int y2)
 	remap_bar(x1, y1, x2, y2, vga.gray_remap_table);
 }
 //--------- End of function VgaBuf::convert_gray -----------//
-

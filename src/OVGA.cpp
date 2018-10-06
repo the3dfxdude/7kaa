@@ -26,7 +26,6 @@
 #include <OMOUSE.h>
 #include <OCOLTBL.h>
 #include <OSYS.h>
-#include <surface.h>
 #include <platform.h>
 #include <dbglog.h>
 #include <version.h>
@@ -44,13 +43,11 @@ VgaBuf* Vga::active_buf   = &vga_front;      // default: front buffer
 
 Vga::Vga()
 {
-   front = NULL;
    memset(game_pal, 0, sizeof(SDL_Color)*VGA_PALETTE_SIZE);
    custom_pal = NULL;
    vga_color_table = NULL;
 
    target = NULL;
-   front = NULL;
    texture = NULL;
    renderer = NULL;
    window = NULL;
@@ -136,16 +133,6 @@ int Vga::init()
       return 0;
    }
 
-   front = SDL_CreateRGBSurface(0,
-                                VGA_WIDTH,
-                                VGA_HEIGHT,
-                                VGA_BPP,
-                                0, 0, 0, 0);
-   if (!front)
-   {
-      return 0;
-   }
-
    int desktop_bpp = 0;
    if (SDL_PIXELTYPE(window_pixel_format) == SDL_PIXELTYPE_PACKED32)
    {
@@ -186,65 +173,9 @@ int Vga::init()
    }
    SDL_SetWindowTitle(window, WIN_TITLE);
 
-   init_pal(DIR_RES"PAL_STD.RES");
-
-   // Create the front and back buffers
-   init_back(&vga_front);
-   vga_front.is_front = 1; // set it to 1, overriding the setting in init_back()
-   if (sys.debug_session) {
-      init_back(&vga_true_front);
-   }
-   init_back(&vga_back);
-
-   vga_front.lock_buf();
-   vga_back.lock_buf();
-
-   refresh_palette();
-
    return 1;
 }
 //-------- End of function Vga::init ----------//
-
-
-//-------- Begin of function VgaBuf::init_front ----------//
-//
-// Inform the front buffer of the actual surface.  This function retains
-// compatibility with old direct draw code.
-//
-int Vga::init_front(VgaBuf *b)
-{
-   b->init(new SurfaceSDL(front), 1);
-   refresh_palette();
-   return 1;
-}
-//-------- End of function VgaBuf::init_front ----------//
-
-
-//-------- Begin of function VgaBuf::init_back ----------//
-//
-// Create a direct draw back buffer.
-//
-// [DWORD] w      : width of the surface [default 0 : VGA_WIDTH]
-// [DWORD] h      : height of the surface [default 0 : VGA_HEIGHT]
-//
-int Vga::init_back(VgaBuf *b, unsigned long w, unsigned long h)
-{
-   SDL_Surface *surface = SDL_CreateRGBSurface(0,
-                                               VGA_WIDTH,
-                                               VGA_HEIGHT,
-                                               VGA_BPP,
-                                               0, 0, 0, 0);
-   if (!surface)
-   {
-      ERR("Surface not created!\n");
-      return 0;
-   }
-
-   SurfaceSDL *wrapper = new SurfaceSDL(surface);
-   b->init(wrapper, 0);
-   return 1;
-}
-//-------- End of function VgaBuf::init_back ----------//
 
 
 //-------- Begin of function Vga::deinit ----------//
@@ -269,9 +200,6 @@ void Vga::deinit()
    if( target )
       SDL_FreeSurface(target);
    target = NULL;
-   if( front )
-      SDL_FreeSurface(front);
-   front = NULL;
    if( texture )
       SDL_DestroyTexture(texture);
    texture = NULL;
@@ -287,12 +215,12 @@ void Vga::deinit()
 //-------- End of function Vga::deinit ----------//
 
 
-//--------- Start of function Vga::init_pal ----------//
+//--------- Start of function Vga::load_pal ----------//
 //
 // Loads the default game palette specified by fileName. Creates the ddraw
 // palette.
 //
-int Vga::init_pal(const char* fileName)
+int Vga::load_pal(const char* fileName)
 {
    char palBuf[VGA_PALETTE_SIZE][3];
    File palFile;
@@ -317,30 +245,7 @@ int Vga::init_pal(const char* fileName)
 
    return 1;
 }
-//----------- End of function Vga::init_pal ----------//
-
-//--------- Start of function Vga::refresh_palette ----------//
-//
-// Update front buffers with the current palette.
-//
-void Vga::refresh_palette()
-{
-   SurfaceSDL *fake_front = vga_front.get_buf();
-   if (custom_pal) {
-      fake_front->activate_pal(custom_pal, 0, VGA_PALETTE_SIZE);
-      SDL_SetPaletteColors(front->format->palette,
-                           custom_pal,
-                           0,
-                           VGA_PALETTE_SIZE);
-   } else {
-      fake_front->activate_pal(game_pal, 0, VGA_PALETTE_SIZE);
-      SDL_SetPaletteColors(front->format->palette,
-                           game_pal,
-                           0,
-                           VGA_PALETTE_SIZE);
-   }
-}
-//----------- End of function Vga::refresh_palette ----------//
+//----------- End of function Vga::load_pal ----------//
 
 
 //-------- Begin of function Vga::activate_pal ----------//
@@ -349,6 +254,7 @@ void Vga::refresh_palette()
 //
 void Vga::activate_pal(VgaBuf* vgaBufPtr)
 {
+   vgaBufPtr->activate_pal(game_pal);
 }
 //--------- End of function Vga::activate_pal ----------//
 
@@ -377,7 +283,7 @@ int Vga::set_custom_palette(char *fileName)
       custom_pal[i].b = palBuf[i][2];
    }
 
-   refresh_palette();
+   vga_front.activate_pal(custom_pal);
 
    return 1;
 }
@@ -395,7 +301,7 @@ void Vga::free_custom_palette()
       mem_del(custom_pal);
       custom_pal = NULL; 
    }
-   refresh_palette();
+   vga_front.activate_pal(game_pal);
 }
 //--------- End of function Vga::free_custom_palette ----------//
 
@@ -433,10 +339,7 @@ void Vga::adjust_brightness(int changeValue)
 
    vga_front.temp_unlock();
 
-   SDL_SetPaletteColors(front->format->palette,
-                        palBuf,
-                        0,
-                        VGA_PALETTE_SIZE);
+   vga_front.activate_pal(palBuf);
 
    vga_front.temp_restore_lock();
 }
@@ -696,7 +599,6 @@ void Vga::set_full_screen_mode(int mode)
       return;
    }
 
-   refresh_palette();
    sys.need_redraw_flag = 1;
    boundary_set = 0;
    if( flags == SDL_WINDOW_FULLSCREEN_DESKTOP )
@@ -820,12 +722,15 @@ void Vga::set_window_grab(WinGrab mode)
 void Vga::flip()
 {
    static Uint32 ticks = 0;
-   Uint32 cur_ticks = SDL_GetTicks();
+   Uint32 cur_ticks;
+
+   if( !is_inited() )
+      return;
+
+   cur_ticks = SDL_GetTicks();
    if (cur_ticks > ticks + 17 || cur_ticks < ticks) {
-      SurfaceSDL *tmp = vga_front.get_buf();
-      SDL_Surface *src = tmp->get_surface();
       ticks = cur_ticks;
-      SDL_BlitSurface(src, NULL, target, NULL);
+      SDL_BlitSurface(vga_front.surface, NULL, target, NULL);
       SDL_UpdateTexture(texture, NULL, target->pixels, target->pitch);
       SDL_RenderClear(renderer);
       SDL_RenderCopy(renderer, texture, NULL, NULL);

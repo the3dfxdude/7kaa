@@ -186,9 +186,6 @@ noinst_HEADERS = \
 	posix_string_compat.h \
 	session_desc.h \
 	storage_constants.h \
-	surface.h \
-	surface_base.h \
-	surface_sdl.h \
 	version.h \
 	vga_util.h \
 	wav_stream.h

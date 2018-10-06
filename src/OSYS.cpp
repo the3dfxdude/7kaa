@@ -261,6 +261,39 @@ int Sys::init_directx()
    if( !vga.init() )
       return 0;
    DEBUG_LOG("vga.init() ok");
+
+   DEBUG_LOG("Attempt vga.load_pal()");
+   vga.load_pal(DIR_RES"PAL_STD.RES");
+   DEBUG_LOG("vga.load_pal() finish");
+
+   if( sys.debug_session )                // if we are currently in a debug session, don't lock the front buffer otherwise the system will hang up
+   {
+      DEBUG_LOG("Attempt vga_front.init_back()");
+      vga_front.init(1);
+      DEBUG_LOG("Attempt vga_true_front.init_front()");
+      vga_true_front.init(1);
+      DEBUG_LOG("Attempt vga.activate_pal()");
+      vga.activate_pal(&vga_true_front);
+      DEBUG_LOG("vga.activate_pal() finish");
+   }
+   else
+   {
+      vga_front.init(1);
+      vga.activate_pal(&vga_front);
+   }
+
+   DEBUG_LOG("Attempt vga_back.init_back()");
+   vga_back.init(0);
+   DEBUG_LOG("vga_back.init_back() finish");
+
+   DEBUG_LOG("Attempt vga_front.lock_buf()");
+   vga_front.lock_buf();
+   DEBUG_LOG("vga_front.lock_buf() finish");
+
+   DEBUG_LOG("Attempt vga_back.lock_buf()");
+   vga_back.lock_buf();
+   DEBUG_LOG("vga_back.lock_buf() finish");
+
 #if !defined(DEBUG) && !defined(_DEBUG)
    vga.set_full_screen_mode(1);
 #endif

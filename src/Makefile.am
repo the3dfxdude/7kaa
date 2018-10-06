@@ -283,7 +283,6 @@ bin_PROGRAMS = 7kaa
 	output_stream.cpp \
 	session_desc.cpp \
 	player_desc.cpp \
-	surface_sdl.cpp \
 	vgautil.cpp \
 	vgautil2.cpp
 

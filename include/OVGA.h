@@ -76,7 +76,6 @@ private:
 	SDL_Window*    window;
 	SDL_Renderer*  renderer;
 	SDL_Texture*   texture;
-	SDL_Surface*   front;
 	SDL_Surface*   target;
 	SDL_Color      game_pal[VGA_PALETTE_SIZE];
 	SDL_Color*     custom_pal;
@@ -103,7 +102,10 @@ public:
 	int    init();
 	void   deinit();
 
-	char   is_inited()  { return front != NULL; }
+	char   is_inited()  { return window != NULL; }
+
+	int    load_pal(const char* fileName);
+	void   activate_pal(VgaBuf*);
 
 	int    set_custom_palette(char*);
 	void   free_custom_palette();
@@ -122,13 +124,6 @@ public:
 	void   set_window_grab(WinGrab mode);
 	void   flip();
 	void   save_status_report();
-
-private:
-	int    init_front(VgaBuf*);
-	int    init_back(VgaBuf*, unsigned long =0, unsigned long =0);
-	int    init_pal(const char* fileName);
-	void   activate_pal(VgaBuf*);
-	void   refresh_palette();
 
 };
 
