@@ -3,6 +3,7 @@ noinst_HEADERS = \
 	COLCODE.h \
 	COLOR.h \
 	CRC.h \
+	CmdLine.h \
 	GAMEDEF.h \
 	IMGFUN.h \
 	KEY.h \

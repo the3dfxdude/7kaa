@@ -110,6 +110,7 @@
 #include <OINGMENU.h>
 // ###### end Gilbert 23/10 #######//
 #include <dbglog.h>
+#include <CmdLine.h>
 #include <LocaleRes.h>
 #include "gettext.h"
 
@@ -237,6 +238,7 @@ HallOfFame        hall_of_fame;
 OptionMenu			option_menu;
 InGameMenu			in_game_menu;
 // ###### end Gilbert 23/10 #######//
+CmdLine           cmd_line;
 
 //----------- Global Variables -----------//
 
@@ -299,28 +301,8 @@ static void extra_error_handler();
 // DEBUG3 - debugging some functions (e.g. Location::get_loc()) which
 //          will cause major slowdown.
 //
-// Command line paramters:
-// -join <named or ip address>
-//   Begin the program by attempting to connect to the specified address.
-// -host
-//   Begin the program by hosting a multiplayer match
-// -name <player name>
-//   Set the name you wish to be known as.
-//
-// You cannot specify -join or -host more than once.
-//
 int main(int argc, char **argv)
 {
-	const char *lobbyJoinCmdLine = "-join";
-	const char *lobbyHostCmdLine = "-host";
-	const char *lobbyNameCmdLine = "-name";
-	const char *demoCmdLine = "-demo";
-	const char *demoSpeedCmdLine = "-speed";
-	char *join_host = NULL;
-	int lobbied = 0;
-	int demoSelection = 0;
-	int demoSpeed = 99;
-
 	if (!sys.set_game_dir())
 		return 1;
 	locale_res.init("");
@@ -336,49 +318,13 @@ int main(int argc, char **argv)
 
 	//----- read command line arguments -----//
 
-	for (int i = 0; i < argc; i++) {
-		if (!strcmp(argv[i], lobbyJoinCmdLine)) {
-			if (lobbied) {
-				sys.show_error_dialog(_("You cannot specify multiple -host or -join options."));
-				return 1;
-			}
-			if (i >= argc - 1) {
-				sys.show_error_dialog(_("Expected argument after %s."), lobbyJoinCmdLine);
-				return 1;
-			}
-			lobbied = 1;
-			join_host = argv[i+1];
-			i++;
-		} else if (!strcmp(argv[i], lobbyHostCmdLine)) {
-			if (lobbied) {
-				sys.show_error_dialog(_("You cannot specify multiple -host or -join options."));
-				return 1;
-			}
-			lobbied = 1;
-		} else if (!strcmp(argv[i], lobbyNameCmdLine)) {
-			if (i >= argc - 1) {
-				sys.show_error_dialog(_("Expected argument after %s."), lobbyNameCmdLine);
-				return 1;
-			}
-			strncpy(config.player_name, argv[i+1], HUMAN_NAME_LEN);
-			config.player_name[HUMAN_NAME_LEN] = 0;
-			i++;
-		} else if (!strcmp(argv[i], demoCmdLine)) {
-			demoSelection = 1;
-		} else if (!strcmp(argv[i], demoSpeedCmdLine)) {
-			if (i >= argc - 1) {
-				sys.show_error_dialog(_("Expected argument after %s."), demoSpeedCmdLine);
-				return 1;
-			}
-			demoSpeed = atoi(argv[i+1]);
-			i++;
-		}
-	}
+	if( !cmd_line.init(argc, argv) )
+		return 1;
 
 #ifdef ENABLE_INTRO_VIDEO
 	//----------- play movie ---------------//
 
-	if (!lobbied && !demoSelection)
+	if( cmd_line.startup_mode == STARTUP_NORMAL )
 	{
 		String movieFileStr;
 		movieFileStr = DIR_MOVIE;
@@ -418,27 +364,32 @@ int main(int argc, char **argv)
 
 	err.set_extra_handler( extra_error_handler );   // set extra error handler, save the game when a error happens
 
-	if (!lobbied && !demoSelection)
-		game.main_menu();
-#ifndef DISABLE_MULTI_PLAYER
-	else if (!demoSelection)
-		game.multi_player_menu(lobbied, join_host);
-#endif // DISABLE_MULTI_PLAYER
-	else if (!lobbied)
+	switch( cmd_line.startup_mode )
 	{
+	case STARTUP_NORMAL:
+		game.main_menu();
+		break;
+	case STARTUP_MULTI_PLAYER:
+		game.multi_player_menu(1, cmd_line.join_host);
+		break;
+	case STARTUP_TEST:
+		game.init();
+		battle.run_test();
+		game.deinit();
+		break;
+	case STARTUP_DEMO:
 		mouse_cursor.set_icon(CURSOR_NORMAL);
-		sys.set_speed(demoSpeed);
 		sys.disp_fps_flag = 1;
 		config.help_mode = NO_HELP;
-		game.game_mode = GAME_DEMO;
 		game.init();
-#ifdef HEADLESS_SIM
+		game.game_mode = GAME_DEMO;
 		info.init_random_seed(0);
 		battle.run(0);
-#else
-		battle.run_test();
-#endif
 		game.deinit();
+		break;
+	default:
+		game.main_menu();
+		break;
 	}
 
 	sys.deinit();

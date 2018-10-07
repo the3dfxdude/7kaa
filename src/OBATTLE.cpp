@@ -46,6 +46,7 @@
 #include <OBATTLE.h>
 #include <OMOUSECR.h>
 #include <vga_util.h>
+#include <CmdLine.h>
 
 //---------- define static functions -------------//
 
@@ -85,10 +86,6 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	}
 #endif
 
-#ifdef HEADLESS_SIM
-	game.game_mode = GAME_DEMO; // skip end screens
-#endif
-
 	// ####### begin Gilbert 24/10 #######//
 	//-- random seed is initalized at connecting multiplayer --//
 	//if( !mpGame )
@@ -108,18 +105,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 
 	//------- create player nation --------//
 
-	if( !mpGame )
-	{
-#ifndef HEADLESS_SIM
-		// if config.race_id == 0, select a random race, but don't call misc.random
-		int nationRecno = nation_array.new_nation( NATION_OWN,
-								config.race_id ? config.race_id : 1+misc.get_time() % MAX_RACE,
-								config.player_nation_color );
-
-		nation_array.set_human_name( nationRecno, config.player_name );
-#endif
-	}
-	else
+	if( mpGame )
 	{
 		for( int i = 0; i < mpPlayerCount; ++i )
 		{
@@ -128,6 +114,15 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 				err.run( "Unexpected nation recno created" );
 			nation_array.set_human_name( nationRecno, mpGame[i].player_name );
 		}
+	}
+	else if( game.game_mode != GAME_DEMO )
+	{
+		// if config.race_id == 0, select a random race, but don't call misc.random
+		int nationRecno = nation_array.new_nation( NATION_OWN,
+								config.race_id ? config.race_id : 1+misc.get_time() % MAX_RACE,
+								config.player_nation_color );
+
+		nation_array.set_human_name( nationRecno, config.player_name );
 	}
 
 	//--------- create ai nations --------//
@@ -140,13 +135,11 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 		err_when( aiToCreate < 0 );
 		create_ai_nation(aiToCreate);
 	}
-	else
+	else if( game.game_mode == GAME_DEMO )
 	{
-#ifdef HEADLESS_SIM
 		create_ai_nation(config.ai_nation_count+1); // no human player
-#else
+	} else {
 		create_ai_nation(config.ai_nation_count);
-#endif
 	}
 
 	//------ create pregame objects ------//
@@ -177,10 +170,10 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	// Set speed to normal. When hosting, broadcast the speed to the clients. As a client, set to default speed initially.
 	if ( remote.is_enable() && !remote.is_host )
 		sys.set_speed(12, COMMAND_REMOTE);
-#ifndef HEADLESS_SIM
+	else if( cmd_line.game_speed >= 0 )
+		sys.set_speed(cmd_line.game_speed, COMMAND_PLAYER);
 	else
 		sys.set_speed(12, COMMAND_PLAYER);
-#endif
 
 	//---- reset cheats ----//
 

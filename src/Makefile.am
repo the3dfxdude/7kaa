@@ -6,6 +6,7 @@ endif
 bin_PROGRAMS = 7kaa
 7kaa_SOURCES = \
 	AM.cpp \
+	CmdLine.cpp \
 	LocaleRes.cpp \
 	OAI_ACT.cpp \
 	OAI_ACT2.cpp \
