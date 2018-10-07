@@ -62,6 +62,7 @@
 #include <OFIRMDIE.h>
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
+#include <CmdLine.h>
 
 
 //---------- define static variables ----------//
@@ -249,9 +250,8 @@ void Sys::process()
 
 	LOG_MSG("begin sys.disp_frame");
 	misc.lock_seed();
-#ifndef HEADLESS_SIM
-	disp_frame();
-#endif
+	if( cmd_line.enable_if )
+		disp_frame();
 	misc.unlock_seed();
 	LOG_MSG("end sys.disp_frame");
 	LOG_MSG(misc.get_random_seed() );

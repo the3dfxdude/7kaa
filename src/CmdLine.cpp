@@ -28,6 +28,7 @@
 
 CmdLine::CmdLine()
 {
+	enable_if = 1;
 	game_speed = -1;
 	startup_mode = STARTUP_NORMAL;
 	join_host = NULL;
@@ -75,6 +76,7 @@ int CmdLine::init(int argc, char **argv)
 	const char *lobbyHostOption = "-host";
 	const char *lobbyNameOption = "-name";
 	const char *demoOption = "-demo";
+	const char *noIfOption = "-noif";
 	const char *speedOption = "-speed";
 	for( int i = 1; i < argc; i++ )
 	{
@@ -99,6 +101,11 @@ int CmdLine::init(int argc, char **argv)
 		else if( !strcmp(argv[i], demoOption) )
 		{
 			set_startup_mode(STARTUP_DEMO);
+		}
+		else if( !strcmp(argv[i], noIfOption) )
+		{
+			if( cmd_line.startup_mode == STARTUP_DEMO )
+				enable_if = 0;
 		}
 		else if( !strcmp(argv[i], speedOption) )
 		{

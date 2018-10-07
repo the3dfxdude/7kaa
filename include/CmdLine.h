@@ -34,6 +34,7 @@ enum StartupMode
 
 struct CmdLine
 {
+	int		enable_if;
 	int		game_speed;
 	StartupMode	startup_mode;
 	char		*join_host;
