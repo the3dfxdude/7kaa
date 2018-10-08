@@ -119,12 +119,12 @@ public:
 	int    is_full_screen();
 	int    is_input_grabbed();
 	void   update_boundary();
+	void   update_mouse_pos();
 	void   set_full_screen_mode(int mode);
 	void   set_mouse_mode(MouseInputMode mode);
 	void   set_window_grab(WinGrab mode);
 	void   flip();
 	void   save_status_report();
-
 };
 
 extern Vga vga;

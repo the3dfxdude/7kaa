@@ -75,7 +75,6 @@ int Vga::init()
    win_grab_forced = 0;
    win_grab_user_mode = 0;
    mouse_mode = MOUSE_INPUT_ABS;
-   bound_x1, bound_y1, bound_x2, bound_y2 = 0;
    boundary_set = 0;
 
    if (SDL_Init(SDL_INIT_VIDEO))
@@ -386,6 +385,7 @@ void Vga::handle_messages()
 
             case SDL_WINDOWEVENT_EXPOSED:
                sys.need_redraw_flag = 1;
+               update_mouse_pos();
                break;
          }
          break;
@@ -569,6 +569,29 @@ void Vga::update_boundary()
 //-------- End of function Vga::update_boundary --------//
 
 
+//-------- Begin of function Vga::update_mouse_pos ----------//
+// Updates logical mouse position according to actual mouse state.
+void Vga::update_mouse_pos()
+{
+   float xscale, yscale;
+   SDL_Rect rect;
+   int logical_x, logical_y, win_x, win_y, mouse_x, mouse_y;
+
+   if( !window )
+      return;
+
+   SDL_RenderGetScale(renderer, &xscale, &yscale);
+   SDL_RenderGetViewport(renderer, &rect);
+   SDL_GetWindowPosition(window, &win_x, &win_y);
+   SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
+   logical_x = ((float)(mouse_x - win_x) / xscale - rect.x);
+   logical_y = ((float)(mouse_y - win_y) / yscale - rect.y);
+
+   mouse.process_mouse_motion(logical_x, logical_y);
+}
+//---------- End of function Vga::update_mouse_pos ----------//
+
+
 //-------- Begin of function Vga::set_full_screen_mode --------//
 //
 // mode -1: toggle
@@ -576,7 +599,7 @@ void Vga::update_boundary()
 // mode  1: full screen without display mode change (stretched to desktop)
 void Vga::set_full_screen_mode(int mode)
 {
-   int result = 0;
+   int result, mouse_x, mouse_y;
    uint32_t flags = 0;
 
    switch (mode)
@@ -593,6 +616,11 @@ void Vga::set_full_screen_mode(int mode)
          err_now("invalid mode");
    }
 
+   // Save the mouse position to restore after mode change. If we don't do
+   // this, then the old position gets recalculated, with the mode change
+   // affecting the location, causing a jump.
+   SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
+
    result = SDL_SetWindowFullscreen(window, flags);
    if (result < 0) {
       ERR("Could not toggle fullscreen: %s\n", SDL_GetError());
@@ -605,6 +633,8 @@ void Vga::set_full_screen_mode(int mode)
       set_window_grab(WINGRAB_ON);
    else
       set_window_grab(WINGRAB_OFF);
+
+   SDL_WarpMouseGlobal(mouse_x, mouse_y);
 }
 //-------- End of function Vga::set_full_screen_mode ----------//
 

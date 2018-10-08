@@ -56,13 +56,8 @@ Mouse::Mouse()
 	init_flag = 0;
 	handle_flicking = 0;
 	vga_update_buf = NULL;
-	cur_x = cur_y = 0;
 	left_press = right_press = 0;
 	skey_state = 0;
-	bound_x1 = 0;
-	bound_y1 = 0;
-	bound_x2 = 0;
-	bound_y2 = 0;
 	event_skey_state = 0;
 	has_mouse_event = 0;
 	mouse_event_type = (MouseEventType)0;
@@ -110,7 +105,8 @@ void Mouse::init()
 
 	SDL_StopTextInput();
 	SDL_ShowCursor(SDL_DISABLE);
-	SDL_GetMouseState(&cur_x, &cur_y);
+	cur_x = VGA_WIDTH/2;
+	cur_y = VGA_HEIGHT/2;
 
 	init_flag = 1;
 }
