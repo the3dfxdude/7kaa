@@ -31,6 +31,7 @@ CmdLine::CmdLine()
 	enable_if = 1;
 	game_speed = -1;
 	startup_mode = STARTUP_NORMAL;
+	full_screen_mode = 1;
 	join_host = NULL;
 }
 
@@ -78,6 +79,7 @@ int CmdLine::init(int argc, char **argv)
 	const char *demoOption = "-demo";
 	const char *noIfOption = "-noif";
 	const char *speedOption = "-speed";
+	const char *windowOption = "-win";
 	for( int i = 1; i < argc; i++ )
 	{
 		if( !strcmp(argv[i], lobbyJoinOption) )
@@ -112,6 +114,10 @@ int CmdLine::init(int argc, char **argv)
 			if( !have_arg(i, argc, speedOption) )
 				return 0;
 			game_speed = atoi(argv[++i]);
+		}
+		else if( !strcmp(argv[i], windowOption) )
+		{
+			full_screen_mode = 0;
 		}
 	}
 	return 1;

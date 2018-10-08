@@ -37,6 +37,7 @@ struct CmdLine
 	int		enable_if;
 	int		game_speed;
 	StartupMode	startup_mode;
+	int		full_screen_mode;
 	char		*join_host;
 
 	CmdLine();
