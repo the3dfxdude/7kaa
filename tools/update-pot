@@ -7,9 +7,10 @@ PODIR=po
 DATADIR=data
 XGETTEXT_OPTIONS="--keyword=_ --keyword=N_"
 POTFILES=${PODIR}/POTFILES.in
+GENPOT=tools/genpot
 
-if [ ! -e data ]; then
-  echo "Please execute from top level source directory"
+if [ ! -e $DATADIR ]; then
+  echo "Could not find the ${DATADIR} directory -- please run this from the top source directory"
   exit 1
 fi
 
@@ -17,12 +18,12 @@ ${XGETTEXT} --default-domain=${DOMAIN} --directory=${DIR} \
     --add-comments=TRANSLATORS: ${XGETTEXT_OPTIONS}  \
     --files-from=${POTFILES} --output ${PODIR}/${DOMAIN}.src.pot
 
-./tools/genpot ${DATADIR} | msguniq > ${PODIR}/${DOMAIN}.res.pot
+${GENPOT} ${DATADIR} | msguniq > ${PODIR}/${DOMAIN}.res.pot
 
 msgcat ${PODIR}/7kaa.src.pot ${PODIR}/7kaa.res.pot > ${PODIR}/7kaa.pot
 
-# NOTE: Downstream translations will need this after po template is updated.
-for i in `grep -v '^#' po/LINGUAS`; do
+# Update translations to reflect new template.
+for i in `grep -v '^#' ${PODIR}/LINGUAS`; do
   echo Updating $i.po;
   msgmerge --update --lang=$i ${PODIR}/$i.po ${PODIR}/7kaa.pot
 done
