@@ -308,6 +308,9 @@ int World::detect()
 //
 int World::detect_scroll()
 {
+   if( !vga.is_input_grabbed() )
+      return 0;
+
    if( mouse_cursor.frame_flag )    // if it's now in frame selection mode
       return 0;
 
