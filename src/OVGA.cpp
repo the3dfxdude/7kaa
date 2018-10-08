@@ -26,12 +26,14 @@
 #include <OMOUSE.h>
 #include <OCOLTBL.h>
 #include <OSYS.h>
-#include <platform.h>
 #include <dbglog.h>
 #include <version.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
 
+//--------- Declare static functions ---------//
+
+static void init_dpi();
 
 //------ Define static class member vars ---------//
 
@@ -70,7 +72,9 @@ int Vga::init()
 {
    SDL_Surface *icon;
 
-   InitDPI();
+#ifdef USE_WINDOWS
+   init_dpi();
+#endif
 
    win_grab_forced = 0;
    win_grab_user_mode = 0;
@@ -891,3 +895,54 @@ void Vga::save_status_report()
    return;
 }
 //-------- End of function Vga::save_status_report ----------//
+
+
+#ifdef USE_WINDOWS
+
+#include <windows.h>
+
+typedef enum PROCESS_DPI_AWARENESS {
+   PROCESS_DPI_UNAWARE = 0,
+   PROCESS_SYSTEM_DPI_AWARE = 1,
+   PROCESS_PER_MONITOR_DPI_AWARE = 2
+} PROCESS_DPI_AWARENESS;
+
+BOOL(WINAPI *SetProcessDPIAware)(void); // Vista and later
+HRESULT(WINAPI *SetProcessDpiAwareness)(PROCESS_DPI_AWARENESS dpiAwareness); // Windows 8.1 and later
+
+// Based on the example provided by Eric Wasylishen
+// https://discourse.libsdl.org/t/sdl-getdesktopdisplaymode-resolution-reported-in-windows-10-when-using-app-scaling/22389
+static void init_dpi()
+{
+   void* userDLL;
+   void* shcoreDLL;
+
+   shcoreDLL = SDL_LoadObject("SHCORE.DLL");
+   if (shcoreDLL)
+   {
+      SetProcessDpiAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "SetProcessDpiAwareness");
+   }
+
+   if (SetProcessDpiAwareness)
+   {
+      /* Try Windows 8.1+ version */
+      HRESULT result = SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
+      return;
+   }
+
+   userDLL = SDL_LoadObject("USER32.DLL");
+   if (userDLL)
+   {
+      SetProcessDPIAware = (BOOL(WINAPI *)(void)) SDL_LoadFunction(userDLL, "SetProcessDPIAware");
+   }
+
+   if (SetProcessDPIAware)
+   {
+      /* Try Vista - Windows 8 version.
+      This has a constant scale factor for all monitors.
+      */
+      BOOL success = SetProcessDPIAware();
+   }
+}
+
+#endif

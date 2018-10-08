@@ -1,4 +1,4 @@
-SUBDIRS = enet imgfun openal platform
+SUBDIRS = enet imgfun openal
 if USE_CURL
 SUBDIRS += curl
 endif
@@ -306,8 +306,6 @@ if USE_ASM
 else
 7kaa_LDADD += ./imgfun/generic/libimgfun_generic.a
 endif
-
-7kaa_LDADD += ./platform/libplatform.a
 
 if USE_CURL
 7kaa_LDADD += ./curl/libWebService.a

@@ -182,7 +182,6 @@ noinst_HEADERS = \
 	multiplayer.h \
 	openal_audio.h \
 	output_stream.h \
-	platform.h \
 	player_desc.h \
 	posix_string_compat.h \
 	session_desc.h \
