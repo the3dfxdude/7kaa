@@ -69,7 +69,7 @@ bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo,
 	int rc = file.file_create(filePath, 0, 1); // 0=tell File don't handle error itself
 												// 1=allow the writing size and the read size to be different
 	if( !rc )
-		errorMessage = _("Error creating saved game file.");
+		errorMessage = _("Error creating saved game file");
 	else
 		fileOpened = true;
 
@@ -80,14 +80,14 @@ bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo,
 		rc = write_game_header(saveGameInfo, &file);    // write saved game header information
 
 		if( !rc )
-			errorMessage = _("Error creating saved game header.");
+			errorMessage = _("Error creating saved game header");
 
 		if( rc )
 		{
 			rc = write_file(&file);
 
 			if( !rc )
-				errorMessage = _("Error writing saved game data.");
+				errorMessage = _("Error writing saved game data");
 		}
 	}
 
