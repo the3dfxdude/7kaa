@@ -561,14 +561,14 @@ void Game::multi_player_game(int lobbied, char *game_host)
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
-		box.msg(_("Unable to connect from lobby."));
+		box.msg(_("Unable to connect from lobby"));
 	}
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg(_("Cannot initialize ENet."));
+		box.msg(_("Cannot initialize ENet"));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
@@ -618,7 +618,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			}
 			if ( !strlen(game_name) )
 			{
-				box.msg(_("Invalid game name."));
+				box.msg(_("Invalid game name"));
 #ifdef HAVE_LIBCURL
 				ws.deinit();
 #endif
@@ -627,7 +627,7 @@ void Game::multi_player_game(int lobbied, char *game_host)
 			}
 			if (!mp_obj.create_session(game_name, password, MAX_NATION))
 			{
-				box.msg(_("Cannot create the game."));
+				box.msg(_("Cannot create the game"));
 #ifdef HAVE_LIBCURL
 				ws.deinit();
 #endif
@@ -829,14 +829,14 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 
 	if (lobbied && !mp_obj.init_lobbied(MAX_NATION, game_host))
 	{
-		box.msg(_("Unable to connect from lobby."));
+		box.msg(_("Unable to connect from lobby"));
 	}
 
 	// do not call remote.init here, or sys.yield will call remote.poll_msg
 	if(!mp_obj.is_initialized())
 	{
 		// BUGHERE : display error message
-		box.msg(_("Cannot initialize ENet."));
+		box.msg(_("Cannot initialize ENet"));
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
@@ -893,7 +893,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			}
 			if ( !strlen(game_name) )
 			{
-				box.msg(_("Invalid game name."));
+				box.msg(_("Invalid game name"));
 #ifdef HAVE_LIBCURL
 				ws.deinit();
 #endif
@@ -902,7 +902,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 			}
 			if (!mp_obj.create_session(game_name, password, gamePlayerCount))
 			{
-				box.msg(_("Cannot create the game."));
+				box.msg(_("Cannot create the game"));
 #ifdef HAVE_LIBCURL
 				ws.deinit();
 #endif
@@ -1460,7 +1460,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 			}
 			else
 			{
-				box.msg(_("Unable to connect to 7kfans.com."));
+				box.msg(_("Unable to connect to 7kfans.com"));
 				rc = 0;
 			}
 		}
@@ -2237,7 +2237,7 @@ void Game::mp_close_session()
 
 	box.close();
 
-	MSG("Dropping %d remaining connections.\n", pending);
+	MSG("Dropping %d remaining connections\n", pending);
 }
 
 
@@ -4153,19 +4153,19 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 			if( !recvSeed )
 			{
-				box.msg( _("Cannot get random seeds from the host.") );
+				box.msg( _("Cannot get random seeds from the host") );
 				return 0;
 			}
 			err_when( recvSeed > 1 );
 			if( !recvConfig )
 			{
-				box.msg( _("Cannot get game configuration information from the host.") );
+				box.msg( _("Cannot get game configuration information from the host") );
 				return 0;
 			}
 			err_when( recvConfig > 1 );
 			if( playerCount == 0 )
 			{
-				box.msg( _("Cannot get kingdom information from the host.") );
+				box.msg( _("Cannot get kingdom information from the host") );
 				return 0;
 			}
 			err_when( playerCount > MAX_NATION );
@@ -5606,7 +5606,7 @@ int Game::mp_select_load_option(char *fileName)
 
 			if( playerCount == 0 )
 			{
-				box.msg( _("Cannot get kingdom information from the host.") );
+				box.msg( _("Cannot get kingdom information from the host") );
 				return 0;
 			}
 			err_when( playerCount > MAX_NATION );

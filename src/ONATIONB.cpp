@@ -60,7 +60,7 @@ const char* NationRelation::relation_status_str_array[5] =
 	N_("Neutral"),
 	// TRANSLATORS: Part of "Duration of Friendly Status"
 	N_("Friendly"),
-	// TRANSLATORS: Par of "Duration of Alliance Status"
+	// TRANSLATORS: Part of "Duration of Alliance Status"
 	N_("Alliance")
 };
 

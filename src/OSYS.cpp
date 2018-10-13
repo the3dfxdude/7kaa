@@ -520,7 +520,7 @@ int Sys::set_config_dir()
    // create the config directory
    if (!misc.mkpath(dir_config))
    {
-      show_error_dialog(_("Unable to determine a location for storing the game configuration."));
+      show_error_dialog(_("Unable to determine a location for storing the game configuration"));
       dir_config[0] = 0;
       return 0;
    }
@@ -1040,7 +1040,7 @@ void Sys::auto_save()
          if (misc.path_cat(auto1_path, dir_config, "AUTO.SAV", MAX_PATH+1) == 0 ||
              misc.path_cat(auto2_path, dir_config, "AUTO2.SAV", MAX_PATH+1) == 0)
          {
-	        ERR("Path to the savegames too long.\n");
+	        ERR("Path to the savegames too long\n");
             return;
          }
 
@@ -1094,7 +1094,7 @@ void Sys::auto_save()
 	  if (misc.path_cat(auto1_path, dir_config, "AUTO.SVM", MAX_PATH+1) == 0 ||
           misc.path_cat(auto2_path, dir_config, "AUTO2.SVM", MAX_PATH+1) == 0)
       {
-	     ERR("Path to the savegames too long.\n");
+	     ERR("Path to the savegames too long\n");
          return;
       }
 
@@ -1615,9 +1615,9 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
             config.opaque_report = !config.opaque_report;
 
             if( config.opaque_report )
-               box.msg( _("Opaque report mode.") );
+               box.msg( _("Opaque report mode") );
             else
-               box.msg( _("Transparent report mode.") );
+               box.msg( _("Transparent report mode") );
          }
          break;
 
@@ -1895,9 +1895,9 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
          config.fast_build = !config.fast_build;
 
          if( !config.fast_build )
-            box.msg( _("Fast build is now disabled") );
+            box.msg( _("Fast build is now disabled.") );
          else
-            box.msg( _("Fast build is now enabled") );
+            box.msg( _("Fast build is now enabled.") );
          break;
 
       //----- increase the combat level -------//
@@ -2019,9 +2019,9 @@ int Sys::detect_debug_cheat_key(unsigned scanCode, unsigned skeyState)
          config.disable_ai_flag = !config.disable_ai_flag;
 
          if( config.disable_ai_flag )
-            box.msg( "AI is now disabled" );
+            box.msg( "AI is now disabled." );
          else
-            box.msg( "AI is now enabled" );
+            box.msg( "AI is now enabled." );
          ++keyProcessed;
          break;
 
@@ -2808,7 +2808,7 @@ int Sys::chdir_to_game_dir()
       return 1;
 #endif
 
-   show_error_dialog(_("Unable to locate the game resources."));
+   show_error_dialog(_("Unable to locate the game resources"));
 
    return 0;
 }

@@ -1087,7 +1087,7 @@ int TalkRes::detect_talk()
 		choice_question_second_line = NULL;
 
 		talk_choice_count = 0;
-		add_talk_choice( _("Continue"), 0 );
+		add_talk_choice( _("Continue."), 0 );
 	}
 
 	return 1;

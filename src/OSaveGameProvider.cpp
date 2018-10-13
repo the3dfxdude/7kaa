@@ -133,7 +133,7 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 	if (!misc.path_cat(full_path, sys.dir_config, newFileName, MAX_PATH))
 	{
 		success = false;
-		errorMessage = _("Path too long to the saved game.");
+		errorMessage = _("Path too long to the saved game");
 	}
 
 	power.win_opened=1;				// to disable power.mouse_handler()
