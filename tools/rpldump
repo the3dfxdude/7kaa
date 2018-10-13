@@ -16,16 +16,16 @@ use constant {
 
 my $player_count = 2;
 my @msg_ids = (
-	['MSG_QUEUE_HEADER', 'Ls', 'senderFrameCount=%u nationRecno=%hd'],
+	['MSG_QUEUE_HEADER', 'Ls', [qw(senderFrameCount nationRecno)]],
 	['MSG_QUEUE_TRAILER'],
 	['MSG_NEW_NATION'],
 	['MSG_UPDATE_GAME_SETTING'],
 	['MSG_START_GAME'],
-	['MSG_NEXT_FRAME', 's', 'nationRecno=%hd'],
+	['MSG_NEXT_FRAME', 's', [qw(nationRecno)]],
 	['MSG_REQUEST_RESEND'],
 	['MSG_TELL_SEND_TIME'],
 	['MSG_SET_SPEED'],
-	['MSG_TELL_RANDOM_SEED', 'sl', 'nationRecno=%hd remoteSeed=%d'],
+	['MSG_TELL_RANDOM_SEED', 'sl', [qw(nationRecno remoteSeed)]],
 	['MSG_REQUEST_SAVE'],
 	['MSG_PLAYER_QUIT'],
 
@@ -35,7 +35,7 @@ my @msg_ids = (
 	['MSG_UNIT_ATTACK'],
 	['MSG_UNIT_ASSIGN'],
 	['MSG_UNIT_CHANGE_NATION'],
-	['MSG_UNIT_BUILD_FIRM', 'ssss', 'unitRecno=%hd xLoc=%hd yLoc=%hd firmId=%hd'],
+	['MSG_UNIT_BUILD_FIRM', 'ssss', [qw(unitRecno xLoc yLoc firmId)]],
 	['MSG_UNIT_BURN'],
 	['MSG_UNITS_SETTLE'],
 	['MSG_UNIT_SET_GUARD'],
@@ -43,15 +43,15 @@ my @msg_ids = (
 	['MSG_UNIT_DISMOUNT'],
 	['MSG_UNIT_REWARD'],
 	['MSG_UNITS_TRANSFORM'],
-	['MSG_UNIT_RESIGN', 'ss', 'unitRecno=%hd nationRecno=%hd'],
+	['MSG_UNIT_RESIGN', 'ss', [qw(unitRecno nationRecno)]],
 	['MSG_UNITS_ASSIGN_TO_SHIP'],
 	['MSG_UNITS_SHIP_TO_BEACH'],
 	['MSG_UNIT_SUCCEED_KING'],
 	['MSG_UNITS_RETURN_CAMP'],
-	['MSG_U_CARA_CHANGE_GOODS', 'sss', 'unitRecno=%hd stopId=%hd pickUpType=%hd'],
-	['MSG_U_CARA_SET_STOP', 'ssss', 'unitRecno=%hd stopId=%hd xLoc=%hd yLoc=%hd)'],
-	['MSG_U_CARA_DEL_STOP', 'ssss', 'unitRecno=%hd stopId=%hd'],
-	['MSG_U_CARA_SELECTED', 's', 'spriteRecno=%hd'],
+	['MSG_U_CARA_CHANGE_GOODS', 'sss', [qw(unitRecno stopId pickUpType)]],
+	['MSG_U_CARA_SET_STOP', 'ssss', [qw(unitRecno stopId xLoc yLoc)]],
+	['MSG_U_CARA_DEL_STOP', 'ss', [qw(unitRecno stopId)]],
+	['MSG_U_CARA_SELECTED', 's', [qw(spriteRecno)]],
 	['MSG_U_SHIP_UNLOAD_UNIT'],
 	['MSG_U_SHIP_UNLOAD_ALL_UNITS'],
 	['MSG_U_SHIP_CHANGE_GOODS'],
@@ -100,7 +100,7 @@ my @msg_ids = (
 	['MSG_F_BASE_MOBL_PRAYER'],
 	['MSG_F_BASE_INVOKE_GOD'],
 
-	['MSG_TOWN_RECRUIT', 'ssss', 'townRecno=%hd skillId=%hd raceId=%hd amount=%hd'],
+	['MSG_TOWN_RECRUIT', 'ssss', [qw(townRecno skillId raceId amount)]],
 	['MSG_TOWN_SKIP_RECRUIT'],
 	['MSG_TOWN_MIGRATE'],
 	['MSG_TOWN_COLLECT_TAX'],
@@ -128,14 +128,14 @@ my @msg_ids = (
 	['MSG_NATION_SET_SHOULD_ATTACK'],
 	['MSG_CHAT'],
 
-	['MSG_COMPARE_NATION', 'sC*', 'ARRAY'],
-	['MSG_COMPARE_UNIT', 'sC*', 'ARRAY'],
-	['MSG_COMPARE_FIRM', 'sC*', 'ARRAY'],
-	['MSG_COMPARE_TOWN', 'sC*', 'ARRAY'],
-	['MSG_COMPARE_BULLET', 'sC*', 'ARRAY'],
-	['MSG_COMPARE_REBEL', 'sC*', 'ARRAY'],
-	['MSG_COMPARE_SPY', 'sC*', 'ARRAY'],
-	['MSG_COMPARE_TALK', 'sC*', 'ARRAY'],
+	['MSG_COMPARE_NATION', 'sC*', [qw(array_len crc)]],
+	['MSG_COMPARE_UNIT', 'sC*', [qw(array_len crc)]],
+	['MSG_COMPARE_FIRM', 'sC*', [qw(array_len crc)]],
+	['MSG_COMPARE_TOWN', 'sC*', [qw(array_len crc)]],
+	['MSG_COMPARE_BULLET', 'sC*', [qw(array_len crc)]],
+	['MSG_COMPARE_REBEL', 'sC*', [qw(array_len crc)]],
+	['MSG_COMPARE_SPY', 'sC*', [qw(array_len crc)]],
+	['MSG_COMPARE_TALK', 'sC*', [qw(array_len crc)]],
 
 	['LAST_REMOTE_MSG_ID'],
 );
@@ -265,6 +265,22 @@ my (
 	$LAST_REMOTE_MSG_ID,
 ) = (FIRST_REMOTE_MSG_ID)..(FIRST_REMOTE_MSG_ID+scalar(@msg_ids));
 
+my %pack_id_to_fmt_id = (
+	'C' => '%hhu',
+	'L' => '%u',
+	'S' => '%hu',
+	'l' => '%d',
+	's' => '%hd',
+);
+
+my %pack_id_to_len = (
+	'C' => 1,
+	'L' => 4,
+	'S' => 2,
+	'l' => 4,
+	's' => 2,
+);
+
 if (!@ARGV) {
 	print "Usage: $0 file.rpl\n";
 	exit 1;
@@ -332,6 +348,47 @@ sub msg_id_to_str {
 	return sprintf("(invalid)0x%x", $_[0]);
 }
 
+sub pack_str_to_fmt_str {
+	my $pack_str;
+	my $fmt_ids;
+	my $msg_len;
+	my $len;
+	my $last_len;
+	my $last_fmt;
+	my $last_fmt_id;
+	my @fmt;
+	my @pack_ids;
+	my $i;
+	($pack_str, $fmt_ids, $msg_len) = @_;
+	@pack_ids = split(//, $pack_str);
+	$len = 0;
+	for ($i = 0; $i < @pack_ids && $len < $msg_len; $i++) {
+		my $id;
+		if (defined($fmt_ids->[$i])) {
+			$id = $fmt_ids->[$i] . "=";
+		} else {
+			$id = "";
+		}
+		if ($pack_ids[$i] eq '*') {
+			if (!defined($last_fmt)) {
+				die;
+			}
+			my $count = ($msg_len - $len) / $last_len;
+			$fmt[$#fmt] = "${last_fmt_id}ARRAY(" . join(" ", map {$last_fmt} 0..$count) . ")";
+			last;
+		}
+		if (!defined($pack_id_to_fmt_id{$pack_ids[$i]}) || !defined($pack_id_to_len{$pack_ids[$i]})) {
+			die;
+		}
+		$last_fmt = $pack_id_to_fmt_id{$pack_ids[$i]};
+		$last_len = $pack_id_to_len{$pack_ids[$i]};
+		$last_fmt_id = $id;
+		$len += $last_len;
+		push(@fmt, "${id}$last_fmt");
+	}
+	return join(" ", @fmt);
+}
+
 sub process_nation {
 	my $fh;
 	my $buf;
@@ -341,7 +398,7 @@ sub process_nation {
 
 	read($fh, $buf, NATION_PARA_SIZE);
 	@params = unpack("sssZ*", $buf);
-	print "Nation Parameters: @params\n";
+	printf("Nation Parameters: nation_recno=%hd color_scheme=%hd race_id=%hd player_name=%s\n", @params);
 }
 
 sub process_frame {
@@ -407,18 +464,12 @@ sub process_msg {
 		my $encoding;
 		if (defined($msg_ids[$idx][1])) {
 			$encoding = $msg_ids[$idx][1];
-			$format = $msg_ids[$idx][2];
+			#$format = $msg_ids[$idx][2];
+			$format = pack_str_to_fmt_str($encoding, $msg_ids[$idx][2], $size);
 		} else {
 			$encoding = "S"x($size/2);
 			$format = "%hu "x($size/2);
 			chop($format);
-		}
-		if (defined($msg_ids[$idx][2]) && $msg_ids[$idx][2] eq 'ARRAY') {
-			# Sets format for 8-bit word for array
-			$format = "array_len=%hd";
-			if ($size > 2) {
-				$format .= " %hhu"x($size-2);
-			}
 		}
 		@data = unpack($encoding, $packed_msg);
 	} else {
@@ -432,7 +483,7 @@ sub process_msg {
 	} elsif ($msg_id == $MSG_TELL_RANDOM_SEED) {
 		if (defined($frame->{random_seed})) {
 			if ($frame->{random_seed} != $data[1]) {
-				print "---desync rng at frame=$frame_count---\n";
+				print "---desync rng at frame=$frame_count ($frame->{random_seed} != $data[1])---\n";
 			}
 		} else {
 			$frame->{random_seed} = $data[1];
@@ -452,10 +503,10 @@ sub process_msg {
 				}
 			}
 			if ($desync) {
-				print "---desync crc at frame=$frame_count id=$desync---\n";
+				print "---desync crc of $key at frame=$frame_count crc_id=$desync ($crc->[$desync] != $data[$desync])---\n";
 			}
-                } else {
+		} else {
 			$frame->{crc}{$key} = [@data];
-                }
+		}
 	}
 }
