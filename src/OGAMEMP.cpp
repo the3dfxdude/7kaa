@@ -5568,7 +5568,7 @@ int Game::mp_select_load_option(char *fileName)
 							!nationPtr->is_own() && !nationPtr->is_remote() ||
 							nationPtr->color_scheme_id != msgNation->color_scheme )
 						{
-							box.msg( _("Incorrect kingdom information received from the host.") );
+							box.msg( _("Incorrect kingdom information received from the host") );
 							return 0;
 						}
 						nationPtr->player_id = msgNation->dp_player_id;
