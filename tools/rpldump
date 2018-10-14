@@ -30,7 +30,7 @@ my @msg_ids = (
 	['MSG_PLAYER_QUIT'],
 
 	['MSG_UNIT_STOP'],
-	['MSG_UNIT_MOVE'],
+	['MSG_UNIT_MOVE', 'sssss*', [qw(destXLoc destYLoc selectedCount divided selectedUnitArray)]],
 	['MSG_UNIT_SET_FORCE_MOVE'],
 	['MSG_UNIT_ATTACK'],
 	['MSG_UNIT_ASSIGN'],
@@ -73,7 +73,7 @@ my @msg_ids = (
 	['MSG_FIRM_SET_REPAIR'],
 	['MSG_FIRM_TRAIN_LEVEL'],
 	['MSG_FIRM_MOBL_WORKER'],
-	['MSG_FIRM_MOBL_ALL_WORKERS'],
+	['MSG_FIRM_MOBL_ALL_WORKERS', 's', [qw(firmRecno)]],
 	['MSG_FIRM_MOBL_OVERSEER'],
 	['MSG_FIRM_MOBL_BUILDER'],
 	['MSG_FIRM_TOGGLE_LINK_FIRM'],
@@ -476,7 +476,8 @@ sub process_msg {
 		@data = unpack("H$size", $packed_msg);
 		$format = "%s";
 	}
-	printf("frame=%d pos=%x size=%hu msg_size=%hu nation=%d msg=%s $format\n", $frame_count, $pos, $size+6, $size+4, $frame->{nation}, msg_id_to_str($msg_id), @data);
+	#printf("frame=%d pos=%x size=%hu msg_size=%hu nation=%d msg=%s $format\n", $frame_count, $pos, $size+6, $size+4, $frame->{nation}, msg_id_to_str($msg_id), @data);
+	printf("nation=%d msg=%s $format\n", $frame->{nation}, msg_id_to_str($msg_id), @data);
 
 	if ($msg_id == $MSG_QUEUE_HEADER) {
 		$frame->{nation} = $data[1];
@@ -500,6 +501,7 @@ sub process_msg {
 			for (my $i = 1; $i < @$crc; $i++) {
 				if ($crc->[$i] != $data[$i]) {
 					$desync = $i;
+					last;
 				}
 			}
 			if ($desync) {
