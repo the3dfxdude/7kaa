@@ -53,6 +53,7 @@ public:
    char*  lower();
    int    len()         { return strlen(str_buf); }
    int    at(char*);
+   void   catf(char *format, ...);
 
    char*  right(int needLen)           { return substr( len()-needLen ); }
    char*  left(int needLen)             { return substr( 0, needLen ); }

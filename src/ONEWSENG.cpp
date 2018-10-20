@@ -1210,66 +1210,44 @@ void News::earthquake_damage()
 	{
 		if( short_para3 > 0)
 		{
-			snprintf(str,
-				 MAX_STR_LEN+1,
-				 // TRANSLATORS: <Number> of your units has been injured and <Number> killed in an earthquake.
-				 // <Number> of your units have been injured and <Number> killed in an earthquake.
-				 ngettext("%d of your units has been injured and %d killed in an earthquake.",
-					  "%d of your units have been injured and %d killed in an earthquake.",
-					  short_para2),
-				 short_para2,
-				 short_para3);
+			// TRANSLATORS: Part of "<Number> of your units has/have been injured and <Number referring to units> killed in an earthquake."
+			str.catf(ngettext("%d of your units has been injured",
+				"%d of your units have been injured", short_para2), short_para2);
+			str += " ";
+			// TRANSLATORS: Part of "<Number> of your units has/have been injured and <Number referring to units> killed in an earthquake."
+			str.catf(ngettext("and %d killed in an earthquake.",
+				"and %d killed in an earthquake.", short_para3), short_para3);
 		}
 		else
 		{
-			snprintf(str,
-				 MAX_STR_LEN+1,
-				 // TRANSLATORS: <Number> of your units has been injured in an earthquake.
-				 // <Number> of your units have been injured in an earthquake.
-				 ngettext("%d of your units has been injured in an earthquake.",
-					  "%d of your units have been injured in an earthquake.",
-					  short_para2),
-				 short_para2);
+			// TRANSLATORS: <Number> of your units has/have been injured in an earthquake.
+			str.catf(ngettext("%d of your units has been injured in an earthquake.",
+				"%d of your units have been injured in an earthquake.", short_para2), short_para2);
 		}
 	}
 	else if( short_para1 == 2 )
 	{
-		if( short_para2 > 0)
-		{
-			snprintf(str,
-				 MAX_STR_LEN+1,
-				 // TRANSLATORS: <Number> of your villagers has been killed in an earthquake.
-				 // <Number> of your villagers have been killed in an earthquake.
-				 ngettext("%d of your villagers has been killed in an earthquake.",
-					  "%d of your villagers have been killed in an earthquake.",
-					  short_para2),
-				 short_para2);
-		}
+		// TRANSLATORS: <Number> of your villagers has/have been killed in an earthquake.
+		str.catf(ngettext("%d of your villagers has been killed in an earthquake.",
+			"%d of your villagers have been killed in an earthquake.", short_para2), short_para2);
 	}
 	else if( short_para1 == 3)
 	{
 		if( short_para3 > 0)
 		{
-			snprintf(str,
-				 MAX_STR_LEN+1,
-				 // TRANSLATORS: <Number> of your buildings has been damaged and <Number> destroyed in an earthquake.
-				 // <Number> of your buildings have been damaged and <Number> destroyed in an earthquake.
-				 ngettext("%d of your buildings has been damaged and %d destroyed in an earthquake.",
-					  "%d of your buildings have been damaged and %d destroyed in an earthquake.",
-					  short_para2),
-				 short_para2,
-				 short_para3);
+			 // TRANSLATORS: Part of "<Number> of your buildings has/have been damaged and <Number referring to buildings> destroyed in an earthquake."
+			str.catf(ngettext("%d of your buildings has been damaged",
+				"%d of your buildings have been damaged", short_para2), short_para2);
+			str += " ";
+			 // TRANSLATORS: Part of "<Number> of your buildings has/have been damaged and <Number referring to buildings> destroyed in an earthquake."
+			str.catf(ngettext("and %d destroyed in an earthquake.",
+				"and %d destroyed in an earthquake.", short_para3), short_para3);
 		}
 		else
 		{
-			snprintf(str,
-				 MAX_STR_LEN+1,
-				 // TRANSLATORS: <Number> of your buildings has been damaged in an earthquake.
-				 // TRANSLATORS: <Number> of your buildings have been damaged in an earthquake.
-				 ngettext("%d of your buildings has been damaged in an earthquake.",
-					  "%d of your buildings have been damaged in an earthquake.",
-					  short_para2),
-				 short_para2);
+			// TRANSLATORS: <Number> of your buildings has/have been damaged in an earthquake.
+			str.catf(ngettext("%d of your buildings has been damaged in an earthquake.",
+				"%d of your buildings have been damaged in an earthquake.", short_para2), short_para2);
 		}
 	}
 	else
@@ -1295,38 +1273,40 @@ void News::goal_deadline()
 	//
 	//----------------------------------------------//
 
-	if( short_para1 > 1 && short_para2 > 1 )
+	str = _("Make haste!");
+
+	if( short_para1 <= 0 && short_para2 <= 0 )
 	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d years and %d months left to achieve your goal."), short_para1, short_para2);
+		err_here();
+		return;
 	}
-	else if( short_para1 > 1 && short_para2 == 1 )
+
+	str += " ";
+
+	if( short_para1 && !short_para2 )
 	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d years and %d month left to achieve your goal."), short_para1, short_para2);
+		str.catf(ngettext("You have only %d year left to achieve your goal.",
+			"You have only %d years left to achieve your goal.",
+			short_para1), short_para1);
+		return;
 	}
-	else if( short_para1 > 1 )
+	if( !short_para1 && short_para2 )
 	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d years left to achieve your goal."), short_para1);
+		str.catf(ngettext("You have only %d month left to achieve your goal.",
+			"You have only %d months left to achieve your goal.",
+			short_para2), short_para2);
+		return;
 	}
-	else if( short_para1 == 1 && short_para2 > 1 )
-	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d year and %d months left to achieve your goal."), short_para1, short_para2);
-	}
-	else if( short_para1 == 1 && short_para2 == 1 )
-	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d year and %d month left to achieve your goal."), short_para1, short_para2);
-	}
-	else if( short_para1 == 1 )
-	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d year left to achieve your goal."), short_para1);
-	}
-	else if( short_para2 > 1 )
-	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d months left to achieve your goal."), short_para2);
-	}
-	else if( short_para2 == 1 )
-	{
-		snprintf(str, MAX_STR_LEN+1, _("Make haste! You have only %d month left to achieve your goal."), short_para2);
-	}
+
+	// TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
+	str.catf(ngettext("You have only %d year",
+		"You have only %d years",
+		short_para1), short_para1);
+	str += " ";
+	// TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
+	str.catf(ngettext("and %d month left to achieve your goal.",
+		"and %d months left to achieve your goal.",
+		short_para2), short_para2);
 }
 //------- End of function News::goal_deadline -----//
 

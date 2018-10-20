@@ -23,6 +23,8 @@
 
 #include <OMISC.h>
 #include <OSTR.h>
+#include <stdarg.h>
+#include <stdio.h>
 
 #include <cctype>
 
@@ -144,6 +146,22 @@ int String::at(char* searchStr)
   return pos;
 }
 //---------- End of function String::at ---------------//
+
+
+//-------- Begin of function String::catf ---------------//
+//
+// A formatted string concatenation
+//
+void String::catf(char *format, ...)
+{
+   va_list valist;
+   va_start(valist, format);
+   vsnprintf(work_buf, MAX_STR_LEN+1, format, valist);
+   va_end(valist);
+   strncat(str_buf, work_buf, MAX_STR_LEN);
+   str_buf[MAX_STR_LEN] = '\0';
+}
+//---------- End of function String::catf ---------------//
 
 
 //-------- Begin of operator= functions -----------//

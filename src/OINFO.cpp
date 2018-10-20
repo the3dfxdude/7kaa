@@ -597,30 +597,14 @@ char* Info::play_time_str()
 
 	str = "";
 
-	if( playHour > 1 && playMin > 1 )
+	if( playHour )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%d hours and %d minutes"), playHour, playMin );
+		// TRANSLATORS: Part of "%d hour(s) and %d minute(s)"
+		str.catf(ngettext("%d hour and", "%d hours and", playHour), playHour);
+		str += " ";
 	}
-	else if( playHour > 1 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%d hours and %d minute"), playHour, playMin );
-	}
-	else if( playHour > 0 && playMin > 1 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%d hour and %d minutes"), playHour, playMin );
-	}
-	else if( playHour > 0 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%d hour and %d minute"), playHour, playMin );
-	}
-	else if( playMin > 1 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%s minutes"), misc.format(playMin) );
-	}
-	else
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%s minute"), misc.format(playMin) );
-	}
+
+	str.catf(ngettext("%d minute", "%d minutes", playMin), playMin);
 
 	return str;
 }
@@ -658,30 +642,14 @@ char* Info::game_duration_str()
 
 	str = "";
 
-	if( playYear > 1 && playDay > 1 )
+	if( playYear )
 	{
-		snprintf( str, MAX_STR_LEN+1, _("%d years and %d days"), playYear, playDay );
+		// TRANSLATORS: Part of "%d year(s) and %d day(s)"
+		str.catf(ngettext("%d year and", "%d years and", playYear), playYear);
+		str += " ";
 	}
-	else if( playYear > 1 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%d years and %d day"), playYear, playDay );
-	}
-	else if( playYear > 0 && playDay > 1 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%d year and %d days"), playYear, playDay );
-	}
-	else if( playYear > 0 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%d year and %d day"), playYear, playDay );
-	}
-	else if( playDay > 1 )
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%s days"), misc.format(playDay) );
-	}
-	else
-	{
-		snprintf( str, MAX_STR_LEN+1, _("%s day"), misc.format(playDay) );
-	}
+
+	str.catf(ngettext("%d day", "%d days", playDay), playDay);
 
 	return str;
 }

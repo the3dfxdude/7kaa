@@ -5333,14 +5333,13 @@ int Game::mp_select_load_option(char *fileName)
 				{
 					String str;
 
-					snprintf(str,
-						 MAX_STR_LEN+1,
-						 ngettext("This multiplayer saved game needs %d human players while now there is only %d human player.",
-							  "This multiplayer saved game needs %d human players while now there are only %d human players.",
-							  regPlayerCount),
-						 maxPlayer,
-						 regPlayerCount);
-					str += " The game cannot start.";
+					str.catf(ngettext("This multiplayer saved game needs %d human player",
+						"This multiplayer saved game needs %d human players", maxPlayer), maxPlayer);
+					str += " ";
+					str.catf(ngettext("while now there is %d human player.",
+						"while now there are %d human players.", regPlayerCount), regPlayerCount);
+					str += " ";
+					str += _("The game cannot start.");
 
 					box.msg(str);
 				}
@@ -5483,32 +5482,19 @@ int Game::mp_select_load_option(char *fileName)
 			}
 			*/
 
-			//--- if the current number of players < original number of players ---//
+			//--- check if the number of players match the save file's number of players ---//
 
-			if( playerCount < maxPlayer )
+			if( playerCount != maxPlayer )
 			{
 				String str;
 
-				snprintf(str,
-					 MAX_STR_LEN+1,
-					 ngettext("This multiplayer saved game needs %d human players while now there is only %d human player.",
-						  "This multiplayer saved game needs %d human players while now there are only %d human players.",
-						  playerCount),
-					 maxPlayer,
-					 playerCount);
-				str += " The game cannot start.";
-
-				box.msg(str);
-				return 0;
-			}
-
-			//--- if the current number of players > original number of players ---//
-
-			if( playerCount > maxPlayer )
-			{
-				String str;
-
-				snprintf(str, MAX_STR_LEN+1, _("This multiplayer saved game can only support %d human players while now there are %d human players. The game cannot start."), maxPlayer, playerCount);
+				str.catf(ngettext("This multiplayer saved game needs %d human player",
+					"This multiplayer saved game needs %d human players", maxPlayer), maxPlayer);
+				str += " ";
+				str.catf(ngettext("while now there is %d human player.",
+					"while now there are %d human players.", playerCount), playerCount);
+				str += " ";
+				str += _("The game cannot start.");
 
 				box.msg(str);
 				return 0;
