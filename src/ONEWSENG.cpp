@@ -668,7 +668,7 @@ void News::monster_king_killed()
 	//
 	//----------------------------------------------//
 
-	// TRANSLATORS: An All High <Fryhtan> has been slain.
+	// TRANSLATORS: An All High <monster type> has been slain.
 	snprintf(str, MAX_STR_LEN+1, _("An All High %s has been slain."), _(monster_res[short_para1]->name));
 }
 //------- End of function News::monster_king_killed -----//

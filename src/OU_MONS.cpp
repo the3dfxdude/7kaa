@@ -55,17 +55,19 @@ char* UnitMonster::unit_name(int withTitle)
 {
 	static String str;
 
-	char* monsterName = monster_res[get_monster_id()]->name;   // contribution is used for storing the monster id. temporary
+	char* monsterName = _(monster_res[get_monster_id()]->name);
 
-	str = monsterName;
+	str = "";
 
 	switch( rank_id )
 	{
 		case RANK_KING:
+			// TRANSLATORS: "All High <monster type>" which describes a king-ranking monster
 			snprintf( str, MAX_STR_LEN+1, _("All High %s"), monsterName );
 			break;
 
 		case RANK_GENERAL:
+			// TRANSLATORS: "<monster type> Ordo" which describes a general-ranking monster
 			snprintf( str, MAX_STR_LEN+1, _("%s Ordo"), monsterName );
 			break;
 	}
