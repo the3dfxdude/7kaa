@@ -62,6 +62,8 @@ public:
 };
 #pragma pack()
 
+struct FirmMonsterCrc;
+
 //------- Define class FirmMonster --------//
 
 #pragma pack(1)
@@ -132,6 +134,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(FirmMonsterCrc *c);
 
 private:
 	void	disp_monster_info(int dispY1, int refreshFlag);

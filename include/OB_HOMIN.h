@@ -26,6 +26,8 @@
 
 #include <OBULLET.h>
 
+struct BulletHomingCrc;
+
 #pragma pack(1)
 class BulletHoming : public Bullet
 {
@@ -50,6 +52,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(BulletHomingCrc *c);
 };
 #pragma pack()
 

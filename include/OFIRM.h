@@ -130,6 +130,7 @@ public:
 };
 #pragma pack()
 
+struct FirmCrc;
 class FirmBase;
 class FirmMine;
 class FirmFactory;
@@ -381,6 +382,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(FirmCrc *c);
 
    //---------------------------------------//
 

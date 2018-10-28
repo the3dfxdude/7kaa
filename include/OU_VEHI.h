@@ -28,6 +28,8 @@
 #include <OUNIT.h>
 #endif
 
+struct UnitVehicleCrc;
+
 //----------- Define class UnitVehicle -----------//
 
 #pragma pack(1)
@@ -44,6 +46,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(UnitVehicleCrc *c);
 };
 #pragma pack()
 

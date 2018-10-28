@@ -57,6 +57,8 @@ public:
 };
 #pragma pack()
 
+struct FirmInnCrc;
+
 //------- Define class FirmInn --------//
 
 #pragma pack(1)
@@ -91,6 +93,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(FirmInnCrc *c);
 
 private:
 	int 		should_add_inn_unit();

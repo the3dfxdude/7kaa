@@ -199,6 +199,8 @@ struct TeamInfo
 };
 #pragma pack()
 
+struct UnitCrc;
+
 //----------- Define class Unit -----------//
 
 #pragma pack(1)
@@ -568,6 +570,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(UnitCrc *c);
 
 private:
 	//------------------ idle functions -------------------//

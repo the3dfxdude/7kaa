@@ -28,6 +28,8 @@
 #include <OFIRM.h>
 #endif
 
+struct FirmFactoryCrc;
+
 //------- Define class FirmFactory --------//
 
 #pragma pack(1)
@@ -73,6 +75,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(FirmFactoryCrc *c);
 
 private:
 	void		auto_set_product();

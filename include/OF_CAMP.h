@@ -46,6 +46,7 @@ struct DefenseUnit
 
 //------- Define class FirmCamp --------//
 
+struct FirmCampCrc;
 class Town;
 class Unit;
 
@@ -125,6 +126,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(FirmCampCrc *c);
 
 private:
 	void 		reset_unit_home_camp(int firmRecno);

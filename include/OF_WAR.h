@@ -32,6 +32,8 @@
 
 #define MAX_BUILD_QUEUE				20
 
+struct FirmWarCrc;
+
 //------- Define class FirmWar --------//
 
 #pragma pack(1)
@@ -73,6 +75,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t	crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(FirmWarCrc *c);
 
 	enum {FIRMWAR_BUILD_BATCH_COUNT = 10}; // Number of units enqueued when holding shift - ensure this is less than MAX_BUILD_QUEUE
 

@@ -81,6 +81,7 @@ noinst_HEADERS = \
 	OMOUSE.h \
 	OMOUSE2.h \
 	OMOUSECR.h \
+	OMP_CRC.h \
 	OMUSIC.h \
 	ONATION.h \
 	ONATIONA.h \

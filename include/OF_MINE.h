@@ -36,6 +36,8 @@
 
 #define DEFAULT_MINE_MAX_STOCK_QTY 	500
 
+struct FirmMineCrc;
+
 //------- Define class FirmMine --------//
 
 #pragma pack(1)
@@ -85,6 +87,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(FirmMineCrc *c);
 
 private:
 	void 		 produce_raw();

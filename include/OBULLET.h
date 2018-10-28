@@ -45,6 +45,7 @@ enum	{	BULLET_BY_UNIT = 1,
 //----------- Define class Bullet -----------//
 
 class Unit;
+struct BulletCrc;
 
 #pragma pack(1)
 class Bullet : public Sprite
@@ -87,6 +88,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(BulletCrc *c);
 };
 #pragma pack()
 

@@ -108,6 +108,8 @@ public:
 };
 #pragma pack()
 
+struct UnitCaravanCrc;
+
 //----------- Define class Caravan -----------//
 
 #pragma pack(1)
@@ -167,6 +169,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(UnitCaravanCrc *c);
 
 private:
 	void 	disp_stop(int dispY1, int refreshFlag);

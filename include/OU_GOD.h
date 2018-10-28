@@ -32,6 +32,8 @@
 #include <OFIRM.h>
 #endif
 
+struct UnitGodCrc;
+
 //----------- Define class God -----------//
 
 #pragma pack(1)
@@ -58,6 +60,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual void    init_crc(UnitGodCrc *c);
 
 private:
 	void consume_power_pray_points();

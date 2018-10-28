@@ -65,6 +65,8 @@ public:
 };
 #pragma pack()
 
+struct UnitMarineCrc;
+
 //------- Define class UnitMarine -------//
 
 #pragma pack(1)
@@ -189,6 +191,7 @@ public:
 
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(UnitMarineCrc *c);
 
 private:
 	void 	disp_unit_menu(int dispY1, int refreshFlag);

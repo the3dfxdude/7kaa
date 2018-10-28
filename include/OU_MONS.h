@@ -34,6 +34,8 @@ enum	{	MONSTER_ACTION_STOP = 0,
 			MONSTER_ACTION_EXPAND,
 		};
 
+struct UnitMonsterCrc;
+
 //----------- Define class Monster -----------//
 
 #pragma pack(1)
@@ -55,6 +57,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(UnitMonsterCrc *c);
 
 private:
 	int 	random_attack();

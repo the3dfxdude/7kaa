@@ -26,6 +26,8 @@
 
 #include <OBULLET.h>
 
+struct ProjectileCrc;
+
 #pragma pack(1)
 class Projectile : public Bullet
 {
@@ -48,6 +50,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual	void	init_crc(ProjectileCrc *c);
 };
 #pragma pack()
 

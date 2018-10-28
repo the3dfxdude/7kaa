@@ -46,6 +46,8 @@ enum { SPRITE_IDLE=1,
 
 #define GUARD_COUNT_MAX 5
 
+struct SpriteCrc;
+
 //---------- Define class Sprite -----------//
 
 #pragma pack(1)
@@ -150,6 +152,7 @@ public:
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
 	virtual	void	clear_ptr();
+	virtual void    init_crc(SpriteCrc *c);
 };
 #pragma pack()
 
