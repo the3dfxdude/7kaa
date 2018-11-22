@@ -1002,7 +1002,8 @@ void Town::detect_train_menu()
 			quitFlag = 0;		// don't quit the menu right after pressing the button
 		}
 		//------ detect pressing on the big button -------//
-		else if( (rc= button_skill[b-1].detect(0,0,2)) != 0)
+		// but defer to the queue button if clicked over that
+		else if( !button_queue_skill[b-1].button_wait && ((rc= button_skill[b-1].detect(0,0,2)) != 0) )
 		{
 			quitFlag = 1;		// quit the menu right after pressing the button
 		}

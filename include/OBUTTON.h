@@ -52,6 +52,8 @@ public:
 	char     	   init_flag;
 	char     	   button_type;
 	char				use_texture_flag;
+	char			button_wait; // user pushed button and waiting for release
+	uint32_t		button_wait_timeout;
 	unsigned short button_key;     // button is pressed when user press this key
 
 	char  	  		str_buf[STR_BUF_LEN+1];
