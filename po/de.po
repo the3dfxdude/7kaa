@@ -142,14 +142,14 @@ msgstr "Dez"
 
 #. TRANSLATORS: <Month> <Day>, <Year>
 #: src/ODATE.cpp:248 src/ODATE.cpp:252
-#, fuzzy, c-format
+#, c-format
 msgid "%s %d, %d"
 msgstr "%2$d %1$s %3$d"
 
 #. TRANSLATORS: <Town> <Short Firm Name> <Firm #>
 #. This is the name of the firm when there are multiple linked firms to a town.
 #: src/OFIRM.cpp:492
-#, fuzzy, c-format
+#, c-format
 msgctxt "FirmUI|Name"
 msgid "%s %s %d"
 msgstr "%1$s %2$s %3$d"
@@ -207,12 +207,10 @@ msgid "Bribe"
 msgstr "Bestechen"
 
 #: src/OFIRMIF3.cpp:116
-#, fuzzy
 msgid "Bribe Succeeded."
 msgstr "Bestechung erfolgreich."
 
 #: src/OFIRMIF3.cpp:122
-#, fuzzy
 msgid "Bribe Failed."
 msgstr "Bestechung gescheitert."
 
@@ -343,7 +341,7 @@ msgstr "Ungenutzte Reserven"
 
 #. TRANSLATORS: <Fryhtan Type> Lair
 #: src/OF_MONS.cpp:137
-#, fuzzy, c-format
+#, c-format
 msgctxt "FirmUI|Name"
 msgid "%s Lair"
 msgstr "%s Nest"
@@ -357,12 +355,10 @@ msgid "Cannot initialize ENet."
 msgstr "Kann nicht ENet initialisieren."
 
 #: src/OGAMEMP.cpp:597 src/OGAMEMP.cpp:865
-#, fuzzy
 msgid "Unable to retrieve leaderboard"
 msgstr "Unfähig Leaderboard abzurufen"
 
 #: src/OGAMEMP.cpp:612 src/OGAMEMP.cpp:887
-#, fuzzy
 msgid "Enter a name for your game session."
 msgstr "Geben sie einen Namen für das Spiel ein:"
 
@@ -391,7 +387,6 @@ msgid "Service not supported"
 msgstr "Service wird nicht unterstützt"
 
 #: src/OGAMEMP.cpp:1411
-#, fuzzy
 msgid ""
 "It is not recommended to use this save game file name. Do you wish to "
 "continue?"
@@ -449,7 +444,6 @@ msgid "Unable to connect"
 msgstr "Verbindung nicht möglich"
 
 #: src/OGAMEMP.cpp:2176
-#, fuzzy
 msgid "Failed to initiate connection"
 msgstr "Verbindungsaufbau gescheitert"
 
@@ -474,7 +468,6 @@ msgid "The game host has aborted the game."
 msgstr "Der Gamehost hat das Spiel abgebrochen."
 
 #: src/OGAMEMP.cpp:3410 src/OGAMEMP.cpp:5196
-#, fuzzy
 msgid "Your game version does not match the host's version."
 msgstr "Ihre Spielversion stimmt nicht mit der des Hosts überein."
 
@@ -495,7 +488,6 @@ msgid "You cannot join the game because the host is not loading a save."
 msgstr "Sie können dem Spiel nicht beitreten, weil der Host gerade kein Spiel lädt."
 
 #: src/OGAMEMP.cpp:3425 src/OGAMEMP.cpp:5211
-#, fuzzy
 msgid ""
 "You cannot join the game because the saved multiplayer game you selected is "
 "different."
@@ -504,7 +496,6 @@ msgstr ""
 "gespeicherte Multiplayer-Spiel anders ist."
 
 #: src/OGAMEMP.cpp:3428 src/OGAMEMP.cpp:5214
-#, fuzzy
 msgid "The host refused the connection."
 msgstr "Der Host hat die Verbindung verweigert."
 
@@ -517,7 +508,6 @@ msgid "Cannot get random seeds from the host."
 msgstr "Kann nicht zufälligen Seed vom Host erhalten."
 
 #: src/OGAMEMP.cpp:4172
-#, fuzzy
 msgid "Cannot get game configuration information from the host."
 msgstr "Kann nicht Spiel Konfigurations-Information vom Host erhalten."
 
@@ -539,7 +529,7 @@ msgstr ""
 "Einige Spieler haben bei der Initialisierung des Spiels Fehler vorgefunden."
 
 #: src/OGAMEMP.cpp:5348 src/OGAMEMP.cpp:5504
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This multiplayer saved game needs %d human players while now there is only "
 "%d human player."
@@ -554,7 +544,7 @@ msgstr[1] ""
 "zurzeit gibt es nur %d Spieler."
 
 #: src/OGAMEMP.cpp:5521
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This multiplayer saved game can only support %d human players while now "
 "there are %d human players. The game cannot start."
@@ -642,7 +632,7 @@ msgstr "Sie haben das Spiel verloren !"
 
 #. TRANSLATORS: You Surrendered to <King's Kingdom> on <Date>.
 #: src/OGAMEND.cpp:370
-#, fuzzy, c-format
+#, c-format
 msgid "You Surrendered to %s on %s."
 msgstr "Sie kapitulierten vor %s am %s."
 
@@ -832,7 +822,6 @@ msgid "Error writing saved game data."
 msgstr "Fehler beim Schreiben gespeicherter Spieldaten."
 
 #: src/OGFILE.cpp:102
-#, fuzzy
 msgid " The game is not saved."
 msgstr "Das Spiel wird nicht gespeichert."
 
@@ -861,7 +850,6 @@ msgid "Invalid header"
 msgstr "Invalider Header"
 
 #: src/OGFILE.cpp:217
-#, fuzzy
 msgid "Could not open file"
 msgstr "Datei konnte nicht geöffnet werden"
 
@@ -878,22 +866,22 @@ msgid "%s General"
 msgstr "%s General"
 
 #: src/OINFO.cpp:602
-#, fuzzy, c-format
+#, c-format
 msgid "%d hours and %d minutes"
 msgstr "%d Stunden und %d Minuten"
 
 #: src/OINFO.cpp:606
-#, fuzzy, c-format
+#, c-format
 msgid "%d hours and %d minute"
 msgstr "%d Stunden und %d Minute"
 
 #: src/OINFO.cpp:610
-#, fuzzy, c-format
+#, c-format
 msgid "%d hour and %d minutes"
 msgstr "%d Stunde und %d Minuten"
 
 #: src/OINFO.cpp:614
-#, fuzzy, c-format
+#, c-format
 msgid "%d hour and %d minute"
 msgstr "%d Stunde und %d Minute"
 
@@ -908,22 +896,22 @@ msgid "%s minute"
 msgstr "%s Minute"
 
 #: src/OINFO.cpp:663
-#, fuzzy, c-format
+#, c-format
 msgid "%d years and %d days"
 msgstr "%d Jahre und %d Tage"
 
 #: src/OINFO.cpp:667
-#, fuzzy, c-format
+#, c-format
 msgid "%d years and %d day"
 msgstr "%d Jahre und %d Tag"
 
 #: src/OINFO.cpp:671
-#, fuzzy, c-format
+#, c-format
 msgid "%d year and %d days"
 msgstr "%d Jahr und %d Tage"
 
 #: src/OINFO.cpp:675
-#, fuzzy, c-format
+#, c-format
 msgid "%d year and %d day"
 msgstr "%d Jahr und %d Tag"
 
@@ -986,22 +974,22 @@ msgid "%s's Kingdom"
 msgstr "%s's Königreich"
 
 #: src/ONATIONB.cpp:2054 src/ONATIONB.cpp:2362
-#, fuzzy, c-format
+#, c-format
 msgid "%d years and %d months"
 msgstr "%d Jahre und %d Monate"
 
 #: src/ONATIONB.cpp:2058 src/ONATIONB.cpp:2366
-#, fuzzy, c-format
+#, c-format
 msgid "%d years and %d month"
 msgstr "%d Jahre und %d Monat"
 
 #: src/ONATIONB.cpp:2062 src/ONATIONB.cpp:2370
-#, fuzzy, c-format
+#, c-format
 msgid "%d year and %d months"
 msgstr "%d Jahr und %d Monate"
 
 #: src/ONATIONB.cpp:2066 src/ONATIONB.cpp:2374
-#, fuzzy, c-format
+#, c-format
 msgid "%d year and %d month"
 msgstr "%d Jahr und %d Monat"
 
@@ -1018,7 +1006,7 @@ msgstr "%d Monat"
 #. TRANSLATORS: <Number> Peasant in <Town> in <King's Kingdom> is rebelling.
 #. <Number> Peasants in <Town> in <King's Kingdom> are rebelling.
 #: src/ONEWSENG.cpp:174
-#, fuzzy, c-format
+#, c-format
 msgid "%d Peasant in %s in %s is rebelling."
 msgid_plural "%d Peasants in %s in %s are rebelling."
 msgstr[0] "%d Bauer in %s in %s rebelliert."
@@ -1027,7 +1015,7 @@ msgstr[1] "%d Bauern in %s in %s rebellieren."
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town> in <King's Kingdom>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town> in <King's Kingdom>.
 #: src/ONEWSENG.cpp:217
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s %s has emigrated from your village of %s to %s in %s."
 msgid_plural "%d %s %ss have emigrated from your village of %s to %s in %s."
 msgstr[0] ""
@@ -1038,7 +1026,7 @@ msgstr[1] ""
 #. TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town> in <King's Kingdom>.
 #. <Number> <Race> Peasants have emigrated from your village of <Town> to <Town> in <King's Kingdom>.
 #: src/ONEWSENG.cpp:233
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s Peasant has emigrated from your village of %s to %s in %s."
 msgid_plural ""
 "%d %s Peasants have emigrated from your village of %s to %s in %s."
@@ -1050,7 +1038,7 @@ msgstr[1] ""
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town>.
 #: src/ONEWSENG.cpp:251
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s %s has emigrated from your village of %s to %s."
 msgid_plural "%d %s %ss have emigrated from your village of %s to %s."
 msgstr[0] "%d %s %s emigrierte aus ihrem Dorf %s nach %s."
@@ -1059,7 +1047,7 @@ msgstr[1] "%d %s %s emigrierten aus ihrem Dorf %s nach %s."
 #. TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town>.
 #. <Number> <Race> Peasants have emigrated from your village of <Town> to <Town>.
 #: src/ONEWSENG.cpp:266
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s Peasant has emigrated from your village of %s to %s."
 msgid_plural "%d %s Peasants have emigrated from your village of %s to %s."
 msgstr[0] "%d %s Bauer emigrierte aus ihrem Dorf %s nach %s."
@@ -1068,7 +1056,7 @@ msgstr[1] "%d %s Bauern emigrierten aus ihrem Dorf %s nach %s."
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> in <King's Kingdom> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> in <King's Kingdom> to your village of <Town>.
 #: src/ONEWSENG.cpp:286
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s %s has immigrated from %s in %s to your village of %s."
 msgid_plural "%d %s %ss have immigrated from %s in %s to your village of %s."
 msgstr[0] "%d %s %s immigrierte aus %s im %s zu ihrem Dorf %s."
@@ -1077,7 +1065,7 @@ msgstr[1] "%d %s %s immigrierten aus %s im %s zu ihrem Dorf %s."
 #. TRANSLATORS: A <Race> Peasant has immigrated from <Town> in <King's Kingdom> to your village of <Town>.
 #. <Number> <Race> Peasants have immigrated from <Town> in <King's Kingdom> to your village of <Town>.
 #: src/ONEWSENG.cpp:302
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s Peasant has immigrated from %s in %s to your village of %s."
 msgid_plural ""
 "%d %s Peasants have immigrated from %s in %s to your village of %s."
@@ -1089,7 +1077,7 @@ msgstr[1] ""
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> to your village of <Town>.
 #: src/ONEWSENG.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s %s has immigrated from %s to your village of %s."
 msgid_plural "%d %s %ss have immigrated from %s to your village of %s."
 msgstr[0] "%d %s %s immigrierte aus %s zu ihrem Dorf %s."
@@ -1098,7 +1086,7 @@ msgstr[1] "%d %s %s immigrierten aus %s zu ihrem Dorf %s."
 #. TRANSLATORS: A <Race> Peasant has immigrated from <Town> to your village of <Town>.
 #. <Number> <Race> Peasants have immigrated from <Town> to your village of <Town>.
 #: src/ONEWSENG.cpp:335
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s Peasant has immigrated from %s to your village of %s."
 msgid_plural "%d %s Peasants have immigrated from %s to your village of %s."
 msgstr[0] "%d %s Bauer immigrierte aus %s zu ihrem Dorf %s."
@@ -1124,7 +1112,7 @@ msgstr "%s hat sich ihnen ergeben."
 
 #. TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
 #: src/ONEWSENG.cpp:408
-#, fuzzy, c-format
+#, c-format
 msgid "%s has surrendered to %s."
 msgstr "%s hat sich %s ergeben."
 
@@ -1136,7 +1124,7 @@ msgstr "Ihr König %s wurde getötet."
 
 #. TRANSLATORS: King <Name> of <King's Kingdom> has been slain.
 #: src/ONEWSENG.cpp:438
-#, fuzzy, c-format
+#, c-format
 msgid "King %s of %s has been slain."
 msgstr "König %s des %s wurde getötet."
 
@@ -1148,49 +1136,49 @@ msgstr "%s hat den Thron als ihr neuer König bestiegen."
 
 #. TRANSLATORS: <Name> has ascended the throne as the new King of <King's Kingdom>.
 #: src/ONEWSENG.cpp:472
-#, fuzzy, c-format
+#, c-format
 msgid "%s has ascended the throne as the new King of %s."
 msgstr "%s hat den Thron als neuer König von %s bestiegen."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King's Kingdom>.
 #: src/ONEWSENG.cpp:500
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been destroyed by %s."
 msgstr "%s in der Nähe von %s wurde von %s zerstört."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
 #: src/ONEWSENG.cpp:505
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been destroyed by Rebels."
 msgstr "%s in der Nähe von %s wurde von Rebellen zerstört."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
 #: src/ONEWSENG.cpp:510
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been destroyed by Fryhtans."
 msgstr "%s in der Nähe von %s wurde von Fryhtans zerstört."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed.
 #: src/ONEWSENG.cpp:515
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been destroyed."
 msgstr "%s in der Nähe von % wurde zerstört."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King's Kingdom>.
 #: src/ONEWSENG.cpp:547
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been captured by a spy from %s."
 msgstr "%s in der Nähe von %s wurde von einem Spion von %s eingenommen."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by <King's Kingdom>.
 #: src/ONEWSENG.cpp:552
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been captured by %s."
 msgstr "%s in der Nähe von %s wurde von %s eingenommen."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by <King's Kingdom>.
 #: src/ONEWSENG.cpp:577
-#, fuzzy, c-format
+#, c-format
 msgid "Your village of %s has been destroyed by %s."
 msgstr "Ihr Dorf %s wurde von %s zerstört."
 
@@ -1220,13 +1208,13 @@ msgstr "Ihr Dorf %s wurde von seinen Einwohnern verlassen."
 
 #. TRANSLATORS: Your village of <Town> has surrendered to <King's Kingdom>.
 #: src/ONEWSENG.cpp:643
-#, fuzzy, c-format
+#, c-format
 msgid "Your village of %s has surrendered to %s."
 msgstr "Ihr Dorf %s unterwarf sich %s."
 
 #. TRANSLATORS: The village of <Town> in <King's Kingdom> has surrendered to you.
 #: src/ONEWSENG.cpp:648
-#, fuzzy, c-format
+#, c-format
 msgid "The village of %s in %s has surrendered to you."
 msgstr "Das Dorf %s in %s hat sich ihnen unterworfen."
 
@@ -1262,7 +1250,7 @@ msgstr "Sie haben die %s Schriftrolle der Macht erworben."
 
 #. TRANSLATORS: <King's Kingdom> has acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:724
-#, fuzzy, c-format
+#, c-format
 msgid "%s has acquired the %s Scroll of Power."
 msgstr "%s hat die %s Schriftrolle der Macht erworben."
 
@@ -1274,7 +1262,7 @@ msgstr "Sie haben einen Schatz im Wert von %s von den Fryhtans erlangt."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King's Kingdom>.
 #: src/ONEWSENG.cpp:782
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a %s near %s in %s."
 msgstr ""
@@ -1282,13 +1270,13 @@ msgstr ""
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
 #: src/ONEWSENG.cpp:787
-#, fuzzy, c-format
+#, c-format
 msgid "Your spy has been exposed and executed on his mission to a %s near %s."
 msgstr "Ihr Spion wurde auf seiner Mission in %s nähe %s entdeckt und hingerichtet."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to <Town> in <King's Kingdom>.
 #: src/ONEWSENG.cpp:795
-#, fuzzy, c-format
+#, c-format
 msgid "Your spy has been exposed and executed on his mission to %s in %s."
 msgstr "Ihr Spion wurde auf seiner Mission in %s in %s entdeckt und hingerichtet."
 
@@ -1300,7 +1288,7 @@ msgstr "Ihr Spion wurde auf seiner Mission in %s entdeckt und hingerichtet."
 
 #. TRANSLATORS: Your spy <Name> has been exposed and executed on his mission to <King's Kingdom>.
 #: src/ONEWSENG.cpp:808
-#, fuzzy, c-format
+#, c-format
 msgid "Your spy %s has been exposed and executed on his mission to %s."
 msgstr "Ihr Spion %s wurde auf seiner Mission in %s entdeckt und hingerichtet."
 
@@ -1312,19 +1300,19 @@ msgstr "Ihr Spion %s wurde auf seiner Mission entdeckt und hingerichtet."
 
 #. TRANSLATORS: A spy from <King's Kingdom> has been uncovered and executed in your <Firm> near <Town>.
 #: src/ONEWSENG.cpp:850
-#, fuzzy, c-format
+#, c-format
 msgid "A spy from %s has been uncovered and executed in your %s near %s."
 msgstr "Ein Spion von %s wurde in %s nähe %s enttarnt und hingerichtet."
 
 #. TRANSLATORS: A spy from <King's Kingdom> has been uncovered and executed in your village of <Town>.
 #: src/ONEWSENG.cpp:855
-#, fuzzy, c-format
+#, c-format
 msgid "A spy from %s has been uncovered and executed in your village of %s."
 msgstr "Ein Spion von %s wurde enttarnt und in ihrem Dorf %s hingerichtet."
 
 #. TRANSLATORS: Spy <Name> from <King's Kingdom> has been uncovered and executed.
 #: src/ONEWSENG.cpp:863
-#, fuzzy, c-format
+#, c-format
 msgid "Spy %s from %s has been uncovered and executed."
 msgstr "Spion %s von %s wurde enttarnt und hingerichtet."
 
@@ -1348,25 +1336,25 @@ msgstr "%s hat sich von ihnen losgesagt und wurde unabhängig."
 
 #. TRANSLATORS: General <Name> has betrayed you and turned towards <King's Kingdom>.
 #: src/ONEWSENG.cpp:926
-#, fuzzy, c-format
+#, c-format
 msgid "General %s has betrayed you and turned towards %s."
 msgstr "General %s hat sie verraten und ist %s beigetreten."
 
 #. TRANSLATORS: <Name> has betrayed you and turned towards <King's Kingdom>.
 #: src/ONEWSENG.cpp:931
-#, fuzzy, c-format
+#, c-format
 msgid "%s has betrayed you and turned towards %s."
 msgstr "%s hat sie verraten und ist %s beigetreten."
 
 #. TRANSLATORS: General <Name> of <King's Kingdom> has defected to your forces.
 #: src/ONEWSENG.cpp:939
-#, fuzzy, c-format
+#, c-format
 msgid "General %s of %s has defected to your forces."
 msgstr "General %s von %s ist zu ihren Streitkräften übergelaufen."
 
 #. TRANSLATORS: <Name> of <King's Kingdom> has defected to your forces.
 #: src/ONEWSENG.cpp:944
-#, fuzzy, c-format
+#, c-format
 msgid "%s of %s has defected to your forces."
 msgstr "%s von %s ist zu ihren Streitkräften übergelaufen."
 
@@ -1403,13 +1391,13 @@ msgstr "Ein feindlicher Spion wurde beim Versuch ihren General zu ermorden niede
 
 #. TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
 #: src/ONEWSENG.cpp:1040
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s Mine has exhausted its %s deposit."
 msgstr "Ihre %smine hat seinen natürlichen Vorrat an %s ausgeschöpft."
 
 #. TRANSLATORS: Your scientists have finished their <Tech> Mark <Level> research.
 #: src/ONEWSENG.cpp:1062
-#, fuzzy, c-format
+#, c-format
 msgid "Your scientists have finished their %s Mark %s research."
 msgstr "Ihre Wissenschaftler haben ihre %s Mark %s Forschung vollendet."
 
@@ -1457,13 +1445,13 @@ msgstr "Ihre Einheit %s wurde von einem Blitz getroffen und verletzt."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
 #: src/ONEWSENG.cpp:1144
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been destroyed by lightning."
 msgstr "%s in der Nähe von %s wurde nach Blitzeinschlag zerstört."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
 #: src/ONEWSENG.cpp:1149
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s near %s has been struck by lightning."
 msgstr "%s in der Nähe von %s wurde von einem Blitz getroffen."
 
@@ -1494,7 +1482,7 @@ msgstr "Ihr Dorf %s wurde von einem Blitz getroffen."
 #. TRANSLATORS: <Number> of your units has been injured and <Number> killed in an earthquake.
 #. <Number> of your units have been injured and <Number> killed in an earthquake.
 #: src/ONEWSENG.cpp:1214
-#, fuzzy, c-format
+#, c-format
 msgid "%d of your units has been injured and %d killed in an earthquake."
 msgid_plural ""
 "%d of your units have been injured and %d killed in an earthquake."
@@ -1524,7 +1512,7 @@ msgstr[1] "%d ihrer Dorfbewohner sind bei einem Erdbeben ums Leben gekommen."
 #. TRANSLATORS: <Number> of your buildings has been damaged and <Number> destroyed in an earthquake.
 #. <Number> of your buildings have been damaged and <Number> destroyed in an earthquake.
 #: src/ONEWSENG.cpp:1254
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%d of your buildings has been damaged and %d destroyed in an earthquake."
 msgid_plural ""
@@ -1544,14 +1532,14 @@ msgstr[0] "%d ihrer Gebäude wurde bei einem Erdbeben beschädigt."
 msgstr[1] "%d ihrer Gebäude wurden bei einem Erdbeben beschädigt."
 
 #: src/ONEWSENG.cpp:1297
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Make haste! You have only %d years and %d months left to achieve your goal."
 msgstr ""
 "Schnell! Sie haben nur noch %d Jahre und %d Monate um ihr Ziel zu erreichen."
 
 #: src/ONEWSENG.cpp:1301
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Make haste! You have only %d years and %d month left to achieve your goal."
 msgstr ""
@@ -1563,14 +1551,14 @@ msgid "Make haste! You have only %d years left to achieve your goal."
 "Schnell! Sie haben nur noch %d Jahre ihr Ziel zu erreichen."
 
 #: src/ONEWSENG.cpp:1309
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Make haste! You have only %d year and %d months left to achieve your goal."
 msgstr ""
 "Schnell! Sie haben nur noch %d Jahr und %d Monate um ihr Ziel zu erreichen."
 
 #: src/ONEWSENG.cpp:1313
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Make haste! You have only %d year and %d month left to achieve your goal."
 msgstr ""
@@ -1600,7 +1588,7 @@ msgstr ""
 
 #. TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1379
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your %s near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
@@ -1962,12 +1950,11 @@ msgstr "Bitte fügen sie ihre Chatnachricht ein und drücken sie <Enter> zum Sende
 
 #. TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
 #: src/OR_RANK.cpp:232
-#, fuzzy, c-format
+#, c-format
 msgid "GOAL: Achieve One of the Following Before %s:"
 msgstr "ZIEL: Erreichen sie eines der Folgenden bevor %s:"
 
 #: src/OR_RANK.cpp:236
-#, fuzzy
 msgid "GOAL: Achieve One of the Following:"
 msgstr "ZIEL: Erreichen sie eines der Folgenden:"
 
@@ -2309,7 +2296,6 @@ msgid "The current screen has been written to file %s."
 msgstr "Der aktuelle Bildschirm wurde in die Datei %s geschrieben."
 
 #: src/OSYS.cpp:2639
-#, fuzzy
 msgid "Failed Loading Game"
 msgstr "Laden des Spiels fehlgeschlagen"
 
@@ -2350,17 +2336,14 @@ msgid "File Date: "
 msgstr "Dateidatum: "
 
 #: src/OSaveGameArray.cpp:687
-#, fuzzy
 msgid "It will overwrite the existing saved game. Proceed?"
 msgstr "Das vorhandene gespeicherte Spiel wird überschrieben. Fortfahren?"
 
 #: src/OSaveGameArray.cpp:889
-#, fuzzy
 msgid "This saved game will be deleted. Proceed?"
 msgstr "Dieses gespeicherte Spiel wird gelöscht. Fortfahren?"
 
 #: src/OSaveGameProvider.cpp:136
-#, fuzzy
 msgid "Path too long to the saved game."
 msgstr "Der Pfad zum gespeicherten Spiel ist zu lang."
 
@@ -2550,79 +2533,79 @@ msgstr "Sie verweigern einen Waffenstillstand mit %s."
 
 #. TRANSLATORS: You request <King 1's Kingdom> to declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:435
-#, fuzzy, c-format
+#, c-format
 msgid "You request %s to declare war on %s%s."
 msgstr "Sie fordern %s zu einem Krieg gegen %s%s auf."
 
 #. TRANSLATORS: <King 1's Kingdom> requests that you declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:440
-#, fuzzy, c-format
+#, c-format
 msgid "%s requests that you declare war on %s%s."
 msgstr "%s erbittet sie zu einem Krieg gegen %s%s."
 
 #. TRANSLATORS: <King 1's Kingdom> agrees to declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:449
-#, fuzzy, c-format
+#, c-format
 msgid "%s agrees to declare war on %s%s."
 msgstr "%s akzeptiert %s%s den Krieg zu erklären."
 
 #. TRANSLATORS: <King 1's Kingdom> refuses to declare war on <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:452
-#, fuzzy, c-format
+#, c-format
 msgid "%s refuses to declare war on %s%s."
 msgstr "%s verweigert %s%s den Krieg zu erklären."
 
 #. TRANSLATORS: You agree to declare war on <King's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:458
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to declare war on %s%s."
 msgstr "Sie akzeptieren %s%s den Krieg zu erklären."
 
 #. TRANSLATORS: You refuse to declare war on <King's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:461
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to declare war on %s%s."
 msgstr "Sie verweigern %s%s den Krieg zu erklären."
 
 #. TRANSLATORS: <King's Kingdom> offers <Amount> for 10 units of food.
 #: src/OTALKENG.cpp:484
-#, fuzzy, c-format
+#, c-format
 msgid "%s offers %s for 10 units of food."
 msgstr "%s bietet %s für 10 Nahrungseinheiten."
 
 #. TRANSLATORS: You request to purchase <Number> units of food from <King's Kingdom>.
 #: src/OTALKENG.cpp:512
-#, fuzzy, c-format
+#, c-format
 msgid "You request to purchase %s units of food from %s."
 msgstr "Sie erbitten den Kauf von %s Nahrungseinheiten von %s."
 
 #. TRANSLATORS: <King's Kingdom> requests to purchase <Number> units of food from you.
 #: src/OTALKENG.cpp:517
-#, fuzzy, c-format
+#, c-format
 msgid "%s requests to purchase %s units of food from you."
 msgstr "%s erbittet den Kauf von %s Nahrungseinheiten von ihnen."
 
 #. TRANSLATORS: <King's Kingdom> agrees to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:526
-#, fuzzy, c-format
+#, c-format
 msgid "%s agrees to sell %s units of food to you."
 msgstr "%s akzeptiert den Verkauf von %s Nahrungseinheiten an sie."
 
 #. TRANSLATORS: <King's Kingdom> refuses to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:529
-#, fuzzy, c-format
+#, c-format
 msgid "%s refuses to sell %s units of food to you."
 msgstr "%s verweigert den Verkauf von %s Nahrungseinheiten an sie."
 
 #. TRANSLATORS: You agree to sell <Number> units of food to <King's Kingdom>.
 #: src/OTALKENG.cpp:535
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to sell %s units of food to %s."
 msgstr "Sie akzeptieren den Verkauf von %s Nahrungseinheiten an %s."
 
 #. TRANSLATORS: You refuse to sell <Number> units of food to <King's Kingdom>.
 #: src/OTALKENG.cpp:538
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to sell %s units of food to %s."
 msgstr "Sie verweigern den Verkauf von %s Nahrungseinheiten an %s."
 
@@ -2640,229 +2623,229 @@ msgstr "%s erklärt ihnen den Krieg."
 
 #. TRANSLATORS: You offer <King's Kingdom> <Amount> in aid.
 #: src/OTALKENG.cpp:605
-#, fuzzy, c-format
+#, c-format
 msgid "You offer %s %s in aid."
 msgstr "Sie bieten %s %s in Hilfe an."
 
 #. TRANSLATORS: You offer <King's Kingdom> <Amount> in tribute.
 #: src/OTALKENG.cpp:610
-#, fuzzy, c-format
+#, c-format
 msgid "You offer %s %s in tribute."
 msgstr "Sie bieten %s %s Tribut an."
 
 #. TRANSLATORS: <King's Kingdom> offers you <Amount> in aid.
 #: src/OTALKENG.cpp:618
-#, fuzzy, c-format
+#, c-format
 msgid "%s offers you %s in aid."
 msgstr "%s bietet ihnen %s in Hilfe an."
 
 #. TRANSLATORS: <King's Kingdom> offers you <Amount> in tribute.
 #: src/OTALKENG.cpp:623
-#, fuzzy, c-format
+#, c-format
 msgid "%s offers you %s in tribute."
 msgstr "%s bietet ihnen %s in Tribut an."
 
 #. TRANSLATORS: <King's Kingdom> accepts your aid of <Amount>.
 #: src/OTALKENG.cpp:636
-#, fuzzy, c-format
+#, c-format
 msgid "%s accepts your aid of %s."
 msgstr "%1s akzeptiert ihre Hilfe von %s."
 
 #. TRANSLATORS: <King's Kingdom> accepts your tribute of <Amount>.
 #: src/OTALKENG.cpp:641
-#, fuzzy, c-format
+#, c-format
 msgid "%s accepts your tribute of %s."
 msgstr "%s akzeptiert ihren Tribut von %s."
 
 #. TRANSLATORS: <King's Kingdom> rejects your aid of <Amount>.
 #: src/OTALKENG.cpp:649
-#, fuzzy, c-format
+#, c-format
 msgid "%s rejects your aid of %s."
 msgstr "%s lehnt ihre Hilfe von %s ab."
 
 #. TRANSLATORS: <King's Kingdom> rejects your tribute of <Amount>.
 #: src/OTALKENG.cpp:654
-#, fuzzy, c-format
+#, c-format
 msgid "%s rejects your tribute of %s."
 msgstr "%s lehnt ihren Tribut von %s ab."
 
 #. TRANSLATORS: You accept the <Amount> in aid from <King's Kingdom>.
 #: src/OTALKENG.cpp:665
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the %s in aid from %s."
 msgstr "Sie akzeptieren die Hilfe von %s von %s."
 
 #. TRANSLATORS: You accept the <Amount> in tribute from <King's Kingdom>.
 #: src/OTALKENG.cpp:670
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the %s in tribute from %s."
 msgstr "Sie akzeptieren den Tribut von %s von %s."
 
 #. TRANSLATORS: You reject the <Amount> in aid from <King's Kingdom>.
 #: src/OTALKENG.cpp:678
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the %s in aid from %s."
 msgstr "Sie lehnen die Hilfe von %s von %s ab."
 
 #. TRANSLATORS: You reject the <Amount> in tribute from <King's Kingdom>.
 #: src/OTALKENG.cpp:683
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the %s in tribute from %s."
 msgstr "Sie lehnen den Tribut von %s von %s ab."
 
 #. TRANSLATORS: You request <Amount> in aid from <King's Kingdom>.
 #: src/OTALKENG.cpp:724
-#, fuzzy, c-format
+#, c-format
 msgid "You request %s in aid from %s."
 msgstr "Sie erbitten %s in Hilfe von %s."
 
 #. TRANSLATORS: You demand <Amount> in tribute from <King's Kingdom>.
 #: src/OTALKENG.cpp:727
-#, fuzzy, c-format
+#, c-format
 msgid "You demand %s in tribute from %s."
 msgstr "Sie fordern %s in Tribut von %s."
 
 #. TRANSLATORS: <King's Kingdom> requests <Amount> in aid from you.
 #: src/OTALKENG.cpp:733
-#, fuzzy, c-format
+#, c-format
 msgid "%s requests %s in aid from you."
 msgstr "%s erbittet %s in Hilfe von ihnen."
 
 #. TRANSLATORS: <King's Kingdom> demands <Amount> in tribute from you.
 #: src/OTALKENG.cpp:736
-#, fuzzy, c-format
+#, c-format
 msgid "%s demands %s in tribute from you."
 msgstr "%s fordert % in Tribut von ihnen."
 
 #. TRANSLATORS: <King's Kingdom> agrees to give you <Amount> in aid.
 #: src/OTALKENG.cpp:748
-#, fuzzy, c-format
+#, c-format
 msgid "%s agrees to give you %s in aid."
 msgstr "%s akzeptiert ihnen %s in Hilfe zu geben."
 
 #. TRANSLATORS: <King's Kingdom> agrees to pay you <Amount> in tribute.
 #: src/OTALKENG.cpp:750
-#, fuzzy, c-format
+#, c-format
 msgid "%s agrees to pay you %s in tribute."
 msgstr "%s akzeptiert ihnen %s in Tribut zu zahlen."
 
 #. TRANSLATORS: <King's Kingdom> refuses to give you <Amount> in aid.
 #: src/OTALKENG.cpp:758
-#, fuzzy, c-format
+#, c-format
 msgid "%s refuses to give you %s in aid."
 msgstr "%s verweigert ihnen %s in Hilfe zu geben."
 
 #. TRANSLATORS: <King's Kingdom> refuses to pay you <Amount> in tribute.
 #: src/OTALKENG.cpp:760
-#, fuzzy, c-format
+#, c-format
 msgid "%s refuses to pay you %s in tribute."
 msgstr "%s verweigert ihnen %s in Tribut zu zahlen."
 
 #. TRANSLATORS: You agree to give <King's Kingdom> <Amount> in aid.
 #: src/OTALKENG.cpp:771
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to give %s %s in aid."
 msgstr "Sie akzeptieren %s %s in Hilfe zu geben."
 
 #. TRANSLATORS: You agree to pay <King's Kingdom> <Amount> in tribute.
 #: src/OTALKENG.cpp:773
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to pay %s %s in tribute."
 msgstr "Sie akzeptieren %s %s in Tribut zu zahlen."
 
 #. TRANSLATORS: You refuse to give <King's Kingdom> <Amount> in aid.
 #: src/OTALKENG.cpp:781
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to give %s %s in aid."
 msgstr "Sie verweigern %s %s in Hilfe zu geben."
 
 #. TRANSLATORS: You refuse to pay <King's Kingdom> <Amount> in tribute.
 #: src/OTALKENG.cpp:783
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to pay %s %s in tribute."
 msgstr "Sie verweigern %s %s in Tribut zu zahlen."
 
 #. TRANSLATORS: You offer <Tech> technology to <King's Kingdom>.
 #: src/OTALKENG.cpp:830
-#, fuzzy, c-format
+#, c-format
 msgid "You offer %s technology to %s."
 msgstr "Sie bieten %s-Technologie an %s."
 
 #. TRANSLATORS: <King's Kingdom> offers <Tech> technology to you.
 #: src/OTALKENG.cpp:835
-#, fuzzy, c-format
+#, c-format
 msgid "%s offers %s technology to you."
 msgstr "%s bietet ihnen %s-Technologie an."
 
 #. TRANSLATORS: <King's Kingdom> accepts your gift of <Tech> technology.
 #: src/OTALKENG.cpp:844
-#, fuzzy, c-format
+#, c-format
 msgid "%s accepts your gift of %s technology."
 msgstr "%s akzeptiert ihr %s-Technologie Geschenk."
 
 #. TRANSLATORS: <King's Kingdom> rejects your gift of <Tech> technology.
 #: src/OTALKENG.cpp:847
-#, fuzzy, c-format
+#, c-format
 msgid "%s rejects your gift of %s technology."
 msgstr "%s lehnt ihr %s-Technologie Geschenk ab."
 
 #. TRANSLATORS: You accept the gift of <Tech> technology from <King's Kingdom>.
 #: src/OTALKENG.cpp:853
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of %s technology from %s."
 msgstr "Sie akzeptieren das %s-Technologie Geschenk von %s."
 
 #. TRANSLATORS: You reject the gift of <Tech> technology from <King's Kingdom>.
 #: src/OTALKENG.cpp:856
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of %s technology from %s."
 msgstr "Sie lehnen das %s-Technologie Geschenk von s ab."
 
 #. TRANSLATORS: You request the latest <Tech> technology from <King's Kingdom>.
 #: src/OTALKENG.cpp:909
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest %s technology from %s."
 msgstr "Sie erbitten die neueste %s-Technologie von %s."
 
 #. TRANSLATORS: You demand the latest <Tech> technology from <King's Kingdom>.
 #: src/OTALKENG.cpp:914
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest %s technology from %s."
 msgstr "Sie fordern die neueste %s-Technologie von %s."
 
 #. TRANSLATORS: <King's Kingdom> requests the latest <Tech> technology from you.
 #: src/OTALKENG.cpp:922
-#, fuzzy, c-format
+#, c-format
 msgid "%s requests the latest %s technology from you."
 msgstr "%s erbittet die neueste %s-Technologie von ihnen."
 
 #. TRANSLATORS: <King's Kingdom> demands the latest <Tech> technology from you.
 #: src/OTALKENG.cpp:927
-#, fuzzy, c-format
+#, c-format
 msgid "%s demands the latest %s technology from you."
 msgstr "%s fordert die neueste %s-Technologie von ihnen."
 
 #. TRANSLATORS: <King's Kingdom> agrees to transfer its latest <Tech> technology to you.
 #: src/OTALKENG.cpp:937
-#, fuzzy, c-format
+#, c-format
 msgid "%s agrees to transfer its latest %s technology to you."
 msgstr "%s akzeptiert die neueste %s-Technologie an sie zu übermitteln."
 
 #. TRANSLATORS: <King's Kingdom> refuses to transfer its latest <Tech> technology to you.
 #: src/OTALKENG.cpp:940
-#, fuzzy, c-format
+#, c-format
 msgid "%s refuses to transfer its latest %s technology to you."
 msgstr "%s verweigert die neueste %s-Technologie an sie zu übermitteln."
 
 #. TRANSLATORS: You agree to transfer your latest <Tech> technology to <King's Kingdom>.
 #: src/OTALKENG.cpp:946
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to transfer your latest %s technology to %s."
 msgstr "Sie akzeptieren ihre neueste %s-Technologie an %s zu übermitteln."
 
 #. TRANSLATORS: You refuse to transfer your latest <Tech> technology to <King's Kingdom>.
 #: src/OTALKENG.cpp:949
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to transfer your latest %s technology to %s."
 msgstr "Sie verweigern ihre neueste %s-Technologie an %s zu übermitteln."
 
@@ -2904,49 +2887,49 @@ msgstr "Sie weigern sich %s sofortige militärische Hilfe zu senden."
 
 #. TRANSLATORS: You request <King 1's Kingdom> to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:1043
-#, fuzzy, c-format
+#, c-format
 msgid "You request %s to join an embargo on trade with %s%s."
 msgstr "Sie erbitten %s einem Handelsembargo gegen %s%s beizutreten."
 
 #. TRANSLATORS: <King 1's Kingdom> requests you to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:1048
-#, fuzzy, c-format
+#, c-format
 msgid "%s requests you to join an embargo on trade with %s%s."
 msgstr "%s erbittet sie einem Handelsembargo gegen %s%s beizutreten."
 
 #. TRANSLATORS: <King 1's Kingdom> agrees to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:1057
-#, fuzzy, c-format
+#, c-format
 msgid "%s agrees to join an embargo on trade with %s%s."
 msgstr "%s akzeptiert dem Handelsembargo gegen %s%s beizutreten."
 
 #. TRANSLATORS: <King 1's Kingdom> refuses to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
 #: src/OTALKENG.cpp:1060
-#, fuzzy, c-format
+#, c-format
 msgid "%s refuses to join an embargo on trade with %s%s."
 msgstr "%s weigert sich dem Handelsembargo gegen %s%s beizutreten."
 
 #. TRANSLATORS: You agree to join an embargo on trade with <King 1's Kingdom><Kingdom color> as requested by <King 2's Kingdom>.
 #: src/OTALKENG.cpp:1066
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to join an embargo on trade with %s%s as requested by %s."
 msgstr "Sie akzeptieren dem Handelsembargo gegen %s%s beizutreten, wie es %s erbat."
 
 #. TRANSLATORS: You refuse to join an embargo on trade with <King 1's Kingdom><Kingdom color> as requested by <King 2's Kingdom>.
 #: src/OTALKENG.cpp:1069
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to join an embargo on trade with %s%s as requested by %s."
 msgstr "Sie weigern sich dem Handelsembargo gegen %s%s beizutreten, wie es %s erbat."
 
 #. TRANSLATORS: You offer <Amount> for the throne of <King's Kingdom>.
 #: src/OTALKENG.cpp:1108
-#, fuzzy, c-format
+#, c-format
 msgid "You offer %s for the throne of %s."
 msgstr "Sie bieten %2$s %1$s für seinen Thron an."
 
 #. TRANSLATORS: To unite our two Kingdoms under his rule, King <Name> offers <Amount> for your throne.
 #: src/OTALKENG.cpp:1113
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "To unite our two Kingdoms under his rule, King %s offers %s for your throne."
 msgstr ""
@@ -3147,7 +3130,6 @@ msgid "Controlled by Rebels"
 msgstr "Von Rebellen kontrolliert"
 
 #: src/OTOWNIF.cpp:851
-#, fuzzy
 msgid "Train (Cost: $30, Skill: 20)"
 msgstr "Trainieren (Kosten: $30, Skill: 20)"
 
@@ -3449,7 +3431,6 @@ msgstr "Zulu"
 msgid "uNkulunkulu"
 msgstr "uNkulunkulu"
 
-#, fuzzy
 msgid "Mayan"
 msgstr "Maya"
 
@@ -6296,7 +6277,7 @@ msgstr ""
 "evakuieren."
 
 msgid "Seven Forts for Seven Generals"
-msgstr "Seven Seven Forts für Generäle"
+msgstr "Sieben Festungen für sieben Generäle"
 
 #, fuzzy
 msgid ""
@@ -6318,7 +6299,7 @@ msgstr ""
 "wird im unteren Bereich angezeigt werden."
 
 msgid "Cloak & Dagger"
-msgstr "Cloak & Dagger"
+msgstr "Umhang & Dolch"
 
 #, fuzzy
 msgid ""
@@ -6401,7 +6382,7 @@ msgstr ""
 "Erinnerung an Ihr Ziel wird im unteren Bereich angezeigt werden."
 
 msgid "Fight for Autonomy"
-msgstr "Kampf für die Autonomie"
+msgstr "Kampf für Unabhängigkeit"
 
 #, fuzzy
 msgid ""
@@ -6418,7 +6399,7 @@ msgstr ""
 "Zerstörung von jeder Person, die nicht tragen Sie Ihre Farben."
 
 msgid "Winning Hearts & Minds"
-msgstr "Winning Hearts & Minds"
+msgstr "Herzen & Geister gewinnen"
 
 #, fuzzy
 msgid ""
@@ -6468,7 +6449,7 @@ msgstr ""
 "Eine Erinnerung an Ihr Ziel wird im unteren Bereich angezeigt werden."
 
 msgid "Iron Fist & Velvet Glove"
-msgstr "Iron Fist & Velvet Glove"
+msgstr "Eisenfaust & Samthandschuhe"
 
 #, fuzzy
 msgid ""
@@ -6495,7 +6476,7 @@ msgstr ""
 "auch Ihr Sieg zu sichern."
 
 msgid "Kukulcan's People"
-msgstr "Kukulkan der Menschen"
+msgstr "Kukulkan's Leute"
 
 #, fuzzy
 msgid ""
@@ -6512,7 +6493,7 @@ msgstr ""
 "weniger als die totale Niederlage des untreuen innerhalb von 20 Jahren."
 
 msgid "Make or Break"
-msgstr "Pause machen oder"
+msgstr "Erzeugen oder Brechen"
 
 #, fuzzy
 msgid ""
@@ -6534,7 +6515,7 @@ msgstr ""
 "kommen, wenn Sie allein."
 
 msgid "Melting Pot"
-msgstr "Schmelztiegel"
+msgstr "Schmelztopf"
 
 #, fuzzy
 msgid ""
@@ -6550,7 +6531,7 @@ msgstr ""
 "aller Konkurrenten zu erreichen."
 
 msgid "Make Money or War?"
-msgstr "Verdienen Sie Geld oder Krieg?"
+msgstr "Geld oder Krieg?"
 
 #, fuzzy
 msgid ""
@@ -6590,7 +6571,7 @@ msgstr ""
 "zwei mächtige Feinde zu finanzieren. Der Sieg wird kommen, wenn Sie allein."
 
 msgid "United Normandy"
-msgstr "Groß Normandie"
+msgstr "Vereinte Normandie"
 
 #, fuzzy
 msgid ""
@@ -6608,7 +6589,7 @@ msgstr ""
 "nur noch ein Reich, Ihre eigenen."
 
 msgid "Not all those who Wander are Lost"
-msgstr "Nicht alle, die Wander verloren sind"
+msgstr "Nicht alle, die wandern, sind verloren"
 
 #, fuzzy
 msgid ""
@@ -6635,7 +6616,7 @@ msgstr ""
 "vorgegebenen Zeit zu kommen."
 
 msgid "Pirates"
-msgstr "Pirates"
+msgstr "Piraten"
 
 #, fuzzy
 msgid ""
@@ -6656,7 +6637,7 @@ msgstr ""
 "müssen Sie aus der Mitte der Kapitäne Ihrer Flotte zu wählen."
 
 msgid "Prince Takao"
-msgstr "Prince Takao"
+msgstr "Prinz Takao"
 
 #, fuzzy
 msgid ""
@@ -6692,7 +6673,7 @@ msgstr ""
 "erreicht, wenn dein Reich steht allein."
 
 msgid "Resource Depletion"
-msgstr "Ressourcenabbau"
+msgstr "Ressourcenerschöpfung"
 
 #, fuzzy
 msgid ""
@@ -6712,7 +6693,7 @@ msgstr ""
 "und unterzieht Ihre eigenen."
 
 msgid "Tread Carefully"
-msgstr "Treten Sie vorsichtig"
+msgstr "Trete vorsichtig"
 
 #, fuzzy
 msgid ""
@@ -6728,7 +6709,7 @@ msgstr ""
 "Sie den Sieg zu erringen."
 
 msgid "Viking Blitz"
-msgstr "Viking Blitz"
+msgstr "Wikinger Blitz"
 
 #, fuzzy
 msgid ""
@@ -6749,7 +6730,7 @@ msgstr ""
 "an Ihr Ziel wird im unteren Bereich angezeigt werden."
 
 msgid "A Weakened State"
-msgstr "Einem geschwächten Zustand"
+msgstr "Ein geschwächter Staat"
 
 #, fuzzy
 msgid ""
@@ -6765,7 +6746,7 @@ msgstr ""
 "wirst der Sieger sein."
 
 msgid "The Quick & the Dead"
-msgstr "Die Quick & the Dead"
+msgstr "Die Schnellen & die Toten"
 
 #, fuzzy
 msgid ""
@@ -6782,7 +6763,7 @@ msgstr ""
 "unabhängigen Königreich abschließen, bevor zwei Jahre vergangen."
 
 msgid "Go Forth & Multiply"
-msgstr "Go Forth & Multiply"
+msgstr "Gehe und vermehre dich"
 
 #, fuzzy
 msgid ""
@@ -6802,7 +6783,7 @@ msgstr ""
 "unteren Bereich angezeigt werden."
 
 msgid "The Riches of Kemet"
-msgstr "The Riches von Kemet"
+msgstr "Die Reichtümer von Kemet"
 
 #, fuzzy
 msgid ""
@@ -6823,7 +6804,7 @@ msgstr ""
 "Bereich angezeigt werden."
 
 msgid "Shaken to the Core"
-msgstr "Auf den Grundfesten erschüttert"
+msgstr "In den Grundfesten erschüttert"
 
 #, fuzzy
 msgid ""
@@ -6861,7 +6842,7 @@ msgstr ""
 "Königreiche zu überprüfen, klicken Sie auf ihren Namen im oberen Bereich."
 
 msgid "Plague"
-msgstr "Plague"
+msgstr "Plage"
 
 #, fuzzy
 msgid ""
@@ -6877,7 +6858,7 @@ msgstr ""
 "Rivalen Königreich."
 
 msgid "All That is Gold"
-msgstr "Alles, was Gold"
+msgstr "Alles was Gold ist"
 
 #, fuzzy
 msgid ""
@@ -6895,7 +6876,7 @@ msgstr ""
 "überprüfen, klicken Sie auf ihren Namen im oberen Bereich."
 
 msgid "First Born"
-msgstr "First Born"
+msgstr "Erstgeborener"
 
 #, fuzzy
 msgid ""
@@ -6930,7 +6911,7 @@ msgstr ""
 "auch in den Sieg für Sie führen."
 
 msgid "Impassable Isthmus"
-msgstr "Unpassierbare Isthmus"
+msgstr "Unpassierbare Landenge"
 
 #, fuzzy
 msgid ""
@@ -6947,7 +6928,7 @@ msgstr ""
 "verweilen bei Ihrer Suche, wie Sie durften nur vier Jahren."
 
 msgid "The Great Lakes"
-msgstr "Die Great Lakes"
+msgstr "Die großen Seen"
 
 #, fuzzy
 msgid ""
@@ -6962,7 +6943,7 @@ msgstr ""
 "besser dran, nicht vorhanden."
 
 msgid "Eye of the Storm"
-msgstr "Auge des Sturms"
+msgstr "Das Auge des Sturms"
 
 #, fuzzy
 msgid ""
@@ -6996,7 +6977,7 @@ msgstr ""
 "kämpfen Fryhtan auf die Beseitigung der letzten Fryhtan zu erreichen."
 
 msgid "Nine Lord's Quest"
-msgstr "Neun Herrn Quest"
+msgstr "Neun Herren's Aufgabe"
 
 #, fuzzy
 msgid ""
@@ -7029,7 +7010,7 @@ msgstr ""
 "unter dem Scroll-Ranking (F8) zu überprüfen."
 
 msgid "Kingdoms Report"
-msgstr "Kingdoms Bericht"
+msgstr "Königreich Bericht"
 
 #, fuzzy
 msgid ""
@@ -7051,7 +7032,7 @@ msgstr ""
 "Klicken Sie darauf, wieder oder ESC drücken, um es zu schließen."
 
 msgid "Economy Report"
-msgstr "Economy Report"
+msgstr "Ökonomie Bericht"
 
 #, fuzzy
 msgid ""
@@ -7062,7 +7043,7 @@ msgstr ""
 "Klicken Sie darauf, wieder oder ESC drücken, um es zu schließen."
 
 msgid "Trade Report"
-msgstr "Trade Report"
+msgstr "Handel Bericht"
 
 #, fuzzy
 msgid ""
@@ -7073,7 +7054,7 @@ msgstr ""
 "Klicken Sie darauf, wieder oder ESC drücken, um es zu schließen."
 
 msgid "Military Report"
-msgstr "Militärbericht"
+msgstr "Militär Bericht"
 
 #, fuzzy
 msgid ""
@@ -7084,7 +7065,7 @@ msgstr ""
 "Klicken Sie darauf, wieder oder ESC drücken, um es zu schließen."
 
 msgid "Technology Report"
-msgstr "Technologiebericht"
+msgstr "Technologie Bericht"
 
 #, fuzzy
 msgid ""
@@ -7095,7 +7076,7 @@ msgstr ""
 "Klicken Sie darauf, wieder oder ESC drücken, um es zu schließen."
 
 msgid "Espionage Report"
-msgstr "Spionagebericht"
+msgstr "Spionage Bericht"
 
 #, fuzzy
 msgid ""
@@ -7106,7 +7087,7 @@ msgstr ""
 "Klicken Sie darauf, wieder oder ESC drücken, um es zu schließen."
 
 msgid "Ranking Report"
-msgstr "Ranking-Bericht"
+msgstr "Ranking Bericht"
 
 #, fuzzy
 msgid ""
@@ -7117,7 +7098,7 @@ msgstr ""
 "Bericht. Klicken Sie darauf, wieder oder ESC drücken, um es zu schließen."
 
 msgid "Food"
-msgstr "Lebensmittel"
+msgstr "Nahrung"
 
 #, fuzzy
 msgid "This shows the store of food in your kingdom. "
@@ -7139,7 +7120,7 @@ msgid "This shows your kingdom's reputation. "
 msgstr "Dies zeigt Ruf Ihres Königreichs."
 
 msgid "Terrain Map"
-msgstr "Terrain Karte"
+msgstr "Gelände Karte"
 
 #, fuzzy
 msgid ""
@@ -7150,7 +7131,7 @@ msgstr ""
 "Dörfer und Einheiten."
 
 msgid "Kingdom Power Map"
-msgstr "Britannien Strom Karte"
+msgstr "Königreich Macht Karte"
 
 #, fuzzy
 msgid ""
@@ -7191,7 +7172,7 @@ msgid "This will cancel your present action. "
 msgstr "Dies wird Ihre aktuelle Aktion abzubrechen."
 
 msgid "Capture"
-msgstr "Capture-"
+msgstr "Einnehmen"
 
 #, fuzzy
 msgid "This will capture the selected structure for your kingdom. "
@@ -7209,7 +7190,7 @@ msgstr ""
 "Produkte wechseln."
 
 msgid "Collect Tax"
-msgstr "Sammeln Steuer"
+msgstr "Steuer einsammeln"
 
 #, fuzzy
 msgid ""
@@ -7221,7 +7202,7 @@ msgstr ""
 "automatisch besteuern."
 
 msgid "At Ease"
-msgstr "At Ease"
+msgstr "Angespannt"
 
 #, fuzzy
 msgid "This orders your troops to remain in the fort even when attacked. "
@@ -7230,7 +7211,7 @@ msgstr ""
 "werden."
 
 msgid "Alert"
-msgstr "Benachrichtigung"
+msgstr "Wachsam"
 
 #, fuzzy
 msgid ""
@@ -7241,7 +7222,7 @@ msgstr ""
 "Strukturen werden angegriffen."
 
 msgid "Demote Unit"
-msgstr "Herabstufen Einheit"
+msgstr "Einheit degradieren"
 
 #, fuzzy
 msgid "This will demote the selected General to a common soldier. "
@@ -7269,7 +7250,7 @@ msgstr ""
 "Loyalität oder Widerstand zu verringern."
 
 msgid "Hire Caravan"
-msgstr "Vermietung Caravan"
+msgstr "Karawane anheuern"
 
 #, fuzzy
 msgid ""
@@ -7283,7 +7264,7 @@ msgstr ""
 "Wohnwagen zu unterstützen."
 
 msgid "Hire Person"
-msgstr "Vermietung Person"
+msgstr "Person anheuern"
 
 #, fuzzy
 msgid "This hires the selected mercenary. He will then join your service. "
@@ -7291,7 +7272,7 @@ msgstr ""
 "Dieser Mitarbeiter des ausgewählten Söldner. Er wird dann kommen Sie da."
 
 msgid "Invoke Greater Being"
-msgstr "Rufen länger Being"
+msgstr "Höheres Wesen beschwören"
 
 #, fuzzy
 msgid ""
@@ -7304,7 +7285,7 @@ msgstr ""
 "Aufruf möglich zu machen."
 
 msgid "Build a Ship"
-msgstr "Bauen Sie ein Schiff"
+msgstr "Schiff bauen"
 
 #, fuzzy
 msgid ""
@@ -7314,7 +7295,7 @@ msgstr ""
 "bauen."
 
 msgid "Make a Weapon"
-msgstr "Machen Sie eine Waffe"
+msgstr "Waffe produzieren"
 
 #, fuzzy
 msgid ""
@@ -7326,14 +7307,14 @@ msgstr ""
 
 #, fuzzy
 msgid "Mobilize Workers"
-msgstr "Mobilisieren Spy"
+msgstr "Arbeiter mobilisieren"
 
 #, fuzzy
 msgid "This will cause all workers to exit the building immediately. "
 msgstr "Dies bewirkt, dass der Spion zu geben, seine Spionage-Identität."
 
 msgid "Mobilize Spy"
-msgstr "Mobilisieren Spy"
+msgstr "Spione mobilisieren"
 
 #, fuzzy
 msgid ""
@@ -7344,7 +7325,7 @@ msgstr ""
 "senden."
 
 msgid "Disembark from Ship"
-msgstr "Steigen Sie aus Schiffs"
+msgstr "Aus dem Schiff aussteigen"
 
 #, fuzzy
 msgid ""
@@ -7440,7 +7421,7 @@ msgstr ""
 "erhöhen. Dies wird für den König deaktiviert zu sein."
 
 msgid "Sail out of Harbor"
-msgstr "Segeln von Hafen"
+msgstr "Aus Hafen segeln"
 
 #, fuzzy
 msgid ""
@@ -7451,7 +7432,7 @@ msgstr ""
 "Ihre weitere Befehle."
 
 msgid "Offer Bribe"
-msgstr "Angebot Bestechung"
+msgstr "Bestechen"
 
 #, fuzzy
 msgid ""
@@ -7462,7 +7443,7 @@ msgstr ""
 "ausgewählte Feind Person bieten."
 
 msgid "Settle"
-msgstr "Regeln"
+msgstr "Siedeln"
 
 #, fuzzy
 msgid ""
@@ -7476,14 +7457,14 @@ msgstr ""
 "begleichen."
 
 msgid "Spy Menu"
-msgstr "Spy Menü"
+msgstr "Spionage Menü"
 
 #, fuzzy
 msgid "Go to the spy menu. "
 msgstr "Gehen Sie auf die Spion-Menü."
 
 msgid "Capture Enemy Structure"
-msgstr "Capture-Feind-Struktur"
+msgstr "Feindliche Struktur einnehmen"
 
 #, fuzzy
 msgid ""
@@ -7494,15 +7475,14 @@ msgstr ""
 "befindet zu erfassen."
 
 msgid "Spy's Task"
-msgstr "Spy Task"
+msgstr "Spion Aufgabe"
 
 #, fuzzy
 msgid "This orders your spy to change his task. "
 msgstr "Diese ordnet Ihre Spion, um seine Aufgabe zu ändern."
 
 msgid "Notification currently disabled. Click to enable."
-msgstr ""
-"Benachrichtigung derzeit deaktiviert. Klicken Sie hier um zu ermöglichen."
+msgstr "Benachrichtigung derzeit deaktiviert. Klicken sie hier zum aktivieren."
 
 #, fuzzy
 msgid ""
@@ -7514,8 +7494,7 @@ msgstr ""
 "behalten."
 
 msgid "Notification currently enabled. Click to disable."
-msgstr ""
-"Benachrichtigung derzeit aktiviert. Klicken Sie hier um zu deaktivieren."
+msgstr "Benachrichtigung derzeit aktiviert. Klicken Sie hier zum deaktivieren."
 
 #, fuzzy
 msgid ""
@@ -7528,14 +7507,14 @@ msgstr ""
 "Ihres Spion Kontrolle zu verlieren."
 
 msgid "Succeed to the Crown"
-msgstr "Erfolg der Krone"
+msgstr "Krönen"
 
 #, fuzzy
 msgid "This will elevate the selected person to the Crown. "
 msgstr "Dies wird die ausgewählte Person an die Krone zu erheben."
 
 msgid "Train"
-msgstr "Zug"
+msgstr "Ausbilden"
 
 #, fuzzy
 msgid ""
@@ -7548,7 +7527,7 @@ msgstr ""
 "Sie nicht über eine Allgemeine in einem Fort zu dem Dorf verbunden."
 
 msgid "View Secrets"
-msgstr "Secrets anzeigen"
+msgstr "Geheimnisse anzeigen"
 
 #, fuzzy
 msgid ""
@@ -7561,7 +7540,7 @@ msgstr ""
 "hängt von der Spielstärke des Spionage abhängen."
 
 msgid "Drop spy identity"
-msgstr "Drop-Spion Identität"
+msgstr "Spion Identität abnehmen"
 
 #, fuzzy
 msgid "This will cause the spy to give up his spying identity. "
@@ -7590,7 +7569,7 @@ msgstr ""
 "diesem Markt oder den Hafen."
 
 msgid "Disband a unit"
-msgstr "Disband eine Einheit"
+msgstr "Einheit auflösen"
 
 #, fuzzy
 msgid ""
@@ -7601,7 +7580,7 @@ msgstr ""
 "ein Fremd Spion, wird diese ihn auszuführen."
 
 msgid "Set a caravan's trade stop"
-msgstr "Legen Handel Anschlag eines Wohnwagens"
+msgstr "Handelsstop einer Karawane setzen"
 
 #, fuzzy
 msgid ""
@@ -7612,21 +7591,21 @@ msgstr ""
 "Sie wollen Ihren Wohnwagen zu stoppen."
 
 msgid "View a caravan's trade stop"
-msgstr "Sehen Handel Anschlag eines Wohnwagens"
+msgstr "Handelsstop einer Karawane sehen"
 
 #, fuzzy
 msgid "This will center your screen over this caravan stop. "
 msgstr "Das wird Ihr Bildschirm über diesen Wohnwagen Anschlag zu zentrieren."
 
 msgid "Delete a caravan's trade stop"
-msgstr "Löschen Handel Anschlag eines Wohnwagens"
+msgstr "Handelsstop einer Karawane löschen"
 
 #, fuzzy
 msgid "Clicking here will delete this caravan trade stop. "
 msgstr "Wenn Sie hier klicken wird diese Karawanenhandel Anschlag löschen."
 
 msgid "Set a ship's trade stop"
-msgstr "Legen Handel Stopp eines Schiffs"
+msgstr "Handelsstop eines Schiffs setzen"
 
 #, fuzzy
 msgid ""
@@ -7637,7 +7616,7 @@ msgstr ""
 "Sie wollen, dass Ihre Handelsschiff zu stoppen."
 
 msgid "View a ship's trade stop"
-msgstr "Sehen Handel Stopp eines Schiffs"
+msgstr "Handelsstop eines Schiffs sehen"
 
 #, fuzzy
 msgid "This will center your screen over this ship's trading stop. "
@@ -7645,7 +7624,7 @@ msgstr ""
 "Das wird Ihr Bildschirm über Handelsplatz dieses Schiffes zu zentrieren."
 
 msgid "Delete a ship's trade stop"
-msgstr "Löschen Handel Stopp eines Schiffs"
+msgstr "Handelsstop eines Schiffs löschen"
 
 #, fuzzy
 msgid "Clicking here will delete this ship's trade stop. "
@@ -7653,14 +7632,14 @@ msgstr ""
 "Wenn Sie hier klicken wird der Handel Stopp dieses Schiffes zu löschen."
 
 msgid "Demolish a structure"
-msgstr "Zerstöre eine Struktur"
+msgstr "Eine Struktur zerstören"
 
 #, fuzzy
 msgid "Clicking here will demolish this structure. "
 msgstr "Wenn Sie hier klicken wird diese Struktur zu zerstören."
 
 msgid "Sell a structure"
-msgstr "Verkaufen eine Struktur"
+msgstr "Eine Struktur verkaufen"
 
 #, fuzzy
 msgid "Clicking here will sell this structure. "
@@ -7679,7 +7658,7 @@ msgstr ""
 "Bauarbeiter zu mobilisieren."
 
 msgid "Reply to diplomatic message"
-msgstr "Antwort auf diplomatischen Nachricht"
+msgstr "Auf diplomatische Nachricht antworten"
 
 #, fuzzy
 msgid "Click on this colored box to reply this diplomatic message. "
@@ -7687,14 +7666,14 @@ msgstr ""
 "Klicken Sie auf das Farbfeld, um diese diplomatische Nachricht zu antworten."
 
 msgid "News Log"
-msgstr "News Anmelden"
+msgstr "News Log"
 
 #, fuzzy
 msgid "Click on this to bring up the news log. "
 msgstr "Klicken Sie auf diese, um das Nachrichtenprotokoll."
 
 msgid "Clear news messages"
-msgstr "Klar News-Meldungen"
+msgstr "Neuigkeiten entfernen"
 
 #, fuzzy
 msgid ""
@@ -7705,7 +7684,7 @@ msgstr ""
 "löschen. Sie können auch X drücken auf Ihrer Tastatur."
 
 msgid "Game Menu"
-msgstr "Spiel-Menü"
+msgstr "Spielmenü"
 
 #, fuzzy
 msgid "Click on this button to bring up the Game Menu. "
@@ -7736,7 +7715,7 @@ msgstr ""
 "Dies zeigt die Gesamteinnahmen in diesem Markt in den letzten 365 Tagen."
 
 msgid "Clear Stock"
-msgstr "Klar Lizenz"
+msgstr "Vorrat entfernen"
 
 #, fuzzy
 msgid ""
@@ -7773,7 +7752,7 @@ msgstr ""
 "Kapazität für die Speicherung der Lager in einer Fabrik 500."
 
 msgid "Cancel weapon production"
-msgstr "Abbrechen Waffenproduktion"
+msgstr "Waffenproduktion abbrechen"
 
 #, fuzzy
 msgid ""
@@ -7784,7 +7763,7 @@ msgstr ""
 "abzubrechen."
 
 msgid "Cancel building this Ship"
-msgstr "Abbrechen Bau dieses Schiffs"
+msgstr "Schiffsbau abbrechen"
 
 #, fuzzy
 msgid ""
@@ -7794,14 +7773,14 @@ msgstr ""
 "abzubrechen."
 
 msgid "Cancel Training"
-msgstr "Abbrechen Ausbildung"
+msgstr "Ausbildung abbrechen"
 
 #, fuzzy
 msgid "Click on this to cancel the training of the unit. "
 msgstr "Klicken Sie auf diese, um die Ausbildung der Einheit abzubrechen."
 
 msgid "Cancel building this structure."
-msgstr "Abbrechen Aufbau dieser Struktur."
+msgstr "Bauarbeit abbrechen."
 
 #, fuzzy
 msgid "Clicking here will cancel the building of this structure. "
@@ -7823,7 +7802,7 @@ msgstr ""
 "Dies zeigt die Menge der natürlichen Ressourcen noch verbliebenen U-Bahn."
 
 msgid "Yearly Import"
-msgstr "Jahres Import"
+msgstr "Jahresimport"
 
 #, fuzzy
 msgid ""
@@ -7834,7 +7813,7 @@ msgstr ""
 "Königreich."
 
 msgid "Yearly Export"
-msgstr "Jahres Export"
+msgstr "Jahresexport"
 
 #, fuzzy
 msgid ""
@@ -7845,7 +7824,7 @@ msgstr ""
 "Königreich."
 
 msgid "Duration of the Current Status"
-msgstr "Dauer der Mitglied"
+msgstr "Dauer der jetzigen Zustandes"
 
 #, fuzzy
 msgid ""
@@ -7856,7 +7835,7 @@ msgstr ""
 "mit dem gewählten Reich gewesen."
 
 msgid "Continuous Peace"
-msgstr "Kontinuierliche Frieden"
+msgstr "Kontinuierliche Friedenszeit"
 
 #, fuzzy
 msgid ""
@@ -7867,7 +7846,7 @@ msgstr ""
 "gewesen."
 
 msgid "Allow Attack"
-msgstr "Lassen Angriff"
+msgstr "Angriff zulassen"
 
 #, fuzzy
 msgid ""
@@ -7879,7 +7858,7 @@ msgstr ""
 "ist, werden Sie nicht."
 
 msgid "Passive Mode Enabled. Click for Aggressive Mode"
-msgstr "Passive Mode aktiviert. Klicken Sie für Aggressive Mode"
+msgstr "Passiver Modus aktiviert. Klicken sie hier für aggressiven Modus"
 
 #, fuzzy
 msgid ""
@@ -7891,7 +7870,7 @@ msgstr ""
 "zu kämpfen, einen Angriff."
 
 msgid "Aggressive Mode Enabled. Click for Passive Mode"
-msgstr "Aggressive Mode Enabled. Klicken Sie für den Passiv-Modus"
+msgstr "Aggressiver Modus aktiviert. Klicken sie hier für passiven Modus"
 
 #, fuzzy
 msgid ""
@@ -7905,7 +7884,7 @@ msgstr ""
 "kämpfen, einen Angriff und dann weiter."
 
 msgid "Assassinate"
-msgstr "Ermorden"
+msgstr "Meucheln"
 
 #, fuzzy
 msgid ""
@@ -7916,7 +7895,7 @@ msgstr ""
 "der Festung König oder General zu ermorden."
 
 msgid "Dispense Healing"
-msgstr "Dispense Healing"
+msgstr "Heilung entbinden"
 
 #, fuzzy
 msgid ""
@@ -7929,7 +7908,7 @@ msgstr ""
 "wieder klicken. Wiederholen, bis der Herr der Heilung Macht ist aufgebraucht."
 
 msgid "Change Loyalty"
-msgstr "Treue ändern"
+msgstr "Loyalität ändern"
 
 #, fuzzy
 msgid ""
@@ -7942,7 +7921,7 @@ msgstr ""
 "Wiederholen, bis der Geist Turner Macht ist aufgebraucht."
 
 msgid "Increase power of Maya Soldiers"
-msgstr "Erhöhen Sie die Leistung der Maya-Soldaten"
+msgstr "Macht der Maya Soldaten erhöhen"
 
 #, fuzzy
 msgid ""
@@ -7955,7 +7934,7 @@ msgstr ""
 "Wiederholen, bis Kukulcan Macht ist aufgebraucht."
 
 msgid "Summon Rain"
-msgstr "Summon Regen"
+msgstr "Regen beschwören"
 
 #, fuzzy
 msgid ""
@@ -7966,7 +7945,7 @@ msgstr ""
 "der ganzen Welt zu kommen. Wiederholen, bis Thors Kraft erschöpft ist."
 
 msgid "Summon Tornadoes"
-msgstr "Summon Tornados"
+msgstr "Tornados beschwören"
 
 #, fuzzy
 msgid ""
@@ -7978,6 +7957,7 @@ msgstr ""
 "ändern. Legen Sie diesen Platz über Ihr Ziel und wieder klicken. "
 "Wiederholen, bis Thors Kraft erschöpft ist."
 
+#, fuzzy
 #~ msgid ""
 #~ "Every lesson will begin with the game running at the speed of 3. Press "
 #~ "higher numbers on your keyboard to make things move faster, or press "
@@ -7989,25 +7969,25 @@ msgstr ""
 #~ "verlangsamen. 0 drücken, werden das Spiel anzuhalten."
 
 #~ msgid "Set the game's password:"
-#~ msgstr "Stellen Sie das Spiel vergessen:"
+#~ msgstr "Setzen sie das Spielpasswort:"
 
 #~ msgid "Local Area Network"
 #~ msgstr "Local Area Network"
 
 #~ msgid "Enter IP Address"
-#~ msgstr "Geben Sie die IP-Adresse"
+#~ msgstr "IP-Adresse eingeben"
 
 #~ msgid "7kfans Leader Board"
 #~ msgstr "7kfans Leader Board"
 
 #~ msgid "Unable to poll sessions.\n"
-#~ msgstr "Unfähig, Sitzungen abzufragen. \n"
+#~ msgstr "Unfähig Sitzungen abzufragen.\n"
 
 #~ msgid "Mayan King"
-#~ msgstr "Maya-König"
+#~ msgstr "Maya König"
 
 #~ msgid "Mayan General"
-#~ msgstr "Maya Allgemeine"
+#~ msgstr "Maya General"
 
 #~ msgctxt "Race Adjective"
 #~ msgid "Norman"
@@ -8049,6 +8029,4 @@ msgstr ""
 #~ msgstr "%1$s %2$s"
 
 #~ msgid "Your spy %1$s has been exposed and executed on his mission to %2$s."
-#~ msgstr ""
-#~ "Ihr Spion %1$s ausgesetzt wurde und auf seiner Mission, die ausgeführt "
-#~ "%2$s ."
+#~ msgstr "Ihr Spion %s wurde auf seiner Mission zu %s entdeckt und hingerichtet."
