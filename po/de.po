@@ -1018,10 +1018,8 @@ msgstr[1] "%d Bauern in %s in %s rebellieren."
 #, c-format
 msgid "%d %s %s has emigrated from your village of %s to %s in %s."
 msgid_plural "%d %s %ss have emigrated from your village of %s to %s in %s."
-msgstr[0] ""
-"Ein %s %s emigrierte aus ihrem Dorf in %s zu %s ins %s."
-msgstr[1] ""
-"%d %s %s emigrierten aus ihrem Dorf in %s zu %s ins %s."
+msgstr[0] "%d %s %s emigrierte aus ihrem Dorf in %s zu %s ins %s."
+msgstr[1] "%d %s %s emigrierten aus ihrem Dorf in %s zu %s ins %s."
 
 #. TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town> in <King's Kingdom>.
 #. <Number> <Race> Peasants have emigrated from your village of <Town> to <Town> in <King's Kingdom>.
@@ -1162,7 +1160,7 @@ msgstr "%s in der Nähe von %s wurde von Fryhtans zerstört."
 #: src/ONEWSENG.cpp:515
 #, c-format
 msgid "Your %s near %s has been destroyed."
-msgstr "%s in der Nähe von % wurde zerstört."
+msgstr "%s in der Nähe von %s wurde zerstört."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King's Kingdom>.
 #: src/ONEWSENG.cpp:547
@@ -1234,7 +1232,7 @@ msgstr "Ein All High %s wurde erschlagen."
 #: src/ONEWSENG.cpp:693
 #, c-format
 msgid "An %s Lair has been destroyed."
-msgstr "Ein Ickbau wurde zerstört."
+msgstr "Ein %sbau wurde zerstört."
 
 #. TRANSLATORS: A <Fryhtan> Lair has been destroyed.
 #: src/ONEWSENG.cpp:696
@@ -1548,7 +1546,7 @@ msgstr ""
 #: src/ONEWSENG.cpp:1305
 #, c-format
 msgid "Make haste! You have only %d years left to achieve your goal."
-"Schnell! Sie haben nur noch %d Jahre ihr Ziel zu erreichen."
+msgstr "Schnell! Sie haben nur noch %d Jahre ihr Ziel zu erreichen."
 
 #: src/ONEWSENG.cpp:1309
 #, c-format
@@ -2715,7 +2713,7 @@ msgstr "%s erbittet %s in Hilfe von ihnen."
 #: src/OTALKENG.cpp:736
 #, c-format
 msgid "%s demands %s in tribute from you."
-msgstr "%s fordert % in Tribut von ihnen."
+msgstr "%s fordert %s in Tribut von ihnen."
 
 #. TRANSLATORS: <King's Kingdom> agrees to give you <Amount> in aid.
 #: src/OTALKENG.cpp:748
@@ -2799,7 +2797,7 @@ msgstr "Sie akzeptieren das %s-Technologie Geschenk von %s."
 #: src/OTALKENG.cpp:856
 #, c-format
 msgid "You reject the gift of %s technology from %s."
-msgstr "Sie lehnen das %s-Technologie Geschenk von s ab."
+msgstr "Sie lehnen das %s-Technologie Geschenk von %s ab."
 
 #. TRANSLATORS: You request the latest <Tech> technology from <King's Kingdom>.
 #: src/OTALKENG.cpp:909
