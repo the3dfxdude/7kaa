@@ -30,7 +30,7 @@
 #include <ctype.h>
 #include <sys/stat.h>
 #else
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 #include <storage_constants.h>

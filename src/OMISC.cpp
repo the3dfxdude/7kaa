@@ -26,7 +26,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #else
-#include <Windows.h>
+#include <windows.h>
 #endif 
 
 #include <SDL.h>

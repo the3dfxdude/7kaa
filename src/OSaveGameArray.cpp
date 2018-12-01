@@ -51,7 +51,7 @@
 #include <posix_string_compat.h> //strnicmp
 
 #ifndef NO_WINDOWS
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 DBGLOG_DEFAULT_CHANNEL(SaveGameArray);

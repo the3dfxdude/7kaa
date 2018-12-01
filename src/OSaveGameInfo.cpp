@@ -27,7 +27,7 @@
 #include <OINFO.h>
 
 #ifndef NO_WINDOWS
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 
