@@ -313,10 +313,11 @@ endif
 
 if USE_WINDOWS
 7kaa_SOURCES += ico.rc
+endif
+
 SUFFIXES = .rc
 .rc.o:
-	windres -I "$(top_srcdir)/include" -i $< $@
+	$(WINDRES) -I "$(top_srcdir)/include" -i $< $@
 ico.o: $(top_srcdir)/include/version.h 7k.ico
-endif
 
 EXTRA_DIST = 7k.ico ico.rc

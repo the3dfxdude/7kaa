@@ -138,7 +138,9 @@ AS_CASE(["$host"],
     use_windows=yes
     use_mingw=yes
     jwasm_fmt=-coff
-])
+    AC_CHECK_TOOL([WINDRES],[windres])
+  ]
+)
 
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
