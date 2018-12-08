@@ -415,8 +415,12 @@ void World::go_loc(int xLoc, int yLoc, int selectFlag)
 		}
 		else if( locPtr->is_firm() )
 		{
+			int firmRecno = locPtr->firm_recno();
+
 			power.reset_selection();
-			firm_array.selected_recno = locPtr->firm_recno();
+
+			firm_array.selected_recno = firmRecno;
+			firm_array[firmRecno]->sort_worker();
 		}
 		else if( locPtr->is_town() )
 		{
@@ -1659,6 +1663,7 @@ int World::detect_firm_town()
 			{
 				power.reset_selection();
 				firm_array.selected_recno = i;
+				firmPtr->sort_worker();
 				info.disp();
 
 				// -------- sound effect -----------//
@@ -2216,6 +2221,7 @@ void World::disp_next(int seekDir, int sameNation)
 			{
 				power.reset_selection();
 				firm_array.selected_recno = firmRecno;
+				firmPtr->sort_worker();
 
 				world.go_loc( firmPtr->center_x, firmPtr->center_y );
 				return;

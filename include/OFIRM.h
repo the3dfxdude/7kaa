@@ -323,6 +323,7 @@ public:
 
 	virtual void put_info(int refreshFlag)		{;}
 	virtual void detect_info()						{;}
+			  void sort_worker();
 
 	 		  void process_animation();
 			  void process_construction();

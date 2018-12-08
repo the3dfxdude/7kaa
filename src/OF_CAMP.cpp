@@ -52,12 +52,8 @@
 //----------- Define static vars -------------//
 
 static Button3D button_patrol, button_reward, button_defense;
-static Firm*	 cur_firm_ptr;
 
 //--------- Declare static functions ---------//
-
-static int  sort_soldier_function( const void *a, const void *b );
-static int  sort_soldier_id_function( const void *a, const void *b );
 
 static void disp_debug_info(FirmCamp* firmPtr, int refreshFlag);
 
@@ -258,7 +254,7 @@ void FirmCamp::assign_worker(int workerUnitRecno)
 
 	//-------- sort soldiers ---------//
 
-	sort_soldier();
+	sort_worker();
 }
 //----------- End of function FirmCamp::assign_worker --------//
 
@@ -742,7 +738,7 @@ void FirmCamp::train_unit()
 		}
 	}
 
-	sort_soldier();
+	sort_worker();
 }
 //-------- End of function FirmCamp::train_unit --------//
 
@@ -1285,72 +1281,6 @@ int FirmCamp::is_worker_full()
 	return worker_count + patrol_unit_count + coming_unit_count >= MAX_WORKER;
 }
 //----------- End of function FirmCamp::is_worker_full ---------//
-
-
-//--------- Begin of function FirmCamp::sort_soldier ---------//
-//
-// Sort units in camp by their leaderhip.
-//
-void FirmCamp::sort_soldier()
-{
-	if( worker_count > 1 )
-	{
-		//--- prepare worker_id_array[] for later preserving the currently worker selected ---//
-
-		short worker_id_array[MAX_WORKER];
-
-		int i;
-		for( i=0 ; i<worker_count ; i++ )
-			worker_id_array[i] = i+1;
-
-		cur_firm_ptr = this;
-
-		err_when( selected_worker_id < 0 );
-		err_when( selected_worker_id > worker_count );
-
-		qsort( worker_id_array, worker_count, sizeof(short), sort_soldier_id_function );
-		qsort( worker_array, worker_count, sizeof(Worker), sort_soldier_function );
-
-		//---- scan worker_id_array[] for preserving the currently worker selected ---//
-
-		if( selected_worker_id )
-		{
-			for( i=0 ; i<worker_count ; i++ )
-			{
-				if( worker_id_array[i] == selected_worker_id )
-				{
-					selected_worker_id = i+1;
-					break;
-				}
-			}
-
-			err_when( i==worker_count );
-		}
-	}
-}
-//----------- End of function FirmCamp::sort_soldier -----------//
-
-
-//--------- Begin of function sort_soldier_function ---------//
-//
-static int sort_soldier_function( const void *a, const void *b )
-{
-	return ((Worker*)b)->skill_level - ((Worker*)a)->skill_level;
-}
-//----------- End of function sort_soldier_function -----------//
-
-
-//--------- Begin of function sort_soldier_id_function ---------//
-//
-static int sort_soldier_id_function( const void *a, const void *b )
-{
-	int workerId1 = *((short*)a);
-	int workerId2 = *((short*)b);
-
-	return cur_firm_ptr->worker_array[workerId2-1].skill_level -
-			 cur_firm_ptr->worker_array[workerId1-1].skill_level;
-}
-//----------- End of function sort_soldier_id_function -----------//
 
 
 #ifdef DEBUG
