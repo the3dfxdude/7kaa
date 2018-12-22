@@ -28,6 +28,7 @@
 #include <OSYS.h>
 #include <dbglog.h>
 #include <version.h>
+#include <FilePath.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
 
@@ -777,13 +778,14 @@ void Vga::flip()
 //-------- Beginning of function Vga::save_status_report ----------//
 void Vga::save_status_report()
 {
-   char path[MAX_PATH+1];
+   FilePath path(sys.dir_config);
    FILE *file;
    int num, i;
    const char *s;
    SDL_version ver;
 
-   if( !misc.path_cat(path, sys.dir_config, "sdl.txt", MAX_PATH) )
+   path += "sdl.txt";
+   if( path.error_flag )
       return;
 
    file = fopen(path, "w");

@@ -35,6 +35,7 @@
 #include <multiplayer.h>
 #include <OERRCTRL.h>
 #include <ReplayFile.h>
+#include <FilePath.h>
 
 //--------- Begin of function Remote::Remote ----------//
 
@@ -124,8 +125,9 @@ void Remote::init_replay_save(NewNationPara *mpGame, int playerCount)
 {
 	err_when( connectivity_mode != MODE_MP_ENABLED );
 
-	char full_path[MAX_PATH+1];
-	if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
+	FilePath full_path(sys.dir_config);
+	full_path += "noname.rpl";
+	if( !full_path.error_flag )
 		replay.open_write(full_path, mpGame, playerCount);
 }
 //--------- End of function Remote::init_replay_save ----------//

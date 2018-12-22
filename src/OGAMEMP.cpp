@@ -52,6 +52,7 @@
 #include <OBLOB.h>
 #include <dbglog.h>
 #include "gettext.h"
+#include <FilePath.h>
 
 
 DBGLOG_DEFAULT_CHANNEL(GameMP);
@@ -4190,11 +4191,10 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		}
 		else
 		{
-			char full_path[MAX_PATH+1];
-		        if( misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
-			{
+			FilePath full_path(sys.dir_config);
+			full_path += "noname.rpl";
+			if( !full_path.error_flag )
 				remote.replay.open_write(full_path, nationPara, playerCount);
-			}
 		}
 
 		{

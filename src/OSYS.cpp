@@ -89,6 +89,7 @@
 // ##### end Gilbert 23/10 ######//
 #include <LocaleRes.h>
 #include <CmdLine.h>
+#include <FilePath.h>
 
 #include <dbglog.h>
 #ifndef NO_WINDOWS
@@ -506,7 +507,7 @@ int Sys::set_config_dir()
    if( home )
    {
       strcpy(dir_config, home);
-      strcat(dir_config, "//");
+      strcat(dir_config, PATH_DELIM);
    }
    else
    {
@@ -1035,14 +1036,13 @@ void Sys::auto_save()
       {
          //---------- get path to savegames ----------//
 
-         char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
+         FilePath auto1_path(dir_config);
+         FilePath auto2_path(dir_config);
 
-         if (misc.path_cat(auto1_path, dir_config, "AUTO.SAV", MAX_PATH+1) == 0 ||
-             misc.path_cat(auto2_path, dir_config, "AUTO2.SAV", MAX_PATH+1) == 0)
-         {
-	        ERR("Path to the savegames too long\n");
+         auto1_path += "AUTO.SAV";
+         auto2_path += "AUTO2.SAV";
+         if( auto1_path.error_flag || auto2_path.error_flag )
             return;
-         }
 
          //--- rename the existing AUTO.SAV to AUTO2.SAV and save a new game ---//
 
@@ -1087,16 +1087,15 @@ void Sys::auto_save()
       day_frame_count==0 && info.game_day==1 && info.game_month%2==0 )
 	// ###### patch end Gilbert 23/1 #######//
    {
-	  //---------- get path to savegames ----------//
+      //---------- get path to savegames ----------//
 
-      char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
+      FilePath auto1_path(dir_config);
+      FilePath auto2_path(dir_config);
 
-	  if (misc.path_cat(auto1_path, dir_config, "AUTO.SVM", MAX_PATH+1) == 0 ||
-          misc.path_cat(auto2_path, dir_config, "AUTO2.SVM", MAX_PATH+1) == 0)
-      {
-	     ERR("Path to the savegames too long\n");
+      auto1_path += "AUTO.SVM";
+      auto2_path += "AUTO2.SVM";
+      if( auto1_path.error_flag || auto2_path.error_flag )
          return;
-      }
 
       //--- rename the existing AUTO.SVM to AUTO2.SVM and save a new game ---//
 
@@ -2605,20 +2604,14 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
 //
 void Sys::capture_screen()
 {
-   // NB: Increase this when allowing more decimals in the screenshot file, or when changing the screenshot filename
-   enum {MAX_SCREENSHOT_FILENAME_LENGTH = 8};
+   FilePath full_path(dir_config);
+   const char filename_template[] = "7KXX.BMP";
 
-   char full_path[MAX_PATH+1];
-   int path_len;
+   full_path += filename_template; // template for screenshot filename
+   if( full_path.error_flag )
+      return;
 
-   strcpy(full_path, dir_config);
-   path_len = strlen(full_path);
-   if (path_len + MAX_SCREENSHOT_FILENAME_LENGTH > MAX_PATH)
-   {
-	   ERR("Path to the screenshots too long.\n");
-	   return;
-   }
-
+   char *filename = (char*)full_path+strlen(dir_config);
    String str("7K");
 
    int i;
@@ -2632,7 +2625,7 @@ void Sys::capture_screen()
       str += i;
       str += ".BMP";
 
-	  strcpy(full_path + path_len, str);
+      memcpy(filename, str, strlen(filename_template));
 
       if( !misc.is_file_exist(full_path) )
          break;

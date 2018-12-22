@@ -31,8 +31,8 @@
 #include <OPOWER.h> // TODO: There might be an even better (higher-level / UI) place to do this (power.win_opened)
 #include <OMOUSECR.h>
 #include <dbglog.h>
-
 #include "gettext.h"
+#include <FilePath.h>
 
 #ifdef NO_WINDOWS
 #include <unistd.h>
@@ -49,14 +49,11 @@ DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 //
 void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const std::function<void(const SaveGameInfo* saveGameInfo)>& callback)
 {
-	const char* const directory = sys.dir_config;
+	FilePath full_path(sys.dir_config);
 
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, directory, filenameWildcard, MAX_PATH))
-	{
-		ERR("Path to the config directory too long.\n");
+	full_path += filenameWildcard;
+	if( full_path.error_flag )
 		return;
-	}
 
 	Directory saveGameDirectory;
 	saveGameDirectory.read(full_path, 0);  // 0-Don't sort file names
@@ -67,12 +64,11 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 	{
 		const char* const saveGameName = saveGameDirectory[i]->name;
 		String errorMessage;
-		char save_game_path[MAX_PATH+1];
-		if (!misc.path_cat(save_game_path, directory, saveGameName, MAX_PATH))
-		{
-			ERR("Path to saved game '%s' too long\n", saveGameName);
+		FilePath save_game_path(sys.dir_config);
+
+		save_game_path += saveGameName;
+		if( save_game_path.error_flag )
 			continue;
-		}
 
 		SaveGameInfo saveGameInfo;
 		if( GameFile::read_header(save_game_path, &saveGameInfo, /*out*/ errorMessage) )
@@ -95,12 +91,11 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 // Deletes the savegame whose file part of filename is saveGameName.
 //
 void SaveGameProvider::delete_savegame(const char* saveGameName) {
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, saveGameName, MAX_PATH))
-	{
-		ERR("Path to the saved game too long.\n");
+	FilePath full_path(sys.dir_config);
+
+	full_path += saveGameName;
+	if( full_path.error_flag )
 		return;
-	}
 
 	unlink(full_path);
 }
@@ -129,8 +124,9 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 
 	bool success = true;
 
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, newFileName, MAX_PATH))
+	FilePath full_path(sys.dir_config);
+	full_path += newFileName;
+	if( full_path.error_flag )
 	{
 		success = false;
 		errorMessage = _("Path too long to the saved game");
@@ -164,8 +160,9 @@ int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ save
 	// Note: we cannot assume that fileName and saveGameInfo->file_name are different addresses, so we must take care when copying between the two.
 
 	int rc = 1;
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, fileName, MAX_PATH))
+	FilePath full_path(sys.dir_config);
+	full_path += fileName;
+	if( full_path.error_flag )
 	{
 		rc = 0;
 		errorMessage = _("Path too long to the saved game");

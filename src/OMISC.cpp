@@ -1177,42 +1177,6 @@ int Misc::is_file_exist(const char* fileName)
 //---------- End of function Misc::is_file_exist ---------//
 
 
-//------- Begin of function Misc::path_cat ---------//
-//
-// Copies src1 to dest, then src2, ensuring the two strings together don't
-// exceed max_len-1. The destination string is always null terminated.
-//
-// The return is 1 on success. If length of src1+src2 is greater than
-// max_len-1, then the return is 0, and the dest string contents is null.
-//
-int Misc::path_cat(char *dest, const char *src1, const char *src2, int max_len)
-{
-   int c = 0;
-   char *d = dest;
-   for (; c < max_len-1; c++) {
-      if (!*src1)
-         break;
-      *d = *src1;
-      d++;
-      src1++;
-   }
-   for (; c < max_len-1; c++) {
-      if (!*src2)
-         break;
-      *d = *src2;
-      d++;
-      src2++;
-   }
-   if (c >= max_len-1) {
-      *dest = 0;
-      return 0;
-   }
-   *d = 0;
-   return 1;
-}
-//---------- End of function Misc::path_cat ---------//
-
-
 // misc_mkdir -- helper function to mkpath
 int misc_mkdir(char *path)
 {

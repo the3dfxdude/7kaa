@@ -47,6 +47,7 @@
 #include <OMOUSECR.h>
 #include <vga_util.h>
 #include <CmdLine.h>
+#include <FilePath.h>
 
 //---------- define static functions -------------//
 
@@ -650,13 +651,15 @@ void Battle::run_replay()
 {
 	NewNationPara *mpGame = (NewNationPara *)mem_add(sizeof(NewNationPara)*MAX_NATION);
 	int mpPlayerCount = 0;
-	char full_path[MAX_PATH+1];
+	FilePath full_path(sys.dir_config);
+
+	full_path += "noname.rpl";
+	if( full_path.error_flag )
+		return;
 
 	game.game_mode = GAME_DEMO;
 	game.game_has_ended = 1;
 
-	if( !misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
-		return;
 	if( !remote.init_replay_load(full_path, mpGame, &mpPlayerCount) )
 		return;
 	battle.run(mpGame, mpPlayerCount);

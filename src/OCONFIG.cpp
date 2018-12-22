@@ -29,6 +29,7 @@
 #include <OCONFIG.h>
 #include <dbglog.h>
 #include "gettext.h"
+#include <FilePath.h>
 
 DBGLOG_DEFAULT_CHANNEL(Config);
 
@@ -388,15 +389,12 @@ void Config::disable_weather_audio()
 //--------- Begin of function Config::save -------------//
 int Config::save(const char *filename)
 {
-	char full_path[MAX_PATH+1];
+	FilePath full_path(sys.dir_config);
 	File configFile;
 
-	if(!misc.path_cat(full_path, sys.dir_config, filename, MAX_PATH))
-	{
-		ERR("Path too long to the config file.\n");
+	full_path += filename;
+	if( full_path.error_flag )
 		return 0;
-	}
-	MSG("Saving config: %s\n", full_path);
 
 	if( !configFile.file_create(full_path) )
 		return 0;
@@ -417,15 +415,12 @@ int Config::save(const char *filename)
 //
 int Config::load(const char *filename)
 {
-	char full_path[MAX_PATH+1];
+	FilePath full_path(sys.dir_config);
 	File configFile;
 
-        if(!misc.path_cat(full_path, sys.dir_config, filename, MAX_PATH))
-        {
-                ERR("Path too long to the config file.\n");
-                return 0;
-        }
-        MSG("Loading config: %s\n", full_path);
+	full_path += filename;
+	if( full_path.error_flag )
+		return 0;
 
 	if( !misc.is_file_exist(full_path) || !configFile.file_open(full_path) )
 		return 0;

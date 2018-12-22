@@ -36,6 +36,7 @@
 #include <ONATION.h>
 #include <dbglog.h>
 #include "gettext.h"
+#include <FilePath.h>
 
 #include <string.h> // for strncpy
 
@@ -73,15 +74,13 @@ void HallOfFame::set_last_savegame_file_name(const char* fileName) {
 //
 int HallOfFame::read_hall_of_fame()
 {
-	char full_path[MAX_PATH+1];
+	FilePath full_path(sys.dir_config);
 	int  rc;
 	File file;
 
-	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
-	{
-		ERR("Path to the hall of fame too long.\n");
+	full_path += HALL_OF_FAME_FILE_NAME;
+	if( full_path.error_flag )
 		return 0;
-	}
 
 	if( !misc.is_file_exist(full_path) )
 		return 0;
@@ -112,15 +111,13 @@ int HallOfFame::read_hall_of_fame()
 //
 int HallOfFame::write_hall_of_fame()
 {
-	char full_path[MAX_PATH+1];
+	FilePath full_path(sys.dir_config);
 	int  rc;
 	File file;
 
-	if (!misc.path_cat(full_path, sys.dir_config, HALL_OF_FAME_FILE_NAME, MAX_PATH))
-	{
-		ERR("Path to the hall of fame too long.\n");
+	full_path += HALL_OF_FAME_FILE_NAME;
+	if( full_path.error_flag )
 		return 0;
-	}
 
 	rc = file.file_create( full_path, 0, 1 );  // 0=don't handle error itself
 
