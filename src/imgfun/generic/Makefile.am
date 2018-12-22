@@ -39,3 +39,5 @@ libimgfun_generic_a_SOURCES = \
 	I_PIXEL.cpp \
 	I_READ.cpp \
 	I_SNOW.cpp
+
+AM_CXXFLAGS = $(GLOBAL_CFLAGS)

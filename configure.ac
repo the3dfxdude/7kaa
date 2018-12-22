@@ -36,16 +36,19 @@ AC_DEFUN([SEARCH_LIB_FLAGS], [
 ])
 
 # Checks for programs.
-CXXFLAGS="$CXXFLAGS -fsigned-char"
 AC_LANG(C++)
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
 AC_PROG_LN_S
 PKG_PROG_PKG_CONFIG
-
 AX_CXX_COMPILE_STDCXX_11(,[mandatory])
+save_CXXFLAGS="$CXXFLAGS"
 
+GLOBAL_CFLAGS="-include \"\$(top_builddir)/include/config.h\""
+GLOBAL_LDFLAGS=""
+
+CXXFLAGS="$CXXFLAGS -fsigned-char"
 AC_MSG_CHECKING(whether char is signed)
 AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 #include <limits.h>
@@ -54,11 +57,13 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 #endif
   )],[
     AC_MSG_RESULT(yes)
+    GLOBAL_CFLAGS="$GLOBAL_CFLAGS -fsigned-char"
   ],[
     AC_MSG_RESULT(no)
     AC_ERROR([The compiler must interpret char as signed])
   ]
 )
+CXXFLAGS="$save_CXXFLAGS"
 
 # Checks for header files.
 dnl AC_CHECK_HEADERS([])
@@ -219,14 +224,12 @@ AS_IF([test "$audio_backend" = openal], [
     ])
   ])
 
-  CXXFLAGS="$CXXFLAGS $OPENAL_CFLAGS"
   LIBS="$OPENAL_LIBS $LIBS"
 ])
 
 AM_PATH_SDL2([2.0.4], [], [
   AC_ERROR([SDL not found])
 ])
-CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
 dnl FIXME: SDLmain can screw up some autoconf macros
 LIBS="$SDL_LIBS $LIBS"
 
@@ -237,7 +240,6 @@ AS_IF([test "$enable_enet" = yes], [
     ])
   ])
 
-  CXXFLAGS="$CXXFLAGS $ENET_CFLAGS"
   LIBS="$LIBS $ENET_LIBS"
 ])
 
@@ -246,7 +248,6 @@ AS_IF([test "$enable_curl" = yes], [
     AC_ERROR([curl not found])
   ])
 
-  CXXFLAGS="$CXXFLAGS $CURL_CFLAGS"
   LIBS="$LIBS $CURL_LIBS"
 ])
 
@@ -254,7 +255,7 @@ AS_IF([test "$use_windows" = yes], [
   LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
 
   AS_IF([test "$enable_debug" = no], [
-    LDFLAGS="$LDFLAGS -mwindows"
+    GLOBAL_LDFLAGS="$GLOBAL_LDFLAGS -mwindows"
   ])
 ])
 
@@ -329,8 +330,8 @@ AS_IF([test "$enable_asm" = yes], [
   ])
 ])
 
-CXXFLAGS="$CXXFLAGS -I\"\$(top_srcdir)/include\""
-CXXFLAGS="$CXXFLAGS -include \"\$(top_builddir)/include/config.h\""
+AC_SUBST([GLOBAL_LDFLAGS])
+AC_SUBST([GLOBAL_CFLAGS])
 
 AC_CONFIG_FILES([
   Makefile
