@@ -92,7 +92,7 @@
 #include <FilePath.h>
 
 #include <dbglog.h>
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 #include <direct.h>
 #define chdir _chdir
 #else

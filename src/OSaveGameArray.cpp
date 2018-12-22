@@ -51,7 +51,7 @@
 #include <string.h> //strncpy
 #include <posix_string_compat.h> //strnicmp
 
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 #include <windows.h>
 #endif
 
@@ -633,7 +633,7 @@ void SaveGameArray::disp_entry_info(const SaveGameInfo* entry, int x, int y)
 	#endif
 
 	int timeYear, timeMonth, timeDay, timeHour, timeMinute;
-#ifndef NO_WINDOWS  //FIXME
+#ifdef USE_WINDOWS
 	FILETIME fileTime;
 	FILETIME localFileTime;
 	SYSTEMTIME sysTime;
@@ -643,7 +643,7 @@ void SaveGameArray::disp_entry_info(const SaveGameInfo* entry, int x, int y)
 	FileTimeToSystemTime( &localFileTime, &sysTime );
 	timeYear = sysTime.wYear; timeMonth = sysTime.wMonth; timeDay = sysTime.wDay;
 	timeHour = sysTime.wHour; timeMinute = sysTime.wMinute;
-#else
+#else // FIXME
 	timeYear = timeMonth = timeDay = timeHour = timeMinute = 0;
 #endif
 

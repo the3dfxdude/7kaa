@@ -256,8 +256,6 @@ AS_IF([test "$use_windows" = yes], [
   AS_IF([test "$enable_debug" = no], [
     LDFLAGS="$LDFLAGS -mwindows"
   ])
-
-  AC_DEFINE([USE_WINDOWS], [1], [Define to 1 if building on the windows platform])
 ])
 
 AS_IF([test "$use_mingw" = yes], [
@@ -280,8 +278,8 @@ AS_IF([test "$found_iconv" = libiconv], [
 
 # Defines
 
-AS_IF([test "$use_windows" != yes], [
-  AC_DEFINE([NO_WINDOWS], [1], [Define to 1 if not using Windows headers])
+AS_IF([test "$use_windows" = yes], [
+  AC_DEFINE([USE_WINDOWS], [1], [Define to 1 if building for the windows platform])
 ])
 
 AS_CASE(["$video_backend"],

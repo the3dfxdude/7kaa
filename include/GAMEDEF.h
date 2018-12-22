@@ -39,10 +39,10 @@ extern const int GAME_VERSION;
 
 //------- Data sub-directories -------//
 
-#ifdef NO_WINDOWS
-#define PATH_DELIM "/"
-#else // WINDOWS
+#ifdef USE_WINDOWS
 #define PATH_DELIM "\\"
+#else
+#define PATH_DELIM "/"
 #endif
 
 // config dir

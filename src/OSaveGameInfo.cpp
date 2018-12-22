@@ -26,7 +26,7 @@
 #include <OCONFIG.h>
 #include <OINFO.h>
 
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 #include <windows.h>
 #endif
 
@@ -47,7 +47,7 @@ SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 
 	saveGameInfo.game_date    = info.game_date;
 	saveGameInfo.file_date    = 0;
-#ifndef NO_WINDOWS  // FIXME
+#ifdef USE_WINDOWS
 	//----- set the file date ------//
 
 	FILETIME sysTimeAsFileTime;
@@ -55,6 +55,7 @@ SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 	GetSystemTime(&sysTime);
 	SystemTimeToFileTime(&sysTime, &sysTimeAsFileTime);
 	saveGameInfo.file_date = static_cast<std::uint64_t>(sysTimeAsFileTime.dwHighDateTime) << 32 | sysTimeAsFileTime.dwLowDateTime;
+#else // FIXME
 #endif
 
 	saveGameInfo.terrain_set  = config.terrain_set;

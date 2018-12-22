@@ -21,12 +21,12 @@
 //Filename    : OMISC.CPP
 //Description : Object of Misc useful functions
 
-#ifdef NO_WINDOWS
+#ifdef USE_WINDOWS
+#include <windows.h>
+#else
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <errno.h>
-#else
-#include <windows.h>
 #endif 
 
 #include <SDL.h>
@@ -1180,9 +1180,7 @@ int Misc::is_file_exist(const char* fileName)
 // misc_mkdir -- helper function to mkpath
 int misc_mkdir(char *path)
 {
-#ifdef NO_WINDOWS
-   return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
-#else // WINDOWS
+#ifdef USE_WINDOWS
    if (!path[2] && path[1] == ':' && isalpha(path[0]))
    {
       // don't try to make a drive letter path
@@ -1191,6 +1189,8 @@ int misc_mkdir(char *path)
    }
    return !CreateDirectory(path, NULL) ?
        GetLastError() == ERROR_ALREADY_EXISTS : 1;
+#else
+   return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
 #endif
 }
 

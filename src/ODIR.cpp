@@ -25,12 +25,12 @@
 #include <string.h>
 #include <ODIR.h>
 
-#ifdef NO_WINDOWS
+#ifdef USE_WINDOWS
+#include <windows.h>
+#else
 #include <dirent.h>
 #include <ctype.h>
 #include <sys/stat.h>
-#else
-#include <windows.h>
 #endif
 
 #include <storage_constants.h>
@@ -67,7 +67,7 @@ Directory::Directory() : DynArray( sizeof(FileInfo), 20 )
 int Directory::read(const char *fileSpec, int sortName)
 {
    FileInfo				fileInfo;
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 	WIN32_FIND_DATA	findData;
    
    //----------- get the file list -------------//

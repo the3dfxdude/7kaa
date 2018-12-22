@@ -34,10 +34,10 @@
 #include "gettext.h"
 #include <FilePath.h>
 
-#ifdef NO_WINDOWS
-#include <unistd.h>
-#else
+#ifdef USE_WINDOWS
 #include <io.h>
+#else
+#include <unistd.h>
 #endif
 
 DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);

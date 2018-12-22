@@ -24,11 +24,8 @@
 #include <ALL.h>
 #include <version.h>
 
-#ifndef NO_WINDOWS
-#include <initguid.h>
-#endif
-
 #ifdef ENABLE_INTRO_VIDEO
+#include <initguid.h>
 #include <dshow.h>
 #endif
 
