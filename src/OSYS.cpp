@@ -951,11 +951,7 @@ void Sys::main_loop(int isLoadedGame)
 
             if( nation_array.player_recno )     // only save when the player is still in the game
             {
-               String errorMessage;
-               if ( !SaveGameProvider::save_game( remote.save_file_name, /*out*/ errorMessage ) )
-			   {
-				   box.msg( errorMessage );
-			   }
+               SaveGameProvider::save_game(remote.save_file_name);
 
                // ####### begin Gilbert 24/10 ######//
                //static String str;
@@ -1014,21 +1010,15 @@ void Sys::auto_save()
       #endif
       {
          static int saveCount = 0;
-		 bool saveSuccessfull = false;
-		 String errorMessage;
          switch(saveCount)
          {
-            case 0:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG1.SAV", /*out*/ errorMessage );
+            case 0:  SaveGameProvider::save_game("DEBUG1.SAV");
                      break;
-			case 1:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG2.SAV", /*out*/ errorMessage );
+			case 1:  SaveGameProvider::save_game("DEBUG2.SAV");
                      break;
-			case 2:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG3.SAV", /*out*/ errorMessage );
+			case 2:  SaveGameProvider::save_game("DEBUG3.SAV");
                      break;
          }
-		 if( !saveSuccessfull )
-		 {
-			box.msg( errorMessage );
-		 }
          if( ++saveCount>=3 )
             saveCount = 0;
       }
@@ -1054,11 +1044,7 @@ void Sys::auto_save()
             rename( auto1_path, auto2_path );
          }
 
-		 String errorMessage;
-         if( !SaveGameProvider::save_game( "AUTO.SAV", /*out*/ errorMessage ) )
-		 {
-			 box.msg( errorMessage );
-		 }
+         SaveGameProvider::save_game("AUTO.SAV");
       }
 
       //-*********** syn game test ***********-//
@@ -1107,11 +1093,7 @@ void Sys::auto_save()
          rename( auto1_path, auto2_path );
       }
 
-	  String errorMessage;
-	  if( !SaveGameProvider::save_game( "AUTO.SVM", /*out*/ errorMessage ) )
-	  {
-		  box.msg( errorMessage );
-	  }
+      SaveGameProvider::save_game("AUTO.SVM");
    }
 }
 //-------- End of function Sys::auto_save --------//

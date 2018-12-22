@@ -38,6 +38,7 @@
 #include <OINFO.h>
 #include <OGAME.h>
 #include <OGAMESET.h>
+#include <OGFILE.h>
 #include <OSaveGameProvider.h>
 #include <OGAMHALL.h>
 #include <OBUTT3D.h>
@@ -688,10 +689,9 @@ int SaveGameArray::process_action(int saveNew)
 				return 0;
 
 			SaveGameInfo* saveGameInfo = (*this)[browse_recno];
-			String errorMessage;
-			if( !SaveGameProvider::save_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage) )
+			if( !SaveGameProvider::save_game(saveGameInfo->file_name, /*out*/ saveGameInfo) )
 			{
-				box.msg( errorMessage );
+				box.msg(GameFile::status_str());
 				return -1;
 			}
 
@@ -707,15 +707,14 @@ int SaveGameArray::process_action(int saveNew)
 	{
 		SaveGameInfo* saveGameInfo = (*this)[browse_recno];
 
-		String errorMessage;
-		int rc = SaveGameProvider::load_game(saveGameInfo->file_name, /*out*/ saveGameInfo, /*out*/ errorMessage);
+		int rc = SaveGameProvider::load_game(saveGameInfo->file_name, /*out*/ saveGameInfo);
 		if( rc > 0 )
 		{
 			strcpy( last_file_name, saveGameInfo->file_name );
 		}
 		else
 		{
-			box.msg( errorMessage );
+			box.msg(GameFile::status_str());
 		}
 		return rc;
 	}
@@ -768,8 +767,7 @@ int SaveGameArray::save_new_game(const char* newFileName)
 	//----------- save game now ------------//
 
 	SaveGameInfo saveGameInfo;
-	String errorMessage;
-	if( SaveGameProvider::save_game(fileName, /*out*/ &saveGameInfo, /*out*/ errorMessage) )
+	if( SaveGameProvider::save_game(fileName, /*out*/ &saveGameInfo) )
 	{
 		strcpy( last_file_name, saveGameInfo.file_name );
 
@@ -786,8 +784,9 @@ int SaveGameArray::save_new_game(const char* newFileName)
 
 		return 1;
 	}
-	else {
-		box.msg( errorMessage );
+	else
+	{
+		box.msg(GameFile::status_str());
 		return 0;
 	}
 }

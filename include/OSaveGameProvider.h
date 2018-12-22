@@ -49,18 +49,18 @@ public:
 	static void delete_savegame(const char* saveGameName);
 
 	// Save the current game under the file specified by newFileName.
-	static bool save_game(const char* newFileName, String& /*out*/ errorMessage);
+	static bool save_game(const char* newFileName);
 	// Save the current game under the file specified by newFileName. Sets saveGameInfo to the new savegame information on success.
-	static bool save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
+	static bool save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo);
 
 	// Loads the game given by fileName as the current game. Sets saveGameInfo to the new savegame information on success. Returns 1, 0, or -1 for resp. success, recoverable failure, or failure.
-	static int load_game(const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
+	static int load_game(const char* fileName, SaveGameInfo* /*out*/ saveGameInfo);
 
 	// Loads the scenario whose full path is given by filePath. Returns 1, 0, or -1 for resp. success, recoverable failure, or failure.
-	static int load_scenario(const char* filePath, String& /*out*/ errorMessage);
+	static int load_scenario(const char* filePath);
 
 private:
-	static int load_game_from_file(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage);
+	static int load_game_from_file(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo);
 };
 
 #endif // !__OSAVEGAMEPROVIDER_H

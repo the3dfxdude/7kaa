@@ -32,6 +32,7 @@
 #include <OIMGRES.h>
 #include <OBUTTON.h>
 #include <OBUTT3D.h>
+#include <OGFILE.h>
 #include <OSaveGameArray.h>
 #include <OSaveGameProvider.h>
 #include <OGAME.h>
@@ -380,12 +381,10 @@ void Tutor::run(int tutorId, int inGameCall)
 		str += tutor[tutorId]->code;
 		str += ".TUT";
 
-		String errorMessage;
 		int rc = 0;
 		if( misc.is_file_exist(str) )
 		{
-			rc = SaveGameProvider::load_scenario(str, /*out*/ errorMessage);
-			ERR("Failed to load tutortial '%s'; retrying with default. Reason: %s", (const char*)str, (const char*)errorMessage);
+			rc = SaveGameProvider::load_scenario(str);
 		}
 		if (rc <= 0)
 		{
@@ -393,12 +392,12 @@ void Tutor::run(int tutorId, int inGameCall)
 			str += "STANDARD.TUT";
 
 			if( misc.is_file_exist(str) )
-				rc = SaveGameProvider::load_scenario(str, /*out*/ errorMessage);
+				rc = SaveGameProvider::load_scenario(str);
 		}
 
 		if (rc <= 0)
 		{
-			box.msg(errorMessage);
+			box.msg(GameFile::status_str());
 			return;
 		}
 
