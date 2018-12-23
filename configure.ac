@@ -99,7 +99,6 @@ enable_enet=yes
 # enable_asm=no
 # enable_curl=yes
 # enable_debug=no
-# with_wine=no
 # enable_dynamic_support_libs=no
 
 # Configuration options
@@ -124,11 +123,6 @@ AC_ARG_ENABLE([network],
   [], [enable_network=yes]
 )
 
-#AC_ARG_WITH([wine],
-#  AS_HELP_STRING([--with-wine], [build with winelib using wineg++]),
-#  [], [with_wine=no]
-#)
-
 AC_ARG_ENABLE([dynamic-mingw-gnulibs],
   AS_HELP_STRING([--enable-dynamic-mingw-gnulibs], [enable dynamic linking to gnu libs on mingw]),
   [], [enable_dynamic_mingw_gnulibs=no]
@@ -151,22 +145,6 @@ AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$platform"      = windows])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
 AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
-
-
-# Wine set-up
-
-AS_IF([test "$with_wine" = yes], [
-  winecxx=$(which wineg++)
-  AS_IF([test -z "$winecxx"], [
-    AC_ERROR([wineg++ not found])
-  ])
-  AC_MSG_CHECKING([the wine prefix])
-  wine_prefix=$(echo "$winecxx" | sed 's/\/bin\/wineg++$//')
-  AC_MSG_RESULT([$wine_prefix])
-  CXX="wineg++"
-  CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/msvcrt\""
-  CXXFLAGS="$CXXFLAGS -I\"$wine_prefix/include/wine/windows\""
-])
 
 
 # Jwasm assembler set-up
