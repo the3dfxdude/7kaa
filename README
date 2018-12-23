@@ -58,7 +58,7 @@ Optional dependencies
 * Autoconf 2.65 (when using git snapshot)
 * libcurl for full 7kfans multiplayer integration
 * gettext 0.19
-* Game music bundle (copy music into program data folder or PACKAGE_DATA_PATH)
+* Game music bundle (copy music into program data folder or PACKAGE_DATA_DIR)
 * NSIS for building a Windows installer
 
 

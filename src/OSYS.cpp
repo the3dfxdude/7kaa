@@ -2777,8 +2777,8 @@ int Sys::chdir_to_game_dir()
    }
 
    // test compile time path
-#ifdef PACKAGE_DATA_PATH
-   chdir(PACKAGE_DATA_PATH);
+#ifdef PACKAGE_DATA_DIR
+   chdir(PACKAGE_DATA_DIR);
    if (misc.is_file_exist(test_file))
       return 1;
 #endif
