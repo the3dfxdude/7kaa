@@ -92,20 +92,8 @@ int Directory::read(const char *fileSpec, int sortName)
 	FindClose(findHandle);
 #endif
 #ifdef USE_POSIX
-   // FIXME: Case guessing. Make repository case match source code.
-   char file_spec[MAX_PATH];
-   const char *s = fileSpec;
-   char *d = file_spec;
-   while( *s )
-   {
-     *d = tolower(*s);
-     s++;
-     d++;
-   }
-   *d = 0;
    glob_t results;
    glob(fileSpec, sortName ? 0 : GLOB_NOSORT, NULL, &results);
-   glob(file_spec, (sortName ? 0 : GLOB_NOSORT)|GLOB_APPEND, NULL, &results);
    for( int i = 0; i < results.gl_pathc; i++ )
    {
       struct stat file_stat;
