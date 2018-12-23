@@ -27,10 +27,12 @@
 
 #ifdef USE_WINDOWS
 #include <windows.h>
-#else
+#endif
+#ifdef USE_POSIX
 #include <dirent.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <glob.h>
 #endif
 
 #include <storage_constants.h>
@@ -88,136 +90,45 @@ int Directory::read(const char *fileSpec, int sortName)
    }
 
 	FindClose(findHandle);
-
-#else
-
-   MSG("Listing Directory %s sortName=%d\n", fileSpec, sortName);
-
-   char dirname[MAX_PATH];
-   char search[MAX_PATH];
-   struct dirent **namelist;
-   int n;
-
-   char *slash = strrchr((char*)fileSpec, '/');
-   if (slash)
+#endif
+#ifdef USE_POSIX
+   // FIXME: Case guessing. Make repository case match source code.
+   char file_spec[MAX_PATH];
+   const char *s = fileSpec;
+   char *d = file_spec;
+   while( *s )
    {
-      char *s = (char*)fileSpec;
-      char *d = dirname;
-      int i = 0;
-      while (s != slash && i < MAX_PATH - 1)
-      {
-         if (*s == '\\')
-            *d = '/';
-         else if (isalpha(*s))
-            *d = tolower(*s);
-         else
-            *d = *s;
-         d++;
-         s++;
-         i++;
-      }
-      *d = 0;
-
-      i = 0;
-      d = search;
-      s++;
-      while (*s && i < MAX_PATH - 1)
-      {
-         if (*s == '*')
-         {
-            s++;
-            i++;
-            continue;
-         }
-         else if (isalpha(*s))
-         {
-            *d = tolower(*s);
-         }
-         else
-         {
-            *d = *s;
-         }
-         d++;
-         s++;
-         i++;
-      }
-      *d = 0;
-   } else {
-      char *s = (char*)fileSpec;
-      char *d = search;
-      int i = 0;
-
-      while (*s && i < MAX_PATH - 1)
-      {
-         if (*s == '*')
-         {
-            s++;
-            i++;
-            continue;
-         }
-         else if (isalpha(*s))
-         {
-            *d = tolower(*s);
-         }
-         else
-         {
-            *d = *s;
-         }
-         d++;
-         s++;
-         i++;
-      }
-      *d = 0;
-
-
-      dirname[0] = '.';
-      dirname[1] = 0;
+     *d = tolower(*s);
+     s++;
+     d++;
    }
-
-   MSG("directory=%s search=%s\n", dirname, search);
-   n = scandir(dirname, &namelist, 0, alphasort);
-   for (int i = 0; i < n; i++)
+   *d = 0;
+   glob_t results;
+   glob(fileSpec, sortName ? 0 : GLOB_NOSORT, NULL, &results);
+   glob(file_spec, (sortName ? 0 : GLOB_NOSORT)|GLOB_APPEND, NULL, &results);
+   for( int i = 0; i < results.gl_pathc; i++ )
    {
-      char filename[MAX_PATH];
-      char *s = namelist[i]->d_name;
-      char *d = filename;
-      int j = 0;
-      while (*s && j < MAX_PATH - 1)
-      {
-         if (isalpha(*s))
-            *d = tolower(*s);
-         else
-            *d = *s;
-         d++;
-         s++;
-         j++;
-      }
-      *d = 0;
+      struct stat file_stat;
+      char *p;
 
-      if (strstr(filename, search))
-      {
-         char full_path[MAX_PATH];
-         struct stat file_stat;
+      stat(results.gl_pathv[i], &file_stat);
 
-         full_path[0] = 0;
-         strcat(full_path, dirname);
-         strcat(full_path, "/");
-         strcat(full_path, namelist[i]->d_name);
+      p = strrchr(results.gl_pathv[i], PATH_DELIM[0]);
+      if( p )
+         p++;
+      else
+         p = results.gl_pathv[i];
 
-         stat(full_path, &file_stat);
+      size_t filename_len = strlen(p);
+      if( filename_len >= MAX_PATH )
+         continue;
+      memcpy(fileInfo.name, p, filename_len+1);
+      fileInfo.size = file_stat.st_size;
+      fileInfo.time = 0; // FIXME
 
-         strncpy(fileInfo.name, namelist[i]->d_name, MAX_PATH - 2);
-
-         fileInfo.size = file_stat.st_size;
-         fileInfo.time = 0;
-
-         linkin( &fileInfo );
-      }
-      free(namelist[i]);
+      linkin(&fileInfo);
    }
-   if (n > -1)
-     free(namelist);
-
+   globfree(&results);
 #endif
 
    //------ the file list by file name ---------//

@@ -256,6 +256,9 @@ AS_IF([test "$found_iconv" = libiconv], [
 AS_IF([test "$platform" = windows], [
   AC_DEFINE([USE_WINDOWS], [1], [Define to 1 if building for the windows platform])
 ])
+AS_IF([test "$platform" = posix], [
+  AC_DEFINE([USE_POSIX], [1], [Define to 1 if building for the posix compliant platform])
+])
 
 AS_CASE(["$video_backend"],
   [sdl], [
