@@ -91,8 +91,7 @@ AM_GNU_GETTEXT_VERSION([0.19])
 audio_backend=openal # openal
 input_backend=sdl    # sdl
 video_backend=sdl    # sdl
-use_windows=no
-use_mingw=no
+platform=posix
 jwasm_fmt="-elf -zt0"
 enable_enet=yes
 
@@ -140,8 +139,7 @@ AC_ARG_ENABLE([dynamic-mingw-gnulibs],
 
 AS_CASE(["$host"],
   [*-mingw*], [
-    use_windows=yes
-    use_mingw=yes
+    platform=windows
     jwasm_fmt=-coff
     AC_CHECK_TOOL([WINDRES],[windres])
   ]
@@ -150,7 +148,7 @@ AS_CASE(["$host"],
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
-AM_CONDITIONAL([USE_WINDOWS],  [test "$use_windows"   = yes])
+AM_CONDITIONAL([USE_WINDOWS],  [test "$platform"      = windows])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
 AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
 
@@ -251,15 +249,13 @@ AS_IF([test "$enable_curl" = yes], [
   LIBS="$LIBS $CURL_LIBS"
 ])
 
-AS_IF([test "$use_windows" = yes], [
+AS_IF([test "$platform" = windows], [
   LIBS="-lole32 -lmsvcrt -lwinmm $LIBS"
 
   AS_IF([test "$enable_debug" = no], [
     GLOBAL_LDFLAGS="$GLOBAL_LDFLAGS -mwindows"
   ])
-])
 
-AS_IF([test "$use_mingw" = yes], [
   AS_IF([test "$enable_dynamic_mingw_gnulibs" = no], [
     dnl Static linking on windows, plus a thread library work-around:
     dnl The --whole-archive switch makes the linker try to static link anyway,
@@ -279,7 +275,7 @@ AS_IF([test "$found_iconv" = libiconv], [
 
 # Defines
 
-AS_IF([test "$use_windows" = yes], [
+AS_IF([test "$platform" = windows], [
   AC_DEFINE([USE_WINDOWS], [1], [Define to 1 if building for the windows platform])
 ])
 
