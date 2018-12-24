@@ -653,7 +653,7 @@ void Battle::run_replay()
 	int mpPlayerCount = 0;
 	FilePath full_path(sys.dir_config);
 
-	full_path += "noname.rpl";
+	full_path += "NONAME.RPL";
 	if( full_path.error_flag )
 		return;
 

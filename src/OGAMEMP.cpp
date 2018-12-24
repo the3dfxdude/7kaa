@@ -4192,7 +4192,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		else
 		{
 			FilePath full_path(sys.dir_config);
-			full_path += "noname.rpl";
+			full_path += "NONAME.RPL";
 			if( !full_path.error_flag )
 				remote.replay.open_write(full_path, nationPara, playerCount);
 		}
