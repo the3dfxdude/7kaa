@@ -54,7 +54,7 @@ void WebService::init()
 	FilePath cookie_file(sys.dir_config);
 	cookie_file += "cookies.txt";
 	if( !cookie_file.error_flag )
-		curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookie_file);
+		curl_easy_setopt(curl, CURLOPT_COOKIEJAR, (char*)cookie_file);
 	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
