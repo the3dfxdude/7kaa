@@ -282,7 +282,7 @@ my %pack_id_to_len = (
 );
 
 if (!@ARGV) {
-	print "Usage: $0 file.rpl\n";
+	print "Usage: $0 FILE.RPL\n";
 	exit 1;
 }
 

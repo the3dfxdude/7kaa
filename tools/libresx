@@ -27,7 +27,7 @@ use File::Basename;
 use File::Spec;
 
 if (@ARGV != 2) {
-	print "Usage: $0 file.res src_dir\n";
+	print "Usage: $0 FILE.RES src_dir\n";
 	print "Puts all files in src_dir into the res archive\n";
 	exit 1;
 }

@@ -722,8 +722,8 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-//	pal = init_pal("pal_std.res");
-	pal = init_pal("pal_grey.res");
+//	pal = init_pal("PAL_STD.RES");
+	pal = init_pal("PAL_GREY.RES");
 	if( !pal )
 	{
 		printf("unable to load palette\n");

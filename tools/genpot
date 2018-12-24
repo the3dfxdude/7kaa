@@ -40,30 +40,24 @@ if (!defined($ENV{DERESX})) {
 	$ENV{DERESX} = File::Spec->catfile($FindBin::Bin, "deresx");
 }
 
+system($ENV{DERESX}, respath("STD.SET"), stdpath(), ".dbf");
 if (! -d stdpath()) {
-	system($ENV{DERESX}, respath("std.set"), stdpath(), ".dbf");
-}
-if (! -d stdpath()) {
-	warn "Error: Expecting std.res unpacked in ", stdpath(), "\n";
+	warn "Error: Expecting STD.SET unpacked in ", stdpath(), "\n";
 }
 
+system($ENV{DERESX}, respath("TUT_INTR.RES"), tut_intr_path(), ".TXT");
 if (! -d tut_intr_path()) {
-	system($ENV{DERESX}, respath("tut_intr.res"), tut_intr_path(), ".txt");
-}
-if (! -d tut_intr_path()) {
-	warn "Error: Expecting tut_intr.res unpacked in ", tut_intr_path(), "\n";
+	warn "Error: Expecting TUT_INTR.RES unpacked in ", tut_intr_path(), "\n";
 }
 
+system($ENV{DERESX}, respath("TUT_TEXT.RES"), tut_text_path(), ".TXT");
 if (! -d tut_text_path()) {
-	system($ENV{DERESX}, respath("tut_text.res"), tut_text_path(), ".txt");
-}
-if (! -d tut_text_path()) {
-	warn "Error: Expecting tut_text.res unpacked in ", tut_text_path(), "\n";
+	warn "Error: Expecting TUT_TEXT.RES unpacked in ", tut_text_path(), "\n";
 }
 
 my @dbf_list = (
 [
-	respath('tut_list.res'),
+	respath('TUT_LIST.RES'),
 	['DES', ''], # Tutorial|Title
 ],[
 	stdpath('00003-RAW.dbf'),
@@ -96,19 +90,19 @@ foreach (@dbf_list) {
 	pot_extract_dbf(@$_);
 }
 
-foreach (glob(tut_intr_path("*.txt"))) {
+foreach (glob(tut_intr_path("*.TXT"))) {
 	tut_text_extract($_, 0);
 }
 
-foreach (glob(tut_text_path("*.txt"))) {
+foreach (glob(tut_text_path("*.TXT"))) {
 	tut_text_extract($_, 1);
 }
 
-foreach (glob(sct1_text_path("*.sct"))) {
+foreach (glob(sct1_text_path("*.SCT"))) {
 	sct_text_extract($_);
 }
 
-foreach (glob(sct2_text_path("*.sct"))) {
+foreach (glob(sct2_text_path("*.SCT"))) {
 	sct_text_extract($_);
 }
 
@@ -117,31 +111,31 @@ help_res_extract(help_res_path());
 exit 0;
 
 sub respath {
-	return File::Spec->catfile($datadir, 'resource', @_);
+	return File::Spec->catfile($datadir, 'RESOURCE', @_);
 }
 
 sub stdpath {
-	return File::Spec->catfile($datadir, 'resource', 'std', @_);
+	return File::Spec->catfile($datadir, 'RESOURCE', 'STD', @_);
 }
 
 sub tut_intr_path {
-	return File::Spec->catfile($datadir, 'resource', 'tut_intr', @_);
+	return File::Spec->catfile($datadir, 'RESOURCE', 'TUT_INTR', @_);
 }
 
 sub tut_text_path {
-	return File::Spec->catfile($datadir, 'resource', 'tut_text', @_);
+	return File::Spec->catfile($datadir, 'RESOURCE', 'TUT_TEXT', @_);
 }
 
 sub sct1_text_path {
-	return File::Spec->catfile($datadir, 'scenario', @_);
+	return File::Spec->catfile($datadir, 'SCENARIO', @_);
 }
 
 sub sct2_text_path {
-	return File::Spec->catfile($datadir, 'scenari2', @_);
+	return File::Spec->catfile($datadir, 'SCENARI2', @_);
 }
 
 sub help_res_path {
-	return File::Spec->catfile($datadir, 'resource', 'help.res');
+	return File::Spec->catfile($datadir, 'RESOURCE', 'HELP.RES');
 }
 
 # implements FileTxt::read_line()

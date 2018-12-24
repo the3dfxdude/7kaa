@@ -30,7 +30,7 @@ my $PaletteHeaderSize = 8;
 my @pal;
 
 if (@ARGV < 1) {
-	print "Usage: $0 pal.res pal.txt\n";
+	print "Usage: $0 PAL.RES pal.txt\n";
 	print "Dumps palette colors, and optionally write pal.txt\n";
 	exit 0;
 }

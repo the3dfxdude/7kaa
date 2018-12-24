@@ -64,9 +64,9 @@ m4/visibility.m4
 m4/wchar_t.m4
 m4/wint_t.m4
 m4/xsize.m4
-data/resource/std/
-data/resource/tut_intr/
-data/resource/tut_text/
+data/RESOURCE/STD/
+data/RESOURCE/TUT_INTR/
+data/RESOURCE/TUT_TEXT/
 po/7kaa.res.pot
 po/7kaa.src.pot
 po/Makefile.in.in
@@ -87,3 +87,4 @@ doc/main.idx
 doc/main.log
 doc/main.out
 doc/main.toc
+tools/genfont
