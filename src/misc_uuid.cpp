@@ -110,7 +110,7 @@ static int get_random_fd(void)
 	/* Crank the random number generator a few times */
 	gettimeofday(&tv, 0);
 	for (i = (tv.tv_sec ^ tv.tv_usec) & 0x1F; i > 0; i--)
-		rand();
+		::rand();
 	return fd;
 }
 
@@ -238,7 +238,7 @@ void Misc::get_system_random_bytes(void *buf, int nbytes)
 	 * randomness if /dev/random/urandom is out to lunch.
 	 */
 	for (cp = (unsigned char *)buf, i = 0; i < nbytes; i++)
-		*cp++ ^= (rand() >> 7) & 0xFF;
+		*cp++ ^= (::rand() >> 7) & 0xFF;
 
 	return;
 }
