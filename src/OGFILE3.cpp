@@ -988,6 +988,8 @@ int FirmArray::read_file(File* filePtr)
 
             if( !filePtr->file_read( firmPtr->worker_array, MAX_WORKER*sizeof(Worker) ) )
                return 0;
+
+            firmPtr->sort_worker(); // if this one selected, refresh interface
          }
 
          //----- read data in derived class -----//
