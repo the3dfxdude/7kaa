@@ -534,7 +534,8 @@ void Tutor::play_speech()
 
 	str  = sys.dir_tutorial;
 	str += tutor[cur_tutor_id]->code;
-	str += "\\TUT";
+	str += PATH_DELIM;
+	str += "TUT";
 
 	if( cur_text_block_id < 10 )		// Add a zero. e.g. "TUT01"
 		str += "0";

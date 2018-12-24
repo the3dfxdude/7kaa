@@ -529,7 +529,7 @@ int Misc::valid_char( char ch )
    return ( ch>='a' && ch<='z'  ||
             ch>='A' && ch<='Z'  ||
             ch>='0' && ch<='9'  ||
-            ch=='\\'  ||  ch=='.'  || ch=='_'  ||  ch==':' ) ;
+            ch=='\\'  ||  ch=='/'  ||  ch=='.'  || ch=='_'  ||  ch==':' ) ;
 }
 
 //--------- END OF FUNCTION Misc::valid_char ----------//
@@ -1274,7 +1274,7 @@ void Misc::extract_file_name(char* desFileName, const char* srcFileName)
 
 	for( i=strlen(srcFileName); i>=0 ; i-- )
 	{
-		if( srcFileName[i]=='\\' )			// get last '\' before the file name
+		if( srcFileName[i]==PATH_DELIM[0] )			// get last '\' before the file name
 			break;
 	}
 

@@ -96,7 +96,6 @@ int Directory::read(const char *fileSpec, int sortName)
    for( int i = 0; i < results.gl_pathc; i++ )
    {
       struct stat file_stat;
-      char *p;
 
       if( stat(results.gl_pathv[i], &file_stat) )
       {
@@ -104,16 +103,7 @@ int Directory::read(const char *fileSpec, int sortName)
          continue;
       }
 
-      p = strrchr(results.gl_pathv[i], PATH_DELIM[0]);
-      if( p )
-         p++;
-      else
-         p = results.gl_pathv[i];
-      size_t filename_len = strlen(p);
-      if( filename_len >= FilePath::MAX_FILE_PATH )
-         continue;
-
-      memcpy(fileInfo.name, p, filename_len+1);
+      misc.extract_file_name(fileInfo.name, results.gl_pathv[i]);
       fileInfo.size = file_stat.st_size;
       fileInfo.time = *localtime(&file_stat.st_mtime);
 
