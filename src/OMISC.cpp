@@ -23,7 +23,9 @@
 
 #ifdef USE_WINDOWS
 #include <windows.h>
-#else
+#endif
+#ifdef USE_POSIX
+#include <unistd.h>
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -41,7 +43,6 @@
 #include <ALL.h>
 #include <OSTR.h>
 #include <OMISC.h>
-#include <ODIR.h>
 
 #define	MOVE_AROUND_TABLE_SIZE	900
 
@@ -1171,8 +1172,18 @@ float Misc::round_dec(float inNum)
 //
 int Misc::is_file_exist(const char* fileName)
 {
-   Directory dir;
-   return dir.read(fileName, 0) == 1;
+#ifdef USE_WINDOWS
+   WIN32_FIND_DATA findData;
+
+   HANDLE findHandle = FindFirstFile( fileName, &findData );
+
+   return findHandle!=INVALID_HANDLE_VALUE;
+#endif
+#ifdef USE_POSIX
+   return !access(fileName, F_OK);
+#endif
+   err.msg("Misc::is_file_exist: stub");
+   return 0;
 }
 //---------- End of function Misc::is_file_exist ---------//
 
