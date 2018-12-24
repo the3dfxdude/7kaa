@@ -633,20 +633,9 @@ void SaveGameArray::disp_entry_info(const SaveGame* entry, int x, int y)
 	#endif
 
 	str  = _("File Date: ");
-#ifdef USE_WINDOWS
-	FILETIME localFileTime;
-	SYSTEMTIME sysTime;
-	FileTimeToLocalFileTime( &entry->file_info.time, &localFileTime );
-	FileTimeToSystemTime( &localFileTime, &sysTime );
-	str += date.date_str(date.julian(sysTime.wYear, sysTime.wMonth, sysTime.
-wDay), 1);
+	str += date.date_str(date.julian(entry->file_info.time.year, entry->file_info.time.month, entry->file_info.time.day), 1);
 	str += " ";
-	str += date.time_str(sysTime.wHour * 100 + sysTime.wMinute);
-#elif defined USE_POSIX
-	str += date.date_str(date.julian(entry->file_info.time.tm_year+1900, entry->file_info.time.tm_mon+1, entry->file_info.time.tm_mday), 1);
-	str += " ";
-	str += date.time_str(entry->file_info.time.tm_hour*100 + entry->file_info.time.tm_min);
-#endif
+	str += date.time_str(entry->file_info.time.hour*100 + entry->file_info.time.minute);
 
 	#if(defined(FRENCH))
 		font_small.put( x+318, y+34, str );

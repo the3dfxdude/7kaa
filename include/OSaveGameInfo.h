@@ -28,14 +28,11 @@
 
 #include <cstdint>
 
-#ifdef USE_WINDOWS
-#include <windows.h>
-#else
-typedef struct _FILETIME {
+struct SaveGameTime
+{
 	uint32_t dwLowDateTime;
 	uint32_t dwHighDateTime;
-} FILETIME, *PFILETIME;
-#endif
+};
 
 // The basic information ('header') of a savegame.
 #pragma pack(1)
@@ -49,7 +46,7 @@ struct SaveGameInfo
 	char     nation_color;
 
 	int           game_date;      // the game date of the saved game
-	FILETIME      file_date;      // unused
+	SaveGameTime  file_date;      // unused
 	short         terrain_set;
 };
 #pragma pack()

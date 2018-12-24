@@ -26,25 +26,23 @@
 
 #include <ODYNARR.h>
 
-#ifdef USE_WINDOWS
-#include <windows.h>
-#endif
-#ifdef USE_POSIX
-#include <time.h>
-#endif
+struct TimeInfo
+{
+   int year;
+   int month;
+   int day;
+   int hour;
+   int minute;
+};
 
 //---------- Define struct FileInfo ----------//
 
 struct FileInfo
 {
+    enum { MAX_TIME_LEN = 64 };
     char          name[FilePath::MAX_FILE_PATH];
     unsigned long size;
-#ifdef USE_WINDOWS
-    FILETIME      time;
-#endif
-#ifdef USE_POSIX
-    struct tm     time;
-#endif
+    TimeInfo      time;
 };
 
 //---------- Define class Directory ----------//

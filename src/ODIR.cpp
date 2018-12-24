@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ODATE.h>
 #include <ODIR.h>
 
 #ifdef USE_WINDOWS
@@ -33,6 +34,7 @@
 #include <ctype.h>
 #include <sys/stat.h>
 #include <glob.h>
+#include <time.h>
 #endif
 
 #include <posix_string_compat.h>
@@ -80,7 +82,16 @@ int Directory::read(const char *fileSpec, int sortName)
       misc.extract_file_name( fileInfo.name, findData.cFileName ); // get the file name only from a full path string
 
       fileInfo.size = findData.nFileSizeLow;
-      fileInfo.time = static_cast<std::uint64_t>(findData.ftLastWriteTime.dwHighDateTime) << 32 | findData.ftLastWriteTime.dwLowDateTime;
+
+      SYSTEMTIME sysTime;
+      FILETIME localFileTime;
+      FileTimeToLocalFileTime(&findData.ftLastWriteTime, &localFileTime);
+      FileTimeToSystemTime(&localFileTime, &sysTime);
+      fileInfo.time.year = sysTime.wYear;
+      fileInfo.time.month = sysTime.wMonth;
+      fileInfo.time.day = sysTime.wDay;
+      fileInfo.time.hour = sysTime.wHour;
+      fileInfo.time.minute = sysTime.wMinute;
 
       linkin( &fileInfo );
 
@@ -105,7 +116,13 @@ int Directory::read(const char *fileSpec, int sortName)
 
       misc.extract_file_name(fileInfo.name, results.gl_pathv[i]);
       fileInfo.size = file_stat.st_size;
-      fileInfo.time = *localtime(&file_stat.st_mtime);
+
+      struct tm *time = localtime(&file_stat.st_mtime);
+      fileInfo.time.year = time->tm_year+1900;
+      fileInfo.time.month = time->tm_mon+1;
+      fileInfo.time.day = time->tm_mday;
+      fileInfo.time.hour = time->tm_hour;
+      fileInfo.time.minute = time->tm_min;
 
       linkin(&fileInfo);
    }
