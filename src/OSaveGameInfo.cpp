@@ -26,17 +26,12 @@
 #include <OCONFIG.h>
 #include <OINFO.h>
 
-#ifdef USE_WINDOWS
-#include <windows.h>
-#endif
-
 
 SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 {
 	SaveGameInfo saveGameInfo;
 
-	strncpy( saveGameInfo.file_name, newFileName, MAX_PATH);
-	saveGameInfo.file_name[MAX_PATH] = '\0';
+	memset(saveGameInfo.file_name, 0, MAX_PATH+1);
 
 	Nation* playerNation = ~nation_array;
 	strncpy( saveGameInfo.player_name, playerNation->king_name(), HUMAN_NAME_LEN );
@@ -46,17 +41,11 @@ SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 	saveGameInfo.nation_color = playerNation->nation_color;
 
 	saveGameInfo.game_date    = info.game_date;
-	saveGameInfo.file_date    = 0;
-#ifdef USE_WINDOWS
+
 	//----- set the file date ------//
 
-	FILETIME sysTimeAsFileTime;
-	SYSTEMTIME sysTime;
-	GetSystemTime(&sysTime);
-	SystemTimeToFileTime(&sysTime, &sysTimeAsFileTime);
-	saveGameInfo.file_date = static_cast<std::uint64_t>(sysTimeAsFileTime.dwHighDateTime) << 32 | sysTimeAsFileTime.dwLowDateTime;
-#else // FIXME
-#endif
+	saveGameInfo.file_date.dwLowDateTime = 0;
+	saveGameInfo.file_date.dwHighDateTime = 0;
 
 	saveGameInfo.terrain_set  = config.terrain_set;
 

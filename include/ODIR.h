@@ -27,7 +27,12 @@
 #include <storage_constants.h>
 #include <ODYNARR.h>
 
-#include <cstdint>
+#ifdef USE_WINDOWS
+#include <windows.h>
+#endif
+#ifdef USE_POSIX
+#include <time.h>
+#endif
 
 //---------- Define struct FileInfo ----------//
 
@@ -35,7 +40,12 @@ struct FileInfo
 {
     char          name[MAX_PATH+1];
     unsigned long size;
-    std::uint64_t time;
+#ifdef USE_WINDOWS
+    FILETIME      time;
+#endif
+#ifdef USE_POSIX
+    struct tm     time;
+#endif
 };
 
 //---------- Define class Directory ----------//

@@ -28,6 +28,7 @@
 #include <functional>
 
 class String;
+struct SaveGame;
 struct SaveGameInfo;
 
 // Note on nomenclature:
@@ -43,7 +44,7 @@ class SaveGameProvider
 {
 public:
 	//  Enumerates all the savegames, calling callback for each savegame.
-	static void enumerate_savegames(const char* filenameWildcard, const std::function<void (const SaveGameInfo* saveGameInfo)>& callback);
+	static void enumerate_savegames(const char* filenameWildcard, const std::function<void (const SaveGame* saveGame)>& callback);
 
 	// Deletes the savegame whose file part of filename is saveGameName.
 	static void delete_savegame(const char* saveGameName);

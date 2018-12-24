@@ -22,6 +22,7 @@
 //Description : Provides the interface between the UI and the save game handling logic
 
 
+#include <OSaveGameArray.h>
 #include <OSaveGameProvider.h>
 #include <OSaveGameInfo.h>
 #include <OMISC.h>
@@ -36,7 +37,8 @@
 
 #ifdef USE_WINDOWS
 #include <io.h>
-#else
+#endif
+#ifdef USE_POSIX
 #include <unistd.h>
 #endif
 
@@ -47,7 +49,7 @@ DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 //
 // Enumerates all the savegames that match the wildcard pattern, calling callback for each savegame.
 //
-void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const std::function<void(const SaveGameInfo* saveGameInfo)>& callback)
+void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const std::function<void(const SaveGame* saveGame)>& callback)
 {
 	FilePath full_path(sys.dir_config);
 
@@ -69,12 +71,11 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 		if( save_game_path.error_flag )
 			continue;
 
-		SaveGameInfo saveGameInfo;
-		if( GameFile::read_header(save_game_path, &saveGameInfo) )
+		SaveGame saveGame;
+		if( GameFile::read_header(save_game_path, &saveGame.header) )
 		{
-			strncpy(saveGameInfo.file_name, saveGameName, MAX_PATH); // in case file names are different
-			saveGameInfo.file_date = saveGameDirectory[i]->time;
-			callback(&saveGameInfo);
+			saveGame.file_info = *saveGameDirectory[i];
+			callback(&saveGame);
 		}
 	}
 }
@@ -115,8 +116,6 @@ bool SaveGameProvider::save_game(const char* newFileName)
 //
 bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo)
 {
-	// Note: we cannot assume that newFileName and saveGameInfo->file_name are different addresses, so we must take care when copying between the two.
-
 	bool success = true;
 
 	FilePath full_path(sys.dir_config);
@@ -151,8 +150,6 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 //
 int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ saveGameInfo)
 {
-	// Note: we cannot assume that fileName and saveGameInfo->file_name are different addresses, so we must take care when copying between the two.
-
 	int rc = 1;
 	FilePath full_path(sys.dir_config);
 	full_path += fileName;
@@ -164,15 +161,6 @@ int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ save
 	if (rc > 0)
 	{
 		rc = load_game_from_file(full_path, /*out*/ saveGameInfo);
-	}
-
-	if (rc > 0)
-	{
-		// Fixup file name if stored file_name is different than actual file name
-		if (saveGameInfo->file_name != fileName /*(comparison as pointers)*/) {
-			strncpy(saveGameInfo->file_name, fileName, MAX_PATH);
-			saveGameInfo->file_name[MAX_PATH] = '\0';
-		}
 	}
 
 	return rc;

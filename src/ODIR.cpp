@@ -99,20 +99,24 @@ int Directory::read(const char *fileSpec, int sortName)
       struct stat file_stat;
       char *p;
 
-      stat(results.gl_pathv[i], &file_stat);
+      if( stat(results.gl_pathv[i], &file_stat) )
+      {
+         // can't read, skip
+         continue;
+      }
 
       p = strrchr(results.gl_pathv[i], PATH_DELIM[0]);
       if( p )
          p++;
       else
          p = results.gl_pathv[i];
-
       size_t filename_len = strlen(p);
       if( filename_len >= MAX_PATH )
          continue;
+
       memcpy(fileInfo.name, p, filename_len+1);
       fileInfo.size = file_stat.st_size;
-      fileInfo.time = 0; // FIXME
+      fileInfo.time = *localtime(&file_stat.st_mtime);
 
       linkin(&fileInfo);
    }

@@ -28,23 +28,30 @@
 
 #include <cstdint>
 
+#ifdef USE_WINDOWS
+#include <windows.h>
+#else
+typedef struct _FILETIME {
+	uint32_t dwLowDateTime;
+	uint32_t dwHighDateTime;
+} FILETIME, *PFILETIME;
+#endif
 
 // The basic information ('header') of a savegame.
 #pragma pack(1)
 struct SaveGameInfo
 {
-	char     file_name[MAX_PATH+1];
+	char     file_name[MAX_PATH+1]; // unused
 	char     player_name[HUMAN_NAME_LEN+1];
 
 	char     race_id;
 	char     nation_color;
 
 	int           game_date;      // the game date of the saved game
-	std::uint64_t file_date;      // saving game date (FILETIME)
+	FILETIME      file_date;      // unused
 	short         terrain_set;
 };
 #pragma pack()
-
 
 SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName);
 

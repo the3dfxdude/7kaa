@@ -864,7 +864,7 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 							{
 								err_when( !loadedRecno );
 								// ####### begin Gilbert 13/2 #######//
-								load_mp_game(save_game_array[loadedRecno]->file_name, lobbied, game_host);
+								load_mp_game(save_game_array[loadedRecno]->file_info.name, lobbied, game_host);
 								// ####### begin Gilbert 13/2 #######//
 							}
 							{
