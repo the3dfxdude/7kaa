@@ -191,6 +191,7 @@ public:
 	int 		set_config_dir();
 	int		chdir_to_game_dir();
 	int		set_game_dir();
+	int		set_one_dir(const char* checkFileName, const char* defaultDir, char* trueDir);
 
 	//-------- for load/save games --------//
 

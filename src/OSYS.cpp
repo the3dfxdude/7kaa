@@ -121,7 +121,6 @@ static unsigned long last_frame_time=0, last_resend_time=0;
 static char          remote_send_success_flag=1;
 static char          scenario_cheat_flag=0;
 
-
 static std::string get_bundle_resources_path(void)
 {
 #ifdef HAVE__NSGETEXECUTABLEPATH
@@ -2754,7 +2753,7 @@ int Sys::chdir_to_game_dir()
    const char *test_file;
 
    // test current directory
-   test_file = DEFAULT_DIR_IMAGE "HALLFAME.ICN";
+   test_file = "IMAGE" PATH_DELIM "HALLFAME.ICN";
    if (misc.is_file_exist(test_file))
       return 1;
 
@@ -2794,19 +2793,32 @@ int Sys::chdir_to_game_dir()
 //
 // Set all game directories. Return true on success.
 //
+#define P PATH_DELIM
 int Sys::set_game_dir()
 {
    if (!chdir_to_game_dir())
       return 0;
 
-   strcpy(dir_image, DEFAULT_DIR_IMAGE);
-   strcpy(dir_encyc, DEFAULT_DIR_ENCYC);
-   strcpy(dir_encyc2, DEFAULT_DIR_ENCYC2);
-   strcpy(dir_movie, DEFAULT_DIR_MOVIE);
-   strcpy(dir_music, DEFAULT_DIR_MUSIC);
-   strcpy(dir_tutorial, DEFAULT_DIR_TUTORIAL);
-   strcpy(dir_scenario, DEFAULT_DIR_SCENARIO);
-   strcpy(dir_scenario_path[1], DEFAULT_DIR_SCENARI2);
+   set_one_dir( "HALLFAME.ICN"         , "IMAGE" P   , dir_image );
+   set_one_dir( "SEAT" P "NORMAN.ICN"  , "ENCYC" P   , dir_encyc );
+//#ifdef AMPLUS
+   set_one_dir( "SEAT" P "EGYPTIAN.ICN", "ENCYC2" P  , dir_encyc2 );
+//#endif
+   set_one_dir( "INTRO.AVI"            , "MOVIE" P   , dir_movie );
+
+#ifdef DEMO
+   set_one_dir( "DEMO.WAV"             , "MUSIC" P   , dir_music );
+   set_one_dir( "STANDARD.TUT"         , "TUTORIAL" P, dir_tutorial );
+   set_one_dir( "DEMO.SCN"             , "SCENARIO" P, dir_scenario );
+#else
+   set_one_dir( "NORMAN.WAV"           , "MUSIC" P   , dir_music );
+   set_one_dir( "1BAS_MIL.TUT"         , "TUTORIAL" P, dir_tutorial );
+   set_one_dir( "7FOR7.SCN"            , "SCENARIO" P, dir_scenario );
+#endif
+
+#if(MAX_SCENARIO_PATH >= 2)
+   set_one_dir( "SCN_01.SCN"           , "SCENARI2" P, dir_scenario_path[1] );
+#endif
 
    //-------- set game version ---------//
 
@@ -2815,6 +2827,29 @@ int Sys::set_game_dir()
    return 1;
 }
 //----------- End of function Sys::set_game_dir ----------//
+#undef P
+
+
+//-------- Begin of function Sys::set_one_dir ----------//
+//
+int Sys::set_one_dir(const char* checkFileName, const char* defaultDir, char* trueDir)
+{
+   FilePath full_path(defaultDir);
+   full_path += checkFileName;
+
+   if( !full_path.error_flag && misc.is_file_exist(full_path) )
+   {
+      strcpy(trueDir, defaultDir);
+   }
+   else
+   {
+      trueDir[0] = 0;
+      return 0;
+   }
+
+   return 1;
+}
+//----------- End of function Sys::set_one_dir ----------//
 
 
 //-------- Start of function locate_king_general -------------//

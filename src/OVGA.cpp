@@ -166,7 +166,9 @@ int Vga::init()
       return 0;
    }
 
-   icon = SDL_LoadBMP(DEFAULT_DIR_IMAGE "7K_ICON.BMP");
+   FilePath icon_path(sys.dir_image);
+   icon_path += "7K_ICON.BMP";
+   icon = SDL_LoadBMP(icon_path);
    if (icon)
    {
       Uint32 colorkey;
