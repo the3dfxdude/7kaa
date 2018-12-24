@@ -41,7 +41,8 @@ typedef struct _FILETIME {
 #pragma pack(1)
 struct SaveGameInfo
 {
-	char     file_name[MAX_PATH+1]; // unused
+	enum { MAX_FILE_PATH = 260 };
+	char     file_name[MAX_FILE_PATH+1]; // unused
 	char     player_name[HUMAN_NAME_LEN+1];
 
 	char     race_id;

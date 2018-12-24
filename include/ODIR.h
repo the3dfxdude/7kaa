@@ -24,7 +24,6 @@
 #ifndef __ODIR_H
 #define __ODIR_H
 
-#include <storage_constants.h>
 #include <ODYNARR.h>
 
 #ifdef USE_WINDOWS
@@ -38,7 +37,7 @@
 
 struct FileInfo
 {
-    char          name[MAX_PATH+1];
+    char          name[FilePath::MAX_FILE_PATH];
     unsigned long size;
 #ifdef USE_WINDOWS
     FILETIME      time;

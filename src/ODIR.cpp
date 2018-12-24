@@ -35,7 +35,6 @@
 #include <glob.h>
 #endif
 
-#include <storage_constants.h>
 #include <posix_string_compat.h>
 
 #include <dbglog.h>
@@ -111,7 +110,7 @@ int Directory::read(const char *fileSpec, int sortName)
       else
          p = results.gl_pathv[i];
       size_t filename_len = strlen(p);
-      if( filename_len >= MAX_PATH )
+      if( filename_len >= FilePath::MAX_FILE_PATH )
          continue;
 
       memcpy(fileInfo.name, p, filename_len+1);

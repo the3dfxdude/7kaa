@@ -65,7 +65,7 @@ private:
 
 private:
 	bool     has_fetched_last_file_name_from_hall_of_fame;
-	char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
+	char     last_file_name[SaveGameInfo::MAX_FILE_PATH+1]; // (persisted via HallOfFame)
 };
 
 extern SaveGameArray save_game_array;

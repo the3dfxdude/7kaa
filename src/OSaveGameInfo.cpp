@@ -31,7 +31,7 @@ SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 {
 	SaveGameInfo saveGameInfo;
 
-	memset(saveGameInfo.file_name, 0, MAX_PATH+1);
+	memset(saveGameInfo.file_name, 0, SaveGameInfo::MAX_FILE_PATH+1);
 
 	Nation* playerNation = ~nation_array;
 	strncpy( saveGameInfo.player_name, playerNation->king_name(), HUMAN_NAME_LEN );

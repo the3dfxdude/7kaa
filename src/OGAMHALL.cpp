@@ -65,8 +65,8 @@ void HallOfFame::deinit()
 
 
 void HallOfFame::set_last_savegame_file_name(const char* fileName) {
-	strncpy(last_savegame_file_name, fileName, MAX_PATH);
-	last_savegame_file_name[MAX_PATH] = '\0';
+	strncpy(last_savegame_file_name, fileName, SaveGameInfo::MAX_FILE_PATH);
+	last_savegame_file_name[SaveGameInfo::MAX_FILE_PATH] = '\0';
 }
 
 
@@ -98,7 +98,7 @@ int HallOfFame::read_hall_of_fame()
 	//------ read last saved game file name ------//
 
 	if( rc )
-		rc = file.file_read( last_savegame_file_name, MAX_PATH+1 );
+		rc = file.file_read( last_savegame_file_name, SaveGameInfo::MAX_FILE_PATH+1 );
 
 	file.file_close();
 
@@ -132,7 +132,7 @@ int HallOfFame::write_hall_of_fame()
 	//------ write last saved game file name ------//
 
 	if( rc )
-		rc = file.file_write( last_savegame_file_name, MAX_PATH+1 );
+		rc = file.file_write( last_savegame_file_name, SaveGameInfo::MAX_FILE_PATH+1 );
 
 	file.file_close();
 

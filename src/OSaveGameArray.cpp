@@ -114,8 +114,8 @@ void SaveGameArray::init(const char *extStr)
 {
 	if( !has_fetched_last_file_name_from_hall_of_fame )		// only read once, SaveGameArray::init() is called every time the load/save game menu is brought up.
 	{
-		strncpy(last_file_name, hall_of_fame.get_last_savegame_file_name(), MAX_PATH);
-		last_file_name[MAX_PATH] = '\0';
+		strncpy(last_file_name, hall_of_fame.get_last_savegame_file_name(), SaveGameInfo::MAX_FILE_PATH);
+		last_file_name[SaveGameInfo::MAX_FILE_PATH] = '\0';
 		has_fetched_last_file_name_from_hall_of_fame = true;
 	}
 
@@ -736,10 +736,16 @@ int SaveGameArray::save_new_game(const char* newFileName)
 {
 	int addFlag=1;
 	int gameFileRecno;
-	char fileName[MAX_PATH+1];
+	char fileName[FilePath::MAX_FILE_PATH];
 
 	if( newFileName )
 	{
+		if( strlen(newFileName) >= FilePath::MAX_FILE_PATH )
+		{
+			box.msg(_("Cannot save the game because the path is too long"));
+			return 0;
+		}
+
 		//----- check for overwriting an existing file ----//
 
 		for( gameFileRecno=1 ; gameFileRecno<=this->size() ; gameFileRecno++ )

@@ -28,8 +28,6 @@
 #include <OREMOTEQ.h>
 #include <ReplayFile.h>
 
-#include <storage_constants.h>
-
 //---------- Define message id. ---------//
 
 enum { FIRST_REMOTE_MSG_ID = 0x25D3 };
@@ -380,7 +378,7 @@ public:
 	//-------------------------------//
 	short				nation_processing;		// used in process_receive_queue
 
-	char				save_file_name[MAX_PATH+1];
+	char				save_file_name[FilePath::MAX_FILE_PATH];
 
 	char				*common_msg_buf;
 	// ###### patch begin Gilbert 22/1 #######//

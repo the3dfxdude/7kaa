@@ -1212,11 +1212,14 @@ int misc_mkdir(char *path)
 // necessary.
 int Misc::mkpath(char *abs_path)
 {
-   char path_copy[MAX_PATH+1];
+   char path_copy[FilePath::MAX_FILE_PATH];
    int count;
 
+   if( strlen(path_copy) >= FilePath::MAX_FILE_PATH )
+      return 0;
+
    count = 0;
-   while (count < MAX_PATH) {
+   while (count < FilePath::MAX_FILE_PATH) {
      if (!abs_path[count]) {
         if (count > 0) {
           path_copy[count] = 0;
@@ -1268,14 +1271,22 @@ void Misc::change_file_ext(char* desFileName, const char* srcFileName, const cha
 void Misc::extract_file_name(char* desFileName, const char* srcFileName)
 {
 	int i;
-	for( i=strlen(srcFileName) ; i>=0 ; i-- )
+
+	for( i=strlen(srcFileName); i>=0 ; i-- )
 	{
 		if( srcFileName[i]=='\\' )			// get last '\' before the file name
 			break;
 	}
 
-	strncpy(desFileName, srcFileName+i+1, MAX_PATH);
-	desFileName[MAX_PATH]='\0';
+	const char *p = srcFileName+i+1;
+	size_t fileNameLen = strlen(p);
+	if( fileNameLen >= FilePath::MAX_FILE_PATH )
+	{
+		desFileName[0] = 0;
+		return;
+	}
+
+	strncpy(desFileName, p, FilePath::MAX_FILE_PATH);
 }
 //---------- End of function Misc::extract_file_name ---------//
 

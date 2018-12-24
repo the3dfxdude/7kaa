@@ -49,7 +49,7 @@ DBGLOG_DEFAULT_CHANNEL(File);
 //
 int File::file_open(const char* fileName, int handleError, int fileType)
 {
-	if(strlen(fileName) > MAX_PATH)
+	if(strlen(fileName) >= FilePath::MAX_FILE_PATH)
 	{
 		if (handleError)
 			err.run("File : file name is too long.");
@@ -93,7 +93,7 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 //
 int File::file_create(const char* fileName, int handleError, int fileType)
 {
-	if(strlen(fileName) > MAX_PATH)
+	if(strlen(fileName) >= FilePath::MAX_FILE_PATH)
 	{
 		if (handleError)
 			err.run("File : file name is too long.");

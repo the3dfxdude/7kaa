@@ -102,7 +102,6 @@ noinst_HEADERS = \
 	OREMOTEQ.h \
 	ORES.h \
 	ORESDB.h \
-	ORESTXT.h \
 	ORESX.h \
 	OROCK.h \
 	OROCKRES.h \
