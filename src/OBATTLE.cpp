@@ -186,6 +186,15 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	if( sys.testing_session )
 		config.show_unit_path = 3;
 
+	if( game.game_mode == GAME_DEMO )
+	{
+		// observation mode
+		world.unveil(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1);
+		world.visit(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1, 0, 0);
+
+		config.blacken_map = 0;
+	}
+
 	// ######## begin Gilbert 11/11 #######//
 	// enable tech and god, useful for multi-player
 #if(0)
