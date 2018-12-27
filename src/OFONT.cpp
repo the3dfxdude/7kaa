@@ -603,6 +603,9 @@ int Font::text_height(int lineSpace)
 //                      this would be 0.
 //                      ( default : 1 )
 //
+// [char justify]     = how to justify the lines
+//                      ( default : 0, auto justify )
+//
 //-------------------------------------------------------//
 //
 // It will store resulting paramteres :
@@ -610,7 +613,7 @@ int Font::text_height(int lineSpace)
 // <char*> next_text_ptr = point to the textPtr just after this paragraph
 //                         which has been put to the screen.
 //
-// <int>   next_textPtr_y   = the endding y position of the paragraph and which
+// <int>   next_text_y   = the endding y position of the paragraph and which
 //                         is the y position which next paragraph can be put
 //
 // <int>   line_count    = the no. of lines has been displayed in current
@@ -621,7 +624,7 @@ int Font::text_height(int lineSpace)
 //-------------------------------------------------------//
 
 void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
-								 int lineSpace, int startLine, char dispFlag)
+								 int lineSpace, int startLine, char dispFlag, char justify)
 {
 	if( !init_flag || y1+font_height-1 > y2 )
 		return;
@@ -634,15 +637,17 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 
 	int   x,y,wordX;
 	int   newWord;
+	int   newLine;
+	int   charWidth;
 	short textChar;
 	const char *wordPtr;
+	const char *linePtr;
 
-   char  flag_under_line=0;     // attribute control flags
-   char  flag_hyper_field=0;
+	char  flag_under_line=0;     // attribute control flags
+	char  flag_hyper_field=0;
+	char  eot_flag=0;
 
-   int   under_line_x1;         // parameters for drawing under line
-
-   HyperField* hyper_field_ptr = hyper_field_array;
+	HyperField* hyper_field_ptr = hyper_field_array;
 	FontInfo*   fontInfo;
 
 	//--------- initialize vars ---------------//
@@ -651,212 +656,170 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 	y       = y1;
 	wordX   = x1;          // the x of the start of the word
 	wordPtr = textPtr;
+	linePtr = textPtr;
 	newWord = 0;
+	newLine = 0;
+	charWidth = 0;
 
-   line_count=0;
+	line_count=0;
 
 	hyper_field_count = 0;
 
-   //---------- prepare for display font ----------//
+	if( justify == AUTO_JUSTIFY )
+		justify == LEFT_JUSTIFY;
+
+	//---------- prepare for display font ----------//
 
 	if( dispFlag )
-   {
-      err_when( x1>x2 || y1>y2 || x1<0 || y1<0 || x2>=VGA_WIDTH || y2>=VGA_HEIGHT );
+	{
+		err_when( x1>x2 || y1>y2 || x1<0 || y1<0 || x2>=VGA_WIDTH || y2>=VGA_HEIGHT );
 
-      if( !Vga::use_back_buf )     // if not say word by word, turn off mouse one time, otherwise turn off mouse one word at a time
+		if( !Vga::use_back_buf )     // if not say word by word, turn off mouse one time, otherwise turn off mouse one word at a time
 			mouse.hide_area( x1,y1,x2,y2 );  // if the mouse cursor is in that area, hide it
 	}
 
 	//--------- loop for displaying textPtr ----------//
 
-	while(1)
+	while( !eot_flag )
 	{
-		//------ space appear, process the previous word ------//
-
-		if ( newWord )
-		{
-			if( x-1 > x2 )  // it is still okay if x-1==x2 because x is the next pixel, not the last displayed pixel
-			{
-				if( line_count >= startLine-1 )    // startLine start from 1
-				{
-					y += font_height + lineSpace;
-					if ( y + font_height - 1 > y2 )     // no further space for printing textPtr, end
-						break;
-				}
-
-				x = x1;
-				line_count++;
-			}
-			else
-			{
-				x = wordX;
-			}
-
-			//--------- Process current word ----------//
-
-			for( ; wordPtr < textPtr && *wordPtr ; wordPtr++, x+=inter_char_space )  // wordPtr point to the current word which will be printed
-			{
-				textChar = *((unsigned char*)wordPtr); // textChar is <unsiged char>
-
+		textChar = *((unsigned char*)textPtr); // textChar is <unsiged char>
 //#ifdef GERMAN
-//				textChar = translate_german_char(textChar);
+//		textChar = translate_german_char(textChar);
 //#endif
 
-				//---------- control char: '_' -------------//
+		if( textChar ) // don't go past end
+			textPtr++;
 
-				if( textChar == '_' )       // e.g. _Title_, a line will be drawn under the word "Title"
-				{
-					if( flag_under_line )    // current '_' is the closing one, the open '_' has appeared previously
-					{
-						if( dispFlag && line_count >= startLine-1 )    // startLine start from 1
-							IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
-								under_line_x1, y+font_height, x, y+font_height, HYPER_FIELD_COLOR );
-					}
-					else
-						under_line_x1 = x;
+		//---------- control char: '_' -------------//
 
-					flag_under_line = !flag_under_line;
-					continue;
-				}
+		if( textChar == '_' )       // e.g. _Title_, a line will be drawn under the word "Title"
+		{
+			// tracked in put_paragraph_line
+			continue;
+		}
 
-				//-------- control char: '~' -----------//
+		//-------- control char: '~' -----------//
 
-				else if( textChar == '~' )       // e.g. ~Captial~, the word "Capital" is a hyper-textPtred field, pressing on it will link to the topic "Capital"
-				{
-					if( !flag_hyper_field )   // current '~' is the opening one
-					{
-						hyper_field_ptr->x1       = x;
-						hyper_field_ptr->y1       = y;
-						hyper_field_ptr->text_ptr = (wordPtr+1);  // skip current '~'
-					}
-					else                      // current '~' is the closing one
-					{
-						hyper_field_ptr->x2       = x;
-						hyper_field_ptr->y2       = y+font_height;
-						hyper_field_ptr->text_len = wordPtr - hyper_field_ptr->text_ptr;
-
-						hyper_field_count++;
-						hyper_field_ptr++;
-						err_when( hyper_field_count >= MAX_HYPER_FIELD );
-					}
-
-					flag_hyper_field = !flag_hyper_field;
-					continue;
-				}
-
-				//-------- control char: FIRST_NATION_COLOR_CODE_IN_TEXT -----------//
-
-				else if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT ) 	// display nation color bar in text
-				{
-					if( x2 >= 0 && x+NATION_COLOR_BAR_WIDTH-1 > x2 )      // exceed right border x2
-						break;
-
-					char colorCode = game.color_remap_array[textChar-FIRST_NATION_COLOR_CODE_IN_TEXT].main_color;
-
-					nation_array.disp_nation_color(x, y+2, colorCode);
-
-					x += NATION_COLOR_BAR_WIDTH;
-				}
-
-				//--------------- space character ------------------//
-
-				else if( textChar == ' ' )
-				{
-					if( x+space_width > x2 )
-						break;
-
-					x += space_width;
-				}
-
-				//----------- display char ------------//
-
-				else if( textChar >= first_char && textChar <= last_char )
-				{
-					fontInfo = font_info_array+textChar-first_char;
-
-					// character width = offset of next character - current offset
-
-					if( x2 >= 0 && x+fontInfo->width-1 > x2 )      // exceed right border x2
-						break;
-
-					if( fontInfo->width > 0 )
-					{
-						if( dispFlag && line_count >= startLine-1 )    // startLine start from 1
-						{
-//							if( flag_hyper_field )
-//								mainColor = HYPER_FIELD_COLOR;
-
-							IMGbltTrans( Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
-								x,	y+fontInfo->offset_y, font_bitmap_buf + fontInfo->bitmap_offset );
-						}
-
-						x += fontInfo->width;
-					}
-				}
-			}
-
-			//--------- next line ----------------------//
-
-			if( *textPtr == '\n' )   // next line
+		else if( textChar == '~' )       // e.g. ~Capital~, the word "Capital" is a hyper-textPtred field, pressing on it will link to the topic "Capital"
+		{
+			if( !flag_hyper_field )   // current '~' is the opening one
 			{
-				if( line_count >= startLine-1 )    // startLine start from 1
-				{
-					y += font_height + lineSpace;
-					if ( y + font_height - 1 > y2 )     // no further space for printing textPtr, end
-						break;
-				}
+				hyper_field_ptr->x1       = x;
+				hyper_field_ptr->y1       = y;
+				hyper_field_ptr->text_ptr = (textPtr+1);  // skip current '~'
+			}
+			else                      // current '~' is the closing one
+			{
+				hyper_field_ptr->x2       = x;
+				hyper_field_ptr->y2       = y+font_height;
+				hyper_field_ptr->text_len = textPtr - hyper_field_ptr->text_ptr;
 
-				x = x1;
-				textPtr++;
-				line_count++;
+				hyper_field_count++;
+				hyper_field_ptr++;
+				err_when( hyper_field_count >= MAX_HYPER_FIELD );
 			}
 
-			if( *textPtr == '\0' )     // all paragraph has been printed
-				break;
+			flag_hyper_field = !flag_hyper_field;
+			continue;
+		}
 
+		//-------- control char: FIRST_NATION_COLOR_CODE_IN_TEXT -----------//
+
+		else if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT ) 	// display nation color bar in text
+		{
+			if( x2 >= 0 && x+NATION_COLOR_BAR_WIDTH-1 > x2 )      // exceed right border x2
+				newLine = 1;
+			charWidth = NATION_COLOR_BAR_WIDTH;
+		}
+
+		//--------------- space character ------------------//
+
+		else if( textChar == ' ' )
+		{
+			if( x+space_width > x2 )
+				newLine = 1;
+			else
+				charWidth = space_width;
+			newWord = 1;
+		}
+
+		//--------------- new line character ------------------//
+
+		else if( textChar == '\n' )
+		{
+			newLine = 1;
+			newWord = 1;
+		}
+
+		//--------------- end of text character ------------------//
+
+		else if( textChar == '\0' )
+		{
+			newLine = 1;
+			newWord = 1;
+			eot_flag = 1;
+		}
+
+		//----------- display char ------------//
+
+		else if( textChar >= first_char && textChar <= last_char )
+		{
+			fontInfo = font_info_array+textChar-first_char;
+
+			// character width = offset of next character - current offset
+
+			if( x2 >= 0 && x+fontInfo->width-1 > x2 )      // exceed right border x2
+				newLine = 1;
+			if( fontInfo->width )
+				charWidth = fontInfo->width;
+			else
+				charWidth = space_width; // hold place for char with missing glyph
+		}
+
+		if( charWidth )
+		{
+			x += charWidth + inter_char_space;
+			wordX += charWidth + inter_char_space;
+			charWidth = 0;
+		}
+
+		if( newWord )
+		{
 			wordPtr = textPtr;
-			wordX   = x;
+			wordX = 0;
 			newWord = 0;
 		}
 
-		//------------ process spacing -------------//
-
-		if( *textPtr == ' ' || *textPtr == '\n' || *textPtr == '\0' )    // not space
-			newWord = 1;
-		else
+		if( newLine )
 		{
-			textChar = *((unsigned char*)textPtr); // textChar is <unsiged char>
-
-//#ifdef GERMAN
-//			textChar = translate_german_char(textChar);
-//#endif
-
-			if( textChar >= first_char && textChar <= last_char )
+			if( line_count >= startLine-1 )    // startLine start from 1
 			{
-				fontInfo = font_info_array+textChar-first_char;
+				// align line width to exact boundary
+				x -= wordX;
+				x -= inter_char_space+1;
 
-				if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT ) 	// display nation color bar in text
-					x += NATION_COLOR_BAR_WIDTH;
+				if( dispFlag && x > 0 )
+				{
+					int x_line = x1;
 
-				else if( textChar == ' ' )
-					x+=space_width;
+					if( justify == RIGHT_JUSTIFY )
+						x_line -= x2+x;
+					else if( justify == CENTER_JUSTIFY )
+						x_line -= (x2+x)/2;
 
-				else if( fontInfo->width > 0 )   // current font width
-					x+=fontInfo->width;
+					put_paragraph_line(x_line, y, linePtr, wordPtr, &flag_under_line);
+				}
 
-				else
-					x+=space_width;
-			}
-			else
-			{
-				x+=space_width;
+				y += font_height + lineSpace;
+				if( y + font_height - 1 > y2 )     // no further space for printing textPtr, end
+					eot_flag = 1;
 			}
 
-			x+=inter_char_space;
+			x = x1+wordX; // start with the portion of the next word
+			linePtr = wordPtr;
+			line_count++;
+			newLine = 0;
 		}
-
-		if( *textPtr && *textPtr != '\n' )    // when finished, remain as NULL for next cycle to detect
-			textPtr++;
 	}
 
 	//------------ finish displaying ----------------//
@@ -867,12 +830,8 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 			mouse.show_area();
 	}
 
-//   while( *textPtr == '\n' || *textPtr == '\r' )
-//      textPtr++;
-
-	next_text_ptr = textPtr;    // the current pointer in the textPtr
+	next_text_ptr = wordPtr;    // point to any remaining text
 	next_text_y   = y + font_height + lineSpace;
-	line_count++;
 }
 //---------- End of function Font::put_paragraph ------//
 
@@ -1395,3 +1354,116 @@ void Font::center_put_to_buffer(char* dest, int destPitch, int x1, int y1, int x
    put_to_buffer( dest, destPitch, tx, ty, desStr);
 }
 //--------- End of function Font::center_put_to_buffer ---------//
+
+
+//--------- Begin of function Font::put_paragraph_line ---------//
+//
+// Line Render function for put_paragraph
+//
+void Font::put_paragraph_line(int x, int y, const char *textPtr, const char *textPtrEnd, char *flag_under_line)
+{
+	FontInfo* fontInfo;
+	int       under_line_x1 = x;
+
+	while( textPtr < textPtrEnd )
+	{
+		short textChar = *((unsigned char*)textPtr); // textChar is <unsiged char>
+//#ifdef GERMAN
+//		textChar = translate_german_char(textChar);
+//#endif
+
+		textPtr++;
+
+		//---------- control char: '_' -------------//
+
+		if( textChar == '_' )       // e.g. _Title_, a line will be drawn under the word "Title"
+		{
+			if( *flag_under_line )    // current '_' is the closing one, the open '_' has appeared previously
+			{
+				IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+					under_line_x1, y+font_height, x, y+font_height, HYPER_FIELD_COLOR);
+			}
+			else
+				under_line_x1 = x;
+
+			*flag_under_line = !(*flag_under_line);
+			continue;
+		}
+
+		//-------- control char: '~' -----------//
+
+		else if( textChar == '~' )       // e.g. ~Captial~, the word "Capital" is a hyper-textPtred field, pressing on it will link to the topic "Capital"
+		{
+			// tracked in put_paragraph
+			continue;
+		}
+
+		//-------- control char: FIRST_NATION_COLOR_CODE_IN_TEXT -----------//
+
+		else if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT ) 	// display nation color bar in text
+		{
+			char colorCode = game.color_remap_array[textChar-FIRST_NATION_COLOR_CODE_IN_TEXT].main_color;
+
+			nation_array.disp_nation_color(x, y+2, colorCode);
+
+			x += NATION_COLOR_BAR_WIDTH;
+		}
+
+		//--------------- space character ------------------//
+
+		else if( textChar == ' ' )
+		{
+			x += space_width;
+		}
+
+		//----------- display char ------------//
+
+		else if( textChar >= first_char && textChar <= last_char )
+		{
+			fontInfo = font_info_array+textChar-first_char;
+
+			// character width = offset of next character - current offset
+
+			if( fontInfo->width > 0 )
+			{
+//				if( flag_hyper_field )
+//					mainColor = HYPER_FIELD_COLOR;
+
+				IMGbltTrans( Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+					x,	y+fontInfo->offset_y, font_bitmap_buf + fontInfo->bitmap_offset );
+
+				x += fontInfo->width;
+			}
+			else
+			{
+				// hold space for missing glyph
+				x += space_width;
+			}
+		}
+		x += inter_char_space;
+	}
+
+	if( *flag_under_line )    // under line not terminated yet, but need to draw under line for the end of this line
+	{
+		IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+			under_line_x1, y+font_height, x, y+font_height, HYPER_FIELD_COLOR);
+	}
+}
+//--------- End of function Font::put_paragraph_line ---------//
+
+// Wrappers to Font::put_paragraph
+void Font::center_put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
+								 int lineSpace, int startLine, char dispFlag)
+{
+	put_paragraph(x1,y1,x2,y2,textPtr,startLine,dispFlag,CENTER_JUSTIFY);
+}
+void Font::left_put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
+								 int lineSpace, int startLine, char dispFlag)
+{
+	put_paragraph(x1,y1,x2,y2,textPtr,startLine,dispFlag,LEFT_JUSTIFY);
+}
+void Font::right_put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
+								 int lineSpace, int startLine, char dispFlag)
+{
+	put_paragraph(x1,y1,x2,y2,textPtr,startLine,dispFlag,RIGHT_JUSTIFY);
+}

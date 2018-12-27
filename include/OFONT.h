@@ -75,6 +75,12 @@ struct FontInfo;
 class Font
 {
 public:
+	enum { AUTO_JUSTIFY=0,
+		LEFT_JUSTIFY=1,
+		RIGHT_JUSTIFY=2,
+		CENTER_JUSTIFY=3
+	};
+
 	char	  init_flag;
 
 	const char*   next_text_ptr;      // these 3 vars are used for storing
@@ -132,7 +138,10 @@ public:
 	void d3_put(int,int,int,int,const char*);
 	int  center_put(int,int,int,int,const char*,char clearBack=0);
 
-	void put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
+	void put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1,char=AUTO_JUSTIFY);
+	void center_put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
+	void left_put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
+	void right_put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
 
 	void count_line(int x1, int y1, int x2, int y2, const char *text,
 						 int lineSpace, int& totalLines, int& dispLines);
@@ -191,6 +200,9 @@ public:
 	void update_field(int,int,const char*,int);
 	void field(int,int,const char*,int,const char*,int,int,const char* helpCode=NULL);
 	int  disp(int,int,const char*,int);
+
+private:
+	void put_paragraph_line(int x1, int y1, const char *textPtr, const char *textPtrEnd, char *flag_under_line);
 };
 
 extern Font font_san, font_std, font_small, font_mid, font_news;

@@ -28,9 +28,6 @@
 
 //--------- Define macro ant ------------//
 
-#define LEFT_JUSTIFY    0
-#define CENTER_JUSTIFY  1
-#define RIGHT_JUSTIFY   2
 #define NOCLIP          0
 #define CLIP            1
 
