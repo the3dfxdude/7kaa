@@ -769,7 +769,15 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 			// character width = offset of next character - current offset
 
 			if( x2 >= 0 && x+fontInfo->width-1 > x2 )      // exceed right border x2
+			{
 				newLine = 1;
+				if( wordPtr == linePtr )
+				{
+					// hard break in the middle of this single word since it cannot fit in a single line
+					wordPtr = textPtr-1;
+					wordX = 0;
+				}
+			}
 			if( fontInfo->width )
 				charWidth = fontInfo->width;
 			else
