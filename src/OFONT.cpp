@@ -654,7 +654,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 
 	x       = x1;
 	y       = y1;
-	wordX   = x1;          // the x of the start of the word
+	wordX   = 0;          // the width of the current word
 	wordPtr = textPtr;
 	linePtr = textPtr;
 	newWord = 0;
@@ -738,8 +738,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 		{
 			if( x+space_width > x2 )
 				newLine = 1;
-			else
-				charWidth = space_width;
+			charWidth = space_width;
 			newWord = 1;
 		}
 
@@ -805,6 +804,13 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 				// align line width to exact boundary
 				x -= wordX;
 				x -= inter_char_space+1;
+				// trim white space from the right
+				const char *trim = wordPtr-1;
+				while( trim > linePtr && *trim == ' ')
+				{
+					x -= space_width+inter_char_space;
+					trim--;
+				}
 
 				if( dispFlag && x > 0 )
 				{
@@ -815,7 +821,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 					else if( justify == CENTER_JUSTIFY )
 						x_line += (x2-x)/2;
 
-					put_paragraph_line(x_line, y, linePtr, wordPtr, &flag_under_line);
+					put_paragraph_line(x_line, y, linePtr, trim+1, &flag_under_line);
 				}
 
 				y += font_height + lineSpace;
@@ -829,6 +835,19 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 			newLine = 0;
 		}
 	}
+
+#ifdef DEBUG_PARA_BOX
+	IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+		(x2+x1)/2, 0, (x2+x1)/2, VGA_HEIGHT-1, V_YELLOW);
+	IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+		x1, 0, x1, VGA_HEIGHT-1, V_RED);
+	IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+		x2, 0, x2, VGA_HEIGHT-1, V_RED);
+	IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+		x1, y1, x2, y1, V_RED);
+	IMGbar(Vga::active_buf->buf_ptr(), Vga::active_buf->buf_pitch(),
+		x1, y2, x2, y2, V_RED);
+#endif
 
 	//------------ finish displaying ----------------//
 
