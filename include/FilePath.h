@@ -52,6 +52,7 @@ struct FilePath
 	FilePath& operator=(const char *s)
 	{
 		strcpy(str_buf, s);
+		return *this;
 	}
 
 	FilePath& operator+=(const char *s)
