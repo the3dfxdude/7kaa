@@ -604,7 +604,7 @@ int Font::text_height(int lineSpace)
 //                      ( default : 1 )
 //
 // [char justify]     = how to justify the lines
-//                      ( default : 0, auto justify )
+//                      ( default : Font::AUTO_JUSTIFY )
 //
 //-------------------------------------------------------//
 //
@@ -666,7 +666,7 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 	hyper_field_count = 0;
 
 	if( justify == AUTO_JUSTIFY )
-		justify == LEFT_JUSTIFY;
+		justify = LEFT_JUSTIFY; // FIXME: Should be based on locale
 
 	//---------- prepare for display font ----------//
 
@@ -803,9 +803,9 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 					int x_line = x1;
 
 					if( justify == RIGHT_JUSTIFY )
-						x_line -= x2+x;
+						x_line += x2-x;
 					else if( justify == CENTER_JUSTIFY )
-						x_line -= (x2+x)/2;
+						x_line += (x2-x)/2;
 
 					put_paragraph_line(x_line, y, linePtr, wordPtr, &flag_under_line);
 				}
@@ -1450,20 +1450,3 @@ void Font::put_paragraph_line(int x, int y, const char *textPtr, const char *tex
 	}
 }
 //--------- End of function Font::put_paragraph_line ---------//
-
-// Wrappers to Font::put_paragraph
-void Font::center_put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
-								 int lineSpace, int startLine, char dispFlag)
-{
-	put_paragraph(x1,y1,x2,y2,textPtr,startLine,dispFlag,CENTER_JUSTIFY);
-}
-void Font::left_put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
-								 int lineSpace, int startLine, char dispFlag)
-{
-	put_paragraph(x1,y1,x2,y2,textPtr,startLine,dispFlag,LEFT_JUSTIFY);
-}
-void Font::right_put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
-								 int lineSpace, int startLine, char dispFlag)
-{
-	put_paragraph(x1,y1,x2,y2,textPtr,startLine,dispFlag,RIGHT_JUSTIFY);
-}

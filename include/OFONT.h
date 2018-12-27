@@ -75,10 +75,10 @@ struct FontInfo;
 class Font
 {
 public:
-	enum { AUTO_JUSTIFY=0,
-		LEFT_JUSTIFY=1,
-		RIGHT_JUSTIFY=2,
-		CENTER_JUSTIFY=3
+	enum { LEFT_JUSTIFY=0,
+		CENTER_JUSTIFY,
+		RIGHT_JUSTIFY,
+		AUTO_JUSTIFY
 	};
 
 	char	  init_flag;
@@ -139,9 +139,6 @@ public:
 	int  center_put(int,int,int,int,const char*,char clearBack=0);
 
 	void put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1,char=AUTO_JUSTIFY);
-	void center_put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
-	void left_put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
-	void right_put_paragraph(int,int,int,int,const char*,int=DEFAULT_LINE_SPACE,int=1,char=1);
 
 	void count_line(int x1, int y1, int x2, int y2, const char *text,
 						 int lineSpace, int& totalLines, int& dispLines);
