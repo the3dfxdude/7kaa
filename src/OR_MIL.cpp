@@ -62,6 +62,11 @@ static int  troop_filter(int recNo=0);
 static int  unit_filter(int recNo=0);
 static void	disp_troop_total();
 static void disp_unit_total();
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr);
+
+#define J_L Font::LEFT_JUSTIFY
+#define J_C Font::CENTER_JUSTIFY
+#define J_R Font::RIGHT_JUSTIFY
 
 //--------- Begin of function Info::disp_military ---------//
 //
@@ -91,15 +96,12 @@ void Info::disp_military(int refreshFlag)
 		font_san.put( x+415, y+13, "Soldiers" );
 		font_san.put( x+485, y+7 , "Status" );
 	#else
-		font_san.put( x	 , y+7 , _("Commander") );
-		font_san.put( x+200, y+7 , _("Leadership") );
-		font_san.put( x+285, y+7 , _("Loyalty") );
-		font_san.put( x+342, y+7 , _("Hit Points") );
-		// TRANSLATORS: Part of "Commanded Soldiers"
-		font_san.put( x+406, y   , _("Commanded") );
-		// TRANSLATORS: Part of "Commanded Soldiers"
-		font_san.put( x+423, y+13, _("Soldiers") );
-		font_san.put( x+490, y+7 , _("Status") );
+		put_heading( J_L, x    , y, x+200, y+29, _("Commander") );
+		put_heading( J_C, x+200, y, x+285, y+29, _("Leadership") );
+		put_heading( J_L, x+285, y, x+342, y+29, _("Loyalty") );
+		put_heading( J_C, x+342, y, x+406, y+29, _("Hit Points") );
+		put_heading( J_C, x+406, y, x+490, y+29, _("Commanded Soldiers") );
+		put_heading( J_R, x+490, y, TROOP_BROWSE_X2-20, y+29, _("Status") );
 	#endif
 
 	if( refreshFlag == INFO_REPAINT )
@@ -486,3 +488,16 @@ static void put_unit_rec(int recNo, int x, int y, int refreshFlag)
 //----------- End of static function put_unit_rec -----------//
 
 
+//-------- Begin of static function put_heading --------//
+//
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr)
+{
+	int dispLines=0;
+	int totalLines=0;
+	font_san.count_line(x1,y1,x2,y2,textPtr,0,dispLines,totalLines);
+	if( dispLines > 1 )
+		font_san.put_paragraph(x1,y1,x2,y2,textPtr,0,1,1,justify);
+	else if( y1+7<y2 )
+		font_san.put_paragraph(x1,y1+7,x2,y2,textPtr,0,1,1,justify);
+}
+//----------- End of static function put_heading -----------//

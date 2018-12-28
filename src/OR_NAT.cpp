@@ -110,6 +110,12 @@ static void disp_talk_msg_sent(int refreshFlag);
 
 static int  sort_talk_msg( const void *a, const void *b );
 
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr);
+
+#define J_L Font::LEFT_JUSTIFY
+#define J_C Font::CENTER_JUSTIFY
+#define J_R Font::RIGHT_JUSTIFY
+
 
 //--------- Begin of function Info::disp_nation ---------//
 //
@@ -126,10 +132,10 @@ void Info::disp_nation(int refreshFlag)
 
 	vga_back.d3_panel_up(REPORT_BROWSE_X1, REPORT_BROWSE_Y1, REPORT_BROWSE_X2, REPORT_BROWSE_Y1+33 );
 
-	font_san.put( x	 , y+7, _("Kingdom") );
+	put_heading( J_L, x    , y, x+185, y+29, _("Kingdom") );
 
-	font_san.put( x+185, y+7, _("Reputation") );
-	font_san.put( x+275, y+7, _("Status") );
+	put_heading( J_C, x+185, y, x+275, y+29, _("Reputation") );
+	put_heading( J_L, x+275, y, x+345, y+29, _("Status") );
 
 
 #if(defined(SPANISH))
@@ -160,20 +166,11 @@ void Info::disp_nation(int refreshFlag)
 	font_san.put( x+465, y   , "Handels-" );
 	font_san.put( x+465, y+13, "Betrag" );
 #else
-	// TRANSLATORS: Part of "Allow Attack"
-	font_san.put( x+345, y   , _("Allow") );
-	// TRANSLATORS: Part of "Allow Attack"
-	font_san.put( x+343, y+13, _("Attack") );
+	put_heading( J_L, x+345, y   , x+405, y+29, _("Allow Attack") );
 
-	// TRANSLATORS: Part of "Trade Treaty"
-	font_san.put( x+405, y   , pgettext("OR_NAT", "Trade") );
-	// TRANSLATORS: Part of "Trade Treaty"
-	font_san.put( x+405, y+13, _("Treaty") );
+	put_heading( J_L, x+405, y   , x+465, y+29, _("Trade Treaty") );
 
-	// TRANSLATORS: Part of "Trade Amount"
-	font_san.put( x+465, y   , pgettext("OR_NAT", "Trade") );
-	// TRANSLATORS: Part of "Trade Amount"
-	font_san.put( x+465, y+13, _("Amount") );
+	put_heading( J_L, x+465, y   , REPORT_BROWSE_X2-20, y+29, _("Trade Amount") );
 #endif
 
 
@@ -1060,3 +1057,17 @@ void Info::player_reply_chat(int withNationRecno)
 }
 //-------- End of function Info::player_reply_chat ---------//
 
+
+//-------- Begin of static function put_heading --------//
+//
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr)
+{
+	int dispLines=0;
+	int totalLines=0;
+	font_san.count_line(x1,y1,x2,y2,textPtr,0,dispLines,totalLines);
+	if( dispLines > 1 )
+		font_san.put_paragraph(x1,y1,x2,y2,textPtr,-1,1,1,justify);
+	else if( y1+7<y2 )
+		font_san.put_paragraph(x1,y1+7,x2,y2,textPtr,-1,1,1,justify);
+}
+//----------- End of static function put_heading -----------//
