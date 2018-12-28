@@ -368,6 +368,13 @@ void Vga::handle_messages()
       case SDL_WINDOWEVENT:
          switch (event.window.event)
          {
+            case SDL_WINDOWEVENT_EXPOSED:
+            case SDL_WINDOWEVENT_RESIZED:
+               sys.need_redraw_flag = 1;
+               update_mouse_pos();
+               boundary_set = 0;
+               break;
+
             //case SDL_WINDOWEVENT_ENTER: // Do not respond to mouse focus
             case SDL_WINDOWEVENT_FOCUS_GAINED:
             case SDL_WINDOWEVENT_RESTORED:
@@ -388,11 +395,6 @@ void Vga::handle_messages()
                // turn the system cursor back on to get around a fullscreen
                // mouse grabbed problem on windows
                SDL_ShowCursor(SDL_ENABLE);
-               break;
-
-            case SDL_WINDOWEVENT_EXPOSED:
-               sys.need_redraw_flag = 1;
-               update_mouse_pos();
                break;
          }
          break;
