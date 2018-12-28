@@ -6,14 +6,16 @@
 ;
 ; Requires NSIS to compile
 ;
-; Installs 7kaa in a directory the user selects and creates an uninstaller
+; Install 7kaa in a directory, copy this into the directory, and use NSIS to
+; create the installer. See build.sh for a quick rundown on how to use "make
+; install". A few other files might need to be brought in from elsewhere.
 
 ;--------------------------------
 ; Set current working directory
 
 ; You can achieve this with /NOCD, but this might get rolled into Makefile
 ; and this makes more sense.
-!cd ..\..\dest
+;!cd ..\..\dest
 
 ;--------------------------------
 ;Include Modern UI
@@ -104,19 +106,19 @@ Section "7kaa (required)" 7kaareq
   Rename "$INSTDIR\COPYING" "$INSTDIR\COPYING.txt"
   File ".\7kaa-hotkeys-2.14.5.png"
   File ".\7kaa-manual.pdf"
-  File /r ".\encyc"
-  File /r ".\encyc2"
-  File /r ".\image"
+  File /r ".\ENCYC"
+  File /r ".\ENCYC2"
+  File /r ".\IMAGE"
   File /r ".\locale"
-  File /r ".\resource"
-  File /r ".\scenari2"
-  File /r ".\scenario"
-  File /r ".\sound"
-  File /r ".\sprite"
-  File /r ".\tutorial"
+  File /r ".\RESOURCE"
+  File /r ".\SCENARI2"
+  File /r ".\SCENARIO"
+  File /r ".\SOUND"
+  File /r ".\SPRITE"
+  File /r ".\TUTORIAL"
   File .\7kaa.exe
   File ".\SDL2.dll"
-  File ".\libcurl.dll"
+  File ".\libcurl-4.dll"
   
   ;Reset Install path
   ;SetOutPath "$INSTDIR"
@@ -139,7 +141,7 @@ Section "Music" music
   SetOutPath "$INSTDIR"
   File ".\README-music.txt"
   File ".\COPYING-music.txt"
-  File /r ".\music"
+  File /r ".\MUSIC"
 
 SectionEnd
 
@@ -198,17 +200,17 @@ Section "Uninstall"
   DeleteRegKey HKCU "SOFTWARE\7kaa"
 
   ; Remove the program files
-  RMDir /r "$INSTDIR\encyc"
-  RMDir /r "$INSTDIR\encyc2"
-  RMDir /r "$INSTDIR\image"
+  RMDir /r "$INSTDIR\ENCYC"
+  RMDir /r "$INSTDIR\ENCYC2"
+  RMDir /r "$INSTDIR\IMAGE"
   RMDir /r "$INSTDIR\locale"
-  RMDir /r "$INSTDIR\resource"
-  RMDir /r "$INSTDIR\scenari2"
-  RMDir /r "$INSTDIR\scenario"
-  RMDir /r "$INSTDIR\sound"
-  RMDir /r "$INSTDIR\sprite"
-  RMDir /r "$INSTDIR\tutorial"
-  RMDir /r "$INSTDIR\music"
+  RMDir /r "$INSTDIR\RESOURCE"
+  RMDir /r "$INSTDIR\SCENARI2"
+  RMDir /r "$INSTDIR\SCENARIO"
+  RMDir /r "$INSTDIR\SOUND"
+  RMDir /r "$INSTDIR\SPRITE"
+  RMDir /r "$INSTDIR\TUTORIAL"
+  RMDir /r "$INSTDIR\MUSIC"
   Delete "$INSTDIR\7kaa.exe"
   Delete "$INSTDIR\COPYING.txt"
   Delete "$INSTDIR\README.txt"
@@ -218,7 +220,7 @@ Section "Uninstall"
   Delete "$INSTDIR\README-music.txt"
   Delete "$INSTDIR\OpenAL32.dll"
   Delete "$INSTDIR\SDL2.dll"
-  Delete "$INSTDIR\libcurl.dll"
+  Delete "$INSTDIR\libcurl-4.dll"
   Delete "$INSTDIR\Uninstall.exe"
 
   ; Remove shortcuts
