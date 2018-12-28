@@ -4,6 +4,7 @@ noinst_HEADERS = \
 	COLOR.h \
 	CRC.h \
 	CmdLine.h \
+	FilePath.h \
 	GAMEDEF.h \
 	IMGFUN.h \
 	KEY.h \
@@ -101,7 +102,6 @@ noinst_HEADERS = \
 	OREMOTEQ.h \
 	ORES.h \
 	ORESDB.h \
-	ORESTXT.h \
 	ORESX.h \
 	OROCK.h \
 	OROCKRES.h \

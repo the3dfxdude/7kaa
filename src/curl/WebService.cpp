@@ -23,6 +23,7 @@
 
 #include <OSYS.h>
 #include <WebService.h>
+#include <FilePath.h>
 
 static size_t WriteMemoryCallback(char *contents, size_t size, size_t nmemb, std::string *buffer)
 {
@@ -50,9 +51,10 @@ void WebService::init()
 	if( !curl )
 		return;
 
-	std::string cookie_file = sys.dir_config;
+	FilePath cookie_file(sys.dir_config);
 	cookie_file += "cookies.txt";
-	curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookie_file.c_str());
+	if( !cookie_file.error_flag )
+		curl_easy_setopt(curl, CURLOPT_COOKIEJAR, (char*)cookie_file);
 	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);

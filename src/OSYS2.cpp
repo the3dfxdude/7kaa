@@ -63,6 +63,7 @@
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
 #include <CmdLine.h>
+#include <gettext.h>
 
 
 //---------- define static variables ----------//
@@ -1011,7 +1012,22 @@ void Sys::disp_zoom()
 	sys.frames_in_this_second++;		// no. of frames displayed in this second
 
 	if( view_mode==MODE_NORMAL )
+	{
 		disp_frames_per_second();
+
+		if( remote.is_enable() && (remote.sync_test_level & 0x40) )
+		{
+			// Warn user we are out of sync
+			vga.use_back();
+
+			if( !(remote.sync_test_level & 1) )
+				font_news.disp( ZOOM_X1+10, ZOOM_Y1+30, _("Multiplayer Random Seed Sync Error"), MAP_X2 );
+			else if( !(remote.sync_test_level & 2) )
+				font_news.disp( ZOOM_X1+10, ZOOM_Y1+30, _("Multiplayer Object Sync Error"), MAP_X2 );
+
+			vga.use_front();
+		}
+	}
 }
 //-------- End of function Sys::disp_zoom --------//
 

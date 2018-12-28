@@ -38,6 +38,7 @@ ButtonCustom::ButtonCustom() : custom_para(NULL, 0)
 	init_flag = 0;
 	enable_flag = 0;
 	button_key = 0;
+	button_wait = 0;
 }
 //--------- End of function ButtonCustom::ButtonCustom -------//
 
@@ -131,55 +132,82 @@ void ButtonCustom::paint(int defIsPushed, int repaintBody)
 //
 int ButtonCustom::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int suspendPop)
 {
-	int rc=0;
+	int rc = 0;
 
 	if( !init_flag || !enable_flag )
 		return 0;
 
-	if( mouse.any_click(x1,y1,x2,y2,LEFT_BUTTON) )
-		rc=1;
+	//---------------------------------------------//
 
-	else if( detectRight && mouse.any_click(x1,y1,x2,y2,RIGHT_BUTTON) )
-		rc=2;
-
-	else if(mouse.key_code)
+	if( button_wait )
 	{
-      unsigned mouseKey=mouse.key_code;
+		// handle button press in progress
 
-      if( mouseKey >= 'a' && mouseKey <= 'z' )   // non-case sensitive comparsion
-         mouseKey -= 32;                         // convert from lower case to upper case
+		int in_rect = mouse.cur_x >= x1 && mouse.cur_y >= y1 && mouse.cur_x <= x2 && mouse.cur_y <= y2;
+		int mouse_press = (button_wait == 1 && mouse.left_press)||(button_wait==2 && mouse.right_press);
 
-      if( mouseKey == keyCode1 || mouseKey == keyCode2 || mouseKey == button_key )
-		{
-         rc=3;
-      }
-   }
+		if( in_rect && mouse_press && misc.get_time() < button_wait_timeout )
+			return 0;
 
-   if( !rc )
-      return 0;
+		if( in_rect )
+			rc = button_wait;
 
-   //----- paint the button with pressed shape ------//
+		if( elastic_flag )
+			paint(0);
+
+		button_wait = 0;
+
+		return rc;
+	}
+
+	//---------------------------------------------//
 
 	#define PRESSED_TIMEOUT_SECONDS  1      // 1 seconds
-	unsigned long timeOutTime = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+	button_wait_timeout = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+
+	// check for new button presses
+	if( mouse.any_click(x1,y1,x2,y2,LEFT_BUTTON) )
+	{
+		if( elastic_flag )
+		{
+			button_wait = 1;
+			button_wait_timeout = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+		}
+		else
+			rc = 1;
+	}
+	else if( detectRight && mouse.any_click(x1,y1,x2,y2,RIGHT_BUTTON) )
+	{
+		if( elastic_flag )
+		{
+			button_wait = 2;
+			button_wait_timeout = misc.get_time()+PRESSED_TIMEOUT_SECONDS*1000;
+		}
+		else
+			rc = 2;
+	}
+	else if( mouse.key_code )
+	{
+		unsigned mouseKey=mouse.key_code;
+
+		if( mouseKey >= 'a' && mouseKey <= 'z' )   // non-case sensitive comparsion
+			mouseKey -= 32;                         // convert from lower case to upper case
+
+		if( mouseKey == keyCode1 || mouseKey == keyCode2 || mouseKey == button_key )
+		{
+			rc = 3;
+		}
+	}
+
+	if( !button_wait && !rc )
+		return 0;
+
+	//----- paint the button with pressed shape ------//
 
 	if( elastic_flag )
 	{
 		if( !pushed_flag )
 			paint(1);
-
-		while( (rc==1 && mouse.left_press) || (rc==2 && mouse.right_press) )
-		{
-			sys.yield();
-			vga.flip();
-			mouse.get_event();
-
-			if( misc.get_time() >= timeOutTime )
-				break;
-		}
-
-		if( elastic_flag )
-			paint(0);
 	}
 	else         // inelastic_flag button
 	{
@@ -189,19 +217,9 @@ int ButtonCustom::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, 
 			pushed_flag = !pushed_flag;
 
 		paint(pushed_flag);
-
-		while( (rc==1 && mouse.left_press) || (rc==2 && mouse.right_press) )
-		{
-			sys.yield();
-			vga.flip();
-			mouse.get_event();
-
-			if( misc.get_time() >= timeOutTime )
-				break;
-		}
 	}
 
-   return rc;
+	return rc;
 }
 //----------- End of function ButtonCustom::detect -------------//
 

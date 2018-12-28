@@ -24,18 +24,25 @@
 #ifndef __ODIR_H
 #define __ODIR_H
 
-#include <storage_constants.h>
 #include <ODYNARR.h>
 
-#include <cstdint>
+struct TimeInfo
+{
+   int year;
+   int month;
+   int day;
+   int hour;
+   int minute;
+};
 
 //---------- Define struct FileInfo ----------//
 
 struct FileInfo
 {
-    char          name[MAX_PATH+1];
+    enum { MAX_TIME_LEN = 64 };
+    char          name[FilePath::MAX_FILE_PATH];
     unsigned long size;
-    std::uint64_t time;
+    TimeInfo      time;
 };
 
 //---------- Define class Directory ----------//

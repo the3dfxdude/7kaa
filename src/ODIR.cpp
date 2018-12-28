@@ -23,17 +23,20 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ODATE.h>
 #include <ODIR.h>
 
-#ifdef NO_WINDOWS
+#ifdef USE_WINDOWS
+#include <windows.h>
+#endif
+#ifdef USE_POSIX
 #include <dirent.h>
 #include <ctype.h>
 #include <sys/stat.h>
-#else
-#include <Windows.h>
+#include <glob.h>
+#include <time.h>
 #endif
 
-#include <storage_constants.h>
 #include <posix_string_compat.h>
 
 #include <dbglog.h>
@@ -67,7 +70,7 @@ Directory::Directory() : DynArray( sizeof(FileInfo), 20 )
 int Directory::read(const char *fileSpec, int sortName)
 {
    FileInfo				fileInfo;
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 	WIN32_FIND_DATA	findData;
    
    //----------- get the file list -------------//
@@ -79,7 +82,16 @@ int Directory::read(const char *fileSpec, int sortName)
       misc.extract_file_name( fileInfo.name, findData.cFileName ); // get the file name only from a full path string
 
       fileInfo.size = findData.nFileSizeLow;
-      fileInfo.time = static_cast<std::uint64_t>(findData.ftLastWriteTime.dwHighDateTime) << 32 | findData.ftLastWriteTime.dwLowDateTime;
+
+      SYSTEMTIME sysTime;
+      FILETIME localFileTime;
+      FileTimeToLocalFileTime(&findData.ftLastWriteTime, &localFileTime);
+      FileTimeToSystemTime(&localFileTime, &sysTime);
+      fileInfo.time.year = sysTime.wYear;
+      fileInfo.time.month = sysTime.wMonth;
+      fileInfo.time.day = sysTime.wDay;
+      fileInfo.time.hour = sysTime.wHour;
+      fileInfo.time.minute = sysTime.wMinute;
 
       linkin( &fileInfo );
 
@@ -88,136 +100,33 @@ int Directory::read(const char *fileSpec, int sortName)
    }
 
 	FindClose(findHandle);
-
-#else
-
-   MSG("Listing Directory %s sortName=%d\n", fileSpec, sortName);
-
-   char dirname[MAX_PATH];
-   char search[MAX_PATH];
-   struct dirent **namelist;
-   int n;
-
-   char *slash = strrchr((char*)fileSpec, '/');
-   if (slash)
+#endif
+#ifdef USE_POSIX
+   glob_t results;
+   glob(fileSpec, sortName ? 0 : GLOB_NOSORT, NULL, &results);
+   for( int i = 0; i < results.gl_pathc; i++ )
    {
-      char *s = (char*)fileSpec;
-      char *d = dirname;
-      int i = 0;
-      while (s != slash && i < MAX_PATH - 1)
+      struct stat file_stat;
+
+      if( stat(results.gl_pathv[i], &file_stat) )
       {
-         if (*s == '\\')
-            *d = '/';
-         else if (isalpha(*s))
-            *d = tolower(*s);
-         else
-            *d = *s;
-         d++;
-         s++;
-         i++;
+         // can't read, skip
+         continue;
       }
-      *d = 0;
 
-      i = 0;
-      d = search;
-      s++;
-      while (*s && i < MAX_PATH - 1)
-      {
-         if (*s == '*')
-         {
-            s++;
-            i++;
-            continue;
-         }
-         else if (isalpha(*s))
-         {
-            *d = tolower(*s);
-         }
-         else
-         {
-            *d = *s;
-         }
-         d++;
-         s++;
-         i++;
-      }
-      *d = 0;
-   } else {
-      char *s = (char*)fileSpec;
-      char *d = search;
-      int i = 0;
+      misc.extract_file_name(fileInfo.name, results.gl_pathv[i]);
+      fileInfo.size = file_stat.st_size;
 
-      while (*s && i < MAX_PATH - 1)
-      {
-         if (*s == '*')
-         {
-            s++;
-            i++;
-            continue;
-         }
-         else if (isalpha(*s))
-         {
-            *d = tolower(*s);
-         }
-         else
-         {
-            *d = *s;
-         }
-         d++;
-         s++;
-         i++;
-      }
-      *d = 0;
+      struct tm *time = localtime(&file_stat.st_mtime);
+      fileInfo.time.year = time->tm_year+1900;
+      fileInfo.time.month = time->tm_mon+1;
+      fileInfo.time.day = time->tm_mday;
+      fileInfo.time.hour = time->tm_hour;
+      fileInfo.time.minute = time->tm_min;
 
-
-      dirname[0] = '.';
-      dirname[1] = 0;
+      linkin(&fileInfo);
    }
-
-   MSG("directory=%s search=%s\n", dirname, search);
-   n = scandir(dirname, &namelist, 0, alphasort);
-   for (int i = 0; i < n; i++)
-   {
-      char filename[MAX_PATH];
-      char *s = namelist[i]->d_name;
-      char *d = filename;
-      int j = 0;
-      while (*s && j < MAX_PATH - 1)
-      {
-         if (isalpha(*s))
-            *d = tolower(*s);
-         else
-            *d = *s;
-         d++;
-         s++;
-         j++;
-      }
-      *d = 0;
-
-      if (strstr(filename, search))
-      {
-         char full_path[MAX_PATH];
-         struct stat file_stat;
-
-         full_path[0] = 0;
-         strcat(full_path, dirname);
-         strcat(full_path, "/");
-         strcat(full_path, namelist[i]->d_name);
-
-         stat(full_path, &file_stat);
-
-         strncpy(fileInfo.name, namelist[i]->d_name, MAX_PATH - 2);
-
-         fileInfo.size = file_stat.st_size;
-         fileInfo.time = 0;
-
-         linkin( &fileInfo );
-      }
-      free(namelist[i]);
-   }
-   if (n > -1)
-     free(namelist);
-
+   globfree(&results);
 #endif
 
    //------ the file list by file name ---------//

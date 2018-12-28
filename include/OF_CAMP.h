@@ -137,7 +137,6 @@ private:
 	void		train_unit();
 	void 		recover_hit_point();
 	void 		pay_weapon_expense();
-	void 		sort_soldier();
 
 	void 		update_influence();
 	void 		validate_patrol_unit();

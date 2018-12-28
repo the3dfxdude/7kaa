@@ -30,8 +30,8 @@ my $PaletteHeaderSize = 8;
 my @pal;
 
 if (@ARGV < 2) {
-	print "Usage: $0 pal.res pal.txt\n";
-	print "Reconstructs pal.txt into pal.res file.\n";
+	print "Usage: $0 PAL.RES pal.txt\n";
+	print "Reconstructs pal.txt into PAL.RES file.\n";
 	exit 0;
 }
 my ($pal_file, $in_file) = @ARGV;

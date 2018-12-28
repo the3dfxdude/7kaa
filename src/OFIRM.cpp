@@ -573,6 +573,7 @@ void Firm::assign_unit(int unitRecno)
 	else if( firmInfo->need_worker )
 	{
 		assign_worker(unitRecno);
+		sort_worker();
 	}
 }
 //--------- End of function Firm::assign_unit -----------//
@@ -2321,6 +2322,8 @@ void Firm::update_worker()
 				workerPtr->hit_points = maxHitPoints;
 		}
 	}
+
+	sort_worker();
 }
 //----------- End of function Firm::update_worker ---------//
 
@@ -2427,6 +2430,8 @@ int Firm::mobilize_worker(int workerId, char remoteAction)
 
 	err_when( unitRecno2 && unitRecno );		// only one of them should have value
 	err_when( !unitRecno2 && !unitRecno );		// one of them must have a value
+
+	sort_worker();
 
 	if( unitRecno )
 		return unitRecno;

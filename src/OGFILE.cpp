@@ -55,21 +55,35 @@ typedef GameFile::SaveGameHeader SaveGameHeader;
 enum {CLASS_SIZE = 302};
 static_assert(sizeof(SaveGameHeader) == CLASS_SIZE, "Savegame header size mismatch"); // (no packing)
 
+enum { ERROR_NONE = 0,
+	ERROR_CREATE,
+	ERROR_WRITE_HEADER,
+	ERROR_WRITE_DATA,
+	ERROR_OPEN,
+	ERROR_FILE_HEADER,
+	ERROR_FILE_FORMAT,
+	ERROR_FILE_CORRUPTED,
+};
+
+static int last_status = ERROR_NONE;
+
 
 //-------- Begin of function GameFile::save_game --------//
 //
 // Saves the current game under the given filePath.
-// On error, returns false, and returns the error message in errorMessage.
+// On error, returns false.
 //
-bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo, String& /*out*/ errorMessage)
+bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo)
 {
 	File file;
 	bool fileOpened = false;
 
+	last_status = ERROR_NONE;
+
 	int rc = file.file_create(filePath, 0, 1); // 0=tell File don't handle error itself
 												// 1=allow the writing size and the read size to be different
 	if( !rc )
-		errorMessage = _("Error creating saved game file");
+		last_status = ERROR_CREATE;
 	else
 		fileOpened = true;
 
@@ -80,14 +94,14 @@ bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo,
 		rc = write_game_header(saveGameInfo, &file);    // write saved game header information
 
 		if( !rc )
-			errorMessage = _("Error creating saved game header");
+			last_status = ERROR_WRITE_HEADER;
 
 		if( rc )
 		{
 			rc = write_file(&file);
 
 			if( !rc )
-				errorMessage = _("Error writing saved game data");
+				last_status = ERROR_WRITE_DATA;
 		}
 	}
 
@@ -98,10 +112,6 @@ bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo,
 	if( !rc )
 	{
 		if (fileOpened) remove( filePath );         // delete the file as it is not complete
-
-		// Also explicitly inform the user that the game has not been saved.
-		errorMessage += " ";
-		errorMessage += _("The game is not saved.");
 	}
 
 	return rc != 0;
@@ -115,15 +125,17 @@ bool GameFile::save_game(const char* filePath, const SaveGameInfo& saveGameInfo,
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
-int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo)
 {
 	File file;
 	int  rc=1;
 
+	last_status = ERROR_NONE;
+
 	if(rc && !file.file_open(filePath, 0, 1)) // 0=tell File don't handle error itself
 	{
 		rc = 0;
-		errorMessage = _("Cannot open save game file");
+		last_status = ERROR_OPEN;
 	}
 
 	//-------- read in the GameFile class --------//
@@ -134,12 +146,12 @@ int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo
 		if( !file.file_read(&saveGameHeader, CLASS_SIZE) )	// read the whole object from the saved game file
 		{
 			rc = 0;
-			errorMessage = _("Cannot read file header");
+			last_status = ERROR_FILE_HEADER;
 		}
 		else if( !validate_header(&saveGameHeader) )
 		{
 			rc = 0;
-			errorMessage = _("Incompatible save game");
+			last_status = ERROR_FILE_FORMAT;
 		}
 	}
 
@@ -161,12 +173,12 @@ int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo
 			break;
 		case -1:
 			rc = 0;		// consider cancel load game
-			errorMessage = _("Incompatible save game");
+			last_status = ERROR_FILE_FORMAT;
 			break;
 		case 0:
 		default:
 			rc = -1;
-			errorMessage = _("Load game error");
+			last_status = ERROR_FILE_CORRUPTED;
 		}
 
 		if( rc > 0 )
@@ -196,7 +208,7 @@ int GameFile::load_game(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo
 //
 // Reads the given file and fills the save game info from the header. Returns true if successful.
 //
-bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo)
 {
 	bool success;
 	File file;
@@ -206,7 +218,6 @@ bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameI
 	{
 		if( !validate_header(&saveGameHeader) )
 		{
-			errorMessage = _("Invalid header");
 			success = false;
 		}
 		else
@@ -216,7 +227,6 @@ bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameI
 	}
 	else
 	{
-		errorMessage = _("Could not open file");
 		success = false;
 	}
 	file.file_close();
@@ -304,3 +314,31 @@ bool GameFile::validate_header(const SaveGameHeader* saveGameHeader)
 	return saveGameHeader->class_size == CLASS_SIZE && saveGameHeader->info.terrain_set > 0;
 }
 //--------- End of function GameFile::validate_header -------//
+
+
+//--------- Begin of function GameFile::status_str -------//
+const char *GameFile::status_str()
+{
+	switch(last_status)
+	{
+	case ERROR_NONE:
+		return _("Success");
+	case ERROR_CREATE:
+		return _("Error creating saved game file");
+	case ERROR_WRITE_HEADER:
+		return _("Error creating saved game header");
+	case ERROR_WRITE_DATA:
+		return _("Error writing saved game data");
+	case ERROR_OPEN:
+		return _("Cannot open save game file");
+	case ERROR_FILE_HEADER:
+		return _("Cannot read file header");
+	case ERROR_FILE_FORMAT:
+		return _("Incompatible save game");
+	case ERROR_FILE_CORRUPTED:
+		return _("Load game error");
+	}
+	err_here();
+	return "";
+}
+//--------- End of function GameFile::status_str -------//

@@ -49,10 +49,13 @@
 
 static Button3D button_sell, button_destruct, button_builder;
 static short  	 pop_disp_y1;
+static char     worker_id_array[MAX_WORKER];
+static Firm*    cur_firm_ptr;
 
 //---------- Declare static function ------------//
 
 static void disp_worker_hit_points(int x1, int y1, int x2, int hitPoints, int maxHitPoints);
+static int sort_worker_id_function(const void *a, const void *b);
 
 //--------- Begin of function Firm::disp_info_both ---------//
 //
@@ -365,7 +368,7 @@ void Firm::disp_worker_list(int dispY1, int refreshFlag)
 		overseerRaceId = unit_array[overseer_recno]->race_id;
 
 	if( selected_worker_id > worker_count )
-		selected_worker_id = worker_count;
+		selected_worker_id = worker_id_array[worker_count-1];
 
 	//------ display population composition -------//
 
@@ -376,8 +379,9 @@ void Firm::disp_worker_list(int dispY1, int refreshFlag)
 
 	dispY1+=1;
 
-	for( int i=0 ; i<MAX_WORKER ; i++, workerPtr++ )
+	for( int i=0 ; i<MAX_WORKER ; i++ )
 	{
+		workerPtr = &worker_array[worker_id_array[i]-1];
 		x = INFO_X1+4+i%4*50;
 		y = dispY1+i/4*29;
 
@@ -392,7 +396,7 @@ void Firm::disp_worker_list(int dispY1, int refreshFlag)
 
 			//----- highlight the selected worker -------//
 
-			if( selected_worker_id == i+1 )
+			if( selected_worker_id == worker_id_array[i] )
 				vga_front.rect( x, y, x+27, y+23, 2, V_YELLOW );
 			else
 				vga_front.rect( x, y, x+27, y+23, 2, vga_front.color_up );
@@ -494,10 +498,10 @@ int Firm::detect_worker_list()
 		switch( mouse.any_click(x, y, x+27, y+23, LEFT_BUTTON) ? 1 : (mouse.any_click(x, y, x+27, y+23, RIGHT_BUTTON) ? 2 : 0) )
 		{
 			case 1:         // left button to select worker
-				if (selected_worker_id == i+1)
+				if (selected_worker_id == worker_id_array[i])
 					selected_worker_id = 0;
 				else
-					selected_worker_id = i+1;
+					selected_worker_id = worker_id_array[i];
 				return 1;
 
 			case 2:
@@ -505,7 +509,7 @@ int Firm::detect_worker_list()
 				{
 					//--- if the town where the unit lives belongs to the nation of this firm ---//
 
-					mobilize_worker(i+1, COMMAND_PLAYER);
+					mobilize_worker(worker_id_array[i], COMMAND_PLAYER);
 					return 1;
 				}
 				break;
@@ -575,7 +579,7 @@ void Firm::disp_worker_info(int dispY1, int refreshFlag)
 	static int lastSelected;
 
 	if( selected_worker_id > worker_count )
-		selected_worker_id = worker_count;
+		selected_worker_id = worker_id_array[worker_count-1];
 
 	if( lastSelected != selected_worker_id > 0 )
 	{
@@ -730,3 +734,39 @@ void Firm::disp_hit_point(int dispY1)
 	Vga::active_buf->indicator(0x0b, INFO_X1+58, dispY1+1, hitPoints, max_hit_points, 0);
 }
 //----------- End of function Firm::disp_hit_point -----------//
+
+
+//--------- Begin of function Firm::sort_worker ---------//
+//
+// This is used to display the workers sorted by skill.
+//
+void Firm::sort_worker()
+{
+	if( firm_array.selected_recno != firm_recno )
+		return;
+
+	for( int i=0 ; i<MAX_WORKER ; i++ )
+	{
+		worker_id_array[i] = i+1;
+	}
+
+	if( worker_count > 1 )
+	{
+		cur_firm_ptr = this;
+		qsort(worker_id_array, worker_count, sizeof(char), sort_worker_id_function);
+	}
+}
+//----------- End of function Firm::sort_worker -----------//
+
+
+//--------- Begin of function sort_worker_id_function ---------//
+//
+static int sort_worker_id_function(const void *a, const void *b)
+{
+	int workerId1 = *((char*)a);
+	int workerId2 = *((char*)b);
+
+	return cur_firm_ptr->worker_array[workerId2-1].skill_level -
+			cur_firm_ptr->worker_array[workerId1-1].skill_level;
+}
+//----------- End of function sort_worker_id_function -----------//

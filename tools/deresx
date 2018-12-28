@@ -28,8 +28,8 @@ use File::Path qw(make_path);
 use File::Spec;
 
 if (@ARGV < 1) {
-	print "Usage: $0 file.res out_dir .ext\n";
-	print "Extracts all files from file.res, giving each file the defined suffix .ext\n";
+	print "Usage: $0 FILE.RES out_dir .ext\n";
+	print "Extracts all files from FILE.RES, giving each file the defined suffix .ext\n";
 	print "This is not for a 'LIBDB' generated resource file.\n";
 	exit 1;
 }

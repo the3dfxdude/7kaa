@@ -89,9 +89,10 @@
 // ##### end Gilbert 23/10 ######//
 #include <LocaleRes.h>
 #include <CmdLine.h>
+#include <FilePath.h>
 
 #include <dbglog.h>
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 #include <direct.h>
 #define chdir _chdir
 #else
@@ -119,7 +120,6 @@ static int  get_mouse_loc_in_zoom_map(int &x, int &y);
 static unsigned long last_frame_time=0, last_resend_time=0;
 static char          remote_send_success_flag=1;
 static char          scenario_cheat_flag=0;
-
 
 static std::string get_bundle_resources_path(void)
 {
@@ -506,7 +506,7 @@ int Sys::set_config_dir()
    if( home )
    {
       strcpy(dir_config, home);
-      strcat(dir_config, "//");
+      strcat(dir_config, PATH_DELIM);
    }
    else
    {
@@ -950,11 +950,7 @@ void Sys::main_loop(int isLoadedGame)
 
             if( nation_array.player_recno )     // only save when the player is still in the game
             {
-               String errorMessage;
-               if ( !SaveGameProvider::save_game( remote.save_file_name, /*out*/ errorMessage ) )
-			   {
-				   box.msg( errorMessage );
-			   }
+               SaveGameProvider::save_game(remote.save_file_name);
 
                // ####### begin Gilbert 24/10 ######//
                //static String str;
@@ -1013,21 +1009,15 @@ void Sys::auto_save()
       #endif
       {
          static int saveCount = 0;
-		 bool saveSuccessfull = false;
-		 String errorMessage;
          switch(saveCount)
          {
-            case 0:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG1.SAV", /*out*/ errorMessage );
+            case 0:  SaveGameProvider::save_game("DEBUG1.SAV");
                      break;
-			case 1:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG2.SAV", /*out*/ errorMessage );
+			case 1:  SaveGameProvider::save_game("DEBUG2.SAV");
                      break;
-			case 2:  saveSuccessfull = SaveGameProvider::save_game( "DEBUG3.SAV", /*out*/ errorMessage );
+			case 2:  SaveGameProvider::save_game("DEBUG3.SAV");
                      break;
          }
-		 if( !saveSuccessfull )
-		 {
-			box.msg( errorMessage );
-		 }
          if( ++saveCount>=3 )
             saveCount = 0;
       }
@@ -1035,14 +1025,13 @@ void Sys::auto_save()
       {
          //---------- get path to savegames ----------//
 
-         char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
+         FilePath auto1_path(dir_config);
+         FilePath auto2_path(dir_config);
 
-         if (misc.path_cat(auto1_path, dir_config, "AUTO.SAV", MAX_PATH+1) == 0 ||
-             misc.path_cat(auto2_path, dir_config, "AUTO2.SAV", MAX_PATH+1) == 0)
-         {
-	        ERR("Path to the savegames too long\n");
+         auto1_path += "AUTO.SAV";
+         auto2_path += "AUTO2.SAV";
+         if( auto1_path.error_flag || auto2_path.error_flag )
             return;
-         }
 
          //--- rename the existing AUTO.SAV to AUTO2.SAV and save a new game ---//
 
@@ -1054,11 +1043,7 @@ void Sys::auto_save()
             rename( auto1_path, auto2_path );
          }
 
-		 String errorMessage;
-         if( !SaveGameProvider::save_game( "AUTO.SAV", /*out*/ errorMessage ) )
-		 {
-			 box.msg( errorMessage );
-		 }
+         SaveGameProvider::save_game("AUTO.SAV");
       }
 
       //-*********** syn game test ***********-//
@@ -1087,16 +1072,15 @@ void Sys::auto_save()
       day_frame_count==0 && info.game_day==1 && info.game_month%2==0 )
 	// ###### patch end Gilbert 23/1 #######//
    {
-	  //---------- get path to savegames ----------//
+      //---------- get path to savegames ----------//
 
-      char auto1_path[MAX_PATH+1], auto2_path[MAX_PATH+1];
+      FilePath auto1_path(dir_config);
+      FilePath auto2_path(dir_config);
 
-	  if (misc.path_cat(auto1_path, dir_config, "AUTO.SVM", MAX_PATH+1) == 0 ||
-          misc.path_cat(auto2_path, dir_config, "AUTO2.SVM", MAX_PATH+1) == 0)
-      {
-	     ERR("Path to the savegames too long\n");
+      auto1_path += "AUTO.SVM";
+      auto2_path += "AUTO2.SVM";
+      if( auto1_path.error_flag || auto2_path.error_flag )
          return;
-      }
 
       //--- rename the existing AUTO.SVM to AUTO2.SVM and save a new game ---//
 
@@ -1108,11 +1092,7 @@ void Sys::auto_save()
          rename( auto1_path, auto2_path );
       }
 
-	  String errorMessage;
-	  if( !SaveGameProvider::save_game( "AUTO.SVM", /*out*/ errorMessage ) )
-	  {
-		  box.msg( errorMessage );
-	  }
+      SaveGameProvider::save_game("AUTO.SVM");
    }
 }
 //-------- End of function Sys::auto_save --------//
@@ -2605,20 +2585,14 @@ void Sys::set_speed(int frameSpeed, int remoteCall)
 //
 void Sys::capture_screen()
 {
-   // NB: Increase this when allowing more decimals in the screenshot file, or when changing the screenshot filename
-   enum {MAX_SCREENSHOT_FILENAME_LENGTH = 8};
+   FilePath full_path(dir_config);
+   const char filename_template[] = "7KXX.BMP";
 
-   char full_path[MAX_PATH+1];
-   int path_len;
+   full_path += filename_template; // template for screenshot filename
+   if( full_path.error_flag )
+      return;
 
-   strcpy(full_path, dir_config);
-   path_len = strlen(full_path);
-   if (path_len + MAX_SCREENSHOT_FILENAME_LENGTH > MAX_PATH)
-   {
-	   ERR("Path to the screenshots too long.\n");
-	   return;
-   }
-
+   char *filename = (char*)full_path+strlen(dir_config);
    String str("7K");
 
    int i;
@@ -2632,7 +2606,7 @@ void Sys::capture_screen()
       str += i;
       str += ".BMP";
 
-	  strcpy(full_path + path_len, str);
+      memcpy(filename, str, strlen(filename_template));
 
       if( !misc.is_file_exist(full_path) )
          break;
@@ -2779,7 +2753,7 @@ int Sys::chdir_to_game_dir()
    const char *test_file;
 
    // test current directory
-   test_file = DEFAULT_DIR_IMAGE "HALLFAME.ICN";
+   test_file = "IMAGE" PATH_DELIM "HALLFAME.ICN";
    if (misc.is_file_exist(test_file))
       return 1;
 
@@ -2802,8 +2776,8 @@ int Sys::chdir_to_game_dir()
    }
 
    // test compile time path
-#ifdef PACKAGE_DATA_PATH
-   chdir(PACKAGE_DATA_PATH);
+#ifdef PACKAGE_DATA_DIR
+   chdir(PACKAGE_DATA_DIR);
    if (misc.is_file_exist(test_file))
       return 1;
 #endif
@@ -2819,19 +2793,32 @@ int Sys::chdir_to_game_dir()
 //
 // Set all game directories. Return true on success.
 //
+#define P PATH_DELIM
 int Sys::set_game_dir()
 {
    if (!chdir_to_game_dir())
       return 0;
 
-   strcpy(dir_image, DEFAULT_DIR_IMAGE);
-   strcpy(dir_encyc, DEFAULT_DIR_ENCYC);
-   strcpy(dir_encyc2, DEFAULT_DIR_ENCYC2);
-   strcpy(dir_movie, DEFAULT_DIR_MOVIE);
-   strcpy(dir_music, DEFAULT_DIR_MUSIC);
-   strcpy(dir_tutorial, DEFAULT_DIR_TUTORIAL);
-   strcpy(dir_scenario, DEFAULT_DIR_SCENARIO);
-   strcpy(dir_scenario_path[1], DEFAULT_DIR_SCENARI2);
+   set_one_dir( "HALLFAME.ICN"         , "IMAGE" P   , dir_image );
+   set_one_dir( "SEAT" P "NORMAN.ICN"  , "ENCYC" P   , dir_encyc );
+//#ifdef AMPLUS
+   set_one_dir( "SEAT" P "EGYPTIAN.ICN", "ENCYC2" P  , dir_encyc2 );
+//#endif
+   set_one_dir( "INTRO.AVI"            , "MOVIE" P   , dir_movie );
+
+#ifdef DEMO
+   set_one_dir( "DEMO.WAV"             , "MUSIC" P   , dir_music );
+   set_one_dir( "STANDARD.TUT"         , "TUTORIAL" P, dir_tutorial );
+   set_one_dir( "DEMO.SCN"             , "SCENARIO" P, dir_scenario );
+#else
+   set_one_dir( "NORMAN.WAV"           , "MUSIC" P   , dir_music );
+   set_one_dir( "1BAS_MIL.TUT"         , "TUTORIAL" P, dir_tutorial );
+   set_one_dir( "7FOR7.SCN"            , "SCENARIO" P, dir_scenario );
+#endif
+
+#if(MAX_SCENARIO_PATH >= 2)
+   set_one_dir( "SCN_01.SCN"           , "SCENARI2" P, dir_scenario_path[1] );
+#endif
 
    //-------- set game version ---------//
 
@@ -2840,6 +2827,29 @@ int Sys::set_game_dir()
    return 1;
 }
 //----------- End of function Sys::set_game_dir ----------//
+#undef P
+
+
+//-------- Begin of function Sys::set_one_dir ----------//
+//
+int Sys::set_one_dir(const char* checkFileName, const char* defaultDir, char* trueDir)
+{
+   FilePath full_path(defaultDir);
+   full_path += checkFileName;
+
+   if( !full_path.error_flag && misc.is_file_exist(full_path) )
+   {
+      strcpy(trueDir, defaultDir);
+   }
+   else
+   {
+      trueDir[0] = 0;
+      return 0;
+   }
+
+   return 1;
+}
+//----------- End of function Sys::set_one_dir ----------//
 
 
 //-------- Start of function locate_king_general -------------//

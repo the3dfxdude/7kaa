@@ -39,39 +39,20 @@ extern const int GAME_VERSION;
 
 //------- Data sub-directories -------//
 
-#ifdef NO_WINDOWS
-#define PATH_DELIM "/"
-#else // WINDOWS
+#ifdef USE_WINDOWS
 #define PATH_DELIM "\\"
+#else
+#define PATH_DELIM "/"
 #endif
 
 // config dir
 #define CONFIG_ORGANIZATION_NAME "7kfans.com"
 #define CONFIG_APPLICATION_NAME "7kaa"
 
-// top level data dirs
-#define DEFAULT_DIR_RES      "resource" PATH_DELIM
-#define DEFAULT_DIR_SPRITE   "sprite" PATH_DELIM
-#define DEFAULT_DIR_SOUND    "sound" PATH_DELIM
-#define DEFAULT_DIR_IMAGE    "image" PATH_DELIM
-#define DEFAULT_DIR_ENCYC    "encyc" PATH_DELIM
-#define DEFAULT_DIR_ENCYC2   "encyc2" PATH_DELIM
-#define DEFAULT_DIR_MOVIE    "movie" PATH_DELIM
-#define DEFAULT_DIR_MUSIC    "music" PATH_DELIM
-#define DEFAULT_DIR_TUTORIAL "tutorial" PATH_DELIM
-#define DEFAULT_DIR_SCENARIO "scenario" PATH_DELIM
-#define DEFAULT_DIR_SCENARI2 "scenari2" PATH_DELIM
-
-// encylopedia chapter dirs
-#define DEFAULT_DIR_ENCYC_UNIT    "unit" PATH_DELIM
-#define DEFAULT_DIR_ENCYC_FIRM    "firm" PATH_DELIM
-#define DEFAULT_DIR_ENCYC_SEAT    "seat" PATH_DELIM
-#define DEFAULT_DIR_ENCYC_GOD     "god" PATH_DELIM
-#define DEFAULT_DIR_ENCYC_MONSTER "monster" PATH_DELIM
-
-#define DIR_RES         DEFAULT_DIR_RES
-#define DIR_SPRITE      DEFAULT_DIR_SPRITE
-#define DIR_SOUND       DEFAULT_DIR_SOUND
+// data dirs
+#define DIR_RES         "RESOURCE" PATH_DELIM
+#define DIR_SPRITE      "SPRITE" PATH_DELIM
+#define DIR_SOUND       "SOUND" PATH_DELIM
 #define DIR_IMAGE       sys.dir_image
 #define DIR_ENCYC       sys.dir_encyc
 #define DIR_ENCYC2	sys.dir_encyc2

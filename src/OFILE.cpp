@@ -38,10 +38,7 @@ DBGLOG_DEFAULT_CHANNEL(File);
 //
 // <char*> fileName      = name of the file
 // [int]   handleError   = Treat RW operation failures as fatal or not
-//                         (default true, 1). Original code maked the game 
-//                         quit immediately on fatal errors; now this only
-//                         affects error channel being used to output error
-//                         message (ERR or MSG)
+//                         (default true, 1).
 // [int]   fileType = FLAT (0, default) or STRUCTURED (1). Structured file stores 
 //                    its data as a records, where every record has the
 //                    following format: [entry size: uint16; entry data: bytes]
@@ -52,10 +49,7 @@ DBGLOG_DEFAULT_CHANNEL(File);
 //
 int File::file_open(const char* fileName, int handleError, int fileType)
 {
-	char name[MAX_PATH+1];
-	int size = strlen(fileName);
-
-	if(strlen(fileName) > MAX_PATH)
+	if(strlen(fileName) >= FilePath::MAX_FILE_PATH)
 	{
 		if (handleError)
 			err.run("File : file name is too long.");
@@ -65,34 +59,18 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 	if (file_handle != NULL)
 		file_close();
 
-	strcpy(name, fileName);
-	for (int i = 0; i < size; i++)
-	{
-		if (name[i] == '\\') name[i] = '/';
-	}
-
+	strcpy(file_name, fileName);
 	handle_error = handleError;
 	file_type = (FileType)fileType;
 
-	file_handle = fopen(name, "rb");
-	if (!file_handle)
-	{
-		for (int i = 0; i < size; i++)
-		{
-			name[i] = tolower(name[i]);
-		}
-		file_handle = fopen(name, "rb");
-	}
+	file_handle = fopen(fileName, "rb");
 	if (!file_handle)
 	{
 		if (handleError)
-			err.run("[File::file_open] error opening file %s: %s\n", name, strerror(errno));
+			err.run("[File::file_open] error opening file %s: %s\n", fileName, strerror(errno));
 		return 0;
 	}
 
-	strcpy(file_name, name);
-
-	MSG("[File::file_open] opened %s\n", file_name);
 	return 1;
 }
 //---------- End of function File::file_open ----------//
@@ -104,10 +82,7 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 //
 // <char*> fileName      = name of the file
 // [int]   handleError   = Treat RW operation failures as fatal or not
-//                         (default true, 1). Original code maked the game 
-//                         quit immediately on fatal errors; now this only
-//                         affects error channel being used to output error
-//                         message (ERR or MSG)
+//                         (default true, 1).
 // [int]   fileType = FLAT (0, default) or STRUCTURED (1). Structured file stores 
 //                    its data as a records, where every record has the
 //                    following format: [entry size: uint16; entry data: bytes]
@@ -118,7 +93,7 @@ int File::file_open(const char* fileName, int handleError, int fileType)
 //
 int File::file_create(const char* fileName, int handleError, int fileType)
 {
-	if(strlen(fileName) > MAX_PATH)
+	if(strlen(fileName) >= FilePath::MAX_FILE_PATH)
 	{
 		if (handleError)
 			err.run("File : file name is too long.");
@@ -126,13 +101,6 @@ int File::file_create(const char* fileName, int handleError, int fileType)
 	}
 
 	strcpy(file_name, fileName);
-	// FIXME: this fileName handling is broken
-	for (int i = 0; i < static_cast<int>(strlen(fileName)); i++)
-	{
-		file_name[i] = tolower(file_name[i]);
-		if (file_name[i] == '\\') file_name[i] = '/';
-	}
-
 	handle_error = handleError;
 	file_type = (FileType)fileType;
 
@@ -144,7 +112,6 @@ int File::file_create(const char* fileName, int handleError, int fileType)
 		return 0;
 	}
 
-	MSG("[File::file_create] created %s\n", file_name);
 	return 1;
 }
 //---------- End of function File::file_create ----------//
@@ -155,12 +122,8 @@ void File::file_close()
 {
 	if (file_handle != NULL)
 	{
-		MSG("[File::file_close] closing %s\n", file_name);
 		file_name[0] = '\0';
-		if (fclose(file_handle))
-		{
-			MSG("Error closing file descriptor: %s\n", strerror(errno));	
-		}
+		fclose(file_handle);
 		file_handle = NULL;
 	}
 }

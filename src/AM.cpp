@@ -24,11 +24,8 @@
 #include <ALL.h>
 #include <version.h>
 
-#ifndef NO_WINDOWS
-#include <initguid.h>
-#endif
-
 #ifdef ENABLE_INTRO_VIDEO
+#include <initguid.h>
 #include <dshow.h>
 #endif
 
@@ -284,13 +281,6 @@ DBGLOG_DEFAULT_CHANNEL(am);
 //------- Define static functions --------//
 
 static void extra_error_handler();
-
-/* Override obstinate SDL hacks */
-#ifdef __WINE__
-# ifdef main
-#   undef main
-# endif
-#endif
 
 //---------- Begin of function main ----------//
 //

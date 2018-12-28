@@ -21,12 +21,14 @@
 //Filename    : OMISC.CPP
 //Description : Object of Misc useful functions
 
-#ifdef NO_WINDOWS
+#ifdef USE_WINDOWS
+#include <windows.h>
+#endif
+#ifdef USE_POSIX
+#include <unistd.h>
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <errno.h>
-#else
-#include <Windows.h>
 #endif 
 
 #include <SDL.h>
@@ -41,7 +43,6 @@
 #include <ALL.h>
 #include <OSTR.h>
 #include <OMISC.h>
-#include <ODIR.h>
 
 #define	MOVE_AROUND_TABLE_SIZE	900
 
@@ -528,7 +529,7 @@ int Misc::valid_char( char ch )
    return ( ch>='a' && ch<='z'  ||
             ch>='A' && ch<='Z'  ||
             ch>='0' && ch<='9'  ||
-            ch=='\\'  ||  ch=='.'  || ch=='_'  ||  ch==':' ) ;
+            ch=='\\'  ||  ch=='/'  ||  ch=='.'  || ch=='_'  ||  ch==':' ) ;
 }
 
 //--------- END OF FUNCTION Misc::valid_char ----------//
@@ -1171,54 +1172,26 @@ float Misc::round_dec(float inNum)
 //
 int Misc::is_file_exist(const char* fileName)
 {
-   Directory dir;
-   return dir.read(fileName, 0) == 1;
+#ifdef USE_WINDOWS
+   WIN32_FIND_DATA findData;
+
+   HANDLE findHandle = FindFirstFile( fileName, &findData );
+
+   return findHandle!=INVALID_HANDLE_VALUE;
+#endif
+#ifdef USE_POSIX
+   return !access(fileName, F_OK);
+#endif
+   err.msg("Misc::is_file_exist: stub");
+   return 0;
 }
 //---------- End of function Misc::is_file_exist ---------//
-
-
-//------- Begin of function Misc::path_cat ---------//
-//
-// Copies src1 to dest, then src2, ensuring the two strings together don't
-// exceed max_len-1. The destination string is always null terminated.
-//
-// The return is 1 on success. If length of src1+src2 is greater than
-// max_len-1, then the return is 0, and the dest string contents is null.
-//
-int Misc::path_cat(char *dest, const char *src1, const char *src2, int max_len)
-{
-   int c = 0;
-   char *d = dest;
-   for (; c < max_len-1; c++) {
-      if (!*src1)
-         break;
-      *d = *src1;
-      d++;
-      src1++;
-   }
-   for (; c < max_len-1; c++) {
-      if (!*src2)
-         break;
-      *d = *src2;
-      d++;
-      src2++;
-   }
-   if (c >= max_len-1) {
-      *dest = 0;
-      return 0;
-   }
-   *d = 0;
-   return 1;
-}
-//---------- End of function Misc::path_cat ---------//
 
 
 // misc_mkdir -- helper function to mkpath
 int misc_mkdir(char *path)
 {
-#ifdef NO_WINDOWS
-   return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
-#else // WINDOWS
+#ifdef USE_WINDOWS
    if (!path[2] && path[1] == ':' && isalpha(path[0]))
    {
       // don't try to make a drive letter path
@@ -1227,6 +1200,8 @@ int misc_mkdir(char *path)
    }
    return !CreateDirectory(path, NULL) ?
        GetLastError() == ERROR_ALREADY_EXISTS : 1;
+#else
+   return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
 #endif
 }
 
@@ -1237,11 +1212,14 @@ int misc_mkdir(char *path)
 // necessary.
 int Misc::mkpath(char *abs_path)
 {
-   char path_copy[MAX_PATH+1];
+   char path_copy[FilePath::MAX_FILE_PATH];
    int count;
 
+   if( strlen(path_copy) >= FilePath::MAX_FILE_PATH )
+      return 0;
+
    count = 0;
-   while (count < MAX_PATH) {
+   while (count < FilePath::MAX_FILE_PATH) {
      if (!abs_path[count]) {
         if (count > 0) {
           path_copy[count] = 0;
@@ -1293,14 +1271,22 @@ void Misc::change_file_ext(char* desFileName, const char* srcFileName, const cha
 void Misc::extract_file_name(char* desFileName, const char* srcFileName)
 {
 	int i;
-	for( i=strlen(srcFileName) ; i>=0 ; i-- )
+
+	for( i=strlen(srcFileName); i>=0 ; i-- )
 	{
-		if( srcFileName[i]=='\\' )			// get last '\' before the file name
+		if( srcFileName[i]==PATH_DELIM[0] )			// get last '\' before the file name
 			break;
 	}
 
-	strncpy(desFileName, srcFileName+i+1, MAX_PATH);
-	desFileName[MAX_PATH]='\0';
+	const char *p = srcFileName+i+1;
+	size_t fileNameLen = strlen(p);
+	if( fileNameLen >= FilePath::MAX_FILE_PATH )
+	{
+		desFileName[0] = 0;
+		return;
+	}
+
+	strncpy(desFileName, p, FilePath::MAX_FILE_PATH);
 }
 //---------- End of function Misc::extract_file_name ---------//
 

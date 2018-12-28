@@ -41,6 +41,7 @@
 // ##### patch begin Gilbert 20/1 #######//
 #include <OBOX.h>
 // ##### patch end Gilbert 20/1 #######//
+#include <gettext.h>
 
 //---------------- Define variable type ---------------//
 
@@ -456,11 +457,9 @@ void RemoteMsg::tell_random_seed()
 			LOG_DUMP;
 			if( (remote.sync_test_level & 1) && (remote.sync_test_level >= 0) )
 			{
-				remote.sync_test_level = ~remote.sync_test_level;	// signal error encountered
+				remote.sync_test_level = ~1;	// signal error encountered
 				if( sys.debug_session )
-					err.run( "Multiplayer Random Seed Sync Error." );
-				else
-					box.msg( "Multiplayer Random Seed Sync Error." );
+					err.run( _("Multiplayer Random Seed Sync Error") );
 			}
 		}
 	}
@@ -2832,11 +2831,9 @@ void	RemoteMsg::compare_remote_object()
 	if( (remote.sync_test_level & 2) && (remote.sync_test_level >= 0)
 		&& crc_store.compare_remote(id, data_buf) )
 	{
-		remote.sync_test_level = ~remote.sync_test_level;	// signal error encountered
+		remote.sync_test_level = ~2;	// signal error encountered
 		if( sys.debug_session )
-			err.run( "Multiplayer Object Sync Error." );
-		else
-			box.msg( "Multiplayer Object Sync Error." );
+			err.run( _("Multiplayer Object Sync Error") );
 	}
 	// ###### patch end Gilbert 20/1 #######//
 }

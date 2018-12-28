@@ -448,7 +448,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 	{
 		case ENCYC_PEOPLE:
 			strcpy( filename, DIR_ENCYC );
-			strcat( filename, DEFAULT_DIR_ENCYC_UNIT );
+			strcat( filename, "UNIT" PATH_DELIM );
 			strcat( filename, race_name[selSubClass-1] );
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
@@ -456,7 +456,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
-				strcat( filename2, DEFAULT_DIR_ENCYC_UNIT );
+				strcat( filename2, "UNIT" PATH_DELIM );
 				strcat( filename2, race_name[selSubClass-1] );
 				strcpy( palname2, filename2);
 				strcat( palname2, pal_extension);
@@ -466,7 +466,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 		case ENCYC_WEAPONS:
 			strcpy( filename, DIR_ENCYC );
-			strcat( filename, DEFAULT_DIR_ENCYC_UNIT );
+			strcat( filename, "UNIT" PATH_DELIM );
 			strcat( filename, weapon_name[selSubClass-1] );
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
@@ -474,7 +474,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
-				strcat( filename2, DEFAULT_DIR_ENCYC_UNIT );
+				strcat( filename2, "UNIT" PATH_DELIM );
 				strcat( filename2, weapon_name[selSubClass-1] );
 				strcpy( palname2, filename2);
 				strcat( palname2, pal_extension);
@@ -484,7 +484,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 		case ENCYC_SHIPS:
 			strcpy( filename, DIR_ENCYC );
-			strcat( filename, DEFAULT_DIR_ENCYC_UNIT );
+			strcat( filename, "UNIT" PATH_DELIM );
 			strcat( filename, ship_name[selSubClass-1] );
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
@@ -492,7 +492,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
-				strcat( filename2, DEFAULT_DIR_ENCYC_UNIT );
+				strcat( filename2, "UNIT" PATH_DELIM );
 				strcat( filename2, ship_name[selSubClass-1] );
 				strcpy( palname2, filename2);
 				strcat( palname2, pal_extension);
@@ -502,7 +502,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 		case ENCYC_STRUCTURES:
 			strcpy( filename, DIR_ENCYC );
-			strcat( filename, DEFAULT_DIR_ENCYC_FIRM );
+			strcat( filename, "FIRM" PATH_DELIM );
 			strcat( filename, firm_name[selSubClass-1] );
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
@@ -510,7 +510,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
-				strcat( filename2, DEFAULT_DIR_ENCYC_FIRM );
+				strcat( filename2, "FIRM" PATH_DELIM );
 				strcat( filename2, firm_name[selSubClass-1] );
 				strcpy( palname2, filename2);
 				strcat( palname2, pal_extension);
@@ -520,7 +520,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 		case ENCYC_PALACE:
 			strcpy( filename, DIR_ENCYC );
-			strcat( filename, DEFAULT_DIR_ENCYC_SEAT );
+			strcat( filename, "SEAT" PATH_DELIM );
 			strcat( filename, race_name[selSubClass-1] );
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
@@ -528,7 +528,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
-				strcat( filename2, DEFAULT_DIR_ENCYC_SEAT );
+				strcat( filename2, "SEAT" PATH_DELIM );
 				strcat( filename2, race_name[selSubClass-1] );
 				strcpy( palname2, filename2);
 				strcat( palname2, pal_extension);
@@ -538,7 +538,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 		case ENCYC_GOD:
 			strcpy( filename, DIR_ENCYC );
-			strcat( filename, DEFAULT_DIR_ENCYC_GOD );
+			strcat( filename, "GOD" PATH_DELIM );
 			strcat( filename, god_name[selSubClass-1] );
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
@@ -546,7 +546,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
-				strcat( filename2, DEFAULT_DIR_ENCYC_GOD );
+				strcat( filename2, "GOD" PATH_DELIM );
 				strcat( filename2, god_name[selSubClass-1] );
 				strcpy( palname2, filename2);
 				strcat( palname2, pal_extension);
@@ -556,7 +556,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 		case ENCYC_FRYHTANS:
 			strcpy( filename, DIR_ENCYC );
-			strcat( filename, DEFAULT_DIR_ENCYC_MONSTER );
+			strcat( filename, "MONSTER" PATH_DELIM );
 			strcat( filename, monster_name[selSubClass-1] );
 			strcpy( palname, filename);
 			strcat( palname, pal_extension);
@@ -564,7 +564,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 			if( DIR_ENCYC2[0] )
 			{
 				strcpy( filename2, DIR_ENCYC2 );
-				strcat( filename2, DEFAULT_DIR_ENCYC_MONSTER );
+				strcat( filename2, "MONSTER" PATH_DELIM );
 				strcat( filename2, monster_name[selSubClass-1] );
 				strcpy( palname2, filename2);
 				strcat( palname2, pal_extension);

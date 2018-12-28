@@ -1372,6 +1372,11 @@ int Power::detect_select(int selX1, int selY1, int selX2, int selY2, int recallG
 
 		reset_command();		// reset current command when a new unit is selected
 
+		//--- update worker display for selected firm ---//
+
+		if( selectedFirmRecno )
+			firm_array[selectedFirmRecno]->sort_worker();
+
 		//--- group them automatically if a group of units are selected ---//
 
 //		if( unit_array.selected_count > 1 )

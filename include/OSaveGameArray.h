@@ -28,8 +28,14 @@
 #include <ODYNARR.h>
 #endif
 
+#include <ODIR.h>
 #include <OSaveGameInfo.h>
 
+struct SaveGame
+{
+	FileInfo file_info;
+	SaveGameInfo header;
+};
 
 class SaveGameArray : private DynArray
 {
@@ -46,20 +52,20 @@ public:
 
 	int save_new_game(const char* =NULL); // save a new game immediately without prompting menu
 
-	SaveGameInfo* operator[](int recNo);
+	SaveGame* operator[](int recNo);
 
 private:
 	void set_file_name(char* /*out*/ fileName, int size);
 
 	void disp_browse();
-	static void disp_entry_info(const SaveGameInfo* entry, int x, int y);
+	static void disp_entry_info(const SaveGame* entry, int x, int y);
 	void load_all_game_header(const char *extStr);
 	int  process_action(int=0);
 	void del_game();
 
 private:
 	bool     has_fetched_last_file_name_from_hall_of_fame;
-	char     last_file_name[MAX_PATH+1]; // (persisted via HallOfFame)
+	char     last_file_name[SaveGameInfo::MAX_FILE_PATH+1]; // (persisted via HallOfFame)
 };
 
 extern SaveGameArray save_game_array;

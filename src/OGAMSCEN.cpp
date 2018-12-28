@@ -25,6 +25,7 @@
 #include <OSYS.h>
 #include <ONEWS.h>
 #include <ODATE.h>
+#include <OGFILE.h>
 #include <OSaveGameArray.h>
 #include <OSaveGameProvider.h>
 #include <OF_MONS.h>
@@ -148,8 +149,7 @@ int Game::run_scenario(ScenInfo* scenInfo)
 		strcpy(playerName, config.player_name);
 		// ###### end Gilbert 1/11 #########//
 
-		String errorMessage;
-		if( SaveGameProvider::load_scenario(str, /*out*/ errorMessage) > 0 )
+		if( SaveGameProvider::load_scenario(str) > 0 )
 		{
 			init_scenario_var(scenInfo);
 
@@ -165,8 +165,9 @@ int Game::run_scenario(ScenInfo* scenInfo)
 
 			battle.run_loaded();
 		}
-		else {
-			box.msg(errorMessage);
+		else
+		{
+			box.msg(GameFile::status_str());
 		}
 		game.deinit();
 		return 1;

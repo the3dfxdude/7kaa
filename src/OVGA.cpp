@@ -28,6 +28,7 @@
 #include <OSYS.h>
 #include <dbglog.h>
 #include <version.h>
+#include <FilePath.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
 
@@ -165,7 +166,9 @@ int Vga::init()
       return 0;
    }
 
-   icon = SDL_LoadBMP(DEFAULT_DIR_IMAGE "7k_icon.bmp");
+   FilePath icon_path(sys.dir_image);
+   icon_path += "7K_ICON.BMP";
+   icon = SDL_LoadBMP(icon_path);
    if (icon)
    {
       Uint32 colorkey;
@@ -365,6 +368,13 @@ void Vga::handle_messages()
       case SDL_WINDOWEVENT:
          switch (event.window.event)
          {
+            case SDL_WINDOWEVENT_EXPOSED:
+            case SDL_WINDOWEVENT_RESIZED:
+               sys.need_redraw_flag = 1;
+               update_mouse_pos();
+               boundary_set = 0;
+               break;
+
             //case SDL_WINDOWEVENT_ENTER: // Do not respond to mouse focus
             case SDL_WINDOWEVENT_FOCUS_GAINED:
             case SDL_WINDOWEVENT_RESTORED:
@@ -385,11 +395,6 @@ void Vga::handle_messages()
                // turn the system cursor back on to get around a fullscreen
                // mouse grabbed problem on windows
                SDL_ShowCursor(SDL_ENABLE);
-               break;
-
-            case SDL_WINDOWEVENT_EXPOSED:
-               sys.need_redraw_flag = 1;
-               update_mouse_pos();
                break;
          }
          break;
@@ -777,13 +782,14 @@ void Vga::flip()
 //-------- Beginning of function Vga::save_status_report ----------//
 void Vga::save_status_report()
 {
-   char path[MAX_PATH+1];
+   FilePath path(sys.dir_config);
    FILE *file;
    int num, i;
    const char *s;
    SDL_version ver;
 
-   if( !misc.path_cat(path, sys.dir_config, "sdl.txt", MAX_PATH) )
+   path += "sdl.txt";
+   if( path.error_flag )
       return;
 
    file = fopen(path, "w");

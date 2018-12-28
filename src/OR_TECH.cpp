@@ -67,6 +67,11 @@ static void put_tech_rec(int recNo, int x, int y, int refreshFlag);
 static void put_god_rec(int recNo, int x, int y, int refreshFlag);
 static void disp_owned_scroll();
 static void disp_scroll(int x, int y, int raceId);
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr);
+
+#define J_L Font::LEFT_JUSTIFY
+#define J_C Font::CENTER_JUSTIFY
+#define J_R Font::RIGHT_JUSTIFY
 
 //--------- Begin of function Info::disp_tech ---------//
 //
@@ -79,7 +84,7 @@ void Info::disp_tech(int refreshFlag)
 
 	vga_back.d3_panel_up(TECH_BROWSE_X1, TECH_BROWSE_Y1, TECH_BROWSE_X2, TECH_BROWSE_Y1+32 );
 
-	font_san.put( x	 , y+7, _("Technology") );
+	put_heading( J_L, x, y, x+160, y+29, _("Technology") );
 
 #if(defined(SPANISH))
 	font_san.put( x+160, y   , "Version" );
@@ -106,22 +111,10 @@ void Info::disp_tech(int refreshFlag)
 	font_san.put( x+462, y+13, "Savoir" );
 #else
 	// German and US
-	// TRANSLATORS: Part of "Present Version"
-	font_san.put( x+160, y   , _("Present") );
-	// TRANSLATORS: Part of "Present Version"
-	font_san.put( x+160, y+13, _("Version") );
-
-	// TRANSLATORS: Part of "Researching Version"
-	font_san.put( x+230, y   , _("Researching") );
-	// TRANSLATORS: Part of "Researching Version"
-	font_san.put( x+245, y+13, _("Version") );
-
-	font_san.put( x+320, y+7, _("Research Progress") );
-
-	// TRANSLATORS: Part of "Tower of Science"
-	font_san.put( x+460, y   , _("Tower of") );
-	// TRANSLATORS: Part of "Tower of Science"
-	font_san.put( x+462, y+13, _("Science") );
+	put_heading( J_L, x+160, y, x+230, y+29, _("Present Version") );
+	put_heading( J_L, x+230, y, x+320, y+29, _("Researching Version") );
+	put_heading( J_L, x+320, y, x+460, y+29, _("Research Progress") );
+	put_heading( J_L, x+460, y, TECH_BROWSE_X2-20, y+29, _("Tower of Science") );
 #endif
 
 	if( refreshFlag == INFO_REPAINT )
@@ -399,3 +392,17 @@ static void disp_owned_scroll()
 }
 //----------- End of static function disp_owned_scroll -----------//
 
+
+//-------- Begin of static function put_heading --------//
+//
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr)
+{
+	int dispLines=0;
+	int totalLines=0;
+	font_san.count_line(x1,y1,x2,y2,textPtr,0,dispLines,totalLines);
+	if( dispLines > 1 )
+		font_san.put_paragraph(x1,y1,x2,y2,textPtr,-1,1,1,justify);
+	else if( y1+7<y2 )
+		font_san.put_paragraph(x1,y1+7,x2,y2,textPtr,-1,1,1,justify);
+}
+//----------- End of static function put_heading -----------//

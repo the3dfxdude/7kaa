@@ -990,8 +990,9 @@ static void i_disp_queue_skill_button(ButtonCustom *button, int repaintBody)
 //
 void Town::detect_train_menu()
 {
-	int	x=INFO_X1+2, y=INFO_Y1+24, rc, quitFlag;
+	int	x=INFO_X1+2, y=INFO_Y1+24, rc, quitFlag, waitFlag;
 
+	waitFlag = 0;
 	for(int b=1; b<=MAX_TRAINABLE_SKILL; ++b)
 	{
 		// ###### begin Gilbert 10/9 ########//
@@ -1002,11 +1003,15 @@ void Town::detect_train_menu()
 			quitFlag = 0;		// don't quit the menu right after pressing the button
 		}
 		//------ detect pressing on the big button -------//
-		else if( (rc= button_skill[b-1].detect(0,0,2)) != 0)
+		// but defer to the queue button if clicked over that
+		else if( !button_queue_skill[b-1].button_wait && ((rc= button_skill[b-1].detect(0,0,2)) != 0) )
 		{
 			quitFlag = 1;		// quit the menu right after pressing the button
 		}
 		// ###### end Gilbert 10/9 ########//
+
+		if( button_queue_skill[b-1].button_wait || button_skill[b-1].button_wait )
+			waitFlag = 1;
 
 		int shiftPressed = mouse.event_skey_state & SHIFT_KEY_MASK;
 
@@ -1065,7 +1070,7 @@ void Town::detect_train_menu()
 	}
 	//------ detect the cancel button --------//
 
-	if( button_cancel3.detect() || mouse.any_click(1) )		// press the cancel button or right click
+	if( button_cancel3.detect() || (!waitFlag && mouse.any_click(1)) )		// press the cancel button or right click
 	{
 		// ##### begin Gilbert 26/9 ########//
 		se_ctrl.immediate_sound("TURN_OFF");

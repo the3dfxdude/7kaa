@@ -22,6 +22,7 @@
 //Description : Provides the interface between the UI and the save game handling logic
 
 
+#include <OSaveGameArray.h>
 #include <OSaveGameProvider.h>
 #include <OSaveGameInfo.h>
 #include <OMISC.h>
@@ -31,13 +32,14 @@
 #include <OPOWER.h> // TODO: There might be an even better (higher-level / UI) place to do this (power.win_opened)
 #include <OMOUSECR.h>
 #include <dbglog.h>
-
 #include "gettext.h"
+#include <FilePath.h>
 
-#ifdef NO_WINDOWS
-#include <unistd.h>
-#else
+#ifdef USE_WINDOWS
 #include <io.h>
+#endif
+#ifdef USE_POSIX
+#include <unistd.h>
 #endif
 
 DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
@@ -47,16 +49,13 @@ DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 //
 // Enumerates all the savegames that match the wildcard pattern, calling callback for each savegame.
 //
-void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const std::function<void(const SaveGameInfo* saveGameInfo)>& callback)
+void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const std::function<void(const SaveGame* saveGame)>& callback)
 {
-	const char* const directory = sys.dir_config;
+	FilePath full_path(sys.dir_config);
 
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, directory, filenameWildcard, MAX_PATH))
-	{
-		ERR("Path to the config directory too long.\n");
+	full_path += filenameWildcard;
+	if( full_path.error_flag )
 		return;
-	}
 
 	Directory saveGameDirectory;
 	saveGameDirectory.read(full_path, 0);  // 0-Don't sort file names
@@ -66,24 +65,17 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 	for( int i=1 ; i<=saveGameDirectory.size() ; i++ )
 	{
 		const char* const saveGameName = saveGameDirectory[i]->name;
-		String errorMessage;
-		char save_game_path[MAX_PATH+1];
-		if (!misc.path_cat(save_game_path, directory, saveGameName, MAX_PATH))
-		{
-			ERR("Path to saved game '%s' too long\n", saveGameName);
-			continue;
-		}
+		FilePath save_game_path(sys.dir_config);
 
-		SaveGameInfo saveGameInfo;
-		if( GameFile::read_header(save_game_path, &saveGameInfo, /*out*/ errorMessage) )
+		save_game_path += saveGameName;
+		if( save_game_path.error_flag )
+			continue;
+
+		SaveGame saveGame;
+		if( GameFile::read_header(save_game_path, &saveGame.header) )
 		{
-			strncpy(saveGameInfo.file_name, saveGameName, MAX_PATH); // in case file names are different
-			saveGameInfo.file_date = saveGameDirectory[i]->time;
-			callback(&saveGameInfo);
-		}
-		else
-		{
-			ERR("Failed to enumerate savegame '%s': %s\n", saveGameName, (const char*)errorMessage);
+			saveGame.file_info = *saveGameDirectory[i];
+			callback(&saveGame);
 		}
 	}
 }
@@ -95,12 +87,11 @@ void SaveGameProvider::enumerate_savegames(const char* filenameWildcard, const s
 // Deletes the savegame whose file part of filename is saveGameName.
 //
 void SaveGameProvider::delete_savegame(const char* saveGameName) {
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, saveGameName, MAX_PATH))
-	{
-		ERR("Path to the saved game too long.\n");
+	FilePath full_path(sys.dir_config);
+
+	full_path += saveGameName;
+	if( full_path.error_flag )
 		return;
-	}
 
 	unlink(full_path);
 }
@@ -111,10 +102,10 @@ void SaveGameProvider::delete_savegame(const char* saveGameName) {
 //
 // Save the current game under the file specified by newFileName.
 //
-bool SaveGameProvider::save_game(const char* newFileName, String& /*out*/ errorMessage)
+bool SaveGameProvider::save_game(const char* newFileName)
 {
 	SaveGameInfo newSaveGameInfo;
-	return save_game(newFileName, /*out*/ &newSaveGameInfo, /*out*/ errorMessage);
+	return save_game(newFileName, /*out*/ &newSaveGameInfo);
 }
 //-------- End of function SaveGameProvider::save_game(1) --------//
 
@@ -123,23 +114,21 @@ bool SaveGameProvider::save_game(const char* newFileName, String& /*out*/ errorM
 //
 // Save the current game under the file specified by newFileName. Sets saveGameInfo to the new savegame information on success.
 //
-bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ saveGameInfo)
 {
-	// Note: we cannot assume that newFileName and saveGameInfo->file_name are different addresses, so we must take care when copying between the two.
-
 	bool success = true;
 
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, newFileName, MAX_PATH))
+	FilePath full_path(sys.dir_config);
+	full_path += newFileName;
+	if( full_path.error_flag )
 	{
 		success = false;
-		errorMessage = _("Path too long to the saved game");
 	}
 
 	power.win_opened=1;				// to disable power.mouse_handler()
 
 	SaveGameInfo newSaveGameInfo = SaveGameInfoFromCurrentGame(newFileName);
-	success = success && GameFile::save_game(full_path, newSaveGameInfo, /*out*/ errorMessage);
+	success = success && GameFile::save_game(full_path, newSaveGameInfo);
 
 	power.win_opened=0;
 
@@ -159,30 +148,19 @@ bool SaveGameProvider::save_game(const char* newFileName, SaveGameInfo* /*out*/ 
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
-int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ saveGameInfo)
 {
-	// Note: we cannot assume that fileName and saveGameInfo->file_name are different addresses, so we must take care when copying between the two.
-
 	int rc = 1;
-	char full_path[MAX_PATH+1];
-	if (!misc.path_cat(full_path, sys.dir_config, fileName, MAX_PATH))
+	FilePath full_path(sys.dir_config);
+	full_path += fileName;
+	if( full_path.error_flag )
 	{
 		rc = 0;
-		errorMessage = _("Path too long to the saved game");
 	}
 
 	if (rc > 0)
 	{
-		rc = load_game_from_file(full_path, /*out*/ saveGameInfo, /*out*/ errorMessage);
-	}
-
-	if (rc > 0)
-	{
-		// Fixup file name if stored file_name is different than actual file name
-		if (saveGameInfo->file_name != fileName /*(comparison as pointers)*/) {
-			strncpy(saveGameInfo->file_name, fileName, MAX_PATH);
-			saveGameInfo->file_name[MAX_PATH] = '\0';
-		}
+		rc = load_game_from_file(full_path, /*out*/ saveGameInfo);
 	}
 
 	return rc;
@@ -197,10 +175,10 @@ int SaveGameProvider::load_game(const char* fileName, SaveGameInfo* /*out*/ save
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
-int SaveGameProvider::load_scenario(const char* filePath, String& /*out*/ errorMessage)
+int SaveGameProvider::load_scenario(const char* filePath)
 {
 	SaveGameInfo saveGameInfo;
-	return load_game_from_file(filePath, /*out*/ &saveGameInfo, /*out*/ errorMessage);
+	return load_game_from_file(filePath, /*out*/ &saveGameInfo);
 }
 //-------- End of function SaveGameProvider::load_scenario --------//
 
@@ -212,14 +190,14 @@ int SaveGameProvider::load_scenario(const char* filePath, String& /*out*/ errorM
 //                0 - not loaded.
 //               -1 - error and partially loaded
 //
-int SaveGameProvider::load_game_from_file(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo, String& /*out*/ errorMessage)
+int SaveGameProvider::load_game_from_file(const char* filePath, SaveGameInfo* /*out*/ saveGameInfo)
 {
 	power.win_opened=1;				// to disable power.mouse_handler()
 	const int oldCursor = mouse_cursor.get_icon();
 	mouse_cursor.set_icon( CURSOR_WAITING );
 	const int powerEnableFlag = power.enable_flag;
 
-	int rc = GameFile::load_game(filePath, /*out*/ saveGameInfo, /*out*/ errorMessage);
+	int rc = GameFile::load_game(filePath, /*out*/ saveGameInfo);
 
 	mouse_cursor.set_frame(0);		// to fix a frame bug with loading game
 

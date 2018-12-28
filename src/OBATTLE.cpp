@@ -47,6 +47,7 @@
 #include <OMOUSECR.h>
 #include <vga_util.h>
 #include <CmdLine.h>
+#include <FilePath.h>
 
 //---------- define static functions -------------//
 
@@ -184,6 +185,15 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 
 	if( sys.testing_session )
 		config.show_unit_path = 3;
+
+	if( game.game_mode == GAME_DEMO )
+	{
+		// observation mode
+		world.unveil(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1);
+		world.visit(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1, 0, 0);
+
+		config.blacken_map = 0;
+	}
 
 	// ######## begin Gilbert 11/11 #######//
 	// enable tech and god, useful for multi-player
@@ -650,13 +660,15 @@ void Battle::run_replay()
 {
 	NewNationPara *mpGame = (NewNationPara *)mem_add(sizeof(NewNationPara)*MAX_NATION);
 	int mpPlayerCount = 0;
-	char full_path[MAX_PATH+1];
+	FilePath full_path(sys.dir_config);
+
+	full_path += "NONAME.RPL";
+	if( full_path.error_flag )
+		return;
 
 	game.game_mode = GAME_DEMO;
 	game.game_has_ended = 1;
 
-	if( !misc.path_cat(full_path, sys.dir_config, "noname.rpl", MAX_PATH) )
-		return;
 	if( !remote.init_replay_load(full_path, mpGame, &mpPlayerCount) )
 		return;
 	battle.run(mpGame, mpPlayerCount);

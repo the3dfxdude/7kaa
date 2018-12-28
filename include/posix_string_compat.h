@@ -25,7 +25,7 @@
 
 #include <string.h>
 
-#ifdef NO_WINDOWS
+#ifndef USE_WINDOWS
 #include <strings.h>
 #define strcmpi(s1,s2) strcasecmp(s1,s2)
 #define strnicmp(s1,s2,len) strncasecmp(s1,s2,len)

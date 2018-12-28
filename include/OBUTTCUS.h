@@ -53,6 +53,9 @@ public:
 	char  	  		enable_flag;   // either 1(Yes) or 0(No)
 	char  	  		elastic_flag;
 
+	char			button_wait; // user pushed button and waiting for release
+	uint32_t		button_wait_timeout;
+
 	unsigned short button_key;     // button is pressed when user press this key
 	
 	ButtonCustomFP	body_fp;

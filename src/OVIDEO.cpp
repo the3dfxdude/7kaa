@@ -22,7 +22,7 @@
 //Description : Video for Windows playback class
 //Owner       : Gilbert
 
-#if !defined(NO_WINDOWS) && ENABLE_INTRO_VIDEO
+#ifdef ENABLE_INTRO_VIDEO
 // for some .h files to define some IIDs
 #include <windows.h>
 #include <windowsx.h>

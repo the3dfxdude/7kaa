@@ -67,6 +67,11 @@ static int   nation_filter(int recNo=0);
 static void  disp_score();
 static void	 disp_goal();
 static void	 disp_play_time(int y1);
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr);
+
+#define J_L Font::LEFT_JUSTIFY
+#define J_C Font::CENTER_JUSTIFY
+#define J_R Font::RIGHT_JUSTIFY
 
 //--------- Begin of function Info::disp_rank ---------//
 //
@@ -79,15 +84,12 @@ void Info::disp_rank(int refreshFlag)
 
 	vga_back.d3_panel_up(NATION_BROWSE_X1, NATION_BROWSE_Y1, NATION_BROWSE_X2, NATION_BROWSE_Y1+32 );
 
-	font_san.put( x	 , y+7, _("Kingdom") );
-	font_san.put( x+180, y+7, _("Population") );
-	font_san.put( x+264, y+7, _("Military") );
-	font_san.put( x+332, y+7, _("Economy") );
-	font_san.put( x+406, y+7, _("Reputation") );
-	// TRANSLATORS: Part of "Fryhtan Battling"
-	font_san.put( x+484, y  , _("Fryhtan") );
-	// TRANSLATORS: Part of "Fryhtan Battling"
-	font_san.put( x+484, y+13, _("Battling") );
+	put_heading( J_L, x    , y, x+180, y+29, _("Kingdom") );
+	put_heading( J_C, x+180, y, x+264, y+29, _("Population") );
+	put_heading( J_L, x+264, y, x+332, y+29, _("Military") );
+	put_heading( J_L, x+332, y, x+406, y+29, _("Economy") );
+	put_heading( J_L, x+406, y, x+484, y+29, _("Reputation") );
+	put_heading( J_L, x+484, y, NATION_BROWSE_X2-20, y+29, _("Fryhtan Battling") );
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -537,3 +539,18 @@ int Info::get_total_score(int nationRecno)
 	return totalScore;
 }
 //----------- End of function Info::get_total_score -----------//
+
+
+//-------- Begin of static function put_heading --------//
+//
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr)
+{
+	int dispLines=0;
+	int totalLines=0;
+	font_san.count_line(x1,y1,x2,y2,textPtr,0,dispLines,totalLines);
+	if( dispLines > 1 )
+		font_san.put_paragraph(x1,y1,x2,y2,textPtr,-1,1,1,justify);
+	else if( y1+7<y2 )
+		font_san.put_paragraph(x1,y1+7,x2,y2,textPtr,-1,1,1,justify);
+}
+//----------- End of static function put_heading -----------//

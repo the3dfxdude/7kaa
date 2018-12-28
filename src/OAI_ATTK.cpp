@@ -226,6 +226,9 @@ int Nation::ai_attack_target(int targetXLoc, int targetYLoc, int targetCombatLev
 		if( firmCamp->firm_recno == kingFirmRecno )
 			continue;
 
+		if( leadAttackCampRecno && firmCamp->firm_recno == leadAttackCampRecno )
+			continue; // don't double count
+
 		//---- don't order this camp if the overseer is injured ----//
 
 		Unit* overseerUnit = unit_array[firmCamp->overseer_recno];
@@ -337,6 +340,9 @@ int Nation::ai_attack_target(int targetXLoc, int targetYLoc, int targetCombatLev
 
 					if( firmCamp->is_attack_camp )
 						continue;
+
+					if( leadAttackCampRecno && firmCamp->firm_recno == leadAttackCampRecno )
+						continue; // don't double count
 
 					totalCombatLevel += firmCamp->total_combat_level();
 
@@ -787,8 +793,10 @@ static int sort_attack_camp_function( const void *a, const void *b )
 {
 	int ratingA = ((AttackCamp*)a)->combat_level - ((AttackCamp*)a)->distance;
 	int ratingB = ((AttackCamp*)b)->combat_level - ((AttackCamp*)b)->distance;
-
-	return ratingB - ratingA;
+	int rc = ratingB - ratingA;
+	if( rc )
+		return rc;
+	return ((AttackCamp*)b)->firm_recno - ((AttackCamp*)a)->firm_recno;
 }
 //------- End of function sort_attack_camp_function ------//
 

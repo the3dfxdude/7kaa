@@ -24,7 +24,7 @@
 #ifndef __OFILE_H
 #define __OFILE_H
 
-#include <storage_constants.h>
+#include <FilePath.h>
 
 #include <stdio.h>
 #include <stdint.h>
@@ -37,7 +37,7 @@ public:
 
 	enum  FileType { FLAT = 0, STRUCTURED = 1 };
 
-	char     file_name[MAX_PATH+1];
+	char     file_name[FilePath::MAX_FILE_PATH];
 	FILE*    file_handle;
 	int      handle_error;
 	FileType file_type;

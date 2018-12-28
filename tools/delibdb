@@ -35,7 +35,7 @@ if (@ARGV != 4) {
 }
 my ($dbf_file, $res_file, $filename_field, $ptr_field, $ext) = @ARGV;
 if (!defined($ext)) {
-	$ext = '.icn';
+	$ext = '.ICN';
 }
 my $res_fh;
 

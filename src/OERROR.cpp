@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 #include <windows.h> // OutputDebugString
 #endif
 
@@ -121,7 +121,7 @@ void Error::internal(char* errMsg,const char* fileName,int lineNum)
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 	OutputDebugString( strBuf );
 #endif
 
@@ -164,7 +164,7 @@ void Error::mem()
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 	OutputDebugString( strBuf );
 #endif
 
@@ -208,7 +208,7 @@ void Error::msg( const char *format, ... )
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 	OutputDebugString( strBuf );
 #endif
 
@@ -260,7 +260,7 @@ void Error::run( const char *format, ... )
 	//-------- display error message -------//
 
 	ERR("%s\n", strBuf);
-#ifndef NO_WINDOWS
+#ifdef USE_WINDOWS
 	OutputDebugString( strBuf );
 #endif
 

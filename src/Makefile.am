@@ -291,6 +291,11 @@ AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\"$(pkgdatadir)\" \
 	-DLOCALE_DIR=\"$(localedir)\"
 
+AM_CXXFLAGS = $(GLOBAL_CFLAGS)
+AM_CXXFLAGS += $(SDL_CFLAGS)
+
+AM_LDFLAGS = $(GLOBAL_LDFLAGS)
+
 7kaa_LDADD =
 
 if AUDIO_OPENAL
@@ -313,10 +318,11 @@ endif
 
 if USE_WINDOWS
 7kaa_SOURCES += ico.rc
+endif
+
 SUFFIXES = .rc
 .rc.o:
-	windres -I "$(top_srcdir)/include" -i $< $@
+	$(WINDRES) -I "$(top_srcdir)/include" -i $< $@
 ico.o: $(top_srcdir)/include/version.h 7k.ico
-endif
 
 EXTRA_DIST = 7k.ico ico.rc
