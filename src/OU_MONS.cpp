@@ -70,6 +70,9 @@ char* UnitMonster::unit_name(int withTitle)
 			// TRANSLATORS: "<monster type> Ordo" which describes a general-ranking monster
 			snprintf( str, MAX_STR_LEN+1, _("%s Ordo"), monsterName );
 			break;
+
+		default:
+			str = monsterName;
 	}
 
 	return str;
