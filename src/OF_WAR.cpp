@@ -292,9 +292,10 @@ void FirmWar::disp_build_menu(int refreshFlag)
 void FirmWar::detect_build_menu()
 {
 
-	int 	 	 unitId, x=INFO_X1+2, y=INFO_Y1, rc, quitFlag;
+	int 	 	 unitId, x=INFO_X1+2, y=INFO_Y1, rc, quitFlag, waitFlag;
 	UnitInfo* unitInfo;
 
+	waitFlag = 0;
 	for( int b = 0; b < added_count; ++b)
 	{
 		// ##### begin Gilbert 10/9 ######//
@@ -320,9 +321,13 @@ void FirmWar::detect_build_menu()
 		}
 		// ######## end Gilbert 10/9 #########//
 
+		if( button_queue_weapon[b].button_wait || button_weapon[b].button_wait )
+			waitFlag = 1;
+
 		int shiftPressed = mouse.event_skey_state & SHIFT_KEY_MASK;
 
 		//------- process the action --------//
+
 
 		if( rc > 0 )
 		{
@@ -377,7 +382,7 @@ void FirmWar::detect_build_menu()
 	}
 	//------ detect the cancel button --------//
 
-	if( button_cancel.detect() )
+	if( button_cancel.detect() || (!waitFlag && mouse.any_click(1)) )
 	{
 		// ##### begin Gilbert 25/9 ######//
 		se_ctrl.immediate_sound("TURN_OFF");
