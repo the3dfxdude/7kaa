@@ -314,7 +314,7 @@ void FirmWar::detect_build_menu()
 
 		//------ detect pressing on the big button -------//
 
-		else if( (rc = button_weapon[b].detect(0,0,2)) != 0 )
+		else if( !button_queue_weapon[b].button_wait && ((rc = button_weapon[b].detect(0,0,2)) != 0) )
 		{
 			quitFlag = 1;		// quit the menu right after pressing the button
 		}
