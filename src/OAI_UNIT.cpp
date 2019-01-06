@@ -45,6 +45,8 @@ Unit* Nation::get_skilled_unit(int skillId, int raceId, ActionNode* actionNode)
 
 	if(actionNode->unit_recno) // a unit has started training previously
 	{
+		if( unit_array.is_deleted(actionNode->unit_recno) )
+			return NULL; // but unit is lost already and action has failed
 		skilledUnit = unit_array[actionNode->unit_recno];
 	}
 	else
