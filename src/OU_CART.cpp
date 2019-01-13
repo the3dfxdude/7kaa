@@ -108,15 +108,15 @@ int UnitExpCart::process_die()
 					Location *locPtr = world.get_loc(x,y);
 					if( locPtr->has_unit(UNIT_LAND) )
 					{
-						hit_target(this, unit_array[locPtr->unit_recno(UNIT_LAND)], (float) EXPLODE_DAMAGE);
+						hit_target(this, unit_array[locPtr->unit_recno(UNIT_LAND)], (float) EXPLODE_DAMAGE, nation_recno);
 					}
 					else if( locPtr->has_unit(UNIT_SEA) )
 					{
-						hit_target(this, unit_array[locPtr->unit_recno(UNIT_SEA)], (float) EXPLODE_DAMAGE);
+						hit_target(this, unit_array[locPtr->unit_recno(UNIT_SEA)], (float) EXPLODE_DAMAGE, nation_recno);
 					}
 					else if( locPtr->is_wall() )
 					{
-						hit_wall(this, x, y, (float) EXPLODE_DAMAGE);
+						hit_wall(this, x, y, (float) EXPLODE_DAMAGE, nation_recno);
 					}
 					else if( locPtr->is_plant() )
 					{
@@ -125,7 +125,7 @@ int UnitExpCart::process_die()
 					}
 					else
 					{
-						hit_building(this, x, y, (float) EXPLODE_DAMAGE);
+						hit_building(this, x, y, (float) EXPLODE_DAMAGE, nation_recno);
 					}
 				}
 			}

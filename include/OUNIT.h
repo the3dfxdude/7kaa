@@ -476,11 +476,11 @@ public:
 	void  attack_town(int townXLoc, int townYLoc, int xOffset=0, int yOffset=0, int resetBlockedEdge=1);
 	void  attack_wall(int wallXLoc, int wallYLoc, int xOffset=0, int yOffset=0, int resetBlockedEdge=1);
 
-	void  hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage);
-	void  hit_building(Unit* parentUnit, int targetXLoc, int targetYLoc, float attackDamage);
-	void  hit_firm(Unit* parentUnit, int targetXLoc, int targetYLoc, float attackDamage);
-	void  hit_town(Unit* parentUnit, int targetXLoc, int targetYLoc, float attackDamage);
-	void  hit_wall(Unit* attackUnit, int targetXLoc, int targetYLoc, float attackDamage);
+	void  hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, short parentNationRecno);
+	void  hit_building(Unit* attackUnit, int targetXLoc, int targetYLoc, float attackDamage, short attackNationRecno);
+	void  hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float attackDamage, short attackNationRecno);
+	void  hit_town(Unit* attackUnit, int targetXLoc, int targetYLoc, float attackDamage, short attackNationRecno);
+	void  hit_wall(Unit* attackUnit, int targetXLoc, int targetYLoc, float attackDamage, short attackNationRecno);
 
 	int   max_attack_range();
 	void  gain_experience();

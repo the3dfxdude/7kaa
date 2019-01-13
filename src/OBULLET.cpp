@@ -321,7 +321,7 @@ void Bullet::hit_target(short x, short y)
 		}
 	}
 
-	targetUnit->hit_target(parentUnit, targetUnit, attackDamage);
+	targetUnit->hit_target(parentUnit, targetUnit, attackDamage, nation_recno);
 }
 //---------- End of function Bullet::hit_target ----------//
 
@@ -382,7 +382,7 @@ void Bullet::hit_building(short x, short y)
 	else
 		virtualUnit = parentUnit = unit_array[parent_recno];
 
-	virtualUnit->hit_building(parentUnit, target_x_loc, target_y_loc, attackDamage);
+	virtualUnit->hit_building(parentUnit, target_x_loc, target_y_loc, attackDamage, nation_recno);
 	// ####### end Gilbert 14/5 ########//
 }
 //---------- End of function Bullet::hit_building ----------//
@@ -427,7 +427,7 @@ void Bullet::hit_wall(short x, short y)
 		virtualUnit = parentUnit = unit_array[parent_recno];
 
 	// ###### begin Gilbert 14/5 #########//
-	virtualUnit->hit_wall(parentUnit, target_x_loc, target_y_loc, attackDamage);
+	virtualUnit->hit_wall(parentUnit, target_x_loc, target_y_loc, attackDamage, nation_recno);
 	// ###### end Gilbert 14/5 ########//
 }
 //---------- End of function Bullet::hit_wall ----------//

@@ -770,7 +770,7 @@ void Unit::attack_target(Unit* targetUnit)
 			if(targetUnit->unit_id == UNIT_EXPLOSIVE_CART && targetUnit->is_nation(nation_recno))
 				((UnitExpCart *)targetUnit)->trigger_explode();
 			else
-				hit_target(this, targetUnit, actual_damage());
+				hit_target(this, targetUnit, actual_damage(), nation_recno);
 
 			// ####### begin Gilbert 14/7 ########//
 			add_close_attack_effect();
@@ -1316,7 +1316,7 @@ void Unit::process_attack_firm()
 			if(cur_frame!=cur_sprite_attack()->frame_count)
 				return; // is attacking
 
-			hit_firm(this, action_x_loc, action_y_loc, actual_damage());
+			hit_firm(this, action_x_loc, action_y_loc, actual_damage(), nation_recno);
 			// ####### begin Gilbert 14/7 ########//
 			add_close_attack_effect();
 			// ####### end Gilbert 14/7 ########//
@@ -1772,7 +1772,7 @@ void Unit::process_attack_town()
 				return; // attacking
 
 			err_when(final_dir != (check_unit_dir1 = get_dir(next_x_loc(), next_y_loc(), targetTown->center_x, targetTown->center_y)));
-			hit_town(this, action_x_loc, action_y_loc, actual_damage());
+			hit_town(this, action_x_loc, action_y_loc, actual_damage(), nation_recno);
 			// ####### begin Gilbert 14/7 ########//
 			add_close_attack_effect();
 			// ####### end Gilbert 14/7 ########//
@@ -2158,7 +2158,7 @@ void Unit::process_attack_wall()
 				return; // attacking
 
 			err_when(final_dir!=(check_unit_dir1=get_dir(move_to_x_loc, move_to_y_loc, action_x_loc, action_y_loc)));
-			hit_wall(this, action_x_loc, action_y_loc, actual_damage());
+			hit_wall(this, action_x_loc, action_y_loc, actual_damage(), nation_recno);
 			// ####### begin Gilbert 14/7 ########//
 			add_close_attack_effect();
 			// ####### end Gilbert 14/7 ########//
