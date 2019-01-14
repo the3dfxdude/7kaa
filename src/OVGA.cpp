@@ -926,7 +926,7 @@ static void init_dpi()
    shcoreDLL = SDL_LoadObject("SHCORE.DLL");
    if (shcoreDLL)
    {
-      pSetProcessDPIAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "pSetProcessDPIAwareness");
+      pSetProcessDPIAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "SetProcessDPIAwareness");
    }
 
    if (pSetProcessDPIAwareness)
@@ -939,7 +939,7 @@ static void init_dpi()
    userDLL = SDL_LoadObject("USER32.DLL");
    if (userDLL)
    {
-      pSetProcessDPIAware = (BOOL(WINAPI *)(void)) SDL_LoadFunction(userDLL, "pSetProcessDPIAware");
+      pSetProcessDPIAware = (BOOL(WINAPI *)(void)) SDL_LoadFunction(userDLL, "SetProcessDPIAware");
    }
 
    if (pSetProcessDPIAware)
