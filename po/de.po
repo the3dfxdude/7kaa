@@ -192,11 +192,11 @@ msgstr "Kampf"
 #: src/OR_TECH.cpp:152 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:117
 #: src/OU_MARIF.cpp:551
 msgid "Hit Points"
-msgstr "Lebenspunkte"
+msgstr "Leben"
 
 #: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1262
 msgid "Spy Skill"
-msgstr "Spionagegeschick"
+msgstr "Spion Skill"
 
 #: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1264
 msgid "Action"
@@ -283,7 +283,7 @@ msgstr "Fertig"
 
 #: src/OF_INN.cpp:406
 msgid "Hiring Cost"
-msgstr "Einstellungskosten"
+msgstr "Anheuern"
 
 #. TRANSLATORS: Part of "You're not permitted to trade with this market."
 #: src/OF_MARK.cpp:408
@@ -319,7 +319,7 @@ msgstr "Nachfrage"
 
 #: src/OF_MARK.cpp:506 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
 msgid "Yearly Income"
-msgstr "Jährliches Einkommen"
+msgstr "Jhrl. Ertrag"
 
 #: src/OF_MINE.cpp:269
 msgid "No Natural Resources"
@@ -713,7 +713,7 @@ msgstr "Königreich"
 #: src/OGAMEND.cpp:464 src/OGAMHALL.cpp:273 src/OR_RANK.cpp:83
 #: src/OTOWNIF.cpp:263
 msgid "Population"
-msgstr "Bevölkerung"
+msgstr "Population"
 
 #: src/OGAMEND.cpp:465 src/OR_RANK.cpp:84 src/OSPYA.cpp:45
 msgid "Military"
@@ -800,6 +800,10 @@ msgstr "Schwierigkeit: "
 #: src/OGAMMAIN.cpp:371 src/OR_TECH.cpp:112 src/OR_TECH.cpp:117
 msgid "Version"
 msgstr "Version"
+msgid "Present Version"
+msgstr "Derzeitige Version"
+msgid "Researching Version"
+msgstr "Forschende Version"
 
 #: src/OGAMSCE2.cpp:132
 msgid "Scenario files not found."
@@ -1220,7 +1224,7 @@ msgstr "Das Dorf %s in %s hat sich ihnen unterworfen."
 #: src/ONEWSENG.cpp:653
 #, c-format
 msgid "The independent village of %s has surrendered to you."
-msgstr "Die unabhängige Dorf %s hat ihnen unterworfen."
+msgstr "Die unabhängige Dorf %s hat sich ihnen unterworfen."
 
 #. TRANSLATORS: An All High <Fryhtan> has been slain.
 #: src/ONEWSENG.cpp:672
@@ -1627,7 +1631,7 @@ msgstr "Ausgaben"
 
 #: src/OR_ECO.cpp:108 src/OR_TOWN.cpp:119
 msgid "Yearly Expense"
-msgstr "Jährliche Ausgaben"
+msgstr "Jhrl. Ausgaben"
 
 #: src/OR_ECO.cpp:168
 msgid "Total Yearly Income"
@@ -1750,6 +1754,8 @@ msgstr "Befehligte"
 #: src/OR_MIL.cpp:101
 msgid "Soldiers"
 msgstr "Soldaten"
+msgid "Commanded Soldiers"
+msgstr "Befehligte Soldaten"
 
 #: src/OR_MIL.cpp:102 src/OR_NAT.cpp:132
 msgid "Status"
@@ -1766,17 +1772,17 @@ msgstr "Anzahl der Einheiten"
 #: src/OR_MIL.cpp:224
 #, c-format
 msgid "Total Commanders: %s"
-msgstr "Befehlshaber insgesamt: %s"
+msgstr "Befehlshaber insg.: %s"
 
 #: src/OR_MIL.cpp:230
 #, c-format
 msgid "Total Soldiers Under Command: %s"
-msgstr "Befehligte Soldaten insgesamt: %s"
+msgstr "Befehligte Soldaten insg.: %s"
 
 #: src/OR_MIL.cpp:236
 #, c-format
 msgid "Total Soldiers: %s"
-msgstr "Soldaten insgesamt: %s"
+msgstr "Soldaten insg.: %s"
 
 #: src/OR_MIL.cpp:283
 #, c-format
@@ -1785,7 +1791,7 @@ msgstr "Einheiten insgesamt: %s"
 
 #: src/OR_MIL.cpp:376
 msgid "In Fort"
-msgstr "In Festung"
+msgstr "Festung"
 
 #: src/OR_MIL.cpp:379
 msgid "In Seat"
@@ -1851,6 +1857,8 @@ msgstr "Angriff"
 msgctxt "OR_NAT"
 msgid "Trade"
 msgstr "Handel"
+msgid "Trade Amount"
+msgstr "Handelsmenge"
 
 #. TRANSLATORS: Part of "Trade Treaty"
 #: src/OR_NAT.cpp:171
@@ -1902,7 +1910,7 @@ msgstr "Dauer des %s Status"
 #: src/OR_NAT.cpp:546
 #, c-format
 msgid "Allow Your Units to Attack %s's Kingdom"
-msgstr "Ihren Einheiten erlauben %s's Königreich anzugreifen"
+msgstr "Einheiten erlauben %s's Königreich anzugreifen"
 
 #. TRANSLATORS: <King>'s Kingdom's Treasure
 #: src/OR_NAT.cpp:561
@@ -1924,7 +1932,7 @@ msgstr "%s's Königreich diplomatische Beziehung zu anderen Königreichen:"
 
 #: src/OR_NAT.cpp:606
 msgid "Trade Treaty"
-msgstr "Handelsvertrag"
+msgstr "Handels Vertrag"
 
 #. TRANSLATORS: To <Nation color> on <Date> :
 #: src/OR_NAT.cpp:865
@@ -2004,7 +2012,7 @@ msgstr "Spion Name"
 
 #: src/OR_SPY.cpp:74
 msgid "Cloak"
-msgstr "Umhang"
+msgstr "Mantel"
 
 #: src/OR_SPY.cpp:75
 msgid "Location"
@@ -2012,7 +2020,7 @@ msgstr "Lage"
 
 #: src/OR_SPY.cpp:76
 msgid "Skill"
-msgstr "Fertigkeit"
+msgstr "Skill"
 
 #: src/OR_SPY.cpp:135
 #, c-format
@@ -2065,7 +2073,7 @@ msgstr "Dorf"
 
 #: src/OR_TOWN.cpp:85
 msgid "Villagers"
-msgstr "Dorfbewohner"
+msgstr "Dörfler"
 
 #: src/OR_TOWN.cpp:86 src/OTOWNIF.cpp:264
 msgid "Peasants"
@@ -2081,7 +2089,7 @@ msgstr "Struktur"
 
 #: src/OR_TOWN.cpp:113
 msgid "Unit Cost"
-msgstr "Einheit Kosten"
+msgstr "1x Kosten"
 
 #: src/OR_TOWN.cpp:117
 msgid "No. of Structures"
@@ -2095,12 +2103,12 @@ msgstr "Dörfer insgesamt: %s"
 #: src/OR_TOWN.cpp:208
 #, c-format
 msgid "Total Villagers: %s"
-msgstr "Dorfbewohner insgesamt: %s"
+msgstr "Dorfbewohner insg.: %s"
 
 #: src/OR_TOWN.cpp:214
 #, c-format
 msgid "Total Peasants: %s"
-msgstr "Bauern insgesamt: %s"
+msgstr "Bauern insg.: %s"
 
 #: src/OR_TOWN.cpp:227
 #, c-format
@@ -2114,7 +2122,7 @@ msgstr "Gesamteinwohnerzahl: %s"
 
 #: src/OR_TOWN.cpp:242 src/OTOWNIF.cpp:290
 msgid "Total"
-msgstr "Insgesamt"
+msgstr "Total"
 
 #: src/OR_TRADE.cpp:82
 msgid "Caravan"
@@ -2216,7 +2224,7 @@ msgstr "Schlaf"
 
 #: src/OSPY.cpp:598
 msgid "Sow Dissent"
-msgstr "Widerspruch säen"
+msgstr "Aufstacheln"
 
 #: src/OSPY.cpp:601
 msgid "Sabotage"
@@ -3121,7 +3129,7 @@ msgstr "Widerstand"
 
 #: src/OTOWNIF.cpp:291
 msgid "Avg"
-msgstr "Durchschnitt"
+msgstr "Drchs"
 
 #: src/OTOWNIF.cpp:325
 msgid "Controlled by Rebels"
@@ -3211,7 +3219,7 @@ msgstr "Minenarbeiter"
 
 #: src/OUNITIF.cpp:1247
 msgid "Worker"
-msgstr "Arbeiter"
+msgstr "Fabrikarbeiter"
 
 #: src/OUNITIF.cpp:1251
 msgid "Scientist"
@@ -3235,7 +3243,7 @@ msgstr "Feinde in der Nähe"
 
 #: src/OUNITIF.cpp:1363
 msgid "Spy Cloak:"
-msgstr "Spion Mantel:"
+msgstr "Farbe:"
 
 #: src/OU_CARA.cpp:184 src/OU_CARA.cpp:205 src/OU_MARIF.cpp:640
 #: src/OU_MARIF.cpp:660
@@ -3760,9 +3768,8 @@ msgstr ""
 "Karavellen und Galeonen erfordern Forschung. Lassen Sie uns zunächst einen "
 "Transport zu bauen."
 
-#, fuzzy
 msgid "Click on the Transport Button. "
-msgstr "Klicken Sie auf die Transport-Schaltfläche."
+msgstr "Klicken sie auf den Transport Button."
 
 #, fuzzy
 msgid ""
@@ -6297,7 +6304,7 @@ msgstr ""
 "wird im unteren Bereich angezeigt werden."
 
 msgid "Cloak & Dagger"
-msgstr "Umhang & Dolch"
+msgstr "Mantel & Dolch"
 
 #, fuzzy
 msgid ""
@@ -7630,14 +7637,14 @@ msgstr ""
 "Wenn Sie hier klicken wird der Handel Stopp dieses Schiffes zu löschen."
 
 msgid "Demolish a structure"
-msgstr "Eine Struktur zerstören"
+msgstr "Struktur zerstören"
 
 #, fuzzy
 msgid "Clicking here will demolish this structure. "
 msgstr "Wenn Sie hier klicken wird diese Struktur zu zerstören."
 
 msgid "Sell a structure"
-msgstr "Eine Struktur verkaufen"
+msgstr "Struktur verkaufen"
 
 #, fuzzy
 msgid "Clicking here will sell this structure. "
