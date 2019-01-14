@@ -152,7 +152,7 @@ int String::at(char* searchStr)
 //
 // A formatted string concatenation
 //
-void String::catf(char *format, ...)
+void String::catf(const char *format, ...)
 {
    va_list valist;
    va_start(valist, format);

@@ -913,8 +913,8 @@ typedef enum PROCESS_DPI_AWARENESS {
    PROCESS_PER_MONITOR_DPI_AWARE = 2
 } PROCESS_DPI_AWARENESS;
 
-BOOL(WINAPI *SetProcessDPIAware)(void); // Vista and later
-HRESULT(WINAPI *SetProcessDpiAwareness)(PROCESS_DPI_AWARENESS dpiAwareness); // Windows 8.1 and later
+BOOL(WINAPI *pSetProcessDPIAware)(void); // Vista and later
+HRESULT(WINAPI *pSetProcessDPIAwareness)(PROCESS_DPI_AWARENESS dpiAwareness); // Windows 8.1 and later
 
 // Based on the example provided by Eric Wasylishen
 // https://discourse.libsdl.org/t/sdl-getdesktopdisplaymode-resolution-reported-in-windows-10-when-using-app-scaling/22389
@@ -926,28 +926,28 @@ static void init_dpi()
    shcoreDLL = SDL_LoadObject("SHCORE.DLL");
    if (shcoreDLL)
    {
-      SetProcessDpiAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "SetProcessDpiAwareness");
+      pSetProcessDPIAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "pSetProcessDPIAwareness");
    }
 
-   if (SetProcessDpiAwareness)
+   if (pSetProcessDPIAwareness)
    {
       /* Try Windows 8.1+ version */
-      HRESULT result = SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
+      HRESULT result = pSetProcessDPIAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
       return;
    }
 
    userDLL = SDL_LoadObject("USER32.DLL");
    if (userDLL)
    {
-      SetProcessDPIAware = (BOOL(WINAPI *)(void)) SDL_LoadFunction(userDLL, "SetProcessDPIAware");
+      pSetProcessDPIAware = (BOOL(WINAPI *)(void)) SDL_LoadFunction(userDLL, "pSetProcessDPIAware");
    }
 
-   if (SetProcessDPIAware)
+   if (pSetProcessDPIAware)
    {
       /* Try Vista - Windows 8 version.
       This has a constant scale factor for all monitors.
       */
-      BOOL success = SetProcessDPIAware();
+      BOOL success = pSetProcessDPIAware();
    }
 }
 

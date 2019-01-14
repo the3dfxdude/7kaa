@@ -55,7 +55,7 @@ char* UnitMonster::unit_name(int withTitle)
 {
 	static String str;
 
-	char* monsterName = _(monster_res[get_monster_id()]->name);
+	char const * monsterName = _(monster_res[get_monster_id()]->name);
 
 	str = "";
 
