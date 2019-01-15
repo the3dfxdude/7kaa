@@ -381,6 +381,7 @@ void Vga::handle_messages()
       case SDL_MOUSEWHEEL:
           scroll_x = event.wheel.x;
           scroll_y = event.wheel.y;
+          set_window_grab(WINGRAB_FORCE);
           break;
       case SDL_WINDOWEVENT:
          switch (event.window.event)
@@ -572,7 +573,7 @@ int Vga::is_full_screen()
 //
 int Vga::is_input_grabbed()
 {
-   return ((SDL_GetWindowFlags(window) & SDL_WINDOW_MOUSE_FOCUS) != 0);
+   return ((SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_GRABBED) != 0);
 }
 //-------- End of function Vga::is_input_grabbed ----------//
 
