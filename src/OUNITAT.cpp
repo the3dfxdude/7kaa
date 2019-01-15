@@ -182,7 +182,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 					targetNationPtr->own_civilian_killed++;
 				}
 
-				if(parentUnit && parentNationRecno )
+				if( parentNationRecno )
 				{
 					parentNationPtr->civilian_killed(targetUnit->race_id, 1);
 					parentNationPtr->enemy_civilian_killed++;
@@ -196,7 +196,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 					targetNationPtr->own_civilian_killed++;
 				}
 
-				if(parentUnit && parentNationRecno )
+				if( parentNationRecno )
 				{
 					parentNationPtr->civilian_killed(targetUnit->race_id, 0);
 					parentNationPtr->enemy_civilian_killed++;
@@ -207,7 +207,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 				if( targetNationRecno )
 					targetNationPtr->own_soldier_killed++;
 
-				if(parentUnit && parentNationRecno )
+				if( parentNationRecno )
 					parentNationPtr->enemy_soldier_killed++;
 			}
 		}
@@ -219,7 +219,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 			switch( unit_res[targetUnit->unit_id]->unit_class )
 			{
 				case UNIT_CLASS_WEAPON:
-					if(parentUnit && parentNationRecno )
+					if( parentNationRecno )
 						parentNationPtr->enemy_weapon_destroyed++;
 
 					if( targetNationRecno )
@@ -228,7 +228,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 
 
 				case UNIT_CLASS_SHIP:
-					if(parentUnit && parentNationRecno )
+					if( parentNationRecno )
 						parentNationPtr->enemy_ship_destroyed++;
 
 					if( targetNationRecno )
@@ -245,7 +245,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 				if( targetNationRecno )
 					targetNationPtr->civilian_killed(0, -1);
 
-				if( parentUnit && parentNationRecno )
+				if( parentNationRecno )
 					parentNationPtr->civilian_killed(0, 3);
 			}
 		}
