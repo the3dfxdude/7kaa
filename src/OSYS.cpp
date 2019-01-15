@@ -274,6 +274,7 @@ int Sys::init_directx()
       DEBUG_LOG("Attempt vga_true_front.init_front()");
       vga_true_front.init(1);
       DEBUG_LOG("Attempt vga.activate_pal()");
+      vga.activate_pal (&vga_front);
       vga.activate_pal(&vga_true_front);
       DEBUG_LOG("vga.activate_pal() finish");
    }
