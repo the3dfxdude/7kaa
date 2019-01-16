@@ -36,6 +36,7 @@
 #include <OBATTLE.h>
 #include <OGAME.h>
 #include <ONATIONA.h>
+#include <PlayerStats.h>
 
 //--------- declare static vars ----------//
 
@@ -55,6 +56,10 @@ int Game::select_run_scenario()
 	ScenInfo* scenInfoArray = NULL;
 	int scenInfoSize = 0;
 	int dirId;
+
+	PlayerStats ps;
+	char const * internal_name = nullptr;
+
 	for( dirId = 0; dirId < MAX_SCENARIO_PATH; ++dirId )
 	{
 		if( DIR_SCENARIO_PATH(dirId)[0] )
@@ -77,6 +82,18 @@ int Game::select_run_scenario()
 					char	txtFileName[20];
 					scenInfoArray[scenInfoSize].file_name = gameDir[i]->name;    // keep the pointers to the file name string
 					scenInfoArray[scenInfoSize].dir_id    = dirId;
+
+					// Get the internal name from the header for player stats tracking
+					{
+						String str;
+						str = DIR_SCENARIO_PATH(dirId);
+						str += gameDir[i]->name;
+						internal_name = GameFile::read_internal_file_name((char*)str);
+						if (internal_name) 
+						{
+							PlayStatus status = ps.get_scenario_play_status(internal_name);
+						}
+					}
 
 					{
 						misc.change_file_ext( txtFileName, gameDir[i]->name, "SCT" );
@@ -119,7 +136,14 @@ int Game::select_run_scenario()
 	int rc = select_scenario( scenInfoSize, scenInfoArray );
 
 	if( rc )
+	{
+		if(internal_name)
+		{
+			ps.save_scenario_stat(internal_name, PlayStatus::PLAYED);
+			free(const_cast<char*>(internal_name));
+		}
 		run_scenario( scenInfoArray+rc-1 );
+	}
 
 	//-------------------------------------------//
 

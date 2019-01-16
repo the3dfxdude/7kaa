@@ -1,0 +1,59 @@
+/*
+* Seven Kingdoms: Ancient Adversaries
+*
+* Copyright 2019 Steven Lavoie
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
+//Filename    : PlayerStats.h
+//Description : Handles file IO for player statistics information
+
+#ifndef __PLAYERSTATS_H
+#define __PLAYERSTATS_H
+
+#include <OGAME.h>
+#ifndef __ODYNARR_H
+#include <ODYNARR.h>
+#endif
+
+enum PlayStatus : int { UNPLAYED = 0, PLAYED = 1, COMPLETED = 2 };
+
+namespace player_stat_detail {
+enum { MAX_FILE_PATH = 260 };
+typedef struct {
+	char internal_name[MAX_FILE_PATH + 1]; //HACK: Use global max file name
+	PlayStatus status;
+} ScenarioStats;
+}
+
+
+class PlayerStats
+{
+private:
+	player_stat_detail::ScenarioStats * scene_stats = nullptr;
+	size_t scene_stats_len = 0;
+
+	FILE * open_scenario_file(bool read);
+	bool load_scenario_file();
+
+public:
+	PlayStatus get_scenario_play_status(char const * name);
+	bool save_scenario_stat(char const * name, PlayStatus status);
+	PlayerStats();
+	~PlayerStats();
+};
+
+#endif

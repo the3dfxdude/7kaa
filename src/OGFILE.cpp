@@ -240,6 +240,28 @@ bool GameFile::read_header(const char* filePath, SaveGameInfo* /*out*/ saveGameI
 }
 //--------- End of function GameFile::read_header --------//
 
+//--------- Start of function GameFile::read_internal_file_name --------//
+//
+// Currently only used for scenario played-status tracking since the
+// internal file names aren't used/stored anywhere else but provide
+// a unique identifier for each scenario.
+//
+char * GameFile::read_internal_file_name(const char* filePath)
+{
+	char * ret = nullptr;
+	const int MAX_PATH = 260;
+	SaveGameHeader s;
+	if (read_header(filePath, &s.info)) {
+		int len = strnlen(s.info.game_name, MAX_PATH);
+		ret = (char*)calloc(1, len + 1);
+		if (ret) {
+			strncpy(ret, s.info.game_name, len);
+		}
+	}
+	
+	return ret;
+}
+//--------- End of function GameFile::read_internal_file_name --------//
 
 //-------- Begin of function GameFile::save_process -------//
 //
