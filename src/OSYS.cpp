@@ -890,8 +890,8 @@ void Sys::main_loop(int isLoadedGame)
 								if( !nation_array.is_deleted(nationRecno) )
 								{
 									String newsStr;
-									// TRANSLATORS: Waiting for <King's Kingdom>
-									snprintf( newsStr, MAX_STR_LEN+1, _("Waiting for %s"), nation_array[nationRecno]->nation_name() );
+									// TRANSLATORS: Waiting for <King>'s Kingdom
+									snprintf( newsStr, MAX_STR_LEN+1, _("Waiting for %s's Kingdom"), nation_array[nationRecno]->king_name(1) );
 									int x2 = font_news.put( x, y, newsStr );
 									y += font_news.height() + 5;
 								}

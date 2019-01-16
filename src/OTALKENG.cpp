@@ -42,6 +42,10 @@ static short  viewing_nation_recno;
 static char   should_disp_reply;
 static char   disp_second_line;
 
+//-------- macros --------//
+// used in printf commands in pairs for "%'s Kingdom%s"
+#define KING_PARA1 nation_array[talk_para1]->king_name(1)
+#define COLOR_PARA1 nation_color_code_str(talk_para1)
 
 //------- Begin of function TalkMsg::msg_str --------//
 //
@@ -431,13 +435,13 @@ void TalkMsg::request_declare_war()
 	{
 		if( viewing_nation_recno == from_nation_recno )
 		{
-			// TRANSLATORS: You request <King 1's Kingdom> to declare war on <King 2's Kingdom><Kingdom color>.
-			snprintf(str, MAX_STR_LEN+1, _("You request %s to declare war on %s%s."), to_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+			// TRANSLATORS: You request <King 1's Kingdom> to declare war on <King 2>'s Kingdom<Kingdom color>.
+			snprintf(str, MAX_STR_LEN+1, _("You request %s to declare war on %s's Kingdom%s."), to_nation_name(), KING_PARA1, COLOR_PARA1);
 		}
 		else
 		{
-			// TRANSLATORS: <King 1's Kingdom> requests that you declare war on <King 2's Kingdom><Kingdom color>.
-			snprintf(str, MAX_STR_LEN+1, _("%s requests that you declare war on %s%s."), from_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+			// TRANSLATORS: <King 1's Kingdom> requests that you declare war on <King 2>'s Kingdom<Kingdom color>.
+			snprintf(str, MAX_STR_LEN+1, _("%s requests that you declare war on %s's Kingdom%s."), from_nation_name(), KING_PARA1, COLOR_PARA1);
 		}
 	}
 	else
@@ -445,20 +449,20 @@ void TalkMsg::request_declare_war()
 		if( viewing_nation_recno == from_nation_recno )
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: <King 1's Kingdom> agrees to declare war on <King 2's Kingdom><Kingdom color>.
-				snprintf(str, MAX_STR_LEN+1, _("%s agrees to declare war on %s%s."), to_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+				// TRANSLATORS: <King 1's Kingdom> agrees to declare war on <King 2>'s Kingdom<Kingdom color>.
+				snprintf(str, MAX_STR_LEN+1, _("%s agrees to declare war on %s's Kingdom%s."), to_nation_name(), KING_PARA1, COLOR_PARA1);
 			else
-				// TRANSLATORS: <King 1's Kingdom> refuses to declare war on <King 2's Kingdom><Kingdom color>.
-				snprintf(str, MAX_STR_LEN+1, _("%s refuses to declare war on %s%s."), to_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+				// TRANSLATORS: <King 1's Kingdom> refuses to declare war on <King 2>'s Kingdom<Kingdom color>.
+				snprintf(str, MAX_STR_LEN+1, _("%s refuses to declare war on %s's Kingdom%s."), to_nation_name(), KING_PARA1, COLOR_PARA1);
 		}
 		else
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: You agree to declare war on <King's Kingdom><Kingdom color>.
-				snprintf(str, MAX_STR_LEN+1, _("You agree to declare war on %s%s."), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+				// TRANSLATORS: You agree to declare war on <King>'s Kingdom<Kingdom color>.
+				snprintf(str, MAX_STR_LEN+1, _("You agree to declare war on %s's Kingdom%s."), KING_PARA1, COLOR_PARA1);
 			else
-				// TRANSLATORS: You refuse to declare war on <King's Kingdom><Kingdom color>.
-				snprintf(str, MAX_STR_LEN+1, _("You refuse to declare war on %s%s."), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+				// TRANSLATORS: You refuse to declare war on <King>'s Kingdom<Kingdom color>.
+				snprintf(str, MAX_STR_LEN+1, _("You refuse to declare war on %s's Kingdom%s."), KING_PARA1, COLOR_PARA1);
 		}
 	}
 }
@@ -1039,13 +1043,13 @@ void TalkMsg::request_trade_embargo()
 	{
 		if( viewing_nation_recno == from_nation_recno )
 		{
-			// TRANSLATORS: You request <King 1's Kingdom> to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
-			snprintf(str, MAX_STR_LEN+1, _("You request %s to join an embargo on trade with %s%s."), to_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+			// TRANSLATORS: You request <King 1's Kingdom> to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
+			snprintf(str, MAX_STR_LEN+1, _("You request %s to join an embargo on trade with %s's Kingdom%s."), to_nation_name(), KING_PARA1, COLOR_PARA1);
 		}
 		else
 		{
-			// TRANSLATORS: <King 1's Kingdom> requests you to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
-			snprintf(str, MAX_STR_LEN+1, _("%s requests you to join an embargo on trade with %s%s."), from_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+			// TRANSLATORS: <King 1's Kingdom> requests you to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
+			snprintf(str, MAX_STR_LEN+1, _("%s requests you to join an embargo on trade with %s's Kingdom%s."), from_nation_name(), KING_PARA1, COLOR_PARA1);
 		}
 	}
 	else
@@ -1053,20 +1057,20 @@ void TalkMsg::request_trade_embargo()
 		if( viewing_nation_recno == from_nation_recno )
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: <King 1's Kingdom> agrees to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
-				snprintf(str, MAX_STR_LEN+1, _("%s agrees to join an embargo on trade with %s%s."), to_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+				// TRANSLATORS: <King 1's Kingdom> agrees to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
+				snprintf(str, MAX_STR_LEN+1, _("%s agrees to join an embargo on trade with %s's Kingdom%s."), to_nation_name(), KING_PARA1, COLOR_PARA1);
 			else
-				// TRANSLATORS: <King 1's Kingdom> refuses to join an embargo on trade with <King 2's Kingdom><Kingdom color>.
-				snprintf(str, MAX_STR_LEN+1, _("%s refuses to join an embargo on trade with %s%s."), to_nation_name(), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1));
+				// TRANSLATORS: <King 1's Kingdom> refuses to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
+				snprintf(str, MAX_STR_LEN+1, _("%s refuses to join an embargo on trade with %s's Kingdom%s."), to_nation_name(), KING_PARA1, COLOR_PARA1);
 		}
 		else
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: You agree to join an embargo on trade with <King 1's Kingdom><Kingdom color> as requested by <King 2's Kingdom>.
-				snprintf(str, MAX_STR_LEN+1, _("You agree to join an embargo on trade with %s%s as requested by %s."), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1), from_nation_name());
+				// TRANSLATORS: You agree to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2's Kingdom>.
+				snprintf(str, MAX_STR_LEN+1, _("You agree to join an embargo on trade with %s's Kingdom%s as requested by %s."), KING_PARA1, COLOR_PARA1, from_nation_name());
 			else
-				// TRANSLATORS: You refuse to join an embargo on trade with <King 1's Kingdom><Kingdom color> as requested by <King 2's Kingdom>.
-				snprintf(str, MAX_STR_LEN+1, _("You refuse to join an embargo on trade with %s%s as requested by %s."), nation_array[talk_para1]->nation_name(), nation_color_code_str(talk_para1), from_nation_name());
+				// TRANSLATORS: You refuse to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2's Kingdom>.
+				snprintf(str, MAX_STR_LEN+1, _("You refuse to join an embargo on trade with %s's Kingdom%s as requested by %s."), KING_PARA1, COLOR_PARA1, from_nation_name());
 		}
 	}
 }

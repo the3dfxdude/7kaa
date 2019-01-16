@@ -268,8 +268,8 @@ static void disp_goal_str(int winNationRecno)
 		}
 		else
 		{
-			// TRANSLATORS: <King's Kingdom> has Achieved the Highest Fryhtan Battling Score !
-			snprintf(str2, MAX_STR_LEN+1, _("%s has Achieved the Highest Fryhtan Battling Score !"), nation_array[winNationRecno]->nation_name());
+			// TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
+			snprintf(str2, MAX_STR_LEN+1, _("%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"), nation_array[winNationRecno]->king_name(1));
 		}
 	}
 
@@ -284,8 +284,8 @@ static void disp_goal_str(int winNationRecno)
 		}
 		else
 		{
-			// TRANSLATORS: Part of "<King's Kingdom> has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-			snprintf(str, MAX_STR_LEN+1, _("%s has Reached"), nation_array[winNationRecno]->nation_name());
+			// TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom has Reached"), nation_array[winNationRecno]->king_name(1));
 		}
 		// TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
 		snprintf(str2, MAX_STR_LEN+1, _("its Population Goal of %s !"), misc.format(config.goal_population));
@@ -302,8 +302,8 @@ static void disp_goal_str(int winNationRecno)
 		}
 		else
 		{
-			// TRANSLATORS: Part of "<King's Kingdom> has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-			snprintf(str, MAX_STR_LEN+1, _("%s has Reached"), nation_array[winNationRecno]->nation_name());
+			// TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom has Reached"), nation_array[winNationRecno]->king_name(1));
 		}
 		// TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Economic Score Goal of <Number> !"
 		snprintf(str2, MAX_STR_LEN+1, _("its Economic Score Goal of %s !"), misc.format(config.goal_economic_score));
@@ -320,8 +320,8 @@ static void disp_goal_str(int winNationRecno)
 		}
 		else
 		{
-			// TRANSLATORS: Part of "<King's Kingdom> has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-			snprintf(str, MAX_STR_LEN+1, _("%s has Reached"), nation_array[winNationRecno]->nation_name());
+			// TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
+			snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom has Reached"), nation_array[winNationRecno]->king_name(1));
 		}
 		// TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Total Score Goal of <Number> !"
 		snprintf(str2, MAX_STR_LEN+1, _("its Total Score Goal of %s !"), misc.format(config.goal_total_score));
@@ -337,8 +337,8 @@ static void disp_goal_str(int winNationRecno)
 		}
 		else
 		{
-			// TRANSLATORS: <King's Kingdom> has Defeated All Other Kingdoms !
-			snprintf(str, MAX_STR_LEN+1, _("%s has Defeated All Other Kingdoms !"), nation_array[winNationRecno]->nation_name());
+			// TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
+			snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom has Defeated All Other Kingdoms !"), nation_array[winNationRecno]->king_name(1));
 		}
 	}
 
@@ -366,8 +366,8 @@ static void disp_losing_str(int surrenderToNationRecno)
 
 	if( surrenderToNationRecno )		// you surrender to another kingdom
 	{
-		// TRANSLATORS: You Surrendered to <King's Kingdom> on <Date>.
-		snprintf(str, MAX_STR_LEN+1, _("You Surrendered to %s on %s."), nation_array[surrenderToNationRecno]->nation_name(), date.date_str(info.game_date));
+		// TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
+		snprintf(str, MAX_STR_LEN+1, _("You Surrendered to %s's Kingdom on %s."), nation_array[surrenderToNationRecno]->king_name(1), date.date_str(info.game_date));
 	}
 
 	// You failed to achieve the goal within the time limit
