@@ -1858,7 +1858,7 @@ msgctxt "OR_NAT"
 msgid "Trade"
 msgstr "Handel"
 msgid "Trade Amount"
-msgstr "Handelsmenge"
+msgstr "Handels Menge"
 
 #. TRANSLATORS: Part of "Trade Treaty"
 #: src/OR_NAT.cpp:171
