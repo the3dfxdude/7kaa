@@ -42,6 +42,8 @@
 #include <unistd.h>
 #endif
 
+extern SaveGameInfo current_game_info; // in AM.cpp
+
 DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 
 
@@ -198,6 +200,10 @@ int SaveGameProvider::load_game_from_file(const char* filePath, SaveGameInfo* /*
 	const int powerEnableFlag = power.enable_flag;
 
 	int rc = GameFile::load_game(filePath, /*out*/ saveGameInfo);
+	if(rc)
+	{
+		memcpy(&current_game_info, saveGameInfo, sizeof(SaveGameInfo));
+	}
 
 	mouse_cursor.set_frame(0);		// to fix a frame bug with loading game
 
