@@ -136,9 +136,9 @@ PlayStatus PlayerStats::get_scenario_play_status(char const * name) {
 }
 //------- End of function PlayerStats::get_scenario_play_status ------//
 
-//------- Begin of function PlayerStats::save_scenario_stat ------//
+//------- Begin of function PlayerStats::set_scenario_play_status ------//
 //
-bool PlayerStats::save_scenario_stat(char const * name, PlayStatus status) {
+bool PlayerStats::set_scenario_play_status(char const * name, PlayStatus status) {
 	for (int i = 0; i < scn_stat_arr_len; i++) {
 		if (!strncmp(scn_stat_arr[i].internal_name, name, detail::MAX_FILE_PATH)) {
 			if (scn_stat_arr[i].status != status) {
@@ -160,4 +160,4 @@ bool PlayerStats::save_scenario_stat(char const * name, PlayStatus status) {
 	scn_stat_arr[idx].status = status;
 	return write_scenario_file();
 }
-//------- End of function PlayerStats::save_scenario_stat ------//
+//------- End of function PlayerStats::set_scenario_play_status ------//

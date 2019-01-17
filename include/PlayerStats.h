@@ -72,7 +72,7 @@ private:
 
 public:
 	PlayStatus get_scenario_play_status(char const * name);
-	bool save_scenario_stat(char const * name, PlayStatus status);
+	bool set_scenario_play_status(char const * name, PlayStatus status);
 	PlayerStats();
 	~PlayerStats();
 };

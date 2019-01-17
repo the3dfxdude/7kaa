@@ -182,7 +182,7 @@ int Game::run_scenario(ScenInfo* scenInfo)
 			// ##### end Gilbert 1/11 #######//
 
 			if (current_game_info.game_name) {
-				ps.save_scenario_stat(current_game_info.game_name, PlayStatus::PLAYED);
+				ps.set_scenario_play_status(current_game_info.game_name, PlayStatus::PLAYED);
 			} else {
 				err.run("Scenario %s has no internal name\n", str);
 			}
