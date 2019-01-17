@@ -584,3 +584,24 @@ char* TalkMsg::nation_color_code_str(int nationRecno)
 }
 //------- End of function TalkMsg::nation_color_code_str ------//
 
+
+//----- Begin of function TalkMsg::from_nation_color_code_str2 ------//
+//
+char* TalkMsg::nation_color_code_str2(int nationRecno)
+{
+	static char colorCodeStr[] = " 0";
+
+	if( talk_res.msg_add_nation_color )
+	{
+		colorCodeStr[0] = ' ';
+		colorCodeStr[1] = FIRST_NATION_COLOR_CODE_IN_TEXT + nation_array[nationRecno]->color_scheme_id;
+	}
+	else
+	{
+		colorCodeStr[0] = 0;
+	}
+
+	return colorCodeStr;
+}
+//------- End of function TalkMsg::nation_color_code_str2 ------//
+

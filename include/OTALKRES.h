@@ -81,6 +81,7 @@ public:
 	char* 	to_king_name();
 
 	char* 	nation_color_code_str(int nationRecno);
+	char* 	nation_color_code_str2(int nationRecno);
 
 	//-----------------------------------//
 
