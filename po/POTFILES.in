@@ -1,5 +1,6 @@
 # List of source files which contain translatable strings.
 src/AM.cpp
+src/CmdLine.cpp
 src/OBOX.cpp
 src/OCONFIG.cpp
 src/ODATE.cpp
@@ -32,6 +33,7 @@ src/ONATIONB.cpp
 src/ONEWSENG.cpp
 src/ORACERES.cpp
 src/ORAWRES.cpp
+src/OREMOTEM.cpp
 src/OR_AI.cpp
 src/OR_ECO.cpp
 src/OR_MIL.cpp
@@ -46,6 +48,7 @@ src/OSKILL.cpp
 src/OSPY.cpp
 src/OSPYA.cpp
 src/OSYS.cpp
+src/OSYS2.cpp
 src/OSaveGameArray.cpp
 src/OSaveGameProvider.cpp
 src/OTALKENG.cpp
@@ -61,4 +64,5 @@ src/OUNITRES.cpp
 src/OU_CARA.cpp
 src/OU_MARIF.cpp
 src/OU_MONS.cpp
+src/OVGABUF.cpp
 src/OWORLD_Z.cpp
