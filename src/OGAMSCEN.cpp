@@ -42,6 +42,8 @@
 
 static void init_scenario_var(ScenInfo* scenInfo);
 static int sort_scenario_func(const void *arg1, const void *arg2);
+extern SaveGameInfo current_game_info; // After loading, need this to log it as played
+static nsPlayerStats::PlayerStats ps;
 
 //---------- Begin of function Game::select_run_scenario ----------//
 //
@@ -56,9 +58,6 @@ int Game::select_run_scenario()
 	ScenInfo* scenInfoArray = NULL;
 	int scenInfoSize = 0;
 	int dirId;
-
-	PlayerStats ps;
-	char const * internal_name = nullptr;
 
 	for( dirId = 0; dirId < MAX_SCENARIO_PATH; ++dirId )
 	{
@@ -88,10 +87,11 @@ int Game::select_run_scenario()
 						String str;
 						str = DIR_SCENARIO_PATH(dirId);
 						str += gameDir[i]->name;
-						internal_name = GameFile::read_internal_file_name((char*)str);
+						char * internal_name = GameFile::read_internal_file_name((char*)str);
 						if (internal_name) 
 						{
 							PlayStatus status = ps.get_scenario_play_status(internal_name);
+							free(const_cast<char*>(internal_name));
 						}
 					}
 
@@ -136,14 +136,7 @@ int Game::select_run_scenario()
 	int rc = select_scenario( scenInfoSize, scenInfoArray );
 
 	if( rc )
-	{
-		if(internal_name)
-		{
-			ps.save_scenario_stat(internal_name, PlayStatus::PLAYED);
-			free(const_cast<char*>(internal_name));
-		}
 		run_scenario( scenInfoArray+rc-1 );
-	}
 
 	//-------------------------------------------//
 
@@ -186,6 +179,12 @@ int Game::run_scenario(ScenInfo* scenInfo)
 			}
 			strcpy(config.player_name, playerName);
 			// ##### end Gilbert 1/11 #######//
+
+			if (current_game_info.game_name) {
+				ps.save_scenario_stat(current_game_info.game_name, PlayStatus::PLAYED);
+			} else {
+				err.run("Scenario %s has no internal name\n", str);
+			}
 
 			battle.run_loaded();
 		}

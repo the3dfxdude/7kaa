@@ -31,22 +31,41 @@
 
 enum PlayStatus : int { UNPLAYED = 0, PLAYED = 1, COMPLETED = 2 };
 
-namespace player_stat_detail {
-enum { MAX_FILE_PATH = 260 };
-typedef struct {
-	char internal_name[MAX_FILE_PATH + 1]; //HACK: Use global max file name
-	PlayStatus status;
-} ScenarioStats;
-}
+namespace nsPlayerStats {
+namespace detail {
 
+char const * const scn_dat_file = "PLAYSTAT.DAT";
+enum { MAX_FILE_PATH = 260 }; //HACK: This is repeated all over. Should be global constant.
+
+//
+// This structure is written as-is to PLAYSTAT.DAT
+//
+#pragma pack(1)
+typedef struct {
+	//
+	// This size is dictated by SAV format and is a legacy requirement
+	//
+	char internal_name[MAX_FILE_PATH + 1];
+	PlayStatus status;
+	//
+	// Room for expansion later. Just subtract
+	// the size of your new value from this
+	//
+	char reserved_for_later[120];
+} ScenStat;
+
+static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH + 1, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
+static_assert(sizeof(ScenStat) == 385, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
+
+}
 
 class PlayerStats
 {
 private:
-	player_stat_detail::ScenarioStats * scene_stats = nullptr;
-	size_t scene_stats_len = 0;
+	detail::ScenStat * scn_stat_arr;
+	size_t scn_stat_arr_len;
 
-	FILE * open_scenario_file(bool read);
+	bool write_scenario_file();
 	bool load_scenario_file();
 
 public:
@@ -55,5 +74,5 @@ public:
 	PlayerStats();
 	~PlayerStats();
 };
-
+} // nsPlayerStats
 #endif
