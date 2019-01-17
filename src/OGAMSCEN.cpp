@@ -83,19 +83,6 @@ int Game::select_run_scenario()
 					scenInfoArray[scenInfoSize].file_name = gameDir[i]->name;    // keep the pointers to the file name string
 					scenInfoArray[scenInfoSize].dir_id    = dirId;
 
-					// Get the internal name from the header for player stats tracking
-					{
-						String str;
-						str = DIR_SCENARIO_PATH(dirId);
-						str += gameDir[i]->name;
-						char * internal_name = GameFile::read_internal_file_name((char*)str);
-						if (internal_name) 
-						{
-							PlayStatus status = ps.get_scenario_play_status(internal_name);
-							free(const_cast<char*>(internal_name));
-						}
-					}
-
 					{
 						misc.change_file_ext( txtFileName, gameDir[i]->name, "SCT" );
 
@@ -116,6 +103,19 @@ int Game::select_run_scenario()
 
 						fileTxtScen.get_token();		// skip "Bonus:"
 						scenInfoArray[scenInfoSize].goal_score_bonus = (short) fileTxtScen.get_num();
+
+						// Get the internal name from the header for player stats tracking
+						{
+							String path;
+							path = DIR_SCENARIO_PATH(dirId);
+							path += gameDir[i]->name;
+							char * internal_name = GameFile::read_internal_file_name((char*)path);
+							if (internal_name) {
+								PlayStatus status = ps.get_scenario_play_status(internal_name);
+								scenInfoArray[scenInfoSize].play_status = static_cast<int>(status);
+								free(const_cast<char*>(internal_name));
+							}
+						}
 					}
 				}
 			}

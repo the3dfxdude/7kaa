@@ -73,9 +73,10 @@ struct ScenInfo
 
 	char* 	file_name;
 	char  	scen_name[SCEN_NAME_LEN+1];
-	char		dir_id;			// real path look from DIR_SCENARIO_PATH(dir_id)
-	short		goal_difficulty;
+	char	dir_id;			// real path look from DIR_SCENARIO_PATH(dir_id)
+	short	goal_difficulty;
 	short 	goal_score_bonus;
+	int		play_status;
 };
 
 //-------- Define class Game -----------//

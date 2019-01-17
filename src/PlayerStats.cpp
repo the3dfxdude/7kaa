@@ -113,7 +113,7 @@ bool PlayerStats::write_scenario_file() {
 
 //------- Begin of function PlayerStats::get_scenario_play_status ------//
 //
-PlayStatus PlayerStats::get_scenario_play_status(char const * name) {
+PlayStatus PlayerStats::get_scenario_play_status(char const * internal_name) {
 	// Check if we already loaded our file. If not, do it.
 	if (!scn_stat_arr) {
 		if (!load_scenario_file()) {
@@ -125,7 +125,7 @@ PlayStatus PlayerStats::get_scenario_play_status(char const * name) {
 
 	// Find a matching name and return its status
 	for (int i = 0; i < scn_stat_arr_len; i++) {
-		if (!strncmp(scn_stat_arr[i].internal_name, name, detail::MAX_FILE_PATH)) {
+		if (!strncmp(scn_stat_arr[i].internal_name, internal_name, detail::MAX_FILE_PATH)) {
 			return scn_stat_arr[i].status;
 		}
 	}
