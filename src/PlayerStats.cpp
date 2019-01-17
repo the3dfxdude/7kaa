@@ -48,17 +48,25 @@ PlayerStats::~PlayerStats() {
 
 //------- Begin of function PlayerStats::load_scenario_file ------//
 //
-bool PlayerStats::load_scenario_file() {
+bool PlayerStats::load_scenario_file(bool force_reload) {
+
+	if (scn_stat_arr && !force_reload) { return true; }
+	else if (scn_stat_arr && force_reload) {
+		mem_del(scn_stat_arr);
+		scn_stat_arr = nullptr;
+		scn_stat_arr_len = 0;
+	}
+
 	FilePath full_path(sys.dir_config);
 	int  rc;
 	File file;
 
 	full_path += scn_dat_file;
 	if (full_path.error_flag)
-		return 0;
+		return false;
 
 	if (!misc.is_file_exist(full_path))
-		return 0;
+		return false;
 
 	rc = file.file_open(full_path, 0, 1);   // 0=don't handle error itself
 											// 1=allow the writing size and the read size to be different
@@ -86,7 +94,6 @@ bool PlayerStats::load_scenario_file() {
 // Will re-write the entire file with values from scn_stat_arr
 //
 bool PlayerStats::write_scenario_file() {
-
 	FilePath full_path(sys.dir_config);
 	full_path += scn_dat_file;
 	if (full_path.error_flag)
@@ -139,6 +146,13 @@ PlayStatus PlayerStats::get_scenario_play_status(char const * internal_name) {
 //------- Begin of function PlayerStats::set_scenario_play_status ------//
 //
 bool PlayerStats::set_scenario_play_status(char const * name, PlayStatus status) {
+	// Check if we already loaded our file. If not, do it.
+	if (!scn_stat_arr) {
+		// If it fails, we'll create a new one. If it succeeds, we'll
+		// write to it. No need to check the return value here.
+		load_scenario_file();
+	}
+
 	for (int i = 0; i < scn_stat_arr_len; i++) {
 		if (!strncmp(scn_stat_arr[i].internal_name, name, detail::MAX_FILE_PATH)) {
 			if (scn_stat_arr[i].status != status) {

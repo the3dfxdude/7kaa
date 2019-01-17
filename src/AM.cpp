@@ -109,6 +109,7 @@
 #include <dbglog.h>
 #include <CmdLine.h>
 #include <LocaleRes.h>
+#include <PlayerStats.h>
 #include "gettext.h"
 
 //------- define game version constant --------//
@@ -236,6 +237,7 @@ SaveGameArray     save_game_array;
 // tutor files, just pass this in to load_scenario().
 //
 SaveGameInfo	  current_game_info;
+nsPlayerStats::PlayerStats playerStats;
 HallOfFame        hall_of_fame;
 // ###### begin Gilbert 23/10 #######//
 OptionMenu			option_menu;

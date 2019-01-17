@@ -53,7 +53,8 @@ typedef struct {
 	// Room for expansion later. Just subtract
 	// the size of your new value from this
 	//
-	char reserved_for_later[120];
+	char reserved_for_later[119];
+	char newl = '\n';
 } ScenStat;
 
 static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH + 1, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
@@ -68,13 +69,18 @@ private:
 	size_t scn_stat_arr_len;
 
 	bool write_scenario_file();
-	bool load_scenario_file();
 
 public:
 	PlayStatus get_scenario_play_status(char const * name);
 	bool set_scenario_play_status(char const * name, PlayStatus status);
+	// If force_reload==true, the stats will be reloaded from the file or,
+	// if the file is deleted, the UI will be updated to reflect that
+	bool load_scenario_file(bool force_reload = false);
+
 	PlayerStats();
 	~PlayerStats();
 };
 } // nsPlayerStats
+
+extern nsPlayerStats::PlayerStats playerStats; // in AM.cpp
 #endif

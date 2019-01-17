@@ -62,7 +62,6 @@ static void put_stat(int y, const char* desStr, const char* dispStr);
 static void put_stat(int y, const char* desStr, int dispValue);
 static void put_ranking(int y, int nationRecno);
 
-static nsPlayerStats::PlayerStats ps;
 extern SaveGameInfo current_game_info;
 
 //---------- Begin of function Game::game_end --------//
@@ -80,7 +79,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 {
 	//--- set scenario as complete if they didn't retire ---//
 	if(!retireFlag)
-		ps.set_scenario_play_status(current_game_info.game_name, nsPlayerStats::PlayStatus::COMPLETED);
+		playerStats.set_scenario_play_status(current_game_info.game_name, nsPlayerStats::PlayStatus::COMPLETED);
 
 	//--- skip all game ending screens if in demo mode ---//
 
