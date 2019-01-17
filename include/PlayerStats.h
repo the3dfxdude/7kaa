@@ -53,8 +53,7 @@ typedef struct {
 	// Room for expansion later. Just subtract
 	// the size of your new value from this
 	//
-	char reserved_for_later[119];
-	char newl = '\n';
+	char reserved_for_later[120];
 } ScenStat;
 
 static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH + 1, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
