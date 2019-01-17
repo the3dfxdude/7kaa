@@ -29,9 +29,11 @@
 #include <ODYNARR.h>
 #endif
 
-enum PlayStatus : int { UNPLAYED = 0, PLAYED = 1, COMPLETED = 2 };
 
 namespace nsPlayerStats {
+
+enum PlayStatus : int { UNPLAYED = 0, PLAYED = 1, COMPLETED = 2 };
+
 namespace detail {
 
 char const * const scn_dat_file = "PLAYSTAT.DAT";

@@ -43,7 +43,8 @@
 static void init_scenario_var(ScenInfo* scenInfo);
 static int sort_scenario_func(const void *arg1, const void *arg2);
 extern SaveGameInfo current_game_info; // After loading, need this to log it as played
-static nsPlayerStats::PlayerStats ps;
+using namespace nsPlayerStats;
+static PlayerStats ps;
 
 //---------- Begin of function Game::select_run_scenario ----------//
 //
