@@ -43,13 +43,13 @@ enum { MAX_FILE_PATH = 260 }; //HACK: This is repeated all over. Should be globa
 // This structure is written as-is to PLAYSTAT.DAT
 //
 #pragma pack(1)
-typedef struct {
+struct ScenStat {
 	//
 	// This size is dictated by SAV format and is a legacy requirement
 	//
 	char internal_name[MAX_FILE_PATH + 1];
 	PlayStatus status;
-} ScenStat;
+};
 
 static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH + 1, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
 static_assert(sizeof(ScenStat) == 265, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
