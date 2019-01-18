@@ -33,6 +33,7 @@
 namespace nsPlayerStats {
 
 enum PlayStatus : int { UNPLAYED = 0, PLAYED = 1, COMPLETED = 2 };
+enum RecordType : int { ScenarioPlayStatus = 0 };
 
 namespace detail {
 
@@ -40,7 +41,25 @@ char const * const scn_dat_file = "PLAYSTAT.DAT";
 enum { MAX_FILE_PATH = 260 }; //HACK: This is repeated all over. Should be global constant.
 
 //
-// This structure is written as-is to PLAYSTAT.DAT
+// These structures are written as-is to PLAYSTAT.DAT and cannot be changed
+// without breaking the format. To prevent breaking changes, just add a new
+// record type that includes whatever additional data.
+//
+
+//
+// Dictates the reading/writing of the file. Every type of statistic
+// must be preceded by a RecordHeader.
+//
+#pragma pack(1)
+struct RecordHeader {
+	RecordType rec_type;
+	uint32_t rec_count;
+	uint32_t rec_size;
+};
+static_assert(sizeof(RecordHeader) == 12, "Changing RecordHeader is a breaking change for PLAYSTAT.DAT");
+
+//
+// Tracks whether a scenario has been played/completed
 //
 #pragma pack(1)
 struct ScenStat {
@@ -62,14 +81,14 @@ private:
 	detail::ScenStat * scn_stat_arr;
 	size_t scn_stat_arr_len;
 
-	bool write_scenario_file();
+	bool write_player_stats();
 
 public:
 	PlayStatus get_scenario_play_status(char const * name);
 	bool set_scenario_play_status(char const * name, PlayStatus status);
 	// If force_reload==true, the stats will be reloaded from the file or,
 	// if the file is deleted, the UI will be updated to reflect that
-	bool load_scenario_file(bool force_reload = false);
+	bool load_player_stats(bool force_reload = false);
 
 	PlayerStats();
 	~PlayerStats();

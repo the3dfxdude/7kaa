@@ -105,7 +105,7 @@ int Game::select_run_scenario()
 
 						// Get the internal name from the header for player stats tracking
 						{
-							playerStats.load_scenario_file(true);
+							playerStats.load_player_stats(true);
 							String path;
 							path = DIR_SCENARIO_PATH(dirId);
 							path += gameDir[i]->name;
