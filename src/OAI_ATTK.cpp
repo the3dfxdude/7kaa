@@ -657,7 +657,7 @@ void Nation::ai_attack_target_execute(int directAttack)
 
 		firmCamp = (FirmCamp*) firm_array[firmRecno];
 
-		if( firmCamp->overseer_recno || firmCamp->worker_count )
+		if( firmCamp && (firmCamp->overseer_recno || firmCamp->worker_count) )
 		{
 			//--- if this is the lead attack camp, don't mobilize the overseer ---//
 
@@ -700,7 +700,8 @@ void Nation::ai_attack_target_execute(int directAttack)
 
 		//--------- reset FirmCamp::is_attack_camp ---------//
 
-		firmCamp->is_attack_camp = 0;
+		if( firmCamp )
+			firmCamp->is_attack_camp = 0;
 
 		//------- remove this from attack_camp_array -------//
 
