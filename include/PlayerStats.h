@@ -32,8 +32,8 @@
 
 namespace nsPlayerStats {
 
-enum PlayStatus : int { UNPLAYED = 0, PLAYED = 1, COMPLETED = 2 };
-enum RecordType : int { ScenarioPlayStatus = 0 };
+enum PlayStatus : uint32_t { UNPLAYED = 0, PLAYED = 1, COMPLETED = 2 };
+enum RecordType : uint32_t { ScenarioPlayStatus = 0 };
 
 namespace detail {
 
