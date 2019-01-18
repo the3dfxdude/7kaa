@@ -182,7 +182,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 					targetNationPtr->own_civilian_killed++;
 				}
 
-				if( parentNationRecno )
+				if( parentNationPtr )
 				{
 					parentNationPtr->civilian_killed(targetUnit->race_id, 1);
 					parentNationPtr->enemy_civilian_killed++;
@@ -196,7 +196,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 					targetNationPtr->own_civilian_killed++;
 				}
 
-				if( parentNationRecno )
+				if( parentNationPtr )
 				{
 					parentNationPtr->civilian_killed(targetUnit->race_id, 0);
 					parentNationPtr->enemy_civilian_killed++;
@@ -207,7 +207,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 				if( targetNationRecno )
 					targetNationPtr->own_soldier_killed++;
 
-				if( parentNationRecno )
+				if( parentNationPtr )
 					parentNationPtr->enemy_soldier_killed++;
 			}
 		}
@@ -219,7 +219,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 			switch( unit_res[targetUnit->unit_id]->unit_class )
 			{
 				case UNIT_CLASS_WEAPON:
-					if( parentNationRecno )
+					if( parentNationPtr )
 						parentNationPtr->enemy_weapon_destroyed++;
 
 					if( targetNationRecno )
@@ -228,7 +228,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 
 
 				case UNIT_CLASS_SHIP:
-					if( parentNationRecno )
+					if( parentNationPtr )
 						parentNationPtr->enemy_ship_destroyed++;
 
 					if( targetNationRecno )
@@ -245,7 +245,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 				if( targetNationRecno )
 					targetNationPtr->civilian_killed(0, -1);
 
-				if( parentNationRecno )
+				if( parentNationPtr )
 					parentNationPtr->civilian_killed(0, 3);
 			}
 		}
@@ -273,7 +273,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 
 	//------- two nations at war ---------//
 
-	if( parentNationRecno && targetNationRecno )
+	if( parentNationPtr && targetNationRecno )
 	{
 		parentNationPtr->set_at_war_today();
 		targetNationPtr->set_at_war_today(parentUnit->sprite_recno);
@@ -281,7 +281,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 
 	//-------- increase battling fryhtan score --------//
 
-	if( targetUnitClass==UNIT_CLASS_MONSTER && parentNationRecno )
+	if( parentNationPtr && targetUnitClass==UNIT_CLASS_MONSTER )
 	{
 		parentNationPtr->kill_monster_score += (float) 0.1;
 	}
@@ -320,7 +320,7 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 
 	else if( targetUnitClass == UNIT_CLASS_MONSTER )
 	{
-		if( parentNationRecno )
+		if( parentNationPtr )
 			parentNationPtr->change_reputation(REPUTATION_INCREASE_PER_ATTACK_MONSTER);
 	}
 
@@ -555,6 +555,8 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if(!locPtr->is_firm())
 		return;	// do nothing if no firm there
 
+	Nation *attackNation = nation_array[attackNationRecno];
+
 	//----------- attack firm ------------//
 	err_when(!locPtr->firm_recno());
 	Firm *targetFirm = firm_array[locPtr->firm_recno()];
@@ -568,10 +570,10 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if( attackUnit!=NULL && attackUnit->cur_action!=SPRITE_DIE &&
 		 targetFirm->nation_recno != attackNationRecno )		// the target and the attacker's nations are different (it's possible that when a unit who has just changed nation has its bullet hitting its own nation)
 	{
-		if( attackNationRecno && targetFirm->nation_recno )
+		if( attackNation && targetFirm->nation_recno )
 		{
 			//### trevor 29/9 ###//
-			nation_array[attackNationRecno]->set_at_war_today();
+			attackNation->set_at_war_today();
 			nation_array[targetFirm->nation_recno]->set_at_war_today(attackUnit->sprite_recno);
 			//### trevor 29/9 ###//
 		}
@@ -590,8 +592,8 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		//------ increase battling fryhtan score -------//
 
-		if( targetFirm->firm_id == FIRM_MONSTER && attackNationRecno )
-			nation_array[attackNationRecno]->kill_monster_score += (float) 0.01;
+		if( attackNation && targetFirm->firm_id == FIRM_MONSTER )
+			attackNation->kill_monster_score += (float) 0.01;
 	}
 
 	//---------- add indicator on the map ----------//
@@ -619,8 +621,8 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		if( targetFirm->nation_recno )
 		{
-			if( attackNationRecno )
-				nation_array[attackNationRecno]->enemy_firm_destroyed++;
+			if( attackNation )
+				attackNation->enemy_firm_destroyed++;
 
 			if( targetFirm->nation_recno )
 				nation_array[targetFirm->nation_recno]->own_firm_destroyed++;
@@ -662,6 +664,8 @@ void Unit::hit_town(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if(!locPtr->is_town())
 		return;	// do nothing if no town there
 
+	Nation *attackNation = nation_array[attackNationRecno];
+
 	//----------- attack town ----------//
 
 	err_when(!locPtr->town_recno());
@@ -690,10 +694,10 @@ void Unit::hit_town(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		//------- change to hostile relation -------//
 
-		if( attackNationRecno && targetTown->nation_recno )
+		if( attackNation && targetTown->nation_recno )
 		{
 			//### trevor 29/9 ###//
-			nation_array[attackNationRecno]->set_at_war_today();
+			attackNation->set_at_war_today();
 			nation_array[targetTown->nation_recno]->set_at_war_today(attackUnit->sprite_recno);
 			//### trevor 29/9 ###//
 		}

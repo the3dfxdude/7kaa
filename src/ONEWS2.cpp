@@ -262,16 +262,18 @@ void NewsArray::firm_destroyed(int firmRecno, Unit *attackUnit, short destroyerN
 
 	newsPtr->short_para3 = DESTROYER_UNKNOWN;
 
-	if( attackUnit )
+	if( destroyerNationRecno )
+	{
+		if( !nation_array.is_deleted(destroyerNationRecno) )
+			newsPtr->short_para3 = DESTROYER_NATION;
+	}
+	else if( attackUnit )
 	{
 		if( attackUnit->unit_mode == UNIT_MODE_REBEL )
 			newsPtr->short_para3 = DESTROYER_REBEL;
 
 		else if( unit_res[attackUnit->unit_id]->unit_class == UNIT_CLASS_MONSTER )
 			newsPtr->short_para3 = DESTROYER_MONSTER;
-
-		else if( attackUnit->nation_recno )
-			newsPtr->short_para3 = DESTROYER_NATION;
 	}
 
 	//--------- set location ---------//
@@ -341,16 +343,18 @@ void NewsArray::town_destroyed(int townNameId, int xLoc, int yLoc, Unit* attackU
 
 	newsPtr->short_para2 = DESTROYER_UNKNOWN;
 
-	if( attackUnit )
+	if( destroyerNationRecno )
+	{
+		if( !nation_array.is_deleted(destroyerNationRecno) )
+			newsPtr->short_para2 = DESTROYER_NATION;
+	}
+	else if( attackUnit )
 	{
 		if( attackUnit->unit_mode == UNIT_MODE_REBEL )
 			newsPtr->short_para2 = DESTROYER_REBEL;
 
 		else if( unit_res[attackUnit->unit_id]->unit_class == UNIT_CLASS_MONSTER )
 			newsPtr->short_para2 = DESTROYER_MONSTER;
-
-		else if( attackUnit->nation_recno )
-			newsPtr->short_para2 = DESTROYER_NATION;
 	}
 
 	//-------- set location ----------//
