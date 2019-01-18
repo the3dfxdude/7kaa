@@ -49,15 +49,10 @@ typedef struct {
 	//
 	char internal_name[MAX_FILE_PATH + 1];
 	PlayStatus status;
-	//
-	// Room for expansion later. Just subtract
-	// the size of your new value from this
-	//
-	char reserved_for_later[120];
 } ScenStat;
 
 static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH + 1, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
-static_assert(sizeof(ScenStat) == 385, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
+static_assert(sizeof(ScenStat) == 265, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
 
 }
 
