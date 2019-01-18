@@ -48,9 +48,9 @@ enum { MAX_FILE_PATH = 260 }; //HACK: This is repeated all over. Should be globa
 
 //
 // Dictates the reading/writing of the file. Every type of statistic
-// must be preceded by a RecordHeader.
+// must be preceded by a RecordHeader. This struct is written as-is
+// to/from an array and file so ensure any changes are 4-byte aligned.
 //
-#pragma pack(1)
 struct RecordHeader {
 	RecordType rec_type;
 	uint32_t rec_count;
@@ -59,19 +59,23 @@ struct RecordHeader {
 static_assert(sizeof(RecordHeader) == 12, "Changing RecordHeader is a breaking change for PLAYSTAT.DAT");
 
 //
-// Tracks whether a scenario has been played/completed
+// Tracks whether a scenario has been played/completed. This
+// struct is written as-is to/from an array and file so ensure
+// any changes are 4-byte aligned.
 //
-#pragma pack(1)
 struct ScenStat {
 	//
-	// This size is dictated by SAV format and is a legacy requirement
+	// The SAV format actually has MAX_FILE_PATH + 1, which was stupid. Since
+	// this field is not actively used and even legacy scenario files only contain
+	// an 8.3 filename, we'll dispense with the extra byte. Windows includes /0 in
+	// its MAX_PATH's 260 bytes anyway.
 	//
-	char internal_name[MAX_FILE_PATH + 1];
+	char internal_name[MAX_FILE_PATH];
 	PlayStatus status;
 };
 
-static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH + 1, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
-static_assert(sizeof(ScenStat) == 265, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
+static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
+static_assert(sizeof(ScenStat) == 264, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
 
 }
 
