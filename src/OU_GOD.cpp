@@ -681,6 +681,14 @@ void UnitGod::consume_power_pray_points()
 
 	err_when( firmBase->firm_id != FIRM_BASE );
 
+	//--- if the seat of power supporting this unit is destroyed, this unit dies ---//
+
+	if( !firmBase )
+	{
+		hit_points = (float)0;
+		return;
+	}
+
 	firmBase->pray_points -= god_res[god_id]->power_pray_points;
 
 	if( firmBase->pray_points < 0 )
