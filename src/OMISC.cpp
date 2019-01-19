@@ -1215,7 +1215,7 @@ int Misc::mkpath(char *abs_path)
    char path_copy[FilePath::MAX_FILE_PATH];
    int count;
 
-   if( strlen(path_copy) >= FilePath::MAX_FILE_PATH )
+   if( strlen(abs_path) >= FilePath::MAX_FILE_PATH )
       return 0;
 
    count = 0;
