@@ -111,6 +111,7 @@ void Unit::init(int unitId, int nationRecno, int rankId, int unitLoyalty, int st
    {
       team_info = (TeamInfo*) mem_add( sizeof(TeamInfo) );
       team_info->member_count = 0;
+      team_info->ai_last_request_defense_date = 0;
    }
    else
       team_info = NULL;
@@ -2003,6 +2004,7 @@ void Unit::set_rank(int rankId)
       {
          team_info = (TeamInfo*) mem_add( sizeof(TeamInfo) );
          team_info->member_count = 0;
+         team_info->ai_last_request_defense_date = 0;
       }
 
       //--- set leadership if this unit does not have any now ----//
