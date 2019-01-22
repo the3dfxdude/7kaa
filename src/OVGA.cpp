@@ -914,7 +914,7 @@ typedef enum PROCESS_DPI_AWARENESS {
 } PROCESS_DPI_AWARENESS;
 
 BOOL(WINAPI *pSetProcessDPIAware)(void); // Vista and later
-HRESULT(WINAPI *pSetProcessDPIAwareness)(PROCESS_DPI_AWARENESS dpiAwareness); // Windows 8.1 and later
+HRESULT(WINAPI *pSetProcessDpiAwareness)(PROCESS_DPI_AWARENESS dpiAwareness); // Windows 8.1 and later
 
 // Based on the example provided by Eric Wasylishen
 // https://discourse.libsdl.org/t/sdl-getdesktopdisplaymode-resolution-reported-in-windows-10-when-using-app-scaling/22389
@@ -926,13 +926,13 @@ static void init_dpi()
    shcoreDLL = SDL_LoadObject("SHCORE.DLL");
    if (shcoreDLL)
    {
-      pSetProcessDPIAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "SetProcessDPIAwareness");
+      pSetProcessDpiAwareness = (HRESULT(WINAPI *)(PROCESS_DPI_AWARENESS)) SDL_LoadFunction(shcoreDLL, "SetProcessDpiAwareness");
    }
 
-   if (pSetProcessDPIAwareness)
+   if (pSetProcessDpiAwareness)
    {
       /* Try Windows 8.1+ version */
-      HRESULT result = pSetProcessDPIAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
+      HRESULT result = pSetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
       return;
    }
 
