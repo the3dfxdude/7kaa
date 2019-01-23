@@ -118,6 +118,9 @@ public:
 	char* king_name1(int addColor=0);
 	char* king_name2(int addColor=0);
 
+	char* nation_color_str1();
+	char* nation_color_str2();
+
 	short short_para1;
 	short short_para2;
 	short short_para3;
