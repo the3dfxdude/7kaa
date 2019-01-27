@@ -1194,6 +1194,30 @@ void News::raw_exhaust()
 //------- End of function News::raw_exhaust -----//
 
 
+const char *tech_researched_level_msg[] =
+{
+	// TRANSLATORS: Your scientists have finished their <Tech> Mark <Level Roman Numeral> research.
+	N_("Your scientists have finished their Catapult Mark %s research."),
+	N_("Your scientists have finished their Porcupine Mark %s research."),
+	N_("Your scientists have finished their Ballista Mark %s research."),
+	N_("Your scientists have finished their Cannon Mark %s research."),
+	N_("Your scientists have finished their Spitfire Mark %s research."),
+	N_("Your scientists have finished their Caravel Mark %s research."),
+	N_("Your scientists have finished their Galleon Mark %s research."),
+	N_("Your scientists have finished their Unicorn Mark %s research."),
+};
+const char *tech_researched_msg[] =
+{
+	// TRANSLATORS: Your scientists have finished their <Tech> research.
+	N_("Your scientists have finished their Catapult research."),
+	N_("Your scientists have finished their Porcupine research."),
+	N_("Your scientists have finished their Ballista research."),
+	N_("Your scientists have finished their Cannon research."),
+	N_("Your scientists have finished their Spitfire research."),
+	N_("Your scientists have finished their Caravel research."),
+	N_("Your scientists have finished their Galleon research."),
+	N_("Your scientists have finished their Unicorn research."),
+};
 //------ Begin of function News::tech_researched -----//
 //
 // short_para1 - tech id.
@@ -1210,13 +1234,11 @@ void News::tech_researched()
 
 	if( tech_res[short_para1]->max_tech_level > 1 )		// if the tech has more than one level
 	{
-		// TRANSLATORS: Your scientists have finished their <Tech> Mark <Level> research.
-		snprintf(str, MAX_STR_LEN+1, _("Your scientists have finished their %s Mark %s research."), tech_res[short_para1]->tech_des(), misc.roman_number(short_para2));
+		snprintf(str, MAX_STR_LEN+1, tech_researched_level_msg[short_para1-1], misc.roman_number(short_para2));
 	}
 	else
 	{
-		// TRANSLATORS: Your scientists have finished their <Tech> research.
-		snprintf(str, MAX_STR_LEN+1, _("Your scientists have finished their %s research."), tech_res[short_para1]->tech_des());
+		str = tech_researched_msg[short_para1-1];
 	}
 }
 //------- End of function News::tech_researched -----//
