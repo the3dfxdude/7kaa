@@ -1170,6 +1170,13 @@ void News::assassinator_caught()
 //------- End of function News::assassinator_caught -----//
 
 
+const char *raw_exhaust_msg[MAX_RAW] =
+{
+	// TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
+	N_("Your Clay Mine has exhausted its Clay deposit."),
+	N_("Your Copper Mine has exhausted its Copper deposit."),
+	N_("Your Iron Mine has exhausted its Iron deposit."),
+};
 //------ Begin of function News::raw_exhaust -----//
 //
 // short_para1 - raw id.
@@ -1182,8 +1189,7 @@ void News::raw_exhaust()
 	//
 	//----------------------------------------------//
 
-	// TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
-	snprintf(str, MAX_STR_LEN+1, _("Your %s Mine has exhausted its %s deposit."), _(raw_res[short_para1]->name), _(raw_res[short_para1]->name));
+	str = raw_exhaust_msg[short_para1-1];
 }
 //------- End of function News::raw_exhaust -----//
 
