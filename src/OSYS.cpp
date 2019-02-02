@@ -2442,7 +2442,7 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
          keyProcessed++;
          break;
 
-      case 's':
+      case 's': //------------ force current-default-view nation (CTRL+F) to surrender to player ------------//
          if( info.default_viewing_nation_recno &&
              nation_array.player_recno &&
              nation_array[info.default_viewing_nation_recno]->is_ai() )
