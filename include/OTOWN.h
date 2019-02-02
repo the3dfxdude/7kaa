@@ -231,7 +231,7 @@ public:
 	int   recruit(int withTraining, int raceId, char remoteAction);
 	int  	recruit_dec_loyalty(int raceId, int decNow=1);
 	void	cancel_train_unit();
-	int  	form_new_nation();
+	int  	form_new_nation(bool force=false);
 
 	int	can_recruit(int raceId);
 	int	can_train(int raceId);

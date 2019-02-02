@@ -157,14 +157,19 @@ int Town::think_independent_form_new_nation()
 //--------- Begin of function Town::form_new_nation ---------//
 //
 // This independent town forms a new nation.
+// <bool> force - true will ignore NationArray::can_form_new_ai_nation()
 //
 // Return: <int> 
 //
-int Town::form_new_nation()
+// NOTE: The `force` param is only used by Sys::detect_scenario_cheat_key(),
+// in order to create a new nation when building a scenario. It is up to the
+// caller to ensure nation_array.nation_count < MAX_NATION.
+//
+int Town::form_new_nation(bool force)
 {
 	err_when( nation_recno );
 
-	if( !nation_array.can_form_new_ai_nation() )
+	if( !force && !nation_array.can_form_new_ai_nation() )
 		return 0;
 
 	//----- determine the race with most population -----//
