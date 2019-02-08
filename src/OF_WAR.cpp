@@ -369,11 +369,7 @@ void FirmWar::detect_build_menu()
 
 			if( quitFlag )
 				info.disp();		// info.disp() will call put_info() which will switch mode back to the main menu mode
-			// ###### begin Gilbert 10/9 ########//
-			else
-				//disp_queue_button(y+COUNT_BUTTON_OFFSET_Y, unitId, 1);
-				info.update();
-			// ###### end Gilbert 10/9 ########//
+			
 
 			return;
 		}
