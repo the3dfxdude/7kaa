@@ -947,6 +947,20 @@ void News::your_spy_killed()
 //------- End of function News::your_spy_killed -----//
 
 
+const char *enemy_spy_killed_in_firm[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: A spy from <King>'s Kingdom<Color> has been uncovered and executed in your <Firm> near <Town>.
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Seat of Power near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Factory near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Inn near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Market near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Fort near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Mine near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Tower of Science near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your War Factory near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Harbor near %s."),
+	N_("A spy from %s's Kingdom%s has been uncovered and executed in your Fryhtan Lair near %s."),
+};
 //------ Begin of function News::enemy_spy_killed -----//
 //
 // nation_name1() - your nation.
@@ -976,8 +990,7 @@ void News::enemy_spy_killed()
 	{
 		if( short_para3==SPY_FIRM )
 		{
-			// TRANSLATORS: A spy from <King>'s Kingdom<Color> has been uncovered and executed in your <Firm> near <Town>.
-			snprintf(str, MAX_STR_LEN+1, _("A spy from %s's Kingdom%s has been uncovered and executed in your %s near %s."), king_name2(), nation_color_str2(), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, enemy_spy_killed_in_firm[short_para1-1], king_name2(), nation_color_str2(), town_res.get_name(short_para2));
 		}
 		else
 		{
