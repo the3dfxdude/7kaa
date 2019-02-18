@@ -1534,6 +1534,21 @@ void News::goal_deadline()
 //------- End of function News::goal_deadline -----//
 
 
+const char *weapon_ship_worn_out_msg[UNIT_GALLEON-UNIT_CATAPULT+1] =
+{
+	// TRANSLATORS: A <Weapon> <Tech Level Number> of yours has broken down due to the lack of maintenance funds.
+	N_("A Catapult %s of yours has broken down due to the lack of maintenance funds."),
+	N_("A Ballista %s of yours has broken down due to the lack of maintenance funds."),
+	N_("A Spitfire %s of yours has broken down due to the lack of maintenance funds."),
+	N_("A Cannon %s of yours has broken down due to the lack of maintenance funds."),
+	N_("A Porcupine %s of yours has broken down due to the lack of maintenance funds."),
+	// TRANSLATORS: A <Ship> of yours has broken down due to the lack of maintenance funds.
+	N_("A Trader of yours has broken down due to the lack of maintenance funds."),
+	N_("A Transport of yours has broken down due to the lack of maintenance funds."),
+	N_("A Caravel of yours has broken down due to the lack of maintenance funds."),
+	N_("A Galleon of yours has broken down due to the lack of maintenance funds."),
+};
+const char *unicorn_worn_out_msg = N_("A Unicorn %s of yours has broken down due to the lack of maintenance funds.");
 //------ Begin of function News::weapon_ship_worn_out -----//
 //
 // Your weapon or ship worn out and destroyed due to lack of money for
@@ -1551,18 +1566,19 @@ void News::weapon_ship_worn_out()
 	//
 	//----------------------------------------------//
 
-	String tmp(_(unit_res[short_para1]->name));
-
-	if( short_para2 )
+	if( short_para1 == UNIT_F_BALLISTA )
 	{
-		tmp += " ";
-		tmp += misc.roman_number(short_para2);
+		// unicorn is separate in the dbf, handle directly
+		snprintf(str, MAX_STR_LEN+1, unicorn_worn_out_msg, misc.roman_number(short_para2));
 	}
-
-	const char* weapon = tmp;
-
-	// TRANSLATORS: A <Weapon/Ship> of yours has broken down due to the lack of maintenance funds.
-	snprintf(str, MAX_STR_LEN+1, _("A %s of yours has broken down due to the lack of maintenance funds."), weapon);
+	else if( short_para2 )
+	{
+		snprintf(str, MAX_STR_LEN+1, weapon_ship_worn_out_msg[short_para1-UNIT_CATAPULT], misc.roman_number(short_para2));
+	}
+	else
+	{
+		str = weapon_ship_worn_out_msg[short_para1-UNIT_CATAPULT];
+	}
 }
 //------- End of function News::weapon_ship_worn_out -----//
 
