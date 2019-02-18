@@ -851,6 +851,34 @@ void News::monster_gold_acquired()
 //------- End of function News::monster_gold_acquired -----//
 
 
+const char *your_spy_killed_in_firm_by_nation[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King>'s Kingdom<Color>.
+	N_("Your spy has been exposed and executed on his mission to a Seat of Power near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Factory near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Inn near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Market near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Fort near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Mine near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Tower of Science near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a War Factory near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Harbor near %s in %s's Kingdom%s."),
+	N_("Your spy has been exposed and executed on his mission to a Fryhtan Lair near %s in %s's Kingdom%s."),
+};
+const char *your_spy_killed_in_firm[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
+	N_("Your spy has been exposed and executed on his mission to a Seat of Power near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Factory near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Inn near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Market near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Fort near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Mine near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Tower of Science near %s."),
+	N_("Your spy has been exposed and executed on his mission to a War Factory near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Harbor near %s."),
+	N_("Your spy has been exposed and executed on his mission to a Fryhtan Lair near %s."),
+};
 //------ Begin of function News::your_spy_killed -----//
 //
 // nation_name1() - your nation.
@@ -882,13 +910,11 @@ void News::your_spy_killed()
 	{
 		if( nation_name_id2 )		// not for independent town.
 		{
-			// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King>'s Kingdom<Color>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s in %s's Kingdom%s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), king_name2(), nation_color_str2());
+			snprintf(str, MAX_STR_LEN+1, your_spy_killed_in_firm_by_nation[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
 		}
 		else
 		{
-			// TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
-			snprintf(str, MAX_STR_LEN+1, _("Your spy has been exposed and executed on his mission to a %s near %s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, your_spy_killed_in_firm[short_para1-1], town_res.get_name(short_para2));
 		}
 	}
 	else if( short_para3 == SPY_TOWN )
