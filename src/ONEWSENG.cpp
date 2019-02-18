@@ -1244,6 +1244,62 @@ void News::tech_researched()
 //------- End of function News::tech_researched -----//
 
 
+const char *lightning_destroyed_firm_near_town[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
+	N_("Your Seat of Power near %s has been destroyed by lightning."),
+	N_("Your Factory near %s has been destroyed by lightning."),
+	N_("Your Inn near %s has been destroyed by lightning."),
+	N_("Your Market near %s has been destroyed by lightning."),
+	N_("Your Fort near %s has been destroyed by lightning."),
+	N_("Your Mine near %s has been destroyed by lightning."),
+	N_("Your Tower of Science near %s has been destroyed by lightning."),
+	N_("Your War Factory near %s has been destroyed by lightning."),
+	N_("Your Harbor near %s has been destroyed by lightning."),
+	N_("Your Fryhtan Lair near %s has been destroyed by lightning."),
+};
+const char *lightning_damaged_firm_near_town[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
+	N_("Your Seat of Power near %s has been struck by lightning."),
+	N_("Your Factory near %s has been struck by lightning."),
+	N_("Your Inn near %s has been struck by lightning."),
+	N_("Your Market near %s has been struck by lightning."),
+	N_("Your Fort near %s has been struck by lightning."),
+	N_("Your Mine near %s has been struck by lightning."),
+	N_("Your Tower of Science near %s has been struck by lightning."),
+	N_("Your War Factory near %s has been struck by lightning."),
+	N_("Your Harbor near %s has been struck by lightning."),
+	N_("Your Fryhtan Lair near %s has been struck by lightning."),
+};
+const char *lightning_destroyed_firm[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> has been destroyed by lightning.
+	N_("Your Seat of Power has been destroyed by lightning."),
+	N_("Your Factory has been destroyed by lightning."),
+	N_("Your Inn has been destroyed by lightning."),
+	N_("Your Market has been destroyed by lightning."),
+	N_("Your Fort has been destroyed by lightning."),
+	N_("Your Mine has been destroyed by lightning."),
+	N_("Your Tower of Science has been destroyed by lightning."),
+	N_("Your War Factory has been destroyed by lightning."),
+	N_("Your Harbor has been destroyed by lightning."),
+	N_("Your Fryhtan Lair has been destroyed by lightning."),
+};
+const char *lightning_damaged_firm[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> has been struck by lightning.
+	N_("Your Seat of Power has been struck by lightning."),
+	N_("Your Factory has been struck by lightning."),
+	N_("Your Inn has been struck by lightning."),
+	N_("Your Market has been struck by lightning."),
+	N_("Your Fort has been struck by lightning."),
+	N_("Your Mine has been struck by lightning."),
+	N_("Your Tower of Science has been struck by lightning."),
+	N_("Your War Factory has been struck by lightning."),
+	N_("Your Harbor has been struck by lightning."),
+	N_("Your Fryhtan Lair has been struck by lightning."),
+};
 //------ Begin of function News::lightning_damage -----//
 //
 void News::lightning_damage()
@@ -1314,26 +1370,22 @@ void News::lightning_damage()
 		{
 			if( short_para5 )
 			{
-				// TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by lightning."), _(firm_res[short_para2]->name), town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, lightning_destroyed_firm_near_town[short_para2-1], town_res.get_name(short_para3));
 			}
 			else
 			{
-				// TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been struck by lightning."), _(firm_res[short_para2]->name), town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, lightning_damaged_firm_near_town[short_para2-1], town_res.get_name(short_para3));
 			}
 		}
 		else
 		{
 			if( short_para5 )
 			{
-				// TRANSLATORS: Your <Firm> has been destroyed by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s has been destroyed by lightning."), _(firm_res[short_para2]->name));
+				str = lightning_destroyed_firm[short_para2-1];
 			}
 			else
 			{
-				// TRANSLATORS: Your <Firm> has been struck by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your %s has been struck by lightning."), _(firm_res[short_para2]->name));
+				str = lightning_damaged_firm[short_para2-1];
 			}
 		}
 		break;
