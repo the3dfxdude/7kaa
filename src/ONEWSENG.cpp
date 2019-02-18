@@ -475,6 +475,62 @@ void News::new_king()
 //------- End of function News::new_king -----//
 
 
+const char *firm_destroyed_by_nation[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King>'s Kingdom<Color>.
+	N_("Your Seat of Power near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Factory near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Inn near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Market near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Fort near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Mine near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Tower of Science near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your War Factory near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Harbor near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Fryhtan Lair near %s has been destroyed by %s's Kingdom%s."),
+};
+const char *firm_destroyed_by_rebels[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
+	N_("Your Seat of Power near %s has been destroyed by Rebels."),
+	N_("Your Factory near %s has been destroyed by Rebels."),
+	N_("Your Inn near %s has been destroyed by Rebels."),
+	N_("Your Market near %s has been destroyed by Rebels."),
+	N_("Your Fort near %s has been destroyed by Rebels."),
+	N_("Your Mine near %s has been destroyed by Rebels."),
+	N_("Your Tower of Science near %s has been destroyed by Rebels."),
+	N_("Your War Factroy near %s has been destroyed by Rebels."),
+	N_("Your Harbor near %s has been destroyed by Rebels."),
+	N_("Your Fryhtan Lair near %s has been destroyed by Rebels."),
+};
+const char *firm_destroyed_by_monster[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
+	N_("Your Seat of Power near %s has been destroyed by Fryhtans."),
+	N_("Your Factory near %s has been destroyed by Fryhtans."),
+	N_("Your Inn near %s has been destroyed by Fryhtans."),
+	N_("Your Market near %s has been destroyed by Fryhtans."),
+	N_("Your Fort near %s has been destroyed by Fryhtans."),
+	N_("Your Mine near %s has been destroyed by Fryhtans."),
+	N_("Your Tower of Science near %s has been destroyed by Fryhtans."),
+	N_("Your War Factory near %s has been destroyed by Fryhtans."),
+	N_("Your Harbor near %s has been destroyed by Fryhtans."),
+	N_("Your Fryhtan Lair near %s has been destroyed by Fryhtans."),
+};
+const char *firm_destroyed_by_unknown[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been destroyed.
+	N_("Your Seat of Power near %s has been destroyed."),
+	N_("Your Factory near %s has been destroyed."),
+	N_("Your Inn near %s has been destroyed."),
+	N_("Your Market near %s has been destroyed."),
+	N_("Your Fort near %s has been destroyed."),
+	N_("Your Mine near %s has been destroyed."),
+	N_("Your Tower of Science near %s has been destroyed."),
+	N_("Your War Factory near %s has been destroyed."),
+	N_("Your Harbor near %s has been destroyed."),
+	N_("Your Fryhtan Lair near %s has been destroyed."),
+};
 //------ Begin of function News::firm_destroyed -----//
 //
 // short_para1 - name id. of the firm destroyed.
@@ -496,23 +552,19 @@ void News::firm_destroyed()
 	// ##### patch end Gilbert 10/2 ######//
 	{
 		case DESTROYER_NATION:
-			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King>'s Kingdom<Color>.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by %s's Kingdom%s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), king_name2(), nation_color_str2());
+			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_nation[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
 			break;
 
 		case DESTROYER_REBEL:
-			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Rebels."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_rebels[short_para1-1], town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_MONSTER:
-			// TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed by Fryhtans."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_monster[short_para1-1], town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_UNKNOWN:
-			// TRANSLATORS: Your <Firm> near <Town> has been destroyed.
-			snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been destroyed."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_unknown[short_para1-1], town_res.get_name(short_para2));
 			break;
 	}
 }
