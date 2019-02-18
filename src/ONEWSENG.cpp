@@ -1567,6 +1567,21 @@ void News::weapon_ship_worn_out()
 //------- End of function News::weapon_ship_worn_out -----//
 
 
+const char *firm_worn_out_near_town_msg[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
+	N_("Your Seat of Power near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Factory near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Inn near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Market near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Fort near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Mine near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Tower of Science near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your War Factory near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Harbor near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Fryhtan Lair near %s has fallen into disrepair due to the lack of maintenance funds."),
+
+};
 //------ Begin of function News::firm_worn_out -----//
 //
 // short_para1 - id. of the firm destroyed.
@@ -1581,8 +1596,7 @@ void News::firm_worn_out()
 	//
 	//----------------------------------------------//
 
-	// TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
-	snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has fallen into disrepair due to the lack of maintenance funds."), _(firm_res[short_para1]->name), town_res.get_name(short_para2));
+	snprintf(str, MAX_STR_LEN+1, firm_worn_out_near_town_msg[short_para1-1], town_res.get_name(short_para2));
 }
 //------- End of function News::firm_worn_out -----//
 
