@@ -54,8 +54,6 @@ Vga::Vga()
    texture = NULL;
    renderer = NULL;
    window = NULL;
-
-   scroll_x = scroll_y = 0;
 }
 //-------- End of function Vga::Vga ----------//
 
@@ -353,17 +351,6 @@ void Vga::adjust_brightness(int changeValue)
 }
 //--------- End of function Vga::adjust_brightness ----------//
 
-bool Vga::get_mouse_scroll(int * x, int * y) {
-    *x = scroll_x;
-    *y = scroll_y;
-    scroll_x = 0;
-    scroll_y = 0;
-    if (*x != 0 || *y != 0) 
-    {
-        return true; 
-    }
-    return false;
-}
 
 //-------- Begin of function Vga::handle_messages --------//
 void Vga::handle_messages()
@@ -379,27 +366,27 @@ void Vga::handle_messages()
          break;
       case SDL_MULTIGESTURE:
          if (event.mgesture.numFingers == 2) {
-            if (!scrolling)
+            if (!mouse.scrolling)
             {
-               scroll_prev_y = event.mgesture.y;
-               scroll_prev_x = event.mgesture.x;
+               mouse.scroll_prev_y = event.mgesture.y;
+               mouse.scroll_prev_x = event.mgesture.x;
             }
             else
             {
-              double dy = event.mgesture.y - scroll_prev_y;
-              scroll_y = dy * scroll_sensitivity;
-              double dx = event.mgesture.x - scroll_prev_x;
-              scroll_x = dx * scroll_sensitivity;
+              double dy = event.mgesture.y - mouse.scroll_prev_y;
+              mouse.scroll_y = dy * mouse.scroll_sensitivity;
+              double dx = event.mgesture.x - mouse.scroll_prev_x;
+              mouse.scroll_x = dx * mouse.scroll_sensitivity;
             }
          }
-         scrolling = true;
+         mouse.scrolling = true;
          break;
       case SDL_FINGERDOWN:
-         scrolling = false;
+         mouse.scrolling = false;
          break;
       case SDL_MOUSEWHEEL:
-          scroll_x = event.wheel.x;
-          scroll_y = event.wheel.y;
+          mouse.scroll_x = event.wheel.x;
+          mouse.scroll_y = event.wheel.y;
           break;
       case SDL_WINDOWEVENT:
          switch (event.window.event)

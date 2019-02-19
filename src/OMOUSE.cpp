@@ -793,6 +793,17 @@ void Mouse::poll_event()
 }
 //--------- End of Mouse::poll_event --------------//
 
+bool Mouse::get_scroll(int * x, int * y) {
+    *x = scroll_x;
+    *y = scroll_y;
+    scroll_x = 0;
+    scroll_y = 0;
+    if (*x != 0 || *y != 0) 
+    {
+        return true; 
+    }
+    return false;
+}
 
 //--------- Begin of Mouse::process_mouse_motion ---------//
 void Mouse::process_mouse_motion(int x, int y)

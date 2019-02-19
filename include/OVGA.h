@@ -84,10 +84,6 @@ private:
 	int win_grab_user_mode;
 	int bound_x1, bound_y1, bound_x2, bound_y2;
 	int boundary_set;
-	bool scrolling = false;
-	int scroll_sensitivity = 10;
-	int scroll_x, scroll_y;
-	double scroll_prev_y, scroll_prev_x;
 
 public:
 	ColorTable*    vga_color_table;
@@ -129,7 +125,6 @@ public:
 	void   set_window_grab(WinGrab mode);
 	void   flip();
 	void   save_status_report();
-	bool   get_mouse_scroll(int * x, int * y);
 };
 
 extern Vga vga;
