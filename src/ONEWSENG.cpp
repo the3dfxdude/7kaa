@@ -734,6 +734,23 @@ void News::town_surrendered()
 //------- End of function News::town_surrendered -----//
 
 
+const char *monster_king_killed_msg[] =
+{
+	// TRANSLATORS: An All High <monster type> has been slain.
+	N_("An All High Deezboanz has been slain."),
+	N_("An All High Rattus has been slain."),
+	N_("An All High Broosken has been slain."),
+	N_("An All High Haubudam has been slain."),
+	N_("An All High Pfith has been slain."),
+	N_("An All High Rokken has been slain."),
+	N_("An All High Doink has been slain."),
+	N_("An All High Wyrm has been slain."),
+	N_("An All High Droog has been slain."),
+	N_("An All High Ick has been slain."),
+	N_("An All High Sauroid has been slain."),
+	N_("An All High Karrotten has been slain."),
+	N_("An All High Holgh has been slain."),
+};
 //------ Begin of function News::monster_king_killed -----//
 //
 // short_para1 - monster id.
@@ -746,12 +763,28 @@ void News::monster_king_killed()
 	//
 	//----------------------------------------------//
 
-	// TRANSLATORS: An All High <monster type> has been slain.
-	snprintf(str, MAX_STR_LEN+1, _("An All High %s has been slain."), _(monster_res[short_para1]->name));
+	str = monster_king_killed_msg[short_para1-1];
 }
 //------- End of function News::monster_king_killed -----//
 
 
+const char *monster_firm_destroyed_msg[] =
+{
+	// TRANSLATORS: A <Fryhtan> Lair has been destroyed.
+	N_("A Deezboanz Lair has been destroyed."),
+	N_("A Rattus Lair has been destroyed."),
+	N_("A Broosken Lair has been destroyed."),
+	N_("A Haubudam Lair has been destroyed."),
+	N_("A Pfith Lair has been destroyed."),
+	N_("A Rokken Lair has been destroyed."),
+	N_("A Doink Lair has been destroyed."),
+	N_("A Wyrm Lair has been destroyed."),
+	N_("A Droog Lair has been destroyed."),
+	N_("An Ick Lair has been destroyed."),
+	N_("A Sauroid Lair has been destroyed."),
+	N_("A Karrotten Lair has been destroyed."),
+	N_("A Holgh Lair has been destroyed."),
+};
 //------ Begin of function News::monster_firm_destroyed -----//
 //
 // short_para1 - monster id.
@@ -764,14 +797,7 @@ void News::monster_firm_destroyed()
 	//
 	//----------------------------------------------//
 
-	const char* nameStr = _(monster_res[short_para1]->name);
-
-	if( nameStr[0] == 'I' )		// "An Ick Lair"
-		// TRANSLATORS: An Ick Lair has been destroyed.
-		snprintf(str, MAX_STR_LEN+1, _("An %s Lair has been destroyed."), nameStr);
-	else
-		// TRANSLATORS: A <Fryhtan> Lair has been destroyed.
-		snprintf(str, MAX_STR_LEN+1, _("A %s Lair has been destroyed."), nameStr);
+	str = monster_firm_destroyed_msg[short_para1-1];
 }
 //------- End of function News::monster_firm_destroyed -----//
 
