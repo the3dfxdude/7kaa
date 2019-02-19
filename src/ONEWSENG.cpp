@@ -571,6 +571,34 @@ void News::firm_destroyed()
 //------- End of function News::firm_destroyed -----//
 
 
+const char *firm_captured_by_spy[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King>'s Kingdom<Color>.
+	N_("Your Seat of Power near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Factory near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Inn near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Market near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Fort near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Mine near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Tower of Science near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your War Factory near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Harbor near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Fryhtan Lair near %s has been captured by a spy from %s's Kingdom%s."),
+};
+const char *firm_captured_by_worker[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Your <Firm> near <Town> has been captured by <King>'s Kingdom<Color>.
+	N_("Your Seat of Power near %s has been captured by %s's Kingdom%s."),
+	N_("Your Factory near %s has been captured by %s's Kingdom%s."),
+	N_("Your Inn near %s has been captured by %s's Kingdom%s."),
+	N_("Your Market near %s has been captured by %s's Kingdom%s."),
+	N_("Your Fort near %s has been captured by %s's Kingdom%s."),
+	N_("Your Mine near %s has been captured by %s's Kingdom%s."),
+	N_("Your Tower of Science near %s has been captured by %s's Kingdom%s."),
+	N_("Your War Factory near %s has been captured by %s's Kingdom%s."),
+	N_("Your Harbor near %s has been captured by %s's Kingdom%s."),
+	N_("Your Fryhtan Lair near %s has been captured by %s's Kingdom%s."),
+};
 //------ Begin of function News::firm_captured -----//
 //
 // nation_name2() - name of the nation that took over your firm.
@@ -595,13 +623,11 @@ void News::firm_captured()
 
 	if( short_para3 )
 	{
-		// TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King>'s Kingdom<Color>.
-		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by a spy from %s's Kingdom%s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), king_name2(), nation_color_str2());
+		snprintf(str, MAX_STR_LEN+1, firm_captured_by_spy[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
 	}
 	else
 	{
-		// TRANSLATORS: Your <Firm> near <Town> has been captured by <King>'s Kingdom<Color>.
-		snprintf(str, MAX_STR_LEN+1, _("Your %s near %s has been captured by %s's Kingdom%s."), _(firm_res[short_para1]->name), town_res.get_name(short_para2), king_name2(), nation_color_str2());
+		snprintf(str, MAX_STR_LEN+1, firm_captured_by_worker[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
 	}
 }
 //------- End of function News::firm_captured -----//
