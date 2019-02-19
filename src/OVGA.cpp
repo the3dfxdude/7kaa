@@ -366,23 +366,11 @@ void Vga::handle_messages()
          break;
       case SDL_MULTIGESTURE:
          if (event.mgesture.numFingers == 2) {
-            if (!mouse.scrolling)
-            {
-               mouse.scroll_prev_y = event.mgesture.y;
-               mouse.scroll_prev_x = event.mgesture.x;
-            }
-            else
-            {
-              double dy = event.mgesture.y - mouse.scroll_prev_y;
-              mouse.scroll_y = dy * mouse.scroll_sensitivity;
-              double dx = event.mgesture.x - mouse.scroll_prev_x;
-              mouse.scroll_x = dx * mouse.scroll_sensitivity;
-            }
+            mouse.process_scroll(event.mgesture.x, event.mgesture.y);
          }
-         mouse.scrolling = true;
          break;
       case SDL_FINGERDOWN:
-         mouse.scrolling = false;
+         mouse.end_scroll();
          break;
       case SDL_MOUSEWHEEL:
           mouse.scroll_x = event.wheel.x;
