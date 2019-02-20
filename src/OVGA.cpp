@@ -54,8 +54,6 @@ Vga::Vga()
    texture = NULL;
    renderer = NULL;
    window = NULL;
-
-   scroll_x = scroll_y = 0;
 }
 //-------- End of function Vga::Vga ----------//
 
@@ -353,17 +351,6 @@ void Vga::adjust_brightness(int changeValue)
 }
 //--------- End of function Vga::adjust_brightness ----------//
 
-bool Vga::get_mouse_scroll(int * x, int * y) {
-    *x = scroll_x;
-    *y = scroll_y;
-    scroll_x = 0;
-    scroll_y = 0;
-    if (*x != 0 || *y != 0) 
-    { 
-        return true; 
-    }
-    return false;
-}
 
 //-------- Begin of function Vga::handle_messages --------//
 void Vga::handle_messages()
@@ -377,11 +364,16 @@ void Vga::handle_messages()
       case SDL_QUIT:
          sys.signal_exit_flag = 1;
          break;
-
+      case SDL_MULTIGESTURE:
+         if (event.mgesture.numFingers == 2) {
+            mouse.process_scroll(event.mgesture.x, event.mgesture.y);
+         }
+         break;
+      case SDL_FINGERDOWN:
+         mouse.end_scroll();
+         break;
       case SDL_MOUSEWHEEL:
-          scroll_x = event.wheel.x;
-          scroll_y = event.wheel.y;
-          set_window_grab(WINGRAB_FORCE);
+          mouse.process_scroll(event.wheel.x, event.wheel.y * -1);
           break;
       case SDL_WINDOWEVENT:
          switch (event.window.event)

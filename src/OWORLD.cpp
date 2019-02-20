@@ -308,7 +308,8 @@ int World::detect()
 //
 int World::detect_scroll()
 {
-   if( !vga.is_input_grabbed() )
+   int scroll_x = 0, scroll_y = 0;
+   if( !vga.is_input_grabbed() && !mouse.get_scroll(&scroll_x, &scroll_y))
       return 0;
 
    if( mouse_cursor.frame_flag )    // if it's now in frame selection mode
@@ -319,8 +320,7 @@ int World::detect_scroll()
 
    int rc=0;
 
-   int scroll_x = 0, scroll_y = 0;
-   if ( vga.get_mouse_scroll(&scroll_x, &scroll_y) )
+   if ( scroll_x || scroll_y )
    {
        zoom_matrix->scroll(scroll_x, scroll_y);
        rc = 1;

@@ -148,6 +148,13 @@ public:
 	unsigned scan_code;             // key pressed, keyboard event
 	unsigned key_code;				// converted from scan_code and event_skey_state
 
+	//-------- wheel/touch scrolling ---------//
+
+	bool scrolling = false;
+	int scroll_sensitivity = 10;
+	int scroll_x = 0, scroll_y = 0;
+	double scroll_prev_y = 0.0, scroll_prev_x = 0.0;
+
 public:
 	Mouse();
 	~Mouse();
@@ -175,6 +182,10 @@ public:
 	int  	in_area(int,int,int,int);
 	int  	press_area(int,int,int,int,int=0);
 	int 	wait_press(int timeOutSecond=0);
+	bool    get_scroll(int * x, int * y);
+	void    process_scroll(int x, int y);
+	void    process_scroll(double x, double y);
+	void    end_scroll();
 
 	//---- functions of mouse cursor boundary ------//
 	void	set_boundary(int, int, int, int);

@@ -793,6 +793,56 @@ void Mouse::poll_event()
 }
 //--------- End of Mouse::poll_event --------------//
 
+//--------- Begin of Mouse::get_scroll ---------//
+bool Mouse::get_scroll(int * x, int * y)
+{
+	*x = scroll_x;
+	*y = scroll_y;
+	scroll_x = 0;
+	scroll_y = 0;
+	if (*x != 0 || *y != 0) 
+	{
+		return true; 
+	}
+	return false;
+}
+//--------- End of Mouse::get_scroll ---------//
+
+//--------- Begin of Mouse::process_scroll ---------//
+void Mouse::process_scroll(double x, double y)
+{
+	if (!mouse.scrolling)
+	{
+		scroll_prev_y = y;
+		scroll_prev_x = x;
+	}
+	else
+	{
+		double dy = y - scroll_prev_y;
+		scroll_y = dy * scroll_sensitivity;
+		double dx = x - scroll_prev_x;
+		scroll_x = dx * scroll_sensitivity;
+	}
+	scrolling = true;
+}
+//--------- End of Mouse::process_scroll ---------//
+
+//--------- Begin of Mouse::process_scroll ---------//
+void Mouse::process_scroll(int x, int y)
+{
+	scroll_y = y;
+	scroll_x = x;
+}
+//--------- End of Mouse::process_scroll ---------//
+
+//--------- Begin of Mouse::end_scroll ---------//
+void Mouse::end_scroll()
+{
+	scroll_x = scroll_y = 0;
+	scroll_prev_x = scroll_prev_y = 0;
+	scrolling = false;
+}
+//--------- End of Mouse::end_scroll ---------//
 
 //--------- Begin of Mouse::process_mouse_motion ---------//
 void Mouse::process_mouse_motion(int x, int y)
