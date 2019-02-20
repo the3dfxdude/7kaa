@@ -373,8 +373,7 @@ void Vga::handle_messages()
          mouse.end_scroll();
          break;
       case SDL_MOUSEWHEEL:
-          mouse.scroll_x = event.wheel.x;
-          mouse.scroll_y = event.wheel.y;
+          mouse.process_scroll(event.wheel.x, event.wheel.y * -1);
           break;
       case SDL_WINDOWEVENT:
          switch (event.window.event)

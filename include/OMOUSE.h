@@ -183,6 +183,7 @@ public:
 	int  	press_area(int,int,int,int,int=0);
 	int 	wait_press(int timeOutSecond=0);
 	bool    get_scroll(int * x, int * y);
+	void    process_scroll(int x, int y);
 	void    process_scroll(double x, double y);
 	void    end_scroll();
 

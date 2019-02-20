@@ -827,6 +827,14 @@ void Mouse::process_scroll(double x, double y)
 }
 //--------- End of Mouse::process_scroll ---------//
 
+//--------- Begin of Mouse::process_scroll ---------//
+void Mouse::process_scroll(int x, int y)
+{
+	scroll_y = y;
+	scroll_x = x;
+}
+//--------- End of Mouse::process_scroll ---------//
+
 //--------- Begin of Mouse::end_scroll ---------//
 void Mouse::end_scroll()
 {
