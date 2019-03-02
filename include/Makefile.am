@@ -160,6 +160,7 @@ noinst_HEADERS = \
 	OWEATHER.h \
 	OWORLD.h \
 	OWORLDMT.h \
+	PlayerStats.h \
 	RESOURCE.h \
 	ReplayFile.h \
 	WALLTILE.h \

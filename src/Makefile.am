@@ -271,6 +271,7 @@ bin_PROGRAMS = 7kaa
 	OW_ROCK.cpp \
 	OW_SOUND.cpp \
 	OW_WALL.cpp \
+	PlayerStats.cpp \
 	ReplayFile.cpp \
 	dbglog.cpp \
 	file_input_stream.cpp \
