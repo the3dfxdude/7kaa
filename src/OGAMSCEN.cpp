@@ -36,11 +36,14 @@
 #include <OBATTLE.h>
 #include <OGAME.h>
 #include <ONATIONA.h>
+#include <PlayerStats.h>
 
 //--------- declare static vars ----------//
 
 static void init_scenario_var(ScenInfo* scenInfo);
 static int sort_scenario_func(const void *arg1, const void *arg2);
+extern SaveGameInfo current_game_info; // After loading, need this to log it as played
+using namespace nsPlayerStats;
 
 //---------- Begin of function Game::select_run_scenario ----------//
 //
@@ -55,6 +58,7 @@ int Game::select_run_scenario()
 	ScenInfo* scenInfoArray = NULL;
 	int scenInfoSize = 0;
 	int dirId;
+
 	for( dirId = 0; dirId < MAX_SCENARIO_PATH; ++dirId )
 	{
 		if( DIR_SCENARIO_PATH(dirId)[0] )
@@ -98,6 +102,20 @@ int Game::select_run_scenario()
 
 						fileTxtScen.get_token();		// skip "Bonus:"
 						scenInfoArray[scenInfoSize].goal_score_bonus = (short) fileTxtScen.get_num();
+
+						// Get the internal name from the header for player stats tracking
+						{
+							playerStats.load_player_stats(true);
+							String path;
+							path = DIR_SCENARIO_PATH(dirId);
+							path += gameDir[i]->name;
+							char * internal_name = GameFile::read_internal_file_name((char*)path);
+							if (internal_name) {
+								PlayStatus status = playerStats.get_scenario_play_status(internal_name);
+								scenInfoArray[scenInfoSize].play_status = static_cast<int>(status);
+								free(const_cast<char*>(internal_name));
+							}
+						}
 					}
 				}
 			}
@@ -162,6 +180,12 @@ int Game::run_scenario(ScenInfo* scenInfo)
 			}
 			strcpy(config.player_name, playerName);
 			// ##### end Gilbert 1/11 #######//
+
+			if (current_game_info.game_name) {
+				playerStats.set_scenario_play_status(current_game_info.game_name, PlayStatus::PLAYED);
+			} else {
+				err.run("Scenario %s has no internal name\n", str);
+			}
 
 			battle.run_loaded();
 		}

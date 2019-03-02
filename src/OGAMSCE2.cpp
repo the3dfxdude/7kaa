@@ -39,6 +39,8 @@
 #include <OFILETXT.h>
 #include <OVQUEUE.h>
 #include <OGETA.h>
+#include <PlayerStats.h>
+#include <OGFILE.h>
 // ####### begin Gilbert 4/11 #######//
 #include <OMUSIC.h>
 // ####### end Gilbert 4/11 #######//
@@ -47,7 +49,8 @@
 // --------- declare static funtion --------//
 
 static void disp_scroll_bar_func(SlideVBar *scroll, int);
-
+enum CHECKBOX_STATE { UNCHECKED = 0, PART_CHECKED = 1, CHECKED = 2 };
+static void draw_checkbox(int x, int y, CHECKBOX_STATE checked);
 
 enum { TUTOR_MENU_X1 = 0,
 		 TUTOR_MENU_Y1 = 0,
@@ -108,6 +111,49 @@ enum {
 // ##### end Gilbert 1/11 ########//
 #define TUOPTION_ALL           0xffffffff
 
+//---------- Begin of function draw_checkbox ----------//
+//
+// Though we check for PlayStatus here, this is a very general
+// purpose function and can be used anywhere with ints instead.
+//
+void draw_checkbox(int x, int y, CHECKBOX_STATE checked)
+{
+	// UNPLAYED  = Empty checkbox
+	// PLAYED    = Line in checkbox
+	// COMPLETED = Checked
+
+	if (checked == CHECKBOX_STATE::CHECKED) {
+		image_menu.put_front(x, y, "NMPG-RCH");             // Checked checkbox
+	}
+	else                                                    // Unchecked checkbox
+	{
+		//
+		// We need an empty checkbox to start. It stays that way for an
+		// UNCHECKED box. We'll draw a line inside for PART_CHECKED.
+		//
+
+		//---- draw a pseudo-3D empty checkbox ----//
+		vga_front.rect(x, y, x + 14, y + 14, 10, V_WHITE); // white background
+		vga_front.line(x, y, x + 14, y, V_WHITE - 8);      // top
+		vga_front.line(x, y, x, y + 14, V_WHITE - 8);      // left
+		x += 1;
+		y += 1;
+		vga_front.line(x, y, x + 13, y, V_WHITE - 6);	   // inner shadow top
+		vga_front.line(x, y, x, y + 13, V_WHITE - 6);	   // inner shadow left
+		x += 1;
+		y += 1;
+		vga_front.rect(x, y, x + 12, y + 12, 1, V_WHITE - 1);  // another inner shadow
+
+		if (checked == CHECKBOX_STATE::PART_CHECKED)   // Line in the middle
+		{
+			vga_front.line(x + 1, y + 4, x + 11, y + 4, VGA_GRAY + 4);  // Dark gray line
+			vga_front.line(x + 1, y + 5, x + 11, y + 5, VGA_GRAY + 4);  // Dark gray line
+			vga_front.line(x + 1, y + 6, x + 11, y + 6, VGA_GRAY + 4);  // Dark gray line
+			vga_front.line(x + 2, y + 7, x + 12, y + 7, V_WHITE - 8);   // slight shadow bottom-right
+		}
+	}
+}
+//---------- End of function draw_checkbox ----------//
 
 //---------- Begin of function Game::select_scenario ----------//
 //
@@ -405,6 +451,12 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 							textX = font_bible.put(textX, browseSlotY1+TEXT_OFFSET_Y,
 								_(scenInfoArray[rec-1].scen_name), 0, browseSlotX2 );
 
+							//---- display the scenario's play status ----//
+
+							draw_checkbox(browseSlotX1 + TEXT_OFFSET_X + 675,
+										  browseSlotY1 + TEXT_OFFSET_Y + 5,
+										  static_cast<CHECKBOX_STATE>(scenInfoArray[rec - 1].play_status));
+
 							//---- display the scenario difficulty and bonus points ----//
 
 							String str(_("Difficulty : "));
@@ -495,11 +547,14 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 		}
 		else if( mouse.single_click( menuX1+BROWSE_X1, menuY1+BROWSE_Y1, 
 			menuX1+BROWSE_X1+BROWSE_REC_WIDTH-1, 
-			menuY1+BROWSE_Y1+ BROWSE_REC_HEIGHT*MAX_BROWSE_DISP_REC -1) )
+			menuY1+BROWSE_Y1+ BROWSE_REC_HEIGHT*MAX_BROWSE_DISP_REC -1, 2) )
 		{
+			int btn;
+			if (mouse.left_press) { btn = 0; }
+			else if (mouse.right_press) { btn = 1; }
 			// click on game slot
 			int oldValue = browseRecno;
-			int newValue = scrollBar.view_recno + (mouse.click_y(0) - BROWSE_Y1 - menuY1) / BROWSE_REC_HEIGHT;
+			int newValue = scrollBar.view_recno + (mouse.click_y(btn) - BROWSE_Y1 - menuY1) / BROWSE_REC_HEIGHT;
 			if( newValue <= scenCount )
 			{
 				if( oldValue != newValue )
@@ -510,6 +565,32 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 						| TUOPTION_TEXT_AREA | TUOPTION_PIC_AREA;
 					if( oldValue-scrollBar.view_recno >= 0 && oldValue-scrollBar.view_recno < MAX_BROWSE_DISP_REC)
 						refreshFlag |= TUOPTION_BROWSE(oldValue-scrollBar.view_recno);
+				}
+			}
+
+			if (mouse.right_press)
+			{
+				int status = scenInfoArray[browseRecno - 1].play_status;
+				status++;
+				if(status > nsPlayerStats::PlayStatus::COMPLETED)
+				{
+					status = nsPlayerStats::PlayStatus::UNPLAYED;
+				}
+				scenInfoArray[browseRecno - 1].play_status = status;
+				int browseSlotX1 = menuX1 + BROWSE_X1;
+				int browseSlotY1 = menuY1 + BROWSE_Y1 + (newValue - scrollBar.view_recno) * BROWSE_REC_HEIGHT;
+				draw_checkbox(browseSlotX1 + TEXT_OFFSET_X + 675,
+							  browseSlotY1 + TEXT_OFFSET_Y + 5,
+							  static_cast<CHECKBOX_STATE>(status));
+
+				// update PLAYSTAT.DAT
+				String path;
+				path += DIR_SCENARIO_PATH(scenInfoArray[browseRecno - 1].dir_id);;
+				path += scenInfoArray[browseRecno - 1].file_name;
+				char * internal_name = GameFile::read_internal_file_name(path);
+				if(internal_name)
+				{
+					playerStats.set_scenario_play_status(internal_name, static_cast<nsPlayerStats::PlayStatus>(status));
 				}
 			}
 		}

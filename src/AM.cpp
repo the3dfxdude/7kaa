@@ -109,6 +109,7 @@
 #include <dbglog.h>
 #include <CmdLine.h>
 #include <LocaleRes.h>
+#include <PlayerStats.h>
 #include "gettext.h"
 
 //------- define game version constant --------//
@@ -230,6 +231,13 @@ Battle            battle;
 Power             power;
 World             world;
 SaveGameArray     save_game_array;
+//
+// For regular game files, copy the SaveGameInfo over after calling
+// load_game (see SaveGameArray::process_action). For scenarios or
+// tutor files, just pass this in to load_scenario().
+//
+SaveGameInfo	  current_game_info;
+nsPlayerStats::PlayerStats playerStats;
 HallOfFame        hall_of_fame;
 // ###### begin Gilbert 23/10 #######//
 OptionMenu			option_menu;

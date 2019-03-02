@@ -41,6 +41,7 @@
 #include <OMUSIC.h>
 #include <OOPTMENU.h>
 #include <OINGMENU.h>
+#include <PlayerStats.h>
 // ####### begin Gilbert 29/10 ########//
 #include <OPOWER.h>
 // ####### end Gilbert 29/10 ########//
@@ -61,6 +62,7 @@ static void put_stat(int y, const char* desStr, const char* dispStr);
 static void put_stat(int y, const char* desStr, int dispValue);
 static void put_ranking(int y, int nationRecno);
 
+extern SaveGameInfo current_game_info;
 
 //---------- Begin of function Game::game_end --------//
 //
@@ -75,6 +77,10 @@ static void put_ranking(int y, int nationRecno);
 //
 void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNationRecno, int retireFlag)
 {
+	//--- set scenario as complete if they didn't retire ---//
+	if(!retireFlag)
+		playerStats.set_scenario_play_status(current_game_info.game_name, nsPlayerStats::PlayStatus::COMPLETED);
+
 	//--- skip all game ending screens if in demo mode ---//
 
 	if( game_mode == GAME_DEMO )
