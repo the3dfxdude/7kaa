@@ -164,7 +164,7 @@ int Town::form_new_nation()
 {
 	err_when( nation_recno );
 
-	if( !nation_array.can_form_new_ai_nation() )
+	if( nation_array.nation_count >= MAX_NATION )
 		return 0;
 
 	//----- determine the race with most population -----//
