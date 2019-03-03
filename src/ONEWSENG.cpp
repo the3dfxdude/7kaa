@@ -405,7 +405,7 @@ void News::nation_surrender()
 	else
 	{
 		// TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s has surrendered to %s's Kingdom."), king_name1(), nation_color_str1(), king_name2(), nation_color_str2());
+		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s has surrendered to %s's Kingdom%s."), king_name1(), nation_color_str1(), king_name2(), nation_color_str2());
 	}
 }
 //------- End of function News::nation_surrender -----//
