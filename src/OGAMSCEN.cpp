@@ -109,12 +109,8 @@ int Game::select_run_scenario()
 							String path;
 							path = DIR_SCENARIO_PATH(dirId);
 							path += gameDir[i]->name;
-							char * internal_name = GameFile::read_internal_file_name((char*)path);
-							if (internal_name) {
-								PlayStatus status = playerStats.get_scenario_play_status(internal_name);
-								scenInfoArray[scenInfoSize].play_status = static_cast<int>(status);
-								free(const_cast<char*>(internal_name));
-							}
+							PlayStatus status = playerStats.get_scenario_play_status(gameDir[i]->name);
+							scenInfoArray[scenInfoSize].play_status = static_cast<int>(status);
 						}
 					}
 				}
