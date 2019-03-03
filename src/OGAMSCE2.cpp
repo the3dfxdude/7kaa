@@ -587,11 +587,7 @@ int Game::select_scenario(int scenCount, ScenInfo* scenInfoArray)
 				String path;
 				path += DIR_SCENARIO_PATH(scenInfoArray[browseRecno - 1].dir_id);;
 				path += scenInfoArray[browseRecno - 1].file_name;
-				char * internal_name = GameFile::read_internal_file_name(path);
-				if(internal_name)
-				{
-					playerStats.set_scenario_play_status(internal_name, static_cast<nsPlayerStats::PlayStatus>(status));
-				}
+				playerStats.set_scenario_play_status(scenInfoArray[browseRecno - 1].file_name, static_cast<nsPlayerStats::PlayStatus>(status));
 			}
 		}
 		// ######## begin Gilbert 1/11 #########//

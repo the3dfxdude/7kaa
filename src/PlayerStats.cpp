@@ -136,7 +136,7 @@ bool PlayerStats::write_player_stats() {
 
 //------- Begin of function PlayerStats::get_scenario_play_status ------//
 //
-PlayStatus PlayerStats::get_scenario_play_status(char const * internal_name) {
+PlayStatus PlayerStats::get_scenario_play_status(char const * game_name) {
 	// Check if we already loaded our file. If not, do it.
 	if (!scn_stat_arr) {
 		if (!load_player_stats()) {
@@ -148,7 +148,7 @@ PlayStatus PlayerStats::get_scenario_play_status(char const * internal_name) {
 
 	// Find a matching name and return its status
 	for (int i = 0; i < scn_stat_arr_len; i++) {
-		if (!strncmp(scn_stat_arr[i].internal_name, internal_name, detail::MAX_FILE_PATH)) {
+		if (!strncmp(scn_stat_arr[i].game_name, game_name, detail::MAX_FILE_PATH)) {
 			return scn_stat_arr[i].status;
 		}
 	}
@@ -161,7 +161,7 @@ PlayStatus PlayerStats::get_scenario_play_status(char const * internal_name) {
 
 //------- Begin of function PlayerStats::set_scenario_play_status ------//
 //
-bool PlayerStats::set_scenario_play_status(char const * name, PlayStatus status) {
+bool PlayerStats::set_scenario_play_status(char const * game_name, PlayStatus status) {
 	// Check if we already loaded our file. If not, do it.
 	if (!scn_stat_arr) {
 		// If it fails, we'll create a new one. If it succeeds, we'll
@@ -170,7 +170,7 @@ bool PlayerStats::set_scenario_play_status(char const * name, PlayStatus status)
 	}
 
 	for (int i = 0; i < scn_stat_arr_len; i++) {
-		if (!strncmp(scn_stat_arr[i].internal_name, name, detail::MAX_FILE_PATH)) {
+		if (!strncmp(scn_stat_arr[i].game_name, game_name, detail::MAX_FILE_PATH)) {
 			if (scn_stat_arr[i].status != status) {
 				// Update the entry and re-write the file
 				scn_stat_arr[i].status = status;
@@ -186,7 +186,7 @@ bool PlayerStats::set_scenario_play_status(char const * name, PlayStatus status)
 	int idx = scn_stat_arr_len;
 	scn_stat_arr_len++;
 	scn_stat_arr = (ScenStat *)mem_resize(scn_stat_arr, sizeof(ScenStat)*(scn_stat_arr_len));
-	strncpy(scn_stat_arr[idx].internal_name, name, detail::MAX_FILE_PATH);
+	strncpy(scn_stat_arr[idx].game_name, game_name, detail::MAX_FILE_PATH);
 	scn_stat_arr[idx].status = status;
 	return write_player_stats();
 }

@@ -70,11 +70,11 @@ struct ScenStat {
 	// an 8.3 filename, we'll dispense with the extra byte. Windows includes /0 in
 	// its MAX_PATH's 260 bytes anyway.
 	//
-	char internal_name[MAX_FILE_PATH];
+	char game_name[MAX_FILE_PATH];
 	PlayStatus status;
 };
 
-static_assert(sizeof(ScenStat::internal_name) == MAX_FILE_PATH, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
+static_assert(sizeof(ScenStat::game_name) == MAX_FILE_PATH, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
 static_assert(sizeof(ScenStat) == 264, "Changing ScenStat is a breaking change for PLAYSTAT.DAT");
 
 }
@@ -88,8 +88,8 @@ private:
 	bool write_player_stats();
 
 public:
-	PlayStatus get_scenario_play_status(char const * name);
-	bool set_scenario_play_status(char const * name, PlayStatus status);
+	PlayStatus get_scenario_play_status(char const * game_name);
+	bool set_scenario_play_status(char const * game_name, PlayStatus status);
 	// If force_reload==true, the stats will be reloaded from the file or,
 	// if the file is deleted, the UI will be updated to reflect that
 	bool load_player_stats(bool force_reload = false);
