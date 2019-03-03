@@ -41,6 +41,7 @@
 #include <OFILETXT.h>
 #include <OTUTOR.h>
 #include <OBOX.h>
+#include <OMOUSE.h>
 #include <dbglog.h>
 
 #include <posix_string_compat.h>
@@ -598,7 +599,8 @@ int Tutor::detect()
 		return 1;
 	}
 
-	return 0;
+	// block any click-throughs to the world zoom
+	return mouse.any_click(TUTOR_X1,TUTOR_Y1,TUTOR_X2,TUTOR_Y2);
 }
 //----------- End of function Tutor::detect ------------//
 
