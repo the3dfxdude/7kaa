@@ -854,7 +854,7 @@ void Vga::save_status_report()
          if( info.max_texture_width || info.max_texture_height )
             fprintf(file, "Maximum texture size: %dx%d\n", info.max_texture_width, info.max_texture_height);
          fprintf(file, "Pixel formats:\n");
-         for( i=0; i<info.num_texture_formats; i++ )
+         for( unsigned i=0; i<info.num_texture_formats; i++ )
             fprintf(file, "\t%s\n", SDL_GetPixelFormatName(info.texture_formats[i]));
       }
    }
@@ -902,7 +902,7 @@ void Vga::save_status_report()
       if( info.max_texture_width || info.max_texture_height )
          fprintf(file, "Maximum texture size: %dx%d\n", info.max_texture_width, info.max_texture_height);
       fprintf(file, "Pixel formats:\n");
-      for( int j=0; j<info.num_texture_formats; j++ )
+      for( unsigned j=0; j<info.num_texture_formats; j++ )
          fprintf(file, "\t%s\n", SDL_GetPixelFormatName(info.texture_formats[j]));
       fprintf(file, "\n");
    }

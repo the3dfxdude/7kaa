@@ -71,8 +71,7 @@ void GetA::init(int x1, int y1, int x2, char *field, unsigned length,
 
 	if( hide )
 	{
-		int len;
-		len = strlen(input_field);
+		unsigned len = strlen(input_field);
 		err_when(len >= field_len);
 		hide_flag = 1;
 		hide_field = mem_add(field_len+1);
