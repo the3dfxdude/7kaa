@@ -1217,6 +1217,11 @@ void Unit::idle_detect_helper_attack(short unitRecno)
 		if(targetUnit->nation_recno==nation_recno)
 			return;
 
+		// the targetUnit this unitPtr is attacking may have entered a
+		// building by now due to processing order -- skip this one
+		if(!targetUnit->is_visible())
+			return;
+
 		if(misc.points_distance(next_x_loc(), next_y_loc(), targetUnit->next_x_loc(), targetUnit->next_y_loc())<HELP_DISTANCE)
 		{
 			if(idle_detect_unit_checking(actionPara))
