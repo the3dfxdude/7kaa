@@ -2452,11 +2452,13 @@ static int detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState)
          keyProcessed++;
          break;
 
-      case 'y': //-- cause independent/rebel town to found a new nation --//
+      case 'y': //-- cause independent town to found a new nation --//
           if( town_array.selected_recno )
           {
               townPtr = town_array[town_array.selected_recno];
-              if( townPtr->nation_recno == 0 && nation_array.nation_count < MAX_NATION )
+              if( townPtr->nation_recno == 0
+				  && nation_array.nation_count < MAX_NATION
+				  && !townPtr->rebel_recno)
               {
                   townPtr->form_new_nation();
               }
