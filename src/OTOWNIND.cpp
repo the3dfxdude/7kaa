@@ -215,8 +215,6 @@ int Town::form_new_nation()
 
 	//------ set the nation of the rebel town -----//
 
-   err_when( rebel_recno );		// rebel has its own function in Rebel, this shouldn't be called
-
 	set_nation(nationRecno);		// set the town at last because set_nation() will delete the Town object
 
 	//------ increase the loyalty of the town -----//
