@@ -842,12 +842,23 @@ void Vga::save_status_report()
       SDL_GetWindowSize(window, &w, &h);
       fprintf(file, "Geometry: %dx%d @ (%d, %d)\n", w, h, x, y);
       fprintf(file, "Pixel format: %s\n", SDL_GetPixelFormatName(SDL_GetWindowPixelFormat(window)));
+      fprintf(file, "Full screen: %s\n", is_full_screen() ? "yes" : "no");
       fprintf(file, "Input grabbed: %s\n\n", SDL_GetWindowGrab(window) ? "yes" : "no");
       if( r )
       {
          SDL_RendererInfo info;
+         float xscale, yscale;
+         SDL_Rect rect;
+
          SDL_GetRendererInfo(r, &info);
+         SDL_RenderGetScale(renderer, &xscale, &yscale);
+         SDL_RenderGetViewport(renderer, &rect);
+         SDL_RenderGetLogicalSize(renderer, &w, &h);
+
          fprintf(file, "-- Current renderer: %s --\n", info.name);
+         fprintf(file, "Viewport: x=%d,y=%d,w=%d,h=%d\n", rect.x, rect.y, rect.w, rect.h);
+         fprintf(file, "Scale: xscale=%f,yscale=%f\n", xscale, yscale);
+         fprintf(file, "Logical size: w=%d, h=%d\n", w, h);
          fprintf(file, "Capabilities: %s\n", info.flags & SDL_RENDERER_ACCELERATED ? "hardware accelerated" : "software fallback");
          fprintf(file, "V-sync: %s\n", info.flags & SDL_RENDERER_PRESENTVSYNC ? "on" : "off");
          fprintf(file, "Rendering to texture supported: %s\n", info.flags & SDL_RENDERER_TARGETTEXTURE ? "yes" : "no");
