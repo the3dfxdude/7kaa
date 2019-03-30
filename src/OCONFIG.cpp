@@ -149,7 +149,8 @@ void Config::default_cheat_setting()
 void Config::default_local_game_setting()
 {
 	race_id = 1;
-	strcpy(player_name, _("New Player"));
+	// check translatable string length
+	strcpy(player_name, strlen(_("New Player")) > HUMAN_NAME_LEN ? "New Player" : _("New Player"));
 	player_nation_color = 1;
 	expired_flag = 0;
 }
