@@ -149,7 +149,7 @@ void Config::default_cheat_setting()
 void Config::default_local_game_setting()
 {
 	race_id = 1;
-	strcpy(player_name, _("New Player"));
+	strcpy(player_name, "New Player");
 	player_nation_color = 1;
 	expired_flag = 0;
 }
