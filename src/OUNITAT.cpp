@@ -555,7 +555,7 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if(!locPtr->is_firm())
 		return;	// do nothing if no firm there
 
-	Nation *attackNation = nation_array[attackNationRecno];
+	Nation *attackNation = attackNationRecno ? nation_array[attackNationRecno] : nullptr;
 
 	//----------- attack firm ------------//
 	err_when(!locPtr->firm_recno());
@@ -664,7 +664,7 @@ void Unit::hit_town(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if(!locPtr->is_town())
 		return;	// do nothing if no town there
 
-	Nation *attackNation = nation_array[attackNationRecno];
+	Nation *attackNation = attackNationRecno ? nation_array[attackNationRecno] : nullptr;
 
 	//----------- attack town ----------//
 
