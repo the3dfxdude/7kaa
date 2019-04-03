@@ -21,8 +21,10 @@
 //Filename    : LocaleRes.cpp
 //Description : Locale Resources
 
+#ifdef ENABLE_NLS
 #include <libintl.h>
 #include <locale.h>
+#endif
 
 #include <ALL.h>
 #include <ODB.h>
