@@ -760,7 +760,10 @@ int SaveGameArray::save_new_game(const char* newFileName)
 	SaveGame saveGame;
 	if( SaveGameProvider::save_game(fileName, /*out*/ &saveGame.header) )
 	{
-		strcpy( last_file_name, saveGame.file_info.name );
+		strcpy( saveGame.file_info.name, fileName );
+		saveGame.file_info.size = 0;
+		saveGame.file_info.time = TimeInfo{}; // TODO: We should create a correct file_info, here and also for the normal save.
+		strcpy( last_file_name, fileName );
 
 		if( addFlag )
 		{
