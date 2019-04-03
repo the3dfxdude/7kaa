@@ -222,7 +222,6 @@ private:
 	int		is_mp_sync( int *unreadyPlayerFlag );
 	void		auto_save();
 
-	void 		blt_next_frame();
 	void		disp_frames_per_second();
 
 	void		process_key(unsigned scanCode, unsigned skeyState);
