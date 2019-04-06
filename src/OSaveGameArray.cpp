@@ -760,17 +760,27 @@ int SaveGameArray::save_new_game(const char* newFileName)
 	SaveGame saveGame;
 	if( SaveGameProvider::save_game(fileName, /*out*/ &saveGame.header) )
 	{
-		strcpy( last_file_name, saveGame.file_info.name );
+		strcpy( last_file_name, fileName );
 
-		if( addFlag )
-		{
-			linkin(&saveGame);
+		FilePath full_path(sys.dir_config);
+		full_path += fileName;
+		Directory saveGameDirectory;
+		saveGameDirectory.read(full_path, 0);  // 0-Don't sort file names
 
-			quick_sort( sort_game_file_function );
-		}
-		else
+		if( saveGameDirectory.size() == 1 )
 		{
-			this->update(&saveGame, gameFileRecno);
+			saveGame.file_info = *saveGameDirectory[1];
+
+			if( addFlag )
+			{
+				linkin(&saveGame);
+
+				quick_sort( sort_game_file_function );
+			}
+			else
+			{
+				this->update(&saveGame, gameFileRecno);
+			}
 		}
 
 		return 1;
