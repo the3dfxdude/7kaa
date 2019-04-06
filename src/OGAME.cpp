@@ -222,6 +222,9 @@ int Game::init(int loadGameCall)
 
 	game_has_ended = 0;
 
+	if( !loadGameCall )
+		memset(scenario_file_name, 0, FilePath::MAX_FILE_PATH+1);
+
 	init_flag=1;
 
 	return 1;
