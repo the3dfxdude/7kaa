@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 17:33-0700\n"
+"POT-Creation-Date: 2019-04-08 21:09-0500\n"
 "PO-Revision-Date: 2019-03-07 22:31-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,12 +18,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: src/CmdLine.cpp:47
+#: src/CmdLine.cpp:46
 #, c-format
 msgid "The command line option %s requires an argument."
 msgstr "La opción %s de la linea de comandos requiere un argumento."
 
-#: src/CmdLine.cpp:57
+#: src/CmdLine.cpp:56
 msgid "Multiple startup mode options present on the command line."
 msgstr ""
 "Opciones de modo múltiples presentes en el inicio por linea de comandos."
@@ -583,233 +583,233 @@ msgstr "La partida no puede comenzar."
 msgid "Incorrect kingdom information received from the host."
 msgstr "Se ha recibido información incorrecta del reino desde el anfitrión."
 
-#: src/OGAMEND.cpp:212
+#: src/OGAMEND.cpp:218
 msgid "Do you want to continue to stay in the game?"
 msgstr "¿Quieres seguir en el juego?"
 
-#: src/OGAMEND.cpp:212 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
+#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
 #: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
 #: src/OR_NAT.cpp:548
 msgid "Yes"
 msgstr "Sí"
 
-#: src/OGAMEND.cpp:212 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
+#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
 #: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
 #: src/OR_NAT.cpp:549
 msgid "No"
 msgstr "No"
 
-#: src/OGAMEND.cpp:264
+#: src/OGAMEND.cpp:270
 msgid "All Fryhtans have been Destroyed !"
 msgstr "¡Todos los Fryhtans han sido destruidos!"
 
-#: src/OGAMEND.cpp:267
+#: src/OGAMEND.cpp:273
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr "¡Su reino ha alcanzado el puntaje más alto batallando Fryhtan!"
 
 #. TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
-#: src/OGAMEND.cpp:272
+#: src/OGAMEND.cpp:278
 #, c-format
 msgid "%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr "¡El reino de %s ha alcanzado el puntaje más alto batallando Fryhtans!"
 
 #. TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:283 src/OGAMEND.cpp:301 src/OGAMEND.cpp:319
+#: src/OGAMEND.cpp:289 src/OGAMEND.cpp:307 src/OGAMEND.cpp:325
 msgid "Your Kingdom has Reached"
 msgstr "¡Su reino ha alcanzado"
 
 #. TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:288 src/OGAMEND.cpp:306 src/OGAMEND.cpp:324
+#: src/OGAMEND.cpp:294 src/OGAMEND.cpp:312 src/OGAMEND.cpp:330
 #, c-format
 msgid "%s's Kingdom has Reached"
 msgstr "¡El reino de %s ha alcanzado"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
-#: src/OGAMEND.cpp:291
+#: src/OGAMEND.cpp:297
 #, c-format
 msgid "its Population Goal of %s !"
 msgstr "su objetivo de población de %s!"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Economic Score Goal of <Number> !"
-#: src/OGAMEND.cpp:309
+#: src/OGAMEND.cpp:315
 #, c-format
 msgid "its Economic Score Goal of %s !"
 msgstr "su objetivo de puntuación económica de %s !"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:327
+#: src/OGAMEND.cpp:333
 #, c-format
 msgid "its Total Score Goal of %s !"
 msgstr "el objetivo de puntuación total de %s !"
 
-#: src/OGAMEND.cpp:336
+#: src/OGAMEND.cpp:342
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
 msgstr "¡Su reino ha vencido a todos los demás reinos!"
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
-#: src/OGAMEND.cpp:341
+#: src/OGAMEND.cpp:347
 #, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
 msgstr "¡El reino de %s ha vencido a todos los demás reinos!"
 
-#: src/OGAMEND.cpp:351
+#: src/OGAMEND.cpp:357
 msgid "You Have Lost the Game !"
 msgstr "¡Ha perdido el juego!"
 
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
-#: src/OGAMEND.cpp:370
+#: src/OGAMEND.cpp:376
 #, c-format
 msgid "You Surrendered to %s's Kingdom on %s."
 msgstr "Usted se rindió al reino de %1$s el %2$s ."
 
-#: src/OGAMEND.cpp:377
+#: src/OGAMEND.cpp:383
 msgid "Your Kingdom has Failed to Achieve its Goal Within the Time Limit."
 msgstr "Su reino no ha logrado alcanzar su meta dentro del límite de tiempo."
 
-#: src/OGAMEND.cpp:381
+#: src/OGAMEND.cpp:387
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
 msgstr "¡Su reino ha caído en una ignominiosa derrota!"
 
 #. TRANSLATORS: You Retired on <Date>.
-#: src/OGAMEND.cpp:396
+#: src/OGAMEND.cpp:402
 #, c-format
 msgid "You Retired on %s."
 msgstr "Usted se ha retirado el %s ."
 
-#: src/OGAMEND.cpp:411
+#: src/OGAMEND.cpp:417
 msgid "Duration of Your Rule"
 msgstr "Duración de su reinado"
 
-#: src/OGAMEND.cpp:412
+#: src/OGAMEND.cpp:418
 msgid "Total Gaming Time"
 msgstr "Tiempo total de juego"
 
-#: src/OGAMEND.cpp:414
+#: src/OGAMEND.cpp:420
 msgid "Final Population"
 msgstr "Población final"
 
-#: src/OGAMEND.cpp:415
+#: src/OGAMEND.cpp:421
 msgid "Final Treasure"
 msgstr "Tesoro final"
 
-#: src/OGAMEND.cpp:417
+#: src/OGAMEND.cpp:423
 msgid "Enemy Soldiers Dispatched"
 msgstr "Soldados enemigos despachados"
 
-#: src/OGAMEND.cpp:418
+#: src/OGAMEND.cpp:424
 msgid "King's Soldiers Martyred"
 msgstr "Soldados del rey martirizados"
 
-#: src/OGAMEND.cpp:420
+#: src/OGAMEND.cpp:426
 msgid "Enemy Weapons Destroyed"
 msgstr "Armas del enemigo destruidas"
 
-#: src/OGAMEND.cpp:421
+#: src/OGAMEND.cpp:427
 msgid "King's Weapons Rendered Obsolete"
 msgstr "Armas del rey obsoletas"
 
-#: src/OGAMEND.cpp:423
+#: src/OGAMEND.cpp:429
 msgid "Enemy Ships Sunk"
 msgstr "Barcos enemigos hundidos"
 
-#: src/OGAMEND.cpp:424
+#: src/OGAMEND.cpp:430
 msgid "King's Ships Missing"
 msgstr "Barcos del rey desaparecidos"
 
-#: src/OGAMEND.cpp:426
+#: src/OGAMEND.cpp:432
 msgid "Enemy Buildings Destroyed"
 msgstr "Edificios enemigos destruidos"
 
-#: src/OGAMEND.cpp:427
+#: src/OGAMEND.cpp:433
 msgid "King's Buildings Cleared"
 msgstr "Edificios del rey despejados"
 
-#: src/OGAMEND.cpp:429
+#: src/OGAMEND.cpp:435
 msgid "Enemy Civilians Collaterally Damaged"
 msgstr "Civiles enemigos dañados colateralmente"
 
-#: src/OGAMEND.cpp:430
+#: src/OGAMEND.cpp:436
 msgid "King's Civilians Cruelly Murdered"
 msgstr "Civiles del rey cruelmente asesinados"
 
-#: src/OGAMEND.cpp:463 src/OR_NAT.cpp:135 src/OR_RANK.cpp:87
+#: src/OGAMEND.cpp:469 src/OR_NAT.cpp:135 src/OR_RANK.cpp:87
 msgid "Kingdom"
 msgstr "Reino"
 
-#: src/OGAMEND.cpp:464 src/OGAMHALL.cpp:270 src/OR_RANK.cpp:88
+#: src/OGAMEND.cpp:470 src/OGAMHALL.cpp:270 src/OR_RANK.cpp:88
 #: src/OTOWNIF.cpp:263
 msgid "Population"
 msgstr "Población"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/tut_list.res
-#: src/OGAMEND.cpp:465 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:471 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
 msgid "Military"
 msgstr "Militar"
 
-#: src/OGAMEND.cpp:466 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:472 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
 msgid "Economy"
 msgstr "Economía"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:46
-#: src/OGAMEND.cpp:467 src/OR_NAT.cpp:137 src/OR_RANK.cpp:91
+#: src/OGAMEND.cpp:473 src/OR_NAT.cpp:137 src/OR_RANK.cpp:91
 msgid "Reputation"
 msgstr "Reputación"
 
 #. TRANSLATORS: Part of "Fryhtan Battling"
-#: src/OGAMEND.cpp:474
+#: src/OGAMEND.cpp:480
 msgid "Fryhtan"
 msgstr "Fryhtan"
 
 #. TRANSLATORS: Part of "Fryhtan Battling"
-#: src/OGAMEND.cpp:476
+#: src/OGAMEND.cpp:482
 msgid "Battling"
 msgstr "Batallando"
 
-#: src/OGAMEND.cpp:524 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:530 src/OR_RANK.cpp:137
 msgid "Population Score"
 msgstr "Puntuación de población"
 
-#: src/OGAMEND.cpp:524 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:530 src/OR_RANK.cpp:137
 msgid "Military Score"
 msgstr "Puntuación militar"
 
-#: src/OGAMEND.cpp:524 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:530 src/OR_RANK.cpp:137
 msgid "Economic Score"
 msgstr "Puntuación económica"
 
-#: src/OGAMEND.cpp:525 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:531 src/OR_RANK.cpp:138
 msgid "Reputation Score"
 msgstr "Reputación"
 
-#: src/OGAMEND.cpp:525 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:531 src/OR_RANK.cpp:138
 msgid "Fryhtan Battling Score"
 msgstr "Putuación batallando Frythan"
 
-#: src/OGAMEND.cpp:546 src/OR_RANK.cpp:161
+#: src/OGAMEND.cpp:552 src/OR_RANK.cpp:161
 msgid "Total Score"
 msgstr "Puntuación Total"
 
 #. TRANSLATORS: Final Score:  <Number> X
-#: src/OGAMEND.cpp:560 src/OR_RANK.cpp:175
+#: src/OGAMEND.cpp:566 src/OR_RANK.cpp:175
 #, c-format
 msgid "Final Score:  %s X "
 msgstr "Puntuacion final:  %s X "
 
 #. TRANSLATORS: <Number> (Difficulty Rating)
-#: src/OGAMEND.cpp:565 src/OR_RANK.cpp:180
+#: src/OGAMEND.cpp:571 src/OR_RANK.cpp:180
 #, c-format
 msgid "%s (Difficulty Rating)"
 msgstr "%s (Grado de dificultad)"
 
 #. TRANSLATORS: +  <Number> (Bonus)  =  <Number>
-#: src/OGAMEND.cpp:580
+#: src/OGAMEND.cpp:586
 #, c-format
 msgid "+  %d (Bonus)  =  %s"
 msgstr "+ %d (Bonos) = %s"
 
-#: src/OGAMEND.cpp:587 src/OR_RANK.cpp:190
+#: src/OGAMEND.cpp:593 src/OR_RANK.cpp:190
 msgid "X  0 (Cheated)  =  0"
 msgstr "X 0 (Trampa) = 0"
 
@@ -821,7 +821,7 @@ msgstr "Puntuación : "
 msgid "Period : "
 msgstr "Período : "
 
-#: src/OGAMHALL.cpp:291 src/OGAMSCE2.cpp:410
+#: src/OGAMHALL.cpp:291 src/OGAMSCE2.cpp:462
 msgid "Difficulty : "
 msgstr "Dificultad : "
 
@@ -829,43 +829,43 @@ msgstr "Dificultad : "
 msgid "Version"
 msgstr "Versión"
 
-#: src/OGAMSCE2.cpp:132
+#: src/OGAMSCE2.cpp:178
 msgid "Scenario files not found."
 msgstr "Archivos de escenario no encontrados."
 
-#: src/OGAMSCE2.cpp:416
+#: src/OGAMSCE2.cpp:468
 msgid "Score Bonus: "
 msgstr "Puntuación bonos: "
 
-#: src/OGFILE.cpp:325
+#: src/OGFILE.cpp:324
 msgid "Success"
 msgstr "Éxito"
 
-#: src/OGFILE.cpp:327
+#: src/OGFILE.cpp:326
 msgid "Error creating saved game file"
 msgstr "Error al crear el archivo de guardado de la partida"
 
-#: src/OGFILE.cpp:329
+#: src/OGFILE.cpp:328
 msgid "Error creating saved game header"
 msgstr "Error al crear la cabecera de guardado de la partida"
 
-#: src/OGFILE.cpp:331
+#: src/OGFILE.cpp:330
 msgid "Error writing saved game data"
 msgstr "Error al escribir los datos de guardado de la partida"
 
-#: src/OGFILE.cpp:333
+#: src/OGFILE.cpp:332
 msgid "Cannot open save game file"
 msgstr "No se puede abrir el archivo de la partida guardada"
 
-#: src/OGFILE.cpp:335
+#: src/OGFILE.cpp:334
 msgid "Cannot read file header"
 msgstr "No se puede leer la cabecera del archivo"
 
-#: src/OGFILE.cpp:337
+#: src/OGFILE.cpp:336
 msgid "Incompatible save game"
 msgstr "Partida guardada incompatible"
 
-#: src/OGFILE.cpp:339
+#: src/OGFILE.cpp:338
 msgid "Load game error"
 msgstr "Error al cargar la partida"
 
@@ -898,7 +898,7 @@ msgstr[1] "%d minutos"
 
 #. TRANSLATORS: Part of "%d year(s) and %d day(s)"
 #. TRANSLATORS: Part of "%d year(s) and %d month(s)"
-#: src/OINFO.cpp:648 src/ONATIONB.cpp:2057 src/ONATIONB.cpp:2349
+#: src/OINFO.cpp:648 src/ONATIONB.cpp:2054 src/ONATIONB.cpp:2346
 #, c-format
 msgid "%d year and"
 msgid_plural "%d years and"
@@ -960,7 +960,7 @@ msgstr "Alianza"
 msgid "%s's Kingdom"
 msgstr "Reino de %s"
 
-#: src/ONATIONB.cpp:2061 src/ONATIONB.cpp:2353
+#: src/ONATIONB.cpp:2058 src/ONATIONB.cpp:2350
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -1091,8 +1091,8 @@ msgstr "El reino de %s%s se ha rendido ante usted."
 
 #. TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
 #: src/ONEWSENG.cpp:408
-#, c-format
-msgid "%s's Kingdom%s has surrendered to %s's Kingdom."
+#, fuzzy, c-format
+msgid "%s's Kingdom%s has surrendered to %s's Kingdom%s."
 msgstr "El reino de %s%s se ha rendido ante el reino de %s."
 
 #. TRANSLATORS: Your King, <Name>, has been slain.
@@ -3268,24 +3268,24 @@ msgstr "Construcción rápida está desactivada."
 msgid "Fast build is now enabled."
 msgstr "Construcción rápida está habilitada."
 
-#: src/OSYS.cpp:2635
+#: src/OSYS.cpp:2647
 #, c-format
 msgid "The current screen has been written to file %s."
 msgstr "La pantalla actual se ha escrito al archivo %s ."
 
-#: src/OSYS.cpp:2676
+#: src/OSYS.cpp:2688
 msgid "Failed Loading Game"
 msgstr "Error al cargar partida"
 
-#: src/OSYS.cpp:2687
+#: src/OSYS.cpp:2699
 msgid "Game Loaded Successfully"
 msgstr "Partida cargada correctamente"
 
-#: src/OSYS.cpp:2714
+#: src/OSYS.cpp:2726
 msgid "Game Saved Successfully"
 msgstr "Partida guardada con éxito"
 
-#: src/OSYS.cpp:2786
+#: src/OSYS.cpp:2798
 msgid "Unable to locate the game resources"
 msgstr "Imposible encontrar los archivos del juego"
 
@@ -4157,11 +4157,11 @@ msgstr ""
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: src/OTUTOR.cpp:480
+#: src/OTUTOR.cpp:481
 msgid "Next Training"
 msgstr "Siguiente entrenamiento"
 
-#: src/OTUTOR.cpp:481
+#: src/OTUTOR.cpp:482
 msgid "Quit Training"
 msgstr "Cancelar entrenamiento"
 
