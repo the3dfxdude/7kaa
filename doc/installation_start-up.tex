@@ -25,97 +25,71 @@
 
 To play \textit{Seven Kingdoms: Ancient Adversaries}, the following hardware and software is required:
 
-\begin{adjustwidth}{1cm}{}
-x86 or x86\_64 processor, Pentium or better \\
-SDL2.0 with accelerated OpenGl or DirectX compliant video drivers \\
-32 MB of RAM
-\end{adjustwidth}
+\begin{itemize}
+\item x86 or x86\_64 little-endian processor, Pentium or better
+\item SDL2.0 with accelerated OpenGl or DirectX compliant video drivers
+\item 32 MB of RAM
+\end{itemize}
+
+For more information about system requirements including limitations, see: \\
+
+\href{https://www.7kfans.com/wiki/index.php/System_Requirements_for_Seven_Kingdoms_1}{System Requirements}
 
 \subsection{Optional Requirements}
 
-\begin{adjustwidth}{1cm}{}
-UDP/IP connection for LAN and Internet play
-\end{adjustwidth}
+\begin{itemize}
+\item IPv4 UDP connection for LAN and Internet play
+\end{itemize}
 
-%\section{Installation and Update}
+\subsection{Required dependencies}
 
-% NOTE: MacOs and BSD are not supported by this manual yet. You may find additional information regarding 7kaa on these operating systems on the internet. There are BSD ports of 7kaa, and 7kaa is known to install on MacOs.
+\begin{itemize}
+\item C++11 compliant compiler
+\item SDL 2
+\item Enet
+\item OpenAL-soft or equivalent driver
+\end{itemize}
 
-% break up into topics? id est linux vs windows?
+\subsection{Optional dependencies}
 
-%Most Gnu/Linux distributions have a package for 7kaa. Use the package manager that comes with your distribution to install and update 7kaa. If your are unable to find the package in your distribution’s repository, try searching for 7kaa.
+\begin{itemize}
+\item Autoconf (when using git snapshot)
+\item Libcurl (the URL transfer library, for full 7kfans multiplayer integration)
+\item Gettext
+\item Game music bundle
+\end{itemize}
 
-%\textbf{NOTE}: distributions that are not rolling release may have older packages in their stable branch. The official releases from 7kfans.com may be different. Although bugs may appear, the new releases usually have important updates and fixes.
+\section{Installation}
 
-%A Windows 32-bit installer is provided on the download page. It includes the required dependencies to play. 
-% give specifics
-%Follow the prompts that you will see as the installation progresses and choose your options. 
+\subsection{Download}
 
-%Occasionally, an .exe is released for a development branch on the download page.
-%why?
-%Only prebuilt Windows binaries are released via the Downloads page. For a development version on Linux, compile the git snapshot.
+\textit{Seven Kingdoms: Ancient Adversaries} can be downloaded at the \\
 
-\section{Building the Game on GNU/Linux}
+\href{https://www.7kfans.com/wiki/index.php/Download}{\textbf{Download Page}} \\
 
-Make sure you have these programs installed:
-
-\begin{adjustwidth}{1cm}{}
-make \\
-autoconf \\
-GCC 4.6+ or later (or other C++11 compliant compiler) \\
-git
-\end{adjustwidth}
-
-\clearpage
-	
-Then, install these:
-
-Required dependencies
-
-\begin{adjustwidth}{1cm}{}
-SDL 2.0.4 or later \\
-enet 1.3.xx \\
-OpenAL-soft or equivalent driver \\
-Autoconf 2.65
-\end{adjustwidth}
-
-Optional dependencies
-
-\begin{adjustwidth}{1cm}{}
-libcurl (the URL transfer library, for full 7kfans multiplayer integration) \\
-gettext 0.18 or later \\
-Game music bundle
-\end{adjustwidth}
-
-To compile, run:
+Or you can checkout the git repository at \\
 
 \begin{lstlisting}[language=bash]
-$ git clone git://www.7kfans.com/7kaa.git
-$ autogen.sh
-$ ./configure
-$ make
-# make install
+https://github.com/the3dfxdude/7kaa.git
 \end{lstlisting}
 
-%\subsection{Compile with Translations}
+\subsection{Install Instructions}
 
-\subsection{How to Install the Music}
+For install instructions, see
 
-To install music, copy music into data folder or use PACKAGE\_DATA\_PATH.
+\begin{itemize}
+\item \href{https://www.7kfans.com/wiki/index.php/Installation\_Guide}{\textbf{Installation Guide}} for Windows.
 
-From the build directory, run:
+\item \href{https://www.7kfans.com/wiki/index.php/Building\_From_Source}{\textbf{Building From Source}} for GNU/Linux.
 
-\begin{lstlisting}[language=bash]
-$ wget https://www.7kfans.com/downloads/7kaa-music.tar.bz2
-$ bzip2 -cd 7kaa-music.tar.bz2 | tar xvf -
-$ mv 7kaa-music/music data/music
-\end{lstlisting}
+\item \href{https://www.7kfans.com/wiki/index.php/Brew\_Formula}{\textbf{Brew Formula}} for MacOS.
+\end{itemize}
 
 \section{Troubleshooting}
 
 \begin{tabular}{ | l | p{6cm} |}
 	\hline
-	Problem	& Solution \\ \hline
+Problem	& Solution \\ \hline
 There is no music. & The music files are not included in the git snapshot, nor are they included in some distributions. Ensure you have downloaded and installed the music. \\ \hline
 Errors during compile & Ensure you have the required dependencies. If you are unable to find the dependency in your distribution's package repository, ensure you have the correct package name for your distribution. \\
  \hline
@@ -123,13 +97,19 @@ Errors during compile & Ensure you have the required dependencies. If you are un
 
 \section{Start up}
 
-In the terminal, make install will allow you to invoke:
+\subsection{Executable}
+
+\textbf{Click} on the \textit{Seven Kingdoms: Ancient Adversaries}' icon  to start it. \\
+
+\includegraphics[width=0.1\linewidth]{7kicon}
+
+\subsubsection{Terminal}
 
 \begin{lstlisting}[language=bash]
 $ 7kaa
 \end{lstlisting}
 
-%\subsection{Git Snapshot}
+\subsubsection{Git Snapshot}
 
 To run the game from the build directory, you need to point to the game data folder. The game data folder is set by the environment variable SKDATA. In a bash shell, this can be accomplished by
 
@@ -138,13 +118,3 @@ $ SKDATA=data src/7kaa
 \end{lstlisting}
 
 (where src/7kaa is in the 7kaa directory downloaded via git or in .zip / tar.bz2 form).
-
-%\subsection{Windows}
-
-%If selected to install Start Menu Shortcuts, Seven Kingdoms AA start menu folder will be installed. 
-
-%A 7kaa.exe desktop shortcut will be installed % add icon image
-
-%You have the option of creating shortcut on the desktop with a 7kaa icon. Click on the shortcut to start 7kaa. Otherwise, an entry will be created in the menu as Seven Kingdoms AA with the same icon.
-
-% add icon image
