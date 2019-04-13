@@ -555,8 +555,6 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if(!locPtr->is_firm())
 		return;	// do nothing if no firm there
 
-	Nation *attackNation = nation_array[attackNationRecno];
-
 	//----------- attack firm ------------//
 	err_when(!locPtr->firm_recno());
 	Firm *targetFirm = firm_array[locPtr->firm_recno()];
@@ -570,10 +568,10 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if( attackUnit!=NULL && attackUnit->cur_action!=SPRITE_DIE &&
 		 targetFirm->nation_recno != attackNationRecno )		// the target and the attacker's nations are different (it's possible that when a unit who has just changed nation has its bullet hitting its own nation)
 	{
-		if( attackNation && targetFirm->nation_recno )
+		if( attackNationRecno && targetFirm->nation_recno )
 		{
 			//### trevor 29/9 ###//
-			attackNation->set_at_war_today();
+			nation_array[attackNationRecno]->set_at_war_today();
 			nation_array[targetFirm->nation_recno]->set_at_war_today(attackUnit->sprite_recno);
 			//### trevor 29/9 ###//
 		}
@@ -592,8 +590,8 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		//------ increase battling fryhtan score -------//
 
-		if( attackNation && targetFirm->firm_id == FIRM_MONSTER )
-			attackNation->kill_monster_score += (float) 0.01;
+		if( attackNationRecno && targetFirm->firm_id == FIRM_MONSTER )
+			nation_array[attackNationRecno]->kill_monster_score += (float) 0.01;
 	}
 
 	//---------- add indicator on the map ----------//
@@ -621,11 +619,10 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		if( targetFirm->nation_recno )
 		{
-			if( attackNation )
-				attackNation->enemy_firm_destroyed++;
+			if( attackNationRecno )
+				nation_array[attackNationRecno]->enemy_firm_destroyed++;
 
-			if( targetFirm->nation_recno )
-				nation_array[targetFirm->nation_recno]->own_firm_destroyed++;
+			nation_array[targetFirm->nation_recno]->own_firm_destroyed++;
 		}
 
 		else if( targetFirm->firm_id == FIRM_MONSTER )
@@ -664,8 +661,6 @@ void Unit::hit_town(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if(!locPtr->is_town())
 		return;	// do nothing if no town there
 
-	Nation *attackNation = nation_array[attackNationRecno];
-
 	//----------- attack town ----------//
 
 	err_when(!locPtr->town_recno());
@@ -694,10 +689,10 @@ void Unit::hit_town(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		//------- change to hostile relation -------//
 
-		if( attackNation && targetTown->nation_recno )
+		if( attackNationRecno && targetTown->nation_recno )
 		{
 			//### trevor 29/9 ###//
-			attackNation->set_at_war_today();
+			nation_array[attackNationRecno]->set_at_war_today();
 			nation_array[targetTown->nation_recno]->set_at_war_today(attackUnit->sprite_recno);
 			//### trevor 29/9 ###//
 		}
