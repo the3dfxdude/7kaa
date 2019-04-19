@@ -78,6 +78,10 @@ CHGPROD
 Change Production
 This toggles production in this factory between iron, copper, and clay products.
 ~
+MKTYPE
+Market Type
+This toggles the resources prioritized at this market between raw and finished products, or either. An unprioritized resource taking up a slot but with 0 for the amount will auto-clear for a prioritized resource that becomes available.
+~
 COLLTAX
 Collect Tax
 This collects tax from the selected village. If you right-click on this, you will be able to tax your villagers automatically.

@@ -72,6 +72,7 @@ static Point slot_point_array[] =
 	{ 28, 14 },
 };
 
+static Button3D	button_toggle_accepted_goods;
 static Button3D button_hire_caravan;
 static Button 	 button_clear_stock[MAX_MARKET_GOODS];
 
@@ -113,13 +114,12 @@ void FirmMarket::init_derived()
 
 	town_array.distribute_demand();
 
-	//-------- set is_retail_market (for AI only) --------//
+	//-------- set is_retail_market --------//
+	is_retail_market = 1;		// set it to 1 first
 
 	if( firm_ai )
 	{
 		Firm *firmPtr, *otherFirm;
-
-		is_retail_market = 1;		// set it to 1 first
 
 		for( int i=0 ; i<linked_firm_count ; i++ )
 		{
@@ -252,8 +252,15 @@ void FirmMarket::put_info(int refreshFlag)
 
 	disp_income(INFO_Y1+209, refreshFlag );	  // 1-display income figure
 
-	if( refreshFlag == INFO_REPAINT )
-		button_hire_caravan.paint( INFO_X1, INFO_Y1+236, 'A', "HIRECARA" );
+	if (refreshFlag == INFO_REPAINT)
+	{
+		button_hire_caravan.paint(INFO_X1, INFO_Y1 + 236, 'A', "HIRECARA");
+		button_toggle_accepted_goods.paint(INFO_X1 + BUTTON_ACTION_WIDTH, INFO_Y1 + 236, 'A', "CHGPROD");
+		button_toggle_accepted_goods.set_help_code("MKTYPE");
+	}
+
+	font_san.center_put(INFO_X1, INFO_Y1 + BUTTON_ACTION_HEIGHT + 236, INFO_X2, INFO_Y2, market_type);
+	button_toggle_accepted_goods.enable();
 
 	if( can_hire_caravan() )
 		button_hire_caravan.enable();
@@ -305,9 +312,25 @@ void FirmMarket::detect_info()
 
 	if( button_hire_caravan.detect('R') )
 		hire_caravan(COMMAND_PLAYER);
+
+	//----- detect toggle accepted goods button -------//
+
+	if (button_toggle_accepted_goods.detect())
+		change_market_type();
 }
 //----------- End of function FirmMarket::detect_info -----------//
 
+//----------- Begin of function FirmMarket::change_market_type -----------//
+void FirmMarket::change_market_type()
+{
+	is_retail_market = !is_retail_market;
+
+	if(is_retail_market)
+		market_type = "retail";
+	else
+		market_type = "raw";
+}
+//----------- Begin of function FirmMarket::change_market_type -----------//
 
 //------- Begin of function FirmMarket::can_hire_caravan -------//
 //
@@ -693,12 +716,12 @@ void FirmMarket::input_goods(int maxInputQty)
 		{
 			if( !is_inputing_array[i] && marketGoods->stock_qty==0 )
 			{
-				if( firmPtr->firm_id == FIRM_MINE )
+				if( firmPtr->firm_id == FIRM_MINE && !is_retail_market )
 				{
 					set_goods(1, ((FirmMine*)firmPtr)->raw_id, i);
 					break;
 				}
-				else if( firmPtr->firm_id == FIRM_FACTORY )
+				else if( firmPtr->firm_id == FIRM_FACTORY && is_retail_market )
 				{
 					set_goods(0, ((FirmFactory*)firmPtr)->product_raw_id, i);
 					break;

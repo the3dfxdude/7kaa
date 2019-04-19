@@ -216,10 +216,14 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 		processed_product_raw_qty_array[j] += 2;
 		curMarket->set_goods(0, j+1, position);
 
-		short unloadQty = (short) MIN(product_raw_qty_array[j], curMarket->max_stock_qty-marketGoods->stock_qty);
-		product_raw_qty_array[j] -= unloadQty;
-		marketGoods->stock_qty	 += unloadQty;
-		processed++;
+		if (curMarket->is_retail_market)
+		{
+			short unloadQty = (short)MIN(product_raw_qty_array[j], curMarket->max_stock_qty - marketGoods->stock_qty);
+			product_raw_qty_array[j] -= unloadQty;
+			marketGoods->stock_qty += unloadQty;
+			processed++;
+		}
+
 		break;
 	}
 
@@ -269,10 +273,14 @@ int UnitCaravan::market_unload_goods_in_empty_slot(FirmMarket *curMarket, int po
 			processed_raw_qty_array[j] += 2;
 			curMarket->set_goods(1, j+1, position);
 
-			short unloadQty = (short) MIN(raw_qty_array[j], curMarket->max_stock_qty-marketGoods->stock_qty);
-			raw_qty_array[j]			-= unloadQty;
-			marketGoods->stock_qty	+= unloadQty;
-			processed++;
+			if (!curMarket->is_retail_market)
+			{
+				short unloadQty = (short)MIN(raw_qty_array[j], curMarket->max_stock_qty - marketGoods->stock_qty);
+				raw_qty_array[j] -= unloadQty;
+				marketGoods->stock_qty += unloadQty;
+				processed++;
+			}
+
 			break;
 		}
 	}
