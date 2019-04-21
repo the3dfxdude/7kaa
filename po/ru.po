@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-18 17:33-0700\n"
-"PO-Revision-Date: 2018-09-13 12:36-0500\n"
+"PO-Revision-Date: 2019-04-12 17:26+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: src/CmdLine.cpp:47
 #, c-format
 msgid "The command line option %s requires an argument."
-msgstr ""
+msgstr "Параметру командной строки %s требуется аргумент."
 
 #: src/CmdLine.cpp:57
 msgid "Multiple startup mode options present on the command line."
-msgstr ""
+msgstr "В командной строке имеется несколько параметров режима запуска."
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
 #: src/OGAMEMP.cpp:1527 src/OGAMEMP.cpp:1627 src/OGAMEMP.cpp:3030
@@ -194,11 +194,11 @@ msgstr "Бой"
 #: src/OR_TECH.cpp:145 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:117
 #: src/OU_MARIF.cpp:521
 msgid "Hit Points"
-msgstr "здоровье"
+msgstr "Здоровье"
 
 #: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1267
 msgid "Spy Skill"
-msgstr "навыки"
+msgstr "Шпионские способности"
 
 #: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1269
 msgid "Action"
@@ -206,7 +206,7 @@ msgstr "Действие"
 
 #: src/OFIRMIF3.cpp:88
 msgid "Bribe"
-msgstr "Взятка"
+msgstr "Подкуп"
 
 #: src/OFIRMIF3.cpp:116
 msgid "Bribe Succeeded."
@@ -274,7 +274,7 @@ msgstr "Запасы сырья"
 # data/resource/help.res:317
 #: src/OF_FACT.cpp:396
 msgid "Product Stock"
-msgstr "Кол-во продуктов"
+msgstr "Запас продукции"
 
 #: src/OF_HARB.cpp:453 src/OU_MARIF.cpp:87
 msgid "Units"
@@ -290,7 +290,7 @@ msgstr "Готово"
 
 #: src/OF_INN.cpp:406
 msgid "Hiring Cost"
-msgstr "Наем стоит"
+msgstr "Стоимость найма"
 
 #. TRANSLATORS: Part of "You're not permitted to trade with this market."
 #: src/OF_MARK.cpp:408
@@ -362,18 +362,16 @@ msgid "%s Lair"
 msgstr "%s Логово"
 
 #: src/OGAMEMP.cpp:565 src/OGAMEMP.cpp:833
-#, fuzzy
 msgid "Unable to connect from lobby"
-msgstr "Невозможно соединиться из гостевой."
+msgstr "Невозможно соединиться из гостевой"
 
 #: src/OGAMEMP.cpp:572 src/OGAMEMP.cpp:840
-#, fuzzy
 msgid "Cannot initialize ENet"
-msgstr "Невозможно запустить ENet."
+msgstr "Невозможно запустить ENet"
 
 #: src/OGAMEMP.cpp:588 src/OGAMEMP.cpp:856
 msgid "Unable to retrieve leaderboard"
-msgstr "Невозможно получить таблицу лидеров"
+msgstr "Невозможно получить список лидеров"
 
 #: src/OGAMEMP.cpp:603 src/OGAMEMP.cpp:878
 msgid "Enter a name for your game session."
@@ -388,14 +386,12 @@ msgid "Password:"
 msgstr "Пароль:"
 
 #: src/OGAMEMP.cpp:622 src/OGAMEMP.cpp:897
-#, fuzzy
 msgid "Invalid game name"
-msgstr "Неверное имя игры."
+msgstr "Неверное имя игры"
 
 #: src/OGAMEMP.cpp:631 src/OGAMEMP.cpp:906
-#, fuzzy
 msgid "Cannot create the game"
-msgstr "Невозможно создать игру."
+msgstr "Невозможно создать игру"
 
 #: src/OGAMEMP.cpp:660 src/OGAMEMP.cpp:935
 msgid "Enter the game's address:"
@@ -420,7 +416,7 @@ msgid ""
 "leave your password blank, and the previous session is used."
 msgstr ""
 "Введите данные вашего 7kfans.com/forums аккаунта чтобы продолжить.\n"
-"ПОДСКАЗКА: Если вы уже входили используя тот же логин, вы можете оставить "
+"ПОДСКАЗКА: Если вы уже входили, используя тот же логин, вы можете оставить "
 "поле пароля пустым, тогда будет использована предыдущая сессия."
 
 #: src/OGAMEMP.cpp:1441
@@ -428,9 +424,8 @@ msgid "Username:"
 msgstr "Логин:"
 
 #: src/OGAMEMP.cpp:1464
-#, fuzzy
 msgid "Unable to connect to 7kfans.com"
-msgstr "нет соединения с 7kfans.com."
+msgstr "Нет соединения с 7kfans.com"
 
 #: src/OGAMEMP.cpp:1948
 msgid "Unable to communicate with the network"
@@ -473,7 +468,7 @@ msgstr "Подождите пока идет разъединение..."
 
 #: src/OGAMEMP.cpp:2252
 msgid "Retrieving leaderboard"
-msgstr "Загружается таблица лидеров"
+msgstr "Загружается список лидеров"
 
 #: src/OGAMEMP.cpp:2957 src/OGAMEMP.cpp:4863
 msgid "?anonymous?"
@@ -481,15 +476,15 @@ msgstr "?аноним?"
 
 #: src/OGAMEMP.cpp:3030 src/OGAMEMP.cpp:4937
 msgid "The game host has disconnected."
-msgstr "Создатель игры отсоединился."
+msgstr "Хост отсоединился."
 
 #: src/OGAMEMP.cpp:3095 src/OGAMEMP.cpp:5003
 msgid "The game host has aborted the game."
-msgstr "Создатель игры прервал игру."
+msgstr "Хост прервал игру."
 
 #: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:5186
 msgid "Your game version does not match the host's version."
-msgstr "Версия вашей игры не совпадает с версией игры создателя."
+msgstr "Версия вашей игры не совпадает с версией хоста."
 
 #: src/OGAMEMP.cpp:3404 src/OGAMEMP.cpp:5189
 msgid "The game you tried to join is currently full."
@@ -497,18 +492,17 @@ msgstr "Игра к которой вы пытаетесь присоедини�
 
 #: src/OGAMEMP.cpp:3407 src/OGAMEMP.cpp:5192
 msgid "The host refused to authorize your connection."
-msgstr "Создатель игры отказал вам в авторизации."
+msgstr "Хост отказал вам в авторизации."
 
 #: src/OGAMEMP.cpp:3410 src/OGAMEMP.cpp:5195
 msgid "You cannot join the game because the host is loading a save."
 msgstr ""
-"Вы не можете присоединится к игре потому что создатель загружает сохранение."
+"Вы не можете присоединится к игре потому что хост загружает сохранение."
 
 #: src/OGAMEMP.cpp:3413 src/OGAMEMP.cpp:5198
 msgid "You cannot join the game because the host is not loading a save."
 msgstr ""
-"Вы не можете присоединится к игре потому что создатель не загружает "
-"сохранение."
+"Вы не можете присоединится к игре потому что хост не загружает сохранение."
 
 #: src/OGAMEMP.cpp:3416 src/OGAMEMP.cpp:5201
 msgid ""
@@ -520,52 +514,43 @@ msgstr ""
 
 #: src/OGAMEMP.cpp:3419 src/OGAMEMP.cpp:5204
 msgid "The host refused the connection."
-msgstr "Создатель игры отказал вам в соединении."
+msgstr "Хост отказал вам в соединении."
 
 #: src/OGAMEMP.cpp:4150 src/OGAMEMP.cpp:5588
 msgid "Connection string from host is corrupted"
-msgstr "Строка соединения от создателя повреждена"
+msgstr "Строка соединения хоста повреждена"
 
 #: src/OGAMEMP.cpp:4157
-#, fuzzy
 msgid "Cannot get random seeds from the host"
-msgstr "Невозможно получить сиды от создателя."
+msgstr "Невозможно получить сиды от хоста"
 
 #: src/OGAMEMP.cpp:4163
-#, fuzzy
 msgid "Cannot get game configuration information from the host"
-msgstr "Невозможно получить игровую конфигурацию от создателя."
+msgstr "Невозможно получить от хоста игровую конфигурацию"
 
 #: src/OGAMEMP.cpp:4169 src/OGAMEMP.cpp:5595
-#, fuzzy
 msgid "Cannot get kingdom information from the host"
-msgstr "Невозможно получить информацию о королевстве от создателя."
+msgstr "Невозможно получить от хоста информацию о королевстве"
 
 #: src/OGAMEMP.cpp:4175 src/OGAMEMP.cpp:5601
 msgid "The host cannot recognize your machine."
-msgstr "Создатель не может распознать ваш ПК."
+msgstr "Хост не может распознать ваш ПК."
 
 #: src/OGAMEMP.cpp:4181 src/OGAMEMP.cpp:5607
 msgid "Cannot receive important information from the host"
-msgstr "Невозможно получить важную информацию от создателя"
+msgstr "Невозможно получить важную информацию от хоста"
 
 #: src/OGAMEMP.cpp:4233 src/OGAMEMP.cpp:5653
 msgid "Some player(s) encountered errors when initializing the game."
 msgstr "Некоторый(е) игрок(и) получил(и) ошибки при запуске игры."
 
 #: src/OGAMEMP.cpp:5336 src/OGAMEMP.cpp:5491
-#, fuzzy, c-format
+#, c-format
 msgid "This multiplayer saved game needs %d human player"
 msgid_plural "This multiplayer saved game needs %d human players"
-msgstr[0] ""
-"Это сохранение сетевой игры требует %d человек игроков, в то время как есть "
-"только %d человек игрок."
-msgstr[1] ""
-"Это сохранение сетевой игры требует %d человек игроков, в то время как есть "
-"только %d человека игрока."
-msgstr[2] ""
-"Это сохранение сетевой игры требует %d человек игроков, в то время как есть "
-"только %d человек игроков."
+msgstr[0] "Это сохранение сетевой игры требует %d человек игроков"
+msgstr[1] "Это сохранение сетевой игры требует %d человек игроков"
+msgstr[2] "Это сохранение сетевой игры требует %d человек игроков"
 
 #: src/OGAMEMP.cpp:5339 src/OGAMEMP.cpp:5494
 #, c-format
@@ -576,9 +561,8 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: src/OGAMEMP.cpp:5342 src/OGAMEMP.cpp:5497
-#, fuzzy
 msgid "The game cannot start."
-msgstr "Игра не сохранена."
+msgstr "Невозможно начать игру."
 
 #: src/OGAMEMP.cpp:5557
 msgid "Incorrect kingdom information received from the host."
@@ -610,9 +594,9 @@ msgstr "Ваше королевство достигло наивысших бо
 
 #. TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
 #: src/OGAMEND.cpp:272
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"
-msgstr "Ваше королевство достигло наивысших боевых очков Фрихтанов !"
+msgstr "%s, Ваше королевство достигло наивысших боевых очков Фрихтанов!"
 
 #. TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
 #: src/OGAMEND.cpp:283 src/OGAMEND.cpp:301 src/OGAMEND.cpp:319
@@ -621,9 +605,9 @@ msgstr "Ваше королевство достигло"
 
 #. TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
 #: src/OGAMEND.cpp:288 src/OGAMEND.cpp:306 src/OGAMEND.cpp:324
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Reached"
-msgstr "Ваше королевство достигло"
+msgstr "%s, Ваше королевство достигло"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
 #: src/OGAMEND.cpp:291
@@ -649,9 +633,9 @@ msgstr "Ваше королевство одержало победу над д�
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
 #: src/OGAMEND.cpp:341
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
-msgstr "Ваше королевство одержало победу над другими королевствами !"
+msgstr "%s, Ваше королевство одержало победу над другими королевствами !"
 
 #: src/OGAMEND.cpp:351
 msgid "You Have Lost the Game !"
@@ -763,7 +747,7 @@ msgstr "Фрихтан"
 #. TRANSLATORS: Part of "Fryhtan Battling"
 #: src/OGAMEND.cpp:476
 msgid "Battling"
-msgstr "агрессия"
+msgstr "Сражение"
 
 #: src/OGAMEND.cpp:524 src/OR_RANK.cpp:137
 msgid "Population Score"
@@ -840,19 +824,16 @@ msgid "Success"
 msgstr ""
 
 #: src/OGFILE.cpp:327
-#, fuzzy
 msgid "Error creating saved game file"
-msgstr "Ошибка создания файла сохранения."
+msgstr "Ошибка создания файла сохранения"
 
 #: src/OGFILE.cpp:329
-#, fuzzy
 msgid "Error creating saved game header"
-msgstr "Ошибка создания игрового заголовка."
+msgstr "Ошибка создания игрового заголовка"
 
 #: src/OGFILE.cpp:331
-#, fuzzy
 msgid "Error writing saved game data"
-msgstr "Ошибка записи данных сохранения."
+msgstr "Ошибка записи данных сохранения"
 
 #: src/OGFILE.cpp:333
 msgid "Cannot open save game file"
@@ -966,7 +947,7 @@ msgid "%s's Kingdom"
 msgstr "Королевство %s"
 
 #: src/ONATIONB.cpp:2061 src/ONATIONB.cpp:2353
-#, fuzzy, c-format
+#, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d месяц"
@@ -976,12 +957,12 @@ msgstr[2] "%d месяц"
 #. TRANSLATORS: <Number> Peasant in <Town> in <King>'s Kingdom<Color> is rebelling.
 #. <Number> Peasants in <Town> in <King>'s Kingdom<Color> are rebelling.
 #: src/ONEWSENG.cpp:174
-#, fuzzy, c-format
+#, c-format
 msgid "%d Peasant in %s in %s's Kingdom%s is rebelling."
 msgid_plural "%d Peasants in %s in %s's Kingdom%s are rebelling."
-msgstr[0] "%d крестьянин из %s в %s бунтует."
-msgstr[1] "%d крестьянина из %s в %s бунтуют."
-msgstr[2] "%d крестьян из %s в %s бунтуют."
+msgstr[0] "%d крестьянин из %s в %s бунтует в королестве %s."
+msgstr[1] "%d крестьянина из %s в %s бунтуют в королестве %s."
+msgstr[2] "%d крестьян из %s в %s бунтуют  в королестве %s."
 
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
@@ -1080,9 +1061,9 @@ msgstr "Образовалось новое королевство под пре
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has been destroyed.
 #: src/ONEWSENG.cpp:380
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has been destroyed."
-msgstr "%s было уничтожено."
+msgstr "%s было уничтожено %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has surrendered to you.
 #: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1174
@@ -2310,12 +2291,12 @@ msgstr "Ваша деревня %s была поражена молнией."
 
 #. TRANSLATORS: Part of "<Number> of your units has/have been injured and <Number referring to units> killed in an earthquake."
 #: src/ONEWSENG.cpp:1437
-#, fuzzy, c-format
+#, c-format
 msgid "%d of your units has been injured"
 msgid_plural "%d of your units have been injured"
-msgstr[0] "%d ваш юнит был ранен во время землетрясения."
-msgstr[1] "%d ваших юнита было ранено во время землетрясения."
-msgstr[2] "%d ваших юнитов были ранены во время землетрясения."
+msgstr[0] "%d из ваших юнитов были ранены"
+msgstr[1] "%d из ваших юнитов были ранены"
+msgstr[2] "%d из ваших юнитов были ранены"
 
 #. TRANSLATORS: Part of "<Number> of your units has/have been injured and <Number referring to units> killed in an earthquake."
 #: src/ONEWSENG.cpp:1441
@@ -2346,12 +2327,12 @@ msgstr[2] "%d ваших поселенцев погибли во время з�
 
 #. TRANSLATORS: Part of "<Number> of your buildings has/have been damaged and <Number referring to buildings> destroyed in an earthquake."
 #: src/ONEWSENG.cpp:1462
-#, fuzzy, c-format
+#, c-format
 msgid "%d of your buildings has been damaged"
 msgid_plural "%d of your buildings have been damaged"
-msgstr[0] "%d ваша постройка была повреждена во время землетрясения."
-msgstr[1] "%d ваших постройки были повреждены во время землетрясения."
-msgstr[2] "%d ваших построек были повреждены во время землетрясения."
+msgstr[0] "%d из ваших построек были повреждены во время землетрясения"
+msgstr[1] "%d из ваших построек были повреждены во время землетрясения"
+msgstr[2] "%d из ваших построек были повреждены во время землетрясения"
 
 #. TRANSLATORS: Part of "<Number> of your buildings has/have been damaged and <Number referring to buildings> destroyed in an earthquake."
 #: src/ONEWSENG.cpp:1466
@@ -2411,15 +2392,12 @@ msgstr[2] ""
 
 #. TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
 #: src/ONEWSENG.cpp:1530
-#, fuzzy, c-format
+#, c-format
 msgid "and %d month left to achieve your goal."
 msgid_plural "and %d months left to achieve your goal."
-msgstr[0] ""
-"Поторопитесь! У вас остался только %d месяц на достижение игровой цели."
-msgstr[1] ""
-"Поторопитесь! У вас остался только %d месяц на достижение игровой цели."
-msgstr[2] ""
-"Поторопитесь! У вас остался только %d месяц на достижение игровой цели."
+msgstr[0] "%d мес. осталсяна достижение игровой цели."
+msgstr[1] "%d мес. осталсяна достижение игровой цели."
+msgstr[2] "%d мес. осталсяна достижение игровой цели."
 
 #. TRANSLATORS: A <Weapon> <Tech Level Number> of yours has broken down due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1540
@@ -2637,7 +2615,7 @@ msgstr "Добытые сокровища"
 
 #: src/OR_ECO.cpp:205
 msgid "Worker Income"
-msgstr "доход рабочим"
+msgstr "Доход рабочих"
 
 #: src/OR_ECO.cpp:206
 msgid "Sale of Buildings"
@@ -2653,11 +2631,11 @@ msgstr "Читерство"
 
 #: src/OR_ECO.cpp:232
 msgid "General Costs"
-msgstr "стоимость Генералей"
+msgstr "Общие затраты"
 
 #: src/OR_ECO.cpp:233
 msgid "Spy Costs"
-msgstr "стоимость шпионов"
+msgstr "Затраты на шпионаж"
 
 #: src/OR_ECO.cpp:234
 msgid "Other Mobile Human Unit Costs"
@@ -2665,19 +2643,19 @@ msgstr "Стоимость других передвижных отрядов л
 
 #: src/OR_ECO.cpp:235
 msgid "Caravan Costs"
-msgstr "стоимость караванов"
+msgstr "Затраты на караваны"
 
 #: src/OR_ECO.cpp:236
 msgid "Weapons Costs"
-msgstr "стоимость оружия"
+msgstr "Затраты на оружие"
 
 #: src/OR_ECO.cpp:237
 msgid "Ship Costs"
-msgstr "стоимость кораблей"
+msgstr "Затраты на корабли"
 
 #: src/OR_ECO.cpp:238
 msgid "Buildings Costs"
-msgstr "стоимость постройки"
+msgstr "Затраты на строительство"
 
 #: src/OR_ECO.cpp:239
 msgid "Training Units"
@@ -2720,9 +2698,8 @@ msgid "Commander"
 msgstr "Командор"
 
 #: src/OR_MIL.cpp:103
-#, fuzzy
 msgid "Commanded Soldiers"
-msgstr "под комвнд."
+msgstr "Командование войсками"
 
 #: src/OR_MIL.cpp:104 src/OR_NAT.cpp:138
 msgid "Status"
@@ -2770,7 +2747,7 @@ msgstr "На корабле"
 
 #: src/OR_MIL.cpp:392 src/OR_SPY.cpp:270
 msgid "Mobile"
-msgstr "в походе"
+msgstr "В походе"
 
 #: src/OR_MIL.cpp:470
 msgid "Human General"
@@ -2965,7 +2942,7 @@ msgstr "Имя шпиона"
 
 #: src/OR_SPY.cpp:74
 msgid "Cloak"
-msgstr "плащ"
+msgstr "Плащ"
 
 #: src/OR_SPY.cpp:75
 msgid "Location"
@@ -3079,15 +3056,15 @@ msgstr "Караван"
 
 #: src/OR_TRADE.cpp:88 src/OR_TRADE.cpp:119
 msgid "Stop 1"
-msgstr "один"
+msgstr "Один"
 
 #: src/OR_TRADE.cpp:89 src/OR_TRADE.cpp:120
 msgid "Stop 2"
-msgstr "два"
+msgstr "Два"
 
 #: src/OR_TRADE.cpp:90 src/OR_TRADE.cpp:121
 msgid "Stop 3"
-msgstr "три"
+msgstr "Три"
 
 #: src/OR_TRADE.cpp:91 src/OR_TRADE.cpp:122
 msgid "Goods Carried"
@@ -3145,7 +3122,7 @@ msgstr "Строительство"
 
 #: src/OSKILL.cpp:36
 msgid "Mining"
-msgstr "Горная пром."
+msgstr "Горнодобыча"
 
 #: src/OSKILL.cpp:37
 msgid "Manufacture"
@@ -3157,7 +3134,7 @@ msgstr "Исследство"
 
 #: src/OSKILL.cpp:39 src/OUNITIF.cpp:1165
 msgid "Spying"
-msgstr "шпионство"
+msgstr "Слежение"
 
 #: src/OSKILL.cpp:40
 msgid "Praying"
@@ -3194,16 +3171,15 @@ msgstr "Торговля"
 # data/resource/help.res:26
 #: src/OSPYA.cpp:45
 msgid "Espionage"
-msgstr "шпионаж"
+msgstr "Ппионаж"
 
 #: src/OSPYA.cpp:328
 msgid "Steal which type of secrets?"
 msgstr "Какие секреты украсть?"
 
 #: src/OSYS.cpp:524
-#, fuzzy
 msgid "Unable to determine a location for storing the game configuration"
-msgstr "Невозможно определить местоположение для хранения конфигурации игры."
+msgstr "Невозможно определить местоположение для хранения конфигурации игры"
 
 #. TRANSLATORS: Waiting for <King>'s Kingdom
 #: src/OSYS.cpp:894
@@ -3216,14 +3192,12 @@ msgid "Cheat Mode Enabled."
 msgstr "Режим обмана включен."
 
 #: src/OSYS.cpp:1599
-#, fuzzy
 msgid "Opaque report mode"
-msgstr "Режим непрозрачного отчёта."
+msgstr "Режим непрозрачного отчёта"
 
 #: src/OSYS.cpp:1601
-#, fuzzy
 msgid "Transparent report mode"
-msgstr "Режим прозрачного отчета."
+msgstr "Режим прозрачного отчета"
 
 #: src/OSYS.cpp:1817
 msgid ""
@@ -3242,14 +3216,12 @@ msgid "King immortal mode is now disabled."
 msgstr "Бессмертие короля более недоступно."
 
 #: src/OSYS.cpp:1879
-#, fuzzy
 msgid "Fast build is now disabled."
-msgstr "Быстрое строительство отключено"
+msgstr "Быстрое строительство отключено."
 
 #: src/OSYS.cpp:1881
-#, fuzzy
 msgid "Fast build is now enabled."
-msgstr "Быстрое строительство включено"
+msgstr "Быстрое строительство включено."
 
 #: src/OSYS.cpp:2635
 #, c-format
@@ -3269,9 +3241,8 @@ msgid "Game Saved Successfully"
 msgstr "Игра успешно сохранена"
 
 #: src/OSYS.cpp:2786
-#, fuzzy
 msgid "Unable to locate the game resources"
-msgstr "Невозможно найти игровые ресурсы."
+msgstr "Невозможно найти игровые ресурсы"
 
 #: src/OSaveGameArray.cpp:201
 msgid "You haven't saved any games yet."
@@ -3291,7 +3262,7 @@ msgstr "Время игры: "
 
 #: src/OSaveGameArray.cpp:624
 msgid "File Name: "
-msgstr "имя файла: "
+msgstr "Имя файла: "
 
 #: src/OSaveGameArray.cpp:635
 msgid "File Date: "
@@ -3302,11 +3273,8 @@ msgid "It will overwrite the existing saved game. Proceed?"
 msgstr "Данная игра будет перезаписана. продолжить?"
 
 #: src/OSaveGameArray.cpp:734
-#, fuzzy
 msgid "Cannot save the game because the path is too long"
-msgstr ""
-"Вы не можете присоединится к игре потому что создатель не загружает "
-"сохранение."
+msgstr "Слишком длинный путь сохранения игры"
 
 #: src/OSaveGameArray.cpp:879
 msgid "This saved game will be deleted. Proceed?"
@@ -4076,9 +4044,8 @@ msgstr ""
 "посылать сообщения, пока не будут обработаны ранние."
 
 #: src/OTALKRES.cpp:1090
-#, fuzzy
 msgid "Continue."
-msgstr "Продолжать"
+msgstr "Продолжать."
 
 #: src/OTALKRES.cpp:1339
 msgid "Accept."
@@ -4152,7 +4119,7 @@ msgstr "Генерал"
 #: src/OUNITIF.cpp:1015
 #, c-format
 msgid "Please select a location to build the %s."
-msgstr "выберите место, чтобы построить %s."
+msgstr "Выберите место, чтобы построить %s."
 
 #: src/OUNITIF.cpp:1055
 msgid "Please select a location to settle."
@@ -4209,7 +4176,7 @@ msgstr "Ближайшие враги"
 
 #: src/OUNITIF.cpp:1363
 msgid "Spy Cloak:"
-msgstr "плащ:"
+msgstr "Шпионский плащ:"
 
 #: src/OU_CARA.cpp:158 src/OU_CARA.cpp:179 src/OU_MARIF.cpp:610
 #: src/OU_MARIF.cpp:630
@@ -4580,7 +4547,7 @@ msgstr ""
 "далекими королевствами или для соединения отдаленных частей вашей империи. "
 "Вы также узнаете, как устанавливать порты захода и как управлять грузом для "
 "своих кораблей, а также как переключаться между режимом автоматической "
-"торговли и управления"
+"торговли и управления. "
 
 # data/resource/tut_intr/00003-8FRYHTAN.txt:1
 msgid ""
@@ -4605,7 +4572,7 @@ msgstr ""
 "В этом уроке вы научитесь использовать свое исследование оружия путем "
 "строительства военных заводов и производства оружия. Вы также узнаете, как "
 "управлять этим оружием в поле и как максимизировать его эффективность. "
-"Внимание уделяется самому необычному оружию, Поркупайн"
+"Внимание уделяется самому необычному оружию, Поркупайн. "
 
 # data/resource/tut_intr/00005-5BAS_NAV.txt:1
 msgid ""
