@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-08 21:09-0500\n"
+"POT-Creation-Date: 2019-04-21 13:05-0700\n"
 "PO-Revision-Date: 2018-09-09 18:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,28 +28,24 @@ msgid "Multiple startup mode options present on the command line."
 msgstr ""
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
-#: src/OGAMEMP.cpp:1527 src/OGAMEMP.cpp:1627 src/OGAMEMP.cpp:3030
-#: src/OGAMEMP.cpp:3095 src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:3404
-#: src/OGAMEMP.cpp:3407 src/OGAMEMP.cpp:3410 src/OGAMEMP.cpp:3413
-#: src/OGAMEMP.cpp:3416 src/OGAMEMP.cpp:3419 src/OGAMEMP.cpp:4937
-#: src/OGAMEMP.cpp:5003 src/OGAMEMP.cpp:5186 src/OGAMEMP.cpp:5189
-#: src/OGAMEMP.cpp:5192 src/OGAMEMP.cpp:5195 src/OGAMEMP.cpp:5198
-#: src/OGAMEMP.cpp:5201 src/OGAMEMP.cpp:5204
+#: src/OGAMEMP.cpp:1509 src/OGAMEMP.cpp:1609 src/OGAMEMP.cpp:3011
+#: src/OGAMEMP.cpp:3076 src/OGAMEMP.cpp:3382 src/OGAMEMP.cpp:3385
+#: src/OGAMEMP.cpp:3388 src/OGAMEMP.cpp:3391 src/OGAMEMP.cpp:3394
+#: src/OGAMEMP.cpp:3397 src/OGAMEMP.cpp:3400 src/OGAMEMP.cpp:4918
+#: src/OGAMEMP.cpp:4984 src/OGAMEMP.cpp:5167 src/OGAMEMP.cpp:5170
+#: src/OGAMEMP.cpp:5173 src/OGAMEMP.cpp:5176 src/OGAMEMP.cpp:5179
+#: src/OGAMEMP.cpp:5182 src/OGAMEMP.cpp:5185
 msgid "Ok"
 msgstr "Ok"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:70
 #: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:278
-#: src/OGAMEMP.cpp:1528 src/OGAMEMP.cpp:1628 src/OGAMEMP.cpp:2092
-#: src/OGAMEMP.cpp:2194 src/OGAMEMP.cpp:2257 src/OSPYA.cpp:351
+#: src/OGAMEMP.cpp:1510 src/OGAMEMP.cpp:1610 src/OGAMEMP.cpp:2073
+#: src/OGAMEMP.cpp:2175 src/OGAMEMP.cpp:2238 src/OSPYA.cpp:351
 #: src/OTOWNIF.cpp:1123 src/OUNITIF.cpp:1021 src/OUNITIF.cpp:1057
 msgid "Cancel"
 msgstr "Cancelar"
-
-#: src/OCONFIG.cpp:152
-msgid "New Player"
-msgstr "Novo Jogador"
 
 #: src/ODATE.cpp:40
 msgid "January"
@@ -373,58 +369,74 @@ msgctxt "FirmUI|Name"
 msgid "%s Lair"
 msgstr "Covil de %s"
 
-#: src/OGAMEMP.cpp:565 src/OGAMEMP.cpp:833
+#: src/OGAMEMP.cpp:518
+msgid "Create multiplayer session"
+msgstr ""
+
+#: src/OGAMEMP.cpp:519
+msgid "Session Name:"
+msgstr "Nome da sessão:"
+
+#: src/OGAMEMP.cpp:520
+#, fuzzy
+msgid "Set Password:"
+msgstr "Senha:"
+
+#: src/OGAMEMP.cpp:571 src/OGAMEMP.cpp:833
 #, fuzzy
 msgid "Unable to connect from lobby"
 msgstr "Não foi possível conectar com a sala."
 
-#: src/OGAMEMP.cpp:572 src/OGAMEMP.cpp:840
+#: src/OGAMEMP.cpp:578 src/OGAMEMP.cpp:840
 #, fuzzy
 msgid "Cannot initialize ENet"
 msgstr "Não foi possível inicializar ENet."
 
-#: src/OGAMEMP.cpp:588 src/OGAMEMP.cpp:856
+#: src/OGAMEMP.cpp:594 src/OGAMEMP.cpp:856
 msgid "Unable to retrieve leaderboard"
 msgstr "Não foi possível recuperar o quadro de pontuação"
 
-#: src/OGAMEMP.cpp:603 src/OGAMEMP.cpp:878
-msgid "Enter a name for your game session."
-msgstr "Digite um nome para a sua sessão de jogo."
-
-#: src/OGAMEMP.cpp:604 src/OGAMEMP.cpp:879
-msgid "Session Name:"
-msgstr "Nome da sessão:"
-
-#: src/OGAMEMP.cpp:605 src/OGAMEMP.cpp:880 src/OGAMEMP.cpp:1442
-msgid "Password:"
-msgstr "Senha:"
-
-#: src/OGAMEMP.cpp:622 src/OGAMEMP.cpp:897
+#: src/OGAMEMP.cpp:622 src/OGAMEMP.cpp:891
 #, fuzzy
 msgid "Invalid game name"
 msgstr "Nome de jogo inválido."
 
-#: src/OGAMEMP.cpp:631 src/OGAMEMP.cpp:906
+#: src/OGAMEMP.cpp:631 src/OGAMEMP.cpp:900
 #, fuzzy
 msgid "Cannot create the game"
 msgstr "Não foi possível criar o jogo."
 
-#: src/OGAMEMP.cpp:660 src/OGAMEMP.cpp:935
+#: src/OGAMEMP.cpp:660 src/OGAMEMP.cpp:929
 msgid "Enter the game's address:"
 msgstr "Entre o endereço do jogo:"
 
-#: src/OGAMEMP.cpp:668 src/OGAMEMP.cpp:943
+#: src/OGAMEMP.cpp:668 src/OGAMEMP.cpp:937
 msgid "Service not supported"
 msgstr "Serviço não suportado"
 
-#: src/OGAMEMP.cpp:1402
-msgid ""
-"It is not recommended to use this save game file name. Do you wish to "
-"continue?"
+#: src/OGAMEMP.cpp:1043
+msgid "Local Area Network"
 msgstr ""
-"Não é recomendado usar este nome para o arquivo do jogo. Deseja continuar?"
 
-#: src/OGAMEMP.cpp:1440
+#. TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
+#: src/OGAMEMP.cpp:1045
+#, fuzzy
+msgid "Enter Address"
+msgstr "Entre o endereço do jogo:"
+
+#: src/OGAMEMP.cpp:1050
+msgid "Host or join a game using the local area network"
+msgstr ""
+
+#: src/OGAMEMP.cpp:1051
+msgid "Join a game by entering an address"
+msgstr ""
+
+#: src/OGAMEMP.cpp:1052
+msgid "Host or join a game over the internet"
+msgstr ""
+
+#: src/OGAMEMP.cpp:1199
 msgid ""
 "Enter your 7kfans.com/forums account credentials to continue.\n"
 "TIP: If you have just previously logged in using the same username, you can "
@@ -434,94 +446,118 @@ msgstr ""
 "DICA: Se você ingressou recentemente usando o seu nome de usuário, você pode "
 "deixar o campo senha em branco, e a sessão prévia será utilizada."
 
-#: src/OGAMEMP.cpp:1441
+#: src/OGAMEMP.cpp:1200
 msgid "Username:"
 msgstr "Nome de usuário:"
 
-#: src/OGAMEMP.cpp:1464
+#: src/OGAMEMP.cpp:1201
+msgid "Password:"
+msgstr "Senha:"
+
+#: src/OGAMEMP.cpp:1390
+msgid ""
+"It is not recommended to use this save game file name. Do you wish to "
+"continue?"
+msgstr ""
+"Não é recomendado usar este nome para o arquivo do jogo. Deseja continuar?"
+
+#: src/OGAMEMP.cpp:1446
 #, fuzzy
 msgid "Unable to connect to 7kfans.com"
 msgstr "Não foi possível conectar"
 
-#: src/OGAMEMP.cpp:1948
+#: src/OGAMEMP.cpp:1737
+msgid ""
+"Unable to connect to the 7kfans.com service. Verify your account information "
+"and try again."
+msgstr ""
+
+#: src/OGAMEMP.cpp:1739
+msgid ""
+"Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to log "
+"in.\n"
+"(No libcurl)"
+msgstr ""
+
+#: src/OGAMEMP.cpp:1929
 msgid "Unable to communicate with the network"
 msgstr "Não foi possível comunicar com a rede"
 
-#: src/OGAMEMP.cpp:1951
+#: src/OGAMEMP.cpp:1932
 msgid "Trying to connect to the service provider"
 msgstr "Tentando conectar com o provedor de serviço"
 
-#: src/OGAMEMP.cpp:1966
+#: src/OGAMEMP.cpp:1947
 msgid ""
 "There is a new version of Seven Kingdoms: Ancient Adversaries at www.7kfans."
 "com"
 msgstr "Uma nova versão de Sete Reinos: Antigos Adversários em www.7kfans.com"
 
-#: src/OGAMEMP.cpp:2080
+#: src/OGAMEMP.cpp:2061
 msgid "Enter the game's password:"
 msgstr "Entre a senha do jogo:"
 
-#: src/OGAMEMP.cpp:2087
+#: src/OGAMEMP.cpp:2068
 msgid "Attempting to connect"
 msgstr "Tentando conectar"
 
-#: src/OGAMEMP.cpp:2156
+#: src/OGAMEMP.cpp:2137
 msgid "The session you selected no longer exists."
 msgstr "A sessão que você selecionou não existe."
 
-#: src/OGAMEMP.cpp:2162
+#: src/OGAMEMP.cpp:2143
 msgid "Unable to connect"
 msgstr "Não foi possível conectar"
 
-#: src/OGAMEMP.cpp:2167
+#: src/OGAMEMP.cpp:2148
 msgid "Failed to initiate connection"
 msgstr "Falha em iniciar conexão"
 
-#: src/OGAMEMP.cpp:2189
+#: src/OGAMEMP.cpp:2170
 msgid "Please wait while disconnecting..."
 msgstr "Desconectando, por favor aguarde…"
 
-#: src/OGAMEMP.cpp:2252
+#: src/OGAMEMP.cpp:2233
 msgid "Retrieving leaderboard"
 msgstr "Recuperando quadro de pontuação"
 
-#: src/OGAMEMP.cpp:2957 src/OGAMEMP.cpp:4863
+#: src/OGAMEMP.cpp:2938 src/OGAMEMP.cpp:4844
 msgid "?anonymous?"
 msgstr "?Anônimo?"
 
-#: src/OGAMEMP.cpp:3030 src/OGAMEMP.cpp:4937
+#: src/OGAMEMP.cpp:3011 src/OGAMEMP.cpp:4918
 msgid "The game host has disconnected."
 msgstr "O host do jogo desconectou."
 
-#: src/OGAMEMP.cpp:3095 src/OGAMEMP.cpp:5003
+#: src/OGAMEMP.cpp:3076 src/OGAMEMP.cpp:4984
 msgid "The game host has aborted the game."
 msgstr "O host to jogo abortou a partida."
 
-#: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:5186
+#: src/OGAMEMP.cpp:3382 src/OGAMEMP.cpp:5167
 msgid "Your game version does not match the host's version."
 msgstr "Sua versão do jogo não é a mesma que a do host."
 
-#: src/OGAMEMP.cpp:3404 src/OGAMEMP.cpp:5189
+#: src/OGAMEMP.cpp:3385 src/OGAMEMP.cpp:5170
 msgid "The game you tried to join is currently full."
 msgstr "O jogo que você tentou ingressar esta cheio."
 
-#: src/OGAMEMP.cpp:3407 src/OGAMEMP.cpp:5192
+#: src/OGAMEMP.cpp:3388 src/OGAMEMP.cpp:5173
 msgid "The host refused to authorize your connection."
 msgstr "I host não autorizou sua conexão."
 
-#: src/OGAMEMP.cpp:3410 src/OGAMEMP.cpp:5195
+#: src/OGAMEMP.cpp:3391 src/OGAMEMP.cpp:5176
 msgid "You cannot join the game because the host is loading a save."
 msgstr ""
 "Você não pode ingressar a partida pois o host está carregando um arquivo "
 "salvo."
 
-#: src/OGAMEMP.cpp:3413 src/OGAMEMP.cpp:5198
+#: src/OGAMEMP.cpp:3394 src/OGAMEMP.cpp:5179
 msgid "You cannot join the game because the host is not loading a save."
 msgstr ""
 "Você não pode ingressar a partida pois o host não está carregando um arquivo "
 "salvo."
 
-#: src/OGAMEMP.cpp:3416 src/OGAMEMP.cpp:5201
+#: src/OGAMEMP.cpp:3397 src/OGAMEMP.cpp:5182
 msgid ""
 "You cannot join the game because the saved multiplayer game you selected is "
 "different."
@@ -529,42 +565,42 @@ msgstr ""
 "Você não pode ingressar a partida pois o arquivo de jogo multi-jogador que "
 "você selecionou é diferente."
 
-#: src/OGAMEMP.cpp:3419 src/OGAMEMP.cpp:5204
+#: src/OGAMEMP.cpp:3400 src/OGAMEMP.cpp:5185
 msgid "The host refused the connection."
 msgstr "O host recusou a conexão."
 
-#: src/OGAMEMP.cpp:4150 src/OGAMEMP.cpp:5588
+#: src/OGAMEMP.cpp:4131 src/OGAMEMP.cpp:5569
 msgid "Connection string from host is corrupted"
 msgstr "A linha de conexão do host está corrompida"
 
-#: src/OGAMEMP.cpp:4157
+#: src/OGAMEMP.cpp:4138
 #, fuzzy
 msgid "Cannot get random seeds from the host"
 msgstr "Não foi possível obter uma semente aleatória do host."
 
-#: src/OGAMEMP.cpp:4163
+#: src/OGAMEMP.cpp:4144
 #, fuzzy
 msgid "Cannot get game configuration information from the host"
 msgstr "Não foi possível obter do host a configuração da partida."
 
-#: src/OGAMEMP.cpp:4169 src/OGAMEMP.cpp:5595
+#: src/OGAMEMP.cpp:4150 src/OGAMEMP.cpp:5576
 #, fuzzy
 msgid "Cannot get kingdom information from the host"
 msgstr "Não foi possível obter do host informações do reino."
 
-#: src/OGAMEMP.cpp:4175 src/OGAMEMP.cpp:5601
+#: src/OGAMEMP.cpp:4156 src/OGAMEMP.cpp:5582
 msgid "The host cannot recognize your machine."
 msgstr "O host não pode reconhecer seu computador."
 
-#: src/OGAMEMP.cpp:4181 src/OGAMEMP.cpp:5607
+#: src/OGAMEMP.cpp:4162 src/OGAMEMP.cpp:5588
 msgid "Cannot receive important information from the host"
 msgstr "Não foi possível receber do host informações importantes"
 
-#: src/OGAMEMP.cpp:4233 src/OGAMEMP.cpp:5653
+#: src/OGAMEMP.cpp:4214 src/OGAMEMP.cpp:5634
 msgid "Some player(s) encountered errors when initializing the game."
 msgstr "Alguns jogadores encontraram problemas na inicialização do jogo."
 
-#: src/OGAMEMP.cpp:5336 src/OGAMEMP.cpp:5491
+#: src/OGAMEMP.cpp:5317 src/OGAMEMP.cpp:5472
 #, fuzzy, c-format
 msgid "This multiplayer saved game needs %d human player"
 msgid_plural "This multiplayer saved game needs %d human players"
@@ -575,249 +611,244 @@ msgstr[1] ""
 "Esta arquivo de partida com múltiplos jogadores necessita %d jogadores "
 "humanos enquanto no momento apenas %d jogadores existem."
 
-#: src/OGAMEMP.cpp:5339 src/OGAMEMP.cpp:5494
+#: src/OGAMEMP.cpp:5320 src/OGAMEMP.cpp:5475
 #, c-format
 msgid "while now there is %d human player."
 msgid_plural "while now there are %d human players."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/OGAMEMP.cpp:5342 src/OGAMEMP.cpp:5497
+#: src/OGAMEMP.cpp:5323 src/OGAMEMP.cpp:5478
 #, fuzzy
 msgid "The game cannot start."
 msgstr " Este jogo não foi salvo."
 
-#: src/OGAMEMP.cpp:5557
+#: src/OGAMEMP.cpp:5538
 msgid "Incorrect kingdom information received from the host."
 msgstr "O host recebeu informações incorretas sobre o reino."
 
-#: src/OGAMEND.cpp:218
+#: src/OGAMEND.cpp:217
 msgid "Do you want to continue to stay in the game?"
 msgstr "Você quer continuar para permanecer na partida?"
 
-#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
+#: src/OGAMEND.cpp:217 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
 #: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
 #: src/OR_NAT.cpp:548
 msgid "Yes"
 msgstr "Sim"
 
-#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
+#: src/OGAMEND.cpp:217 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
 #: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
 #: src/OR_NAT.cpp:549
 msgid "No"
 msgstr "Não"
 
-#: src/OGAMEND.cpp:270
+#: src/OGAMEND.cpp:269
 msgid "All Fryhtans have been Destroyed !"
 msgstr "Todos os Fryhtanianos foram destruídos!"
 
-#: src/OGAMEND.cpp:273
+#: src/OGAMEND.cpp:272
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr "O seu reino obteve a maior pontuação de batalha Fryhtaniana!"
 
 #. TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
-#: src/OGAMEND.cpp:278
+#: src/OGAMEND.cpp:277
 #, fuzzy, c-format
 msgid "%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr "O seu reino obteve a maior pontuação de batalha Fryhtaniana!"
 
 #. TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:289 src/OGAMEND.cpp:307 src/OGAMEND.cpp:325
+#: src/OGAMEND.cpp:288 src/OGAMEND.cpp:306 src/OGAMEND.cpp:324
 msgid "Your Kingdom has Reached"
 msgstr "O seu reino atingiu"
 
 #. TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:294 src/OGAMEND.cpp:312 src/OGAMEND.cpp:330
+#: src/OGAMEND.cpp:293 src/OGAMEND.cpp:311 src/OGAMEND.cpp:329
 #, fuzzy, c-format
 msgid "%s's Kingdom has Reached"
 msgstr "O seu reino atingiu"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
-#: src/OGAMEND.cpp:297
+#: src/OGAMEND.cpp:296
 #, c-format
 msgid "its Population Goal of %s !"
 msgstr "o objetivo de população de %s !"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Economic Score Goal of <Number> !"
-#: src/OGAMEND.cpp:315
+#: src/OGAMEND.cpp:314
 #, c-format
 msgid "its Economic Score Goal of %s !"
 msgstr "o objetivo de pontuação econômica de %s !"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:333
+#: src/OGAMEND.cpp:332
 #, c-format
 msgid "its Total Score Goal of %s !"
 msgstr "o objetivo de pontuação total de %s !"
 
-#: src/OGAMEND.cpp:342
+#: src/OGAMEND.cpp:341
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
 msgstr "O seu reino derrotou todos os outros reinos!"
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
-#: src/OGAMEND.cpp:347
+#: src/OGAMEND.cpp:346
 #, fuzzy, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
 msgstr "O seu reino derrotou todos os outros reinos!"
 
-#: src/OGAMEND.cpp:357
+#: src/OGAMEND.cpp:356
 msgid "You Have Lost the Game !"
 msgstr "Você perdeu a partida!"
 
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
-#: src/OGAMEND.cpp:376
+#: src/OGAMEND.cpp:375
 #, fuzzy, c-format
 msgid "You Surrendered to %s's Kingdom on %s."
 msgstr "Você rendeu-se a %s em %s."
 
-#: src/OGAMEND.cpp:383
+#: src/OGAMEND.cpp:382
 msgid "Your Kingdom has Failed to Achieve its Goal Within the Time Limit."
 msgstr "Seu reino não conseguiu alcançar o objetivo dentro do limite de tempo."
 
-#: src/OGAMEND.cpp:387
+#: src/OGAMEND.cpp:386
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
 msgstr "Seu reino sofreu uma derrota vergonhosa!"
 
 #. TRANSLATORS: You Retired on <Date>.
-#: src/OGAMEND.cpp:402
+#: src/OGAMEND.cpp:401
 #, c-format
 msgid "You Retired on %s."
 msgstr "Você se aposentou em %s."
 
-#: src/OGAMEND.cpp:417
+#: src/OGAMEND.cpp:416
 msgid "Duration of Your Rule"
 msgstr "Duração de seu reinado"
 
-#: src/OGAMEND.cpp:418
+#: src/OGAMEND.cpp:417
 msgid "Total Gaming Time"
 msgstr "Tempo total de jogo"
 
-#: src/OGAMEND.cpp:420
+#: src/OGAMEND.cpp:419
 msgid "Final Population"
 msgstr "População final"
 
-#: src/OGAMEND.cpp:421
+#: src/OGAMEND.cpp:420
 msgid "Final Treasure"
 msgstr "Tesouro final"
 
-#: src/OGAMEND.cpp:423
+#: src/OGAMEND.cpp:422
 msgid "Enemy Soldiers Dispatched"
 msgstr "Soldados inimigos mortos"
 
-#: src/OGAMEND.cpp:424
+#: src/OGAMEND.cpp:423
 msgid "King's Soldiers Martyred"
 msgstr "Soldados reais martirizados"
 
-#: src/OGAMEND.cpp:426
+#: src/OGAMEND.cpp:425
 msgid "Enemy Weapons Destroyed"
 msgstr "Armas inimigas destruídas"
 
-#: src/OGAMEND.cpp:427
+#: src/OGAMEND.cpp:426
 msgid "King's Weapons Rendered Obsolete"
 msgstr "Armamento real tornou-se obsoleto"
 
-#: src/OGAMEND.cpp:429
+#: src/OGAMEND.cpp:428
 msgid "Enemy Ships Sunk"
 msgstr "Navios inimigos afundados"
 
-#: src/OGAMEND.cpp:430
+#: src/OGAMEND.cpp:429
 msgid "King's Ships Missing"
 msgstr "Navio real desaparecido"
 
-#: src/OGAMEND.cpp:432
+#: src/OGAMEND.cpp:431
 msgid "Enemy Buildings Destroyed"
 msgstr "Construções inimigas destruídas"
 
-#: src/OGAMEND.cpp:433
+#: src/OGAMEND.cpp:432
 msgid "King's Buildings Cleared"
 msgstr "Construções reais completadas"
 
-#: src/OGAMEND.cpp:435
+#: src/OGAMEND.cpp:434
 msgid "Enemy Civilians Collaterally Damaged"
 msgstr "Cidadãos inimigos feridos em fogo cruzado"
 
-#: src/OGAMEND.cpp:436
+#: src/OGAMEND.cpp:435
 msgid "King's Civilians Cruelly Murdered"
 msgstr "Cidadãos reais assassinados cruelmente"
 
-#: src/OGAMEND.cpp:469 src/OR_NAT.cpp:135 src/OR_RANK.cpp:87
+#: src/OGAMEND.cpp:468 src/OR_NAT.cpp:135 src/OR_RANK.cpp:87
 msgid "Kingdom"
 msgstr "Reino"
 
-#: src/OGAMEND.cpp:470 src/OGAMHALL.cpp:270 src/OR_RANK.cpp:88
+#: src/OGAMEND.cpp:469 src/OGAMHALL.cpp:270 src/OR_RANK.cpp:88
 #: src/OTOWNIF.cpp:263
 msgid "Population"
 msgstr "População"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/tut_list.res
-#: src/OGAMEND.cpp:471 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:470 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
 msgid "Military"
 msgstr "Exército"
 
-#: src/OGAMEND.cpp:472 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:471 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
 msgid "Economy"
 msgstr "Economia"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:46
-#: src/OGAMEND.cpp:473 src/OR_NAT.cpp:137 src/OR_RANK.cpp:91
+#: src/OGAMEND.cpp:472 src/OR_NAT.cpp:137 src/OR_RANK.cpp:91
 msgid "Reputation"
 msgstr "Reputação"
 
-#. TRANSLATORS: Part of "Fryhtan Battling"
-#: src/OGAMEND.cpp:480
-msgid "Fryhtan"
-msgstr "Fryhtanianos"
+#: src/OGAMEND.cpp:474 src/OR_RANK.cpp:92
+#, fuzzy
+msgid "Fryhtan Battling"
+msgstr "Pontuação de batalha com os Fryhtanianos"
 
-#. TRANSLATORS: Part of "Fryhtan Battling"
-#: src/OGAMEND.cpp:482
-msgid "Battling"
-msgstr "Batalhando"
-
-#: src/OGAMEND.cpp:530 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
 msgid "Population Score"
 msgstr "Pontuação de população"
 
-#: src/OGAMEND.cpp:530 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
 msgid "Military Score"
 msgstr "Pontuação militar"
 
-#: src/OGAMEND.cpp:530 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
 msgid "Economic Score"
 msgstr "Pontuação econômica"
 
-#: src/OGAMEND.cpp:531 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:522 src/OR_RANK.cpp:138
 msgid "Reputation Score"
 msgstr "Pontuação de reputação"
 
-#: src/OGAMEND.cpp:531 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:522 src/OR_RANK.cpp:138
 msgid "Fryhtan Battling Score"
 msgstr "Pontuação de batalha com os Fryhtanianos"
 
-#: src/OGAMEND.cpp:552 src/OR_RANK.cpp:161
+#: src/OGAMEND.cpp:543 src/OR_RANK.cpp:161
 msgid "Total Score"
 msgstr "Pontuação total"
 
 #. TRANSLATORS: Final Score:  <Number> X
-#: src/OGAMEND.cpp:566 src/OR_RANK.cpp:175
+#: src/OGAMEND.cpp:557 src/OR_RANK.cpp:175
 #, c-format
 msgid "Final Score:  %s X "
 msgstr "Pontuação final: %s X "
 
 #. TRANSLATORS: <Number> (Difficulty Rating)
-#: src/OGAMEND.cpp:571 src/OR_RANK.cpp:180
+#: src/OGAMEND.cpp:562 src/OR_RANK.cpp:180
 #, c-format
 msgid "%s (Difficulty Rating)"
 msgstr "%s (Dificuldade)"
 
 #. TRANSLATORS: +  <Number> (Bonus)  =  <Number>
-#: src/OGAMEND.cpp:586
+#: src/OGAMEND.cpp:577
 #, c-format
 msgid "+  %d (Bonus)  =  %s"
 msgstr "+  %d (Bônus)  =  %s"
 
-#: src/OGAMEND.cpp:593 src/OR_RANK.cpp:190
+#: src/OGAMEND.cpp:584 src/OR_RANK.cpp:190
 msgid "X  0 (Cheated)  =  0"
 msgstr "X  0 (Trapaceou)  =  0"
 
@@ -845,38 +876,38 @@ msgstr "Arquivo de cenário não encontrado."
 msgid "Score Bonus: "
 msgstr "Bônus de pontuação: "
 
-#: src/OGFILE.cpp:324
+#: src/OGFILE.cpp:326
 msgid "Success"
 msgstr ""
 
-#: src/OGFILE.cpp:326
+#: src/OGFILE.cpp:328
 #, fuzzy
 msgid "Error creating saved game file"
 msgstr "Erro criando arquivo de jogo."
 
-#: src/OGFILE.cpp:328
+#: src/OGFILE.cpp:330
 #, fuzzy
 msgid "Error creating saved game header"
 msgstr "Erro criando cabeçalho de arquivo de jogo."
 
-#: src/OGFILE.cpp:330
+#: src/OGFILE.cpp:332
 #, fuzzy
 msgid "Error writing saved game data"
 msgstr "Erro escrevendo dados no arquivo."
 
-#: src/OGFILE.cpp:332
+#: src/OGFILE.cpp:334
 msgid "Cannot open save game file"
 msgstr "Não foi possível abrir o arquivo de jogo"
 
-#: src/OGFILE.cpp:334
+#: src/OGFILE.cpp:336
 msgid "Cannot read file header"
 msgstr "Não foi possível ler o cabeçalho do arquivo"
 
-#: src/OGFILE.cpp:336
+#: src/OGFILE.cpp:338
 msgid "Incompatible save game"
 msgstr "Arquivo de jogo incompatível"
 
-#: src/OGFILE.cpp:338
+#: src/OGFILE.cpp:340
 msgid "Load game error"
 msgstr "Erro carregando o arquivo de jogo"
 
@@ -1162,11 +1193,6 @@ msgstr "Seu %s próximo de %s foi destruído por %s."
 msgid "Your Harbor near %s has been destroyed by %s's Kingdom%s."
 msgstr "Seu %s próximo de %s foi destruído por %s."
 
-#: src/ONEWSENG.cpp:490
-#, fuzzy, c-format
-msgid "Your Fryhtan Lair near %s has been destroyed by %s's Kingdom%s."
-msgstr "Seu %s próximo de %s foi destruído por %s."
-
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
 #: src/ONEWSENG.cpp:495
 #, fuzzy, c-format
@@ -1211,11 +1237,6 @@ msgstr "Seu %s próximo de %s foi destruído pelos Rebeldes."
 #: src/ONEWSENG.cpp:503
 #, fuzzy, c-format
 msgid "Your Harbor near %s has been destroyed by Rebels."
-msgstr "Seu %s próximo de %s foi destruído pelos Rebeldes."
-
-#: src/ONEWSENG.cpp:504
-#, fuzzy, c-format
-msgid "Your Fryhtan Lair near %s has been destroyed by Rebels."
 msgstr "Seu %s próximo de %s foi destruído pelos Rebeldes."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
@@ -1264,11 +1285,6 @@ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 msgid "Your Harbor near %s has been destroyed by Fryhtans."
 msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 
-#: src/ONEWSENG.cpp:518
-#, fuzzy, c-format
-msgid "Your Fryhtan Lair near %s has been destroyed by Fryhtans."
-msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
-
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed.
 #: src/ONEWSENG.cpp:523
 #, fuzzy, c-format
@@ -1313,11 +1329,6 @@ msgstr "Seu %s próximo de %s foi destruído."
 #: src/ONEWSENG.cpp:531
 #, fuzzy, c-format
 msgid "Your Harbor near %s has been destroyed."
-msgstr "Seu %s próximo de %s foi destruído."
-
-#: src/ONEWSENG.cpp:532
-#, fuzzy, c-format
-msgid "Your Fryhtan Lair near %s has been destroyed."
 msgstr "Seu %s próximo de %s foi destruído."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King>'s Kingdom<Color>.
@@ -1369,12 +1380,6 @@ msgstr "Seu %s próximo de %s foi capturado por um espião de %s."
 msgid "Your Harbor near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Seu %s próximo de %s foi capturado por um espião de %s."
 
-#: src/ONEWSENG.cpp:586
-#, fuzzy, c-format
-msgid ""
-"Your Fryhtan Lair near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Seu %s próximo de %s foi capturado por um espião de %s."
-
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:591
 #, fuzzy, c-format
@@ -1419,11 +1424,6 @@ msgstr "Seu %s próximo de %s foi capturado por %s."
 #: src/ONEWSENG.cpp:599
 #, fuzzy, c-format
 msgid "Your Harbor near %s has been captured by %s's Kingdom%s."
-msgstr "Seu %s próximo de %s foi capturado por %s."
-
-#: src/ONEWSENG.cpp:600
-#, fuzzy, c-format
-msgid "Your Fryhtan Lair near %s has been captured by %s's Kingdom%s."
 msgstr "Seu %s próximo de %s foi capturado por %s."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by <King>'s Kingdom<Color>.
@@ -2107,11 +2107,6 @@ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 msgid "Your Harbor near %s has been destroyed by lightning."
 msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 
-#: src/ONEWSENG.cpp:1259
-#, fuzzy, c-format
-msgid "Your Fryhtan Lair near %s has been destroyed by lightning."
-msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
-
 #. TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
 #: src/ONEWSENG.cpp:1264
 #, fuzzy, c-format
@@ -2156,11 +2151,6 @@ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 #: src/ONEWSENG.cpp:1272
 #, fuzzy, c-format
 msgid "Your Harbor near %s has been struck by lightning."
-msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
-
-#: src/ONEWSENG.cpp:1273
-#, fuzzy, c-format
-msgid "Your Fryhtan Lair near %s has been struck by lightning."
 msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 
 #. TRANSLATORS: Your <Firm> has been destroyed by lightning.
@@ -2209,11 +2199,6 @@ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 msgid "Your Harbor has been destroyed by lightning."
 msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 
-#: src/ONEWSENG.cpp:1287
-#, fuzzy
-msgid "Your Fryhtan Lair has been destroyed by lightning."
-msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
-
 #. TRANSLATORS: Your <Firm> has been struck by lightning.
 #: src/ONEWSENG.cpp:1292
 #, fuzzy
@@ -2258,11 +2243,6 @@ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 #: src/ONEWSENG.cpp:1300
 #, fuzzy
 msgid "Your Harbor has been struck by lightning."
-msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
-
-#: src/ONEWSENG.cpp:1301
-#, fuzzy
-msgid "Your Fryhtan Lair has been struck by lightning."
 msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 
 #. TRANSLATORS: Your General <Name> has been struck and killed by lightning.
@@ -2522,13 +2502,6 @@ msgstr ""
 msgid ""
 "Your Harbor near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
-msgstr ""
-
-#: src/ONEWSENG.cpp:1598
-#, c-format
-msgid ""
-"Your Fryhtan Lair near %s has fallen into disrepair due to the lack of "
-"maintenance funds."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has retired and quit the game.
@@ -2869,11 +2842,6 @@ msgstr "em %s :"
 #: src/OR_NAT.cpp:917
 msgid "Please enter your chat message and press <Enter> to send."
 msgstr ""
-
-#: src/OR_RANK.cpp:92
-#, fuzzy
-msgid "Fryhtan Battling"
-msgstr "Pontuação de batalha com os Fryhtanianos"
 
 #. TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
 #: src/OR_RANK.cpp:234
@@ -3279,7 +3247,7 @@ msgstr ""
 "Você não pode ingressar a partida pois o host não está carregando um arquivo "
 "salvo."
 
-#: src/OSaveGameArray.cpp:879
+#: src/OSaveGameArray.cpp:889
 msgid "This saved game will be deleted. Proceed?"
 msgstr "Este arquivo de partida será apagado. Continuar?"
 
@@ -7835,6 +7803,59 @@ msgid ""
 "Place this square over your target and Click again. Repeat until Thor's "
 "power has been depleted. "
 msgstr ""
+
+#~ msgid "New Player"
+#~ msgstr "Novo Jogador"
+
+#~ msgid "Enter a name for your game session."
+#~ msgstr "Digite um nome para a sua sessão de jogo."
+
+#~ msgid "Fryhtan"
+#~ msgstr "Fryhtanianos"
+
+#~ msgid "Battling"
+#~ msgstr "Batalhando"
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair near %s has been destroyed by %s's Kingdom%s."
+#~ msgstr "Seu %s próximo de %s foi destruído por %s."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair near %s has been destroyed by Rebels."
+#~ msgstr "Seu %s próximo de %s foi destruído pelos Rebeldes."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair near %s has been destroyed by Fryhtans."
+#~ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair near %s has been destroyed."
+#~ msgstr "Seu %s próximo de %s foi destruído."
+
+#, fuzzy
+#~ msgid ""
+#~ "Your Fryhtan Lair near %s has been captured by a spy from %s's Kingdom%s."
+#~ msgstr "Seu %s próximo de %s foi capturado por um espião de %s."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair near %s has been captured by %s's Kingdom%s."
+#~ msgstr "Seu %s próximo de %s foi capturado por %s."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair near %s has been destroyed by lightning."
+#~ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair near %s has been struck by lightning."
+#~ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair has been destroyed by lightning."
+#~ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
+
+#, fuzzy
+#~ msgid "Your Fryhtan Lair has been struck by lightning."
+#~ msgstr "Seu %s próximo de %s foi destruído pelos Fryhtanianos."
 
 #~ msgid "You cannot specify multiple -host or -join options."
 #~ msgstr "Você não pode definir múltiplas opções de -host ou -join."
