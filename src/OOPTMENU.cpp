@@ -105,24 +105,25 @@ void OptionMenu::enter(char untilExitFlag)
 	Config& tempConfig = config;
 	old_config = config;
 
+	
 	// -------- initialize sound effect volume --------//
-	se_vol_slide.init_slide(264, 123, 420, 123+SLIDE_BUTTON_HEIGHT-1, 
+	se_vol_slide.init_slide(VGA_X1+264, VGA_Y1 + 123, VGA_X1 + 420, VGA_Y1 + 123+SLIDE_BUTTON_HEIGHT-1,
 		SLIDE_BUTTON_WIDTH, disp_slide_bar);
 	se_vol_slide.set(0, 100, tempConfig.sound_effect_flag ? tempConfig.sound_effect_volume : 0);
 
 	// -------- initialize music volume --------//
-	music_vol_slide.init_slide(566, 123, 722, 123+SLIDE_BUTTON_HEIGHT-1, 
+	music_vol_slide.init_slide(VGA_X1 + 566, VGA_Y1 + 123, VGA_X1 + 722, VGA_Y1 + 123+SLIDE_BUTTON_HEIGHT-1,
 		SLIDE_BUTTON_WIDTH, disp_slide_bar);
 	music_vol_slide.set(0, 100, tempConfig.music_flag ? tempConfig.wav_music_volume : 0);
 
 	// -------- initialize frame speed volume --------//
-	frame_speed_slide.init_slide(196, 410, 352, 410+SLIDE_BUTTON_HEIGHT-1, 
+	frame_speed_slide.init_slide(VGA_X1 + 196, VGA_Y1 + 410, VGA_X1 + 352, VGA_Y1 + 410+SLIDE_BUTTON_HEIGHT-1,
 		SLIDE_BUTTON_WIDTH, disp_slide_bar);
 	frame_speed_slide.set(0, 31, tempConfig.frame_speed <= 30 ? tempConfig.frame_speed: 31);
 	// use frame 31 to represent full speed (i.e. 99)
 
 	// -------- initialize scroll speed volume --------//
-	scroll_speed_slide.init_slide(196, 454, 352, 454+SLIDE_BUTTON_HEIGHT-1, 
+	scroll_speed_slide.init_slide(VGA_X1 + 196, VGA_Y1 + 454, VGA_X1 + 352, VGA_Y1 + 454+SLIDE_BUTTON_HEIGHT-1,
 		SLIDE_BUTTON_WIDTH, disp_slide_bar);
 	scroll_speed_slide.set(0, 10, tempConfig.scroll_speed );
 
@@ -130,8 +131,8 @@ void OptionMenu::enter(char untilExitFlag)
 
 	for( i = 0; i < MAX_RACE_TABLE; ++i )
 	{
-		race_button[i].create(181+i*BASIC_OPTION_X_SPACE, 162,
-			181+(i+1)*BASIC_OPTION_X_SPACE-1, 162+BASIC_OPTION_HEIGHT-1,
+		race_button[i].create(VGA_X1 + 181+i*BASIC_OPTION_X_SPACE, VGA_Y1 + 162,
+			VGA_X1 + 181+(i+1)*BASIC_OPTION_X_SPACE-1, VGA_Y1 + 162+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(NULL, race_table[i]));
 	}
 
@@ -139,8 +140,8 @@ void OptionMenu::enter(char untilExitFlag)
 
 	for( i = 0; i < 3; ++i )
 	{
-		help_group[i].create(120+i*BASIC_OPTION_X_SPACE, 244,
-			120+(i+1)*BASIC_OPTION_X_SPACE-1, 244+BASIC_OPTION_HEIGHT-1,
+		help_group[i].create(VGA_X1 + 120+i*BASIC_OPTION_X_SPACE, VGA_Y1 + 244,
+			VGA_X1 + 120+(i+1)*BASIC_OPTION_X_SPACE-1, VGA_Y1 + 244+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&help_group, i), 0, 0);
 	}
 
@@ -148,8 +149,8 @@ void OptionMenu::enter(char untilExitFlag)
 
 	for( i = 0; i < 2; ++i )
 	{
-		news_group[i].create(198+i*BASIC_OPTION_X_SPACE, 320,
-			198+(i+1)*BASIC_OPTION_X_SPACE-1, 320+BASIC_OPTION_HEIGHT-1,
+		news_group[i].create(VGA_X1 + 198+i*BASIC_OPTION_X_SPACE, VGA_Y1 + 320,
+			VGA_X1 + 198+(i+1)*BASIC_OPTION_X_SPACE-1, VGA_Y1 + 320+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&news_group, 1-i), 0, 0);
 	}
 
@@ -157,8 +158,8 @@ void OptionMenu::enter(char untilExitFlag)
 
 	for( i = 0; i < 2; ++i )
 	{
-		report_group[i].create(572+i*BASIC_OPTION_X_SPACE, 244,
-			572+(i+1)*BASIC_OPTION_X_SPACE-1, 244+BASIC_OPTION_HEIGHT-1,
+		report_group[i].create(VGA_X1 + 572+i*BASIC_OPTION_X_SPACE, VGA_Y1+244,
+			VGA_X1 + 572+(i+1)*BASIC_OPTION_X_SPACE-1, VGA_Y1 + 244+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&report_group, 1-i), 0, 0);
 	}
 
@@ -166,8 +167,8 @@ void OptionMenu::enter(char untilExitFlag)
 
 	for( i = 0; i < 2; ++i )
 	{
-		show_icon_group[i].create(572+i*BASIC_OPTION_X_SPACE, 320,
-			572+(i+1)*BASIC_OPTION_X_SPACE-1, 320+BASIC_OPTION_HEIGHT-1,
+		show_icon_group[i].create(VGA_X1 + 572+i*BASIC_OPTION_X_SPACE, VGA_Y1 + 320,
+			VGA_X1 + 572+(i+1)*BASIC_OPTION_X_SPACE-1, VGA_Y1 + 320+BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&show_icon_group, 1-i), 0, 0);
 	}
 
@@ -175,14 +176,14 @@ void OptionMenu::enter(char untilExitFlag)
 
 	for( i = 0; i < 4; ++i )
 	{
-		show_path_group[i].create(572+(i/2)*BASIC_OPTION_X_SPACE, 408+(i%2)*BASIC_OPTION_HEIGHT,
-			572+(i/2+1)*BASIC_OPTION_X_SPACE-1, 408+(i%2+1)*BASIC_OPTION_HEIGHT-1,
+		show_path_group[i].create(VGA_X1 + 572+(i/2)*BASIC_OPTION_X_SPACE, VGA_Y1 + 408+(i%2)*BASIC_OPTION_HEIGHT,
+			VGA_X1 + 572+(i/2+1)*BASIC_OPTION_X_SPACE-1, VGA_Y1 + 408+(i%2+1)*BASIC_OPTION_HEIGHT-1,
 			disp_virtual_button, ButtonCustomPara(&show_path_group, i), 0, 0);
 	}
 
 	// --------- other buttons --------//
-	start_button.create(200, 520, "RETURN-U", "RETURN-D", 1, 0);
-	cancel_button.create(416, 520, "CANCEL-U", "CANCEL-D", 1, 0);
+	start_button.create(VGA_X1 + 200, VGA_Y1+520, "RETURN-U", "RETURN-D", 1, 0);
+	cancel_button.create(VGA_X1 + 416, VGA_Y1+ 520, "CANCEL-U", "CANCEL-D", 1, 0);
 
 	mouse_cursor.set_icon(CURSOR_NORMAL);
 
@@ -220,7 +221,8 @@ void OptionMenu::disp(int needRepaint)
 	{
 		if( refresh_flag & IGOPTION_PAGE )
 		{
-			image_interface.put_to_buf( &vga_back, "OPTIONS");
+// 			image_interface.put_to_buf( &vga_back, "OPTIONS");
+			image_interface.put_large(&vga_back, VGA_X1, VGA_Y1, "OPTIONS");
 			vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 
 			start_button.paint();

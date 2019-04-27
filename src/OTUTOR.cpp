@@ -56,15 +56,24 @@
 
 //---------- define coordinations ------------//
 
-enum { TUTOR_X1 = ZOOM_X1,
-		 TUTOR_Y1 = ZOOM_Y1,
-		 TUTOR_X2 = ZOOM_X2,
-		 TUTOR_Y2 = TUTOR_Y1+120
-	  };
+// enum { TUTOR_X1 = ZOOM_X1,
+// 		 TUTOR_Y1 = ZOOM_Y1,
+// 		 TUTOR_X2 = ZOOM_X2,
+// 		 TUTOR_Y2 = TUTOR_Y1+120
+// 	  };
+// 
+// enum { TUTOR_BUTTON_X1 = TUTOR_X2-66,
+// 		 TUTOR_BUTTON_Y1 = TUTOR_Y1+20
+// 	  };
 
-enum { TUTOR_BUTTON_X1 = TUTOR_X2-66,
-		 TUTOR_BUTTON_Y1 = TUTOR_Y1+20
-	  };
+#define TUTOR_X1 ZOOM_X1
+#define TUTOR_Y1 ZOOM_Y1
+#define TUTOR_X2 ZOOM_X2
+#define TUTOR_Y2 TUTOR_Y1 + 120
+
+#define TUTOR_BUTTON_X1 TUTOR_X2 - 66
+#define TUTOR_BUTTON_Y1 TUTOR_Y1 + 20
+
 
 //-------- Define static vars ----------//
 

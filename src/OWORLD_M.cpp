@@ -39,6 +39,8 @@
 
 MapMatrix::MapMatrix()
 {
+
+
 	init( MAP_X1, MAP_Y1, MAP_X2, MAP_Y2,
 			MAP_WIDTH, MAP_HEIGHT,
 			MAP_LOC_WIDTH, MAP_LOC_HEIGHT, 1 );    // 1-create a background buffer
@@ -108,9 +110,9 @@ void MapMatrix::disp_mode_button(int putFront)
 	}
 
 	if( putFront )
-		image_button.put_front( 579, 2, iconName, 1 );
+		image_button.put_front( MAPMODE_X1, MAPMODE_Y1, iconName, 1 );
 	else
-		image_button.put_back( 579, 2, iconName, 1 );
+		image_button.put_back( MAPMODE_X1, MAPMODE_Y1, iconName, 1 );
 }
 //----------- End of function MapMatrix::disp_mode_button ------------//
 
@@ -119,13 +121,13 @@ void MapMatrix::disp_mode_button(int putFront)
 
 int MapMatrix::detect()
 {
-	int x=586;
+	int x = MAPMODE_X1;
 
-	#define MAP_MODE_BUTTON_WIDTH 40
+	
 
 	for( int i=0 ; i<MAP_MODE_COUNT ; i++, x+=MAP_MODE_BUTTON_WIDTH )
 	{
-		if( mouse.single_click(	x, 7, x+MAP_MODE_BUTTON_WIDTH-1, 46 ) )
+		if( mouse.single_click(	x, MAPMODE_Y1, x + MAP_MODE_BUTTON_WIDTH-1, 46 ) )
 		{
 			toggle_map_mode(i);
 			return 1;

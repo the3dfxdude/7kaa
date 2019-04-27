@@ -42,6 +42,7 @@
 
 static void init_scenario_var(ScenInfo* scenInfo);
 static int sort_scenario_func(const void *arg1, const void *arg2);
+extern SaveGameInfo current_game_info; // After loading, need this to log it as played
 using namespace nsPlayerStats;
 
 //---------- Begin of function Game::select_run_scenario ----------//
@@ -176,7 +177,11 @@ int Game::run_scenario(ScenInfo* scenInfo)
 			strcpy(config.player_name, playerName);
 			// ##### end Gilbert 1/11 #######//
 
-			playerStats.set_scenario_play_status(scenInfo->file_name, PlayStatus::PLAYED);
+			if (current_game_info.game_name) {
+				playerStats.set_scenario_play_status(current_game_info.game_name, PlayStatus::PLAYED);
+			} else {
+				err.run("Scenario %s has no internal name\n", str);
+			}
 
 			battle.run_loaded();
 		}

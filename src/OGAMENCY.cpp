@@ -38,6 +38,24 @@
 #define FRYHTAN_MAX_PAGE 3
 #define SUB_CLASS_BUTTON_MAX 10
 
+#define NCY_X1 ((VGA_WIDTH >> 1) - 400)
+#define NCY_Y1 ((VGA_HEIGHT >> 1) - 300)
+
+enum {
+	BUTTON_WIDTH = 146, CLASS_BUTTON_Y_SPACING = 30, BUTTON_HEIGHT = 28,
+	SUBCLASS_TOP_BORDER = 3, BUTTON_Y_SPACING = 31, MAX_SUBBUTTON = 10
+};
+
+#define BUTTON_X			NCY_X1+14
+#define BUTTON_Y			NCY_Y1+14
+#define SUBBUTTON_X			NCY_X1+14
+#define SUBBUTTON_Y			NCY_Y1+236
+#define CLASS_BUTTON_Y		NCY_Y1+14
+#define SUBCLASS_BUTTON_Y	NCY_Y1+236
+
+
+
+
 enum
 {
 	ENCYC_PEOPLE=1,
@@ -144,10 +162,13 @@ void Game::view_encyclopedia()
 	music.stop();			// no music for encyclopedia as it reads files from the CDROM
 
 	//---- load the interface into the back buffer ----//
+	vga_back.bar(0, 0, VGA_WIDTH - 1, VGA_HEIGHT - 1, VGA_GRAY);
 
-	image_encyc.put_to_buf( &vga_back, "ENCYC" );
+// 	image_encyc.put_to_buf( &vga_back, "ENCYC" );
+	image_encyc.put_large(&vga_back, NCY_X1, NCY_Y1, "ENCYC");
 
 	//-------- hide and change mouse cursor --------//
+	
 
 	mouse.hide();
 	mouse_cursor.set_icon(CURSOR_ENCYC);
@@ -268,12 +289,12 @@ void Game::view_encyclopedia()
 
 		//------ detect the "Return" button -------//
 
-		if( mouse.single_click(6, 552, 165, 592) )		// return button
+		if( mouse.single_click(NCY_X1+6, NCY_Y1+552, NCY_X1+165, NCY_Y1+592) )		// return button
 			break;
 
 		//--------- F9 to capture screen ----------//
 
-		if( mouse.single_click(174, 12, 787, 587, 1) )		// right clicking on the picture to save it
+		if( mouse.single_click(NCY_X1+174, NCY_Y1+12, NCY_X1+787, NCY_Y1+587, 1) )		// right clicking on the picture to save it
 			sys.capture_screen();
 
 		//----------- auto slide show -------------//
@@ -309,7 +330,7 @@ void Game::view_encyclopedia()
 
 	//----- palette restore when backupPal destruct ----//
 	{
-		vga_front.bar( 0, 0, VGA_WIDTH-1, VGA_HEIGHT-1, 0 );
+		vga_front.bar(0, 0, VGA_WIDTH - 1, VGA_HEIGHT - 1, 0);
 
 		VgaFrontLock vgaLock;
 		vga.free_custom_palette();
@@ -322,8 +343,8 @@ void Game::view_encyclopedia()
 
 static int detect_main_class_button()
 {
-	enum { BUTTON_X = 14, BUTTON_Y = 14, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 28 };
-	enum { BUTTON_Y_SPACING = 30 };
+// 	enum { BUTTON_X = 14, BUTTON_Y = 14, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 28 };
+// 	enum { BUTTON_Y_SPACING = 30 };
 
 	for( int c=1 ; c<=ENCYC_CLASS_COUNT ; c++ )
 	{
@@ -352,24 +373,24 @@ static int detect_main_class_button()
 
 static int detect_sub_class_button(int n, int firstButton)
 {
-	enum { BUTTON_X = 14, BUTTON_Y = 236, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 28 };
-	enum { BUTTON_Y_SPACING = 31, MAX_BUTTON = 10 };
+// 	enum { BUTTON_X = 14, BUTTON_Y = 236, BUTTON_WIDTH = 146, BUTTON_HEIGHT = 28 };
+// 	enum { BUTTON_Y_SPACING = 31, MAX_BUTTON = 10 };
 
 	for( int c=firstButton ; c<=n && c<=SUB_CLASS_BUTTON_MAX ; c++ )
 	{
 		//if( mouse.press_area( BUTTON_X, BUTTON_Y + (c-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
 		//	BUTTON_Y + c*BUTTON_Y_SPACING-1) )
-		if( mouse.single_click( BUTTON_X, BUTTON_Y + (c-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
-			BUTTON_Y + c*BUTTON_Y_SPACING-1) )
+		if( mouse.single_click( SUBBUTTON_X, SUBBUTTON_Y + (c-1)*BUTTON_Y_SPACING, SUBBUTTON_X + BUTTON_WIDTH-1,
+			SUBBUTTON_Y + c*BUTTON_Y_SPACING-1) )
 		{
-			// int subClassId = sub_class_id_array[main_class_id-1];
+			int subClassId = sub_class_id_array[main_class_id-1];
 
-			// vga_util.blt_buf( BUTTON_X, BUTTON_Y + (subClassId-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
-			// BUTTON_Y + subClassId*BUTTON_Y_SPACING-1, 0);
+			vga_util.blt_buf( BUTTON_X, BUTTON_Y + (subClassId-1)*BUTTON_Y_SPACING, BUTTON_X + BUTTON_WIDTH-1,
+			BUTTON_Y + subClassId*BUTTON_Y_SPACING-1, 0);
 
 			// ###### begin Gilbert 22/9 #######//
 			// image_encyc.put_front(BUTTON_X-2, BUTTON_Y + (c-1)*BUTTON_Y_SPACING-2, "B_DOWN");
-			image_encyc.put_front(BUTTON_X, BUTTON_Y + (c-1)*BUTTON_Y_SPACING, "B_DOWN");
+			image_encyc.put_front(SUBBUTTON_X, SUBBUTTON_Y + (c-1)*BUTTON_Y_SPACING, "B_DOWN");
 			// ###### end Gilbert 22/9 #######//
 			return c;
 		}
@@ -384,14 +405,22 @@ static int detect_sub_class_button(int n, int firstButton)
 //
 static void disp_class_buttons()
 {
-	enum { BUTTON_X=14, BUTTON_WIDTH=146, CLASS_BUTTON_Y=14, CLASS_BUTTON_Y_SPACING=30, 
-		SUBCLASS_BUTTON_Y=236, SUBCLASS_TOP_BORDER=3, BUTTON_Y_SPACING=31 };
+// 	enum { BUTTON_X=14, BUTTON_WIDTH=146, CLASS_BUTTON_Y=14, CLASS_BUTTON_Y_SPACING=30, 
+// 		SUBCLASS_BUTTON_Y=236, SUBCLASS_TOP_BORDER=3, BUTTON_Y_SPACING=31 };
+// 	enum {
+// 		BUTTON_WIDTH = 146, CLASS_BUTTON_Y_SPACING = 30, 
+// 		SUBCLASS_TOP_BORDER = 3, BUTTON_Y_SPACING = 31
+// 	};
+// 	#define BUTTON_X NCY_X1+14
+// 	#define CLASS_BUTTON_Y NCY_Y1+14
+// 	#define SUBCLASS_BUTTON_Y NCY_Y1+236
+
 
 	int subClassId = sub_class_id_array[main_class_id-1];
 
 	if( main_class_id != ENCYC_FRYHTANS )
 	{
-		vga_back.put_bitmap(12, SUBCLASS_BUTTON_Y-SUBCLASS_TOP_BORDER,
+		vga_back.put_bitmap(NCY_X1+12, SUBCLASS_BUTTON_Y-SUBCLASS_TOP_BORDER,
 			image_encyc.get_ptr(button_name_array[main_class_id-1]) );
 	}
 	else
@@ -402,21 +431,22 @@ static void disp_class_buttons()
 			sub_class_id_array[main_class_id-1]-1 >= monster_page_index[monsterSubClass];
 			++monsterSubClass);
 		err_when( monsterSubClass > FRYHTAN_MAX_PAGE );
-		vga_back.put_bitmap(12, SUBCLASS_BUTTON_Y-SUBCLASS_TOP_BORDER, 
+
+		vga_back.put_bitmap(NCY_X1+12, SUBCLASS_BUTTON_Y-SUBCLASS_TOP_BORDER,
 			image_encyc.get_ptr(monster_button_name_array[monsterSubClass-1]) );
 
 		// modify subClassId
 		subClassId -= monster_page_index[monsterSubClass-1];
 	}
 
-	vga_util.blt_buf( BUTTON_X, 14, BUTTON_X+BUTTON_WIDTH-1, VGA_HEIGHT-40, 0 );
+	vga_util.blt_buf( NCY_X1, NCY_Y1, BUTTON_X+BUTTON_WIDTH-1, VGA_HEIGHT-40, 0 );
 
-	int y=CLASS_BUTTON_Y;
+	int y = CLASS_BUTTON_Y;
 	// ###### begin Gilbert 22/9 #######//
 	image_encyc.put_front( BUTTON_X, y + (main_class_id-1)*CLASS_BUTTON_Y_SPACING, "B_DOWN");
 	// ###### end Gilbert 22/9 #######//
 
-	y=SUBCLASS_BUTTON_Y;
+	y = SUBCLASS_BUTTON_Y;
 	// #### begin Gilbert 22/9 #######//
 	image_encyc.put_front( BUTTON_X, y + (subClassId-1)*BUTTON_Y_SPACING, "B_DOWN");
 	// #### end Gilbert 22/9 #######//
@@ -585,10 +615,10 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 		filename2[0] && misc.is_file_exist(filename2) && pictFile.file_open(filename2,0) && (palNamePtr = palname2) ||
 		filename[0] && misc.is_file_exist(filename) && pictFile.file_open(filename,0) && (palNamePtr = palname) )
 	{
-		vga_back.put_large_bitmap(174, 12, &pictFile);
+		vga_back.put_large_bitmap(NCY_X1 + 174, NCY_Y1 + 12, &pictFile);
 
 		if( !firstDisp )
-			vga_front.bar(174,12,787,587, 0x00);		// wipe the picture screen
+			vga_front.bar(NCY_X1 + 174, NCY_Y1 + 12, NCY_X1 + 787, NCY_X1 + 587, 0x00);		// wipe the picture screen
 
 		if( palNamePtr && misc.is_file_exist(palNamePtr) )
 		{
@@ -597,7 +627,7 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 		}
 
 		if( !firstDisp )
-			vga_util.blt_buf(174,12,787,587, 0);
+			vga_util.blt_buf(NCY_X1 + 174, NCY_Y1 + 12, NCY_X1 + 787, NCY_X1 + 587, 0);
 
 		return 1;
 	}

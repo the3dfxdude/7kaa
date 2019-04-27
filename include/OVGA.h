@@ -30,9 +30,13 @@
 #include <SDL.h>
 
 //----------- define constants ----------//
-
-#define VGA_WIDTH             800
-#define VGA_HEIGHT            600
+// 
+// #define VGA_WIDTH             800
+// #define VGA_HEIGHT            600
+#define VGA_WIDTH             config.win_width
+#define VGA_HEIGHT            config.win_height
+#define VGA_X1            ((VGA_WIDTH>>1)-400)
+#define VGA_Y1            ((VGA_HEIGHT>>1)-300)
 #define VGA_BPP                 8
 #define VGA_PALETTE_SIZE      256
 

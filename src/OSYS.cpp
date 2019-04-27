@@ -163,8 +163,8 @@ Sys::Sys()
 
    is_mp_game = 0;
    toggle_full_screen_flag = 0;
-   user_pause_flag = 0;
-   disp_fps_flag = 0;
+   user_pause_flag = 1;
+   disp_fps_flag = 1;
 }
 //----------- End of function Sys::Sys -----------//
 
@@ -400,7 +400,28 @@ int Sys::init_objects()
    #endif
 
    image_icon.init(DIR_RES"I_ICON.RES",1,0);       // 1-read into buffer
-   image_interface.init(DIR_RES"I_IF.RES",0,0);    // 0-don't read into the buffer, don't use common buffer
+   
+   char* filename = "I_IF.RES";
+   switch (config.resolution_type)
+   {
+	
+   case RES_600:
+	   filename = "I_IF.RES";
+	   break;
+   case RES_768:
+	   filename = "I_IF_hd2.RES";
+	   break;
+   case RES_1080:
+	   filename = "I_IF_hd3.RES";
+	   break;
+   default:
+	   filename = "I_IF.RES";
+	   break;
+   }
+   char* pathpath = new char[100];
+   strcpy(pathpath, DIR_RES);
+   strcat(pathpath, filename);
+   image_interface.init(pathpath,0,0);    // 0-don't read into the buffer, don't use common buffer
 
    #ifndef DEMO         // do not load these in the demo verison
       image_menu.init(DIR_RES"I_MENU.RES",0,0);       // 0-don't read into the buffer, don't use common buffer
@@ -1171,6 +1192,9 @@ void Sys::yield()
       toggle_full_screen_flag = 0;
       vga.set_full_screen_mode(-1);
    }
+//    toggle_full_screen_flag = 0;
+//    vga.set_full_screen_mode(0);
+
 
    mouse.poll_event();
 
@@ -1583,7 +1607,7 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       {
       //---- keys for toggling map mode ----//
 
-      case 'e':
+      case 'm':
          world.map_matrix->cycle_map_mode();
          break;
 
@@ -1603,25 +1627,41 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          break;
 
       //------ clear news messages ------//
-
       case 'x':
          news_array.clear_news_disp();
          break;
 
-      //------ open oldest open diplomatic message  ------//
 
+      //------ scroll world map zoom region  ------//
       case 'd':
-         news_array.view_first_diplomatic();
+		  if (skeyState & CONTROL_KEY_MASK)
+		  {
+			  news_array.view_first_diplomatic();
+		  }
+		 world.zoom_matrix->scroll(5, 0);
          break;
-
-      //------ jump to a location with natural resource ---//
-
-      case 'j':
+	  case 's':
+		  if (skeyState & CONTROL_KEY_MASK)
+		  {
+			  save_game();
+		  }
+		  world.zoom_matrix->scroll(0, 5);
+		  break;
+	  case 'a':
+		  world.zoom_matrix->scroll(-5, 0);
+		  break;
+	  case 'w':
+		  world.zoom_matrix->scroll(0, -5);
+		  break;
+      
+		  
+		//------ jump to a location with natural resource ---//
+      case 'r':
          site_array.go_to_a_raw_site();
          break;
 
-      //--------- bring up the option menu  ----------//
 
+      //--------- bring up the option menu  ----------//
       case 'o':
          // ##### begin Gilbert 5/11 #######//
          // game.in_game_option_menu();
@@ -1630,42 +1670,48 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
          break;
 
       //--------- forward/backward tutorial text block --------//
-
       case ',':
          if( game.game_mode == GAME_TUTORIAL )
             tutor.prev_text_block();
          break;
-
       case '.':
          if( game.game_mode == GAME_TUTORIAL )
             tutor.next_text_block();
          break;
 
-      //---- keys for saving and loading game -----//
-
-      case 's':
-         save_game();
-         break;
 
       case 'l':
-         load_game();
+		  if (skeyState & CONTROL_KEY_MASK)
+		  {
+			  load_game();
+		  }
          break;
 
-      case KEY_UP:
+      case 'q':
+		if (skeyState & CONTROL_KEY_MASK)
+		{
+			world.disp_next(-1, 1);
+			break;
+		}
          world.disp_next(-1, 0);    // previous same object type of any nation
          break;
 
-      case KEY_DOWN:
+      case 'e':
+		  if (skeyState & CONTROL_KEY_MASK)
+		  {
+			  world.disp_next(1, 1);
+			  break;
+		  }
          world.disp_next(1, 0);     // next same object type of any nation
          break;
 
-      case KEY_LEFT:
-         world.disp_next(-1, 1);    // prevous same object type of the same nation
-         break;
-
-      case KEY_RIGHT:
-         world.disp_next(1, 1);     // next same object type of the same nation
-         break;
+//       case KEY_LEFT:
+//          world.disp_next(-1, 1);    // prevous same object type of the same nation
+//          break;
+// 
+//       case KEY_RIGHT:
+//          world.disp_next(1, 1);     // next same object type of the same nation
+//          break;
 
       //---- key for quick locate -----//
 

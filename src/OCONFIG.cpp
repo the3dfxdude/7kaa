@@ -30,6 +30,8 @@
 #include <dbglog.h>
 #include "gettext.h"
 #include <FilePath.h>
+#include <INIReader.h>
+#include <OLOG.h>
 
 DBGLOG_DEFAULT_CHANNEL(Config);
 
@@ -51,6 +53,7 @@ static char  table_new_nation_emerge[5] = { 0, 0, 0, 1, 1 };
 static char  table_monster_type[5] = { OPTION_MONSTER_DEFENSIVE, OPTION_MONSTER_DEFENSIVE, OPTION_MONSTER_DEFENSIVE, OPTION_MONSTER_OFFENSIVE, OPTION_MONSTER_OFFENSIVE };
 static char  table_start_up_has_mine_nearby[5] = { 1, 1, 0, 0, 0 };
 static char  table_random_start_up[5] = { 0, 0, 0, 1, 1 };
+static char  table_resolutions[3] = { RES_600, RES_768, RES_1080 };
 
 //--------- Begin of function Config::init -----------//
 
@@ -76,6 +79,39 @@ void Config::deinit()
 }
 //--------- End of function Config::deinit --------//
 
+void Config::init_resolution()
+{
+	INIReader reader("config.ini");
+	if (reader.ParseError() >= 0) {
+		int resType = reader.GetInteger("user", "resolution", -1);
+		switch (resType)
+		{
+		case 2:
+			resolution_type = RES_768;
+			win_width = 1024; win_height = 768;
+			zoom_width = 800; zoom_height = 704;
+			break;
+		case 3:
+			resolution_type = RES_1080;
+			win_width = 1920; win_height = 1080;
+			zoom_width = 1696; zoom_height = 1024;
+			break;
+		default:
+			resolution_type = RES_600;
+			win_width = 800; win_height = 600;
+			zoom_width = 576; zoom_height = 544;
+			break;
+		}
+	}
+	else
+	{
+		DEBUG_LOG("Can not find config.ini in data folder");
+		config.resolution_type = RES_600;
+		config.win_width = 800; config.win_height = 600;
+		config.zoom_width = 576; config.zoom_height = 544;
+	}
+
+}
 
 //--------- Begin of function Config::default_game_setting ---------//
 void Config::default_game_setting()
@@ -92,6 +128,8 @@ void Config::default_game_setting()
 	start_up_raw_site = 6;
 	difficulty_level = OPTION_CUSTOM;
 
+
+
 	explore_whole_map = 1;
 	fog_of_war   = 0;
 
@@ -106,7 +144,7 @@ void Config::default_game_setting()
 	monster_type = OPTION_MONSTER_DEFENSIVE;
 	new_nation_emerge = 1;
 	start_up_has_mine_nearby = 0;
-   random_start_up = 0;
+	random_start_up = 0;
 
 	change_difficulty(OPTION_VERY_EASY);
 
@@ -149,7 +187,7 @@ void Config::default_cheat_setting()
 void Config::default_local_game_setting()
 {
 	race_id = 1;
-	strcpy(player_name, "New Player");
+	strcpy(player_name, _("New Player"));
 	player_nation_color = 1;
 	expired_flag = 0;
 }

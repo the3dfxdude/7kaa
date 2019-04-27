@@ -48,6 +48,11 @@
 #include "gettext.h"
 
 
+#define TXT_X1 ((VGA_WIDTH >> 1) - 280)
+#define TXT_Y1 ((VGA_HEIGHT >> 1) - 184)
+#define BG_X1  ((VGA_WIDTH >> 1) - 400)
+#define BG_Y1  ((VGA_HEIGHT >> 1) - 300)
+
 
 //-------- Declare static vars & functions ---------//
 
@@ -61,7 +66,8 @@ static void disp_stat();
 static void put_stat(int y, const char* desStr, const char* dispStr);
 static void put_stat(int y, const char* desStr, int dispValue);
 static void put_ranking(int y, int nationRecno);
-static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr);
+
+extern SaveGameInfo current_game_info;
 
 //---------- Begin of function Game::game_end --------//
 //
@@ -78,7 +84,8 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 {
 	//--- set scenario as complete if they didn't retire ---//
 	if(!retireFlag)
-		playerStats.set_scenario_play_status(scenario_file_name, nsPlayerStats::PlayStatus::COMPLETED);
+		playerStats.set_scenario_play_status(current_game_info.game_name, nsPlayerStats::PlayStatus::COMPLETED);
+
 
 	//--- skip all game ending screens if in demo mode ---//
 
@@ -135,7 +142,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 		else
 			fileName = "LOSEGAME";
 
-		vga_util.disp_image_file(fileName);
+		vga_util.disp_image_file(fileName, BG_X1, BG_Y1);
 
 		music.play(songId, sys.cdrom_drive ? MUSIC_CD_THEN_WAV : 0);
 		mouse.wait_press(60);		// 60 seconds to time out
@@ -147,7 +154,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 
 	//------- display the statistic -------//
 
-	vga_util.disp_image_file("RESULTS");
+	vga_util.disp_image_file("RESULTS", BG_X1, BG_Y1);
 
 	if( winNationRecno )
 	{
@@ -168,7 +175,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 
 	//-------- display ranking and score ----------//
 
-	vga_util.disp_image_file("RESULTS");
+	vga_util.disp_image_file("RESULTS", BG_X1, BG_Y1);
 
 	info.set_rank_data(0);		// count all nations, not only those that have contact with the player
 
@@ -353,12 +360,12 @@ static void disp_goal_str(int winNationRecno)
 
 	if( winNationRecno != nation_array.player_recno )
 	{
-		font_bible.center_put(0, 30, VGA_WIDTH-1, 60, _("You Have Lost the Game !") );
+		font_bible.center_put(BG_X1, BG_Y1 + 30, VGA_WIDTH-1, BG_Y1 + 60, _("You Have Lost the Game !") );
 		y=60;
 	}
 
-	font_bible.center_put(0, y   , VGA_WIDTH-1, y+30, str  );
-	font_bible.center_put(0, y+30, VGA_WIDTH-1, y+60, str2 );
+	font_bible.center_put(BG_X1, BG_Y1 + y   , VGA_WIDTH-1, BG_Y1+y+30, str  );
+	font_bible.center_put(BG_X1, BG_Y1 + y+30, VGA_WIDTH-1, BG_Y1+y+60, str2 );
 }
 //----------- End of static function disp_goal_str -----------//
 
@@ -386,7 +393,7 @@ static void disp_losing_str(int surrenderToNationRecno)
 		str = _("Your Kingdom has Gone Down to Ignominious Defeat !");
 	}
 
-	font_bible.center_put(0, 0, VGA_WIDTH-1, 139, str );
+	font_bible.center_put(BG_X1, BG_Y1, VGA_WIDTH-1, BG_Y1 + 139, str );
 }
 //----------- End of static function disp_losing_str -----------//
 
@@ -400,7 +407,7 @@ static void disp_retire_str()
 	// TRANSLATORS: You Retired on <Date>.
 	snprintf(str, MAX_STR_LEN+1, _("You Retired on %s."), date.date_str( info.game_date ));
 
-	font_bible.center_put(0, 0, VGA_WIDTH-1, 139, str );
+	font_bible.center_put(BG_X1, BG_Y1, VGA_WIDTH - 1, BG_Y1 + 139, str);
 }
 //----------- End of static function disp_retire_str -----------//
 
@@ -409,7 +416,7 @@ static void disp_retire_str()
 //
 static void disp_stat()
 {
-	int y=140;
+	int y = BG_Y1 + 140;
 
 	Nation* nationPtr = ~nation_array;
 
@@ -441,8 +448,8 @@ static void disp_stat()
 //
 static void put_stat(int y, const char* desStr, const char* dispStr)
 {
-	font_bible.put( 140, y, desStr );
-	font_bible.put( 570, y, dispStr );
+	font_bible.put(BG_X1 + 140, y, desStr );
+	font_bible.put(BG_X1 + 570, y, dispStr );
 }
 //----------- End of static function put_stat -----------//
 
@@ -451,8 +458,8 @@ static void put_stat(int y, const char* desStr, const char* dispStr)
 //
 static void put_stat(int y, const char* desStr, int dispValue)
 {
-	font_bible.put( 140, y, desStr );
-	font_bible.put( 570, y, misc.format(dispValue) );
+	font_bible.put(BG_X1 + 140, y, desStr );
+	font_bible.put(BG_X1 + 570, y, misc.format(dispValue) );
 }
 //----------- End of static function put_stat -----------//
 
@@ -463,7 +470,7 @@ static void disp_ranking()
 {
 	//--------- display descriptions ---------//
 
-	int x=20, y=76;
+	int x= BG_X1+20, y= BG_Y1+76;
 
 	font_bible.put( x+20 , y+7, _("Kingdom") );
 	font_bible.put( x+260, y+7, _("Population") );
@@ -471,7 +478,15 @@ static void disp_ranking()
 	font_bible.put( x+470, y+7, _("Economy") );
 	font_bible.put( x+562, y+7, _("Reputation") );
 
-	put_heading( Font::LEFT_JUSTIFY, x+670, y, x+760, y+42, _("Fryhtan Battling") );
+#if(defined(SPANISH))
+	font_bible.put( x+670, y   , "Lucha" );
+	font_bible.put( x+670, y+14, "Fryhtan" );
+#else
+	// TRANSLATORS: Part of "Fryhtan Battling"
+	font_bible.put( x+670, y   , _("Fryhtan") );
+	// TRANSLATORS: Part of "Fryhtan Battling"
+	font_bible.put( x+670, y+14, _("Battling") );
+#endif
 
 	//--------- display rankings -----------//
 
@@ -494,7 +509,7 @@ static void put_ranking(int y, int nationRecno)
 {
 	Nation* nationPtr = nation_array[nationRecno];
 
-	int x=20;
+	int x= BG_X1+20;
 
 	nationPtr->disp_nation_color(x, y+5);
 
@@ -515,7 +530,7 @@ static void put_ranking(int y, int nationRecno)
 //
 static int disp_score(int winFlag)
 {
-	int x=200, y=360;
+	int x= BG_X1+200, y= BG_Y1+360;
 
 	static const char* rankStrArray[] =
 	{ N_("Population Score"), N_("Military Score"), N_("Economic Score"),
@@ -589,19 +604,3 @@ static int disp_score(int winFlag)
 	return finalScore;
 }
 //----------- End of static function disp_score -----------//
-
-
-//-------- Begin of static function put_heading --------//
-//
-static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr)
-{
-	int dispLines=0;
-	int totalLines=0;
-	int lineSpacing=-7;
-	font_bible.count_line(x1,y1,x2,y2,textPtr,lineSpacing,dispLines,totalLines);
-	if( dispLines > 1 )
-		font_bible.put_paragraph(x1,y1,x2,y2,textPtr,lineSpacing,1,1,justify);
-	else if( y1+7<y2 )
-		font_bible.put_paragraph(x1,y1+7,x2,y2,textPtr,lineSpacing,1,1,justify);
-}
-//----------- End of static function put_heading -----------//

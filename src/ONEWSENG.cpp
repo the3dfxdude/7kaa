@@ -405,7 +405,7 @@ void News::nation_surrender()
 	else
 	{
 		// TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
-		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s has surrendered to %s's Kingdom%s."), king_name1(), nation_color_str1(), king_name2(), nation_color_str2());
+		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s has surrendered to %s's Kingdom."), king_name1(), nation_color_str1(), king_name2(), nation_color_str2());
 	}
 }
 //------- End of function News::nation_surrender -----//
@@ -487,7 +487,7 @@ const char *firm_destroyed_by_nation[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been destroyed by %s's Kingdom%s."),
 	N_("Your War Factory near %s has been destroyed by %s's Kingdom%s."),
 	N_("Your Harbor near %s has been destroyed by %s's Kingdom%s."),
-	("Your Fryhtan Lair near %s has been destroyed by %s's Kingdom%s."),
+	N_("Your Fryhtan Lair near %s has been destroyed by %s's Kingdom%s."),
 };
 const char *firm_destroyed_by_rebels[MAX_FIRM_TYPE] =
 {
@@ -501,7 +501,7 @@ const char *firm_destroyed_by_rebels[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been destroyed by Rebels."),
 	N_("Your War Factroy near %s has been destroyed by Rebels."),
 	N_("Your Harbor near %s has been destroyed by Rebels."),
-	("Your Fryhtan Lair near %s has been destroyed by Rebels."),
+	N_("Your Fryhtan Lair near %s has been destroyed by Rebels."),
 };
 const char *firm_destroyed_by_monster[MAX_FIRM_TYPE] =
 {
@@ -515,7 +515,7 @@ const char *firm_destroyed_by_monster[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been destroyed by Fryhtans."),
 	N_("Your War Factory near %s has been destroyed by Fryhtans."),
 	N_("Your Harbor near %s has been destroyed by Fryhtans."),
-	("Your Fryhtan Lair near %s has been destroyed by Fryhtans."),
+	N_("Your Fryhtan Lair near %s has been destroyed by Fryhtans."),
 };
 const char *firm_destroyed_by_unknown[MAX_FIRM_TYPE] =
 {
@@ -529,7 +529,7 @@ const char *firm_destroyed_by_unknown[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been destroyed."),
 	N_("Your War Factory near %s has been destroyed."),
 	N_("Your Harbor near %s has been destroyed."),
-	("Your Fryhtan Lair near %s has been destroyed."),
+	N_("Your Fryhtan Lair near %s has been destroyed."),
 };
 //------ Begin of function News::firm_destroyed -----//
 //
@@ -583,7 +583,7 @@ const char *firm_captured_by_spy[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been captured by a spy from %s's Kingdom%s."),
 	N_("Your War Factory near %s has been captured by a spy from %s's Kingdom%s."),
 	N_("Your Harbor near %s has been captured by a spy from %s's Kingdom%s."),
-	("Your Fryhtan Lair near %s has been captured by a spy from %s's Kingdom%s."),
+	N_("Your Fryhtan Lair near %s has been captured by a spy from %s's Kingdom%s."),
 };
 const char *firm_captured_by_worker[MAX_FIRM_TYPE] =
 {
@@ -597,7 +597,7 @@ const char *firm_captured_by_worker[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been captured by %s's Kingdom%s."),
 	N_("Your War Factory near %s has been captured by %s's Kingdom%s."),
 	N_("Your Harbor near %s has been captured by %s's Kingdom%s."),
-	("Your Fryhtan Lair near %s has been captured by %s's Kingdom%s."),
+	N_("Your Fryhtan Lair near %s has been captured by %s's Kingdom%s."),
 };
 //------ Begin of function News::firm_captured -----//
 //
@@ -1256,7 +1256,7 @@ const char *lightning_destroyed_firm_near_town[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been destroyed by lightning."),
 	N_("Your War Factory near %s has been destroyed by lightning."),
 	N_("Your Harbor near %s has been destroyed by lightning."),
-	("Your Fryhtan Lair near %s has been destroyed by lightning."),
+	N_("Your Fryhtan Lair near %s has been destroyed by lightning."),
 };
 const char *lightning_damaged_firm_near_town[MAX_FIRM_TYPE] =
 {
@@ -1270,7 +1270,7 @@ const char *lightning_damaged_firm_near_town[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has been struck by lightning."),
 	N_("Your War Factory near %s has been struck by lightning."),
 	N_("Your Harbor near %s has been struck by lightning."),
-	("Your Fryhtan Lair near %s has been struck by lightning."),
+	N_("Your Fryhtan Lair near %s has been struck by lightning."),
 };
 const char *lightning_destroyed_firm[MAX_FIRM_TYPE] =
 {
@@ -1284,7 +1284,7 @@ const char *lightning_destroyed_firm[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science has been destroyed by lightning."),
 	N_("Your War Factory has been destroyed by lightning."),
 	N_("Your Harbor has been destroyed by lightning."),
-	("Your Fryhtan Lair has been destroyed by lightning."),
+	N_("Your Fryhtan Lair has been destroyed by lightning."),
 };
 const char *lightning_damaged_firm[MAX_FIRM_TYPE] =
 {
@@ -1298,7 +1298,7 @@ const char *lightning_damaged_firm[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science has been struck by lightning."),
 	N_("Your War Factory has been struck by lightning."),
 	N_("Your Harbor has been struck by lightning."),
-	("Your Fryhtan Lair has been struck by lightning."),
+	N_("Your Fryhtan Lair has been struck by lightning."),
 };
 //------ Begin of function News::lightning_damage -----//
 //
@@ -1595,7 +1595,7 @@ const char *firm_worn_out_near_town_msg[MAX_FIRM_TYPE] =
 	N_("Your Tower of Science near %s has fallen into disrepair due to the lack of maintenance funds."),
 	N_("Your War Factory near %s has fallen into disrepair due to the lack of maintenance funds."),
 	N_("Your Harbor near %s has fallen into disrepair due to the lack of maintenance funds."),
-	("Your Fryhtan Lair near %s has fallen into disrepair due to the lack of maintenance funds."),
+	N_("Your Fryhtan Lair near %s has fallen into disrepair due to the lack of maintenance funds."),
 
 };
 //------ Begin of function News::firm_worn_out -----//

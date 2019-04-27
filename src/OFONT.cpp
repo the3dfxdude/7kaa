@@ -81,8 +81,7 @@ struct FontInfo	// info for each character
 //#ifdef GERMAN
 //#define GERMAN_CHAR_COUNT  	7
 
-//	their DOS ascii characters:			 ü    ä    ß    ö    Ä    Ü    Ö
-//static short german_ascii_array[]  = { 252, 228, 223, 246, 196, 220, 214 };
+//	their DOS ascii characters:			 ?   ?   ?   ?   ?   ?   ?//static short german_ascii_array[]  = { 252, 228, 223, 246, 196, 220, 214 };
 //static short german_bmp_id_array[] = { 121, 100,  95, 116, 128, 151, 145 };
 //#endif
 

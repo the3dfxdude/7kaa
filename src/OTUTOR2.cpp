@@ -48,22 +48,28 @@
 static void disp_scroll_bar_func(SlideVBar *scroll, int);
 
 
-enum { TUTOR_MENU_X1 = 0,
-		 TUTOR_MENU_Y1 = 0,
-		 TUTOR_MENU_WIDTH = VGA_WIDTH,
-		 TUTOR_MENU_HEIGHT = VGA_HEIGHT };
+// enum { TUTOR2_MENU_X1 = 0,
+// 		 TUTOR2_MENU_Y1 = 0,
+// 		 TUTOR2_MENU_WIDTH = VGA_WIDTH,
+// 		 TUTOR2_MENU_HEIGHT = VGA_HEIGHT };
 
-enum { SCROLL_X1 = 757,
-		 SCROLL_Y1 = 309,
-		 SCROLL_X2 = 770,
-		 SCROLL_Y2 = 492 };
+#define TUTOR2_MENU_X1 ((VGA_WIDTH>>1)-400)
+#define TUTOR2_MENU_Y1 ((VGA_HEIGHT>>1)-300)
+#define TUTOR2_MENU_WIDTH 800
+#define TUTOR2_MENU_HEIGHT 600
 
-enum { BROWSE_X1 = 30,
-		 BROWSE_Y1 = 292,
-		 BROWSE_REC_WIDTH  = 725,
-		 BROWSE_REC_HEIGHT = 44,
-		 BROWSE_X2 = BROWSE_X1 + BROWSE_REC_WIDTH - 1,
-		 MAX_BROWSE_DISP_REC = 5 };
+
+enum {   T2_SCROLL_X1 = 757,
+		 T2_SCROLL_Y1 = 309,
+		 T2_SCROLL_X2 = 770,
+		 T2_SCROLL_Y2 = 492 };
+
+enum {	T2_BROWSE_X1 = 30,
+		 T2_BROWSE_Y1 = 292,
+		 T2_BROWSE_REC_WIDTH  = 725,
+		 T2_BROWSE_REC_HEIGHT = 44,
+ 		 T2_BROWSE_X2 = T2_BROWSE_X1 + T2_BROWSE_REC_WIDTH - 1,
+		 T2_MAX_BROWSE_DISP_REC = 5 };
 
 enum { TEXT_AREA_X1 = 40,
 		 TEXT_AREA_Y1 = 198,
@@ -75,6 +81,30 @@ enum { TEXT_AREA_X1 = 40,
 
 enum { TEXT_OFFSET_X = 11,
 		 TEXT_OFFSET_Y = 9 };
+
+// #define T2_SCROLL_X1 TUTOR2_MENU_X1+757
+// #define T2_SCROLL_Y1 TUTOR2_MENU_Y1+309
+// #define T2_SCROLL_X2 TUTOR2_MENU_X1+770
+// #define T2_SCROLL_Y2 TUTOR2_MENU_Y1+492
+// 
+// #define T2_BROWSE_X1 TUTOR2_MENU_X1+30
+// #define T2_BROWSE_Y1 TUTOR2_MENU_Y1+292
+// #define T2_BROWSE_REC_WIDTH TUTOR2_MENU_X1+725
+// #define T2_BROWSE_REC_HEIGHT TUTOR2_MENU_Y1+44
+// #define T2_BROWSE_X2 T2_BROWSE_X1 + T2_BROWSE_REC_WIDTH - 1
+// #define T2_MAX_BROWSE_DISP_REC 5
+// 
+// #define TEXT_AREA_X1 TUTOR2_MENU_X1+40
+// #define TEXT_AREA_Y1 TUTOR2_MENU_X1+198
+// #define TEXT_AREA_X2 TUTOR2_MENU_X1+768
+// #define TEXT_AREA_Y2 TUTOR2_MENU_X1+260
+// #define TEXT_AREA_WIDTH TEXT_AREA_X2 - TEXT_AREA_X1 + 1
+// #define TEXT_AREA_HEIGHT TEXT_AREA_Y2 - TEXT_AREA_Y1 + 1
+// 
+// 
+// #define TEXT_OFFSET_X 11
+// #define TEXT_OFFSET_Y 9
+
 
 #define TU_USE_BACKUP_SURFACE
 
@@ -99,10 +129,10 @@ int Tutor::select_tutor(int actionMode)
 	{
 		// copy or restore screen to back buffer
 		int scrnX1, scrnY1, scrnX2, scrnY2;
-		scrnX1 = TUTOR_MENU_X1;
-		scrnY1 = TUTOR_MENU_Y1;
-		scrnX2 = scrnX1 + TUTOR_MENU_WIDTH-1;
-		scrnY2 = scrnY1 + TUTOR_MENU_HEIGHT-1;
+		scrnX1 = TUTOR2_MENU_X1;
+		scrnY1 = TUTOR2_MENU_Y1;
+		scrnX2 = scrnX1 + TUTOR2_MENU_WIDTH-1;
+		scrnY2 = scrnY1 + TUTOR2_MENU_HEIGHT-1;
 
 		mouse.hide_area( scrnX1, scrnY1, scrnX2, scrnY2);
 
@@ -141,8 +171,8 @@ int Tutor::select_tutor(int actionMode)
 	music.stop();
 	// ##### end Gilbert 4/11 ########//
 
-	int menuX1 = TUTOR_MENU_X1;
-	int menuY1 = TUTOR_MENU_Y1;
+	int menuX1 = TUTOR2_MENU_X1;
+	int menuY1 = TUTOR2_MENU_Y1;
 
 	// int x=menuX1, y=menuY1+17;
 
@@ -168,27 +198,27 @@ int Tutor::select_tutor(int actionMode)
 	int retFlag = 0;
 	int refreshFlag = TUOPTION_ALL;
 
-	scrollUp.create(menuX1+SCROLL_X1,menuY1+SCROLL_Y1-17, "SV-UP-U", "SV-UP-D", 1, 0);
-	scrollDown.create(menuX1+SCROLL_X1,menuY1+SCROLL_Y2+1, "SV-DW-U", "SV-DW-D", 1, 0);
+	scrollUp.create(menuX1+T2_SCROLL_X1,menuY1+T2_SCROLL_Y1-17, "SV-UP-U", "SV-UP-D", 1, 0);
+	scrollDown.create(menuX1+T2_SCROLL_X1,menuY1+T2_SCROLL_Y2+1, "SV-DW-U", "SV-DW-D", 1, 0);
 	startButton.create(menuX1+170, menuY1+529, "START-U", "START-D",1, 0);
 	cancelButton.create(menuX1+465, menuY1+529, "CANCEL-U", "CANCEL-D", 1, 0);
 
 	SlideVBar scrollBar;
-	scrollBar.init_scroll(menuX1+SCROLL_X1, menuY1+SCROLL_Y1, menuX1+SCROLL_X2, menuY1+SCROLL_Y2,
-		MAX_BROWSE_DISP_REC, disp_scroll_bar_func);
+	scrollBar.init_scroll(menuX1+T2_SCROLL_X1, menuY1+T2_SCROLL_Y1, menuX1+T2_SCROLL_X2, menuY1+T2_SCROLL_Y2,
+		T2_MAX_BROWSE_DISP_REC, disp_scroll_bar_func);
 	scrollBar.set(minRecno, tutor_count, minRecno);
 
 	// try to centre the selected record on the browser
-//	int newBrowseTopRecno = browseRecno - MAX_BROWSE_DISP_REC/2;
+//	int newBrowseTopRecno = browseRecno - T2_MAX_BROWSE_DISP_REC/2;
 //	if( newBrowseTopRecno > scrollBar.max_view_recno() )
 //		newBrowseTopRecno = scrollBar.max_view_recno();
 //	if( newBrowseTopRecno < scrollBar.min_recno )
 ///		newBrowseTopRecno = scrollBar.min_recno;
-	scrollBar.set_view_recno(browseRecno - MAX_BROWSE_DISP_REC/2);
+	scrollBar.set_view_recno(browseRecno - T2_MAX_BROWSE_DISP_REC/2);
 
 #ifdef TU_USE_BACKUP_SURFACE
 	// create temporary surface
-	Blob browseArea[MAX_BROWSE_DISP_REC];
+	Blob browseArea[T2_MAX_BROWSE_DISP_REC];
 	Blob scrollArea;
 	Blob textArea;
 #endif
@@ -212,22 +242,22 @@ int Tutor::select_tutor(int actionMode)
 
 			if( refreshFlag & TUOPTION_PAGE )
 			{
-				mouse.hide_area(menuX1, menuY1, menuX1+TUTOR_MENU_WIDTH, menuY1+TUTOR_MENU_HEIGHT);
+				mouse.hide_area(menuX1, menuY1, menuX1+TUTOR2_MENU_WIDTH, menuY1+TUTOR2_MENU_HEIGHT);
 
 				image_interface.put_front( menuX1, menuY1, "TUTORIAL" );
 #ifdef TU_USE_BACKUP_SURFACE
 				// capture into browseArea, scrollArea, textArea
-				for( int j = 0; j < MAX_BROWSE_DISP_REC; ++j)
+				for( int j = 0; j < T2_MAX_BROWSE_DISP_REC; ++j)
 				{
-					browseArea[j].resize(2*sizeof(short) + BROWSE_REC_WIDTH*BROWSE_REC_HEIGHT);
+					browseArea[j].resize(2*sizeof(short) + T2_BROWSE_REC_WIDTH*T2_BROWSE_REC_HEIGHT);
 					vga_front.read_bitmap(
-						menuX1+BROWSE_X1, menuY1+BROWSE_Y1 + j*BROWSE_REC_HEIGHT,
-						menuX1+BROWSE_X2, menuY1+BROWSE_Y1 + j*BROWSE_REC_HEIGHT+BROWSE_REC_HEIGHT-1,
+						menuX1+T2_BROWSE_X1, menuY1+T2_BROWSE_Y1 + j*T2_BROWSE_REC_HEIGHT,
+						menuX1+T2_BROWSE_X2, menuY1+T2_BROWSE_Y1 + j*T2_BROWSE_REC_HEIGHT+T2_BROWSE_REC_HEIGHT-1,
 						browseArea[j].ptr);
 				}
 
-				scrollArea.resize(2*sizeof(short)+(SCROLL_X2-SCROLL_X1+1)*(SCROLL_Y2-SCROLL_Y1+1));
-				vga_front.read_bitmap(menuX1+SCROLL_X1,menuY1+SCROLL_Y1,menuX1+SCROLL_X2,menuY1+SCROLL_Y2, scrollArea.ptr);
+				scrollArea.resize(2*sizeof(short)+(T2_SCROLL_X2-T2_SCROLL_X1+1)*(T2_SCROLL_Y2-T2_SCROLL_Y1+1));
+				vga_front.read_bitmap(menuX1+T2_SCROLL_X1,menuY1+T2_SCROLL_Y1,menuX1+T2_SCROLL_X2,menuY1+T2_SCROLL_Y2, scrollArea.ptr);
 
 				textArea.resize(2*sizeof(short)+TEXT_AREA_WIDTH*TEXT_AREA_HEIGHT);
 				vga_front.read_bitmap(menuX1+TEXT_AREA_X1, menuY1+TEXT_AREA_Y1,
@@ -245,7 +275,7 @@ int Tutor::select_tutor(int actionMode)
 			{
 				if( browseRecno && image_tutorial.get_index(this->operator[](browseRecno)->code) )
 				{
-					image_tutorial.put_large(&vga_front, 21,19, this->operator[](browseRecno)->code);
+					image_tutorial.put_large(&vga_front, TUTOR2_MENU_X1+21, TUTOR2_MENU_Y1+19, this->operator[](browseRecno)->code);
 				}
 				else
 				{
@@ -280,7 +310,7 @@ int Tutor::select_tutor(int actionMode)
 			{
 #ifdef TU_USE_BACKUP_SURFACE
 				// copy from back buffer
-				vga_front.put_bitmap(menuX1+SCROLL_X1, menuY1+SCROLL_Y1, 
+				vga_front.put_bitmap(menuX1+T2_SCROLL_X1, menuY1+T2_SCROLL_Y1, 
 					scrollArea.ptr);
 #endif
 				// display scroll bar
@@ -292,17 +322,17 @@ int Tutor::select_tutor(int actionMode)
 				int rec, slot;
 				for( slot = 0; slot < scrollBar.view_size; ++slot)
 				{
-					int browseSlotX1 = menuX1+BROWSE_X1;
-					int browseSlotY1 = menuY1+BROWSE_Y1+slot*BROWSE_REC_HEIGHT;
-					int browseSlotX2 = menuX1+BROWSE_X2;
-					int browseSlotY2 = menuY1+BROWSE_Y1+(slot+1)*BROWSE_REC_HEIGHT-1;
+					int browseSlotX1 = menuX1+T2_BROWSE_X1;
+					int browseSlotY1 = menuY1+T2_BROWSE_Y1+slot*T2_BROWSE_REC_HEIGHT;
+					int browseSlotX2 = menuX1+T2_BROWSE_X2;
+					int browseSlotY2 = menuY1+T2_BROWSE_Y1+(slot+1)*T2_BROWSE_REC_HEIGHT-1;
 
 					rec = scrollBar.view_recno + slot;
 					if( refreshFlag & TUOPTION_BROWSE(slot) )
 					{
 #ifdef TU_USE_BACKUP_SURFACE
 						vga_front.put_bitmap(browseSlotX1, browseSlotY1,
-							browseArea[rec%MAX_BROWSE_DISP_REC].ptr);
+							browseArea[rec%T2_MAX_BROWSE_DISP_REC].ptr);
 #endif
 						if( rec >= 1 && rec <= tutor_count )
 						{
@@ -317,7 +347,7 @@ int Tutor::select_tutor(int actionMode)
 							{
 								vga_front.adjust_brightness(browseSlotX1, browseSlotY1, browseSlotX2, browseSlotY2, -2);
 
-								//vga_front.put_bitmap_trans_decompress( menuX1+BROWSE_X1, menuY1+BROWSE_Y1+slot*BROWSE_REC_HEIGHT,
+								//vga_front.put_bitmap_trans_decompress( menuX1+T2_BROWSE_X1, menuY1+T2_BROWSE_Y1+slot*T2_BROWSE_REC_HEIGHT,
 								//	image_button.read("LS-DWN"));
 							}
 						}
@@ -329,6 +359,9 @@ int Tutor::select_tutor(int actionMode)
 		}
 
 		sys.blt_virtual_buf();
+
+
+		// --------- interaction ----------//
 
 		if( scrollBar.detect() == 1)
 		{
@@ -358,13 +391,13 @@ int Tutor::select_tutor(int actionMode)
 			if( oldValue != scrollBar.set_view_recno(oldValue+1) )
 				refreshFlag |= TUOPTION_ALL_BROWSE | TUOPTION_SCROLL;
 		}
-		else if( mouse.double_click( menuX1+BROWSE_X1, menuY1+BROWSE_Y1, 
-			menuX1+BROWSE_X1+BROWSE_REC_WIDTH-1, 
-			menuY1+BROWSE_Y1+ BROWSE_REC_HEIGHT*MAX_BROWSE_DISP_REC -1) )
+		else if( mouse.double_click( menuX1+T2_BROWSE_X1, menuY1+T2_BROWSE_Y1, 
+			menuX1+T2_BROWSE_X1+T2_BROWSE_REC_WIDTH-1, 
+			menuY1+T2_BROWSE_Y1+ T2_BROWSE_REC_HEIGHT*T2_MAX_BROWSE_DISP_REC -1) )
 		{
 			// double click on game slot
 			int oldValue = browseRecno;
-			int newValue = scrollBar.view_recno + (mouse.click_y(0) - BROWSE_Y1 - menuY1) / BROWSE_REC_HEIGHT;
+			int newValue = scrollBar.view_recno + (mouse.click_y(0) - T2_BROWSE_Y1 - menuY1) / T2_BROWSE_REC_HEIGHT;
 			if( newValue <= tutor_count && newValue == oldValue)
 			{
 				browseRecno = newValue;
@@ -372,13 +405,13 @@ int Tutor::select_tutor(int actionMode)
 				break;
 			}
 		}
-		else if( mouse.single_click( menuX1+BROWSE_X1, menuY1+BROWSE_Y1, 
-			menuX1+BROWSE_X1+BROWSE_REC_WIDTH-1, 
-			menuY1+BROWSE_Y1+ BROWSE_REC_HEIGHT*MAX_BROWSE_DISP_REC -1) )
+		else if( mouse.single_click( menuX1+T2_BROWSE_X1, menuY1+T2_BROWSE_Y1, 
+			menuX1+T2_BROWSE_X1+T2_BROWSE_REC_WIDTH-1, 
+			menuY1+T2_BROWSE_Y1+ T2_BROWSE_REC_HEIGHT*T2_MAX_BROWSE_DISP_REC -1) )
 		{
 			// click on game slot
 			int oldValue = browseRecno;
-			int newValue = scrollBar.view_recno + (mouse.click_y(0) - BROWSE_Y1 - menuY1) / BROWSE_REC_HEIGHT;
+			int newValue = scrollBar.view_recno + (mouse.click_y(0) - T2_BROWSE_Y1 - menuY1) / T2_BROWSE_REC_HEIGHT;
 			// ##### begin Gilbert 31/10 ########//
 			if( newValue <= tutor_count )
 			{
@@ -387,7 +420,7 @@ int Tutor::select_tutor(int actionMode)
 					browseRecno = newValue;
 					refreshFlag |= TUOPTION_BROWSE(newValue-scrollBar.view_recno)
 						| TUOPTION_TEXT_AREA | TUOPTION_PIC_AREA;
-					if( oldValue-scrollBar.view_recno >= 0 && oldValue-scrollBar.view_recno < MAX_BROWSE_DISP_REC )
+					if( oldValue-scrollBar.view_recno >= 0 && oldValue-scrollBar.view_recno < T2_MAX_BROWSE_DISP_REC )
 						refreshFlag |= TUOPTION_BROWSE(oldValue-scrollBar.view_recno);
 				}
 			}

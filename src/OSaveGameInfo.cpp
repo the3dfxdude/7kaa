@@ -25,13 +25,18 @@
 #include <ONATION.h>
 #include <OCONFIG.h>
 #include <OINFO.h>
-#include <OGAME.h>
+
+extern SaveGameInfo current_game_info; // in AM.cpp
 
 SaveGameInfo SaveGameInfoFromCurrentGame(const char* newFileName)
 {
 	SaveGameInfo saveGameInfo;
 
-	strcpy(saveGameInfo.file_name, scenario_file_name);
+	//
+	// Save the header-internal file/game name
+	//
+	memset(saveGameInfo.game_name, 0, SaveGameInfo::MAX_FILE_PATH+1);
+	strncpy(saveGameInfo.game_name, current_game_info.game_name, sizeof(current_game_info.game_name) - 1);
 
 	Nation* playerNation = ~nation_array;
 	strncpy( saveGameInfo.player_name, playerNation->king_name(), HUMAN_NAME_LEN );

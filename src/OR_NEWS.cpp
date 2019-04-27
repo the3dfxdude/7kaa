@@ -35,11 +35,16 @@
 
 //------------- Define coordinations -----------//
 
-enum { NEWS_BROWSE_X1 = ZOOM_X1+6,
-		 NEWS_BROWSE_Y1 = ZOOM_Y1+6,
-		 NEWS_BROWSE_X2 = ZOOM_X2-6,
-		 NEWS_BROWSE_Y2 = ZOOM_Y2-25,
-	  };
+// enum { NEWS_BROWSE_X1 = ZOOM_X1+6,
+// 		 NEWS_BROWSE_Y1 = ZOOM_Y1+6,
+// 		 NEWS_BROWSE_X2 = ZOOM_X2-6,
+// 		 NEWS_BROWSE_Y2 = ZOOM_Y2-25,
+// 	  };
+
+#define NEWS_BROWSE_X1 ZOOM_X1 + 6
+#define NEWS_BROWSE_Y1 ZOOM_Y1 + 6
+#define NEWS_BROWSE_X2 ZOOM_X2 - 6
+#define NEWS_BROWSE_Y2 ZOOM_Y2 - 25
 
 //----------- Define static variables ----------//
 

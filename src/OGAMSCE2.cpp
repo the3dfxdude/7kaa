@@ -52,10 +52,14 @@ static void disp_scroll_bar_func(SlideVBar *scroll, int);
 enum CHECKBOX_STATE { UNCHECKED = 0, PART_CHECKED = 1, CHECKED = 2 };
 static void draw_checkbox(int x, int y, CHECKBOX_STATE checked);
 
-enum { TUTOR_MENU_X1 = 0,
-		 TUTOR_MENU_Y1 = 0,
-		 TUTOR_MENU_WIDTH = VGA_WIDTH,
-		 TUTOR_MENU_HEIGHT = VGA_HEIGHT };
+// enum { TUTOR_MENU_X1 = 0,
+// 		 TUTOR_MENU_Y1 = 0,
+// 		 TUTOR_MENU_WIDTH = VGA_WIDTH,
+// 		 TUTOR_MENU_HEIGHT = VGA_HEIGHT };
+#define TUTOR_MENU_X1 ((VGA_WIDTH>>1)-400)
+#define TUTOR_MENU_Y1 ((VGA_HEIGHT>>1)-300)
+#define TUTOR_MENU_WIDTH 400
+#define TUTOR_MENU_HEIGHT 300
 
 enum { SCROLL_X1 = 757,
 		 SCROLL_Y1 = 352,
@@ -94,6 +98,42 @@ enum {
 //		 NAME_FIELD_Y2 = 566,
 };
 // ####### end Gilbert 1/11 #########//
+
+
+// #define SCROLL_X1 TUTOR_MENU_X1+757
+// #define SCROLL_Y1 TUTOR_MENU_Y1+352
+// #define SCROLL_X2 TUTOR_MENU_X1+770
+// #define SCROLL_Y2 TUTOR_MENU_Y1+492
+// 
+// #define BROWSE_X1 TUTOR_MENU_X1+30
+// #define BROWSE_Y1 TUTOR_MENU_Y1+336
+// #define BROWSE_REC_WIDTH TUTOR_MENU_X1+725
+// #define BROWSE_REC_HEIGHT TUTOR_MENU_Y1+44
+// #define BROWSE_X2 BROWSE_X1 + BROWSE_REC_WIDTH - 1
+// #define MAX_BROWSE_DISP_REC 4
+// 
+// #define TEXT_AREA_X1 TUTOR_MENU_X1+43
+// #define TEXT_AREA_Y1 TUTOR_MENU_X1+198
+// #define TEXT_AREA_X2 TUTOR_MENU_X1+745
+// #define TEXT_AREA_Y2 TUTOR_MENU_X1+302
+// #define TEXT_AREA_WIDTH TEXT_AREA_X2 - TEXT_AREA_X1 + 1
+// #define TEXT_AREA_HEIGHT TEXT_AREA_Y2 - TEXT_AREA_Y1 + 1
+// 
+// #define TEXT_SCROLL_X1 SCROLL_X1
+// #define TEXT_SCROLL_Y1 TUTOR_MENU_X1+202
+// #define TEXT_SCROLL_X2 SCROLL_X2
+// #define TEXT_SCROLL_Y2 TUTOR_MENU_X1+289
+// 
+// #define TEXT_OFFSET_X 11
+// #define TEXT_OFFSET_Y 9
+// 
+// #define NAME_FIELD_X1 TUTOR_MENU_X1+180
+// #define NAME_FIELD_Y1 TUTOR_MENU_X1+551
+// #define NAME_FIELD_X2 TUTOR_MENU_X1+351
+// #define NAME_FIELD_Y2 TUTOR_MENU_X1+566
+
+
+
 
 
 #define TU_USE_BACKUP_SURFACE

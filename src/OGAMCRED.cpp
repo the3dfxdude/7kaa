@@ -46,8 +46,12 @@ static void disp_credits(int y, char** creditNameArray);
 void Game::view_credits()
 {
 	//----- display the first page ------//
+	int x = (VGA_WIDTH >> 1) - 280, y = (VGA_HEIGHT >> 1) - 184;
+	int BG_X1 = (VGA_WIDTH >> 1) - 400, BG_Y1 = (VGA_HEIGHT >> 1) - 300;
 
-	vga_util.disp_image_file("CREDITS1");
+	vga_back.bar(0, 0, VGA_WIDTH - 1, VGA_HEIGHT - 1, V_BLACK);
+
+	vga_util.disp_image_file("CREDITS1", BG_X1, BG_Y1);
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
@@ -57,7 +61,7 @@ void Game::view_credits()
 
 	//------ display the 2nd page -----//
 
-	vga_util.disp_image_file("CREDITS2");
+	vga_util.disp_image_file("CREDITS2", BG_X1, BG_Y1);
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
@@ -67,7 +71,7 @@ void Game::view_credits()
 
 	//------ display the 3rd page -----//
 
-	vga_util.disp_image_file("CREDITS3");
+	vga_util.disp_image_file("CREDITS3", BG_X1, BG_Y1);
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{
@@ -77,7 +81,7 @@ void Game::view_credits()
 
 	//------ display the 4th page -----//
 
-	vga_util.disp_image_file("CREDITS4");
+	vga_util.disp_image_file("CREDITS4", BG_X1, BG_Y1);
 
 	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
 	{

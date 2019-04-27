@@ -2386,7 +2386,7 @@ int Firm::mobilize_worker(int workerId, char remoteAction)
 
 	Worker *workerPtr = worker_array+workerId-1;
 
-	if( remoteAction <= COMMAND_REMOTE && !workerPtr->is_nation(firm_recno, nation_recno) )
+	if( remoteAction <= COMMAND_REMOTE && !workerPtr->is_nation(firm_recno, nation_recno, 1) )
 	{
 		// cannot order mobilization of foreign workers
 		return 0;

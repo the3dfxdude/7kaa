@@ -48,7 +48,7 @@ public:
 
 	char* get_ptr(const char* imageName)   { return ResourceIdx::read(imageName); }
 
-	void  put_large(VgaBuf*,int,int,char*);  // put a large image, over 64K
+	void  put_large(VgaBuf*,int,int,char*,int useStretch=0);  // put a large image, over 64K
 	void  put_large(VgaBuf*,int,int,int);
 
 	void  put_to_buf(VgaBuf* vgaBufPtr, const char* imageName);

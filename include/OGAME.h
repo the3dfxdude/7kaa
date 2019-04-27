@@ -27,6 +27,10 @@
 #include <ALL.h>
 #include <OCONFIG.h>
 
+
+
+
+
 //-------- Define game modes -----------//
 
 enum { GAME_PREGAME=1,
@@ -162,7 +166,7 @@ private:
 #pragma pack()
 
 extern Game game;
-extern char game_demo_mode, game_design_mode, scenario_file_name[FilePath::MAX_FILE_PATH+1];
+extern char game_demo_mode, game_design_mode;
 
 //-------------------------------------//
 

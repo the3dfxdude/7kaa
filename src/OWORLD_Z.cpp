@@ -64,6 +64,11 @@
 #include "gettext.h"
 
 //--------- Define static vars -----------//
+#define Lightning_bound_x1 (ZOOM_X1 + 4)
+#define Lightning_bound_y1 (ZOOM_Y1 - 4)
+#define Lightning_bound_x2 (ZOOM_X2 - 4)
+#define Lightning_bound_y2 (ZOOM_Y2 - 4)
+
 
 //static int 			init_rain = 0;					// reset on new game and load game
 static Rain 		rain;
@@ -639,7 +644,12 @@ void ZoomMatrix::draw_weather_effects()
 	//                100					 (decrease randomly)
 	//                99 - 1             (rest states)
 	// see world.process
-
+	int ww = config.zoom_height;
+	int ww2 = config.zoom_width;
+	int hh = Lightning_bound_y1;
+	int hh2 = Lightning_bound_y2;
+	int hh33 = Lightning::bound_y1;
+	int hh333 = Lightning::bound_y2;
 	unsigned long mRandom = misc.get_random_seed();
 	if( world.lightning_signal >= 105 && world.lightning_signal <= 108)
 	{
@@ -653,11 +663,16 @@ void ZoomMatrix::draw_weather_effects()
 			}
 
 			// find the starting and ending point of the lightning
-			lightning_x1 = Lightning::bound_x1 + 20 + short(mRandom % (Lightning::bound_x2-Lightning::bound_x1 - 40));
-			lightning_y1 = Lightning::bound_y1 - 50;
-			lightning_x2 = Lightning::bound_x1 + 10 + short(mRandom % (Lightning::bound_x2-Lightning::bound_x1 - 20));
-			lightning_y2 = (Lightning::bound_y1+Lightning::bound_y2) / 2 +
-				short(mRandom % ( (Lightning::bound_y2-Lightning::bound_y1) / 2));
+
+// 			lightning_x1 = Lightning::bound_x1 + 20 + short(mRandom % (Lightning::bound_x2-Lightning::bound_x1 - 40));
+// 			lightning_y1 = Lightning::bound_y1 - 50;
+// 			lightning_x2 = Lightning::bound_x1 + 10 + short(mRandom % (Lightning::bound_x2-Lightning::bound_x1 - 20));
+// 			lightning_y2 = (Lightning::bound_y1+Lightning::bound_y2) / 2 +
+// 				short(mRandom % ( (Lightning::bound_y2-Lightning::bound_y1) / 2));
+			lightning_x1 = Lightning_bound_x1 + 20 + short(mRandom % (Lightning_bound_x2 - Lightning_bound_x1 - 40));
+			lightning_y1 = Lightning_bound_y1 - 50;
+			lightning_x2 = Lightning_bound_x1 + 10 + short(mRandom % (Lightning_bound_x2 - Lightning_bound_x1 - 20));
+			lightning_y2 = (Lightning_bound_y1 + Lightning_bound_y2) / 2 + short(mRandom % ((Lightning_bound_y2 - Lightning_bound_y1) / 2));
 			init_lightning = 1;
 		}
 

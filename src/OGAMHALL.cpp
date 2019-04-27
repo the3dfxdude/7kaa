@@ -147,12 +147,14 @@ int HallOfFame::write_hall_of_fame()
 //
 void HallOfFame::disp_hall_of_fame()
 {
-	vga_util.disp_image_file("HALLFAME");
-
-	//---------- display hall of fame records ------------//
+	vga_back.bar(0, 0, VGA_WIDTH - 1, VGA_HEIGHT - 1, V_BLACK);
 
 	int i;
-	int x=120, y=116;
+	int x = (VGA_WIDTH >> 1) - 280, y = (VGA_HEIGHT >> 1) - 184;
+	int BG_X1 = (VGA_WIDTH >> 1) - 400, BG_Y1 = (VGA_HEIGHT >> 1) - 300;
+	vga_util.disp_image_file("HALLFAME", BG_X1, BG_Y1);
+
+	//---------- display hall of fame records ------------//
 
 	for( i=0 ; i<HALL_FAME_NUM ; i++, y+=76 )
 	{

@@ -46,19 +46,34 @@
 enum { GAME_MENU_WIDTH  = 350,
        GAME_MENU_HEIGHT = 400  };
 
-enum { GAME_MENU_X1 = ZOOM_X1 + ( (ZOOM_X2-ZOOM_X1+1) - GAME_MENU_WIDTH ) / 2,
-       GAME_MENU_Y1 = ZOOM_Y1 + ( (ZOOM_Y2-ZOOM_Y1+1) - GAME_MENU_HEIGHT ) / 2 };
+// enum { GAME_MENU_X1 = ZOOM_X1 + ( (ZOOM_X2-ZOOM_X1+1) - GAME_MENU_WIDTH ) / 2,
+//        GAME_MENU_Y1 = ZOOM_Y1 + ( (ZOOM_Y2-ZOOM_Y1+1) - GAME_MENU_HEIGHT ) / 2 };
+
+#define GAME_MENU_X1 ZOOM_X1 + ((ZOOM_X2 - ZOOM_X1 + 1) - GAME_MENU_WIDTH) / 2
+#define GAME_MENU_Y1 ZOOM_Y1 + ((ZOOM_Y2 - ZOOM_Y1 + 1) - GAME_MENU_HEIGHT) / 2
 
 enum { GAME_OPTION_WIDTH  = 170,
        GAME_OPTION_HEIGHT = 34   };
 
-enum { GAME_OPTION_X1 = GAME_MENU_X1+90,
-       GAME_OPTION_Y1 = GAME_MENU_Y1+93  };
+// enum { GAME_OPTION_X1 = GAME_MENU_X1+90,
+//        GAME_OPTION_Y1 = GAME_MENU_Y1+93  };
+// 
+// enum { MAP_ID_X1 = GAME_MENU_X1 + 18,
+//        MAP_ID_Y1 = GAME_MENU_Y1 + 362,
+//        MAP_ID_X2 = GAME_MENU_X1 + 330,
+//        MAP_ID_Y2 = GAME_MENU_Y1 + 382 };
 
-enum { MAP_ID_X1 = GAME_MENU_X1 + 18,
-       MAP_ID_Y1 = GAME_MENU_Y1 + 362,
-       MAP_ID_X2 = GAME_MENU_X1 + 330,
-       MAP_ID_Y2 = GAME_MENU_Y1 + 382 };
+
+#define GAME_OPTION_X1 GAME_MENU_X1 + 90
+#define GAME_OPTION_Y1 GAME_MENU_Y1 + 93
+
+#define MAP_ID_X1 GAME_MENU_X1 + 18
+#define MAP_ID_Y1 GAME_MENU_Y1 + 362
+#define MAP_ID_X2 GAME_MENU_X1 + 330
+#define MAP_ID_Y2 GAME_MENU_Y1 + 382
+
+
+
 
 unsigned InGameMenu::menu_hot_key[GAME_OPTION_COUNT] = {'o','s','l', 0,0,0,0,KEY_ESC };
 
@@ -225,7 +240,7 @@ int InGameMenu::detect()
       case 5:     // retire
          if( nation_array.player_recno )     // only when the player's kingdom still exists
          {
-            if( box.ask(_("Do you really want to retire?"), _("Yes"), _("No"), 175, 320) )
+            if( box.ask(_("Do you really want to retire?"), _("Yes"), _("No"), VGA_X1 + 175, VGA_Y1 + 320) )
             {
                if( remote.is_enable() )
                {
@@ -244,13 +259,13 @@ int InGameMenu::detect()
          int boxX1;
 
          #ifdef GERMAN
-            boxX1 = 125;
+            boxX1 = VGA_X1 + 125;
          #else
-            boxX1 = 115;
+            boxX1 = VGA_X1 + 115;
          #endif
 
          if( !nation_array.player_recno ||
-             box.ask( _("Do you really want to quit to the Main Menu?"), _("Yes"), _("No"), boxX1, 350 ) )
+             box.ask( _("Do you really want to quit to the Main Menu?"), _("Yes"), _("No"), boxX1, VGA_Y1 + 350 ) )
          {
             if( remote.is_enable() && nation_array.player_recno )
             {
@@ -266,7 +281,7 @@ int InGameMenu::detect()
 
       case 7:
          if( !nation_array.player_recno ||
-             box.ask( _("Do you really want to quit Seven Kingdoms?"), _("Yes"), _("No"), 178, 388 ) )
+             box.ask( _("Do you really want to quit Seven Kingdoms?"), _("Yes"), _("No"), VGA_X1 + 178, VGA_Y1 + 388 ) )
          {
             if( remote.is_enable() && nation_array.player_recno )
             {

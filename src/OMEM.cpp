@@ -90,7 +90,7 @@ char* Mem::add(unsigned memSize, const char* fileName, int fileLine)
 {
 	// ###### begin Gilbert 29/8 ######//
 	//err_when( memSize > 1000000 );		//**BUGHERE, for temporary debugging only
-	err_when( memSize > 0x800000 );
+	err_when( memSize > 0xFF0000 );
 	// ###### end Gilbert 29/8 ######//
 
    //----------- build up memory pointer table ---------//

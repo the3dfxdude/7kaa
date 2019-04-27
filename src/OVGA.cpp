@@ -29,6 +29,7 @@
 #include <dbglog.h>
 #include <version.h>
 #include <FilePath.h>
+#include <OCONFIG.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
 
@@ -86,25 +87,46 @@ int Vga::init()
       return 0;
 
    SDL_DisplayMode mode;
-   int window_width = 1024;
-   int window_height = 768;
+//    switch (config.resolution_type)
+//    {
+//    case RES_1080:
+// 	   VGA_WIDTH = 1920;
+// 	   VGA_HEIGHT = 1080;
+// 	   break;
+//    case RES_768:
+// 	   VGA_WIDTH = 1024;
+// 	   VGA_HEIGHT = 768;
+// 	   break;
+//    case RES_600:
+// 	   VGA_WIDTH = 800;
+// 	   VGA_HEIGHT = 600;
+// 	   break;
+//    default:
+// 	   break;
+//    }
+//    if (config.resolution_type == RES_1080)
+//    {
+// 	   VGA_WIDTH = 1024;
+// 	   VGA_HEIGHT = 768;
+//    }
+//    
+// 
+//    if (SDL_GetDesktopDisplayMode(0, &mode) == 0)
+//    {
+//       if (mode.h < 1024)
+//       {
+// 		  VGA_WIDTH = 800;
+// 		  VGA_HEIGHT = 600;
+//       }
+//    }
+//    else
+//    {
+//       ERR("Could not get desktop display mode: %s\n", SDL_GetError());
+//       return 0;
+//    }
 
-   if (SDL_GetDesktopDisplayMode(0, &mode) == 0)
-   {
-      if (mode.h < 1024)
-      {
-         window_width = 800;
-         window_height = 600;
-      }
-   }
-   else
-   {
-      ERR("Could not get desktop display mode: %s\n", SDL_GetError());
-      return 0;
-   }
-
-   if (SDL_CreateWindowAndRenderer(window_width,
-                                   window_height,
+   if (SDL_CreateWindowAndRenderer(VGA_WIDTH,
+								   VGA_HEIGHT,
                                    0,
                                    &window,
                                    &renderer) < 0)
@@ -842,30 +864,19 @@ void Vga::save_status_report()
       SDL_GetWindowSize(window, &w, &h);
       fprintf(file, "Geometry: %dx%d @ (%d, %d)\n", w, h, x, y);
       fprintf(file, "Pixel format: %s\n", SDL_GetPixelFormatName(SDL_GetWindowPixelFormat(window)));
-      fprintf(file, "Full screen: %s\n", is_full_screen() ? "yes" : "no");
       fprintf(file, "Input grabbed: %s\n\n", SDL_GetWindowGrab(window) ? "yes" : "no");
       if( r )
       {
          SDL_RendererInfo info;
-         float xscale, yscale;
-         SDL_Rect rect;
-
          SDL_GetRendererInfo(r, &info);
-         SDL_RenderGetScale(renderer, &xscale, &yscale);
-         SDL_RenderGetViewport(renderer, &rect);
-         SDL_RenderGetLogicalSize(renderer, &w, &h);
-
          fprintf(file, "-- Current renderer: %s --\n", info.name);
-         fprintf(file, "Viewport: x=%d,y=%d,w=%d,h=%d\n", rect.x, rect.y, rect.w, rect.h);
-         fprintf(file, "Scale: xscale=%f,yscale=%f\n", xscale, yscale);
-         fprintf(file, "Logical size: w=%d, h=%d\n", w, h);
          fprintf(file, "Capabilities: %s\n", info.flags & SDL_RENDERER_ACCELERATED ? "hardware accelerated" : "software fallback");
          fprintf(file, "V-sync: %s\n", info.flags & SDL_RENDERER_PRESENTVSYNC ? "on" : "off");
          fprintf(file, "Rendering to texture supported: %s\n", info.flags & SDL_RENDERER_TARGETTEXTURE ? "yes" : "no");
          if( info.max_texture_width || info.max_texture_height )
             fprintf(file, "Maximum texture size: %dx%d\n", info.max_texture_width, info.max_texture_height);
          fprintf(file, "Pixel formats:\n");
-         for( unsigned i=0; i<info.num_texture_formats; i++ )
+         for( i=0; i<info.num_texture_formats; i++ )
             fprintf(file, "\t%s\n", SDL_GetPixelFormatName(info.texture_formats[i]));
       }
    }
@@ -913,7 +924,7 @@ void Vga::save_status_report()
       if( info.max_texture_width || info.max_texture_height )
          fprintf(file, "Maximum texture size: %dx%d\n", info.max_texture_width, info.max_texture_height);
       fprintf(file, "Pixel formats:\n");
-      for( unsigned j=0; j<info.num_texture_formats; j++ )
+      for( int j=0; j<info.num_texture_formats; j++ )
          fprintf(file, "\t%s\n", SDL_GetPixelFormatName(info.texture_formats[j]));
       fprintf(file, "\n");
    }

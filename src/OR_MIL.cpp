@@ -37,17 +37,27 @@
 
 //------------- Define coordinations -----------//
 
-enum { TROOP_BROWSE_X1 = ZOOM_X1+6,
-		 TROOP_BROWSE_Y1 = ZOOM_Y1+6,
-		 TROOP_BROWSE_X2 = ZOOM_X2-6,
-		 TROOP_BROWSE_Y2 = TROOP_BROWSE_Y1+240
-	  };
+// enum { TROOP_BROWSE_X1 = ZOOM_X1+6,
+// 		 TROOP_BROWSE_Y1 = ZOOM_Y1+6,
+// 		 TROOP_BROWSE_X2 = ZOOM_X2-6,
+// 		 TROOP_BROWSE_Y2 = TROOP_BROWSE_Y1+240
+// 	  };
+// 
+// enum { UNIT_BROWSE_X1 = ZOOM_X1+6,
+// 		 UNIT_BROWSE_Y1 = TROOP_BROWSE_Y2+6,
+// 		 UNIT_BROWSE_X2 = ZOOM_X2-6,
+// 		 UNIT_BROWSE_Y2 = ZOOM_Y2-6,
+// 	  };
 
-enum { UNIT_BROWSE_X1 = ZOOM_X1+6,
-		 UNIT_BROWSE_Y1 = TROOP_BROWSE_Y2+6,
-		 UNIT_BROWSE_X2 = ZOOM_X2-6,
-		 UNIT_BROWSE_Y2 = ZOOM_Y2-6,
-	  };
+#define TROOP_BROWSE_X1 ZOOM_X1 + 6
+#define TROOP_BROWSE_Y1 ZOOM_Y1 + 6
+#define TROOP_BROWSE_X2 ZOOM_X2 - 6
+#define TROOP_BROWSE_Y2 TROOP_BROWSE_Y1 + 240
+
+#define UNIT_BROWSE_X1 ZOOM_X1 + 6
+#define UNIT_BROWSE_Y1 TROOP_BROWSE_Y2 + 6
+#define UNIT_BROWSE_X2 ZOOM_X2 - 6
+#define UNIT_BROWSE_Y2 ZOOM_Y2 - 6
 
 //----------- Define static variables ----------//
 
