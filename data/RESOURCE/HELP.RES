@@ -270,8 +270,8 @@ Structure repair icon
 This icon shows that there is a construction worker stationed in this structure. Click or Right-Click on this to mobilize the construction worker.
 ~
 REPLYDIP
-Reply to diplomatic message
-Click on this colored box to reply this diplomatic message.
+Zoom to activity
+Click on this box to reply to the message or to see the location of the event.
 ~
 NEWSLOG
 News Log
