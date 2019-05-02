@@ -802,6 +802,34 @@ void News::monster_firm_destroyed()
 //------- End of function News::monster_firm_destroyed -----//
 
 
+const char *you_scroll_acquired_msg[] =
+{
+	// TRANSLATORS: You have acquired the <Race> Scroll of Power.
+	N_("You have acquired the Norman Scroll of Power."),
+	N_("You have acquired the Mayan Scroll of Power."),
+	N_("You have acquired the Greek Scroll of Power."),
+	N_("You have acquired the Viking Scroll of Power."),
+	N_("You have acquired the Persian Scroll of Power."),
+	N_("You have acquired the Chinese Scroll of Power."),
+	N_("You have acquired the Japanese Scroll of Power."),
+	N_("You have acquired the Egyptian Scroll of Power."),
+	N_("You have acquired the Mughul Scroll of Power."),
+	N_("You have acquired the Zulu Scroll of Power."),
+};
+const char *kingdom_scroll_acquired_msg[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> has acquired the <Race> Scroll of Power.
+	N_("%s's Kingdom%s has acquired the Norman Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Mayan Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Greek Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Viking Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Persian Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Chinese Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Japanese Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Egyptian Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Mughul Scroll of Power."),
+	N_("%s's Kingdom%s has acquired the Zulu Scroll of Power."),
+};
 //------ Begin of function News::scroll_acquired -----//
 //
 // nation_name1() - the nation that has acquired the scroll.
@@ -819,13 +847,11 @@ void News::scroll_acquired()
 
 	if( nation_array.player_recno && nation_name_id1 == (~nation_array)->nation_name_id )
 	{
-		// TRANSLATORS: You have acquired the <Race> Scroll of Power.
-		snprintf(str, MAX_STR_LEN+1, _("You have acquired the %s Scroll of Power."), _(race_res[short_para1]->adjective));
+		str = you_scroll_acquired_msg[short_para1-1];
 	}
 	else
 	{
-		// TRANSLATORS: <King>'s Kingdom<Color> has acquired the <Race> Scroll of Power.
-		snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s has acquired the %s Scroll of Power."), king_name1(), nation_color_str1(), _(race_res[short_para1]->adjective));
+		snprintf(str, MAX_STR_LEN+1, kingdom_scroll_acquired_msg[short_para1-1], king_name1(), nation_color_str1());
 	}
 }
 //------- End of function News::scroll_acquired -----//
