@@ -52,16 +52,20 @@
 
 const char* NationRelation::relation_status_str_array[5] =
 {
-	// TRANSLATORS: Part of "Duration of War Status"
 	N_("War"),
-	// TRANSLATORS: Part of "Duration of Tense Status"
 	N_("Tense"),
-	// TRANSLATORS: Part of "Duration of Neutral Status"
 	N_("Neutral"),
-	// TRANSLATORS: Part of "Duration of Friendly Status"
 	N_("Friendly"),
-	// TRANSLATORS: Part of "Duration of Alliance Status"
 	N_("Alliance")
+};
+
+const char* NationRelation::duration_of_status_str_array[5] =
+{
+	N_("Duration of War Status"),
+	N_("Duration of Tense Status"),
+	N_("Duration of Neutral Status"),
+	N_("Duration of Friendly Status"),
+	N_("Duration of Alliance Status")
 };
 
 //--------- Define static functions -------//
@@ -2352,4 +2356,13 @@ char* NationRelation::status_duration_str()
 	return str;
 }
 //------ End of function NationRelation::status_duration_str -----//
+
+
+//----- Begin of function NationRelation::duration_of_status_str -----//
+//
+const char* NationRelation::duration_of_status_str()
+{
+	return _(duration_of_status_str_array[status]);
+}
+//------ End of function NationRelation::duration_of_status_str -----//
 

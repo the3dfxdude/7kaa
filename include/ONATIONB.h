@@ -101,6 +101,7 @@ struct NationRelation			// many-to-many relationships between nations
 
 	char  status;
 	const char* status_str();
+	const char* duration_of_status_str();
 
 	int	last_change_status_date;
    char* status_duration_str();
@@ -128,6 +129,7 @@ struct NationRelation			// many-to-many relationships between nations
 	char	contact_msg_flag;										// used only in multiplayer
 
 	static const char* relation_status_str_array[5];
+	static const char* duration_of_status_str_array[5];
 };
 #pragma pack()
 
