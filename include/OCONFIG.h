@@ -40,6 +40,8 @@ enum { OPTION_VERY_EASY, OPTION_EASY, OPTION_MEDIUM, OPTION_HARD, OPTION_VERY_HA
 
 enum { OPTION_DISPLAY_MAJOR_NEWS, OPTION_DISPLAY_ALL_NEWS };
 
+enum { RES_600, RES_768, RES_1080 };
+
 //------------- Define constant -------------//
 
 enum { SMALL_STARTUP_RESOURCE  = 4000,
@@ -56,6 +58,7 @@ public:
 	void			init();
 	void			deinit();
 
+	void			init_resolution();
 	void			default_game_setting();
 	void			default_cheat_setting();
 	void			default_local_game_setting();
@@ -101,6 +104,7 @@ public:
 	short			start_up_independent_town;
 	short			start_up_raw_site;
 	char			difficulty_level;
+	char			resolution_type;
 
 	//-------- option settings  ---------//
 
@@ -231,6 +235,13 @@ public:
 	char			blacken_map;				// whether the map is blackened at the first place
 	char			explore_mask_method;		// 0 for none, 1 for masking, 2 for remapping
 	char			fog_mask_method;			// 1 for fast masking, 2 for slow remapping
+
+	//------------ map prefernce -------------//
+	int		win_width;
+	int		win_height;
+	int		zoom_width;
+	int		zoom_height;
+
 };
 #pragma pack()
 

@@ -26,7 +26,6 @@
 #include <ALL.h>		// for memcpy
 #include <IMGFUN.h>
 
-
 //----------- BEGIN OF FUNCTION IMGblt2 ------------
 //
 // Put an non-compressed bitmap on image buffer.
@@ -61,3 +60,54 @@ void IMGcall IMGblt2(char*imageBuf,int pitch,int x,int y,int bitmapWidth,int bit
 	}
 }
 //----------- END OF FUNCTION IMGblt2 ----------
+void IMGcall IMGblt3(char*imageBuf, int pitch, int height, int x, int y, int bitmapWidth, int bitmapHeight, char*bitmapBuf)
+{
+	int destline = y * pitch + x;
+	int esi = 0;		// [Alex] NOTE: bitmapBuf is actually the RAW bitmap data, ignore the comments above!!
+	int destHeight = height;
+	int destWidth = pitch;
+	float scalewidth = ((float)bitmapWidth / destWidth);
+	float scaleHeight = ((float)bitmapHeight/ destHeight);
+
+	int row = 0;
+	for (int j = 0; j < destHeight; )
+	{
+		for (int i = 0; i < destWidth; ++i)
+		{
+			int lineIdx2 = scalewidth * i;
+			unsigned char color = ((unsigned char*)bitmapBuf)[esi + lineIdx2];
+			imageBuf[destline + i] = color;
+		}
+		int newRow = j * scaleHeight;
+		if (row != newRow)
+		{
+			row = newRow;
+			esi += bitmapWidth;
+		}
+		destline += pitch;
+		j++;
+
+	}
+}
+
+// void IMGcall IMGblt3(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
+// {
+// 	int dest = (desY + srcY1) * pitch + (desX + srcX1);
+// // 	int bitmapWidth = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1] << 8);
+// 	int src = 0;	// 4 bytes are header fields (width, height)
+// 	int width = srcX2 - srcX1 + 1;
+// 	int height = srcY2 - srcY1 + 1;
+// 
+// 	for (int j = 0; j < height; ++j, dest += pitch, src += width)
+// 	{
+// 		for (int i = 0; i < width; ++i)
+// 		{
+// 			unsigned char color = ((unsigned char*)bitmapBuf)[src + i];
+// 			// 			color = 0x7F;
+// 			imageBuf[dest + i] = color;
+// 		}
+// 	}
+// 
+// }
+// 
+

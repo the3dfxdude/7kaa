@@ -19,7 +19,7 @@
  */
 
 //Filename   : OGAMMENU.CPP
-//Description: In Game Menu
+//Description: In Game Option Menu
 
 #include <KEY.h>
 #include <OVGA.h>
@@ -52,18 +52,28 @@
 enum { GAME_MENU_WIDTH  = 350,
 		 GAME_MENU_HEIGHT = 386  };
 
-enum { GAME_MENU_X1 = ZOOM_X1 + ( (ZOOM_X2-ZOOM_X1+1) - GAME_MENU_WIDTH ) / 2,
-		 GAME_MENU_Y1 = ZOOM_Y1 + ( (ZOOM_Y2-ZOOM_Y1+1) - GAME_MENU_HEIGHT ) / 2 };
+// enum { GAME_MENU_X1 = ZOOM_X1 + ( (ZOOM_X2-ZOOM_X1+1) - GAME_MENU_WIDTH ) / 2,
+// 		 GAME_MENU_Y1 = ZOOM_Y1 + ( (ZOOM_Y2-ZOOM_Y1+1) - GAME_MENU_HEIGHT ) / 2 };
+
+#define GAME_MENU_X1 ZOOM_X1 + ((ZOOM_X2 - ZOOM_X1 + 1) - GAME_MENU_WIDTH) / 2
+#define GAME_MENU_Y1 ZOOM_Y1 + ((ZOOM_Y2 - ZOOM_Y1 + 1) - GAME_MENU_HEIGHT) / 2
+
 
 enum { GAME_OPTION_WIDTH  = 170,
 		 GAME_OPTION_HEIGHT = 34   };
 
 // ####### begin Gilbert 29/10 #########//
-enum { GAME_OPTION_X1 = GAME_MENU_X1+90,
-		 GAME_OPTION_Y1 = GAME_MENU_Y1+76  };
+// enum { GAME_OPTION_X1 = GAME_MENU_X1+90,
+// 		 GAME_OPTION_Y1 = GAME_MENU_Y1+76  };
+// 
+// enum { MAP_ID_X1 = GAME_MENU_X1 + 18, 
+// 		 MAP_ID_Y1 = GAME_MENU_Y1 + 352 };
 
-enum { MAP_ID_X1 = GAME_MENU_X1 + 18, 
-		 MAP_ID_Y1 = GAME_MENU_Y1 + 352 };
+#define GAME_OPTION_X1 GAME_MENU_X1 + 90
+#define GAME_OPTION_Y1 GAME_MENU_Y1 + 76
+
+#define MAP_ID_X1 GAME_MENU_X1 + 18
+#define MAP_ID_Y1 GAME_MENU_Y1 + 352
 // ####### end Gilbert 29/10 #########//
 
 enum { GAME_OPTION_COUNT = 8 };
@@ -232,14 +242,14 @@ static int detect_game_option()
 		case 5:		// retire
 			if( nation_array.player_recno )		// only when the player's kingdom still exists
 			{
-				if( box.ask("Do you really want to retire?", "Yes", "No", 175, 320) )
+				if( box.ask("Do you really want to retire?", "Yes", "No", VGA_X1+175, VGA_Y1 + 320) )
 					game.game_end(0, 0, 0, 1);				// 1 - retire
 			}
 			break;
 
 		case 6:		// quit to main menu
 			if( !nation_array.player_recno ||
-				 box.ask( "Do you really want to quit to the Main Menu?", "Yes", "No", 115, 350 ) )
+				 box.ask( "Do you really want to quit to the Main Menu?", "Yes", "No", VGA_X1 + 115, VGA_Y1 + 350 ) )
 			{
 				if( remote.is_enable() && nation_array.player_recno )
 				{
@@ -254,7 +264,7 @@ static int detect_game_option()
 
 		case 7:
 			if( !nation_array.player_recno ||
-				 box.ask( "Do you really want to quit Seven Kingdoms?", "Yes", "No", 178, 388 ) )
+				 box.ask( "Do you really want to quit Seven Kingdoms?", "Yes", "No", VGA_X1 + 178, VGA_Y1 + 388 ) )
 			{
 				if( remote.is_enable() && nation_array.player_recno )
 				{
@@ -431,7 +441,8 @@ int Game::in_game_option_menu()
 		{
 			if( refreshFlag & IGOPTION_PAGE )
 			{
-				image_interface.put_to_buf( &vga_back, "OPTIONS");
+// 				image_interface.put_to_buf( &vga_back, "OPTIONS");
+				image_interface.put_large(&vga_back, 0, 0, "OPTIONS");
 				vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,0);
 
 				startButton.paint();

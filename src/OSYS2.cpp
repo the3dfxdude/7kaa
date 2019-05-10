@@ -383,7 +383,7 @@ void Sys::disp_button()
 {
 	vga.use_back();
 
-	button_menu.paint( 720, 6, "MENU-U", "MENU-D" );
+	button_menu.paint( VGA_WIDTH - 80, 6, "MENU-U", "MENU-D" );
 	button_menu.set_help_code( "GAMEMENU" );
 
 	vga.use_front();
@@ -537,10 +537,19 @@ void Sys::disp_frame()
 
 		if( need_redraw_flag )
 		{
+			// info panel
 			info.disp_panel();
+
+			// mini/main map
 			world.paint();
+
+			//option/mini map mode
 			disp_button();
+
+			//update world
 			world.refresh();
+
+			//units?
 			disp_view();
 
 			if( in_game_menu.is_active() )
@@ -685,7 +694,7 @@ void Sys::update_view()
 		{
 			vga.use_back();
 /*
-			char* germanStr = "d ü    ä    ß    ö    Ä    Ü    Ö";
+			char* germanStr = "d ?   ?   ?   ?   ?   ?   ?;
 
 			vga_back.bar( ZOOM_X1, ZOOM_Y1, ZOOM_X1+300, ZOOM_Y1+150, VGA_LIGHT_GREEN );
 

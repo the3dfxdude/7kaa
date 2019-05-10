@@ -37,11 +37,16 @@
 
 //------- define screen coordinations -------//
 
-enum { NEWS_HEIGHT = 20,
-		 NEWS_X1 = ZOOM_X1+8,
-		 NEWS_X2 = ZOOM_X2-16,
-		 NEWS_Y2 = ZOOM_Y2-5,
-	  };
+// enum { NEWS_HEIGHT = 20,
+// 		 NEWS_X1 = ZOOM_X1+8,
+// 		 NEWS_X2 = ZOOM_X2-16,
+// 		 NEWS_Y2 = ZOOM_Y2-5,
+// 	  };
+
+#define NEWS_HEIGHT 20
+#define NEWS_X1 ZOOM_X1 + 8
+#define NEWS_X2 ZOOM_X2 - 16
+#define NEWS_Y2 ZOOM_Y2 - 5
 
 //--------- define static vars --------------//
 

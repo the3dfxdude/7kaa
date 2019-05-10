@@ -188,12 +188,13 @@ void ImageRes::put_join(int x, int y, const char* imageName)
 // <int>	    x,y       = the location of the image
 // <char*>   imageName = name of the image
 //
-void ImageRes::put_large(VgaBuf* vgaBuf, int x, int y, char* imageName)
+void ImageRes::put_large(VgaBuf* vgaBuf, int x, int y, char* imageName, int useStretch)
 {
 	int dataSize;
 
-	vgaBuf->put_large_bitmap( x, y, ResourceIdx::get_file(imageName, dataSize) );
-}
+	vgaBuf->put_large_bitmap( x, y, ResourceIdx::get_file(imageName, dataSize), useStretch);
+// 	vgaBuf->put_bitmap2(0, 0, 800, 600, ResourceIdx::get_file(imageName, dataSize));
+}	
 //---------- End of function ImageRes::put_large --------//
 
 
@@ -228,6 +229,7 @@ void ImageRes::put_large(VgaBuf* vgaBuf, int x, int y, int bitmapId)
 void ImageRes::put_to_buf(VgaBuf* vgaBufPtr, const char* imageName)
 {
 	set_user_buf( vgaBufPtr->buf_ptr(), vgaBufPtr->buf_size(), 4 );	// 4-by pass the width and height info of the source data, only read the bitmap into the buffer
+// 	set_user_buf(vgaBufPtr->buf_ptr(), 800*600, 4);
 	read(imageName);
 	reset_user_buf();
 

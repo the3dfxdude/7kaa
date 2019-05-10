@@ -53,13 +53,24 @@ struct OptionInfo
 
 // -------- define constant ----------//
 
-enum { SWORD1_X = 258, SWORD1_Y = 194 };
+// enum { SWORD1_X = (VGA_WIDTH >> 1) - 140, SWORD1_Y = (int)(VGA_HEIGHT * 0.3f) };
+
+#define SWORD1_X ((VGA_WIDTH >> 1) - 142)
+#define SWORD1_Y ((VGA_HEIGHT >> 1) - 106)
+
+// #define SWORD1_X 258
+// #define SWORD1_Y 194
 
 //---------- Begin of function Game::main_menu ----------//
 //
 void Game::main_menu()
 {
 	enum { MAIN_OPTION_COUNT = 6 };
+
+	int s1x1 = (VGA_WIDTH >> 1) - 142;
+	int s1y1 = (VGA_HEIGHT >> 1) - 106;
+	int s1x = SWORD1_X;
+	int s1y = SWORD1_Y;
 
 	static OptionInfo main_option_array[MAIN_OPTION_COUNT] =
 	{
@@ -105,19 +116,28 @@ void Game::main_menu()
 	char *darkBitmap = NULL;
 	int pointingOption = -1;
 
+	
+
 	while(1)
 	{
 		game_mode = GAME_PREGAME;
 
 		//------- Display game title and paint menu box --------//
+		// vga_back.bar(0, 0, VGA_WIDTH - 1, VGA_HEIGHT - 1, V_BLACK);
 
 		if( refreshFlag )
 		{
 			mouse_cursor.set_icon(CURSOR_NORMAL);
 
-			image_interface.put_to_buf( &vga_back, "M_MAIN" );
+			int resSize;
+			File *resFile;
+			resFile = image_interface.get_file("M_MAIN", resSize);
+
+//  			image_interface.put_to_buf( &vga_back, "M_MAIN" );
+			image_interface.put_large(&vga_back, 0, 0, "M_MAIN",1);
 
 			vga_util.blt_buf(0,0,VGA_WIDTH-1,VGA_HEIGHT-1);	// blt the main menu screen from the back buffer to the front buffer
+// 			vga_util.blt_buf(0, 0, 800 - 1, 600 - 1);
 
 			disp_version();
 
@@ -152,7 +172,7 @@ void Game::main_menu()
 				{
 					mouse.hide_area(main_option_array[i].x1, main_option_array[i].y1,
 						main_option_array[i].x2, main_option_array[i].y2);
-					vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, 
+					vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y,
 						main_option_flag[i] ? menuBitmap : darkBitmap,
 						main_option_array[i].x1 - SWORD1_X, main_option_array[i].y1 - SWORD1_Y,
 						main_option_array[i].x2 - SWORD1_X, main_option_array[i].y2 - SWORD1_Y);
@@ -462,7 +482,8 @@ void Game::single_player_menu()
 
 		if( refreshFlag )
 		{
-			image_interface.put_to_buf( &vga_back, "M_MAIN" );
+// 			image_interface.put_to_buf( &vga_back, "M_MAIN" );
+			image_interface.put_large(&vga_back, 0, 0, "M_MAIN", 1);
 
 			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 
@@ -718,7 +739,8 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 
 		if( refreshFlag )
 		{
-			image_interface.put_to_buf( &vga_back, "M_MAIN" );
+// 			image_interface.put_to_buf( &vga_back, "M_MAIN" );
+			image_interface.put_large(&vga_back, 0, 0, "M_MAIN", 1);
 
 			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 

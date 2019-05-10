@@ -131,16 +131,21 @@ public:
 
 	void		put_bitmap_trans(int x,int y,char* bitmapPtr);
 	void		put_bitmap_remap(int desX, int desY, char* bitmapPtr, char *colorTable);
-	void 		put_large_bitmap(int x1, int y1, File* filePtr);
+	void 		put_large_bitmap(int x1, int y1, File* filePtr, int useStretch=0);
 	void		put_bitmap(int x,int y,char* bitmapPtr);
 
 	//---------- assembly bitmap manipulation functions ----------//
 
 	void		fast_put_bitmap(int x, int y, char* bitmapPtr)
 				{ IMGblt(buf_ptr(), buf_pitch(), x, y, bitmapPtr); }
-
+	void		put_bitmap2_s(int x, int y, int bitmapWidth, int bitmapHeight, char* bitmapPtr)
+				{
+					IMGblt3(buf_ptr(), buf_pitch(), buf_height(), x, y, bitmapWidth, bitmapHeight, bitmapPtr);
+				}
 	void		put_bitmap2(int x,int y,int bitmapWidth, int bitmapHeight, char* bitmapPtr)
-				{ IMGblt2(buf_ptr(), buf_pitch(), x, y, bitmapWidth, bitmapHeight, bitmapPtr); }
+				{ 
+					IMGblt2(buf_ptr(), buf_pitch(), x, y, bitmapWidth, bitmapHeight, bitmapPtr); 
+				}
 
 	void		put_bitmap_32x32(int x,int y,char* bitmapPtr)
 				{ IMGblt32x32(buf_ptr(), buf_pitch(), x, y, bitmapPtr); }

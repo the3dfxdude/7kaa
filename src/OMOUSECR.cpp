@@ -29,6 +29,7 @@
 #include <OMOUSE.h>
 #include <OMOUSECR.h>
 
+
 //---------- define constant ------------//
 
 #define CURSOR_DBF  	DIR_RES"CURSOR.RES"
@@ -56,10 +57,22 @@ MouseCursor::MouseCursor()
 	frame_x1 = frame_y1 = frame_x2 = frame_y2 = 0;
 	frame_origin_x = frame_origin_y = 0;
 	frame_border_x1 = frame_border_y1 = frame_border_x2 = frame_border_y2 = 0;
+
+// 	frame_top_save_scr = new char[VGA_WIDTH + 4];
+// 	frame_bottom_save_scr = new char[VGA_WIDTH + 4];
+// 	frame_left_save_scr = new char[VGA_HEIGHT + 4];
+// 	frame_right_save_scr = new char[VGA_HEIGHT + 4];
+
 	memset(frame_top_save_scr, 0, VGA_WIDTH + 4);
 	memset(frame_bottom_save_scr, 0, VGA_WIDTH + 4);
 	memset(frame_left_save_scr, 0, VGA_HEIGHT + 4);
 	memset(frame_right_save_scr, 0, VGA_HEIGHT + 4);
+
+
+
+
+
+
 	cursor_count = 0;
 	cursor_info_array = NULL;
 }
@@ -122,6 +135,28 @@ void MouseCursor::deinit()
 			mem_del( merge_buf );
 			merge_buf = NULL;
 		}
+
+// 		if (frame_top_save_scr)		// buffer for merging save screen from the front and back buffers
+// 		{
+// 			mem_del(frame_top_save_scr);
+// 			frame_top_save_scr = NULL;
+// 		}
+// 		if (frame_bottom_save_scr)		// buffer for merging save screen from the front and back buffers
+// 		{
+// 			mem_del(frame_bottom_save_scr);
+// 			frame_bottom_save_scr = NULL;
+// 		}
+// 		if (frame_left_save_scr)		// buffer for merging save screen from the front and back buffers
+// 		{
+// 			mem_del(frame_left_save_scr);
+// 			frame_left_save_scr = NULL;
+// 		}
+// 		if (frame_right_save_scr)		// buffer for merging save screen from the front and back buffers
+// 		{
+// 			mem_del(frame_right_save_scr);
+// 			frame_right_save_scr = NULL;
+// 		}
+
 
 		init_flag = 0;
 		icon_ptr  = NULL;
@@ -350,6 +385,10 @@ void MouseCursor::process_frame(int curX, int curY)
 		vga_front.fast_put_bitmap( frame_x1, frame_y2, frame_bottom_save_scr );
 		vga_front.fast_put_bitmap( frame_x1, frame_y1, frame_left_save_scr   );
 		vga_front.fast_put_bitmap( frame_x2, frame_y1, frame_right_save_scr  );
+// 		vga_front.put_bitmap(frame_x1, frame_y1, frame_top_save_scr);
+// 		vga_front.put_bitmap(frame_x1, frame_y2, frame_bottom_save_scr);
+// 		vga_front.put_bitmap(frame_x1, frame_y1, frame_left_save_scr);
+// 		vga_front.put_bitmap(frame_x2, frame_y1, frame_right_save_scr);
 	}
 
 	//---------- update frame position ----------//

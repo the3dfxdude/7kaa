@@ -86,6 +86,11 @@ unsigned Lightning::rand_seed()
 void Lightning::init(double fromX, double fromY, double toX, double toY,
 							char energy)
 {
+	bound_x1 = ZOOM_X1 + 4;
+	bound_y1 = ZOOM_Y1 - 4;
+	bound_x2 = ZOOM_X2 - 4;
+	bound_y2 = ZOOM_Y2 - 4;
+
 	x = fromX;
 	y = fromY;
 	destx = toX;

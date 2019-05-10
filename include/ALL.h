@@ -31,7 +31,9 @@
 #include <OFILE.h>
 #include <GAMEDEF.h>
 #include <OERROR.h>
+#include <OCONFIG.h>
 
+// #define ENABLE_NLS 1
 
 //-------- Define macro functions -------//
 

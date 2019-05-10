@@ -37,23 +37,38 @@
 
 //------------- Define coordinations -----------//
 
-enum { TECH_BROWSE_X1 = ZOOM_X1+6,
-		 TECH_BROWSE_Y1 = ZOOM_Y1+6,
-		 TECH_BROWSE_X2 = ZOOM_X2-6,
-		 TECH_BROWSE_Y2 = TECH_BROWSE_Y1+220
-	  };
+// enum { TECH_BROWSE_X1 = ZOOM_X1+6,
+// 		 TECH_BROWSE_Y1 = ZOOM_Y1+6,
+// 		 TECH_BROWSE_X2 = ZOOM_X2-6,
+// 		 TECH_BROWSE_Y2 = TECH_BROWSE_Y1+220
+// 	  };
+// 
+// enum { SCROLL_X1 = ZOOM_X1+6,
+// 		 SCROLL_Y1 = TECH_BROWSE_Y2+6,
+// 		 SCROLL_X2 = ZOOM_X2-6,
+// 		 SCROLL_Y2 = SCROLL_Y1+80
+// 	  };
+// 
+// enum { GOD_BROWSE_X1 = ZOOM_X1+6,
+// 		 GOD_BROWSE_Y1 = SCROLL_Y2+6,
+// 		 GOD_BROWSE_X2 = ZOOM_X2-6,
+// 		 GOD_BROWSE_Y2 = ZOOM_Y2-6
+// 	  };
 
-enum { SCROLL_X1 = ZOOM_X1+6,
-		 SCROLL_Y1 = TECH_BROWSE_Y2+6,
-		 SCROLL_X2 = ZOOM_X2-6,
-		 SCROLL_Y2 = SCROLL_Y1+80
-	  };
+#define TECH_BROWSE_X1 ZOOM_X1 + 6
+#define TECH_BROWSE_Y1 ZOOM_Y1 + 6
+#define TECH_BROWSE_X2 ZOOM_X2 - 6
+#define TECH_BROWSE_Y2 TECH_BROWSE_Y1 + 220
 
-enum { GOD_BROWSE_X1 = ZOOM_X1+6,
-		 GOD_BROWSE_Y1 = SCROLL_Y2+6,
-		 GOD_BROWSE_X2 = ZOOM_X2-6,
-		 GOD_BROWSE_Y2 = ZOOM_Y2-6
-	  };
+#define SCROLL_X1 ZOOM_X1 + 6
+#define SCROLL_Y1 TECH_BROWSE_Y2 + 6
+#define SCROLL_X2 ZOOM_X2 - 6
+#define SCROLL_Y2 SCROLL_Y1 + 80
+
+#define GOD_BROWSE_X1 ZOOM_X1 + 6
+#define GOD_BROWSE_Y1 SCROLL_Y2 + 6
+#define GOD_BROWSE_X2 ZOOM_X2 - 6
+#define GOD_BROWSE_Y2 ZOOM_Y2 - 6
 
 //----------- Define static variables ----------//
 

@@ -23,6 +23,7 @@
 
 #include <ALL.h>
 #include <version.h>
+#include <INIReader.h>
 
 #ifdef ENABLE_INTRO_VIDEO
 #include <initguid.h>
@@ -230,8 +231,13 @@ GameSet           game_set;         // no constructor
 Battle            battle;
 Power             power;
 World             world;
-char              scenario_file_name[FilePath::MAX_FILE_PATH+1];
 SaveGameArray     save_game_array;
+//
+// For regular game files, copy the SaveGameInfo over after calling
+// load_game (see SaveGameArray::process_action). For scenarios or
+// tutor files, just pass this in to load_scenario().
+//
+SaveGameInfo	  current_game_info;
 nsPlayerStats::PlayerStats playerStats;
 HallOfFame        hall_of_fame;
 // ###### begin Gilbert 23/10 #######//
@@ -301,6 +307,9 @@ int main(int argc, char **argv)
 	locale_res.init("");
 	sys.set_config_dir();
 
+	//init resolution here since we can not save it to config for now
+	config.init_resolution();
+
 	//try to read from CONFIG.DAT, moved to AM.CPP
 
 	if( !config.load("CONFIG.DAT") )
@@ -308,6 +317,7 @@ int main(int argc, char **argv)
 		new_config_dat_flag = 1;
 		config.init();
 	}
+
 
 	//----- read command line arguments -----//
 

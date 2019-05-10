@@ -31,6 +31,10 @@
 
 enum { HALL_FAME_NUM = 6 };     // No. of Hall of Fame entries
 
+
+
+
+
 #pragma pack(1)
 struct HallFameEntry         // Hall of Fame
 {

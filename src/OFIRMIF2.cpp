@@ -45,17 +45,27 @@
 
 //------------- Define coordinations -----------//
 
-enum { SPY_BROWSE_X1 = INFO_X1,
-		 SPY_BROWSE_Y1 = INFO_Y1+75,
-		 SPY_BROWSE_X2 = INFO_X2,
-		 SPY_BROWSE_Y2 = SPY_BROWSE_Y1+130,
-	  };
+// enum { SPY_BROWSE_X1 = INFO_X1,
+// 		 SPY_BROWSE_Y1 = INFO_Y1+75,
+// 		 SPY_BROWSE_X2 = INFO_X2,
+// 		 SPY_BROWSE_Y2 = SPY_BROWSE_Y1+130,
+// 	  };
+// 
+// enum { BUTTON_X1 = INFO_X1,
+// 		 BUTTON_Y1 = SPY_BROWSE_Y2+28,
+// 		 BUTTON_X2 = INFO_X2,
+// 		 BUTTON_Y2 = BUTTON_Y1+50,
+// 	  };
 
-enum { BUTTON_X1 = INFO_X1,
-		 BUTTON_Y1 = SPY_BROWSE_Y2+28,
-		 BUTTON_X2 = INFO_X2,
-		 BUTTON_Y2 = BUTTON_Y1+50,
-	  };
+#define SPY_BROWSE_X1 INFO_X1
+#define SPY_BROWSE_Y1 INFO_Y1 + 75
+#define SPY_BROWSE_X2 INFO_X2
+#define SPY_BROWSE_Y2 SPY_BROWSE_Y1 + 130
+
+#define BUTTON_X1 INFO_X1
+#define BUTTON_Y1 SPY_BROWSE_Y2 + 28
+#define BUTTON_X2 INFO_X2
+#define BUTTON_Y2 BUTTON_Y1 + 50
 
 //----------- Define static variables ----------//
 

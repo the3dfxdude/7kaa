@@ -37,6 +37,7 @@ extern "C"
 
 	void IMGcall IMGblt(char*,int pitch,int,int,char*);
 	void IMGcall IMGblt2(char*,int pitch,int,int,int,int,char*);
+	void IMGcall IMGblt3(char*, int pitch, int height, int, int, int, int, char*);
 	void IMGcall IMGblt32x32(char*,int pitch,int,int,char*);
 	void IMGcall IMGbltDW(char*,int pitch,int,int,char*);
 	void IMGcall IMGbltTrans(char*,int pitch,int,int,char*);

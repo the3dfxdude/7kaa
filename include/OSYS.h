@@ -29,7 +29,7 @@
 
 //------ Define common data buffer size  ------//
 
-enum { COMMON_DATA_BUF_SIZE = 64*1024 };			// keep a 64K common buffer for all temporary memory storage like reading files temporarily into memory
+enum { COMMON_DATA_BUF_SIZE = 1024*2048 };			// keep a 64K common buffer for all temporary memory storage like reading files temporarily into memory
 
 //-------------- define constant ------------//
 
@@ -222,6 +222,7 @@ private:
 	int		is_mp_sync( int *unreadyPlayerFlag );
 	void		auto_save();
 
+	void 		blt_next_frame();
 	void		disp_frames_per_second();
 
 	void		process_key(unsigned scanCode, unsigned skeyState);

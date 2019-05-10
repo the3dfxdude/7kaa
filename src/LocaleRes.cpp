@@ -21,10 +21,8 @@
 //Filename    : LocaleRes.cpp
 //Description : Locale Resources
 
-#ifdef ENABLE_NLS
 #include <libintl.h>
 #include <locale.h>
-#endif
 
 #include <ALL.h>
 #include <ODB.h>
@@ -99,11 +97,13 @@ void LocaleRes::init(const char *locale)
 	if( i >= locale_count )
 	{
 		strcpy(lang, "??");
-		strcpy(codeset, "ISO-8859-1");
+		// strcpy(codeset, "ISO-8859-1");
+		strcpy(codeset, "UTF-8");
 	}
 
 	cd = iconv_open(codeset, "");
-	cd_latin = iconv_open("ISO-8859-1", "");
+	// cd_latin = iconv_open("ISO-8859-1", "");
+	cd_latin = iconv_open("UTF-8", "");
 	in_buf = mem_add(INIT_BUF_SIZE+1);
 	in_buf_size = INIT_BUF_SIZE;
 	out_buf = mem_add(INIT_BUF_SIZE+1);

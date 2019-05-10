@@ -39,7 +39,10 @@ struct SaveGameTime
 struct SaveGameInfo
 {
 	enum { MAX_FILE_PATH = 260 };
-	char     file_name[MAX_FILE_PATH+1]; // scenario file name or null if not a scenario
+	union {
+		char     file_name[MAX_FILE_PATH + 1]; // unused
+		char     game_name[MAX_FILE_PATH + 1]; // used to track a scenario's original name so we know if a saved game is from a scenario
+	};
 	char     player_name[HUMAN_NAME_LEN+1];
 
 	char     race_id;

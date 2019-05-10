@@ -34,7 +34,6 @@
 #include <dbglog.h>
 #include "gettext.h"
 #include <FilePath.h>
-#include <OGAME.h>
 
 #ifdef USE_WINDOWS
 #include <io.h>
@@ -45,6 +44,7 @@
 
 // Both in AM.cpp
 extern Misc misc;
+extern SaveGameInfo current_game_info;
 
 DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 
@@ -183,7 +183,12 @@ int SaveGameProvider::load_scenario(const char* filePath)
 {
 	SaveGameInfo saveGameInfo;
 	auto rc = load_game_from_file(filePath, /*out*/ &saveGameInfo);
-	misc.extract_file_name(scenario_file_name, filePath);
+	// Note that saveGameInfo is just thrown away here, so we're writing
+	// to the global current_game_info instead. This is necessary because
+	// the internal name field is not unique across all the original game
+	// scenario files. Since the actual file names are, we're using those
+	// to uniquely identify each game.
+	misc.extract_file_name(current_game_info.game_name, filePath);
 	return rc;
 }
 //-------- End of function SaveGameProvider::load_scenario --------//
@@ -204,6 +209,10 @@ int SaveGameProvider::load_game_from_file(const char* filePath, SaveGameInfo* /*
 	const int powerEnableFlag = power.enable_flag;
 
 	int rc = GameFile::load_game(filePath, /*out*/ saveGameInfo);
+	if(rc)
+	{
+		memcpy(&current_game_info, saveGameInfo, sizeof(SaveGameInfo));
+	}
 
 	mouse_cursor.set_frame(0);		// to fix a frame bug with loading game
 

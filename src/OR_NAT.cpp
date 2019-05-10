@@ -44,23 +44,40 @@
 
 //------------- Define coordinations -----------//
 
-enum { REPORT_BROWSE_X1 = ZOOM_X1+6,
-		 REPORT_BROWSE_Y1 = ZOOM_Y1+6,
-		 REPORT_BROWSE_X2 = ZOOM_X2-6,
-		 REPORT_BROWSE_Y2 = REPORT_BROWSE_Y1+206,
+// enum { REPORT_BROWSE_X1 = ZOOM_X1+6,
+// 		 REPORT_BROWSE_Y1 = ZOOM_Y1+6,
+// 		 REPORT_BROWSE_X2 = ZOOM_X2-6,
+// 		 REPORT_BROWSE_Y2 = REPORT_BROWSE_Y1+206,
+// 
+// 		 REPORT_BUTTON_X1 = ZOOM_X1+8,
+// 		 REPORT_BUTTON_Y1 = REPORT_BROWSE_Y2+6,
+// 		 REPORT_BUTTON_WIDTH = 135,
+// 		 REPORT_BUTTON_Y2 = REPORT_BUTTON_Y1+20,
+// 		 REPORT_BUTTON_X_SPACE = 130,
+// 
+// 		 REPORT_DET_X1 = ZOOM_X1+6,
+// 		 REPORT_DET_Y1 = REPORT_BUTTON_Y2+4,
+// 		 REPORT_DET_X2 = ZOOM_X2-6,
+// 		 REPORT_DET_Y2 = ZOOM_Y2-6,
+// 		 REPORT_TALK_Y2 = ZOOM_Y2-86,		// use a shorter height for the diplomacy menu as it needs to let the player looks at the messages received.
+// 	 };
 
-		 REPORT_BUTTON_X1 = ZOOM_X1+8,
-		 REPORT_BUTTON_Y1 = REPORT_BROWSE_Y2+6,
-		 REPORT_BUTTON_WIDTH = 135,
-		 REPORT_BUTTON_Y2 = REPORT_BUTTON_Y1+20,
-		 REPORT_BUTTON_X_SPACE = 130,
+#define REPORT_BROWSE_X1 ZOOM_X1 + 6
+#define REPORT_BROWSE_Y1 ZOOM_Y1 + 6
+#define REPORT_BROWSE_X2 ZOOM_X2 - 6
+#define REPORT_BROWSE_Y2 REPORT_BROWSE_Y1 + 206
 
-		 REPORT_DET_X1 = ZOOM_X1+6,
-		 REPORT_DET_Y1 = REPORT_BUTTON_Y2+4,
-		 REPORT_DET_X2 = ZOOM_X2-6,
-		 REPORT_DET_Y2 = ZOOM_Y2-6,
-		 REPORT_TALK_Y2 = ZOOM_Y2-86,		// use a shorter height for the diplomacy menu as it needs to let the player looks at the messages received.
-	 };
+#define REPORT_BUTTON_X1 ZOOM_X1 + 8
+#define REPORT_BUTTON_Y1 REPORT_BROWSE_Y2 + 6
+#define REPORT_BUTTON_WIDTH 135
+#define REPORT_BUTTON_Y2 REPORT_BUTTON_Y1 + 20
+#define REPORT_BUTTON_X_SPACE 130
+
+#define REPORT_DET_X1 ZOOM_X1 + 6
+#define REPORT_DET_Y1 REPORT_BUTTON_Y2 + 4
+#define REPORT_DET_X2 ZOOM_X2 - 6
+#define REPORT_DET_Y2 ZOOM_Y2 - 6
+#define REPORT_TALK_Y2 ZOOM_Y2 - 86	
 
 //---------- Define report mode strings ---------//
 

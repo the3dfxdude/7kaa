@@ -265,8 +265,8 @@ void Info::next_day()
 //
 void Info::disp_panel()
 {
-	image_interface.put_to_buf( &vga_back, "MAINSCR" );
-
+// 	image_interface.put_to_buf( &vga_back, "MAINSCR" );
+	image_interface.put_large(&vga_back, 0, 0, "MAINSCR", 1);
 	//------ keep a copy of bitmap of the panel texture -----//
 
 	if( !info_background_bitmap ) 
@@ -674,10 +674,10 @@ void Info::save_game_scr()
 
 	// left and right
 	if( 0 < ZOOM_X1 )
-		save_buf_3 = vga_front.save_area(0, ZOOM_Y1, ZOOM_X1-1, ZOOM_Y2);
+		save_buf_3 = vga_front.save_area(0, ZOOM_Y1, ZOOM_X1-1, ZOOM_Y2-1);
 
 	if( ZOOM_X2 < VGA_WIDTH-1 )
-		save_buf_4 = vga_front.save_area(ZOOM_X2+1, ZOOM_Y1, VGA_WIDTH-1, ZOOM_Y2);
+		save_buf_4 = vga_front.save_area(ZOOM_X2+1, ZOOM_Y1, VGA_WIDTH-1, ZOOM_Y2-1);
 }
 //---------- End of function Info::save_game_scr ---------//
 

@@ -132,6 +132,7 @@ int Game::init(int loadGameCall)
 	plant_res.init();
 	tech_res.init();
 	god_res.init();
+	
 
 	sprite_res.init();                              // sprite resource object must been initialized after game_set as it relies on game_set for info.
 	sprite_frame_res.init();
@@ -221,9 +222,6 @@ int Game::init(int loadGameCall)
 	mouse_cursor.restore_icon(oldCursor);
 
 	game_has_ended = 0;
-
-	if( !loadGameCall )
-		memset(scenario_file_name, 0, FilePath::MAX_FILE_PATH+1);
 
 	init_flag=1;
 

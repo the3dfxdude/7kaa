@@ -63,11 +63,19 @@ DBGLOG_DEFAULT_CHANNEL(SaveGameArray);
 enum { FILE_MENU_WIDTH = 638,
 		 FILE_MENU_HEIGHT = 398 };
 
-enum { FILE_MAIN_MENU_X1 = 80,
-		 FILE_MAIN_MENU_Y1 = 175 };
+// enum { FILE_MAIN_MENU_X1 = 80,
+// 		 FILE_MAIN_MENU_Y1 = 175 };
+// enum {
+// 	FILE_IN_GAME_MENU_X1 = 80,
+// 	FILE_IN_GAME_MENU_Y1 = 115
+// };
 
-enum { FILE_IN_GAME_MENU_X1 = 80,
-		 FILE_IN_GAME_MENU_Y1 = 115 };
+#define FILE_MAIN_MENU_X1 (VGA_X1 + 80)
+#define FILE_MAIN_MENU_Y1 (VGA_Y1 + 175)
+
+#define FILE_IN_GAME_MENU_X1 (VGA_X1 + 110)
+#define FILE_IN_GAME_MENU_Y1 (VGA_Y1 + 115)
+
 
 enum { BROWSE_X1 = 34,
 		 BROWSE_Y1 = 31,
@@ -760,27 +768,17 @@ int SaveGameArray::save_new_game(const char* newFileName)
 	SaveGame saveGame;
 	if( SaveGameProvider::save_game(fileName, /*out*/ &saveGame.header) )
 	{
-		strcpy( last_file_name, fileName );
+		strcpy( last_file_name, saveGame.file_info.name );
 
-		FilePath full_path(sys.dir_config);
-		full_path += fileName;
-		Directory saveGameDirectory;
-		saveGameDirectory.read(full_path, 0);  // 0-Don't sort file names
-
-		if( saveGameDirectory.size() == 1 )
+		if( addFlag )
 		{
-			saveGame.file_info = *saveGameDirectory[1];
+			linkin(&saveGame);
 
-			if( addFlag )
-			{
-				linkin(&saveGame);
-
-				quick_sort( sort_game_file_function );
-			}
-			else
-			{
-				this->update(&saveGame, gameFileRecno);
-			}
+			quick_sort( sort_game_file_function );
+		}
+		else
+		{
+			this->update(&saveGame, gameFileRecno);
 		}
 
 		return 1;

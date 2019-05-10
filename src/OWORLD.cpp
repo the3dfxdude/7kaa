@@ -62,10 +62,7 @@ World::World()
 	plant_count = 0;
 	plant_limit = 0;
 
-   //------- initialize matrix objects -------//
 
-   map_matrix  = new MapMatrix;
-   zoom_matrix = new ZoomMatrix;
 }
 //------------- End of function World::World -----------//
 
@@ -95,8 +92,11 @@ World::~World()
 
 void World::init()
 {
-	//----------- initialize vars -------------//
+	//------- initialize matrix objects -------//
+	map_matrix = new MapMatrix;
+	zoom_matrix = new ZoomMatrix;
 
+	//----------- initialize vars -------------//
 	scan_fire_x = 0;
 	scan_fire_y = 0;
 	lightning_signal = 0;
@@ -130,7 +130,7 @@ void World::assign_map()
 	//------------- assign map -------------//
 
    map_matrix-> assign_map(loc_matrix, max_x_loc, max_y_loc );
-	zoom_matrix->assign_map(loc_matrix, max_x_loc, max_y_loc );
+   zoom_matrix->assign_map(loc_matrix, max_x_loc, max_y_loc );
 
    //-------- set the zoom area box on map matrix ------//
 

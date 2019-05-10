@@ -39,11 +39,15 @@
 
 //---------- the subtitle area ----------//
 
-enum { TALK_X1 = ZOOM_X1+16,
-		 TALK_Y1 = ZOOM_Y1+252,
-		 TALK_X2 = ZOOM_X2-16,
-		 TALK_Y2 = ZOOM_Y2-86,
-	  };
+// enum { TALK_X1 = ZOOM_X1+16,
+// 		 TALK_Y1 = ZOOM_Y1+252,
+// 		 TALK_X2 = ZOOM_X2-16,
+// 		 TALK_Y2 = ZOOM_Y2-86,
+// 	  };
+#define TALK_X1 ZOOM_X1 + 16
+#define TALK_Y1 ZOOM_Y1 + 252
+#define TALK_X2 ZOOM_X2 - 16
+#define TALK_Y2 ZOOM_Y2 - 86
 
 enum { TALK_LINE_HEIGHT = 18 };
 

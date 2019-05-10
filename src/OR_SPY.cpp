@@ -34,11 +34,18 @@
 
 //------------- Define coordinations -----------//
 
-enum { SPY_BROWSE_X1 = ZOOM_X1+6,
-		 SPY_BROWSE_Y1 = ZOOM_Y1+6,
-		 SPY_BROWSE_X2 = ZOOM_X2-6,
-		 SPY_BROWSE_Y2 = ZOOM_Y2-6,
-	  };
+// enum { SPY_BROWSE_X1 = ZOOM_X1+6,
+// 		 SPY_BROWSE_Y1 = ZOOM_Y1+6,
+// 		 SPY_BROWSE_X2 = ZOOM_X2-6,
+// 		 SPY_BROWSE_Y2 = ZOOM_Y2-6,
+// 	  };
+
+#define SPY_BROWSE_X1 ZOOM_X1 + 6
+#define SPY_BROWSE_Y1 ZOOM_Y1 + 6
+#define SPY_BROWSE_X2 ZOOM_X2 - 6
+#define SPY_BROWSE_Y2 ZOOM_Y2 - 6
+
+
 
 //----------- Define static variables ----------//
 

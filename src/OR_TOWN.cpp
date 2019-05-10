@@ -37,23 +37,38 @@
 
 //------------- Define coordinations -----------//
 
-enum { TOWN_BROWSE_X1 = ZOOM_X1+6,
-		 TOWN_BROWSE_Y1 = ZOOM_Y1+6,
-		 TOWN_BROWSE_X2 = ZOOM_X2-6,
-		 TOWN_BROWSE_Y2 = TOWN_BROWSE_Y1+280
-	  };
+// enum { TOWN_BROWSE_X1 = ZOOM_X1+6,
+// 		 TOWN_BROWSE_Y1 = ZOOM_Y1+6,
+// 		 TOWN_BROWSE_X2 = ZOOM_X2-6,
+// 		 TOWN_BROWSE_Y2 = TOWN_BROWSE_Y1+280
+// 	  };
+// 
+// enum { POP_TOTAL_X1 = ZOOM_X1+6,
+// 		 POP_TOTAL_Y1 = TOWN_BROWSE_Y2+2,
+// 		 POP_TOTAL_X2 = ZOOM_X2-6,
+// 		 POP_TOTAL_Y2 = POP_TOTAL_Y1+18,
+// 	  };
+// 
+// enum { FIRM_BROWSE_X1 = ZOOM_X1+6,
+// 		 FIRM_BROWSE_Y1 = POP_TOTAL_Y2+6,
+// 		 FIRM_BROWSE_X2 = ZOOM_X2-6,
+// 		 FIRM_BROWSE_Y2 = ZOOM_Y2-6,
+// 	  };
 
-enum { POP_TOTAL_X1 = ZOOM_X1+6,
-		 POP_TOTAL_Y1 = TOWN_BROWSE_Y2+2,
-		 POP_TOTAL_X2 = ZOOM_X2-6,
-		 POP_TOTAL_Y2 = POP_TOTAL_Y1+18,
-	  };
+#define TOWN_BROWSE_X1 ZOOM_X1 + 6
+#define TOWN_BROWSE_Y1 ZOOM_Y1 + 6
+#define TOWN_BROWSE_X2 ZOOM_X2 - 6
+#define TOWN_BROWSE_Y2 TOWN_BROWSE_Y1 + 280
 
-enum { FIRM_BROWSE_X1 = ZOOM_X1+6,
-		 FIRM_BROWSE_Y1 = POP_TOTAL_Y2+6,
-		 FIRM_BROWSE_X2 = ZOOM_X2-6,
-		 FIRM_BROWSE_Y2 = ZOOM_Y2-6,
-	  };
+#define POP_TOTAL_X1 ZOOM_X1 + 6
+#define POP_TOTAL_Y1 TOWN_BROWSE_Y2 + 2
+#define POP_TOTAL_X2 ZOOM_X2 - 6
+#define POP_TOTAL_Y2 POP_TOTAL_Y1 + 18
+
+#define FIRM_BROWSE_X1 ZOOM_X1 + 6
+#define FIRM_BROWSE_Y1 POP_TOTAL_Y2 + 6
+#define FIRM_BROWSE_X2 ZOOM_X2 - 6
+#define FIRM_BROWSE_Y2 ZOOM_Y2 - 6
 
 //----------- Define static variables ----------//
 

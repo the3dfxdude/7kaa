@@ -64,10 +64,41 @@ void IMGcall IMGbltArea(char* imageBuf,int pitch, int desX, int desY, char* bitm
 	int width = srcX2-srcX1+1;
 	int height = srcY2-srcY1+1;
 
-	for (int j=0; j<height; ++j, dest+=pitch, src+=bitmapWidth)
+	for (int j=0; j<height; ++j, dest+=pitch, src+= bitmapWidth)
 	{
-		memcpy( &imageBuf[ dest ], &bitmapBuf[ src ], width );
+// 		memcpy( &imageBuf[ dest ], &bitmapBuf[ src ], width );
+		for (int i = 0; i < width; ++i)
+		{
+			unsigned char color = ((unsigned char*)bitmapBuf)[src + i];
+// 			color = 0x7F;
+			imageBuf[dest + i] = color;
+		}
 	}
+
+// 	for (int j = 0; j < height; ++j, dest += pitch, src += bitmapWidth)
+// 	{
+// 		for (int i = 0; i < width; ++i)
+// 		{
+// 			al = ((unsigned char*)bitmapPtr)[srcline + i];
+// 			if (al != TRANSPARENT_CODE)
+// 			{
+// 				imageBuf[destline + i] = al;
+// 			}
+// 		}
+// 	}
 }
 
+void IMGcall IMGbltAreaStretch(char* imageBuf, int pitch, int desX, int desY, char* bitmapBuf, int srcX1, int srcY1, int srcX2, int srcY2)
+{
+	int dest = (desY + srcY1) * pitch + (desX + srcX1);
+	int bitmapWidth = ((unsigned char*)bitmapBuf)[0] + (((unsigned char*)bitmapBuf)[1] << 8);
+	int src = 4 + srcY1 * bitmapWidth + srcX1;	// 4 bytes are header fields (width, height)
+	int width = srcX2 - srcX1 + 1;
+	int height = srcY2 - srcY1 + 1;
+
+	for (int j = 0; j < height; ++j, dest += pitch, src += bitmapWidth)
+	{
+		memcpy(&imageBuf[dest], &bitmapBuf[src], width);
+	}
+}
 //----------- END OF FUNCTION IMGbltArea ----------//
