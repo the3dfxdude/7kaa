@@ -111,6 +111,7 @@
 #include <LocaleRes.h>
 #include <PlayerStats.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
 
 //------- define game version constant --------//
 
@@ -239,6 +240,7 @@ OptionMenu			option_menu;
 InGameMenu			in_game_menu;
 // ###### end Gilbert 23/10 #######//
 CmdLine           cmd_line;
+ConfigAdv         config_adv;
 
 //----------- Global Variables -----------//
 
@@ -308,6 +310,7 @@ int main(int argc, char **argv)
 		new_config_dat_flag = 1;
 		config.init();
 	}
+	config_adv.init();
 
 	//----- read command line arguments -----//
 
