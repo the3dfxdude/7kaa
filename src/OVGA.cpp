@@ -29,6 +29,7 @@
 #include <dbglog.h>
 #include <version.h>
 #include <FilePath.h>
+#include <ConfigAdv.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
 
@@ -115,7 +116,10 @@ int Vga::init()
 
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
    SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP, "1");
-   SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
+   if( config_adv.vga_keep_aspect_ratio )
+      SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
+   else
+      SDL_RenderSetLogicalSize(renderer, mode.w, mode.h);
 
    Uint32 window_pixel_format = SDL_GetWindowPixelFormat(window);
    if (window_pixel_format == SDL_PIXELFORMAT_UNKNOWN)
