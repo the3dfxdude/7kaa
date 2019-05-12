@@ -66,8 +66,46 @@ public:
 
    long   file_size()   { return file_length; }
    int    is_eof()      { return *data_ptr == CHAR_EOF; }
+
+   // Match and advance data_ptr functions
+   size_t match_chars(const char *cc);
+   size_t match_chars_ex(const char *cc);
+   size_t match_str(const char *str);
 };
 
-#endif
+// Match an unordered class of characters of cc beginning at data_ptr. Matches
+// of the same characters may happen multiple times. Advance data_ptr if there
+// is a match. Return the character match count.
+inline size_t FileTxt::match_chars(const char *cc)
+{
+   size_t c = strspn(data_ptr, cc);
+   data_ptr += c;
+   return c;
+}
 
+// Match an unordered class of characters of exlucsive of the list in cc
+// beginning at data_ptr. Matches of the same characters may happen multiple
+// times. Advance data_ptr if there is a match. Return the match count.
+inline size_t FileTxt::match_chars_ex(const char *cc)
+{
+   size_t c = strcspn(data_ptr, cc);
+   data_ptr += c;
+   return c;
+}
+
+// Match character sequence of str, stopping before null, beginning at
+// data_ptr. Advance data_ptr if there is an exact match. Return the match
+// count.
+inline size_t FileTxt::match_str(const char *str)
+{
+   size_t c = strlen(str);
+   if( !strncmp(data_ptr, str, c) )
+   {
+      data_ptr += c;
+      return c;
+   }
+   return 0;
+}
+
+#endif
 
