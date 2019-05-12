@@ -53,6 +53,7 @@
 #include <dbglog.h>
 #include "gettext.h"
 #include <FilePath.h>
+#include <ConfigAdv.h>
 
 
 DBGLOG_DEFAULT_CHANNEL(GameMP);
@@ -105,7 +106,6 @@ static char reverse_race_table[MAX_RACE] =		// race translation table
 };
 #endif
 
-static uint32_t mp_build_flags;
 static char sub_game_mode;		// 0 = new multiplayer game, 1 = load multiplayer game
 static void disp_virtual_button(ButtonCustom *, int);
 static void disp_virtual_tick(ButtonCustom *, int);
@@ -222,12 +222,12 @@ struct MpStructNewPlayer : public MpStructBase
 	uint32_t ver1;
 	uint32_t ver2;
 	uint32_t ver3;
-	uint32_t build_flags;
+	uint32_t flags;
 	char name[MP_FRIENDLY_NAME_LEN+1];
 	char pass[MP_FRIENDLY_NAME_LEN+1];
 
 	MpStructNewPlayer(char *name, char *pass) : MpStructBase(MPMSG_NEW_PLAYER),
-		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), build_flags(mp_build_flags)
+		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), flags(config_adv.flags)
 	{
 		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
 		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
@@ -321,7 +321,7 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 	uint32_t ver1;
 	uint32_t ver2;
 	uint32_t ver3;
-	uint32_t build_flags;
+	uint32_t flags;
 	short nation_recno;
 	short color_scheme_id;
 	short race_id;
@@ -334,7 +334,7 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
 		race_id(n->race_id), frame_count(frame), random_seed(seed),
-		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), build_flags(mp_build_flags)
+		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), flags(config_adv.flags)
 	{
 		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
 		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
@@ -527,12 +527,6 @@ void Game::multi_player_game(int lobbied, char *game_host)
 {
 	sys.is_mp_game = 1;
 	sub_game_mode = 0;
-	#ifdef DEBUG
-		mp_build_flags |= 0x00000001;
-	#endif
-	#ifdef DEV_VERSION
-		mp_build_flags |= 0x00000002;
-	#endif
 
 	info.init_random_seed(0);			// initialize the random seed
 
@@ -793,9 +787,6 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 {
 	sys.is_mp_game = 1;
 	sub_game_mode = 1;
-	#ifdef DEBUG
-		mp_build_flags |= 0x00000001;
-	#endif
 
 	int nationRecno;
 	int service_mode, p;
@@ -3097,7 +3088,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						if( newPlayerMsg->ver1 != SKVERMAJ ||
 							newPlayerMsg->ver2 != SKVERMED ||
 							newPlayerMsg->ver3 != SKVERMIN ||
-							newPlayerMsg->build_flags != mp_build_flags)
+							newPlayerMsg->flags != config_adv.flags)
 						{
 							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SKVER_MISMATCH);
 							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
@@ -5011,7 +5002,7 @@ int Game::mp_select_load_option(char *fileName)
 						if( newPlayerMsg->ver1 != SKVERMAJ ||
 							newPlayerMsg->ver2 != SKVERMED ||
 							newPlayerMsg->ver3 != SKVERMIN ||
-							newPlayerMsg->build_flags != mp_build_flags)
+							newPlayerMsg->flags != config_adv.flags)
 						{
 							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SKVER_MISMATCH);
 							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
