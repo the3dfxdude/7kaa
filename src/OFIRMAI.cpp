@@ -90,7 +90,7 @@ void Firm::ai_del_firm()
 {
 	if( under_construction )
 	{
-		cancel_construction(COMMAND_PLAYER);
+		cancel_construction(COMMAND_AI);
 	}
 	else
 	{
