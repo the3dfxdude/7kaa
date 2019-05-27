@@ -104,15 +104,18 @@ int Vga::init()
       return 0;
    }
 
-   if (SDL_CreateWindowAndRenderer(window_width,
-                                   window_height,
-                                   0,
-                                   &window,
-                                   &renderer) < 0)
-   {
-      ERR("Could not create window and renderer: %s\n", SDL_GetError());
+   window = SDL_CreateWindow(WIN_TITLE,
+                             SDL_WINDOWPOS_UNDEFINED,
+                             SDL_WINDOWPOS_UNDEFINED,
+                             window_width,
+                             window_height,
+                             0);
+   if( !window )
       return 0;
-   }
+
+   renderer = SDL_CreateRenderer(window, -1, 0);
+   if( !renderer )
+      return 0;
 
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
    SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP, "1");
@@ -181,7 +184,6 @@ int Vga::init()
       SDL_SetWindowIcon(window, icon);
       SDL_FreeSurface(icon);
    }
-   SDL_SetWindowTitle(window, WIN_TITLE);
 
    return 1;
 }
