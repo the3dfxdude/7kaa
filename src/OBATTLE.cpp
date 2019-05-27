@@ -212,7 +212,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	//------- enable/disable sound effects -------//
 
 	int songId;
-	if( (~nation_array) && (~nation_array)->race_id <= 7 )
+	if( nation_array.player_recno && (~nation_array)->race_id <= 7 )
 		songId = (~nation_array)->race_id+1;
 	else
 		songId = music.random_bgm_track();
