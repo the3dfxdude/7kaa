@@ -37,6 +37,7 @@ DBGLOG_DEFAULT_CHANNEL(Vga);
 
 static void init_dpi();
 static int init_window_flags();
+static void init_window_size();
 
 //------ Define static class member vars ---------//
 
@@ -87,24 +88,6 @@ int Vga::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   SDL_DisplayMode mode;
-   int window_width = 1024;
-   int window_height = 768;
-
-   if (SDL_GetDesktopDisplayMode(0, &mode) == 0)
-   {
-      if (mode.h < 1024)
-      {
-         window_width = 800;
-         window_height = 600;
-      }
-   }
-   else
-   {
-      ERR("Could not get desktop display mode: %s\n", SDL_GetError());
-      return 0;
-   }
-
    // Save the mouse position to restore after mode change. If we don't do
    // this, then the old position gets recalculated, with the mode change
    // affecting the location, causing a jump.
@@ -114,8 +97,8 @@ int Vga::init()
    window = SDL_CreateWindow(WIN_TITLE,
                              SDL_WINDOWPOS_UNDEFINED,
                              SDL_WINDOWPOS_UNDEFINED,
-                             window_width,
-                             window_height,
+                             config_adv.vga_window_width,
+                             config_adv.vga_window_height,
                              init_window_flags());
    if( !window )
       return 0;
@@ -132,7 +115,7 @@ int Vga::init()
    if( config_adv.vga_keep_aspect_ratio )
       SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
    else
-      SDL_RenderSetLogicalSize(renderer, mode.w, mode.h);
+      SDL_RenderSetLogicalSize(renderer, config_adv.vga_window_width, config_adv.vga_window_height);
 
    SDL_WarpMouseGlobal(mouse_x, mouse_y); // warp to initialize mouse by event queue
 
@@ -1000,4 +983,49 @@ static int init_window_flags()
    if( config_adv.vga_allow_highdpi )
       flags |= SDL_WINDOW_ALLOW_HIGHDPI;
    return flags;
+}
+
+static void init_window_size()
+{
+   if( config_adv.vga_window_width && config_adv.vga_window_height )
+      return;
+
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+   int display_idx;
+   SDL_Window *size_win = SDL_CreateWindow(WIN_TITLE, 0, 0, 1, 1, 0);
+   if( !size_win )
+      goto unknown_display;
+
+   display_idx = SDL_GetWindowDisplayIndex(size_win);
+   SDL_DestroyWindow(size_win);
+   if( display_idx < 0 )
+      goto unknown_display;
+
+   SDL_Rect rect;
+   if( SDL_GetDisplayUsableBounds(display_idx, &rect)<0 )
+      goto unknown_display;
+
+   if( rect.w >= 1024 && rect.h >= 768 )
+   {
+      config_adv.vga_window_width = 1024;
+      config_adv.vga_window_height = 768;
+      return;
+   }
+
+   if( rect.w >= 800 && rect.h >= 600 )
+   {
+      config_adv.vga_window_width = 800;
+      config_adv.vga_window_height = 600;
+      return;
+   }
+
+   config_adv.vga_window_width = 640;
+   config_adv.vga_window_height = 480;
+   return;
+#endif
+
+unknown_display:
+      config_adv.vga_window_width = 800;
+      config_adv.vga_window_height = 600;
+      return;
 }

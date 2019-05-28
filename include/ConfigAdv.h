@@ -43,6 +43,9 @@ public:
 	char			vga_full_screen;
 	char			vga_keep_aspect_ratio;
 
+	int			vga_window_width;
+	int			vga_window_height;
+
 public:
 	ConfigAdv();
 	~ConfigAdv();

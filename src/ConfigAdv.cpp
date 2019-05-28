@@ -28,6 +28,7 @@
 #include <OSYS.h>
 #include <posix_string_compat.h>
 #include <version.h>
+#include <errno.h>
 #include "gettext.h"
 
 
@@ -147,6 +148,9 @@ void ConfigAdv::reset()
 	vga_full_screen = 1;
 	vga_keep_aspect_ratio = 1;
 
+	vga_window_width = 0;
+	vga_window_height = 0;
+
 	// after applying defaults, checksum is not required
 	checksum = 0;
 	flags &= ~FLAG_CKSUM_REQ;
@@ -187,6 +191,22 @@ int ConfigAdv::set(char *name, char *value)
 		else
 			return 0;
 		// TODO: Update active renderer
+	}
+	else if( !strcmp(name, "vga_window_height") )
+	{
+		char *endptr;
+		int tmp = strtol(value, &endptr, 10);
+		if( endptr == value || *endptr )
+			return 0;
+		vga_window_height = tmp;
+	}
+	else if( !strcmp(name, "vga_window_width") )
+	{
+		char *endptr;
+		int tmp = strtol(value, &endptr, 10);
+		if( endptr == value || *endptr )
+			return 0;
+		vga_window_width = tmp;
 	}
 	else
 	{
