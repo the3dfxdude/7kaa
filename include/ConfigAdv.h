@@ -39,6 +39,7 @@ public:
 	uint32_t		flags;
 
 	// vga settings
+	char			vga_full_screen;
 	char			vga_keep_aspect_ratio;
 
 public:

@@ -36,6 +36,7 @@ DBGLOG_DEFAULT_CHANNEL(Vga);
 //--------- Declare static functions ---------//
 
 static void init_dpi();
+static int init_window_flags();
 
 //------ Define static class member vars ---------//
 
@@ -104,14 +105,23 @@ int Vga::init()
       return 0;
    }
 
+   // Save the mouse position to restore after mode change. If we don't do
+   // this, then the old position gets recalculated, with the mode change
+   // affecting the location, causing a jump.
+   int mouse_x, mouse_y;
+   SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
+
    window = SDL_CreateWindow(WIN_TITLE,
                              SDL_WINDOWPOS_UNDEFINED,
                              SDL_WINDOWPOS_UNDEFINED,
                              window_width,
                              window_height,
-                             0);
+                             init_window_flags());
    if( !window )
       return 0;
+
+   if( config_adv.vga_full_screen )
+      set_window_grab(WINGRAB_ON);
 
    renderer = SDL_CreateRenderer(window, -1, 0);
    if( !renderer )
@@ -123,6 +133,8 @@ int Vga::init()
       SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
    else
       SDL_RenderSetLogicalSize(renderer, mode.w, mode.h);
+
+   SDL_WarpMouseGlobal(mouse_x, mouse_y); // warp to initialize mouse by event queue
 
    Uint32 window_pixel_format = SDL_GetWindowPixelFormat(window);
    if (window_pixel_format == SDL_PIXELFORMAT_UNKNOWN)
@@ -979,3 +991,11 @@ static void init_dpi()
 }
 
 #endif
+
+static int init_window_flags()
+{
+   int flags = 0;
+   if( config_adv.vga_full_screen )
+      flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+   return flags;
+}

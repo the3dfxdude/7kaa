@@ -296,10 +296,6 @@ int Sys::init_directx()
    vga_back.lock_buf();
    DEBUG_LOG("vga_back.lock_buf() finish");
 
-#if !defined(DEBUG) && !defined(_DEBUG)
-   vga.set_full_screen_mode(cmd_line.full_screen_mode);
-#endif
-
    //---------- Initialize Audio ----------//
 
    DEBUG_LOG("Attempt audio.init()");

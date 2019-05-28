@@ -143,6 +143,7 @@ err_out:
 //
 void ConfigAdv::reset()
 {
+	vga_full_screen = 1;
 	vga_keep_aspect_ratio = 1;
 
 	// after applying defaults, checksum is not required
@@ -158,7 +159,16 @@ void ConfigAdv::reset()
 // Non-gameplay settings will not require a checksum.
 int ConfigAdv::set(char *name, char *value)
 {
-	if( !strcmp(name, "vga_keep_aspect_ratio") )
+	if( !strcmp(name, "vga_full_screen") )
+	{
+		if( !strcmpi(value, "true") )
+			vga_full_screen = 1;
+		else if( !strcmpi(value, "false") )
+			vga_full_screen = 0;
+		else
+			return 0;
+	}
+	else if( !strcmp(name, "vga_keep_aspect_ratio") )
 	{
 		if( !strcmpi(value, "true") )
 			vga_keep_aspect_ratio = 1;
