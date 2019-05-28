@@ -46,6 +46,38 @@ void UnitMonster::set_monster_action_mode(char monsterActionMode)
 //---------- End of function UnitMonster::set_monster_action_mode --------//
 
 
+const char *monster_name_king[] =
+{
+	N_("All High Deezboanz"),
+	N_("All High Rattus"),
+	N_("All High Broosken"),
+	N_("All High Haubudam"),
+	N_("All High Pfith"),
+	N_("All High Rokken"),
+	N_("All High Doink"),
+	N_("All High Wyrm"),
+	N_("All High Droog"),
+	N_("All High Ick"),
+	N_("All High Sauroid"),
+	N_("All High Karrotten"),
+	N_("All High Holgh"),
+};
+const char *monster_name_general[] =
+{
+	N_("Deezboanz Ordo"),
+	N_("Rattus Ordo"),
+	N_("Broosken Ordo"),
+	N_("Haubudam Ordo"),
+	N_("Pfith Ordo"),
+	N_("Rokken Ordo"),
+	N_("Doink Ordo"),
+	N_("Wyrm Ordo"),
+	N_("Droog Ordo"),
+	N_("Ick Ordo"),
+	N_("Sauroid Ordo"),
+	N_("Karrotten Ordo"),
+	N_("Holgh Ordo"),
+};
 //--------- Begin of function UnitMonster::unit_name ---------//
 //
 // [int] withTitle - whether return a string with the title of the unit
@@ -55,24 +87,18 @@ char* UnitMonster::unit_name(int withTitle)
 {
 	static String str;
 
-	char const * monsterName = _(monster_res[get_monster_id()]->name);
-
-	str = "";
-
 	switch( rank_id )
 	{
 		case RANK_KING:
-			// TRANSLATORS: "All High <monster type>" which describes a king-ranking monster
-			snprintf( str, MAX_STR_LEN+1, _("All High %s"), monsterName );
+			str = _(monster_name_king[get_monster_id()-1]);
 			break;
 
 		case RANK_GENERAL:
-			// TRANSLATORS: "<monster type> Ordo" which describes a general-ranking monster
-			snprintf( str, MAX_STR_LEN+1, _("%s Ordo"), monsterName );
+			str = _(monster_name_general[get_monster_id()-1]);
 			break;
 
 		default:
-			str = monsterName;
+			str = _(monster_res[get_monster_id()]->name);
 	}
 
 	return str;

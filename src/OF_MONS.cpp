@@ -127,14 +127,29 @@ void FirmMonster::deinit_derived()
 //----------- End of function FirmMonster::deinit_derived -----------//
 
 
+const char *monster_firm_name[] =
+{
+	N_("Deezboanz Lair"),
+	N_("Rattus Lair"),
+	N_("Broosken Lair"),
+	N_("Haubudam Lair"),
+	N_("Pfith Lair"),
+	N_("Rokken Lair"),
+	N_("Doink Lair"),
+	N_("Wyrm Lair"),
+	N_("Droog Lair"),
+	N_("Ick Lair"),
+	N_("Sauroid Lair"),
+	N_("Karrotten Lair"),
+	N_("Holgh Lair"),
+};
 //------- Begin of function FirmMonster::firm_name -----------//
 //
 char* FirmMonster::firm_name()
 {
 	static String str;
 
-	// TRANSLATORS: <Fryhtan Type> Lair
-	snprintf(str, MAX_STR_LEN+1, pgettext ("FirmUI|Name", "%s Lair"), _(monster_res[monster_id]->name));
+	str = monster_firm_name[monster_id-1];
 
 	return str;
 }
