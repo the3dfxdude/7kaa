@@ -370,6 +370,12 @@ short FirmMarket::hire_caravan(char remoteAction)
 //----------- End of function FirmMarket::hire_caravan -----------//
 
 
+const char *product_type_msg[MAX_RAW] =
+{
+	_("Clay Products"),
+	_("Copper Products"),
+	_("Iron Products"),
+};
 //--------- Begin of function FirmMarket::put_market_info ---------//
 //
 void FirmMarket::put_market_info(int dispY1, int refreshFlag)
@@ -433,8 +439,7 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 		}
 		else if( marketGoods->product_raw_id )
 		{
-			// TRANSLATORS: <Clay/Copper/Iron> Products
-			snprintf( str, MAX_STR_LEN+1, _("%s Products"), _(raw_res[marketGoods->product_raw_id]->name) );
+			str = _(product_type_msg[marketGoods->product_raw_id-1]);
 			bitmapPtr = raw_res.small_product_icon(marketGoods->product_raw_id);
 		}
 		else
