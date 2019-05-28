@@ -997,5 +997,7 @@ static int init_window_flags()
    int flags = 0;
    if( config_adv.vga_full_screen )
       flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+   if( config_adv.vga_allow_highdpi )
+      flags |= SDL_WINDOW_ALLOW_HIGHDPI;
    return flags;
 }
