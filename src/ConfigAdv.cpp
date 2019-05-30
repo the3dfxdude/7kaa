@@ -32,6 +32,9 @@
 #include "gettext.h"
 
 
+static int read_int(char *in, int *out);
+static int read_bool(char *in, char *out);
+
 //--------- Begin of function ConfigAdv::ConfigAdv -----------//
 
 ConfigAdv::ConfigAdv()
@@ -166,47 +169,29 @@ int ConfigAdv::set(char *name, char *value)
 {
 	if( !strcmp(name, "vga_allow_highdpi") )
 	{
-		if( !strcmpi(value, "true") )
-			vga_allow_highdpi = 1;
-		else if( !strcmpi(value, "false") )
-			vga_allow_highdpi = 0;
-		else
+		if( !read_bool(value, &vga_allow_highdpi) )
 			return 0;
 	}
 	else if( !strcmp(name, "vga_full_screen") )
 	{
-		if( !strcmpi(value, "true") )
-			vga_full_screen = 1;
-		else if( !strcmpi(value, "false") )
-			vga_full_screen = 0;
-		else
+		if( !read_bool(value, &vga_full_screen) )
 			return 0;
 	}
 	else if( !strcmp(name, "vga_keep_aspect_ratio") )
 	{
-		if( !strcmpi(value, "true") )
-			vga_keep_aspect_ratio = 1;
-		else if( !strcmpi(value, "false") )
-			vga_keep_aspect_ratio = 0;
-		else
+		if( !read_bool(value, &vga_keep_aspect_ratio) )
 			return 0;
 		// TODO: Update active renderer
 	}
 	else if( !strcmp(name, "vga_window_height") )
 	{
-		char *endptr;
-		int tmp = strtol(value, &endptr, 10);
-		if( endptr == value || *endptr )
+		if( !read_int(value, &vga_window_height) )
 			return 0;
-		vga_window_height = tmp;
 	}
 	else if( !strcmp(name, "vga_window_width") )
 	{
-		char *endptr;
-		int tmp = strtol(value, &endptr, 10);
-		if( endptr == value || *endptr )
+		if( !read_int(value, &vga_window_width) )
 			return 0;
-		vga_window_width = tmp;
 	}
 	else
 	{
@@ -226,3 +211,26 @@ void ConfigAdv::update_check_sum(char *name, char *value)
 	flags |= FLAG_CKSUM_REQ;
 }
 //--------- End of function ConfigAdv::update_check_sum -------------//
+
+
+static int read_int(char *in, int *out)
+{
+	char *endptr;
+	int tmp = strtol(in, &endptr, 10);
+	if( endptr == in || *endptr )
+		return 0;
+	*out = tmp;
+	return 1;
+}
+
+
+static int read_bool(char *in, char *out)
+{
+	if( !strcmpi(in, "true") )
+		*out = 1;
+	else if( !strcmpi(in, "false") )
+		*out = 0;
+	else
+		return 0;
+	return 1;
+}
