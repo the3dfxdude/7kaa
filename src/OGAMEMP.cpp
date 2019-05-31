@@ -149,6 +149,7 @@ enum
 
 	MPMSG_PLAYER_ID,
 	MPMSG_PLAYER_DISCONNECT,
+	MPMSG_VERSION_CHECKSUM,
 };
 
 struct MpStructBase
@@ -388,6 +389,13 @@ struct MpStructPlayerDisconnect : public MpStructBase
 	PID_TYPE lost_player_id;
 	MpStructPlayerDisconnect(PID_TYPE lost_player) : MpStructBase(MPMSG_PLAYER_DISCONNECT),
 		lost_player_id(lost_player) {}
+};
+
+struct MpStructVersionChecksum : public MpStructBase
+{
+	uint32_t checksum;
+	MpStructVersionChecksum(uint32_t cksum) : MpStructBase(MPMSG_VERSION_CHECKSUM),
+		checksum(cksum) {}
 };
 
 //--------- Define static functions ------------//
@@ -3187,6 +3195,9 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 								}
 							}
 
+							MpStructVersionChecksum msgVerCksum(config_adv.checksum);
+							mp_obj.send(from, &msgVerCksum, sizeof(msgVerCksum));
+
 							// ###### patch begin Gilbert 22/1 ######//
 							// send remote.sync_test_level
 							MpStructSyncLevel msgSyncTest(remote.sync_test_level);
@@ -3431,6 +3442,12 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							playerBalance[MAX_NATION-1] = 0;
 							--regPlayerCount;
 						}
+					}
+					break;
+				case MPMSG_VERSION_CHECKSUM:
+					if( !remote.is_host && ((MpStructVersionChecksum*)recvPtr)->checksum != config_adv.checksum )
+					{
+						mp_info_box_show(&info_box, _("The host is using a modified game which you are not running."), _("Ok"));
 					}
 					break;
 				default:		// if the game is started, any other thing is received
@@ -5075,6 +5092,9 @@ int Game::mp_select_load_option(char *fileName)
 								}
 							}
 
+							MpStructVersionChecksum msgVerCksum(config_adv.checksum);
+							mp_obj.send(from, &msgVerCksum, sizeof(msgVerCksum));
+
 							// ###### patch begin Gilbert 22/1 ######//
 							// send remote.sync_test_level
 							MpStructSyncLevel msgSyncTest(remote.sync_test_level);
@@ -5216,6 +5236,12 @@ int Game::mp_select_load_option(char *fileName)
 							playerBalance[MAX_NATION-1] = 0;
 							--regPlayerCount;
 						}
+					}
+					break;
+				case MPMSG_VERSION_CHECKSUM:
+					if( !remote.is_host && ((MpStructVersionChecksum*)recvPtr)->checksum != config_adv.checksum )
+					{
+						mp_info_box_show(&info_box, _("The host is using a modified game which you are not running."), _("Ok"));
 					}
 					break;
 				default:		// if the game is started, any other thing is received
