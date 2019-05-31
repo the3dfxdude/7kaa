@@ -88,6 +88,8 @@ int Vga::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
+   init_window_size();
+
    // Save the mouse position to restore after mode change. If we don't do
    // this, then the old position gets recalculated, with the mode change
    // affecting the location, causing a jump.
