@@ -38,6 +38,10 @@ public:
 	uint32_t		checksum;
 	uint32_t		flags;
 
+	// town settings
+	int			town_ai_emerge_nation_pop_limit;
+	int			town_ai_emerge_town_pop_limit;
+
 	// vga settings
 	char			vga_allow_highdpi;
 	char			vga_full_screen;

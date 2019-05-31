@@ -34,6 +34,7 @@
 #include <OINFO.h>
 #include <OTOWN.h>
 #include <OLOG.h>
+#include <ConfigAdv.h>
 
 //------- Begin of function Town::think_independent_town --------//
 //
@@ -139,7 +140,7 @@ int Town::think_independent_form_new_nation()
 
 	//---- don't form if the world is already densely populated ----//
 
-	if( nation_array.all_nation_population > 60 * MAX_NATION )
+	if( nation_array.all_nation_population > config_adv.town_ai_emerge_nation_pop_limit )
 		return 0;
 
 	//----------------------------------------------//
