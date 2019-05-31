@@ -29,6 +29,7 @@
 #include <ONATIONA.h>
 #include <OREMOTEQ.h>
 #include <version.h>
+#include <ConfigAdv.h>
 
 const char file_magic[] = "7KRP";
 const int32_t replay_version = 0;
@@ -36,20 +37,14 @@ struct GameVer {
 	uint32_t ver1;
 	uint32_t ver2;
 	uint32_t ver3;
-	uint32_t build_flags;
+	uint32_t flags;
 
 	void set_current_version()
 	{
 		ver1 = SKVERMAJ;
 		ver2 = SKVERMED;
 		ver3 = SKVERMIN;
-		build_flags = 0;
-#ifdef DEBUG
-		build_flags |= 0x00000001;
-#endif
-#ifdef DEV_VERSION
-		build_flags |= 0x00000002;
-#endif
+		flags = config_adv.flags;
 	}
 
 	int cmp(GameVer *a)
@@ -57,7 +52,7 @@ struct GameVer {
 		return ver1 == a->ver1 &&
 			ver2 == a->ver2 &&
 			ver3 == a->ver3 &&
-			build_flags == a->build_flags;
+			flags == a->flags;
 	}
 };
 
