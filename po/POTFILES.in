@@ -1,6 +1,7 @@
 # List of source files which contain translatable strings.
 src/AM.cpp
 src/CmdLine.cpp
+src/ConfigAdv.cpp
 src/OBOX.cpp
 src/OCONFIG.cpp
 src/ODATE.cpp
@@ -66,3 +67,4 @@ src/OU_MARIF.cpp
 src/OU_MONS.cpp
 src/OVGABUF.cpp
 src/OWORLD_Z.cpp
+src/ReplayFile.cpp
