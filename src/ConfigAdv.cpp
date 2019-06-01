@@ -23,6 +23,7 @@
 
 #include <ConfigAdv.h>
 #include <FilePath.h>
+#include <ONATIONB.h>
 #include <OFILETXT.h>
 #include <OMISC.h>
 #include <OSYS.h>
@@ -147,6 +148,8 @@ err_out:
 //
 void ConfigAdv::reset()
 {
+	nation_ai_unite_min_relation_level = NATION_NEUTRAL;
+
 	town_ai_emerge_nation_pop_limit = 60 * MAX_NATION;
 	town_ai_emerge_town_pop_limit = 1000;
 
@@ -170,7 +173,25 @@ void ConfigAdv::reset()
 // Non-gameplay settings will not require a checksum.
 int ConfigAdv::set(char *name, char *value)
 {
-	if( !strcmp(name, "town_ai_emerge_nation_pop_limit") )
+	if( !strcmp(name, "nation_ai_unite_min_relation_level") )
+	{
+		if( !strcmpi(value, "hostile") )
+			nation_ai_unite_min_relation_level = NATION_HOSTILE;
+		else if( !strcmpi(value, "tense") )
+			nation_ai_unite_min_relation_level = NATION_TENSE;
+		else if( !strcmpi(value, "neutral") )
+			nation_ai_unite_min_relation_level = NATION_NEUTRAL;
+		else if( !strcmpi(value, "friendly") )
+			nation_ai_unite_min_relation_level = NATION_FRIENDLY;
+		else if( !strcmpi(value, "alliance") )
+			nation_ai_unite_min_relation_level = NATION_ALLIANCE;
+		else if( !strcmpi(value, "off") )
+			nation_ai_unite_min_relation_level = NATION_ALLIANCE+1; // disables
+		else
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "town_ai_emerge_nation_pop_limit") )
 	{
 		if( !read_int(value, &town_ai_emerge_nation_pop_limit) )
 			return 0;

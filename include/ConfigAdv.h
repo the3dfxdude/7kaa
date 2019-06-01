@@ -38,6 +38,9 @@ public:
 	uint32_t		checksum;
 	uint32_t		flags;
 
+	// nation settings
+	char			nation_ai_unite_min_relation_level;
+
 	// town settings
 	int			town_ai_emerge_nation_pop_limit;
 	int			town_ai_emerge_town_pop_limit;

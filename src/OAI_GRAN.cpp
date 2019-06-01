@@ -27,6 +27,7 @@
 #include <OREGIONS.h>
 #include <OF_CAMP.h>
 #include <ONATION.h>
+#include <ConfigAdv.h>
 
 
 //----- Begin of function Nation::think_grand_plan -----//
@@ -431,7 +432,7 @@ int Nation::think_unite_against_big_enemy()
 
 	//------- don't surrender to hostile nation -------//
 
-	if( get_relation_status(secondBestNationRecno) < NATION_NEUTRAL )
+	if( get_relation_status(secondBestNationRecno) < config_adv.nation_ai_unite_min_relation_level ) // defaults to NATION_NEUTRAL
 		return 0;
 
 	//--- if all AI kingdoms are way behind the human players, unite to against the human player ---//
