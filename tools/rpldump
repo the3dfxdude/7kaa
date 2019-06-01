@@ -33,7 +33,7 @@ my @msg_ids = (
 	['MSG_UNIT_MOVE', 'sssss*', [qw(destXLoc destYLoc selectedCount divided selectedUnitArray)]],
 	['MSG_UNIT_SET_FORCE_MOVE'],
 	['MSG_UNIT_ATTACK'],
-	['MSG_UNIT_ASSIGN'],
+	['MSG_UNIT_ASSIGN', 'sssss*', [qw(destX destY selectedCount divided selectedArray)]],
 	['MSG_UNIT_CHANGE_NATION'],
 	['MSG_UNIT_BUILD_FIRM', 'ssss', [qw(unitRecno xLoc yLoc firmId)]],
 	['MSG_UNIT_BURN'],
@@ -68,7 +68,7 @@ my @msg_ids = (
 	['MSG_UNIT_ADD_WAY_POINT'],
 
 	['MSG_FIRM_SELL'],
-	['MSG_FIRM_CANCEL'],
+	['MSG_FIRM_CANCEL', 's', [qw(firmRecno)]],
 	['MSG_FIRM_DESTRUCT'],
 	['MSG_FIRM_SET_REPAIR'],
 	['MSG_FIRM_TRAIN_LEVEL'],
@@ -93,8 +93,8 @@ my @msg_ids = (
 	['MSG_F_WAR_BUILD_WEAPON'],
 	['MSG_F_WAR_CANCEL_WEAPON'],
 	['MSG_F_WAR_SKIP_WEAPON'],
-	['MSG_F_HARBOR_BUILD_SHIP'],
-	['MSG_F_HARBOR_SAIL_SHIP'],
+	['MSG_F_HARBOR_BUILD_SHIP', 'sss', [qw(firm_recno unitId createRemoveAmount)]],
+	['MSG_F_HARBOR_SAIL_SHIP', 'ss', [qw(firm_recno unitRecno)]],
 	['MSG_F_HARBOR_SKIP_SHIP'],
 	['MSG_F_FACTORY_CHG_PROD'],
 	['MSG_F_BASE_MOBL_PRAYER'],
@@ -123,7 +123,7 @@ my @msg_ids = (
 	['MSG_SPY_EXPOSED'],
 
 	['MSG_SEND_TALK_MSG'],
-	['MSG_REPLY_TALK_MSG'],
+	['MSG_REPLY_TALK_MSG', 'lcc', [qw(talkRecno replyType padding)]],
 	['MSG_NATION_CONTACT'],
 	['MSG_NATION_SET_SHOULD_ATTACK'],
 	['MSG_CHAT'],
@@ -269,6 +269,7 @@ my %pack_id_to_fmt_id = (
 	'C' => '%hhu',
 	'L' => '%u',
 	'S' => '%hu',
+	'c' => '%hhd',
 	'l' => '%d',
 	's' => '%hd',
 );
@@ -277,6 +278,7 @@ my %pack_id_to_len = (
 	'C' => 1,
 	'L' => 4,
 	'S' => 2,
+	'c' => 1,
 	'l' => 4,
 	's' => 2,
 );
@@ -378,7 +380,7 @@ sub pack_str_to_fmt_str {
 			last;
 		}
 		if (!defined($pack_id_to_fmt_id{$pack_ids[$i]}) || !defined($pack_id_to_len{$pack_ids[$i]})) {
-			die;
+			die "Perl specifier '$pack_ids[$i]' does not have the format and size specified for printing";
 		}
 		$last_fmt = $pack_id_to_fmt_id{$pack_ids[$i]};
 		$last_len = $pack_id_to_len{$pack_ids[$i]};
