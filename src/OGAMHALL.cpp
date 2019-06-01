@@ -260,7 +260,8 @@ void HallFameEntry::disp_info(int x, int y, int pos)
 
 	//----------------------------------------//
 
-	str  = _("Score : ");
+	str  = _("Score");
+	str += " : ";
 	str += score;
 
 	fontPtr->put( x, y2, str );
@@ -279,7 +280,8 @@ void HallFameEntry::disp_info(int x, int y, int pos)
 		x-=10;			// position adjustment for the German version
 	#endif
 
-	str  = _("Period : ");
+	str  = _("Period");
+	str += " : ";
 	str += misc.num_to_str(start_year);     // without adding comma separators
 	str += "-";
 	str += misc.num_to_str(end_year);
@@ -288,7 +290,8 @@ void HallFameEntry::disp_info(int x, int y, int pos)
 
 	//----------------------------------------//
 
-	str  = _("Difficulty : ");
+	str  = _("Difficulty");
+	str += " : ";
 	str += difficulty_rating;
 
 	fontPtr->put( x+420, y2, str );
