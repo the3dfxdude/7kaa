@@ -150,6 +150,9 @@ void ConfigAdv::reset()
 {
 	nation_ai_unite_min_relation_level = NATION_NEUTRAL;
 
+	remote_compare_object_crc = 1;
+	remote_compare_random_seed = 1;
+
 	town_ai_emerge_nation_pop_limit = 60 * MAX_NATION;
 	town_ai_emerge_town_pop_limit = 1000;
 
@@ -190,6 +193,16 @@ int ConfigAdv::set(char *name, char *value)
 		else
 			return 0;
 		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "remote_compare_object_crc") )
+	{
+		if( !read_bool(value, &remote_compare_object_crc) )
+			return 0;
+	}
+	else if( !strcmp(name, "remote_compare_random_seed") )
+	{
+		if( !read_bool(value, &remote_compare_random_seed) )
+			return 0;
 	}
 	else if( !strcmp(name, "town_ai_emerge_nation_pop_limit") )
 	{

@@ -41,6 +41,10 @@ public:
 	// nation settings
 	char			nation_ai_unite_min_relation_level;
 
+	// remote settings
+	char		        remote_compare_object_crc;
+	char			remote_compare_random_seed;
+
 	// town settings
 	int			town_ai_emerge_nation_pop_limit;
 	int			town_ai_emerge_town_pop_limit;

@@ -36,6 +36,7 @@
 #include <OERRCTRL.h>
 #include <ReplayFile.h>
 #include <FilePath.h>
+#include <ConfigAdv.h>
 
 //--------- Begin of function Remote::Remote ----------//
 
@@ -90,9 +91,12 @@ void Remote::init(MultiPlayer *mp)
 	mp_ptr = mp;
 
 	// ###### patch begin Gilbert 22/1 #######//
-	sync_test_level = (misc.is_file_exist("NOSYNC1.SYS") ? 0 : 1)
-		| (misc.is_file_exist("NOSYNC2.SYS") ? 0 : 2);
-		// 0=disable, bit0= random seed, bit1=crc
+	// 0=disable, bit0= random seed, bit1=crc
+	sync_test_level = 0;
+	if( config_adv.remote_compare_random_seed || misc.is_file_exist("SYNC1.SYS") )
+		sync_test_level |= 1;
+	if( config_adv.remote_compare_object_crc || misc.is_file_exist("SYNC2.SYS") )
+		sync_test_level |= 2;
 	// ###### patch end Gilbert 22/1 #######//
 
 	reset_process_frame_delay();
