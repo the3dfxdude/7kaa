@@ -116,6 +116,15 @@ int Remote::init_replay_load(char *full_path, NewNationPara *mpGame, int *player
 	if (!replay.open_read(full_path, mpGame, playerCount))
 		return 0;
 
+	// 0=disable, bit0= random seed, bit1=crc
+	sync_test_level = 0;
+	if( config_adv.remote_compare_random_seed || misc.is_file_exist("SYNC1.SYS") )
+		sync_test_level |= 1;
+	if( config_adv.remote_compare_object_crc || misc.is_file_exist("SYNC2.SYS") )
+		sync_test_level |= 2;
+
+	set_process_frame_delay(5);
+
 	remote.connectivity_mode = Remote::MODE_REPLAY;
 
 	return 1;

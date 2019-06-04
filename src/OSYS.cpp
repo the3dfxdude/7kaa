@@ -829,14 +829,15 @@ void Sys::main_loop(int isLoadedGame)
                LOG_END;
 
                // -------- compare objects' crc --------- //
-					// ###### patch begin Gilbert 20/1 ######//
-					if( remote.is_enable() && (remote.sync_test_level & 2) &&(frame_count % (remote.get_process_frame_delay()+3)) == 0)
+               // ###### patch begin Gilbert 20/1 ######//
+               if( (remote.is_enable() || remote.is_replay()) && (remote.sync_test_level & 2) && (frame_count % (remote.get_process_frame_delay()+3)) == 0 )
                {
                   // cannot compare every frame, as PROCESS_FRAME_DELAY >= 1
                   crc_store.record_all();
-                  crc_store.send_all();
+                  if( !remote.is_replay() )
+                     crc_store.send_all();
                }
-					// ###### patch end Gilbert 20/1 ######//
+               // ###### patch end Gilbert 20/1 ######//
 
             }
          }
