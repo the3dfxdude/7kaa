@@ -293,6 +293,7 @@ my $fh;
 my $frame_count;
 my $file_version;
 my @game_ver = (0,0,0,0,0);
+my $frame_delay = 5;
 my $random_seed;
 my $nation_count;
 
@@ -316,12 +317,12 @@ if (read($fh, $buf, INT_SIZE) != INT_SIZE) {
 }
 $file_version = unpack('L', $buf);
 if ($file_version == 1) {
-	my $file_header_size = INT_SIZE*6;
+	my $file_header_size = INT_SIZE*7;
 	if (read($fh, $buf, $file_header_size) != $file_header_size) {
 		print "Invalid file\n";
 		goto error_out;
 	}
-	($game_ver[0], $game_ver[1], $game_ver[2], $game_ver[3], $game_ver[4], $random_seed) = unpack('LLLLLL', $buf);
+	($game_ver[0], $game_ver[1], $game_ver[2], $game_ver[3], $game_ver[4], $frame_delay, $random_seed) = unpack('LLLLLLL', $buf);
 } elsif ($file_version == 0) {
 	my $file_header_size = INT_SIZE*5;
 	if (read($fh, $buf, $file_header_size) != $file_header_size) {

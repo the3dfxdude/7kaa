@@ -123,8 +123,6 @@ int Remote::init_replay_load(char *full_path, NewNationPara *mpGame, int *player
 	if( config_adv.remote_compare_object_crc || misc.is_file_exist("SYNC2.SYS") )
 		sync_test_level |= 2;
 
-	set_process_frame_delay(5);
-
 	remote.connectivity_mode = Remote::MODE_REPLAY;
 
 	return 1;
