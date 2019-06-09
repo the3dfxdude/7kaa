@@ -68,7 +68,13 @@ void LocaleRes::init(const char *locale)
 	if( !ctype )
 		return;
 
-	bindtextdomain(PACKAGE, LOCALE_DIR);
+	const char *env_locale_dir;
+	if( misc.is_file_exist("locale") )
+		bindtextdomain(PACKAGE, "locale");
+	else if( env_locale_dir = getenv("SKLOCALE") )
+		bindtextdomain(PACKAGE, env_locale_dir);
+	else
+		bindtextdomain(PACKAGE, LOCALE_DIR);
 	textdomain(PACKAGE);
 
 	LocaleRec *localeRec;
