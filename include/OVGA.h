@@ -125,6 +125,9 @@ public:
 	void   set_window_grab(WinGrab mode);
 	void   flip();
 	void   save_status_report();
+
+private:
+	void   get_window_scale(float *xscale, float *yscale);
 };
 
 extern Vga vga;

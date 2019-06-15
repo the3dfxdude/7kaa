@@ -116,8 +116,6 @@ int Vga::init()
    SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP, "1");
    if( config_adv.vga_keep_aspect_ratio )
       SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
-   else
-      SDL_RenderSetLogicalSize(renderer, config_adv.vga_window_width, config_adv.vga_window_height);
 
    SDL_WarpMouseGlobal(mouse_x, mouse_y); // warp to initialize mouse by event queue
 
@@ -416,8 +414,18 @@ void Vga::handle_messages()
          if( mouse_mode == MOUSE_INPUT_ABS )
          {
             int logical_x, logical_y;
-            logical_x = event.motion.x;
-            logical_y = event.motion.y;
+            if( config_adv.vga_keep_aspect_ratio )
+            {
+               logical_x = event.motion.x;
+               logical_y = event.motion.y;
+            }
+            else
+            {
+               float xscale, yscale;
+               get_window_scale(&xscale, &yscale);
+               logical_x = ((float)event.motion.x / xscale);
+               logical_y = ((float)event.motion.y / yscale);
+            }
             if( win_grab_user_mode || win_grab_forced )
             {
                int real_x, real_y, do_warp;
@@ -580,7 +588,7 @@ void Vga::update_boundary()
 {
    float xscale, yscale;
    SDL_Rect rect;
-   SDL_RenderGetScale(renderer, &xscale, &yscale);
+   get_window_scale(&xscale, &yscale);
    SDL_RenderGetViewport(renderer, &rect);
    bound_x1 = ((float)(mouse.bound_x1 + rect.x) * xscale);
    bound_x2 = ((float)(mouse.bound_x2 + rect.x) * xscale);
@@ -602,7 +610,7 @@ void Vga::update_mouse_pos()
    if( !window )
       return;
 
-   SDL_RenderGetScale(renderer, &xscale, &yscale);
+   get_window_scale(&xscale, &yscale);
    SDL_RenderGetViewport(renderer, &rect);
    SDL_GetWindowPosition(window, &win_x, &win_y);
    SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
@@ -854,7 +862,7 @@ void Vga::save_status_report()
          SDL_Rect rect;
 
          SDL_GetRendererInfo(r, &info);
-         SDL_RenderGetScale(renderer, &xscale, &yscale);
+         get_window_scale(&xscale, &yscale);
          SDL_RenderGetViewport(renderer, &rect);
          SDL_RenderGetLogicalSize(renderer, &w, &h);
 
@@ -925,6 +933,24 @@ void Vga::save_status_report()
    return;
 }
 //-------- End of function Vga::save_status_report ----------//
+
+
+//-------- Beginning of function Vga::get_window_scale ----------//
+void Vga::get_window_scale(float *xscale, float *yscale)
+{
+   if( config_adv.vga_keep_aspect_ratio )
+   {
+      SDL_RenderGetScale(renderer, xscale, yscale);
+   }
+   else
+   {
+      int w, h;
+      SDL_GetWindowSize(window, &w, &h);
+      *xscale = (float)w / (float)VGA_WIDTH;
+      *yscale = (float)h / (float)VGA_HEIGHT;
+   }
+}
+//-------- End of function Vga::get_window_scale ----------//
 
 
 #ifdef USE_WINDOWS
