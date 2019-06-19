@@ -46,6 +46,7 @@
 #include <ONATION.h>
 #include <OREBEL.h>
 #include <OREMOTE.h>
+#include <ConfigAdv.h>
 #include "gettext.h"
 
 //-------- Define static variables --------//
@@ -167,6 +168,20 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, uint32_t pl
 		god_res.enable_know_all(nation_recno);
 	}
 	//#### end alex 23/9 ####//
+	else
+	{
+		if( config_adv.nation_start_god_level == 1 )
+		{
+			god_res[race_id]->enable_know(nation_recno);
+		}
+		else if( config_adv.nation_start_god_level > 1 )
+		{
+			god_res.enable_know_all(nation_recno);
+		}
+
+		for( int i=0; i<config_adv.nation_start_tech_inc_all_level; i++)
+			tech_res.inc_all_tech_level(nation_recno);
+	}
 }
 //----------- End of function NationBase::init ---------//
 

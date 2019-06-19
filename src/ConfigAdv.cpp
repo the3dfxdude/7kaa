@@ -32,6 +32,7 @@
 #include <errno.h>
 #include "gettext.h"
 
+#define CHECK_BOUND(n,x,y) n<x || n>y
 
 static int read_int(char *in, int *out);
 static int read_bool(char *in, char *out);
@@ -149,6 +150,8 @@ err_out:
 void ConfigAdv::reset()
 {
 	nation_ai_unite_min_relation_level = NATION_NEUTRAL;
+	nation_start_god_level = 0;
+	nation_start_tech_inc_all_level = 0;
 
 	remote_compare_object_crc = 1;
 	remote_compare_random_seed = 1;
@@ -194,6 +197,22 @@ int ConfigAdv::set(char *name, char *value)
 			return 0;
 		update_check_sum(name, value);
 	}
+	else if( !strcmp(name, "nation_start_god_level") )
+	{
+		if( !read_int(value, &nation_start_god_level) )
+			return 0;
+		if( CHECK_BOUND(nation_start_god_level, 0, 2) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "nation_start_tech_inc_all_level") )
+	{
+		if( !read_int(value, &nation_start_tech_inc_all_level) )
+			return 0;
+		if( CHECK_BOUND(nation_start_tech_inc_all_level, 0, 2) )
+			return 0;
+		update_check_sum(name, value);
+	}
 	else if( !strcmp(name, "remote_compare_object_crc") )
 	{
 		if( !read_bool(value, &remote_compare_object_crc) )
@@ -230,7 +249,6 @@ int ConfigAdv::set(char *name, char *value)
 	{
 		if( !read_bool(value, &vga_keep_aspect_ratio) )
 			return 0;
-		// TODO: Update active renderer
 	}
 	else if( !strcmp(name, "vga_window_height") )
 	{

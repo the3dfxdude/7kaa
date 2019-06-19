@@ -40,6 +40,8 @@ public:
 
 	// nation settings
 	char			nation_ai_unite_min_relation_level;
+	int			nation_start_god_level;
+	int			nation_start_tech_inc_all_level;
 
 	// remote settings
 	char		        remote_compare_object_crc;
