@@ -89,7 +89,7 @@ SetCompressor /SOLID lzma
 ; because this will make your installer start faster.
 
 !insertmacro MUI_RESERVEFILE_LANGDLL
-ReserveFile "${NSISDIR}\Plugins\*.dll"
+;ReserveFile "${NSISDIR}\Plugins\*.dll"
 
 ;--------------------------------
 ; The stuff to install
