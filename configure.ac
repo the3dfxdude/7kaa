@@ -83,6 +83,11 @@ AC_TYPE_UINT8_T
 # Checks for library functions.
 AC_CHECK_FUNCS([_NSGetExecutablePath])
 
+AX_STRING_STRCASECMP
+if test x"$ac_cv_string_strcasecmp" = "xno" ; then
+  AX_STRINGS_STRCASECMP
+fi
+
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19])
 
