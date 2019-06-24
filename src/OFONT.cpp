@@ -75,6 +75,7 @@ struct FontInfo	// info for each character
 //--------- Define macro constant ------------//
 
 #define HYPER_FIELD_COLOR 	V_LIGHT_BLUE
+#define ASCII_ZERO 0x30
 
 //--------- German character table -------//
 
@@ -311,14 +312,18 @@ int Font::put(int x,int y,const char* textPtr, char clearBack, int x2 )
 		}
 
 		//####### patch begin Gilbert 28/2 ########//
-		// --------- control char: FIRST_NATION_COLOR_CODE_IN_TEXT -----------//
+		// --------- control word: @COL# (nation color) -----------//
 
-		else if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT ) 	// display nation color bar in text
+		else if( textChar == '@' && !strncmp(textPtr, "@COL", 4) ) 	// display nation color bar in text
 		{
 			if( x2 >= 0 && x+NATION_COLOR_BAR_WIDTH-1 > x2 )      // exceed right border x2
 				break;
 
-			char colorCode = game.color_remap_array[textChar-FIRST_NATION_COLOR_CODE_IN_TEXT].main_color;
+			// get nation color and skip over the word
+			textChar = (unsigned char)textPtr[4];
+			textPtr += 4;
+
+			char colorCode = game.color_remap_array[textChar-ASCII_ZERO].main_color;
 
 			nation_array.disp_nation_color(x, y+2, colorCode);
 
@@ -510,10 +515,13 @@ int Font::text_width(const char* textPtr, int textPtrLen, int maxDispWidth)
 			continue;              // next character
 		}
 
-		//-------- control char: FIRST_NATION_COLOR_CODE_IN_TEXT -----------//
+		// --------- control word: @COL# (nation color) -----------//
 
-		else if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT  ) 	// display nation color bar in text
+		else if( textChar == '@' && !strncmp(textPtr, "@COL", 4) ) 	// display nation color bar in text
 		{
+			// skip over the word
+			textPtr += 4;
+
 			x += NATION_COLOR_BAR_WIDTH;
 			wordWidth = 0;
 		}
@@ -723,10 +731,13 @@ void Font::put_paragraph(int x1, int y1, int x2, int y2, const char *textPtr,
 			continue;
 		}
 
-		//-------- control char: FIRST_NATION_COLOR_CODE_IN_TEXT -----------//
+		// --------- control word: @COL# (nation color) -----------//
 
-		else if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT ) 	// display nation color bar in text
+		else if( textChar == '@' && !strncmp(textPtr, "COL", 3) ) 	// display nation color bar in text
 		{
+			// skip over the word
+			textPtr += 4;
+
 			if( x2 >= 0 && x+NATION_COLOR_BAR_WIDTH-1 > x2 )      // exceed right border x2
 				newLine = 1;
 			charWidth = NATION_COLOR_BAR_WIDTH;
@@ -1425,11 +1436,15 @@ void Font::put_paragraph_line(int x, int y, const char *textPtr, const char *tex
 			continue;
 		}
 
-		//-------- control char: FIRST_NATION_COLOR_CODE_IN_TEXT -----------//
+		// --------- control word: @COL# (nation color) -----------//
 
-		else if( textChar >= FIRST_NATION_COLOR_CODE_IN_TEXT && textChar <= LAST_NATION_COLOR_CODE_IN_TEXT ) 	// display nation color bar in text
+		else if( textChar == '@' && !strncmp(textPtr, "COL", 3) ) 	// display nation color bar in text
 		{
-			char colorCode = game.color_remap_array[textChar-FIRST_NATION_COLOR_CODE_IN_TEXT].main_color;
+			// get nation color and skip over the word
+			textChar = (unsigned char)textPtr[3];
+			textPtr += 4;
+
+			char colorCode = game.color_remap_array[textChar-ASCII_ZERO].main_color;
 
 			nation_array.disp_nation_color(x, y+2, colorCode);
 
