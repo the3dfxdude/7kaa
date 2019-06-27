@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-26 01:53-0500\n"
-"PO-Revision-Date: 2019-06-26 02:26-0500\n"
+"PO-Revision-Date: 2019-06-26 22:47-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -1488,7 +1488,7 @@ msgstr[2] "%d месяцев"
 #. TRANSLATORS: <Number> Peasant in <Town> in <King>'s Kingdom<Color> is rebelling.
 #. <Number> Peasants in <Town> in <King>'s Kingdom<Color> are rebelling.
 #: src/ONEWSENG.cpp:178
-#, c-format
+#, fuzzy, c-format
 msgid "%d Peasant in %s in %s's Kingdom%s is rebelling."
 msgid_plural "%d Peasants in %s in %s's Kingdom%s are rebelling."
 msgstr[0] "%d крестьянин из %s в %s бунтует в королестве %s."
@@ -1592,13 +1592,13 @@ msgstr "Образовалось новое королевство под пре
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has been destroyed.
 #: src/ONEWSENG.cpp:384
-#, c-format
+#, fuzzy, c-format
 msgid "%s's Kingdom%s has been destroyed."
 msgstr "%s было уничтожено %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has surrendered to you.
 #: src/ONEWSENG.cpp:407 src/OTALKENG.cpp:1174
-#, c-format
+#, fuzzy, c-format
 msgid "%s's Kingdom%s has surrendered to you."
 msgstr "%sКоролевство%s сдались вам."
 
@@ -1616,7 +1616,7 @@ msgstr "Ваш Король, %s, был повержен."
 
 #. TRANSLATORS: King <Name> of <King>'s Kingdom<Color> has been slain.
 #: src/ONEWSENG.cpp:442
-#, c-format
+#, fuzzy, c-format
 msgid "King %s of %s's Kingdom%s has been slain."
 msgstr "Король %s %s из %s был повержен."
 
@@ -1628,53 +1628,53 @@ msgstr "%s унаследовал трон в качестве вашего но
 
 #. TRANSLATORS: <Name> has ascended the throne as the new King of <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:476
-#, c-format
+#, fuzzy, c-format
 msgid "%s has ascended the throne as the new King of %s's Kingdom%s."
 msgstr "%s унаследовал трон в качестве нового короля %sКоролевства%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:485
-#, c-format
+#, fuzzy, c-format
 msgid "Your Seat of Power near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш центр власти около %s был уничтожен %sКоролевством%s."
 
 #: src/ONEWSENG.cpp:486
-#, c-format
+#, fuzzy, c-format
 msgid "Your Factory near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Завод около %s был уничтожен  %s'Королевством%s."
 
 #: src/ONEWSENG.cpp:487
-#, c-format
+#, fuzzy, c-format
 msgid "Your Inn near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваша Гостиница  около %s была уничтожена  %s'Королевством%s."
 
 #: src/ONEWSENG.cpp:488
-#, c-format
+#, fuzzy, c-format
 msgid "Your Market near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Рынок около %s был уничтожен %s'Королевством%s."
 
 #: src/ONEWSENG.cpp:489
-#, c-format
+#, fuzzy, c-format
 msgid "Your Fort near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Форт около %s был уничтожен %s'Королевством%s."
 
 #: src/ONEWSENG.cpp:490
-#, c-format
+#, fuzzy, c-format
 msgid "Your Mine near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваша Шахта около %s была уничтожена %s'Королевством%s."
 
 #: src/ONEWSENG.cpp:491
-#, c-format
+#, fuzzy, c-format
 msgid "Your Tower of Science near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Научный центр около %s был уничтожен %s'Королевством%s."
 
 #: src/ONEWSENG.cpp:492
-#, c-format
+#, fuzzy, c-format
 msgid "Your War Factory near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Военный завод около %s был уничтожен %s'Королевством%s."
 
 #: src/ONEWSENG.cpp:493
-#, c-format
+#, fuzzy, c-format
 msgid "Your Harbor near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваша Гавань около %s была уничтожена %s'Королевством%s."
 
@@ -2723,11 +2723,11 @@ msgstr "Ваша Гостиница была уничтожена молнией
 
 #: src/ONEWSENG.cpp:1311
 msgid "Your Market has been destroyed by lightning."
-msgstr "Ваш Рынок был  уничтожен молнией."
+msgstr "Ваш Рынок был уничтожен молнией."
 
 #: src/ONEWSENG.cpp:1312
 msgid "Your Fort has been destroyed by lightning."
-msgstr "Ваш Форт был  уничтожен молнией."
+msgstr "Ваш Форт был уничтожен молнией."
 
 #: src/ONEWSENG.cpp:1313
 msgid "Your Mine has been destroyed by lightning."
@@ -2933,7 +2933,7 @@ msgstr[2] ""
 
 #. TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
 #: src/ONEWSENG.cpp:1560
-#, c-format
+#, fuzzy, c-format
 msgid "and %d month left to achieve your goal."
 msgid_plural "and %d months left to achieve your goal."
 msgstr[0] "%d мес. осталсяна достижение игровой цели."
