@@ -107,10 +107,13 @@ void LocaleRes::init(const char *locale)
 		strcpy(lang, "??");
 		strcpy(codeset, "ISO-8859-1");
 	}
-	strcat(codeset, "//TRANSLIT");
 
-	cd = iconv_open(codeset, "");
+	String tocode(codeset);
+	tocode += "//TRANSLIT";
+	cd = iconv_open(tocode, "");
+
 	cd_latin = iconv_open("ISO-8859-1", "");
+
 	in_buf = mem_add(INIT_BUF_SIZE+1);
 	in_buf_size = INIT_BUF_SIZE;
 	out_buf = mem_add(INIT_BUF_SIZE+1);
