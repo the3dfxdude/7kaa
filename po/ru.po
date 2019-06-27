@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 01:53-0500\n"
+"POT-Creation-Date: 2019-06-26 20:20-0700\n"
 "PO-Revision-Date: 2019-06-26 02:26-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1471,8 +1471,8 @@ msgid "Duration of Alliance Status"
 msgstr "Продолжительность %s"
 
 #. TRANSLATORS: <Name>'s Kingdom
-#: src/ONATIONB.cpp:569 src/ONEWSENG.cpp:1744 src/ONEWSENG.cpp:1746
-#: src/ONEWSENG.cpp:1764 src/ONEWSENG.cpp:1766
+#: src/ONATIONB.cpp:569 src/ONEWSENG.cpp:1740 src/ONEWSENG.cpp:1742
+#: src/ONEWSENG.cpp:1760 src/ONEWSENG.cpp:1762
 #, c-format
 msgid "%s's Kingdom"
 msgstr "Королевство %s"
@@ -1487,7 +1487,7 @@ msgstr[2] "%d месяцев"
 
 #. TRANSLATORS: <Number> Peasant in <Town> in <King>'s Kingdom<Color> is rebelling.
 #. <Number> Peasants in <Town> in <King>'s Kingdom<Color> are rebelling.
-#: src/ONEWSENG.cpp:178
+#: src/ONEWSENG.cpp:174
 #, c-format
 msgid "%d Peasant in %s in %s's Kingdom%s is rebelling."
 msgid_plural "%d Peasants in %s in %s's Kingdom%s are rebelling."
@@ -1497,7 +1497,7 @@ msgstr[2] "%d крестьян из %s в %s бунтуют  в королест
 
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:221
+#: src/ONEWSENG.cpp:217
 #, fuzzy, c-format
 msgid "%d %s %s has emigrated from your village of %s to %s in %s's Kingdom%s."
 msgid_plural ""
@@ -1508,7 +1508,7 @@ msgstr[2] "%d %s %s эмигрировали из вашей деревни %s �
 
 #. TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
 #. <Number> <Race> Peasants have emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:237
+#: src/ONEWSENG.cpp:233
 #, fuzzy, c-format
 msgid ""
 "%d %s Peasant has emigrated from your village of %s to %s in %s's Kingdom%s."
@@ -1521,7 +1521,7 @@ msgstr[2] "%d %s крестьян эмигрировали из вашей де�
 
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town>.
-#: src/ONEWSENG.cpp:255
+#: src/ONEWSENG.cpp:251
 #, c-format
 msgid "%d %s %s has emigrated from your village of %s to %s."
 msgid_plural "%d %s %ss have emigrated from your village of %s to %s."
@@ -1531,7 +1531,7 @@ msgstr[2] "%d %s %s эмигрировали из вашей деревни %s �
 
 #. TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town>.
 #. <Number> <Race> Peasants have emigrated from your village of <Town> to <Town>.
-#: src/ONEWSENG.cpp:270
+#: src/ONEWSENG.cpp:266
 #, c-format
 msgid "%d %s Peasant has emigrated from your village of %s to %s."
 msgid_plural "%d %s Peasants have emigrated from your village of %s to %s."
@@ -1541,7 +1541,7 @@ msgstr[2] "%d %s крестьян эмигрировали из вашей де�
 
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
-#: src/ONEWSENG.cpp:290
+#: src/ONEWSENG.cpp:286
 #, fuzzy, c-format
 msgid ""
 "%d %s %s has immigrated from %s in %s's Kingdom%s to your village of %s."
@@ -1553,7 +1553,7 @@ msgstr[2] "%d %s %s эмигрировали из %s в %s в вашу дере�
 
 #. TRANSLATORS: A <Race> Peasant has immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #. <Number> <Race> Peasants have immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
-#: src/ONEWSENG.cpp:306
+#: src/ONEWSENG.cpp:302
 #, fuzzy, c-format
 msgid ""
 "%d %s Peasant has immigrated from %s in %s's Kingdom%s to your village of %s."
@@ -1566,7 +1566,7 @@ msgstr[2] "%d %s крестьян эмигрировали из %s в %s в ва
 
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> to your village of <Town>.
-#: src/ONEWSENG.cpp:324
+#: src/ONEWSENG.cpp:320
 #, c-format
 msgid "%d %s %s has immigrated from %s to your village of %s."
 msgid_plural "%d %s %ss have immigrated from %s to your village of %s."
@@ -1576,7 +1576,7 @@ msgstr[2] "%d %s %s эмигрировали из %s в вашу деревню 
 
 #. TRANSLATORS: A <Race> Peasant has immigrated from <Town> to your village of <Town>.
 #. <Number> <Race> Peasants have immigrated from <Town> to your village of <Town>.
-#: src/ONEWSENG.cpp:339
+#: src/ONEWSENG.cpp:335
 #, c-format
 msgid "%d %s Peasant has immigrated from %s to your village of %s."
 msgid_plural "%d %s Peasants have immigrated from %s to your village of %s."
@@ -1585,622 +1585,622 @@ msgstr[1] "%d %s крестьян эмигрировали из %s в вашу �
 msgstr[2] "%d %s крестьян эмигрировали из %s в вашу деревню %s."
 
 #. TRANSLATORS: A new Kingdom has emerged under the leadership of <Name>.
-#: src/ONEWSENG.cpp:366
+#: src/ONEWSENG.cpp:362
 #, c-format
 msgid "A new Kingdom has emerged under the leadership of %s."
 msgstr "Образовалось новое королевство под предводительством %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has been destroyed.
-#: src/ONEWSENG.cpp:384
+#: src/ONEWSENG.cpp:380
 #, c-format
 msgid "%s's Kingdom%s has been destroyed."
 msgstr "%s было уничтожено %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has surrendered to you.
-#: src/ONEWSENG.cpp:407 src/OTALKENG.cpp:1174
+#: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1174
 #, c-format
 msgid "%s's Kingdom%s has surrendered to you."
 msgstr "%sКоролевство%s сдались вам."
 
 #. TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
-#: src/ONEWSENG.cpp:412
+#: src/ONEWSENG.cpp:408
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has surrendered to %s's Kingdom%s."
 msgstr "%sКоролевство%s сдалось %sКоролевству."
 
 #. TRANSLATORS: Your King, <Name>, has been slain.
-#: src/ONEWSENG.cpp:437
+#: src/ONEWSENG.cpp:433
 #, c-format
 msgid "Your King, %s, has been slain."
 msgstr "Ваш Король, %s, был повержен."
 
 #. TRANSLATORS: King <Name> of <King>'s Kingdom<Color> has been slain.
-#: src/ONEWSENG.cpp:442
+#: src/ONEWSENG.cpp:438
 #, c-format
 msgid "King %s of %s's Kingdom%s has been slain."
 msgstr "Король %s %s из %s был повержен."
 
 #. TRANSLATORS: <Name> has ascended the throne as your new King.
-#: src/ONEWSENG.cpp:471
+#: src/ONEWSENG.cpp:467
 #, c-format
 msgid "%s has ascended the throne as your new King."
 msgstr "%s унаследовал трон в качестве вашего нового короля."
 
 #. TRANSLATORS: <Name> has ascended the throne as the new King of <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:476
+#: src/ONEWSENG.cpp:472
 #, c-format
 msgid "%s has ascended the throne as the new King of %s's Kingdom%s."
 msgstr "%s унаследовал трон в качестве нового короля %sКоролевства%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:485
+#: src/ONEWSENG.cpp:481
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш центр власти около %s был уничтожен %sКоролевством%s."
 
-#: src/ONEWSENG.cpp:486
+#: src/ONEWSENG.cpp:482
 #, c-format
 msgid "Your Factory near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Завод около %s был уничтожен  %s'Королевством%s."
 
-#: src/ONEWSENG.cpp:487
+#: src/ONEWSENG.cpp:483
 #, c-format
 msgid "Your Inn near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваша Гостиница  около %s была уничтожена  %s'Королевством%s."
 
-#: src/ONEWSENG.cpp:488
+#: src/ONEWSENG.cpp:484
 #, c-format
 msgid "Your Market near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Рынок около %s был уничтожен %s'Королевством%s."
 
-#: src/ONEWSENG.cpp:489
+#: src/ONEWSENG.cpp:485
 #, c-format
 msgid "Your Fort near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Форт около %s был уничтожен %s'Королевством%s."
 
-#: src/ONEWSENG.cpp:490
+#: src/ONEWSENG.cpp:486
 #, c-format
 msgid "Your Mine near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваша Шахта около %s была уничтожена %s'Королевством%s."
 
-#: src/ONEWSENG.cpp:491
+#: src/ONEWSENG.cpp:487
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Научный центр около %s был уничтожен %s'Королевством%s."
 
-#: src/ONEWSENG.cpp:492
+#: src/ONEWSENG.cpp:488
 #, c-format
 msgid "Your War Factory near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваш Военный завод около %s был уничтожен %s'Королевством%s."
 
-#: src/ONEWSENG.cpp:493
+#: src/ONEWSENG.cpp:489
 #, c-format
 msgid "Your Harbor near %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваша Гавань около %s была уничтожена %s'Королевством%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
-#: src/ONEWSENG.cpp:499
+#: src/ONEWSENG.cpp:495
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by Rebels."
 msgstr "Ваш Центр власти около %s был уничтожен повстанцами."
 
-#: src/ONEWSENG.cpp:500
+#: src/ONEWSENG.cpp:496
 #, c-format
 msgid "Your Factory near %s has been destroyed by Rebels."
 msgstr "Ваш Завод около %s был уничтожен повстанцами."
 
-#: src/ONEWSENG.cpp:501
+#: src/ONEWSENG.cpp:497
 #, c-format
 msgid "Your Inn near %s has been destroyed by Rebels."
 msgstr "Ваша Гостиница около %s была уничтожена повстанцами."
 
-#: src/ONEWSENG.cpp:502
+#: src/ONEWSENG.cpp:498
 #, c-format
 msgid "Your Market near %s has been destroyed by Rebels."
 msgstr "Ваш Рынок около %s был уничтожен повстанцами."
 
-#: src/ONEWSENG.cpp:503
+#: src/ONEWSENG.cpp:499
 #, c-format
 msgid "Your Fort near %s has been destroyed by Rebels."
 msgstr "Ваш Форт около %s был уничтожен повстанцами."
 
-#: src/ONEWSENG.cpp:504
+#: src/ONEWSENG.cpp:500
 #, c-format
 msgid "Your Mine near %s has been destroyed by Rebels."
 msgstr "Ваша Шахта около %s была уничтожена повстанцами."
 
-#: src/ONEWSENG.cpp:505
+#: src/ONEWSENG.cpp:501
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by Rebels."
 msgstr "Ваш Научный центр около %s был уничтожен повстанцами."
 
-#: src/ONEWSENG.cpp:506
+#: src/ONEWSENG.cpp:502
 #, c-format
 msgid "Your War Factroy near %s has been destroyed by Rebels."
 msgstr "Ваш Военный завод около %s был уничтожен повстанцами."
 
-#: src/ONEWSENG.cpp:507
+#: src/ONEWSENG.cpp:503
 #, c-format
 msgid "Your Harbor near %s has been destroyed by Rebels."
 msgstr "Ваша Гавань около %s была уничтожена повстанцами."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
-#: src/ONEWSENG.cpp:513
+#: src/ONEWSENG.cpp:509
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by Fryhtans."
 msgstr "Ваша Администрация около %s была уничтожена фрихтанами."
 
-#: src/ONEWSENG.cpp:514
+#: src/ONEWSENG.cpp:510
 #, c-format
 msgid "Your Factory near %s has been destroyed by Fryhtans."
 msgstr "Ваша Фабрика около %s была уничтожена фрихтанами."
 
-#: src/ONEWSENG.cpp:515
+#: src/ONEWSENG.cpp:511
 #, c-format
 msgid "Your Inn near %s has been destroyed by Fryhtans."
 msgstr "Ваша Гостиница около %s была уничтожена фрихтанами."
 
-#: src/ONEWSENG.cpp:516
+#: src/ONEWSENG.cpp:512
 #, c-format
 msgid "Your Market near %s has been destroyed by Fryhtans."
 msgstr "Ваш Рынок около %s был уничтожен фрихтанами."
 
-#: src/ONEWSENG.cpp:517
+#: src/ONEWSENG.cpp:513
 #, c-format
 msgid "Your Fort near %s has been destroyed by Fryhtans."
 msgstr "Ваш Форт около %s был уничтожен фрихтанами."
 
-#: src/ONEWSENG.cpp:518
+#: src/ONEWSENG.cpp:514
 #, c-format
 msgid "Your Mine near %s has been destroyed by Fryhtans."
 msgstr "Ваша Шахта около %s была уничтожена фрихтанами."
 
-#: src/ONEWSENG.cpp:519
+#: src/ONEWSENG.cpp:515
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by Fryhtans."
 msgstr "Ваш Научный центр около %s был уничтожен фрихтанами."
 
-#: src/ONEWSENG.cpp:520
+#: src/ONEWSENG.cpp:516
 #, c-format
 msgid "Your War Factory near %s has been destroyed by Fryhtans."
 msgstr "Ваш Военный завод около %s был уничтожен фрихтанами."
 
-#: src/ONEWSENG.cpp:521
+#: src/ONEWSENG.cpp:517
 #, c-format
 msgid "Your Harbor near %s has been destroyed by Fryhtans."
 msgstr "Ваша Гавань около %s была уничтожена фрихтанами."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed.
-#: src/ONEWSENG.cpp:527
+#: src/ONEWSENG.cpp:523
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed."
 msgstr "Ваша Администрация около %s была уничтожена."
 
-#: src/ONEWSENG.cpp:528
+#: src/ONEWSENG.cpp:524
 #, c-format
 msgid "Your Factory near %s has been destroyed."
 msgstr "Ваша Фабрика  около %s была уничтожена."
 
-#: src/ONEWSENG.cpp:529
+#: src/ONEWSENG.cpp:525
 #, c-format
 msgid "Your Inn near %s has been destroyed."
 msgstr "Ваша Гостиница  около %s была уничтожена."
 
-#: src/ONEWSENG.cpp:530
+#: src/ONEWSENG.cpp:526
 #, c-format
 msgid "Your Market near %s has been destroyed."
 msgstr "Ваш Рынок около %s был уничтожен."
 
-#: src/ONEWSENG.cpp:531
+#: src/ONEWSENG.cpp:527
 #, c-format
 msgid "Your Fort near %s has been destroyed."
 msgstr "Ваша Форт около %s был уничтожен."
 
-#: src/ONEWSENG.cpp:532
+#: src/ONEWSENG.cpp:528
 #, c-format
 msgid "Your Mine near %s has been destroyed."
 msgstr "Ваша Шахта около %s была уничтожена."
 
-#: src/ONEWSENG.cpp:533
+#: src/ONEWSENG.cpp:529
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed."
 msgstr "Ваш Научный центр около %s был уничтожен."
 
-#: src/ONEWSENG.cpp:534
+#: src/ONEWSENG.cpp:530
 #, c-format
 msgid "Your War Factory near %s has been destroyed."
 msgstr "Ваш Военный завод около %s была уничтожена."
 
-#: src/ONEWSENG.cpp:535
+#: src/ONEWSENG.cpp:531
 #, c-format
 msgid "Your Harbor near %s has been destroyed."
 msgstr "Ваш Гавань около %s была уничтожена."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:581
+#: src/ONEWSENG.cpp:577
 #, fuzzy, c-format
 msgid ""
 "Your Seat of Power near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваша Администрация около %s была захвачена шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:582
+#: src/ONEWSENG.cpp:578
 #, fuzzy, c-format
 msgid "Your Factory near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваша Фабрика около %s была захвачена шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:583
+#: src/ONEWSENG.cpp:579
 #, fuzzy, c-format
 msgid "Your Inn near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваша Гостиница около %s была захвачена шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:584
+#: src/ONEWSENG.cpp:580
 #, fuzzy, c-format
 msgid "Your Market near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваш Рынок около %s был захвачен шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:585
+#: src/ONEWSENG.cpp:581
 #, fuzzy, c-format
 msgid "Your Fort near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваш Форт около %s был захвачен шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:586
+#: src/ONEWSENG.cpp:582
 #, fuzzy, c-format
 msgid "Your Mine near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваша Шахта около %s была захвачена шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:587
+#: src/ONEWSENG.cpp:583
 #, fuzzy, c-format
 msgid ""
 "Your Tower of Science near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваш Научный центр около %s был захвачен шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:588
+#: src/ONEWSENG.cpp:584
 #, fuzzy, c-format
 msgid ""
 "Your War Factory near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваш Военный завод около %s был захвачен шпионом из %sКоролевства%s."
 
-#: src/ONEWSENG.cpp:589
+#: src/ONEWSENG.cpp:585
 #, fuzzy, c-format
 msgid "Your Harbor near %s has been captured by a spy from %s's Kingdom%s."
 msgstr "Ваша Гавань около %s была захвачена шпионом из %sКоролевства%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:595
+#: src/ONEWSENG.cpp:591
 #, fuzzy, c-format
 msgid "Your Seat of Power near %s has been captured by %s's Kingdom%s."
 msgstr "Ваша Администрация %s около %s была захвачена %s."
 
-#: src/ONEWSENG.cpp:596
+#: src/ONEWSENG.cpp:592
 #, fuzzy, c-format
 msgid "Your Factory near %s has been captured by %s's Kingdom%s."
 msgstr "Ваша Фабрика  %s около %s была захвачена %s."
 
-#: src/ONEWSENG.cpp:597
+#: src/ONEWSENG.cpp:593
 #, fuzzy, c-format
 msgid "Your Inn near %s has been captured by %s's Kingdom%s."
 msgstr "Ваша Гостиница %s около %s была захвачена %s."
 
-#: src/ONEWSENG.cpp:598
+#: src/ONEWSENG.cpp:594
 #, fuzzy, c-format
 msgid "Your Market near %s has been captured by %s's Kingdom%s."
 msgstr "Ваш Рынок %s около %s был захвачен %s."
 
-#: src/ONEWSENG.cpp:599
+#: src/ONEWSENG.cpp:595
 #, fuzzy, c-format
 msgid "Your Fort near %s has been captured by %s's Kingdom%s."
 msgstr "Ваш Форт %s около %s был захвачен %s."
 
-#: src/ONEWSENG.cpp:600
+#: src/ONEWSENG.cpp:596
 #, fuzzy, c-format
 msgid "Your Mine near %s has been captured by %s's Kingdom%s."
 msgstr "Ваша Шахта %s около %s была захвачена %s."
 
-#: src/ONEWSENG.cpp:601
+#: src/ONEWSENG.cpp:597
 #, fuzzy, c-format
 msgid "Your Tower of Science near %s has been captured by %s's Kingdom%s."
 msgstr "Ваш Научный центр %s около %s был захвачен%s."
 
-#: src/ONEWSENG.cpp:602
+#: src/ONEWSENG.cpp:598
 #, fuzzy, c-format
 msgid "Your War Factory near %s has been captured by %s's Kingdom%s."
 msgstr "Ваш Военный завод %s около %s был захвачен %s."
 
-#: src/ONEWSENG.cpp:603
+#: src/ONEWSENG.cpp:599
 #, fuzzy, c-format
 msgid "Your Harbor near %s has been captured by %s's Kingdom%s."
 msgstr "Ваша Гавань %s около %s была захвачена %s."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:659
+#: src/ONEWSENG.cpp:655
 #, fuzzy, c-format
 msgid "Your village of %s has been destroyed by %s's Kingdom%s."
 msgstr "Ваша деревня %s была %s уничтожена %s."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by Rebels.
-#: src/ONEWSENG.cpp:664
+#: src/ONEWSENG.cpp:660
 #, c-format
 msgid "Your village of %s has been destroyed by Rebels."
 msgstr "Ваша деревня %s была уничтожена повстанцами."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by Fryhtans.
-#: src/ONEWSENG.cpp:669
+#: src/ONEWSENG.cpp:665
 #, c-format
 msgid "Your village of %s has been destroyed by Fryhtans."
 msgstr "Ваша деревня %s была уничтожена фрихтанами."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed.
-#: src/ONEWSENG.cpp:674
+#: src/ONEWSENG.cpp:670
 #, c-format
 msgid "Your village of %s has been destroyed."
 msgstr "Ваша деревня %s была уничтожена."
 
 #. TRANSLATORS: Your village of <Town> has been abandoned by its people.
-#: src/ONEWSENG.cpp:695
+#: src/ONEWSENG.cpp:691
 #, c-format
 msgid "Your village of %s has been abandoned by its people."
 msgstr "Жители покинули вашу деревню %s."
 
 #. TRANSLATORS: Your village of <Town> has surrendered to <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:725
+#: src/ONEWSENG.cpp:721
 #, fuzzy, c-format
 msgid "Your village of %s has surrendered to %s's Kingdom%s."
 msgstr "Ваша деревня %s сдалась %sКоролевству%s."
 
 #. TRANSLATORS: The village of <Town> in <King>'s Kingdom<Color> has surrendered to you.
-#: src/ONEWSENG.cpp:730
+#: src/ONEWSENG.cpp:726
 #, fuzzy, c-format
 msgid "The village of %s in %s's Kingdom%s has surrendered to you."
 msgstr "Деревня %s из %s Королевства %s сдалась вам."
 
 #. TRANSLATORS: The independent village of <Town> has surrendered to you.
-#: src/ONEWSENG.cpp:735
+#: src/ONEWSENG.cpp:731
 #, c-format
 msgid "The independent village of %s has surrendered to you."
 msgstr "Независимая деревня %s сдалась вам."
 
 #. TRANSLATORS: An All High <monster type> has been slain.
-#: src/ONEWSENG.cpp:744
+#: src/ONEWSENG.cpp:740
 #, fuzzy
 msgid "An All High Deezboanz has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:745
+#: src/ONEWSENG.cpp:741
 #, fuzzy
 msgid "An All High Rattus has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:746
+#: src/ONEWSENG.cpp:742
 #, fuzzy
 msgid "An All High Broosken has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:747
+#: src/ONEWSENG.cpp:743
 #, fuzzy
 msgid "An All High Haubudam has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:748
+#: src/ONEWSENG.cpp:744
 #, fuzzy
 msgid "An All High Pfith has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:749
+#: src/ONEWSENG.cpp:745
 #, fuzzy
 msgid "An All High Rokken has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:750
+#: src/ONEWSENG.cpp:746
 #, fuzzy
 msgid "An All High Doink has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:751
+#: src/ONEWSENG.cpp:747
 #, fuzzy
 msgid "An All High Wyrm has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:752
+#: src/ONEWSENG.cpp:748
 #, fuzzy
 msgid "An All High Droog has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:753
+#: src/ONEWSENG.cpp:749
 #, fuzzy
 msgid "An All High Ick has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:754
+#: src/ONEWSENG.cpp:750
 #, fuzzy
 msgid "An All High Sauroid has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:755
+#: src/ONEWSENG.cpp:751
 #, fuzzy
 msgid "An All High Karrotten has been slain."
 msgstr "Его высочество %s был повержен."
 
-#: src/ONEWSENG.cpp:756
+#: src/ONEWSENG.cpp:752
 #, fuzzy
 msgid "An All High Holgh has been slain."
 msgstr "Его высочество %s был повержен."
 
 #. TRANSLATORS: A <Fryhtan> Lair has been destroyed.
-#: src/ONEWSENG.cpp:778
+#: src/ONEWSENG.cpp:774
 #, fuzzy
 msgid "A Deezboanz Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:779
+#: src/ONEWSENG.cpp:775
 #, fuzzy
 msgid "A Rattus Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:780
+#: src/ONEWSENG.cpp:776
 #, fuzzy
 msgid "A Broosken Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:781
+#: src/ONEWSENG.cpp:777
 #, fuzzy
 msgid "A Haubudam Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:782
+#: src/ONEWSENG.cpp:778
 #, fuzzy
 msgid "A Pfith Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:783
+#: src/ONEWSENG.cpp:779
 #, fuzzy
 msgid "A Rokken Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:784
+#: src/ONEWSENG.cpp:780
 #, fuzzy
 msgid "A Doink Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:785
+#: src/ONEWSENG.cpp:781
 #, fuzzy
 msgid "A Wyrm Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:786
+#: src/ONEWSENG.cpp:782
 #, fuzzy
 msgid "A Droog Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:787
+#: src/ONEWSENG.cpp:783
 #, fuzzy
 msgid "An Ick Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:788
+#: src/ONEWSENG.cpp:784
 #, fuzzy
 msgid "A Sauroid Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:789
+#: src/ONEWSENG.cpp:785
 #, fuzzy
 msgid "A Karrotten Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
-#: src/ONEWSENG.cpp:790
+#: src/ONEWSENG.cpp:786
 #, fuzzy
 msgid "A Holgh Lair has been destroyed."
 msgstr "Логово %s было уничтожено."
 
 #. TRANSLATORS: You have acquired the <Race> Scroll of Power.
-#: src/ONEWSENG.cpp:812
+#: src/ONEWSENG.cpp:808
 #, fuzzy
 msgid "You have acquired the Norman Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:813
+#: src/ONEWSENG.cpp:809
 #, fuzzy
 msgid "You have acquired the Mayan Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:814
+#: src/ONEWSENG.cpp:810
 #, fuzzy
 msgid "You have acquired the Greek Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:815
+#: src/ONEWSENG.cpp:811
 #, fuzzy
 msgid "You have acquired the Viking Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:816
+#: src/ONEWSENG.cpp:812
 #, fuzzy
 msgid "You have acquired the Persian Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:817
+#: src/ONEWSENG.cpp:813
 #, fuzzy
 msgid "You have acquired the Chinese Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:818
+#: src/ONEWSENG.cpp:814
 #, fuzzy
 msgid "You have acquired the Japanese Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:819
+#: src/ONEWSENG.cpp:815
 #, fuzzy
 msgid "You have acquired the Egyptian Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:820
+#: src/ONEWSENG.cpp:816
 #, fuzzy
 msgid "You have acquired the Mughul Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:821
+#: src/ONEWSENG.cpp:817
 #, fuzzy
 msgid "You have acquired the Zulu Scroll of Power."
 msgstr "Вы получили %s Свиток Власти."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has acquired the <Race> Scroll of Power.
-#: src/ONEWSENG.cpp:826
+#: src/ONEWSENG.cpp:822
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Norman Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:827
+#: src/ONEWSENG.cpp:823
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Mayan Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:828
+#: src/ONEWSENG.cpp:824
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Greek Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:829
+#: src/ONEWSENG.cpp:825
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Viking Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:830
+#: src/ONEWSENG.cpp:826
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Persian Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:831
+#: src/ONEWSENG.cpp:827
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Chinese Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:832
+#: src/ONEWSENG.cpp:828
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Japanese Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:833
+#: src/ONEWSENG.cpp:829
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Egyptian Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:834
+#: src/ONEWSENG.cpp:830
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Mughul Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
-#: src/ONEWSENG.cpp:835
+#: src/ONEWSENG.cpp:831
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has acquired the Zulu Scroll of Power."
 msgstr "%s Королевство%s получило %s Свиток Власти."
 
 #. TRANSLATORS: You have recovered <Amount> worth of treasure from the Fryhtans.
-#: src/ONEWSENG.cpp:879
+#: src/ONEWSENG.cpp:875
 #, c-format
 msgid "You have recovered %s worth of treasure from the Fryhtans."
 msgstr "Вы вернули сокровища достоинством в %s от Фрихтанов."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:887
+#: src/ONEWSENG.cpp:883
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Seat of Power "
@@ -2208,7 +2208,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:888
+#: src/ONEWSENG.cpp:884
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Factory near %s "
@@ -2216,7 +2216,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:889
+#: src/ONEWSENG.cpp:885
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Inn near %s in "
@@ -2224,7 +2224,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:890
+#: src/ONEWSENG.cpp:886
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Market near %s in "
@@ -2232,7 +2232,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:891
+#: src/ONEWSENG.cpp:887
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fort near %s in "
@@ -2240,7 +2240,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:892
+#: src/ONEWSENG.cpp:888
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Mine near %s in "
@@ -2248,7 +2248,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:893
+#: src/ONEWSENG.cpp:889
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Tower of Science "
@@ -2256,7 +2256,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:894
+#: src/ONEWSENG.cpp:890
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a War Factory near "
@@ -2264,7 +2264,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:895
+#: src/ONEWSENG.cpp:891
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Harbor near %s in "
@@ -2272,7 +2272,7 @@ msgid ""
 msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
-#: src/ONEWSENG.cpp:896
+#: src/ONEWSENG.cpp:892
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fryhtan Lair near "
@@ -2281,63 +2281,63 @@ msgstr ""
 "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
-#: src/ONEWSENG.cpp:901
+#: src/ONEWSENG.cpp:897
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Seat of Power "
 "near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:902
+#: src/ONEWSENG.cpp:898
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Factory near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:903
+#: src/ONEWSENG.cpp:899
 #, fuzzy, c-format
 msgid "Your spy has been exposed and executed on his mission to a Inn near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:904
+#: src/ONEWSENG.cpp:900
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Market near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:905
+#: src/ONEWSENG.cpp:901
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fort near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:906
+#: src/ONEWSENG.cpp:902
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Mine near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:907
+#: src/ONEWSENG.cpp:903
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Tower of Science "
 "near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:908
+#: src/ONEWSENG.cpp:904
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a War Factory near "
 "%s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:909
+#: src/ONEWSENG.cpp:905
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Harbor near %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
-#: src/ONEWSENG.cpp:910
+#: src/ONEWSENG.cpp:906
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fryhtan Lair near "
@@ -2345,7 +2345,7 @@ msgid ""
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to <Town> in <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:955
+#: src/ONEWSENG.cpp:951
 #, fuzzy, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to %s in %s's Kingdom"
@@ -2353,89 +2353,89 @@ msgid ""
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s из %s."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to <Town>.
-#: src/ONEWSENG.cpp:960
+#: src/ONEWSENG.cpp:956
 #, c-format
 msgid "Your spy has been exposed and executed on his mission to %s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s."
 
 #. TRANSLATORS: Your spy <Name> has been exposed and executed on his mission to <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:968
+#: src/ONEWSENG.cpp:964
 #, fuzzy, c-format
 msgid ""
 "Your spy %s has been exposed and executed on his mission to %s's Kingdom%s."
 msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s из %s."
 
 #. TRANSLATORS: Your spy <Name> has been exposed and executed on his mission.
-#: src/ONEWSENG.cpp:973
+#: src/ONEWSENG.cpp:969
 #, c-format
 msgid "Your spy %s has been exposed and executed on his mission."
 msgstr "Ваш шпион %s был раскрыт и казнен в течении его миссии."
 
 #. TRANSLATORS: A spy from <King>'s Kingdom<Color> has been uncovered and executed in your <Firm> near <Town>.
-#: src/ONEWSENG.cpp:983
+#: src/ONEWSENG.cpp:979
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Seat of "
 "Power near %s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:984
+#: src/ONEWSENG.cpp:980
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Factory "
 "near %s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:985
+#: src/ONEWSENG.cpp:981
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Inn near "
 "%s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:986
+#: src/ONEWSENG.cpp:982
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Market "
 "near %s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:987
+#: src/ONEWSENG.cpp:983
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Fort near "
 "%s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:988
+#: src/ONEWSENG.cpp:984
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Mine near "
 "%s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:989
+#: src/ONEWSENG.cpp:985
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Tower of "
 "Science near %s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:990
+#: src/ONEWSENG.cpp:986
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your War "
 "Factory near %s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:991
+#: src/ONEWSENG.cpp:987
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Harbor "
 "near %s."
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
-#: src/ONEWSENG.cpp:992
+#: src/ONEWSENG.cpp:988
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Fryhtan "
@@ -2443,7 +2443,7 @@ msgid ""
 msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
 
 #. TRANSLATORS: A spy from <King>'s Kingdom<Color> has been uncovered and executed in your village of <Town>.
-#: src/ONEWSENG.cpp:1028
+#: src/ONEWSENG.cpp:1024
 #, fuzzy, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your village of "
@@ -2451,387 +2451,387 @@ msgid ""
 msgstr "Шпион из %s был раскрыт и казнен в вашей деревне %s."
 
 #. TRANSLATORS: Spy <Name> from <King>'s Kingdom<Color> has been uncovered and executed.
-#: src/ONEWSENG.cpp:1036
+#: src/ONEWSENG.cpp:1032
 #, fuzzy, c-format
 msgid "Spy %s from %s's Kingdom%s has been uncovered and executed."
 msgstr "Шпион %s из %s был раскрыт и казнен."
 
 #. TRANSLATORS: Independent unit <Name> has joined your force.
-#: src/ONEWSENG.cpp:1072
+#: src/ONEWSENG.cpp:1068
 #, c-format
 msgid "Independent unit %s has joined your force."
 msgstr "Независимый юнит %s присоединился к вашим силам."
 
 #. TRANSLATORS: General <Name> has renounced you and become independent.
-#: src/ONEWSENG.cpp:1084
+#: src/ONEWSENG.cpp:1080
 #, c-format
 msgid "General %s has renounced you and become independent."
 msgstr "Генерал %s отрекся от вас и стал независимым."
 
 #. TRANSLATORS: <Name> has renounced you and become independent.
-#: src/ONEWSENG.cpp:1089
+#: src/ONEWSENG.cpp:1085
 #, c-format
 msgid "%s has renounced you and become independent."
 msgstr "%s отрекся от вас и стал независимым."
 
 #. TRANSLATORS: General <Name> has betrayed you and turned towards <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:1099
+#: src/ONEWSENG.cpp:1095
 #, fuzzy, c-format
 msgid "General %s has betrayed you and turned towards %s's Kingdom%s."
 msgstr "Генерал %s предал вас и обратился против %s."
 
 #. TRANSLATORS: <Name> has betrayed you and turned towards <King>'s Kingdom<Color>.
-#: src/ONEWSENG.cpp:1104
+#: src/ONEWSENG.cpp:1100
 #, fuzzy, c-format
 msgid "%s has betrayed you and turned towards %s's Kingdom%s."
 msgstr "%s предал вас и обратился против %s."
 
 #. TRANSLATORS: General <Name> of <King>'s Kingdom<Color> has defected to your forces.
-#: src/ONEWSENG.cpp:1112
+#: src/ONEWSENG.cpp:1108
 #, fuzzy, c-format
 msgid "General %s of %s's Kingdom%s has defected to your forces."
 msgstr "Генерал %s из %s перешел на сторону ваших сил."
 
 #. TRANSLATORS: <Name> of <King>'s Kingdom<Color> has defected to your forces.
-#: src/ONEWSENG.cpp:1117
+#: src/ONEWSENG.cpp:1113
 #, fuzzy, c-format
 msgid "%s of %s's Kingdom%s has defected to your forces."
 msgstr "%s из %s перешел на сторону ваших сил."
 
 #. TRANSLATORS: Your general, <Name>, has been slain.
-#: src/ONEWSENG.cpp:1139
+#: src/ONEWSENG.cpp:1135
 #, c-format
 msgid "Your general, %s, has been slain."
 msgstr "Ваш Генерал, %s, был повержен."
 
 #. TRANSLATORS: Your King, <Name>, has been assassinated by an enemy spy.
-#: src/ONEWSENG.cpp:1165
+#: src/ONEWSENG.cpp:1161
 #, c-format
 msgid "Your King, %s, has been assassinated by an enemy spy."
 msgstr "Ваш Король, %s, был убит шпионом противника."
 
 #. TRANSLATORS: Your general, <Name>, has been assassinated by an enemy spy.
-#: src/ONEWSENG.cpp:1170
+#: src/ONEWSENG.cpp:1166
 #, c-format
 msgid "Your general, %s, has been assassinated by an enemy spy."
 msgstr "Ваш Генерал, %s, был убит шпионом противника."
 
-#: src/ONEWSENG.cpp:1176
+#: src/ONEWSENG.cpp:1172
 msgid "The enemy spy has been killed."
 msgstr "Шпион противника был убит."
 
-#: src/ONEWSENG.cpp:1196
+#: src/ONEWSENG.cpp:1192
 msgid "An enemy spy has been killed while attempting to assassinate your King."
 msgstr "Шпион противника был убит при попытке покушения на вашего короля."
 
-#: src/ONEWSENG.cpp:1198
+#: src/ONEWSENG.cpp:1194
 msgid ""
 "An enemy spy has been killed while attempting to assassinate your General."
 msgstr "Шпион противника был убит при попытке покушения на вашего генерала."
 
 #. TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
-#: src/ONEWSENG.cpp:1206
+#: src/ONEWSENG.cpp:1202
 msgid "Your Clay Mine has exhausted its Clay deposit."
 msgstr "Месторождение глины исчерпало свой ресурс."
 
-#: src/ONEWSENG.cpp:1207
+#: src/ONEWSENG.cpp:1203
 msgid "Your Copper Mine has exhausted its Copper deposit."
 msgstr "Месторождение меди исчерпало свой ресурс."
 
-#: src/ONEWSENG.cpp:1208
+#: src/ONEWSENG.cpp:1204
 msgid "Your Iron Mine has exhausted its Iron deposit."
 msgstr "Месторождение железной руды исчерпало свой ресурс."
 
 #. TRANSLATORS: Your scientists have finished their <Tech> Mark <Level Roman Numeral> research.
-#: src/ONEWSENG.cpp:1230
+#: src/ONEWSENG.cpp:1226
 #, c-format
 msgid "Your scientists have finished their Catapult Mark %s research."
 msgstr "Ваши ученые завершили исследование Катапульты %s уровня."
 
-#: src/ONEWSENG.cpp:1231
+#: src/ONEWSENG.cpp:1227
 #, c-format
 msgid "Your scientists have finished their Porcupine Mark %s research."
 msgstr "Ваши ученые завершили исследование Дикобраза %s уровня."
 
-#: src/ONEWSENG.cpp:1232
+#: src/ONEWSENG.cpp:1228
 #, c-format
 msgid "Your scientists have finished their Ballista Mark %s research."
 msgstr "Ваши ученые завершили исследование Балисты %s уровня."
 
-#: src/ONEWSENG.cpp:1233
+#: src/ONEWSENG.cpp:1229
 #, c-format
 msgid "Your scientists have finished their Cannon Mark %s research."
 msgstr "Ваши ученые завершили исследование Пушки %s уровня."
 
-#: src/ONEWSENG.cpp:1234
+#: src/ONEWSENG.cpp:1230
 #, c-format
 msgid "Your scientists have finished their Spitfire Mark %s research."
 msgstr "Ваши ученые завершили исследование Спитфайра %s уровня."
 
-#: src/ONEWSENG.cpp:1235
+#: src/ONEWSENG.cpp:1231
 #, c-format
 msgid "Your scientists have finished their Caravel Mark %s research."
 msgstr "Ваши ученые завершили исследование Каравеллы %s уровня."
 
-#: src/ONEWSENG.cpp:1236
+#: src/ONEWSENG.cpp:1232
 #, c-format
 msgid "Your scientists have finished their Galleon Mark %s research."
 msgstr "Ваши ученые завершили исследование Галеона %s уровня."
 
-#: src/ONEWSENG.cpp:1237
+#: src/ONEWSENG.cpp:1233
 #, c-format
 msgid "Your scientists have finished their Unicorn Mark %s research."
 msgstr "Ваши ученые завершили исследование Единорога %s уровня."
 
 #. TRANSLATORS: Your scientists have finished their <Tech> research.
-#: src/ONEWSENG.cpp:1242
+#: src/ONEWSENG.cpp:1238
 msgid "Your scientists have finished their Catapult research."
 msgstr "Ваши ученые завершили исследование Катапульты."
 
-#: src/ONEWSENG.cpp:1243
+#: src/ONEWSENG.cpp:1239
 msgid "Your scientists have finished their Porcupine research."
 msgstr "Ваши ученые завершили исследование Дикобраза."
 
-#: src/ONEWSENG.cpp:1244
+#: src/ONEWSENG.cpp:1240
 msgid "Your scientists have finished their Ballista research."
 msgstr "Ваши ученые завершили исследование Балисты."
 
-#: src/ONEWSENG.cpp:1245
+#: src/ONEWSENG.cpp:1241
 msgid "Your scientists have finished their Cannon research."
 msgstr "Ваши ученые завершили исследование Пушки."
 
-#: src/ONEWSENG.cpp:1246
+#: src/ONEWSENG.cpp:1242
 msgid "Your scientists have finished their Spitfire research."
 msgstr "Ваши ученые завершили исследование Спитфайра."
 
-#: src/ONEWSENG.cpp:1247
+#: src/ONEWSENG.cpp:1243
 msgid "Your scientists have finished their Caravel research."
 msgstr "Ваши ученые завершили исследование Каравеллы."
 
-#: src/ONEWSENG.cpp:1248
+#: src/ONEWSENG.cpp:1244
 msgid "Your scientists have finished their Galleon research."
 msgstr "Ваши ученые завершили исследование Галеона."
 
-#: src/ONEWSENG.cpp:1249
+#: src/ONEWSENG.cpp:1245
 msgid "Your scientists have finished their Unicorn research."
 msgstr "Ваши ученые завершили исследование Единорога."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
-#: src/ONEWSENG.cpp:1280
+#: src/ONEWSENG.cpp:1276
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by lightning."
 msgstr "Ваша Администрация около %s была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1281
+#: src/ONEWSENG.cpp:1277
 #, c-format
 msgid "Your Factory near %s has been destroyed by lightning."
 msgstr "Ваша Фабрика около %s была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1282
+#: src/ONEWSENG.cpp:1278
 #, c-format
 msgid "Your Inn near %s has been destroyed by lightning."
 msgstr "Ваша Гостиница около %s была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1283
+#: src/ONEWSENG.cpp:1279
 #, c-format
 msgid "Your Market near %s has been destroyed by lightning."
 msgstr "Ваш Рынок около %s был  уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1284
+#: src/ONEWSENG.cpp:1280
 #, c-format
 msgid "Your Fort near %s has been destroyed by lightning."
 msgstr "Ваш Форт около %s был уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1285
+#: src/ONEWSENG.cpp:1281
 #, c-format
 msgid "Your Mine near %s has been destroyed by lightning."
 msgstr "Ваша Шахта около %s была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1286
+#: src/ONEWSENG.cpp:1282
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by lightning."
 msgstr "Ваш Научный центр около %s был уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1287
+#: src/ONEWSENG.cpp:1283
 #, c-format
 msgid "Your War Factory near %s has been destroyed by lightning."
 msgstr "Ваш Военный завод около %s был уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1288
+#: src/ONEWSENG.cpp:1284
 #, c-format
 msgid "Your Harbor near %s has been destroyed by lightning."
 msgstr "Ваша Гавань около %s была уничтожена молнией."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been struck by lightning.
-#: src/ONEWSENG.cpp:1294
+#: src/ONEWSENG.cpp:1290
 #, c-format
 msgid "Your Seat of Power near %s has been struck by lightning."
 msgstr "Ваша Администрация около %s была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1295
+#: src/ONEWSENG.cpp:1291
 #, c-format
 msgid "Your Factory near %s has been struck by lightning."
 msgstr "Ваша Фабрика около %s была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1296
+#: src/ONEWSENG.cpp:1292
 #, c-format
 msgid "Your Inn near %s has been struck by lightning."
 msgstr "Ваша Гостиница около %s была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1297
+#: src/ONEWSENG.cpp:1293
 #, c-format
 msgid "Your Market near %s has been struck by lightning."
 msgstr "Ваш Рынок около %s был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1298
+#: src/ONEWSENG.cpp:1294
 #, c-format
 msgid "Your Fort near %s has been struck by lightning."
 msgstr "Ваш Форт около %s был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1299
+#: src/ONEWSENG.cpp:1295
 #, c-format
 msgid "Your Mine near %s has been struck by lightning."
 msgstr "Ваша Шахта около %s была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1300
+#: src/ONEWSENG.cpp:1296
 #, c-format
 msgid "Your Tower of Science near %s has been struck by lightning."
 msgstr "Ваш Научный центр около %s был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1301
+#: src/ONEWSENG.cpp:1297
 #, c-format
 msgid "Your War Factory near %s has been struck by lightning."
 msgstr "Ваш Военный завод около %s был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1302
+#: src/ONEWSENG.cpp:1298
 #, c-format
 msgid "Your Harbor near %s has been struck by lightning."
 msgstr "Ваша Гавань около %s была повреждена молнией."
 
 #. TRANSLATORS: Your <Firm> has been destroyed by lightning.
-#: src/ONEWSENG.cpp:1308
+#: src/ONEWSENG.cpp:1304
 msgid "Your Seat of Power has been destroyed by lightning."
 msgstr "Ваша Администрация была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1309
+#: src/ONEWSENG.cpp:1305
 msgid "Your Factory has been destroyed by lightning."
 msgstr "Ваша Фабрика была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1310
+#: src/ONEWSENG.cpp:1306
 msgid "Your Inn has been destroyed by lightning."
 msgstr "Ваша Гостиница была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1311
+#: src/ONEWSENG.cpp:1307
 msgid "Your Market has been destroyed by lightning."
 msgstr "Ваш Рынок был  уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1312
+#: src/ONEWSENG.cpp:1308
 msgid "Your Fort has been destroyed by lightning."
 msgstr "Ваш Форт был  уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1313
+#: src/ONEWSENG.cpp:1309
 msgid "Your Mine has been destroyed by lightning."
 msgstr "Ваша Шахта была была уничтожена молнией."
 
-#: src/ONEWSENG.cpp:1314
+#: src/ONEWSENG.cpp:1310
 msgid "Your Tower of Science has been destroyed by lightning."
 msgstr "Ваш Научный центр был уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1315
+#: src/ONEWSENG.cpp:1311
 msgid "Your War Factory has been destroyed by lightning."
 msgstr "Ваш Военный завод былыл уничтожен молнией."
 
-#: src/ONEWSENG.cpp:1316
+#: src/ONEWSENG.cpp:1312
 msgid "Your Harbor has been destroyed by lightning."
 msgstr "Ваша Гавань была  уничтожена молнией."
 
 #. TRANSLATORS: Your <Firm> has been struck by lightning.
-#: src/ONEWSENG.cpp:1322
+#: src/ONEWSENG.cpp:1318
 msgid "Your Seat of Power has been struck by lightning."
 msgstr "Ваша Администрация была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1323
+#: src/ONEWSENG.cpp:1319
 msgid "Your Factory has been struck by lightning."
 msgstr "Ваша Фабрика была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1324
+#: src/ONEWSENG.cpp:1320
 msgid "Your Inn has been struck by lightning."
 msgstr "Ваша Гостиница  была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1325
+#: src/ONEWSENG.cpp:1321
 msgid "Your Market has been struck by lightning."
 msgstr "Ваш Рынок был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1326
+#: src/ONEWSENG.cpp:1322
 msgid "Your Fort has been struck by lightning."
 msgstr "Ваш Форт был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1327
+#: src/ONEWSENG.cpp:1323
 msgid "Your Mine has been struck by lightning."
 msgstr "Ваша Шахта была повреждена молнией."
 
-#: src/ONEWSENG.cpp:1328
+#: src/ONEWSENG.cpp:1324
 msgid "Your Tower of Science has been struck by lightning."
 msgstr "Ваш Научный центр был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1329
+#: src/ONEWSENG.cpp:1325
 msgid "Your War Factory has been struck by lightning."
 msgstr "Ваш Военный завод был поврежден молнией."
 
-#: src/ONEWSENG.cpp:1330
+#: src/ONEWSENG.cpp:1326
 msgid "Your Harbor has been struck by lightning."
 msgstr "Ваша Гавань была повреждена молнией."
 
 #. TRANSLATORS: Your General <Name> has been struck and killed by lightning.
-#: src/ONEWSENG.cpp:1362
+#: src/ONEWSENG.cpp:1358
 #, c-format
 msgid "Your General %s has been struck and killed by lightning."
 msgstr "Ваш Генерал %s был поражен и убит молнией."
 
 #. TRANSLATORS: Your General <Name> has been struck and injured by lightning.
-#: src/ONEWSENG.cpp:1367
+#: src/ONEWSENG.cpp:1363
 #, c-format
 msgid "Your General %s has been struck and injured by lightning."
 msgstr "Ваш Генерал %s был поражен и ранен молнией."
 
 #. TRANSLATORS: Your King <Name> has been struck and killed by lightning.
-#: src/ONEWSENG.cpp:1375
+#: src/ONEWSENG.cpp:1371
 #, c-format
 msgid "Your King %s has been struck and killed by lightning."
 msgstr "Ваш Король %s был поражен и убит молнией."
 
 #. TRANSLATORS: Your King <Name> has been struck and injured by lightning.
-#: src/ONEWSENG.cpp:1380
+#: src/ONEWSENG.cpp:1376
 #, c-format
 msgid "Your King %s has been struck and injured by lightning."
 msgstr "Ваш Король %s был поражен и ранен молнией."
 
 #. TRANSLATORS: Your unit <Name> has been struck and killed by lightning.
-#: src/ONEWSENG.cpp:1388
+#: src/ONEWSENG.cpp:1384
 #, c-format
 msgid "Your unit %s has been struck and killed by lightning."
 msgstr "Ваш юнит %s был поражен и убит молнией."
 
 #. TRANSLATORS: Your unit <Name> has been struck and injured by lightning.
-#: src/ONEWSENG.cpp:1393
+#: src/ONEWSENG.cpp:1389
 #, c-format
 msgid "Your unit %s has been struck and injured by lightning."
 msgstr "Ваш юнит %s был поражен и ранен молнией."
 
 #. TRANSLATORS: Your village <Town> has been destroyed by lightning.
-#: src/ONEWSENG.cpp:1427
+#: src/ONEWSENG.cpp:1423
 #, c-format
 msgid "Your village %s has been destroyed by lightning."
 msgstr "Ваша деревня %s была уничтожена молнией."
 
 #. TRANSLATORS: Your village <Town> has been struck by lightning.
-#: src/ONEWSENG.cpp:1432
+#: src/ONEWSENG.cpp:1428
 #, c-format
 msgid "Your village %s has been struck by lightning."
 msgstr "Ваша деревня %s была поражена молнией."
 
 #. TRANSLATORS: Part of "<Number> of your units has/have been injured and <Number referring to units> killed in an earthquake."
-#: src/ONEWSENG.cpp:1467
+#: src/ONEWSENG.cpp:1463
 #, c-format
 msgid "%d of your units has been injured"
 msgid_plural "%d of your units have been injured"
@@ -2840,7 +2840,7 @@ msgstr[1] "%d из ваших юнитов были ранены"
 msgstr[2] "%d из ваших юнитов были ранены"
 
 #. TRANSLATORS: Part of "<Number> of your units has/have been injured and <Number referring to units> killed in an earthquake."
-#: src/ONEWSENG.cpp:1471
+#: src/ONEWSENG.cpp:1467
 #, fuzzy, c-format
 msgid "and %d killed in an earthquake."
 msgid_plural "and %d killed in an earthquake."
@@ -2849,7 +2849,7 @@ msgstr[1] "%d ваших юнита было ранено и %d погибло �
 msgstr[2] "%d ваших юнитов были ранены и %d погибли во время землетрясения."
 
 #. TRANSLATORS: <Number> of your units has/have been injured in an earthquake.
-#: src/ONEWSENG.cpp:1477
+#: src/ONEWSENG.cpp:1473
 #, c-format
 msgid "%d of your units has been injured in an earthquake."
 msgid_plural "%d of your units have been injured in an earthquake."
@@ -2858,7 +2858,7 @@ msgstr[1] "%d ваших юнита было ранено во время зем
 msgstr[2] "%d ваших юнитов были ранены во время землетрясения."
 
 #. TRANSLATORS: <Number> of your villagers has/have been killed in an earthquake.
-#: src/ONEWSENG.cpp:1484
+#: src/ONEWSENG.cpp:1480
 #, c-format
 msgid "%d of your villagers has been killed in an earthquake."
 msgid_plural "%d of your villagers have been killed in an earthquake."
@@ -2867,7 +2867,7 @@ msgstr[1] "%d ваших поселенца погибло во время зе�
 msgstr[2] "%d ваших поселенцев погибли во время землетрясения ."
 
 #. TRANSLATORS: Part of "<Number> of your buildings has/have been damaged and <Number referring to buildings> destroyed in an earthquake."
-#: src/ONEWSENG.cpp:1492
+#: src/ONEWSENG.cpp:1488
 #, c-format
 msgid "%d of your buildings has been damaged"
 msgid_plural "%d of your buildings have been damaged"
@@ -2876,7 +2876,7 @@ msgstr[1] "%d из ваших построек были повреждены в�
 msgstr[2] "%d из ваших построек были повреждены во время землетрясения"
 
 #. TRANSLATORS: Part of "<Number> of your buildings has/have been damaged and <Number referring to buildings> destroyed in an earthquake."
-#: src/ONEWSENG.cpp:1496
+#: src/ONEWSENG.cpp:1492
 #, fuzzy, c-format
 msgid "and %d destroyed in an earthquake."
 msgid_plural "and %d destroyed in an earthquake."
@@ -2888,7 +2888,7 @@ msgstr[2] ""
 "%d ваших построек были повреждены и %d уничтожены во время землетрясения."
 
 #. TRANSLATORS: <Number> of your buildings has/have been damaged in an earthquake.
-#: src/ONEWSENG.cpp:1502
+#: src/ONEWSENG.cpp:1498
 #, c-format
 msgid "%d of your buildings has been damaged in an earthquake."
 msgid_plural "%d of your buildings have been damaged in an earthquake."
@@ -2896,11 +2896,11 @@ msgstr[0] "%d ваша постройка была повреждена во в�
 msgstr[1] "%d ваших постройки были повреждены во время землетрясения."
 msgstr[2] "%d ваших построек были повреждены во время землетрясения."
 
-#: src/ONEWSENG.cpp:1529
+#: src/ONEWSENG.cpp:1525
 msgid "Make haste!"
 msgstr ""
 
-#: src/ONEWSENG.cpp:1541
+#: src/ONEWSENG.cpp:1537
 #, fuzzy, c-format
 msgid "You have only %d year left to achieve your goal."
 msgid_plural "You have only %d years left to achieve your goal."
@@ -2911,7 +2911,7 @@ msgstr[1] ""
 msgstr[2] ""
 "Поторопитесь! У вас остался только %d год на достижение игровой цели."
 
-#: src/ONEWSENG.cpp:1548
+#: src/ONEWSENG.cpp:1544
 #, fuzzy, c-format
 msgid "You have only %d month left to achieve your goal."
 msgid_plural "You have only %d months left to achieve your goal."
@@ -2923,7 +2923,7 @@ msgstr[2] ""
 "Поторопитесь! У вас остался только %d месяц на достижение игровой цели."
 
 #. TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
-#: src/ONEWSENG.cpp:1555
+#: src/ONEWSENG.cpp:1551
 #, c-format
 msgid "You have only %d year"
 msgid_plural "You have only %d years"
@@ -2932,7 +2932,7 @@ msgstr[1] ""
 msgstr[2] ""
 
 #. TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
-#: src/ONEWSENG.cpp:1560
+#: src/ONEWSENG.cpp:1556
 #, c-format
 msgid "and %d month left to achieve your goal."
 msgid_plural "and %d months left to achieve your goal."
@@ -2941,68 +2941,68 @@ msgstr[1] "%d мес. осталсяна достижение игровой ц�
 msgstr[2] "%d мес. осталсяна достижение игровой цели."
 
 #. TRANSLATORS: A <Weapon> <Tech Level Number> of yours has broken down due to the lack of maintenance funds.
-#: src/ONEWSENG.cpp:1570
+#: src/ONEWSENG.cpp:1566
 #, fuzzy, c-format
 msgid ""
 "A Catapult %s of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1571
+#: src/ONEWSENG.cpp:1567
 #, fuzzy, c-format
 msgid ""
 "A Ballista %s of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1572
+#: src/ONEWSENG.cpp:1568
 #, fuzzy, c-format
 msgid ""
 "A Spitfire %s of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1573
+#: src/ONEWSENG.cpp:1569
 #, fuzzy, c-format
 msgid ""
 "A Cannon %s of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1574
+#: src/ONEWSENG.cpp:1570
 #, fuzzy, c-format
 msgid ""
 "A Porcupine %s of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #. TRANSLATORS: A <Ship> of yours has broken down due to the lack of maintenance funds.
-#: src/ONEWSENG.cpp:1576
+#: src/ONEWSENG.cpp:1572
 #, fuzzy
 msgid "A Trader of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1577
+#: src/ONEWSENG.cpp:1573
 #, fuzzy
 msgid ""
 "A Transport of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1578
+#: src/ONEWSENG.cpp:1574
 #, fuzzy
 msgid ""
 "A Caravel of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1579
+#: src/ONEWSENG.cpp:1575
 #, fuzzy
 msgid ""
 "A Galleon of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1581
+#: src/ONEWSENG.cpp:1577
 #, fuzzy, c-format
 msgid ""
 "A Unicorn %s of yours has broken down due to the lack of maintenance funds."
 msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #. TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
-#: src/ONEWSENG.cpp:1619
+#: src/ONEWSENG.cpp:1615
 #, fuzzy, c-format
 msgid ""
 "Your Seat of Power near %s has fallen into disrepair due to the lack of "
@@ -3010,7 +3010,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1620
+#: src/ONEWSENG.cpp:1616
 #, fuzzy, c-format
 msgid ""
 "Your Factory near %s has fallen into disrepair due to the lack of "
@@ -3018,7 +3018,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1621
+#: src/ONEWSENG.cpp:1617
 #, fuzzy, c-format
 msgid ""
 "Your Inn near %s has fallen into disrepair due to the lack of maintenance "
@@ -3026,7 +3026,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1622
+#: src/ONEWSENG.cpp:1618
 #, fuzzy, c-format
 msgid ""
 "Your Market near %s has fallen into disrepair due to the lack of maintenance "
@@ -3034,7 +3034,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1623
+#: src/ONEWSENG.cpp:1619
 #, fuzzy, c-format
 msgid ""
 "Your Fort near %s has fallen into disrepair due to the lack of maintenance "
@@ -3042,7 +3042,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1624
+#: src/ONEWSENG.cpp:1620
 #, fuzzy, c-format
 msgid ""
 "Your Mine near %s has fallen into disrepair due to the lack of maintenance "
@@ -3050,7 +3050,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1625
+#: src/ONEWSENG.cpp:1621
 #, fuzzy, c-format
 msgid ""
 "Your Tower of Science near %s has fallen into disrepair due to the lack of "
@@ -3058,7 +3058,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1626
+#: src/ONEWSENG.cpp:1622
 #, fuzzy, c-format
 msgid ""
 "Your War Factory near %s has fallen into disrepair due to the lack of "
@@ -3066,7 +3066,7 @@ msgid ""
 msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
-#: src/ONEWSENG.cpp:1627
+#: src/ONEWSENG.cpp:1623
 #, fuzzy, c-format
 msgid ""
 "Your Harbor near %s has fallen into disrepair due to the lack of maintenance "
@@ -3075,25 +3075,25 @@ msgstr ""
 "Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has retired and quit the game.
-#: src/ONEWSENG.cpp:1678
+#: src/ONEWSENG.cpp:1674
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has retired and quit the game."
 msgstr "%s сдался и покинул игру."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has quit the game.
-#: src/ONEWSENG.cpp:1696
+#: src/ONEWSENG.cpp:1692
 #, fuzzy, c-format
 msgid "%s's Kingdom%s has quit the game."
 msgstr "%s покинул игру."
 
 #. TRANSLATORS: The current game has been saved to <File>.
-#: src/ONEWSENG.cpp:1714
+#: src/ONEWSENG.cpp:1710
 #, c-format
 msgid "The current game has been saved to %s."
 msgstr "Данная игра была сохранена в %s."
 
 #. TRANSLATORS: The connection with <King>'s Kingdom<Color> has been lost.
-#: src/ONEWSENG.cpp:1732
+#: src/ONEWSENG.cpp:1728
 #, fuzzy, c-format
 msgid "The connection with %s's Kingdom%s has been lost."
 msgstr "Соединение с %s было потеряно."
