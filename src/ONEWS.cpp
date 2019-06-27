@@ -275,6 +275,8 @@ int NewsArray::put(int detectAction)
 
 	//------- display buttons -------//
 
+	int rc=0;
+
 	if( !detectAction )
 	{
 		image_icon.put_back(NEWS_X2+3, NEWS_Y2-12, "NEWS_LOG");	// news log report
@@ -292,14 +294,20 @@ int NewsArray::put(int detectAction)
 		help.set_help( NEWS_X2+3, NEWS_Y2-12, NEWS_X2+12, NEWS_Y2-3, "NEWSLOG" );
 
 		if( mouse.single_click( NEWS_X2+3, NEWS_Y2-12, NEWS_X2+12, NEWS_Y2-3 ) )
+		{
 			sys.set_view_mode(MODE_NEWS_LOG);
+			rc = 1;
+		}
 
 		if( dispCount > 0 )			// clear news button
 		{
 			help.set_help( NEWS_X2+3, NEWS_Y2-26, NEWS_X2+12, NEWS_Y2-17, "CLRNEWS" );
 
 			if( mouse.single_click( NEWS_X2+3, NEWS_Y2-26, NEWS_X2+12, NEWS_Y2-17 ) )
+			{
 				clear_news_disp();
+				rc = 1;
+			}
 		}
 	}
 
@@ -307,7 +315,7 @@ int NewsArray::put(int detectAction)
 
 	vga.use_front();
 
-	return 0;
+	return rc;
 }
 //------- End of function NewsArray::put -----//
 
