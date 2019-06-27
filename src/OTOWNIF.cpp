@@ -397,7 +397,7 @@ void Town::disp_main_menu(int refreshFlag)
 
 		if( button_grant.init_flag )
 		{
-			if( nation_array[nation_recno]->cash > 0 )
+			if( nation_recno && nation_array[nation_recno]->cash > 0 )
 				button_grant.enable();
 			else
 				button_grant.disable();
