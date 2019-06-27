@@ -548,10 +548,14 @@ char* TalkMsg::to_king_name()
 //------- End of function TalkMsg::to_king_name ------//
 
 
+#define ASCII_ZERO 0x30
 //----- Begin of function TalkMsg::nation_color_code_str ------//
 //
 char* TalkMsg::nation_color_code_str(int nationRecno)
 {
+	static char colorCodeStr[] = " @COL0";
+
+	colorCodeStr[5] = ASCII_ZERO + nation_array[nationRecno]->color_scheme_id;
 	return select_nation_color(nation_array[nationRecno]->color_scheme_id, 1);
 }
 //------- End of function TalkMsg::nation_color_code_str ------//
@@ -561,12 +565,23 @@ char* TalkMsg::nation_color_code_str(int nationRecno)
 //
 char* TalkMsg::nation_color_code_str2(int nationRecno)
 {
-	return select_nation_color(nation_array[nationRecno]->color_scheme_id, talk_res.msg_add_nation_color);
+	static char colorCodeStr[] = " @COL0";
+
+	if( talk_res.msg_add_nation_color )
+	{
+		colorCodeStr[0] = ' ';
+		colorCodeStr[5] = ASCII_ZERO + nation_array[nationRecno]->color_scheme_id;
+	}
+	else
+	{
+		colorCodeStr[0] = 0;
+	}
+
+	return colorCodeStr;
 }
 //------- End of function TalkMsg::nation_color_code_str2 ------//
 
 
-#define ASCII_ZERO 0x30
 //------ Begin of static function select_nation_color ------//
 //
 static char* select_nation_color(char nation_color, char enabled)

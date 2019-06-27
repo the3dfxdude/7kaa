@@ -94,10 +94,6 @@ static NewsInfo news_info_array[] =
 
 static String str;
 
-// ----------- Define static function ----------//
-
-static char* select_nation_color(char nation_color);
-
 //------ Begin of function News::msg -----//
 //
 // Return the msg string of current news.
@@ -439,7 +435,7 @@ void News::king_die()
 	else
 	{
 		// TRANSLATORS: King <Name> of <King>'s Kingdom<Color> has been slain.
-		snprintf(str, MAX_STR_LEN+1, _("King %s of %s's Kingdom%s has been slain."), king_name1(), nation_name1(), nation_color_str1());
+		snprintf(str, MAX_STR_LEN+1, _("King %s of %s's Kingdom%s has been slain."), king_name1(), king_name1(), nation_color_str1());
 	}
 }
 //------- End of function News::king_die -----//
@@ -1747,7 +1743,7 @@ char* News::nation_name1()
 
 	//------ add color bar -------//
 
-	str += select_nation_color(nation_color1);
+	str += nation_color_str1();
 
 	return str;
 }
@@ -1767,7 +1763,7 @@ char* News::nation_name2()
 
 	//------ add color bar -------//
 
-	str += select_nation_color(nation_color2);
+	str += nation_color_str2();
 
 	return str;
 }
@@ -1792,7 +1788,7 @@ char* News::king_name1(int addColor)
 
 	if( addColor )
 	{
-		str += select_nation_color(nation_color1);
+		str += nation_color_str1();
 	}
 
 	return str;
@@ -1818,7 +1814,7 @@ char* News::king_name2(int addColor)
 
 	if( addColor )
 	{
-		str += select_nation_color(nation_color2);
+		str += nation_color_str2();
 	}
 
 	return str;
@@ -1826,11 +1822,16 @@ char* News::king_name2(int addColor)
 //------- End of function News::king_name2 -----//
 
 
+#define ASCII_ZERO 0x30
 //------ Begin of function News::nation_color_str1 -----//
 //
 char* News::nation_color_str1()
 {
-	return select_nation_color(nation_color1);
+	static char colorCodeStr[] = " @COL0";
+
+	colorCodeStr[5] = ASCII_ZERO + nation_color1;
+
+	return colorCodeStr;
 }
 //------- End of function News::nation_color_str1 -----//
 
@@ -1839,20 +1840,10 @@ char* News::nation_color_str1()
 //
 char* News::nation_color_str2()
 {
-	return select_nation_color(nation_color2);
-}
-//------- End of function News::nation_color_str2 -----//
-
-
-#define ASCII_ZERO 0x30
-//------ Begin of static function select_nation_color ------//
-//
-static char* select_nation_color(char nation_color)
-{
 	static char colorCodeStr[] = " @COL0";
 
-	colorCodeStr[5] = ASCII_ZERO + nation_color;
+	colorCodeStr[5] = ASCII_ZERO + nation_color2;
 
 	return colorCodeStr;
 }
-//------ End of static function select_nation_color ------//
+//------- End of function News::nation_color_str2 -----//
