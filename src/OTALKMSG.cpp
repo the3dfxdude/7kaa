@@ -556,7 +556,7 @@ char* TalkMsg::nation_color_code_str(int nationRecno)
 	static char colorCodeStr[] = " @COL0";
 
 	colorCodeStr[5] = ASCII_ZERO + nation_array[nationRecno]->color_scheme_id;
-	return select_nation_color(nation_array[nationRecno]->color_scheme_id, 1);
+	return colorCodeStr;
 }
 //------- End of function TalkMsg::nation_color_code_str ------//
 
