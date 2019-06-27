@@ -76,6 +76,7 @@ public:
 
 	char* 	from_nation_name();
 	char* 	to_nation_name();
+	char* 	para1_nation_name();
 
 	char* 	from_king_name();
 	char* 	to_king_name();
