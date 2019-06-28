@@ -799,6 +799,78 @@ void TalkMsg::demand_tribute(int isAid)
 //------- End of function TalkMsg::demand_tribute ------//
 
 
+const char *give_tech_you_offer[] =
+{
+	// TRANSLATORS: You offer <Tech><Level> technology to <King>'s Kingdom<Color>.
+	N_("You offer Catapult%s technology to %s's Kingdom%s."),
+	N_("You offer Porcupine%s technology to %s's Kingdom%s."),
+	N_("You offer Ballista%s technology to %s's Kingdom%s."),
+	N_("You offer Cannon%s technology to %s's Kingdom%s."),
+	N_("You offer Spitfire%s technology to %s's Kingdom%s."),
+	N_("You offer Caravel%s technology to %s's Kingdom%s."),
+	N_("You offer Galleon%s technology to %s's Kingdom%s."),
+	N_("You offer Unicorn%s technology to %s's Kingdom%s."),
+};
+const char *give_tech_kingdom_offers[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> offers <Tech><Level> technology to you.
+	N_("%s's Kingdom%s offers Catapult%s technology to you."),
+	N_("%s's Kingdom%s offers Porcupine%s technology to you."),
+	N_("%s's Kingdom%s offers Ballista%s technology to you."),
+	N_("%s's Kingdom%s offers Cannon%s technology to you."),
+	N_("%s's Kingdom%s offers Spitfire%s technology to you."),
+	N_("%s's Kingdom%s offers Caravel%s technology to you."),
+	N_("%s's Kingdom%s offers Galleon%s technology to you."),
+	N_("%s's Kingdom%s offers Unicorn%s technology to you."),
+};
+const char *give_tech_accepts_your_offer[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> accepts your gift of <Tech> technology.
+	N_("%s's Kingdom%s accepts your gift of Catapult%s technology."),
+	N_("%s's Kingdom%s accepts your gift of Porcupine%s technology."),
+	N_("%s's Kingdom%s accepts your gift of Ballista%s technology."),
+	N_("%s's Kingdom%s accepts your gift of Cannon%s technology."),
+	N_("%s's Kingdom%s accepts your gift of Spitfire%s technology."),
+	N_("%s's Kingdom%s accepts your gift of Caravel%s technology."),
+	N_("%s's Kingdom%s accepts your gift of Galleon%s technology."),
+	N_("%s's Kingdom%s accepts your gift of Unicorn%s technology."),
+};
+const char *give_tech_rejects_your_offer[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> rejects your gift of <Tech><Level> technology.
+	N_("%s's Kingdom%s rejects your gift of Catapult%s technology."),
+	N_("%s's Kingdom%s rejects your gift of Porcupine%s technology."),
+	N_("%s's Kingdom%s rejects your gift of Ballista%s technology."),
+	N_("%s's Kingdom%s rejects your gift of Cannon%s technology."),
+	N_("%s's Kingdom%s rejects your gift of Spitfire%s technology."),
+	N_("%s's Kingdom%s rejects your gift of Caravel%s technology."),
+	N_("%s's Kingdom%s rejects your gift of Galleon%s technology."),
+	N_("%s's Kingdom%s rejects your gift of Unicorn%s technology."),
+};
+const char *give_tech_you_accept[] =
+{
+	// TRANSLATORS: You accept the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
+	N_("You accept the gift of Catapult%s technology from %s's Kingdom%s."),
+	N_("You accept the gift of Porcupine%s technology from %s's Kingdom%s."),
+	N_("You accept the gift of Ballista%s technology from %s's Kingdom%s."),
+	N_("You accept the gift of Cannon%s technology from %s's Kingdom%s."),
+	N_("You accept the gift of Spitfire%s technology from %s's Kingdom%s."),
+	N_("You accept the gift of Caravel%s technology from %s's Kingdom%s."),
+	N_("You accept the gift of Galleon%s technology from %s's Kingdom%s."),
+	N_("You accept the gift of Unicorn%s technology from %s's Kingdom%s."),
+};
+const char *give_tech_you_reject[] =
+{
+	// TRANSLATORS: You reject the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
+	N_("You reject the gift of Catapult%s technology from %s's Kingdom%s."),
+	N_("You reject the gift of Porcupine%s technology from %s's Kingdom%s."),
+	N_("You reject the gift of Ballista%s technology from %s's Kingdom%s."),
+	N_("You reject the gift of Cannon%s technology from %s's Kingdom%s."),
+	N_("You reject the gift of Spitfire%s technology from %s's Kingdom%s."),
+	N_("You reject the gift of Caravel%s technology from %s's Kingdom%s."),
+	N_("You reject the gift of Galleon%s technology from %s's Kingdom%s."),
+	N_("You reject the gift of Unicorn%s technology from %s's Kingdom%s."),
+};
 //----- Begin of function TalkMsg::give_tech ------//
 //
 // talk_para1 - id. of the tech given.
@@ -822,7 +894,7 @@ void TalkMsg::give_tech()
 	//
 	//---------------------------------------------//
 
-	String tech(tech_res[talk_para1]->tech_des());
+	String tech;
 
 	if( talk_para2 )		// Ships do not have different versions
 	{
@@ -830,19 +902,15 @@ void TalkMsg::give_tech()
 		tech += misc.roman_number(talk_para2);
 	}
 
-	const char *techStr = tech;
-
 	if( reply_type == REPLY_WAITING || !should_disp_reply )
 	{
 		if( viewing_nation_recno == from_nation_recno )
 		{
-			// TRANSLATORS: You offer <Tech> technology to <King>'s Kingdom<Color>.
-			snprintf(str, MAX_STR_LEN+1, _("You offer %s technology to %s's Kingdom%s."), techStr, TO_NATION, TO_COLOR);
+			snprintf(str, MAX_STR_LEN+1, _(give_tech_you_offer[talk_para1-1]), tech, TO_NATION, TO_COLOR);
 		}
 		else
 		{
-			// TRANSLATORS: <King>'s Kingdom<Color> offers <Tech> technology to you.
-			snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s offers %s technology to you."), FROM_NATION, FROM_COLOR, techStr);
+			snprintf(str, MAX_STR_LEN+1, _(give_tech_kingdom_offers[talk_para1-1]), FROM_NATION, FROM_COLOR, tech);
 		}
 	}
 	else
@@ -850,27 +918,118 @@ void TalkMsg::give_tech()
 		if( viewing_nation_recno == from_nation_recno )
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: <King>'s Kingdom<Color> accepts your gift of <Tech> technology.
-				snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s accepts your gift of %s technology."), TO_NATION, TO_COLOR, techStr);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_accepts_your_offer[talk_para1-1]), TO_NATION, TO_COLOR, tech);
 			else
-				// TRANSLATORS: <King>'s Kingdom<Color> rejects your gift of <Tech> technology.
-				snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s rejects your gift of %s technology."), TO_NATION, TO_COLOR, techStr);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_rejects_your_offer[talk_para1-1]), TO_NATION, TO_COLOR, tech);
 		}
 		else
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: You accept the gift of <Tech> technology from <King>'s Kingdom<Color>.
-				snprintf(str, MAX_STR_LEN+1, _("You accept the gift of %s technology from %s's Kingdom%s."), techStr, FROM_NATION, FROM_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_you_accept[talk_para1-1]), tech, FROM_NATION, FROM_COLOR);
 			else
-				// TRANSLATORS: You reject the gift of <Tech> technology from <King>'s Kingdom<Color>.
-				snprintf(str, MAX_STR_LEN+1, _("You reject the gift of %s technology from %s's Kingdom%s."), techStr, FROM_NATION, FROM_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_you_reject[talk_para1-1]), tech, FROM_NATION, FROM_COLOR);
 		}
 	}
-
 }
 //------- End of function TalkMsg::give_tech ------//
 
 
+const char *demand_tech_you_request[] =
+{
+	// TRANSLATORS: You request the latest <Tech> technology from <King>'s Kingdom<Color>.
+	N_("You request the latest Catapult technology from %s's Kingdom%s."),
+	N_("You request the latest Porcupine technology from %s's Kingdom%s."),
+	N_("You request the latest Ballista technology from %s's Kingdom%s."),
+	N_("You request the latest Cannon technology from %s's Kingdom%s."),
+	N_("You request the latest Spitfire technology from %s's Kingdom%s."),
+	N_("You request the latest Caravel technology from %s's Kingdom%s."),
+	N_("You request the latest Galleon technology from %s's Kingdom%s."),
+	N_("You request the latest Unicorn technology from %s's Kingdom%s."),
+};
+const char *demand_tech_you_demand[] =
+{
+	// TRANSLATORS: You demand the latest <Tech> technology from <King>'s Kingdom<Color>.
+	N_("You demand the latest Catapult technology from %s's Kingdom%s."),
+	N_("You demand the latest Porcupine technology from %s's Kingdom%s."),
+	N_("You demand the latest Ballista technology from %s's Kingdom%s."),
+	N_("You demand the latest Cannon technology from %s's Kingdom%s."),
+	N_("You demand the latest Spitfire technology from %s's Kingdom%s."),
+	N_("You demand the latest Caravel technology from %s's Kingdom%s."),
+	N_("You demand the latest Galleon technology from %s's Kingdom%s."),
+	N_("You demand the latest Unicorn technology from %s's Kingdom%s."),
+};
+const char *demand_tech_kingdom_requests[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> requests the latest <Tech> technology from you.
+	N_("%s's Kingdom%s requests the latest Catapult technology from you."),
+	N_("%s's Kingdom%s requests the latest Porcupine technology from you."),
+	N_("%s's Kingdom%s requests the latest Ballista technology from you."),
+	N_("%s's Kingdom%s requests the latest Cannon technology from you."),
+	N_("%s's Kingdom%s requests the latest Spitfire technology from you."),
+	N_("%s's Kingdom%s requests the latest Caravel technology from you."),
+	N_("%s's Kingdom%s requests the latest Galleon technology from you."),
+	N_("%s's Kingdom%s requests the latest Unicorn technology from you."),
+};
+const char *demand_tech_kingdom_demands[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> demands the latest <Tech> technology from you.
+	N_("%s's Kingdom%s demands the latest Catapult technology from you."),
+	N_("%s's Kingdom%s demands the latest Porcupine technology from you."),
+	N_("%s's Kingdom%s demands the latest Ballista technology from you."),
+	N_("%s's Kingdom%s demands the latest Cannon technology from you."),
+	N_("%s's Kingdom%s demands the latest Spitfire technology from you."),
+	N_("%s's Kingdom%s demands the latest Caravel technology from you."),
+	N_("%s's Kingdom%s demands the latest Galleon technology from you."),
+	N_("%s's Kingdom%s demands the latest Unicorn technology from you."),
+};
+const char *demand_tech_kingdom_agrees[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> agrees to transfer its latest <Tech> technology to you.
+	N_("%s's Kingdom%s agrees to transfer its latest Catapult technology to you."),
+	N_("%s's Kingdom%s agrees to transfer its latest Porcupine technology to you."),
+	N_("%s's Kingdom%s agrees to transfer its latest Ballista technology to you."),
+	N_("%s's Kingdom%s agrees to transfer its latest Cannon technology to you."),
+	N_("%s's Kingdom%s agrees to transfer its latest Spitfire technology to you."),
+	N_("%s's Kingdom%s agrees to transfer its latest Caravel technology to you."),
+	N_("%s's Kingdom%s agrees to transfer its latest Galleon technology to you."),
+	N_("%s's Kingdom%s agrees to transfer its latest Unicorn technology to you."),
+};
+const char *demand_tech_kingdom_refuses[] =
+{
+	// TRANSLATORS: <King>'s Kingdom<Color> refuses to transfer its latest <Tech> technology to you.
+	N_("%s's Kingdom%s refuses to transfer its latest Catapult technology to you."),
+	N_("%s's Kingdom%s refuses to transfer its latest Porcupine technology to you."),
+	N_("%s's Kingdom%s refuses to transfer its latest Ballista technology to you."),
+	N_("%s's Kingdom%s refuses to transfer its latest Cannon technology to you."),
+	N_("%s's Kingdom%s refuses to transfer its latest Spitfire technology to you."),
+	N_("%s's Kingdom%s refuses to transfer its latest Caravel technology to you."),
+	N_("%s's Kingdom%s refuses to transfer its latest Galleon technology to you."),
+	N_("%s's Kingdom%s refuses to transfer its latest Unicorn technology to you."),
+};
+const char *demand_tech_you_agree[] =
+{
+	// TRANSLATORS: You agree to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
+	N_("You agree to transfer your latest Catapult technology to %s's Kingdom%s."),
+	N_("You agree to transfer your latest Porcupine technology to %s's Kingdom%s."),
+	N_("You agree to transfer your latest Ballista technology to %s's Kingdom%s."),
+	N_("You agree to transfer your latest Cannon technology to %s's Kingdom%s."),
+	N_("You agree to transfer your latest Spitfire technology to %s's Kingdom%s."),
+	N_("You agree to transfer your latest Caravel technology to %s's Kingdom%s."),
+	N_("You agree to transfer your latest Galleon technology to %s's Kingdom%s."),
+	N_("You agree to transfer your latest Unicorn technology to %s's Kingdom%s."),
+};
+const char *demand_tech_you_refuse[] =
+{
+	// TRANSLATORS: You refuse to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
+	N_("You refuse to transfer your latest Catapult technology to %s's Kingdom%s."),
+	N_("You refuse to transfer your latest Porcupine technology to %s's Kingdom%s."),
+	N_("You refuse to transfer your latest Ballista technology to %s's Kingdom%s."),
+	N_("You refuse to transfer your latest Cannon technology to %s's Kingdom%s."),
+	N_("You refuse to transfer your latest Spitfire technology to %s's Kingdom%s."),
+	N_("You refuse to transfer your latest Caravel technology to %s's Kingdom%s."),
+	N_("You refuse to transfer your latest Galleon technology to %s's Kingdom%s."),
+	N_("You refuse to transfer your latest Unicorn technology to %s's Kingdom%s."),
+};
 //----- Begin of function TalkMsg::demand_tech ------//
 //
 // Demand for the latest version of the technology.
@@ -915,26 +1074,22 @@ void TalkMsg::demand_tech()
 		{
 			if( friendlyRequest )
 			{
-				// TRANSLATORS: You request the latest <Tech> technology from <King>'s Kingdom<Color>.
-				snprintf(str, MAX_STR_LEN+1, _("You request the latest %s technology from %s's Kingdom%s."), tech_res[talk_para1]->tech_des(), TO_NATION, TO_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_you_request[talk_para1-1]), TO_NATION, TO_COLOR);
 			}
 			else
 			{
-				// TRANSLATORS: You demand the latest <Tech> technology from <King>'s Kingdom<Color>.
-				snprintf(str, MAX_STR_LEN+1, _("You demand the latest %s technology from %s's Kingdom%s."), tech_res[talk_para1]->tech_des(), TO_NATION, TO_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_you_demand[talk_para1-1]), TO_NATION, TO_COLOR);
 			}
 		}
 		else
 		{
 			if( friendlyRequest )
 			{
-				// TRANSLATORS: <King>'s Kingdom<Color> requests the latest <Tech> technology from you.
-				snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s requests the latest %s technology from you."), FROM_NATION, FROM_COLOR, tech_res[talk_para1]->tech_des());
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_kingdom_requests[talk_para1-1]), FROM_NATION, FROM_COLOR);
 			}
 			else
 			{
-				// TRANSLATORS: <King>'s Kingdom<Color> demands the latest <Tech> technology from you.
-				snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s demands the latest %s technology from you."), FROM_NATION, FROM_COLOR, tech_res[talk_para1]->tech_des());
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_kingdom_demands[talk_para1-1]), FROM_NATION, FROM_COLOR);
 			}
 		}
 	}
@@ -943,20 +1098,16 @@ void TalkMsg::demand_tech()
 		if( viewing_nation_recno == from_nation_recno )
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: <King>'s Kingdom<Color> agrees to transfer its latest <Tech> technology to you.
-				snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s agrees to transfer its latest %s technology to you."), TO_NATION, TO_COLOR, tech_res[talk_para1]->tech_des());
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_kingdom_agrees[talk_para1-1]), TO_NATION, TO_COLOR);
 			else
-				// TRANSLATORS: <King>'s Kingdom<Color> refuses to transfer its latest <Tech> technology to you.
-				snprintf(str, MAX_STR_LEN+1, _("%s's Kingdom%s refuses to transfer its latest %s technology to you."), TO_NATION, TO_COLOR, tech_res[talk_para1]->tech_des());
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_kingdom_refuses[talk_para1-1]), TO_NATION, TO_COLOR);
 		}
 		else
 		{
 			if( reply_type == REPLY_ACCEPT )
-				// TRANSLATORS: You agree to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
-				snprintf(str, MAX_STR_LEN+1, _("You agree to transfer your latest %s technology to %s's Kingdom%s."), tech_res[talk_para1]->tech_des(), FROM_NATION, FROM_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_you_agree[talk_para1-1]), FROM_NATION, FROM_COLOR);
 			else
-				// TRANSLATORS: You refuse to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
-				snprintf(str, MAX_STR_LEN+1, _("You refuse to transfer your latest %s technology to %s's Kingdom%s."), tech_res[talk_para1]->tech_des(), FROM_NATION, FROM_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(demand_tech_you_refuse[talk_para1-1]), FROM_NATION, FROM_COLOR);
 		}
 	}
 }
