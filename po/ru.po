@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 20:20-0700\n"
-"PO-Revision-Date: 2019-06-26 02:26-0500\n"
+"POT-Creation-Date: 2019-07-01 12:22-0500\n"
+"PO-Revision-Date: 2019-07-03 04:59-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -31,7 +31,7 @@ msgstr "В командной строке имеется несколько п�
 #: src/ConfigAdv.cpp:141
 #, c-format
 msgid "Error in %s at line %d"
-msgstr ""
+msgstr "Ошибка в %s в линии %d"
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
 #: src/OGAMEMP.cpp:1508 src/OGAMEMP.cpp:1608 src/OGAMEMP.cpp:3010
@@ -54,101 +54,101 @@ msgstr "Отмена"
 
 #: src/ODATE.cpp:40
 msgid "January"
-msgstr "Январь"
+msgstr "Января"
 
 #: src/ODATE.cpp:41
 msgid "February"
-msgstr "Февраль"
+msgstr "февраля"
 
 #: src/ODATE.cpp:42
 msgid "March"
-msgstr "Март"
+msgstr "Марта"
 
 #: src/ODATE.cpp:43
 msgid "April"
-msgstr "Апрель"
+msgstr "Апреля"
 
 #: src/ODATE.cpp:44 src/ODATE.cpp:60
 msgid "May"
-msgstr "Май"
+msgstr "Мая"
 
 #: src/ODATE.cpp:45
 msgid "June"
-msgstr "Июнь"
+msgstr "июня"
 
 #: src/ODATE.cpp:46
 msgid "July"
-msgstr "Июль"
+msgstr "июля"
 
 #: src/ODATE.cpp:47
 msgid "August"
-msgstr "Август"
+msgstr "Августа"
 
 #: src/ODATE.cpp:48
 msgid "September"
-msgstr "Сентябрь"
+msgstr "Сентября"
 
 #: src/ODATE.cpp:49
 msgid "October"
-msgstr "Октябрь"
+msgstr "Октября"
 
 #: src/ODATE.cpp:50
 msgid "November"
-msgstr "Ноябрь"
+msgstr "Ноября"
 
 #: src/ODATE.cpp:51
 msgid "December"
-msgstr "Декабрь"
+msgstr "декабря"
 
 #: src/ODATE.cpp:56
 msgid "Jan"
-msgstr "Янв"
+msgstr "Января"
 
 #: src/ODATE.cpp:57
 msgid "Feb"
-msgstr "Фев"
+msgstr "февраля"
 
 #: src/ODATE.cpp:58
 msgid "Mar"
-msgstr "Мар"
+msgstr "Марта"
 
 #: src/ODATE.cpp:59
 msgid "Apr"
-msgstr "Апр"
+msgstr "Апреля"
 
 #: src/ODATE.cpp:61
 msgid "Jun"
-msgstr "Июн"
+msgstr "июня"
 
 #: src/ODATE.cpp:62
 msgid "Jul"
-msgstr "Июл"
+msgstr "июля"
 
 #: src/ODATE.cpp:63
 msgid "Aug"
-msgstr "Авг"
+msgstr "Августа"
 
 #: src/ODATE.cpp:64
 msgid "Sep"
-msgstr "Сен"
+msgstr "Сентября"
 
 #: src/ODATE.cpp:65
 msgid "Oct"
-msgstr "Окт"
+msgstr "Октября"
 
 #: src/ODATE.cpp:66
 msgid "Nov"
-msgstr "Ноя"
+msgstr "Ноября"
 
 #: src/ODATE.cpp:67
 msgid "Dec"
-msgstr "Дек"
+msgstr "декабря"
 
 #. TRANSLATORS: <Month> <Day>, <Year>
 #: src/ODATE.cpp:248 src/ODATE.cpp:252
 #, c-format
 msgid "%s %d, %d"
-msgstr "%2$d %1$s, %3$d"
+msgstr "%2$d %1$s %3$d"
 
 #. TRANSLATORS: <Town> <Short Firm Name> <Firm #>
 #. This is the name of the firm when there are multiple linked firms to a town.
@@ -226,7 +226,7 @@ msgstr "Ваш шпион был пойман"
 #. TRANSLATORS: Part of "Your Spy Was Caught And Executed."
 #: src/OFIRMIF3.cpp:124 src/OFIRMIF3.cpp:564 src/OFIRMIF3.cpp:583
 msgid "And Executed."
-msgstr "И казнен."
+msgstr "и казнен."
 
 #. TRANSLATORS: Offer <Amount>
 #: src/OFIRMIF3.cpp:247
@@ -256,19 +256,16 @@ msgid "Leadership"
 msgstr "Лидерство"
 
 #: src/OF_FACT.cpp:355
-#, fuzzy
 msgid "Producing Clay Products"
-msgstr "%s продуктов"
+msgstr "Производство глиняных изделий"
 
 #: src/OF_FACT.cpp:356
-#, fuzzy
 msgid "Producing Copper Products"
-msgstr "%s продуктов"
+msgstr "Производство медных изделий"
 
 #: src/OF_FACT.cpp:357
-#, fuzzy
 msgid "Producing Iron Products"
-msgstr "%s продуктов"
+msgstr "Производство железных изделий"
 
 # data/resource/help.res:78
 #: src/OF_FACT.cpp:388 src/OF_MINE.cpp:292
@@ -304,19 +301,16 @@ msgid "Hiring Cost"
 msgstr "Стоимость найма"
 
 #: src/OF_MARK.cpp:375
-#, fuzzy
 msgid "Clay Products"
-msgstr "%s продуктов"
+msgstr "Глинянные изделия"
 
 #: src/OF_MARK.cpp:376
-#, fuzzy
 msgid "Copper Products"
-msgstr "%s продуктов"
+msgstr "Медные изделия"
 
 #: src/OF_MARK.cpp:377
-#, fuzzy
 msgid "Iron Products"
-msgstr "%s продуктов"
+msgstr "Железные изделия"
 
 #. TRANSLATORS: Part of "You're not permitted to trade with this market."
 #: src/OF_MARK.cpp:414
@@ -355,19 +349,16 @@ msgid "Yearly Income"
 msgstr "Итоговая годовая прибыль"
 
 #: src/OF_MINE.cpp:258
-#, fuzzy
 msgid "Mining Clay"
-msgstr "Горнодобыча"
+msgstr "Добыча глины"
 
 #: src/OF_MINE.cpp:259
-#, fuzzy
 msgid "Mining Copper"
-msgstr "Добывается %s"
+msgstr "Добыча меди"
 
 #: src/OF_MINE.cpp:260
-#, fuzzy
 msgid "Mining Iron"
-msgstr "Горнодобыча"
+msgstr "Добыча железа"
 
 #: src/OF_MINE.cpp:275
 msgid "No Natural Resources"
@@ -385,92 +376,78 @@ msgstr "Неогр. запас"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:132
-#, fuzzy
 msgid "Deezboanz Lair"
-msgstr "Дизбонз"
+msgstr "Логово Дизбонза"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:133
-#, fuzzy
 msgid "Rattus Lair"
-msgstr "Раттус"
+msgstr "Логово Раттусов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:134
-#, fuzzy
 msgid "Broosken Lair"
-msgstr "Брускен"
+msgstr "Логово Брускенов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:135
-#, fuzzy
 msgid "Haubudam Lair"
-msgstr "Хабудам"
+msgstr "Логово Хабудамов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:136
-#, fuzzy
 msgid "Pfith Lair"
-msgstr "Пиф"
+msgstr "Логово Пифов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:137
-#, fuzzy
 msgid "Rokken Lair"
-msgstr "Роккен"
+msgstr "Логово Роккенов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:138
-#, fuzzy
 msgid "Doink Lair"
-msgstr "Доинк"
+msgstr "Логово Доинкей"
 
 #: src/OF_MONS.cpp:139
-#, fuzzy
 msgid "Wyrm Lair"
-msgstr "%s Логово"
+msgstr "Логово Вирмов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:140
-#, fuzzy
 msgid "Droog Lair"
-msgstr "Друк"
+msgstr "Логово Друкей"
 
 #: src/OF_MONS.cpp:141
-#, fuzzy
 msgid "Ick Lair"
-msgstr "%s Логово"
+msgstr "Логово Икей"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:142
-#, fuzzy
 msgid "Sauroid Lair"
-msgstr "Сауродин"
+msgstr "Логово Сауродинов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:143
-#, fuzzy
 msgid "Karrotten Lair"
-msgstr "Каротен"
+msgstr "Логово Каротенов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:144
-#, fuzzy
 msgid "Holgh Lair"
-msgstr "Холг"
+msgstr "Логово Холгей"
 
 #: src/OGAMEMP.cpp:526
 msgid "Create multiplayer session"
-msgstr ""
+msgstr "Создать многозадачную сессию"
 
 #: src/OGAMEMP.cpp:527
 msgid "Session Name:"
 msgstr "Имя сессии:"
 
 #: src/OGAMEMP.cpp:528
-#, fuzzy
 msgid "Set Password:"
-msgstr "Пароль:"
+msgstr "Установка пароля:"
 
 #: src/OGAMEMP.cpp:573 src/OGAMEMP.cpp:832
 msgid "Unable to connect from lobby"
@@ -502,25 +479,24 @@ msgstr "Сервис не поддерживается"
 
 #: src/OGAMEMP.cpp:1042
 msgid "Local Area Network"
-msgstr ""
+msgstr "локальную сеть"
 
 #. TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
 #: src/OGAMEMP.cpp:1044
-#, fuzzy
 msgid "Enter Address"
 msgstr "Введите адрес игры:"
 
 #: src/OGAMEMP.cpp:1049
 msgid "Host or join a game using the local area network"
-msgstr ""
+msgstr "принять или присоединиться к игре, используя локальную сеть"
 
 #: src/OGAMEMP.cpp:1050
 msgid "Join a game by entering an address"
-msgstr ""
+msgstr "присоединиться к игре, используя адрес"
 
 #: src/OGAMEMP.cpp:1051
 msgid "Host or join a game over the internet"
-msgstr ""
+msgstr "принять или присоединиться к игре через Интернет"
 
 #: src/OGAMEMP.cpp:1198
 msgid ""
@@ -732,13 +708,13 @@ msgstr "Все Фрихтаны были уничтожены !"
 
 #: src/OGAMEND.cpp:272
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
-msgstr "Ваше королевство достигло наивысших боевых очков Фрихтанов !"
+msgstr "Вы достигл наивысших боевых очков Фрихтанов !"
 
 #. TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
 #: src/OGAMEND.cpp:277
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"
-msgstr "%s, Ваше королевство достигло наивысших боевых очков Фрихтанов!"
+msgstr "%s достигл наивысших боевых очков Фрихтанов!"
 
 #. TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
 #: src/OGAMEND.cpp:288 src/OGAMEND.cpp:306 src/OGAMEND.cpp:324
@@ -747,9 +723,9 @@ msgstr "Ваше королевство достигло"
 
 #. TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
 #: src/OGAMEND.cpp:293 src/OGAMEND.cpp:311 src/OGAMEND.cpp:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Reached"
-msgstr "%s, Ваше королевство достигло"
+msgstr "%s королевство достигло"
 
 #. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
 #: src/OGAMEND.cpp:296
@@ -771,13 +747,13 @@ msgstr "целевой отметки игровых очков %s !"
 
 #: src/OGAMEND.cpp:341
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
-msgstr "Ваше королевство одержало победу над другими королевствами !"
+msgstr "Вы одержал победу над другими королевствами !"
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
 #: src/OGAMEND.cpp:346
 #, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
-msgstr "%s, Ваше королевство одержало победу над другими королевствами !"
+msgstr "%s одержал победу над другими королевствами !"
 
 #: src/OGAMEND.cpp:356
 msgid "You Have Lost the Game !"
@@ -785,18 +761,17 @@ msgstr "Вы проиграли !"
 
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
 #: src/OGAMEND.cpp:375
-#, fuzzy, c-format
+#, c-format
 msgid "You Surrendered to %s's Kingdom on %s."
 msgstr "Вы сдались %s на %s."
 
 #: src/OGAMEND.cpp:382
 msgid "Your Kingdom has Failed to Achieve its Goal Within the Time Limit."
-msgstr ""
-"Ваше королевство не смогло достичь поставленной цели за установленные сроки."
+msgstr "Вы не смогл достичь поставленной цели за установленные сроки."
 
 #: src/OGAMEND.cpp:386
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
-msgstr "Ваше королевство постигло бесславное поражение !"
+msgstr "Вы постигл бесславное поражение !"
 
 #. TRANSLATORS: You Retired on <Date>.
 #: src/OGAMEND.cpp:401
@@ -882,9 +857,8 @@ msgid "Reputation"
 msgstr "Репутация"
 
 #: src/OGAMEND.cpp:474 src/OR_RANK.cpp:92
-#, fuzzy
 msgid "Fryhtan Battling"
-msgstr "Очки воинственности Фрихтанов"
+msgstr "Борьба Фрихтанов"
 
 #: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
 msgid "Population Score"
@@ -933,19 +907,16 @@ msgid "X  0 (Cheated)  =  0"
 msgstr "X  0 (Читер)  =  0"
 
 #: src/OGAMHALL.cpp:263
-#, fuzzy
 msgid "Score"
-msgstr "Очки : "
+msgstr "Очки"
 
 #: src/OGAMHALL.cpp:283
-#, fuzzy
 msgid "Period"
-msgstr "Время : "
+msgstr "Время"
 
 #: src/OGAMHALL.cpp:293
-#, fuzzy
 msgid "Difficulty"
-msgstr "Сложность : "
+msgstr "Сложность"
 
 #: src/OGAMMAIN.cpp:371
 msgid "Version"
@@ -965,7 +936,7 @@ msgstr "Бонус к очкам: "
 
 #: src/OGFILE.cpp:326
 msgid "Success"
-msgstr ""
+msgstr "успех"
 
 #: src/OGFILE.cpp:328
 msgid "Error creating saved game file"
@@ -996,39 +967,32 @@ msgid "Load game error"
 msgstr "Ошибка загрузки игры"
 
 #: src/OHELP.cpp:510
-#, fuzzy
 msgid "Norman General"
-msgstr "Генерал людей"
+msgstr "Норманнский Генерал"
 
 #: src/OHELP.cpp:511
-#, fuzzy
 msgid "Maya General"
-msgstr "Генерал"
+msgstr "Майя Генерал"
 
 #: src/OHELP.cpp:512
-#, fuzzy
 msgid "Greek General"
-msgstr "Генерал"
+msgstr "Греческий Генерал"
 
 #: src/OHELP.cpp:513
-#, fuzzy
 msgid "Viking General"
-msgstr "%s Генерал"
+msgstr "Генерал Викингов"
 
 #: src/OHELP.cpp:514
-#, fuzzy
 msgid "Persian General"
-msgstr "%s Генерал"
+msgstr "Персидский Генерал"
 
 #: src/OHELP.cpp:515
-#, fuzzy
 msgid "Chinese General"
-msgstr "%s Генерал"
+msgstr "Китайский Генерал"
 
 #: src/OHELP.cpp:516
-#, fuzzy
 msgid "Japanese General"
-msgstr "%s Генерал"
+msgstr "Японский Генерал"
 
 # data/resource/help.res:109
 #: src/OHELP.cpp:517 src/OHELP.cpp:564 src/OR_TRADE.cpp:82
@@ -1117,80 +1081,65 @@ msgstr "Средний Тернер"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:534
-#, fuzzy
 msgid "Deezboanz General"
-msgstr "Дизбонз"
+msgstr "null"
 
 #: src/OHELP.cpp:535
-#, fuzzy
 msgid "Rattus General"
-msgstr "%s Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:536
-#, fuzzy
 msgid "Broosken General"
-msgstr "%s Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:537
-#, fuzzy
 msgid "Haubudam General"
-msgstr "Генерал людей"
+msgstr "null"
 
 #: src/OHELP.cpp:538
-#, fuzzy
 msgid "Pfith General"
-msgstr "Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:539
-#, fuzzy
 msgid "Rokken General"
-msgstr "Генерал людей"
+msgstr "null"
 
 #: src/OHELP.cpp:540
-#, fuzzy
 msgid "Doink General"
-msgstr "Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:541
-#, fuzzy
 msgid "Wyrm General"
-msgstr "Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:542
-#, fuzzy
 msgid "Droog General"
-msgstr "Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:543
-#, fuzzy
 msgid "Ick General"
-msgstr "Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:544
-#, fuzzy
 msgid "Sauroid General"
-msgstr "Генерал людей"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:545
-#, fuzzy
 msgid "Karrotten General"
-msgstr "Каротен"
+msgstr "null"
 
 #: src/OHELP.cpp:546
-#, fuzzy
 msgid "Holgh General"
-msgstr "Генерал"
+msgstr "null"
 
 #: src/OHELP.cpp:547
-#, fuzzy
 msgid "Egyptian General"
-msgstr "Генерал людей"
+msgstr "Египетский Генерал"
 
 #: src/OHELP.cpp:548
-#, fuzzy
 msgid "Mughul General"
-msgstr "%s Генерал"
+msgstr "Генерал Моголов"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
@@ -1198,7 +1147,7 @@ msgstr "%s Генерал"
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:549 src/OHELP.cpp:596
 msgid "Zulu"
-msgstr "Зулу"
+msgstr "Зулус"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:550 src/OHELP.cpp:597
@@ -1225,163 +1174,141 @@ msgstr "Единорог"
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:557
-#, fuzzy
 msgid "Norman King"
-msgstr "Норманн"
+msgstr "Норманнский Король"
 
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:558
-#, fuzzy
 msgid "Maya King"
-msgstr "Майя"
+msgstr "Майя Король"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:559
-#, fuzzy
 msgid "Greek King"
-msgstr "Грек"
+msgstr "Греческий Король"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:560
-#, fuzzy
 msgid "Viking King"
-msgstr "Викинг"
+msgstr "Король Викингов"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:561
-#, fuzzy
 msgid "Persian King"
-msgstr "Перс"
+msgstr "Персидский Король"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:562
-#, fuzzy
 msgid "Chinese King"
-msgstr "Китаец"
+msgstr "Китайский Король"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:563
-#, fuzzy
 msgid "Japanese King"
-msgstr "Японец"
+msgstr "Японский Король"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:581
-#, fuzzy
 msgid "Deezboanz King"
-msgstr "Дизбонз"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:582
-#, fuzzy
 msgid "Rattus King"
-msgstr "Раттус"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:583
-#, fuzzy
 msgid "Broosken King"
-msgstr "Брускен"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:584
-#, fuzzy
 msgid "Haubudam King"
-msgstr "Хабудам"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:585
-#, fuzzy
 msgid "Pfith King"
-msgstr "Пиф"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:586
-#, fuzzy
 msgid "Rokken King"
-msgstr "Роккен"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:587
-#, fuzzy
 msgid "Doink King"
-msgstr "Доинк"
+msgstr "null"
 
 #: src/OHELP.cpp:588
-#, fuzzy
 msgid "Wyrm King"
-msgstr "%s Король"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:589
-#, fuzzy
 msgid "Droog King"
-msgstr "Друк"
+msgstr "null"
 
 #: src/OHELP.cpp:590
-#, fuzzy
 msgid "Ick King"
-msgstr "%s Король"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:591
-#, fuzzy
 msgid "Sauroid King"
-msgstr "Сауродин"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:592
-#, fuzzy
 msgid "Karrotten King"
-msgstr "Каротен"
+msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:593
-#, fuzzy
 msgid "Holgh King"
-msgstr "Холг"
+msgstr "null"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:594
-#, fuzzy
 msgid "Egyptian King"
-msgstr "Египтянин"
+msgstr "Египетский Король"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:595
-#, fuzzy
 msgid "Mughul King"
-msgstr "Мугул"
+msgstr "Король Моголов"
 
 #. TRANSLATORS: Part of "%d hour(s) and %d minute(s)"
 #: src/OINFO.cpp:603
 #, c-format
 msgid "%d hour and"
 msgid_plural "%d hours and"
-msgstr[0] "%d час"
-msgstr[1] "%d часа"
-msgstr[2] "%d часов"
+msgstr[0] "%d час и"
+msgstr[1] "%d часа и"
+msgstr[2] "%d часов и"
 
 #: src/OINFO.cpp:607
 #, c-format
@@ -1446,29 +1373,24 @@ msgid "Alliance"
 msgstr "Альянс"
 
 #: src/ONATIONB.cpp:65
-#, fuzzy
 msgid "Duration of War Status"
-msgstr "Продолжительность %s"
+msgstr "Продолжительность статуса Войны"
 
 #: src/ONATIONB.cpp:66
-#, fuzzy
 msgid "Duration of Tense Status"
-msgstr "Продолжительность %s"
+msgstr "Продолжительность статуса Напряжения"
 
 #: src/ONATIONB.cpp:67
-#, fuzzy
 msgid "Duration of Neutral Status"
-msgstr "Продолжительность %s"
+msgstr "Продолжительность статуса Нейтралитета"
 
 #: src/ONATIONB.cpp:68
-#, fuzzy
 msgid "Duration of Friendly Status"
-msgstr "Продолжительность %s"
+msgstr "Продолжительность статуса Дружбы"
 
 #: src/ONATIONB.cpp:69
-#, fuzzy
 msgid "Duration of Alliance Status"
-msgstr "Продолжительность %s"
+msgstr "Продолжительность статуса Альянс"
 
 #. TRANSLATORS: <Name>'s Kingdom
 #: src/ONATIONB.cpp:569 src/ONEWSENG.cpp:1740 src/ONEWSENG.cpp:1742
@@ -1491,9 +1413,9 @@ msgstr[2] "%d месяцев"
 #, c-format
 msgid "%d Peasant in %s in %s's Kingdom%s is rebelling."
 msgid_plural "%d Peasants in %s in %s's Kingdom%s are rebelling."
-msgstr[0] "%d крестьянин из %s в %s бунтует в королестве %s."
-msgstr[1] "%d крестьянина из %s в %s бунтуют в королестве %s."
-msgstr[2] "%d крестьян из %s в %s бунтуют  в королестве %s."
+msgstr[0] "%d крестьянин из %s в %s королестве%s бунтуют."
+msgstr[1] "%d крестьянина из %s в %s королестве%s бунтуют."
+msgstr[2] "%d крестьян из %s в %s королестве%s бунтуют."
 
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
@@ -1522,7 +1444,7 @@ msgstr[2] "%d %s крестьян эмигрировали из вашей де�
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town>.
 #: src/ONEWSENG.cpp:251
-#, c-format
+#, fuzzy, c-format
 msgid "%d %s %s has emigrated from your village of %s to %s."
 msgid_plural "%d %s %ss have emigrated from your village of %s to %s."
 msgstr[0] "%d %s %s эмигрировал из вашей деревни %s в %s."
@@ -1542,27 +1464,27 @@ msgstr[2] "%d %s крестьян эмигрировали из вашей де�
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #: src/ONEWSENG.cpp:286
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%d %s %s has immigrated from %s in %s's Kingdom%s to your village of %s."
 msgid_plural ""
 "%d %s %ss have immigrated from %s in %s's Kingdom%s to your village of %s."
-msgstr[0] "%d %s %s эмигрировал из %s в %s в вашу деревню %s."
-msgstr[1] "%d %s %s эмигрировали из %s в %s в вашу деревню %s."
-msgstr[2] "%d %s %s эмигрировали из %s в %s в вашу деревню %s."
+msgstr[0] "%d %s %s эмигрировал из %s в %s%s в вашу деревню %s."
+msgstr[1] "%d %s %s эмигрировали из %s в %s%s в вашу деревню %s."
+msgstr[2] "%d %s %s эмигрировали из %s в %s%s в вашу деревню %s."
 
 #. TRANSLATORS: A <Race> Peasant has immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #. <Number> <Race> Peasants have immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #: src/ONEWSENG.cpp:302
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%d %s Peasant has immigrated from %s in %s's Kingdom%s to your village of %s."
 msgid_plural ""
 "%d %s Peasants have immigrated from %s in %s's Kingdom%s to your village of "
 "%s."
-msgstr[0] "%d %s крестьянин эмигрировал из %s в %s в вашу деревню %s."
-msgstr[1] "%d %s крестьянина эмигрировали из %s в %s в вашу деревню %s."
-msgstr[2] "%d %s крестьян эмигрировали из %s в %s в вашу деревню %s."
+msgstr[0] "%d %s крестьянин эмигрировал из %s в %s%s в вашу деревню %s."
+msgstr[1] "%d %s крестьянина эмигрировали из %s в %s%s в вашу деревню %s."
+msgstr[2] "%d %s крестьян эмигрировали из %s в %s%s в вашу деревню %s."
 
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> to your village of <Town>.
@@ -1594,19 +1516,19 @@ msgstr "Образовалось новое королевство под пре
 #: src/ONEWSENG.cpp:380
 #, c-format
 msgid "%s's Kingdom%s has been destroyed."
-msgstr "%s было уничтожено %s."
+msgstr "%s%s было уничтожено."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has surrendered to you.
-#: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1174
+#: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1325
 #, c-format
 msgid "%s's Kingdom%s has surrendered to you."
-msgstr "%sКоролевство%s сдались вам."
+msgstr "%s%s сдались вам."
 
 #. TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
 #: src/ONEWSENG.cpp:408
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has surrendered to %s's Kingdom%s."
-msgstr "%sКоролевство%s сдалось %sКоролевству."
+msgstr "%s%s сдалось %s%s."
 
 #. TRANSLATORS: Your King, <Name>, has been slain.
 #: src/ONEWSENG.cpp:433
@@ -1618,7 +1540,7 @@ msgstr "Ваш Король, %s, был повержен."
 #: src/ONEWSENG.cpp:438
 #, c-format
 msgid "King %s of %s's Kingdom%s has been slain."
-msgstr "Король %s %s из %s был повержен."
+msgstr "Король %s из %s%s был повержен."
 
 #. TRANSLATORS: <Name> has ascended the throne as your new King.
 #: src/ONEWSENG.cpp:467
@@ -1630,53 +1552,53 @@ msgstr "%s унаследовал трон в качестве вашего но
 #: src/ONEWSENG.cpp:472
 #, c-format
 msgid "%s has ascended the throne as the new King of %s's Kingdom%s."
-msgstr "%s унаследовал трон в качестве нового короля %sКоролевства%s."
+msgstr "%s унаследовал трон в качестве нового короля %s%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:481
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваш центр власти около %s был уничтожен %sКоролевством%s."
+msgstr "Ваш центр власти около %s был уничтожен %s%s."
 
 #: src/ONEWSENG.cpp:482
 #, c-format
 msgid "Your Factory near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваш Завод около %s был уничтожен  %s'Королевством%s."
+msgstr "Ваш Завод около %s был уничтожен %s'%s."
 
 #: src/ONEWSENG.cpp:483
 #, c-format
 msgid "Your Inn near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваша Гостиница  около %s была уничтожена  %s'Королевством%s."
+msgstr "Ваша Гостиница около %s была уничтожена %s'%s."
 
 #: src/ONEWSENG.cpp:484
 #, c-format
 msgid "Your Market near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваш Рынок около %s был уничтожен %s'Королевством%s."
+msgstr "Ваш Рынок около %s был уничтожен %s'%s."
 
 #: src/ONEWSENG.cpp:485
 #, c-format
 msgid "Your Fort near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваш Форт около %s был уничтожен %s'Королевством%s."
+msgstr "Ваш Форт около %s был уничтожен %s'%s."
 
 #: src/ONEWSENG.cpp:486
 #, c-format
 msgid "Your Mine near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваша Шахта около %s была уничтожена %s'Королевством%s."
+msgstr "Ваша Шахта около %s была уничтожена %s'%s."
 
 #: src/ONEWSENG.cpp:487
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваш Научный центр около %s был уничтожен %s'Королевством%s."
+msgstr "Ваш Научный центр около %s был уничтожен %s'%s."
 
 #: src/ONEWSENG.cpp:488
 #, c-format
 msgid "Your War Factory near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваш Военный завод около %s был уничтожен %s'Королевством%s."
+msgstr "Ваш Военный завод около %s был уничтожен %s'%s."
 
 #: src/ONEWSENG.cpp:489
 #, c-format
 msgid "Your Harbor near %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваша Гавань около %s была уничтожена %s'Королевством%s."
+msgstr "Ваша Гавань около %s была уничтожена %s'%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
 #: src/ONEWSENG.cpp:495
@@ -1728,7 +1650,7 @@ msgstr "Ваша Гавань около %s была уничтожена пов
 #: src/ONEWSENG.cpp:509
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by Fryhtans."
-msgstr "Ваша Администрация около %s была уничтожена фрихтанами."
+msgstr "Ваша Владения около %s была уничтожена фрихтанами."
 
 #: src/ONEWSENG.cpp:510
 #, c-format
@@ -1774,17 +1696,17 @@ msgstr "Ваша Гавань около %s была уничтожена фри
 #: src/ONEWSENG.cpp:523
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed."
-msgstr "Ваша Администрация около %s была уничтожена."
+msgstr "Ваша Владения около %s была уничтожена."
 
 #: src/ONEWSENG.cpp:524
 #, c-format
 msgid "Your Factory near %s has been destroyed."
-msgstr "Ваша Фабрика  около %s была уничтожена."
+msgstr "Ваша Фабрика около %s была уничтожена."
 
 #: src/ONEWSENG.cpp:525
 #, c-format
 msgid "Your Inn near %s has been destroyed."
-msgstr "Ваша Гостиница  около %s была уничтожена."
+msgstr "Ваша Гостиница около %s была уничтожена."
 
 #: src/ONEWSENG.cpp:526
 #, c-format
@@ -1818,104 +1740,104 @@ msgstr "Ваш Гавань около %s была уничтожена."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:577
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Seat of Power near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваша Администрация около %s была захвачена шпионом из %sКоролевства%s."
+msgstr "Ваша Владения около %s была захвачена шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:578
-#, fuzzy, c-format
+#, c-format
 msgid "Your Factory near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваша Фабрика около %s была захвачена шпионом из %sКоролевства%s."
+msgstr "Ваша Фабрика около %s была захвачена шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:579
-#, fuzzy, c-format
+#, c-format
 msgid "Your Inn near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваша Гостиница около %s была захвачена шпионом из %sКоролевства%s."
+msgstr "Ваша Гостиница около %s была захвачена шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:580
-#, fuzzy, c-format
+#, c-format
 msgid "Your Market near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваш Рынок около %s был захвачен шпионом из %sКоролевства%s."
+msgstr "Ваш Рынок около %s был захвачен шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:581
-#, fuzzy, c-format
+#, c-format
 msgid "Your Fort near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваш Форт около %s был захвачен шпионом из %sКоролевства%s."
+msgstr "Ваш Форт около %s был захвачен шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:582
-#, fuzzy, c-format
+#, c-format
 msgid "Your Mine near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваша Шахта около %s была захвачена шпионом из %sКоролевства%s."
+msgstr "Ваша Шахта около %s была захвачена шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:583
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Tower of Science near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваш Научный центр около %s был захвачен шпионом из %sКоролевства%s."
+msgstr "Ваш Научный центр около %s был захвачен шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:584
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your War Factory near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваш Военный завод около %s был захвачен шпионом из %sКоролевства%s."
+msgstr "Ваш Военный завод около %s был захвачен шпионом из %s%s."
 
 #: src/ONEWSENG.cpp:585
-#, fuzzy, c-format
+#, c-format
 msgid "Your Harbor near %s has been captured by a spy from %s's Kingdom%s."
-msgstr "Ваша Гавань около %s была захвачена шпионом из %sКоролевства%s."
+msgstr "Ваша Гавань около %s была захвачена шпионом из %s%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:591
-#, fuzzy, c-format
+#, c-format
 msgid "Your Seat of Power near %s has been captured by %s's Kingdom%s."
-msgstr "Ваша Администрация %s около %s была захвачена %s."
+msgstr "Ваша Владения около %s была захвачена %s%s."
 
 #: src/ONEWSENG.cpp:592
-#, fuzzy, c-format
+#, c-format
 msgid "Your Factory near %s has been captured by %s's Kingdom%s."
-msgstr "Ваша Фабрика  %s около %s была захвачена %s."
+msgstr "Ваша Фабрика около %s была захвачена %s%s."
 
 #: src/ONEWSENG.cpp:593
-#, fuzzy, c-format
+#, c-format
 msgid "Your Inn near %s has been captured by %s's Kingdom%s."
-msgstr "Ваша Гостиница %s около %s была захвачена %s."
+msgstr "Ваша Гостиница около %s была захвачена %s%s."
 
 #: src/ONEWSENG.cpp:594
-#, fuzzy, c-format
+#, c-format
 msgid "Your Market near %s has been captured by %s's Kingdom%s."
-msgstr "Ваш Рынок %s около %s был захвачен %s."
+msgstr "Ваш Рынок около %s был захвачен %s%s."
 
 #: src/ONEWSENG.cpp:595
-#, fuzzy, c-format
+#, c-format
 msgid "Your Fort near %s has been captured by %s's Kingdom%s."
-msgstr "Ваш Форт %s около %s был захвачен %s."
+msgstr "Ваш Форт около %s был захвачен %s%s."
 
 #: src/ONEWSENG.cpp:596
-#, fuzzy, c-format
+#, c-format
 msgid "Your Mine near %s has been captured by %s's Kingdom%s."
-msgstr "Ваша Шахта %s около %s была захвачена %s."
+msgstr "Ваша Шахта около %s была захвачена %s%s."
 
 #: src/ONEWSENG.cpp:597
-#, fuzzy, c-format
+#, c-format
 msgid "Your Tower of Science near %s has been captured by %s's Kingdom%s."
-msgstr "Ваш Научный центр %s около %s был захвачен%s."
+msgstr "Ваш Научный центр около %s был захвачен %s%s."
 
 #: src/ONEWSENG.cpp:598
-#, fuzzy, c-format
+#, c-format
 msgid "Your War Factory near %s has been captured by %s's Kingdom%s."
-msgstr "Ваш Военный завод %s около %s был захвачен %s."
+msgstr "Ваш Военный завод около %s был захвачен %s%s."
 
 #: src/ONEWSENG.cpp:599
-#, fuzzy, c-format
+#, c-format
 msgid "Your Harbor near %s has been captured by %s's Kingdom%s."
-msgstr "Ваша Гавань %s около %s была захвачена %s."
+msgstr "Ваша Гавань около %s была захвачена %s%s."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:655
-#, fuzzy, c-format
+#, c-format
 msgid "Your village of %s has been destroyed by %s's Kingdom%s."
-msgstr "Ваша деревня %s была %s уничтожена %s."
+msgstr "Ваша деревня %s была уничтожена %s%s."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by Rebels.
 #: src/ONEWSENG.cpp:660
@@ -1943,15 +1865,15 @@ msgstr "Жители покинули вашу деревню %s."
 
 #. TRANSLATORS: Your village of <Town> has surrendered to <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:721
-#, fuzzy, c-format
+#, c-format
 msgid "Your village of %s has surrendered to %s's Kingdom%s."
-msgstr "Ваша деревня %s сдалась %sКоролевству%s."
+msgstr "Ваша деревня %s сдалась %s%s."
 
 #. TRANSLATORS: The village of <Town> in <King>'s Kingdom<Color> has surrendered to you.
 #: src/ONEWSENG.cpp:726
-#, fuzzy, c-format
+#, c-format
 msgid "The village of %s in %s's Kingdom%s has surrendered to you."
-msgstr "Деревня %s из %s Королевства %s сдалась вам."
+msgstr "Деревня %s из %s%s сдалась вам."
 
 #. TRANSLATORS: The independent village of <Town> has surrendered to you.
 #: src/ONEWSENG.cpp:731
@@ -1961,237 +1883,201 @@ msgstr "Независимая деревня %s сдалась вам."
 
 #. TRANSLATORS: An All High <monster type> has been slain.
 #: src/ONEWSENG.cpp:740
-#, fuzzy
 msgid "An All High Deezboanz has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Дизбонзов была повержен."
 
 #: src/ONEWSENG.cpp:741
-#, fuzzy
 msgid "An All High Rattus has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Раттусов была повержен."
 
 #: src/ONEWSENG.cpp:742
-#, fuzzy
 msgid "An All High Broosken has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Брускенов была повержен."
 
 #: src/ONEWSENG.cpp:743
-#, fuzzy
 msgid "An All High Haubudam has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Хабудамов была повержен."
 
 #: src/ONEWSENG.cpp:744
-#, fuzzy
 msgid "An All High Pfith has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Пифов была повержен."
 
 #: src/ONEWSENG.cpp:745
-#, fuzzy
 msgid "An All High Rokken has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Роккенов была повержен."
 
 #: src/ONEWSENG.cpp:746
-#, fuzzy
 msgid "An All High Doink has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Доинкей была повержен."
 
 #: src/ONEWSENG.cpp:747
-#, fuzzy
 msgid "An All High Wyrm has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Вирмов была повержен."
 
 #: src/ONEWSENG.cpp:748
-#, fuzzy
 msgid "An All High Droog has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Друкей была повержен."
 
 #: src/ONEWSENG.cpp:749
-#, fuzzy
 msgid "An All High Ick has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Икей была повержен."
 
 #: src/ONEWSENG.cpp:750
-#, fuzzy
 msgid "An All High Sauroid has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Сауродинов была повержен."
 
 #: src/ONEWSENG.cpp:751
-#, fuzzy
 msgid "An All High Karrotten has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Каротенов была повержен."
 
 #: src/ONEWSENG.cpp:752
-#, fuzzy
 msgid "An All High Holgh has been slain."
-msgstr "Его высочество %s был повержен."
+msgstr "Матрона Холгей была повержен."
 
 #. TRANSLATORS: A <Fryhtan> Lair has been destroyed.
 #: src/ONEWSENG.cpp:774
-#, fuzzy
 msgid "A Deezboanz Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Дизбонза было уничтожено."
 
 #: src/ONEWSENG.cpp:775
-#, fuzzy
 msgid "A Rattus Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Раттуса было уничтожено."
 
 #: src/ONEWSENG.cpp:776
-#, fuzzy
 msgid "A Broosken Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Брускена было уничтожено."
 
 #: src/ONEWSENG.cpp:777
-#, fuzzy
 msgid "A Haubudam Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Хабудама было уничтожено."
 
 #: src/ONEWSENG.cpp:778
-#, fuzzy
 msgid "A Pfith Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Пифа было уничтожено."
 
 #: src/ONEWSENG.cpp:779
-#, fuzzy
 msgid "A Rokken Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Роккена было уничтожено."
 
 #: src/ONEWSENG.cpp:780
-#, fuzzy
 msgid "A Doink Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Доинки было уничтожено."
 
 #: src/ONEWSENG.cpp:781
-#, fuzzy
 msgid "A Wyrm Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Вирма было уничтожено."
 
 #: src/ONEWSENG.cpp:782
-#, fuzzy
 msgid "A Droog Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Друки было уничтожено."
 
 #: src/ONEWSENG.cpp:783
-#, fuzzy
 msgid "An Ick Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Ики было уничтожено."
 
 #: src/ONEWSENG.cpp:784
-#, fuzzy
 msgid "A Sauroid Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Сауродина было уничтожено."
 
 #: src/ONEWSENG.cpp:785
-#, fuzzy
 msgid "A Karrotten Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Каротена было уничтожено."
 
 #: src/ONEWSENG.cpp:786
-#, fuzzy
 msgid "A Holgh Lair has been destroyed."
-msgstr "Логово %s было уничтожено."
+msgstr "Логово Холги было уничтожено."
 
 #. TRANSLATORS: You have acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:808
-#, fuzzy
 msgid "You have acquired the Norman Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили нормандский Свиток Власти."
 
 #: src/ONEWSENG.cpp:809
-#, fuzzy
 msgid "You have acquired the Mayan Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили майя Свиток Власти."
 
 #: src/ONEWSENG.cpp:810
-#, fuzzy
 msgid "You have acquired the Greek Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили греческий Свиток Власти."
 
 #: src/ONEWSENG.cpp:811
-#, fuzzy
 msgid "You have acquired the Viking Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили Свиток Власти Викингов."
 
 #: src/ONEWSENG.cpp:812
-#, fuzzy
 msgid "You have acquired the Persian Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили персидский Свиток Власти."
 
 #: src/ONEWSENG.cpp:813
-#, fuzzy
 msgid "You have acquired the Chinese Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили китайский Свиток Власти."
 
 #: src/ONEWSENG.cpp:814
-#, fuzzy
 msgid "You have acquired the Japanese Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили японский Свиток Власти."
 
 #: src/ONEWSENG.cpp:815
-#, fuzzy
 msgid "You have acquired the Egyptian Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили египетский Свиток Власти."
 
 #: src/ONEWSENG.cpp:816
-#, fuzzy
 msgid "You have acquired the Mughul Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили Свиток Власти Моголов."
 
 #: src/ONEWSENG.cpp:817
-#, fuzzy
 msgid "You have acquired the Zulu Scroll of Power."
-msgstr "Вы получили %s Свиток Власти."
+msgstr "Вы получили зулу́сский Свиток Власти."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:822
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Norman Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило нормандский Свиток Власти."
 
 #: src/ONEWSENG.cpp:823
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Mayan Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило майя Свиток Власти."
 
 #: src/ONEWSENG.cpp:824
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Greek Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило греческий Свиток Власти."
 
 #: src/ONEWSENG.cpp:825
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Viking Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило Свиток Власти Викингов."
 
 #: src/ONEWSENG.cpp:826
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Persian Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило персидский Свиток Власти."
 
 #: src/ONEWSENG.cpp:827
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Chinese Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило китайский Свиток Власти."
 
 #: src/ONEWSENG.cpp:828
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Japanese Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило японский Свиток Власти."
 
 #: src/ONEWSENG.cpp:829
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Egyptian Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило египетский Свиток Власти."
 
 #: src/ONEWSENG.cpp:830
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Mughul Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило Свиток Власти Моголов."
 
 #: src/ONEWSENG.cpp:831
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Zulu Scroll of Power."
-msgstr "%s Королевство%s получило %s Свиток Власти."
+msgstr "%s%s получило зулу́сский Свиток Власти."
 
 #. TRANSLATORS: You have recovered <Amount> worth of treasure from the Fryhtans.
 #: src/ONEWSENG.cpp:875
@@ -2201,156 +2087,168 @@ msgstr "Вы вернули сокровища достоинством в %s о
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:883
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Seat of Power "
 "near %s in %s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Владении около %s из %s"
+"%s."
 
 #: src/ONEWSENG.cpp:884
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Factory near %s "
 "in %s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Заводе около %s из %s"
+"%s."
 
 #: src/ONEWSENG.cpp:885
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Inn near %s in "
 "%s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Постоялом дворе около "
+"%s из %s%s."
 
 #: src/ONEWSENG.cpp:886
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Market near %s in "
 "%s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Рыноке около %s из %s"
+"%s."
 
 #: src/ONEWSENG.cpp:887
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fort near %s in "
 "%s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Форте около %s из %s%s."
 
 #: src/ONEWSENG.cpp:888
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Mine near %s in "
 "%s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Шахты около %s из %s%s."
 
 #: src/ONEWSENG.cpp:889
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Tower of Science "
 "near %s in %s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Башня знаном около %s "
+"из %s%s."
 
 #: src/ONEWSENG.cpp:890
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a War Factory near "
 "%s in %s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Военном заводе около "
+"%s из %s%s."
 
 #: src/ONEWSENG.cpp:891
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Harbor near %s in "
 "%s's Kingdom%s."
 msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+"Ваш шпион был раскрыт и казнен в течении его миссии в Гаваня около %s из %s"
+"%s."
 
 #: src/ONEWSENG.cpp:892
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fryhtan Lair near "
 "%s in %s's Kingdom%s."
-msgstr ""
-"Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s из %s."
+msgstr "null %s %s%s"
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
 #: src/ONEWSENG.cpp:897
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Seat of Power "
 "near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr ""
+"Ваш шпион был раскрыт и казнен в течении его миссии в Владении около %s."
 
 #: src/ONEWSENG.cpp:898
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Factory near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в Заводе около %s."
 
 #: src/ONEWSENG.cpp:899
-#, fuzzy, c-format
+#, c-format
 msgid "Your spy has been exposed and executed on his mission to a Inn near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr ""
+"Ваш шпион был раскрыт и казнен в течении его миссии в Постоялом дворе около "
+"%s."
 
 #: src/ONEWSENG.cpp:900
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Market near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в Рыноке около %s."
 
 #: src/ONEWSENG.cpp:901
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fort near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в Форте около %s."
 
 #: src/ONEWSENG.cpp:902
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Mine near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в Шахты около %s."
 
 #: src/ONEWSENG.cpp:903
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Tower of Science "
 "near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr ""
+"Ваш шпион был раскрыт и казнен в течении его миссии в Башня знаном около %s."
 
 #: src/ONEWSENG.cpp:904
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a War Factory near "
 "%s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr ""
+"Ваш шпион был раскрыт и казнен в течении его миссии в Военном заводе около "
+"%s."
 
 #: src/ONEWSENG.cpp:905
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Harbor near %s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в Гаваня около %s."
 
 #: src/ONEWSENG.cpp:906
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fryhtan Lair near "
 "%s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s около %s."
+msgstr "null %s"
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to <Town> in <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:951
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to %s in %s's Kingdom"
 "%s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s из %s."
+msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s из %s%s."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to <Town>.
 #: src/ONEWSENG.cpp:956
@@ -2360,10 +2258,10 @@ msgstr "Ваш шпион был раскрыт и казнен в течени�
 
 #. TRANSLATORS: Your spy <Name> has been exposed and executed on his mission to <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:964
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your spy %s has been exposed and executed on his mission to %s's Kingdom%s."
-msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s из %s."
+msgstr "Ваш шпион был раскрыт и казнен в течении его миссии в %s из %s%s."
 
 #. TRANSLATORS: Your spy <Name> has been exposed and executed on his mission.
 #: src/ONEWSENG.cpp:969
@@ -2373,88 +2271,88 @@ msgstr "Ваш шпион %s был раскрыт и казнен в течен
 
 #. TRANSLATORS: A spy from <King>'s Kingdom<Color> has been uncovered and executed in your <Firm> near <Town>.
 #: src/ONEWSENG.cpp:979
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Seat of "
 "Power near %s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Владении около %s."
 
 #: src/ONEWSENG.cpp:980
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Factory "
 "near %s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Заводе около %s."
 
 #: src/ONEWSENG.cpp:981
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Inn near "
 "%s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Постоялом дворе около %s."
 
 #: src/ONEWSENG.cpp:982
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Market "
 "near %s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Рыноке около %s."
 
 #: src/ONEWSENG.cpp:983
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Fort near "
 "%s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Форте около %s."
 
 #: src/ONEWSENG.cpp:984
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Mine near "
 "%s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Шахты около %s."
 
 #: src/ONEWSENG.cpp:985
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Tower of "
 "Science near %s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Башня знаном около %s."
 
 #: src/ONEWSENG.cpp:986
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your War "
 "Factory near %s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Военном заводе около %s."
 
 #: src/ONEWSENG.cpp:987
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Harbor "
 "near %s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашем Гаваня около %s."
 
 #: src/ONEWSENG.cpp:988
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your Fryhtan "
 "Lair near %s."
-msgstr "Шпион из %s был раскрыт и казнен в вашем %s около %s."
+msgstr "null %s%s %s"
 
 #. TRANSLATORS: A spy from <King>'s Kingdom<Color> has been uncovered and executed in your village of <Town>.
 #: src/ONEWSENG.cpp:1024
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A spy from %s's Kingdom%s has been uncovered and executed in your village of "
 "%s."
-msgstr "Шпион из %s был раскрыт и казнен в вашей деревне %s."
+msgstr "Шпион из %s%s был раскрыт и казнен в вашей деревне %s."
 
 #. TRANSLATORS: Spy <Name> from <King>'s Kingdom<Color> has been uncovered and executed.
 #: src/ONEWSENG.cpp:1032
-#, fuzzy, c-format
+#, c-format
 msgid "Spy %s from %s's Kingdom%s has been uncovered and executed."
-msgstr "Шпион %s из %s был раскрыт и казнен."
+msgstr "Шпион %s из %s%s был раскрыт и казнен."
 
 #. TRANSLATORS: Independent unit <Name> has joined your force.
 #: src/ONEWSENG.cpp:1068
@@ -2476,27 +2374,27 @@ msgstr "%s отрекся от вас и стал независимым."
 
 #. TRANSLATORS: General <Name> has betrayed you and turned towards <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:1095
-#, fuzzy, c-format
+#, c-format
 msgid "General %s has betrayed you and turned towards %s's Kingdom%s."
-msgstr "Генерал %s предал вас и обратился против %s."
+msgstr "Генерал %s предал вас и обратился против %s%s."
 
 #. TRANSLATORS: <Name> has betrayed you and turned towards <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:1100
-#, fuzzy, c-format
+#, c-format
 msgid "%s has betrayed you and turned towards %s's Kingdom%s."
-msgstr "%s предал вас и обратился против %s."
+msgstr "%s предал вас и обратился против %s%s."
 
 #. TRANSLATORS: General <Name> of <King>'s Kingdom<Color> has defected to your forces.
 #: src/ONEWSENG.cpp:1108
-#, fuzzy, c-format
+#, c-format
 msgid "General %s of %s's Kingdom%s has defected to your forces."
-msgstr "Генерал %s из %s перешел на сторону ваших сил."
+msgstr "Генерал %s из %s%s перешел на сторону ваших сил."
 
 #. TRANSLATORS: <Name> of <King>'s Kingdom<Color> has defected to your forces.
 #: src/ONEWSENG.cpp:1113
-#, fuzzy, c-format
+#, c-format
 msgid "%s of %s's Kingdom%s has defected to your forces."
-msgstr "%s из %s перешел на сторону ваших сил."
+msgstr "%s из %s%s перешел на сторону ваших сил."
 
 #. TRANSLATORS: Your general, <Name>, has been slain.
 #: src/ONEWSENG.cpp:1135
@@ -2620,7 +2518,7 @@ msgstr "Ваши ученые завершили исследование Еди
 #: src/ONEWSENG.cpp:1276
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by lightning."
-msgstr "Ваша Администрация около %s была уничтожена молнией."
+msgstr "Ваша Владения около %s была уничтожена молнией."
 
 #: src/ONEWSENG.cpp:1277
 #, c-format
@@ -2666,7 +2564,7 @@ msgstr "Ваша Гавань около %s была уничтожена мол
 #: src/ONEWSENG.cpp:1290
 #, c-format
 msgid "Your Seat of Power near %s has been struck by lightning."
-msgstr "Ваша Администрация около %s была повреждена молнией."
+msgstr "Ваша Владения около %s была повреждена молнией."
 
 #: src/ONEWSENG.cpp:1291
 #, c-format
@@ -2711,7 +2609,7 @@ msgstr "Ваша Гавань около %s была повреждена мол
 #. TRANSLATORS: Your <Firm> has been destroyed by lightning.
 #: src/ONEWSENG.cpp:1304
 msgid "Your Seat of Power has been destroyed by lightning."
-msgstr "Ваша Администрация была уничтожена молнией."
+msgstr "Ваша Владения была уничтожена молнией."
 
 #: src/ONEWSENG.cpp:1305
 msgid "Your Factory has been destroyed by lightning."
@@ -2723,11 +2621,11 @@ msgstr "Ваша Гостиница была уничтожена молнией
 
 #: src/ONEWSENG.cpp:1307
 msgid "Your Market has been destroyed by lightning."
-msgstr "Ваш Рынок был  уничтожен молнией."
+msgstr "Ваш Рынок был уничтожен молнией."
 
 #: src/ONEWSENG.cpp:1308
 msgid "Your Fort has been destroyed by lightning."
-msgstr "Ваш Форт был  уничтожен молнией."
+msgstr "Ваш Форт был уничтожен молнией."
 
 #: src/ONEWSENG.cpp:1309
 msgid "Your Mine has been destroyed by lightning."
@@ -2743,12 +2641,12 @@ msgstr "Ваш Военный завод былыл уничтожен молн�
 
 #: src/ONEWSENG.cpp:1312
 msgid "Your Harbor has been destroyed by lightning."
-msgstr "Ваша Гавань была  уничтожена молнией."
+msgstr "Ваша Гавань была уничтожена молнией."
 
 #. TRANSLATORS: Your <Firm> has been struck by lightning.
 #: src/ONEWSENG.cpp:1318
 msgid "Your Seat of Power has been struck by lightning."
-msgstr "Ваша Администрация была повреждена молнией."
+msgstr "Ваша Владения была повреждена молнией."
 
 #: src/ONEWSENG.cpp:1319
 msgid "Your Factory has been struck by lightning."
@@ -2841,12 +2739,12 @@ msgstr[2] "%d из ваших юнитов были ранены"
 
 #. TRANSLATORS: Part of "<Number> of your units has/have been injured and <Number referring to units> killed in an earthquake."
 #: src/ONEWSENG.cpp:1467
-#, fuzzy, c-format
+#, c-format
 msgid "and %d killed in an earthquake."
 msgid_plural "and %d killed in an earthquake."
-msgstr[0] "%d ваш юнит был ранен и %d погиб во время землетрясения."
-msgstr[1] "%d ваших юнита было ранено и %d погибло во время землетрясения."
-msgstr[2] "%d ваших юнитов были ранены и %d погибли во время землетрясения."
+msgstr[0] "и %d погиб во время землетрясения."
+msgstr[1] "и %d погибло во время землетрясения."
+msgstr[2] "и %d погибли во время землетрясения."
 
 #. TRANSLATORS: <Number> of your units has/have been injured in an earthquake.
 #: src/ONEWSENG.cpp:1473
@@ -2877,15 +2775,12 @@ msgstr[2] "%d из ваших построек были повреждены в�
 
 #. TRANSLATORS: Part of "<Number> of your buildings has/have been damaged and <Number referring to buildings> destroyed in an earthquake."
 #: src/ONEWSENG.cpp:1492
-#, fuzzy, c-format
+#, c-format
 msgid "and %d destroyed in an earthquake."
 msgid_plural "and %d destroyed in an earthquake."
-msgstr[0] ""
-"%d ваша постройка была повреждена и %d уничтожена во время землетрясения."
-msgstr[1] ""
-"%d ваши постройки были повреждены и %d уничтожены во время землетрясения."
-msgstr[2] ""
-"%d ваших построек были повреждены и %d уничтожены во время землетрясения."
+msgstr[0] "и %d уничтожена во время землетрясения."
+msgstr[1] "и %d уничтожены во время землетрясения."
+msgstr[2] "и %d уничтожены во время землетрясения."
 
 #. TRANSLATORS: <Number> of your buildings has/have been damaged in an earthquake.
 #: src/ONEWSENG.cpp:1498
@@ -2898,193 +2793,196 @@ msgstr[2] "%d ваших построек были повреждены во в�
 
 #: src/ONEWSENG.cpp:1525
 msgid "Make haste!"
-msgstr ""
+msgstr "Поторопитесь!"
 
 #: src/ONEWSENG.cpp:1537
-#, fuzzy, c-format
+#, c-format
 msgid "You have only %d year left to achieve your goal."
 msgid_plural "You have only %d years left to achieve your goal."
-msgstr[0] ""
-"Поторопитесь! У вас остался только %d год на достижение игровой цели."
-msgstr[1] ""
-"Поторопитесь! У вас остался только %d год на достижение игровой цели."
-msgstr[2] ""
-"Поторопитесь! У вас остался только %d год на достижение игровой цели."
+msgstr[0] "У вас остался только %d год на достижение игровой цели."
+msgstr[1] "У вас остался только %d года на достижение игровой цели."
+msgstr[2] "У вас остался только %d лет на достижение игровой цели."
 
 #: src/ONEWSENG.cpp:1544
-#, fuzzy, c-format
+#, c-format
 msgid "You have only %d month left to achieve your goal."
 msgid_plural "You have only %d months left to achieve your goal."
-msgstr[0] ""
-"Поторопитесь! У вас остался только %d месяц на достижение игровой цели."
-msgstr[1] ""
-"Поторопитесь! У вас остался только %d месяц на достижение игровой цели."
-msgstr[2] ""
-"Поторопитесь! У вас остался только %d месяц на достижение игровой цели."
+msgstr[0] "У вас остался только %d месяц на достижение игровой цели."
+msgstr[1] "У вас остался только %d месяца на достижение игровой цели."
+msgstr[2] "У вас остался только %d месяцев на достижение игровой цели."
 
 #. TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
 #: src/ONEWSENG.cpp:1551
 #, c-format
 msgid "You have only %d year"
 msgid_plural "You have only %d years"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "У вас остался только %d год"
+msgstr[1] "У вас остался только %d года"
+msgstr[2] "У вас остался только %d лет"
 
 #. TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
 #: src/ONEWSENG.cpp:1556
 #, c-format
 msgid "and %d month left to achieve your goal."
 msgid_plural "and %d months left to achieve your goal."
-msgstr[0] "%d мес. осталсяна достижение игровой цели."
-msgstr[1] "%d мес. осталсяна достижение игровой цели."
-msgstr[2] "%d мес. осталсяна достижение игровой цели."
+msgstr[0] "и %d месяц осталсяна достижение игровой цели."
+msgstr[1] "и %d месяца осталсяна достижение игровой цели."
+msgstr[2] "и %d месяцев осталсяна достижение игровой цели."
 
 #. TRANSLATORS: A <Weapon> <Tech Level Number> of yours has broken down due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1566
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A Catapult %s of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Катапульта %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1567
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A Ballista %s of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Баллиста %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1568
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A Spitfire %s of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Огнемёт %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1569
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A Cannon %s of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Пушка %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1570
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A Porcupine %s of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Поркупайн %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #. TRANSLATORS: A <Ship> of yours has broken down due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1572
-#, fuzzy
 msgid "A Trader of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Торговец вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1573
-#, fuzzy
 msgid ""
 "A Transport of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Транспорт вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1574
-#, fuzzy
 msgid ""
 "A Caravel of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Каравелла вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1575
-#, fuzzy
 msgid ""
 "A Galleon of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr "Ваш Галеон вышел из строя в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1577
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A Unicorn %s of yours has broken down due to the lack of maintenance funds."
-msgstr "Ваш %s вышел из строя в связи с нехваткой средств на обслуживание."
+msgstr ""
+"Ваш Единорог %s вышел из строя в связи с нехваткой средств на обслуживание."
 
 #. TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1615
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Seat of Power near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваш центр власти около %s обветшала в связи с нехваткой средств на "
+"обслуживание."
 
 #: src/ONEWSENG.cpp:1616
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Factory near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваш Завод около %s обветшала в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1617
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Inn near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваша Гостиница около %s обветшала в связи с нехваткой средств на "
+"обслуживание."
 
 #: src/ONEWSENG.cpp:1618
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Market near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваш Рынок около %s обветшала в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1619
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Fort near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваш Форт около %s обветшала в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1620
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Mine near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваша Шахта около %s обветшала в связи с нехваткой средств на обслуживание."
 
 #: src/ONEWSENG.cpp:1621
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Tower of Science near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваш Научный центр около %s обветшала в связи с нехваткой средств на "
+"обслуживание."
 
 #: src/ONEWSENG.cpp:1622
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your War Factory near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваш Военный завод около %s обветшала в связи с нехваткой средств на "
+"обслуживание."
 
 #: src/ONEWSENG.cpp:1623
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your Harbor near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
 msgstr ""
-"Ваша %s около %s обветшала в связи с нехваткой средств на обслуживание."
+"Ваша Гавань около %s обветшала в связи с нехваткой средств на обслуживание."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has retired and quit the game.
 #: src/ONEWSENG.cpp:1674
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has retired and quit the game."
-msgstr "%s сдался и покинул игру."
+msgstr "%s%s сдался и покинул игру."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has quit the game.
 #: src/ONEWSENG.cpp:1692
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has quit the game."
-msgstr "%s покинул игру."
+msgstr "%s%s покинул игру."
 
 #. TRANSLATORS: The current game has been saved to <File>.
 #: src/ONEWSENG.cpp:1710
@@ -3094,22 +2992,22 @@ msgstr "Данная игра была сохранена в %s."
 
 #. TRANSLATORS: The connection with <King>'s Kingdom<Color> has been lost.
 #: src/ONEWSENG.cpp:1728
-#, fuzzy, c-format
+#, c-format
 msgid "The connection with %s's Kingdom%s has been lost."
-msgstr "Соединение с %s было потеряно."
+msgstr "Соединение с %s%s было потеряно."
 
 #: src/ORAWRES.cpp:276
-#, c-format
+#, fuzzy, c-format
 msgid "%s Products"
 msgstr "%s продуктов"
 
 #: src/OREMOTEM.cpp:462 src/OSYS2.cpp:1024
 msgid "Multiplayer Random Seed Sync Error"
-msgstr ""
+msgstr "многопользовательская ошибка синхронизации случайного источника"
 
 #: src/OREMOTEM.cpp:2836 src/OSYS2.cpp:1026
 msgid "Multiplayer Object Sync Error"
-msgstr ""
+msgstr "ошибка синхронизации многопользовательского объекта"
 
 #: src/OR_ECO.cpp:74
 msgid "Income Item"
@@ -3333,9 +3231,8 @@ msgid "Trade Treaty"
 msgstr "Торговый договор"
 
 #: src/OR_NAT.cpp:173
-#, fuzzy
 msgid "Trade Amount"
-msgstr "Количество"
+msgstr "Сумма сделки"
 
 #: src/OR_NAT.cpp:503
 msgid "Your Food"
@@ -3466,31 +3363,31 @@ msgstr "Общее игровое время %s"
 #. TRANSLATORS: Ordinal number for ranking players
 #: src/OR_RANK.cpp:463
 msgid "1st"
-msgstr ""
+msgstr "1-ый"
 
 #: src/OR_RANK.cpp:464
 msgid "2nd"
-msgstr ""
+msgstr "2-ой"
 
 #: src/OR_RANK.cpp:465
 msgid "3rd"
-msgstr ""
+msgstr "3-ий"
 
 #: src/OR_RANK.cpp:466
 msgid "4th"
-msgstr ""
+msgstr "4-ый"
 
 #: src/OR_RANK.cpp:467
 msgid "5th"
-msgstr ""
+msgstr "5-ый"
 
 #: src/OR_RANK.cpp:468
 msgid "6th"
-msgstr ""
+msgstr "6-ой"
 
 #: src/OR_RANK.cpp:469
 msgid "7th"
-msgstr ""
+msgstr "7-ой"
 
 #: src/OR_SPY.cpp:73
 msgid "Spy Name"
@@ -3518,18 +3415,16 @@ msgid "Technology"
 msgstr "Технология"
 
 #: src/OR_TECH.cpp:114
-#, fuzzy
 msgid "Present Version"
-msgstr "Версия"
+msgstr "Текущая версия"
 
 #: src/OR_TECH.cpp:115
-#, fuzzy
 msgid "Researching Version"
-msgstr "Исследуется"
+msgstr "ИССЛЕДОВАТЕЛЬСКАЯ версия"
 
 #: src/OR_TECH.cpp:116
 msgid "Research Progress"
-msgstr "Прогресс"
+msgstr "прогресс исследований"
 
 # data/resource/std/00007-FIRM.dbf
 #: src/OR_TECH.cpp:117
@@ -3607,15 +3502,15 @@ msgstr "Всего"
 
 #: src/OR_TRADE.cpp:88 src/OR_TRADE.cpp:119
 msgid "Stop 1"
-msgstr "Один"
+msgstr "Стоп 1"
 
 #: src/OR_TRADE.cpp:89 src/OR_TRADE.cpp:120
 msgid "Stop 2"
-msgstr "Два"
+msgstr "Стоп 2"
 
 #: src/OR_TRADE.cpp:90 src/OR_TRADE.cpp:121
 msgid "Stop 3"
-msgstr "Три"
+msgstr "Стоп 3"
 
 #: src/OR_TRADE.cpp:91 src/OR_TRADE.cpp:122
 msgid "Goods Carried"
@@ -3734,7 +3629,7 @@ msgstr "Невозможно определить местоположение �
 
 #. TRANSLATORS: Waiting for <King>'s Kingdom
 #: src/OSYS.cpp:891
-#, fuzzy, c-format
+#, c-format
 msgid "Waiting for %s's Kingdom"
 msgstr "Ожидается %s"
 
@@ -3805,7 +3700,7 @@ msgstr "Пустая ячейка"
 
 #: src/OSaveGameArray.cpp:537
 msgid "Cannot delete this slot"
-msgstr "Эта ячейка не может быть удалена"
+msgstr "Эта ячейка не может быть удалена."
 
 #: src/OSaveGameArray.cpp:617
 msgid "Game Date: "
@@ -3821,7 +3716,7 @@ msgstr "Время файла: "
 
 #: src/OSaveGameArray.cpp:673
 msgid "It will overwrite the existing saved game. Proceed?"
-msgstr "Данная игра будет перезаписана. продолжить?"
+msgstr "Данная игра будет перезаписана. Продолжить?"
 
 #: src/OSaveGameArray.cpp:734
 msgid "Cannot save the game because the path is too long"
@@ -3829,594 +3724,1107 @@ msgstr "Слишком длинный путь сохранения игры"
 
 #: src/OSaveGameArray.cpp:889
 msgid "This saved game will be deleted. Proceed?"
-msgstr "Эта игра будет удалена. продолжить?"
+msgstr "Эта игра будет удалена. Продолжить?"
 
 #. TRANSLATORS: You propose a trade treaty to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:195
-#, fuzzy, c-format
+#, c-format
 msgid "You propose a trade treaty to %s's Kingdom%s."
-msgstr "Вы предлагаете торговый договор для %s."
+msgstr "Вы предлагаете торговый договор для %s%s."
 
 #. TRANSLATORS: You propose a friendly treaty to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:200
-#, fuzzy, c-format
+#, c-format
 msgid "You propose a friendly treaty to %s's Kingdom%s."
-msgstr "Вы предлагаете дружеский договор для %s."
+msgstr "Вы предлагаете дружеский договор для %s%s."
 
 #. TRANSLATORS: You propose an alliance treaty to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:205
-#, fuzzy, c-format
+#, c-format
 msgid "You propose an alliance treaty to %s's Kingdom%s."
-msgstr "Вы предлагаете договор о союзе для %s."
+msgstr "Вы предлагаете договор о союзе для %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> proposes a trade treaty to you.
 #: src/OTALKENG.cpp:213
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s proposes a trade treaty to you."
-msgstr "%s предлагает Вам торговое соглашение."
+msgstr "%s%s предлагает Вам торговое соглашение."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> proposes a friendly treaty to you.
 #: src/OTALKENG.cpp:218
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s proposes a friendly treaty to you."
-msgstr "%s предлагает Вам дружеское соглашение."
+msgstr "%s%s предлагает Вам дружеское соглашение."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> proposes an alliance treaty to you.
 #: src/OTALKENG.cpp:223
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s proposes an alliance treaty to you."
-msgstr "%s предлагает Вам союзное соглашение."
+msgstr "%s%s предлагает Вам союзное соглашение."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your proposed trade treaty.
 #: src/OTALKENG.cpp:236
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your proposed trade treaty."
-msgstr "%s принимает предложенный вами торговый договор."
+msgstr "%s%s принимает предложенный вами торговый договор."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your proposed friendly treaty.
 #: src/OTALKENG.cpp:241
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your proposed friendly treaty."
-msgstr "%s принимает предложенный вами торговый договор."
+msgstr "%s%s принимает предложенный вами торговый договор."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your proposed alliance treaty.
 #: src/OTALKENG.cpp:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your proposed alliance treaty."
-msgstr "%s принимает ваш предложенный договор о союзе."
+msgstr "%s%s принимает ваш предложенный договор о союзе."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your proposed trade treaty.
 #: src/OTALKENG.cpp:254
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your proposed trade treaty."
-msgstr "%s принимает предложенный вами торговый договор."
+msgstr "%s%s принимает предложенный вами торговый договор."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your proposed friendly treaty.
 #: src/OTALKENG.cpp:259
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your proposed friendly treaty."
-msgstr "%s отклоняет предложенный вами дружественный договор."
+msgstr "%s%s отклоняет предложенный вами дружественный договор."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your proposed alliance treaty.
 #: src/OTALKENG.cpp:264
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your proposed alliance treaty."
-msgstr "%s принимает ваш предложенный договор о союзе."
+msgstr "%s%s принимает ваш предложенный договор о союзе."
 
 #. TRANSLATORS: You accept the trade treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:275
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the trade treaty proposed by %s's Kingdom%s."
-msgstr "Вы принимаете торговый договор, предложенный %s."
+msgstr "Вы принимаете торговый договор, предложенный %s%s."
 
 #. TRANSLATORS: You accept the friendly treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:280
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the friendly treaty proposed by %s's Kingdom%s."
-msgstr "Вы принимаете дружественный договор, предложенный %s."
+msgstr "Вы принимаете дружественный договор, предложенный %s%s."
 
 #. TRANSLATORS: You accept the alliance treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:285
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the alliance treaty proposed by %s's Kingdom%s."
-msgstr "Вы принимаете договор о союзе, предложенный %s."
+msgstr "Вы принимаете договор о союзе, предложенный %s%s."
 
 #. TRANSLATORS: You reject the trade treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:293
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the trade treaty proposed by %s's Kingdom%s."
-msgstr "Вы отклоняете торговый договор, предложенный %s."
+msgstr "Вы отклоняете торговый договор, предложенный %s%s."
 
 #. TRANSLATORS: You reject the friendly treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:298
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the friendly treaty proposed by %s's Kingdom%s."
-msgstr "Вы отвергаете дружественный договор, предложенный %s."
+msgstr "Вы отвергаете дружественный договор, предложенный %s%s."
 
 #. TRANSLATORS: You reject the alliance treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:303
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the alliance treaty proposed by %s's Kingdom%s."
-msgstr "Вы отклоняете договор о союзе, предложенный %s."
+msgstr "Вы отклоняете договор о союзе, предложенный %s%s."
 
 #. TRANSLATORS: You terminate your trade treaty with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:331
-#, fuzzy, c-format
+#, c-format
 msgid "You terminate your trade treaty with %s's Kingdom%s."
-msgstr "Вы прекратите свой торговый договор с %s."
+msgstr "Вы прекратите свой торговый договор с %s%s."
 
 #. TRANSLATORS: You terminate your friendly treaty with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:336
-#, fuzzy, c-format
+#, c-format
 msgid "You terminate your friendly treaty with %s's Kingdom%s."
-msgstr "Вы расторгнете свой дружественный договор с %s."
+msgstr "Вы расторгнете свой дружественный договор с %s%s."
 
 #. TRANSLATORS: You terminate your alliance treaty with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:341
-#, fuzzy, c-format
+#, c-format
 msgid "You terminate your alliance treaty with %s's Kingdom%s."
-msgstr "Вы расторгнете договор о союзе с %s."
+msgstr "Вы расторгнете договор о союзе с %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> terminates its trade treaty with you.
 #: src/OTALKENG.cpp:349
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s terminates its trade treaty with you."
-msgstr "%s прекращает с вами договор о торговле."
+msgstr "%s%s прекращает с вами договор о торговле."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> terminates its friendly treaty with you.
 #: src/OTALKENG.cpp:354
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s terminates its friendly treaty with you."
-msgstr "%s прекращает с вами дружеский договор."
+msgstr "%s%s прекращает с вами дружеский договор."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> terminates its alliance treaty with you.
 #: src/OTALKENG.cpp:359
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s terminates its alliance treaty with you."
-msgstr "%s прекращает с вами договор о союзе."
+msgstr "%s%s прекращает с вами договор о союзе."
 
 #. TRANSLATORS: You request a cease-fire with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:389
-#, fuzzy, c-format
+#, c-format
 msgid "You request a cease-fire with %s's Kingdom%s."
-msgstr "Вы запрашиваете перемирие с %s."
+msgstr "Вы запрашиваете перемирие с %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests a cease-fire.
 #: src/OTALKENG.cpp:394
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests a cease-fire."
-msgstr "%s просит о прекращении военных действий."
+msgstr "%s%s просит о прекращении военных действий."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to a cease-fire.
 #: src/OTALKENG.cpp:403
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to a cease-fire."
-msgstr "%s соглашается на прекращение огня."
+msgstr "%s%s соглашается на прекращение огня."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses a cease-fire.
 #: src/OTALKENG.cpp:406
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s refuses a cease-fire."
-msgstr "%s отказывается от прекращения огня."
+msgstr "%s%s отказывается от прекращения огня."
 
 #. TRANSLATORS: You agree to a cease-fire with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:412
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to a cease-fire with %s's Kingdom%s."
-msgstr "Вы соглашаетесь на прекращение огня с %s."
+msgstr "Вы соглашаетесь на прекращение огня с %s%s."
 
 #. TRANSLATORS: You refuse a cease-fire with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:415
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse a cease-fire with %s's Kingdom%s."
-msgstr "Вы отказываетесь от прекращения огня с %s."
+msgstr "Вы отказываетесь от прекращения огня с %s%s."
 
 #. TRANSLATORS: You request <King 1>'s Kingdom<Color> to declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:445
-#, fuzzy, c-format
+#, c-format
 msgid "You request %s's Kingdom%s to declare war on %s's Kingdom%s."
-msgstr "Вы просите %s объявить войну %s%s."
+msgstr "Вы просите %s%s объявить войну %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> requests that you declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:450
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests that you declare war on %s's Kingdom%s."
-msgstr "%s просит, чтобы Вы объявили %s%s войну."
+msgstr "%s%s просит, чтобы Вы объявили %s%s войну."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> agrees to declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:459
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to declare war on %s's Kingdom%s."
-msgstr "%s соглашается объявить войну %s%s."
+msgstr "%s%s соглашается объявить войну %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> refuses to declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:462
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s refuses to declare war on %s's Kingdom%s."
-msgstr "%s отказывается объявить войну %s%s."
+msgstr "%s%s отказывается объявить войну %s%s."
 
 #. TRANSLATORS: You agree to declare war on <King>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:468
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to declare war on %s's Kingdom%s."
 msgstr "Вы соглашаетесь объявить войну %s%s."
 
 #. TRANSLATORS: You refuse to declare war on <King>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:471
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to declare war on %s's Kingdom%s."
 msgstr "Вы отказываетесь объявлять войну %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> offers <Amount> for 10 units of food.
 #: src/OTALKENG.cpp:494
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers %s for 10 units of food."
-msgstr "%s предлагает %s для 10 единиц пищи."
+msgstr "%s%s предлагает %s для 10 единиц пищи."
 
 #. TRANSLATORS: You request to purchase <Number> units of food from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:522
-#, fuzzy, c-format
+#, c-format
 msgid "You request to purchase %s units of food from %s's Kingdom%s."
-msgstr "Вы запрашиваете покупку %s единиц продуктов из %s."
+msgstr "Вы запрашиваете покупку %s единиц продуктов из %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests to purchase <Number> units of food from you.
 #: src/OTALKENG.cpp:527
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests to purchase %s units of food from you."
-msgstr "%s просит купить у вас %s единиц продуктов."
+msgstr "%s%s просит купить у вас %s единиц продуктов."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:536
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to sell %s units of food to you."
-msgstr "%s соглашается продать вам %s единиц продуктов."
+msgstr "%s%s соглашается продать вам %s единиц продуктов."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:539
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s refuses to sell %s units of food to you."
-msgstr "%s отказывается продавать вам единицы %s."
+msgstr "%s%s отказывается продавать вам единицы %s."
 
 #. TRANSLATORS: You agree to sell <Number> units of food to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:545
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to sell %s units of food to %s's Kingdom%s."
-msgstr "Вы соглашаетесь продавать %s единиц продуктов питания %s."
+msgstr "Вы соглашаетесь продавать %s единиц продуктов питания %s%s."
 
 #. TRANSLATORS: You refuse to sell <Number> units of food to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:548
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to sell %s units of food to %s's Kingdom%s."
-msgstr "Вы отказываетесь продавать %s единиц продуктов питания %s."
+msgstr "Вы отказываетесь продавать %s единиц продуктов питания %s%s."
 
 #. TRANSLATORS: You declare war on <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:570
-#, fuzzy, c-format
+#, c-format
 msgid "You declare war on %s's Kingdom%s."
-msgstr "Вы объявляете войну %s."
+msgstr "Вы объявляете войну %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> declares war on you.
 #: src/OTALKENG.cpp:575
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s declares war on you."
-msgstr "%s объявляет войну Вам."
+msgstr "%s%s объявляет войну Вам."
 
 #. TRANSLATORS: You offer <King>'s Kingdom<Color> <Amount> in aid.
 #: src/OTALKENG.cpp:615
-#, fuzzy, c-format
+#, c-format
 msgid "You offer %s's Kingdom%s %s in aid."
-msgstr "Вы предлагаете %s %s в помощь."
+msgstr "Вы предлагаете %s%s %s в помощь."
 
 #. TRANSLATORS: You offer <King>'s Kingdom<Color> <Amount> in tribute.
 #: src/OTALKENG.cpp:620
-#, fuzzy, c-format
+#, c-format
 msgid "You offer %s's Kingdom%s %s in tribute."
-msgstr "Вы даете проценты %s %s."
+msgstr "Вы даете проценты %s%s %s в дань."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> offers you <Amount> in aid.
 #: src/OTALKENG.cpp:628
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers you %s in aid."
-msgstr "%s предлагает вам %s в помощь."
+msgstr "%s%s предлагает вам %s в помощь."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> offers you <Amount> in tribute.
 #: src/OTALKENG.cpp:633
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers you %s in tribute."
-msgstr "%s предлагает вам %s в дань."
+msgstr "%s%s предлагает вам %s в дань."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your aid of <Amount>.
 #: src/OTALKENG.cpp:646
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your aid of %s."
-msgstr "%s принимает вашу помощь %s."
+msgstr "%s%s принимает вашу помощь %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your tribute of <Amount>.
 #: src/OTALKENG.cpp:651
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your tribute of %s."
-msgstr "%s принимает вашу дань %s."
+msgstr "%s%s принимает вашу дань %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your aid of <Amount>.
 #: src/OTALKENG.cpp:659
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your aid of %s."
-msgstr "%s отклоняет вашу помощь %s."
+msgstr "%s%s отклоняет вашу помощь %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your tribute of <Amount>.
 #: src/OTALKENG.cpp:664
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your tribute of %s."
-msgstr "%s отклоняет вашу дань %s."
+msgstr "%s%s отклоняет вашу дань %s."
 
 #. TRANSLATORS: You accept the <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:675
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the %s's Kingdom%s in aid from %s."
-msgstr "Вы принимаете %s за помощь из %s."
+msgstr "Вы принимаете %s за помощь из %s%s."
 
 #. TRANSLATORS: You accept the <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:680
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the %s's Kingdom%s in tribute from %s."
-msgstr "Вы принимаете %s в дани с %s."
+msgstr "Вы принимаете %s в дани с %s%s."
 
 #. TRANSLATORS: You reject the <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:688
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the %s's Kingdom%s in aid from %s."
-msgstr "Вы отклоняете %s в помощи %s."
+msgstr "Вы отклоняете %s в помощи %s%s."
 
 #. TRANSLATORS: You reject the <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:693
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the %s's Kingdom%s in tribute from %s."
-msgstr "Вы отклоняете %s в дани из %s."
+msgstr "Вы отклоняете %s в дани из %s%s."
 
 #. TRANSLATORS: You request <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:734
-#, fuzzy, c-format
+#, c-format
 msgid "You request %s in aid from %s's Kingdom%s."
-msgstr "Вы запрашиваете %s с помощью %s."
+msgstr "Вы запрашиваете %s с помощью %s%s."
 
 #. TRANSLATORS: You demand <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:737
-#, fuzzy, c-format
+#, c-format
 msgid "You demand %s in tribute from %s's Kingdom%s."
-msgstr "Вы требуете %s в подаче от %s."
+msgstr "Вы требуете %s в подаче от %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests <Amount> in aid from you.
 #: src/OTALKENG.cpp:743
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests %s in aid from you."
-msgstr "%s запрашивает %s в помощи от вас."
+msgstr "%s%s запрашивает %s в помощи от вас."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> demands <Amount> in tribute from you.
 #: src/OTALKENG.cpp:746
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands %s in tribute from you."
-msgstr "%s требует в подаче от вас %s."
+msgstr "%s%s требует в подаче от вас %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to give you <Amount> in aid.
 #: src/OTALKENG.cpp:758
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to give you %s in aid."
-msgstr "%s соглашается предоставить вам %s в помощь."
+msgstr "%s%s соглашается предоставить вам %s в помощь."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to pay you <Amount> in tribute.
 #: src/OTALKENG.cpp:760
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to pay you %s in tribute."
-msgstr "%s соглашается выплатить вам %s проценты."
+msgstr "%s%s соглашается выплатить вам %s проценты."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses to give you <Amount> in aid.
 #: src/OTALKENG.cpp:768
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s refuses to give you %s in aid."
-msgstr "%s отказывается предоставить вам %s в помощь."
+msgstr "%s%s отказывается предоставить вам %s в помощь."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses to pay you <Amount> in tribute.
 #: src/OTALKENG.cpp:770
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s refuses to pay you %s in tribute."
-msgstr "%s отказывается выплачивать вам %s проценты."
+msgstr "%s%s отказывается выплачивать вам %s проценты."
 
 #. TRANSLATORS: You agree to give <King>'s Kingdom<Color> <Amount> in aid.
 #: src/OTALKENG.cpp:781
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to give %s's Kingdom%s %s in aid."
-msgstr "Вы соглашаетесь предоставить %s %s помощь."
+msgstr "Вы соглашаетесь предоставить %s%s %s помощь."
 
 #. TRANSLATORS: You agree to pay <King>'s Kingdom<Color> <Amount> in tribute.
 #: src/OTALKENG.cpp:783
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to pay %s's Kingdom%s %s in tribute."
-msgstr "Вы соглашаетесь платить проценты %s %s."
+msgstr "Вы соглашаетесь платить проценты %s%s %s."
 
 #. TRANSLATORS: You refuse to give <King>'s Kingdom<Color> <Amount> in aid.
 #: src/OTALKENG.cpp:791
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to give %s's Kingdom%s %s in aid."
-msgstr "Вы отказываетесь от помощи %s %s."
+msgstr "Вы отказываетесь от помощи %s%s %s."
 
 #. TRANSLATORS: You refuse to pay <King>'s Kingdom<Color> <Amount> in tribute.
 #: src/OTALKENG.cpp:793
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to pay %s's Kingdom%s %s in tribute."
-msgstr "Вы отказываетесь платить проценты %s %s."
+msgstr "Вы отказываетесь платить проценты %s%s %s."
 
-#. TRANSLATORS: You offer <Tech> technology to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:840
-#, fuzzy, c-format
-msgid "You offer %s technology to %s's Kingdom%s."
-msgstr "Вы предлагаете %s технологию %s."
+#. TRANSLATORS: You offer <Tech><Level> technology to <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:805
+#, c-format
+msgid "You offer Catapult%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Катапульты%s технологию %s%s."
 
-#. TRANSLATORS: <King>'s Kingdom<Color> offers <Tech> technology to you.
-#: src/OTALKENG.cpp:845
-#, fuzzy, c-format
-msgid "%s's Kingdom%s offers %s technology to you."
-msgstr "%s предлагает вам %s технологию."
+#: src/OTALKENG.cpp:806
+#, c-format
+msgid "You offer Porcupine%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Дикобраза%s технологию %s%s."
+
+#: src/OTALKENG.cpp:807
+#, c-format
+msgid "You offer Ballista%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Балисты%s технологию %s%s."
+
+#: src/OTALKENG.cpp:808
+#, c-format
+msgid "You offer Cannon%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Пушки%s технологию %s%s."
+
+#: src/OTALKENG.cpp:809
+#, c-format
+msgid "You offer Spitfire%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Спитфайра%s технологию %s%s."
+
+#: src/OTALKENG.cpp:810
+#, c-format
+msgid "You offer Caravel%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Каравеллы%s технологию %s%s."
+
+#: src/OTALKENG.cpp:811
+#, c-format
+msgid "You offer Galleon%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Галеона%s технологию %s%s."
+
+#: src/OTALKENG.cpp:812
+#, c-format
+msgid "You offer Unicorn%s technology to %s's Kingdom%s."
+msgstr "Вы предлагаете Единорога%s технологию %s%s."
+
+#. TRANSLATORS: <King>'s Kingdom<Color> offers <Tech><Level> technology to you.
+#: src/OTALKENG.cpp:817
+#, c-format
+msgid "%s's Kingdom%s offers Catapult%s technology to you."
+msgstr "%s%s предлагает вам Катапульты%s технологию."
+
+#: src/OTALKENG.cpp:818
+#, c-format
+msgid "%s's Kingdom%s offers Porcupine%s technology to you."
+msgstr "%s%s предлагает вам Дикобраза%s технологию."
+
+#: src/OTALKENG.cpp:819
+#, c-format
+msgid "%s's Kingdom%s offers Ballista%s technology to you."
+msgstr "%s%s предлагает вам Балисты%s технологию."
+
+#: src/OTALKENG.cpp:820
+#, c-format
+msgid "%s's Kingdom%s offers Cannon%s technology to you."
+msgstr "%s%s предлагает вам Пушки%s технологию."
+
+#: src/OTALKENG.cpp:821
+#, c-format
+msgid "%s's Kingdom%s offers Spitfire%s technology to you."
+msgstr "%s%s предлагает вам Спитфайра%s технологию."
+
+#: src/OTALKENG.cpp:822
+#, c-format
+msgid "%s's Kingdom%s offers Caravel%s technology to you."
+msgstr "%s%s предлагает вам Каравеллы%s технологию."
+
+#: src/OTALKENG.cpp:823
+#, c-format
+msgid "%s's Kingdom%s offers Galleon%s technology to you."
+msgstr "%s%s предлагает вам Галеона%s технологию."
+
+#: src/OTALKENG.cpp:824
+#, c-format
+msgid "%s's Kingdom%s offers Unicorn%s technology to you."
+msgstr "%s%s предлагает вам Единорога%s технологию."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your gift of <Tech> technology.
+#: src/OTALKENG.cpp:829
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Catapult%s technology."
+msgstr "%s%s принимает ваш подарок - Катапульта%s."
+
+#: src/OTALKENG.cpp:830
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Porcupine%s technology."
+msgstr "%s%s принимает ваш подарок - Поркупайн%s."
+
+#: src/OTALKENG.cpp:831
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Ballista%s technology."
+msgstr "%s%s принимает ваш подарок - Баллиста%s."
+
+#: src/OTALKENG.cpp:832
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Cannon%s technology."
+msgstr "%s%s принимает ваш подарок - Пушка%s."
+
+#: src/OTALKENG.cpp:833
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Spitfire%s technology."
+msgstr "%s%s принимает ваш подарок - Огнемёт%s."
+
+#: src/OTALKENG.cpp:834
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Caravel%s technology."
+msgstr "%s%s принимает ваш подарок - Каравелла%s."
+
+#: src/OTALKENG.cpp:835
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Galleon%s technology."
+msgstr "%s%s принимает ваш подарок - Галеон%s."
+
+#: src/OTALKENG.cpp:836
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Unicorn%s technology."
+msgstr "%s%s принимает ваш подарок - Единорог%s."
+
+#. TRANSLATORS: <King>'s Kingdom<Color> rejects your gift of <Tech><Level> technology.
+#: src/OTALKENG.cpp:841
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Catapult%s technology."
+msgstr "%s%s отказывается от вашего подарка - Катапульта%s."
+
+#: src/OTALKENG.cpp:842
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Porcupine%s technology."
+msgstr "%s%s отказывается от вашего подарка - Поркупайн%s."
+
+#: src/OTALKENG.cpp:843
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Ballista%s technology."
+msgstr "%s%s отказывается от вашего подарка - Баллиста%s."
+
+#: src/OTALKENG.cpp:844
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Cannon%s technology."
+msgstr "%s%s отказывается от вашего подарка - Пушка%s."
+
+#: src/OTALKENG.cpp:845
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Spitfire%s technology."
+msgstr "%s%s отказывается от вашего подарка - Огнемёт%s."
+
+#: src/OTALKENG.cpp:846
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Caravel%s technology."
+msgstr "%s%s отказывается от вашего подарка - Каравелла%s."
+
+#: src/OTALKENG.cpp:847
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Galleon%s technology."
+msgstr "%s%s отказывается от вашего подарка - Галеон%s."
+
+#: src/OTALKENG.cpp:848
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Unicorn%s technology."
+msgstr "%s%s отказывается от вашего подарка - Единорог%s."
+
+#. TRANSLATORS: You accept the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:853
+#, c-format
+msgid "You accept the gift of Catapult%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Катапульта%s, от %s%s."
+
 #: src/OTALKENG.cpp:854
-#, fuzzy, c-format
-msgid "%s's Kingdom%s accepts your gift of %s technology."
-msgstr "%s принимает ваш подарок от технологии %s."
+#, c-format
+msgid "You accept the gift of Porcupine%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Поркупайн%s, от %s%s."
 
-#. TRANSLATORS: <King>'s Kingdom<Color> rejects your gift of <Tech> technology.
+#: src/OTALKENG.cpp:855
+#, c-format
+msgid "You accept the gift of Ballista%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Баллиста%s, от %s%s."
+
+#: src/OTALKENG.cpp:856
+#, c-format
+msgid "You accept the gift of Cannon%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Пушка%s, от %s%s."
+
 #: src/OTALKENG.cpp:857
-#, fuzzy, c-format
-msgid "%s's Kingdom%s rejects your gift of %s technology."
-msgstr "%s отказывается от вашего подарка технологии %s."
+#, c-format
+msgid "You accept the gift of Spitfire%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Огнемёт%s, от %s%s."
 
-#. TRANSLATORS: You accept the gift of <Tech> technology from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:863
-#, fuzzy, c-format
-msgid "You accept the gift of %s technology from %s's Kingdom%s."
-msgstr "Вы принимаете подарок %s технологии из %s."
+#: src/OTALKENG.cpp:858
+#, c-format
+msgid "You accept the gift of Caravel%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Каравелла%s, от %s%s."
 
-#. TRANSLATORS: You reject the gift of <Tech> technology from <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:859
+#, c-format
+msgid "You accept the gift of Galleon%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Галеон%s, от %s%s."
+
+#: src/OTALKENG.cpp:860
+#, c-format
+msgid "You accept the gift of Unicorn%s technology from %s's Kingdom%s."
+msgstr "Вы принимаете подарок - Единорог%s, от %s%s."
+
+#. TRANSLATORS: You reject the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:865
+#, c-format
+msgid "You reject the gift of Catapult%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Катапульта%s, от %s%s."
+
 #: src/OTALKENG.cpp:866
-#, fuzzy, c-format
-msgid "You reject the gift of %s technology from %s's Kingdom%s."
-msgstr "Вы отказываетесь %s от технологии %s."
+#, c-format
+msgid "You reject the gift of Porcupine%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Поркупайн%s, от %s%s."
+
+#: src/OTALKENG.cpp:867
+#, c-format
+msgid "You reject the gift of Ballista%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Баллиста%s, от %s%s."
+
+#: src/OTALKENG.cpp:868
+#, c-format
+msgid "You reject the gift of Cannon%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Пушка%s, от %s%s."
+
+#: src/OTALKENG.cpp:869
+#, c-format
+msgid "You reject the gift of Spitfire%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Огнемёт%s, от %s%s."
+
+#: src/OTALKENG.cpp:870
+#, c-format
+msgid "You reject the gift of Caravel%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Каравелла%s, от %s%s."
+
+#: src/OTALKENG.cpp:871
+#, c-format
+msgid "You reject the gift of Galleon%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Галеон%s, от %s%s."
+
+#: src/OTALKENG.cpp:872
+#, c-format
+msgid "You reject the gift of Unicorn%s technology from %s's Kingdom%s."
+msgstr "Вы отказываетесь от подарка - Единорог%s, от %s%s."
 
 #. TRANSLATORS: You request the latest <Tech> technology from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:919
-#, fuzzy, c-format
-msgid "You request the latest %s technology from %s's Kingdom%s."
-msgstr "Вы запрашиваете последнюю %s технологию из %s."
+#: src/OTALKENG.cpp:940
+#, c-format
+msgid "You request the latest Catapult technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Катапульты технологию из %s%s."
+
+#: src/OTALKENG.cpp:941
+#, c-format
+msgid "You request the latest Porcupine technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Дикобраза технологию из %s%s."
+
+#: src/OTALKENG.cpp:942
+#, c-format
+msgid "You request the latest Ballista technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Балисты технологию из %s%s."
+
+#: src/OTALKENG.cpp:943
+#, c-format
+msgid "You request the latest Cannon technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Пушки технологию из %s%s."
+
+#: src/OTALKENG.cpp:944
+#, c-format
+msgid "You request the latest Spitfire technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Спитфайра технологию из %s%s."
+
+#: src/OTALKENG.cpp:945
+#, c-format
+msgid "You request the latest Caravel technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Каравеллы технологию из %s%s."
+
+#: src/OTALKENG.cpp:946
+#, c-format
+msgid "You request the latest Galleon technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Галеона технологию из %s%s."
+
+#: src/OTALKENG.cpp:947
+#, c-format
+msgid "You request the latest Unicorn technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Единорога технологию из %s%s."
 
 #. TRANSLATORS: You demand the latest <Tech> technology from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:924
-#, fuzzy, c-format
-msgid "You demand the latest %s technology from %s's Kingdom%s."
-msgstr "Вы запрашиваете последнюю %s технологию %s."
+#: src/OTALKENG.cpp:952
+#, c-format
+msgid "You demand the latest Catapult technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Катапульты технологию %s%s."
+
+#: src/OTALKENG.cpp:953
+#, c-format
+msgid "You demand the latest Porcupine technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Дикобраза технологию %s%s."
+
+#: src/OTALKENG.cpp:954
+#, c-format
+msgid "You demand the latest Ballista technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Балисты технологию %s%s."
+
+#: src/OTALKENG.cpp:955
+#, c-format
+msgid "You demand the latest Cannon technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Пушки технологию %s%s."
+
+#: src/OTALKENG.cpp:956
+#, c-format
+msgid "You demand the latest Spitfire technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Спитфайра технологию %s%s."
+
+#: src/OTALKENG.cpp:957
+#, c-format
+msgid "You demand the latest Caravel technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Каравеллы технологию %s%s."
+
+#: src/OTALKENG.cpp:958
+#, c-format
+msgid "You demand the latest Galleon technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Галеона технологию %s%s."
+
+#: src/OTALKENG.cpp:959
+#, c-format
+msgid "You demand the latest Unicorn technology from %s's Kingdom%s."
+msgstr "Вы запрашиваете последнюю Единорога технологию %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests the latest <Tech> technology from you.
-#: src/OTALKENG.cpp:932
-#, fuzzy, c-format
-msgid "%s's Kingdom%s requests the latest %s technology from you."
-msgstr "%s просит Вас о последней %s технологии."
+#: src/OTALKENG.cpp:964
+#, c-format
+msgid "%s's Kingdom%s requests the latest Catapult technology from you."
+msgstr "%s%s просит вас о последней Катапульте от вас"
+
+#: src/OTALKENG.cpp:965
+#, c-format
+msgid "%s's Kingdom%s requests the latest Porcupine technology from you."
+msgstr "%s%s просит вас о последней Поркупайне от вас"
+
+#: src/OTALKENG.cpp:966
+#, c-format
+msgid "%s's Kingdom%s requests the latest Ballista technology from you."
+msgstr "%s%s просит вас о последней Баллисте от вас"
+
+#: src/OTALKENG.cpp:967
+#, c-format
+msgid "%s's Kingdom%s requests the latest Cannon technology from you."
+msgstr "%s%s просит вас о последней Пушке от вас"
+
+#: src/OTALKENG.cpp:968
+#, c-format
+msgid "%s's Kingdom%s requests the latest Spitfire technology from you."
+msgstr "%s%s просит вас о последней Огнемёте от вас"
+
+#: src/OTALKENG.cpp:969
+#, c-format
+msgid "%s's Kingdom%s requests the latest Caravel technology from you."
+msgstr "%s%s просит вас о последней Каравелле от вас"
+
+#: src/OTALKENG.cpp:970
+#, c-format
+msgid "%s's Kingdom%s requests the latest Galleon technology from you."
+msgstr "%s%s просит вас о последней Галеоне от вас"
+
+#: src/OTALKENG.cpp:971
+#, c-format
+msgid "%s's Kingdom%s requests the latest Unicorn technology from you."
+msgstr "%s%s просит вас о последней Единороге от вас"
 
 #. TRANSLATORS: <King>'s Kingdom<Color> demands the latest <Tech> technology from you.
-#: src/OTALKENG.cpp:937
-#, fuzzy, c-format
-msgid "%s's Kingdom%s demands the latest %s technology from you."
-msgstr "%s требует от вас новейшую технологию %s."
+#: src/OTALKENG.cpp:976
+#, c-format
+msgid "%s's Kingdom%s demands the latest Catapult technology from you."
+msgstr "%s%s требует от вас новейшую технологию Катапульты."
+
+#: src/OTALKENG.cpp:977
+#, c-format
+msgid "%s's Kingdom%s demands the latest Porcupine technology from you."
+msgstr "%s%s требует от вас новейшую технологию Дикобраза."
+
+#: src/OTALKENG.cpp:978
+#, c-format
+msgid "%s's Kingdom%s demands the latest Ballista technology from you."
+msgstr "%s%s требует от вас новейшую технологию Балисты."
+
+#: src/OTALKENG.cpp:979
+#, c-format
+msgid "%s's Kingdom%s demands the latest Cannon technology from you."
+msgstr "%s%s требует от вас новейшую технологию Пушки."
+
+#: src/OTALKENG.cpp:980
+#, c-format
+msgid "%s's Kingdom%s demands the latest Spitfire technology from you."
+msgstr "%s%s требует от вас новейшую технологию Спитфайра."
+
+#: src/OTALKENG.cpp:981
+#, c-format
+msgid "%s's Kingdom%s demands the latest Caravel technology from you."
+msgstr "%s%s требует от вас новейшую технологию Каравеллы."
+
+#: src/OTALKENG.cpp:982
+#, c-format
+msgid "%s's Kingdom%s demands the latest Galleon technology from you."
+msgstr "%s%s требует от вас новейшую технологию Галеона."
+
+#: src/OTALKENG.cpp:983
+#, c-format
+msgid "%s's Kingdom%s demands the latest Unicorn technology from you."
+msgstr "%s%s требует от вас новейшую технологию Единорога."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to transfer its latest <Tech> technology to you.
-#: src/OTALKENG.cpp:947
-#, fuzzy, c-format
-msgid "%s's Kingdom%s agrees to transfer its latest %s technology to you."
-msgstr "%s соглашается передать вам последнюю технологию %s."
+#: src/OTALKENG.cpp:988
+#, c-format
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Catapult technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Катапульты."
+
+#: src/OTALKENG.cpp:989
+#, c-format
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Porcupine technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Дикобраза."
+
+#: src/OTALKENG.cpp:990
+#, c-format
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Ballista technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Балисты."
+
+#: src/OTALKENG.cpp:991
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Cannon technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Пушки."
+
+#: src/OTALKENG.cpp:992
+#, c-format
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Spitfire technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Спитфайра."
+
+#: src/OTALKENG.cpp:993
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Caravel technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Каравеллы."
+
+#: src/OTALKENG.cpp:994
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Galleon technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Галеона."
+
+#: src/OTALKENG.cpp:995
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Unicorn technology to you."
+msgstr "%s%s соглашается передать вам последнюю технологию Единорога."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses to transfer its latest <Tech> technology to you.
-#: src/OTALKENG.cpp:950
-#, fuzzy, c-format
-msgid "%s's Kingdom%s refuses to transfer its latest %s technology to you."
-msgstr "%s отказывается передать вам последнюю технологию %s."
+#: src/OTALKENG.cpp:1000
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Catapult technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Катапульты."
+
+#: src/OTALKENG.cpp:1001
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Porcupine technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Дикобраза."
+
+#: src/OTALKENG.cpp:1002
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Ballista technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Балисты."
+
+#: src/OTALKENG.cpp:1003
+#, c-format
+msgid "%s's Kingdom%s refuses to transfer its latest Cannon technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Пушки."
+
+#: src/OTALKENG.cpp:1004
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Spitfire technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Спитфайра."
+
+#: src/OTALKENG.cpp:1005
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Caravel technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Каравеллы."
+
+#: src/OTALKENG.cpp:1006
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Galleon technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Галеона."
+
+#: src/OTALKENG.cpp:1007
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Unicorn technology to you."
+msgstr "%s%s отказывается передать вам последнюю технологию Единорога."
 
 #. TRANSLATORS: You agree to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:956
-#, fuzzy, c-format
-msgid "You agree to transfer your latest %s technology to %s's Kingdom%s."
-msgstr "Вы соглашаетесь перенести свою последнюю %s технологию на %s."
+#: src/OTALKENG.cpp:1012
+#, c-format
+msgid ""
+"You agree to transfer your latest Catapult technology to %s's Kingdom%s."
+msgstr ""
+"Вы соглашаетесь перенести свою последнюю Катапульты технологию на %s%s."
+
+#: src/OTALKENG.cpp:1013
+#, c-format
+msgid ""
+"You agree to transfer your latest Porcupine technology to %s's Kingdom%s."
+msgstr "Вы соглашаетесь перенести свою последнюю Дикобраза технологию на %s%s."
+
+#: src/OTALKENG.cpp:1014
+#, c-format
+msgid ""
+"You agree to transfer your latest Ballista technology to %s's Kingdom%s."
+msgstr "Вы соглашаетесь перенести свою последнюю Балисты технологию на %s%s."
+
+#: src/OTALKENG.cpp:1015
+#, c-format
+msgid "You agree to transfer your latest Cannon technology to %s's Kingdom%s."
+msgstr "Вы соглашаетесь перенести свою последнюю Пушки технологию на %s%s."
+
+#: src/OTALKENG.cpp:1016
+#, c-format
+msgid ""
+"You agree to transfer your latest Spitfire technology to %s's Kingdom%s."
+msgstr "Вы соглашаетесь перенести свою последнюю Спитфайра технологию на %s%s."
+
+#: src/OTALKENG.cpp:1017
+#, c-format
+msgid "You agree to transfer your latest Caravel technology to %s's Kingdom%s."
+msgstr "Вы соглашаетесь перенести свою последнюю Каравеллы технологию на %s%s."
+
+#: src/OTALKENG.cpp:1018
+#, c-format
+msgid "You agree to transfer your latest Galleon technology to %s's Kingdom%s."
+msgstr "Вы соглашаетесь перенести свою последнюю Галеона технологию на %s%s."
+
+#: src/OTALKENG.cpp:1019
+#, c-format
+msgid "You agree to transfer your latest Unicorn technology to %s's Kingdom%s."
+msgstr "Вы соглашаетесь перенести свою последнюю Единорога технологию на %s%s."
 
 #. TRANSLATORS: You refuse to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:959
-#, fuzzy, c-format
-msgid "You refuse to transfer your latest %s technology to %s's Kingdom%s."
-msgstr "Вы отказываетесь передать свою последнюю %s технологию %s."
+#: src/OTALKENG.cpp:1024
+#, c-format
+msgid ""
+"You refuse to transfer your latest Catapult technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Катапульты технологию %s%s."
+
+#: src/OTALKENG.cpp:1025
+#, c-format
+msgid ""
+"You refuse to transfer your latest Porcupine technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Дикобраза технологию %s%s."
+
+#: src/OTALKENG.cpp:1026
+#, c-format
+msgid ""
+"You refuse to transfer your latest Ballista technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Балисты технологию %s%s."
+
+#: src/OTALKENG.cpp:1027
+#, c-format
+msgid "You refuse to transfer your latest Cannon technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Пушки технологию %s%s."
+
+#: src/OTALKENG.cpp:1028
+#, c-format
+msgid ""
+"You refuse to transfer your latest Spitfire technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Спитфайра технологию %s%s."
+
+#: src/OTALKENG.cpp:1029
+#, c-format
+msgid ""
+"You refuse to transfer your latest Caravel technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Каравеллы технологию %s%s."
+
+#: src/OTALKENG.cpp:1030
+#, c-format
+msgid ""
+"You refuse to transfer your latest Galleon technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Галеона технологию %s%s."
+
+#: src/OTALKENG.cpp:1031
+#, c-format
+msgid ""
+"You refuse to transfer your latest Unicorn technology to %s's Kingdom%s."
+msgstr "Вы отказываетесь передать свою последнюю Единорога технологию %s%s."
 
 #. TRANSLATORS: You request immediate military aid from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:991
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1142
+#, c-format
 msgid "You request immediate military aid from %s's Kingdom%s."
-msgstr "Просить о незамедлительной военной помощи от %s."
+msgstr "Просить о незамедлительной военной помощи от %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests immediate military aid from you.
-#: src/OTALKENG.cpp:996
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1147
+#, c-format
 msgid "%s's Kingdom%s requests immediate military aid from you."
-msgstr "%s отказывается немедленно послать Вам военную помощь."
+msgstr "%s%s отказывается немедленно послать Вам военную помощь."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to immediately send your requested military aid.
-#: src/OTALKENG.cpp:1005
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1156
+#, c-format
 msgid "%s's Kingdom%s agrees to immediately send your requested military aid."
-msgstr "%s согласен немедленно послать Вам военную помощь."
+msgstr "%s%s согласен немедленно послать Вам военную помощь."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> denies you your requested military aid.
-#: src/OTALKENG.cpp:1008
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1159
+#, c-format
 msgid "%s's Kingdom%s denies you your requested military aid."
-msgstr "%s отказывает в Вашей просьбе о предоставлении военной помощи."
+msgstr "%s%s отказывает в Вашей просьбе о предоставлении военной помощи."
 
 #. TRANSLATORS: You agree to immediately send military aid to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1014
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1165
+#, c-format
 msgid "You agree to immediately send military aid to %s's Kingdom%s."
-msgstr "Вы согласны немедленно послать военную помощь %s."
+msgstr "Вы согласны немедленно послать военную помощь %s%s."
 
 #. TRANSLATORS: You refuse to send military aid to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1017
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1168
+#, c-format
 msgid "You refuse to send military aid to %s's Kingdom%s."
-msgstr "Вы отказываетесь посылать военную помощь %s."
+msgstr "Вы отказываетесь посылать военную помощь %s%s."
 
 #. TRANSLATORS: You request <King 1>'s Kingdom<Color> to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1053
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1204
+#, c-format
 msgid ""
 "You request %s's Kingdom%s to join an embargo on trade with %s's Kingdom%s."
-msgstr "Вы просите %s присоединиться к эмбарго на торговлю с %s%s."
+msgstr "Вы просите %s%s присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> requests you to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1058
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1209
+#, c-format
 msgid ""
 "%s's Kingdom%s requests you to join an embargo on trade with %s's Kingdom%s."
-msgstr "%s просит присоединиться к эмбарго на торговлю с %s%s."
+msgstr "%s%s просит присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> agrees to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1067
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1218
+#, c-format
 msgid "%s's Kingdom%s agrees to join an embargo on trade with %s's Kingdom%s."
-msgstr "%s соглашается присоединиться к эмбарго на торговлю с %s%s."
+msgstr "%s%s соглашается присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> refuses to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1070
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1221
+#, c-format
 msgid "%s's Kingdom%s refuses to join an embargo on trade with %s's Kingdom%s."
-msgstr "%s отказывается присоединиться к эмбарго на торговлю с %s%s."
+msgstr "%s%s отказывается присоединиться к эмбарго на торговлю с %s%s."
 
 #. TRANSLATORS: You agree to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1076
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1227
+#, c-format
 msgid ""
 "You agree to join an embargo on trade with %s's Kingdom%s as requested by "
 "%s's Kingdom%s."
 msgstr ""
-"Вы соглашаетесь присоединиться к эмбарго на торговлю с %s%s по запросу %s."
+"Вы соглашаетесь присоединиться к эмбарго на торговлю с %s%s по запросу %s%s."
 
 #. TRANSLATORS: You refuse to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1079
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1230
+#, c-format
 msgid ""
 "You refuse to join an embargo on trade with %s's Kingdom%s as requested by "
 "%s's Kingdom%s."
 msgstr ""
-"Вы отказываетесь присоединиться к эмбарго на торговлю с %s%s по запросу %s."
+"Вы отказываетесь присоединиться к эмбарго на торговлю с %s%s по запросу %s%s."
 
 #. TRANSLATORS: You offer <Amount> for the throne of <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1118
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1269
+#, c-format
 msgid "You offer %s for the throne of %s's Kingdom%s."
-msgstr "Вы предлагаете %s для трона %s."
+msgstr "Вы предлагаете %s для трона %s%s."
 
 #. TRANSLATORS: To unite our two Kingdoms under his rule, King <Name> offers <Amount> for your throne.
-#: src/OTALKENG.cpp:1123
+#: src/OTALKENG.cpp:1274
 #, c-format
 msgid ""
 "To unite our two Kingdoms under his rule, King %s offers %s for your throne."
@@ -4425,33 +4833,33 @@ msgstr ""
 "%s для вашего трона."
 
 #. TRANSLATORS: King <Name> agrees to take your money in exchange for his throne.
-#: src/OTALKENG.cpp:1132
+#: src/OTALKENG.cpp:1283
 #, c-format
 msgid "King %s agrees to take your money in exchange for his throne."
 msgstr "Король %s согласен взять Ваши деньги взамен на свой трон."
 
 #. TRANSLATORS: King <Name> refuses to dishonor himself by selling his throne!
-#: src/OTALKENG.cpp:1135
+#: src/OTALKENG.cpp:1286
 #, c-format
 msgid "King %s refuses to dishonor himself by selling his throne!"
 msgstr "Король %s отказывается лишать себя чести, продавая свой трон!"
 
-#: src/OTALKENG.cpp:1141
+#: src/OTALKENG.cpp:1292
 msgid "You agree to take the money in exchange for your throne."
 msgstr "Вы согласны взять деньги взамен на Ваш трон."
 
 #. TRANSLATORS: You refuse to dishonor yourself by selling your throne to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1146
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1297
+#, c-format
 msgid ""
 "You refuse to dishonor yourself by selling your throne to %s's Kingdom%s."
-msgstr "Вы отказываетесь лишать себя чести, продавая свой трон %s."
+msgstr "Вы отказываетесь лишать себя чести, продавая свой трон %s%s."
 
 #. TRANSLATORS: You have surrendered to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1169
-#, fuzzy, c-format
+#: src/OTALKENG.cpp:1320
+#, c-format
 msgid "You have surrendered to %s's Kingdom%s."
-msgstr "Вы сдались %s."
+msgstr "Вы сдались %s%s."
 
 #: src/OTALKRES.cpp:52
 msgid "The message has been sent."
@@ -4648,7 +5056,7 @@ msgstr "Недоступно"
 
 #: src/OTUTOR.cpp:481
 msgid "Next Training"
-msgstr "Следующ"
+msgstr "Следующее обучение"
 
 #: src/OTUTOR.cpp:482
 msgid "Quit Training"
@@ -4744,154 +5152,128 @@ msgstr "Просмотр"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:51
-#, fuzzy
 msgid "All High Deezboanz"
-msgstr "Дизбонз"
+msgstr "Матрона Дизбонзов"
 
 #: src/OU_MONS.cpp:52
-#, fuzzy
 msgid "All High Rattus"
-msgstr "Все выше %s"
+msgstr "Матрона Раттусов"
 
 #: src/OU_MONS.cpp:53
-#, fuzzy
 msgid "All High Broosken"
-msgstr "Все выше %s"
+msgstr "Матрона Брускенов"
 
 #: src/OU_MONS.cpp:54
-#, fuzzy
 msgid "All High Haubudam"
-msgstr "Все выше %s"
+msgstr "Матрона Хабудамов"
 
 #: src/OU_MONS.cpp:55
-#, fuzzy
 msgid "All High Pfith"
-msgstr "Все выше %s"
+msgstr "Матрона Пифов"
 
 #: src/OU_MONS.cpp:56
-#, fuzzy
 msgid "All High Rokken"
-msgstr "Все выше %s"
+msgstr "Матрона Роккенов"
 
 #: src/OU_MONS.cpp:57
-#, fuzzy
 msgid "All High Doink"
-msgstr "Все выше %s"
+msgstr "Матрона Доинкей"
 
 #: src/OU_MONS.cpp:58
-#, fuzzy
 msgid "All High Wyrm"
-msgstr "Все выше %s"
+msgstr "Матрона Виров"
 
 #: src/OU_MONS.cpp:59
-#, fuzzy
 msgid "All High Droog"
-msgstr "Все выше %s"
+msgstr "Матрона Друкей"
 
 #: src/OU_MONS.cpp:60
-#, fuzzy
 msgid "All High Ick"
-msgstr "Все выше %s"
+msgstr "Матрона Икей"
 
 #: src/OU_MONS.cpp:61
-#, fuzzy
 msgid "All High Sauroid"
-msgstr "Все выше %s"
+msgstr "Матрона Сауродинов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:62
-#, fuzzy
 msgid "All High Karrotten"
-msgstr "Каротен"
+msgstr "Матрона Каротенов"
 
 #: src/OU_MONS.cpp:63
-#, fuzzy
 msgid "All High Holgh"
-msgstr "Все выше %s"
+msgstr "Матрона Холгей"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:67
-#, fuzzy
 msgid "Deezboanz Ordo"
-msgstr "Дизбонз"
+msgstr "Ордо Дизбонзов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:68
-#, fuzzy
 msgid "Rattus Ordo"
-msgstr "Раттус"
+msgstr "Ордо Раттусов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:69
-#, fuzzy
 msgid "Broosken Ordo"
-msgstr "Брускен"
+msgstr "Ордо Брускенов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:70
-#, fuzzy
 msgid "Haubudam Ordo"
-msgstr "Хабудам"
+msgstr "Ордо Хабудамов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:71
-#, fuzzy
 msgid "Pfith Ordo"
-msgstr "Пиф"
+msgstr "Ордо Пифов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:72
-#, fuzzy
 msgid "Rokken Ordo"
-msgstr "Роккен"
+msgstr "Ордо Роккенов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:73
-#, fuzzy
 msgid "Doink Ordo"
-msgstr "Доинк"
+msgstr "Ордо Доинкей"
 
 #: src/OU_MONS.cpp:74
-#, fuzzy
 msgid "Wyrm Ordo"
-msgstr "%s Ордо"
+msgstr "Ордо Вирмов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:75
-#, fuzzy
 msgid "Droog Ordo"
-msgstr "Друк"
+msgstr "Ордо Друкей"
 
 #: src/OU_MONS.cpp:76
-#, fuzzy
 msgid "Ick Ordo"
-msgstr "%s Ордо"
+msgstr "Ордо Икей"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:77
-#, fuzzy
 msgid "Sauroid Ordo"
-msgstr "Сауродин"
+msgstr "Ордо Сауродинов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:78
-#, fuzzy
 msgid "Karrotten Ordo"
-msgstr "Каротен"
+msgstr "Ордо Каротенов"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:79
-#, fuzzy
 msgid "Holgh Ordo"
-msgstr "Холг"
+msgstr "Ордо Холгей"
 
 #: src/OVGABUF.cpp:73
 msgid "An error occurred creating the front surface!"
-msgstr ""
+msgstr "произошла ошибка при создании лицевой поверхности"
 
 #: src/OVGABUF.cpp:75
 msgid "An error occurred creating the back surface!"
-msgstr ""
+msgstr "произошла ошибка при создании задней поверхности"
 
 #: src/OWORLD_Z.cpp:985 src/OWORLD_Z.cpp:1005
 msgid "(Spy)"
@@ -4899,7 +5281,7 @@ msgstr "(Шпион)"
 
 #: src/ReplayFile.cpp:115
 msgid "The selected reply file uses an unsupported format"
-msgstr ""
+msgstr "выбранный файл ответов использует неподдерживаемый формат"
 
 #: src/ReplayFile.cpp:125
 #, c-format
@@ -5102,7 +5484,7 @@ msgstr "Шахта"
 
 # data/resource/std/00007-FIRM.dbf
 msgid "Prayer"
-msgstr "Игрок"
+msgstr "молящийся"
 
 # data/resource/std/00007-FIRM.dbf
 msgid "Seat of Power"
@@ -9656,7 +10038,6 @@ msgstr ""
 #~ msgid "Your Fryhtan Lair has been struck by lightning."
 #~ msgstr "Ваше Фрихтанское логово было повреждено молнией."
 
-#, fuzzy
 #~ msgid ""
 #~ "Your Fryhtan Lair near %s has fallen into disrepair due to the lack of "
 #~ "maintenance funds."
