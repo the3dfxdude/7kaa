@@ -457,10 +457,22 @@ void Info::set_rank_data(int onlyHasContact)
 //----------- End of static function Info::set_rank_data -----------//
 
 
+const char *rank_num_th[MAX_NATION] =
+{
+	// TRANSLATORS: Ordinal number for ranking players
+	N_("1st"),
+	N_("2nd"),
+	N_("3rd"),
+	N_("4th"),
+	N_("5th"),
+	N_("6th"),
+	N_("7th"),
+};
 //-------- Begin of function Info::get_rank_pos_str --------//
 //
 char* Info::get_rank_pos_str(int rankType, int nationRecno)
 {
+	static String rank_pos_msg;
 	Nation* viewingNation = NULL; 
 	int curNationRankData = nation_rank_data_array[rankType-1][nationRecno-1];
 	int rankPos=1;
@@ -480,7 +492,8 @@ char* Info::get_rank_pos_str(int rankType, int nationRecno)
 			rankPos++;
 	}
 
-	return misc.num_th(rankPos);
+	rank_pos_msg = rank_num_th[rankPos-1];
+	return rank_pos_msg;
 }
 //----------- End of function Info::get_rank_pos_str -----------//
 

@@ -32,6 +32,7 @@
 #include <OF_MONS.h>
 #include <ONATION.h>
 #include <OGAME.h>
+#include <ConfigAdv.h>
 
 #ifdef DEBUG
 #include <OFONT.h>
@@ -278,7 +279,7 @@ void TownArray::think_new_independent_town()
 
 	//--- if the total population of all nations combined > 1000, then no new independent town will emerge ---//
 
-	if( allTotalPop > 1000 )
+	if( allTotalPop > config_adv.town_ai_emerge_town_pop_limit )
 		return;
 
 	//--- add 1 to 2 wanderer per month per race ---//

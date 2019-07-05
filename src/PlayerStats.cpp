@@ -162,6 +162,9 @@ PlayStatus PlayerStats::get_scenario_play_status(char const * game_name) {
 //------- Begin of function PlayerStats::set_scenario_play_status ------//
 //
 bool PlayerStats::set_scenario_play_status(char const * game_name, PlayStatus status) {
+	if (!game_name[0])
+		return false;
+
 	// Check if we already loaded our file. If not, do it.
 	if (!scn_stat_arr) {
 		// If it fails, we'll create a new one. If it succeeds, we'll

@@ -27,29 +27,33 @@
 #include <OCONFIG.h>
 #include <OERROR.h>
 #include <ONATIONA.h>
+#include <OREMOTE.h>
 #include <OREMOTEQ.h>
 #include <version.h>
+#include <ConfigAdv.h>
+#include <OBOX.h>
+#include <gettext.h>
 
 const char file_magic[] = "7KRP";
-const int32_t replay_version = 0;
+
+const int32_t replay_version = 1;
+// version 0 original format
+// version 1
+//  + ver_cksum
+//  + frame_delay
+
 struct GameVer {
 	uint32_t ver1;
 	uint32_t ver2;
 	uint32_t ver3;
-	uint32_t build_flags;
+	uint32_t flags;
 
 	void set_current_version()
 	{
 		ver1 = SKVERMAJ;
 		ver2 = SKVERMED;
 		ver3 = SKVERMIN;
-		build_flags = 0;
-#ifdef DEBUG
-		build_flags |= 0x00000001;
-#endif
-#ifdef DEV_VERSION
-		build_flags |= 0x00000002;
-#endif
+		flags = config_adv.flags;
 	}
 
 	int cmp(GameVer *a)
@@ -57,7 +61,7 @@ struct GameVer {
 		return ver1 == a->ver1 &&
 			ver2 == a->ver2 &&
 			ver3 == a->ver3 &&
-			build_flags == a->build_flags;
+			flags == a->flags;
 	}
 };
 
@@ -91,10 +95,12 @@ int ReplayFile::open_read(const char* filePath, NewNationPara *mpGame, int *mpPl
 		return 0;
 
 	GameVer current_version;
+	uint32_t ver_cksum = 0;
 	char magic[4];
 	int32_t file_version;
 	GameVer version;
 	current_version.set_current_version();
+	int frame_delay;
 	int random_seed;
 
 	if( !file.file_open(filePath, 0) )
@@ -104,13 +110,25 @@ int ReplayFile::open_read(const char* filePath, NewNationPara *mpGame, int *mpPl
 	if( memcmp(magic, file_magic, 4) )
 		goto out;
 	file_version = file.file_get_long();
-	if( file_version != replay_version )
+	if( file_version > replay_version )
+	{
+		box.msg(_("The selected reply file uses an unsupported format"));
 		goto out;
+	}
 	if( !file.file_read(&version, sizeof(GameVer)) )
 		goto out;
-// Can warn user of version mismatch
-//	if( !current_version.cmp(&version) )
-//		box.msg();
+	if( file_version > 0 )
+		ver_cksum = file.file_get_long();
+	if( !current_version.cmp(&version) || ver_cksum != config_adv.checksum )
+	{
+		String msg;
+		sprintf(msg, _("Replay version %u.%u.%u.%u.%u mismatches with current game version %u.%u.%u.%u.%u"), version.ver1, version.ver2, version.ver3, version.flags, ver_cksum, current_version.ver1, current_version.ver2, current_version.ver3, current_version.flags, config_adv.checksum);
+		box.msg(msg);
+	}
+	if( file_version > 0 )
+		frame_delay = file.file_get_long();
+	else
+		frame_delay = 5; // FORCE_MAX_FRAME_DELAY
 	random_seed = file.file_get_long();
 	if( !config.read_file(&file, 1) ) // 1-keep system settings
 		goto out;
@@ -124,6 +142,7 @@ int ReplayFile::open_read(const char* filePath, NewNationPara *mpGame, int *mpPl
 		file.file_read(&mpGame[i].player_name, HUMAN_NAME_LEN+1);
 	}
 
+	remote.set_process_frame_delay(frame_delay);
 	info.init_random_seed(random_seed);
 
 	file_size = file.file_size();
@@ -148,6 +167,8 @@ int ReplayFile::open_write(const char* filePath, NewNationPara *mpGame, int mpPl
 	file.file_write((void *)file_magic, 4);
 	file.file_put_long(replay_version);
 	file.file_write(&current_version, sizeof(GameVer));
+	file.file_put_long(config_adv.checksum);
+	file.file_put_long(remote.get_process_frame_delay());
 	file.file_put_long(info.random_seed);
 	config.write_file(&file);
 	file.file_put_short(mpPlayerCount);

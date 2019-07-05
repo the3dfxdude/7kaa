@@ -6,12 +6,13 @@ use strict;
 use Scalar::Util qw(looks_like_number);
 
 use constant {
-	FILE_HEADER_SIZE => 24,
+	FILE_MAGIC_SIZE => 4,
 	CONFIG_FILE_SIZE => 144,
 	NATION_PARA_SIZE => 3*2+21,
 	FRAME_HEADER_SIZE => 2,
 	MSG_HEADER_SIZE => 6,
 	FIRST_REMOTE_MSG_ID => hex('25D3'),
+	INT_SIZE => 4,
 };
 
 my $player_count = 2;
@@ -33,7 +34,7 @@ my @msg_ids = (
 	['MSG_UNIT_MOVE', 'sssss*', [qw(destXLoc destYLoc selectedCount divided selectedUnitArray)]],
 	['MSG_UNIT_SET_FORCE_MOVE'],
 	['MSG_UNIT_ATTACK'],
-	['MSG_UNIT_ASSIGN'],
+	['MSG_UNIT_ASSIGN', 'sssss*', [qw(destX destY selectedCount divided selectedArray)]],
 	['MSG_UNIT_CHANGE_NATION'],
 	['MSG_UNIT_BUILD_FIRM', 'ssss', [qw(unitRecno xLoc yLoc firmId)]],
 	['MSG_UNIT_BURN'],
@@ -60,15 +61,15 @@ my @msg_ids = (
 	['MSG_U_SHIP_CHANGE_MODE'],
 	['MSG_U_SHIP_SELECTED'],
 	['MSG_U_GOD_CAST'],
-	['MSG_UNIT_SPY_NATION'],
+	['MSG_UNIT_SPY_NATION', 'sss', [qw(spriteRecno newNationRecno groupDefect)]],
 	['MSG_UNIT_SPY_NOTIFY_CLOAKED_NATION'],
 	['MSG_UNIT_CHANGE_AGGRESSIVE_MODE'],
-	['MSG_SPY_CHANGE_NOTIFY_FLAG'],
+	['MSG_SPY_CHANGE_NOTIFY_FLAG', 'ss', [qw(spyRecno newNotifyFlag)]],
 	['MSG_SPY_ASSASSINATE'],
 	['MSG_UNIT_ADD_WAY_POINT'],
 
 	['MSG_FIRM_SELL'],
-	['MSG_FIRM_CANCEL'],
+	['MSG_FIRM_CANCEL', 's', [qw(firmRecno)]],
 	['MSG_FIRM_DESTRUCT'],
 	['MSG_FIRM_SET_REPAIR'],
 	['MSG_FIRM_TRAIN_LEVEL'],
@@ -86,15 +87,15 @@ my @msg_ids = (
 	['MSG_FIRM_REWARD'],
 	['MSG_F_CAMP_PATROL'],
 	['MSG_F_CAMP_TOGGLE_PATROL'],
-	['MSG_F_INN_HIRE'],
+	['MSG_F_INN_HIRE', 'sss', [qw(firm_recno hireId nation_recno)]],
 	['MSG_F_MARKET_SCRAP'],
 	['MSG_F_MARKET_HIRE_CARA'],
 	['MSG_F_RESEARCH_START'],
 	['MSG_F_WAR_BUILD_WEAPON'],
 	['MSG_F_WAR_CANCEL_WEAPON'],
 	['MSG_F_WAR_SKIP_WEAPON'],
-	['MSG_F_HARBOR_BUILD_SHIP'],
-	['MSG_F_HARBOR_SAIL_SHIP'],
+	['MSG_F_HARBOR_BUILD_SHIP', 'sss', [qw(firm_recno unitId createRemoveAmount)]],
+	['MSG_F_HARBOR_SAIL_SHIP', 'ss', [qw(firm_recno unitRecno)]],
 	['MSG_F_HARBOR_SKIP_SHIP'],
 	['MSG_F_FACTORY_CHG_PROD'],
 	['MSG_F_BASE_MOBL_PRAYER'],
@@ -123,7 +124,7 @@ my @msg_ids = (
 	['MSG_SPY_EXPOSED'],
 
 	['MSG_SEND_TALK_MSG'],
-	['MSG_REPLY_TALK_MSG'],
+	['MSG_REPLY_TALK_MSG', 'lcc', [qw(talkRecno replyType padding)]],
 	['MSG_NATION_CONTACT'],
 	['MSG_NATION_SET_SHOULD_ATTACK'],
 	['MSG_CHAT'],
@@ -269,6 +270,7 @@ my %pack_id_to_fmt_id = (
 	'C' => '%hhu',
 	'L' => '%u',
 	'S' => '%hu',
+	'c' => '%hhd',
 	'l' => '%d',
 	's' => '%hd',
 );
@@ -277,6 +279,7 @@ my %pack_id_to_len = (
 	'C' => 1,
 	'L' => 4,
 	'S' => 2,
+	'c' => 1,
 	'l' => 4,
 	's' => 2,
 );
@@ -288,6 +291,9 @@ if (!@ARGV) {
 
 my $fh;
 my $frame_count;
+my $file_version;
+my @game_ver = (0,0,0,0,0);
+my $frame_delay = 5;
 my $random_seed;
 my $nation_count;
 
@@ -297,15 +303,39 @@ if (!open($fh, $ARGV[0], )) {
 }
 
 my $buf;
-if (read($fh, $buf, FILE_HEADER_SIZE) != FILE_HEADER_SIZE) {
+if (read($fh, $buf, FILE_MAGIC_SIZE) != FILE_MAGIC_SIZE) {
 	print "Invalid file\n";
 	goto error_out;
 }
-if (read($fh, $buf, 4) != 4) {
+if ($buf ne "7KRP") {
 	print "Invalid file\n";
 	goto error_out;
 }
-$random_seed = unpack('L', $buf);
+if (read($fh, $buf, INT_SIZE) != INT_SIZE) {
+	print "Invalid file\n";
+	goto error_out;
+}
+$file_version = unpack('L', $buf);
+if ($file_version == 1) {
+	my $file_header_size = INT_SIZE*7;
+	if (read($fh, $buf, $file_header_size) != $file_header_size) {
+		print "Invalid file\n";
+		goto error_out;
+	}
+	($game_ver[0], $game_ver[1], $game_ver[2], $game_ver[3], $game_ver[4], $frame_delay, $random_seed) = unpack('LLLLLLL', $buf);
+} elsif ($file_version == 0) {
+	my $file_header_size = INT_SIZE*5;
+	if (read($fh, $buf, $file_header_size) != $file_header_size) {
+		print "Invalid file\n";
+		goto error_out;
+	}
+	($game_ver[0], $game_ver[1], $game_ver[2], $game_ver[3], $random_seed) = unpack('LLLLL', $buf);
+} else {
+	print "Invalid file\n";
+	goto error_out;
+}
+print "Game version: @game_ver\n";
+print "Random Seed: $random_seed\n";
 if (read($fh, $buf, CONFIG_FILE_SIZE) != CONFIG_FILE_SIZE) {
 	print "Invalid file\n";
 	goto error_out;
@@ -378,7 +408,7 @@ sub pack_str_to_fmt_str {
 			last;
 		}
 		if (!defined($pack_id_to_fmt_id{$pack_ids[$i]}) || !defined($pack_id_to_len{$pack_ids[$i]})) {
-			die;
+			die "Perl specifier '$pack_ids[$i]' does not have the format and size specified for printing";
 		}
 		$last_fmt = $pack_id_to_fmt_id{$pack_ids[$i]};
 		$last_len = $pack_id_to_len{$pack_ids[$i]};

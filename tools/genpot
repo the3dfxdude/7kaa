@@ -68,7 +68,6 @@ my @dbf_list = (
 ],[
 	stdpath('00006-RACE.dbf'),
 	['NAME', ''], # Race|Name
-	['ADJECTIVE', ''], # Race|Adjective
 ],[
 	stdpath('00007-FIRM.dbf'),
 	['NAME', ''], # Firm|Name

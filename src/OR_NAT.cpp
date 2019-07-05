@@ -531,11 +531,7 @@ static void disp_nation_info()
 
 		//--------- duration of current status ----------//
 
-		// TRANSLATORS: Duration of <War/Tense/Neutral/Friendly/Alliance> Status
-		str = _("Duration of %s Status");
-		snprintf( xstr, MAX_STR_LEN+1, str, nationRelation->status_str() );
-
-		font_san.field( x1, y+=16, xstr, x2, nationRelation->status_duration_str(), x3, INFO_REPAINT, "STATTIME" );
+		font_san.field( x1, y+=16, nationRelation->duration_of_status_str(), x2, nationRelation->status_duration_str(), x3, INFO_REPAINT, "STATTIME" );
 
 		//------- display the allow_attack field --------//
 

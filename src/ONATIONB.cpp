@@ -46,22 +46,27 @@
 #include <ONATION.h>
 #include <OREBEL.h>
 #include <OREMOTE.h>
+#include <ConfigAdv.h>
 #include "gettext.h"
 
 //-------- Define static variables --------//
 
 const char* NationRelation::relation_status_str_array[5] =
 {
-	// TRANSLATORS: Part of "Duration of War Status"
 	N_("War"),
-	// TRANSLATORS: Part of "Duration of Tense Status"
 	N_("Tense"),
-	// TRANSLATORS: Part of "Duration of Neutral Status"
 	N_("Neutral"),
-	// TRANSLATORS: Part of "Duration of Friendly Status"
 	N_("Friendly"),
-	// TRANSLATORS: Part of "Duration of Alliance Status"
 	N_("Alliance")
+};
+
+const char* NationRelation::duration_of_status_str_array[5] =
+{
+	N_("Duration of War Status"),
+	N_("Duration of Tense Status"),
+	N_("Duration of Neutral Status"),
+	N_("Duration of Friendly Status"),
+	N_("Duration of Alliance Status")
 };
 
 //--------- Define static functions -------//
@@ -163,6 +168,20 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, uint32_t pl
 		god_res.enable_know_all(nation_recno);
 	}
 	//#### end alex 23/9 ####//
+	else
+	{
+		if( config_adv.nation_start_god_level == 1 )
+		{
+			god_res[race_id]->enable_know(nation_recno);
+		}
+		else if( config_adv.nation_start_god_level > 1 )
+		{
+			god_res.enable_know_all(nation_recno);
+		}
+
+		for( int i=0; i<config_adv.nation_start_tech_inc_all_level; i++)
+			tech_res.inc_all_tech_level(nation_recno);
+	}
 }
 //----------- End of function NationBase::init ---------//
 
@@ -2352,4 +2371,13 @@ char* NationRelation::status_duration_str()
 	return str;
 }
 //------ End of function NationRelation::status_duration_str -----//
+
+
+//----- Begin of function NationRelation::duration_of_status_str -----//
+//
+const char* NationRelation::duration_of_status_str()
+{
+	return _(duration_of_status_str_array[status]);
+}
+//------ End of function NationRelation::duration_of_status_str -----//
 

@@ -350,6 +350,12 @@ void FirmFactory::draw(int displayLayer)
 //--------- End of function FirmFactory::draw -----------//
 
 
+const char *producing_product_msg[MAX_RAW] =
+{
+	N_("Producing Clay Products"),
+	N_("Producing Copper Products"),
+	N_("Producing Iron Products"),
+};
 //--------- Begin of function FirmFactory::disp_factory_info ---------//
 //
 void FirmFactory::disp_factory_info(int dispY1, int refreshFlag)
@@ -367,8 +373,7 @@ void FirmFactory::disp_factory_info(int dispY1, int refreshFlag)
 
 	String str;
 
-	// TRANSLATORS: Producing <Clay/Copper/Iron> Products
-	snprintf( str, MAX_STR_LEN+1, _("Producing %s Products"), _(raw_res[product_raw_id]->name) );
+	str = _(producing_product_msg[product_raw_id-1]);
 
 	font_san.use_max_height();							// make sure the old text is replaced completely
 #if(defined(FRENCH) || defined(SPANISH))

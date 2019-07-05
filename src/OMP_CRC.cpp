@@ -1265,6 +1265,7 @@ void NationBase::clear_ptr()
 {
 	nation_type = 0;
 	memset(nation_name_str, 0, sizeof(nation_name_str) );    // garbage may exist after the '\0'
+	player_id = 0;
 	next_frame_ready = 0;
 	is_allied_with_player = 0;
 

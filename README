@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.15.2-dev
+Release version 2.15.3-dev
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -11,29 +11,21 @@ details of the license. We are indebted to Enlight for making the 7kfans
 project possible and giving a new chance to build a community for fans
 of the game.
 
-Summary of changes from 2.15.0 to 2.15.1
+Summary of changes from 2.15.1 to 2.15.2
 ---------
- * Fixed desync on mobilizing workers.
- * Fixed desync on troop sortie, by making troop sorting deterministic.
- * Fixed desync on AI attack planning, by making AI fort sorting deterministic.
- * Fixed error that caused multiplayer save files appear out of sync.
- * Changed the Button class to not block on holding down the mouse button,
-   smoothing multiplayer games when alot of clicking may be happening.
- * Prevent mobilizing foreign workers from your Firms, however they may be
-   fired back to their home town.
- * Only enable mobilize worker button when the firm is staffed with non-foreign
-   workers.
- * Prefer IPv4 addressing for 7kfans.com match-making.
- * Fixed ambiguity in some translations.
- * Repack structures for Crc checking due to pointer sizing.
- * Improved cross-compilation and platform support.
- * Uppercased the data and user files, as they are supported in the code,
-   maintaining consistency and without needing to guess case.
- * Fixed missing Fryhtan encyclopedia picture on some systems.
- * Fixed observation mode visibility when playing a replay.
- * Added support for center and right paragraph justification.
- * Packagers please note that the music files must be in upper-case now, see
-   the latest download for the music.
+ * Fixed queue buttons in the Harbor and War Factory, and in the tutor dialog for the non-blocking button code.
+ * Fixed AI crash when trying to use a skilled unit that has been deleted.
+ * Added German, Portugese, and Spanish translations.
+ * Correct mobilizing other nations spies in firms under your control.
+ * Fixed AI crash when fort being used to attack has been deleted.
+ * Fixed crashes on bullets hitting targets due to not being attributed correctly.
+ * Fixed crash when a seat of power is destroyed at the same time the greater being casts magic.
+ * Fixed AI use of uninitialized memory when defending a general or king, which can cause a desync.
+ * Added mouse wheel support for map scrolling on touchpads. (sraboy)
+ * Added scenario completion tracking. (sraboy)
+ * Fixed crash in automated attack helping where one unit selects a target, the target unit enters a building (or deleted), and the local team then tries to assist, but the target unit is not longer on the map.
+ * Added advanced config file support. This will allow changing more aspects of the game without recompile.
+ * Enabled sync checking in replay mode.
 
 
 System Requirements
@@ -60,7 +52,7 @@ Required dependencies
 
 Optional dependencies
 * Autoconf 2.65 (when using git snapshot)
-* libcurl for full 7kfans multiplayer integration
+* libcurl for full 7kfans multiplayer integration (website requires TLS1.2)
 * gettext 0.19
 * Game music: 7kaa-music-2.15
   -> Packagers: Copy music into program data folder or PACKAGE_DATA_DIR

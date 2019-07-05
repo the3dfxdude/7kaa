@@ -29,12 +29,15 @@
 #include <dbglog.h>
 #include <version.h>
 #include <FilePath.h>
+#include <ConfigAdv.h>
 
 DBGLOG_DEFAULT_CHANNEL(Vga);
 
 //--------- Declare static functions ---------//
 
 static void init_dpi();
+static int init_window_flags();
+static void init_window_size();
 
 //------ Define static class member vars ---------//
 
@@ -85,37 +88,36 @@ int Vga::init()
    if (SDL_Init(SDL_INIT_VIDEO))
       return 0;
 
-   SDL_DisplayMode mode;
-   int window_width = 1024;
-   int window_height = 768;
+   init_window_size();
 
-   if (SDL_GetDesktopDisplayMode(0, &mode) == 0)
-   {
-      if (mode.h < 1024)
-      {
-         window_width = 800;
-         window_height = 600;
-      }
-   }
-   else
-   {
-      ERR("Could not get desktop display mode: %s\n", SDL_GetError());
-      return 0;
-   }
+   // Save the mouse position to restore after mode change. If we don't do
+   // this, then the old position gets recalculated, with the mode change
+   // affecting the location, causing a jump.
+   int mouse_x, mouse_y;
+   SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
 
-   if (SDL_CreateWindowAndRenderer(window_width,
-                                   window_height,
-                                   0,
-                                   &window,
-                                   &renderer) < 0)
-   {
-      ERR("Could not create window and renderer: %s\n", SDL_GetError());
+   window = SDL_CreateWindow(WIN_TITLE,
+                             SDL_WINDOWPOS_UNDEFINED,
+                             SDL_WINDOWPOS_UNDEFINED,
+                             config_adv.vga_window_width,
+                             config_adv.vga_window_height,
+                             init_window_flags());
+   if( !window )
       return 0;
-   }
+
+   if( config_adv.vga_full_screen )
+      set_window_grab(WINGRAB_ON);
+
+   renderer = SDL_CreateRenderer(window, -1, 0);
+   if( !renderer )
+      return 0;
 
    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
    SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP, "1");
-   SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
+   if( config_adv.vga_keep_aspect_ratio )
+      SDL_RenderSetLogicalSize(renderer, VGA_WIDTH, VGA_HEIGHT);
+
+   SDL_WarpMouseGlobal(mouse_x, mouse_y); // warp to initialize mouse by event queue
 
    Uint32 window_pixel_format = SDL_GetWindowPixelFormat(window);
    if (window_pixel_format == SDL_PIXELFORMAT_UNKNOWN)
@@ -177,7 +179,6 @@ int Vga::init()
       SDL_SetWindowIcon(window, icon);
       SDL_FreeSurface(icon);
    }
-   SDL_SetWindowTitle(window, WIN_TITLE);
 
    return 1;
 }
@@ -413,8 +414,18 @@ void Vga::handle_messages()
          if( mouse_mode == MOUSE_INPUT_ABS )
          {
             int logical_x, logical_y;
-            logical_x = event.motion.x;
-            logical_y = event.motion.y;
+            if( config_adv.vga_keep_aspect_ratio )
+            {
+               logical_x = event.motion.x;
+               logical_y = event.motion.y;
+            }
+            else
+            {
+               float xscale, yscale;
+               get_window_scale(&xscale, &yscale);
+               logical_x = ((float)event.motion.x / xscale);
+               logical_y = ((float)event.motion.y / yscale);
+            }
             if( win_grab_user_mode || win_grab_forced )
             {
                int real_x, real_y, do_warp;
@@ -577,7 +588,7 @@ void Vga::update_boundary()
 {
    float xscale, yscale;
    SDL_Rect rect;
-   SDL_RenderGetScale(renderer, &xscale, &yscale);
+   get_window_scale(&xscale, &yscale);
    SDL_RenderGetViewport(renderer, &rect);
    bound_x1 = ((float)(mouse.bound_x1 + rect.x) * xscale);
    bound_x2 = ((float)(mouse.bound_x2 + rect.x) * xscale);
@@ -599,7 +610,7 @@ void Vga::update_mouse_pos()
    if( !window )
       return;
 
-   SDL_RenderGetScale(renderer, &xscale, &yscale);
+   get_window_scale(&xscale, &yscale);
    SDL_RenderGetViewport(renderer, &rect);
    SDL_GetWindowPosition(window, &win_x, &win_y);
    SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
@@ -842,12 +853,23 @@ void Vga::save_status_report()
       SDL_GetWindowSize(window, &w, &h);
       fprintf(file, "Geometry: %dx%d @ (%d, %d)\n", w, h, x, y);
       fprintf(file, "Pixel format: %s\n", SDL_GetPixelFormatName(SDL_GetWindowPixelFormat(window)));
+      fprintf(file, "Full screen: %s\n", is_full_screen() ? "yes" : "no");
       fprintf(file, "Input grabbed: %s\n\n", SDL_GetWindowGrab(window) ? "yes" : "no");
       if( r )
       {
          SDL_RendererInfo info;
+         float xscale, yscale;
+         SDL_Rect rect;
+
          SDL_GetRendererInfo(r, &info);
+         get_window_scale(&xscale, &yscale);
+         SDL_RenderGetViewport(renderer, &rect);
+         SDL_RenderGetLogicalSize(renderer, &w, &h);
+
          fprintf(file, "-- Current renderer: %s --\n", info.name);
+         fprintf(file, "Viewport: x=%d,y=%d,w=%d,h=%d\n", rect.x, rect.y, rect.w, rect.h);
+         fprintf(file, "Scale: xscale=%f,yscale=%f\n", xscale, yscale);
+         fprintf(file, "Logical size: w=%d, h=%d\n", w, h);
          fprintf(file, "Capabilities: %s\n", info.flags & SDL_RENDERER_ACCELERATED ? "hardware accelerated" : "software fallback");
          fprintf(file, "V-sync: %s\n", info.flags & SDL_RENDERER_PRESENTVSYNC ? "on" : "off");
          fprintf(file, "Rendering to texture supported: %s\n", info.flags & SDL_RENDERER_TARGETTEXTURE ? "yes" : "no");
@@ -913,6 +935,24 @@ void Vga::save_status_report()
 //-------- End of function Vga::save_status_report ----------//
 
 
+//-------- Beginning of function Vga::get_window_scale ----------//
+void Vga::get_window_scale(float *xscale, float *yscale)
+{
+   if( config_adv.vga_keep_aspect_ratio )
+   {
+      SDL_RenderGetScale(renderer, xscale, yscale);
+   }
+   else
+   {
+      int w, h;
+      SDL_GetWindowSize(window, &w, &h);
+      *xscale = (float)w / (float)VGA_WIDTH;
+      *yscale = (float)h / (float)VGA_HEIGHT;
+   }
+}
+//-------- End of function Vga::get_window_scale ----------//
+
+
 #ifdef USE_WINDOWS
 
 #include <windows.h>
@@ -962,3 +1002,58 @@ static void init_dpi()
 }
 
 #endif
+
+static int init_window_flags()
+{
+   int flags = 0;
+   if( config_adv.vga_full_screen )
+      flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+   if( config_adv.vga_allow_highdpi )
+      flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+   return flags;
+}
+
+static void init_window_size()
+{
+   if( config_adv.vga_window_width && config_adv.vga_window_height )
+      return;
+
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+   int display_idx;
+   SDL_Window *size_win = SDL_CreateWindow(WIN_TITLE, 0, 0, 1, 1, 0);
+   if( !size_win )
+      goto unknown_display;
+
+   display_idx = SDL_GetWindowDisplayIndex(size_win);
+   SDL_DestroyWindow(size_win);
+   if( display_idx < 0 )
+      goto unknown_display;
+
+   SDL_Rect rect;
+   if( SDL_GetDisplayUsableBounds(display_idx, &rect)<0 )
+      goto unknown_display;
+
+   if( rect.w >= 1024 && rect.h >= 768 )
+   {
+      config_adv.vga_window_width = 1024;
+      config_adv.vga_window_height = 768;
+      return;
+   }
+
+   if( rect.w >= 800 && rect.h >= 600 )
+   {
+      config_adv.vga_window_width = 800;
+      config_adv.vga_window_height = 600;
+      return;
+   }
+
+   config_adv.vga_window_width = 640;
+   config_adv.vga_window_height = 480;
+   return;
+#endif
+
+unknown_display:
+      config_adv.vga_window_width = 800;
+      config_adv.vga_window_height = 600;
+      return;
+}

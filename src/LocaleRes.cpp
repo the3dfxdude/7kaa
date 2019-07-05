@@ -21,8 +21,10 @@
 //Filename    : LocaleRes.cpp
 //Description : Locale Resources
 
+#ifdef ENABLE_NLS
 #include <libintl.h>
 #include <locale.h>
+#endif
 
 #include <ALL.h>
 #include <ODB.h>
@@ -66,7 +68,13 @@ void LocaleRes::init(const char *locale)
 	if( !ctype )
 		return;
 
-	bindtextdomain(PACKAGE, LOCALE_DIR);
+	const char *env_locale_dir;
+	if( misc.is_file_exist("locale") )
+		bindtextdomain(PACKAGE, "locale");
+	else if( env_locale_dir = getenv("SKLOCALE") )
+		bindtextdomain(PACKAGE, env_locale_dir);
+	else
+		bindtextdomain(PACKAGE, LOCALE_DIR);
 	textdomain(PACKAGE);
 
 	LocaleRec *localeRec;
@@ -100,8 +108,12 @@ void LocaleRes::init(const char *locale)
 		strcpy(codeset, "ISO-8859-1");
 	}
 
-	cd = iconv_open(codeset, "");
+	String tocode(codeset);
+	tocode += "//TRANSLIT";
+	cd = iconv_open(tocode, "");
+
 	cd_latin = iconv_open("ISO-8859-1", "");
+
 	in_buf = mem_add(INIT_BUF_SIZE+1);
 	in_buf_size = INIT_BUF_SIZE;
 	out_buf = mem_add(INIT_BUF_SIZE+1);

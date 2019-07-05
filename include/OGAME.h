@@ -162,7 +162,7 @@ private:
 #pragma pack()
 
 extern Game game;
-extern char game_demo_mode, game_design_mode;
+extern char game_demo_mode, game_design_mode, scenario_file_name[FilePath::MAX_FILE_PATH+1];
 
 //-------------------------------------//
 

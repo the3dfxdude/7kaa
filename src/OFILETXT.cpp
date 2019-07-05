@@ -132,13 +132,9 @@ char FileTxt::get_char(int advancePointer)
 //
 char* FileTxt::next_line()
 {
-   for( ; *data_ptr != CHAR_RETURN && *data_ptr != CHAR_EOF ; data_ptr++ );
-
-   if( *data_ptr == CHAR_RETURN )
-      data_ptr++;
-
-   if( *data_ptr == CHAR_LINE_FEED )
-      data_ptr++;
+   match_chars_ex("\r\n\x1a");
+   if( !match_str("\n") )
+      match_str("\r\n");
 
    next_token();
 

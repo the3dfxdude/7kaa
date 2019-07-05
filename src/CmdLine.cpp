@@ -22,6 +22,7 @@
 //Description : Command line processing
 
 #include <CmdLine.h>
+#include <ConfigAdv.h>
 #include <OCONFIG.h>
 #include <OSYS.h>
 #include <gettext.h>
@@ -31,7 +32,6 @@ CmdLine::CmdLine()
 	enable_if = 1;
 	game_speed = -1;
 	startup_mode = STARTUP_NORMAL;
-	full_screen_mode = 1;
 	join_host = NULL;
 }
 
@@ -117,7 +117,7 @@ int CmdLine::init(int argc, char **argv)
 		}
 		else if( !strcmp(argv[i], windowOption) )
 		{
-			full_screen_mode = 0;
+			config_adv.vga_full_screen = 0;
 		}
 	}
 	return 1;

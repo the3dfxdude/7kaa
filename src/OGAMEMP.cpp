@@ -53,6 +53,7 @@
 #include <dbglog.h>
 #include "gettext.h"
 #include <FilePath.h>
+#include <ConfigAdv.h>
 
 
 DBGLOG_DEFAULT_CHANNEL(GameMP);
@@ -105,7 +106,6 @@ static char reverse_race_table[MAX_RACE] =		// race translation table
 };
 #endif
 
-static uint32_t mp_build_flags;
 static char sub_game_mode;		// 0 = new multiplayer game, 1 = load multiplayer game
 static void disp_virtual_button(ButtonCustom *, int);
 static void disp_virtual_tick(ButtonCustom *, int);
@@ -149,6 +149,7 @@ enum
 
 	MPMSG_PLAYER_ID,
 	MPMSG_PLAYER_DISCONNECT,
+	MPMSG_VERSION_CHECKSUM,
 };
 
 struct MpStructBase
@@ -222,12 +223,12 @@ struct MpStructNewPlayer : public MpStructBase
 	uint32_t ver1;
 	uint32_t ver2;
 	uint32_t ver3;
-	uint32_t build_flags;
+	uint32_t flags;
 	char name[MP_FRIENDLY_NAME_LEN+1];
 	char pass[MP_FRIENDLY_NAME_LEN+1];
 
 	MpStructNewPlayer(char *name, char *pass) : MpStructBase(MPMSG_NEW_PLAYER),
-		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), build_flags(mp_build_flags)
+		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), flags(config_adv.flags)
 	{
 		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
 		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
@@ -321,7 +322,7 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 	uint32_t ver1;
 	uint32_t ver2;
 	uint32_t ver3;
-	uint32_t build_flags;
+	uint32_t flags;
 	short nation_recno;
 	short color_scheme_id;
 	short race_id;
@@ -334,7 +335,7 @@ struct MpStructLoadGameNewPlayer : public MpStructBase
 		MpStructBase(MPMSG_LOAD_GAME_NEW_PLAYER),
 		nation_recno(n->nation_recno), color_scheme_id(n->color_scheme_id),
 		race_id(n->race_id), frame_count(frame), random_seed(seed),
-		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), build_flags(mp_build_flags)
+		ver1(SKVERMAJ), ver2(SKVERMED), ver3(SKVERMIN), flags(config_adv.flags)
 	{
 		strncpy(this->name, name, MP_FRIENDLY_NAME_LEN);
 		strncpy(this->pass, pass, MP_FRIENDLY_NAME_LEN);
@@ -388,6 +389,13 @@ struct MpStructPlayerDisconnect : public MpStructBase
 	PID_TYPE lost_player_id;
 	MpStructPlayerDisconnect(PID_TYPE lost_player) : MpStructBase(MPMSG_PLAYER_DISCONNECT),
 		lost_player_id(lost_player) {}
+};
+
+struct MpStructVersionChecksum : public MpStructBase
+{
+	uint32_t checksum;
+	MpStructVersionChecksum(uint32_t cksum) : MpStructBase(MPMSG_VERSION_CHECKSUM),
+		checksum(cksum) {}
 };
 
 //--------- Define static functions ------------//
@@ -513,6 +521,12 @@ static void ingame_disconnect_handler(uint32_t playerId)
 //--------- End of function ingame_disconnect_handler ---------//
 
 
+const char *create_game_dialog_txt[] =
+{
+	N_("Create multiplayer session"),
+	N_("Session Name:"),
+	N_("Set Password:")
+};
 // --------- Begin of static function multi_player_game ----------//
 // avoid creating local variable in this function
 // ###### begin Gilbert 13/2 #######//
@@ -521,12 +535,6 @@ void Game::multi_player_game(int lobbied, char *game_host)
 {
 	sys.is_mp_game = 1;
 	sub_game_mode = 0;
-	#ifdef DEBUG
-		mp_build_flags |= 0x00000001;
-	#endif
-	#ifdef DEV_VERSION
-		mp_build_flags |= 0x00000002;
-	#endif
 
 	info.init_random_seed(0);			// initialize the random seed
 
@@ -598,18 +606,12 @@ void Game::multi_player_game(int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
-			const char *dialog_txt[3] =
-			{
-				_("Enter a name for your game session."),
-				_("Session Name:"),
-				_("Password:")
-			};
 			char game_name[MP_FRIENDLY_NAME_LEN+1];
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
 			password[0] = 0;
-			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
+			if ( !input_name_pass(create_game_dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
 #ifdef HAVE_LIBCURL
 				ws.deinit();
@@ -793,9 +795,6 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 {
 	sys.is_mp_game = 1;
 	sub_game_mode = 1;
-	#ifdef DEBUG
-		mp_build_flags |= 0x00000001;
-	#endif
 
 	int nationRecno;
 	int service_mode, p;
@@ -873,18 +872,12 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	{
 	case 1:		// create game
 		{
-			const char *dialog_txt[3] =
-			{
-				_("Enter a name for your game session."),
-				_("Session Name:"),
-				_("Password:")
-			};
 			char game_name[MP_FRIENDLY_NAME_LEN+1];
 			char password[MP_FRIENDLY_NAME_LEN+1];
 			strncpy(game_name, config.player_name, MP_FRIENDLY_NAME_LEN);
 			game_name[MP_FRIENDLY_NAME_LEN] = 0;
 			password[0] = 0;
-			if ( !input_name_pass(dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
+			if ( !input_name_pass(create_game_dialog_txt, game_name, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 			{
 #ifdef HAVE_LIBCURL
 				ws.deinit();
@@ -1043,6 +1036,20 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 // --------- End of static function load_mp_game ----------//
 
 
+enum { SERVICE_BUTTON_NUM = 3 };
+const char *service_short_desc[SERVICE_BUTTON_NUM] =
+{
+	N_("Local Area Network"),
+	// TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
+	N_("Enter Address"),
+	"7kfans.com",
+};
+const char *service_long_desc[SERVICE_BUTTON_NUM] =
+{
+	N_("Host or join a game using the local area network"),
+	N_("Join a game by entering an address"),
+	N_("Host or join a game over the internet"),
+};
 //-------- Begin of function Game::mp_select_service --------//
 //
 // Select multiplayer mode. Create a new game or connect
@@ -1052,24 +1059,11 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 // 
 int Game::mp_select_service()
 {
-	enum { BUTTON_NUM = 3 };
-	static short buttonX[BUTTON_NUM] = { 171, 171, 171 };
-	static short buttonY[BUTTON_NUM] = {  57, 125, 193 };
+	static short buttonX[SERVICE_BUTTON_NUM] = { 171, 171, 171 };
+	static short buttonY[SERVICE_BUTTON_NUM] = {  57, 125, 193 };
 	#define SERVICE_BUTTON_WIDTH 459
 	#define SERVICE_BUTTON_HEIGHT 67
 	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
-	const char *service_short_desc[BUTTON_NUM] =
-	{
-		"Local Area Network",
-		"Enter Address",
-		"7kfans.com",
-	};
-	const char *service_long_desc[BUTTON_NUM] =
-	{
-		"Host or join a game using the local area network",
-		"Join a game by entering an address",
-		"Host or join a game over the internet",
-	};
 
 #define SVOPTION_PAGE        0x00000001
 #define SVOPTION_ALL         0x0fffffff
@@ -1080,10 +1074,10 @@ int Game::mp_select_service()
 	Button3D returnButton;
 	returnButton.create(520, 538, "CANCEL-U", "CANCEL-D", 1, 0);
 
-	ButtonCustom serviceButton[BUTTON_NUM];
+	ButtonCustom serviceButton[SERVICE_BUTTON_NUM];
 	int b;
-//	for( b = 0; b < BUTTON_NUM && mp_obj.get_service_provider(b+1); ++b )
-	for( b = 0; b < BUTTON_NUM; ++b )
+//	for( b = 0; b < SERVICE_BUTTON_NUM && mp_obj.get_service_provider(b+1); ++b )
+	for( b = 0; b < SERVICE_BUTTON_NUM; ++b )
 	{
 		serviceButton[b].create(buttonX[b], buttonY[b], 
 			buttonX[b]+SERVICE_BUTTON_WIDTH-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
@@ -1199,28 +1193,21 @@ int Game::mp_select_service()
 //--------- End of function Game::mp_select_service ---------//
 
 
+const char *login_dialog_txt[] =
+{
+	N_("Enter your 7kfans.com/forums account credentials to continue.\nTIP: If you have just previously logged in using the same username, you can leave your password blank, and the previous session is used."),
+	N_("Username:"),
+	N_("Password:")
+};
 //-------- Begin of function Game::mp_select_mode --------//
 // return 0 = cancel, 1 = create, 2 = join
 int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 {
-	enum { BUTTON_NUM = 3 };
-	static short buttonX[BUTTON_NUM] = { 171, 171, 171 };
-	static short buttonY[BUTTON_NUM] = {  57, 125, 193 };
+	static short buttonX[SERVICE_BUTTON_NUM] = { 171, 171, 171 };
+	static short buttonY[SERVICE_BUTTON_NUM] = {  57, 125, 193 };
 	#define SERVICE_BUTTON_WIDTH 459
 	#define SERVICE_BUTTON_HEIGHT 67
 	enum { DESC_MARGIN = 10, DESC_TOP_MARGIN = 6 };
-	const char *service_short_desc[BUTTON_NUM] =
-	{
-		"Local Area Network",
-		"Enter Address",
-		"7kfans.com",
-	};
-	const char *service_long_desc[BUTTON_NUM] =
-	{
-		"Host or join a game using the local area network",
-		"Join a game by entering an address",
-		"Host or join a game over the internet",
-	};
 
 #define SMOPTION_GETA(n)   (1 << n)
 #define SMOPTION_GETA_ALL  0x0000000f
@@ -1247,8 +1234,8 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	// ####### end Gilbert 13/2 ##########//
 	returnButton.create(520, 538, "CANCEL-U", "CANCEL-D", 1, 0);
 
-	ButtonCustom serviceButton[BUTTON_NUM];
-	for( int b = 0; b < BUTTON_NUM; ++b )
+	ButtonCustom serviceButton[SERVICE_BUTTON_NUM];
+	for( int b = 0; b < SERVICE_BUTTON_NUM; ++b )
 	{
 		serviceButton[b].create(buttonX[b], buttonY[b],
 			buttonX[b]+SERVICE_BUTTON_WIDTH-1, buttonY[b]+SERVICE_BUTTON_HEIGHT-1,
@@ -1330,7 +1317,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 				image_menu.put_back( 234, 15,
 					sub_game_mode == 0 ? (char*)"TOP-NMPG" : (char*)"TOP-LMPG" );
 				int b = 0;
-				for( b = 0; b < BUTTON_NUM; ++b )
+				for( b = 0; b < SERVICE_BUTTON_NUM; ++b )
 				{
 					int y = buttonY[b]+DESC_TOP_MARGIN;
 					// write service name to back buffer
@@ -1435,12 +1422,6 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 	if( rc && service_mode == 3 )
 	{
 #ifdef HAVE_LIBCURL
-		const char *dialog_txt[3] =
-		{
-			_("Enter your 7kfans.com/forums account credentials to continue.\nTIP: If you have just previously logged in using the same username, you can leave your password blank, and the previous session is used."),
-			_("Username:"),
-			_("Password:")
-		};
 		char username[MP_FRIENDLY_NAME_LEN+1];
 		char password[MP_FRIENDLY_NAME_LEN+1];
 
@@ -1448,7 +1429,7 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 		username[MP_FRIENDLY_NAME_LEN] = 0;
 		password[0] = 0;
 
-		if( input_name_pass(dialog_txt, username, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
+		if( input_name_pass(login_dialog_txt, username, MP_FRIENDLY_NAME_LEN+1, password, MP_FRIENDLY_NAME_LEN+1) )
 		{
 			int rc2;
 			if( strlen(password) )
@@ -1752,9 +1733,9 @@ int Game::input_name_pass(const char *txt[], char *name, int name_len, char *pas
 
 
 #ifdef HAVE_LIBCURL
-const char *login_failed_msg = "Unable to connect to the 7kfans.com service. Verify your account information and try again.";
+const char *login_failed_msg = N_("Unable to connect to the 7kfans.com service. Verify your account information and try again.");
 #else
-const char *login_failed_msg = "Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to log in.\n(No libcurl)";
+const char *login_failed_msg = N_("Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to log in.\n(No libcurl)");
 #endif
 
 
@@ -1918,7 +1899,6 @@ int Game::mp_select_session()
 			{
 				for( b = 0, s = BASE_SESSION; b < MAX_BUTTON; ++b, ++s )
 				{
-
 					vga_back.put_bitmap(
 						SESSION_BUTTON_X1, b*SESSION_BUTTON_Y_SPACING+SESSION_BUTTON_Y1,
 						browseArea[(s-1)%MAX_BUTTON].ptr);
@@ -3116,7 +3096,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 						if( newPlayerMsg->ver1 != SKVERMAJ ||
 							newPlayerMsg->ver2 != SKVERMED ||
 							newPlayerMsg->ver3 != SKVERMIN ||
-							newPlayerMsg->build_flags != mp_build_flags)
+							newPlayerMsg->flags != config_adv.flags)
 						{
 							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SKVER_MISMATCH);
 							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
@@ -3214,6 +3194,9 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 									mp_obj.send(from, &msgReady, sizeof(msgReady));
 								}
 							}
+
+							MpStructVersionChecksum msgVerCksum(config_adv.checksum);
+							mp_obj.send(from, &msgVerCksum, sizeof(msgVerCksum));
 
 							// ###### patch begin Gilbert 22/1 ######//
 							// send remote.sync_test_level
@@ -3459,6 +3442,12 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 							playerBalance[MAX_NATION-1] = 0;
 							--regPlayerCount;
 						}
+					}
+					break;
+				case MPMSG_VERSION_CHECKSUM:
+					if( !remote.is_host && ((MpStructVersionChecksum*)recvPtr)->checksum != config_adv.checksum )
+					{
+						mp_info_box_show(&info_box, _("The host is using a modified game which you are not running."), _("Ok"));
 					}
 					break;
 				default:		// if the game is started, any other thing is received
@@ -5030,7 +5019,7 @@ int Game::mp_select_load_option(char *fileName)
 						if( newPlayerMsg->ver1 != SKVERMAJ ||
 							newPlayerMsg->ver2 != SKVERMED ||
 							newPlayerMsg->ver3 != SKVERMIN ||
-							newPlayerMsg->build_flags != mp_build_flags)
+							newPlayerMsg->flags != config_adv.flags)
 						{
 							MpStructRefuseNewPlayer msgRefuse(REFUSE_REASON_SKVER_MISMATCH);
 							mp_obj.send(from, &msgRefuse, sizeof(msgRefuse));
@@ -5102,6 +5091,9 @@ int Game::mp_select_load_option(char *fileName)
 									mp_obj.send(from, &msgReady, sizeof(msgReady));
 								}
 							}
+
+							MpStructVersionChecksum msgVerCksum(config_adv.checksum);
+							mp_obj.send(from, &msgVerCksum, sizeof(msgVerCksum));
 
 							// ###### patch begin Gilbert 22/1 ######//
 							// send remote.sync_test_level
@@ -5244,6 +5236,12 @@ int Game::mp_select_load_option(char *fileName)
 							playerBalance[MAX_NATION-1] = 0;
 							--regPlayerCount;
 						}
+					}
+					break;
+				case MPMSG_VERSION_CHECKSUM:
+					if( !remote.is_host && ((MpStructVersionChecksum*)recvPtr)->checksum != config_adv.checksum )
+					{
+						mp_info_box_show(&info_box, _("The host is using a modified game which you are not running."), _("Ok"));
 					}
 					break;
 				default:		// if the game is started, any other thing is received

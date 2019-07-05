@@ -61,8 +61,7 @@ static void disp_stat();
 static void put_stat(int y, const char* desStr, const char* dispStr);
 static void put_stat(int y, const char* desStr, int dispValue);
 static void put_ranking(int y, int nationRecno);
-
-extern SaveGameInfo current_game_info;
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr);
 
 //---------- Begin of function Game::game_end --------//
 //
@@ -79,7 +78,7 @@ void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNati
 {
 	//--- set scenario as complete if they didn't retire ---//
 	if(!retireFlag)
-		playerStats.set_scenario_play_status(current_game_info.game_name, nsPlayerStats::PlayStatus::COMPLETED);
+		playerStats.set_scenario_play_status(scenario_file_name, nsPlayerStats::PlayStatus::COMPLETED);
 
 	//--- skip all game ending screens if in demo mode ---//
 
@@ -472,15 +471,7 @@ static void disp_ranking()
 	font_bible.put( x+470, y+7, _("Economy") );
 	font_bible.put( x+562, y+7, _("Reputation") );
 
-#if(defined(SPANISH))
-	font_bible.put( x+670, y   , "Lucha" );
-	font_bible.put( x+670, y+14, "Fryhtan" );
-#else
-	// TRANSLATORS: Part of "Fryhtan Battling"
-	font_bible.put( x+670, y   , _("Fryhtan") );
-	// TRANSLATORS: Part of "Fryhtan Battling"
-	font_bible.put( x+670, y+14, _("Battling") );
-#endif
+	put_heading( Font::LEFT_JUSTIFY, x+670, y, x+760, y+42, _("Fryhtan Battling") );
 
 	//--------- display rankings -----------//
 
@@ -598,3 +589,19 @@ static int disp_score(int winFlag)
 	return finalScore;
 }
 //----------- End of static function disp_score -----------//
+
+
+//-------- Begin of static function put_heading --------//
+//
+static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr)
+{
+	int dispLines=0;
+	int totalLines=0;
+	int lineSpacing=-7;
+	font_bible.count_line(x1,y1,x2,y2,textPtr,lineSpacing,dispLines,totalLines);
+	if( dispLines > 1 )
+		font_bible.put_paragraph(x1,y1,x2,y2,textPtr,lineSpacing,1,1,justify);
+	else if( y1+7<y2 )
+		font_bible.put_paragraph(x1,y1+7,x2,y2,textPtr,lineSpacing,1,1,justify);
+}
+//----------- End of static function put_heading -----------//

@@ -23,13 +23,17 @@
 #ifndef _POSIX_STRING_COMPAT_H
 #define _POSIX_STRING_COMPAT_H
 
-#include <string.h>
-
-#ifndef USE_WINDOWS
-#include <strings.h>
-#define strcmpi(s1,s2) strcasecmp(s1,s2)
-#define strnicmp(s1,s2,len) strncasecmp(s1,s2,len)
+#ifdef HAVE_STRING_STRCASECMP
+  #include <string.h>
+  #define strcmpi(s1,s2) strcasecmp(s1,s2)
+  #define strnicmp(s1,s2,len) strncasecmp(s1,s2,len)
+#elif HAVE_STRINGS_STRCASECMP
+  #include <strings.h>
+  #define strcmpi(s1,s2) strcasecmp(s1,s2)
+  #define strnicmp(s1,s2,len) strncasecmp(s1,s2,len)
+#else
+  #include <string.h>
+  // platform provides strcmpi and strnicmp
 #endif
-
 
 #endif // _POSIX_STRING_COMPAT_H

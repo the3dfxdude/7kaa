@@ -113,7 +113,6 @@ public:
    void  change_file_ext(char*,const char*,const char*);
    void  extract_file_name(char*,const char*);
 
-   void  put_text_scr(char*);
 	void  del_array_rec(void* arrayBody, int arraySize, int recSize, int delRecno);
 
 	void	cal_move_around_a_point(short num, short width, short height, int& xShift, int& yShift);
