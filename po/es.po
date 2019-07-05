@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-26 20:20-0700\n"
-"PO-Revision-Date: 2019-03-07 22:31-0300\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2019-07-04 21:57-0400\n"
+"Last-Translator: Lenny Andreu\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: src/CmdLine.cpp:46
 #, c-format
@@ -26,12 +26,12 @@ msgstr "La opción %s de la linea de comandos requiere un argumento."
 #: src/CmdLine.cpp:56
 msgid "Multiple startup mode options present on the command line."
 msgstr ""
-"Opciones de modo múltiples presentes en el inicio por linea de comandos."
+"Opciones múltiples de modo de inicio presentes en la linea de comandos."
 
 #: src/ConfigAdv.cpp:141
 #, c-format
 msgid "Error in %s at line %d"
-msgstr ""
+msgstr "Error en %s en la linea %d"
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
 #: src/OGAMEMP.cpp:1508 src/OGAMEMP.cpp:1608 src/OGAMEMP.cpp:3010
@@ -260,19 +260,16 @@ msgid "Leadership"
 msgstr "Liderazgo"
 
 #: src/OF_FACT.cpp:355
-#, fuzzy
 msgid "Producing Clay Products"
-msgstr "Produciendo productos de %s"
+msgstr "Produciendo productos de arcilla"
 
 #: src/OF_FACT.cpp:356
-#, fuzzy
 msgid "Producing Copper Products"
-msgstr "Produciendo productos de %s"
+msgstr "Produciendo productos de cobre"
 
 #: src/OF_FACT.cpp:357
-#, fuzzy
 msgid "Producing Iron Products"
-msgstr "Produciendo productos de %s"
+msgstr "Produciendo productos de hierro"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # #-#-#-#-#  -  #-#-#-#-#
@@ -312,19 +309,16 @@ msgid "Hiring Cost"
 msgstr "Costo de contratación"
 
 #: src/OF_MARK.cpp:375
-#, fuzzy
 msgid "Clay Products"
-msgstr "Productos de %s"
+msgstr "Productos de arcilla"
 
 #: src/OF_MARK.cpp:376
-#, fuzzy
 msgid "Copper Products"
-msgstr "Productos de %s"
+msgstr "Productos de cobre"
 
 #: src/OF_MARK.cpp:377
-#, fuzzy
 msgid "Iron Products"
-msgstr "Productos de %s"
+msgstr "Productos de hierro"
 
 #. TRANSLATORS: Part of "You're not permitted to trade with this market."
 #: src/OF_MARK.cpp:414
@@ -365,19 +359,16 @@ msgid "Yearly Income"
 msgstr "Ingresos anuales"
 
 #: src/OF_MINE.cpp:258
-#, fuzzy
 msgid "Mining Clay"
-msgstr "Minería"
+msgstr "Minando arcilla"
 
 #: src/OF_MINE.cpp:259
-#, fuzzy
 msgid "Mining Copper"
-msgstr "Minando %s"
+msgstr "Minando cobre"
 
 #: src/OF_MINE.cpp:260
-#, fuzzy
 msgid "Mining Iron"
-msgstr "Minería"
+msgstr "Minando hierro"
 
 #: src/OF_MINE.cpp:275
 msgid "No Natural Resources"
@@ -397,92 +388,78 @@ msgstr "Reserva sin explotar"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:132
-#, fuzzy
 msgid "Deezboanz Lair"
-msgstr "Deezboanz"
+msgstr "Guarida de Deezboanz"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:133
-#, fuzzy
 msgid "Rattus Lair"
-msgstr "Rattus"
+msgstr "Guarida de Rattus"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:134
-#, fuzzy
 msgid "Broosken Lair"
-msgstr "Broosken"
+msgstr "Guarida de Broosken"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:135
-#, fuzzy
 msgid "Haubudam Lair"
-msgstr "Haubudam"
+msgstr "Guarida de Haubudam"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:136
-#, fuzzy
 msgid "Pfith Lair"
-msgstr "Pfith"
+msgstr "Guarida de Pfith"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:137
-#, fuzzy
 msgid "Rokken Lair"
-msgstr "Rokken"
+msgstr "Guarida de Rokken"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:138
-#, fuzzy
 msgid "Doink Lair"
-msgstr "Doink"
+msgstr "Guarida de Doink"
 
 #: src/OF_MONS.cpp:139
-#, fuzzy
 msgid "Wyrm Lair"
-msgstr "Guarida de %s"
+msgstr "Guarida de Wyrm"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:140
-#, fuzzy
 msgid "Droog Lair"
-msgstr "Droog"
+msgstr "Guarida de Droog"
 
 #: src/OF_MONS.cpp:141
-#, fuzzy
 msgid "Ick Lair"
-msgstr "Guarida de %s"
+msgstr "Guarida de Ick"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:142
-#, fuzzy
 msgid "Sauroid Lair"
-msgstr "Sauroide"
+msgstr "Guarida de Sauroide"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:143
-#, fuzzy
 msgid "Karrotten Lair"
-msgstr "Karrotten"
+msgstr "Guarida de Karrotten"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OF_MONS.cpp:144
-#, fuzzy
 msgid "Holgh Lair"
-msgstr "Holgh"
+msgstr "Guarida de Holgh"
 
 #: src/OGAMEMP.cpp:526
 msgid "Create multiplayer session"
-msgstr ""
+msgstr "Crear sesión multijugador"
 
 #: src/OGAMEMP.cpp:527
 msgid "Session Name:"
 msgstr "Nombre de sesión:"
 
 #: src/OGAMEMP.cpp:528
-#, fuzzy
 msgid "Set Password:"
-msgstr "Contraseña:"
+msgstr "Establecer contraseña:"
 
 #: src/OGAMEMP.cpp:573 src/OGAMEMP.cpp:832
 msgid "Unable to connect from lobby"
@@ -514,25 +491,24 @@ msgstr "El servicio no es compatible"
 
 #: src/OGAMEMP.cpp:1042
 msgid "Local Area Network"
-msgstr ""
+msgstr "Red de área local"
 
 #. TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
 #: src/OGAMEMP.cpp:1044
-#, fuzzy
 msgid "Enter Address"
-msgstr "Introduzca la dirección del juego:"
+msgstr "Introduzca la dirección"
 
 #: src/OGAMEMP.cpp:1049
 msgid "Host or join a game using the local area network"
-msgstr ""
+msgstr "Servir o unirse a una partida usando la red de área local"
 
 #: src/OGAMEMP.cpp:1050
 msgid "Join a game by entering an address"
-msgstr ""
+msgstr "Unirse a una partida ingresando una dirección"
 
 #: src/OGAMEMP.cpp:1051
 msgid "Host or join a game over the internet"
-msgstr ""
+msgstr "Servir o unirse a una partida por internet"
 
 #: src/OGAMEMP.cpp:1198
 msgid ""
@@ -569,6 +545,8 @@ msgid ""
 "Unable to connect to the 7kfans.com service. Verify your account information "
 "and try again."
 msgstr ""
+"No se pudo conectar al servicio de 7kfans.com. Verifique la información se "
+"su cuenta y pruebe otra vez."
 
 #: src/OGAMEMP.cpp:1738
 msgid ""
@@ -576,6 +554,9 @@ msgid ""
 "in.\n"
 "(No libcurl)"
 msgstr ""
+"No se pudo conectar al servicio de 7kfans.com. Vea en 7kfans.com/wiki como "
+"ingresar.\n"
+"(Sin libcurl)"
 
 #: src/OGAMEMP.cpp:1928
 msgid "Unable to communicate with the network"
@@ -672,6 +653,8 @@ msgstr "El anfitrión ha rechazado la conexión."
 #: src/OGAMEMP.cpp:3450 src/OGAMEMP.cpp:5244
 msgid "The host is using a modified game which you are not running."
 msgstr ""
+"El servidor esta usando una versión modificada del juego la cual usted no "
+"esta corriendo."
 
 #: src/OGAMEMP.cpp:4139 src/OGAMEMP.cpp:5586
 msgid "Connection string from host is corrupted"
@@ -950,19 +933,16 @@ msgid "X  0 (Cheated)  =  0"
 msgstr "X 0 (Trampa) = 0"
 
 #: src/OGAMHALL.cpp:263
-#, fuzzy
 msgid "Score"
-msgstr "Puntuación : "
+msgstr "Puntuación"
 
 #: src/OGAMHALL.cpp:283
-#, fuzzy
 msgid "Period"
-msgstr "Período : "
+msgstr "Período"
 
 #: src/OGAMHALL.cpp:293
-#, fuzzy
 msgid "Difficulty"
-msgstr "Dificultad : "
+msgstr "Dificultad"
 
 #: src/OGAMMAIN.cpp:371
 msgid "Version"
@@ -1013,43 +993,36 @@ msgid "Load game error"
 msgstr "Error al cargar la partida"
 
 #: src/OHELP.cpp:510
-#, fuzzy
 msgid "Norman General"
-msgstr "General humano"
+msgstr "General normando"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:511
-#, fuzzy
 msgid "Maya General"
-msgstr "General"
+msgstr "General maya"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:512
-#, fuzzy
 msgid "Greek General"
-msgstr "General"
+msgstr "General griego"
 
 #: src/OHELP.cpp:513
-#, fuzzy
 msgid "Viking General"
-msgstr "General %s"
+msgstr "General vikingo"
 
 #: src/OHELP.cpp:514
-#, fuzzy
 msgid "Persian General"
-msgstr "General %s"
+msgstr "General persa"
 
 #: src/OHELP.cpp:515
-#, fuzzy
 msgid "Chinese General"
-msgstr "General %s"
+msgstr "General chino"
 
 #: src/OHELP.cpp:516
-#, fuzzy
 msgid "Japanese General"
-msgstr "General %s"
+msgstr "General japonés"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
@@ -1139,92 +1112,77 @@ msgstr "Mind Turner"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:534
-#, fuzzy
 msgid "Deezboanz General"
-msgstr "Deezboanz"
+msgstr "General Deezboanz"
 
 #: src/OHELP.cpp:535
-#, fuzzy
 msgid "Rattus General"
-msgstr "General %s"
+msgstr "General Rattus"
 
 #: src/OHELP.cpp:536
-#, fuzzy
 msgid "Broosken General"
-msgstr "General %s"
+msgstr "General Broosken"
 
 #: src/OHELP.cpp:537
-#, fuzzy
 msgid "Haubudam General"
-msgstr "General humano"
+msgstr "General Haubudam"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:538
-#, fuzzy
 msgid "Pfith General"
-msgstr "General"
+msgstr "General Pfith"
 
 #: src/OHELP.cpp:539
-#, fuzzy
 msgid "Rokken General"
-msgstr "General humano"
+msgstr "General Rokken"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:540
-#, fuzzy
 msgid "Doink General"
-msgstr "General"
+msgstr "General Doink"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:541
-#, fuzzy
 msgid "Wyrm General"
-msgstr "General"
+msgstr "General Wyrm"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:542
-#, fuzzy
 msgid "Droog General"
-msgstr "General"
+msgstr "General Droog"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:543
-#, fuzzy
 msgid "Ick General"
-msgstr "General"
+msgstr "General Ick"
 
 #: src/OHELP.cpp:544
-#, fuzzy
 msgid "Sauroid General"
-msgstr "General humano"
+msgstr "General Sauroid"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:545
-#, fuzzy
 msgid "Karrotten General"
-msgstr "Karrotten"
+msgstr "General Karrotten"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
 #: src/OHELP.cpp:546
-#, fuzzy
 msgid "Holgh General"
-msgstr "General"
+msgstr "General Holgh"
 
 #: src/OHELP.cpp:547
-#, fuzzy
 msgid "Egyptian General"
-msgstr "General humano"
+msgstr "General egipcio"
 
 #: src/OHELP.cpp:548
-#, fuzzy
 msgid "Mughul General"
-msgstr "General %s"
+msgstr "General mogul"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
@@ -1259,154 +1217,132 @@ msgstr "Unicornio"
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:557
-#, fuzzy
 msgid "Norman King"
-msgstr "Normando"
+msgstr "Rey normando"
 
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:558
-#, fuzzy
 msgid "Maya King"
-msgstr "Maya"
+msgstr "Rey maya"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:559
-#, fuzzy
 msgid "Greek King"
-msgstr "Griego"
+msgstr "Rey griego"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:560
-#, fuzzy
 msgid "Viking King"
-msgstr "Vikingo"
+msgstr "Rey vikingo"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:561
-#, fuzzy
 msgid "Persian King"
-msgstr "Persa"
+msgstr "Rey persa"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:562
-#, fuzzy
 msgid "Chinese King"
-msgstr "Chino"
+msgstr "Rey chino"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:563
-#, fuzzy
 msgid "Japanese King"
-msgstr "Japonés"
+msgstr "Rey japonés"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:581
-#, fuzzy
 msgid "Deezboanz King"
-msgstr "Deezboanz"
+msgstr "Rey Deezboanz"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:582
-#, fuzzy
 msgid "Rattus King"
-msgstr "Rattus"
+msgstr "Rey Rattus"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:583
-#, fuzzy
 msgid "Broosken King"
-msgstr "Broosken"
+msgstr "Rey Broosken"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:584
-#, fuzzy
 msgid "Haubudam King"
-msgstr "Haubudam"
+msgstr "Rey Haubudam"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:585
-#, fuzzy
 msgid "Pfith King"
-msgstr "Pfith"
+msgstr "Rey Pfith"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:586
-#, fuzzy
 msgid "Rokken King"
-msgstr "Rokken"
+msgstr "Rey Rokken"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:587
-#, fuzzy
 msgid "Doink King"
-msgstr "Doink"
+msgstr "Rey Doink"
 
 #: src/OHELP.cpp:588
-#, fuzzy
 msgid "Wyrm King"
-msgstr "Rey %s"
+msgstr "Rey Wyrm"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:589
-#, fuzzy
 msgid "Droog King"
-msgstr "Droog"
+msgstr "Rey Droog"
 
 #: src/OHELP.cpp:590
-#, fuzzy
 msgid "Ick King"
-msgstr "Rey %s"
+msgstr "Rey Ick"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:591
-#, fuzzy
 msgid "Sauroid King"
-msgstr "Sauroide"
+msgstr "Rey Sauroid"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:592
-#, fuzzy
 msgid "Karrotten King"
-msgstr "Karrotten"
+msgstr "Rey Karrotten"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:593
-#, fuzzy
 msgid "Holgh King"
-msgstr "Holgh"
+msgstr "Rey Holgh"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:594
-#, fuzzy
 msgid "Egyptian King"
-msgstr "Egipcio"
+msgstr "Rey egipcio"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:595
-#, fuzzy
 msgid "Mughul King"
-msgstr "Mughul"
+msgstr "Rey mogul"
 
 #. TRANSLATORS: Part of "%d hour(s) and %d minute(s)"
 #: src/OINFO.cpp:603
@@ -1476,29 +1412,24 @@ msgid "Alliance"
 msgstr "Alianza"
 
 #: src/ONATIONB.cpp:65
-#, fuzzy
 msgid "Duration of War Status"
-msgstr "Duración en estado de %s"
+msgstr "Duración en estado de guerra"
 
 #: src/ONATIONB.cpp:66
-#, fuzzy
 msgid "Duration of Tense Status"
-msgstr "Duración en estado de %s"
+msgstr "Duración en estado de tensión"
 
 #: src/ONATIONB.cpp:67
-#, fuzzy
 msgid "Duration of Neutral Status"
-msgstr "Duración en estado de %s"
+msgstr "Duración en estado neutral"
 
 #: src/ONATIONB.cpp:68
-#, fuzzy
 msgid "Duration of Friendly Status"
-msgstr "Duración en estado de %s"
+msgstr "Duración en estado amistoso"
 
 #: src/ONATIONB.cpp:69
-#, fuzzy
 msgid "Duration of Alliance Status"
-msgstr "Duración en estado de %s"
+msgstr "Duración en estado de alianza"
 
 #. TRANSLATORS: <Name>'s Kingdom
 #: src/ONATIONB.cpp:569 src/ONEWSENG.cpp:1740 src/ONEWSENG.cpp:1742
@@ -1638,9 +1569,9 @@ msgstr "El reino de %s%s se ha rendido ante usted."
 
 #. TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
 #: src/ONEWSENG.cpp:408
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has surrendered to %s's Kingdom%s."
-msgstr "El reino de %s%s se ha rendido ante el reino de %s."
+msgstr "El reino de %s%s se ha rendido ante el reino de %s%s."
 
 #. TRANSLATORS: Your King, <Name>, has been slain.
 #: src/ONEWSENG.cpp:433
@@ -2116,105 +2047,95 @@ msgstr "Una guarida de Holgh ha sido destruida."
 
 #. TRANSLATORS: You have acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:808
-#, fuzzy
 msgid "You have acquired the Norman Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder normando."
 
 #: src/ONEWSENG.cpp:809
-#, fuzzy
 msgid "You have acquired the Mayan Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder maya."
 
 #: src/ONEWSENG.cpp:810
-#, fuzzy
 msgid "You have acquired the Greek Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder griego."
 
 #: src/ONEWSENG.cpp:811
-#, fuzzy
 msgid "You have acquired the Viking Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder vikingo."
 
 #: src/ONEWSENG.cpp:812
-#, fuzzy
 msgid "You have acquired the Persian Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder persa."
 
 #: src/ONEWSENG.cpp:813
-#, fuzzy
 msgid "You have acquired the Chinese Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder chino."
 
 #: src/ONEWSENG.cpp:814
-#, fuzzy
 msgid "You have acquired the Japanese Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder japonés."
 
 #: src/ONEWSENG.cpp:815
-#, fuzzy
 msgid "You have acquired the Egyptian Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder egipcio."
 
 #: src/ONEWSENG.cpp:816
-#, fuzzy
 msgid "You have acquired the Mughul Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder mogul."
 
 #: src/ONEWSENG.cpp:817
-#, fuzzy
 msgid "You have acquired the Zulu Scroll of Power."
-msgstr "Ha adquirido el Pergamino de poder de %s."
+msgstr "Ha adquirido el Pergamino de poder zulú."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:822
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Norman Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el Pergamino de poder normando."
 
 #: src/ONEWSENG.cpp:823
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Mayan Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el Pergamino de poder maya."
 
 #: src/ONEWSENG.cpp:824
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Greek Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el Pergamino de poder griego."
 
 #: src/ONEWSENG.cpp:825
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Viking Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el Pergamino de poder vikingo."
 
 #: src/ONEWSENG.cpp:826
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Persian Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el Pergamino de poder persa."
 
 #: src/ONEWSENG.cpp:827
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Chinese Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el Pergamino de poder chino."
 
 #: src/ONEWSENG.cpp:828
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Japanese Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el Pergamino de poder japonés."
 
 #: src/ONEWSENG.cpp:829
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Egyptian Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el pergamino de poder egipcio."
 
 #: src/ONEWSENG.cpp:830
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Mughul Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el pergamino de poder mogul."
 
 #: src/ONEWSENG.cpp:831
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s has acquired the Zulu Scroll of Power."
-msgstr "El reino de %s%s ha adquirido el Pergamino de poder de %s."
+msgstr "El reino de %s%s ha adquirido el pergamino de poder zulú."
 
 #. TRANSLATORS: You have recovered <Amount> worth of treasure from the Fryhtans.
 #: src/ONEWSENG.cpp:875
@@ -3547,31 +3468,31 @@ msgstr "Tiempo total de juego: %s"
 #. TRANSLATORS: Ordinal number for ranking players
 #: src/OR_RANK.cpp:463
 msgid "1st"
-msgstr ""
+msgstr "1ro"
 
 #: src/OR_RANK.cpp:464
 msgid "2nd"
-msgstr ""
+msgstr "2do"
 
 #: src/OR_RANK.cpp:465
 msgid "3rd"
-msgstr ""
+msgstr "3ro"
 
 #: src/OR_RANK.cpp:466
 msgid "4th"
-msgstr ""
+msgstr "4to"
 
 #: src/OR_RANK.cpp:467
 msgid "5th"
-msgstr ""
+msgstr "5to"
 
 #: src/OR_RANK.cpp:468
 msgid "6th"
-msgstr ""
+msgstr "6to"
 
 #: src/OR_RANK.cpp:469
 msgid "7th"
-msgstr ""
+msgstr "7mo"
 
 #: src/OR_SPY.cpp:73
 msgid "Spy Name"
@@ -4855,146 +4776,120 @@ msgstr "Ver parada"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:51
-#, fuzzy
 msgid "All High Deezboanz"
-msgstr "Deezboanz"
+msgstr "All High Deezboanz"
 
 #: src/OU_MONS.cpp:52
-#, fuzzy
 msgid "All High Rattus"
-msgstr "All High %s"
+msgstr "All High Rattus"
 
 #: src/OU_MONS.cpp:53
-#, fuzzy
 msgid "All High Broosken"
-msgstr "All High %s"
+msgstr "All High Broosken"
 
 #: src/OU_MONS.cpp:54
-#, fuzzy
 msgid "All High Haubudam"
-msgstr "All High %s"
+msgstr "All High Haubudam"
 
 #: src/OU_MONS.cpp:55
-#, fuzzy
 msgid "All High Pfith"
-msgstr "All High %s"
+msgstr "All High Pfith"
 
 #: src/OU_MONS.cpp:56
-#, fuzzy
 msgid "All High Rokken"
-msgstr "All High %s"
+msgstr "All High Rokken"
 
 #: src/OU_MONS.cpp:57
-#, fuzzy
 msgid "All High Doink"
-msgstr "All High %s"
+msgstr "All High Doink"
 
 #: src/OU_MONS.cpp:58
-#, fuzzy
 msgid "All High Wyrm"
-msgstr "All High %s"
+msgstr "All High Wyrm"
 
 #: src/OU_MONS.cpp:59
-#, fuzzy
 msgid "All High Droog"
-msgstr "All High %s"
+msgstr "All High Droog"
 
 #: src/OU_MONS.cpp:60
-#, fuzzy
 msgid "All High Ick"
-msgstr "All High %s"
+msgstr "All High Ick"
 
 #: src/OU_MONS.cpp:61
-#, fuzzy
 msgid "All High Sauroid"
-msgstr "All High %s"
+msgstr "All High Sauroide"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:62
-#, fuzzy
 msgid "All High Karrotten"
-msgstr "Karrotten"
+msgstr "All High Karrotten"
 
 #: src/OU_MONS.cpp:63
-#, fuzzy
 msgid "All High Holgh"
-msgstr "All High %s"
+msgstr "All High Holgh"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:67
-#, fuzzy
 msgid "Deezboanz Ordo"
-msgstr "Deezboanz"
+msgstr "Ordo Deezboanz"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:68
-#, fuzzy
 msgid "Rattus Ordo"
-msgstr "Rattus"
+msgstr "Ordo Rattus"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:69
-#, fuzzy
 msgid "Broosken Ordo"
-msgstr "Broosken"
+msgstr "Ordo Broosken"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:70
-#, fuzzy
 msgid "Haubudam Ordo"
-msgstr "Haubudam"
+msgstr "Ordo Haubudam"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:71
-#, fuzzy
 msgid "Pfith Ordo"
-msgstr "Pfith"
+msgstr "Ordo Pfith"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:72
-#, fuzzy
 msgid "Rokken Ordo"
-msgstr "Rokken"
+msgstr "Ordo Rokken"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:73
-#, fuzzy
 msgid "Doink Ordo"
-msgstr "Doink"
+msgstr "Ordo Doink"
 
 #: src/OU_MONS.cpp:74
-#, fuzzy
 msgid "Wyrm Ordo"
-msgstr "Ordo %s"
+msgstr "Ordo Wyrm"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:75
-#, fuzzy
 msgid "Droog Ordo"
-msgstr "Droog"
+msgstr "Ordo Droog"
 
 #: src/OU_MONS.cpp:76
-#, fuzzy
 msgid "Ick Ordo"
-msgstr "Ordo %s"
+msgstr "Ordo Ick"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:77
-#, fuzzy
 msgid "Sauroid Ordo"
-msgstr "Sauroide"
+msgstr "Ordo Sauroide"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:78
-#, fuzzy
 msgid "Karrotten Ordo"
-msgstr "Karrotten"
+msgstr "Ordo Karrotten"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OU_MONS.cpp:79
-#, fuzzy
 msgid "Holgh Ordo"
-msgstr "Holgh"
+msgstr "Ordo Holgh"
 
 #: src/OVGABUF.cpp:73
 msgid "An error occurred creating the front surface!"
@@ -5010,7 +4905,7 @@ msgstr "(Espía)"
 
 #: src/ReplayFile.cpp:115
 msgid "The selected reply file uses an unsupported format"
-msgstr ""
+msgstr "El archivo de repetición seleccionado usa un formato no compatible"
 
 #: src/ReplayFile.cpp:125
 #, c-format
@@ -5018,6 +4913,8 @@ msgid ""
 "Replay version %u.%u.%u.%u.%u mismatches with current game version %u.%u.%u."
 "%u.%u"
 msgstr ""
+"Versión de repetición %u.%u.%u.%u.%u difiere con la versión actual del juego "
+"%u.%u.%u.%u.%u"
 
 # POT extraction from 7KAA data files
 # data/resource/tut_list.res
@@ -9450,16 +9347,15 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:273
 msgid "Zoom to activity"
-msgstr ""
+msgstr "Ir a actividad"
 
 # data/resource/help.res:306
-#, fuzzy
 msgid ""
 "Click on this box to reply to the message or to see the location of the "
 "event. "
 msgstr ""
-"Haga clic en este botón para eliminar todas las reservas de este tipo de "
-"bien del mercado. "
+"Haga clic en este cuadro para responder al mensaje o para ver la ubicación "
+"del evento. "
 
 # data/resource/help.res:277
 msgid "News Log"
