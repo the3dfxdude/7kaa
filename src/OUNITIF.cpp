@@ -998,6 +998,20 @@ void Unit::detect_build_menu()
 //----------- End of function Unit::detect_build_menu -----------//
 
 
+const char *select_where_to_build[MAX_FIRM_TYPE] =
+{
+	// TRANSLATORS: Please select a location to build the <Firm>.
+	N_("Please select a location to build the Seat of Power."),
+	N_("Please select a location to build the Factory."),
+	N_("Please select a location to build the Inn."),
+	N_("Please select a location to build the Market."),
+	N_("Please select a location to build the Fort."),
+	N_("Please select a location to build the Mine."),
+	N_("Please select a location to build the Tower of Science."),
+	N_("Please select a location to build the War Factory."),
+	N_("Please select a location to build the Harbor."),
+	("Please select a location to build the Fryhtan Lair."),
+};
 //--------- Begin of function Unit::disp_build ---------//
 //
 // Display the info when the player has selected the type of
@@ -1011,8 +1025,7 @@ void Unit::disp_build(int refreshFlag)
 
 		String str;
 
-		// TRANSLATORS: Please select a location to build the <Firm>.
-		snprintf( str, MAX_STR_LEN+1, _("Please select a location to build the %s."), _(firm_res[power.command_para]->name) );
+		str = _(select_where_to_build[power.command_para-1]);
 
 // FRENCH
 //		font_san.put_paragraph( INFO_X1, INFO_Y1, INFO_X2, INFO_Y2, str, 0 );
