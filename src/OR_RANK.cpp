@@ -492,7 +492,7 @@ char* Info::get_rank_pos_str(int rankType, int nationRecno)
 			rankPos++;
 	}
 
-	rank_pos_msg = rank_num_th[rankPos-1];
+	rank_pos_msg = _(rank_num_th[rankPos-1]);
 	return rank_pos_msg;
 }
 //----------- End of function Info::get_rank_pos_str -----------//

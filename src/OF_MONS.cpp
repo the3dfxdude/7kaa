@@ -149,7 +149,7 @@ char* FirmMonster::firm_name()
 {
 	static String str;
 
-	str = monster_firm_name[monster_id-1];
+	str = _(monster_firm_name[monster_id-1]);
 
 	return str;
 }
