@@ -21,6 +21,7 @@
 //Filename    : ODATE.CPP
 //Description : Date Information Object
 
+#include <locale.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -35,37 +36,19 @@
 
 #define  JULIAN_ADJUSTMENT    1721425L
 
-static char month_str_array[][10] =
-{
-   N_("January"),
-   N_("February"),
-   N_("March"),
-   N_("April"),
-   N_("May"),
-   N_("June"),
-   N_("July"),
-   N_("August"),
-   N_("September"),
-   N_("October"),
-   N_("November"),
-   N_("December")
-} ;
-
-static char short_month_str_array[][10] =
-{
-   N_("Jan"),
-   N_("Feb"),
-   N_("Mar"),
-   N_("Apr"),
-   N_("May"),
-   N_("Jun"),
-   N_("Jul"),
-   N_("Aug"),
-   N_("Sep"),
-   N_("Oct"),
-   N_("Nov"),
-   N_("Dec")
-} ;
+enum { MONTH_JAN=1,
+   MONTH_FEB,
+   MONTH_MAR,
+   MONTH_APR,
+   MONTH_MAY,
+   MONTH_JUN,
+   MONTH_JUL,
+   MONTH_AUG,
+   MONTH_SEP,
+   MONTH_OCT,
+   MONTH_NOV,
+   MONTH_DEC,
+};
 
 static int month_tot[]=
     { 0, 0,  31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 } ;
@@ -245,11 +228,11 @@ char* DateInfo::date_str( long julianDate, int shortMonthStr)
    if( shortMonthStr )
    {
       // TRANSLATORS: <Month> <Day>, <Year>
-      snprintf(str, MAX_STR_LEN+1, _("%s %d, %d"), _(short_month_str_array[month-1]), day, year);
+      snprintf(str, MAX_STR_LEN+1, _("%s %d, %d"), short_month_str(month), day, year);
    }
    else
    {
-      snprintf(str, MAX_STR_LEN+1, _("%s %d, %d"), _(month_str_array[month-1]), day, year);
+      snprintf(str, MAX_STR_LEN+1, _("%s %d, %d"), month_str(month), day, year);
    }
 
    return str;
@@ -265,9 +248,77 @@ char* DateInfo::date_str( long julianDate, int shortMonthStr)
 //
 const char* DateInfo::month_str(int monthNo)
 {
-	return _(month_str_array[monthNo-1]);
+   switch( monthNo )
+   {
+   case MONTH_JAN:
+      return pgettext("Month|Full","January");
+   case MONTH_FEB:
+      return pgettext("Month|Full","February");
+   case MONTH_MAR:
+      return pgettext("Month|Full","March");
+   case MONTH_APR:
+      return pgettext("Month|Full","April");
+   case MONTH_MAY:
+      return pgettext("Month|Full","May");
+   case MONTH_JUN:
+      return pgettext("Month|Full","June");
+   case MONTH_JUL:
+      return pgettext("Month|Full","July");
+   case MONTH_AUG:
+      return pgettext("Month|Full","August");
+   case MONTH_SEP:
+      return pgettext("Month|Full","September");
+   case MONTH_OCT:
+      return pgettext("Month|Full","October");
+   case MONTH_NOV:
+      return pgettext("Month|Full","November");
+   case MONTH_DEC:
+      return pgettext("Month|Full","December");
+   }
+   return "(Invalid)";
 }
 //------------- End of function DateInfo::month_str --------//
+
+
+//------------ Begin of function DateInfo::short_month_str ---------//
+//
+// <int> monthNo = the month (1-12)
+//
+// Return : <char*> the short month string
+//
+const char* DateInfo::short_month_str(int monthNo)
+{
+   switch( monthNo )
+   {
+   case MONTH_JAN:
+      // TRANSLATORS: An abbreviated month. If not used in your language, spell full month.
+      return pgettext("Month|Short","Jan");
+   case MONTH_FEB:
+      return pgettext("Month|Short","Feb");
+   case MONTH_MAR:
+      return pgettext("Month|Short","Mar");
+   case MONTH_APR:
+      return pgettext("Month|Short","Apr");
+   case MONTH_MAY:
+      return pgettext("Month|Short","May");
+   case MONTH_JUN:
+      return pgettext("Month|Short","Jun");
+   case MONTH_JUL:
+      return pgettext("Month|Short","Jul");
+   case MONTH_AUG:
+      return pgettext("Month|Short","Aug");
+   case MONTH_SEP:
+      return pgettext("Month|Short","Sep");
+   case MONTH_OCT:
+      return pgettext("Month|Short","Oct");
+   case MONTH_NOV:
+      return pgettext("Month|Short","Nov");
+   case MONTH_DEC:
+      return pgettext("Month|Short","Dec");
+   }
+   return "(Invalid)";
+}
+//------------- End of function DateInfo::short_month_str --------//
 
 
 //---------- Begin of function DateInfo::day_year ----------//
