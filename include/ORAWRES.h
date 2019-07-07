@@ -109,6 +109,7 @@ public:
 
 	void  	put_small_product_icon(int x, int y, int rawId);
 	void		put_small_raw_icon(int x, int y, int rawId);
+	const char*	product_name(int rawId);
 
 	char* 	large_product_icon(int rawId)	{ return res_icon.read(rawId); }
 	char* 	small_product_icon(int rawId) { return res_icon.read(MAX_RAW+rawId); }

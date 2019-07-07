@@ -273,9 +273,23 @@ void RawRes::put_small_product_icon(int x, int y, int rawId)
 
 	String str;
 
-	snprintf( str, MAX_STR_LEN+1, _("%s Products"), _(raw_res[rawId]->name) );
+	str = product_name(rawId);
 
 	help.set_custom_help( x, y, x+RAW_SMALL_ICON_WIDTH-1, y+RAW_SMALL_ICON_HEIGHT-1, str );
 }
 //---------- End of function RawRes::put_small_product_icon -----------//
 
+
+const char *product_name_str[MAX_RAW] =
+{
+	N_("Clay Products"),
+	N_("Copper Products"),
+	N_("Iron Products")
+};
+//---------- Begin of function RawRes::product_name -----------//
+
+const char *RawRes::product_name(int rawId)
+{
+	return _(product_name_str[rawId-1]);
+}
+//---------- End of function RawRes::product_name -----------//
