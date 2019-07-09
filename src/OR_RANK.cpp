@@ -171,13 +171,16 @@ static void disp_score()
 	int	 finalScore = totalScore * difficultyRating / 100;
 	String str;
 
-	// TRANSLATORS: Final Score:  <Number> X
-	snprintf( str, MAX_STR_LEN+1, _("Final Score:  %s X "), misc.format(totalScore) );
+	str  = _("Final Score");
+	str += ":  ";
+	str += misc.format(totalScore);
+	str += " X ";
 
 	int x2 = font_san.put( x, y+12, str ) + 5;
 
-	// TRANSLATORS: <Number> (Difficulty Rating)
-	snprintf( str, MAX_STR_LEN+1, _("%s (Difficulty Rating)"), misc.format(difficultyRating) );
+	str  = misc.format(difficultyRating);
+	str += " ";
+	str += _("(Difficulty Rating)");
 
 	font_san.center_put( x2, y+1, x2+156, y+15, str );
 	vga_back.bar( x2   , y+16, x2+156, y+17, V_BLACK );
@@ -187,13 +190,19 @@ static void disp_score()
 
 	if( nation_array[viewNationRecno]->cheat_enabled_flag )
 	{
-		str = _("X  0 (Cheated)  =  0");
+		str  = "X  0 ";
+		str += _("(Cheated)");
+		str += "  ";
+
+		finalScore = 0;
 	}
 	else
 	{
-		str = "=  ";
-		str += finalScore;
+		str = "";
 	}
+
+	str += "=  ";
+	str += finalScore;
 
 	font_san.put( x2+170, y+12, str);
 
