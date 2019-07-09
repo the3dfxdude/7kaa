@@ -553,13 +553,16 @@ static int disp_score(int winFlag)
 	int	 finalScore = totalScore * difficultyRating / 100;
 	String str;
 
-	// TRANSLATORS: Final Score:  <Number> X
-	snprintf( str, MAX_STR_LEN+1, _("Final Score:  %s X "), misc.format(totalScore) );
+	str  = _("Final Score");
+	str += ":  ";
+	str += misc.format(totalScore);
+	str += " X ";
 
 	x = font_bible.put( x, y+20, str )+5;
 
-	// TRANSLATORS: <Number> (Difficulty Rating)
-	snprintf( str, MAX_STR_LEN+1, _("%s (Difficulty Rating)"), misc.format(difficultyRating) );
+	str  = misc.format(difficultyRating);
+	str += " ";
+	str += _("(Difficulty Rating)");
 
 	font_bible.center_put( x, y+4, x+170, y+1+font_bible.height(), str );
 	vga_front.bar( x, y+27, x+170, y+28, V_BLACK );
@@ -572,17 +575,27 @@ static int disp_score(int winFlag)
 	if( info.goal_score_bonus && winFlag &&
 		 !nation_array[viewNationRecno]->cheat_enabled_flag )		// if cheated, don't display bonus score, as there is no space for displaying both
 	{
+		str += "+  ";
+		str += info.goal_score_bonus;
+		str += " ";
+		str += _("(Bonus)");
+		str += "  ";
 		finalScore += info.goal_score_bonus;
-		// TRANSLATORS: +  <Number> (Bonus)  =  <Number>
-		snprintf( str, MAX_STR_LEN+1, _("+  %d (Bonus)  =  %s"), info.goal_score_bonus, misc.format(finalScore) );
 	}
 
 	//------- if the player has cheated -------//
 
 	if( nation_array[viewNationRecno]->cheat_enabled_flag )
 	{
-		str = _("X  0 (Cheated)  =  0");
+		str  = "X  0 ";
+		str += _("(Cheated)");
+		str += "  ";
+
+		finalScore = 0;
 	}
+
+	str += "=  ";
+	str += finalScore;
 
 	font_bible.put( x+180, y+18, str);
 
