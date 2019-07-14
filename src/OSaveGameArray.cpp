@@ -614,14 +614,16 @@ void SaveGameArray::disp_entry_info(const SaveGame* entry, int x, int y)
 
 	//------- display game date --------//
 
-	str  = _("Game Date: ");
+	str  = _("Game Date");
+	str += ": ";
 	str += date.date_str(entry->header.game_date);
 
 	font_bible.put( x, y+30, str );
 
 	//---------------------------------//
 
-	str  = _("File Name: ");
+	str  = _("File Name");
+	str += ": ";
 	str += entry->file_info.name;
 
 	#if(defined(FRENCH))
@@ -632,7 +634,8 @@ void SaveGameArray::disp_entry_info(const SaveGame* entry, int x, int y)
 		font_small.put( x+335, y+16, str );
 	#endif
 
-	str  = _("File Date: ");
+	str  = _("File Date");
+	str += ": ";
 	str += date.date_str(date.julian(entry->file_info.time.year, entry->file_info.time.month, entry->file_info.time.day), 1);
 	str += " ";
 	str += date.time_str(entry->file_info.time.hour*100 + entry->file_info.time.minute);

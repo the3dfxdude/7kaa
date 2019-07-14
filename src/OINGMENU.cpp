@@ -150,8 +150,9 @@ void InGameMenu::disp(int needRepaint)
          }
       }
 
-		String str(_("Map I.D.: "));
+      String str(_("Map I.D."));
 
+      str += ": ";
       str += info.random_seed;
       font_bible.center_put( MAP_ID_X1, MAP_ID_Y1, MAP_ID_X2, MAP_ID_Y2, str);
 

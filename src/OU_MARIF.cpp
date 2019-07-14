@@ -622,7 +622,7 @@ void UnitMarine::disp_stop(int dispY1, int refreshFlag)
 				firmPtr = firm_array[ stop_array[i].firm_recno ];
 				nation_array[firmPtr->nation_recno]->disp_nation_color(x+4, y+4);
 				font_san.put(x+20, y+4, firmPtr->firm_name());
-				font_san.put(x+4, y+19, _("Pick up: "));
+				font_san.put(x+4, y+19, _("Pick up:"));
 
 #if(defined(FRENCH))
 				button_set_stop[i].paint_text( x+4, y+37, x+90, y+56, "Faire Escale" );
