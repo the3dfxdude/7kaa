@@ -363,10 +363,9 @@ static void disp_owned_scroll()
 
 	//------- display words -------//
 
-	if( scrollCount > 1 )
-		font_san.put( SCROLL_X1+6, SCROLL_Y1+5, _("Acquired Scrolls:") );
-	else
-		font_san.put( SCROLL_X1+6, SCROLL_Y1+5, _("Acquired Scroll:") );
+	const char *msg = ngettext("Acquired Scroll:", "Acquired Scrolls:", scrollCount);
+
+	font_san.put( SCROLL_X1+6, SCROLL_Y1+5, msg );
 
 	//------- display scrolls ----------//
 
