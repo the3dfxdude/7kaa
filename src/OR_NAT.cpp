@@ -111,6 +111,7 @@ static void disp_talk_msg_sent(int refreshFlag);
 static int  sort_talk_msg( const void *a, const void *b );
 
 static void put_heading(char justify, int x1, int y1, int x2, int y2, const char *textPtr);
+static char* nation_color_code_str(int nationRecno);
 
 #define J_L Font::LEFT_JUSTIFY
 #define J_C Font::CENTER_JUSTIFY
@@ -851,40 +852,29 @@ static void put_talk_msg_rec(int recNo, int x1, int y, int refreshFlag)
 
 	//---------------------------------------//
 
-	const char* str1;
-
-	if( isTo )
-		// TRANSLATORS: To <Nation color> on <Date> :
-		str1 = _("To");
-	else
-		// TRANSLATORS: From <Nation color> on <Date> :
-		str1 = _("From");
-
-	font_san.put( x , y, str1 );
-
-	x += font_san.text_width(str1)+5;
-
-	//---------------------------------------//
+	String str;
+	char *nation_color, *date_str;
 
 	if( talkMsg->from_nation_recno == info.viewing_nation_recno )
-		nation_array[talkMsg->to_nation_recno]->disp_nation_color(x, y+2);
+		nation_color = nation_color_code_str(talkMsg->to_nation_recno);
 	else
-		nation_array[talkMsg->from_nation_recno]->disp_nation_color(x, y+2);
-
-	x+=18;
-
-	String str;
-	char xstr[MAX_STR_LEN+1] = {0};
-
-	// TRANSLATORS: To/From <Nation color> on <Date> :
-	str = _("on %s :");
+		nation_color = nation_color_code_str(talkMsg->from_nation_recno);
 
 	if( talkMsgDisp->is_reply )
-		snprintf( xstr, MAX_STR_LEN+1, str, date.date_str(talkMsg->reply_date) );
+		date_str = date.date_str(talkMsg->reply_date);
 	else
-		snprintf( xstr, MAX_STR_LEN+1, str, date.date_str(talkMsg->date) );
+		date_str = date.date_str(talkMsg->date);
 
-	font_san.put( x , y, xstr );
+	if( isTo )
+		// TRANSLATORS: To<Nation color> on <Date> :
+		snprintf(str, MAX_STR_LEN+1, "To%s on %s :", nation_color, date_str);
+	else
+		// TRANSLATORS: From<Nation color> on <Date> :
+		snprintf(str, MAX_STR_LEN+1, "From%s on %s :", nation_color, date_str);
+
+	font_san.put( x , y, str );
+
+	//---------------------------------------//
 
 	font_san.put( x1, y+13, talkMsg->msg_str(info.viewing_nation_recno, talkMsgDisp->is_reply), 0, browse_talk_msg.ix2 );
 }
@@ -1067,3 +1057,16 @@ static void put_heading(char justify, int x1, int y1, int x2, int y2, const char
 		font_san.put_paragraph(x1,y1+7,x2,y2,textPtr,-1,1,1,justify);
 }
 //----------- End of static function put_heading -----------//
+
+
+#define ASCII_ZERO 0x30
+//----- Begin of static function nation_color_code_str ------//
+//
+static char* nation_color_code_str(int nationRecno)
+{
+	static char colorCodeStr[] = " @COL0";
+
+	colorCodeStr[5] = ASCII_ZERO + nation_array[nationRecno]->color_scheme_id;
+	return colorCodeStr;
+}
+//------- End of static function nation_color_code_str ------//
