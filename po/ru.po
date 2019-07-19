@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-01 12:22-0500\n"
+"POT-Creation-Date: 2019-07-19 06:48-0700\n"
 "PO-Revision-Date: 2019-07-03 04:59-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -48,107 +48,160 @@ msgstr "Ok"
 #: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:278
 #: src/OGAMEMP.cpp:1509 src/OGAMEMP.cpp:1609 src/OGAMEMP.cpp:2072
 #: src/OGAMEMP.cpp:2174 src/OGAMEMP.cpp:2237 src/OSPYA.cpp:351
-#: src/OTOWNIF.cpp:1123 src/OUNITIF.cpp:1021 src/OUNITIF.cpp:1057
+#: src/OTOWNIF.cpp:1123 src/OUNITIF.cpp:1034 src/OUNITIF.cpp:1070
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/ODATE.cpp:40
-msgid "January"
-msgstr "Января"
-
-#: src/ODATE.cpp:41
-msgid "February"
-msgstr "февраля"
-
-#: src/ODATE.cpp:42
-msgid "March"
-msgstr "Марта"
-
-#: src/ODATE.cpp:43
-msgid "April"
-msgstr "Апреля"
-
-#: src/ODATE.cpp:44 src/ODATE.cpp:60
-msgid "May"
-msgstr "Мая"
-
-#: src/ODATE.cpp:45
-msgid "June"
-msgstr "июня"
-
-#: src/ODATE.cpp:46
-msgid "July"
-msgstr "июля"
-
-#: src/ODATE.cpp:47
-msgid "August"
-msgstr "Августа"
-
-#: src/ODATE.cpp:48
-msgid "September"
-msgstr "Сентября"
-
-#: src/ODATE.cpp:49
-msgid "October"
-msgstr "Октября"
-
-#: src/ODATE.cpp:50
-msgid "November"
-msgstr "Ноября"
-
-#: src/ODATE.cpp:51
-msgid "December"
-msgstr "декабря"
-
-#: src/ODATE.cpp:56
-msgid "Jan"
-msgstr "Января"
-
-#: src/ODATE.cpp:57
-msgid "Feb"
-msgstr "февраля"
-
-#: src/ODATE.cpp:58
-msgid "Mar"
-msgstr "Марта"
-
-#: src/ODATE.cpp:59
-msgid "Apr"
-msgstr "Апреля"
-
-#: src/ODATE.cpp:61
-msgid "Jun"
-msgstr "июня"
-
-#: src/ODATE.cpp:62
-msgid "Jul"
-msgstr "июля"
-
-#: src/ODATE.cpp:63
-msgid "Aug"
-msgstr "Августа"
-
-#: src/ODATE.cpp:64
-msgid "Sep"
-msgstr "Сентября"
-
-#: src/ODATE.cpp:65
-msgid "Oct"
-msgstr "Октября"
-
-#: src/ODATE.cpp:66
-msgid "Nov"
-msgstr "Ноября"
-
-#: src/ODATE.cpp:67
-msgid "Dec"
-msgstr "декабря"
-
 #. TRANSLATORS: <Month> <Day>, <Year>
-#: src/ODATE.cpp:248 src/ODATE.cpp:252
+#: src/ODATE.cpp:231 src/ODATE.cpp:235
 #, c-format
 msgid "%s %d, %d"
 msgstr "%2$d %1$s %3$d"
+
+#: src/ODATE.cpp:254
+#, fuzzy
+msgctxt "Month|Full"
+msgid "January"
+msgstr "Января"
+
+#: src/ODATE.cpp:256
+#, fuzzy
+msgctxt "Month|Full"
+msgid "February"
+msgstr "февраля"
+
+#: src/ODATE.cpp:258
+#, fuzzy
+msgctxt "Month|Full"
+msgid "March"
+msgstr "Марта"
+
+#: src/ODATE.cpp:260
+#, fuzzy
+msgctxt "Month|Full"
+msgid "April"
+msgstr "Апреля"
+
+#: src/ODATE.cpp:262
+#, fuzzy
+msgctxt "Month|Full"
+msgid "May"
+msgstr "Мая"
+
+#: src/ODATE.cpp:264
+#, fuzzy
+msgctxt "Month|Full"
+msgid "June"
+msgstr "июня"
+
+#: src/ODATE.cpp:266
+#, fuzzy
+msgctxt "Month|Full"
+msgid "July"
+msgstr "июля"
+
+#: src/ODATE.cpp:268
+#, fuzzy
+msgctxt "Month|Full"
+msgid "August"
+msgstr "Августа"
+
+#: src/ODATE.cpp:270
+#, fuzzy
+msgctxt "Month|Full"
+msgid "September"
+msgstr "Сентября"
+
+#: src/ODATE.cpp:272
+#, fuzzy
+msgctxt "Month|Full"
+msgid "October"
+msgstr "Октября"
+
+#: src/ODATE.cpp:274
+#, fuzzy
+msgctxt "Month|Full"
+msgid "November"
+msgstr "Ноября"
+
+#: src/ODATE.cpp:276
+#, fuzzy
+msgctxt "Month|Full"
+msgid "December"
+msgstr "декабря"
+
+#. TRANSLATORS: An abbreviated month. If not used in your language, spell full month.
+#: src/ODATE.cpp:295
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Jan"
+msgstr "Января"
+
+#: src/ODATE.cpp:297
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Feb"
+msgstr "февраля"
+
+#: src/ODATE.cpp:299
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Mar"
+msgstr "Марта"
+
+#: src/ODATE.cpp:301
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Apr"
+msgstr "Апреля"
+
+#: src/ODATE.cpp:303
+#, fuzzy
+msgctxt "Month|Short"
+msgid "May"
+msgstr "Мая"
+
+#: src/ODATE.cpp:305
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Jun"
+msgstr "июня"
+
+#: src/ODATE.cpp:307
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Jul"
+msgstr "июля"
+
+#: src/ODATE.cpp:309
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Aug"
+msgstr "Августа"
+
+#: src/ODATE.cpp:311
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Sep"
+msgstr "Сентября"
+
+#: src/ODATE.cpp:313
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Oct"
+msgstr "Октября"
+
+#: src/ODATE.cpp:315
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Nov"
+msgstr "Ноября"
+
+#: src/ODATE.cpp:317
+#, fuzzy
+msgctxt "Month|Short"
+msgid "Dec"
+msgstr "декабря"
 
 #. TRANSLATORS: <Town> <Short Firm Name> <Firm #>
 #. This is the name of the firm when there are multiple linked firms to a town.
@@ -177,7 +230,7 @@ msgstr "Резиденция"
 #: src/OFIRMIF.cpp:627 src/OFIRMIF.cpp:634 src/OFIRMIF2.cpp:95
 #: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:402 src/OF_CAMP.cpp:588
 #: src/OINFO.cpp:743 src/OR_MIL.cpp:101 src/OR_SPY.cpp:77 src/OR_TOWN.cpp:87
-#: src/OTOWNIF.cpp:267 src/OTOWNIF.cpp:1268 src/OUNITIF.cpp:1133
+#: src/OTOWNIF.cpp:267 src/OTOWNIF.cpp:1268 src/OUNITIF.cpp:1146
 #: src/OU_MARIF.cpp:507
 msgid "Loyalty"
 msgstr "Лояльность"
@@ -188,7 +241,7 @@ msgid "N/A"
 msgstr "Не указано"
 
 #: src/OFIRMIF.cpp:662 src/OFIRMIF.cpp:710 src/OF_INN.cpp:391
-#: src/OF_INN.cpp:442 src/OUNITIF.cpp:1145 src/OU_MARIF.cpp:511
+#: src/OF_INN.cpp:442 src/OUNITIF.cpp:1158 src/OU_MARIF.cpp:511
 msgid "Combat"
 msgstr "Бой"
 
@@ -247,7 +300,7 @@ msgid "Assassination Failed."
 msgstr "Убийство не удалось."
 
 #: src/OF_BASE.cpp:377 src/OF_CAMP.cpp:563 src/OGAMHALL.cpp:255
-#: src/OSaveGameArray.cpp:609 src/OUNIT.cpp:761 src/OUNITIF.cpp:1205
+#: src/OSaveGameArray.cpp:609 src/OUNIT.cpp:761 src/OUNITIF.cpp:1218
 msgid "King"
 msgstr "Король"
 
@@ -300,51 +353,34 @@ msgstr "Готово"
 msgid "Hiring Cost"
 msgstr "Стоимость найма"
 
-#: src/OF_MARK.cpp:375
-msgid "Clay Products"
-msgstr "Глинянные изделия"
-
-#: src/OF_MARK.cpp:376
-msgid "Copper Products"
-msgstr "Медные изделия"
-
-#: src/OF_MARK.cpp:377
-msgid "Iron Products"
-msgstr "Железные изделия"
-
-#. TRANSLATORS: Part of "You're not permitted to trade with this market."
-#: src/OF_MARK.cpp:414
-msgid "You're not permitted to"
+#: src/OF_MARK.cpp:407
+#, fuzzy
+msgid "You're not permitted to trade with this market."
 msgstr "Вам не позволено"
 
-#. TRANSLATORS: Part of "You're not permitted to trade with this market."
-#: src/OF_MARK.cpp:416
-msgid "trade with this market."
-msgstr "торговать с этим рынком."
-
-#: src/OF_MARK.cpp:470
+#: src/OF_MARK.cpp:461
 msgid "Clear"
 msgstr "Очистить"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:289
-#: src/OF_MARK.cpp:482
+#: src/OF_MARK.cpp:473
 msgid "Stock"
 msgstr "Наличие"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:293
-#: src/OF_MARK.cpp:484
+#: src/OF_MARK.cpp:475
 msgid "Sales"
 msgstr "Продажи"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:297
-#: src/OF_MARK.cpp:492
+#: src/OF_MARK.cpp:483
 msgid "Demand"
 msgstr "Спрос"
 
-#: src/OF_MARK.cpp:511 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
+#: src/OF_MARK.cpp:502 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
 msgid "Yearly Income"
 msgstr "Итоговая годовая прибыль"
 
@@ -686,224 +722,228 @@ msgstr "Невозможно начать игру."
 msgid "Incorrect kingdom information received from the host."
 msgstr "Неверная информация о королевстве получена от создателя."
 
-#: src/OGAMEND.cpp:217
+#: src/OGAMEND.cpp:218
 msgid "Do you want to continue to stay in the game?"
 msgstr "Вы хотите остаться в игре?"
 
-#: src/OGAMEND.cpp:217 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
-#: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
-#: src/OR_NAT.cpp:544
+#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:229 src/OINGMENU.cpp:254
+#: src/OINGMENU.cpp:270 src/OR_NAT.cpp:332 src/OR_NAT.cpp:333
+#: src/OR_NAT.cpp:545
 msgid "Yes"
 msgstr "Да"
 
-#: src/OGAMEND.cpp:217 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
-#: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
-#: src/OR_NAT.cpp:545
+#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:229 src/OINGMENU.cpp:254
+#: src/OINGMENU.cpp:270 src/OR_NAT.cpp:332 src/OR_NAT.cpp:333
+#: src/OR_NAT.cpp:546
 msgid "No"
 msgstr "Нет"
 
-#: src/OGAMEND.cpp:269
+#: src/OGAMEND.cpp:268
+msgid "You Have Lost the Game !"
+msgstr "Вы проиграли !"
+
+#: src/OGAMEND.cpp:276
 msgid "All Fryhtans have been Destroyed !"
 msgstr "Все Фрихтаны были уничтожены !"
 
-#: src/OGAMEND.cpp:272
+#: src/OGAMEND.cpp:280
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr "Вы достигл наивысших боевых очков Фрихтанов !"
 
 #. TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
-#: src/OGAMEND.cpp:277
+#: src/OGAMEND.cpp:286
 #, c-format
 msgid "%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr "%s достигл наивысших боевых очков Фрихтанов!"
 
-#. TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:288 src/OGAMEND.cpp:306 src/OGAMEND.cpp:324
-msgid "Your Kingdom has Reached"
-msgstr "Ваше королевство достигло"
-
-#. TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:293 src/OGAMEND.cpp:311 src/OGAMEND.cpp:329
-#, c-format
-msgid "%s's Kingdom has Reached"
-msgstr "%s королевство достигло"
-
-#. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
-#: src/OGAMEND.cpp:296
-#, c-format
-msgid "its Population Goal of %s !"
+#. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:297
+#, fuzzy, c-format
+msgid "Your Kingdom has Reached its Population Goal of %s !"
 msgstr "целевой отметки уровня населения %s !"
 
-#. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Economic Score Goal of <Number> !"
-#: src/OGAMEND.cpp:314
-#, c-format
-msgid "its Economic Score Goal of %s !"
+#. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:302
+#, fuzzy, c-format
+msgid "%s's Kingdom has Reached its Population Goal of %s !"
+msgstr "целевой отметки уровня населения %s !"
+
+#. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:315
+#, fuzzy, c-format
+msgid "Your Kingdom has Reached its Economic Score Goal of %s !"
 msgstr "целевой отметки очков экономики %s !"
 
-#. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:332
-#, c-format
-msgid "its Total Score Goal of %s !"
+#. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:320
+#, fuzzy, c-format
+msgid "%s's Kingdom has Reached its Economic Score Goal of %s !"
+msgstr "целевой отметки очков экономики %s !"
+
+#. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:333
+#, fuzzy, c-format
+msgid "Your Kingdom has Reached its Total Score Goal of %s !"
 msgstr "целевой отметки игровых очков %s !"
 
-#: src/OGAMEND.cpp:341
+#. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:338
+#, fuzzy, c-format
+msgid "%s's Kingdom has Reached its Total Score Goal of %s !"
+msgstr "целевой отметки игровых очков %s !"
+
+#: src/OGAMEND.cpp:350
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
 msgstr "Вы одержал победу над другими королевствами !"
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
-#: src/OGAMEND.cpp:346
+#: src/OGAMEND.cpp:355
 #, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
 msgstr "%s одержал победу над другими королевствами !"
 
-#: src/OGAMEND.cpp:356
-msgid "You Have Lost the Game !"
-msgstr "Вы проиграли !"
-
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
-#: src/OGAMEND.cpp:375
+#: src/OGAMEND.cpp:382
 #, c-format
 msgid "You Surrendered to %s's Kingdom on %s."
 msgstr "Вы сдались %s на %s."
 
-#: src/OGAMEND.cpp:382
+#: src/OGAMEND.cpp:389
 msgid "Your Kingdom has Failed to Achieve its Goal Within the Time Limit."
 msgstr "Вы не смогл достичь поставленной цели за установленные сроки."
 
-#: src/OGAMEND.cpp:386
+#: src/OGAMEND.cpp:393
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
 msgstr "Вы постигл бесславное поражение !"
 
 #. TRANSLATORS: You Retired on <Date>.
-#: src/OGAMEND.cpp:401
+#: src/OGAMEND.cpp:408
 #, c-format
 msgid "You Retired on %s."
 msgstr "Вы сдались на %s."
 
-#: src/OGAMEND.cpp:416
+#: src/OGAMEND.cpp:423
 msgid "Duration of Your Rule"
 msgstr "Длительность вашего правления"
 
-#: src/OGAMEND.cpp:417
+#: src/OGAMEND.cpp:424
 msgid "Total Gaming Time"
 msgstr "Общее игровое время"
 
-#: src/OGAMEND.cpp:419
+#: src/OGAMEND.cpp:426
 msgid "Final Population"
 msgstr "Финальный уровень населения"
 
-#: src/OGAMEND.cpp:420
+#: src/OGAMEND.cpp:427
 msgid "Final Treasure"
 msgstr "Финальное сокровище"
 
-#: src/OGAMEND.cpp:422
+#: src/OGAMEND.cpp:429
 msgid "Enemy Soldiers Dispatched"
 msgstr "Противник выслал своих солдат"
 
-#: src/OGAMEND.cpp:423
+#: src/OGAMEND.cpp:430
 msgid "King's Soldiers Martyred"
 msgstr "Солдаты короля были замучены до смерти"
 
-#: src/OGAMEND.cpp:425
+#: src/OGAMEND.cpp:432
 msgid "Enemy Weapons Destroyed"
 msgstr "Вооружение противника уничтожено"
 
-#: src/OGAMEND.cpp:426
+#: src/OGAMEND.cpp:433
 msgid "King's Weapons Rendered Obsolete"
 msgstr "Королевское вооружение устарело"
 
-#: src/OGAMEND.cpp:428
+#: src/OGAMEND.cpp:435
 msgid "Enemy Ships Sunk"
 msgstr "Корабль противника потонул"
 
-#: src/OGAMEND.cpp:429
+#: src/OGAMEND.cpp:436
 msgid "King's Ships Missing"
 msgstr "Королевские корабли пропали без вести"
 
-#: src/OGAMEND.cpp:431
+#: src/OGAMEND.cpp:438
 msgid "Enemy Buildings Destroyed"
 msgstr "Строения противника уничтожены"
 
-#: src/OGAMEND.cpp:432
+#: src/OGAMEND.cpp:439
 msgid "King's Buildings Cleared"
 msgstr "Королевские строения зачищены"
 
-#: src/OGAMEND.cpp:434
+#: src/OGAMEND.cpp:441
 msgid "Enemy Civilians Collaterally Damaged"
 msgstr "Гражданские противника понесли ущерб"
 
-#: src/OGAMEND.cpp:435
+#: src/OGAMEND.cpp:442
 msgid "King's Civilians Cruelly Murdered"
 msgstr "Граждане королевства были жестоко убиты"
 
-#: src/OGAMEND.cpp:468 src/OR_NAT.cpp:135 src/OR_RANK.cpp:87
+#: src/OGAMEND.cpp:475 src/OR_NAT.cpp:136 src/OR_RANK.cpp:87
 msgid "Kingdom"
 msgstr "Королевство"
 
-#: src/OGAMEND.cpp:469 src/OGAMHALL.cpp:271 src/OR_RANK.cpp:88
+#: src/OGAMEND.cpp:476 src/OGAMHALL.cpp:271 src/OR_RANK.cpp:88
 #: src/OTOWNIF.cpp:263
 msgid "Population"
 msgstr "Население"
 
-#: src/OGAMEND.cpp:470 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:477 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
 msgid "Military"
 msgstr "Армия"
 
-#: src/OGAMEND.cpp:471 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:478 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
 msgid "Economy"
 msgstr "Экономика"
 
-#: src/OGAMEND.cpp:472 src/OR_NAT.cpp:137 src/OR_RANK.cpp:91
+#: src/OGAMEND.cpp:479 src/OR_NAT.cpp:138 src/OR_RANK.cpp:91
 msgid "Reputation"
 msgstr "Репутация"
 
-#: src/OGAMEND.cpp:474 src/OR_RANK.cpp:92
+#: src/OGAMEND.cpp:481 src/OR_RANK.cpp:92
 msgid "Fryhtan Battling"
 msgstr "Борьба Фрихтанов"
 
-#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Population Score"
 msgstr "Очки населения"
 
-#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Military Score"
 msgstr "Очки армии"
 
-#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Economic Score"
 msgstr "Очки экономики"
 
-#: src/OGAMEND.cpp:522 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:529 src/OR_RANK.cpp:138
 msgid "Reputation Score"
 msgstr "Очки репутации"
 
-#: src/OGAMEND.cpp:522 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:529 src/OR_RANK.cpp:138
 msgid "Fryhtan Battling Score"
 msgstr "Очки воинственности Фрихтанов"
 
-#: src/OGAMEND.cpp:543 src/OR_RANK.cpp:161
+#: src/OGAMEND.cpp:550 src/OR_RANK.cpp:161
 msgid "Total Score"
 msgstr "Общий счет"
 
-#. TRANSLATORS: Final Score:  <Number> X
-#: src/OGAMEND.cpp:557 src/OR_RANK.cpp:175
-#, c-format
-msgid "Final Score:  %s X "
+#: src/OGAMEND.cpp:563 src/OR_RANK.cpp:174
+#, fuzzy
+msgid "Final Score"
 msgstr "Финальный счет:  %s X "
 
-#. TRANSLATORS: <Number> (Difficulty Rating)
-#: src/OGAMEND.cpp:562 src/OR_RANK.cpp:180
-#, c-format
-msgid "%s (Difficulty Rating)"
+#: src/OGAMEND.cpp:572 src/OR_RANK.cpp:183
+#, fuzzy
+msgid "(Difficulty Rating)"
 msgstr "%s (Коэф. сложности)"
 
-#. TRANSLATORS: +  <Number> (Bonus)  =  <Number>
-#: src/OGAMEND.cpp:577
-#, c-format
-msgid "+  %d (Bonus)  =  %s"
-msgstr "+  %d (Бонус)  =  %s"
+#: src/OGAMEND.cpp:588
+msgid "(Bonus)"
+msgstr ""
 
-#: src/OGAMEND.cpp:584 src/OR_RANK.cpp:190
-msgid "X  0 (Cheated)  =  0"
+#: src/OGAMEND.cpp:598 src/OR_RANK.cpp:194
+#, fuzzy
+msgid "(Cheated)"
 msgstr "X  0 (Читер)  =  0"
 
 #: src/OGAMHALL.cpp:263
@@ -914,7 +954,7 @@ msgstr "Очки"
 msgid "Period"
 msgstr "Время"
 
-#: src/OGAMHALL.cpp:293
+#: src/OGAMHALL.cpp:293 src/OGAMSCE2.cpp:462
 msgid "Difficulty"
 msgstr "Сложность"
 
@@ -926,12 +966,9 @@ msgstr "Версия"
 msgid "Scenario files not found."
 msgstr "Файлы сценария не найдены."
 
-#: src/OGAMSCE2.cpp:462
-msgid "Difficulty : "
-msgstr "Сложность : "
-
-#: src/OGAMSCE2.cpp:468
-msgid "Score Bonus: "
+#: src/OGAMSCE2.cpp:469
+#, fuzzy
+msgid "Score Bonus"
 msgstr "Бонус к очкам: "
 
 #: src/OGFILE.cpp:326
@@ -995,177 +1032,175 @@ msgid "Japanese General"
 msgstr "Японский Генерал"
 
 # data/resource/help.res:109
-#: src/OHELP.cpp:517 src/OHELP.cpp:564 src/OR_TRADE.cpp:82
+#: src/OHELP.cpp:517 src/OHELP.cpp:565 src/OR_TRADE.cpp:82
 msgid "Caravan"
 msgstr "Караван"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:518 src/OHELP.cpp:565
+#: src/OHELP.cpp:518 src/OHELP.cpp:566
 msgid "Catapult"
 msgstr "Катапульта"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:519 src/OHELP.cpp:566
+#: src/OHELP.cpp:519 src/OHELP.cpp:567
 msgid "Ballista"
 msgstr "Баллиста"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:520 src/OHELP.cpp:567
+#: src/OHELP.cpp:520 src/OHELP.cpp:568
 msgid "Spitfire"
 msgstr "Огнемёт"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:521 src/OHELP.cpp:568
+#: src/OHELP.cpp:521 src/OHELP.cpp:569
 msgid "Cannon"
 msgstr "Пушка"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:522 src/OHELP.cpp:569
+#: src/OHELP.cpp:522 src/OHELP.cpp:570
 msgid "Porcupine"
 msgstr "Поркупайн"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:523 src/OHELP.cpp:570
+#: src/OHELP.cpp:523 src/OHELP.cpp:571
 msgid "Trader"
 msgstr "Торговец"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:524 src/OHELP.cpp:571
+#: src/OHELP.cpp:524 src/OHELP.cpp:572
 msgid "Transport"
 msgstr "Транспорт"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:525 src/OHELP.cpp:572
+#: src/OHELP.cpp:525 src/OHELP.cpp:573
 msgid "Caravel"
 msgstr "Каравелла"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:526 src/OHELP.cpp:573
+#: src/OHELP.cpp:526 src/OHELP.cpp:574
 msgid "Galleon"
 msgstr "Галеон"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:527 src/OHELP.cpp:574
+#: src/OHELP.cpp:527 src/OHELP.cpp:575
 msgid "Dragon"
 msgstr "Дракон"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:528 src/OHELP.cpp:575
+#: src/OHELP.cpp:528 src/OHELP.cpp:576
 msgid "Jing Nung"
 msgstr "Джинг Нунг"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:529 src/OHELP.cpp:576
+#: src/OHELP.cpp:529 src/OHELP.cpp:577
 msgid "Lord of Healing"
 msgstr "Лекарь"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:530 src/OHELP.cpp:577
+#: src/OHELP.cpp:530 src/OHELP.cpp:578
 msgid "Thor"
 msgstr "Тор"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:531 src/OHELP.cpp:578
+#: src/OHELP.cpp:531 src/OHELP.cpp:579
 msgid "Phoenix"
 msgstr "Феникс"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:532 src/OHELP.cpp:579
+#: src/OHELP.cpp:532 src/OHELP.cpp:580
 msgid "Kukulcan"
 msgstr "Кукулкан"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:533 src/OHELP.cpp:580
+#: src/OHELP.cpp:533 src/OHELP.cpp:581
 msgid "Mind Turner"
 msgstr "Средний Тернер"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:534
+#. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use General or Ordo whichever makes sense.
+#: src/OHELP.cpp:535
 msgid "Deezboanz General"
 msgstr "null"
 
-#: src/OHELP.cpp:535
+#: src/OHELP.cpp:536
 msgid "Rattus General"
 msgstr "null"
 
-#: src/OHELP.cpp:536
+#: src/OHELP.cpp:537
 msgid "Broosken General"
 msgstr "null"
 
-#: src/OHELP.cpp:537
+#: src/OHELP.cpp:538
 msgid "Haubudam General"
 msgstr "null"
 
-#: src/OHELP.cpp:538
+#: src/OHELP.cpp:539
 msgid "Pfith General"
 msgstr "null"
 
-#: src/OHELP.cpp:539
+#: src/OHELP.cpp:540
 msgid "Rokken General"
 msgstr "null"
 
-#: src/OHELP.cpp:540
+#: src/OHELP.cpp:541
 msgid "Doink General"
 msgstr "null"
 
-#: src/OHELP.cpp:541
+#: src/OHELP.cpp:542
 msgid "Wyrm General"
 msgstr "null"
 
-#: src/OHELP.cpp:542
+#: src/OHELP.cpp:543
 msgid "Droog General"
 msgstr "null"
 
-#: src/OHELP.cpp:543
+#: src/OHELP.cpp:544
 msgid "Ick General"
 msgstr "null"
 
-#: src/OHELP.cpp:544
+#: src/OHELP.cpp:545
 msgid "Sauroid General"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:545
+#: src/OHELP.cpp:546
 msgid "Karrotten General"
 msgstr "null"
 
-#: src/OHELP.cpp:546
+#: src/OHELP.cpp:547
 msgid "Holgh General"
 msgstr "null"
 
-#: src/OHELP.cpp:547
+#: src/OHELP.cpp:548
 msgid "Egyptian General"
 msgstr "Египетский Генерал"
 
-#: src/OHELP.cpp:548
+#: src/OHELP.cpp:549
 msgid "Mughul General"
 msgstr "Генерал Моголов"
 
-# #-#-#-#-#  -  #-#-#-#-#
-# data/resource/std/00005-UNIT.dbf
-# #-#-#-#-#  -  #-#-#-#-#
-# data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:549 src/OHELP.cpp:596
-msgid "Zulu"
-msgstr "Зулус"
+#: src/OHELP.cpp:550
+#, fuzzy
+msgid "Zulu General"
+msgstr "Генерал Моголов"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:550 src/OHELP.cpp:597
+#: src/OHELP.cpp:551 src/OHELP.cpp:599
 msgid "Isis"
 msgstr "Изида"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:551 src/OHELP.cpp:598
+#: src/OHELP.cpp:552 src/OHELP.cpp:600
 msgid "Djini"
 msgstr "Джини"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:552 src/OHELP.cpp:599
+#: src/OHELP.cpp:553 src/OHELP.cpp:601
 msgid "uNkulunkulu"
 msgstr "ункулункулу"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:553 src/OHELP.cpp:600
+#: src/OHELP.cpp:554 src/OHELP.cpp:602
 msgid "Unicorn"
 msgstr "Единорог"
 
@@ -1173,12 +1208,12 @@ msgstr "Единорог"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:557
+#: src/OHELP.cpp:558
 msgid "Norman King"
 msgstr "Норманнский Король"
 
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:558
+#: src/OHELP.cpp:559
 msgid "Maya King"
 msgstr "Майя Король"
 
@@ -1186,7 +1221,7 @@ msgstr "Майя Король"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:559
+#: src/OHELP.cpp:560
 msgid "Greek King"
 msgstr "Греческий Король"
 
@@ -1194,7 +1229,7 @@ msgstr "Греческий Король"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:560
+#: src/OHELP.cpp:561
 msgid "Viking King"
 msgstr "Король Викингов"
 
@@ -1202,7 +1237,7 @@ msgstr "Король Викингов"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:561
+#: src/OHELP.cpp:562
 msgid "Persian King"
 msgstr "Персидский Король"
 
@@ -1210,7 +1245,7 @@ msgstr "Персидский Король"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:562
+#: src/OHELP.cpp:563
 msgid "Chinese King"
 msgstr "Китайский Король"
 
@@ -1218,70 +1253,71 @@ msgstr "Китайский Король"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:563
+#: src/OHELP.cpp:564
 msgid "Japanese King"
 msgstr "Японский Король"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:581
+#. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use King or All High whichever makes sense.
+#: src/OHELP.cpp:583
 msgid "Deezboanz King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:582
+#: src/OHELP.cpp:584
 msgid "Rattus King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:583
+#: src/OHELP.cpp:585
 msgid "Broosken King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:584
+#: src/OHELP.cpp:586
 msgid "Haubudam King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:585
+#: src/OHELP.cpp:587
 msgid "Pfith King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:586
+#: src/OHELP.cpp:588
 msgid "Rokken King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:587
+#: src/OHELP.cpp:589
 msgid "Doink King"
 msgstr "null"
 
-#: src/OHELP.cpp:588
+#: src/OHELP.cpp:590
 msgid "Wyrm King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:589
+#: src/OHELP.cpp:591
 msgid "Droog King"
 msgstr "null"
 
-#: src/OHELP.cpp:590
+#: src/OHELP.cpp:592
 msgid "Ick King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:591
+#: src/OHELP.cpp:593
 msgid "Sauroid King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:592
+#: src/OHELP.cpp:594
 msgid "Karrotten King"
 msgstr "null"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:593
+#: src/OHELP.cpp:595
 msgid "Holgh King"
 msgstr "null"
 
@@ -1289,7 +1325,7 @@ msgstr "null"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:594
+#: src/OHELP.cpp:596
 msgid "Egyptian King"
 msgstr "Египетский Король"
 
@@ -1297,8 +1333,17 @@ msgstr "Египетский Король"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:595
+#: src/OHELP.cpp:597
 msgid "Mughul King"
+msgstr "Король Моголов"
+
+# #-#-#-#-#  -  #-#-#-#-#
+# data/resource/std/00005-UNIT.dbf
+# #-#-#-#-#  -  #-#-#-#-#
+# data/resource/std/00006-RACE.dbf
+#: src/OHELP.cpp:598
+#, fuzzy
+msgid "Zulu King"
 msgstr "Король Моголов"
 
 #. TRANSLATORS: Part of "%d hour(s) and %d minute(s)"
@@ -1337,18 +1382,19 @@ msgstr[1] "%d дня"
 msgstr[2] "%d дней"
 
 #: src/OINGMENU.cpp:153
-msgid "Map I.D.: "
+#, fuzzy
+msgid "Map I.D."
 msgstr "I.D. Карты: "
 
-#: src/OINGMENU.cpp:228
+#: src/OINGMENU.cpp:229
 msgid "Do you really want to retire?"
 msgstr "Вы хотите окончить игру?"
 
-#: src/OINGMENU.cpp:253
+#: src/OINGMENU.cpp:254
 msgid "Do you really want to quit to the Main Menu?"
 msgstr "Вы хотите выйти в Главное Меню?"
 
-#: src/OINGMENU.cpp:269
+#: src/OINGMENU.cpp:270
 msgid "Do you really want to quit Seven Kingdoms?"
 msgstr "Вы хотите выйти из Seven Kingdoms?"
 
@@ -2996,10 +3042,17 @@ msgstr "Данная игра была сохранена в %s."
 msgid "The connection with %s's Kingdom%s has been lost."
 msgstr "Соединение с %s%s было потеряно."
 
-#: src/ORAWRES.cpp:276
-#, fuzzy, c-format
-msgid "%s Products"
-msgstr "%s продуктов"
+#: src/ORAWRES.cpp:285
+msgid "Clay Products"
+msgstr "Глинянные изделия"
+
+#: src/ORAWRES.cpp:286
+msgid "Copper Products"
+msgstr "Медные изделия"
+
+#: src/ORAWRES.cpp:287
+msgid "Iron Products"
+msgstr "Железные изделия"
 
 #: src/OREMOTEM.cpp:462 src/OSYS2.cpp:1024
 msgid "Multiplayer Random Seed Sync Error"
@@ -3137,7 +3190,7 @@ msgstr "Командор"
 msgid "Commanded Soldiers"
 msgstr "Командование войсками"
 
-#: src/OR_MIL.cpp:104 src/OR_NAT.cpp:138
+#: src/OR_MIL.cpp:104 src/OR_NAT.cpp:139
 msgid "Status"
 msgstr "Статус"
 
@@ -3222,170 +3275,154 @@ msgid "Send to all human controlled kingdoms"
 msgstr "Отправить всем королевствам под управлением игроков"
 
 # data/resource/help.res:365
-#: src/OR_NAT.cpp:169
+#: src/OR_NAT.cpp:170
 msgid "Allow Attack"
 msgstr "Разрешить атаку"
 
-#: src/OR_NAT.cpp:171 src/OR_NAT.cpp:599
+#: src/OR_NAT.cpp:172 src/OR_NAT.cpp:600
 msgid "Trade Treaty"
 msgstr "Торговый договор"
 
-#: src/OR_NAT.cpp:173
+#: src/OR_NAT.cpp:174
 msgid "Trade Amount"
 msgstr "Сумма сделки"
 
-#: src/OR_NAT.cpp:503
+#: src/OR_NAT.cpp:504
 msgid "Your Food"
 msgstr "Ваша еда"
 
-#: src/OR_NAT.cpp:508
+#: src/OR_NAT.cpp:509
 msgid "Your Treasure"
 msgstr "Ваши сокровища"
 
-#: src/OR_NAT.cpp:510
+#: src/OR_NAT.cpp:511
 msgid "Your Continuous Peace Time"
 msgstr "Мирное время"
 
 #. TRANSLATORS: Your Yearly Import from <King>'s Kingdom
-#: src/OR_NAT.cpp:515
+#: src/OR_NAT.cpp:516
 #, c-format
 msgid "Your Yearly Import from %s's Kingdom"
 msgstr "Ваш годовой импорт из королевства %s"
 
 #. TRANSLATORS: Your Yearly Export to <King>'s Kingdom
-#: src/OR_NAT.cpp:521
+#: src/OR_NAT.cpp:522
 #, c-format
 msgid "Your Yearly Export to %s's Kingdom"
 msgstr "Ваш годовой экспорт в королевство %s"
 
 #. TRANSLATORS: Continuous Peace Time of <King>'s Kingdom
-#: src/OR_NAT.cpp:527
+#: src/OR_NAT.cpp:528
 #, c-format
 msgid "Continuous Peace Time of %s's Kingdom"
 msgstr "Мирное время с королевством %s"
 
 #. TRANSLATORS: Allow Your Units to Attack <Kings>'s Kingdom
-#: src/OR_NAT.cpp:539
+#: src/OR_NAT.cpp:540
 #, c-format
 msgid "Allow Your Units to Attack %s's Kingdom"
 msgstr "Позволить вашим отрядам атаковать %s"
 
 #. TRANSLATORS: <King>'s Kingdom's Treasure
-#: src/OR_NAT.cpp:554
+#: src/OR_NAT.cpp:555
 #, c-format
 msgid "%s's Kingdom's Treasure"
 msgstr "Сокровища королевства %s"
 
 #. TRANSLATORS: <King>'s Kingdom's Food
-#: src/OR_NAT.cpp:560
+#: src/OR_NAT.cpp:561
 #, c-format
 msgid "%s's Kingdom's Food"
 msgstr "Еда королевства %s"
 
 #. TRANSLATORS: <King>'s Kingdom's Diplomatic Status with Other Kingdoms:
-#: src/OR_NAT.cpp:576
+#: src/OR_NAT.cpp:577
 #, c-format
 msgid "%s's Kingdom's Diplomatic Status with Other Kingdoms:"
 msgstr "Дипломатическое состояние королевства %s с другими королевствами:"
 
-#. TRANSLATORS: To <Nation color> on <Date> :
-#: src/OR_NAT.cpp:858
-msgid "To"
-msgstr "К"
-
-#. TRANSLATORS: From <Nation color> on <Date> :
-#: src/OR_NAT.cpp:861
-msgid "From"
-msgstr "От"
-
-#. TRANSLATORS: To/From <Nation color> on <Date> :
-#: src/OR_NAT.cpp:880
-#, c-format
-msgid "on %s :"
-msgstr "на %s :"
-
-#: src/OR_NAT.cpp:913
+#: src/OR_NAT.cpp:903
 msgid "Please enter your chat message and press <Enter> to send."
 msgstr "Веедите ваше сообщение в чат и нажмите <Enter> для отправки."
 
 #. TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
-#: src/OR_RANK.cpp:234
+#: src/OR_RANK.cpp:243
 #, c-format
 msgid "GOAL: Achieve One of the Following Before %s:"
 msgstr "ЦЕЛЬ: Достичь одного из нижеперечисленного до %s:"
 
-#: src/OR_RANK.cpp:238
+#: src/OR_RANK.cpp:247
 msgid "GOAL: Achieve One of the Following:"
 msgstr "ЦЕЛЬ: Достичь одного из нижеперечисленного:"
 
 #. TRANSLATORS: GOAL: Defeat All Other Kingdoms Before <Date>.
-#: src/OR_RANK.cpp:246
+#: src/OR_RANK.cpp:255
 #, c-format
 msgid "GOAL: Defeat All Other Kingdoms Before %s."
 msgstr "ЦЕЛЬ: Победить все остальные королевства до %s."
 
-#: src/OR_RANK.cpp:250
+#: src/OR_RANK.cpp:259
 msgid "GOAL: Defeat All Other Kingdoms."
 msgstr "ЦЕЛЬ: Победить все остальные королевства."
 
-#: src/OR_RANK.cpp:265
+#: src/OR_RANK.cpp:274
 msgid "Defeat All Other Kingdoms."
 msgstr "Победить все остальные королевства."
 
-#: src/OR_RANK.cpp:274
+#: src/OR_RANK.cpp:283
 msgid "Destroy All Fryhtans."
 msgstr "Уничтожить всех Фрихтанов."
 
 #. TRANSLATORS: Achieve a Population of <Number>.
-#: src/OR_RANK.cpp:286
+#: src/OR_RANK.cpp:295
 #, c-format
 msgid "Achieve a Population of %s."
 msgstr "Достичь уровня населения к-вом в %s."
 
 #. TRANSLATORS: Achieve an Economic Score of <Number>.
-#: src/OR_RANK.cpp:298
+#: src/OR_RANK.cpp:307
 #, c-format
 msgid "Achieve an Economic Score of %s."
 msgstr "Достичь очков экономики к-вом в %s."
 
 #. TRANSLATORS: Achieve a Total Score of <Number>.
-#: src/OR_RANK.cpp:310
+#: src/OR_RANK.cpp:319
 #, c-format
 msgid "Achieve a Total Score of %s."
 msgstr "Достичь к-ва общих очков в %s."
 
 #. TRANSLATORS: Total Playing Time: <Time duration>
-#: src/OR_RANK.cpp:329
+#: src/OR_RANK.cpp:338
 #, c-format
 msgid "Total Playing Time: %s"
 msgstr "Общее игровое время %s"
 
 #. TRANSLATORS: Ordinal number for ranking players
-#: src/OR_RANK.cpp:463
+#: src/OR_RANK.cpp:472
 msgid "1st"
 msgstr "1-ый"
 
-#: src/OR_RANK.cpp:464
+#: src/OR_RANK.cpp:473
 msgid "2nd"
 msgstr "2-ой"
 
-#: src/OR_RANK.cpp:465
+#: src/OR_RANK.cpp:474
 msgid "3rd"
 msgstr "3-ий"
 
-#: src/OR_RANK.cpp:466
+#: src/OR_RANK.cpp:475
 msgid "4th"
 msgstr "4-ый"
 
-#: src/OR_RANK.cpp:467
+#: src/OR_RANK.cpp:476
 msgid "5th"
 msgstr "5-ый"
 
-#: src/OR_RANK.cpp:468
+#: src/OR_RANK.cpp:477
 msgid "6th"
 msgstr "6-ой"
 
-#: src/OR_RANK.cpp:469
+#: src/OR_RANK.cpp:478
 msgid "7th"
 msgstr "7-ой"
 
@@ -3431,17 +3468,17 @@ msgstr "прогресс исследований"
 msgid "Tower of Science"
 msgstr "Башня знаний"
 
-#: src/OR_TECH.cpp:144 src/OUNITIF.cpp:1226
+#: src/OR_TECH.cpp:144 src/OUNITIF.cpp:1239
 msgid "Greater Being"
 msgstr "Всевышний"
 
-#: src/OR_TECH.cpp:367
-msgid "Acquired Scrolls:"
-msgstr "Добытые свитки:"
-
-#: src/OR_TECH.cpp:369
+#: src/OR_TECH.cpp:366
+#, fuzzy
 msgid "Acquired Scroll:"
-msgstr "Добытый свиток:"
+msgid_plural "Acquired Scrolls:"
+msgstr[0] "Добытый свиток:"
+msgstr[1] "Добытый свиток:"
+msgstr[2] "Добытый свиток:"
 
 #: src/OR_TOWN.cpp:84
 msgid "Village"
@@ -3578,7 +3615,7 @@ msgstr "Производство"
 msgid "Research"
 msgstr "Исследство"
 
-#: src/OSKILL.cpp:39 src/OUNITIF.cpp:1165
+#: src/OSKILL.cpp:39 src/OUNITIF.cpp:1178
 msgid "Spying"
 msgstr "Слежение"
 
@@ -3586,19 +3623,19 @@ msgstr "Слежение"
 msgid "Praying"
 msgstr "Моление"
 
-#: src/OSPY.cpp:591
+#: src/OSPY.cpp:601
 msgid "Counter-Spy"
 msgstr "Контрразведка"
 
-#: src/OSPY.cpp:594
+#: src/OSPY.cpp:604
 msgid "Sleep"
 msgstr "Сон"
 
-#: src/OSPY.cpp:598
+#: src/OSPY.cpp:608
 msgid "Sow Dissent"
 msgstr "Посеять раздор"
 
-#: src/OSPY.cpp:601
+#: src/OSPY.cpp:611
 msgid "Sabotage"
 msgstr "Саботаж"
 
@@ -3703,26 +3740,29 @@ msgid "Cannot delete this slot"
 msgstr "Эта ячейка не может быть удалена."
 
 #: src/OSaveGameArray.cpp:617
-msgid "Game Date: "
+#, fuzzy
+msgid "Game Date"
 msgstr "Время игры: "
 
-#: src/OSaveGameArray.cpp:624
-msgid "File Name: "
+#: src/OSaveGameArray.cpp:625
+#, fuzzy
+msgid "File Name"
 msgstr "Имя файла: "
 
-#: src/OSaveGameArray.cpp:635
-msgid "File Date: "
+#: src/OSaveGameArray.cpp:637
+#, fuzzy
+msgid "File Date"
 msgstr "Время файла: "
 
-#: src/OSaveGameArray.cpp:673
+#: src/OSaveGameArray.cpp:676
 msgid "It will overwrite the existing saved game. Proceed?"
 msgstr "Данная игра будет перезаписана. Продолжить?"
 
-#: src/OSaveGameArray.cpp:734
+#: src/OSaveGameArray.cpp:737
 msgid "Cannot save the game because the path is too long"
 msgstr "Слишком длинный путь сохранения игры"
 
-#: src/OSaveGameArray.cpp:889
+#: src/OSaveGameArray.cpp:892
 msgid "This saved game will be deleted. Proceed?"
 msgstr "Эта игра будет удалена. Продолжить?"
 
@@ -5066,74 +5106,114 @@ msgstr "Закончить тренировку"
 msgid "Tutorial files not found."
 msgstr "Учебные материалы не найдены."
 
-#: src/OUNIT.cpp:753 src/OUNITIF.cpp:1211
+#: src/OUNIT.cpp:753 src/OUNITIF.cpp:1224
 msgid "Rebel Leader"
 msgstr "Лидер мятежников"
 
-#: src/OUNIT.cpp:766 src/OUNITIF.cpp:1213
+#: src/OUNIT.cpp:766 src/OUNITIF.cpp:1226
 msgid "General"
 msgstr "Генерал"
 
 #. TRANSLATORS: Please select a location to build the <Firm>.
-#: src/OUNITIF.cpp:1015
-#, c-format
-msgid "Please select a location to build the %s."
+#: src/OUNITIF.cpp:1004
+#, fuzzy
+msgid "Please select a location to build the Seat of Power."
 msgstr "Выберите место, чтобы построить %s."
 
-#: src/OUNITIF.cpp:1055
+#: src/OUNITIF.cpp:1005
+#, fuzzy
+msgid "Please select a location to build the Factory."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1006
+#, fuzzy
+msgid "Please select a location to build the Inn."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1007
+#, fuzzy
+msgid "Please select a location to build the Market."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1008
+#, fuzzy
+msgid "Please select a location to build the Fort."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1009
+#, fuzzy
+msgid "Please select a location to build the Mine."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1010
+#, fuzzy
+msgid "Please select a location to build the Tower of Science."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1011
+#, fuzzy
+msgid "Please select a location to build the War Factory."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1012
+#, fuzzy
+msgid "Please select a location to build the Harbor."
+msgstr "Выберите место, чтобы построить %s."
+
+#: src/OUNITIF.cpp:1068
 msgid "Please select a location to settle."
 msgstr "Пожалуйста, выберите место для поселения."
 
-#: src/OUNITIF.cpp:1173
+#: src/OUNITIF.cpp:1186
 msgid "Contribution"
 msgstr "Контрибуция"
 
-#: src/OUNITIF.cpp:1218
+#: src/OUNITIF.cpp:1231
 msgid "Defending Villager"
 msgstr "Защита крестьянина"
 
-#: src/OUNITIF.cpp:1222
+#: src/OUNITIF.cpp:1235
 msgid "Rebel"
 msgstr "Мятежник"
 
-#: src/OUNITIF.cpp:1235 src/OUNITIF.cpp:1266
+#: src/OUNITIF.cpp:1248 src/OUNITIF.cpp:1279
 msgid "Soldier"
 msgstr "Солдат"
 
-#: src/OUNITIF.cpp:1239
+#: src/OUNITIF.cpp:1252
 msgid "Construction Worker"
 msgstr "Строитель"
 
 # data/resource/std/00007-FIRM.dbf
-#: src/OUNITIF.cpp:1243
+#: src/OUNITIF.cpp:1256
 msgid "Miner"
 msgstr "Шахтёр"
 
-#: src/OUNITIF.cpp:1247
+#: src/OUNITIF.cpp:1260
 msgid "Worker"
 msgstr "Рабочий"
 
-#: src/OUNITIF.cpp:1251
+#: src/OUNITIF.cpp:1264
 msgid "Scientist"
 msgstr "Учёный"
 
-#: src/OUNITIF.cpp:1255
+#: src/OUNITIF.cpp:1268
 msgid "Spy"
 msgstr "Шпион"
 
-#: src/OUNITIF.cpp:1259
+#: src/OUNITIF.cpp:1272
 msgid "Peasant"
 msgstr "Селянин"
 
-#: src/OUNITIF.cpp:1269
+#: src/OUNITIF.cpp:1282
 msgid "Civilian"
 msgstr "Житель"
 
-#: src/OUNITIF.cpp:1352
+#: src/OUNITIF.cpp:1365
 msgid "Enemies Nearby"
 msgstr "Ближайшие враги"
 
-#: src/OUNITIF.cpp:1363
+#: src/OUNITIF.cpp:1376
 msgid "Spy Cloak:"
 msgstr "Шпионский плащ:"
 
@@ -5143,7 +5223,8 @@ msgid "Set Stop"
 msgstr "Задать стопу"
 
 #: src/OU_CARA.cpp:174 src/OU_MARIF.cpp:625
-msgid "Pick up: "
+#, fuzzy
+msgid "Pick up:"
 msgstr "Подобрать: "
 
 #: src/OU_CARA.cpp:187 src/OU_MARIF.cpp:638
@@ -5453,6 +5534,13 @@ msgstr "Викинг"
 # data/resource/std/00005-UNIT.dbf
 msgid "Wyrm"
 msgstr "Вирм"
+
+# #-#-#-#-#  -  #-#-#-#-#
+# data/resource/std/00005-UNIT.dbf
+# #-#-#-#-#  -  #-#-#-#-#
+# data/resource/std/00006-RACE.dbf
+msgid "Zulu"
+msgstr "Зулус"
 
 # data/resource/std/00007-FIRM.dbf
 msgid "Factory"
@@ -9992,6 +10080,37 @@ msgstr ""
 "Когда ты кликаешь на эту плашку, твой курсор изменится на маленький квадрат. "
 "Поместите этот квадрат поверх своей цели и щёлкните еще раз. Повторяйте до "
 "тех пор, пока сила Тора не будет исчерпана. "
+
+#~ msgid "trade with this market."
+#~ msgstr "торговать с этим рынком."
+
+#~ msgid "Your Kingdom has Reached"
+#~ msgstr "Ваше королевство достигло"
+
+#~ msgid "%s's Kingdom has Reached"
+#~ msgstr "%s королевство достигло"
+
+#~ msgid "+  %d (Bonus)  =  %s"
+#~ msgstr "+  %d (Бонус)  =  %s"
+
+#~ msgid "Difficulty : "
+#~ msgstr "Сложность : "
+
+#, fuzzy
+#~ msgid "%s Products"
+#~ msgstr "%s продуктов"
+
+#~ msgid "To"
+#~ msgstr "К"
+
+#~ msgid "From"
+#~ msgstr "От"
+
+#~ msgid "on %s :"
+#~ msgstr "на %s :"
+
+#~ msgid "Acquired Scrolls:"
+#~ msgstr "Добытые свитки:"
 
 #~ msgid "New Player"
 #~ msgstr "Новый Игрок"

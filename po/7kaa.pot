@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 20:20-0700\n"
+"POT-Creation-Date: 2019-07-19 06:48-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,106 +49,135 @@ msgstr ""
 #: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:278
 #: src/OGAMEMP.cpp:1509 src/OGAMEMP.cpp:1609 src/OGAMEMP.cpp:2072
 #: src/OGAMEMP.cpp:2174 src/OGAMEMP.cpp:2237 src/OSPYA.cpp:351
-#: src/OTOWNIF.cpp:1123 src/OUNITIF.cpp:1021 src/OUNITIF.cpp:1057
+#: src/OTOWNIF.cpp:1123 src/OUNITIF.cpp:1034 src/OUNITIF.cpp:1070
 msgid "Cancel"
 msgstr ""
 
-#: src/ODATE.cpp:40
+#. TRANSLATORS: <Month> <Day>, <Year>
+#: src/ODATE.cpp:231 src/ODATE.cpp:235
+#, c-format
+msgid "%s %d, %d"
+msgstr ""
+
+#: src/ODATE.cpp:254
+msgctxt "Month|Full"
 msgid "January"
 msgstr ""
 
-#: src/ODATE.cpp:41
+#: src/ODATE.cpp:256
+msgctxt "Month|Full"
 msgid "February"
 msgstr ""
 
-#: src/ODATE.cpp:42
+#: src/ODATE.cpp:258
+msgctxt "Month|Full"
 msgid "March"
 msgstr ""
 
-#: src/ODATE.cpp:43
+#: src/ODATE.cpp:260
+msgctxt "Month|Full"
 msgid "April"
 msgstr ""
 
-#: src/ODATE.cpp:44 src/ODATE.cpp:60
+#: src/ODATE.cpp:262
+msgctxt "Month|Full"
 msgid "May"
 msgstr ""
 
-#: src/ODATE.cpp:45
+#: src/ODATE.cpp:264
+msgctxt "Month|Full"
 msgid "June"
 msgstr ""
 
-#: src/ODATE.cpp:46
+#: src/ODATE.cpp:266
+msgctxt "Month|Full"
 msgid "July"
 msgstr ""
 
-#: src/ODATE.cpp:47
+#: src/ODATE.cpp:268
+msgctxt "Month|Full"
 msgid "August"
 msgstr ""
 
-#: src/ODATE.cpp:48
+#: src/ODATE.cpp:270
+msgctxt "Month|Full"
 msgid "September"
 msgstr ""
 
-#: src/ODATE.cpp:49
+#: src/ODATE.cpp:272
+msgctxt "Month|Full"
 msgid "October"
 msgstr ""
 
-#: src/ODATE.cpp:50
+#: src/ODATE.cpp:274
+msgctxt "Month|Full"
 msgid "November"
 msgstr ""
 
-#: src/ODATE.cpp:51
+#: src/ODATE.cpp:276
+msgctxt "Month|Full"
 msgid "December"
 msgstr ""
 
-#: src/ODATE.cpp:56
+#. TRANSLATORS: An abbreviated month. If not used in your language, spell full month.
+#: src/ODATE.cpp:295
+msgctxt "Month|Short"
 msgid "Jan"
 msgstr ""
 
-#: src/ODATE.cpp:57
+#: src/ODATE.cpp:297
+msgctxt "Month|Short"
 msgid "Feb"
 msgstr ""
 
-#: src/ODATE.cpp:58
+#: src/ODATE.cpp:299
+msgctxt "Month|Short"
 msgid "Mar"
 msgstr ""
 
-#: src/ODATE.cpp:59
+#: src/ODATE.cpp:301
+msgctxt "Month|Short"
 msgid "Apr"
 msgstr ""
 
-#: src/ODATE.cpp:61
+#: src/ODATE.cpp:303
+msgctxt "Month|Short"
+msgid "May"
+msgstr ""
+
+#: src/ODATE.cpp:305
+msgctxt "Month|Short"
 msgid "Jun"
 msgstr ""
 
-#: src/ODATE.cpp:62
+#: src/ODATE.cpp:307
+msgctxt "Month|Short"
 msgid "Jul"
 msgstr ""
 
-#: src/ODATE.cpp:63
+#: src/ODATE.cpp:309
+msgctxt "Month|Short"
 msgid "Aug"
 msgstr ""
 
-#: src/ODATE.cpp:64
+#: src/ODATE.cpp:311
+msgctxt "Month|Short"
 msgid "Sep"
 msgstr ""
 
-#: src/ODATE.cpp:65
+#: src/ODATE.cpp:313
+msgctxt "Month|Short"
 msgid "Oct"
 msgstr ""
 
-#: src/ODATE.cpp:66
+#: src/ODATE.cpp:315
+msgctxt "Month|Short"
 msgid "Nov"
 msgstr ""
 
-#: src/ODATE.cpp:67
+#: src/ODATE.cpp:317
+msgctxt "Month|Short"
 msgid "Dec"
-msgstr ""
-
-#. TRANSLATORS: <Month> <Day>, <Year>
-#: src/ODATE.cpp:248 src/ODATE.cpp:252
-#, c-format
-msgid "%s %d, %d"
 msgstr ""
 
 #. TRANSLATORS: <Town> <Short Firm Name> <Firm #>
@@ -178,7 +207,7 @@ msgstr ""
 #: src/OFIRMIF.cpp:627 src/OFIRMIF.cpp:634 src/OFIRMIF2.cpp:95
 #: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:402 src/OF_CAMP.cpp:588
 #: src/OINFO.cpp:743 src/OR_MIL.cpp:101 src/OR_SPY.cpp:77 src/OR_TOWN.cpp:87
-#: src/OTOWNIF.cpp:267 src/OTOWNIF.cpp:1268 src/OUNITIF.cpp:1133
+#: src/OTOWNIF.cpp:267 src/OTOWNIF.cpp:1268 src/OUNITIF.cpp:1146
 #: src/OU_MARIF.cpp:507
 msgid "Loyalty"
 msgstr ""
@@ -189,7 +218,7 @@ msgid "N/A"
 msgstr ""
 
 #: src/OFIRMIF.cpp:662 src/OFIRMIF.cpp:710 src/OF_INN.cpp:391
-#: src/OF_INN.cpp:442 src/OUNITIF.cpp:1145 src/OU_MARIF.cpp:511
+#: src/OF_INN.cpp:442 src/OUNITIF.cpp:1158 src/OU_MARIF.cpp:511
 msgid "Combat"
 msgstr ""
 
@@ -250,7 +279,7 @@ msgid "Assassination Failed."
 msgstr ""
 
 #: src/OF_BASE.cpp:377 src/OF_CAMP.cpp:563 src/OGAMHALL.cpp:255
-#: src/OSaveGameArray.cpp:609 src/OUNIT.cpp:761 src/OUNITIF.cpp:1205
+#: src/OSaveGameArray.cpp:609 src/OUNIT.cpp:761 src/OUNITIF.cpp:1218
 msgid "King"
 msgstr ""
 
@@ -307,53 +336,35 @@ msgstr ""
 msgid "Hiring Cost"
 msgstr ""
 
-#: src/OF_MARK.cpp:375
-msgid "Clay Products"
+#: src/OF_MARK.cpp:407
+msgid "You're not permitted to trade with this market."
 msgstr ""
 
-#: src/OF_MARK.cpp:376
-msgid "Copper Products"
-msgstr ""
-
-#: src/OF_MARK.cpp:377
-msgid "Iron Products"
-msgstr ""
-
-#. TRANSLATORS: Part of "You're not permitted to trade with this market."
-#: src/OF_MARK.cpp:414
-msgid "You're not permitted to"
-msgstr ""
-
-#. TRANSLATORS: Part of "You're not permitted to trade with this market."
-#: src/OF_MARK.cpp:416
-msgid "trade with this market."
-msgstr ""
-
-#: src/OF_MARK.cpp:470
+#: src/OF_MARK.cpp:461
 msgid "Clear"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:289
-#: src/OF_MARK.cpp:482
+#: src/OF_MARK.cpp:473
 msgid "Stock"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:293
-#: src/OF_MARK.cpp:484
+#: src/OF_MARK.cpp:475
 msgid "Sales"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:297
-#: src/OF_MARK.cpp:492
+#: src/OF_MARK.cpp:483
 msgid "Demand"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:301
-#: src/OF_MARK.cpp:511 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
+#: src/OF_MARK.cpp:502 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
 msgid "Yearly Income"
 msgstr ""
 
@@ -674,228 +685,229 @@ msgstr ""
 msgid "Incorrect kingdom information received from the host."
 msgstr ""
 
-#: src/OGAMEND.cpp:217
+#: src/OGAMEND.cpp:218
 msgid "Do you want to continue to stay in the game?"
 msgstr ""
 
-#: src/OGAMEND.cpp:217 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
-#: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
-#: src/OR_NAT.cpp:544
+#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:229 src/OINGMENU.cpp:254
+#: src/OINGMENU.cpp:270 src/OR_NAT.cpp:332 src/OR_NAT.cpp:333
+#: src/OR_NAT.cpp:545
 msgid "Yes"
 msgstr ""
 
-#: src/OGAMEND.cpp:217 src/OINGMENU.cpp:228 src/OINGMENU.cpp:253
-#: src/OINGMENU.cpp:269 src/OR_NAT.cpp:331 src/OR_NAT.cpp:332
-#: src/OR_NAT.cpp:545
+#: src/OGAMEND.cpp:218 src/OINGMENU.cpp:229 src/OINGMENU.cpp:254
+#: src/OINGMENU.cpp:270 src/OR_NAT.cpp:332 src/OR_NAT.cpp:333
+#: src/OR_NAT.cpp:546
 msgid "No"
 msgstr ""
 
-#: src/OGAMEND.cpp:269
+#: src/OGAMEND.cpp:268
+msgid "You Have Lost the Game !"
+msgstr ""
+
+#: src/OGAMEND.cpp:276
 msgid "All Fryhtans have been Destroyed !"
 msgstr ""
 
-#: src/OGAMEND.cpp:272
+#: src/OGAMEND.cpp:280
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
-#: src/OGAMEND.cpp:277
+#: src/OGAMEND.cpp:286
 #, c-format
 msgid "%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr ""
 
-#. TRANSLATORS: Part of "Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:288 src/OGAMEND.cpp:306 src/OGAMEND.cpp:324
-msgid "Your Kingdom has Reached"
-msgstr ""
-
-#. TRANSLATORS: Part of "<King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:293 src/OGAMEND.cpp:311 src/OGAMEND.cpp:329
+#. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:297
 #, c-format
-msgid "%s's Kingdom has Reached"
+msgid "Your Kingdom has Reached its Population Goal of %s !"
 msgstr ""
 
-#. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Population Goal of <Number> !"
-#: src/OGAMEND.cpp:296
+#. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:302
 #, c-format
-msgid "its Population Goal of %s !"
+msgid "%s's Kingdom has Reached its Population Goal of %s !"
 msgstr ""
 
-#. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Economic Score Goal of <Number> !"
-#: src/OGAMEND.cpp:314
+#. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:315
 #, c-format
-msgid "its Economic Score Goal of %s !"
+msgid "Your Kingdom has Reached its Economic Score Goal of %s !"
 msgstr ""
 
-#. TRANSLATORS: Part of "Your Kingdom (or <King's Kingdom>) has Reached its Total Score Goal of <Number> !"
-#: src/OGAMEND.cpp:332
+#. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:320
 #, c-format
-msgid "its Total Score Goal of %s !"
+msgid "%s's Kingdom has Reached its Economic Score Goal of %s !"
 msgstr ""
 
-#: src/OGAMEND.cpp:341
+#. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:333
+#, c-format
+msgid "Your Kingdom has Reached its Total Score Goal of %s !"
+msgstr ""
+
+#. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
+#: src/OGAMEND.cpp:338
+#, c-format
+msgid "%s's Kingdom has Reached its Total Score Goal of %s !"
+msgstr ""
+
+#: src/OGAMEND.cpp:350
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
-#: src/OGAMEND.cpp:346
+#: src/OGAMEND.cpp:355
 #, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
 msgstr ""
 
-#: src/OGAMEND.cpp:356
-msgid "You Have Lost the Game !"
-msgstr ""
-
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
-#: src/OGAMEND.cpp:375
+#: src/OGAMEND.cpp:382
 #, c-format
 msgid "You Surrendered to %s's Kingdom on %s."
 msgstr ""
 
-#: src/OGAMEND.cpp:382
+#: src/OGAMEND.cpp:389
 msgid "Your Kingdom has Failed to Achieve its Goal Within the Time Limit."
 msgstr ""
 
-#: src/OGAMEND.cpp:386
+#: src/OGAMEND.cpp:393
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
 msgstr ""
 
 #. TRANSLATORS: You Retired on <Date>.
-#: src/OGAMEND.cpp:401
+#: src/OGAMEND.cpp:408
 #, c-format
 msgid "You Retired on %s."
 msgstr ""
 
-#: src/OGAMEND.cpp:416
+#: src/OGAMEND.cpp:423
 msgid "Duration of Your Rule"
 msgstr ""
 
-#: src/OGAMEND.cpp:417
+#: src/OGAMEND.cpp:424
 msgid "Total Gaming Time"
 msgstr ""
 
-#: src/OGAMEND.cpp:419
+#: src/OGAMEND.cpp:426
 msgid "Final Population"
 msgstr ""
 
-#: src/OGAMEND.cpp:420
+#: src/OGAMEND.cpp:427
 msgid "Final Treasure"
 msgstr ""
 
-#: src/OGAMEND.cpp:422
+#: src/OGAMEND.cpp:429
 msgid "Enemy Soldiers Dispatched"
 msgstr ""
 
-#: src/OGAMEND.cpp:423
+#: src/OGAMEND.cpp:430
 msgid "King's Soldiers Martyred"
 msgstr ""
 
-#: src/OGAMEND.cpp:425
+#: src/OGAMEND.cpp:432
 msgid "Enemy Weapons Destroyed"
 msgstr ""
 
-#: src/OGAMEND.cpp:426
+#: src/OGAMEND.cpp:433
 msgid "King's Weapons Rendered Obsolete"
 msgstr ""
 
-#: src/OGAMEND.cpp:428
+#: src/OGAMEND.cpp:435
 msgid "Enemy Ships Sunk"
 msgstr ""
 
-#: src/OGAMEND.cpp:429
+#: src/OGAMEND.cpp:436
 msgid "King's Ships Missing"
 msgstr ""
 
-#: src/OGAMEND.cpp:431
+#: src/OGAMEND.cpp:438
 msgid "Enemy Buildings Destroyed"
 msgstr ""
 
-#: src/OGAMEND.cpp:432
+#: src/OGAMEND.cpp:439
 msgid "King's Buildings Cleared"
 msgstr ""
 
-#: src/OGAMEND.cpp:434
+#: src/OGAMEND.cpp:441
 msgid "Enemy Civilians Collaterally Damaged"
 msgstr ""
 
-#: src/OGAMEND.cpp:435
+#: src/OGAMEND.cpp:442
 msgid "King's Civilians Cruelly Murdered"
 msgstr ""
 
-#: src/OGAMEND.cpp:468 src/OR_NAT.cpp:135 src/OR_RANK.cpp:87
+#: src/OGAMEND.cpp:475 src/OR_NAT.cpp:136 src/OR_RANK.cpp:87
 msgid "Kingdom"
 msgstr ""
 
-#: src/OGAMEND.cpp:469 src/OGAMHALL.cpp:271 src/OR_RANK.cpp:88
+#: src/OGAMEND.cpp:476 src/OGAMHALL.cpp:271 src/OR_RANK.cpp:88
 #: src/OTOWNIF.cpp:263
 msgid "Population"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/TUT_LIST.RES
-#: src/OGAMEND.cpp:470 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:477 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
 msgid "Military"
 msgstr ""
 
-#: src/OGAMEND.cpp:471 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
+#: src/OGAMEND.cpp:478 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
 msgid "Economy"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:46
-#: src/OGAMEND.cpp:472 src/OR_NAT.cpp:137 src/OR_RANK.cpp:91
+#: src/OGAMEND.cpp:479 src/OR_NAT.cpp:138 src/OR_RANK.cpp:91
 msgid "Reputation"
 msgstr ""
 
-#: src/OGAMEND.cpp:474 src/OR_RANK.cpp:92
+#: src/OGAMEND.cpp:481 src/OR_RANK.cpp:92
 msgid "Fryhtan Battling"
 msgstr ""
 
-#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Population Score"
 msgstr ""
 
-#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Military Score"
 msgstr ""
 
-#: src/OGAMEND.cpp:521 src/OR_RANK.cpp:137
+#: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Economic Score"
 msgstr ""
 
-#: src/OGAMEND.cpp:522 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:529 src/OR_RANK.cpp:138
 msgid "Reputation Score"
 msgstr ""
 
-#: src/OGAMEND.cpp:522 src/OR_RANK.cpp:138
+#: src/OGAMEND.cpp:529 src/OR_RANK.cpp:138
 msgid "Fryhtan Battling Score"
 msgstr ""
 
-#: src/OGAMEND.cpp:543 src/OR_RANK.cpp:161
+#: src/OGAMEND.cpp:550 src/OR_RANK.cpp:161
 msgid "Total Score"
 msgstr ""
 
-#. TRANSLATORS: Final Score:  <Number> X
-#: src/OGAMEND.cpp:557 src/OR_RANK.cpp:175
-#, c-format
-msgid "Final Score:  %s X "
+#: src/OGAMEND.cpp:563 src/OR_RANK.cpp:174
+msgid "Final Score"
 msgstr ""
 
-#. TRANSLATORS: <Number> (Difficulty Rating)
-#: src/OGAMEND.cpp:562 src/OR_RANK.cpp:180
-#, c-format
-msgid "%s (Difficulty Rating)"
+#: src/OGAMEND.cpp:572 src/OR_RANK.cpp:183
+msgid "(Difficulty Rating)"
 msgstr ""
 
-#. TRANSLATORS: +  <Number> (Bonus)  =  <Number>
-#: src/OGAMEND.cpp:577
-#, c-format
-msgid "+  %d (Bonus)  =  %s"
+#: src/OGAMEND.cpp:588
+msgid "(Bonus)"
 msgstr ""
 
-#: src/OGAMEND.cpp:584 src/OR_RANK.cpp:190
-msgid "X  0 (Cheated)  =  0"
+#: src/OGAMEND.cpp:598 src/OR_RANK.cpp:194
+msgid "(Cheated)"
 msgstr ""
 
 #: src/OGAMHALL.cpp:263
@@ -906,7 +918,7 @@ msgstr ""
 msgid "Period"
 msgstr ""
 
-#: src/OGAMHALL.cpp:293
+#: src/OGAMHALL.cpp:293 src/OGAMSCE2.cpp:462
 msgid "Difficulty"
 msgstr ""
 
@@ -918,12 +930,8 @@ msgstr ""
 msgid "Scenario files not found."
 msgstr ""
 
-#: src/OGAMSCE2.cpp:462
-msgid "Difficulty : "
-msgstr ""
-
-#: src/OGAMSCE2.cpp:468
-msgid "Score Bonus: "
+#: src/OGAMSCE2.cpp:469
+msgid "Score Bonus"
 msgstr ""
 
 #: src/OGFILE.cpp:326
@@ -988,285 +996,286 @@ msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:517 src/OHELP.cpp:564 src/OR_TRADE.cpp:82
+#: src/OHELP.cpp:517 src/OHELP.cpp:565 src/OR_TRADE.cpp:82
 msgid "Caravan"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:518 src/OHELP.cpp:565
+#: src/OHELP.cpp:518 src/OHELP.cpp:566
 msgid "Catapult"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:519 src/OHELP.cpp:566
+#: src/OHELP.cpp:519 src/OHELP.cpp:567
 msgid "Ballista"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:520 src/OHELP.cpp:567
+#: src/OHELP.cpp:520 src/OHELP.cpp:568
 msgid "Spitfire"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:521 src/OHELP.cpp:568
+#: src/OHELP.cpp:521 src/OHELP.cpp:569
 msgid "Cannon"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:522 src/OHELP.cpp:569
+#: src/OHELP.cpp:522 src/OHELP.cpp:570
 msgid "Porcupine"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:523 src/OHELP.cpp:570
+#: src/OHELP.cpp:523 src/OHELP.cpp:571
 msgid "Trader"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:524 src/OHELP.cpp:571
+#: src/OHELP.cpp:524 src/OHELP.cpp:572
 msgid "Transport"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:525 src/OHELP.cpp:572
+#: src/OHELP.cpp:525 src/OHELP.cpp:573
 msgid "Caravel"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:526 src/OHELP.cpp:573
+#: src/OHELP.cpp:526 src/OHELP.cpp:574
 msgid "Galleon"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:527 src/OHELP.cpp:574
+#: src/OHELP.cpp:527 src/OHELP.cpp:575
 msgid "Dragon"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:528 src/OHELP.cpp:575
+#: src/OHELP.cpp:528 src/OHELP.cpp:576
 msgid "Jing Nung"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:529 src/OHELP.cpp:576
+#: src/OHELP.cpp:529 src/OHELP.cpp:577
 msgid "Lord of Healing"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:530 src/OHELP.cpp:577
+#: src/OHELP.cpp:530 src/OHELP.cpp:578
 msgid "Thor"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:531 src/OHELP.cpp:578
+#: src/OHELP.cpp:531 src/OHELP.cpp:579
 msgid "Phoenix"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:532 src/OHELP.cpp:579
+#: src/OHELP.cpp:532 src/OHELP.cpp:580
 msgid "Kukulcan"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:533 src/OHELP.cpp:580
+#: src/OHELP.cpp:533 src/OHELP.cpp:581
 msgid "Mind Turner"
 msgstr ""
 
-#: src/OHELP.cpp:534
+#. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use General or Ordo whichever makes sense.
+#: src/OHELP.cpp:535
 msgid "Deezboanz General"
 msgstr ""
 
-#: src/OHELP.cpp:535
+#: src/OHELP.cpp:536
 msgid "Rattus General"
 msgstr ""
 
-#: src/OHELP.cpp:536
+#: src/OHELP.cpp:537
 msgid "Broosken General"
 msgstr ""
 
-#: src/OHELP.cpp:537
+#: src/OHELP.cpp:538
 msgid "Haubudam General"
 msgstr ""
 
-#: src/OHELP.cpp:538
+#: src/OHELP.cpp:539
 msgid "Pfith General"
 msgstr ""
 
-#: src/OHELP.cpp:539
+#: src/OHELP.cpp:540
 msgid "Rokken General"
 msgstr ""
 
-#: src/OHELP.cpp:540
+#: src/OHELP.cpp:541
 msgid "Doink General"
 msgstr ""
 
-#: src/OHELP.cpp:541
+#: src/OHELP.cpp:542
 msgid "Wyrm General"
 msgstr ""
 
-#: src/OHELP.cpp:542
+#: src/OHELP.cpp:543
 msgid "Droog General"
 msgstr ""
 
-#: src/OHELP.cpp:543
+#: src/OHELP.cpp:544
 msgid "Ick General"
 msgstr ""
 
-#: src/OHELP.cpp:544
+#: src/OHELP.cpp:545
 msgid "Sauroid General"
 msgstr ""
 
-#: src/OHELP.cpp:545
+#: src/OHELP.cpp:546
 msgid "Karrotten General"
 msgstr ""
 
-#: src/OHELP.cpp:546
+#: src/OHELP.cpp:547
 msgid "Holgh General"
 msgstr ""
 
-#: src/OHELP.cpp:547
+#: src/OHELP.cpp:548
 msgid "Egyptian General"
 msgstr ""
 
-#: src/OHELP.cpp:548
+#: src/OHELP.cpp:549
 msgid "Mughul General"
 msgstr ""
 
-# #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
-# #-#-#-#-#  -  #-#-#-#-#
-# data/RESOURCE/STD/00005-UNIT.dbf
-# #-#-#-#-#  -  #-#-#-#-#
-# data/RESOURCE/STD/00006-RACE.dbf
-#: src/OHELP.cpp:549 src/OHELP.cpp:596
-msgid "Zulu"
+#: src/OHELP.cpp:550
+msgid "Zulu General"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:550 src/OHELP.cpp:597
+#: src/OHELP.cpp:551 src/OHELP.cpp:599
 msgid "Isis"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:551 src/OHELP.cpp:598
+#: src/OHELP.cpp:552 src/OHELP.cpp:600
 msgid "Djini"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:552 src/OHELP.cpp:599
+#: src/OHELP.cpp:553 src/OHELP.cpp:601
 msgid "uNkulunkulu"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
-#: src/OHELP.cpp:553 src/OHELP.cpp:600
+#: src/OHELP.cpp:554 src/OHELP.cpp:602
 msgid "Unicorn"
 msgstr ""
 
-#: src/OHELP.cpp:557
+#: src/OHELP.cpp:558
 msgid "Norman King"
 msgstr ""
 
-#: src/OHELP.cpp:558
+#: src/OHELP.cpp:559
 msgid "Maya King"
 msgstr ""
 
-#: src/OHELP.cpp:559
+#: src/OHELP.cpp:560
 msgid "Greek King"
 msgstr ""
 
-#: src/OHELP.cpp:560
+#: src/OHELP.cpp:561
 msgid "Viking King"
 msgstr ""
 
-#: src/OHELP.cpp:561
+#: src/OHELP.cpp:562
 msgid "Persian King"
 msgstr ""
 
-#: src/OHELP.cpp:562
+#: src/OHELP.cpp:563
 msgid "Chinese King"
 msgstr ""
 
-#: src/OHELP.cpp:563
+#: src/OHELP.cpp:564
 msgid "Japanese King"
 msgstr ""
 
-#: src/OHELP.cpp:581
+#. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use King or All High whichever makes sense.
+#: src/OHELP.cpp:583
 msgid "Deezboanz King"
 msgstr ""
 
-#: src/OHELP.cpp:582
+#: src/OHELP.cpp:584
 msgid "Rattus King"
 msgstr ""
 
-#: src/OHELP.cpp:583
+#: src/OHELP.cpp:585
 msgid "Broosken King"
 msgstr ""
 
-#: src/OHELP.cpp:584
+#: src/OHELP.cpp:586
 msgid "Haubudam King"
 msgstr ""
 
-#: src/OHELP.cpp:585
+#: src/OHELP.cpp:587
 msgid "Pfith King"
 msgstr ""
 
-#: src/OHELP.cpp:586
+#: src/OHELP.cpp:588
 msgid "Rokken King"
 msgstr ""
 
-#: src/OHELP.cpp:587
+#: src/OHELP.cpp:589
 msgid "Doink King"
 msgstr ""
 
-#: src/OHELP.cpp:588
+#: src/OHELP.cpp:590
 msgid "Wyrm King"
 msgstr ""
 
-#: src/OHELP.cpp:589
+#: src/OHELP.cpp:591
 msgid "Droog King"
 msgstr ""
 
-#: src/OHELP.cpp:590
+#: src/OHELP.cpp:592
 msgid "Ick King"
 msgstr ""
 
-#: src/OHELP.cpp:591
+#: src/OHELP.cpp:593
 msgid "Sauroid King"
 msgstr ""
 
-#: src/OHELP.cpp:592
+#: src/OHELP.cpp:594
 msgid "Karrotten King"
 msgstr ""
 
-#: src/OHELP.cpp:593
+#: src/OHELP.cpp:595
 msgid "Holgh King"
 msgstr ""
 
-#: src/OHELP.cpp:594
+#: src/OHELP.cpp:596
 msgid "Egyptian King"
 msgstr ""
 
-#: src/OHELP.cpp:595
+#: src/OHELP.cpp:597
 msgid "Mughul King"
+msgstr ""
+
+#: src/OHELP.cpp:598
+msgid "Zulu King"
 msgstr ""
 
 #. TRANSLATORS: Part of "%d hour(s) and %d minute(s)"
@@ -1301,18 +1310,18 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/OINGMENU.cpp:153
-msgid "Map I.D.: "
+msgid "Map I.D."
 msgstr ""
 
-#: src/OINGMENU.cpp:228
+#: src/OINGMENU.cpp:229
 msgid "Do you really want to retire?"
 msgstr ""
 
-#: src/OINGMENU.cpp:253
+#: src/OINGMENU.cpp:254
 msgid "Do you really want to quit to the Main Menu?"
 msgstr ""
 
-#: src/OINGMENU.cpp:269
+#: src/OINGMENU.cpp:270
 msgid "Do you really want to quit Seven Kingdoms?"
 msgstr ""
 
@@ -1473,7 +1482,7 @@ msgid "%s's Kingdom%s has been destroyed."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has surrendered to you.
-#: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1174
+#: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1325
 #, c-format
 msgid "%s's Kingdom%s has surrendered to you."
 msgstr ""
@@ -2895,9 +2904,16 @@ msgstr ""
 msgid "The connection with %s's Kingdom%s has been lost."
 msgstr ""
 
-#: src/ORAWRES.cpp:276
-#, c-format
-msgid "%s Products"
+#: src/ORAWRES.cpp:285
+msgid "Clay Products"
+msgstr ""
+
+#: src/ORAWRES.cpp:286
+msgid "Copper Products"
+msgstr ""
+
+#: src/ORAWRES.cpp:287
+msgid "Iron Products"
 msgstr ""
 
 #: src/OREMOTEM.cpp:462 src/OSYS2.cpp:1024
@@ -3036,7 +3052,7 @@ msgstr ""
 msgid "Commanded Soldiers"
 msgstr ""
 
-#: src/OR_MIL.cpp:104 src/OR_NAT.cpp:138
+#: src/OR_MIL.cpp:104 src/OR_NAT.cpp:139
 msgid "Status"
 msgstr ""
 
@@ -3122,170 +3138,154 @@ msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:365
-#: src/OR_NAT.cpp:169
+#: src/OR_NAT.cpp:170
 msgid "Allow Attack"
 msgstr ""
 
-#: src/OR_NAT.cpp:171 src/OR_NAT.cpp:599
+#: src/OR_NAT.cpp:172 src/OR_NAT.cpp:600
 msgid "Trade Treaty"
 msgstr ""
 
-#: src/OR_NAT.cpp:173
+#: src/OR_NAT.cpp:174
 msgid "Trade Amount"
 msgstr ""
 
-#: src/OR_NAT.cpp:503
+#: src/OR_NAT.cpp:504
 msgid "Your Food"
 msgstr ""
 
-#: src/OR_NAT.cpp:508
+#: src/OR_NAT.cpp:509
 msgid "Your Treasure"
 msgstr ""
 
-#: src/OR_NAT.cpp:510
+#: src/OR_NAT.cpp:511
 msgid "Your Continuous Peace Time"
 msgstr ""
 
 #. TRANSLATORS: Your Yearly Import from <King>'s Kingdom
-#: src/OR_NAT.cpp:515
+#: src/OR_NAT.cpp:516
 #, c-format
 msgid "Your Yearly Import from %s's Kingdom"
 msgstr ""
 
 #. TRANSLATORS: Your Yearly Export to <King>'s Kingdom
-#: src/OR_NAT.cpp:521
+#: src/OR_NAT.cpp:522
 #, c-format
 msgid "Your Yearly Export to %s's Kingdom"
 msgstr ""
 
 #. TRANSLATORS: Continuous Peace Time of <King>'s Kingdom
-#: src/OR_NAT.cpp:527
+#: src/OR_NAT.cpp:528
 #, c-format
 msgid "Continuous Peace Time of %s's Kingdom"
 msgstr ""
 
 #. TRANSLATORS: Allow Your Units to Attack <Kings>'s Kingdom
-#: src/OR_NAT.cpp:539
+#: src/OR_NAT.cpp:540
 #, c-format
 msgid "Allow Your Units to Attack %s's Kingdom"
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom's Treasure
-#: src/OR_NAT.cpp:554
+#: src/OR_NAT.cpp:555
 #, c-format
 msgid "%s's Kingdom's Treasure"
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom's Food
-#: src/OR_NAT.cpp:560
+#: src/OR_NAT.cpp:561
 #, c-format
 msgid "%s's Kingdom's Food"
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom's Diplomatic Status with Other Kingdoms:
-#: src/OR_NAT.cpp:576
+#: src/OR_NAT.cpp:577
 #, c-format
 msgid "%s's Kingdom's Diplomatic Status with Other Kingdoms:"
 msgstr ""
 
-#. TRANSLATORS: To <Nation color> on <Date> :
-#: src/OR_NAT.cpp:858
-msgid "To"
-msgstr ""
-
-#. TRANSLATORS: From <Nation color> on <Date> :
-#: src/OR_NAT.cpp:861
-msgid "From"
-msgstr ""
-
-#. TRANSLATORS: To/From <Nation color> on <Date> :
-#: src/OR_NAT.cpp:880
-#, c-format
-msgid "on %s :"
-msgstr ""
-
-#: src/OR_NAT.cpp:913
+#: src/OR_NAT.cpp:903
 msgid "Please enter your chat message and press <Enter> to send."
 msgstr ""
 
 #. TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
-#: src/OR_RANK.cpp:234
+#: src/OR_RANK.cpp:243
 #, c-format
 msgid "GOAL: Achieve One of the Following Before %s:"
 msgstr ""
 
-#: src/OR_RANK.cpp:238
+#: src/OR_RANK.cpp:247
 msgid "GOAL: Achieve One of the Following:"
 msgstr ""
 
 #. TRANSLATORS: GOAL: Defeat All Other Kingdoms Before <Date>.
-#: src/OR_RANK.cpp:246
+#: src/OR_RANK.cpp:255
 #, c-format
 msgid "GOAL: Defeat All Other Kingdoms Before %s."
 msgstr ""
 
-#: src/OR_RANK.cpp:250
+#: src/OR_RANK.cpp:259
 msgid "GOAL: Defeat All Other Kingdoms."
 msgstr ""
 
-#: src/OR_RANK.cpp:265
+#: src/OR_RANK.cpp:274
 msgid "Defeat All Other Kingdoms."
 msgstr ""
 
-#: src/OR_RANK.cpp:274
+#: src/OR_RANK.cpp:283
 msgid "Destroy All Fryhtans."
 msgstr ""
 
 #. TRANSLATORS: Achieve a Population of <Number>.
-#: src/OR_RANK.cpp:286
+#: src/OR_RANK.cpp:295
 #, c-format
 msgid "Achieve a Population of %s."
 msgstr ""
 
 #. TRANSLATORS: Achieve an Economic Score of <Number>.
-#: src/OR_RANK.cpp:298
+#: src/OR_RANK.cpp:307
 #, c-format
 msgid "Achieve an Economic Score of %s."
 msgstr ""
 
 #. TRANSLATORS: Achieve a Total Score of <Number>.
-#: src/OR_RANK.cpp:310
+#: src/OR_RANK.cpp:319
 #, c-format
 msgid "Achieve a Total Score of %s."
 msgstr ""
 
 #. TRANSLATORS: Total Playing Time: <Time duration>
-#: src/OR_RANK.cpp:329
+#: src/OR_RANK.cpp:338
 #, c-format
 msgid "Total Playing Time: %s"
 msgstr ""
 
 #. TRANSLATORS: Ordinal number for ranking players
-#: src/OR_RANK.cpp:463
+#: src/OR_RANK.cpp:472
 msgid "1st"
 msgstr ""
 
-#: src/OR_RANK.cpp:464
+#: src/OR_RANK.cpp:473
 msgid "2nd"
 msgstr ""
 
-#: src/OR_RANK.cpp:465
+#: src/OR_RANK.cpp:474
 msgid "3rd"
 msgstr ""
 
-#: src/OR_RANK.cpp:466
+#: src/OR_RANK.cpp:475
 msgid "4th"
 msgstr ""
 
-#: src/OR_RANK.cpp:467
+#: src/OR_RANK.cpp:476
 msgid "5th"
 msgstr ""
 
-#: src/OR_RANK.cpp:468
+#: src/OR_RANK.cpp:477
 msgid "6th"
 msgstr ""
 
-#: src/OR_RANK.cpp:469
+#: src/OR_RANK.cpp:478
 msgid "7th"
 msgstr ""
 
@@ -3332,17 +3332,15 @@ msgstr ""
 msgid "Tower of Science"
 msgstr ""
 
-#: src/OR_TECH.cpp:144 src/OUNITIF.cpp:1226
+#: src/OR_TECH.cpp:144 src/OUNITIF.cpp:1239
 msgid "Greater Being"
 msgstr ""
 
-#: src/OR_TECH.cpp:367
-msgid "Acquired Scrolls:"
-msgstr ""
-
-#: src/OR_TECH.cpp:369
+#: src/OR_TECH.cpp:366
 msgid "Acquired Scroll:"
-msgstr ""
+msgid_plural "Acquired Scrolls:"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/OR_TOWN.cpp:84
 msgid "Village"
@@ -3483,7 +3481,7 @@ msgstr ""
 msgid "Research"
 msgstr ""
 
-#: src/OSKILL.cpp:39 src/OUNITIF.cpp:1165
+#: src/OSKILL.cpp:39 src/OUNITIF.cpp:1178
 msgid "Spying"
 msgstr ""
 
@@ -3491,19 +3489,19 @@ msgstr ""
 msgid "Praying"
 msgstr ""
 
-#: src/OSPY.cpp:591
+#: src/OSPY.cpp:601
 msgid "Counter-Spy"
 msgstr ""
 
-#: src/OSPY.cpp:594
+#: src/OSPY.cpp:604
 msgid "Sleep"
 msgstr ""
 
-#: src/OSPY.cpp:598
+#: src/OSPY.cpp:608
 msgid "Sow Dissent"
 msgstr ""
 
-#: src/OSPY.cpp:601
+#: src/OSPY.cpp:611
 msgid "Sabotage"
 msgstr ""
 
@@ -3609,26 +3607,26 @@ msgid "Cannot delete this slot"
 msgstr ""
 
 #: src/OSaveGameArray.cpp:617
-msgid "Game Date: "
+msgid "Game Date"
 msgstr ""
 
-#: src/OSaveGameArray.cpp:624
-msgid "File Name: "
+#: src/OSaveGameArray.cpp:625
+msgid "File Name"
 msgstr ""
 
-#: src/OSaveGameArray.cpp:635
-msgid "File Date: "
+#: src/OSaveGameArray.cpp:637
+msgid "File Date"
 msgstr ""
 
-#: src/OSaveGameArray.cpp:673
+#: src/OSaveGameArray.cpp:676
 msgid "It will overwrite the existing saved game. Proceed?"
 msgstr ""
 
-#: src/OSaveGameArray.cpp:734
+#: src/OSaveGameArray.cpp:737
 msgid "Cannot save the game because the path is too long"
 msgstr ""
 
-#: src/OSaveGameArray.cpp:889
+#: src/OSaveGameArray.cpp:892
 msgid "This saved game will be deleted. Proceed?"
 msgstr ""
 
@@ -4046,154 +4044,666 @@ msgstr ""
 msgid "You refuse to pay %s's Kingdom%s %s in tribute."
 msgstr ""
 
-#. TRANSLATORS: You offer <Tech> technology to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:840
+#. TRANSLATORS: You offer <Tech><Level> technology to <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:805
 #, c-format
-msgid "You offer %s technology to %s's Kingdom%s."
+msgid "You offer Catapult%s technology to %s's Kingdom%s."
 msgstr ""
 
-#. TRANSLATORS: <King>'s Kingdom<Color> offers <Tech> technology to you.
-#: src/OTALKENG.cpp:845
+#: src/OTALKENG.cpp:806
 #, c-format
-msgid "%s's Kingdom%s offers %s technology to you."
+msgid "You offer Porcupine%s technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:807
+#, c-format
+msgid "You offer Ballista%s technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:808
+#, c-format
+msgid "You offer Cannon%s technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:809
+#, c-format
+msgid "You offer Spitfire%s technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:810
+#, c-format
+msgid "You offer Caravel%s technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:811
+#, c-format
+msgid "You offer Galleon%s technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:812
+#, c-format
+msgid "You offer Unicorn%s technology to %s's Kingdom%s."
+msgstr ""
+
+#. TRANSLATORS: <King>'s Kingdom<Color> offers <Tech><Level> technology to you.
+#: src/OTALKENG.cpp:817
+#, c-format
+msgid "%s's Kingdom%s offers Catapult%s technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:818
+#, c-format
+msgid "%s's Kingdom%s offers Porcupine%s technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:819
+#, c-format
+msgid "%s's Kingdom%s offers Ballista%s technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:820
+#, c-format
+msgid "%s's Kingdom%s offers Cannon%s technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:821
+#, c-format
+msgid "%s's Kingdom%s offers Spitfire%s technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:822
+#, c-format
+msgid "%s's Kingdom%s offers Caravel%s technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:823
+#, c-format
+msgid "%s's Kingdom%s offers Galleon%s technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:824
+#, c-format
+msgid "%s's Kingdom%s offers Unicorn%s technology to you."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your gift of <Tech> technology.
+#: src/OTALKENG.cpp:829
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Catapult%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:830
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Porcupine%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:831
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Ballista%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:832
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Cannon%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:833
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Spitfire%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:834
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Caravel%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:835
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Galleon%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:836
+#, c-format
+msgid "%s's Kingdom%s accepts your gift of Unicorn%s technology."
+msgstr ""
+
+#. TRANSLATORS: <King>'s Kingdom<Color> rejects your gift of <Tech><Level> technology.
+#: src/OTALKENG.cpp:841
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Catapult%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:842
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Porcupine%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:843
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Ballista%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:844
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Cannon%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:845
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Spitfire%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:846
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Caravel%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:847
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Galleon%s technology."
+msgstr ""
+
+#: src/OTALKENG.cpp:848
+#, c-format
+msgid "%s's Kingdom%s rejects your gift of Unicorn%s technology."
+msgstr ""
+
+#. TRANSLATORS: You accept the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:853
+#, c-format
+msgid "You accept the gift of Catapult%s technology from %s's Kingdom%s."
+msgstr ""
+
 #: src/OTALKENG.cpp:854
 #, c-format
-msgid "%s's Kingdom%s accepts your gift of %s technology."
+msgid "You accept the gift of Porcupine%s technology from %s's Kingdom%s."
 msgstr ""
 
-#. TRANSLATORS: <King>'s Kingdom<Color> rejects your gift of <Tech> technology.
+#: src/OTALKENG.cpp:855
+#, c-format
+msgid "You accept the gift of Ballista%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:856
+#, c-format
+msgid "You accept the gift of Cannon%s technology from %s's Kingdom%s."
+msgstr ""
+
 #: src/OTALKENG.cpp:857
 #, c-format
-msgid "%s's Kingdom%s rejects your gift of %s technology."
+msgid "You accept the gift of Spitfire%s technology from %s's Kingdom%s."
 msgstr ""
 
-#. TRANSLATORS: You accept the gift of <Tech> technology from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:863
+#: src/OTALKENG.cpp:858
 #, c-format
-msgid "You accept the gift of %s technology from %s's Kingdom%s."
+msgid "You accept the gift of Caravel%s technology from %s's Kingdom%s."
 msgstr ""
 
-#. TRANSLATORS: You reject the gift of <Tech> technology from <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:859
+#, c-format
+msgid "You accept the gift of Galleon%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:860
+#, c-format
+msgid "You accept the gift of Unicorn%s technology from %s's Kingdom%s."
+msgstr ""
+
+#. TRANSLATORS: You reject the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
+#: src/OTALKENG.cpp:865
+#, c-format
+msgid "You reject the gift of Catapult%s technology from %s's Kingdom%s."
+msgstr ""
+
 #: src/OTALKENG.cpp:866
 #, c-format
-msgid "You reject the gift of %s technology from %s's Kingdom%s."
+msgid "You reject the gift of Porcupine%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:867
+#, c-format
+msgid "You reject the gift of Ballista%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:868
+#, c-format
+msgid "You reject the gift of Cannon%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:869
+#, c-format
+msgid "You reject the gift of Spitfire%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:870
+#, c-format
+msgid "You reject the gift of Caravel%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:871
+#, c-format
+msgid "You reject the gift of Galleon%s technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:872
+#, c-format
+msgid "You reject the gift of Unicorn%s technology from %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You request the latest <Tech> technology from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:919
+#: src/OTALKENG.cpp:940
 #, c-format
-msgid "You request the latest %s technology from %s's Kingdom%s."
+msgid "You request the latest Catapult technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:941
+#, c-format
+msgid "You request the latest Porcupine technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:942
+#, c-format
+msgid "You request the latest Ballista technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:943
+#, c-format
+msgid "You request the latest Cannon technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:944
+#, c-format
+msgid "You request the latest Spitfire technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:945
+#, c-format
+msgid "You request the latest Caravel technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:946
+#, c-format
+msgid "You request the latest Galleon technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:947
+#, c-format
+msgid "You request the latest Unicorn technology from %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You demand the latest <Tech> technology from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:924
+#: src/OTALKENG.cpp:952
 #, c-format
-msgid "You demand the latest %s technology from %s's Kingdom%s."
+msgid "You demand the latest Catapult technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:953
+#, c-format
+msgid "You demand the latest Porcupine technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:954
+#, c-format
+msgid "You demand the latest Ballista technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:955
+#, c-format
+msgid "You demand the latest Cannon technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:956
+#, c-format
+msgid "You demand the latest Spitfire technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:957
+#, c-format
+msgid "You demand the latest Caravel technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:958
+#, c-format
+msgid "You demand the latest Galleon technology from %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:959
+#, c-format
+msgid "You demand the latest Unicorn technology from %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests the latest <Tech> technology from you.
-#: src/OTALKENG.cpp:932
+#: src/OTALKENG.cpp:964
 #, c-format
-msgid "%s's Kingdom%s requests the latest %s technology from you."
+msgid "%s's Kingdom%s requests the latest Catapult technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:965
+#, c-format
+msgid "%s's Kingdom%s requests the latest Porcupine technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:966
+#, c-format
+msgid "%s's Kingdom%s requests the latest Ballista technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:967
+#, c-format
+msgid "%s's Kingdom%s requests the latest Cannon technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:968
+#, c-format
+msgid "%s's Kingdom%s requests the latest Spitfire technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:969
+#, c-format
+msgid "%s's Kingdom%s requests the latest Caravel technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:970
+#, c-format
+msgid "%s's Kingdom%s requests the latest Galleon technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:971
+#, c-format
+msgid "%s's Kingdom%s requests the latest Unicorn technology from you."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> demands the latest <Tech> technology from you.
-#: src/OTALKENG.cpp:937
+#: src/OTALKENG.cpp:976
 #, c-format
-msgid "%s's Kingdom%s demands the latest %s technology from you."
+msgid "%s's Kingdom%s demands the latest Catapult technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:977
+#, c-format
+msgid "%s's Kingdom%s demands the latest Porcupine technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:978
+#, c-format
+msgid "%s's Kingdom%s demands the latest Ballista technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:979
+#, c-format
+msgid "%s's Kingdom%s demands the latest Cannon technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:980
+#, c-format
+msgid "%s's Kingdom%s demands the latest Spitfire technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:981
+#, c-format
+msgid "%s's Kingdom%s demands the latest Caravel technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:982
+#, c-format
+msgid "%s's Kingdom%s demands the latest Galleon technology from you."
+msgstr ""
+
+#: src/OTALKENG.cpp:983
+#, c-format
+msgid "%s's Kingdom%s demands the latest Unicorn technology from you."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to transfer its latest <Tech> technology to you.
-#: src/OTALKENG.cpp:947
+#: src/OTALKENG.cpp:988
 #, c-format
-msgid "%s's Kingdom%s agrees to transfer its latest %s technology to you."
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Catapult technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:989
+#, c-format
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Porcupine technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:990
+#, c-format
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Ballista technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:991
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Cannon technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:992
+#, c-format
+msgid ""
+"%s's Kingdom%s agrees to transfer its latest Spitfire technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:993
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Caravel technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:994
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Galleon technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:995
+#, c-format
+msgid "%s's Kingdom%s agrees to transfer its latest Unicorn technology to you."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses to transfer its latest <Tech> technology to you.
-#: src/OTALKENG.cpp:950
+#: src/OTALKENG.cpp:1000
 #, c-format
-msgid "%s's Kingdom%s refuses to transfer its latest %s technology to you."
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Catapult technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:1001
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Porcupine technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:1002
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Ballista technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:1003
+#, c-format
+msgid "%s's Kingdom%s refuses to transfer its latest Cannon technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:1004
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Spitfire technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:1005
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Caravel technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:1006
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Galleon technology to you."
+msgstr ""
+
+#: src/OTALKENG.cpp:1007
+#, c-format
+msgid ""
+"%s's Kingdom%s refuses to transfer its latest Unicorn technology to you."
 msgstr ""
 
 #. TRANSLATORS: You agree to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:956
+#: src/OTALKENG.cpp:1012
 #, c-format
-msgid "You agree to transfer your latest %s technology to %s's Kingdom%s."
+msgid ""
+"You agree to transfer your latest Catapult technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1013
+#, c-format
+msgid ""
+"You agree to transfer your latest Porcupine technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1014
+#, c-format
+msgid ""
+"You agree to transfer your latest Ballista technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1015
+#, c-format
+msgid "You agree to transfer your latest Cannon technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1016
+#, c-format
+msgid ""
+"You agree to transfer your latest Spitfire technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1017
+#, c-format
+msgid "You agree to transfer your latest Caravel technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1018
+#, c-format
+msgid "You agree to transfer your latest Galleon technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1019
+#, c-format
+msgid "You agree to transfer your latest Unicorn technology to %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You refuse to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:959
+#: src/OTALKENG.cpp:1024
 #, c-format
-msgid "You refuse to transfer your latest %s technology to %s's Kingdom%s."
+msgid ""
+"You refuse to transfer your latest Catapult technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1025
+#, c-format
+msgid ""
+"You refuse to transfer your latest Porcupine technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1026
+#, c-format
+msgid ""
+"You refuse to transfer your latest Ballista technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1027
+#, c-format
+msgid "You refuse to transfer your latest Cannon technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1028
+#, c-format
+msgid ""
+"You refuse to transfer your latest Spitfire technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1029
+#, c-format
+msgid ""
+"You refuse to transfer your latest Caravel technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1030
+#, c-format
+msgid ""
+"You refuse to transfer your latest Galleon technology to %s's Kingdom%s."
+msgstr ""
+
+#: src/OTALKENG.cpp:1031
+#, c-format
+msgid ""
+"You refuse to transfer your latest Unicorn technology to %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You request immediate military aid from <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:991
+#: src/OTALKENG.cpp:1142
 #, c-format
 msgid "You request immediate military aid from %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests immediate military aid from you.
-#: src/OTALKENG.cpp:996
+#: src/OTALKENG.cpp:1147
 #, c-format
 msgid "%s's Kingdom%s requests immediate military aid from you."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to immediately send your requested military aid.
-#: src/OTALKENG.cpp:1005
+#: src/OTALKENG.cpp:1156
 #, c-format
 msgid "%s's Kingdom%s agrees to immediately send your requested military aid."
 msgstr ""
 
 #. TRANSLATORS: <King>'s Kingdom<Color> denies you your requested military aid.
-#: src/OTALKENG.cpp:1008
+#: src/OTALKENG.cpp:1159
 #, c-format
 msgid "%s's Kingdom%s denies you your requested military aid."
 msgstr ""
 
 #. TRANSLATORS: You agree to immediately send military aid to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1014
+#: src/OTALKENG.cpp:1165
 #, c-format
 msgid "You agree to immediately send military aid to %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You refuse to send military aid to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1017
+#: src/OTALKENG.cpp:1168
 #, c-format
 msgid "You refuse to send military aid to %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You request <King 1>'s Kingdom<Color> to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1053
+#: src/OTALKENG.cpp:1204
 #, c-format
 msgid ""
 "You request %s's Kingdom%s to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> requests you to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1058
+#: src/OTALKENG.cpp:1209
 #, c-format
 msgid ""
 "%s's Kingdom%s requests you to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> agrees to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1067
+#: src/OTALKENG.cpp:1218
 #, c-format
 msgid "%s's Kingdom%s agrees to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> refuses to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
-#: src/OTALKENG.cpp:1070
+#: src/OTALKENG.cpp:1221
 #, c-format
 msgid "%s's Kingdom%s refuses to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You agree to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1076
+#: src/OTALKENG.cpp:1227
 #, c-format
 msgid ""
 "You agree to join an embargo on trade with %s's Kingdom%s as requested by "
@@ -4201,7 +4711,7 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: You refuse to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1079
+#: src/OTALKENG.cpp:1230
 #, c-format
 msgid ""
 "You refuse to join an embargo on trade with %s's Kingdom%s as requested by "
@@ -4209,43 +4719,43 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: You offer <Amount> for the throne of <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1118
+#: src/OTALKENG.cpp:1269
 #, c-format
 msgid "You offer %s for the throne of %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: To unite our two Kingdoms under his rule, King <Name> offers <Amount> for your throne.
-#: src/OTALKENG.cpp:1123
+#: src/OTALKENG.cpp:1274
 #, c-format
 msgid ""
 "To unite our two Kingdoms under his rule, King %s offers %s for your throne."
 msgstr ""
 
 #. TRANSLATORS: King <Name> agrees to take your money in exchange for his throne.
-#: src/OTALKENG.cpp:1132
+#: src/OTALKENG.cpp:1283
 #, c-format
 msgid "King %s agrees to take your money in exchange for his throne."
 msgstr ""
 
 #. TRANSLATORS: King <Name> refuses to dishonor himself by selling his throne!
-#: src/OTALKENG.cpp:1135
+#: src/OTALKENG.cpp:1286
 #, c-format
 msgid "King %s refuses to dishonor himself by selling his throne!"
 msgstr ""
 
-#: src/OTALKENG.cpp:1141
+#: src/OTALKENG.cpp:1292
 msgid "You agree to take the money in exchange for your throne."
 msgstr ""
 
 #. TRANSLATORS: You refuse to dishonor yourself by selling your throne to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1146
+#: src/OTALKENG.cpp:1297
 #, c-format
 msgid ""
 "You refuse to dishonor yourself by selling your throne to %s's Kingdom%s."
 msgstr ""
 
 #. TRANSLATORS: You have surrendered to <King>'s Kingdom<Color>.
-#: src/OTALKENG.cpp:1169
+#: src/OTALKENG.cpp:1320
 #, c-format
 msgid "You have surrendered to %s's Kingdom%s."
 msgstr ""
@@ -4451,81 +4961,112 @@ msgstr ""
 msgid "Tutorial files not found."
 msgstr ""
 
-#: src/OUNIT.cpp:753 src/OUNITIF.cpp:1211
+#: src/OUNIT.cpp:753 src/OUNITIF.cpp:1224
 msgid "Rebel Leader"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
-#: src/OUNIT.cpp:766 src/OUNITIF.cpp:1213
+#: src/OUNIT.cpp:766 src/OUNITIF.cpp:1226
 msgid "General"
 msgstr ""
 
 #. TRANSLATORS: Please select a location to build the <Firm>.
-#: src/OUNITIF.cpp:1015
-#, c-format
-msgid "Please select a location to build the %s."
+#: src/OUNITIF.cpp:1004
+msgid "Please select a location to build the Seat of Power."
 msgstr ""
 
-#: src/OUNITIF.cpp:1055
+#: src/OUNITIF.cpp:1005
+msgid "Please select a location to build the Factory."
+msgstr ""
+
+#: src/OUNITIF.cpp:1006
+msgid "Please select a location to build the Inn."
+msgstr ""
+
+#: src/OUNITIF.cpp:1007
+msgid "Please select a location to build the Market."
+msgstr ""
+
+#: src/OUNITIF.cpp:1008
+msgid "Please select a location to build the Fort."
+msgstr ""
+
+#: src/OUNITIF.cpp:1009
+msgid "Please select a location to build the Mine."
+msgstr ""
+
+#: src/OUNITIF.cpp:1010
+msgid "Please select a location to build the Tower of Science."
+msgstr ""
+
+#: src/OUNITIF.cpp:1011
+msgid "Please select a location to build the War Factory."
+msgstr ""
+
+#: src/OUNITIF.cpp:1012
+msgid "Please select a location to build the Harbor."
+msgstr ""
+
+#: src/OUNITIF.cpp:1068
 msgid "Please select a location to settle."
 msgstr ""
 
-#: src/OUNITIF.cpp:1173
+#: src/OUNITIF.cpp:1186
 msgid "Contribution"
 msgstr ""
 
-#: src/OUNITIF.cpp:1218
+#: src/OUNITIF.cpp:1231
 msgid "Defending Villager"
 msgstr ""
 
-#: src/OUNITIF.cpp:1222
+#: src/OUNITIF.cpp:1235
 msgid "Rebel"
 msgstr ""
 
-#: src/OUNITIF.cpp:1235 src/OUNITIF.cpp:1266
+#: src/OUNITIF.cpp:1248 src/OUNITIF.cpp:1279
 msgid "Soldier"
 msgstr ""
 
-#: src/OUNITIF.cpp:1239
+#: src/OUNITIF.cpp:1252
 msgid "Construction Worker"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
-#: src/OUNITIF.cpp:1243
+#: src/OUNITIF.cpp:1256
 msgid "Miner"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
-#: src/OUNITIF.cpp:1247
+#: src/OUNITIF.cpp:1260
 msgid "Worker"
 msgstr ""
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
-#: src/OUNITIF.cpp:1251
+#: src/OUNITIF.cpp:1264
 msgid "Scientist"
 msgstr ""
 
-#: src/OUNITIF.cpp:1255
+#: src/OUNITIF.cpp:1268
 msgid "Spy"
 msgstr ""
 
-#: src/OUNITIF.cpp:1259
+#: src/OUNITIF.cpp:1272
 msgid "Peasant"
 msgstr ""
 
-#: src/OUNITIF.cpp:1269
+#: src/OUNITIF.cpp:1282
 msgid "Civilian"
 msgstr ""
 
-#: src/OUNITIF.cpp:1352
+#: src/OUNITIF.cpp:1365
 msgid "Enemies Nearby"
 msgstr ""
 
-#: src/OUNITIF.cpp:1363
+#: src/OUNITIF.cpp:1376
 msgid "Spy Cloak:"
 msgstr ""
 
@@ -4535,7 +5076,7 @@ msgid "Set Stop"
 msgstr ""
 
 #: src/OU_CARA.cpp:174 src/OU_MARIF.cpp:625
-msgid "Pick up: "
+msgid "Pick up:"
 msgstr ""
 
 #: src/OU_CARA.cpp:187 src/OU_MARIF.cpp:638
@@ -4831,6 +5372,13 @@ msgstr ""
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Wyrm"
+msgstr ""
+
+# #-#-#-#-#  -  #-#-#-#-#
+# data/RESOURCE/STD/00005-UNIT.dbf
+# #-#-#-#-#  -  #-#-#-#-#
+# data/RESOURCE/STD/00006-RACE.dbf
+msgid "Zulu"
 msgstr ""
 
 # data/RESOURCE/STD/00007-FIRM.dbf
