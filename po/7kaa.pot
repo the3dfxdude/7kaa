@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-19 06:48-0700\n"
+"POT-Creation-Date: 2019-07-23 07:05-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3202,6 +3202,18 @@ msgstr ""
 #: src/OR_NAT.cpp:577
 #, c-format
 msgid "%s's Kingdom's Diplomatic Status with Other Kingdoms:"
+msgstr ""
+
+#. TRANSLATORS: To<Nation color> on <Date> :
+#: src/OR_NAT.cpp:870
+#, c-format
+msgid "To%s on %s :"
+msgstr ""
+
+#. TRANSLATORS: From<Nation color> on <Date> :
+#: src/OR_NAT.cpp:873
+#, c-format
+msgid "From%s on %s :"
 msgstr ""
 
 #: src/OR_NAT.cpp:903

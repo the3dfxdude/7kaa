@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-19 06:48-0700\n"
+"POT-Creation-Date: 2019-07-23 07:05-0700\n"
 "PO-Revision-Date: 2019-03-07 22:31-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3524,6 +3524,18 @@ msgstr "Alimentos del reino de %s"
 #, c-format
 msgid "%s's Kingdom's Diplomatic Status with Other Kingdoms:"
 msgstr "Estado diplomático del reino de %s con otros reinos:"
+
+#. TRANSLATORS: To<Nation color> on <Date> :
+#: src/OR_NAT.cpp:870
+#, fuzzy, c-format
+msgid "To%s on %s :"
+msgstr "el %s :"
+
+#. TRANSLATORS: From<Nation color> on <Date> :
+#: src/OR_NAT.cpp:873
+#, fuzzy, c-format
+msgid "From%s on %s :"
+msgstr "el %s :"
 
 #: src/OR_NAT.cpp:903
 msgid "Please enter your chat message and press <Enter> to send."
@@ -10414,9 +10426,6 @@ msgstr ""
 
 #~ msgid "From"
 #~ msgstr "Desde"
-
-#~ msgid "on %s :"
-#~ msgstr "el %s :"
 
 #~ msgid "Acquired Scrolls:"
 #~ msgstr "Pergaminos adquiridos:"

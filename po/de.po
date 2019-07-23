@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 7kaa 2.14.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-19 06:48-0700\n"
+"POT-Creation-Date: 2019-07-23 07:05-0700\n"
 "PO-Revision-Date: 2015-10-05 21:45-0400\n"
 "Last-Translator:  <toaster@hush.com>\n"
 "Language-Team: German\n"
@@ -3386,6 +3386,18 @@ msgstr "%s's Königreich Nahrung"
 #, c-format
 msgid "%s's Kingdom's Diplomatic Status with Other Kingdoms:"
 msgstr "%s's Königreich diplomatische Beziehung zu anderen Königreichen:"
+
+#. TRANSLATORS: To<Nation color> on <Date> :
+#: src/OR_NAT.cpp:870
+#, fuzzy, c-format
+msgid "To%s on %s :"
+msgstr "am %s :"
+
+#. TRANSLATORS: From<Nation color> on <Date> :
+#: src/OR_NAT.cpp:873
+#, fuzzy, c-format
+msgid "From%s on %s :"
+msgstr "am %s :"
 
 #: src/OR_NAT.cpp:903
 msgid "Please enter your chat message and press <Enter> to send."
@@ -10089,9 +10101,6 @@ msgstr ""
 
 #~ msgid "From"
 #~ msgstr "Aus"
-
-#~ msgid "on %s :"
-#~ msgstr "am %s :"
 
 #~ msgid "Acquired Scrolls:"
 #~ msgstr "Erworbene Schriftrollen:"
