@@ -867,10 +867,10 @@ static void put_talk_msg_rec(int recNo, int x1, int y, int refreshFlag)
 
 	if( isTo )
 		// TRANSLATORS: To<Nation color> on <Date> :
-		snprintf(str, MAX_STR_LEN+1, "To%s on %s :", nation_color, date_str);
+		snprintf(str, MAX_STR_LEN+1, _("To%s on %s :"), nation_color, date_str);
 	else
 		// TRANSLATORS: From<Nation color> on <Date> :
-		snprintf(str, MAX_STR_LEN+1, "From%s on %s :", nation_color, date_str);
+		snprintf(str, MAX_STR_LEN+1, _("From%s on %s :"), nation_color, date_str);
 
 	font_san.put( x , y, str );
 
