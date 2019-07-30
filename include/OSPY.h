@@ -186,6 +186,13 @@ public:
 
 extern SpyArray spy_array;
 
+class SpyArrayLock
+{
+public:
+	SpyArrayLock() { spy_array.lock_body(); }
+	~SpyArrayLock() { spy_array.unlock_body(); }
+};
+
 //----------------------------------------//
 
 class SpyProcess
