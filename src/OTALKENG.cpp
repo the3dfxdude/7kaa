@@ -906,11 +906,11 @@ void TalkMsg::give_tech()
 	{
 		if( viewing_nation_recno == from_nation_recno )
 		{
-			snprintf(str, MAX_STR_LEN+1, _(give_tech_you_offer[talk_para1-1]), tech, TO_NATION, TO_COLOR);
+			snprintf(str, MAX_STR_LEN+1, _(give_tech_you_offer[talk_para1-1]), tech.str_buf, TO_NATION, TO_COLOR);
 		}
 		else
 		{
-			snprintf(str, MAX_STR_LEN+1, _(give_tech_kingdom_offers[talk_para1-1]), FROM_NATION, FROM_COLOR, tech);
+			snprintf(str, MAX_STR_LEN+1, _(give_tech_kingdom_offers[talk_para1-1]), FROM_NATION, FROM_COLOR, tech.str_buf);
 		}
 	}
 	else
@@ -918,16 +918,16 @@ void TalkMsg::give_tech()
 		if( viewing_nation_recno == from_nation_recno )
 		{
 			if( reply_type == REPLY_ACCEPT )
-				snprintf(str, MAX_STR_LEN+1, _(give_tech_accepts_your_offer[talk_para1-1]), TO_NATION, TO_COLOR, tech);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_accepts_your_offer[talk_para1-1]), TO_NATION, TO_COLOR, tech.str_buf);
 			else
-				snprintf(str, MAX_STR_LEN+1, _(give_tech_rejects_your_offer[talk_para1-1]), TO_NATION, TO_COLOR, tech);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_rejects_your_offer[talk_para1-1]), TO_NATION, TO_COLOR, tech.str_buf);
 		}
 		else
 		{
 			if( reply_type == REPLY_ACCEPT )
-				snprintf(str, MAX_STR_LEN+1, _(give_tech_you_accept[talk_para1-1]), tech, FROM_NATION, FROM_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_you_accept[talk_para1-1]), tech.str_buf, FROM_NATION, FROM_COLOR);
 			else
-				snprintf(str, MAX_STR_LEN+1, _(give_tech_you_reject[talk_para1-1]), tech, FROM_NATION, FROM_COLOR);
+				snprintf(str, MAX_STR_LEN+1, _(give_tech_you_reject[talk_para1-1]), tech.str_buf, FROM_NATION, FROM_COLOR);
 		}
 	}
 }
