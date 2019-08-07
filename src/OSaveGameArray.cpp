@@ -673,7 +673,7 @@ int SaveGameArray::process_action(int saveNew)
 		}
 		else           // save on existing slot
 		{
-			if( !box.ask( _("It will overwrite the existing saved game. Proceed?") ) )
+			if( !box.ask( _("Overwrite the existing saved game?") ) )
 				return 0;
 
 			SaveGame* saveGame = (*this)[browse_recno];

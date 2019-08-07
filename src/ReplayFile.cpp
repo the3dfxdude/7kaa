@@ -112,7 +112,7 @@ int ReplayFile::open_read(const char* filePath, NewNationPara *mpGame, int *mpPl
 	file_version = file.file_get_long();
 	if( file_version > replay_version )
 	{
-		box.msg(_("The selected reply file uses an unsupported format"));
+		box.msg(_("The selected replay file uses an unsupported format."));
 		goto out;
 	}
 	if( !file.file_read(&version, sizeof(GameVer)) )
