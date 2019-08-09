@@ -379,7 +379,7 @@ When you Click on this tile, your selected spy will attempt to assassinate the f
 ~
 GODHEAL
 Dispense Healing
-When you Click on this tile your cursor will change into a large white circle. Place this circle over your injured units and Click again. Repeat until the Lord of Healing's power has been depleted.
+When you Click on this tile, your cursor will change into a large white circle. Place this circle over your injured units and Click again. Repeat until the Lord of Healing's power has been depleted.
 ~
 GODMIND
 Change Loyalty
@@ -395,4 +395,4 @@ When you Click on this tile, it will cause the rains to come to the whole world.
 ~
 GODTORNA
 Summon Tornadoes
-When you Click on this, tile your cursor will change into a small square. Place this square over your target and Click again. Repeat until Thor's power has been depleted.
+When you Click on this tile, your cursor will change into a small square. Place this square over your target and Click again. Repeat until Thor's power has been depleted.
