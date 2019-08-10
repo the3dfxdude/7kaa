@@ -379,7 +379,7 @@ When you Click on this tile, your selected spy will attempt to assassinate the f
 ~
 GODHEAL
 Dispense Healing
-When you Click on this tile your cursor will change into a large white circle. Place this circle over your injured units and Click again. Repeat until the Lord of Healing's power has been depleted.
+When you Click on this tile, your cursor will change into a large white circle. Place this circle over your injured units and Click again. Repeat until the Lord of Healing's power has been depleted.
 ~
 GODMIND
 Change Loyalty
