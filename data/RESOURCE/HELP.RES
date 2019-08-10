@@ -56,15 +56,15 @@ This map shows the political boundaries of every kingdom and the location of vil
 ~
 673, 8, 710, 45
 Villages and Units Map
-This map mode shows the location of villages and units.
+This map shows the location of villages and units.
 ~
 BRIBE
-Bribe
-This takes you to a menu where you can select a bribe to offer to the selected person.
+Offer Bribe
+Make a bribe with the selected spy. This takes you to a menu where you can choose the amount of the bribe to offer to the selected foreign unit.
 ~
 BUILD
 Build
-This enables you to choose a structure to build. If you do not have enough money to build a structure, this tile will be disabled.
+This enables you to choose a structure to build. If you do not have enough money to build a structure, this tile is disabled.
 ~
 CANCEL
 Cancel
@@ -80,7 +80,7 @@ This toggles production in this factory between iron, copper, and clay products.
 ~
 COLLTAX
 Collect Tax
-This collects tax from the selected village. If you right-click on this, you will be able to tax your villagers automatically.
+This collects tax from the selected village. If you right-click, you will be able to set a maximum loyalty level to tax your villagers automatically.
 ~
 CONTINUE
 Continue
@@ -99,7 +99,7 @@ This demotes the selected General to a common soldier.
 ~
 GRANT
 Grant
-This grants money to the selected village. If you right-click on this, you will be able to grant money automatically.
+This grants money to the selected village. If you right-click, you will be able to set a loyalty level to grant money automatically.
 ~
 GRANT2
 Grant
@@ -107,11 +107,11 @@ This grants money to the selected village to lower the villagers' loyalty or res
 ~
 HIRECARA
 Hire Caravan
-This hires a caravan from this market so that you can conduct trade. It is disabled if you have too few villagers to support any more caravans. 10 villagers are needed to support each caravan.
+This hires a caravan from this market so that you can conduct trade and move goods. It is disabled if you have too few villagers to support any more caravans. 10 villagers are needed to support each caravan.
 ~
 HIREUNIT
-Hire Person
-This hires the selected mercenary. He will then join your service.
+Hire Mercenary
+This hires the selected mercenary to be in your service.
 ~
 INVOKE
 Invoke Greater Being
@@ -163,7 +163,7 @@ This orders the start of a research project. This is disabled if all possible re
 ~
 REWARD
 Honors
-This awards an honor to the selected person. For each honor, the person's loyalty increases by 10 points. This is disabled for the King.
+This awards an honor to the selected unit. For each honor, the unit's loyalty increases by 10 points. This is disabled for the King.
 ~
 REWARDCB
 Honors
@@ -179,7 +179,7 @@ This orders the selected ship to sail out of the harbor and await your further c
 ~
 SELBRIBE
 Offer Bribe
-This takes you to a menu where you can choose the amount of the bribe to offer to the selected enemy person.
+This takes you to a menu where you can choose the amount of the bribe to offer to the selected foreign unit. If more than one spy is in the building, you will also be prompted to select one of your spies to do the offer.
 ~
 SETTLE
 Settle
@@ -198,28 +198,28 @@ Spy's Task
 This orders your spy to change his task.
 ~
 SPYNOTI0
-Notification currently disabled. Click to enable.
+Notification Currently Disabled. Click to Enable.
 When this is disabled, it keeps your spy's change of color a secret. You retain the ability to control your spy's movement.
 ~
 SPYNOTI1
-Notification currently enabled. Click to disable.
+Notification Currently Enabled. Click to Disable.
 When this is enabled, it announces your spy's change of color to the kingdom that he is joining. You lose your ability to control your spy's movement.
 ~
 SUCCEED
 Succeed to the Crown
-This elevates the selected person to the Crown.
+This elevates the selected unit to the Crown.
 ~
 TRAIN
 Train
-This trains a villager in a selected skill.  This tile is disabled if there are no more peasants in the village or if you do not have a General in a fort linked to the village.
+This trains a villager in a selected skill. This tile is disabled if there are no more peasants in the village or if you do not have a General in a fort linked to the village.
 ~
 VSECRET
 View Secrets
-This takes you to a menu where you can select the type of this kingdom's secrets to view. The secrets that you can view depends on the skill level of your spy.
+This takes you to a menu where you can select the type of this kingdom's secrets to view. The secrets that you can view depend on the skill level of your spy.
 ~
 NOSPY
-Drop spy identity
-This causes the spy to give up his spying identity.
+Drop Spy Identity
+This causes the spy to give up his spy identity.
 ~
 AUTOPICK
 Automatic
@@ -230,47 +230,47 @@ Nothing
 With this set, your caravans and ships will not pick up anything from this market or harbor.
 ~
 RESIGN
-Disband a unit
-This disbands the selected unit. If the selected unit is a foreign spy, this executes him.
+Disband Unit
+This disbands the selected unit. If the selected unit is a foreign spy, it executes him.
 ~
 CSETSTOP
-Set a caravan's trade stop
+Set Caravan Stop
 After you press this button, click your cursor on the location where you want your caravan to stop.
 ~
 CGOSTOP
-View a caravan's trade stop
-This centers your screen over this caravan stop.
+View Caravan Stop
+Click here to center the map over this caravan stop.
 ~
 CDELSTOP
-Delete a caravan's trade stop
-Clicking here deletes this caravan trade stop.
+Delete Caravan Stop
+Click here to delete this caravan stop.
 ~
 SSETSTOP
-Set a ship's trade stop
-After you press this button, click your cursor on the harbor where you want your trading ship to stop.
+Set Trade Ship Stop
+After you press this button, click your cursor on the harbor where you want your trade ship to stop.
 ~
 SGOSTOP
-View a ship's trade stop
-This centers your screen over this ship's trading stop.
+View Trade Ship Stop
+Click here to center the map over this trade ship stop.
 ~
 SDELSTOP
-Delete a ship's trade stop
-Clicking here deletes this ship's trade stop.
+Delete Trade Ship Stop
+Click here to delete this trade ship stop.
 ~
 DESTFIRM
-Demolish a structure
-Clicking here demolishs this structure.
+Demolish Structure
+Click here to demolish this structure.
 ~
 SELLFIRM
-Sell a structure
-Clicking here sells this structure.
+Sell Structure
+Click here to sell this structure.
 ~
 REPAIR
-Structure repair icon
-This icon shows that there is a construction worker stationed in this structure. Click or Right-Click on this to mobilize the construction worker.
+Sturcture Repair Icon
+This icon shows there is a construction worker stationed in this structure. Click or right-click on this icon to mobilize the construction worker.
 ~
 REPLYDIP
-Zoom to activity
+Zoom to Activity
 Click on this box to reply to the message or to see the location of the event.
 ~
 NEWSLOG
@@ -278,8 +278,8 @@ News Log
 Click on this to bring up the news log.
 ~
 CLRNEWS
-Clear news messages
-Click on this to clear all news messages on the screen. You may also press X on your keyboard.
+Clear News Messages
+Click on this to clear all news messages on the screen. You can also press X on your keyboard.
 ~
 GAMEMENU
 Game Menu
@@ -318,20 +318,20 @@ Product Stock
 This shows the current stock of the finished goods in this factory. The maximum capacity for storing the stock in a factory is 500.
 ~
 CANCELWP
-Cancel weapon production
-Click on this to cancel the production of the weapon currently being produced.
+Cancel Weapon Production
+Click on this to cancel producing the current weapon.
 ~
 CANCELSHP
-Cancel building this Ship
-Click on this to cancel the production of the ship currently being built.
+Cancel Building Ship
+Click on this to cancel building the current ship.
 ~
 CANCELTRA
 Cancel Training
-Click on this to cancel the training of the unit.
+Click on this to cancel training the current unit.
 ~
 CANCELBLD
-Cancel building this structure.
-Clicking here cancels the building of this structure.
+Cancel Building Structure
+Click on this to cancel building the current structure.
 ~
 MN_PROD
 Monthly Production
@@ -366,11 +366,11 @@ Allow Attack
 If this is set to 'Yes', you will be able to target and attack the units and structures of the selected kingdom. If it is set to 'No', you will not.
 ~
 AGGRESS0
-Passive Mode Enabled. Click for Aggressive Mode
+Passive Mode Enabled. Click for Aggressive Mode.
 When toggled to this mode, your units will not fight unless attacked. If ordered to change location, they will not stop to fight off an attack.
 ~
 AGGRESS1
-Aggressive Mode Enabled. Click for Passive Mode
+Aggressive Mode Enabled. Click for Passive Mode.
 When toggled to this mode, your units will automatically attack an enemy in their area, but they will not follow it out of the area. If ordered to change location, they will stop to fight off an attack and then continue.
 ~
 ASSASSIN
@@ -386,7 +386,7 @@ Change Loyalty
 When you Click on this tile, your cursor will change into a large white circle. Place this circle over your target and Click again. Repeat until the Mind Turner's power has been depleted.
 ~
 GODINCCL
-Increase power of Maya Soldiers
+Increase Power of Maya Soldiers
 When you Click on this tile, your cursor will change into a large white circle. Place this circle over your soldiers and Click again. Repeat until Kukulcan's power has been depleted.
 ~
 GODRAIN
@@ -395,4 +395,4 @@ When you Click on this tile, it will cause the rains to come to the whole world.
 ~
 GODTORNA
 Summon Tornadoes
-When you Click on this, tile your cursor will change into a small square. Place this square over your target and Click again. Repeat until Thor's power has been depleted.
+When you Click on this tile, your cursor will change into a small square. Place this square over your target and Click again. Repeat until Thor's power has been depleted.
