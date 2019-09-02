@@ -33,6 +33,7 @@ public:
 		FLAG_DEBUG_VER = 1,
 		FLAG_DEVEL_VER = 2,
 		FLAG_CKSUM_REQ = 4,
+		FLAG_UNKNOWN_BUILD = 8,
 	};
 
 	uint32_t		checksum;

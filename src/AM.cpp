@@ -365,9 +365,11 @@ int main(int argc, char **argv)
 	case STARTUP_NORMAL:
 		game.main_menu();
 		break;
+#ifndef DISABLE_MULTI_PLAYER
 	case STARTUP_MULTI_PLAYER:
 		game.multi_player_menu(1, cmd_line.join_host);
 		break;
+#endif
 	case STARTUP_TEST:
 		game.init();
 		battle.run_test();

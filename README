@@ -31,10 +31,13 @@ Summary of changes from 2.15.1 to 2.15.2
 System Requirements
 ---------
 
-Supported systems
+Supported operating systems
 * Windows
 * Linux
 * MacOS
+
+Supported architectures for multiplayer
+* x86 compatible processor
 
 For the best results in multiplayer, you should all play on the same exact
 build and operating system. Testing as of late showed that playing mixed games

@@ -49,6 +49,9 @@ ConfigAdv::ConfigAdv()
 	#ifdef DEV_VERSION
 		flags |= FLAG_DEVEL_VER;
 	#endif
+	#ifndef HAVE_KNOWN_BUILD
+		flags |= FLAG_UNKNOWN_BUILD;
+	#endif
 }
 //--------- End of function ConfigAdv::ConfigAdv --------//
 

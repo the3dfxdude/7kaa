@@ -376,6 +376,10 @@ void Game::disp_version()
 		str += "-dev";
 	#endif
 
+	#ifndef HAVE_KNOWN_BUILD
+		str += "?";
+	#endif
+
 	#ifdef DEBUG
 		str += " (DEBUG)";
 	#endif

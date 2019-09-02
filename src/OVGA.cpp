@@ -824,6 +824,9 @@ void Vga::save_status_report()
       fprintf(file, "Big endian\n");
    else
       fprintf(file, "Little endian\n");
+#ifndef HAVE_KNOWN_BUILD
+   fprintf(file, "Binary built using unsupported configuration\n");
+#endif
 
    s = SDL_GetCurrentVideoDriver();
    fprintf(file, "Current SDL video driver: %s\n", s);
