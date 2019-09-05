@@ -300,7 +300,7 @@ int main(int argc, char **argv)
 {
 	if (!sys.set_game_dir())
 		return 1;
-	locale_res.init("");
+	locale_res.init();
 	sys.set_config_dir();
 
 	//try to read from CONFIG.DAT, moved to AM.CPP
@@ -311,6 +311,8 @@ int main(int argc, char **argv)
 		config.init();
 	}
 	config_adv.init();
+	if( config_adv.locale[0] )
+		locale_res.load();
 
 	//----- read command line arguments -----//
 

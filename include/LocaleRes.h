@@ -61,8 +61,9 @@ public:
 	LocaleRes();
 	~LocaleRes();
 
-	void init(const char *locale);
+	void init();
 	void deinit();
+	void load();
 
 #ifdef ENABLE_NLS
 	const char *conv_str(iconv_t cd, const char *s);

@@ -28,6 +28,7 @@
 
 #include <ALL.h>
 #include <ODB.h>
+#include <ConfigAdv.h>
 #include <LocaleRes.h>
 
 //------------- End of function Constructor -------//
@@ -60,14 +61,9 @@ LocaleRes::~LocaleRes()
 //-------- Begin of function LocaleRes::init -----------//
 //
 #define INIT_BUF_SIZE 2048
-void LocaleRes::init(const char *locale)
+void LocaleRes::init()
 {
 #ifdef ENABLE_NLS
-	setlocale(LC_ALL, locale);
-	char *ctype = setlocale(LC_CTYPE, NULL);
-	if( !ctype )
-		return;
-
 	const char *env_locale_dir;
 	if( misc.is_file_exist("locale") )
 		bindtextdomain(PACKAGE, "locale");
@@ -76,6 +72,52 @@ void LocaleRes::init(const char *locale)
 	else
 		bindtextdomain(PACKAGE, LOCALE_DIR);
 	textdomain(PACKAGE);
+
+	load();
+
+	in_buf = mem_add(INIT_BUF_SIZE+1);
+	in_buf_size = INIT_BUF_SIZE;
+	out_buf = mem_add(INIT_BUF_SIZE+1);
+	out_buf_size = INIT_BUF_SIZE;
+#endif
+
+	init_flag = 1;
+}
+//---------- End of function LocaleRes::init ----------//
+
+
+//----------- Start of function LocaleRes::deinit ---------//
+//
+void LocaleRes::deinit()
+{
+	if( !init_flag )
+		return;
+#ifdef ENABLE_NLS
+	if( cd != (iconv_t)-1 )
+		iconv_close(cd);
+	if( cd_latin != (iconv_t)-1 )
+		iconv_close(cd_latin);
+	cd = (iconv_t)-1;
+	cd_latin = (iconv_t)-1;
+#endif
+	if( in_buf )
+		mem_del(in_buf);
+	if( out_buf )
+		mem_del(out_buf);
+	init_flag = 0;
+}
+//------------- End of function LocaleRes::deinit ---------//
+
+
+//----------- Start of function LocaleRes::change_locale ---------//
+//
+void LocaleRes::load()
+{
+#ifdef ENABLE_NLS
+	setlocale(LC_ALL, config_adv.locale);
+	char *ctype = setlocale(LC_CTYPE, NULL);
+	if( !ctype )
+		return;
 
 	LocaleRec *localeRec;
 	String localeDbName;
@@ -110,42 +152,17 @@ void LocaleRes::init(const char *locale)
 
 	String tocode(codeset);
 	tocode += "//TRANSLIT";
-	cd = iconv_open(tocode, "");
 
-	cd_latin = iconv_open("ISO-8859-1", "");
-
-	in_buf = mem_add(INIT_BUF_SIZE+1);
-	in_buf_size = INIT_BUF_SIZE;
-	out_buf = mem_add(INIT_BUF_SIZE+1);
-	out_buf_size = INIT_BUF_SIZE;
-#endif
-
-	init_flag = 1;
-}
-//---------- End of function LocaleRes::init ----------//
-
-
-//----------- Start of function LocaleRes::deinit ---------//
-//
-void LocaleRes::deinit()
-{
-	if( !init_flag )
-		return;
-#ifdef ENABLE_NLS
 	if( cd != (iconv_t)-1 )
 		iconv_close(cd);
 	if( cd_latin != (iconv_t)-1 )
 		iconv_close(cd_latin);
-	cd = (iconv_t)-1;
-	cd_latin = (iconv_t)-1;
+	cd = iconv_open(tocode, "");
+	cd_latin = iconv_open("ISO-8859-1", "");
 #endif
-	if( in_buf )
-		mem_del(in_buf);
-	if( out_buf )
-		mem_del(out_buf);
-	init_flag = 0;
 }
-//------------- End of function LocaleRes::deinit ---------//
+//------------- End of function LocaleRes::change_locale ---------//
+
 
 #ifdef ENABLE_NLS
 #define BUF_INCR 1000

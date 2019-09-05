@@ -36,8 +36,15 @@ public:
 		FLAG_UNKNOWN_BUILD = 8,
 	};
 
+	enum {
+		LOCALE_LEN = 40,
+	};
+
 	uint32_t		checksum;
 	uint32_t		flags;
+
+	// locale settings
+	char			locale[LOCALE_LEN+1];
 
 	// nation settings
 	char			nation_ai_unite_min_relation_level;
