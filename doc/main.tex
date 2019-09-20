@@ -19,8 +19,55 @@
 %*
 %*
 
+% -- Changelog -- %
+
+% Greetings reader, my purpose is a complete restoration of the orginal manual with the updates. Overall, however, this is a differant manual with lots of minor differences, coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux. I tried to let LaTeX do everything automatically, but it isn't perfect nor am I; for I had never used LaTeX, so many errors remain such as the bad box issues I completely ignored unless it was visually disruptive. There is still much to improve. I welcome fellow community members to contribute to this manual. Signed by loki with gratitude to everyone who put effort in it.
+
+% Summary of changes: 
+
+% Stylistic:
+	% Eliminated/corrected gender use. 
+	% Removed apersands 
+	% Removed Oxford commas and began modifying comma usage for correct usage and personal preferance.
+	% Began using em dashes instead of comma stops.
+	% Condenced sentences into 3 sentence minimum parapgraphs -- to correct spacing issues.
+
+% Formatting
+	% Parskip is different.
+	% Indentation is different.
+	% Some graphic are different sizes due to un/available space.
+	% More or less whitespace in differant locations.
+	% Header is different.
+	% Used non colored tables.
+	% Used circa 4in tables.
+
+% Content	
+	% Front page is different due to use of the titlepic package.
+	% REMOVED open copyright notice.
+	% ADDED GPL header and music copyright and Enlight tradmark notices.
+	% REMOVED Imagic from manual such as warrenty, registration, and help except for Imagic credits.
+	% ADDED introductiom for the open source project.
+	% ADDED website content such as frontpage/news, wiki, forum, download.
+	% Rewrote installation chapter.
+	% REMOVED troubleshooting information.
+	% Updated 7k icon to (color) 7kaa icon.
+	% Rearranged chapters such as the interface chapter now comes before the village chapter.
+	% Updated reputation penalties
+	% ADDED and updated hotkeys.
+	% ADDED more mouse commands.
+	% Indexed new content such as mChat, website pages, 7kfans multiplayer service, ports, matchmaking, download, Experimental Builds, and cheatcodes.
+	% ADDED 7kfans credits.
+	% Credited other authors for content I used.
+	% Updated lobby pic to reflect new lobby.
+	% Rearanged material a bit such as registration.
+	% General proofreading changes.
+	% Fixed factual errors.
+	% REMOVED CD-ROM referances.
+
+% -- Changelog end -- %
+
 \documentclass[openany]{book}
-\usepackage[paperwidth=5.51in, paperheight=8.81in, top=0.6205in, bottom=1.005in, right=0.505in, left=0.705in,]{geometry}% From the original manual. Do not change.
+\usepackage[paperwidth=5.51in, paperheight=8.81in, top=0.6205in, bottom=1.005in, right=0.505in, left=0.705in,]{geometry} % From the original manual. Do not change.
 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -31,28 +78,24 @@
 \usepackage[strict]{changepage}
 \usepackage{tabu}
 \usepackage{fancyhdr}
+	\pagestyle{plain}
+	\pagestyle{fancy}
+	\setlength{\headheight}{22.44pt}
+	\renewcommand{\headrulewidth}{2pt}
+	\fancyhf[lh,rh,ch]{}
+	\fancyhf[leh]{\leftmark}
+	\fancyhf[roh]{\rightmark}
 \usepackage{makeidx}
 
 % -- Additional Options -- %
-\pagestyle{plain}
-\setlength{\parskip}{1.5ex plus.05ex minus.05ex} % Do not change.
+\setlength{\parskip}{1.5ex plus.05ex minus.05ex} % Do not change unless it's an improvement.
 \setlength{\parindent}{0pt} % From the original manual.
 % -- Additional Options End -- %
 
 \makeindex
 
 % -- Notes and TODO -- %
-
-% Check all Images for v and h space in wrapfig env., correct sizes.
-% Circa 4in tables.
-% Check comma stop vs. em dash usage.
-% REDO chapter references throughout book.
-% Set the header.
-% ALPHABETISIZE KEYBOARD COMMANDS, and bold them?
-% Additional index content: mChat, website pages, 7kfans multiplayer service, ports, matchmaking.
-% Check consistant use of keyboard keys such as "J" key vs. O key vs. (F1)
-
-% -- Notes and TODO End -- %
+% -- Notes and TODO end -- %
 
 \begin{document}
 
