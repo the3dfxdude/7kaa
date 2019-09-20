@@ -49,6 +49,12 @@ ConfigAdv::ConfigAdv()
 	#ifdef DEV_VERSION
 		flags |= FLAG_DEVEL_VER;
 	#endif
+	#ifndef HAVE_KNOWN_BUILD
+		flags |= FLAG_UNKNOWN_BUILD;
+	#endif
+
+	// this is set on program load for LocaleRes
+	locale[0] = 0;
 }
 //--------- End of function ConfigAdv::ConfigAdv --------//
 
@@ -149,6 +155,8 @@ err_out:
 //
 void ConfigAdv::reset()
 {
+	locale[0] = 0;
+
 	nation_ai_unite_min_relation_level = NATION_NEUTRAL;
 	nation_start_god_level = 0;
 	nation_start_tech_inc_all_level = 0;
@@ -179,7 +187,12 @@ void ConfigAdv::reset()
 // Non-gameplay settings will not require a checksum.
 int ConfigAdv::set(char *name, char *value)
 {
-	if( !strcmp(name, "nation_ai_unite_min_relation_level") )
+	if( !strcmp(name, "locale") )
+	{
+		strncpy(locale, value, LOCALE_LEN);
+		locale[LOCALE_LEN] = 0;
+	}
+	else if( !strcmp(name, "nation_ai_unite_min_relation_level") )
 	{
 		if( !strcmpi(value, "hostile") )
 			nation_ai_unite_min_relation_level = NATION_HOSTILE;

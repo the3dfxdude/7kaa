@@ -33,10 +33,18 @@ public:
 		FLAG_DEBUG_VER = 1,
 		FLAG_DEVEL_VER = 2,
 		FLAG_CKSUM_REQ = 4,
+		FLAG_UNKNOWN_BUILD = 8,
+	};
+
+	enum {
+		LOCALE_LEN = 40,
 	};
 
 	uint32_t		checksum;
 	uint32_t		flags;
+
+	// locale settings
+	char			locale[LOCALE_LEN+1];
 
 	// nation settings
 	char			nation_ai_unite_min_relation_level;

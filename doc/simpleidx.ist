@@ -1,0 +1,4 @@
+headings_flag 1
+heading_prefix "\\textbf\{\\huge "
+heading_suffix "\}\\nopagebreak \\indexspace\\nopagebreak"
+

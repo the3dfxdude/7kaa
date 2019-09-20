@@ -9,7 +9,7 @@ AC_CONFIG_HEADERS([include/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([foreign])
-ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([no])])
 
 dnl Utility definitions
 
@@ -61,6 +61,20 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE(
   ],[
     AC_MSG_RESULT(no)
     AC_ERROR([The compiler must interpret char as signed])
+  ]
+)
+CXXFLAGS="$save_CXXFLAGS"
+
+dnl See if 387 fpu is supported
+CXXFLAGS="$CXXFLAGS -mfpmath=387"
+AC_MSG_CHECKING(checking if compiler can emit 387 instructions)
+AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+  )],[
+    AC_MSG_RESULT(yes)
+    GLOBAL_CFLAGS="$GLOBAL_CFLAGS -mfpmath=387"
+    fpu_type=387
+  ],[
+    AC_MSG_RESULT(no)
   ]
 )
 CXXFLAGS="$save_CXXFLAGS"
@@ -123,9 +137,9 @@ AC_ARG_ENABLE([debug],
   [], [enable_debug=no]
 )
 
-AC_ARG_ENABLE([network],
-  AS_HELP_STRING([--disable-network], [disable network support]),
-  [], [enable_network=yes]
+AC_ARG_ENABLE([multiplayer],
+  AS_HELP_STRING([--enable-multiplayer], [enable multiplayer support in menu]),
+  [enable_multiplayer=yes], [enable_multiplayer=auto]
 )
 
 AC_ARG_ENABLE([dynamic-mingw-gnulibs],
@@ -258,6 +272,10 @@ AS_IF([test "$found_iconv" = libiconv], [
 
 # Defines
 
+AS_IF([test "$fpu_type" = 387], [
+  AC_DEFINE([HAVE_KNOWN_BUILD], [1], [Define to 1 if this build config meets requirements for stable game play])
+])
+
 AS_IF([test "$platform" = windows], [
   AC_DEFINE([USE_WINDOWS], [1], [Define to 1 if building for the windows platform])
 ])
@@ -292,6 +310,17 @@ AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
   AC_DEFINE([USE_SDL], [1],
 	    [Define to 1 if using SDL as the video/input backend])
 ])
+
+AS_IF([test "$enable_multiplayer" = auto], [
+  enable_multiplayer=yes
+  AS_IF([test "$fpu_type" != 387], [
+    enable_multiplayer=no
+  ])
+])
+AS_IF([test "$enable_multiplayer" != yes], [
+  AC_DEFINE([DISABLE_MULTI_PLAYER], [1], [Define to 1 if the multiplayer menu option is disabled])
+])
+
 
 AS_IF([test "$enable_curl" = yes], [
   AC_DEFINE([HAVE_LIBCURL], [1],
@@ -336,4 +365,5 @@ AC_MSG_NOTICE([video backend: $video_backend])
 AC_MSG_NOTICE([input backend: $input_backend])
 echo
 AC_MSG_NOTICE([x86 asm: $enable_asm])
+AC_MSG_NOTICE([multiplayer: $enable_multiplayer])
 AC_MSG_NOTICE([debugging features: $enable_debug])
