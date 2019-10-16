@@ -26,22 +26,24 @@
 % Summary of changes: 
 
 % Stylistic:
-	% Eliminated/corrected gender use.
+	% Corrected gender use and used gender neutrality.
 	% Removed apersands.
 	% Removed Oxford commas and began modifying comma usage for correct usage and personal preferance.
 	% Began using em dashes. Currently inconsistantly used with and without spaces.
-	% Condenced some sentences into 3 sentence minimum parapgraphs -- to correct spacing issues.
 	% Replaced/substituted fonts: Galliard with Accanthis and GloudyTextMT with ygothic.
 	% Used standard LaTeX chapter heading/counter.
+	% Some use (in commands sections) of spacing with "/".
 
 % Formatting:
-	% Text is aligned.
-	% Parskip is different.
-	% Indentation is different.
+	% Condenced some sentences into 3 sentence minimum parapgraphs -- to correct spacing issues.
+	% New manual is a bit longer.
+	% Text is aligned. Restore with \raggedright.
 	% Some graphics are different sizes due to un/available space.
 	% More or less whitespace in differant locations.
 	% Used simple LaTeX header.
 	% Used simple LaTeX, non colored, 4in tables.
+	% Sectioning spacing is different.
+	% Graphics have different width, 0.8 or 0.9 to linewidth?
 
 % Content:
 	% Front page is different due to use of the titlepic package.
@@ -75,8 +77,10 @@
 	% Indexing + new content such as mChat, website pages, 7kfans multiplayer service, ports, matchmaking, download, Experimental Builds, and cheatcodes.
 	% Fix header.
 	% Replace Univers font with Universalis(?) for Chapter titles, TOC, and Index.
-	% Restore cover.
+	% Restore purple cover.
 	% Fix FAQ sectioning and header.
+	% Adjust tables. - more spacing on bottom in \hlines.
+	% CODE CLEAN UP.
 		
 % -- Notes and TODO end -- %
 
@@ -84,7 +88,8 @@
 
 % -- Document Specifications -- %
 
-	% Began using inch measurements. - circa 4in tables.
+	% Circa 4in tables.
+	% .5cm indentation.
 	
 % -- Document Specifications end -- %
 
@@ -97,9 +102,8 @@
 \usepackage{graphicx}
 \usepackage{titlepic}
 \usepackage{hyperref} % For the index and TOC but not for external links.
-\usepackage{setspace}
 \usepackage{wrapfig}
-\usepackage[strict]{changepage}
+\usepackage[strict]{changepage} % For the wrapfig (indentation) env.
 \usepackage{tabu}
 \usepackage{fancyhdr}
 	\pagestyle{fancy}
@@ -113,7 +117,7 @@
 
 % -- Additional Options -- %
 
-\setlength{\parskip}{1.5ex plus.05ex minus.05ex}
+\setlength{\parskip}{1ex} % From the original manual.
 \setlength{\parindent}{0pt} % From the original manual.
 
 % -- Additional Options end -- %
@@ -121,15 +125,14 @@
 \begin{document}
 
 \begin{titlepage}
-
 	\title{Seven Kingdoms: Ancient Adversaries \\
 		Instruction Manual}
 	\author{Chris Whitehouse et al. Updated by members of the \\
 		Seven Kingdoms: Ancient Adversaries OSS Project} % Do not change.
 	\date{2018-07-29} % Do not change.
 \titlepic{\includegraphics[width=0.7\linewidth]{7klogo}}
-
 \end{titlepage}
+
 \frontmatter
 \maketitle
 
