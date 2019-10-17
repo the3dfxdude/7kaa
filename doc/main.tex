@@ -36,14 +36,14 @@
 
 % Formatting:
 	% Condenced some sentences into 3 sentence minimum parapgraphs -- to correct spacing issues.
-	% New manual is a bit longer.
+	% New manual is a bit longer. Circa 10 pages. Due to sectioning?
 	% Text is aligned. Restore with \raggedright.
 	% Some graphics are different sizes due to un/available space.
 	% More or less whitespace in differant locations.
 	% Used simple LaTeX header.
 	% Used simple LaTeX, non colored, 4in tables.
 	% Sectioning spacing is different.
-	% Graphics have different width, 0.8 or 0.9 to linewidth?
+	% Large, centered graphics standaridized on .9 width to match .5cm indentation. Tiles standardized on 0.1 width.
 
 % Content:
 	% Front page is different due to use of the titlepic package.
@@ -53,15 +53,16 @@
 	% ADDED introductiom for the open source project. - quoted from jlac
 	% ADDED website content such as frontpage/news, wiki, forum, download.
 	% Rewrote installation chapter. - with help from the3dfxdude.
+	% Rewrote multiplayer information a bit. Contains wiki content. Author: Microvirus?
 	% REMOVED troubleshooting information.
 	% Updated 7k icon to (color) 7kaa icon.
-	% Rearranged chapters such as the interface chapter now comes before the village chapter.
+	% Rearranged interface chapter to come before the village chapter.
 	% Updated reputation penalties. - with help from the3dfxdude.
 	% ADDED and updated hotkeys. - from microvirus' documentation.
 	% ADDED more mouse commands. - from microvirus' documentation.
-	% ADDED cheat codes.
+	% ADDED cheat codes. - Source?
 	% ADDED 7kfans credits.
-	% Credited other authors: the3dfxdude, microvirus, jlac.
+	% Credited other manual authors: the3dfxdude, microvirus, jlac.
 	% Updated lobby graphic to reflect new lobby.
 	% Rearanged material a bit such as registration.
 	% General proofreading changes.
@@ -81,17 +82,16 @@
 	% Fix FAQ sectioning and header.
 	% Adjust tables. - more spacing on bottom in \hlines.
 	% CODE CLEAN UP.
+	% Manually code the tilepage and remove titlepic package. - Graphic on top + Ancient Adversaries... etc.
+	% Some tile graphics extend past top textline.
+	% Check chapter references.
+	% Organize key/mouse commands alphabetically or functionally.
+	% Text in wrapfig env.: botttom text has less space than to the left.
+	% Uses in, cm, pt, etc. Use just one type?
+	% Large "A" graphics on own page centered left - right and top - bottom?
+	% Perfect Nationalities chapter.
 		
 % -- Notes and TODO end -- %
-
-% ---------------------------------------------------------------------- %
-
-% -- Document Specifications -- %
-
-	% Circa 4in tables.
-	% .5cm indentation.
-	
-% -- Document Specifications end -- %
 
 \documentclass[openany]{book}
 \usepackage[paperwidth=5.51in, paperheight=8.81in, top=0.6205in, bottom=1.005in, right=0.505in, left=0.705in,]{geometry} % From the original manual. Do not change.
@@ -100,10 +100,9 @@
 \usepackage{accanthis} % Main font.
 \usepackage{yfonts} % ygothic: For first paragraphs.
 \usepackage{graphicx}
-\usepackage{titlepic}
-\usepackage{hyperref} % For the index and TOC but not for external links.
+\usepackage{titlepic} % Does not place pic on top.
+\usepackage[hidelinks]{hyperref} % For the index and TOC but not for external links. Non color, frameless links from the original manual.
 \usepackage{wrapfig}
-\usepackage[strict]{changepage} % For the wrapfig (indentation) env.
 \usepackage{tabu}
 \usepackage{fancyhdr}
 	\pagestyle{fancy}
@@ -119,6 +118,8 @@
 
 \setlength{\parskip}{1ex} % From the original manual.
 \setlength{\parindent}{0pt} % From the original manual.
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]} % Indentation command.
+\let\endchangemargin=\endlist % Indentation command end.
 
 % -- Additional Options end -- %
 
@@ -168,7 +169,7 @@ This manual is part of the community project. It has been updated to reflect the
 
 \section{Registration}
 
-\textgoth{\Huge{R}}egister for a forums account. An account in needed to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
+\textgoth{\Huge{R}}egister for a forums account. An account is needed to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
 
 \section{Questions or Problems}
 
