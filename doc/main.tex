@@ -21,40 +21,40 @@
 
 % -- Changelog -- %
 
-% Greetings reader, my purpose is a complete restoration of the orginal manual with the updates. Overall, however, this is a differant manual with lots of minor differences, coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux. I tried to let LaTeX do everything automatically, but it isn't perfect nor am I; for I had never used LaTeX, so many errors remain such as the bad box issues I completely ignored unless it was visually disruptive. There is still much to improve. I welcome fellow community members to contribute to this manual. Signed by loki with gratitude to everyone who put effort in it.
+% Greetings reader, my purpose is a complete restoration of the original manual with the updates. Overall, however, this is a different manual with lots of minor differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux. I tried to let LaTeX do everything automatically, but it isn't perfect nor am I; for I had never used LaTeX, so many errors remain such as the bad box issues I completely ignored unless it was visually disruptive. There is still much to improve. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
 
 % Summary of changes: 
 
 % Stylistic:
 	% Corrected gender use and used gender neutrality.
-	% Removed apersands.
-	% Removed Oxford commas and began modifying comma usage for correct usage and personal preferance.
-	% Began using em dashes. Currently inconsistantly used with and without spaces.
+	% Removed ampersands.
+	% Removed Oxford commas.
+	% Began modifying comma usage for correct usage and personal preference.
+	% Began using em dashes. Currently inconsistently used with and without spaces.
 	% Replaced/substituted fonts: Galliard with Accanthis and GloudyTextMT with ygothic.
 	% Used standard LaTeX chapter heading/counter.
-	% Some use (in commands sections) of spacing with "/".
+	% Some use (in commands sections) of spacing with "/". - prefered in tech writing these days.
 
 % Formatting:
-	% Condenced some sentences into 3 sentence minimum parapgraphs -- to correct spacing issues.
-	% New manual is a bit longer. Circa 10 pages. Due to sectioning?
+	% Condensed some sentences into 3 sentence minimum paragraphs -- to correct spacing issues.
+	% New manual is a bit longer. Circa 15 pages. Due to sectioning? i-iii etc. pages not counted in the original?
 	% Text is aligned. Restore with \raggedright.
-	% Some graphics are different sizes due to un/available space.
-	% More or less whitespace in differant locations.
+	% Some graphics are different sizes due to un/available space. Or increased in size due to poor visability. Some are positioned differently such as centered. Large, centered graphics standardized on .9 width to match .5cm indentation. Original sized varied. Tiles standardized on 0.1 width. - Original size. Some are custom. Other graphics are standard Texstudio input size (.7).
+	% More or less whitespace in different locations.
 	% Used simple LaTeX header.
-	% Used simple LaTeX, non colored, 4in tables.
-	% Sectioning spacing is different.
-	% Large, centered graphics standaridized on .9 width to match .5cm indentation. Tiles standardized on 0.1 width.
+	% Used simple LaTeX, non colored, 4in tables. Use of tables for stuff that the original did not use.
 
 % Content:
-	% Front page is different due to use of the titlepic package.
+	% ADDED re-publication date and original author to front page.
 	% REMOVED copyright notice.
-	% ADDED GPL header and music copyright and Enlight trademark notices. - with help from the3dfxdude.
-	% REMOVED Imagic from manual such as warrenty, registration, and help -- except for Imagic credits.
-	% ADDED introductiom for the open source project. - quoted from jlac
+	% ADDED GPL header, music copyright notice, and Enlight trademark notice. - with help from the3dfxdude.
+	% REMOVED Imagic from manual such as warranty, registration, and help -- except for Imagic credits.
+	% ADDED introduction for the open source project. - quoted from jlac1024
 	% ADDED website content such as frontpage/news, wiki, forum, download.
 	% Rewrote installation chapter. - with help from the3dfxdude.
+	% Additional TOC entries. - Standard LaTeX. - Subsections included.
 	% Rewrote multiplayer information a bit. Contains wiki content. Author: Microvirus?
-	% REMOVED troubleshooting information.
+	% REMOVED troubleshooting information and index entry.
 	% Updated 7k icon to (color) 7kaa icon.
 	% Rearranged interface chapter to come before the village chapter.
 	% Updated reputation penalties. - with help from the3dfxdude.
@@ -62,12 +62,12 @@
 	% ADDED more mouse commands. - from microvirus' documentation.
 	% ADDED cheat codes. - Source?
 	% ADDED 7kfans credits.
-	% Credited other manual authors: the3dfxdude, microvirus, jlac.
-	% Updated lobby graphic to reflect new lobby.
-	% Rearanged material a bit such as registration.
+	% Credited other manual authors: the3dfxdude, microvirus, jlac1024.
+	% Updated lobby graphic to show new lobby.
+	% Rearranged material a bit such as registration (repurposed), mouse commands.
 	% General proofreading changes.
 	% Fixed factual errors.
-	% REMOVED CD-ROM referances.
+	% REMOVED CD-ROM references.
 
 % -- Changelog end -- %
 
@@ -75,32 +75,36 @@
 
 % -- Notes and TODO -- %
 
-	% Indexing + new content such as mChat, website pages, 7kfans multiplayer service, ports, matchmaking, download, Experimental Builds, and cheatcodes.
-	% Fix header.
+	% Indexing new content: mChat, website pages, 7kfans multiplayer service, ports, matchmaking, download, Experimental Builds, and cheatcodes. Determine which index entries were changed or removed. Expand on "network play" index entry? Big Letters are missing from index - latexmk?
+	% Fix header. - Even manually code.
 	% Replace Univers font with Universalis(?) for Chapter titles, TOC, and Index.
 	% Restore purple cover.
-	% Fix FAQ sectioning and header.
+	% Fix FAQ sectioning and header. - currently using a dummy section.
 	% Adjust tables. - more spacing on bottom in \hlines.
 	% CODE CLEAN UP.
-	% Manually code the tilepage and remove titlepic package. - Graphic on top + Ancient Adversaries... etc.
-	% Some tile graphics extend past top textline.
+	% Some tile graphics extend past top textline. _ some due to Huge font.
 	% Check chapter references.
-	% Organize key/mouse commands alphabetically or functionally.
-	% Text in wrapfig env.: botttom text has less space than to the left.
+	% Organize key/mouse commands alphabetically or functionally. - Boldened in the original.
+	% Text in wrapfig env.: bottom text has less space than to the left.
 	% Uses in, cm, pt, etc. Use just one type?
-	% Large "A" graphics on own page centered left - right and top - bottom?
 	% Perfect Nationalities chapter.
+	% "Ancient Adversaries" does not align with the Seven Kingdoms graphic.
+	% Include cli commands along with keyboard, mouse, and cheat commands?
+	% I changed multi-player to multiplayer spelling, yet singleplayer and single-player are still used.
+	% Check gothic font in install instructions.
+	% I don't want websites' info in the manual... so far this is 7kfans specific. If the project dies, I will have to fork and change the manual to reflect the new project/websites. Perhaps condense website infos into its own chapter?
+	% I just properly capitalized King in the index. - maybe the index is imperfect. index entries are sometimes vague/misleading.
+	% the original manual "has been designed as an in-depth reference book."
+	% CHeck MLA and the titles' capitalization.
 		
 % -- Notes and TODO end -- %
 
 \documentclass[openany]{book}
 \usepackage[paperwidth=5.51in, paperheight=8.81in, top=0.6205in, bottom=1.005in, right=0.505in, left=0.705in,]{geometry} % From the original manual. Do not change.
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc} % T1.* accanthis specific?
 \usepackage{accanthis} % Main font.
 \usepackage{yfonts} % ygothic: For first paragraphs.
 \usepackage{graphicx}
-\usepackage{titlepic} % Does not place pic on top.
 \usepackage[hidelinks]{hyperref} % For the index and TOC but not for external links. Non color, frameless links from the original manual.
 \usepackage{wrapfig}
 \usepackage{tabu}
@@ -125,14 +129,14 @@
 
 \begin{document}
 
-\begin{titlepage}
-	\title{Seven Kingdoms: Ancient Adversaries \\
-		Instruction Manual}
-	\author{Chris Whitehouse et al. Updated by members of the \\
-		Seven Kingdoms: Ancient Adversaries OSS Project} % Do not change.
-	\date{2018-07-29} % Do not change.
-\titlepic{\includegraphics[width=0.7\linewidth]{7klogo}}
-\end{titlepage}
+\title{
+\includegraphics[width=0.9\linewidth]{7klogo}~\\[1cm]
+{\Huge{\textbf{Ancient Adversaries}}}~\\[1cm]
+{\huge{\textbf{Instruction Manual}}}
+}
+\author{Chris Whitehouse et al. Updated by members of the \\
+Seven Kingdoms: Ancient Adversaries OSS Project} % Do not change.
+\date{2018-07-29} % Do not change.
 
 \frontmatter
 \maketitle
@@ -168,6 +172,8 @@ Seven Kingdoms is a trademark of Enlight Software Ltd., and the 7kfans project i
 This manual is part of the community project. It has been updated to reflect the current status of \textit{Seven Kingdoms: Ancient Adversaries}.
 
 \section{Registration}
+
+\index{registering}
 
 \textgoth{\Huge{R}}egister for a forums account. An account is needed to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
 
