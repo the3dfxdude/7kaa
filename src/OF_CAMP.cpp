@@ -462,7 +462,7 @@ void FirmCamp::detect_info()
 
 	//----------- detect patrol -----------//
 
-	if( button_patrol.detect('R') )
+	if( button_patrol.detect(GETKEY(KEYEVENT_FIRM_PATROL)) )
 	{
 		if(remote.is_enable())
 		{

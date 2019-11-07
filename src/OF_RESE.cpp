@@ -204,7 +204,7 @@ void FirmResearch::detect_main_menu()
 
 	//------ detect the select research button -------//
 
-	if( button_select_research.detect('B') )
+	if( button_select_research.detect(GETKEY(KEYEVENT_FIRM_BUILD)) )
 	{
 		research_menu_mode = RESEARCH_MENU_RESEARCH;
 		disable_refresh = 1;    // static var for disp_info() only

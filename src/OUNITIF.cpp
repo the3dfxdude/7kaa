@@ -108,18 +108,18 @@ static short build_firm_button_order[MAX_FIRM_TYPE] =
 };
 // ##### end Gilbert 3/10 #######//
 
-static char button_build_hotkey[MAX_FIRM_TYPE] =
+static KeyEventType button_build_hotkey[MAX_FIRM_TYPE] =
 {
-	'F', // fort
-	'R', // mine (raw)
-	'A', // factory
-	'M', // market
-	'T', // tower of science
-	'W', // war factory
-	'I', // inn
-	'H', // harbour
-	'P', // seat of power
-	 0, // monster
+	KEYEVENT_BUILD_CAMP,
+	KEYEVENT_BUILD_MINE,
+	KEYEVENT_BUILD_FACTORY,
+	KEYEVENT_BUILD_MARKET,
+	KEYEVENT_BUILD_RESEARCH,
+	KEYEVENT_BUILD_WAR_FACTORY,
+	KEYEVENT_BUILD_INN,
+	KEYEVENT_BUILD_HARBOR,
+	KEYEVENT_BUILD_BASE,
+	KEYEVENT_BUILD_MONSTER,
 };
 
 
@@ -583,7 +583,7 @@ void Unit::detect_button()
 
 	//--------- "return camp" button ---------//
 
-	if( home_camp_firm_recno && button_return_camp.detect('R') )
+	if( home_camp_firm_recno && button_return_camp.detect(GETKEY(KEYEVENT_UNIT_RETURN)) )
 	{
 		// sound effect
 		se_res.far_sound(next_x_loc(), next_y_loc(), 1, 'S', sprite_id, "ACK");
@@ -601,7 +601,7 @@ void Unit::detect_button()
 
 	//-------- build button --------//
 
-	if( button_build.detect('B') )
+	if( button_build.detect(GETKEY(KEYEVENT_UNIT_BUILD)) )
 	{
 		unit_menu_mode = UNIT_MENU_BUILD;
 		info.disp();
@@ -609,7 +609,7 @@ void Unit::detect_button()
 
 	//-------- settle button ---------//
 
-	if( button_settle.detect('T') )
+	if( button_settle.detect(GETKEY(KEYEVENT_UNIT_SETTLE)) )
 	{
 		power.issue_command(COMMAND_SETTLE, sprite_recno);
 		info.disp();
@@ -967,7 +967,7 @@ void Unit::detect_build_menu()
 
 		if( button_build_flag[i] && firm_res[firmId]->can_build(sprite_recno) )
 		{
-			if( button_build_array[i].detect(button_build_hotkey[i]) )
+			if( button_build_array[i].detect(GETKEY(button_build_hotkey[i])) )
 			{
 				power.issue_command(COMMAND_BUILD_FIRM, sprite_recno, firmId);
 				rc = 1;
