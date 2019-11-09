@@ -1596,9 +1596,8 @@ int Mouse::is_key_event(KeyEventType key_event)
 	unsigned kc = SDLK_UNKNOWN;
 	if( key_event == KEYEVENT_UNSET )
 		return 0;
-	if( any_key_code_map[key_event] == unique_key_code )
-		return 1;
-	else if( skey_state & SHIFT_KEY_MASK )
+	kc = any_key_code_map[key_event];
+	if( skey_state & SHIFT_KEY_MASK )
 		kc = shift_key_code_map[key_event];
 	return kc ? kc == unique_key_code : 0;
 }
