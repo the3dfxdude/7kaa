@@ -43,7 +43,7 @@ enum MouseEventType
 	KEY_RELEASE = 6,
 };
 
-enum KeyEventType
+enum KeyEventType : int
 {
 	KEYEVENT_UNSET = 0,
 
@@ -92,6 +92,10 @@ enum KeyEventType
 	KEYEVENT_GOTO_SPY,
 	KEYEVENT_GOTO_SHIP,
 	KEYEVENT_GOTO_CAMP,
+
+	KEYEVENT_CHEAT_ENABLE1,
+	KEYEVENT_CHEAT_ENABLE2,
+	KEYEVENT_CHEAT_ENABLE3,
 
 	KEYEVENT_MAX
 };

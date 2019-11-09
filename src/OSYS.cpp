@@ -121,6 +121,19 @@ static unsigned long last_frame_time=0, last_resend_time=0;
 static char          remote_send_success_flag=1;
 static char          scenario_cheat_flag=0;
 
+static KeyEventType cheat_str[] = {
+   KEYEVENT_CHEAT_ENABLE1,
+   KEYEVENT_CHEAT_ENABLE1,
+   KEYEVENT_CHEAT_ENABLE1,
+   KEYEVENT_CHEAT_ENABLE2,
+   KEYEVENT_CHEAT_ENABLE2,
+   KEYEVENT_CHEAT_ENABLE2,
+   KEYEVENT_CHEAT_ENABLE3,
+   KEYEVENT_CHEAT_ENABLE3,
+   KEYEVENT_CHEAT_ENABLE3,
+   KEYEVENT_MAX
+};
+
 static std::string get_bundle_resources_path(void)
 {
 #ifdef HAVE__NSGETEXECUTABLEPATH
@@ -1519,11 +1532,7 @@ void Sys::process_key(unsigned scanCode, unsigned skeyState)
             }
             else
             {
-            #ifdef GERMAN
-               if( detect_key_str(1, "!!!###") )
-            #else
-               if( detect_key_str(1, "!!!@@@###") )
-            #endif
+               if( detect_key_str(1, cheat_str) )
                {
                   box.msg( _("Cheat Mode Enabled.") );
                   (~nation_array)->cheat_enabled_flag = 1;
@@ -2519,24 +2528,24 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 // return : <int> 1 - complete string detected
 //                0 - not detected
 //
-int Sys::detect_key_str(int keyStrId, const char* keyStr)
+int Sys::detect_key_str(int keyStrId, const KeyEventType* keyStr)
 {
    err_when( keyStrId < 0 || keyStrId >= MAX_KEY_STR );
 
-   unsigned char* keyStr2 = (unsigned char*) keyStr;
+   //const KeyEventType *keyStr = cheat_str;
 
-   if( mouse.key_code == keyStr2[key_str_pos[keyStrId]] )
+   if( ISKEY(keyStr[key_str_pos[keyStrId]]) )
       key_str_pos[keyStrId]++;
    else
       key_str_pos[keyStrId]=0;    // when one key unmatched, reset the counter
 
-   if( key_str_pos[keyStrId] >= (int) strlen(keyStr) )
+   if( keyStr[key_str_pos[keyStrId]] == KEYEVENT_MAX )
    {
       key_str_pos[keyStrId]=0;    // the full string has been entered successfully without any mistakes
       return 1;
    }
-   else
-      return 0;
+
+   return 0;
 }
 //----------- End of function Sys::detect_key_str --------//
 

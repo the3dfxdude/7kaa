@@ -170,6 +170,10 @@ void Mouse::init_key()
 	bind_key(KEYEVENT_GOTO_SPY, "Y");
 	bind_key(KEYEVENT_GOTO_SHIP, "H");
 	bind_key(KEYEVENT_GOTO_CAMP, "F");
+
+	bind_key(KEYEVENT_CHEAT_ENABLE1, "shift+1");
+	bind_key(KEYEVENT_CHEAT_ENABLE2, "shift+2");
+	bind_key(KEYEVENT_CHEAT_ENABLE3, "shift+3");
 }
 //------------- End of Mouse::init_key -------------//
 
