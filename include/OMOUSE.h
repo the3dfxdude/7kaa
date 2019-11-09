@@ -41,6 +41,7 @@ enum MouseEventType
 	LEFT_BUTTON_RELEASE = 4,
 	RIGHT_BUTTON_RELEASE = LEFT_BUTTON_RELEASE+1,
 	KEY_RELEASE = 6,
+	KEY_TYPING = 7,
 };
 
 enum KeyEventType : int
@@ -114,6 +115,7 @@ struct MouseEvent               // event buffer structure
 
 	int      x, y;               // mousecursor coordinates
 	unsigned scan_code;          // if scan_code>0 then it's a key press event
+	char typing;
 };
 
 #define LEFT_BUTTON_MASK	1
@@ -207,6 +209,7 @@ public:
 	unsigned scan_code;             // key pressed, keyboard event
 	unsigned key_code;				// converted from scan_code and event_skey_state
 	unsigned unique_key_code;	// any key pressed unfiltered by modifiers
+	char typing_char;
 
 	//-------- wheel/touch scrolling ---------//
 
@@ -284,6 +287,7 @@ public:
 	void bind_key(KeyEventType key_event, const char *key);
 	int is_key_event(KeyEventType key_event);
 	unsigned get_key_code(KeyEventType key_event);
+	void add_typing_event(char *text, unsigned long timeStamp);
 
 private:
 	int micky_to_displacement(int d);

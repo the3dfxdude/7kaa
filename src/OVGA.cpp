@@ -532,6 +532,8 @@ void Vga::handle_messages()
                   set_mouse_mode( MOUSE_INPUT_ABS );
             }
          }
+         if( SDL_IsTextInputActive() && event.key.keysym.sym >= SDLK_SPACE && event.key.keysym.sym <= SDLK_z )
+		bypass = 1;
          if( !bypass )
          {
             mouse.update_skey_state();
@@ -543,6 +545,9 @@ void Vga::handle_messages()
          mouse.update_skey_state();
          break;
       case SDL_TEXTINPUT:
+         mouse.add_typing_event(event.text.text, misc.get_time());
+         break;
+      case SDL_TEXTEDITING:
       case SDL_JOYAXISMOTION:
       case SDL_JOYBALLMOTION:
       case SDL_JOYHATMOTION:

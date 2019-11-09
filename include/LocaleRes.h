@@ -47,6 +47,7 @@ public:
 #ifdef ENABLE_NLS
 	iconv_t cd;
 	iconv_t cd_latin;
+	iconv_t cd_from_sdl;
 #endif
 
 private:

@@ -42,6 +42,7 @@ LocaleRes::LocaleRes()
 #ifdef ENABLE_NLS
 	cd = (iconv_t)-1;
 	cd_latin = (iconv_t)-1;
+	cd_from_sdl = (iconv_t)-1;
 #endif
 	in_buf = NULL;
 	out_buf = NULL;
@@ -159,6 +160,7 @@ void LocaleRes::load()
 		iconv_close(cd_latin);
 	cd = iconv_open(tocode, "");
 	cd_latin = iconv_open("ISO-8859-1", "");
+	cd_from_sdl = iconv_open("ISO-8859-1//TRANSLIT//IGNORE", "UTF-8");
 #endif
 }
 //------------- End of function LocaleRes::change_locale ---------//

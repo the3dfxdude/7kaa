@@ -30,6 +30,7 @@
 #include <OSYS.h>
 #include <ctype.h>
 #include <dbglog.h>
+#include <LocaleRes.h>
 
 DBGLOG_DEFAULT_CHANNEL(Mouse);
 
@@ -67,6 +68,7 @@ Mouse::Mouse()
 	scan_code = 0;
 	key_code = 0;
 	unique_key_code = 0;
+	typing_char = 0;
 	memset(event_buffer, 0, sizeof(MouseEvent) * EVENT_BUFFER_SIZE);
 	head_ptr = 0;
 	tail_ptr = 0;
@@ -456,6 +458,7 @@ int Mouse::get_event()
 		scan_code      =0;        // no keyboard event
 		key_code       =0;
 		unique_key_code=0;
+		typing_char    =0;
 		has_mouse_event=0;        // no mouse event
 		return 0;
 	}
@@ -487,6 +490,7 @@ int Mouse::get_event()
 		scan_code       = 0;
 		key_code        = 0;
 		unique_key_code = 0;
+		typing_char     = 0;
       has_mouse_event = 1;
 		break;
 
@@ -494,6 +498,7 @@ int Mouse::get_event()
 		scan_code = eptr->scan_code;
 		key_code = mouse.is_key(scan_code, event_skey_state, (unsigned short)0, K_CHAR_KEY);
 		unique_key_code = mouse.is_key(scan_code, 0, (unsigned short)0, K_UNIQUE_KEY);
+		typing_char     = 0;
 		has_mouse_event = 0;
 		break;
 
@@ -506,11 +511,20 @@ int Mouse::get_event()
 		scan_code          = 0;
 		key_code           = 0;
 		unique_key_code    = 0;
+		typing_char        = 0;
 		has_mouse_event    = 1;
 		break;
 
 	case KEY_RELEASE:
 		// no action
+		break;
+
+	case KEY_TYPING:
+		scan_code       = 0;
+		key_code        = 0;
+		unique_key_code = 0;
+		typing_char     = eptr->typing;
+		has_mouse_event = 0;
 		break;
 
 	default:
@@ -1619,3 +1633,41 @@ unsigned Mouse::get_key_code(KeyEventType key_event)
 	return SDLK_UNKNOWN;
 }
 // ------ End of Mouse::get_key_code -------//
+
+
+// ------ Begin of Mouse::add_typing_event -------//
+void Mouse::add_typing_event(char *text, unsigned long timeStamp)
+{
+#ifdef ENABLE_NLS
+	const char *str = locale_res.conv_str(locale_res.cd_from_sdl, text);
+#else
+	char *str = text;
+#endif
+	while( *str )
+	{
+		if((head_ptr == tail_ptr-1) ||               // see if the buffer is full
+			(head_ptr == EVENT_BUFFER_SIZE-1 && tail_ptr == 0))
+		{
+			break;
+		}
+
+		MouseEvent *ev = event_buffer + head_ptr;
+
+		ev->event_type = KEY_TYPING;
+		ev->scan_code = 0;
+		ev->skey_state = skey_state;
+		ev->time = timeStamp;
+		ev->typing = *str;
+
+		// put mouse state
+		// ev->state = 0;			//ev->state = left_press | right_press;
+		ev->x = cur_x;
+		ev->y = cur_y;
+
+		if(++head_ptr >= EVENT_BUFFER_SIZE)  // increment the head ptr
+			head_ptr = 0;
+
+		str++;
+	}
+}
+// ------ End of Mouse::add_typing_event -------//

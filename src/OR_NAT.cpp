@@ -407,6 +407,10 @@ static int detect_button()
 		if( mouse.single_click( x, REPORT_BUTTON_Y1, x+REPORT_BUTTON_WIDTH-1, REPORT_BUTTON_Y2 ) )
 		{
 			info.nation_report_mode = i;
+			if( info.nation_report_mode == NATION_REPORT_CHAT )
+				SDL_StartTextInput();
+			else
+				SDL_StopTextInput();
 			return 1;
 		}
 
