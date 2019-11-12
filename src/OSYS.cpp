@@ -121,6 +121,19 @@ static unsigned long last_frame_time=0, last_resend_time=0;
 static char          remote_send_success_flag=1;
 static char          scenario_cheat_flag=0;
 
+static KeyEventType cheat_str[] = {
+   KEYEVENT_CHEAT_ENABLE1,
+   KEYEVENT_CHEAT_ENABLE1,
+   KEYEVENT_CHEAT_ENABLE1,
+   KEYEVENT_CHEAT_ENABLE2,
+   KEYEVENT_CHEAT_ENABLE2,
+   KEYEVENT_CHEAT_ENABLE2,
+   KEYEVENT_CHEAT_ENABLE3,
+   KEYEVENT_CHEAT_ENABLE3,
+   KEYEVENT_CHEAT_ENABLE3,
+   KEYEVENT_MAX
+};
+
 static std::string get_bundle_resources_path(void)
 {
 #ifdef HAVE__NSGETEXECUTABLEPATH
@@ -1519,11 +1532,7 @@ void Sys::process_key(unsigned scanCode, unsigned skeyState)
             }
             else
             {
-            #ifdef GERMAN
-               if( detect_key_str(1, "!!!###") )
-            #else
-               if( detect_key_str(1, "!!!@@@###") )
-            #endif
+               if( detect_key_str(1, cheat_str) )
                {
                   box.msg( _("Cheat Mode Enabled.") );
                   (~nation_array)->cheat_enabled_flag = 1;
@@ -1572,124 +1581,127 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       }
    }
 
-   if( (keyCode = mouse.is_key(scanCode, skeyState, (unsigned short) 0, K_UNIQUE_KEY)) )
+   //---- keys for toggling map mode ----//
+
+   if( ISKEY(KEYEVENT_MAP_MODE_CYCLE) )
    {
-      keyCode = misc.lower(keyCode);
+      world.map_matrix->cycle_map_mode();
+   }
 
-      switch(keyCode)
-      {
-      //---- keys for toggling map mode ----//
+   //--------- opaque report mode --------//
 
-      case 'e':
-         world.map_matrix->cycle_map_mode();
-         break;
+   else if( ISKEY(KEYEVENT_REPORT_OPAQUE_TOGGLE) )
+   {
+      config.opaque_report = !config.opaque_report;
 
-      //--------- opaque report mode --------//
+      if( config.opaque_report )
+         box.msg( _("Opaque report mode") );
+      else
+         box.msg( _("Transparent report mode") );
+   }
 
-      case 'p':
-         // Key overlaps with Seat of Power from unit build menu.
-         if ( ! info.is_unit_build_menu_opened())
-         {
-            config.opaque_report = !config.opaque_report;
+   //------ clear news messages ------//
 
-            if( config.opaque_report )
-               box.msg( _("Opaque report mode") );
-            else
-               box.msg( _("Transparent report mode") );
-         }
-         break;
-
-      //------ clear news messages ------//
-
-      case 'x':
-         news_array.clear_news_disp();
-         break;
+   else if( ISKEY(KEYEVENT_CLEAR_NEWS) )
+   {
+      news_array.clear_news_disp();
+   }
 
       //------ open oldest open diplomatic message  ------//
 
-      case 'd':
-         news_array.view_first_diplomatic();
-         break;
+   else if( ISKEY(KEYEVENT_OPEN_DIPLOMATIC_MSG) )
+   {
+      news_array.view_first_diplomatic();
+   }
 
-      //------ jump to a location with natural resource ---//
+   //------ jump to a location with natural resource ---//
 
-      case 'j':
-         site_array.go_to_a_raw_site();
-         break;
+   else if( ISKEY(KEYEVENT_GOTO_RAW) )
+   {
+      site_array.go_to_a_raw_site();
+   }
 
-      //--------- bring up the option menu  ----------//
+   //--------- bring up the option menu  ----------//
 
-      case 'o':
-         // ##### begin Gilbert 5/11 #######//
-         // game.in_game_option_menu();
-         option_menu.enter(!remote.is_enable());
-         // ##### end Gilbert 5/11 #######//
-         break;
+   else if( ISKEY(KEYEVENT_OPEN_OPTION_MENU) )
+   {
+      // ##### begin Gilbert 5/11 #######//
+      // game.in_game_option_menu();
+      option_menu.enter(!remote.is_enable());
+      // ##### end Gilbert 5/11 #######//
+   }
 
-      //--------- forward/backward tutorial text block --------//
+   //--------- forward/backward tutorial text block --------//
 
-      case ',':
-         if( game.game_mode == GAME_TUTORIAL )
-            tutor.prev_text_block();
-         break;
+   else if( ISKEY(KEYEVENT_TUTOR_PREV) )
+   {
+      if( game.game_mode == GAME_TUTORIAL )
+         tutor.prev_text_block();
+   }
 
-      case '.':
-         if( game.game_mode == GAME_TUTORIAL )
-            tutor.next_text_block();
-         break;
+   else if( ISKEY(KEYEVENT_TUTOR_NEXT) )
+   {
+      if( game.game_mode == GAME_TUTORIAL )
+         tutor.next_text_block();
+   }
 
-      //---- keys for saving and loading game -----//
+   //---- keys for saving and loading game -----//
 
-      case 's':
-         save_game();
-         break;
+   else if( ISKEY(KEYEVENT_SAVE_GAME) )
+   {
+      save_game();
+   }
 
-      case 'l':
-         load_game();
-         break;
+   else if( ISKEY(KEYEVENT_LOAD_GAME) )
+   {
+      load_game();
+   }
 
-      case KEY_UP:
-         world.disp_next(-1, 0);    // previous same object type of any nation
-         break;
+   else if( ISKEY(KEYEVENT_OBJECT_PREV) )
+   {
+      world.disp_next(-1, 0);    // previous same object type of any nation
+   }
 
-      case KEY_DOWN:
-         world.disp_next(1, 0);     // next same object type of any nation
-         break;
+   else if( ISKEY(KEYEVENT_OBJECT_NEXT) )
+   {
+      world.disp_next(1, 0);     // next same object type of any nation
+   }
 
-      case KEY_LEFT:
-         world.disp_next(-1, 1);    // prevous same object type of the same nation
-         break;
+   else if( ISKEY(KEYEVENT_NATION_OBJECT_PREV) )
+   {
+      world.disp_next(-1, 1);    // prevous same object type of the same nation
+   }
 
-      case KEY_RIGHT:
-         world.disp_next(1, 1);     // next same object type of the same nation
-         break;
+   else if( ISKEY(KEYEVENT_NATION_OBJECT_NEXT) )
+   {
+      world.disp_next(1, 1);     // next same object type of the same nation
+   }
 
-      //---- key for quick locate -----//
+   //---- key for quick locate -----//
 
-      case 'k':
-         locate_king_general(RANK_KING);
-         break;
+   else if( ISKEY(KEYEVENT_GOTO_KING) )
+   {
+      locate_king_general(RANK_KING);
+   }
 
-      case 'g':
-         locate_king_general(RANK_GENERAL);
-         break;
+   else if( ISKEY(KEYEVENT_GOTO_GENERAL) )
+   {
+      locate_king_general(RANK_GENERAL);
+   }
 
-      case 'y':
-         locate_spy();
-         break;
+   else if( ISKEY(KEYEVENT_GOTO_SPY) )
+   {
+      locate_spy();
+   }
 
-      case 'h':
-         // Key overlaps with Harbour from unit build menu.
-         if ( ! info.is_unit_build_menu_opened())
-            locate_ship();
-         break;
+   else if( ISKEY(KEYEVENT_GOTO_SHIP) )
+   {
+      locate_ship();
+   }
 
-      case 'f':
-         // Key overlaps with Fort from unit build menu.
-         if ( ! info.is_unit_build_menu_opened())
-            locate_camp();
-         break;
-      }
+   else if( ISKEY(KEYEVENT_GOTO_CAMP) )
+   {
+      locate_camp();
    }
 }
 //--------- End of function Sys::detect_letter_key ---------//
@@ -2516,24 +2528,24 @@ int Sys::detect_set_speed(unsigned scanCode, unsigned skeyState)
 // return : <int> 1 - complete string detected
 //                0 - not detected
 //
-int Sys::detect_key_str(int keyStrId, const char* keyStr)
+int Sys::detect_key_str(int keyStrId, const KeyEventType* keyStr)
 {
    err_when( keyStrId < 0 || keyStrId >= MAX_KEY_STR );
 
-   unsigned char* keyStr2 = (unsigned char*) keyStr;
+   //const KeyEventType *keyStr = cheat_str;
 
-   if( mouse.key_code == keyStr2[key_str_pos[keyStrId]] )
+   if( ISKEY(keyStr[key_str_pos[keyStrId]]) )
       key_str_pos[keyStrId]++;
    else
       key_str_pos[keyStrId]=0;    // when one key unmatched, reset the counter
 
-   if( key_str_pos[keyStrId] >= (int) strlen(keyStr) )
+   if( keyStr[key_str_pos[keyStrId]] == KEYEVENT_MAX )
    {
       key_str_pos[keyStrId]=0;    // the full string has been entered successfully without any mistakes
       return 1;
    }
-   else
-      return 0;
+
+   return 0;
 }
 //----------- End of function Sys::detect_key_str --------//
 

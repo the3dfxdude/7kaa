@@ -552,10 +552,10 @@ void Town::detect_main_menu()
 
 	//------- detect buttons --------//
 
-	if( button_recruit.detect('R') )
+	if( button_recruit.detect(GETKEY(KEYEVENT_TOWN_RECRUIT)) )
 		recruit(-1, 0, COMMAND_PLAYER);
 
-	if( button_train.detect('B') )
+	if( button_train.detect(GETKEY(KEYEVENT_TOWN_TRAIN)) )
 	{
 		town_menu_mode = TOWN_MENU_TRAIN;
 		disable_refresh = 1;    // static var for disp_info() only

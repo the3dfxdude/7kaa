@@ -42,6 +42,7 @@
 #include <OF_MARK.h>
 #include <OREMOTE.h>
 #include <OSE.h>
+#include <OMOUSE.h>
 #include "gettext.h"
 
 //------- define static vars -------//
@@ -303,7 +304,7 @@ void FirmMarket::detect_info()
 
 	//----- detect hire caravan button -------//
 
-	if( button_hire_caravan.detect('R') )
+	if( button_hire_caravan.detect(GETKEY(KEYEVENT_FIRM_PATROL)) )
 		hire_caravan(COMMAND_PLAYER);
 }
 //----------- End of function FirmMarket::detect_info -----------//

@@ -41,7 +41,67 @@ enum MouseEventType
 	LEFT_BUTTON_RELEASE = 4,
 	RIGHT_BUTTON_RELEASE = LEFT_BUTTON_RELEASE+1,
 	KEY_RELEASE = 6,
+	KEY_TYPING = 7,
 };
+
+enum KeyEventType : int
+{
+	KEYEVENT_UNSET = 0,
+
+	KEYEVENT_FIRM_BUILD,
+	KEYEVENT_FIRM_PATROL,
+
+	KEYEVENT_TOWN_RECRUIT,
+	KEYEVENT_TOWN_TRAIN,
+
+	KEYEVENT_UNIT_BUILD,
+	KEYEVENT_UNIT_RETURN,
+	KEYEVENT_UNIT_SETTLE,
+	KEYEVENT_UNIT_UNLOAD,
+
+	KEYEVENT_BUILD_BASE,
+	KEYEVENT_BUILD_CAMP,
+	KEYEVENT_BUILD_FACTORY,
+	KEYEVENT_BUILD_HARBOR,
+	KEYEVENT_BUILD_INN,
+	KEYEVENT_BUILD_MARKET,
+	KEYEVENT_BUILD_MINE,
+	KEYEVENT_BUILD_MONSTER,
+	KEYEVENT_BUILD_RESEARCH,
+	KEYEVENT_BUILD_WAR_FACTORY,
+
+	KEYEVENT_MAP_MODE_CYCLE,
+	KEYEVENT_REPORT_OPAQUE_TOGGLE,
+	KEYEVENT_CLEAR_NEWS,
+	KEYEVENT_OPEN_DIPLOMATIC_MSG,
+	KEYEVENT_OPEN_OPTION_MENU,
+
+	KEYEVENT_TUTOR_PREV,
+	KEYEVENT_TUTOR_NEXT,
+
+	KEYEVENT_SAVE_GAME,
+	KEYEVENT_LOAD_GAME,
+
+	KEYEVENT_OBJECT_PREV,
+	KEYEVENT_OBJECT_NEXT,
+	KEYEVENT_NATION_OBJECT_PREV,
+	KEYEVENT_NATION_OBJECT_NEXT,
+
+	KEYEVENT_GOTO_RAW,
+	KEYEVENT_GOTO_KING,
+	KEYEVENT_GOTO_GENERAL,
+	KEYEVENT_GOTO_SPY,
+	KEYEVENT_GOTO_SHIP,
+	KEYEVENT_GOTO_CAMP,
+
+	KEYEVENT_CHEAT_ENABLE1,
+	KEYEVENT_CHEAT_ENABLE2,
+	KEYEVENT_CHEAT_ENABLE3,
+
+	KEYEVENT_MAX
+};
+#define GETKEY(n) mouse.get_key_code(n)
+#define ISKEY(n) mouse.is_key_event(n)
 
 //------- Define struct MouseEvent --------//
 
@@ -55,6 +115,7 @@ struct MouseEvent               // event buffer structure
 
 	int      x, y;               // mousecursor coordinates
 	unsigned scan_code;          // if scan_code>0 then it's a key press event
+	char typing;
 };
 
 #define LEFT_BUTTON_MASK	1
@@ -147,6 +208,8 @@ public:
 											 // use : LEFT_BUTTON=0, RIGHT_BUTTON=1
 	unsigned scan_code;             // key pressed, keyboard event
 	unsigned key_code;				// converted from scan_code and event_skey_state
+	unsigned unique_key_code;	// any key pressed unfiltered by modifiers
+	char typing_char;
 
 	//-------- wheel/touch scrolling ---------//
 
@@ -160,6 +223,7 @@ public:
 	~Mouse();
 
 	void	init();
+	void	init_key();
 	void	deinit();
 
 	void 	add_event(MouseEvent *);
@@ -219,6 +283,11 @@ public:
 
 	void disp_count_start();
 	void disp_count_end();
+
+	void bind_key(KeyEventType key_event, const char *key);
+	int is_key_event(KeyEventType key_event);
+	unsigned get_key_code(KeyEventType key_event);
+	void add_typing_event(char *text, unsigned long timeStamp);
 
 private:
 	int micky_to_displacement(int d);
