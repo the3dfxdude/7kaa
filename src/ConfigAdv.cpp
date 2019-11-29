@@ -155,6 +155,8 @@ err_out:
 //
 void ConfigAdv::reset()
 {
+	big_dynarray_mode = 1;
+
 	locale[0] = 0;
 
 	nation_ai_unite_min_relation_level = NATION_NEUTRAL;
