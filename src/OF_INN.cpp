@@ -227,11 +227,17 @@ void FirmInn::detect_info()
 		// ###### end Gilbert 31/7 #######//
 		if(remote.is_enable())
 		{
-			// packet structure : <firm recno>, <hire Id> <nation no>
-			short *shortPtr=(short *)remote.new_send_queue_msg(MSG_F_INN_HIRE, 3*sizeof(short));
+			InnUnit *innUnit = &inn_unit_array[browse_hire.recno()-1];
+			// packet structure : <firm recno> <unit id> <combat level> <skill id> <skill_level> <hire cost> <spy recno> <nation no>
+			short *shortPtr=(short *)remote.new_send_queue_msg(MSG_F_INN_HIRE, 8*sizeof(short));
 			shortPtr[0] = firm_recno;
-			shortPtr[1] = browse_hire.recno();
-			shortPtr[2] = nation_recno;
+			shortPtr[1] = innUnit->unit_id;
+			shortPtr[2] = innUnit->skill.combat_level;
+			shortPtr[3] = innUnit->skill.skill_id;
+			shortPtr[4] = innUnit->skill.skill_level;
+			shortPtr[5] = innUnit->hire_cost;
+			shortPtr[6] = innUnit->spy_recno;
+			shortPtr[7] = nation_recno;
 		}
 		else
 		{
@@ -246,10 +252,7 @@ void FirmInn::detect_info()
 //
 int FirmInn::hire(short recNo)
 {
-	err_when( recNo < 1 );
-
-	if( recNo > inn_unit_count )		// this may happen in a multiplayer game
-		return 0;
+	err_when( recNo < 1 || recNo > inn_unit_count );
 
 	//--------- first check if you have enough money to hire ------//
 
@@ -322,6 +325,38 @@ int FirmInn::hire(short recNo)
 }
 //----------- End of function FirmInn::hire -----------//
 
+
+//--------- Begin of function FirmInn::hire ---------//
+// called from remote message processing
+int FirmInn::hire_remote(short unitId, short combat_level, short skill_id, short skill_level, short hire_cost, short spy_recno)
+{
+	InnUnit* innUnit;
+	short recNo;
+
+	for( recNo=1; recNo<=inn_unit_count; recNo++ )
+	{
+		innUnit = inn_unit_array+recNo-1;
+		if( innUnit->unit_id != unitId )
+			continue;
+		if( innUnit->skill.combat_level != combat_level )
+			continue;
+		if( innUnit->skill.skill_id != skill_id )
+			continue;
+		if( innUnit->skill.skill_level != skill_level )
+			continue;
+		if( innUnit->hire_cost != hire_cost )
+			continue;
+		if( innUnit->spy_recno != spy_recno )
+			continue;
+		break;
+	}
+
+	if( recNo > inn_unit_count )		// this may happen in a multiplayer game
+		return 0;
+
+	return hire(recNo);
+}
+//----------- End of function FirmInn::hire_remote -----------//
 
 //--------- Begin of function FirmInn::put_det ---------//
 //
