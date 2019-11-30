@@ -53,6 +53,7 @@
 // ##### end Gilbert 9/10 ######//
 #include <OSERES.h>
 #include <OLOG.h>
+#include <ConfigAdv.h>
 
 
 //--------- Begin of function Town::Town ----------//
@@ -1307,7 +1308,9 @@ void Town::update_target_loyalty()
 
 	//------- apply quality of life -------//
 
-	int qolContribution = (quality_of_life-50)/3;			// -17 to +17
+	int qolContribution = config_adv.town_loyalty_qol ?
+		(quality_of_life-50)/3 :			// -17 to +17
+		0;						// off
 	for( i=0 ; i<MAX_RACE ; i++ )
 	{
 		if( race_pop_array[i] == 0 )

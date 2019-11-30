@@ -168,6 +168,7 @@ void ConfigAdv::reset()
 
 	town_ai_emerge_nation_pop_limit = 60 * MAX_NATION;
 	town_ai_emerge_town_pop_limit = 1000;
+	town_loyalty_qol = 1;
 
 	vga_allow_highdpi = 0;
 	vga_full_screen = 1;
@@ -247,6 +248,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "town_ai_emerge_town_pop_limit") )
 	{
 		if( !read_int(value, &town_ai_emerge_town_pop_limit) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "town_loyalty_qol") )
+	{
+		if( !read_bool(value, &town_loyalty_qol) )
 			return 0;
 		update_check_sum(name, value);
 	}
