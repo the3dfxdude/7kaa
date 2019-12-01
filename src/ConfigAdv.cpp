@@ -176,6 +176,7 @@ void ConfigAdv::reset()
 	vga_allow_highdpi = 0;
 	vga_full_screen = 1;
 	vga_keep_aspect_ratio = 1;
+	vga_pause_on_focus_loss = 1;
 
 	vga_window_width = 0;
 	vga_window_height = 0;
@@ -287,6 +288,11 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "vga_keep_aspect_ratio") )
 	{
 		if( !read_bool(value, &vga_keep_aspect_ratio) )
+			return 0;
+	}
+	else if( !strcmp(name, "vga_pause_on_focus_loss") )
+	{
+		if( !read_bool(value, &vga_pause_on_focus_loss) )
 			return 0;
 	}
 	else if( !strcmp(name, "vga_window_height") )

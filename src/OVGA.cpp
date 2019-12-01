@@ -390,7 +390,7 @@ void Vga::handle_messages()
             case SDL_WINDOWEVENT_FOCUS_GAINED:
             case SDL_WINDOWEVENT_RESTORED:
                sys.need_redraw_flag = 1;
-               if( !sys.is_mp_game )
+               if( !sys.is_mp_game && config_adv.vga_pause_on_focus_loss )
                   sys.unpause();
 
                // update ctrl/shift/alt key state
@@ -401,7 +401,7 @@ void Vga::handle_messages()
             //case SDL_WINDOWEVENT_LEAVE: // Do not respond to mouse focus
             case SDL_WINDOWEVENT_FOCUS_LOST:
             case SDL_WINDOWEVENT_MINIMIZED:
-               if( !sys.is_mp_game )
+               if( !sys.is_mp_game && config_adv.vga_pause_on_focus_loss )
                   sys.pause();
                // turn the system cursor back on to get around a fullscreen
                // mouse grabbed problem on windows

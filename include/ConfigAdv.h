@@ -46,6 +46,9 @@ public:
 	// internal settings
 	char			big_dynarray_mode;
 
+	// game settings
+	char			game_pause_on_focus_loss;
+
 	// locale settings
 	char			locale[LOCALE_LEN+1];
 
