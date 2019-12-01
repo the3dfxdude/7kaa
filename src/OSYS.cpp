@@ -120,6 +120,7 @@ static int  get_mouse_loc_in_zoom_map(int &x, int &y);
 static unsigned long last_frame_time=0, last_resend_time=0;
 static char          remote_send_success_flag=1;
 static char          scenario_cheat_flag=0;
+static short         last_frame_speed=0;
 
 static KeyEventType cheat_str[] = {
    KEYEVENT_CHEAT_ENABLE1,
@@ -2557,26 +2558,19 @@ int Sys::detect_key_str(int keyStrId, const KeyEventType* keyStr)
 //
 void Sys::set_speed(int frameSpeed, int remoteCall)
 {
-   static int last_speed = 0;
    short requested_speed;
 
    if( frameSpeed > 0 )
    {
       // set the game speed
       requested_speed = frameSpeed;
-      last_speed = 0;
-   } else if (last_speed == 0 && config.frame_speed == 0) {
-	   // can happen when loading games; the game should unpause
-	   requested_speed = 12;
-	   last_speed = 0;
-   } else if (last_speed != 0 && config.frame_speed != 0) {
-	  // can happen when loading games; the game should pause
-	  requested_speed = 0;
-	  last_speed = config.frame_speed;
-   } else {
+      last_frame_speed = 0;
+   }
+   else
+   {
       // toggle last game speed
-      requested_speed = last_speed;
-      last_speed = config.frame_speed;
+      requested_speed = last_frame_speed;
+      last_frame_speed = config.frame_speed;
    }
 
    //--------- if multiplayer, update remote players setting -------//
