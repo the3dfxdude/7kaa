@@ -159,6 +159,9 @@ void ConfigAdv::reset()
 
 	locale[0] = 0;
 
+	monster_alternate_attack_curve = 0;
+	monster_attack_divisor = 4;
+
 	nation_ai_unite_min_relation_level = NATION_NEUTRAL;
 	nation_start_god_level = 0;
 	nation_start_tech_inc_all_level = 0;
@@ -194,6 +197,20 @@ int ConfigAdv::set(char *name, char *value)
 	{
 		strncpy(locale, value, LOCALE_LEN);
 		locale[LOCALE_LEN] = 0;
+	}
+	else if( !strcmp(name, "monster_alternate_attack_curve") )
+	{
+		if( !read_bool(value, &monster_alternate_attack_curve) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "monster_attack_divisor") )
+	{
+		if( !read_int(value, &monster_attack_divisor) )
+			return 0;
+		if( CHECK_BOUND(monster_attack_divisor, 1, 6) )
+			return 0;
+		update_check_sum(name, value);
 	}
 	else if( !strcmp(name, "nation_ai_unite_min_relation_level") )
 	{

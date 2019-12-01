@@ -49,6 +49,10 @@ public:
 	// locale settings
 	char			locale[LOCALE_LEN+1];
 
+	// monster settings
+	char			monster_alternate_attack_curve;
+	int			monster_attack_divisor;
+
 	// nation settings
 	char			nation_ai_unite_min_relation_level;
 	int			nation_start_god_level;
