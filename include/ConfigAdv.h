@@ -46,9 +46,6 @@ public:
 	// internal settings
 	char			big_dynarray_mode;
 
-	// game settings
-	char			game_pause_on_focus_loss;
-
 	// locale settings
 	char			locale[LOCALE_LEN+1];
 
@@ -74,6 +71,7 @@ public:
 	char			vga_allow_highdpi;
 	char			vga_full_screen;
 	char			vga_keep_aspect_ratio;
+	char			vga_pause_on_focus_loss;
 
 	int			vga_window_width;
 	int			vga_window_height;
