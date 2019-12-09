@@ -40,6 +40,8 @@ static int update_x1, update_y1, update_x2, update_y2;          // coordination 
 static unsigned any_key_code_map[KEYEVENT_MAX];
 static unsigned shift_key_code_map[KEYEVENT_MAX];
 
+static void reset_key(KeyEventType key_event);
+
 //--------- Define Click Threshold -----------//
 //
 // Clock tick is incremented 1000 times per second or once per millisecond.
@@ -1602,6 +1604,7 @@ int Mouse::bind_key(KeyEventType key_event, const char *key)
 	if( kc == SDLK_UNKNOWN )
 		return 0;
 
+	reset_key(key_event);
 	*ke = mouse.is_key(kc, 0, (unsigned short)0, K_UNIQUE_KEY);
 	return 1;
 }
@@ -1672,3 +1675,12 @@ void Mouse::add_typing_event(char *text, unsigned long timeStamp)
 	}
 }
 // ------ End of Mouse::add_typing_event -------//
+
+
+// ------ Begin of static function reset_key -------//
+static void reset_key(KeyEventType key_event)
+{
+	any_key_code_map[key_event] = SDLK_UNKNOWN;
+	shift_key_code_map[key_event] = SDLK_UNKNOWN;
+}
+// ------ End of static function reset_key -------//
