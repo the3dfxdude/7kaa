@@ -284,7 +284,7 @@ public:
 	void disp_count_start();
 	void disp_count_end();
 
-	void bind_key(KeyEventType key_event, const char *key);
+	int bind_key(KeyEventType key_event, const char *key);
 	int is_key_event(KeyEventType key_event);
 	unsigned get_key_code(KeyEventType key_event);
 	void add_typing_event(char *text, unsigned long timeStamp);

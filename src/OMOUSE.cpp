@@ -1579,7 +1579,7 @@ void Mouse::disp_count_end()
 // string "key" is the SDL representation. Key is converted to the internal
 // game representation for key codes.
 //
-void Mouse::bind_key(KeyEventType key_event, const char *key)
+int Mouse::bind_key(KeyEventType key_event, const char *key)
 {
 	SDL_Keycode kc;
 	unsigned int *ke;
@@ -1597,10 +1597,13 @@ void Mouse::bind_key(KeyEventType key_event, const char *key)
 		if( !memcmp(key, "shift", 5) )
 			ke = &shift_key_code_map[key_event];
 		else
-			return;
+			return 0;
 	}
+	if( kc == SDLK_UNKNOWN )
+		return 0;
 
 	*ke = mouse.is_key(kc, 0, (unsigned short)0, K_UNIQUE_KEY);
+	return 1;
 }
 // ------ End of Mouse::bind_key -------//
 
