@@ -26,6 +26,7 @@
 #include <ONATIONB.h>
 #include <OFILETXT.h>
 #include <OMISC.h>
+#include <OMOUSE.h>
 #include <OSYS.h>
 #include <posix_string_compat.h>
 #include <version.h>
@@ -34,8 +35,70 @@
 
 #define CHECK_BOUND(n,x,y) n<x || n>y
 
+union KeyEventMap
+{
+	int index;
+	KeyEventType type;
+};
+static const char *keyevent_map[] = {
+	"KEYEVENT_UNSET",
+
+	"KEYEVENT_FIRM_BUILD",
+	"KEYEVENT_FIRM_PATROL",
+
+	"KEYEVENT_TOWN_RECRUIT",
+	"KEYEVENT_TOWN_TRAIN",
+
+	"KEYEVENT_UNIT_BUILD",
+	"KEYEVENT_UNIT_RETURN",
+	"KEYEVENT_UNIT_SETTLE",
+	"KEYEVENT_UNIT_UNLOAD",
+
+	"KEYEVENT_BUILD_BASE",
+	"KEYEVENT_BUILD_CAMP",
+	"KEYEVENT_BUILD_FACTORY",
+	"KEYEVENT_BUILD_HARBOR",
+	"KEYEVENT_BUILD_INN",
+	"KEYEVENT_BUILD_MARKET",
+	"KEYEVENT_BUILD_MINE",
+	"KEYEVENT_BUILD_MONSTER",
+	"KEYEVENT_BUILD_RESEARCH",
+	"KEYEVENT_BUILD_WAR_FACTORY",
+
+	"KEYEVENT_MAP_MODE_CYCLE",
+	"KEYEVENT_REPORT_OPAQUE_TOGGLE",
+	"KEYEVENT_CLEAR_NEWS",
+	"KEYEVENT_OPEN_DIPLOMATIC_MSG",
+	"KEYEVENT_OPEN_OPTION_MENU",
+
+	"KEYEVENT_TUTOR_PREV",
+	"KEYEVENT_TUTOR_NEXT",
+
+	"KEYEVENT_SAVE_GAME",
+	"KEYEVENT_LOAD_GAME",
+
+	"KEYEVENT_OBJECT_PREV",
+	"KEYEVENT_OBJECT_NEXT",
+	"KEYEVENT_NATION_OBJECT_PREV",
+	"KEYEVENT_NATION_OBJECT_NEXT",
+
+	"KEYEVENT_GOTO_RAW",
+	"KEYEVENT_GOTO_KING",
+	"KEYEVENT_GOTO_GENERAL",
+	"KEYEVENT_GOTO_SPY",
+	"KEYEVENT_GOTO_SHIP",
+	"KEYEVENT_GOTO_CAMP",
+
+	"KEYEVENT_CHEAT_ENABLE1",
+	"KEYEVENT_CHEAT_ENABLE2",
+	"KEYEVENT_CHEAT_ENABLE3",
+
+	"KEYEVENT_MAX"
+};
+
 static int read_int(char *in, int *out);
 static int read_bool(char *in, char *out);
+static int read_key(char *in, char **out, KeyEventMap *event);
 
 //--------- Begin of function ConfigAdv::ConfigAdv -----------//
 
@@ -194,7 +257,14 @@ void ConfigAdv::reset()
 // Non-gameplay settings will not require a checksum.
 int ConfigAdv::set(char *name, char *value)
 {
-	if( !strcmp(name, "locale") )
+	if( !strcmp(name, "bindkey") )
+	{
+		KeyEventMap event;
+		char *key;
+		if( !read_key(value, &key, &event) || !mouse.bind_key(event.type, key) )
+			return 0;
+	}
+	else if( !strcmp(name, "locale") )
 	{
 		strncpy(locale, value, LOCALE_LEN);
 		locale[LOCALE_LEN] = 0;
@@ -344,5 +414,26 @@ static int read_bool(char *in, char *out)
 		*out = 0;
 	else
 		return 0;
+	return 1;
+}
+
+
+static int read_key(char *in, char **out, KeyEventMap *event)
+{
+	char *p = strchr(in, ',');
+	if( !p )
+		return 0;
+	*p = 0;
+	p++;
+	if( !*p )
+		return 0;
+	*out = p;
+	int i;
+	for( i=0; i<(int)KEYEVENT_MAX; i++ )
+		if( strcmp(keyevent_map[i], in)==0 )
+			break;
+	if( i>=(int)KEYEVENT_MAX )
+		return 0;
+	event->index = i;
 	return 1;
 }
