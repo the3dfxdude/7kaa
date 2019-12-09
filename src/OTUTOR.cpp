@@ -43,6 +43,7 @@
 #include <OBOX.h>
 #include <OMOUSE.h>
 #include <dbglog.h>
+#include <ConfigAdv.h>
 
 #include <posix_string_compat.h>
 
@@ -436,8 +437,22 @@ void Tutor::run(int tutorId, int inGameCall)
 
 	if( !inGameCall )
 	{
+		ConfigAdv backup;
+		if( config_adv.scenario_config )
+		{
+			String str2;
+			str2  = DIR_TUTORIAL;
+			str2 += "config.txt";
+
+			backup = config_adv;
+			config_adv.load(str2);
+		}
+
 		battle.run_loaded();
 		game.deinit();
+
+		if( config_adv.scenario_config )
+			config_adv = backup;
 	}
 }
 //----------- End of function Tutor::run ------------//

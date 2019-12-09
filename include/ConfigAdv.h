@@ -62,6 +62,9 @@ public:
 	char		        remote_compare_object_crc;
 	char			remote_compare_random_seed;
 
+	// scenario settings
+	char			scenario_config;
+
 	// town settings
 	int			town_ai_emerge_nation_pop_limit;
 	int			town_ai_emerge_town_pop_limit;

@@ -154,8 +154,7 @@ int ConfigAdv::load(char *filename)
 		return 0;
 	if( !misc.is_file_exist(full_path) )
 	{
-		full_path = DIR_RES;
-		full_path += filename;
+		full_path = filename;
 		if( full_path.error_flag || !misc.is_file_exist(full_path) )
 			return 0;
 	}
@@ -231,6 +230,8 @@ void ConfigAdv::reset()
 
 	remote_compare_object_crc = 1;
 	remote_compare_random_seed = 1;
+
+	scenario_config = 1;
 
 	town_ai_emerge_nation_pop_limit = 60 * MAX_NATION;
 	town_ai_emerge_town_pop_limit = 1000;
@@ -325,6 +326,11 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "remote_compare_random_seed") )
 	{
 		if( !read_bool(value, &remote_compare_random_seed) )
+			return 0;
+	}
+	else if( !strcmp(name, "scenario_config") )
+	{
+		if( !read_bool(value, &scenario_config) )
 			return 0;
 	}
 	else if( !strcmp(name, "town_ai_emerge_nation_pop_limit") )
