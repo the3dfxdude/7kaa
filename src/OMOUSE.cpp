@@ -74,6 +74,7 @@ Mouse::Mouse()
 	tail_ptr = 0;
 	double_speed_threshold = DEFAULT_DOUBLE_SPEED_THRESHOLD;
 	triple_speed_threshold = DEFAULT_TRIPLE_SPEED_THRESHOLD;
+	init_key();
 }
 //---------- End of Mouse::Mouse ---------//
 
@@ -96,7 +97,8 @@ void Mouse::init()
 	if( !SDL_WasInit(SDL_INIT_VIDEO) )
 		return;
 
-	init_key();
+	update_skey_state();
+	SDL_StopTextInput();
 
 	//------- initialize VGA update buffer -------//
 
@@ -121,9 +123,6 @@ void Mouse::init()
 //
 void Mouse::init_key()
 {
-	update_skey_state();
-	SDL_StopTextInput();
-
 	bind_key(KEYEVENT_FIRM_BUILD, "B");
 	bind_key(KEYEVENT_FIRM_PATROL, "R");
 
@@ -1599,7 +1598,6 @@ void Mouse::bind_key(KeyEventType key_event, const char *key)
 			ke = &shift_key_code_map[key_event];
 		else
 			return;
-
 	}
 
 	*ke = mouse.is_key(kc, 0, (unsigned short)0, K_UNIQUE_KEY);
