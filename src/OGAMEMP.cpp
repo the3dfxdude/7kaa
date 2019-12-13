@@ -1604,9 +1604,9 @@ int Game::input_box(const char *tell_string, char *buf, int len, char hide_input
 // The return is 1 when ok is pressed, and 0 when cancel is pressed.
 int Game::input_name_pass(const char *txt[], char *name, int name_len, char *pass, int pass_len)
 {
-	const char *title = txt[0];
-	const char *inputFieldDes1 = txt[1];
-	const char *inputFieldDes2 = txt[2];
+	const char *title = _(txt[0]);
+	const char *inputFieldDes1 = _(txt[1]);
+	const char *inputFieldDes2 = _(txt[2]);
 	const char *buttonDes1 = _("Ok");
 	const char *buttonDes2 = _("Cancel");
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
