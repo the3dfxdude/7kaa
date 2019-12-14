@@ -21,53 +21,61 @@
 
 % -- Changelog -- %
 
-% Greetings reader, my purpose is a complete restoration of the original manual with the updates. Overall, however, this is a different manual with lots of minor differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux. I tried to let LaTeX do everything automatically, but it isn't perfect nor am I; for I had never used LaTeX, so many errors remain such as the bad box issues I completely ignored unless it was visually disruptive. There is still much to improve. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
+% Greetings reader, my purpose is a complete restoration of the original manual with the updates. Special attention has been given to preserving the original author's voice; Overall, however, this is a different manual with lots of minor and major differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux. I tried to let LaTeX do everything automatically, but it isn't perfect nor am I; for I had never used LaTeX, so many errors remain such as the bad box issues I completely ignored unless it was visually disruptive. There is still much to improve. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
 
 % Summary of changes: 
 
 % Stylistic:
-	% Corrected gender use and used gender neutrality.
-	% Removed ampersands.
-	% Removed Oxford commas.
-	% Began modifying comma usage for correct usage and personal preference.
-	% Began using em dashes. Currently inconsistently used with and without spaces.
-	% Replaced/substituted fonts: Galliard with Accanthis and GloudyTextMT with ygothic.
-	% Used standard LaTeX chapter heading/counter.
-	% Some use (in commands sections) of spacing with "/". - prefered in tech writing these days.
+	% Replaced proprietary fonts with substitutable open fonts: Galliard with Accanthis and GloudyTextMT with ygothic
+	% REMOVED ampersands.
+
+% Grammar:
+	% Used gender neutral term when referring to all Greater Beings.
+
+% Punctuation:	
+	% Modified comma usage: consistency with comma rules, REMOVED comma stops, and separated beginning clauses; REMOVED Oxford commas.
+	% REMOVED en and em dashes.
+	% REMOVED scare quotes.
+	% REMOVED the two dot, non spaced ellipsis; ".."
 
 % Formatting:
-	% Condensed some sentences into 3 sentence minimum paragraphs -- to correct spacing issues.
-	% New manual is a bit longer. Circa 15 pages. Due to sectioning? i-iii etc. pages not counted in the original?
-	% Text is aligned. Restore with \raggedright.
-	% Some graphics are different sizes due to un/available space. Or increased in size due to poor visability. Some are positioned differently such as centered. Large, centered graphics standardized on .9 width to match .5cm indentation. Original sized varied. Tiles standardized on 0.1 width. - Original size. Some are custom. Other graphics are standard Texstudio input size (.7).
+	% Text is both left and right justified.
 	% More or less whitespace in different locations.
-	% Used simple LaTeX header.
-	% Used simple LaTeX, non colored, 4in tables. Use of tables for stuff that the original did not use.
+	% Condensed some sentences into 3 sentence minimum paragraphs to correct spacing issues.
+	% New manual is a bit longer.
+	% Some graphics are different sizes but close approximations to the original.
+	% Fancyhdr package modifies ...
+	% Used simple LaTeX, non colored, ~4in tables.
+	% Additional TOC entries. - Standard LaTeX. - Subsections included.
+	% ADDED additional sub/sections.
+	% Capitalized sectioning according to M.L.A. except for trade situations and FAQ.
+	% Used standard LaTeX chapter heading/counter.
 
 % Content:
-	% ADDED re-publication date and original author to front page.
+	% ADDED re-publication date to front page.
+	% ADDED the author, original and new, to front page.
 	% REMOVED copyright notice.
-	% ADDED GPL header, music copyright notice, and Enlight trademark notice. - with help from the3dfxdude.
+	% ADDED GPL header, music copyright notice, and Enlight trademark notice with help from the3dfxdude.
 	% REMOVED Imagic from manual such as warranty, registration, and help -- except for Imagic credits.
-	% ADDED introduction for the open source project. - quoted from jlac1024
-	% ADDED website content such as frontpage/news, wiki, forum, download.
-	% Rewrote installation chapter. - with help from the3dfxdude.
-	% Additional TOC entries. - Standard LaTeX. - Subsections included.
-	% Rewrote multiplayer information a bit. Contains wiki content. Author: Microvirus?
-	% REMOVED troubleshooting information and index entry.
+	% ADDED introduction for the open source project, quoted from jlac1024.
+	% ADDED website information such as frontpage/news, wiki, forum, download.
+	% Rewrote installation chapter with help from the3dfxdude.
+	% ADDED information about 7kfans.com multiplayer service.
+	% REMOVED troubleshooting information.
 	% Updated 7k icon to (color) 7kaa icon.
-	% Rearranged interface chapter to come before the village chapter.
-	% Updated reputation penalties. - with help from the3dfxdude.
-	% ADDED and updated hotkeys. - from microvirus' documentation.
-	% ADDED more mouse commands. - from microvirus' documentation.
-	% ADDED cheat codes. - Source?
+	% Rearranged interface chapter to preceed the village chapter.
+	% Updated reputation penalties with help from the3dfxdude.
+	% ADDED and updated hotkeys from MicroVirus' documentation.
+	% ADDED more mouse commands from MicroVirus' documentation.
+	% ADDED cheat codes from MicroVirus' documentation.
 	% ADDED 7kfans credits.
-	% Credited other manual authors: the3dfxdude, microvirus, jlac1024.
+	% Credited manual content authors.
 	% Updated lobby graphic to show new lobby.
-	% Rearranged material a bit such as registration (repurposed), mouse commands.
-	% General proofreading changes.
+	% Rearranged material such as registration (repurposed), mouse commands.
 	% Fixed factual errors.
 	% REMOVED CD-ROM references.
+	% REMOVED spinners and troubleshooting index entries.
+	% Respelled multi-player to multiplayer and single-player to single player.
 
 % -- Changelog end -- %
 
@@ -75,48 +83,53 @@
 
 % -- Notes and TODO -- %
 
-	% Indexing new content: mChat, website pages, 7kfans multiplayer service, ports, matchmaking, download, Experimental Builds, and cheatcodes. Determine which index entries were changed or removed. Expand on "network play" index entry? Big Letters are missing from index - latexmk?
+	% the original manual "has been designed as an in-depth reference book."
+	% https://writingcenter.unc.edu/tips-and-tools/gender-inclusive-language/
+	% https://style.mla.org/commas-conj-mods/
+	% https://style.mla.org/scare-quotes-origins/
+	% Indexing new content: mChat, website pages, 7kfans multiplayer service, download, Experimental Builds, and cheatcodes. Expand on "network play" index entry?
 	% Fix header. - Even manually code.
 	% Replace Univers font with Universalis(?) for Chapter titles, TOC, and Index.
 	% Restore purple cover.
 	% Fix FAQ sectioning and header. - currently using a dummy section.
-	% Adjust tables. - more spacing on bottom in \hlines.
 	% CODE CLEAN UP.
-	% Some tile graphics extend past top textline. _ some due to Huge font.
-	% Check chapter references.
-	% Organize key/mouse commands alphabetically or functionally. - Boldened in the original.
-	% Text in wrapfig env.: bottom text has less space than to the left.
+	% Some tile graphics extend past top textline. - some due to Huge font.
+	% Organize key/mouse commands.
 	% Uses in, cm, pt, etc. Use just one type?
-	% Perfect Nationalities chapter.
-	% "Ancient Adversaries" does not align with the Seven Kingdoms graphic.
-	% Include cli commands along with keyboard, mouse, and cheat commands?
-	% I changed multi-player to multiplayer spelling, yet singleplayer and single-player are still used.
-	% Check gothic font in install instructions.
-	% I don't want websites' info in the manual... so far this is 7kfans specific. If the project dies, I will have to fork and change the manual to reflect the new project/websites. Perhaps condense website infos into its own chapter?
-	% I just properly capitalized King in the index. - maybe the index is imperfect. index entries are sometimes vague/misleading.
-	% the original manual "has been designed as an in-depth reference book."
-	% CHeck MLA and the titles' capitalization.
+	% Ancient Adversaries" does not align with the Seven Kingdoms graphic.
+	% Restore orginal voice
+	% Disagreement between troop and troops in pronoun use.
+	% Capitalization is not consistant.
+	% Period usage in the hotkeys/mouse commands/cheats. the box in the mouse commands looks a bit gray. hotkeys are slightly indented in the original. 
+	% itemize is used only once. it's in the 7kfans credits.
 		
 % -- Notes and TODO end -- %
 
 \documentclass[openany]{book}
 \usepackage[paperwidth=5.51in, paperheight=8.81in, top=0.6205in, bottom=1.005in, right=0.505in, left=0.705in,]{geometry} % From the original manual. Do not change.
-\usepackage[T1]{fontenc} % T1.* accanthis specific?
+\usepackage[T1]{fontenc} % T1 accanthis specific?
 \usepackage{accanthis} % Main font.
 \usepackage{yfonts} % ygothic: For first paragraphs.
+\usepackage{xcolor,colortbl} % Need both?
 \usepackage{graphicx}
+%	\graphicspath{{assets/}}
 \usepackage[hidelinks]{hyperref} % For the index and TOC but not for external links. Non color, frameless links from the original manual.
 \usepackage{wrapfig}
 \usepackage{tabu}
 \usepackage{fancyhdr}
 	\pagestyle{fancy}
 	\setlength{\headheight}{22.44pt} % 22.44pt used to avoid errors.
-	\renewcommand{\headrulewidth}{.5pt} % From original manual.
+	\renewcommand{\headrulewidth}{.5pt} % From original manual?
 	\fancyhf[lh,rh,ch]{}
 	\fancyhf[leh]{\leftmark}
 	\fancyhf[roh]{\rightmark}
 \usepackage{makeidx}
 	\makeindex
+
+%\usepackage{showframe} % For testing.
+
+% -- New Environment -- %
+% -- New Environment end -- %
 
 % -- Additional Options -- %
 
@@ -157,6 +170,8 @@ You should have received a copy of the GNU General Public License along with thi
 
 \subsubsection{Music}
 
+% ø letter and (c)
+
 The music is the work of Bjørn Lynne, Copyright (c) 1997, and is not provided under the GPL. It may be freely downloaded and used with Seven Kingdoms: Ancient Adversaries but not modified or repurposed into derivative works.
 
 \subsubsection{Trademark}
@@ -165,9 +180,15 @@ Seven Kingdoms is a trademark of Enlight Software Ltd., and the 7kfans project i
 
 \clearpage
 
-\section{Introduction}
+\section{Project Introduction}
 
-\textgoth{\Huge{I}}n 2009, Trevor Chan from Enlight Software released the source code for \textit{Seven Kingdoms: Ancient Adversaries}. He released it under a community project so that developers can provide some long awaited bug fixes and address some other game-play issues. The official website for \textit{Seven Kingdoms: Ancient Adversaries} is at https://7kfans.com/. Here you will find the Forums, Wiki, and Download Page. \textit{Seven Kingdoms: Ancient Adversaries} has been under active development since its 2009 release. If you want to see what has been fixed or changed, see the changelogs for the official releases under News. 
+% Hyphenation here
+
+\textgoth{\Huge{I}}n 2009, Trevor Chan from Enlight Software released the source code for \textit{Seven Kingdoms: Ancient Adversaries}. He released it under a community project so that developers can provide some long awaited bug fixes and address some other game-play issues. 
+
+The official website for \textit{Seven Kingdoms: Ancient Adversaries} OSS Project is at https://7kfans.com/. Here you will find the forums, wiki, and download page.
+
+\textit{Seven Kingdoms: Ancient Adversaries} has been under active development since its 2009 release. If you want to see what has been fixed or changed, see the changelogs for the official releases under News. 
 
 This manual is part of the community project. It has been updated to reflect the current status of \textit{Seven Kingdoms: Ancient Adversaries}.
 
@@ -175,11 +196,11 @@ This manual is part of the community project. It has been updated to reflect the
 
 \index{registering}
 
-\textgoth{\Huge{R}}egister for a forums account. An account is needed to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
+\textgoth{\Huge{R}}egister for a forums account. An account is necessary to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
 
 \section{Questions or Problems}
 
-\textgoth{\Huge{I}}f you have difficulties with this game and cannot find the solution in this manual, please post your question or problem on the forums, and a member of the community will assist you. There may also be additional information on the wiki not found in this manual.
+\textgoth{\Huge{I}}f you have difficulties with this game and cannot find the solution in this manual, there is additional information on the wiki, or post your question or problem on the forums for assistance from a member of the community.
 
 \tableofcontents
 
@@ -193,7 +214,7 @@ This manual is part of the community project. It has been updated to reflect the
 \include{developing_your_economy}
 \include{developing_weapons}
 \include{harbors_ships}
-\include{mercanaries}
+\include{mercenaries}
 \include{diplomacy}
 \include{creating_empire}
 \include{spies_espionage}
