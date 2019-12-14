@@ -883,6 +883,8 @@ static void group_drop_spy_identity()
 			if( !remote.is_enable() )
 			{
 				spy_array[unitPtr->spy_recno]->drop_spy_identity();
+				if( unitPtr->sprite_recno == unit_array.selected_recno )
+					info.disp();
 			}
 			else
 			{

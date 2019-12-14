@@ -2647,7 +2647,13 @@ void RemoteMsg::spy_drop_identity()
 #ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d drop identity\n", shortPtr[0]);
 #endif
-		spy_array[*shortPtr]->drop_spy_identity();
+		Spy* spyPtr = spy_array[*shortPtr];
+		if( spyPtr->spy_place != SPY_MOBILE ) // message can only be for mobile spy
+			return;
+		short sprite_recno = spyPtr->spy_place_para; // mobile spy
+		spyPtr->drop_spy_identity();
+		if( sprite_recno && sprite_recno == unit_array.selected_recno )
+			info.disp();
 	}
 }
 // ------- End of function RemoteMsg::spy_drop_identity ------//
