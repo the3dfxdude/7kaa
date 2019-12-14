@@ -538,7 +538,8 @@ void FirmInn::update_del_hire_list()
 		{
 			del_inn_unit(i);
 
-			if( firm_recno == firm_array.selected_recno )
+			if( firm_recno == firm_array.selected_recno &&
+				should_show_info() )
 			{
 				if( browse_hire.recno() > i && browse_hire.recno() > 1 )
 					browse_hire.refresh( browse_hire.recno()-1, inn_unit_count );
