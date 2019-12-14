@@ -146,18 +146,20 @@ void Mouse::init_key()
 	bind_key(KEYEVENT_BUILD_MINE, "R");
 	bind_key(KEYEVENT_BUILD_RESEARCH, "T");
 	bind_key(KEYEVENT_BUILD_WAR_FACTORY, "W");
-#endif
 
 	bind_key(KEYEVENT_MAP_MODE_CYCLE, "E");
+#else
+	bind_key(KEYEVENT_MAP_MODE0, "Q");
+	bind_key(KEYEVENT_MAP_MODE1, "W");
+	bind_key(KEYEVENT_MAP_MODE2, "E");
+#endif
 	bind_key(KEYEVENT_REPORT_OPAQUE_TOGGLE, "P");
 	bind_key(KEYEVENT_CLEAR_NEWS, "X");
 	bind_key(KEYEVENT_OPEN_DIPLOMATIC_MSG, "D");
 	bind_key(KEYEVENT_OPEN_OPTION_MENU, "O");
 
 	bind_key(KEYEVENT_TUTOR_PREV, ",");
-//	bind_key(KEYEVENT_TUTOR_PREV, "shift+,");
 	bind_key(KEYEVENT_TUTOR_NEXT, ".");
-//	bind_key(KEYEVENT_TUTOR_NEXT, "shift+.");
 
 	bind_key(KEYEVENT_SAVE_GAME, "S");
 	bind_key(KEYEVENT_LOAD_GAME, "L");

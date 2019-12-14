@@ -1589,6 +1589,21 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       world.map_matrix->cycle_map_mode();
    }
 
+   else if( ISKEY(KEYEVENT_MAP_MODE0) )
+   {
+      world.map_matrix->toggle_map_mode(0);
+   }
+
+   else if( ISKEY(KEYEVENT_MAP_MODE1) )
+   {
+      world.map_matrix->toggle_map_mode(1);
+   }
+
+   else if( ISKEY(KEYEVENT_MAP_MODE2) )
+   {
+      world.map_matrix->toggle_map_mode(2);
+   }
+
    //--------- opaque report mode --------//
 
    else if( ISKEY(KEYEVENT_REPORT_OPAQUE_TOGGLE) )
