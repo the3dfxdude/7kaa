@@ -326,7 +326,7 @@ int FirmInn::hire(short recNo)
 //----------- End of function FirmInn::hire -----------//
 
 
-//--------- Begin of function FirmInn::hire ---------//
+//--------- Begin of function FirmInn::hire_remote ---------//
 // called from remote message processing
 int FirmInn::hire_remote(short unitId, short combat_level, short skill_id, short skill_level, short hire_cost, short spy_recno)
 {
