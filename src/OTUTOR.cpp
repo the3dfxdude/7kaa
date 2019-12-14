@@ -70,8 +70,9 @@ enum { TUTOR_BUTTON_X1 = TUTOR_X2-66,
 //-------- Define static vars ----------//
 
 static Button button_new_tutor, button_quit_tutor;
-static Button button_restart, button_prev, button_next;
+static Button button_restart, button_prev, button_next, button_up, button_down;
 static Button3D button_sample;
+static int text_start_line, text_disp_lines, text_max_lines;
 
 DBGLOG_DEFAULT_CHANNEL(Tutor);
 
@@ -432,6 +433,7 @@ void Tutor::run(int tutorId, int inGameCall)
 	tutor.load(tutorId);			
 
 	game.game_mode = GAME_TUTORIAL;
+	text_max_lines=0;
 
 	//------------------------------------------//
 
@@ -482,8 +484,14 @@ void Tutor::disp()
 
 	//-------- display tutorial text --------//
 
+	if( !text_max_lines )
+	{
+		font_san.count_line( TUTOR_X1+10, TUTOR_Y1+10, textX2, TUTOR_Y2-10,
+					tutorTextBlock->text_ptr, 4, text_disp_lines, text_max_lines );
+		text_start_line = 0;
+	}
 	font_san.put_paragraph( TUTOR_X1+10, TUTOR_Y1+10, textX2, TUTOR_Y2-10,
-									tutorTextBlock->text_ptr, 4 );
+									tutorTextBlock->text_ptr, 4, text_start_line+1 );
 
 	//--------- display controls ---------//
 
@@ -514,6 +522,12 @@ void Tutor::disp()
 	//------- display other controls --------//
 
 	button_restart.paint_text( x, y, "|<<" );
+
+	if( text_max_lines > text_disp_lines )
+		button_up.paint_text( TUTOR_X2-9, y-20, "" );
+
+	if( text_max_lines > text_disp_lines )
+		button_down.paint_text( TUTOR_X2-9, y, "" );
 
 	if( cur_text_block_id > 1 )
 		button_prev.paint_text( x+45, y, " < " );
@@ -599,7 +613,25 @@ int Tutor::detect()
 	if( button_restart.detect() )
 	{
 		cur_text_block_id = 1;
+		text_max_lines = 0;
 		return 1;
+	}
+
+	if( text_max_lines > text_disp_lines )
+	{
+		if( button_up.detect() )
+		{
+			if( --text_start_line < 0 )
+				text_start_line = 0;
+			return 1;
+		}
+
+		if( button_down.detect() )
+		{
+			if( ++text_start_line > text_max_lines-text_disp_lines )
+				text_start_line = text_max_lines-text_disp_lines;
+			return 1;
+		}
 	}
 
 	if( cur_text_block_id > 1 && button_prev.detect() )
@@ -626,6 +658,7 @@ void Tutor::prev_text_block()
 {
 	if( cur_text_block_id > 1 )
 		cur_text_block_id--;
+	text_max_lines = 0;
 }
 //----------- End of function Tutor::prev_text_block ------------//
 
@@ -636,6 +669,7 @@ void Tutor::next_text_block()
 {
 	if( cur_text_block_id < text_block_count )
 		cur_text_block_id++;
+	text_max_lines = 0;
 }
 //----------- End of function Tutor::next_text_block ------------//
 
