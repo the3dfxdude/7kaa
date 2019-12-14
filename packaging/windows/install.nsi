@@ -104,7 +104,6 @@ Section "7kaa (required)" 7kaareq
   Rename "$INSTDIR\README" "$INSTDIR\README.txt"
   File ".\COPYING"
   Rename "$INSTDIR\COPYING" "$INSTDIR\COPYING.txt"
-  File ".\7kaa-hotkeys-2.14.5.png"
   File ".\7kaa-manual.pdf"
   File /r ".\ENCYC"
   File /r ".\ENCYC2"
@@ -161,7 +160,6 @@ Section "Start Menu Shortcuts" startshort
   CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Seven Kingdoms AA.lnk" "$INSTDIR\7kaa.exe"
-  CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Hotkeys.lnk" "$INSTDIR\7kaa-hotkeys-2.14.5.png"
   CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Manual.lnk" "$INSTDIR\7kaa-manual.pdf"
   
   !insertmacro MUI_STARTMENU_WRITE_END
@@ -214,7 +212,6 @@ Section "Uninstall"
   Delete "$INSTDIR\7kaa.exe"
   Delete "$INSTDIR\COPYING.txt"
   Delete "$INSTDIR\README.txt"
-  Delete "$INSTDIR\7kaa-hotkeys-2.14.5.png"
   Delete "$INSTDIR\7kaa-manual.pdf"
   Delete "$INSTDIR\COPYING-music.txt"
   Delete "$INSTDIR\README-music.txt"
