@@ -85,7 +85,7 @@ void InGameMenu::enter(char untilExitFlag)
       game_menu_option_flag[4] = 0;    // disable retire
    }
 
-   if( remote.is_enable() )
+   if( remote.is_enable() || remote.is_replay() )
    {
       // when in when in multi-player mode,
       game_menu_option_flag[2] = 0;    // disable load game
