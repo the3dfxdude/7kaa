@@ -224,6 +224,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
   Delete "$SMPROGRAMS\$StartMenuFolder\Seven Kingdoms AA.lnk"
   Delete "$SMPROGRAMS\$StartMenuFolder\Manual.lnk"
+  Delete "$SMPROGRAMS\$StartMenuFolder\Hotkeys.lnk"
 
   ; Remove directories if empty
   RMDir "$SMPROGRAMS\$StartMenuFolder"
