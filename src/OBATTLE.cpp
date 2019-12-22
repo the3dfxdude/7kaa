@@ -663,14 +663,16 @@ void Battle::run_replay()
 	if( full_path.error_flag )
 		return;
 
-	game.game_mode = GAME_DEMO;
-	game.game_has_ended = 1;
-
 	if( !remote.init_replay_load(full_path, mpGame, &mpPlayerCount) )
 		return;
+
+	game.init();
+	game.game_mode = GAME_DEMO;
+	game.game_has_ended = 1;
 	battle.run(mpGame, mpPlayerCount);
 	mem_del(mpGame);
 	remote.deinit();
+	game.deinit();
 }
 //--------- End of function Battle::run_replay ---------//
 

@@ -262,9 +262,7 @@ void Game::main_menu()
 		// method to start a game replay at this time
 		if( mouse.is_key_event() && mouse.scan_code == 'r')
 		{
-			init();
 			battle.run_replay();
-			deinit();
 			refreshFlag=1;
 		}
 
