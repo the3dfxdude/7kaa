@@ -37,7 +37,6 @@
 #define MP_SERVICE_PROVIDER_NAME_LEN 64
 #define MP_SESSION_NAME_LEN 64
 #define MP_PASSWORD_LEN 32
-#define MP_RECV_BUFFER_SIZE 0x2000
 #define MP_GAME_LIST_SIZE 10
 #define MP_LADDER_LIST_SIZE 6
 
@@ -160,6 +159,7 @@ private:
 	PlayerDesc        *pending_pool[MAX_NATION];
 
 	char *            recv_buf;
+	unsigned          recv_buffer_size;
 
 	ENetHost          *host;
 	uint32_t          packet_mode;
@@ -245,6 +245,8 @@ private:
 	PlayerDesc* yank_pending_player(ENetAddress *address);
 	ENetPeer *get_peer(uint32_t playerId);
 	ENetPeer *get_peer(ENetAddress *address);
+
+	int retrieve_packet(ENetEvent *event, uint32_t *size);
 };
 
 extern MultiPlayer mp_obj;
