@@ -84,6 +84,9 @@ struct FirmMarketCrc;
 #pragma pack(1)
 class FirmMarket : public Firm
 {
+private:
+	char *      	 market_type = "retail";
+
 public:
 	float			 max_stock_qty;		// maximum stock qty of each market goods
 
@@ -117,7 +120,8 @@ public:
 	void		next_day();
 	void		next_month();
 	void		next_year();
-
+	
+	void		change_market_type();
 	void		sell_goods();
 	short		hire_caravan(char remoteAction);
 	int		can_hire_caravan();
