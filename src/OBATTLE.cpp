@@ -48,10 +48,13 @@
 #include <vga_util.h>
 #include <CmdLine.h>
 #include <FilePath.h>
+#include <ConfigAdv.h>
 
 //---------- define static functions -------------//
 
 static int is_space(int xLoc1, int yLoc1, int xLoc2, int yLoc2, char mobileType);
+static char random_race();
+static char random_race_time();
 
 //-------- Begin of function Battle::init --------//
 //
@@ -120,7 +123,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	{
 		// if config.race_id == 0, select a random race, but don't call misc.random
 		int nationRecno = nation_array.new_nation( NATION_OWN,
-								config.race_id ? config.race_id : 1+misc.get_time() % MAX_RACE,
+								config.race_id ? config.race_id : random_race_time(),
 								config.player_nation_color );
 
 		nation_array.set_human_name( nationRecno, config.player_name );
@@ -252,7 +255,7 @@ void Battle::run_sim()
 
 	// if config.race_id == 0, select a random race, but don't call misc.random
 	nation_array.new_nation( NATION_OWN,
-		config.race_id ? config.race_id : 1+misc.get_time() % MAX_RACE,
+		config.race_id ? config.race_id : random_race_time(),
 		config.player_nation_color );
 
 	//--------- create ai nations --------//
@@ -388,7 +391,7 @@ void Battle::create_ai_nation(int aiNationCount)
 		err_when( nation_array.size() == MAX_NATION );
 
 		if( config.random_start_up )
-			raceId = misc.random(MAX_RACE)+1;
+			raceId = random_race();
 		else
 			raceId = nation_array.random_unused_race();
 
@@ -492,7 +495,7 @@ void Battle::create_pregame_object()
 				if( misc.random(2)==0 )
 					unitId = race_res[nationPtr->race_id]->basic_unit_id;
 				else
-					unitId = race_res[ misc.random(MAX_RACE)+1 ]->basic_unit_id;
+					unitId = race_res[ random_race() ]->basic_unit_id;
 
 				if( misc.random(3)==0 )
 					rankId = RANK_GENERAL;
@@ -569,7 +572,7 @@ void Battle::create_pregame_object()
 		if(startUpIndependentTown)
 		{
 			//------ create independent towns -------//
-			raceId = i%MAX_RACE+1;
+			raceId = config_adv.race_random_list[i%config_adv.race_random_list_max];
 			if(!create_town( 0, raceId, xLoc, yLoc ) )
 			{
 				startUpIndependentTown = 0;
@@ -829,7 +832,7 @@ int Battle::create_town(int nationRecno, int raceId, int& xLoc, int& yLoc)
 					curPop = MAX_TOWN_POPULATION-totalPop;
 
 				err_when(curPop==0);
-				townPtr->init_pop( misc.random(MAX_RACE)+1, curPop, townResistance, 0, 1 );
+				townPtr->init_pop( random_race(), curPop, townResistance, 0, 1 );
 				totalPop += curPop;
 			}
 		}
@@ -967,3 +970,26 @@ static int is_space(int xLoc1, int yLoc1, int xLoc2, int yLoc2, char mobileType)
 }
 //--------- End of static function is_space ---------//
 
+
+//-------- Begin of static function random_race --------//
+//
+// Uses misc.random() for random race
+//
+static char random_race()
+{
+	int num = misc.random(config_adv.race_random_list_max);
+	return config_adv.race_random_list[num];
+}
+//--------- End of static function random_race ---------//
+
+
+//-------- Begin of static function random_race_time --------//
+//
+// Uses current time for random race
+//
+static char random_race_time()
+{
+	int num = misc.get_time();
+	return config_adv.race_random_list[num%config_adv.race_random_list_max];
+}
+//--------- End of static function random_race_time ---------//

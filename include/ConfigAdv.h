@@ -24,6 +24,7 @@
 #ifndef __CONFIGADV_H
 #define __CONFIGADV_H
 
+#include <GAMEDEF.h>
 #include <stdint.h>
 
 class ConfigAdv
@@ -57,6 +58,10 @@ public:
 	char			nation_ai_unite_min_relation_level;
 	int			nation_start_god_level;
 	int			nation_start_tech_inc_all_level;
+
+	// race settings
+	char			race_random_list[MAX_RACE];
+	int			race_random_list_max;
 
 	// remote settings
 	char		        remote_compare_object_crc;

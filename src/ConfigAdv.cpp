@@ -231,6 +231,10 @@ void ConfigAdv::reset()
 	nation_start_god_level = 0;
 	nation_start_tech_inc_all_level = 0;
 
+	race_random_list_max = MAX_RACE;
+	for (int i = 0; i < race_random_list_max; i++)
+		race_random_list[i] = i+1;
+
 	remote_compare_object_crc = 1;
 	remote_compare_random_seed = 1;
 
@@ -320,6 +324,21 @@ int ConfigAdv::set(char *name, char *value)
 		if( CHECK_BOUND(nation_start_tech_inc_all_level, 0, 2) )
 			return 0;
 		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "race_random_list") )
+	{
+		// the game defaults to all
+		if( !strcmpi(value, "original") )
+		{
+			race_random_list_max = 7;
+			for (int i = 0; i < race_random_list_max; i++)
+				race_random_list[i] = i+1;
+			update_check_sum(name, value);
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	else if( !strcmp(name, "remote_compare_object_crc") )
 	{

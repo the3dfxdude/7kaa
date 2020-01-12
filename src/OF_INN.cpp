@@ -42,6 +42,7 @@
 #include <OREMOTE.h>
 #include <OSERES.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
 
 //------------- Define coordinations -----------//
 
@@ -67,6 +68,7 @@ static FirmInn* 	firm_inn_ptr;
 //----------- Define static functions ----------//
 
 static void put_hire_rec(int recNo, int x, int y, int refreshFlag);
+static char random_race();
 
 //--------- Begin of function FirmInn::FirmInn ---------//
 //
@@ -516,7 +518,7 @@ void FirmInn::update_add_hire_list()
 	{
 		if( should_add_inn_unit() )
 		{
-			int unitId = race_res[misc.random(MAX_RACE)+1]->basic_unit_id;
+			int unitId = race_res[random_race()]->basic_unit_id;
 
 			if( unitId )
 				add_inn_unit(unitId);
@@ -717,3 +719,14 @@ void FirmInn::auto_defense(short targetRecno)
 }
 //----------- End of function FirmInn::auto_defense -----------//
 
+
+//-------- Begin of static function random_race --------//
+//
+// Uses misc.random() for random race
+//
+static char random_race()
+{
+	int num = misc.random(config_adv.race_random_list_max);
+	return config_adv.race_random_list[num];
+}
+//--------- End of static function random_race ---------//

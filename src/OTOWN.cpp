@@ -55,6 +55,8 @@
 #include <OLOG.h>
 #include <ConfigAdv.h>
 
+static char random_race();
+
 
 //--------- Begin of function Town::Town ----------//
 //
@@ -2209,7 +2211,7 @@ void Town::think_migrate()
 
 		//---- scan all jobless population, see if any of them want to migrate ----//
 
-		raceId = misc.random(MAX_RACE)+1;
+		raceId = random_race();
 
 		for( j=0 ; j<MAX_RACE ; j++ )
 		{
@@ -3769,7 +3771,7 @@ void Town::auto_set_layout()
 
 	//--- assign the first house to each race, each present race will at least have one house ---//
 
-	int firstRaceId = misc.random(MAX_RACE)+1;		// random match
+	int firstRaceId = random_race();		// random match
 	int raceId = firstRaceId;
 
 	for( i=0 ; i<townLayout->slot_count ; i++ )
@@ -3849,7 +3851,7 @@ label_distribute_house:
 
 			case TOWN_OBJECT_HOUSE:
 				if( !slot_object_id_array[i] )
-					slot_object_id_array[i] = town_res.scan_build( townLayout->first_slot_recno+i, misc.random(MAX_RACE)+1 );
+					slot_object_id_array[i] = town_res.scan_build( townLayout->first_slot_recno+i, random_race() );
 				break;
 		}
 	}
@@ -4549,3 +4551,14 @@ int Town::closest_own_camp()
 }
 //-------- End of function Town::closest_own_camp ---------//
 
+
+//-------- Begin of static function random_race --------//
+//
+// Uses misc.random() for random race
+//
+static char random_race()
+{
+	int num = misc.random(config_adv.race_random_list_max);
+	return config_adv.race_random_list[num];
+}
+//--------- End of static function random_race ---------//

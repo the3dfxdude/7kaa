@@ -90,6 +90,7 @@
 #include <LocaleRes.h>
 #include <CmdLine.h>
 #include <FilePath.h>
+#include <ConfigAdv.h>
 
 #include <dbglog.h>
 #ifdef USE_WINDOWS
@@ -114,6 +115,7 @@ static int  locate_ship_in_harbor();
 static int  locate_visible_ship();
 static int  detect_scenario_cheat_key(unsigned scanCode, unsigned skeyState);
 static int  get_mouse_loc_in_zoom_map(int &x, int &y);
+static char random_race();
 
 //----------- Define static variables ------------//
 
@@ -1861,7 +1863,7 @@ void Sys::detect_cheat_key(unsigned scanCode, unsigned skeyState)
                   }
                }
             #else
-               townPtr->init_pop( misc.random(MAX_RACE)+1, 10, 100 );
+               townPtr->init_pop( random_race(), 10, 100 );
             #endif
             townPtr->auto_set_layout();
          }
@@ -3115,3 +3117,15 @@ static int get_mouse_loc_in_zoom_map(int &x, int &y)
    return 0; // out of zoom map boundary
 }
 //--------- End of function get_mouse_loc_in_zoom_map ---------------//
+
+
+//-------- Begin of static function random_race --------//
+//
+// Uses misc.random() for random race
+//
+static char random_race()
+{
+	int num = misc.random(config_adv.race_random_list_max);
+	return config_adv.race_random_list[num];
+}
+//--------- End of static function random_race ---------//
