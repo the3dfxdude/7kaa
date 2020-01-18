@@ -1146,6 +1146,15 @@ void FirmCamp::defense(short targetRecno, int useRangeAttack)
 		unitPtr->action_misc = ACTION_MISC_DEFENSE_CAMP_RECNO;
 		unitPtr->action_misc_para = firm_recno; // store the firm_recno for going back camp
 
+		if(overseer_recno)
+		{
+			unitPtr->leader_unit_recno = overseer_recno;
+			unitPtr->update_loyalty();	// update target loyalty based on having a leader assigned
+
+			err_when( unit_array[overseer_recno]->rank_id != RANK_KING &&
+					  unit_array[overseer_recno]->rank_id != RANK_GENERAL );
+		}
+
 		defense_inside_camp(unitRecno, targetRecno);
 		defPtr->unit_recno = unitRecno;
 		defPtr->status = OUTSIDE_CAMP;
