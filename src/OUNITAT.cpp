@@ -833,8 +833,8 @@ float Unit::actual_damage()
 
 			if( leaderUnit->is_visible() )
 			{
-				leaderXLoc = cur_x_loc();
-				leaderYLoc = cur_y_loc();
+				leaderXLoc = leaderUnit->cur_x_loc();
+				leaderYLoc = leaderUnit->cur_y_loc();
 			}
 			else if( leaderUnit->unit_mode == UNIT_MODE_OVERSEE )
 			{
