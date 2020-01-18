@@ -2662,6 +2662,45 @@ int Unit::get_cur_loc(short& xLoc, short& yLoc)
 //----------- End of function Unit::get_cur_loc -----------//
 
 
+//----------- Begin of function Unit::is_leader_in_range -----------//
+// If the leader is assigned and in range, return leader_unit_recno, otherwise
+// return zero for indicating the leader is not in range.
+//
+short Unit::is_leader_in_range()
+{
+	if( !leader_unit_recno )
+		return 0;
+
+	if( unit_array.is_deleted(leader_unit_recno) )
+	{
+		leader_unit_recno = 0;
+		return 0;
+	}
+
+	Unit* leaderUnit = unit_array[leader_unit_recno];
+
+	short leaderXLoc, leaderYLoc = -1;
+	if( leaderUnit->is_visible() )
+	{
+		leaderXLoc = leaderUnit->cur_x_loc();
+		leaderYLoc = leaderUnit->cur_y_loc();
+	}
+	else if( leaderUnit->unit_mode == UNIT_MODE_OVERSEE )
+	{
+		Firm* firmPtr = firm_array[leaderUnit->unit_mode_para];
+
+		leaderXLoc = firmPtr->center_x;
+		leaderYLoc = firmPtr->center_y;
+	}
+
+	if( leaderXLoc >= 0 && misc.points_distance(cur_x_loc(), cur_y_loc(), leaderXLoc, leaderYLoc) <= EFFECTIVE_LEADING_DISTANCE )
+		return leader_unit_recno;
+
+	return 0;
+}
+//----------- End of function Unit::is_leader_in_range -----------//
+
+
 //----------- Begin of function Unit::add_way_point -----------//
 // Add the point to the way_point_array if it is not in the array.
 // Otherwise, remove the point from the way_point_array.

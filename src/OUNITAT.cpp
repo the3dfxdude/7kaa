@@ -820,38 +820,10 @@ float Unit::actual_damage()
 	//
 	//------------------------------------------------------------------------//
 
-	if( leader_unit_recno )
+	if( is_leader_in_range() )
 	{
-		if( unit_array.is_deleted(leader_unit_recno) )
-		{
-			leader_unit_recno = 0;
-		}
-		else
-		{
-			Unit* leaderUnit = unit_array[leader_unit_recno];
-			int	leaderXLoc, leaderYLoc;
-
-			if( leaderUnit->is_visible() )
-			{
-				leaderXLoc = leaderUnit->cur_x_loc();
-				leaderYLoc = leaderUnit->cur_y_loc();
-			}
-			else if( leaderUnit->unit_mode == UNIT_MODE_OVERSEE )
-			{
-				Firm* firmPtr = firm_array[leaderUnit->unit_mode_para];
-
-				leaderXLoc = firmPtr->center_x;
-				leaderYLoc = firmPtr->center_y;
-			}
-			else
-				leaderXLoc = -1;
-
-			if( leaderXLoc >= 0 &&
-				 misc.points_distance(cur_x_loc(), cur_y_loc(), leaderXLoc, leaderYLoc) <= EFFECTIVE_LEADING_DISTANCE )
-			{
-				attackDamage += attackDamage * leaderUnit->skill.skill_level / 100;
-			}
-		}
+		Unit *leaderUnit = unit_array[leader_unit_recno];
+		attackDamage += attackDamage * leaderUnit->skill.skill_level / 100;
 	}
 
 	return (float) attackDamage / ATTACK_SLOW_DOWN;		// lessen all attacking damages, thus slowing down all battles.
