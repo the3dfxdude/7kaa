@@ -244,6 +244,8 @@ void ConfigAdv::reset()
 	town_ai_emerge_town_pop_limit = 1000;
 	town_loyalty_qol = 1;
 
+	unit_loyalty_require_local_leader = 1;
+
 	vga_allow_highdpi = 0;
 	vga_full_screen = 1;
 	vga_keep_aspect_ratio = 1;
@@ -370,6 +372,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "town_loyalty_qol") )
 	{
 		if( !read_bool(value, &town_loyalty_qol) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "unit_loyalty_require_local_leader") )
+	{
+		if( !read_bool(value, &unit_loyalty_require_local_leader) )
 			return 0;
 		update_check_sum(name, value);
 	}

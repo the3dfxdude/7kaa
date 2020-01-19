@@ -47,6 +47,7 @@
 #include <OREMOTE.h>
 #include <OSYS.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
 
 #if(GAME_FRAMES_PER_DAY!=FRAMES_PER_DAY)
 #error
@@ -1153,7 +1154,9 @@ void Unit::update_loyalty()
 
 	else if( rank_id==RANK_SOLDIER )
 	{
-		if( leader_unit_recno )
+		int leader_bonus = config_adv.unit_loyalty_require_local_leader ?
+			is_leader_in_range() : leader_unit_recno;
+		if( leader_bonus )
 		{
 			//----------------------------------------//
 			//
@@ -1164,12 +1167,6 @@ void Unit::update_loyalty()
 			//   + the leader unit's leadership / 2
 			//
 			//----------------------------------------//
-
-			if( unit_array.is_deleted(leader_unit_recno) )
-			{
-				leader_unit_recno = 0;
-				return;
-			}
 
 			Unit* leaderUnit = unit_array[leader_unit_recno];
 

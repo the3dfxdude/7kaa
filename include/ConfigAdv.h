@@ -75,6 +75,9 @@ public:
 	int			town_ai_emerge_town_pop_limit;
 	char			town_loyalty_qol;
 
+	// unit settings
+	char			unit_loyalty_require_local_leader;
+
 	// vga settings
 	char			vga_allow_highdpi;
 	char			vga_full_screen;
