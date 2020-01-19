@@ -382,6 +382,7 @@ public:
 			  int  true_nation_recno();            // the true nation recno of the unit, taking care of the situation where the unit is a spy
 	virtual int  is_ai_all_stop();
 			  int  get_cur_loc(short& xLoc, short& yLoc);
+			  int  get_cur_loc2(short& xLoc, short& yLoc);
 			  short is_leader_in_range();
 
 	virtual void die()         {;}
