@@ -45,6 +45,9 @@ static unsigned long	town_profile_time = 0L;
 //#### end alex 20/9 ####//
 #endif
 
+static char random_race();
+
+
 //--------- Begin of function TownArray::TownArray ----------//
 
 TownArray::TownArray() : DynArrayB(sizeof(Town*), 10, DEFAULT_REUSE_INTERVAL_DAYS)
@@ -291,7 +294,7 @@ void TownArray::think_new_independent_town()
 
 	//----- check if there are enough wanderers to set up a new town ---//
 
-	int raceId = misc.random(MAX_RACE)+1;
+	int raceId = random_race();
 
 	for( i=0 ; i<MAX_RACE ; i++ )
 	{
@@ -341,7 +344,7 @@ void TownArray::think_new_independent_town()
 
 		//---- next race to be added to the independent town ----//
 
-		raceId = misc.random(MAX_RACE)+1;
+		raceId = random_race();
 
 		for( i=0 ; i<MAX_RACE ; i++ )
 		{
@@ -808,3 +811,14 @@ Town* TownArray::operator[](int recNo)
 
 #endif
 
+
+//-------- Begin of static function random_race --------//
+//
+// Uses misc.random() for random race
+//
+static char random_race()
+{
+	int num = misc.random(config_adv.race_random_list_max);
+	return config_adv.race_random_list[num];
+}
+//--------- End of static function random_race ---------//

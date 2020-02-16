@@ -197,7 +197,7 @@ void Unit::process_idle()
 	//---------------------------------------------------------------------------//
 	if(action_mode>=ACTION_ATTACK_UNIT && action_mode<=ACTION_ATTACK_WALL)
 	{
-		if(unit_array.idle_blocked_unit_reset_count && *(long*)blocked_edge)
+		if(unit_array.idle_blocked_unit_reset_count && *(uint32_t*)blocked_edge)
 		{
 			unit_array.idle_blocked_unit_reset_count = 0;
 			memset(blocked_edge, 0, sizeof(char)*4);

@@ -29,6 +29,10 @@
 #include <OMONSRES.h>
 #include <OU_MONS.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
+
+static char random_race();
+
 
 //--------- Begin of function UnitMonster::UnitMonster --------//
 UnitMonster::UnitMonster()
@@ -255,7 +259,7 @@ void UnitMonster::king_leave_scroll()
 	}
 
 	if( !bestRaceId )
-		bestRaceId = misc.random(MAX_RACE)+1;		// if there is no human units nearby (perhaps just using weapons)
+		bestRaceId = random_race();		// if there is no human units nearby (perhaps just using weapons)
 
 	//------ locate for space to add the scroll -------//
 
@@ -489,3 +493,15 @@ void UnitMonster::group_order_monster(int destXLoc, int destYLoc, int actionType
 	}
 }
 //---------- End of function UnitMonster::group_order_monster --------//
+
+
+//-------- Begin of static function random_race --------//
+//
+// Uses misc.random() for random race
+//
+static char random_race()
+{
+	int num = misc.random(config_adv.race_random_list_max);
+	return config_adv.race_random_list[num];
+}
+//--------- End of static function random_race ---------//

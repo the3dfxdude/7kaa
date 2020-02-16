@@ -187,7 +187,10 @@ void SpyArray::next_day()
 			continue;
 
 		if( nation_array[spyPtr->true_nation_recno]->is_ai() )
-			spyPtr->process_ai();
+		{
+			SpyProcess spyProcess(i);
+			spyProcess.process_ai();
+		}
 	}
 
 	//---------- update Firm::sabotage_level ----------//
@@ -678,7 +681,10 @@ void SpyArray::ai_spy_town_rebel(int townRecno)
 			//----- think new action for the spy ------//
 
 			if( unitRecno )
-				spyPtr->think_mobile_spy_new_action();
+			{
+				SpyProcess spyProcess(i);
+				spyProcess.think_mobile_spy_new_action();
+			}
 		}
 	}
 }

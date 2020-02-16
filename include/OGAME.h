@@ -123,7 +123,9 @@ public:
 	// ###### end Gilbert 24/10 #######//
 
 	// ###### begin Gilbert 13/2 #######//
+#ifndef DISABLE_MULTI_PLAYER
 	void 			multi_player_menu(int lobbied, char *game_host);
+#endif
 	// ###### end Gilbert 13/2 #######//
 
 	int 			write_file(File* filePtr);

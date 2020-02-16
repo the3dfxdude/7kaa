@@ -47,6 +47,7 @@ public:
 #ifdef ENABLE_NLS
 	iconv_t cd;
 	iconv_t cd_latin;
+	iconv_t cd_from_sdl;
 #endif
 
 private:
@@ -61,8 +62,9 @@ public:
 	LocaleRes();
 	~LocaleRes();
 
-	void init(const char *locale);
+	void init();
 	void deinit();
+	void load();
 
 #ifdef ENABLE_NLS
 	const char *conv_str(iconv_t cd, const char *s);

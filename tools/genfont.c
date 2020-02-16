@@ -770,6 +770,11 @@ int main(int argc, char **argv)
 
 		if( header.max_width < glyphs[i]->w )
 			header.max_width = glyphs[i]->w;
+
+		// we need to update max_height, just in case the shadow makes
+		// the font taller than the TTF system reports
+		if( header.max_height < info[i].height + info[i].offset_y )
+			header.max_height = info[i].height + info[i].offset_y;
 	}
 	iconv_close(cd);
 	TTF_CloseFont(font);

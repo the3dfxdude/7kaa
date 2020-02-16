@@ -38,6 +38,7 @@
 #include <OMONSRES.h>
 #include <OF_MONS.h>
 #include <locale.h>
+#include <ConfigAdv.h>
 #include "gettext.h"
 
 
@@ -47,6 +48,7 @@
 static char current_monster_action_mode;
 
 static int fryhtan_attacks_per_six_months(int numOfLairs);
+static int fryhtan_random_attack();
 
 
 //--------- Begin of function FirmMonster::init_derived ---------//
@@ -149,7 +151,7 @@ char* FirmMonster::firm_name()
 {
 	static String str;
 
-	str = monster_firm_name[monster_id-1];
+	str = _(monster_firm_name[monster_id-1]);
 
 	return str;
 }
@@ -230,17 +232,10 @@ void FirmMonster::next_day()
 		//------ attack human towns and firms randomly -----//
 
 		if( info.game_date > info.game_start_date + 1000 &&	// only start attacking 3 years after the game starts so the human can build up things
-			info.game_date%30 == firm_recno%30 )
+			info.game_date%30 == firm_recno%30 &&
+			fryhtan_random_attack() )
 		{
-			// From the desired average number of attacks per 6 months, we want the attack chance per lair (which is per month):
-			//   Lairs * P(Attack) * 6 = Desired      <=>    P(Attack) = Desired / 6 / Lairs
-			// Note that Desired < (6 * Lairs). We can use: rand(6 * Lairs) < Desired to simulate this chance.
-			int numOfLairs = firm_res[FIRM_MONSTER]->total_firm_count;
-			int attacksPerSixMonths = fryhtan_attacks_per_six_months(numOfLairs);
-			if (misc.random(6 * numOfLairs) < attacksPerSixMonths)
-			{
-				think_attack_human();
-			}
+			think_attack_human();
 		}
 
 		//--------- think expansion ---------//
@@ -260,7 +255,7 @@ void FirmMonster::next_day()
 // Encodes the Fryhtan attack curve.
 // Returns the average number of Fryhtan attacks in 6 months for the given number of lairs.
 //
-int fryhtan_attacks_per_six_months(int numOfLairs)
+static int fryhtan_attacks_per_six_months(int numOfLairs)
 {
 	// This algorithm encodes the continuation of the following table:
 	//
@@ -293,6 +288,27 @@ int fryhtan_attacks_per_six_months(int numOfLairs)
 	return attacks;
 }
 //----------- End of function fryhtan_attacks_per_six_months -----------//
+
+
+//------- Begin of function fryhtan_random_attack -------//
+// The fryhtans attack chance based on monster_attack_divisor (original design)
+// or fryhtans attack more as lairs increase (alternate option)
+static int fryhtan_random_attack()
+{
+	if( config_adv.monster_alternate_attack_curve )
+	{
+		// roll of 1/(lairs*6)
+		int chance = misc.random(firm_res[FIRM_MONSTER]->total_firm_count*6);
+		// From the desired average number of attacks per 6 months, we want the attack chance per lair (which is per month):
+		//   Lairs * P(Attack) * 6 = Desired      <=>    P(Attack) = Desired / 6 / Lairs
+		// Note that Desired < (6 * Lairs). We can use: rand(6 * Lairs) < Desired to simulate this chance.
+		return chance < fryhtan_attacks_per_six_months(firm_res[FIRM_MONSTER]->total_firm_count);
+	}
+
+	// original probability 1/6
+	return misc.random(firm_res[FIRM_MONSTER]->total_firm_count*config_adv.monster_attack_divisor) == 0;
+}
+//----------- End of function fryhtan_random_attack -----------//
 
 
 //------- Begin of function FirmMonster::recover_hit_points -------//

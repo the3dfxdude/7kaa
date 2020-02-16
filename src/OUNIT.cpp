@@ -47,6 +47,7 @@
 #include <OREMOTE.h>
 #include <OSYS.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
 
 #if(GAME_FRAMES_PER_DAY!=FRAMES_PER_DAY)
 #error
@@ -612,9 +613,10 @@ void Unit::deinit_sprite(int keepSelected)
    if( cur_x == -1 )
       return;
 
-	//---- if this unit is led by a leader, only mobile units has leader_unit_recno assigned to a leader -----//
+   //---- if this unit is led by a leader, only mobile units has leader_unit_recno assigned to a leader -----//
+   // units are still considered mobile when boarding a ship
 
-	if( leader_unit_recno )
+   if( leader_unit_recno && unit_mode != UNIT_MODE_ON_SHIP )
    {
       if( !unit_array.is_deleted(leader_unit_recno) )    // the leader unit may have been killed at the same time
          unit_array[leader_unit_recno]->del_team_member(sprite_recno);
@@ -1152,7 +1154,9 @@ void Unit::update_loyalty()
 
 	else if( rank_id==RANK_SOLDIER )
 	{
-		if( leader_unit_recno )
+		int leader_bonus = config_adv.unit_loyalty_require_local_leader ?
+			is_leader_in_range() : leader_unit_recno;
+		if( leader_bonus )
 		{
 			//----------------------------------------//
 			//
@@ -1163,12 +1167,6 @@ void Unit::update_loyalty()
 			//   + the leader unit's leadership / 2
 			//
 			//----------------------------------------//
-
-			if( unit_array.is_deleted(leader_unit_recno) )
-			{
-				leader_unit_recno = 0;
-				return;
-			}
 
 			Unit* leaderUnit = unit_array[leader_unit_recno];
 
@@ -2660,6 +2658,87 @@ int Unit::get_cur_loc(short& xLoc, short& yLoc)
 	return 1;
 }
 //----------- End of function Unit::get_cur_loc -----------//
+
+
+//----------- Begin of function Unit::get_cur_loc2 -----------//
+//
+// <short&> xLoc, yLoc - reference vars for returning the
+//								 location of this unit
+//
+// return : 0 - if this unit is invisible
+//				1 - if a location has been returned.
+//
+int Unit::get_cur_loc2(short& xLoc, short& yLoc)
+{
+	if( is_visible() )
+	{
+		xLoc = cur_x_loc();
+		yLoc = cur_y_loc();
+	}
+	else if( unit_mode == UNIT_MODE_OVERSEE ||
+				unit_mode==UNIT_MODE_CONSTRUCT ||
+				unit_mode == UNIT_MODE_IN_HARBOR )
+	{
+		Firm* firmPtr = firm_array[unit_mode_para];
+
+		xLoc = firmPtr->center_x;
+		yLoc = firmPtr->center_y;
+	}
+	else if( unit_mode == UNIT_MODE_ON_SHIP )
+	{
+		Unit* unitPtr = unit_array[unit_mode_para];
+
+		if( unitPtr->is_visible() )
+		{
+			xLoc = unitPtr->cur_x_loc();
+			yLoc = unitPtr->cur_y_loc();
+		}
+		else
+		{
+			err_when(unitPtr->unit_mode!=UNIT_MODE_IN_HARBOR);
+			Firm *firmPtr = firm_array[unitPtr->unit_mode_para];
+			xLoc = firmPtr->center_x;
+			yLoc = firmPtr->center_y;
+		}
+	}
+	else
+		return 0;
+
+	return 1;
+}
+//----------- End of function Unit::get_cur_loc2 -----------//
+
+
+//----------- Begin of function Unit::is_leader_in_range -----------//
+// If the leader is assigned and in range, return leader_unit_recno, otherwise
+// return zero for indicating the leader is not in range.
+//
+short Unit::is_leader_in_range()
+{
+	if( !leader_unit_recno )
+		return 0;
+
+	if( unit_array.is_deleted(leader_unit_recno) )
+	{
+		leader_unit_recno = 0;
+		return 0;
+	}
+
+	Unit* leaderUnit = unit_array[leader_unit_recno];
+
+	if( !leaderUnit->is_visible() && leaderUnit->unit_mode == UNIT_MODE_CONSTRUCT )
+		return 0;
+
+	short leaderXLoc, leaderYLoc, xLoc, yLoc;
+	leaderUnit->get_cur_loc2(leaderXLoc, leaderYLoc);
+	get_cur_loc2(xLoc, yLoc);
+
+	if( leaderXLoc >= 0 && misc.points_distance(xLoc, yLoc, leaderXLoc, leaderYLoc) <= EFFECTIVE_LEADING_DISTANCE )
+		return leader_unit_recno;
+
+	return 0;
+}
+//----------- End of function Unit::is_leader_in_range -----------//
 
 
 //----------- Begin of function Unit::add_way_point -----------//

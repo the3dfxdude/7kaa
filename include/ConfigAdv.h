@@ -24,6 +24,7 @@
 #ifndef __CONFIGADV_H
 #define __CONFIGADV_H
 
+#include <GAMEDEF.h>
 #include <stdint.h>
 
 class ConfigAdv
@@ -33,28 +34,55 @@ public:
 		FLAG_DEBUG_VER = 1,
 		FLAG_DEVEL_VER = 2,
 		FLAG_CKSUM_REQ = 4,
+		FLAG_UNKNOWN_BUILD = 8,
+	};
+
+	enum {
+		LOCALE_LEN = 40,
 	};
 
 	uint32_t		checksum;
 	uint32_t		flags;
+
+	// internal settings
+	char			big_dynarray_mode;
+
+	// locale settings
+	char			locale[LOCALE_LEN+1];
+
+	// monster settings
+	char			monster_alternate_attack_curve;
+	int			monster_attack_divisor;
 
 	// nation settings
 	char			nation_ai_unite_min_relation_level;
 	int			nation_start_god_level;
 	int			nation_start_tech_inc_all_level;
 
+	// race settings
+	char			race_random_list[MAX_RACE];
+	int			race_random_list_max;
+
 	// remote settings
 	char		        remote_compare_object_crc;
 	char			remote_compare_random_seed;
 
+	// scenario settings
+	char			scenario_config;
+
 	// town settings
 	int			town_ai_emerge_nation_pop_limit;
 	int			town_ai_emerge_town_pop_limit;
+	char			town_loyalty_qol;
+
+	// unit settings
+	char			unit_loyalty_require_local_leader;
 
 	// vga settings
 	char			vga_allow_highdpi;
 	char			vga_full_screen;
 	char			vga_keep_aspect_ratio;
+	char			vga_pause_on_focus_loss;
 
 	int			vga_window_width;
 	int			vga_window_height;

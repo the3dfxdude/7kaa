@@ -74,8 +74,6 @@ int Nation::ai_defend(int attackerUnitRecno)
 //
 int Nation::ai_request_military_aid()
 {
-	return 0;		//**BUGHERE, multiplayer sync error, disabled temporarily
-
 	for( int i=nation_array.size() ; i>0 ; i-- )
 	{
 		if( nation_array.is_deleted(i) )

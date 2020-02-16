@@ -74,6 +74,8 @@ enum	{	NO_DEBUG_SYN = 0,
 		};
 //#### end alex 11/8 ####//
 
+enum KeyEventType : int;
+
 //-------- Define class Sys -----------//
 
 class Sys
@@ -232,7 +234,7 @@ private:
 	int			detect_debug_cheat_key(unsigned scanCode, unsigned skeyState);
 	int 		detect_set_speed(unsigned scanCode, unsigned skeyState);
 
-	int 		detect_key_str(int keyStrId, const char* keyStr);
+	int 		detect_key_str(int keyStrId, const KeyEventType* keyStr);
 };
 
 extern Sys sys;

@@ -425,10 +425,7 @@ int Button::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, int su
 	}
 	else if( mouse.key_code )
 	{
-		unsigned mouseKey=mouse.key_code;
-
-		if( mouseKey >= 'a' && mouseKey <= 'z' )   // non-case sensitive comparsion
-			mouseKey -= 32;                         // convert from lower case to upper case
+		unsigned mouseKey=mouse.unique_key_code;
 
 		if( mouseKey == keyCode1 || mouseKey == keyCode2 || mouseKey == button_key )
 		{
@@ -570,7 +567,7 @@ int ButtonGroup::detect()
 
    for( i=0 ; i<button_num ; i++ )
    {
-		if( !button_array[i].is_pushed && button_array[i].detect() )
+      if( (!button_array[i].is_pushed || button_array[i].button_wait) && button_array[i].detect() )
       {
           button_array[button_pressed].pop();
           button_pressed = i;

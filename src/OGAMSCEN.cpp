@@ -37,6 +37,7 @@
 #include <OGAME.h>
 #include <ONATIONA.h>
 #include <PlayerStats.h>
+#include <ConfigAdv.h>
 
 //--------- declare static vars ----------//
 
@@ -164,6 +165,17 @@ int Game::run_scenario(ScenInfo* scenInfo)
 
 		if( SaveGameProvider::load_scenario(str) > 0 )
 		{
+			ConfigAdv backup;
+			if( config_adv.scenario_config )
+			{
+				String str2;
+				str2  = DIR_SCENARIO_PATH(scenInfo->dir_id);
+				str2 += "config.txt";
+
+				backup = config_adv;
+				config_adv.load(str2);
+			}
+
 			init_scenario_var(scenInfo);
 
 			// ##### begin Gilbert 1/11 #######//
@@ -179,6 +191,9 @@ int Game::run_scenario(ScenInfo* scenInfo)
 			playerStats.set_scenario_play_status(scenInfo->file_name, PlayStatus::PLAYED);
 
 			battle.run_loaded();
+
+			if( config_adv.scenario_config )
+				config_adv = backup;
 		}
 		else
 		{
