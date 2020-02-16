@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 20:20-0700\n"
-"PO-Revision-Date: 2019-07-04 21:57-0400\n"
+"POT-Creation-Date: 2019-12-21 20:15-0700\n"
+"PO-Revision-Date: 2020-02-16 15:28-0300\n"
 "Last-Translator: Lenny Andreu\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: src/CmdLine.cpp:46
 #, c-format
@@ -26,7 +26,7 @@ msgstr "La opción %s de la linea de comandos requiere un argumento."
 #: src/CmdLine.cpp:56
 msgid "Multiple startup mode options present on the command line."
 msgstr ""
-"Opciones múltiples de modo de inicio presentes en la linea de comandos."
+"Opciones de modo múltiples presentes en el inicio por linea de comandos."
 
 #: src/ConfigAdv.cpp:212
 #, c-format
@@ -61,146 +61,122 @@ msgid "%s %d, %d"
 msgstr "%2$d de %1$s del %3$d"
 
 #: src/ODATE.cpp:254
-#, fuzzy
 msgctxt "Month|Full"
 msgid "January"
 msgstr "Enero"
 
 #: src/ODATE.cpp:256
-#, fuzzy
 msgctxt "Month|Full"
 msgid "February"
 msgstr "Febrero"
 
 #: src/ODATE.cpp:258
-#, fuzzy
 msgctxt "Month|Full"
 msgid "March"
 msgstr "Marzo"
 
 #: src/ODATE.cpp:260
-#, fuzzy
 msgctxt "Month|Full"
 msgid "April"
 msgstr "Abril"
 
 #: src/ODATE.cpp:262
-#, fuzzy
 msgctxt "Month|Full"
 msgid "May"
 msgstr "Mayo"
 
 #: src/ODATE.cpp:264
-#, fuzzy
 msgctxt "Month|Full"
 msgid "June"
 msgstr "Junio"
 
 #: src/ODATE.cpp:266
-#, fuzzy
 msgctxt "Month|Full"
 msgid "July"
 msgstr "Julio"
 
 #: src/ODATE.cpp:268
-#, fuzzy
 msgctxt "Month|Full"
 msgid "August"
 msgstr "Agosto"
 
 #: src/ODATE.cpp:270
-#, fuzzy
 msgctxt "Month|Full"
 msgid "September"
 msgstr "Septiembre"
 
 #: src/ODATE.cpp:272
-#, fuzzy
 msgctxt "Month|Full"
 msgid "October"
 msgstr "Octubre"
 
 #: src/ODATE.cpp:274
-#, fuzzy
 msgctxt "Month|Full"
 msgid "November"
 msgstr "Noviembre"
 
 #: src/ODATE.cpp:276
-#, fuzzy
 msgctxt "Month|Full"
 msgid "December"
 msgstr "Diciembre"
 
 #. TRANSLATORS: An abbreviated month. If not used in your language, spell full month.
 #: src/ODATE.cpp:295
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Jan"
 msgstr "Ene"
 
 #: src/ODATE.cpp:297
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Feb"
 msgstr "Feb"
 
 #: src/ODATE.cpp:299
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Mar"
 msgstr "Mar"
 
 #: src/ODATE.cpp:301
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Apr"
 msgstr "Abr"
 
 #: src/ODATE.cpp:303
-#, fuzzy
 msgctxt "Month|Short"
 msgid "May"
 msgstr "Mayo"
 
 #: src/ODATE.cpp:305
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Jun"
 msgstr "Jun"
 
 #: src/ODATE.cpp:307
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Jul"
 msgstr "Jul"
 
 #: src/ODATE.cpp:309
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Aug"
 msgstr "Ago"
 
 #: src/ODATE.cpp:311
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Sep"
 msgstr "Sep"
 
 #: src/ODATE.cpp:313
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Oct"
 msgstr "Oct"
 
 #: src/ODATE.cpp:315
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Nov"
 msgstr "Nov"
 
 #: src/ODATE.cpp:317
-#, fuzzy
 msgctxt "Month|Short"
 msgid "Dec"
 msgstr "Dic"
@@ -361,22 +337,9 @@ msgstr "Hecho"
 msgid "Hiring Cost"
 msgstr "Costo de contratación"
 
-#: src/OF_MARK.cpp:375
-msgid "Clay Products"
-msgstr "Productos de arcilla"
-
-#: src/OF_MARK.cpp:376
-msgid "Copper Products"
-msgstr "Productos de cobre"
-
-#: src/OF_MARK.cpp:377
-msgid "Iron Products"
-msgstr "Productos de hierro"
-
-#. TRANSLATORS: Part of "You're not permitted to trade with this market."
-#: src/OF_MARK.cpp:414
-msgid "You're not permitted to"
-msgstr "No está autorizado a"
+#: src/OF_MARK.cpp:408
+msgid "You're not permitted to trade with this market."
+msgstr "No está autorizado a comerciar con este mercado."
 
 #: src/OF_MARK.cpp:462
 msgid "Clear"
@@ -435,65 +398,65 @@ msgid "Untapped Reserve"
 msgstr "Reserva sin explotar"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:132
+#: src/OF_MONS.cpp:134
 msgid "Deezboanz Lair"
 msgstr "Guarida de Deezboanz"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:133
+#: src/OF_MONS.cpp:135
 msgid "Rattus Lair"
 msgstr "Guarida de Rattus"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:134
+#: src/OF_MONS.cpp:136
 msgid "Broosken Lair"
 msgstr "Guarida de Broosken"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:135
+#: src/OF_MONS.cpp:137
 msgid "Haubudam Lair"
 msgstr "Guarida de Haubudam"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:136
+#: src/OF_MONS.cpp:138
 msgid "Pfith Lair"
 msgstr "Guarida de Pfith"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:137
+#: src/OF_MONS.cpp:139
 msgid "Rokken Lair"
 msgstr "Guarida de Rokken"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:138
+#: src/OF_MONS.cpp:140
 msgid "Doink Lair"
 msgstr "Guarida de Doink"
 
-#: src/OF_MONS.cpp:139
+#: src/OF_MONS.cpp:141
 msgid "Wyrm Lair"
 msgstr "Guarida de Wyrm"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:140
+#: src/OF_MONS.cpp:142
 msgid "Droog Lair"
 msgstr "Guarida de Droog"
 
-#: src/OF_MONS.cpp:141
+#: src/OF_MONS.cpp:143
 msgid "Ick Lair"
 msgstr "Guarida de Ick"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:142
+#: src/OF_MONS.cpp:144
 msgid "Sauroid Lair"
 msgstr "Guarida de Sauroide"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:143
+#: src/OF_MONS.cpp:145
 msgid "Karrotten Lair"
 msgstr "Guarida de Karrotten"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OF_MONS.cpp:144
+#: src/OF_MONS.cpp:146
 msgid "Holgh Lair"
 msgstr "Guarida de Holgh"
 
@@ -507,7 +470,7 @@ msgstr "Nombre de sesión:"
 
 #: src/OGAMEMP.cpp:528
 msgid "Set Password:"
-msgstr "Establecer contraseña:"
+msgstr "Establezca contraseña:"
 
 #: src/OGAMEMP.cpp:573 src/OGAMEMP.cpp:832
 msgid "Unable to connect from lobby"
@@ -542,13 +505,13 @@ msgid "Local Area Network"
 msgstr "Red de área local"
 
 #. TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
-#: src/OGAMEMP.cpp:1044
+#: src/OGAMEMP.cpp:1046
 msgid "Enter Address"
 msgstr "Introduzca la dirección"
 
 #: src/OGAMEMP.cpp:1051
 msgid "Host or join a game using the local area network"
-msgstr "Servir o unirse a una partida usando la red de área local"
+msgstr "Alojar o unirse a una partida usando la red de área local"
 
 #: src/OGAMEMP.cpp:1052
 msgid "Join a game by entering an address"
@@ -556,7 +519,7 @@ msgstr "Unirse a una partida ingresando una dirección"
 
 #: src/OGAMEMP.cpp:1053
 msgid "Host or join a game over the internet"
-msgstr "Servir o unirse a una partida por internet"
+msgstr "Alojar o unirse a una partida por internet"
 
 #: src/OGAMEMP.cpp:1200
 msgid ""
@@ -593,7 +556,7 @@ msgid ""
 "Unable to connect to the 7kfans.com service. Verify your account information "
 "and try again."
 msgstr ""
-"No se pudo conectar al servicio de 7kfans.com. Verifique la información se "
+"No se pudo conectar al servicio de 7kfans.com. Verifique la información de "
 "su cuenta y pruebe otra vez."
 
 #: src/OGAMEMP.cpp:1740
@@ -792,39 +755,40 @@ msgstr "¡El reino de %s ha alcanzado el puntaje más alto batallando Fryhtans!"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:297
-#, fuzzy, c-format
+#, c-format
 msgid "Your Kingdom has Reached its Population Goal of %s !"
-msgstr "su objetivo de población de %s!"
+msgstr "Su reino ha alcanzado su objetivo de población de %s !"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:302
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Reached its Population Goal of %s !"
-msgstr "su objetivo de población de %s!"
+msgstr "El reino de %s ha alcanzado su objetivo de población de %s !"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:315
-#, fuzzy, c-format
+#, c-format
 msgid "Your Kingdom has Reached its Economic Score Goal of %s !"
-msgstr "su objetivo de puntuación económica de %s !"
+msgstr "Su reino ha alcanzado su objetivo de puntuación económica de %s !"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Reached its Economic Score Goal of %s !"
-msgstr "su objetivo de puntuación económica de %s !"
+msgstr ""
+"El reino de %s ha alcanzado su objetivo de puntuación económica de %s !"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:333
-#, fuzzy, c-format
+#, c-format
 msgid "Your Kingdom has Reached its Total Score Goal of %s !"
-msgstr "el objetivo de puntuación total de %s !"
+msgstr "Su reino ha alcanzado su objetivo de puntuación total de %s !"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:338
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom has Reached its Total Score Goal of %s !"
-msgstr "el objetivo de puntuación total de %s !"
+msgstr "El reino de %s ha alcanzado el objetivo de puntuación total de %s !"
 
 #: src/OGAMEND.cpp:350
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
@@ -966,23 +930,20 @@ msgid "Total Score"
 msgstr "Puntuación Total"
 
 #: src/OGAMEND.cpp:563 src/OR_RANK.cpp:174
-#, fuzzy
 msgid "Final Score"
-msgstr "Puntuacion final:  %s X "
+msgstr "Puntuación final"
 
 #: src/OGAMEND.cpp:572 src/OR_RANK.cpp:183
-#, fuzzy
 msgid "(Difficulty Rating)"
-msgstr "%s (Grado de dificultad)"
+msgstr "(Grado de dificultad)"
 
 #: src/OGAMEND.cpp:588
 msgid "(Bonus)"
-msgstr ""
+msgstr "(Bonificación)"
 
 #: src/OGAMEND.cpp:598 src/OR_RANK.cpp:194
-#, fuzzy
 msgid "(Cheated)"
-msgstr "X 0 (Trampa) = 0"
+msgstr "(Trampa)"
 
 #: src/OGAMHALL.cpp:263
 msgid "Score"
@@ -992,7 +953,7 @@ msgstr "Puntuación"
 msgid "Period"
 msgstr "Período"
 
-#: src/OGAMHALL.cpp:293
+#: src/OGAMHALL.cpp:293 src/OGAMSCE2.cpp:462
 msgid "Difficulty"
 msgstr "Dificultad"
 
@@ -1005,9 +966,8 @@ msgid "Scenario files not found."
 msgstr "Archivos de escenario no encontrados."
 
 #: src/OGAMSCE2.cpp:469
-#, fuzzy
 msgid "Score Bonus"
-msgstr "Puntuación bonos: "
+msgstr "Puntuación de bonificación"
 
 #: src/OGFILE.cpp:326
 msgid "Success"
@@ -1102,7 +1062,7 @@ msgstr "Cañón"
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:522 src/OHELP.cpp:570
 msgid "Porcupine"
-msgstr "Puerco espín"
+msgstr "Puercoespín"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:523 src/OHELP.cpp:571
@@ -1160,83 +1120,83 @@ msgid "Mind Turner"
 msgstr "Mind Turner"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:534
+#. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use General or Ordo whichever makes sense.
+#: src/OHELP.cpp:535
 msgid "Deezboanz General"
 msgstr "General Deezboanz"
 
-#: src/OHELP.cpp:535
+#: src/OHELP.cpp:536
 msgid "Rattus General"
 msgstr "General Rattus"
 
-#: src/OHELP.cpp:536
+#: src/OHELP.cpp:537
 msgid "Broosken General"
 msgstr "General Broosken"
 
-#: src/OHELP.cpp:537
+#: src/OHELP.cpp:538
 msgid "Haubudam General"
 msgstr "General Haubudam"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
-#: src/OHELP.cpp:538
+#: src/OHELP.cpp:539
 msgid "Pfith General"
 msgstr "General Pfith"
 
-#: src/OHELP.cpp:539
+#: src/OHELP.cpp:540
 msgid "Rokken General"
 msgstr "General Rokken"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
-#: src/OHELP.cpp:540
+#: src/OHELP.cpp:541
 msgid "Doink General"
 msgstr "General Doink"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
-#: src/OHELP.cpp:541
+#: src/OHELP.cpp:542
 msgid "Wyrm General"
 msgstr "General Wyrm"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
-#: src/OHELP.cpp:542
+#: src/OHELP.cpp:543
 msgid "Droog General"
 msgstr "General Droog"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
-#: src/OHELP.cpp:543
+#: src/OHELP.cpp:544
 msgid "Ick General"
 msgstr "General Ick"
 
-#: src/OHELP.cpp:544
+#: src/OHELP.cpp:545
 msgid "Sauroid General"
 msgstr "General Sauroid"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:545
+#: src/OHELP.cpp:546
 msgid "Karrotten General"
 msgstr "General Karrotten"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/std/00007-FIRM.dbf
-#: src/OHELP.cpp:546
+#: src/OHELP.cpp:547
 msgid "Holgh General"
 msgstr "General Holgh"
 
-#: src/OHELP.cpp:547
+#: src/OHELP.cpp:548
 msgid "Egyptian General"
 msgstr "General egipcio"
 
-#: src/OHELP.cpp:548
+#: src/OHELP.cpp:549
 msgid "Mughul General"
 msgstr "General mogul"
 
 #: src/OHELP.cpp:550
-#, fuzzy
 msgid "Zulu General"
-msgstr "General %s"
+msgstr "General zulu"
 
 # data/resource/std/00005-UNIT.dbf
 #: src/OHELP.cpp:551 src/OHELP.cpp:599
@@ -1262,12 +1222,12 @@ msgstr "Unicornio"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:557
+#: src/OHELP.cpp:558
 msgid "Norman King"
 msgstr "Rey normando"
 
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:558
+#: src/OHELP.cpp:559
 msgid "Maya King"
 msgstr "Rey maya"
 
@@ -1275,7 +1235,7 @@ msgstr "Rey maya"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:559
+#: src/OHELP.cpp:560
 msgid "Greek King"
 msgstr "Rey griego"
 
@@ -1283,7 +1243,7 @@ msgstr "Rey griego"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:560
+#: src/OHELP.cpp:561
 msgid "Viking King"
 msgstr "Rey vikingo"
 
@@ -1291,7 +1251,7 @@ msgstr "Rey vikingo"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:561
+#: src/OHELP.cpp:562
 msgid "Persian King"
 msgstr "Rey persa"
 
@@ -1299,7 +1259,7 @@ msgstr "Rey persa"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:562
+#: src/OHELP.cpp:563
 msgid "Chinese King"
 msgstr "Rey chino"
 
@@ -1307,70 +1267,71 @@ msgstr "Rey chino"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:563
+#: src/OHELP.cpp:564
 msgid "Japanese King"
 msgstr "Rey japonés"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:581
+#. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use King or All High whichever makes sense.
+#: src/OHELP.cpp:583
 msgid "Deezboanz King"
 msgstr "Rey Deezboanz"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:582
+#: src/OHELP.cpp:584
 msgid "Rattus King"
 msgstr "Rey Rattus"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:583
+#: src/OHELP.cpp:585
 msgid "Broosken King"
 msgstr "Rey Broosken"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:584
+#: src/OHELP.cpp:586
 msgid "Haubudam King"
 msgstr "Rey Haubudam"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:585
+#: src/OHELP.cpp:587
 msgid "Pfith King"
 msgstr "Rey Pfith"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:586
+#: src/OHELP.cpp:588
 msgid "Rokken King"
 msgstr "Rey Rokken"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:587
+#: src/OHELP.cpp:589
 msgid "Doink King"
 msgstr "Rey Doink"
 
-#: src/OHELP.cpp:588
+#: src/OHELP.cpp:590
 msgid "Wyrm King"
 msgstr "Rey Wyrm"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:589
+#: src/OHELP.cpp:591
 msgid "Droog King"
 msgstr "Rey Droog"
 
-#: src/OHELP.cpp:590
+#: src/OHELP.cpp:592
 msgid "Ick King"
 msgstr "Rey Ick"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:591
+#: src/OHELP.cpp:593
 msgid "Sauroid King"
 msgstr "Rey Sauroid"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:592
+#: src/OHELP.cpp:594
 msgid "Karrotten King"
 msgstr "Rey Karrotten"
 
 # data/resource/std/00005-UNIT.dbf
-#: src/OHELP.cpp:593
+#: src/OHELP.cpp:595
 msgid "Holgh King"
 msgstr "Rey Holgh"
 
@@ -1378,7 +1339,7 @@ msgstr "Rey Holgh"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:594
+#: src/OHELP.cpp:596
 msgid "Egyptian King"
 msgstr "Rey egipcio"
 
@@ -1386,7 +1347,7 @@ msgstr "Rey egipcio"
 # data/resource/std/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
-#: src/OHELP.cpp:595
+#: src/OHELP.cpp:597
 msgid "Mughul King"
 msgstr "Rey mogul"
 
@@ -1395,9 +1356,8 @@ msgstr "Rey mogul"
 # #-#-#-#-#  -  #-#-#-#-#
 # data/resource/std/00006-RACE.dbf
 #: src/OHELP.cpp:598
-#, fuzzy
 msgid "Zulu King"
-msgstr "Mughul"
+msgstr "Rey zulu"
 
 #. TRANSLATORS: Part of "%d hour(s) and %d minute(s)"
 #: src/OINFO.cpp:604
@@ -1431,9 +1391,8 @@ msgstr[0] "%d día"
 msgstr[1] "%d días"
 
 #: src/OINGMENU.cpp:153
-#, fuzzy
 msgid "Map I.D."
-msgstr "ID del mapa: "
+msgstr "I.D. del mapa"
 
 #: src/OINGMENU.cpp:229
 msgid "Do you really want to retire?"
@@ -2602,7 +2561,7 @@ msgstr ""
 #, c-format
 msgid "Your scientists have finished their Porcupine Mark %s research."
 msgstr ""
-"Sus científicos han terminado su investigación de porcupine de nivel %s."
+"Sus científicos han terminado su investigación del puercoespín de nivel %s."
 
 #: src/ONEWSENG.cpp:1228
 #, c-format
@@ -2644,7 +2603,7 @@ msgstr "Sus científicos han terminado su investigación de catapulta."
 
 #: src/ONEWSENG.cpp:1239
 msgid "Your scientists have finished their Porcupine research."
-msgstr "Sus científicos han terminado su investigación de porcupine."
+msgstr "Sus científicos han terminado su investigación del puercoespín."
 
 #: src/ONEWSENG.cpp:1240
 msgid "Your scientists have finished their Ballista research."
@@ -2898,7 +2857,7 @@ msgstr[1] "%d de sus unidades han sido heridas"
 msgid "and %d killed in an earthquake."
 msgid_plural "and %d killed in an earthquake."
 msgstr[0] "y %d muerta en un terremoto."
-msgstr[1] " y %d muertas en un terremoto."
+msgstr[1] "y %d muertas en un terremoto."
 
 #. TRANSLATORS: <Number> of your units has/have been injured in an earthquake.
 #: src/ONEWSENG.cpp:1473
@@ -3012,8 +2971,8 @@ msgstr ""
 msgid ""
 "A Porcupine %s of yours has broken down due to the lack of maintenance funds."
 msgstr ""
-"Uno de sus porcupines %s se ha destrozado debido a la falta de fondos para "
-"mantenimiento."
+"Uno de sus puerco espines %s se ha destrozado debido a la falta de fondos "
+"para mantenimiento."
 
 #. TRANSLATORS: A <Ship> of yours has broken down due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1572
@@ -3158,19 +3117,16 @@ msgid "The connection with %s's Kingdom%s has been lost."
 msgstr "La conexión con el reino de %s%s se ha perdido."
 
 #: src/ORAWRES.cpp:285
-#, fuzzy
 msgid "Clay Products"
-msgstr "Productos de %s"
+msgstr "Productos de arcilla"
 
 #: src/ORAWRES.cpp:286
-#, fuzzy
 msgid "Copper Products"
-msgstr "Productos de %s"
+msgstr "Productos de cobre"
 
 #: src/ORAWRES.cpp:287
-#, fuzzy
 msgid "Iron Products"
-msgstr "Productos de %s"
+msgstr "Productos de hierro"
 
 #: src/OREMOTEM.cpp:462 src/OSYS2.cpp:1028
 msgid "Multiplayer Random Seed Sync Error"
@@ -3461,15 +3417,15 @@ msgstr "Estado diplomático del reino de %s con otros reinos:"
 
 #. TRANSLATORS: To<Nation color> on <Date> :
 #: src/OR_NAT.cpp:874
-#, fuzzy, c-format
+#, c-format
 msgid "To%s on %s :"
-msgstr "el %s :"
+msgstr "A %s el %s :"
 
 #. TRANSLATORS: From<Nation color> on <Date> :
 #: src/OR_NAT.cpp:877
-#, fuzzy, c-format
+#, c-format
 msgid "From%s on %s :"
-msgstr "el %s :"
+msgstr "Desde %s el %s :"
 
 #: src/OR_NAT.cpp:907
 msgid "Please enter your chat message and press <Enter> to send."
@@ -3603,11 +3559,10 @@ msgid "Greater Being"
 msgstr "Ser superior"
 
 #: src/OR_TECH.cpp:366
-#, fuzzy
 msgid "Acquired Scroll:"
 msgid_plural "Acquired Scrolls:"
 msgstr[0] "Pergamino adquirido:"
-msgstr[1] "Pergamino adquirido:"
+msgstr[1] "Pergaminos adquiridos:"
 
 #: src/OR_TOWN.cpp:84
 msgid "Village"
@@ -3877,24 +3832,20 @@ msgid "Cannot delete this slot"
 msgstr "No se puede eliminar esta ranura"
 
 #: src/OSaveGameArray.cpp:617
-#, fuzzy
 msgid "Game Date"
-msgstr "Fecha de la partida: "
+msgstr "Fecha de la partida"
 
 #: src/OSaveGameArray.cpp:625
-#, fuzzy
 msgid "File Name"
-msgstr "Nombre del archivo: "
+msgstr "Nombre del archivo"
 
 #: src/OSaveGameArray.cpp:637
-#, fuzzy
 msgid "File Date"
-msgstr "Fecha del archivo: "
+msgstr "Fecha del archivo"
 
 #: src/OSaveGameArray.cpp:676
-#, fuzzy
 msgid "Overwrite the existing saved game?"
-msgstr "Se sobrescribirá la partida guardada existente, ¿Proceder?"
+msgstr "¿Sobrescribir la partida guardada existente?"
 
 #: src/OSaveGameArray.cpp:737
 msgid "Cannot save the game because the path is too long"
@@ -4320,623 +4271,657 @@ msgstr "Se niega a pagar %3$s en tributo al reino de %1$s%2$s."
 
 #. TRANSLATORS: You offer <Tech><Level> technology to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:805
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Catapult%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología de la catapulta %1$s al reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:806
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Porcupine%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología del puercoespín %1$s al reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:807
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Ballista%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología de la ballesta %1$s al reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:808
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Cannon%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología del cañón %1$s al reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:809
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Spitfire%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología del spitfire %1$s al reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:810
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Caravel%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología de la carabela %1$s al reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:811
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Galleon%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología del galeón %1$s al reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:812
-#, fuzzy, c-format
+#, c-format
 msgid "You offer Unicorn%s technology to %s's Kingdom%s."
-msgstr "Ofrece la tecnología %1$s al reino de %2$s%3$s."
+msgstr "Ofrece la tecnología del unicornio %1$s al reino de %2$s%3$s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> offers <Tech><Level> technology to you.
 #: src/OTALKENG.cpp:817
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Catapult%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología de la catapulta %3$s."
 
 #: src/OTALKENG.cpp:818
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Porcupine%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología del puercoespín %3$s."
 
 #: src/OTALKENG.cpp:819
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Ballista%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología de la ballesta %3$s."
 
 #: src/OTALKENG.cpp:820
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Cannon%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología del cañón %3$s."
 
 #: src/OTALKENG.cpp:821
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Spitfire%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología del spitfire %3$s."
 
 #: src/OTALKENG.cpp:822
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Caravel%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología la carabela %3$s."
 
 #: src/OTALKENG.cpp:823
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Galleon%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología del galeón %3$s."
 
 #: src/OTALKENG.cpp:824
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s offers Unicorn%s technology to you."
-msgstr "El reino de %1$s%2$s le ofrece la tecnología %3$s."
+msgstr "El reino de %1$s%2$s le ofrece la tecnología del unicornio %3$s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your gift of <Tech> technology.
 #: src/OTALKENG.cpp:829
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Catapult%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta su regalo tecnológico de la catapulta %3$s."
 
 #: src/OTALKENG.cpp:830
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Porcupine%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta su regalo tecnológico del puercoespín %3$s."
 
 #: src/OTALKENG.cpp:831
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Ballista%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de la ballesta %3$s."
 
 #: src/OTALKENG.cpp:832
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Cannon%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s acepta su regalo tecnológico del cañón %3$s."
 
 #: src/OTALKENG.cpp:833
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Spitfire%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s acepta su regalo tecnológico del spitfire %3$s."
 
 #: src/OTALKENG.cpp:834
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Caravel%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de la carabela %3$s."
 
 #: src/OTALKENG.cpp:835
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Galleon%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s acepta su regalo tecnológico del galeón %3$s."
 
 #: src/OTALKENG.cpp:836
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s accepts your gift of Unicorn%s technology."
-msgstr "El reino de %1$s%2$s acepta su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s acepta su regalo tecnológico del unicornio %3$s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your gift of <Tech><Level> technology.
 #: src/OTALKENG.cpp:841
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Catapult%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr ""
+"El reino de %1$s%2$s rechaza su regalo tecnológico de la catapulta %3$s."
 
 #: src/OTALKENG.cpp:842
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Porcupine%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr ""
+"El reino de %1$s%2$s rechaza su regalo tecnológico del puercoespín %3$s."
 
 #: src/OTALKENG.cpp:843
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Ballista%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr ""
+"El reino de %1$s%2$s rechaza su regalo tecnológico de la ballesta %3$s."
 
 #: src/OTALKENG.cpp:844
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Cannon%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico del cañón %3$s."
 
 #: src/OTALKENG.cpp:845
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Spitfire%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico del spitfire %3$s."
 
 #: src/OTALKENG.cpp:846
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Caravel%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr ""
+"El reino de %1$s%2$s rechaza su regalo tecnológico de la carabela %3$s."
 
 #: src/OTALKENG.cpp:847
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Galleon%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico del galeón %3$s."
 
 #: src/OTALKENG.cpp:848
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s rejects your gift of Unicorn%s technology."
-msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico de %3$s."
+msgstr "El reino de %1$s%2$s rechaza su regalo tecnológico del unicornio %3$s."
 
 #. TRANSLATORS: You accept the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:853
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Catapult%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr ""
+"Acepta el regalo tecnológico de la catapulta %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:854
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Porcupine%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr ""
+"Acepta el regalo tecnológico del puercoespín %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:855
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Ballista%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr ""
+"Acepta el regalo tecnológico de la ballesta %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:856
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Cannon%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr "Acepta el regalo tecnológico del cañon %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:857
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Spitfire%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr "Acepta el regalo tecnológico del spitfire %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:858
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Caravel%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr ""
+"Acepta el regalo tecnológico de la carabela %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:859
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Galleon%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr "Acepta el regalo tecnológico del galeón %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:860
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the gift of Unicorn%s technology from %s's Kingdom%s."
-msgstr "Acepta el regalo tecnológico %1$s del reino de %2$s%3$s."
+msgstr "Acepta el regalo tecnológico del unicornio %1$s del reino de %2$s%3$s."
 
 #. TRANSLATORS: You reject the gift of <Tech><Level> technology from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:865
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Catapult%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr ""
+"Rechaza el regalo tecnológico de la catapulta %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:866
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Porcupine%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr ""
+"Rechaza el regalo tecnológico del puercoespín %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:867
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Ballista%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr ""
+"Rechaza el regalo tecnológico de la ballesta %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:868
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Cannon%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr "Rechaza el regalo tecnológico del cañón %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:869
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Spitfire%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr "Rechaza el regalo tecnológico del spitfire %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:870
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Caravel%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr ""
+"Rechaza el regalo tecnológico de la carabela %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:871
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Galleon%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr "Rechaza el regalo tecnológico del galeón %1$s del reino de %2$s%3$s."
 
 #: src/OTALKENG.cpp:872
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the gift of Unicorn%s technology from %s's Kingdom%s."
-msgstr "Rechaza el regalo tecnológico de %1$s del reino de %2$s%3$s."
+msgstr ""
+"Rechaza el regalo tecnológico del unicornio %1$s del reino de %2$s%3$s."
 
 #. TRANSLATORS: You request the latest <Tech> technology from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:940
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Catapult technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología de la catapulta del reino de %s%s."
 
 #: src/OTALKENG.cpp:941
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Porcupine technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología del puercoespín del reino de %s%s."
 
 #: src/OTALKENG.cpp:942
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Ballista technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología de la ballesta del reino de %s%s."
 
 #: src/OTALKENG.cpp:943
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Cannon technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología del cañón del reino de %s%s."
 
 #: src/OTALKENG.cpp:944
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Spitfire technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología del spitfire del reino de %s%s."
 
 #: src/OTALKENG.cpp:945
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Caravel technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología de la carabela del reino de %s%s."
 
 #: src/OTALKENG.cpp:946
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Galleon technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología del galeón del reino de %s%s."
 
 #: src/OTALKENG.cpp:947
-#, fuzzy, c-format
+#, c-format
 msgid "You request the latest Unicorn technology from %s's Kingdom%s."
-msgstr "Solicita la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Solicita la última tecnología del unicornio del reino de %s%s."
 
 #. TRANSLATORS: You demand the latest <Tech> technology from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:952
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Catapult technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología de la catapulta del reino de %s%s."
 
 #: src/OTALKENG.cpp:953
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Porcupine technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología del puercoespín del reino de %s%s."
 
 #: src/OTALKENG.cpp:954
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Ballista technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología de la ballesta del reino de %s%s."
 
 #: src/OTALKENG.cpp:955
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Cannon technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología del cañón del reino de %s%s."
 
 #: src/OTALKENG.cpp:956
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Spitfire technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología del spitfire del reino de %s%s."
 
 #: src/OTALKENG.cpp:957
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Caravel technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología de la carabela del reino de %s%s."
 
 #: src/OTALKENG.cpp:958
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Galleon technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología del galeón del reino de %s%s."
 
 #: src/OTALKENG.cpp:959
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Unicorn technology from %s's Kingdom%s."
-msgstr "Exige la última tecnología %1$s del reino de %2$s%3$s."
+msgstr "Exige la última tecnología del unicornio del reino de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests the latest <Tech> technology from you.
 #: src/OTALKENG.cpp:964
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Catapult technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología dela catapulta."
 
 #: src/OTALKENG.cpp:965
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Porcupine technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología del puercoespín."
 
 #: src/OTALKENG.cpp:966
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Ballista technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología de la ballesta."
 
 #: src/OTALKENG.cpp:967
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Cannon technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología del cañón."
 
 #: src/OTALKENG.cpp:968
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Spitfire technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología del spitfire."
 
 #: src/OTALKENG.cpp:969
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Caravel technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología de la carabela."
 
 #: src/OTALKENG.cpp:970
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Galleon technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología del galeón."
 
 #: src/OTALKENG.cpp:971
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Unicorn technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le pide la última tecnología del unicornio."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> demands the latest <Tech> technology from you.
 #: src/OTALKENG.cpp:976
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Catapult technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología de la catapulta."
 
 #: src/OTALKENG.cpp:977
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Porcupine technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología del puercoespín."
 
 #: src/OTALKENG.cpp:978
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Ballista technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología de la ballesta."
 
 #: src/OTALKENG.cpp:979
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Cannon technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología del cañón."
 
 #: src/OTALKENG.cpp:980
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Spitfire technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología del spitfire."
 
 #: src/OTALKENG.cpp:981
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Caravel technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología de la carabela."
 
 #: src/OTALKENG.cpp:982
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Galleon technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología del galeón."
 
 #: src/OTALKENG.cpp:983
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s demands the latest Unicorn technology from you."
-msgstr "El reino de %1$s%2$s le exige la última tecnología de %3$s."
+msgstr "El reino de %1$s%2$s le exige la última tecnología del unicornio."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to transfer its latest <Tech> technology to you.
 #: src/OTALKENG.cpp:988
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s agrees to transfer its latest Catapult technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología de catapulta."
 
 #: src/OTALKENG.cpp:989
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s agrees to transfer its latest Porcupine technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología del "
+"puercoespín."
 
 #: src/OTALKENG.cpp:990
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s agrees to transfer its latest Ballista technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología de la ballesta."
 
 #: src/OTALKENG.cpp:991
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to transfer its latest Cannon technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología del cañón."
 
 #: src/OTALKENG.cpp:992
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s agrees to transfer its latest Spitfire technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología del spitfire."
 
 #: src/OTALKENG.cpp:993
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to transfer its latest Caravel technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología de la carabela."
 
 #: src/OTALKENG.cpp:994
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to transfer its latest Galleon technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología del galeón."
 
 #: src/OTALKENG.cpp:995
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s agrees to transfer its latest Unicorn technology to you."
-msgstr "El reino de %1$s%2$s acepta transferirle su última tecnología de %3$s."
+msgstr ""
+"El reino de %1$s%2$s acepta transferirle su última tecnología del unicornio."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses to transfer its latest <Tech> technology to you.
 #: src/OTALKENG.cpp:1000
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s refuses to transfer its latest Catapult technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología de la "
+"catapulta."
 
 #: src/OTALKENG.cpp:1001
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s refuses to transfer its latest Porcupine technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología del "
+"puercoespín."
 
 #: src/OTALKENG.cpp:1002
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s refuses to transfer its latest Ballista technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología de la "
+"ballesta."
 
 #: src/OTALKENG.cpp:1003
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s refuses to transfer its latest Cannon technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología del cañón."
 
 #: src/OTALKENG.cpp:1004
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s refuses to transfer its latest Spitfire technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología del "
+"spitfire."
 
 #: src/OTALKENG.cpp:1005
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s refuses to transfer its latest Caravel technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología de la "
+"carabela."
 
 #: src/OTALKENG.cpp:1006
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s refuses to transfer its latest Galleon technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología del galeón."
 
 #: src/OTALKENG.cpp:1007
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s's Kingdom%s refuses to transfer its latest Unicorn technology to you."
 msgstr ""
-"El reino de %1$s%2$s se niega a transferirle su última tecnología %3$s."
+"El reino de %1$s%2$s se niega a transferirle su última tecnología del "
+"unicornio."
 
 #. TRANSLATORS: You agree to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1012
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You agree to transfer your latest Catapult technology to %s's Kingdom%s."
 msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Acepta transferir su última tecnología de la catapulta al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1013
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You agree to transfer your latest Porcupine technology to %s's Kingdom%s."
 msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Acepta transferir su última tecnología del puercoespín al reino de %s%s."
 
 #: src/OTALKENG.cpp:1014
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You agree to transfer your latest Ballista technology to %s's Kingdom%s."
 msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Acepta transferir su última tecnología de la ballesta al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1015
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to transfer your latest Cannon technology to %s's Kingdom%s."
-msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+msgstr "Acepta transferir su última tecnología del cañón al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1016
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You agree to transfer your latest Spitfire technology to %s's Kingdom%s."
 msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Acepta transferir su última tecnología del spitfire al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1017
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to transfer your latest Caravel technology to %s's Kingdom%s."
 msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Acepta transferir su última tecnología de la carabela al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1018
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to transfer your latest Galleon technology to %s's Kingdom%s."
 msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Acepta transferir su última tecnología del galeón al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1019
-#, fuzzy, c-format
+#, c-format
 msgid "You agree to transfer your latest Unicorn technology to %s's Kingdom%s."
 msgstr ""
-"Acepta transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Acepta transferir su última tecnología del unicornio al reino de %1$s%2$s."
 
 #. TRANSLATORS: You refuse to transfer your latest <Tech> technology to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1024
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You refuse to transfer your latest Catapult technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología de la catapulta al reino de %1$s"
+"%2$s."
 
 #: src/OTALKENG.cpp:1025
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You refuse to transfer your latest Porcupine technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología del puercoespín para el reino de "
+"%s%s."
 
 #: src/OTALKENG.cpp:1026
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You refuse to transfer your latest Ballista technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología de la ballesta al reino de %1$s"
+"%2$s."
 
 #: src/OTALKENG.cpp:1027
-#, fuzzy, c-format
+#, c-format
 msgid "You refuse to transfer your latest Cannon technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología del cañón al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1028
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You refuse to transfer your latest Spitfire technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología del spitfire al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1029
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You refuse to transfer your latest Caravel technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología de la carabela al reino de %1$s"
+"%2$s."
 
 #: src/OTALKENG.cpp:1030
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You refuse to transfer your latest Galleon technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología del galeón al reino de %1$s%2$s."
 
 #: src/OTALKENG.cpp:1031
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You refuse to transfer your latest Unicorn technology to %s's Kingdom%s."
 msgstr ""
-"Se niega a transferir su última tecnología de %1$s para el reino de %2$s%3$s."
+"Se niega a transferir su última tecnología del unicornio para el reino de "
+"%1$s%2$s."
 
 #. TRANSLATORS: You request immediate military aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1142
@@ -5293,49 +5278,42 @@ msgstr "General"
 
 #. TRANSLATORS: Please select a location to build the <Firm>.
 #: src/OUNITIF.cpp:1006
-#, fuzzy
 msgid "Please select a location to build the Seat of Power."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr "Por favor, seleccione una ubicación para construir la sede de poder."
 
 #: src/OUNITIF.cpp:1007
-#, fuzzy
 msgid "Please select a location to build the Factory."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr "Por favor, seleccione una ubicación para construir la fábrica."
 
 #: src/OUNITIF.cpp:1008
-#, fuzzy
 msgid "Please select a location to build the Inn."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr "Por favor, seleccione una ubicación para construir la taberna."
 
 #: src/OUNITIF.cpp:1009
-#, fuzzy
 msgid "Please select a location to build the Market."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr "Por favor, seleccione una ubicación para construir el mercado."
 
 #: src/OUNITIF.cpp:1010
-#, fuzzy
 msgid "Please select a location to build the Fort."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr "Por favor, seleccione una ubicación para construir el fuerte."
 
 #: src/OUNITIF.cpp:1011
-#, fuzzy
 msgid "Please select a location to build the Mine."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr "Por favor, seleccione una ubicación para construir la mina."
 
 #: src/OUNITIF.cpp:1012
-#, fuzzy
 msgid "Please select a location to build the Tower of Science."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr ""
+"Por favor, seleccione una ubicación para construir la torre de ciencia."
 
 #: src/OUNITIF.cpp:1013
-#, fuzzy
 msgid "Please select a location to build the War Factory."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr ""
+"Por favor, seleccione una ubicación para construir la fábrica de guerra."
 
 #: src/OUNITIF.cpp:1014
-#, fuzzy
 msgid "Please select a location to build the Harbor."
-msgstr "Por favor, seleccione una ubicación para construir el %s ."
+msgstr "Por favor, seleccione una ubicación para construir el puerto ."
 
 #: src/OUNITIF.cpp:1070
 msgid "Please select a location to settle."
@@ -5405,9 +5383,8 @@ msgid "Set Stop"
 msgstr "Establecer parada"
 
 #: src/OU_CARA.cpp:174 src/OU_MARIF.cpp:625
-#, fuzzy
 msgid "Pick up:"
-msgstr "Recogida: "
+msgstr "Recogida:"
 
 #: src/OU_CARA.cpp:187 src/OU_MARIF.cpp:638
 msgid "View Stop"
@@ -5543,8 +5520,8 @@ msgid "(Spy)"
 msgstr "(Espía)"
 
 #: src/ReplayFile.cpp:115
-msgid "The selected reply file uses an unsupported format"
-msgstr "El archivo de repetición seleccionado usa un formato no compatible"
+msgid "The selected replay file uses an unsupported format."
+msgstr "El archivo de repetición seleccionado usa un formato no compatible."
 
 #: src/ReplayFile.cpp:125
 #, c-format
@@ -7713,15 +7690,16 @@ msgid ""
 "exception is the Porcupine. "
 msgstr ""
 "Las armas son seleccionadas y apuntadas exactamente en la misma manera que "
-"los soldados. La excepción es el Porcupine. "
+"los soldados. La excepción es el puercoespín. "
 
 # data/resource/tut_text/00009-4WEAPONS.txt:35
 msgid ""
 "A Porcupine is a Weapon designed to be destroyed by your own forces. Send "
 "one or -- better yet -- several Porcupines into the midst of the enemy. "
 msgstr ""
-"Un Porcupine es un arma diseñada para ser destruida por sus propias fuerzas. "
-"Envíe uno o -- mejor aún -- varios Porcupines al medio del enemigo. "
+"Un puercoespín es un arma diseñada para ser destruida por sus propias "
+"fuerzas. Envíe uno o -- mejor aún -- varios puerco espines al medio del "
+"enemigo. "
 
 # data/resource/tut_text/00009-4WEAPONS.txt:38
 msgid ""
@@ -7731,9 +7709,9 @@ msgid ""
 "a Porcupine. "
 msgstr ""
 "Ahora, con un cañón, catapulta, spitfire o flecha flamígera (Egipcio), "
-"indique y ataque al \"porcupine\". Para hacer eso, primero seleccione "
+"indique y ataque al puercoespín. Para hacer eso, primero seleccione "
 "cualquier otra arma. Luego mientras mantiene presionada la tecla Shift en su "
-"teclado, haga clic con el cursor de mano verde sobre el \"porcupine\". "
+"teclado, haga clic con el cursor de mano verde sobre el puercoespín. "
 
 # data/resource/tut_text/00009-4WEAPONS.txt:42
 msgid ""
@@ -7741,8 +7719,8 @@ msgid ""
 "a fire. If you have any other Porcupines adjacent to the one you targeted, "
 "it will cause a chain reaction explosion between all of them. "
 msgstr ""
-"Cuando su proyectil alcance al porcupine, causará su explosión y comenzará "
-"un incendio. Si tiene cualquier otro porcupine adyacente al que apuntó, "
+"Cuando su proyectil alcance al puercoespín, causará su explosión y comenzará "
+"un incendio. Si tiene cualquier otro puercoespín adyacente al que apuntó, "
 "causará una cadena de explosiones entre todos ellos. "
 
 # data/resource/tut_text/00009-4WEAPONS.txt:45
@@ -9432,36 +9410,37 @@ msgid "Villages and Units Map"
 msgstr "Mapa de pueblos y unidades"
 
 # data/resource/help.res:59
-#, fuzzy
 msgid "This map shows the location of villages and units. "
-msgstr "Este modo mapa muestra la ubicación de las ciudades y unidades. "
+msgstr "Este mapa muestra la ubicación de las ciudades y unidades. "
 
 # data/resource/help.res:181
 msgid "Offer Bribe"
 msgstr "Ofrecer soborno"
 
 # data/resource/help.res:182
-#, fuzzy
 msgid ""
 "Make a bribe with the selected spy. This takes you to a menu where you can "
 "choose the amount of the bribe to offer to the selected foreign unit. "
 msgstr ""
-"Esto le llevará a un menú donde puede elegir la cantidad de soborno para "
-"ofrecer al enemigo seleccionado. "
+"Realiza un soborno con el espía seleccionado. Esto le lleva a un menú donde "
+"puede elegir la cantidad de soborno para ofrecer a la unidad extranjera "
+"seleccionada. "
 
 # data/resource/help.res:66
 msgid "Build"
 msgstr "Construir"
 
 # data/resource/help.res:67
-#, fuzzy
+# #
+# este cuadro está deshabilitado (literal)
+# este cuadro estará deshabilitado (mejor)
 msgid ""
 "This enables you to choose a structure to build. If you do not have enough "
 "money to build a structure, this tile is disabled. "
 msgstr ""
-"Esto le permitirá elegir una estructura para construir. Si usted no tiene "
-"suficiente dinero para construir una estructura, se deshabilitará este "
-"cuadro. "
+"Esto le permite elegir una estructura para construir. Si usted no tiene "
+"suficiente dinero para construir una estructura, el cuadro estará "
+"deshabilitado. "
 
 # data/resource/help.res:71
 msgid "This cancels your present action. "
@@ -9492,13 +9471,14 @@ msgid "Collect Tax"
 msgstr "Cobrar impuesto"
 
 # data/resource/help.res:83
-#, fuzzy
+# # No debería ser el nivel minimo en el que cobrar?
 msgid ""
 "This collects tax from the selected village. If you right-click, you will be "
 "able to set a maximum loyalty level to tax your villagers automatically. "
 msgstr ""
-"Esto cobrará el impuesto del pueblo seleccionado. Si hace clic derecho en "
-"este podrá cobrar impuestos sus aldeanos automáticamente. "
+"Esto cobra el impuesto del pueblo seleccionado. Si hace clic derecho, podrá "
+"establecer el nivel de lealtad máximo en el que cobrar impuestos a sus "
+"aldeanos automáticamente. "
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:86
@@ -9543,13 +9523,12 @@ msgid "Grant"
 msgstr "Subvención"
 
 # data/resource/help.res:102
-#, fuzzy
 msgid ""
 "This grants money to the selected village. If you right-click, you will be "
 "able to set a loyalty level to grant money automatically. "
 msgstr ""
-"Esto otorgará dinero al pueblo seleccionado. Si hace clic derecho en este "
-"podrá conceder dinero de forma automática. "
+"Esto le otorga dinero al pueblo seleccionado. Si hace clic derecho, podrá "
+"establecer el nivel de lealtad para conceder dinero de forma automática. "
 
 # data/resource/help.res:106
 msgid ""
@@ -9564,25 +9543,23 @@ msgid "Hire Caravan"
 msgstr "Contratar caravana"
 
 # data/resource/help.res:110
-#, fuzzy
 msgid ""
 "This hires a caravan from this market so that you can conduct trade and move "
 "goods. It is disabled if you have too few villagers to support any more "
 "caravans. 10 villagers are needed to support each caravan. "
 msgstr ""
-"Esto contratará una caravana de este mercado para que pueda comerciar. Se "
-"deshabilitará si usted tiene muy pocos habitantes para mantener cualquier "
-"caravana adicional. Se necesitan 10 aldeanos para mantener cada caravana. "
+"Esto contrata una caravana de este mercado para que pueda comerciar y "
+"trasladar bienes. Se deshabilitará si usted tiene muy pocos habitantes para "
+"mantener alguna caravana adicional. Se necesitan 10 aldeanos para mantener "
+"cada caravana. "
 
 # data/resource/tut_list.res
-#, fuzzy
 msgid "Hire Mercenary"
-msgstr "Mercenarios"
+msgstr "Contratar mercenario"
 
 # data/resource/help.res:114
-#, fuzzy
 msgid "This hires the selected mercenary to be in your service. "
-msgstr "Esto contrata al mercenario seleccionado. Él se unirá a su servicio. "
+msgstr "Esto contrata al mercenario seleccionado para estar a su servicio. "
 
 # data/resource/help.res:117
 msgid "Invoke Greater Being"
@@ -9719,14 +9696,12 @@ msgid "Honors"
 msgstr "Honores"
 
 # data/resource/help.res:166
-#, fuzzy
 msgid ""
 "This awards an honor to the selected unit. For each honor, the unit's "
 "loyalty increases by 10 points. This is disabled for the King. "
 msgstr ""
-"Esto otorgará honores para la persona seleccionada. Para cada honor, la "
-"lealtad de la persona se incrementará en 10 puntos. Esto se deshabilitará "
-"para el Rey. "
+"Esto otorga honores a la unidad seleccionada. Por cada honor, la lealtad de "
+"la unidad se incrementa en 10 puntos. Esto está deshabilitado para el Rey. "
 
 # data/resource/help.res:170
 msgid ""
@@ -9761,14 +9736,15 @@ msgstr ""
 "sus órdenes adicionales. "
 
 # data/resource/help.res:182
-#, fuzzy
 msgid ""
 "This takes you to a menu where you can choose the amount of the bribe to "
 "offer to the selected foreign unit. If more than one spy is in the building, "
 "you will also be prompted to select one of your spies to do the offer. "
 msgstr ""
-"Esto le llevará a un menú donde puede elegir la cantidad de soborno para "
-"ofrecer al enemigo seleccionado. "
+"Esto le lleva a un menú donde puede elegir la cantidad de soborno para "
+"ofrecer a la unidad extrajera seleccionada. Si hay más de un espía en el "
+"edificio, también se le indicará que seleccione a uno de sus espías para "
+"hacer la oferta. "
 
 # data/resource/help.res:185
 msgid "Settle"
@@ -9813,7 +9789,6 @@ msgid "This orders your spy to change his task. "
 msgstr "Esto ordena a su espía cambiar la tarea. "
 
 # data/resource/help.res:201
-#, fuzzy
 msgid "Notification Currently Disabled. Click to Enable."
 msgstr "Notificación actualmente desactivada. Haga clic para activar."
 
@@ -9826,7 +9801,6 @@ msgstr ""
 "secreto. Dispondrá de la capacidad de controlar el movimiento de su espía. "
 
 # data/resource/help.res:205
-#, fuzzy
 msgid "Notification Currently Enabled. Click to Disable."
 msgstr "Notificación actualmente activada. Haga clic para desactivar."
 
@@ -9844,16 +9818,14 @@ msgid "Succeed to the Crown"
 msgstr "Suceder a la corona"
 
 # data/resource/help.res:210
-#, fuzzy
 msgid "This elevates the selected unit to the Crown. "
-msgstr "Esto elevará la persona seleccionada a la corona. "
+msgstr "Esto elevará la unidad seleccionada a la corona. "
 
 # data/resource/help.res:213
 msgid "Train"
 msgstr "Entrenar"
 
 # data/resource/help.res:214
-#, fuzzy
 msgid ""
 "This trains a villager in a selected skill. This tile is disabled if there "
 "are no more peasants in the village or if you do not have a General in a "
@@ -9868,25 +9840,22 @@ msgid "View Secrets"
 msgstr "Ver secretos"
 
 # data/resource/help.res:218
-#, fuzzy
 msgid ""
 "This takes you to a menu where you can select the type of this kingdom's "
 "secrets to view. The secrets that you can view depend on the skill level of "
 "your spy. "
 msgstr ""
-"Esto le llevará a un menú en el que puede seleccionar el tipo de los "
-"secretos de este reino para ver. Los secretos que se pueden ver dependerán "
-"del nivel de habilidad de su espía. "
+"Esto le lleva a un menú en el que puede seleccionar el tipo de secretos de "
+"este reino para ver. Los secretos que puede ver dependerán del nivel de "
+"habilidad de su espía. "
 
 # data/resource/help.res:221
-#, fuzzy
 msgid "Drop Spy Identity"
 msgstr "Eliminar identidad de espía"
 
 # data/resource/help.res:222
-#, fuzzy
 msgid "This causes the spy to give up his spy identity. "
-msgstr "Esto hará que el espía renuncie a su identidad de espionaje. "
+msgstr "Esto hace que el espía renuncie a su identidad de espionaje. "
 
 # data/resource/help.res:225
 msgid "Automatic"
@@ -9913,23 +9882,20 @@ msgstr ""
 "mercado o puerto. "
 
 # data/resource/help.res:233
-#, fuzzy
 msgid "Disband Unit"
-msgstr "Desbandar una unidad"
+msgstr "Desbandar unidad"
 
 # data/resource/help.res:234
-#, fuzzy
 msgid ""
 "This disbands the selected unit. If the selected unit is a foreign spy, it "
 "executes him. "
 msgstr ""
-"Esto desbandará la unidad seleccionada. Si la unidad seleccionada es un "
-"espía extranjero, esto lo ejecutará. "
+"Esto desbanda a la unidad seleccionada. Si la unidad seleccionada es un "
+"espía extranjero, esto lo ejecuta. "
 
 # data/resource/help.res:237
-#, fuzzy
 msgid "Set Caravan Stop"
-msgstr "Establecer parada comercial de una caravana"
+msgstr "Establecer parada de caravana"
 
 # data/resource/help.res:238
 msgid ""
@@ -9939,97 +9905,80 @@ msgstr ""
 "Después de pulsar este botón, haga clic con el cursor en el lugar donde "
 "quiere que su caravana se detenga. "
 
-#, fuzzy
 msgid "View Caravan Stop"
-msgstr "Ver parada"
+msgstr "Ver parada de caravana"
 
 # data/resource/help.res:246
-#, fuzzy
 msgid "Click here to center the map over this caravan stop. "
-msgstr ""
-"Al hacer clic aquí se eliminará esta parada comercial de la caravana . "
+msgstr "Haga clic aquí para centrar el mapa en esta parada de la caravana. "
 
 # data/resource/help.res:245
-#, fuzzy
 msgid "Delete Caravan Stop"
-msgstr "Eliminar parada comercial de una caravana"
+msgstr "Eliminar parada de caravana"
 
 # data/resource/help.res:246
-#, fuzzy
 msgid "Click here to delete this caravan stop. "
-msgstr ""
-"Al hacer clic aquí se eliminará esta parada comercial de la caravana . "
+msgstr "Haga clic aquí para eliminar esta parada de la caravana. "
 
 # data/resource/help.res:249
-#, fuzzy
 msgid "Set Trade Ship Stop"
 msgstr "Establecer parada comercial de una nave"
 
 # data/resource/help.res:250
-#, fuzzy
 msgid ""
 "After you press this button, click your cursor on the harbor where you want "
 "your trade ship to stop. "
 msgstr ""
 "Después de pulsar este botón, haga clic con el cursor en el puerto donde "
-"desea que su barco mercante se detenga. "
+"desea que su nave mercante se detenga. "
 
 # data/resource/help.res:253
-#, fuzzy
 msgid "View Trade Ship Stop"
-msgstr "Ver parada comercial de una nave"
+msgstr "Ver parada comercial de la nave"
 
 # data/resource/help.res:258
-#, fuzzy
 msgid "Click here to center the map over this trade ship stop. "
-msgstr "Al hacer clic aquí se eliminará parada la comercial del barco. "
+msgstr ""
+"Haga clic aquí para centrar el mapa en esta parada comercial de la nave. "
 
 # data/resource/help.res:257
-#, fuzzy
 msgid "Delete Trade Ship Stop"
-msgstr "Eliminar parada comercial de una nave"
+msgstr "Eliminar parada comercial de la nave"
 
 # data/resource/help.res:258
-#, fuzzy
 msgid "Click here to delete this trade ship stop. "
-msgstr "Al hacer clic aquí se eliminará parada la comercial del barco. "
+msgstr "Haga clic aquí para eliminar esta parada comercial de la nave. "
 
 # data/resource/help.res:261
-#, fuzzy
 msgid "Demolish Structure"
-msgstr "Demoler una estructura"
+msgstr "Demoler estructura"
 
 # data/resource/help.res:262
-#, fuzzy
 msgid "Click here to demolish this structure. "
-msgstr "Al hacer clic aquí se venderá esta estructura. "
+msgstr "Haga clic aquí para demoler esta estructura. "
 
 # data/resource/help.res:265
-#, fuzzy
 msgid "Sell Structure"
-msgstr "Vender una estructura"
+msgstr "Vender estructura"
 
 # data/resource/help.res:266
-#, fuzzy
 msgid "Click here to sell this structure. "
-msgstr "Al hacer clic aquí se venderá esta estructura. "
+msgstr "Haga clic aquí para vender esta estructura. "
 
 # data/resource/help.res:269
-#, fuzzy
 msgid "Sturcture Repair Icon"
 msgstr "Icono de reparación de estructura"
 
 # data/resource/help.res:270
-#, fuzzy
 msgid ""
 "This icon shows there is a construction worker stationed in this structure. "
 "Click or right-click on this icon to mobilize the construction worker. "
 msgstr ""
-"Este icono muestra que hay un constructor estacionado en esta estructura. "
-"Haga clic o clic derecho en este para movilizar al constructor. "
+"Este icono muestra que hay un constructor emplazado en esta estructura. Haga "
+"clic o clic derecho en este icono para movilizar al constructor. "
 
 # data/RESOURCE/HELP.RES:273
-msgid "Zoom to activity"
+msgid "Zoom to Activity"
 msgstr "Ir a actividad"
 
 # data/resource/help.res:306
@@ -10049,12 +9998,10 @@ msgid "Click on this to bring up the news log. "
 msgstr "Haga clic en este botón para abrir el registro de noticias. "
 
 # data/resource/help.res:281
-#, fuzzy
 msgid "Clear News Messages"
 msgstr "Limpiar mensajes de noticias"
 
 # data/resource/help.res:282
-#, fuzzy
 msgid ""
 "Click on this to clear all news messages on the screen. You can also press X "
 "on your keyboard. "
@@ -10137,45 +10084,40 @@ msgstr ""
 "capacidad máxima de almacenamiento en una fábrica es 500. "
 
 # data/resource/help.res:321
-#, fuzzy
 msgid "Cancel Weapon Production"
 msgstr "Cancelar producción del arma"
 
 # data/resource/help.res:326
-#, fuzzy
 msgid "Click on this to cancel producing the current weapon. "
-msgstr ""
-"Haga clic en este botón para cancelar la producción de la nave que se está "
-"construyendo actualmente. "
+msgstr "Haga clic en este botón para cancelar la producción del arma actual. "
 
 # data/resource/help.res:325
-#, fuzzy
 msgid "Cancel Building Ship"
-msgstr "Cancelar la construcción de esta nave"
+msgstr "Cancelar la construcción de la nave"
 
 # data/resource/help.res:330
-#, fuzzy
 msgid "Click on this to cancel building the current ship. "
-msgstr "Haga clic en este botón para cancelar el entrenamiento de la unidad. "
+msgstr ""
+"Haga clic en este botón para cancelar la construcción de la nave actual. "
 
 # data/resource/help.res:329
 msgid "Cancel Training"
 msgstr "Cancelar entrenamiento"
 
 # data/resource/help.res:330
-#, fuzzy
 msgid "Click on this to cancel training the current unit. "
-msgstr "Haga clic en este botón para cancelar el entrenamiento de la unidad. "
+msgstr ""
+"Haga clic en este botón para cancelar el entrenamiento de la unidad actual. "
 
 # data/resource/help.res:333
-#, fuzzy
 msgid "Cancel Building Structure"
-msgstr "Cancelar la construcción de esta estructura."
+msgstr "Cancelar la construcción de la estructura"
 
 # data/resource/help.res:330
-#, fuzzy
 msgid "Click on this to cancel building the current structure. "
-msgstr "Haga clic en este botón para cancelar el entrenamiento de la unidad. "
+msgstr ""
+"Haga clic en este botón para cancelar la construcción de la estructura "
+"actual. "
 
 # data/resource/help.res:342
 msgid ""
@@ -10248,9 +10190,8 @@ msgstr ""
 "estructuras del reino seleccionado. Si se establece en 'No', no lo hará. "
 
 # data/resource/help.res:369
-#, fuzzy
 msgid "Passive Mode Enabled. Click for Aggressive Mode."
-msgstr "Modo pasivo habilitado. Haga clic para modo agresivo"
+msgstr "Modo pasivo habilitado. Haga clic para modo agresivo."
 
 # data/resource/help.res:370
 msgid ""
@@ -10262,9 +10203,8 @@ msgstr ""
 "ataque. "
 
 # data/resource/help.res:373
-#, fuzzy
 msgid "Aggressive Mode Enabled. Click for Passive Mode."
-msgstr "Modo agresivo habilitado. Haga clic para modo pasivo"
+msgstr "Modo agresivo habilitado. Haga clic para modo pasivo."
 
 # data/resource/help.res:374
 msgid ""
@@ -10293,13 +10233,13 @@ msgid "Dispense Healing"
 msgstr "Dispensar salud"
 
 # data/resource/help.res:382
-#, fuzzy
+# # Como traducir Lord of Healing ?
 msgid ""
 "When you Click on this tile, your cursor will change into a large white "
 "circle. Place this circle over your injured units and Click again. Repeat "
 "until the Lord of Healing's power has been depleted. "
 msgstr ""
-"Cuando haga clic en este cuadro su cursor cambiará en un gran círculo "
+"Cuando haga clic en este cuadro, su cursor cambiará en un gran círculo "
 "blanco. Posicione este circulo sobre sus unidades heridas y haga clic de "
 "nuevo. Repita hasta que Lord of Healing haya agotado su poder. "
 
@@ -10318,7 +10258,6 @@ msgstr ""
 "hasta que el poder de Mind Turner se haya agotado. "
 
 # data/resource/help.res:389
-#, fuzzy
 msgid "Increase Power of Maya Soldiers"
 msgstr "Aumenta el poder de los soldados mayas"
 
@@ -10349,7 +10288,6 @@ msgid "Summon Tornadoes"
 msgstr "Invocar tornados"
 
 # data/resource/help.res:398
-#, fuzzy
 msgid ""
 "When you Click on this tile, your cursor will change into a small square. "
 "Place this square over your target and Click again. Repeat until Thor's "
