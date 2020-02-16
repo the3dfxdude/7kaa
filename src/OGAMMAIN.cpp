@@ -262,9 +262,7 @@ void Game::main_menu()
 		// method to start a game replay at this time
 		if( mouse.is_key_event() && mouse.scan_code == 'r')
 		{
-			init();
 			battle.run_replay();
-			deinit();
 			refreshFlag=1;
 		}
 
@@ -374,6 +372,10 @@ void Game::disp_version()
 
 	#ifdef DEV_VERSION
 		str += "-dev";
+	#endif
+
+	#ifndef HAVE_KNOWN_BUILD
+		str += "?";
 	#endif
 
 	#ifdef DEBUG
@@ -622,6 +624,7 @@ void Game::single_player_menu()
 
 						if( save_game_array.load_game() == 1)
 						{
+							sys.set_speed(9, COMMAND_AUTO);
 							battle.run_loaded();
 							deinit();
 						}

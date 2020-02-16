@@ -33,6 +33,7 @@
 #include <ONATIONA.h>
 #include <OREMOTE.h>
 #include <OLOG.h>
+#include <ConfigAdv.h>
 
 //### begin alex 22/9 ###//
 #ifdef DEBUG
@@ -430,11 +431,18 @@ int NationArray::random_unused_race()
 	//----- figure out which race has been used, which has not -----//
 
 	char usedRaceArray[MAX_RACE];
-	int  usedCount=0;
+	int  usedCount=MAX_RACE;
 
-	memset( usedRaceArray, 0, sizeof(usedRaceArray) );
+	// need to make sure disable races aren't included, work backwards
+	memset( usedRaceArray, 1, sizeof(usedRaceArray) );
 
 	int i;
+	for( i=0 ; i<config_adv.race_random_list_max; i++ )
+	{
+		usedRaceArray[config_adv.race_random_list[i]-1] = 0; // reset on
+		usedCount--;
+	}
+
 	for( i=1 ; i<=nation_array.size() ; i++ )
 	{
 		if( nation_array.is_deleted(i) )

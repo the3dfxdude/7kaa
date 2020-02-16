@@ -469,8 +469,6 @@ struct UnitMarineCrc : UnitCrc
 
 struct UnitCaravanCrc : UnitCrc
 {
-	short		caravan_id;
-
 	char		journey_status;
 	char		dest_stop_id;
 	char		stop_defined_num;

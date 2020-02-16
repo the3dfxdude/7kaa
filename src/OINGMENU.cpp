@@ -85,7 +85,7 @@ void InGameMenu::enter(char untilExitFlag)
       game_menu_option_flag[4] = 0;    // disable retire
    }
 
-   if( remote.is_enable() )
+   if( remote.is_enable() || remote.is_replay() )
    {
       // when in when in multi-player mode,
       game_menu_option_flag[2] = 0;    // disable load game
@@ -150,8 +150,9 @@ void InGameMenu::disp(int needRepaint)
          }
       }
 
-		String str(_("Map I.D.: "));
+      String str(_("Map I.D."));
 
+      str += ": ";
       str += info.random_seed;
       font_bible.center_put( MAP_ID_X1, MAP_ID_Y1, MAP_ID_X2, MAP_ID_Y2, str);
 

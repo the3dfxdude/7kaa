@@ -552,19 +552,19 @@ void News::firm_destroyed()
 	// ##### patch end Gilbert 10/2 ######//
 	{
 		case DESTROYER_NATION:
-			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_nation[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
+			snprintf(str, MAX_STR_LEN+1, _(firm_destroyed_by_nation[short_para1-1]), town_res.get_name(short_para2), king_name2(), nation_color_str2());
 			break;
 
 		case DESTROYER_REBEL:
-			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_rebels[short_para1-1], town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _(firm_destroyed_by_rebels[short_para1-1]), town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_MONSTER:
-			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_monster[short_para1-1], town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _(firm_destroyed_by_monster[short_para1-1]), town_res.get_name(short_para2));
 			break;
 
 		case DESTROYER_UNKNOWN:
-			snprintf(str, MAX_STR_LEN+1, firm_destroyed_by_unknown[short_para1-1], town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _(firm_destroyed_by_unknown[short_para1-1]), town_res.get_name(short_para2));
 			break;
 	}
 }
@@ -623,11 +623,11 @@ void News::firm_captured()
 
 	if( short_para3 )
 	{
-		snprintf(str, MAX_STR_LEN+1, firm_captured_by_spy[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
+		snprintf(str, MAX_STR_LEN+1, _(firm_captured_by_spy[short_para1-1]), town_res.get_name(short_para2), king_name2(), nation_color_str2());
 	}
 	else
 	{
-		snprintf(str, MAX_STR_LEN+1, firm_captured_by_worker[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
+		snprintf(str, MAX_STR_LEN+1, _(firm_captured_by_worker[short_para1-1]), town_res.get_name(short_para2), king_name2(), nation_color_str2());
 	}
 }
 //------- End of function News::firm_captured -----//
@@ -763,7 +763,7 @@ void News::monster_king_killed()
 	//
 	//----------------------------------------------//
 
-	str = monster_king_killed_msg[short_para1-1];
+	str = _(monster_king_killed_msg[short_para1-1]);
 }
 //------- End of function News::monster_king_killed -----//
 
@@ -797,7 +797,7 @@ void News::monster_firm_destroyed()
 	//
 	//----------------------------------------------//
 
-	str = monster_firm_destroyed_msg[short_para1-1];
+	str = _(monster_firm_destroyed_msg[short_para1-1]);
 }
 //------- End of function News::monster_firm_destroyed -----//
 
@@ -847,11 +847,11 @@ void News::scroll_acquired()
 
 	if( nation_array.player_recno && nation_name_id1 == (~nation_array)->nation_name_id )
 	{
-		str = you_scroll_acquired_msg[short_para1-1];
+		str = _(you_scroll_acquired_msg[short_para1-1]);
 	}
 	else
 	{
-		snprintf(str, MAX_STR_LEN+1, kingdom_scroll_acquired_msg[short_para1-1], king_name1(), nation_color_str1());
+		snprintf(str, MAX_STR_LEN+1, _(kingdom_scroll_acquired_msg[short_para1-1]), king_name1(), nation_color_str1());
 	}
 }
 //------- End of function News::scroll_acquired -----//
@@ -936,11 +936,11 @@ void News::your_spy_killed()
 	{
 		if( nation_name_id2 )		// not for independent town.
 		{
-			snprintf(str, MAX_STR_LEN+1, your_spy_killed_in_firm_by_nation[short_para1-1], town_res.get_name(short_para2), king_name2(), nation_color_str2());
+			snprintf(str, MAX_STR_LEN+1, _(your_spy_killed_in_firm_by_nation[short_para1-1]), town_res.get_name(short_para2), king_name2(), nation_color_str2());
 		}
 		else
 		{
-			snprintf(str, MAX_STR_LEN+1, your_spy_killed_in_firm[short_para1-1], town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _(your_spy_killed_in_firm[short_para1-1]), town_res.get_name(short_para2));
 		}
 	}
 	else if( short_para3 == SPY_TOWN )
@@ -1016,7 +1016,7 @@ void News::enemy_spy_killed()
 	{
 		if( short_para3==SPY_FIRM )
 		{
-			snprintf(str, MAX_STR_LEN+1, enemy_spy_killed_in_firm[short_para1-1], king_name2(), nation_color_str2(), town_res.get_name(short_para2));
+			snprintf(str, MAX_STR_LEN+1, _(enemy_spy_killed_in_firm[short_para1-1]), king_name2(), nation_color_str2(), town_res.get_name(short_para2));
 		}
 		else
 		{
@@ -1215,7 +1215,7 @@ void News::raw_exhaust()
 	//
 	//----------------------------------------------//
 
-	str = raw_exhaust_msg[short_para1-1];
+	str = _(raw_exhaust_msg[short_para1-1]);
 }
 //------- End of function News::raw_exhaust -----//
 
@@ -1260,11 +1260,11 @@ void News::tech_researched()
 
 	if( tech_res[short_para1]->max_tech_level > 1 )		// if the tech has more than one level
 	{
-		snprintf(str, MAX_STR_LEN+1, tech_researched_level_msg[short_para1-1], misc.roman_number(short_para2));
+		snprintf(str, MAX_STR_LEN+1, _(tech_researched_level_msg[short_para1-1]), misc.roman_number(short_para2));
 	}
 	else
 	{
-		str = tech_researched_msg[short_para1-1];
+		str = _(tech_researched_msg[short_para1-1]);
 	}
 }
 //------- End of function News::tech_researched -----//
@@ -1396,22 +1396,22 @@ void News::lightning_damage()
 		{
 			if( short_para5 )
 			{
-				snprintf(str, MAX_STR_LEN+1, lightning_destroyed_firm_near_town[short_para2-1], town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, _(lightning_destroyed_firm_near_town[short_para2-1]), town_res.get_name(short_para3));
 			}
 			else
 			{
-				snprintf(str, MAX_STR_LEN+1, lightning_damaged_firm_near_town[short_para2-1], town_res.get_name(short_para3));
+				snprintf(str, MAX_STR_LEN+1, _(lightning_damaged_firm_near_town[short_para2-1]), town_res.get_name(short_para3));
 			}
 		}
 		else
 		{
 			if( short_para5 )
 			{
-				str = lightning_destroyed_firm[short_para2-1];
+				str = _(lightning_destroyed_firm[short_para2-1]);
 			}
 			else
 			{
-				str = lightning_damaged_firm[short_para2-1];
+				str = _(lightning_damaged_firm[short_para2-1]);
 			}
 		}
 		break;
@@ -1595,15 +1595,15 @@ void News::weapon_ship_worn_out()
 	if( short_para1 == UNIT_F_BALLISTA )
 	{
 		// unicorn is separate in the dbf, handle directly
-		snprintf(str, MAX_STR_LEN+1, unicorn_worn_out_msg, misc.roman_number(short_para2));
+		snprintf(str, MAX_STR_LEN+1, _(unicorn_worn_out_msg), misc.roman_number(short_para2));
 	}
 	else if( short_para2 )
 	{
-		snprintf(str, MAX_STR_LEN+1, weapon_ship_worn_out_msg[short_para1-UNIT_CATAPULT], misc.roman_number(short_para2));
+		snprintf(str, MAX_STR_LEN+1, _(weapon_ship_worn_out_msg[short_para1-UNIT_CATAPULT]), misc.roman_number(short_para2));
 	}
 	else
 	{
-		str = weapon_ship_worn_out_msg[short_para1-UNIT_CATAPULT];
+		str = _(weapon_ship_worn_out_msg[short_para1-UNIT_CATAPULT]);
 	}
 }
 //------- End of function News::weapon_ship_worn_out -----//
@@ -1638,7 +1638,7 @@ void News::firm_worn_out()
 	//
 	//----------------------------------------------//
 
-	snprintf(str, MAX_STR_LEN+1, firm_worn_out_near_town_msg[short_para1-1], town_res.get_name(short_para2));
+	snprintf(str, MAX_STR_LEN+1, _(firm_worn_out_near_town_msg[short_para1-1]), town_res.get_name(short_para2));
 }
 //------- End of function News::firm_worn_out -----//
 

@@ -30,12 +30,17 @@
 #include <OSYS.h>
 #include <ctype.h>
 #include <dbglog.h>
+#include <LocaleRes.h>
 
 DBGLOG_DEFAULT_CHANNEL(Mouse);
 
 #define VGA_UPDATE_BUF_SIZE	(100*100)
 static int update_x1, update_y1, update_x2, update_y2;          // coordination of the last double-buffer update area
 
+static unsigned any_key_code_map[KEYEVENT_MAX];
+static unsigned shift_key_code_map[KEYEVENT_MAX];
+
+static void reset_key(KeyEventType key_event);
 
 //--------- Define Click Threshold -----------//
 //
@@ -64,11 +69,14 @@ Mouse::Mouse()
 	memset(click_buffer, 0, sizeof(MouseClick) * 2);
 	scan_code = 0;
 	key_code = 0;
+	unique_key_code = 0;
+	typing_char = 0;
 	memset(event_buffer, 0, sizeof(MouseEvent) * EVENT_BUFFER_SIZE);
 	head_ptr = 0;
 	tail_ptr = 0;
 	double_speed_threshold = DEFAULT_DOUBLE_SPEED_THRESHOLD;
 	triple_speed_threshold = DEFAULT_TRIPLE_SPEED_THRESHOLD;
+	init_key();
 }
 //---------- End of Mouse::Mouse ---------//
 
@@ -92,6 +100,7 @@ void Mouse::init()
 		return;
 
 	update_skey_state();
+	SDL_StopTextInput();
 
 	//------- initialize VGA update buffer -------//
 
@@ -103,7 +112,6 @@ void Mouse::init()
 	// ------- initialize event queue ---------//
 	head_ptr = tail_ptr = 0;
 
-	SDL_StopTextInput();
 	SDL_ShowCursor(SDL_DISABLE);
 	cur_x = VGA_WIDTH/2;
 	cur_y = VGA_HEIGHT/2;
@@ -111,6 +119,68 @@ void Mouse::init()
 	init_flag = 1;
 }
 //------------- End of Mouse::init -------------//
+
+
+//------------ Start of Mouse::init_key ------------//
+//
+void Mouse::init_key()
+{
+	bind_key(KEYEVENT_FIRM_BUILD, "B");
+	bind_key(KEYEVENT_FIRM_PATROL, "R");
+
+	bind_key(KEYEVENT_TOWN_RECRUIT, "R");
+	bind_key(KEYEVENT_TOWN_TRAIN, "B");
+
+	bind_key(KEYEVENT_UNIT_BUILD, "B");
+	bind_key(KEYEVENT_UNIT_RETURN, "R");
+	bind_key(KEYEVENT_UNIT_SETTLE, "T");
+	bind_key(KEYEVENT_UNIT_UNLOAD, "R");
+
+#ifdef BUILD_HOTKEYS
+	bind_key(KEYEVENT_BUILD_BASE, "P");
+	bind_key(KEYEVENT_BUILD_CAMP, "F");
+	bind_key(KEYEVENT_BUILD_FACTORY, "A");
+	bind_key(KEYEVENT_BUILD_HARBOR, "H");
+	bind_key(KEYEVENT_BUILD_INN, "I");
+	bind_key(KEYEVENT_BUILD_MARKET, "M");
+	bind_key(KEYEVENT_BUILD_MINE, "R");
+	bind_key(KEYEVENT_BUILD_RESEARCH, "T");
+	bind_key(KEYEVENT_BUILD_WAR_FACTORY, "W");
+
+	bind_key(KEYEVENT_MAP_MODE_CYCLE, "E");
+#else
+	bind_key(KEYEVENT_MAP_MODE0, "Q");
+	bind_key(KEYEVENT_MAP_MODE1, "W");
+	bind_key(KEYEVENT_MAP_MODE2, "E");
+#endif
+	bind_key(KEYEVENT_REPORT_OPAQUE_TOGGLE, "P");
+	bind_key(KEYEVENT_CLEAR_NEWS, "X");
+	bind_key(KEYEVENT_OPEN_DIPLOMATIC_MSG, "D");
+	bind_key(KEYEVENT_OPEN_OPTION_MENU, "O");
+
+	bind_key(KEYEVENT_TUTOR_PREV, ",");
+	bind_key(KEYEVENT_TUTOR_NEXT, ".");
+
+	bind_key(KEYEVENT_SAVE_GAME, "S");
+	bind_key(KEYEVENT_LOAD_GAME, "L");
+
+	bind_key(KEYEVENT_OBJECT_PREV, "Up");
+	bind_key(KEYEVENT_OBJECT_NEXT, "Down");
+	bind_key(KEYEVENT_NATION_OBJECT_PREV, "Left");
+	bind_key(KEYEVENT_NATION_OBJECT_NEXT, "Right");
+
+	bind_key(KEYEVENT_GOTO_RAW, "J");
+	bind_key(KEYEVENT_GOTO_KING, "K");
+	bind_key(KEYEVENT_GOTO_GENERAL, "G");
+	bind_key(KEYEVENT_GOTO_SPY, "Y");
+	bind_key(KEYEVENT_GOTO_SHIP, "H");
+	bind_key(KEYEVENT_GOTO_CAMP, "F");
+
+	bind_key(KEYEVENT_CHEAT_ENABLE1, "shift+1");
+	bind_key(KEYEVENT_CHEAT_ENABLE2, "shift+2");
+	bind_key(KEYEVENT_CHEAT_ENABLE3, "shift+3");
+}
+//------------- End of Mouse::init_key -------------//
 
 
 //------------ Start of Mouse::deinit ------------//
@@ -390,6 +460,8 @@ int Mouse::get_event()
 	{
 		scan_code      =0;        // no keyboard event
 		key_code       =0;
+		unique_key_code=0;
+		typing_char    =0;
 		has_mouse_event=0;        // no mouse event
 		return 0;
 	}
@@ -420,12 +492,16 @@ int Mouse::get_event()
       cptr->y    = eptr->y;
 		scan_code       = 0;
 		key_code        = 0;
+		unique_key_code = 0;
+		typing_char     = 0;
       has_mouse_event = 1;
 		break;
 
 	case KEY_PRESS:
 		scan_code = eptr->scan_code;
 		key_code = mouse.is_key(scan_code, event_skey_state, (unsigned short)0, K_CHAR_KEY);
+		unique_key_code = mouse.is_key(scan_code, 0, (unsigned short)0, K_UNIQUE_KEY);
+		typing_char     = 0;
 		has_mouse_event = 0;
 		break;
 
@@ -437,11 +513,21 @@ int Mouse::get_event()
 		cptr->release_y    = eptr->y;
 		scan_code          = 0;
 		key_code           = 0;
+		unique_key_code    = 0;
+		typing_char        = 0;
 		has_mouse_event    = 1;
 		break;
 
 	case KEY_RELEASE:
 		// no action
+		break;
+
+	case KEY_TYPING:
+		scan_code       = 0;
+		key_code        = 0;
+		unique_key_code = 0;
+		typing_char     = eptr->typing;
+		has_mouse_event = 0;
 		break;
 
 	default:
@@ -1489,3 +1575,114 @@ void Mouse::disp_count_end()
 	// unimplemented
 }
 // ------ End of Mouse::disp_count_end -------//
+
+
+// ------ Begin of Mouse::bind_key -------//
+//
+// Associates keys with events. Mod keys are not supported at this time. The
+// string "key" is the SDL representation. Key is converted to the internal
+// game representation for key codes.
+//
+int Mouse::bind_key(KeyEventType key_event, const char *key)
+{
+	SDL_Keycode kc;
+	unsigned int *ke;
+	const char *key2;
+
+	key2 = strchr(key, '+');
+	if( !key2 )
+	{
+		kc = SDL_GetKeyFromName(key);
+		ke = &any_key_code_map[key_event];
+	}
+	else
+	{
+		kc = SDL_GetKeyFromName(key2+1);
+		if( !memcmp(key, "shift", 5) )
+			ke = &shift_key_code_map[key_event];
+		else
+			return 0;
+	}
+	if( kc == SDLK_UNKNOWN )
+		return 0;
+
+	reset_key(key_event);
+	*ke = mouse.is_key(kc, 0, (unsigned short)0, K_UNIQUE_KEY);
+	return 1;
+}
+// ------ End of Mouse::bind_key -------//
+
+
+// ------ Begin of Mouse::is_key_event -------//
+// checks if key_event's key code is the current key_code
+int Mouse::is_key_event(KeyEventType key_event)
+{
+	unsigned kc = SDLK_UNKNOWN;
+	if( key_event == KEYEVENT_UNSET )
+		return 0;
+	kc = any_key_code_map[key_event];
+	if( skey_state & SHIFT_KEY_MASK )
+		kc = shift_key_code_map[key_event];
+	return kc ? kc == unique_key_code : 0;
+}
+// ------ End of Mouse::is_key_event -------//
+
+
+// ------ Begin of Mouse::get_key_code -------//
+// get key code of key event
+unsigned Mouse::get_key_code(KeyEventType key_event)
+{
+	if( any_key_code_map[key_event] )
+		return any_key_code_map[key_event];
+	if( skey_state & SHIFT_KEY_MASK )
+		return shift_key_code_map[key_event];
+	return SDLK_UNKNOWN;
+}
+// ------ End of Mouse::get_key_code -------//
+
+
+// ------ Begin of Mouse::add_typing_event -------//
+void Mouse::add_typing_event(char *text, unsigned long timeStamp)
+{
+#ifdef ENABLE_NLS
+	const char *str = locale_res.conv_str(locale_res.cd_from_sdl, text);
+#else
+	char *str = text;
+#endif
+	while( *str )
+	{
+		if((head_ptr == tail_ptr-1) ||               // see if the buffer is full
+			(head_ptr == EVENT_BUFFER_SIZE-1 && tail_ptr == 0))
+		{
+			break;
+		}
+
+		MouseEvent *ev = event_buffer + head_ptr;
+
+		ev->event_type = KEY_TYPING;
+		ev->scan_code = 0;
+		ev->skey_state = skey_state;
+		ev->time = timeStamp;
+		ev->typing = *str;
+
+		// put mouse state
+		// ev->state = 0;			//ev->state = left_press | right_press;
+		ev->x = cur_x;
+		ev->y = cur_y;
+
+		if(++head_ptr >= EVENT_BUFFER_SIZE)  // increment the head ptr
+			head_ptr = 0;
+
+		str++;
+	}
+}
+// ------ End of Mouse::add_typing_event -------//
+
+
+// ------ Begin of static function reset_key -------//
+static void reset_key(KeyEventType key_event)
+{
+	any_key_code_map[key_event] = SDLK_UNKNOWN;
+	shift_key_code_map[key_event] = SDLK_UNKNOWN;
+}
+// ------ End of static function reset_key -------//

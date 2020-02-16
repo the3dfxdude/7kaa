@@ -531,6 +531,7 @@ const char *unit_help_general[MAX_UNIT_TYPE+1] =
 	N_("Phoenix"),
 	N_("Kukulcan"),
 	N_("Mind Turner"),
+	// TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use General or Ordo whichever makes sense.
 	N_("Deezboanz General"),
 	N_("Rattus General"),
 	N_("Broosken General"),
@@ -546,7 +547,7 @@ const char *unit_help_general[MAX_UNIT_TYPE+1] =
 	N_("Holgh General"),
 	N_("Egyptian General"),
 	N_("Mughul General"),
-	N_("Zulu"),
+	N_("Zulu General"),
 	N_("Isis"),
 	N_("Djini"),
 	N_("uNkulunkulu"),
@@ -578,6 +579,7 @@ const char *unit_help_king[MAX_UNIT_TYPE+1] =
 	N_("Phoenix"),
 	N_("Kukulcan"),
 	N_("Mind Turner"),
+	// TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use King or All High whichever makes sense.
 	N_("Deezboanz King"),
 	N_("Rattus King"),
 	N_("Broosken King"),
@@ -593,7 +595,7 @@ const char *unit_help_king[MAX_UNIT_TYPE+1] =
 	N_("Holgh King"),
 	N_("Egyptian King"),
 	N_("Mughul King"),
-	N_("Zulu"),
+	N_("Zulu King"),
 	N_("Isis"),
 	N_("Djini"),
 	N_("uNkulunkulu"),

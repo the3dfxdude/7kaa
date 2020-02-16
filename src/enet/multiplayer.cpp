@@ -31,7 +31,8 @@
 
 DBGLOG_DEFAULT_CHANNEL(MultiPlayer);
 
-#define MP_UDP_MAX_PACKET_SIZE 800
+#define MP_RECV_BUFFER_SIZE 512*3
+#define MP_RECV_MAX_BUFFER_SIZE 512*20
 
 const uint16_t UDP_GAME_PORT = 19255;
 const uint16_t UDP_MONITOR_PORT = 19383;
@@ -109,6 +110,7 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	}
 
 	recv_buf = new char[MP_RECV_BUFFER_SIZE];
+	recv_buffer_size = MP_RECV_BUFFER_SIZE;
 
 	init_flag = 1;
 }
@@ -304,7 +306,7 @@ int MultiPlayer::poll_sessions()
 	}
 
 	b.data = recv_buf;
-	b.dataLength = MP_RECV_BUFFER_SIZE;
+	b.dataLength = recv_buffer_size;
 
 	ret = MP_POLL_NO_UPDATE;
 	login_failed = 0;
@@ -813,7 +815,7 @@ int MultiPlayer::poll_players()
 			}
 
 			b.data = recv_buf;
-			b.dataLength = MP_RECV_BUFFER_SIZE;
+			b.dataLength = recv_buffer_size;
 
 			while (enet_socket_receive(session_monitor, &a, &b, 1)>0) {
 				uint32_t id = *(uint32_t *)recv_buf;
@@ -1027,14 +1029,9 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 {
 	ENetPacket *packet;
 
-	err_when(!host);
+	err_when(!host || msg_size > MP_RECV_MAX_BUFFER_SIZE);
 
 	if (to == my_player_id) {
-		return 0;
-	}
-
-	if (msg_size > MP_UDP_MAX_PACKET_SIZE) {
-		ERR("Packet message exceeds maximum size.\n");
 		return 0;
 	}
 
@@ -1264,13 +1261,8 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 
 	switch (event.type) {
 	case ENET_EVENT_TYPE_RECEIVE:
-		if (event.packet->dataLength < MP_RECV_BUFFER_SIZE) {
-			memcpy(recv_buf, event.packet->data,
-				event.packet->dataLength);
-			*size = event.packet->dataLength;
+		if (retrieve_packet(&event, size))
 			got_recv = recv_buf;
-		}
-		enet_packet_destroy(event.packet);
 
 		break;
 
@@ -1363,4 +1355,24 @@ void MultiPlayer::sort_sessions(int sortType)
 	default:
 		err_here();
 	}
+}
+
+int MultiPlayer::retrieve_packet(ENetEvent *event, uint32_t *size)
+{
+	int status = 0;
+	if (event->packet->dataLength > recv_buffer_size) {
+		if (recv_buf) {
+			delete[] recv_buf;
+			recv_buf = new char[MP_RECV_MAX_BUFFER_SIZE];
+			recv_buffer_size = MP_RECV_MAX_BUFFER_SIZE;
+		}
+	}
+	if (event->packet->dataLength <= recv_buffer_size) {
+		memcpy(recv_buf, event->packet->data,
+			event->packet->dataLength);
+		*size = event->packet->dataLength;
+		status = 1;
+	}
+	enet_packet_destroy(event->packet);
+	return status;
 }

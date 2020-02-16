@@ -42,6 +42,7 @@
 #include <OREMOTE.h>
 #include <OSERES.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
 
 //------------- Define coordinations -----------//
 
@@ -67,6 +68,7 @@ static FirmInn* 	firm_inn_ptr;
 //----------- Define static functions ----------//
 
 static void put_hire_rec(int recNo, int x, int y, int refreshFlag);
+static char random_race();
 
 //--------- Begin of function FirmInn::FirmInn ---------//
 //
@@ -218,7 +220,7 @@ void FirmInn::detect_info()
 		put_det(INFO_UPDATE);
 	}
 
-	if( button_hire.detect('R') && inn_unit_count > 0 )
+	if( button_hire.detect(GETKEY(KEYEVENT_FIRM_PATROL)) && inn_unit_count > 0 )
 	{
 		// ###### begin Gilbert 31/7 #######//
 		se_res.far_sound(center_x, center_y, 1, 'S', 
@@ -227,11 +229,17 @@ void FirmInn::detect_info()
 		// ###### end Gilbert 31/7 #######//
 		if(remote.is_enable())
 		{
-			// packet structure : <firm recno>, <hire Id> <nation no>
-			short *shortPtr=(short *)remote.new_send_queue_msg(MSG_F_INN_HIRE, 3*sizeof(short));
+			InnUnit *innUnit = &inn_unit_array[browse_hire.recno()-1];
+			// packet structure : <firm recno> <unit id> <combat level> <skill id> <skill_level> <hire cost> <spy recno> <nation no>
+			short *shortPtr=(short *)remote.new_send_queue_msg(MSG_F_INN_HIRE, 8*sizeof(short));
 			shortPtr[0] = firm_recno;
-			shortPtr[1] = browse_hire.recno();
-			shortPtr[2] = nation_recno;
+			shortPtr[1] = innUnit->unit_id;
+			shortPtr[2] = innUnit->skill.combat_level;
+			shortPtr[3] = innUnit->skill.skill_id;
+			shortPtr[4] = innUnit->skill.skill_level;
+			shortPtr[5] = innUnit->hire_cost;
+			shortPtr[6] = innUnit->spy_recno;
+			shortPtr[7] = nation_recno;
 		}
 		else
 		{
@@ -246,10 +254,7 @@ void FirmInn::detect_info()
 //
 int FirmInn::hire(short recNo)
 {
-	err_when( recNo < 1 );
-
-	if( recNo > inn_unit_count )		// this may happen in a multiplayer game
-		return 0;
+	err_when( recNo < 1 || recNo > inn_unit_count );
 
 	//--------- first check if you have enough money to hire ------//
 
@@ -322,6 +327,38 @@ int FirmInn::hire(short recNo)
 }
 //----------- End of function FirmInn::hire -----------//
 
+
+//--------- Begin of function FirmInn::hire_remote ---------//
+// called from remote message processing
+int FirmInn::hire_remote(short unitId, short combat_level, short skill_id, short skill_level, short hire_cost, short spy_recno)
+{
+	InnUnit* innUnit;
+	short recNo;
+
+	for( recNo=1; recNo<=inn_unit_count; recNo++ )
+	{
+		innUnit = inn_unit_array+recNo-1;
+		if( innUnit->unit_id != unitId )
+			continue;
+		if( innUnit->skill.combat_level != combat_level )
+			continue;
+		if( innUnit->skill.skill_id != skill_id )
+			continue;
+		if( innUnit->skill.skill_level != skill_level )
+			continue;
+		if( innUnit->hire_cost != hire_cost )
+			continue;
+		if( innUnit->spy_recno != spy_recno )
+			continue;
+		break;
+	}
+
+	if( recNo > inn_unit_count )		// this may happen in a multiplayer game
+		return 0;
+
+	return hire(recNo);
+}
+//----------- End of function FirmInn::hire_remote -----------//
 
 //--------- Begin of function FirmInn::put_det ---------//
 //
@@ -481,7 +518,7 @@ void FirmInn::update_add_hire_list()
 	{
 		if( should_add_inn_unit() )
 		{
-			int unitId = race_res[misc.random(MAX_RACE)+1]->basic_unit_id;
+			int unitId = race_res[random_race()]->basic_unit_id;
 
 			if( unitId )
 				add_inn_unit(unitId);
@@ -503,7 +540,8 @@ void FirmInn::update_del_hire_list()
 		{
 			del_inn_unit(i);
 
-			if( firm_recno == firm_array.selected_recno )
+			if( firm_recno == firm_array.selected_recno &&
+				should_show_info() )
 			{
 				if( browse_hire.recno() > i && browse_hire.recno() > 1 )
 					browse_hire.refresh( browse_hire.recno()-1, inn_unit_count );
@@ -681,3 +719,14 @@ void FirmInn::auto_defense(short targetRecno)
 }
 //----------- End of function FirmInn::auto_defense -----------//
 
+
+//-------- Begin of static function random_race --------//
+//
+// Uses misc.random() for random race
+//
+static char random_race()
+{
+	int num = misc.random(config_adv.race_random_list_max);
+	return config_adv.race_random_list[num];
+}
+//--------- End of static function random_race ---------//

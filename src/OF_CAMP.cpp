@@ -462,7 +462,7 @@ void FirmCamp::detect_info()
 
 	//----------- detect patrol -----------//
 
-	if( button_patrol.detect('R') )
+	if( button_patrol.detect(GETKEY(KEYEVENT_FIRM_PATROL)) )
 	{
 		if(remote.is_enable())
 		{
@@ -1145,6 +1145,15 @@ void FirmCamp::defense(short targetRecno, int useRangeAttack)
 		unitPtr->team_id = unit_array.cur_team_id;   // define it as a team
 		unitPtr->action_misc = ACTION_MISC_DEFENSE_CAMP_RECNO;
 		unitPtr->action_misc_para = firm_recno; // store the firm_recno for going back camp
+
+		if(overseer_recno)
+		{
+			unitPtr->leader_unit_recno = overseer_recno;
+			unitPtr->update_loyalty();	// update target loyalty based on having a leader assigned
+
+			err_when( unit_array[overseer_recno]->rank_id != RANK_KING &&
+					  unit_array[overseer_recno]->rank_id != RANK_GENERAL );
+		}
 
 		defense_inside_camp(unitRecno, targetRecno);
 		defPtr->unit_recno = unitRecno;

@@ -84,6 +84,7 @@ public:
 	void		assign_unit(int unitRecno);
 
 	int		hire(short recNo);
+	int		hire_remote(short unitId, short combat_level, short skill_id, short skill_level, short hire_cost, short spy_recno);
 
 	virtual	void auto_defense(short targetRecno);
 	virtual	FirmInn* cast_to_FirmInn() { return this; };

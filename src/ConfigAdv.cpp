@@ -26,6 +26,7 @@
 #include <ONATIONB.h>
 #include <OFILETXT.h>
 #include <OMISC.h>
+#include <OMOUSE.h>
 #include <OSYS.h>
 #include <posix_string_compat.h>
 #include <version.h>
@@ -34,8 +35,73 @@
 
 #define CHECK_BOUND(n,x,y) n<x || n>y
 
+union KeyEventMap
+{
+	int index;
+	KeyEventType type;
+};
+static const char *keyevent_map[] = {
+	"KEYEVENT_UNSET",
+
+	"KEYEVENT_FIRM_BUILD",
+	"KEYEVENT_FIRM_PATROL",
+
+	"KEYEVENT_TOWN_RECRUIT",
+	"KEYEVENT_TOWN_TRAIN",
+
+	"KEYEVENT_UNIT_BUILD",
+	"KEYEVENT_UNIT_RETURN",
+	"KEYEVENT_UNIT_SETTLE",
+	"KEYEVENT_UNIT_UNLOAD",
+
+	"KEYEVENT_BUILD_BASE",
+	"KEYEVENT_BUILD_CAMP",
+	"KEYEVENT_BUILD_FACTORY",
+	"KEYEVENT_BUILD_HARBOR",
+	"KEYEVENT_BUILD_INN",
+	"KEYEVENT_BUILD_MARKET",
+	"KEYEVENT_BUILD_MINE",
+	"KEYEVENT_BUILD_MONSTER",
+	"KEYEVENT_BUILD_RESEARCH",
+	"KEYEVENT_BUILD_WAR_FACTORY",
+
+	"KEYEVENT_MAP_MODE_CYCLE",
+	"KEYEVENT_MAP_MODE0",
+	"KEYEVENT_MAP_MODE1",
+	"KEYEVENT_MAP_MODE2",
+	"KEYEVENT_REPORT_OPAQUE_TOGGLE",
+	"KEYEVENT_CLEAR_NEWS",
+	"KEYEVENT_OPEN_DIPLOMATIC_MSG",
+	"KEYEVENT_OPEN_OPTION_MENU",
+
+	"KEYEVENT_TUTOR_PREV",
+	"KEYEVENT_TUTOR_NEXT",
+
+	"KEYEVENT_SAVE_GAME",
+	"KEYEVENT_LOAD_GAME",
+
+	"KEYEVENT_OBJECT_PREV",
+	"KEYEVENT_OBJECT_NEXT",
+	"KEYEVENT_NATION_OBJECT_PREV",
+	"KEYEVENT_NATION_OBJECT_NEXT",
+
+	"KEYEVENT_GOTO_RAW",
+	"KEYEVENT_GOTO_KING",
+	"KEYEVENT_GOTO_GENERAL",
+	"KEYEVENT_GOTO_SPY",
+	"KEYEVENT_GOTO_SHIP",
+	"KEYEVENT_GOTO_CAMP",
+
+	"KEYEVENT_CHEAT_ENABLE1",
+	"KEYEVENT_CHEAT_ENABLE2",
+	"KEYEVENT_CHEAT_ENABLE3",
+
+	"KEYEVENT_MAX"
+};
+
 static int read_int(char *in, int *out);
 static int read_bool(char *in, char *out);
+static int read_key(char *in, char **out, KeyEventMap *event);
 
 //--------- Begin of function ConfigAdv::ConfigAdv -----------//
 
@@ -49,6 +115,12 @@ ConfigAdv::ConfigAdv()
 	#ifdef DEV_VERSION
 		flags |= FLAG_DEVEL_VER;
 	#endif
+	#ifndef HAVE_KNOWN_BUILD
+		flags |= FLAG_UNKNOWN_BUILD;
+	#endif
+
+	// this is set on program load for LocaleRes
+	locale[0] = 0;
 }
 //--------- End of function ConfigAdv::ConfigAdv --------//
 
@@ -85,8 +157,7 @@ int ConfigAdv::load(char *filename)
 		return 0;
 	if( !misc.is_file_exist(full_path) )
 	{
-		full_path = DIR_RES;
-		full_path += filename;
+		full_path = filename;
 		if( full_path.error_flag || !misc.is_file_exist(full_path) )
 			return 0;
 	}
@@ -149,19 +220,36 @@ err_out:
 //
 void ConfigAdv::reset()
 {
+	big_dynarray_mode = 1;
+
+	locale[0] = 0;
+
+	monster_alternate_attack_curve = 0;
+	monster_attack_divisor = 4;
+
 	nation_ai_unite_min_relation_level = NATION_NEUTRAL;
 	nation_start_god_level = 0;
 	nation_start_tech_inc_all_level = 0;
 
+	race_random_list_max = MAX_RACE;
+	for (int i = 0; i < race_random_list_max; i++)
+		race_random_list[i] = i+1;
+
 	remote_compare_object_crc = 1;
 	remote_compare_random_seed = 1;
 
+	scenario_config = 1;
+
 	town_ai_emerge_nation_pop_limit = 60 * MAX_NATION;
 	town_ai_emerge_town_pop_limit = 1000;
+	town_loyalty_qol = 1;
+
+	unit_loyalty_require_local_leader = 1;
 
 	vga_allow_highdpi = 0;
 	vga_full_screen = 1;
 	vga_keep_aspect_ratio = 1;
+	vga_pause_on_focus_loss = 1;
 
 	vga_window_width = 0;
 	vga_window_height = 0;
@@ -179,7 +267,33 @@ void ConfigAdv::reset()
 // Non-gameplay settings will not require a checksum.
 int ConfigAdv::set(char *name, char *value)
 {
-	if( !strcmp(name, "nation_ai_unite_min_relation_level") )
+	if( !strcmp(name, "bindkey") )
+	{
+		KeyEventMap event;
+		char *key;
+		if( !read_key(value, &key, &event) || !mouse.bind_key(event.type, key) )
+			return 0;
+	}
+	else if( !strcmp(name, "locale") )
+	{
+		strncpy(locale, value, LOCALE_LEN);
+		locale[LOCALE_LEN] = 0;
+	}
+	else if( !strcmp(name, "monster_alternate_attack_curve") )
+	{
+		if( !read_bool(value, &monster_alternate_attack_curve) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "monster_attack_divisor") )
+	{
+		if( !read_int(value, &monster_attack_divisor) )
+			return 0;
+		if( CHECK_BOUND(monster_attack_divisor, 1, 6) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "nation_ai_unite_min_relation_level") )
 	{
 		if( !strcmpi(value, "hostile") )
 			nation_ai_unite_min_relation_level = NATION_HOSTILE;
@@ -213,6 +327,21 @@ int ConfigAdv::set(char *name, char *value)
 			return 0;
 		update_check_sum(name, value);
 	}
+	else if( !strcmp(name, "race_random_list") )
+	{
+		// the game defaults to all
+		if( !strcmpi(value, "original") )
+		{
+			race_random_list_max = 7;
+			for (int i = 0; i < race_random_list_max; i++)
+				race_random_list[i] = i+1;
+			update_check_sum(name, value);
+		}
+		else
+		{
+			return 0;
+		}
+	}
 	else if( !strcmp(name, "remote_compare_object_crc") )
 	{
 		if( !read_bool(value, &remote_compare_object_crc) )
@@ -221,6 +350,11 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "remote_compare_random_seed") )
 	{
 		if( !read_bool(value, &remote_compare_random_seed) )
+			return 0;
+	}
+	else if( !strcmp(name, "scenario_config") )
+	{
+		if( !read_bool(value, &scenario_config) )
 			return 0;
 	}
 	else if( !strcmp(name, "town_ai_emerge_nation_pop_limit") )
@@ -232,6 +366,18 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "town_ai_emerge_town_pop_limit") )
 	{
 		if( !read_int(value, &town_ai_emerge_town_pop_limit) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "town_loyalty_qol") )
+	{
+		if( !read_bool(value, &town_loyalty_qol) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "unit_loyalty_require_local_leader") )
+	{
+		if( !read_bool(value, &unit_loyalty_require_local_leader) )
 			return 0;
 		update_check_sum(name, value);
 	}
@@ -248,6 +394,11 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "vga_keep_aspect_ratio") )
 	{
 		if( !read_bool(value, &vga_keep_aspect_ratio) )
+			return 0;
+	}
+	else if( !strcmp(name, "vga_pause_on_focus_loss") )
+	{
+		if( !read_bool(value, &vga_pause_on_focus_loss) )
 			return 0;
 	}
 	else if( !strcmp(name, "vga_window_height") )
@@ -299,5 +450,26 @@ static int read_bool(char *in, char *out)
 		*out = 0;
 	else
 		return 0;
+	return 1;
+}
+
+
+static int read_key(char *in, char **out, KeyEventMap *event)
+{
+	char *p = strchr(in, ',');
+	if( !p )
+		return 0;
+	*p = 0;
+	p++;
+	if( !*p )
+		return 0;
+	*out = p;
+	int i;
+	for( i=0; i<(int)KEYEVENT_MAX; i++ )
+		if( strcmp(keyevent_map[i], in)==0 )
+			break;
+	if( i>=(int)KEYEVENT_MAX )
+		return 0;
+	event->index = i;
 	return 1;
 }

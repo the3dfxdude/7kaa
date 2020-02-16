@@ -1854,7 +1854,7 @@ void RemoteMsg::firm_reward()
 void RemoteMsg::inn_hire()
 {
 	err_when( id != MSG_F_INN_HIRE);
-	// packet structure : <firm recno>, <hire Id> <nation no>
+	// packet structure : <firm recno> <unit id> <combat level> <skill id> <skill_level> <hire cost> <spy recno> <nation no>
 	short *shortPtr = (short *)data_buf;
 	if( validate_firm(*shortPtr) )
 	{
@@ -1862,10 +1862,10 @@ void RemoteMsg::inn_hire()
 		if(inn)
 		{
 #ifdef DEBUG_LONG_LOG
-			long_log->printf("inn %d hire %d, by nation %d\n", shortPtr[0], shortPtr[1], shortPtr[2]);
+			long_log->printf("inn %d hire %d, by nation %d\n", shortPtr[0], shortPtr[1], shortPtr[7]);
 #endif
-			inn->hire(shortPtr[1]);
-			if( shortPtr[2] == nation_array.player_recno)
+			inn->hire_remote(shortPtr[1], shortPtr[2], shortPtr[3], shortPtr[4], shortPtr[5], shortPtr[6]);
+			if( shortPtr[7] == nation_array.player_recno)
 			{
 				inn->put_info(INFO_REPAINT);
 			}
@@ -2647,7 +2647,13 @@ void RemoteMsg::spy_drop_identity()
 #ifdef DEBUG_LONG_LOG
 		long_log->printf("spy %d drop identity\n", shortPtr[0]);
 #endif
-		spy_array[*shortPtr]->drop_spy_identity();
+		Spy* spyPtr = spy_array[*shortPtr];
+		if( spyPtr->spy_place != SPY_MOBILE ) // message can only be for mobile spy
+			return;
+		short sprite_recno = spyPtr->spy_place_para; // mobile spy
+		spyPtr->drop_spy_identity();
+		if( sprite_recno && sprite_recno == unit_array.selected_recno )
+			info.disp();
 	}
 }
 // ------- End of function RemoteMsg::spy_drop_identity ------//

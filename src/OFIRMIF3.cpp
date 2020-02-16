@@ -309,9 +309,8 @@ int Firm::spy_bribe(int bribeAmount, short briberSpyRecno, short workerId)
 
 	int succeedChance = spy_bribe_succeed_chance(bribeAmount, briberSpyRecno, workerId);
 
-	Spy* spyPtr = spy_array[briberSpyRecno];
 
-	nation_array[spyPtr->true_nation_recno]->add_expense( EXPENSE_BRIBE, (float) bribeAmount, 0 );
+	nation_array[spy_array[briberSpyRecno]->true_nation_recno]->add_expense( EXPENSE_BRIBE, (float) bribeAmount, 0 );
 
 	//------ if the bribe succeeds ------//
 
@@ -319,6 +318,7 @@ int Firm::spy_bribe(int bribeAmount, short briberSpyRecno, short workerId)
 	{
 		int spyRecno = spy_array.add_spy();		// add a new Spy record
 
+		Spy* spyPtr = spy_array[briberSpyRecno];
 		Spy* newSpy = spy_array[spyRecno];
 
 		newSpy->spy_skill = 10;
@@ -369,7 +369,7 @@ int Firm::spy_bribe(int bribeAmount, short briberSpyRecno, short workerId)
 	}
 	else //------- if the bribe fails --------//
 	{
-		spyPtr->get_killed(0);		// the spy gets killed when the action failed.
+		spy_array[briberSpyRecno]->get_killed(0);		// the spy gets killed when the action failed.
 											// 0 - don't display new message for the spy being killed, so we already display the msg on the interface
 		bribe_result = BRIBE_FAIL;
 

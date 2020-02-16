@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.15.3-dev
+Release version 2.15.4-dev
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -11,34 +11,40 @@ details of the license. We are indebted to Enlight for making the 7kfans
 project possible and giving a new chance to build a community for fans
 of the game.
 
-Summary of changes from 2.15.1 to 2.15.2
+Summary of changes from 2.15.2 to 2.15.3
 ---------
- * Fixed queue buttons in the Harbor and War Factory, and in the tutor dialog for the non-blocking button code.
- * Fixed AI crash when trying to use a skilled unit that has been deleted.
- * Added German, Portugese, and Spanish translations.
- * Correct mobilizing other nations spies in firms under your control.
- * Fixed AI crash when fort being used to attack has been deleted.
- * Fixed crashes on bullets hitting targets due to not being attributed correctly.
- * Fixed crash when a seat of power is destroyed at the same time the greater being casts magic.
- * Fixed AI use of uninitialized memory when defending a general or king, which can cause a desync.
- * Added mouse wheel support for map scrolling on touchpads. (sraboy)
- * Added scenario completion tracking. (sraboy)
- * Fixed crash in automated attack helping where one unit selects a target, the target unit enters a building (or deleted), and the local team then tries to assist, but the target unit is not longer on the map.
- * Added advanced config file support. This will allow changing more aspects of the game without recompile.
- * Enabled sync checking in replay mode.
+ * Fixed corrupt characters and fields in various in game messages.
+ * Improved translation support.
+ * Updated translations.
+ * Added some UI improvements.
+ * Fixed some crashing issues related to spies.
+ * Standardized on FPU code generation for better cross-platform compatibility.
+ * Added more advanced config options.
+ * Improved manual.
+ * Added key binding support.
+ * Prevented chat keystrokes registering as a hotkey too.
+ * Fixed sometimes hiring wrong unit in the inn.
+ * Added scenario advanced config presets to restore default scenario game play to original game design parameters.
+ * Ensure screen redraw when dropping spy identity.
+ * Improved alternate font set.
+ * Added scroll button for long tutor messages.
+ * Removed gong sound for unsent AI diplomatic messages.
+ * Re-enabled AI ability to request direct military aid; expect allied AI to work together on defending now.
+ * Removed uninitialized parameter in Caravan CRC check.
+ * Removed improper variable-size cast, causing incorrect action processing on 64-bit platforms.
+ * Correct replay initialization for weather sync.
 
 
 System Requirements
 ---------
 
-Supported systems
+Supported operating systems
 * Windows
 * Linux
 * MacOS
 
-For the best results in multiplayer, you should all play on the same exact
-build and operating system. Testing as of late showed that playing mixed games
-of Windows and Linux platforms is unstable.
+Supported architectures for multiplayer
+* x86 compatible processor
 
 
 Building the game

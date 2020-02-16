@@ -109,6 +109,26 @@ unsigned GetA::detect_key()
 	err_when( cursor_pos < 0 || cursor_pos > strlen(input_field) );
 	err_when( mark_cursor_pos < 0 || mark_cursor_pos > strlen(input_field) );
 
+	if( mouse.typing_char )
+	{
+		if( strlen(input_field)-(mark_end() - mark_begin()) < field_len)
+		{
+			// insert character
+			memmove( input_field+mark_begin()+1, input_field+mark_end(),
+				strlen(input_field)-mark_end()+1);
+			input_field[mark_begin()] = mouse.typing_char;
+			cursor_pos = mark_begin()+1;
+			clear_select();
+		}
+		err_when( cursor_pos < 0 || cursor_pos > strlen(input_field) );
+		err_when( mark_cursor_pos < 0 || mark_cursor_pos > strlen(input_field) );
+		if( hide_flag && strlen(input_field) )
+		{
+			hide_field[strlen(input_field)-1] = HIDE_CHAR;
+			hide_field[strlen(input_field)] = 0;
+		}
+		return mouse.typing_char;
+	}
 	if( mouse.is_key_event() )
 	{
 		unsigned keyCode = mouse.key_code;
