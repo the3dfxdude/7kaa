@@ -211,7 +211,7 @@ int Spy::spy_place_nation_recno()
 //
 void Spy::next_day()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	//------- pay expenses --------//
 
@@ -332,7 +332,7 @@ void Spy::next_day()
 //
 void Spy::process_town_action()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	Town* townPtr = town_array[spy_place_para];
 
@@ -371,7 +371,7 @@ void Spy::process_town_action()
 //
 void Spy::process_firm_action()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	Firm* firmPtr = firm_array[spy_place_para];
 
@@ -484,7 +484,7 @@ int Spy::can_sabotage()
 //
 void Spy::get_killed(int dispNews)
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	//-------- add news --------//
 
@@ -721,7 +721,7 @@ void Spy::change_loyalty(int changeAmt)
 //
 int Spy::think_betray()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	if( spy_loyalty >= UNIT_BETRAY_LOYALTY )		// you when unit is
 		return 0;
@@ -756,7 +756,7 @@ int Spy::think_betray()
 //
 void Spy::drop_spy_identity()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	if( spy_place == SPY_FIRM )
 	{
@@ -809,7 +809,7 @@ void Spy::drop_spy_identity()
 //
 void Spy::change_true_nation(int newNationRecno)
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	err_when( nation_array.is_deleted(newNationRecno) );
 
@@ -835,7 +835,7 @@ void Spy::change_true_nation(int newNationRecno)
 //
 void Spy::change_cloaked_nation(int newNationRecno)
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	if( newNationRecno == cloaked_nation_recno )
 		return;
@@ -898,7 +898,7 @@ int Spy::can_change_cloaked_nation(int newNationRecno)
 //
 int Spy::capture_firm()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	if( spy_place != SPY_FIRM )
 		return 0;
@@ -1026,7 +1026,7 @@ int Spy::capture_firm()
 //
 int Spy::mobilize_spy()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	switch( spy_place )
 	{
@@ -1056,7 +1056,7 @@ int Spy::mobilize_spy()
 //
 int Spy::mobilize_town_spy(int decPop)
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	err_when( spy_place != SPY_TOWN );
 
@@ -1090,7 +1090,7 @@ int Spy::mobilize_town_spy(int decPop)
 //
 int Spy::mobilize_firm_spy()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	err_when( spy_place != SPY_FIRM );
 
@@ -1143,7 +1143,7 @@ int Spy::mobilize_firm_spy()
 //
 void Spy::think_become_king()
 {
-	SpyArrayLock arrayLock();
+	SpyArrayLock arrayLock;
 
 	err_when( spy_place != SPY_MOBILE );		// it must be mobile
 
