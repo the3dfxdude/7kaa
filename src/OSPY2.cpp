@@ -224,12 +224,12 @@ int SpyProcess::think_bribe()
 
 	Spy* newSpy = spy_array[newSpyRecno];
 
-	err_when( newSpy->true_nation_recno != true_nation_recno );
+	err_when( newSpy->true_nation_recno != THIS->true_nation_recno );
 	err_when( newSpy->spy_place != SPY_FIRM );
 
 	if( newSpy->capture_firm() )			// try to capture the firm now
 	{
-		err_when( firm_array[newSpy->spy_place_para]->nation_recno != true_nation_recno );
+		err_when( firm_array[newSpy->spy_place_para]->nation_recno != THIS->true_nation_recno );
 
 		newSpy->drop_spy_identity();		// drop the spy identity of the newly bribed spy if the capture is successful, this will save the spying costs
 	}
