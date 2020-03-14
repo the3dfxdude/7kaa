@@ -31,6 +31,7 @@
 #include <mem_input_stream.h>
 #include <openal_audio.h>
 #include <wav_stream.h>
+#include <FileSystem.h>
 
 #define LWAV_STREAM_BUFSIZ    0x1000
 #define LWAV_BANKS            4
@@ -373,7 +374,7 @@ int OpenALAudio::play_wav(char *file_name, const DsVolume &vol)
 	if (normal_sources >= max_normal_sources)
 		return 0;
 
-	if (misc.is_file_exist(file_name))
+	if (FileSystem::is_file_exist(file_name))
 		return this->play_any_wav(NormalWave, file_name, vol);
 
 	idx = this->wav_res.get_index(file_name);

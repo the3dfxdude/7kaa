@@ -26,6 +26,7 @@
 #include <OMUSIC.h>
 #include <OSYS.h>
 #include <OCONFIG.h>
+#include <FileSystem.h>
 
 // -------- define constant --------//
 // random select 2 - 8 for background music
@@ -177,7 +178,7 @@ int Music::play(int songId, int playType)
 		{
 			String waveFileStr(DIR_MUSIC);
 			waveFileStr += music_file[songId-1];
-			if( !DIR_MUSIC[0] || !misc.is_file_exist(waveFileStr) || !audio.wav_init_flag )
+			if( !DIR_MUSIC[0] || !FileSystem::is_file_exist(waveFileStr) || !audio.wav_init_flag )
 				return 0;
 			if( playType & MUSIC_PLAY_LOOPED )
 			{

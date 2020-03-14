@@ -23,6 +23,7 @@
 
 #include <PlayerStats.h>
 #include <OSYS.h>
+#include <FileSystem.h>
 
 extern Sys sys;			// For the config directory
 using namespace nsPlayerStats;
@@ -57,7 +58,7 @@ bool PlayerStats::load_player_stats(bool force_reload) {
 	if (full_path.error_flag)
 		return false;
 
-	if (!misc.is_file_exist(full_path))
+	if (!FileSystem::is_file_exist(full_path))
 		return false;
 
 	rc = file.file_open(full_path, 0, 0);

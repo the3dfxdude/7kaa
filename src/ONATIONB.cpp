@@ -47,6 +47,7 @@
 #include <OREBEL.h>
 #include <OREMOTE.h>
 #include <ConfigAdv.h>
+#include <FileSystem.h>
 #include "gettext.h"
 
 //-------- Define static variables --------//
@@ -160,7 +161,7 @@ void NationBase::init(int nationType, int raceId, int colorSchemeId, uint32_t pl
 	god_res.init_nation_know(nation_recno);
 
 	//### begin alex 23/9 ###//
-	if(remote.is_enable() && nation_recno && !is_ai() && misc.is_file_exist("TECHGOD.SYS"))
+	if(remote.is_enable() && nation_recno && !is_ai() && FileSystem::is_file_exist("TECHGOD.SYS"))
 	{
 		tech_res.inc_all_tech_level(nation_recno);
 		tech_res.inc_all_tech_level(nation_recno);

@@ -26,6 +26,7 @@
 #include <ONATIONB.h>
 #include <OFILETXT.h>
 #include <OMISC.h>
+#include <FileSystem.h>
 #include <OMOUSE.h>
 #include <OSYS.h>
 #include <posix_string_compat.h>
@@ -155,10 +156,10 @@ int ConfigAdv::load(char *filename)
 	full_path += filename;
 	if( full_path.error_flag )
 		return 0;
-	if( !misc.is_file_exist(full_path) )
+	if( !FileSystem::is_file_exist(full_path) )
 	{
 		full_path = filename;
-		if( full_path.error_flag || !misc.is_file_exist(full_path) )
+		if (full_path.error_flag || !FileSystem::is_file_exist(full_path))
 			return 0;
 	}
 

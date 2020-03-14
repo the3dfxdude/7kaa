@@ -42,6 +42,7 @@
 #include <OTUTOR.h>
 #include <OBOX.h>
 #include <OMOUSE.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 #include <ConfigAdv.h>
 
@@ -385,7 +386,7 @@ void Tutor::run(int tutorId, int inGameCall)
 		str += ".TUT";
 
 		int rc = 0;
-		if( misc.is_file_exist(str) )
+		if( FileSystem::is_file_exist(str) )
 		{
 			rc = SaveGameProvider::load_scenario(str);
 		}
@@ -394,7 +395,7 @@ void Tutor::run(int tutorId, int inGameCall)
 			str = DIR_TUTORIAL;
 			str += "STANDARD.TUT";
 
-			if( misc.is_file_exist(str) )
+			if( FileSystem::is_file_exist(str) )
 				rc = SaveGameProvider::load_scenario(str);
 		}
 
@@ -572,7 +573,7 @@ void Tutor::play_speech()
 
 	str += cur_text_block_id;
 
-	if( !misc.is_file_exist(str) )
+	if( !FileSystem::is_file_exist(str) )
 		return;
 
 	// ##### begin Gilbert 25/9 ######//
