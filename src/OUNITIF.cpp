@@ -196,6 +196,9 @@ void Unit::detect_info()
 			detect_build_menu();
 			break;
 	}
+
+	if( detect_select_hotkey() )
+		return;
 }
 //----------- End of function Unit::detect_info -----------//
 
@@ -1554,6 +1557,40 @@ void Unit::disp_hit_point(int dispY1)
 	Vga::active_buf->indicator(0x0f, INFO_X1+30, dispY1+1, hit_points, max_hit_points, 0);
 }
 //----------- End of function Unit::disp_hit_point -----------//
+
+
+//--------- Begin of function Unit::detect_select_hotkey ---------//
+//
+int Unit::detect_select_hotkey()
+{
+	if( ISKEY(KEYEVENT_OBJECT_PREV) )
+	{
+		unit_array.disp_next(-1, 0);    // previous same object type of any nation
+		return 1;
+	}
+
+	if( ISKEY(KEYEVENT_OBJECT_NEXT) )
+	{
+		unit_array.disp_next(1, 0);     // next same object type of any nation
+		return 1;
+	}
+
+	if( ISKEY(KEYEVENT_NATION_OBJECT_PREV) )
+	{
+		unit_array.disp_next(-1, 1);    // prevous same object type of the same nation
+		return 1;
+	}
+
+	if( ISKEY(KEYEVENT_NATION_OBJECT_NEXT) )
+	{
+		unit_array.disp_next(1, 1);     // next same object type of the same nation
+		return 1;
+	}
+
+	return 0;
+}
+//----------- End of function Unit::detect_select_hotkey -----------//
+
 
 #ifdef DEBUG
 

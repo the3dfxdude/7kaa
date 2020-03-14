@@ -713,6 +713,7 @@ protected:
 	void  detect_spy_menu(int dispY1);
 	int   spy_menu_height();
 	void  disp_hit_point(int dispY1);
+	int   detect_select_hotkey();
 
 	void  process_attack_unit();
 	void  process_attack_firm();

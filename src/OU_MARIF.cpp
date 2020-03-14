@@ -120,6 +120,9 @@ void UnitMarine::detect_info()
 	if( detect_basic_info() )
 		return;
 
+	if( detect_select_hotkey() )
+		return;
+
 	if( !is_own() )
 		return;
 

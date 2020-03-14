@@ -96,6 +96,9 @@ void UnitCaravan::detect_info()
 	if( detect_basic_info() )
 		return;
 
+	if( detect_select_hotkey() )
+		return;
+
 	if( !is_own() && !config.show_ai_info )
 		return;
 

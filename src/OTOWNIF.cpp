@@ -224,6 +224,30 @@ void Town::detect_info()
 			detect_auto_menu(0);
 			break;
 	}
+
+	if( ISKEY(KEYEVENT_OBJECT_PREV) )
+	{
+		town_array.disp_next(-1, 0);    // previous same object type of any nation
+		return;
+	}
+
+	if( ISKEY(KEYEVENT_OBJECT_NEXT) )
+	{
+		town_array.disp_next(1, 0);     // next same object type of any nation
+		return;
+	}
+
+	if( ISKEY(KEYEVENT_NATION_OBJECT_PREV) )
+	{
+		town_array.disp_next(-1, 1);    // prevous same object type of the same nation
+		return;
+	}
+
+	if( ISKEY(KEYEVENT_NATION_OBJECT_NEXT) )
+	{
+		town_array.disp_next(1, 1);     // next same object type of the same nation
+		return;
+	}
 }
 //----------- End of function Town::detect_info -----------//
 

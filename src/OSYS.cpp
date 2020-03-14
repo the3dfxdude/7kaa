@@ -1675,26 +1675,6 @@ void Sys::detect_letter_key(unsigned scanCode, unsigned skeyState)
       load_game();
    }
 
-   else if( ISKEY(KEYEVENT_OBJECT_PREV) )
-   {
-      world.disp_next(-1, 0);    // previous same object type of any nation
-   }
-
-   else if( ISKEY(KEYEVENT_OBJECT_NEXT) )
-   {
-      world.disp_next(1, 0);     // next same object type of any nation
-   }
-
-   else if( ISKEY(KEYEVENT_NATION_OBJECT_PREV) )
-   {
-      world.disp_next(-1, 1);    // prevous same object type of the same nation
-   }
-
-   else if( ISKEY(KEYEVENT_NATION_OBJECT_NEXT) )
-   {
-      world.disp_next(1, 1);     // next same object type of the same nation
-   }
-
    //---- key for quick locate -----//
 
    else if( ISKEY(KEYEVENT_GOTO_KING) )
