@@ -6,6 +6,8 @@
 
 #ifdef USE_WINDOWS
 #include <Windows.h>
+#include <direct.h>
+#define chdir _chdir
 #elif defined (USE_POSIX)
 #include <sys/time.h>
 #include <sys/stat.h>
@@ -14,47 +16,49 @@
 #endif
 
 
+bool FileSystem::set_current_directory(const char* directory) {
+	return chdir(directory) == 0;
+}
+
 //------- Begin of function FileSystem::is_file_exist ---------//
 //
 // Check whether the given file exists in the current directory or not
 //
-// <char*> fileName = the name of the file
+// <const char*> fileName = the name of the file
 //
-// return : <int> 1 - the file exists
-//                0 - doesn't exist
+// return : true  - the file exists
+//          false - doesn't exist
 //
-int FileSystem::is_file_exist(const char* fileName)
+bool FileSystem::is_file_exist(const char* fileName)
 {
 #ifdef USE_WINDOWS
-	WIN32_FIND_DATA findData;
-
-	HANDLE findHandle = FindFirstFile(fileName, &findData);
-
-	return findHandle != INVALID_HANDLE_VALUE;
+	DWORD attrib = GetFileAttributes(fileName);
+	return (attrib != INVALID_FILE_ATTRIBUTES) && !(attrib & FILE_ATTRIBUTE_DIRECTORY);
 #elif defined (USE_POSIX)
 	return !access (fileName, F_OK);
 #endif
 	err.msg ("FileSystem::is_file_exist: stub");
-	return 0;
+	return false;
 }
 //---------- End of function FileSystem::is_file_exist ---------//
 
-
-// misc_mkdir -- helper function to mkpath
-int misc_mkdir(char* path)
-{
-#ifdef USE_WINDOWS
-	if (!path[2] && path[1] == ':' && isalpha(path[0]))
+namespace {
+	// mkpath_mkdir -- helper function to mkpath
+	int mkpath_mkdir(char* path)
 	{
-		// don't try to make a drive letter path
-		// this actually works on windows, but not on Wine
-		return 1;
+	#ifdef USE_WINDOWS
+		if (!path[2] && path[1] == ':' && isalpha(path[0]))
+		{
+			// don't try to make a drive letter path
+			// this actually works on windows, but not on Wine
+			return 1;
+		}
+		return !CreateDirectory(path, NULL) ?
+			GetLastError() == ERROR_ALREADY_EXISTS : 1;
+	#else
+		return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
+	#endif
 	}
-	return !CreateDirectory(path, NULL) ?
-		GetLastError() == ERROR_ALREADY_EXISTS : 1;
-#else
-	return mkdir(path, 0777) == -1 ? errno == EEXIST : 1;
-#endif
 }
 
 
@@ -62,33 +66,33 @@ int misc_mkdir(char* path)
 // Given an absolute path to a directory, create the
 // directory, and all intermediate directories if
 // necessary.
-int FileSystem::mkpath(char *abs_path)
+bool FileSystem::mkpath(char *abs_path)
 {
 	char path_copy[FilePath::MAX_FILE_PATH];
 	int count;
 
 	if( strlen(abs_path) >= FilePath::MAX_FILE_PATH )
-		return 0;
+		return false;
 
 	count = 0;
 	while (count < FilePath::MAX_FILE_PATH) {
 		if (!abs_path[count]) {
 			if (count > 0) {
 				path_copy[count] = 0;
-				if (!misc_mkdir(path_copy))
-					return 0;
+				if (!mkpath_mkdir(path_copy))
+					return false;
 			}
-			return 1;
+			return true;
 		} else if (abs_path[count] == PATH_DELIM[0] && count > 0) {
 			path_copy[count] = 0;
-			if (!misc_mkdir(path_copy))
-				return 0;
+			if (!mkpath_mkdir(path_copy))
+				return false;
 		}
 
 		path_copy[count] = abs_path[count];
 		count++;
 	}
-	return 0;
+	return true;
 }
 //-------- End of function FileSystem::mkpath ----------//
 

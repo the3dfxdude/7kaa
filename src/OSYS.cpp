@@ -93,12 +93,6 @@
 #include <ConfigAdv.h>
 #include <FileSystem.h>
 #include <dbglog.h>
-#ifdef USE_WINDOWS
-#include <direct.h>
-#define chdir _chdir
-#else
-#include <unistd.h>
-#endif
 #include "gettext.h"
 
 DBGLOG_DEFAULT_CHANNEL(Sys);
@@ -2794,7 +2788,7 @@ int Sys::chdir_to_game_dir()
    env_data_path = getenv("SKDATA");
    if (env_data_path)
    {
-      chdir(env_data_path);
+      FileSystem::set_current_directory(env_data_path);
       if (FileSystem::is_file_exist(test_file))
          return 1;
    }
@@ -2803,14 +2797,14 @@ int Sys::chdir_to_game_dir()
    std::string bundle_resources_path = get_bundle_resources_path();
    if (!bundle_resources_path.empty())
    {
-      chdir(bundle_resources_path.c_str());
+      FileSystem::set_current_directory(bundle_resources_path.c_str());
       if (FileSystem::is_file_exist(test_file))
 	 return 1;
    }
 
    // test compile time path
 #ifdef PACKAGE_DATA_DIR
-   chdir(PACKAGE_DATA_DIR);
+   FileSystem::set_current_directory(PACKAGE_DATA_DIR);
    if (FileSystem::is_file_exist(test_file))
       return 1;
 #endif
