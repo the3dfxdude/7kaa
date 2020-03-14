@@ -80,7 +80,6 @@ public:
    int   check_sum(char*,int=-1);
 
    char* format(double,int=1);
-   char* format_percent(double);
    char* format(int,int=1);
 
    char* format(short a,int b=1) { return format((int)a, b); }
@@ -89,8 +88,6 @@ public:
 	char* num_to_str(int);
 	char* roman_number(int);
 
-   int   get_key();
-   int   key_pressed();
    int   is_touch(int,int,int,int,int,int,int,int);
 
    int   sqrt(long);
@@ -99,7 +96,6 @@ public:
 	float round(float,int,int=0);
    float round_dec(float);
 
-	void  delay(float wait);
 	unsigned long get_time();
 
    void  randomize();
