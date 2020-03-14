@@ -37,6 +37,7 @@
 #include <OANLINE.h>
 #include <OFONT.h>
 #include <CRC.h>
+#include <OPOWER.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when
@@ -768,3 +769,80 @@ int UnitArray::is_truly_deleted(int recNo)
 	return get_ptr(recNo) == NULL;
 }
 //--------- End of function UnitArray::is_truly_deleted ----//
+
+
+//--------- Begin of function UnitArray::disp_next --------//
+//
+// Display the next object of the same type.
+//
+// <int> seekDir : -1 - display the previous one in the list.
+// 					  1 - display the next one in the list.
+//
+// <int> sameNation - whether display the next object of the same
+//							 nation only or of any nation.
+//
+void UnitArray::disp_next(int seekDir, int sameNation)
+{
+	if( !selected_recno )
+		return;
+
+	int unitRecno = selected_recno;
+	Unit* unitPtr = (*this)[selected_recno];
+	int unitClass = unit_res[unitPtr->unit_id]->unit_class;
+	int nationRecno = unitPtr->nation_recno;
+
+	while(1)
+	{
+		if( seekDir < 0 )
+		{
+			unitRecno--;
+
+			if( unitRecno < 1 )
+				unitRecno = size();
+		}
+		else
+		{
+			unitRecno++;
+
+			if( unitRecno > size() )
+				unitRecno = 1;
+		}
+
+		if( is_deleted(unitRecno) )
+			continue;
+
+		unitPtr = (*this)[unitRecno];
+
+		if( !unitPtr->is_visible() )
+			continue;
+
+		//--- check if the location of the unit has been explored ---//
+
+		if( !world.get_loc(unitPtr->next_x_loc(), unitPtr->next_y_loc())->explored() )
+			continue;
+
+		//-------- if are of the same nation --------//
+
+		if( sameNation && unitPtr->nation_recno != nationRecno )
+			continue;
+
+		//---------------------------------//
+
+		if( unit_res[unitPtr->unit_id]->unit_class == unitClass )
+		{
+			power.reset_selection();
+			unitPtr->selected_flag = 1;
+			selected_recno = unitRecno;
+			selected_count++;
+
+			world.go_loc( unitPtr->cur_x_loc(), unitPtr->cur_y_loc() );
+			return;
+		}
+
+		//--- if the recno loops back to the starting one ---//
+
+		if( unitRecno == selected_recno )
+			break;
+	}
+}
+//----------- End of function UnitArray::disp_next --------//

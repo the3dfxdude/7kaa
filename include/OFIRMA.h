@@ -77,6 +77,7 @@ public:
 	int   is_deleted(int recNo)    // whether the item is deleted or not
 			{ return get_ptr(recNo) == NULL; }
 
+	void  disp_next(int seekDir, int sameNation);
 };
 
 //---------------------------------------------//

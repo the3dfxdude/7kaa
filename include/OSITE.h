@@ -120,6 +120,8 @@ public:
 		Site* operator()()  	   	 { return (Site*) get(); }
 		Site* operator[](int recNo)  { return (Site*) get(recNo); }
 	#endif
+
+	void  disp_next(int seekDir, int sameNation);
 };
 #pragma pack()
 

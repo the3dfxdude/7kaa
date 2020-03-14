@@ -30,6 +30,7 @@
 #include <OGODRES.h>
 #include <ONATION.h>
 #include <OSITE.h>
+#include <OPOWER.h>
 
 //-------------- Define constant -----------//
 
@@ -832,3 +833,68 @@ Site* SiteArray::operator()()
 
 #endif
 
+
+//--------- Begin of function SiteArray::disp_next --------//
+//
+// Display the next object of the same type.
+//
+// <int> seekDir : -1 - display the previous one in the list.
+// 					  1 - display the next one in the list.
+//
+// <int> sameNation - whether display the next object of the same
+//							 nation only or of any nation.
+//
+void SiteArray::disp_next(int seekDir, int sameNation)
+{
+	if( !selected_recno )
+		return;
+
+	int   siteRecno = selected_recno;
+	Site* sitePtr   = (*this)[selected_recno];
+	int   siteType  = sitePtr->site_type;
+
+	while(1)
+	{
+		if( seekDir < 0 )
+		{
+			siteRecno--;
+
+			if( siteRecno < 1 )
+				siteRecno = size();
+		}
+		else
+		{
+			siteRecno++;
+
+			if( siteRecno > size() )
+				siteRecno = 1;
+		}
+
+		if( is_deleted(siteRecno) )
+			continue;
+
+		sitePtr = (*this)[siteRecno];
+
+		//--- check if the location of this site has been explored ---//
+
+		if( !world.get_loc(sitePtr->map_x_loc, sitePtr->map_y_loc)->explored() )
+			continue;
+
+		//---------------------------------//
+
+		if( sitePtr->site_type == siteType )
+		{
+			power.reset_selection();
+			selected_recno = siteRecno;
+
+			world.go_loc( sitePtr->map_x_loc, sitePtr->map_y_loc );
+			return;
+		}
+
+		//--- if the recno loops back to the starting one ---//
+
+		if( siteRecno == selected_recno )
+			break;
+	}
+}
+//----------- End of function SiteArray::disp_next --------//

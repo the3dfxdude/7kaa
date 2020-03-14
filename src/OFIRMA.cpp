@@ -705,3 +705,74 @@ Firm* FirmArray::operator[](int recNo)
 #endif
 
 
+//--------- Begin of function FirmArray::disp_next ---------//
+//
+// Display the next object of the same type.
+//
+// <int> seekDir : -1 - display the previous one in the list.
+// 					  1 - display the next one in the list.
+//
+// <int> sameNation - whether display the next object of the same
+//							 nation only or of any nation.
+//
+void FirmArray::disp_next(int seekDir, int sameNation)
+{
+	if( !selected_recno )
+		return;
+
+	int firmRecno = selected_recno;
+	Firm* firmPtr = (*this)[selected_recno];
+	int firmId = firmPtr->firm_id;
+	int nationRecno = firmPtr->nation_recno;
+
+	while(1)
+	{
+		if( seekDir < 0 )
+		{
+			firmRecno--;
+
+			if( firmRecno < 1 )
+				firmRecno = size();
+		}
+		else
+		{
+			firmRecno++;
+
+			if( firmRecno > size() )
+				firmRecno = 1;
+		}
+
+		if( is_deleted(firmRecno) )
+			continue;
+
+		firmPtr = (*this)[firmRecno];
+
+		//-------- if are of the same nation --------//
+
+		if( sameNation && firmPtr->nation_recno != nationRecno )
+			continue;
+
+		//--- check if the location of this firm has been explored ---//
+
+		if( !world.get_loc(firmPtr->center_x, firmPtr->center_y)->explored() )
+			continue;
+
+		//---------------------------------//
+
+		if( firmPtr->firm_id == firmId )
+		{
+			power.reset_selection();
+			selected_recno = firmRecno;
+			firmPtr->sort_worker();
+
+			world.go_loc( firmPtr->center_x, firmPtr->center_y );
+			return;
+		}
+
+		//--- if the recno loops back to the starting one ---//
+
+		if( firmRecno == selected_recno )
+			break;
+	}
+}
+//---------- End of function FirmArray::disp_next ----------//

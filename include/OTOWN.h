@@ -455,6 +455,8 @@ public:
 	#else
 		Town* operator[](int recNo)  { return (Town*) get_ptr(recNo); }
 	#endif
+
+	void  disp_next(int seekDir, int sameNation);
 };
 
 extern TownArray town_array;

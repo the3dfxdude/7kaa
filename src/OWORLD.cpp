@@ -2119,232 +2119,28 @@ void World::disp_next(int seekDir, int sameNation)
 
 	if( unit_array.selected_recno )
 	{
-		int unitRecno = unit_array.selected_recno;
-		Unit* unitPtr = unit_array[unit_array.selected_recno];
-		int unitClass = unit_res[unitPtr->unit_id]->unit_class;
-		int nationRecno = unitPtr->nation_recno;
-
-		while(1)
-		{
-			if( seekDir < 0 )
-			{
-				unitRecno--;
-
-				if( unitRecno < 1 )
-					unitRecno = unit_array.size();
-			}
-			else
-			{
-				unitRecno++;
-
-				if( unitRecno > unit_array.size() )
-					unitRecno = 1;
-			}
-
-			if( unit_array.is_deleted(unitRecno) )
-				continue;
-
-			unitPtr = unit_array[unitRecno];
-
-			if( !unitPtr->is_visible() )
-				continue;
-
-			//--- check if the location of the unit has been explored ---//
-
-			if( !world.get_loc(unitPtr->next_x_loc(), unitPtr->next_y_loc())->explored() )
-				continue;
-
-         //-------- if are of the same nation --------//
-
-			if( sameNation && unitPtr->nation_recno != nationRecno )
-				continue;
-
-			//---------------------------------//
-
-			if( unit_res[unitPtr->unit_id]->unit_class == unitClass )
-			{
-				power.reset_selection();
-				unitPtr->selected_flag = 1;
-				unit_array.selected_recno = unitRecno;
-				unit_array.selected_count++;
-
-				world.go_loc( unitPtr->cur_x_loc(), unitPtr->cur_y_loc() );
-				return;
-			}
-
-			//--- if the recno loops back to the starting one ---//
-
-			if( unitRecno == unit_array.selected_recno )
-				break;
-		}
+		unit_array.disp_next(seekDir, sameNation);
 	}
 
 	//--- if the selected one is a firm ----//
 
 	if( firm_array.selected_recno )
 	{
-		int firmRecno = firm_array.selected_recno;
-		Firm* firmPtr = firm_array[firm_array.selected_recno];
-		int firmId = firmPtr->firm_id;
-		int nationRecno = firmPtr->nation_recno;
-
-		while(1)
-		{
-			if( seekDir < 0 )
-			{
-				firmRecno--;
-
-				if( firmRecno < 1 )
-					firmRecno = firm_array.size();
-			}
-			else
-			{
-				firmRecno++;
-
-				if( firmRecno > firm_array.size() )
-					firmRecno = 1;
-			}
-
-			if( firm_array.is_deleted(firmRecno) )
-				continue;
-
-			firmPtr = firm_array[firmRecno];
-
-			//-------- if are of the same nation --------//
-
-			if( sameNation && firmPtr->nation_recno != nationRecno )
-				continue;
-
-			//--- check if the location of this firm has been explored ---//
-
-			if( !world.get_loc(firmPtr->center_x, firmPtr->center_y)->explored() )
-				continue;
-
-			//---------------------------------//
-
-			if( firmPtr->firm_id == firmId )
-			{
-				power.reset_selection();
-				firm_array.selected_recno = firmRecno;
-				firmPtr->sort_worker();
-
-				world.go_loc( firmPtr->center_x, firmPtr->center_y );
-				return;
-			}
-
-			//--- if the recno loops back to the starting one ---//
-
-			if( firmRecno == firm_array.selected_recno )
-				break;
-		}
+		firm_array.disp_next(seekDir, sameNation);
 	}
 
 	//--- if the selected one is a town ----//
 
 	if( town_array.selected_recno )
 	{
-		int 	townRecno = town_array.selected_recno;
-		int   nationRecno = town_array[townRecno]->nation_recno;
-		Town* townPtr;
-
-		while(1)
-		{
-			if( seekDir < 0 )
-			{
-				townRecno--;
-
-				if( townRecno < 1 )
-					townRecno = town_array.size();
-			}
-			else
-			{
-				townRecno++;
-
-				if( townRecno > town_array.size() )
-					townRecno = 1;
-			}
-
-			if( town_array.is_deleted(townRecno) )
-				continue;
-
-			townPtr = town_array[townRecno];
-
-			//-------- if are of the same nation --------//
-
-			if( sameNation && townPtr->nation_recno != nationRecno )
-				continue;
-
-			//--- check if the location of this town has been explored ---//
-
-			if( !world.get_loc(townPtr->center_x, townPtr->center_y)->explored() )
-				continue;
-
-			//---------------------------------//
-
-			power.reset_selection();
-			town_array.selected_recno = townRecno;
-
-			world.go_loc( townPtr->center_x, townPtr->center_y );
-			return;
-
-			//--- if the recno loops back to the starting one ---//
-
-			if( townRecno == town_array.selected_recno )
-				break;
-		}
+		town_array.disp_next(seekDir, sameNation);
 	}
 
 	//--- if the selected one is a natural resource site ----//
 
 	if( site_array.selected_recno )
 	{
-		int   siteRecno = site_array.selected_recno;
-		Site* sitePtr   = site_array[site_array.selected_recno];
-		int   siteType  = sitePtr->site_type;
-
-		while(1)
-		{
-			if( seekDir < 0 )
-			{
-				siteRecno--;
-
-				if( siteRecno < 1 )
-					siteRecno = site_array.size();
-			}
-			else
-			{
-				siteRecno++;
-
-				if( siteRecno > site_array.size() )
-					siteRecno = 1;
-			}
-
-			if( site_array.is_deleted(siteRecno) )
-				continue;
-
-			sitePtr = site_array[siteRecno];
-
-			//--- check if the location of this site has been explored ---//
-
-			if( !world.get_loc(sitePtr->map_x_loc, sitePtr->map_y_loc)->explored() )
-				continue;
-
-			//---------------------------------//
-
-			if( sitePtr->site_type == siteType )
-			{
-				power.reset_selection();
-				site_array.selected_recno = siteRecno;
-
-				world.go_loc( sitePtr->map_x_loc, sitePtr->map_y_loc );
-				return;
-			}
-
-			//--- if the recno loops back to the starting one ---//
-
-			if( siteRecno == site_array.selected_recno )
-				break;
-		}
+		site_array.disp_next(seekDir, sameNation);
 	}
 }
 //----------- End of function World::disp_next --------//

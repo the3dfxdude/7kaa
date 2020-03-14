@@ -33,6 +33,7 @@
 #include <ONATION.h>
 #include <OGAME.h>
 #include <ConfigAdv.h>
+#include <OPOWER.h>
 
 #ifdef DEBUG
 #include <OFONT.h>
@@ -810,6 +811,74 @@ Town* TownArray::operator[](int recNo)
 //--------- End of function TownArray::operator[] ----//
 
 #endif
+
+
+//--------- Begin of function TownArray::disp_next --------//
+//
+// Display the next object of the same type.
+//
+// <int> seekDir : -1 - display the previous one in the list.
+// 					  1 - display the next one in the list.
+//
+// <int> sameNation - whether display the next object of the same
+//							 nation only or of any nation.
+//
+void TownArray::disp_next(int seekDir, int sameNation)
+{
+	if( !selected_recno )
+		return;
+
+	int 	townRecno = selected_recno;
+	int   nationRecno = ((*this)[townRecno])->nation_recno;
+	Town* townPtr;
+
+	while(1)
+	{
+		if( seekDir < 0 )
+		{
+			townRecno--;
+
+			if( townRecno < 1 )
+				townRecno = size();
+		}
+		else
+		{
+			townRecno++;
+
+			if( townRecno > size() )
+				townRecno = 1;
+		}
+
+		if( is_deleted(townRecno) )
+			continue;
+
+		townPtr = (*this)[townRecno];
+
+		//-------- if are of the same nation --------//
+
+		if( sameNation && townPtr->nation_recno != nationRecno )
+			continue;
+
+		//--- check if the location of this town has been explored ---//
+
+		if( !world.get_loc(townPtr->center_x, townPtr->center_y)->explored() )
+			continue;
+
+		//---------------------------------//
+
+		power.reset_selection();
+		selected_recno = townRecno;
+
+		world.go_loc( townPtr->center_x, townPtr->center_y );
+		return;
+
+		//--- if the recno loops back to the starting one ---//
+
+		if( townRecno == selected_recno )
+			break;
+	}
+}
+//----------- End of function TownArray::disp_next --------//
 
 
 //-------- Begin of static function random_race --------//

@@ -825,6 +825,8 @@ public:
 	int   is_deleted(int recNo);
 	int   is_truly_deleted(int recNo);
 
+	void  disp_next(int seekDir, int sameNation);
+
 private:
 	void  divide_array(int locX, int locY, short* selectedArray, int selectedCount, int excludeSelectedLocUnit=0);
 	void  set_group_id(short* selectedArray, int selectedCount);
