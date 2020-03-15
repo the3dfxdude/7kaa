@@ -407,13 +407,13 @@ void FirmCamp::put_info(int refreshFlag)
 
 //--------- Begin of function FirmCamp::detect_info ---------//
 //
-void FirmCamp::detect_info()
+int FirmCamp::detect_info()
 {
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	if( !should_show_info() )
-		return;
+		return 0;
 
 	//------ detect the overseer button -----//
 
@@ -426,6 +426,7 @@ void FirmCamp::detect_info()
 		disp_camp_info(INFO_Y1+54, INFO_UPDATE);
 		disp_worker_list(INFO_Y1+104, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+168, INFO_UPDATE);
+		return 1;
 	}
 
 	//--------- detect soldier info ---------//
@@ -435,14 +436,16 @@ void FirmCamp::detect_info()
 		disp_camp_info(INFO_Y1+54, INFO_UPDATE);
 		disp_worker_list(INFO_Y1+104, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+168, INFO_UPDATE);
+		return 1;
 	}
 
 	//---------- detect spy button ----------//
 
-	detect_spy_button();
+	if( detect_spy_button() )
+		return 1;
 
 	if( !own_firm() )
-		return;
+		return 0;
 
 	//------ detect the overseer button -----//
 
@@ -458,6 +461,7 @@ void FirmCamp::detect_info()
 		{
 			assign_overseer(0);		// the overseer quits the camp
 		}
+		return 1;
 	}
 
 	//----------- detect patrol -----------//
@@ -474,6 +478,7 @@ void FirmCamp::detect_info()
 		{
 			patrol();
 		}
+		return 1;
 	}
 
 	//----------- detect reward -----------//
@@ -484,6 +489,7 @@ void FirmCamp::detect_info()
 		// ##### begin Gilbert 25/9 ######//
 		se_ctrl.immediate_sound("TURN_ON");
 		// ##### end Gilbert 25/9 ######//
+		return 1;
 	}
 
 	//----- detect defense mode button -------//
@@ -508,7 +514,11 @@ void FirmCamp::detect_info()
 		}
 
 		button_defense.update_bitmap( defense_flag ? (char*)"DEFENSE1" : (char*)"DEFENSE0" );
+
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmCamp::detect_info -----------//
 

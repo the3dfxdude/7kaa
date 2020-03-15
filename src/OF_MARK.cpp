@@ -266,16 +266,16 @@ void FirmMarket::put_info(int refreshFlag)
 
 //--------- Begin of function FirmMarket::detect_info ---------//
 //
-void FirmMarket::detect_info()
+int FirmMarket::detect_info()
 {
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	if( !config.show_ai_info && nation_recno!=nation_array.player_recno )
-		return;
+		return 0;
 
 	if( nation_recno != nation_array.player_recno )		// the following controls are only available for player's firms
-		return;
+		return 0;
 
 	//----- detect clear stock buttons -------//
 
@@ -289,7 +289,6 @@ void FirmMarket::detect_info()
 				
 				clear_market_goods(i+1);
 				info.disp();
-				return;
 			}
 			else
 			{
@@ -299,13 +298,19 @@ void FirmMarket::detect_info()
 				shortPtr[1] = i;
 			}
 			se_ctrl.immediate_sound("TURN_OFF");
+			return 1;
 		}
 	}
 
 	//----- detect hire caravan button -------//
 
 	if( button_hire_caravan.detect(GETKEY(KEYEVENT_FIRM_PATROL)) )
+	{
 		hire_caravan(COMMAND_PLAYER);
+		return 1;
+	}
+
+	return 0;
 }
 //----------- End of function FirmMarket::detect_info -----------//
 

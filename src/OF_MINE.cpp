@@ -221,12 +221,12 @@ void FirmMine::put_info(int refreshFlag)
 
 //--------- Begin of function FirmMine::detect_info ---------//
 //
-void FirmMine::detect_info()
+int FirmMine::detect_info()
 {
 	//-------- detect basic info -----------//
 
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	//----------- detect worker -----------//
 
@@ -234,21 +234,26 @@ void FirmMine::detect_info()
 	{
 		disp_mine_info(INFO_Y1+52, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+191, INFO_UPDATE);
+		return 1;
 	}
 
 	//-------- detect spy button ----------//
 
-	detect_spy_button();
+	if( detect_spy_button() )
+		return 1;
 
 	if( !own_firm() )
-		return;
+		return 0;
 
 	//-------- detect mobilize button ----------//
 
 	if (button_vacate_firm.detect())
 	{
 		mobilize_all_workers(COMMAND_PLAYER);
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmMine::detect_info -----------//
 

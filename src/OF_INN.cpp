@@ -198,26 +198,27 @@ void FirmInn::put_info(int refreshFlag)
 
 //--------- Begin of function FirmInn::detect_info ---------//
 //
-void FirmInn::detect_info()
+int FirmInn::detect_info()
 {
 	firm_inn_ptr = this;
 
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	//-------- detect spy button ----------//
 
+	if( detect_spy_button() )
+		return 1;
+
 	if( !own_firm() )
-	{
-		detect_spy_button();
-		return;
-	}
+		return 0;
 
 	//-------------------------------------//
 
 	if( browse_hire.detect() )
 	{
 		put_det(INFO_UPDATE);
+		return 1;
 	}
 
 	if( button_hire.detect(GETKEY(KEYEVENT_FIRM_PATROL)) && inn_unit_count > 0 )
@@ -245,7 +246,10 @@ void FirmInn::detect_info()
 		{
 			hire(browse_hire.recno());
 		}
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmInn::detect_info -----------//
 

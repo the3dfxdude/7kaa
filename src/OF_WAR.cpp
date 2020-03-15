@@ -126,18 +126,18 @@ void FirmWar::put_info(int refreshFlag)
 
 //--------- Begin of function FirmWar::detect_info ---------//
 //
-void FirmWar::detect_info()
+int FirmWar::detect_info()
 {
 	switch( war_menu_mode )
 	{
 		case WAR_MENU_MAIN:
-			detect_main_menu();
-			break;
+			return detect_main_menu();
 
 		case WAR_MENU_BUILD:
-			detect_build_menu();
-			break;
+			return detect_build_menu();
 	}
+
+	return 0;
 }
 //----------- End of function FirmWar::detect_info -----------//
 
@@ -185,12 +185,12 @@ void FirmWar::disp_main_menu(int refreshFlag)
 
 //--------- Begin of function FirmWar::detect_main_menu ---------//
 //
-void FirmWar::detect_main_menu()
+int FirmWar::detect_main_menu()
 {
 	//-------- detect basic info -----------//
 
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	//----------- detect worker -----------//
 
@@ -198,14 +198,16 @@ void FirmWar::detect_main_menu()
 	{
 		disp_war_info(INFO_Y1+54, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+171, INFO_UPDATE);
+		return 1;
 	}
 
 	//-------- detect spy button ----------//
 
-	detect_spy_button();
+	if( detect_spy_button() )
+		return 1;
 
 	if( !own_firm() )
-		return;
+		return 0;
 
 	//---------- detect cancel build ------------//
 	if( build_unit_id && button_cancel_build.detect() )
@@ -217,6 +219,7 @@ void FirmWar::detect_main_menu()
 			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_SKIP_WEAPON, sizeof(short) );
 			shortPtr[0] = firm_recno;
 		}
+		return 1;
 	}
 
 	//------ detect the select research button -------//
@@ -227,6 +230,7 @@ void FirmWar::detect_main_menu()
 		disable_refresh = 1;    // static var for disp_info() only
 		info.disp();
 		disable_refresh = 0;
+		return 1;
 	}
 
 	//-------- detect mobilize button ----------//
@@ -234,7 +238,10 @@ void FirmWar::detect_main_menu()
 	if (button_vacate_firm.detect())
 	{
 		mobilize_all_workers(COMMAND_PLAYER);
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmWar::detect_main_menu -----------//
 
@@ -289,7 +296,7 @@ void FirmWar::disp_build_menu(int refreshFlag)
 
 //--------- Begin of function FirmWar::detect_build_menu ---------//
 //
-void FirmWar::detect_build_menu()
+int FirmWar::detect_build_menu()
 {
 
 	int 	 	 unitId, x=INFO_X1+2, y=INFO_Y1, rc, quitFlag, waitFlag;
@@ -375,7 +382,7 @@ void FirmWar::detect_build_menu()
 				info.update();
 			// ###### end Gilbert 10/9 ########//
 
-			return;
+			return 1;
 		}
 
 		y += BUILD_BUTTON_HEIGHT;
@@ -389,7 +396,10 @@ void FirmWar::detect_build_menu()
 		// ##### end Gilbert 25/9 ######//
 		war_menu_mode = WAR_MENU_MAIN;
 		info.disp();
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmWar::detect_build_menu -----------//
 

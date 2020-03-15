@@ -54,13 +54,13 @@ public:
 	~FirmWar();
 
 	void 	put_info(int refreshFlag);
-	void 	detect_info();
+	int	detect_info();
 
 	void 	disp_main_menu(int refreshFlag);
-	void 	detect_main_menu();
+	int	detect_main_menu();
 
 	void 	disp_build_menu(int refreshFlag);
-	void 	detect_build_menu();
+	int	detect_build_menu();
 
 	void    change_nation(int newNationRecno);
 

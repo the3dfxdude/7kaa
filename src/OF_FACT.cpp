@@ -245,12 +245,12 @@ void FirmFactory::put_info(int refreshFlag)
 
 //--------- Begin of function FirmFactory::detect_info ---------//
 //
-void FirmFactory::detect_info()
+int FirmFactory::detect_info()
 {
 	//-------- detect basic info -----------//
 
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	//-------- detect workers ----------//
 
@@ -258,14 +258,16 @@ void FirmFactory::detect_info()
 	{
 		disp_worker_list(INFO_Y1+126, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+190, INFO_UPDATE);
+		return 1;
 	}
 
 	//-------- detect spy button ----------//
 
-	detect_spy_button();
+	if( detect_spy_button() )
+		return 1;
 
 	if( !own_firm() )
-		return;
+		return 0;
 
 	//---- detect change production button -----//
 
@@ -276,6 +278,7 @@ void FirmFactory::detect_info()
 		// ##### begin Gilbert 25/9 ######//
 		se_ctrl.immediate_sound("TURN_ON");
 		// ##### end Gilbert 25/9 ######//
+		return 1;
 	}
 
 	//-------- detect mobilize button ----------//
@@ -283,7 +286,10 @@ void FirmFactory::detect_info()
 	if (button_vacate_firm.detect())
 	{		
 		mobilize_all_workers(COMMAND_PLAYER);
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmFactory::detect_info -----------//
 

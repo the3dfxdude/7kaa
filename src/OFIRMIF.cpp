@@ -168,7 +168,8 @@ void Firm::detect_info_both()
 		switch( firm_menu_mode )
 		{
 			case FIRM_MENU_MAIN:
-				detect_info();
+				if( detect_info() )
+					return;
 				break;
 
 			case FIRM_MENU_SPY:

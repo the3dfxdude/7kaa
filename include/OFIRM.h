@@ -322,7 +322,7 @@ public:
 			  void detect_info_both();
 
 	virtual void put_info(int refreshFlag)		{;}
-	virtual void detect_info()						{;}
+	virtual int  detect_info()						{;}
 			  void sort_worker();
 
 	 		  void process_animation();
@@ -408,7 +408,7 @@ protected:
 			  void process_independent_town_worker();
 
 			  void disp_spy_button(int x, int y, int refreshFlag);
-			  void detect_spy_button();
+			  int  detect_spy_button();
 			  void disp_spy_menu(int refreshFlag);
 			  void detect_spy_menu();
 			  int  can_player_spy_capture();

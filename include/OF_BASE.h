@@ -66,7 +66,7 @@ public:
 	void 		change_nation(int newNationRecno);
 
 	void 		put_info(int refreshFlag);
-	void 		detect_info();
+	int		detect_info();
 
 	void		next_day();
 	void		process_ai();

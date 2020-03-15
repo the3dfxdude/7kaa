@@ -73,7 +73,7 @@ public:
 	void  init(int xLoc, int yLoc, int nationRecno, int firmId, const char* buildCode=NULL, short builderRecno=0);
 	void  deinit_derived();
 	void 	put_info(int refreshFlag);
-	void 	detect_info();
+	int	detect_info();
 
 	void 	assign_unit(int unitRecno);
 	void	next_day();
@@ -120,12 +120,12 @@ private:
 	int 	should_show_harbor_info();
 
 	void 	disp_main_menu(int refreshFlag);
-	void 	detect_main_menu();
+	int	detect_main_menu();
 
 	void 	disp_build_menu(int refreshFlag);
 	void  disp_build_button(int y, int unitId, int buttonUp);
 	void  disp_queue_button(int y, int unitId, int buttonUp);
-	void 	detect_build_menu();
+	int	detect_build_menu();
 
 	void 	put_det(int refreshFlag);
 	int	detect_det();

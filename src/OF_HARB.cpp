@@ -275,18 +275,18 @@ void FirmHarbor::put_info(int refreshFlag)
 
 //--------- Begin of function FirmHarbor::detect_info ---------//
 //
-void FirmHarbor::detect_info()
+int FirmHarbor::detect_info()
 {
 	switch( harbor_menu_mode )
 	{
 		case HARBOR_MENU_MAIN:
-			detect_main_menu();
-			break;
+			return detect_main_menu();
 
 		case HARBOR_MENU_BUILD:
-			detect_build_menu();
-			break;
+			return detect_build_menu();
 	}
+
+	return 0;
 }
 //----------- End of function FirmHarbor::detect_info -----------//
 
@@ -353,21 +353,24 @@ void FirmHarbor::disp_main_menu(int refreshFlag)
 
 //--------- Begin of function FirmHarbor::detect_main_menu ---------//
 //
-void FirmHarbor::detect_main_menu()
+int FirmHarbor::detect_main_menu()
 {
 	firm_harbor_ptr = this;
 
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	if( !own_firm() )
-		return;
+		return 0;
 
 	if( browse_ship.detect() )
+	{
 		put_det(INFO_UPDATE);
+		return 1;
+	}
 
 	if( detect_det() )
-		return;
+		return 1;
 
 	//------- detect the build button ---------//
 
@@ -377,12 +380,16 @@ void FirmHarbor::detect_main_menu()
 		disable_refresh = 1;    // static var for disp_info() only
 		info.disp();
 		disable_refresh = 0;
+		return 1;
 	}
 
 	//-------- detect the sail button ---------//
 
 	if( button_sail.detect(GETKEY(KEYEVENT_FIRM_PATROL)) && browse_ship.recno() > 0 )
+	{
 		sail_ship( ship_recno_array[browse_ship.recno()-1], COMMAND_PLAYER );
+		return 1;
+	}
 
 	//---------- detect cancel build button -----------//
 	if(build_unit_id)
@@ -396,8 +403,11 @@ void FirmHarbor::detect_main_menu()
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_HARBOR_SKIP_SHIP, sizeof(short));
 				shortPtr[0] = firm_recno;
 			}
+			return 1;
 		}
 	}
+
+	return 0;
 }
 //----------- End of function FirmHarbor::detect_main_menu -----------//
 
@@ -810,7 +820,7 @@ static void i_disp_queue_button(ButtonCustom *button, int repaintBody)
 
 //--------- Begin of function FirmHarbor::detect_build_menu ---------//
 //
-void FirmHarbor::detect_build_menu()
+int FirmHarbor::detect_build_menu()
 {
 	int 	 	 unitId, x=INFO_X1+2, y=INFO_Y1, rc, quitFlag, waitFlag;
 	UnitInfo* unitInfo;
@@ -893,7 +903,7 @@ void FirmHarbor::detect_build_menu()
 				info.update();
 			// ######## end Gilbert 20/9 ########//
 
-			return;
+			return 1;
 		}
 
 		y += BUILD_BUTTON_HEIGHT;
@@ -908,7 +918,10 @@ void FirmHarbor::detect_build_menu()
 		// ###### begin Gilbert 26/9 #######//
 		se_ctrl.immediate_sound("TURN_OFF");
 		// ###### end Gilbert 26/9 #######//
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmHarbor::detect_build_menu -----------//
 

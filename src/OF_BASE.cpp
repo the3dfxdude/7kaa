@@ -236,13 +236,13 @@ void FirmBase::put_info(int refreshFlag)
 
 //--------- Begin of function FirmBase::detect_info ---------//
 //
-void FirmBase::detect_info()
+int FirmBase::detect_info()
 {
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	if( !should_show_info() )
-		return;
+		return 0;
 
 	//------ detect the overseer button -----//
 
@@ -255,6 +255,7 @@ void FirmBase::detect_info()
 		disp_base_info(INFO_Y1+54, INFO_UPDATE);
 		disp_worker_list(INFO_Y1+104, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+168, INFO_UPDATE);
+		return 1;
 	}
 
 	//--------- detect soldier info ---------//
@@ -264,14 +265,16 @@ void FirmBase::detect_info()
 		disp_base_info(INFO_Y1+54, INFO_UPDATE);
 		disp_worker_list(INFO_Y1+104, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+168, INFO_UPDATE);
+		return 1;
 	}
 
 	//---------- detect spy button ----------//
 
-	detect_spy_button();
+	if( detect_spy_button() )
+		return 1;
 
 	if( !own_firm() )
-		return;
+		return 0;
 
 	//------ detect the overseer button -----//
 
@@ -287,6 +290,7 @@ void FirmBase::detect_info()
 		{
 			assign_overseer(0);		// the overseer quits the camp
 		}
+		return 1;
 	}
 
 	//----------- detect invoke -----------//
@@ -305,6 +309,7 @@ void FirmBase::detect_info()
 		{
 			invoke_god();
 		}
+		return 1;
 	}
 
 	//----------- detect reward -----------//
@@ -315,6 +320,7 @@ void FirmBase::detect_info()
 		// ##### begin Gilbert 26/9 ########//
 		se_ctrl.immediate_sound("TURN_ON");
 		// ##### end Gilbert 26/9 ########//
+		return 1;
 	}
 
 	//-------- detect mobilize button ----------//
@@ -322,7 +328,10 @@ void FirmBase::detect_info()
 	if( button_vacate_firm.detect() )
 	{
 		mobilize_all_workers(COMMAND_PLAYER);
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmBase::detect_info -----------//
 

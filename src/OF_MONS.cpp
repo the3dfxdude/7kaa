@@ -174,13 +174,15 @@ void FirmMonster::put_info(int refreshFlag)
 
 //--------- Begin of function FirmMonster::detect_info ---------//
 //
-void FirmMonster::detect_info()
+int FirmMonster::detect_info()
 {
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	if( !config.show_ai_info && nation_recno!=nation_array.player_recno )
-		return;
+		return 0;
+
+	return 0;
 }
 //----------- End of function FirmMonster::detect_info -----------//
 

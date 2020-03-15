@@ -63,7 +63,7 @@ public:
 	void		draw(int displayLayer=1);
 
 	void 		put_info(int refreshFlag);
-	void 		detect_info();
+	int		detect_info();
 
 	void		next_day();
 	void		next_month();

@@ -48,13 +48,13 @@ public:
 	void  init_derived();
 
 	void 	put_info(int refreshFlag);
-	void 	detect_info();
+	int	detect_info();
 
 	void 	disp_main_menu(int refreshFlag);
-	void 	detect_main_menu();
+	int	detect_main_menu();
 
 	void 	disp_research_menu(int refreshFlag);
-	void 	detect_research_menu();
+	int	detect_research_menu();
 
 	void 	start_research(int techId, char remoteAction);
 	void 	process_research();

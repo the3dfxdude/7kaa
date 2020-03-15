@@ -73,7 +73,7 @@ public:
 	void		draw(int displayLayer=1);
 
 	void 		put_info(int refreshFlag);
-	void 		detect_info();
+	int		detect_info();
 
 	void 		disp_mine_info(int dispY1, int refreshFlag);
 

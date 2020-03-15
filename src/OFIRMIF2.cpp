@@ -589,7 +589,7 @@ void Firm::disp_spy_button(int x, int y, int refreshFlag)
 
 //--------- Begin of function Firm::detect_spy_button --------//
 
-void Firm::detect_spy_button()
+int Firm::detect_spy_button()
 {
 	if( player_spy_count>0 )
 	{
@@ -597,6 +597,7 @@ void Firm::detect_spy_button()
 		{
 			firm_menu_mode = FIRM_MENU_SPY;
 			info.disp();
+			return 1;
 		}
 
 		if( nation_recno != nation_array.player_recno )		// only display the bribe button for non-player towns
@@ -614,6 +615,7 @@ void Firm::detect_spy_button()
 				}
 
 				info.disp();
+				return 1;
 			}
 		}
 	}
@@ -635,7 +637,10 @@ void Firm::detect_spy_button()
 			shortPtr[1] = nation_array.player_recno;
 		}
 		// ##### end Gilbert 24/6 ##########//
+		return 1;
 	}
+
+	return 0;
 }
 //--------- End of function Firm::detect_spy_button --------//
 

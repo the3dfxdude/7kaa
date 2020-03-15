@@ -123,18 +123,18 @@ void FirmResearch::put_info(int refreshFlag)
 
 //--------- Begin of function FirmResearch::detect_info ---------//
 //
-void FirmResearch::detect_info()
+int FirmResearch::detect_info()
 {
 	switch( research_menu_mode )
 	{
 		case RESEARCH_MENU_MAIN:
-			detect_main_menu();
-			break;
+			return detect_main_menu();
 
 		case RESEARCH_MENU_RESEARCH:
-			detect_research_menu();
-			break;
+			return detect_research_menu();
 	}
+
+	return 0;
 }
 //----------- End of function FirmResearch::detect_info -----------//
 
@@ -180,12 +180,12 @@ void FirmResearch::disp_main_menu(int refreshFlag)
 
 //--------- Begin of function FirmResearch::detect_main_menu ---------//
 //
-void FirmResearch::detect_main_menu()
+int FirmResearch::detect_main_menu()
 {
 	//-------- detect basic info -----------//
 
 	if( detect_basic_info() )
-		return;
+		return 1;
 
 	//----------- detect worker -----------//
 
@@ -193,14 +193,16 @@ void FirmResearch::detect_main_menu()
 	{
 		disp_research_info(INFO_Y1+54, INFO_UPDATE);
 		disp_worker_info(INFO_Y1+171, INFO_UPDATE);
+		return 1;
 	}
 
 	//-------- detect spy button ----------//
 
-	detect_spy_button();
+	if( detect_spy_button() )
+		return 1;
 
 	if( !own_firm() )
-		return;
+		return 0;
 
 	//------ detect the select research button -------//
 
@@ -210,6 +212,7 @@ void FirmResearch::detect_main_menu()
 		disable_refresh = 1;    // static var for disp_info() only
 		info.disp();
 		disable_refresh = 0;
+		return 1;
 	}
 
 	//-------- detect mobilize button ----------//
@@ -217,7 +220,10 @@ void FirmResearch::detect_main_menu()
 	if (button_vacate_firm.detect())
 	{
 		mobilize_all_workers(COMMAND_PLAYER);
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function FirmResearch::detect_main_menu -----------//
 
@@ -283,7 +289,7 @@ void FirmResearch::disp_research_menu(int refreshFlag)
 
 //--------- Begin of function FirmResearch::detect_research_menu ---------//
 //
-void FirmResearch::detect_research_menu()
+int FirmResearch::detect_research_menu()
 {
 	int i;
 	for( i = 0; i < added_count; ++i )
@@ -315,7 +321,7 @@ void FirmResearch::detect_research_menu()
 				se_ctrl.immediate_sound("TURN_OFF");
 				// ##### end Gilbert 25/9 ######//
 			}
-			break;
+			return 1;
 		}
 	}
 
@@ -330,8 +336,11 @@ void FirmResearch::detect_research_menu()
 			// ##### end Gilbert 25/9 ######//
 			research_menu_mode = RESEARCH_MENU_MAIN;
 			info.disp();
+			return 1;
 		}
 	}
+
+	return 0;
 }
 //----------- End of function FirmResearch::detect_research_menu -----------//
 
