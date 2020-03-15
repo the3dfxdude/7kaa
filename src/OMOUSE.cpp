@@ -179,6 +179,13 @@ void Mouse::init_key()
 	bind_key(KEYEVENT_CHEAT_ENABLE1, "shift+1");
 	bind_key(KEYEVENT_CHEAT_ENABLE2, "shift+2");
 	bind_key(KEYEVENT_CHEAT_ENABLE3, "shift+3");
+
+	bind_key(KEYEVENT_MANUF_QUEUE_UP, "Up");
+	bind_key(KEYEVENT_MANUF_QUEUE_DOWN, "Down");
+	bind_key(KEYEVENT_MANUF_QUEUE_ADD, "=");
+	bind_key(KEYEVENT_MANUF_QUEUE_ADD_BATCH, "shift+=");
+	bind_key(KEYEVENT_MANUF_QUEUE_REMOVE, "-");
+	bind_key(KEYEVENT_MANUF_QUEUE_REMOVE_BATCH, "shift+-");
 }
 //------------- End of Mouse::init_key -------------//
 

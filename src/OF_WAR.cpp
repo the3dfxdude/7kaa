@@ -71,9 +71,10 @@ static char     war_menu_mode;
 static char     disable_refresh=0;
 static short	 added_count;
 // ###### begin Gilbert 10/9 #######//
-// static short	 button_unit_id[MAX_WEAPON_TYPE];
+static short	 button_unit_id[MAX_WEAPON_TYPE];
 static ButtonCustom button_weapon[MAX_WEAPON_TYPE];
 static ButtonCustom button_queue_weapon[MAX_WEAPON_TYPE];
+static int queue_weapon_selected = -1;
 // ###### end Gilbert 10/9 #######//
 static ButtonCustom button_cancel;
 static Button3D	button_vacate_firm;
@@ -280,16 +281,19 @@ void FirmWar::disp_build_menu(int refreshFlag)
 					i_disp_build_button, ButtonCustomPara(&button_queue_weapon[added_count], unitId) );
 
 				err_when(added_count >= MAX_UNIT_TYPE);
-				//button_unit_id[added_count++] = unitId;
-				added_count++;
+				button_unit_id[added_count++] = unitId;
 				y += BUILD_BUTTON_HEIGHT;
 			}
 		}
+
+		if( !added_count || queue_weapon_selected >= added_count)
+			queue_weapon_selected = -1;
 
 		button_cancel.paint(x, y, x+BUILD_BUTTON_WIDTH-1, y+BUILD_BUTTON_HEIGHT*3/4,
 		ButtonCustom::disp_text_button_func, ButtonCustomPara((void*)_("Done"),0) );
 	}
 	// ###### end Gilbert 10/9 ########//
+
 }
 //----------- End of function FirmWar::disp_build_menu -----------//
 
@@ -399,6 +403,98 @@ int FirmWar::detect_build_menu()
 		return 1;
 	}
 
+	//------ detect production selecting hotkeys --------//
+
+	if( added_count>0 && ISKEY(KEYEVENT_MANUF_QUEUE_UP) )
+	{
+		queue_weapon_selected--;
+		if( queue_weapon_selected < 0 )
+			queue_weapon_selected = added_count-1;
+		disp_build_menu(INFO_REPAINT);
+		return 1;
+	}
+
+	if( added_count>0 && ISKEY(KEYEVENT_MANUF_QUEUE_DOWN) )
+	{
+		queue_weapon_selected++;
+		if( queue_weapon_selected >= added_count )
+			queue_weapon_selected = 0;
+		disp_build_menu(INFO_REPAINT);
+		return 1;
+	}
+
+	if( queue_weapon_selected>=0 && ISKEY(KEYEVENT_MANUF_QUEUE_ADD) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <firm recno> <unit Id>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_BUILD_WEAPON, 3*sizeof(short) );
+			shortPtr[0] = firm_recno;
+			shortPtr[1] = button_unit_id[queue_weapon_selected];
+			shortPtr[2] = 1;
+		}
+		else
+			add_queue(button_unit_id[queue_weapon_selected], 1);
+
+		se_ctrl.immediate_sound("TURN_ON");
+		info.update();
+		return 1;
+	}
+
+	if( queue_weapon_selected>=0 && ISKEY(KEYEVENT_MANUF_QUEUE_ADD_BATCH) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <firm recno> <unit Id>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_BUILD_WEAPON, 3*sizeof(short) );
+			shortPtr[0] = firm_recno;
+			shortPtr[1] = button_unit_id[queue_weapon_selected];
+			shortPtr[2] = FIRMWAR_BUILD_BATCH_COUNT;
+		}
+		else
+			add_queue(button_unit_id[queue_weapon_selected], FIRMWAR_BUILD_BATCH_COUNT);
+
+		se_ctrl.immediate_sound("TURN_ON");
+		info.update();
+		return 1;
+	}
+
+	if( queue_weapon_selected>=0 && ISKEY(KEYEVENT_MANUF_QUEUE_REMOVE) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <firm recno> <unit Id>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_CANCEL_WEAPON, 3*sizeof(short) );
+			shortPtr[0] = firm_recno;
+			shortPtr[1] = button_unit_id[queue_weapon_selected];
+			shortPtr[2] = 1;
+		}
+		else
+			remove_queue(button_unit_id[queue_weapon_selected], 1);
+
+		se_ctrl.immediate_sound("TURN_OFF");
+		info.update();
+		return 1;
+	}
+
+	if( queue_weapon_selected>=0 && ISKEY(KEYEVENT_MANUF_QUEUE_REMOVE_BATCH) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <firm recno> <unit Id>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_WAR_CANCEL_WEAPON, 3*sizeof(short) );
+			shortPtr[0] = firm_recno;
+			shortPtr[1] = button_unit_id[queue_weapon_selected];
+			shortPtr[2] = FIRMWAR_BUILD_BATCH_COUNT;
+		}
+		else
+			remove_queue(button_unit_id[queue_weapon_selected], FIRMWAR_BUILD_BATCH_COUNT);
+
+		se_ctrl.immediate_sound("TURN_OFF");
+		info.update();
+		return 1;
+	}
+
 	return 0;
 }
 //----------- End of function FirmWar::detect_build_menu -----------//
@@ -494,7 +590,13 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 		//-------- display unit name --------//
 
 		String str;
-		str = _(unitInfo->name);
+
+		str = "";
+
+		if( queue_weapon_selected>=0 && button_unit_id[queue_weapon_selected] == unitId )
+			str += ">";
+
+		str += _(unitInfo->name);
 
 		if( unitInfo->unit_class == UNIT_CLASS_WEAPON )		// add version no.
 		{
@@ -508,6 +610,9 @@ static void i_disp_build_button(ButtonCustom *button, int repaintBody)
 			}
 		}
 		
+		if( queue_weapon_selected>=0 && button_unit_id[queue_weapon_selected] == unitId )
+			str += "<";
+
 		font_bible.put( x1+BUILD_UNIT_NAME_OFFSET_X, y1+BUILD_UNIT_NAME_OFFSET_Y, str );
 	}
 
