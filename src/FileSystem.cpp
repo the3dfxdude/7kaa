@@ -7,7 +7,9 @@
 #ifdef USE_WINDOWS
 #include <Windows.h>
 #include <direct.h>
+#include <stdio.h>
 #define chdir _chdir
+#define unlink _unlink
 #elif defined (USE_POSIX)
 #include <sys/time.h>
 #include <sys/stat.h>
@@ -41,6 +43,12 @@ bool FileSystem::is_file_exist(const char* fileName)
 	return false;
 }
 //---------- End of function FileSystem::is_file_exist ---------//
+
+
+bool FileSystem::delete_file(const char* file) {
+	return unlink(file) == 0;
+}
+
 
 namespace {
 	// mkpath_mkdir -- helper function to mkpath

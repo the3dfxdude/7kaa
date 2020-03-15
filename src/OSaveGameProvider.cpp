@@ -88,7 +88,7 @@ void SaveGameProvider::delete_savegame(const char* saveGameName) {
 	if( full_path.error_flag )
 		return;
 
-	unlink(full_path);
+	FileSystem::delete_file(full_path);
 }
 //-------- End of function SaveGameProvider::delete_savegame --------//
 
