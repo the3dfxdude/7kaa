@@ -197,15 +197,18 @@ void Town::detect_info()
 	switch( town_menu_mode )
 	{
 		case TOWN_MENU_MAIN:
-			detect_main_menu();
+			if( detect_main_menu() )
+				return;
 			break;
 
 		case TOWN_MENU_TRAIN:
-			detect_train_menu();
+			if( detect_train_menu() )
+				return;
 			break;
 
 		case TOWN_MENU_SPY:
-			detect_spy_menu();
+			if( detect_spy_menu() )
+				return;
 			break;
 
 		case TOWN_MENU_VIEW_SECRET:
@@ -213,15 +216,18 @@ void Town::detect_info()
 			{
 				town_menu_mode = TOWN_MENU_MAIN;
 				info.disp();
+				return;
 			}
 			break;
 
 		case TOWN_MENU_SET_AUTO_COLLECT_TAX:
-			detect_auto_menu(1);
+			if( detect_auto_menu(1) )
+				return;
 			break;
 
 		case TOWN_MENU_SET_AUTO_GRANT:
-			detect_auto_menu(0);
+			if( detect_auto_menu(0) )
+				return;
 			break;
 	}
 
@@ -509,14 +515,14 @@ void Town::disp_auto_loyalty()
 
 //--------- Begin of function Town::detect_main_menu ---------//
 //
-void Town::detect_main_menu()
+int Town::detect_main_menu()
 {
 	//--- detect clicking on the name area to center the map on it ---//
 
 	if( mouse.single_click(INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+21) )
 	{
 		world.go_loc( center_x, center_y );
-		return;
+		return 1;
 	}
 
 	//-------- detect browsers ---------//
@@ -528,6 +534,7 @@ void Town::detect_main_menu()
 		if( sys.debug_session || sys.testing_session )
 			disp_debug_resistance(INFO_UPDATE);
 		// ##### end patch Gilbert 21/1 #######//
+		return 1;
 	}
 
 	if( button_spy.detect() )	// switch to the spy menu
@@ -536,7 +543,7 @@ void Town::detect_main_menu()
 		disable_refresh = 1;    // static var for disp_info() only
 		info.disp();
 		disable_refresh = 0;
-		return;
+		return 1;
 	}
 
 	//----- detect granting to an independent town ---//
@@ -549,18 +556,19 @@ void Town::detect_main_menu()
 			se_ctrl.immediate_sound("TURN_ON");
 
 			grant_to_non_own_town(nation_array.player_recno, COMMAND_PLAYER);
+			return 1;
 		}
 	}
 
 	//---------- buttons for player town only --------//
 
 	if( nation_recno!=nation_array.player_recno )
-		return;
+		return 0;
 
 	//------ update button status ------//
 
 	if( browse_race.recno() > race_filter() )
-		return;
+		return 0;
 
 	int raceId = race_filter(browse_race.recno());
 
@@ -577,7 +585,10 @@ void Town::detect_main_menu()
 	//------- detect buttons --------//
 
 	if( button_recruit.detect(GETKEY(KEYEVENT_TOWN_RECRUIT)) )
+	{
 		recruit(-1, 0, COMMAND_PLAYER);
+		return 1;
+	}
 
 	if( button_train.detect(GETKEY(KEYEVENT_TOWN_TRAIN)) )
 	{
@@ -585,7 +596,7 @@ void Town::detect_main_menu()
 		disable_refresh = 1;    // static var for disp_info() only
 		info.disp();
 		disable_refresh = 0;
-		return;
+		return 1;
 	}
 
 	int rc;
@@ -609,6 +620,7 @@ void Town::detect_main_menu()
 			info.disp();
 			disable_refresh = 0;
 		}
+		return 1;
 	}
 
 	if( (rc=button_grant.detect(0, 0, 1)) > 0 )
@@ -630,6 +642,7 @@ void Town::detect_main_menu()
 			info.disp();
 			disable_refresh = 0;
 		}
+		return 1;
 	}
 
 	if(train_unit_recno)
@@ -646,8 +659,11 @@ void Town::detect_main_menu()
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_SKIP_RECRUIT, sizeof(short));
 				shortPtr[0] = town_recno;
 			}
+			return 1;
 		}
 	}
+
+	return 0;
 }
 //----------- End of function Town::detect_main_menu -----------//
 
@@ -1012,7 +1028,7 @@ static void i_disp_queue_skill_button(ButtonCustom *button, int repaintBody)
 
 //--------- Begin of function Town::detect_train_menu ---------//
 //
-void Town::detect_train_menu()
+int Town::detect_train_menu()
 {
 	int	x=INFO_X1+2, y=INFO_Y1+24, rc, quitFlag, waitFlag;
 
@@ -1087,7 +1103,7 @@ void Town::detect_train_menu()
 				info.update();
 			// ####### end Gilbert 10/9 ######//
 
-			return;
+			return 1;
 		}
 
 		y += BUTTON_ACTION_HEIGHT;
@@ -1101,7 +1117,10 @@ void Town::detect_train_menu()
 		// ##### end Gilbert 26/9 ########//
       town_menu_mode = TOWN_MENU_MAIN;
 		info.disp();
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function Town::detect_train_menu -----------//
 
@@ -1151,7 +1170,7 @@ void Town::disp_auto_menu(int modeCollectTax)
 
 //--------- Begin of function Town::detect_auto_menu ---------//
 //
-void Town::detect_auto_menu(int modeCollectTax)
+int Town::detect_auto_menu(int modeCollectTax)
 {
 	int i, rc=0, loyaltyLevel;
 
@@ -1201,6 +1220,7 @@ void Town::detect_auto_menu(int modeCollectTax)
 				shortPtr[1] = loyaltyLevel;
 			}
 		}
+		return 1;
 	}
 	else if( rc==2 )
 	{
@@ -1253,6 +1273,7 @@ void Town::detect_auto_menu(int modeCollectTax)
 			}
 		}
 		// ####### end Gilbert 11/9 ########//
+		return 1;
 	}
 
 	//--------------------------------------//
@@ -1264,7 +1285,10 @@ void Town::detect_auto_menu(int modeCollectTax)
 		// ##### begin Gilbert 26/9 ########//
 		town_menu_mode = TOWN_MENU_MAIN;
 		info.disp();
+		return 1;
 	}
+
+	return 0;
 }
 //----------- End of function Town::detect_auto_menu -----------//
 
@@ -1362,7 +1386,7 @@ void Town::disp_spy_menu(int refreshFlag)
 
 //--------- Begin of function Town::detect_spy_menu ---------//
 //
-void Town::detect_spy_menu()
+int Town::detect_spy_menu()
 {
 	browse_spy.detect();
 
@@ -1386,6 +1410,7 @@ void Town::detect_spy_menu()
 			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_LEAVE_TOWN, sizeof(short) );
 			*shortPtr = spyPtr->spy_recno;
 		}
+		return 1;
 	}
 
 	//------ reward spy ---------//
@@ -1393,6 +1418,7 @@ void Town::detect_spy_menu()
 	else if( button_spy_reward.detect() )
 	{
 		spyPtr->reward(COMMAND_PLAYER);
+		return 1;
 	}
 
 	//----- change spy action --------//
@@ -1412,6 +1438,7 @@ void Town::detect_spy_menu()
 				short *shortPtr = (short *)remote.new_send_queue_msg(MSG_SPY_CYCLE_ACTION, sizeof(short) );
 				*shortPtr = spyPtr->spy_recno;
 			}
+			return 1;
 		}
 	}
 
@@ -1426,13 +1453,19 @@ void Town::detect_spy_menu()
 			disable_refresh = 1;
 			info.disp();
 			disable_refresh = 0;
+			return 1;
 		}
 	}
 
 	//--------- cancel -----------//
 
 	if( button_cancel.detect() || mouse.any_click(1) )		// right click to cancel
+	{
 		info.disp();
+		return 1;
+	}
+
+	return 0;
 }
 //----------- End of function Town::detect_spy_menu -----------//
 

@@ -392,17 +392,17 @@ private:
 	void	disp_train_info(int refreshFlag);
 
 	void  disp_main_menu(int refreshFlag);
-	void  detect_main_menu();
+	int   detect_main_menu();
 	void 	disp_debug_resistance(int refreshFlag);
 
 	void  disp_train_menu(int refreshFlag);
-	void  detect_train_menu();
+	int   detect_train_menu();
 
 	void  disp_auto_menu(int modeCollectTax);
-	void  detect_auto_menu(int modeCollectTax);
+	int   detect_auto_menu(int modeCollectTax);
 
 	void  disp_spy_menu(int refreshFlag);
-	void  detect_spy_menu();
+	int   detect_spy_menu();
 
 	void  think_rebel();
 	int	think_surrender();
