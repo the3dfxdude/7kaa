@@ -91,6 +91,7 @@ static Button		button_loyalty_disabled;
 static Button		button_cancel2;
 static ButtonCustom button_skill[MAX_TRAINABLE_SKILL];
 static ButtonCustom button_queue_skill[MAX_TRAINABLE_SKILL];
+static int        queue_train_selected;
 static short      browse_race_recno=1, browse_race_town_recno=0;		// the town which the browse_race displays its info
 static short      recruit_race_count;
 static short		spy_count;
@@ -956,11 +957,22 @@ static void i_disp_skill_button(ButtonCustom *button, int repaintBody)
 		vga_front.put_bitmap_trans_decompress(x1, y1+4, bitmapPtr);
 
 		// put name
+		String str2;
+
+		str2 = "";
+
+		if( skillId == queue_train_selected )
+			str2 += ">";
 
 		if( skillId == SKILL_MFT )
-			font_bible.put(x1+50, y1+11, _("Manufacturing") );		// the string in skill_str_array[] is "Manufacture".
+			str2 += _("Manufacturing");		// the string in skill_str_array[] is "Manufacture".
 		else
-			font_bible.put(x1+50, y1+11, _(Skill::skill_str_array[skillId-1]));
+			str2 += _(Skill::skill_str_array[skillId-1]);
+
+		if( skillId == queue_train_selected )
+			str2 += "<";
+
+		font_bible.put(x1+50, y1+11, str2);
 	}
 
 	// display small button
@@ -1117,6 +1129,94 @@ int Town::detect_train_menu()
 		// ##### end Gilbert 26/9 ########//
       town_menu_mode = TOWN_MENU_MAIN;
 		info.disp();
+		return 1;
+	}
+
+	//------ detect production selecting hotkeys --------//
+
+	if( ISKEY(KEYEVENT_MANUF_QUEUE_UP) )
+	{
+		queue_train_selected--;
+		if( queue_train_selected <= 0 )
+			queue_train_selected = MAX_TRAINABLE_SKILL;
+		disp_train_menu(INFO_REPAINT);
+		return 1;
+	}
+
+	if( ISKEY(KEYEVENT_MANUF_QUEUE_DOWN) )
+	{
+		queue_train_selected++;
+		if( queue_train_selected > MAX_TRAINABLE_SKILL )
+			queue_train_selected = 1;
+		disp_train_menu(INFO_REPAINT);
+		return 1;
+	}
+
+	if( queue_train_selected && ISKEY(KEYEVENT_MANUF_QUEUE_ADD) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <town recno> <skill id> <race id> <amount>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 4*sizeof(short) );
+			shortPtr[0] = town_recno;
+			shortPtr[1] = queue_train_selected;
+			shortPtr[2] = race_filter(browse_race.recno());
+			shortPtr[3] = 1;
+		}
+		else
+			add_queue(queue_train_selected, race_filter(browse_race.recno()), 1);
+		se_ctrl.immediate_sound("TURN_ON");
+		return 1;
+	}
+
+	if( queue_train_selected && ISKEY(KEYEVENT_MANUF_QUEUE_ADD_BATCH) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <town recno> <skill id> <race id> <amount>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 4*sizeof(short) );
+			shortPtr[0] = town_recno;
+			shortPtr[1] = queue_train_selected;
+			shortPtr[2] = race_filter(browse_race.recno());
+			shortPtr[3] = TOWN_TRAIN_BATCH_COUNT;
+		}
+		else
+			add_queue(queue_train_selected, race_filter(browse_race.recno()), TOWN_TRAIN_BATCH_COUNT);
+		se_ctrl.immediate_sound("TURN_ON");
+		return 1;
+	}
+
+	if( queue_train_selected && ISKEY(KEYEVENT_MANUF_QUEUE_REMOVE) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <town recno> <skill id> <race id> <amount>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 4*sizeof(short) );
+			shortPtr[0] = town_recno;
+			shortPtr[1] = queue_train_selected;
+			shortPtr[2] = -1;		// -1 race_id represent remove queue
+			shortPtr[3] = 1;
+		}
+		else
+			remove_queue(queue_train_selected, 1);
+		se_ctrl.immediate_sound("TURN_OFF");
+		return 1;
+	}
+
+	if( queue_train_selected && ISKEY(KEYEVENT_MANUF_QUEUE_REMOVE_BATCH) )
+	{
+		if( remote.is_enable() )
+		{
+			// packet structure : <town recno> <skill id> <race id> <amount>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_TOWN_RECRUIT, 4*sizeof(short) );
+			shortPtr[0] = town_recno;
+			shortPtr[1] = queue_train_selected;
+			shortPtr[2] = -1;		// -1 race_id represent remove queue
+			shortPtr[3] = TOWN_TRAIN_BATCH_COUNT;
+		}
+		else
+			remove_queue(queue_train_selected, TOWN_TRAIN_BATCH_COUNT);
+		se_ctrl.immediate_sound("TURN_OFF");
 		return 1;
 	}
 
