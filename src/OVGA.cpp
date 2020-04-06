@@ -572,7 +572,7 @@ void Vga::flag_redraw()
 //
 int Vga::is_full_screen()
 {
-   return ((SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN_DESKTOP) != 0);
+   return ((SDL_GetWindowFlags(window) & (SDL_WINDOW_FULLSCREEN|SDL_WINDOW_FULLSCREEN_DESKTOP)) != 0);
 }
 //-------- End of function Vga::is_full_screen ----------//
 
@@ -635,17 +635,19 @@ void Vga::update_mouse_pos()
 void Vga::set_full_screen_mode(int mode)
 {
    int result, mouse_x, mouse_y;
-   uint32_t flags = 0;
+   uint32_t flags = config_adv.vga_full_screen_desktop ?
+      SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN;
 
    switch (mode)
    {
       case -1:
-         flags = is_full_screen() ? 0 : SDL_WINDOW_FULLSCREEN_DESKTOP;
+         if( is_full_screen() )
+            flags = 0;
          break;
       case 0:
+         flags = 0;
          break;
       case 1:
-         flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
          break;
       default:
          err_now("invalid mode");
@@ -664,7 +666,7 @@ void Vga::set_full_screen_mode(int mode)
 
    sys.need_redraw_flag = 1;
    boundary_set = 0;
-   if( flags == SDL_WINDOW_FULLSCREEN_DESKTOP )
+   if( flags ) // went full screen
       set_window_grab(WINGRAB_ON);
    else
       set_window_grab(WINGRAB_OFF);
@@ -1015,7 +1017,8 @@ static int init_window_flags()
 {
    int flags = 0;
    if( config_adv.vga_full_screen )
-      flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+      flags |= config_adv.vga_full_screen_desktop ?
+         SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_FULLSCREEN;
    if( config_adv.vga_allow_highdpi )
       flags |= SDL_WINDOW_ALLOW_HIGHDPI;
    return flags;
@@ -1023,6 +1026,14 @@ static int init_window_flags()
 
 static void init_window_size()
 {
+   if( !config_adv.vga_full_screen_desktop )
+   {
+      // must match game's native resolution
+      config_adv.vga_window_width = 800;
+      config_adv.vga_window_height = 600;
+      return;
+   }
+
    if( config_adv.vga_window_width && config_adv.vga_window_height )
       return;
 

@@ -81,6 +81,7 @@ public:
 	// vga settings
 	char			vga_allow_highdpi;
 	char			vga_full_screen;
+	char			vga_full_screen_desktop;
 	char			vga_keep_aspect_ratio;
 	char			vga_pause_on_focus_loss;
 
