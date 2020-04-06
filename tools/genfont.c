@@ -1,7 +1,7 @@
 /*
  * Seven Kingdoms: Ancient Adversaries
  *
- * Copyright 2018 Jesse Allen
+ * Copyright 2018-2020 Jesse Allen
  * Copyright 1997,1998 Enlight Software Ltd.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -698,9 +698,9 @@ int main(int argc, char **argv)
 	FILE *fh;
 	int offset;
 
-	if( argc<4 )
+	if( argc<5 )
 	{
-		printf("Usage: genfont font.ttf font.res style\n");
+		printf("Usage: genfont font.ttf font.res style codeset\n");
 		return 1;
 	}
 
@@ -715,7 +715,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	cd = iconv_open("UTF-8//", "8859_5//");
+	cd = iconv_open("UTF-8//", argv[4]);
 	if( cd == (iconv_t)-1 )
 	{
 		printf("the requested codeset conversion is not supported on this system\n");
