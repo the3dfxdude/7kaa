@@ -186,7 +186,7 @@ int ButtonCustom::detect(unsigned keyCode1, unsigned keyCode2, int detectRight, 
 		else
 			rc = 2;
 	}
-	else if( mouse.key_code )
+	else if( mouse.unique_key_code )
 	{
 		unsigned mouseKey=mouse.unique_key_code;
 
