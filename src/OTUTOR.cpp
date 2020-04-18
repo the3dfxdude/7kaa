@@ -70,9 +70,10 @@ enum { TUTOR_BUTTON_X1 = TUTOR_X2-66,
 //-------- Define static vars ----------//
 
 static Button button_new_tutor, button_quit_tutor;
-static Button button_restart, button_prev, button_next, button_up, button_down;
+static Button button_restart, button_prev, button_next;
 static Button3D button_sample;
 static int text_start_line, text_disp_lines, text_max_lines;
+static Button3D textScrollUp, textScrollDown;
 
 DBGLOG_DEFAULT_CHANNEL(Tutor);
 
@@ -524,10 +525,12 @@ void Tutor::disp()
 	button_restart.paint_text( x, y, "|<<" );
 
 	if( text_max_lines > text_disp_lines )
-		button_up.paint_text( TUTOR_X2-9, y-20, "" );
+		textScrollUp.paint(TUTOR_X2-28, y,
+			"SV-UP-U", "SV-UP-D", 1, 0);
 
 	if( text_max_lines > text_disp_lines )
-		button_down.paint_text( TUTOR_X2-9, y, "" );
+		textScrollDown.paint(TUTOR_X2-14, y,
+			"SV-DW-U", "SV-DW-D", 1, 0);
 
 	if( cur_text_block_id > 1 )
 		button_prev.paint_text( x+45, y, " < " );
@@ -619,14 +622,14 @@ int Tutor::detect()
 
 	if( text_max_lines > text_disp_lines )
 	{
-		if( button_up.detect() )
+		if( textScrollUp.detect() )
 		{
 			if( --text_start_line < 0 )
 				text_start_line = 0;
 			return 1;
 		}
 
-		if( button_down.detect() )
+		if( textScrollDown.detect() )
 		{
 			if( ++text_start_line > text_max_lines-text_disp_lines )
 				text_start_line = text_max_lines-text_disp_lines;
