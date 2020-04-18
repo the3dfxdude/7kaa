@@ -498,13 +498,8 @@ void Tutor::disp()
 
 	int x=TUTOR_X1+10, y=TUTOR_Y2-22;
 
-	#ifdef GERMAN
-		button_new_tutor.paint_text( x, y, "Next Training" );
-		button_quit_tutor.paint_text( x+120, y, "Quit Training" );
-	#else
-		button_new_tutor.paint_text( x, y, _("Next Training") );
-		button_quit_tutor.paint_text( x+100, y, _("Quit Training") );
-	#endif
+	button_new_tutor.paint_text( x, y, _("Next Training") );
+	button_quit_tutor.paint_text( button_new_tutor.x2+6, y, _("Quit Training") );
 
 	//---- display current text block position ----//
 
