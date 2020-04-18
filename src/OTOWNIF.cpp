@@ -1240,20 +1240,19 @@ void Town::disp_auto_menu(int modeCollectTax)
 
 	//---------- paint buttons ------------//
 
-	const char* headingStr;
+	String headingStr;
 
 	if( modeCollectTax )
 		headingStr = _("Automatically Collect Tax from Villagers when their Loyalty reaches:");
 	else
 		headingStr = _("Automatically Grant Money to Villagers when their Loyalty drops below:");
 
-	const char* clickStr = _("(Left-click below to apply to this village. Right-click below to apply to all your villages.)");
+	headingStr += "\n";
+	headingStr += _("(Left-click below to apply to this village. Right-click below to apply to all your villages.)");
 
 	vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+110 );
 
 	font_san.put_paragraph( INFO_X1+7, INFO_Y1+8, INFO_X2-7, INFO_Y2-5, headingStr );
-
-	font_san.put_paragraph( INFO_X1+7, INFO_Y1+58, INFO_X2-7, INFO_Y2-5, clickStr );
 
 	int i, loyaltyLevel, y=INFO_Y1+114;
 
