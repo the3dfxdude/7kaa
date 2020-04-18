@@ -1026,17 +1026,20 @@ void Unit::disp_build(int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
 	{
-		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+42 );
 
 		String str;
 
 		str = _(select_where_to_build[power.command_para-1]);
 
-// FRENCH
-//		font_san.put_paragraph( INFO_X1, INFO_Y1, INFO_X2, INFO_Y2, str, 0 );
+		int dispLines, totalLines;
+		font_san.count_line( INFO_X1+7, INFO_Y1+5, INFO_X2-7, INFO_Y2-5, str, 0, dispLines, totalLines );
+		int textHeight = font_san.text_height()*dispLines+14;
+
+		vga_util.d3_panel_up( INFO_X1, INFO_Y1, INFO_X2, INFO_Y1+textHeight );
+
 		font_san.put_paragraph( INFO_X1+7, INFO_Y1+5, INFO_X2-7, INFO_Y2-5, str );
 
-		button_cancel2.paint_text( INFO_X1, INFO_Y1+45, INFO_X2, INFO_Y1+70, _("Cancel") );
+		button_cancel2.paint_text( INFO_X1, INFO_Y1+textHeight+3, INFO_X2, INFO_Y1+textHeight+28, _("Cancel") );
 	}
 }
 //----------- End of function Unit::disp_build -----------//
