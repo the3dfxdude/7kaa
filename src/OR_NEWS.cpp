@@ -97,10 +97,16 @@ static void put_news_rec(int recNo, int x, int y, int refreshFlag)
 {
 	News* newsPtr = news_array[ news_array.size()-recNo+1 ]; 	// display in reversed order
 
-	font_san.put( x+20, y, date.date_str(newsPtr->news_date, 1) );
+	char* dateStr = date.date_str(newsPtr->news_date, 1);
+	int dateWidth = font_san.text_width(dateStr) + 5;
+	static int maxDateWidth = 90;
+
+	maxDateWidth = MAX(maxDateWidth, dateWidth);
+
+	font_san.put( x+20, y, dateStr );
 
    talk_res.msg_add_nation_color = 1; 
-	font_san.put_paragraph( x+110, y, browse_news.ix2-30, y+30, newsPtr->msg() );
+	font_san.put_paragraph( x+20+maxDateWidth, y, browse_news.ix2-30, y+30, newsPtr->msg() );
 	talk_res.msg_add_nation_color = 0;
 
 	//----- display and detect the go icon -----//
