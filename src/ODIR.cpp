@@ -25,6 +25,7 @@
 #include <string.h>
 #include <ODATE.h>
 #include <ODIR.h>
+#include <FileSystem.h>
 
 #ifdef USE_WINDOWS
 #include <windows.h>
@@ -69,9 +70,9 @@ Directory::Directory() : DynArray( sizeof(FileInfo), 20 )
 //
 int Directory::read(const char *fileSpec, int sortName)
 {
-   FileInfo				fileInfo;
+    FileInfo fileInfo;
 #ifdef USE_WINDOWS
-	WIN32_FIND_DATA	findData;
+    WIN32_FIND_DATA	findData;
    
    //----------- get the file list -------------//
 
@@ -79,7 +80,7 @@ int Directory::read(const char *fileSpec, int sortName)
 
    while(findHandle!=INVALID_HANDLE_VALUE)
    {
-      misc.extract_file_name( fileInfo.name, findData.cFileName ); // get the file name only from a full path string
+      FileSystem::extract_file_name( fileInfo.name, findData.cFileName ); // get the file name only from a full path string
 
       fileInfo.size = findData.nFileSizeLow;
 
@@ -96,10 +97,10 @@ int Directory::read(const char *fileSpec, int sortName)
       linkin( &fileInfo );
 
       if( !FindNextFile( findHandle, &findData ) )
-			break;
+          break;
    }
 
-	FindClose(findHandle);
+   FindClose(findHandle);
 #endif
 #ifdef USE_POSIX
    glob_t results;
@@ -114,7 +115,7 @@ int Directory::read(const char *fileSpec, int sortName)
          continue;
       }
 
-      misc.extract_file_name(fileInfo.name, results.gl_pathv[i]);
+      FileSystem::extract_file_name(fileInfo.name, results.gl_pathv[i]);
       fileInfo.size = file_stat.st_size;
 
       struct tm *time = localtime(&file_stat.st_mtime);

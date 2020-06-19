@@ -28,6 +28,7 @@
 #include <OVGALOCK.h>
 #include <OVGA.h>
 #include <vga_util.h>
+#include <FileSystem.h>
 
 //----------- Begin of function VgaUtil::VgaUtil -----------//
 
@@ -84,7 +85,7 @@ void VgaUtil::disp_image_file(const char* fileName, int x1, int y1)
 		str += fileName;
 		str += ".COL";
 
-		err_when( !misc.is_file_exist(str) );
+		err_when( !FileSystem::is_file_exist(str) );
 
 		VgaFrontLock vgaLock;
 		vga.set_custom_palette(str);

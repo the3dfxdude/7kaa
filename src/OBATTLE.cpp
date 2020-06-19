@@ -49,6 +49,7 @@
 #include <CmdLine.h>
 #include <FilePath.h>
 #include <ConfigAdv.h>
+#include <FileSystem.h>
 
 //---------- define static functions -------------//
 
@@ -82,7 +83,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 	mouse_cursor.set_icon(CURSOR_WAITING);
 
 #ifdef DEBUG
-	debug_sim_game_type = (misc.is_file_exist("sim.sys")) ? 2 : 0;
+	debug_sim_game_type = (FileSystem::is_file_exist("sim.sys")) ? 2 : 0;
 	if(debug_sim_game_type)
 	{
 		run_sim();

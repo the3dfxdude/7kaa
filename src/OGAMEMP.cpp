@@ -50,6 +50,7 @@
 #include <OGETA.h>
 #include <OSLIDCUS.h>
 #include <OBLOB.h>
+#include <FileSystem.h>
 #include <dbglog.h>
 #include "gettext.h"
 #include <FilePath.h>

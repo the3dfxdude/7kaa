@@ -30,6 +30,7 @@
 #include <ODB.h>
 #include <ConfigAdv.h>
 #include <LocaleRes.h>
+#include <FileSystem.h>
 
 //------------- End of function Constructor -------//
 //
@@ -66,7 +67,7 @@ void LocaleRes::init()
 {
 #ifdef ENABLE_NLS
 	const char *env_locale_dir;
-	if( misc.is_file_exist("locale") )
+	if( FileSystem::is_file_exist("locale") )
 		bindtextdomain(PACKAGE, "locale");
 	else if( env_locale_dir = getenv("SKLOCALE") )
 		bindtextdomain(PACKAGE, env_locale_dir);

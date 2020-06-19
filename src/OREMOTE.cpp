@@ -37,6 +37,7 @@
 #include <ReplayFile.h>
 #include <FilePath.h>
 #include <ConfigAdv.h>
+#include <FileSystem.h>
 
 //--------- Begin of function Remote::Remote ----------//
 
@@ -93,9 +94,9 @@ void Remote::init(MultiPlayer *mp)
 	// ###### patch begin Gilbert 22/1 #######//
 	// 0=disable, bit0= random seed, bit1=crc
 	sync_test_level = 0;
-	if( config_adv.remote_compare_random_seed || misc.is_file_exist("SYNC1.SYS") )
+	if (config_adv.remote_compare_random_seed || FileSystem::is_file_exist("SYNC1.SYS"))
 		sync_test_level |= 1;
-	if( config_adv.remote_compare_object_crc || misc.is_file_exist("SYNC2.SYS") )
+	if (config_adv.remote_compare_object_crc || FileSystem::is_file_exist("SYNC2.SYS"))
 		sync_test_level |= 2;
 	// ###### patch end Gilbert 22/1 #######//
 
@@ -118,9 +119,9 @@ int Remote::init_replay_load(char *full_path, NewNationPara *mpGame, int *player
 
 	// 0=disable, bit0= random seed, bit1=crc
 	sync_test_level = 0;
-	if( config_adv.remote_compare_random_seed || misc.is_file_exist("SYNC1.SYS") )
+	if( config_adv.remote_compare_random_seed || FileSystem::is_file_exist("SYNC1.SYS") )
 		sync_test_level |= 1;
-	if( config_adv.remote_compare_object_crc || misc.is_file_exist("SYNC2.SYS") )
+	if (config_adv.remote_compare_object_crc || FileSystem::is_file_exist("SYNC2.SYS"))
 		sync_test_level |= 2;
 
 	remote.connectivity_mode = Remote::MODE_REPLAY;

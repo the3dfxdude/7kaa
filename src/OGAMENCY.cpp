@@ -31,6 +31,7 @@
 #include <OVGALOCK.h>
 #include <OGAME.h>
 #include <OMUSIC.h>
+#include <FileSystem.h>
 
 //--------- define constant ---------//
 
@@ -582,15 +583,15 @@ static int disp_picture( int selClass, int selSubClass, int firstDisp)
 
 	if( 
 		// search DIR_ENCYC2 first
-		filename2[0] && misc.is_file_exist(filename2) && pictFile.file_open(filename2,0) && (palNamePtr = palname2) ||
-		filename[0] && misc.is_file_exist(filename) && pictFile.file_open(filename,0) && (palNamePtr = palname) )
+		filename2[0] && FileSystem::is_file_exist(filename2) && pictFile.file_open(filename2,0) && (palNamePtr = palname2) ||
+		filename[0] && FileSystem::is_file_exist(filename) && pictFile.file_open(filename,0) && (palNamePtr = palname) )
 	{
 		vga_back.put_large_bitmap(174, 12, &pictFile);
 
 		if( !firstDisp )
 			vga_front.bar(174,12,787,587, 0x00);		// wipe the picture screen
 
-		if( palNamePtr && misc.is_file_exist(palNamePtr) )
+		if( palNamePtr && FileSystem::is_file_exist(palNamePtr) )
 		{
 			VgaFrontLock vgaLock;
 			vga.set_custom_palette(palNamePtr);

@@ -31,20 +31,11 @@
 #include <OGFILE.h>
 #include <OPOWER.h> // TODO: There might be an even better (higher-level / UI) place to do this (power.win_opened)
 #include <OMOUSECR.h>
+#include <FilePath.h>
+#include <FileSystem.h>
+#include <OGAME.h>
 #include <dbglog.h>
 #include "gettext.h"
-#include <FilePath.h>
-#include <OGAME.h>
-
-#ifdef USE_WINDOWS
-#include <io.h>
-#endif
-#ifdef USE_POSIX
-#include <unistd.h>
-#endif
-
-// Both in AM.cpp
-extern Misc misc;
 
 DBGLOG_DEFAULT_CHANNEL(SaveGameProvider);
 
@@ -97,7 +88,7 @@ void SaveGameProvider::delete_savegame(const char* saveGameName) {
 	if( full_path.error_flag )
 		return;
 
-	unlink(full_path);
+	FileSystem::delete_file(full_path);
 }
 //-------- End of function SaveGameProvider::delete_savegame --------//
 
@@ -183,7 +174,7 @@ int SaveGameProvider::load_scenario(const char* filePath)
 {
 	SaveGameInfo saveGameInfo;
 	auto rc = load_game_from_file(filePath, /*out*/ &saveGameInfo);
-	misc.extract_file_name(scenario_file_name, filePath);
+	FileSystem::extract_file_name(scenario_file_name, filePath);
 	return rc;
 }
 //-------- End of function SaveGameProvider::load_scenario --------//
