@@ -40,6 +40,8 @@
 #include <OF_FACT.h>
 #include <OF_MINE.h>
 #include <OF_HARB.h>
+#include <OPOWER.h>
+#include <OSERES.h>
 
 //------------- Define coordinations -----------//
 
@@ -258,7 +260,41 @@ void Info::detect_trade()
 	{
 		browse_firm_recno = browse_firm.recno();
 
-		if( browse_firm.double_click )
+		if( power.command_id == COMMAND_SET_CARAVAN_STOP &&
+			unit_array[power.command_unit_recno]->is_visible() )
+		{
+			Firm* firmPtr = firm_array[ get_report_data2(browse_firm_recno) ];
+			UnitCaravan* unitPtr = (UnitCaravan*) unit_array[power.command_unit_recno];
+			if( unitPtr->can_set_stop(firmPtr->firm_recno) )
+			{
+				if( se_res.mark_command_time() )
+				{
+					se_res.far_sound( unitPtr->cur_x_loc(), unitPtr->cur_y_loc(), 1,
+						'S', unitPtr->sprite_id, "ACK");
+				}
+				unitPtr->set_stop(power.command_para, firmPtr->center_x, firmPtr->center_y, COMMAND_PLAYER);              // command_para is the id. of the stop
+			}
+			power.command_id = 0;
+		}
+
+		else if( power.command_id == COMMAND_SET_SHIP_STOP &&
+			unit_array[power.command_unit_recno]->is_visible() )
+		{
+			Firm* firmPtr = firm_array[ get_report_data2(browse_firm_recno) ];
+			UnitMarine* unitPtr = (UnitMarine*) unit_array[power.command_unit_recno];
+			if( unitPtr->can_set_stop(firmPtr->firm_recno) )
+			{
+				if( se_res.mark_command_time() )
+				{
+					se_res.far_sound( unitPtr->cur_x_loc(), unitPtr->cur_y_loc(), 1,
+						'S', unitPtr->sprite_id, "ACK");
+				}
+				unitPtr->set_stop(power.command_para, firmPtr->center_x, firmPtr->center_y, COMMAND_PLAYER);              // command_para is the id. of the stop
+			}
+			power.command_id = 0;
+		}
+
+		else if( browse_firm.double_click )
 		{
 			Firm* firmPtr = firm_array[ get_report_data2(browse_firm_recno) ];
 

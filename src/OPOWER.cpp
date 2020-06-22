@@ -150,7 +150,22 @@ void Power::init()
 //
 void Power::mouse_handler()
 {
-	if( sys.view_mode != MODE_NORMAL )
+	if( sys.view_mode == MODE_TRADE )
+	{
+		// Setting stops is allowed in the trade report, display cursor
+		if( command_id == COMMAND_SET_CARAVAN_STOP )
+		{
+			mouse_cursor.set_icon(CURSOR_SET_STOP);
+			return;
+		}
+		if( command_id == COMMAND_SET_SHIP_STOP )
+		{
+			mouse_cursor.set_icon(CURSOR_SHIP_STOP);
+			return;
+		}
+	}
+
+	if( sys.view_mode != MODE_NORMAL && sys.view_mode != MODE_TRADE )
 	{
 		mouse_cursor.set_icon(CURSOR_NORMAL);
 		return;
