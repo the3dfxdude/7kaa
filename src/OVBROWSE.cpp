@@ -29,11 +29,6 @@
 #include <OPOWER.h>
 #include <OVBROWSE.h>
 
-//---------- Define static class variables -------//
-
-char		VBrowse::press_record=0;      // for detecting pulling records upwards and downloads
-VBrowse* VBrowse::press_vbrowse_ptr;
-
 //--------- Begin of function VBrowse::init --------//
 //
 // <int> x1, y1, x2, y2  = the coordinations of the list box
@@ -83,6 +78,7 @@ void VBrowse::init(int inX1, int inY1, int inX2, int inY2,
 	y_max_rec = (iy2-iy1+minInterSpace+1) / (rec_height+minInterSpace);
 
 	detect_pull_flag = 1;		// whether detect pulling records or not
+	press_record = 0;		// for pulling records upwards and downloads
 
    err_if( x_max_rec <= 0 || y_max_rec <= 0 )
       err_now( "VBrowse::init() error : disp_max_rec <= 0" );
@@ -337,8 +333,6 @@ int VBrowse::detect()
 
 			if( detect_pull_flag )
 				press_record = 1;
-
-			press_vbrowse_ptr = this;
 		}
 
 		if( mouse.press_area(ix1, iy1, ix2, iy2) )
@@ -349,8 +343,6 @@ int VBrowse::detect()
 
 			if( detect_pull_flag )
 				press_record = 1;
-
-			press_vbrowse_ptr = this;
 		}
 
 		if( recNo>0 && recNo<=top_rec_no-1+disp_max_rec )   // if it is not in the empty browser area
@@ -443,9 +435,6 @@ int VBrowse::detect_pull()
 	if( press_record )                  // test whether user continue pressing it
 	{
 		press_record = mouse.left_press;
-
-		if( press_record )
-			press_vbrowse_ptr = this;
 	}
 
 	if( !( mouse.left_press || mouse.click_count() ) )

@@ -50,6 +50,7 @@ public:
 
 	char  double_click;	    // double clicked on record
 	char	detect_pull_flag;		 // whether detect pulling records or not
+	char  press_record;	    	 // for detecting pulling records upwards and downloads
 
 	short rec_height;        // record height (font.height()+line space)
 	short rec_width;
@@ -79,11 +80,6 @@ public:
 
 	BrowDispFP disp_rec_func;    // user defined function to be called
 	ScrollBar  scroll_bar;
-
-	//--------- Define static member vars ---------//
-
-	static char 	 press_record;     	 // for detecting pulling records upwards and downloads
-	static VBrowse* press_vbrowse_ptr;
 
 public :
 	VBrowse()	  { init_flag=0; }
