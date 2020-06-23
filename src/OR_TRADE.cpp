@@ -68,7 +68,7 @@ enum { FIRM_BROWSE_X1 = ZOOM_X1+6,
 
 static VBrowseIF browse_caravan, browse_ship, browse_firm;
 static char mode_unit, mode_firm;
-static short selected_unit_recno, selected_harbor_recno, unit_x, unit_y, browse_firm_recno;
+static short selected_unit_recno, selected_harbor_recno, unit_x, unit_y, browse_firm_recno, idle_caravans, idle_firms;
 
 #define MAX_FIRM_REPORT_MODE 4
 static const char* firm_mode_str_array[MAX_FIRM_REPORT_MODE] =
@@ -98,6 +98,8 @@ enum { BROWSE_MARKET = 0,
 
 //----------- Define static functions ----------//
 
+static int  is_caravan_route_idle(UnitCaravan* unitPtr);
+static int  is_firm_idle(Firm* firmPtr);
 static void create_caravan_list();
 static void create_firm_list();
 static void create_ship_list();
@@ -408,6 +410,12 @@ static void disp_total()
 
 	font_san.put( x, y, str );
 
+	if( mode_unit == BROWSE_CARAVAN )
+	{
+		snprintf( str, MAX_STR_LEN+1, _("*Idle Caravans: %s"), misc.format(idle_caravans) );
+		font_san.put( x+200, y, str );
+	}
+
 	//-------- display firm total --------//
 
 	x=FIRM_BROWSE_X1+9;
@@ -418,6 +426,9 @@ static void disp_total()
 	snprintf( str, MAX_STR_LEN+1, _("Total Locations: %s"), misc.format(info.report_array2.size()) );
 
 	font_san.put( x, y, str );
+
+	snprintf( str, MAX_STR_LEN+1, _("*Idle Locations: %s"), misc.format(idle_firms) );
+	font_san.put( x+200, y, str );
 }
 //----------- End of static function disp_total -----------//
 
@@ -430,6 +441,7 @@ static void create_caravan_list()
 	Unit* unitPtr;
 
 	info.report_array.zap();
+	idle_caravans = 0;
 
 	for( short unitRecno=1 ; unitRecno<=totalUnit ; unitRecno++ )
 	{
@@ -442,6 +454,8 @@ static void create_caravan_list()
 			 unitPtr->unit_id == UNIT_CARAVAN )
 		{
 			info.report_array.linkin(&unitRecno);
+			if( is_caravan_route_idle((UnitCaravan*)unitPtr) )
+				idle_caravans++;
 		}
 	}
 
@@ -458,6 +472,7 @@ static void create_firm_list()
 	Firm* firmPtr;
 
 	info.report_array2.zap();
+	idle_firms = 0;
 
         if( !nation_array.player_recno )
 		return;
@@ -573,6 +588,8 @@ static void create_firm_list()
 		}
 
 		info.report_array2.linkin(&firmRecno);
+		if( is_firm_idle((Firm*)firmPtr) )
+			idle_firms++;
 	}
 
 	info.report_array2.quick_sort(sort_firm);
@@ -608,6 +625,116 @@ static void create_ship_list()
 //----------- End of static function create_ship_list -----------//
 
 
+//-------- Begin of static function is_caravan_route_idle --------//
+//
+static int is_caravan_route_idle(UnitCaravan* unitPtr)
+{
+	int stops = 0;
+	int can_pick_up = 0;
+	for( int i = 0; i<MAX_STOP_FOR_CARAVAN; i++ )
+	{
+		CaravanStop* tradeStop = &unitPtr->stop_array[i];
+
+		if( !tradeStop->firm_recno || firm_array.is_deleted(tradeStop->firm_recno) )
+			continue;
+
+		stops++;
+
+		if( tradeStop->pick_up_type == NO_PICK_UP )
+			continue;
+
+		Firm* firmPtr = firm_array[tradeStop->firm_recno];
+
+		if( firmPtr->firm_id == FIRM_MARKET )
+		{
+			FirmMarket* firmMarket = firmPtr->cast_to_FirmMarket();
+			MarketGoods* marketGoods = firmMarket->market_goods_array;
+			for( int j=0; j<MAX_MARKET_GOODS; j++, marketGoods++ )
+			{
+				if( !marketGoods->stock_qty && !marketGoods->sales_365days() )
+					continue;
+
+				if( marketGoods->raw_id && (tradeStop->pick_up_array[marketGoods->raw_id-1] || tradeStop->pick_up_type==AUTO_PICK_UP) )
+				{
+					can_pick_up++;
+					break;
+				}
+				else if( marketGoods->product_raw_id && (tradeStop->pick_up_array[marketGoods->product_raw_id-1+MAX_RAW] || tradeStop->pick_up_type==AUTO_PICK_UP) )
+				{
+					can_pick_up++;
+					break;
+				}
+			}
+		}
+
+		else if( firmPtr->firm_id == FIRM_FACTORY )
+		{
+			FirmFactory* firmFactory = firmPtr->cast_to_FirmFactory();
+
+			if( !tradeStop->pick_up_array[firmFactory->product_raw_id-1+MAX_RAW] ||
+					(!firmFactory->stock_qty && !firmFactory->production_30days()) )
+				continue;
+
+			can_pick_up++;
+		}
+
+		else if( firmPtr->firm_id == FIRM_MINE )
+		{
+			FirmMine* firmMine = firmPtr->cast_to_FirmMine();
+
+			if( !tradeStop->pick_up_array[firmMine->raw_id-1] ||
+					(!firmMine->stock_qty && !firmMine->production_30days()) )
+				continue;
+
+			can_pick_up++;
+		}
+	}
+
+	if( stops <= 1 )
+		return 1;
+	return !can_pick_up;
+}
+//----------- End of static function is_caravan_route_idle -----------//
+
+
+//-------- Begin of static function is_firm_idle --------//
+//
+static int is_firm_idle(Firm* firmPtr)
+{
+	if( firmPtr->under_construction )
+		return 0;
+
+	if( firmPtr->firm_id == FIRM_MARKET )
+	{
+		FirmMarket* firmMarket = firmPtr->cast_to_FirmMarket();
+		MarketGoods* marketGoods = firmMarket->market_goods_array;
+		for( int j=0; j<MAX_MARKET_GOODS; j++, marketGoods++ )
+		{
+			if( marketGoods->stock_qty || marketGoods->sales_365days() )
+				return 0;
+		}
+		return 1;
+	}
+
+	if( firmPtr->firm_id == FIRM_FACTORY )
+	{
+		FirmFactory* firmFactory = firmPtr->cast_to_FirmFactory();
+
+		return !firmFactory->stock_qty && !firmFactory->production_30days();
+	}
+
+	if( firmPtr->firm_id == FIRM_MINE )
+	{
+		FirmMine* firmMine = firmPtr->cast_to_FirmMine();
+
+		return !firmMine->stock_qty && !firmMine->production_30days();
+	}
+
+	return 0;
+}
+//----------- End of static function is_firm_idle -----------//
+
+
 //-------- Begin of static function put_caravan_rec --------//
 //
 static void put_caravan_rec(int recNo, int x, int y, int refreshFlag)
@@ -623,11 +750,18 @@ static void put_caravan_rec(int recNo, int x, int y, int refreshFlag)
 	y+=3;
 
 	String str;
+
+	str  = "";
+	if( is_caravan_route_idle(unitPtr) )
+		str += "*";
+	str += unitPtr->unit_name();
+
+	font_san.put( x    , y, str );
+
 	str  = (int) unitPtr->hit_points;
 	str += "/";
 	str += unitPtr->max_hit_points;
 
-	font_san.put( x    , y, unitPtr->unit_name() );
 	font_san.put( x+90 , y, str );
 
 	//------- display pick up type of each stop -------//
@@ -701,7 +835,12 @@ static void put_firm_rec(int recNo, int x, int y, int refreshFlag)
 
 	String str;
 
-	font_san.put( x    , y, firmPtr->firm_name() );
+	str  = "";
+	if( is_firm_idle(firmPtr) )
+		str += "*";
+	str += firmPtr->firm_name();
+
+	font_san.put( x    , y, str );
 
 	x+=170;
 
