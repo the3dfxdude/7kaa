@@ -173,7 +173,12 @@ void VBrowse::open(int recNo, int newTotalRec)
 	state = 1;    // state = OPENED
 
 	if( newTotalRec >= 0 )
-		total_rec_num = newTotalRec;
+	{
+		if( total_rec_num != newTotalRec && (total_rec_num < x_max_rec * y_max_rec || newTotalRec < x_max_rec * y_max_rec) )
+			init_var(newTotalRec, recNo); // recalculate disp_max_rec
+		else
+			total_rec_num = newTotalRec;
+	}
 
 	if( recNo > 0 )      // keep current record no.
 		rec_no = recNo;
