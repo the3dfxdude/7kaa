@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 7kaa 2.14.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-21 20:15-0700\n"
+"POT-Creation-Date: 2020-06-27 16:23-0700\n"
 "PO-Revision-Date: 2015-10-05 21:45-0400\n"
 "Last-Translator:  <toaster@hush.com>\n"
 "Language-Team: German\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Multiple startup mode options present on the command line."
 msgstr ""
 
-#: src/ConfigAdv.cpp:212
+#: src/ConfigAdv.cpp:219
 #, c-format
 msgid "Error in %s at line %d"
 msgstr ""
@@ -43,10 +43,10 @@ msgstr ""
 msgid "Ok"
 msgstr "Ok"
 
-#: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:278
+#: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:284
 #: src/OGAMEMP.cpp:1511 src/OGAMEMP.cpp:1611 src/OGAMEMP.cpp:2074
 #: src/OGAMEMP.cpp:2176 src/OGAMEMP.cpp:2239 src/OSPYA.cpp:354
-#: src/OTOWNIF.cpp:1123 src/OUNITIF.cpp:1036 src/OUNITIF.cpp:1072
+#: src/OTOWNIF.cpp:1265 src/OUNITIF.cpp:1042 src/OUNITIF.cpp:1078
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -221,39 +221,38 @@ msgstr "%s %s"
 msgid "Under Construction"
 msgstr "Im Bau"
 
-#: src/OFIRMIF.cpp:618
+#: src/OFIRMIF.cpp:643
 msgid "Residence"
 msgstr "Wohnort"
 
-#: src/OFIRMIF.cpp:627 src/OFIRMIF.cpp:634 src/OFIRMIF2.cpp:95
-#: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:402 src/OF_CAMP.cpp:588
+#: src/OFIRMIF.cpp:652 src/OFIRMIF.cpp:659 src/OFIRMIF2.cpp:95
+#: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:411 src/OF_CAMP.cpp:598
 #: src/OINFO.cpp:744 src/OR_MIL.cpp:101 src/OR_SPY.cpp:77 src/OR_TOWN.cpp:87
-#: src/OTOWNIF.cpp:267 src/OTOWNIF.cpp:1268 src/OUNITIF.cpp:1148
-#: src/OU_MARIF.cpp:507
+#: src/OTOWNIF.cpp:298 src/OTOWNIF.cpp:1415 src/OUNITIF.cpp:1154
+#: src/OU_MARIF.cpp:510
 msgid "Loyalty"
 msgstr "Loyalität"
 
-#: src/OFIRMIF.cpp:627 src/OFIRMIF.cpp:634 src/OFIRMIF.cpp:646
-#: src/OFIRMIF.cpp:660 src/OU_MARIF.cpp:507
+#: src/OFIRMIF.cpp:652 src/OFIRMIF.cpp:659 src/OFIRMIF.cpp:671
+#: src/OFIRMIF.cpp:685 src/OU_MARIF.cpp:510
 msgid "N/A"
 msgstr "N/A"
 
-#: src/OFIRMIF.cpp:662 src/OFIRMIF.cpp:710 src/OF_INN.cpp:426
-#: src/OF_INN.cpp:477 src/OUNITIF.cpp:1160 src/OU_MARIF.cpp:511
+#: src/OFIRMIF.cpp:687 src/OFIRMIF.cpp:735 src/OF_INN.cpp:432
+#: src/OF_INN.cpp:483 src/OUNITIF.cpp:1166 src/OU_MARIF.cpp:514
 msgid "Combat"
 msgstr "Kampf"
 
-#: src/OFIRMIF.cpp:671 src/OFIRMIF.cpp:719 src/OR_MIL.cpp:102
-#: src/OR_TECH.cpp:145 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:117
-#: src/OU_MARIF.cpp:521
+#: src/OFIRMIF.cpp:696 src/OFIRMIF.cpp:744 src/OR_MIL.cpp:102
+#: src/OR_TECH.cpp:145 src/OR_TRADE.cpp:147 src/OU_MARIF.cpp:524
 msgid "Hit Points"
 msgstr "Leben"
 
-#: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1267
+#: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1414
 msgid "Spy Skill"
 msgstr "Spion Skill"
 
-#: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1269
+#: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1416
 msgid "Action"
 msgstr "Aktion"
 
@@ -297,107 +296,107 @@ msgstr "Ihr Spion konnte entkommen."
 msgid "Assassination Failed."
 msgstr "Mordanschlag fehlgeschlagen."
 
-#: src/OF_BASE.cpp:377 src/OF_CAMP.cpp:563 src/OGAMHALL.cpp:255
-#: src/OSaveGameArray.cpp:609 src/OUNIT.cpp:761 src/OUNITIF.cpp:1220
+#: src/OF_BASE.cpp:386 src/OF_CAMP.cpp:573 src/OGAMHALL.cpp:255
+#: src/OSaveGameArray.cpp:609 src/OUNIT.cpp:763 src/OUNITIF.cpp:1226
 msgid "King"
 msgstr "König"
 
-#: src/OF_BASE.cpp:391 src/OF_CAMP.cpp:577 src/OR_MIL.cpp:100 src/OSKILL.cpp:35
+#: src/OF_BASE.cpp:400 src/OF_CAMP.cpp:587 src/OR_MIL.cpp:100 src/OSKILL.cpp:35
 msgid "Leadership"
 msgstr "Führung"
 
-#: src/OF_FACT.cpp:355
+#: src/OF_FACT.cpp:361
 #, fuzzy
 msgid "Producing Clay Products"
 msgstr "%s Produkte in Erzeugung"
 
-#: src/OF_FACT.cpp:356
+#: src/OF_FACT.cpp:362
 #, fuzzy
 msgid "Producing Copper Products"
 msgstr "%s Produkte in Erzeugung"
 
-#: src/OF_FACT.cpp:357
+#: src/OF_FACT.cpp:363
 #, fuzzy
 msgid "Producing Iron Products"
 msgstr "%s Produkte in Erzeugung"
 
-#: src/OF_FACT.cpp:388 src/OF_MINE.cpp:292
+#: src/OF_FACT.cpp:394 src/OF_MINE.cpp:297
 msgid "Monthly Production"
 msgstr "Monatliche Produktion"
 
-#: src/OF_FACT.cpp:394
+#: src/OF_FACT.cpp:400
 msgid "Raw Material Stock"
 msgstr "Rohstoffvorrat"
 
-#: src/OF_FACT.cpp:401
+#: src/OF_FACT.cpp:407 src/OR_TRADE.cpp:917
 msgid "Product Stock"
 msgstr "Produktvorrat"
 
-#: src/OF_HARB.cpp:453 src/OU_MARIF.cpp:87
+#: src/OF_HARB.cpp:464 src/OU_MARIF.cpp:87
 msgid "Units"
 msgstr "Einheiten"
 
-#: src/OF_HARB.cpp:454 src/OU_MARIF.cpp:88
+#: src/OF_HARB.cpp:465 src/OU_MARIF.cpp:88
 msgid "Goods"
 msgstr "Waren"
 
-#: src/OF_HARB.cpp:624 src/OF_WAR.cpp:283 src/OTOWNIF.cpp:870
+#: src/OF_HARB.cpp:638 src/OF_WAR.cpp:293 src/OTOWNIF.cpp:911
 msgid "Done"
 msgstr "Fertig"
 
-#: src/OF_INN.cpp:441
+#: src/OF_INN.cpp:447
 msgid "Hiring Cost"
 msgstr "Anheuern"
 
-#: src/OF_MARK.cpp:408
+#: src/OF_MARK.cpp:413
 #, fuzzy
 msgid "You're not permitted to trade with this market."
 msgstr "Ihnen ist nicht erlaubt"
 
-#: src/OF_MARK.cpp:462
+#: src/OF_MARK.cpp:467
 msgid "Clear"
 msgstr "Leeren"
 
-#: src/OF_MARK.cpp:474
+#: src/OF_MARK.cpp:479
 msgid "Stock"
 msgstr "Lager"
 
-#: src/OF_MARK.cpp:476
+#: src/OF_MARK.cpp:481
 msgid "Sales"
 msgstr "Verkauf"
 
-#: src/OF_MARK.cpp:484
+#: src/OF_MARK.cpp:489
 msgid "Demand"
 msgstr "Nachfrage"
 
-#: src/OF_MARK.cpp:503 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
+#: src/OF_MARK.cpp:508 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
 msgid "Yearly Income"
 msgstr "Jhrl. Ertrag"
 
-#: src/OF_MINE.cpp:258
+#: src/OF_MINE.cpp:263
 #, fuzzy
 msgid "Mining Clay"
 msgstr "Bergbau"
 
-#: src/OF_MINE.cpp:259
+#: src/OF_MINE.cpp:264
 #, fuzzy
 msgid "Mining Copper"
 msgstr "Abbau von %s"
 
-#: src/OF_MINE.cpp:260
+#: src/OF_MINE.cpp:265
 #, fuzzy
 msgid "Mining Iron"
 msgstr "Bergbau"
 
-#: src/OF_MINE.cpp:275
+#: src/OF_MINE.cpp:280
 msgid "No Natural Resources"
 msgstr "Keine natürliche Ressourcen"
 
-#: src/OF_MINE.cpp:299
+#: src/OF_MINE.cpp:304
 msgid "Mined Stock"
 msgstr "Abgebauter Vorrat"
 
-#: src/OF_MINE.cpp:302
+#: src/OF_MINE.cpp:307
 msgid "Untapped Reserve"
 msgstr "Ungenutzte Reserven"
 
@@ -892,7 +891,7 @@ msgid "Kingdom"
 msgstr "Königreich"
 
 #: src/OGAMEND.cpp:476 src/OGAMHALL.cpp:271 src/OR_RANK.cpp:88
-#: src/OTOWNIF.cpp:263
+#: src/OTOWNIF.cpp:294
 msgid "Population"
 msgstr "Population"
 
@@ -971,7 +970,7 @@ msgstr "Zeitraum: "
 msgid "Difficulty"
 msgstr "Schwierigkeit: "
 
-#: src/OGAMMAIN.cpp:371
+#: src/OGAMMAIN.cpp:369
 msgid "Version"
 msgstr "Version"
 
@@ -1019,318 +1018,318 @@ msgstr "inkompatibeler Spielspeicherstand"
 msgid "Load game error"
 msgstr "Fehler beim Laden des Spiels"
 
-#: src/OHELP.cpp:510
+#: src/OHELP.cpp:507
 #, fuzzy
 msgid "Norman General"
 msgstr "Menschlicher General"
 
-#: src/OHELP.cpp:511
+#: src/OHELP.cpp:508
 #, fuzzy
 msgid "Maya General"
 msgstr "Maya General"
 
-#: src/OHELP.cpp:512
+#: src/OHELP.cpp:509
 #, fuzzy
 msgid "Greek General"
 msgstr "General"
 
-#: src/OHELP.cpp:513
+#: src/OHELP.cpp:510
 #, fuzzy
 msgid "Viking General"
 msgstr "%s General"
 
-#: src/OHELP.cpp:514
+#: src/OHELP.cpp:511
 #, fuzzy
 msgid "Persian General"
 msgstr "%s General"
 
-#: src/OHELP.cpp:515
+#: src/OHELP.cpp:512
 #, fuzzy
 msgid "Chinese General"
 msgstr "%s General"
 
-#: src/OHELP.cpp:516
+#: src/OHELP.cpp:513
 #, fuzzy
 msgid "Japanese General"
 msgstr "Maya General"
 
-#: src/OHELP.cpp:517 src/OHELP.cpp:565 src/OR_TRADE.cpp:82
+#: src/OHELP.cpp:514 src/OHELP.cpp:562 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:141
 msgid "Caravan"
 msgstr "Karawane"
 
-#: src/OHELP.cpp:518 src/OHELP.cpp:566
+#: src/OHELP.cpp:515 src/OHELP.cpp:563
 msgid "Catapult"
 msgstr "Katapult"
 
-#: src/OHELP.cpp:519 src/OHELP.cpp:567
+#: src/OHELP.cpp:516 src/OHELP.cpp:564
 msgid "Ballista"
 msgstr "Ballista"
 
-#: src/OHELP.cpp:520 src/OHELP.cpp:568
+#: src/OHELP.cpp:517 src/OHELP.cpp:565
 msgid "Spitfire"
 msgstr "Spuckfeuer"
 
-#: src/OHELP.cpp:521 src/OHELP.cpp:569
+#: src/OHELP.cpp:518 src/OHELP.cpp:566
 msgid "Cannon"
 msgstr "Kanone"
 
-#: src/OHELP.cpp:522 src/OHELP.cpp:570
+#: src/OHELP.cpp:519 src/OHELP.cpp:567
 msgid "Porcupine"
 msgstr "Stachelschwein"
 
-#: src/OHELP.cpp:523 src/OHELP.cpp:571
+#: src/OHELP.cpp:520 src/OHELP.cpp:568
 msgid "Trader"
 msgstr "Händler"
 
-#: src/OHELP.cpp:524 src/OHELP.cpp:572
+#: src/OHELP.cpp:521 src/OHELP.cpp:569
 msgid "Transport"
 msgstr "Transport"
 
-#: src/OHELP.cpp:525 src/OHELP.cpp:573
+#: src/OHELP.cpp:522 src/OHELP.cpp:570
 msgid "Caravel"
 msgstr "Karavelle"
 
-#: src/OHELP.cpp:526 src/OHELP.cpp:574
+#: src/OHELP.cpp:523 src/OHELP.cpp:571
 msgid "Galleon"
 msgstr "Galeone"
 
-#: src/OHELP.cpp:527 src/OHELP.cpp:575
+#: src/OHELP.cpp:524 src/OHELP.cpp:572
 msgid "Dragon"
 msgstr "Drache"
 
-#: src/OHELP.cpp:528 src/OHELP.cpp:576
+#: src/OHELP.cpp:525 src/OHELP.cpp:573
 msgid "Jing Nung"
 msgstr "Jing Nung"
 
-#: src/OHELP.cpp:529 src/OHELP.cpp:577
+#: src/OHELP.cpp:526 src/OHELP.cpp:574
 msgid "Lord of Healing"
 msgstr "Herr der Heilung"
 
-#: src/OHELP.cpp:530 src/OHELP.cpp:578
+#: src/OHELP.cpp:527 src/OHELP.cpp:575
 msgid "Thor"
 msgstr "Thor"
 
-#: src/OHELP.cpp:531 src/OHELP.cpp:579
+#: src/OHELP.cpp:528 src/OHELP.cpp:576
 msgid "Phoenix"
 msgstr "Phönix"
 
-#: src/OHELP.cpp:532 src/OHELP.cpp:580
+#: src/OHELP.cpp:529 src/OHELP.cpp:577
 msgid "Kukulcan"
 msgstr "Kukulkan"
 
-#: src/OHELP.cpp:533 src/OHELP.cpp:581
+#: src/OHELP.cpp:530 src/OHELP.cpp:578
 msgid "Mind Turner"
 msgstr "Verstandwender"
 
 #. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use General or Ordo whichever makes sense.
-#: src/OHELP.cpp:535
+#: src/OHELP.cpp:532
 #, fuzzy
 msgid "Deezboanz General"
 msgstr "Deezboanz"
 
-#: src/OHELP.cpp:536
+#: src/OHELP.cpp:533
 #, fuzzy
 msgid "Rattus General"
 msgstr "%s General"
 
-#: src/OHELP.cpp:537
+#: src/OHELP.cpp:534
 #, fuzzy
 msgid "Broosken General"
 msgstr "%s General"
 
-#: src/OHELP.cpp:538
+#: src/OHELP.cpp:535
 #, fuzzy
 msgid "Haubudam General"
 msgstr "Menschlicher General"
 
-#: src/OHELP.cpp:539
+#: src/OHELP.cpp:536
 #, fuzzy
 msgid "Pfith General"
 msgstr "General"
 
-#: src/OHELP.cpp:540
+#: src/OHELP.cpp:537
 #, fuzzy
 msgid "Rokken General"
 msgstr "Menschlicher General"
 
-#: src/OHELP.cpp:541
+#: src/OHELP.cpp:538
 #, fuzzy
 msgid "Doink General"
 msgstr "General"
 
-#: src/OHELP.cpp:542
+#: src/OHELP.cpp:539
 #, fuzzy
 msgid "Wyrm General"
 msgstr "General"
 
-#: src/OHELP.cpp:543
+#: src/OHELP.cpp:540
 #, fuzzy
 msgid "Droog General"
 msgstr "General"
 
-#: src/OHELP.cpp:544
+#: src/OHELP.cpp:541
 #, fuzzy
 msgid "Ick General"
 msgstr "General"
 
-#: src/OHELP.cpp:545
+#: src/OHELP.cpp:542
 #, fuzzy
 msgid "Sauroid General"
 msgstr "Menschlicher General"
 
-#: src/OHELP.cpp:546
+#: src/OHELP.cpp:543
 #, fuzzy
 msgid "Karrotten General"
 msgstr "Karrotten"
 
-#: src/OHELP.cpp:547
+#: src/OHELP.cpp:544
 #, fuzzy
 msgid "Holgh General"
 msgstr "General"
 
-#: src/OHELP.cpp:548
+#: src/OHELP.cpp:545
 #, fuzzy
 msgid "Egyptian General"
 msgstr "Maya General"
 
-#: src/OHELP.cpp:549
+#: src/OHELP.cpp:546
 #, fuzzy
 msgid "Mughul General"
 msgstr "%s General"
 
-#: src/OHELP.cpp:550
+#: src/OHELP.cpp:547
 #, fuzzy
 msgid "Zulu General"
 msgstr "%s General"
 
-#: src/OHELP.cpp:551 src/OHELP.cpp:599
+#: src/OHELP.cpp:548 src/OHELP.cpp:596
 msgid "Isis"
 msgstr "Isis"
 
-#: src/OHELP.cpp:552 src/OHELP.cpp:600
+#: src/OHELP.cpp:549 src/OHELP.cpp:597
 msgid "Djini"
 msgstr "Djini"
 
-#: src/OHELP.cpp:553 src/OHELP.cpp:601
+#: src/OHELP.cpp:550 src/OHELP.cpp:598
 msgid "uNkulunkulu"
 msgstr "uNkulunkulu"
 
-#: src/OHELP.cpp:554 src/OHELP.cpp:602
+#: src/OHELP.cpp:551 src/OHELP.cpp:599
 msgid "Unicorn"
 msgstr "Einhorn"
 
-#: src/OHELP.cpp:558
+#: src/OHELP.cpp:555
 #, fuzzy
 msgid "Norman King"
 msgstr "Normannisch"
 
-#: src/OHELP.cpp:559
+#: src/OHELP.cpp:556
 #, fuzzy
 msgid "Maya King"
 msgstr "Maya König"
 
-#: src/OHELP.cpp:560
+#: src/OHELP.cpp:557
 #, fuzzy
 msgid "Greek King"
 msgstr "Griechisch"
 
-#: src/OHELP.cpp:561
+#: src/OHELP.cpp:558
 #, fuzzy
 msgid "Viking King"
 msgstr "Wikinger"
 
-#: src/OHELP.cpp:562
+#: src/OHELP.cpp:559
 #, fuzzy
 msgid "Persian King"
 msgstr "Persisch"
 
-#: src/OHELP.cpp:563
+#: src/OHELP.cpp:560
 #, fuzzy
 msgid "Chinese King"
 msgstr "Chinesisch"
 
-#: src/OHELP.cpp:564
+#: src/OHELP.cpp:561
 #, fuzzy
 msgid "Japanese King"
 msgstr "Japanisch"
 
 #. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use King or All High whichever makes sense.
-#: src/OHELP.cpp:583
+#: src/OHELP.cpp:580
 #, fuzzy
 msgid "Deezboanz King"
 msgstr "Deezboanz"
 
-#: src/OHELP.cpp:584
+#: src/OHELP.cpp:581
 #, fuzzy
 msgid "Rattus King"
 msgstr "Rattus"
 
-#: src/OHELP.cpp:585
+#: src/OHELP.cpp:582
 #, fuzzy
 msgid "Broosken King"
 msgstr "Broosken"
 
-#: src/OHELP.cpp:586
+#: src/OHELP.cpp:583
 #, fuzzy
 msgid "Haubudam King"
 msgstr "Haubudam"
 
-#: src/OHELP.cpp:587
+#: src/OHELP.cpp:584
 #, fuzzy
 msgid "Pfith King"
 msgstr "Pfith"
 
-#: src/OHELP.cpp:588
+#: src/OHELP.cpp:585
 #, fuzzy
 msgid "Rokken King"
 msgstr "Rokken"
 
-#: src/OHELP.cpp:589
+#: src/OHELP.cpp:586
 #, fuzzy
 msgid "Doink King"
 msgstr "Doink"
 
-#: src/OHELP.cpp:590
+#: src/OHELP.cpp:587
 #, fuzzy
 msgid "Wyrm King"
 msgstr "Maya König"
 
-#: src/OHELP.cpp:591
+#: src/OHELP.cpp:588
 #, fuzzy
 msgid "Droog King"
 msgstr "Droog"
 
-#: src/OHELP.cpp:592
+#: src/OHELP.cpp:589
 #, fuzzy
 msgid "Ick King"
 msgstr "%s König"
 
-#: src/OHELP.cpp:593
+#: src/OHELP.cpp:590
 #, fuzzy
 msgid "Sauroid King"
 msgstr "Sauroid"
 
-#: src/OHELP.cpp:594
+#: src/OHELP.cpp:591
 #, fuzzy
 msgid "Karrotten King"
 msgstr "Karrotten"
 
-#: src/OHELP.cpp:595
+#: src/OHELP.cpp:592
 #, fuzzy
 msgid "Holgh King"
 msgstr "Holgh"
 
-#: src/OHELP.cpp:596
+#: src/OHELP.cpp:593
 #, fuzzy
 msgid "Egyptian King"
 msgstr "Ägypter"
 
-#: src/OHELP.cpp:597
+#: src/OHELP.cpp:594
 #, fuzzy
 msgid "Mughul King"
 msgstr "Mughul"
 
-#: src/OHELP.cpp:598
+#: src/OHELP.cpp:595
 #, fuzzy
 msgid "Zulu King"
 msgstr "Mughul"
@@ -3101,11 +3100,11 @@ msgstr "%s Produkte"
 msgid "Iron Products"
 msgstr "%s Produkte"
 
-#: src/OREMOTEM.cpp:462 src/OSYS2.cpp:1028
+#: src/OREMOTEM.cpp:464 src/OSYS2.cpp:1023
 msgid "Multiplayer Random Seed Sync Error"
 msgstr ""
 
-#: src/OREMOTEM.cpp:2842 src/OSYS2.cpp:1030
+#: src/OREMOTEM.cpp:2874 src/OSYS2.cpp:1025
 msgid "Multiplayer Object Sync Error"
 msgstr ""
 
@@ -3493,7 +3492,7 @@ msgstr "Spion Name"
 msgid "Cloak"
 msgstr "Mantel"
 
-#: src/OR_SPY.cpp:75
+#: src/OR_SPY.cpp:75 src/OR_TRADE.cpp:201
 msgid "Location"
 msgstr "Lage"
 
@@ -3526,7 +3525,7 @@ msgstr "Forschungsfortschritt"
 msgid "Tower of Science"
 msgstr "Turm der Wissenschaft"
 
-#: src/OR_TECH.cpp:144 src/OUNITIF.cpp:1241
+#: src/OR_TECH.cpp:144 src/OUNITIF.cpp:1247
 msgid "Greater Being"
 msgstr "Höheres Wesen"
 
@@ -3545,7 +3544,7 @@ msgstr "Dorf"
 msgid "Villagers"
 msgstr "Dörfler"
 
-#: src/OR_TOWN.cpp:86 src/OTOWNIF.cpp:264
+#: src/OR_TOWN.cpp:86 src/OTOWNIF.cpp:295
 msgid "Peasants"
 msgstr "Bauern"
 
@@ -3590,69 +3589,128 @@ msgstr "Andere menschliche Einheiten insgesamt: %s"
 msgid "Total Population: %s"
 msgstr "Gesamteinwohnerzahl: %s"
 
-#: src/OR_TOWN.cpp:242 src/OTOWNIF.cpp:290
+#: src/OR_TOWN.cpp:242 src/OTOWNIF.cpp:321
 msgid "Total"
 msgstr "Total"
 
-#: src/OR_TRADE.cpp:88 src/OR_TRADE.cpp:119
-msgid "Stop 1"
-msgstr "Stop 1"
+#: src/OR_TRADE.cpp:77
+msgid "Market"
+msgstr "Markt"
 
-#: src/OR_TRADE.cpp:89 src/OR_TRADE.cpp:120
-msgid "Stop 2"
-msgstr "Stop 2"
+#: src/OR_TRADE.cpp:78
+msgid "Factory"
+msgstr "Fabrik"
 
-#: src/OR_TRADE.cpp:90 src/OR_TRADE.cpp:121
-msgid "Stop 3"
-msgstr "Stop 3"
+#: src/OR_TRADE.cpp:79
+msgid "Mine"
+msgstr "Mine"
 
-#: src/OR_TRADE.cpp:91 src/OR_TRADE.cpp:122
-msgid "Goods Carried"
-msgstr "Waren befördert"
+#: src/OR_TRADE.cpp:80
+msgid "Any"
+msgstr ""
 
-#: src/OR_TRADE.cpp:113
+#: src/OR_TRADE.cpp:87 src/OR_TRADE.cpp:143
 msgid "Ship"
 msgstr "Schiff"
 
-#: src/OR_TRADE.cpp:192
+#: src/OR_TRADE.cpp:149
+msgid "Stop 1"
+msgstr "Stop 1"
+
+#: src/OR_TRADE.cpp:150
+msgid "Stop 2"
+msgstr "Stop 2"
+
+#: src/OR_TRADE.cpp:151
+msgid "Stop 3"
+msgstr "Stop 3"
+
+#: src/OR_TRADE.cpp:152
+msgid "Goods Carried"
+msgstr "Waren befördert"
+
+#: src/OR_TRADE.cpp:202
+msgid "Stock/Sales/Demand"
+msgstr ""
+
+#: src/OR_TRADE.cpp:204
+msgid "(In Range of Unit)"
+msgstr ""
+
+#: src/OR_TRADE.cpp:422
 #, c-format
 msgid "Total Caravans: %s"
 msgstr "Karawanen insgesamt: %s"
 
-#: src/OR_TRADE.cpp:203
+#: src/OR_TRADE.cpp:424
 #, c-format
 msgid "Total Ships: %s"
 msgstr "Schiffe insgesamt: %s"
 
-#: src/OSITEDRW.cpp:47
-msgid "Natural Resource"
-msgstr "Natürlicher Rohstoff"
+#: src/OR_TRADE.cpp:430
+#, fuzzy, c-format
+msgid "*Idle Caravans: %s"
+msgstr "Karawanen insgesamt: %s"
 
-#: src/OSITEDRW.cpp:52
-msgid "Resource"
-msgstr "Rohstoff"
+#: src/OR_TRADE.cpp:441
+#, fuzzy, c-format
+msgid "Total Locations: %s"
+msgstr "Gesamteinwohnerzahl: %s"
 
-#: src/OSITEDRW.cpp:53
+#: src/OR_TRADE.cpp:445
+#, fuzzy, c-format
+msgid "*Idle Locations: %s"
+msgstr "Gesamteinwohnerzahl: %s"
+
+#: src/OR_TRADE.cpp:906 src/OR_TRADE.cpp:942
+#, fuzzy
+msgid "Raw Stock"
+msgstr "Lager"
+
+#: src/OR_TRADE.cpp:931 src/OSITEDRW.cpp:54
 msgid "Reserve"
 msgstr "Vorrat"
 
-#: src/OSITEDRW.cpp:60
+#: src/OR_TRADE.cpp:952
+#, fuzzy
+msgid "Markets"
+msgstr "Markt"
+
+#: src/OR_TRADE.cpp:959
+#, fuzzy
+msgid "Factories"
+msgstr "Fabrik"
+
+#: src/OR_TRADE.cpp:966
+#, fuzzy
+msgid "Mines"
+msgstr "Mine"
+
+#: src/OSITEDRW.cpp:48
+msgid "Natural Resource"
+msgstr "Natürlicher Rohstoff"
+
+#: src/OSITEDRW.cpp:53
+msgid "Resource"
+msgstr "Rohstoff"
+
+#: src/OSITEDRW.cpp:61
 msgid "Scroll of Power"
 msgstr "Schriftrolle der Macht"
 
-#: src/OSITEDRW.cpp:67
+#: src/OSITEDRW.cpp:68
 msgid "Nationality"
 msgstr "Nationalität"
 
-#: src/OSITEDRW.cpp:68
+#: src/OSITEDRW.cpp:69
 msgid "Invoke"
 msgstr "Aufruf"
 
-#: src/OSITEDRW.cpp:75
+#: src/OSITEDRW.cpp:76
 msgid "Treasure"
 msgstr "Schatz"
 
-#: src/OSITEDRW.cpp:80
+#: src/OSITEDRW.cpp:81
 msgid "Worth"
 msgstr "Wert"
 
@@ -3672,7 +3730,7 @@ msgstr "Herstellung"
 msgid "Research"
 msgstr "Forschung"
 
-#: src/OSKILL.cpp:39 src/OUNITIF.cpp:1180
+#: src/OSKILL.cpp:39 src/OUNITIF.cpp:1186
 msgid "Spying"
 msgstr "Spionage"
 
@@ -3716,32 +3774,32 @@ msgstr "Spionage"
 msgid "Steal which type of secrets?"
 msgstr "Welcher Geheimnisstyp soll gestohlen werden?"
 
-#: src/OSYS.cpp:534
+#: src/OSYS.cpp:536
 #, fuzzy
 msgid "Unable to determine a location for storing the game configuration"
 msgstr "Unfähig Speicherplatz für Spielkonfiguration zu ermitteln."
 
 #. TRANSLATORS: Waiting for <King>'s Kingdom
-#: src/OSYS.cpp:905
+#: src/OSYS.cpp:907
 #, fuzzy, c-format
 msgid "Waiting for %s's Kingdom"
 msgstr "Warten auf %s"
 
-#: src/OSYS.cpp:1538
+#: src/OSYS.cpp:1540
 msgid "Cheat Mode Enabled."
 msgstr "Cheat-Modus aktiviert."
 
-#: src/OSYS.cpp:1614
+#: src/OSYS.cpp:1616
 #, fuzzy
 msgid "Opaque report mode"
 msgstr "Opaque Bericht-Modus."
 
-#: src/OSYS.cpp:1616
+#: src/OSYS.cpp:1618
 #, fuzzy
 msgid "Transparent report mode"
 msgstr "Transparenter Bericht-Modus."
 
-#: src/OSYS.cpp:1842
+#: src/OSYS.cpp:1824
 msgid ""
 "Your technology has advanced.\n"
 "You can now invoke all Greater Beings."
@@ -3749,42 +3807,42 @@ msgstr ""
 "Ihre Technologie hat sich weiterentwickelt.\n"
 "Sie können nun alle höheren Wesen beschwören."
 
-#: src/OSYS.cpp:1874
+#: src/OSYS.cpp:1856
 msgid "Your king is now immortal."
 msgstr "Ihr König ist jetzt unsterblich."
 
-#: src/OSYS.cpp:1876
+#: src/OSYS.cpp:1858
 msgid "King immortal mode is now disabled."
 msgstr "Unsterblichkeitsmodus des Königs ist nun deaktiviert."
 
-#: src/OSYS.cpp:1904
+#: src/OSYS.cpp:1886
 #, fuzzy
 msgid "Fast build is now disabled."
 msgstr "Schneller Bau ist nun deaktiviert"
 
-#: src/OSYS.cpp:1906
+#: src/OSYS.cpp:1888
 #, fuzzy
 msgid "Fast build is now enabled."
 msgstr "Schneller Bau ist nun aktiviert"
 
-#: src/OSYS.cpp:2665
+#: src/OSYS.cpp:2647
 #, c-format
 msgid "The current screen has been written to file %s."
 msgstr "Der aktuelle Bildschirm wurde in die Datei %s geschrieben."
 
-#: src/OSYS.cpp:2706
+#: src/OSYS.cpp:2688
 msgid "Failed Loading Game"
 msgstr "Laden des Spiels fehlgeschlagen"
 
-#: src/OSYS.cpp:2717
+#: src/OSYS.cpp:2699
 msgid "Game Loaded Successfully"
 msgstr "Spiel erfolgreich geladen"
 
-#: src/OSYS.cpp:2744
+#: src/OSYS.cpp:2726
 msgid "Game Saved Successfully"
 msgstr "Spiel erfolgreich gespeichert"
 
-#: src/OSYS.cpp:2816
+#: src/OSYS.cpp:2798
 #, fuzzy
 msgid "Unable to locate the game resources"
 msgstr "Unfähig Spielressourcen zu lokalisieren."
@@ -5121,39 +5179,39 @@ msgstr "Akzeptieren."
 msgid "Reject."
 msgstr "Ablehnen."
 
-#: src/OTOWNIF.cpp:273
+#: src/OTOWNIF.cpp:304
 msgid "Resistance"
 msgstr "Widerstand"
 
-#: src/OTOWNIF.cpp:291
+#: src/OTOWNIF.cpp:322
 msgid "Avg"
 msgstr "Drchs"
 
-#: src/OTOWNIF.cpp:325
+#: src/OTOWNIF.cpp:356
 msgid "Controlled by Rebels"
 msgstr "Von Rebellen kontrolliert"
 
-#: src/OTOWNIF.cpp:851
+#: src/OTOWNIF.cpp:892
 msgid "Train (Cost: $30, Skill: 20)"
 msgstr "Trainieren (Kosten: $30, Skill: 20)"
 
-#: src/OTOWNIF.cpp:921
+#: src/OTOWNIF.cpp:968
 msgid "Manufacturing"
 msgstr "Herstellung"
 
-#: src/OTOWNIF.cpp:1103
+#: src/OTOWNIF.cpp:1246
 msgid "Automatically Collect Tax from Villagers when their Loyalty reaches:"
 msgstr ""
 "Automatisch Steuern von Dorfbewohnern eintreiben wenn ihre Loyalität "
 "folgenden Wert erreicht:"
 
-#: src/OTOWNIF.cpp:1105
+#: src/OTOWNIF.cpp:1248
 msgid "Automatically Grant Money to Villagers when their Loyalty drops below:"
 msgstr ""
 "Automatisch Geld an Dorfbewohner verteilen wenn ihre Loyalität bis zum "
 "folgenden Wert sinkt:"
 
-#: src/OTOWNIF.cpp:1107
+#: src/OTOWNIF.cpp:1251
 msgid ""
 "(Left-click below to apply to this village. Right-click below to apply to "
 "all your villages.)"
@@ -5161,15 +5219,15 @@ msgstr ""
 "(Linksklick unten, um auf dieses Dorf anzuwenden. Rechtsklick unten, um auf "
 "alle ihre Dörfer anzuwenden.)"
 
-#: src/OTOWNIF.cpp:1120
+#: src/OTOWNIF.cpp:1262
 msgid "Disabled"
 msgstr "Verhindert"
 
-#: src/OTUTOR.cpp:504
+#: src/OTUTOR.cpp:501
 msgid "Next Training"
 msgstr "Nächste Ausbildung"
 
-#: src/OTUTOR.cpp:505
+#: src/OTUTOR.cpp:502
 msgid "Quit Training"
 msgstr "Ausbildung beenden"
 
@@ -5177,256 +5235,256 @@ msgstr "Ausbildung beenden"
 msgid "Tutorial files not found."
 msgstr "Tutorial-Dateien nicht gefunden."
 
-#: src/OUNIT.cpp:753 src/OUNITIF.cpp:1226
+#: src/OUNIT.cpp:755 src/OUNITIF.cpp:1232
 msgid "Rebel Leader"
 msgstr "Rebellenführer"
 
-#: src/OUNIT.cpp:766 src/OUNITIF.cpp:1228
+#: src/OUNIT.cpp:768 src/OUNITIF.cpp:1234
 msgid "General"
 msgstr "General"
 
 #. TRANSLATORS: Please select a location to build the <Firm>.
-#: src/OUNITIF.cpp:1006
+#: src/OUNITIF.cpp:1009
 #, fuzzy
 msgid "Please select a location to build the Seat of Power."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1007
+#: src/OUNITIF.cpp:1010
 #, fuzzy
 msgid "Please select a location to build the Factory."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1008
+#: src/OUNITIF.cpp:1011
 #, fuzzy
 msgid "Please select a location to build the Inn."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1009
+#: src/OUNITIF.cpp:1012
 #, fuzzy
 msgid "Please select a location to build the Market."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1010
+#: src/OUNITIF.cpp:1013
 #, fuzzy
 msgid "Please select a location to build the Fort."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1011
+#: src/OUNITIF.cpp:1014
 #, fuzzy
 msgid "Please select a location to build the Mine."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1012
+#: src/OUNITIF.cpp:1015
 #, fuzzy
 msgid "Please select a location to build the Tower of Science."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1013
+#: src/OUNITIF.cpp:1016
 #, fuzzy
 msgid "Please select a location to build the War Factory."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1014
+#: src/OUNITIF.cpp:1017
 #, fuzzy
 msgid "Please select a location to build the Harbor."
 msgstr "Bitte wählen sie einen Bauplatz für %s aus."
 
-#: src/OUNITIF.cpp:1070
+#: src/OUNITIF.cpp:1076
 msgid "Please select a location to settle."
 msgstr "Bitte wählen Sie einen Platz um zu siedeln."
 
-#: src/OUNITIF.cpp:1188
+#: src/OUNITIF.cpp:1194
 msgid "Contribution"
 msgstr "Beitrag"
 
-#: src/OUNITIF.cpp:1233
+#: src/OUNITIF.cpp:1239
 msgid "Defending Villager"
 msgstr "Verteidigender Dorfbewohner"
 
-#: src/OUNITIF.cpp:1237
+#: src/OUNITIF.cpp:1243
 msgid "Rebel"
 msgstr "Rebell"
 
-#: src/OUNITIF.cpp:1250 src/OUNITIF.cpp:1281
+#: src/OUNITIF.cpp:1256 src/OUNITIF.cpp:1287
 msgid "Soldier"
 msgstr "Soldat"
 
-#: src/OUNITIF.cpp:1254
+#: src/OUNITIF.cpp:1260
 msgid "Construction Worker"
 msgstr "Bauarbeiter"
 
-#: src/OUNITIF.cpp:1258
+#: src/OUNITIF.cpp:1264
 msgid "Miner"
 msgstr "Minenarbeiter"
 
-#: src/OUNITIF.cpp:1262
+#: src/OUNITIF.cpp:1268
 msgid "Worker"
 msgstr "Fabrikarbeiter"
 
-#: src/OUNITIF.cpp:1266
+#: src/OUNITIF.cpp:1272
 msgid "Scientist"
 msgstr "Wissenschaftler"
 
-#: src/OUNITIF.cpp:1270
+#: src/OUNITIF.cpp:1276
 msgid "Spy"
 msgstr "Spion"
 
-#: src/OUNITIF.cpp:1274
+#: src/OUNITIF.cpp:1280
 msgid "Peasant"
 msgstr "Bauer"
 
-#: src/OUNITIF.cpp:1284
+#: src/OUNITIF.cpp:1290
 msgid "Civilian"
 msgstr "Zivilist"
 
-#: src/OUNITIF.cpp:1367
+#: src/OUNITIF.cpp:1373
 msgid "Enemies Nearby"
 msgstr "Feinde in der Nähe"
 
-#: src/OUNITIF.cpp:1378
+#: src/OUNITIF.cpp:1384
 msgid "Spy Cloak:"
 msgstr "Farbe:"
 
-#: src/OU_CARA.cpp:158 src/OU_CARA.cpp:179 src/OU_MARIF.cpp:610
-#: src/OU_MARIF.cpp:630
+#: src/OU_CARA.cpp:162 src/OU_CARA.cpp:183 src/OU_MARIF.cpp:613
+#: src/OU_MARIF.cpp:633
 msgid "Set Stop"
 msgstr "Stop setzen"
 
-#: src/OU_CARA.cpp:174 src/OU_MARIF.cpp:625
+#: src/OU_CARA.cpp:178 src/OU_MARIF.cpp:628
 #, fuzzy
 msgid "Pick up:"
 msgstr "Auflesen: "
 
-#: src/OU_CARA.cpp:187 src/OU_MARIF.cpp:638
+#: src/OU_CARA.cpp:191 src/OU_MARIF.cpp:641
 msgid "View Stop"
 msgstr "Stop anzeigen"
 
-#: src/OU_MONS.cpp:51
+#: src/OU_MONS.cpp:55
 #, fuzzy
 msgid "All High Deezboanz"
 msgstr "Deezboanz"
 
-#: src/OU_MONS.cpp:52
+#: src/OU_MONS.cpp:56
 #, fuzzy
 msgid "All High Rattus"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:53
+#: src/OU_MONS.cpp:57
 #, fuzzy
 msgid "All High Broosken"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:54
+#: src/OU_MONS.cpp:58
 #, fuzzy
 msgid "All High Haubudam"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:55
+#: src/OU_MONS.cpp:59
 #, fuzzy
 msgid "All High Pfith"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:56
+#: src/OU_MONS.cpp:60
 #, fuzzy
 msgid "All High Rokken"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:57
+#: src/OU_MONS.cpp:61
 #, fuzzy
 msgid "All High Doink"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:58
+#: src/OU_MONS.cpp:62
 #, fuzzy
 msgid "All High Wyrm"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:59
+#: src/OU_MONS.cpp:63
 #, fuzzy
 msgid "All High Droog"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:60
+#: src/OU_MONS.cpp:64
 #, fuzzy
 msgid "All High Ick"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:61
+#: src/OU_MONS.cpp:65
 #, fuzzy
 msgid "All High Sauroid"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:62
+#: src/OU_MONS.cpp:66
 #, fuzzy
 msgid "All High Karrotten"
 msgstr "Karrotten"
 
-#: src/OU_MONS.cpp:63
+#: src/OU_MONS.cpp:67
 #, fuzzy
 msgid "All High Holgh"
 msgstr "All High %s"
 
-#: src/OU_MONS.cpp:67
+#: src/OU_MONS.cpp:71
 #, fuzzy
 msgid "Deezboanz Ordo"
 msgstr "Deezboanz"
 
-#: src/OU_MONS.cpp:68
+#: src/OU_MONS.cpp:72
 #, fuzzy
 msgid "Rattus Ordo"
 msgstr "Rattus"
 
-#: src/OU_MONS.cpp:69
+#: src/OU_MONS.cpp:73
 #, fuzzy
 msgid "Broosken Ordo"
 msgstr "Broosken"
 
-#: src/OU_MONS.cpp:70
+#: src/OU_MONS.cpp:74
 #, fuzzy
 msgid "Haubudam Ordo"
 msgstr "Haubudam"
 
-#: src/OU_MONS.cpp:71
+#: src/OU_MONS.cpp:75
 #, fuzzy
 msgid "Pfith Ordo"
 msgstr "Pfith"
 
-#: src/OU_MONS.cpp:72
+#: src/OU_MONS.cpp:76
 #, fuzzy
 msgid "Rokken Ordo"
 msgstr "Rokken"
 
-#: src/OU_MONS.cpp:73
+#: src/OU_MONS.cpp:77
 #, fuzzy
 msgid "Doink Ordo"
 msgstr "Doink"
 
-#: src/OU_MONS.cpp:74
+#: src/OU_MONS.cpp:78
 #, fuzzy
 msgid "Wyrm Ordo"
 msgstr "%s Ordo"
 
-#: src/OU_MONS.cpp:75
+#: src/OU_MONS.cpp:79
 #, fuzzy
 msgid "Droog Ordo"
 msgstr "Droog"
 
-#: src/OU_MONS.cpp:76
+#: src/OU_MONS.cpp:80
 #, fuzzy
 msgid "Ick Ordo"
 msgstr "%s Ordo"
 
-#: src/OU_MONS.cpp:77
+#: src/OU_MONS.cpp:81
 #, fuzzy
 msgid "Sauroid Ordo"
 msgstr "Sauroid"
 
-#: src/OU_MONS.cpp:78
+#: src/OU_MONS.cpp:82
 #, fuzzy
 msgid "Karrotten Ordo"
 msgstr "Karrotten"
 
-#: src/OU_MONS.cpp:79
+#: src/OU_MONS.cpp:83
 #, fuzzy
 msgid "Holgh Ordo"
 msgstr "Holgh"
@@ -5559,9 +5617,6 @@ msgstr "Wyrm"
 msgid "Zulu"
 msgstr "Zulu"
 
-msgid "Factory"
-msgstr "Fabrik"
-
 msgid "Fort"
 msgstr "Fort"
 
@@ -5573,12 +5628,6 @@ msgstr "Hafen"
 
 msgid "Inn"
 msgstr "Gasthof"
-
-msgid "Market"
-msgstr "Markt"
-
-msgid "Mine"
-msgstr "Mine"
 
 msgid "Prayer"
 msgstr "Beten"
