@@ -174,7 +174,8 @@ void Info::disp_trade(int refreshFlag)
 			if( !browse_caravan.init_flag )
 				browse_caravan.init( CARAVAN_BROWSE_X1, CARAVAN_BROWSE_Y1+22, CARAVAN_BROWSE_X2, CARAVAN_BROWSE_Y2-20,
 									0, 16, report_array.size(), put_ship_rec, 1 );
-			browse_caravan.paint();
+			else
+				browse_caravan.paint();
 			browse_caravan.open(browse_caravan_recno, report_array.size());
 		}
 		else
@@ -182,7 +183,8 @@ void Info::disp_trade(int refreshFlag)
 			if( !browse_ship.init_flag )
 				browse_ship.init( CARAVAN_BROWSE_X1, CARAVAN_BROWSE_Y1+22, CARAVAN_BROWSE_X2, CARAVAN_BROWSE_Y2-20,
 									0, 16, report_array.size(), put_ship_rec, 1 );
-			browse_ship.paint();
+			else
+				browse_ship.paint();
 			browse_ship.open(browse_ship_recno, report_array.size());
 		}
 	}
