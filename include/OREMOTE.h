@@ -161,6 +161,8 @@ enum { MSG_QUEUE_HEADER=FIRST_REMOTE_MSG_ID,
 		 MSG_COMPARE_SPY,
 		 MSG_COMPARE_TALK,
 
+		 MSG_U_CARA_COPY_ROUTE,
+
 		 LAST_REMOTE_MSG_ID			// keep this item last
 	  };
 
@@ -303,6 +305,8 @@ public:
 	 //##### trevor 30/9 #######//
 
 	void	compare_remote_object();
+
+	void	caravan_copy_route();
 };
 
 //----------- Define class Remote -----------//

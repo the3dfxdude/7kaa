@@ -138,6 +138,8 @@ my @msg_ids = (
 	['MSG_COMPARE_SPY', 'sC*', [qw(array_len crc)]],
 	['MSG_COMPARE_TALK', 'sC*', [qw(array_len crc)]],
 
+	['MSG_U_CARA_COPY_ROUTE', 'ss', [qw(sprite_recno copy_unit_recno)]],
+
 	['LAST_REMOTE_MSG_ID'],
 );
 

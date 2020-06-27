@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2020 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1566,3 +1567,66 @@ int UnitCaravan::carrying_qty(int pickUpType)
 //---------- End of function UnitCaravan::carrying_qty ----------//
 
 
+//--------- Begin of function UnitCaravan::copy_route ---------//
+//
+// Copies trade route from copyUnitRecno to this caravan.
+//
+void UnitCaravan::copy_route(short copyUnitRecno, int remoteAction)
+{
+	if( sprite_recno == copyUnitRecno )
+		return;
+
+	UnitCaravan* copyUnit = (UnitCaravan*)unit_array[copyUnitRecno];
+
+	if( copyUnit->nation_recno != nation_recno )
+		return;
+
+	if( remote.is_enable() && !remoteAction )
+	{
+		// packet structure : <unit recno> <copy recno>
+		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_U_CARA_COPY_ROUTE, 2*sizeof(short));
+		*shortPtr = sprite_recno;
+
+		shortPtr[1] = copyUnitRecno;
+		return;
+	}
+
+	// clear existing stops
+	int num_stops = stop_defined_num;
+	for( int i=0; i<num_stops; i++ )
+		del_stop(1, COMMAND_AUTO); // stop ids shift up
+
+	CaravanStop* caravanStopA = copyUnit->stop_array;
+	CaravanStop* caravanStopB = stop_array;
+	for( int i=0; i<MAX_STOP_FOR_CARAVAN; i++, caravanStopA++, caravanStopB++ )
+	{
+		if( !caravanStopA->firm_recno )
+			break;
+
+		if( firm_array.is_deleted(caravanStopA->firm_recno) )
+			continue;
+
+		Firm* firmPtr = firm_array[caravanStopA->firm_recno];
+		set_stop(i+1, caravanStopA->firm_loc_x1, caravanStopA->firm_loc_y1, COMMAND_AUTO);
+
+		if( caravanStopA->pick_up_type == AUTO_PICK_UP )
+		{
+			set_stop_pick_up(i+1, AUTO_PICK_UP, COMMAND_AUTO );
+		}
+
+		else if( caravanStopA->pick_up_type == NO_PICK_UP )
+		{
+			set_stop_pick_up(i+1, NO_PICK_UP, COMMAND_AUTO );
+		}
+
+		else
+		{
+			for( int b=0; b<MAX_PICK_UP_GOODS; ++b )
+			{
+				if( caravanStopA->pick_up_array[b] != caravanStopB->pick_up_array[b] )
+					set_stop_pick_up(i+1, b+1, COMMAND_PLAYER);
+			}
+		}
+	}
+}
+//---------- End of function UnitCaravan::copy_route ----------//

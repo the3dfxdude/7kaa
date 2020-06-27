@@ -2,6 +2,7 @@
  * Seven Kingdoms: Ancient Adversaries
  *
  * Copyright 1997,1998 Enlight Software Ltd.
+ * Copyright 2020 Jesse Allen
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +19,8 @@
  *
  */
 
-//Filename    : OR_TOWN.CPP
-//Description : Town Report
+//Filename    : OR_TRADE.CPP
+//Description : Trade Report
 
 #include <OVGA.h>
 #include <OSTR.h>
@@ -239,6 +240,18 @@ void Info::detect_trade()
 			Unit* unitPtr = unit_array[ get_report_data(browse_caravan_recno) ];
 
 			world.go_loc(unitPtr->next_x_loc(), unitPtr->next_y_loc(), 1);
+		}
+	}
+
+	else if( mode_unit == BROWSE_CARAVAN && browse_caravan.detect_right() )
+	{
+		browse_caravan_recno = browse_caravan.recno();
+
+		if( unit_array.selected_recno && unit_array[unit_array.selected_recno]->unit_id == UNIT_CARAVAN )
+		{
+			UnitCaravan* unitPtr = (UnitCaravan*) unit_array[ get_report_data(browse_caravan_recno) ];
+			if( unitPtr->nation_recno == nation_array.player_recno )
+				unitPtr->copy_route(unit_array.selected_recno, COMMAND_PLAYER);
 		}
 	}
 

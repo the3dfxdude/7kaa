@@ -158,6 +158,8 @@ public:
 	void	caravan_on_way();
 	void  pre_process();
 
+	void    copy_route(short copyUnitRecno, int remoteAction);
+
 	//------- ai functions --------//
 
 	void 	process_ai();

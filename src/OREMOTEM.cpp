@@ -175,6 +175,8 @@ static MsgProcessFP msg_process_function_array[] =
 	&RemoteMsg::compare_remote_object,
 	&RemoteMsg::compare_remote_object,
 	&RemoteMsg::compare_remote_object,
+
+	&RemoteMsg::caravan_copy_route,
 };
 
 //---------- Declare static functions ----------//
@@ -1152,6 +1154,36 @@ void RemoteMsg::caravan_del_stop()
 	}
 }
 // ------- End of function RemoteMsg::caravan_del_stop ------//
+
+
+// ------- Begin of function RemoteMsg::caravan_copy_route ------//
+void RemoteMsg::caravan_copy_route()
+{
+	err_when( id != MSG_U_CARA_COPY_ROUTE);
+	// packet structure : <unit recno> <copy unit recno>
+	short *shortPtr = (short *)data_buf;
+	short unitCount= 2;
+	validate_selected_unit_array(shortPtr, unitCount);
+
+	if( unitCount > 0)
+	{
+		Unit *unitPtr = unit_array[*shortPtr];
+		UnitCaravan *caravanPtr;
+		if( unitPtr->unit_id != UNIT_CARAVAN)
+		{
+			err_here();
+		}
+		else
+		{
+#ifdef DEBUG_LONG_LOG
+			long_log->printf("caravan %d copy route from %d\n", shortPtr[0], shortPtr[1]);
+#endif
+			caravanPtr = (UnitCaravan *)unitPtr;
+			caravanPtr->copy_route(shortPtr[1], COMMAND_REMOTE);
+		}
+	}
+}
+// ------- End of function RemoteMsg::caravan_copy_route ------//
 
 
 // ------- Begin of function RemoteMsg::ship_unload_unit ---------//
