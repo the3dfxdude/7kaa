@@ -2698,6 +2698,11 @@ void Sys::load_game()
       // #### end Gilbert 22/10 ######//
       box.msg( _("Game Loaded Successfully") );
       signal_exit_flag=0;
+      user_pause_flag = !config.frame_speed;
+      if( user_pause_flag )
+         last_frame_speed = 9;
+      else
+         last_frame_speed = 0;
       info.disp();
    }
 }
