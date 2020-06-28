@@ -67,7 +67,8 @@ void IMGcall IMGbltAreaRemap(char* imageBuf,int pitch, int desX, int desY, char*
 	{
 		for (int i=0; i<width; ++i)
 		{
-			imageBuf[ dest + i ] = colorTable[ bitmapBuf[esi + i] ];
+			unsigned char idx = (unsigned char)bitmapBuf[esi + i];
+			imageBuf[ dest + i ] = colorTable[ idx ];
 		}
 	}
 }
