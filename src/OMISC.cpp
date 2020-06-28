@@ -1177,7 +1177,11 @@ int Misc::is_file_exist(const char* fileName)
 
    HANDLE findHandle = FindFirstFile( fileName, &findData );
 
-   return findHandle!=INVALID_HANDLE_VALUE;
+   if( findHandle == INVALID_HANDLE_VALUE )
+      return 0;
+
+   FindClose(findHandle);
+   return 1;
 #endif
 #ifdef USE_POSIX
    return !access(fileName, F_OK);
