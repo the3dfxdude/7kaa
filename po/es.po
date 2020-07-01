@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2020-02-16 15:28-0300\n"
+"PO-Revision-Date: 2020-06-30 21:53-0400\n"
 "Last-Translator: Lenny Andreu\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: src/CmdLine.cpp:46
 #, c-format
@@ -3637,7 +3637,7 @@ msgstr "Mina"
 
 #: src/OR_TRADE.cpp:80
 msgid "Any"
-msgstr ""
+msgstr "Cualquiera"
 
 #: src/OR_TRADE.cpp:87 src/OR_TRADE.cpp:143
 msgid "Ship"
@@ -3661,11 +3661,11 @@ msgstr "Bienes transportados"
 
 #: src/OR_TRADE.cpp:202
 msgid "Stock/Sales/Demand"
-msgstr ""
+msgstr "Existencias/Ventas/Demanda"
 
 #: src/OR_TRADE.cpp:204
 msgid "(In Range of Unit)"
-msgstr ""
+msgstr "(En rango de unidades)"
 
 #: src/OR_TRADE.cpp:422
 #, c-format
@@ -3678,26 +3678,25 @@ msgid "Total Ships: %s"
 msgstr "Barcos totales: %s"
 
 #: src/OR_TRADE.cpp:430
-#, fuzzy, c-format
+#, c-format
 msgid "*Idle Caravans: %s"
-msgstr "Total de caravanas: %s"
+msgstr "*Caravanas inactivas: %s"
 
 #: src/OR_TRADE.cpp:441
-#, fuzzy, c-format
+#, c-format
 msgid "Total Locations: %s"
-msgstr "Población total: %s"
+msgstr "Total ubicaciones: %s"
 
 #: src/OR_TRADE.cpp:445
-#, fuzzy, c-format
+#, c-format
 msgid "*Idle Locations: %s"
-msgstr "Población total: %s"
+msgstr "*Ubicaciones inactivas: %s"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:289
 #: src/OR_TRADE.cpp:906 src/OR_TRADE.cpp:942
-#, fuzzy
 msgid "Raw Stock"
-msgstr "Existencia"
+msgstr "Materia prima en existencia"
 
 #: src/OR_TRADE.cpp:931 src/OSITEDRW.cpp:54
 msgid "Reserve"
@@ -3705,21 +3704,18 @@ msgstr "Reserva"
 
 # data/resource/std/00007-FIRM.dbf
 #: src/OR_TRADE.cpp:952
-#, fuzzy
 msgid "Markets"
-msgstr "Mercado"
+msgstr "Mercados"
 
 # data/resource/std/00007-FIRM.dbf
 #: src/OR_TRADE.cpp:959
-#, fuzzy
 msgid "Factories"
-msgstr "Fábrica"
+msgstr "Fábricas"
 
 # data/resource/std/00007-FIRM.dbf
 #: src/OR_TRADE.cpp:966
-#, fuzzy
 msgid "Mines"
-msgstr "Mina"
+msgstr "Minas"
 
 #: src/OSITEDRW.cpp:48
 msgid "Natural Resource"
