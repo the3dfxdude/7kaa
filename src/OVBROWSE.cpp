@@ -174,7 +174,7 @@ void VBrowse::open(int recNo, int newTotalRec)
 
 	if( newTotalRec >= 0 )
 	{
-		if( total_rec_num != newTotalRec && (total_rec_num < x_max_rec * y_max_rec || newTotalRec < x_max_rec * y_max_rec) )
+		if( total_rec_num < x_max_rec * y_max_rec || newTotalRec < x_max_rec * y_max_rec )
 			init_var(newTotalRec, recNo); // recalculate disp_max_rec
 		else
 			total_rec_num = newTotalRec;
