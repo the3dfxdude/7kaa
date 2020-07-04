@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.15.4-dev
+Release version 2.15.4
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -11,28 +11,22 @@ details of the license. We are indebted to Enlight for making the 7kfans
 project possible and giving a new chance to build a community for fans
 of the game.
 
-Summary of changes from 2.15.2 to 2.15.3
+Summary of changes from 2.15.3 to 2.15.4
 ---------
- * Fixed corrupt characters and fields in various in game messages.
- * Improved translation support.
+ * Fixed a problem in multiplayer that halted the game play.
+ * Added option to play with the original seven kingdoms, and enabled on original scenarios.
+ * Apply the leadership bonus when the general is in fort for defending soldiers in range.
+ * Fixed the mobile general range calculation for the leadership bonus to not apply to the troop anywhere on the map.
+ * Apply the leadership bonus when the general is on a ship for defending soldiers in range.
  * Updated translations.
- * Added some UI improvements.
- * Fixed some crashing issues related to spies.
- * Standardized on FPU code generation for better cross-platform compatibility.
- * Added more advanced config options.
- * Improved manual.
- * Added key binding support.
- * Prevented chat keystrokes registering as a hotkey too.
- * Fixed sometimes hiring wrong unit in the inn.
- * Added scenario advanced config presets to restore default scenario game play to original game design parameters.
- * Ensure screen redraw when dropping spy identity.
- * Improved alternate font set.
- * Added scroll button for long tutor messages.
- * Removed gong sound for unsent AI diplomatic messages.
- * Re-enabled AI ability to request direct military aid; expect allied AI to work together on defending now.
- * Removed uninitialized parameter in Caravan CRC check.
- * Removed improper variable-size cast, causing incorrect action processing on 64-bit platforms.
- * Correct replay initialization for weather sync.
+ * Added hotkeys for managing the build menu in the War Factory, Harbor, and Town.
+ * Restored support for real full screen resolution that requires a screen mode change.
+ * Improved dynamic UI button and text layout.
+ * Added Polish translation.
+ * Added trade locations to the trade report.
+ * Sort and filter trade locations based on the map selected caravan.
+ * Allow setting stops using the trade report.
+ * Allow copying trade routes using the trade report.
 
 
 System Requirements
