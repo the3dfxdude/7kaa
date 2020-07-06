@@ -27,7 +27,7 @@
 #ifndef __VERSION_H
 #define __VERSION_H
 
-#define SKVERSION "2.15.4"
+#define SKVERSION "2.15.4p1"
 #define SKVERMAJ 2
 #define SKVERMED 15
 #define SKVERMIN 4
