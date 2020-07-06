@@ -1319,7 +1319,6 @@ int Town::detect_auto_menu(int modeCollectTax)
 				shortPtr[1] = loyaltyLevel;
 			}
 		}
-		return 1;
 	}
 	else if( rc==2 )
 	{
@@ -1372,7 +1371,6 @@ int Town::detect_auto_menu(int modeCollectTax)
 			}
 		}
 		// ####### end Gilbert 11/9 ########//
-		return 1;
 	}
 
 	//--------------------------------------//
