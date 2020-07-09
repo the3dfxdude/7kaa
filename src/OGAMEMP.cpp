@@ -5596,12 +5596,7 @@ int Game::mp_select_load_option(char *fileName)
 			}
 			err_when( recvSetFrameDelay > 1 );
 			err_when( recvSyncTestLevel > 1 );
-
-			// ------- send end setting string ------- //
-
-			MpStructBase mpEndSetting(MPMSG_END_SETTING);
-			mp_obj.send( from, &mpEndSetting, sizeof(mpEndSetting) );
-		}	
+		}
 
 		if( remote.sync_test_level == 0)
 		{
