@@ -2383,6 +2383,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	int regPlayerCount = 0;
 	int selfReadyFlag = 0;
 	int shareRace = 1;		// host only, 0= exclusive race of each player
+	int recvEndSetting = 0;
 	int p;
 
 	int i;
@@ -3371,6 +3372,9 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					remote.sync_test_level = ((MpStructSyncLevel *)recvPtr)->sync_test_level;
 					break;
 				// ###### patch end Gilbert 22/1 ######//
+				case MPMSG_END_SETTING:
+					++recvEndSetting;
+					break;
 				case MPMSG_REFUSE_NEW_PLAYER:
 					switch (((MpStructRefuseNewPlayer *)recvPtr)->reason)
 					{
@@ -4191,7 +4195,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 
 			trial = 5000;
 			startTime = misc.get_time();
-			int recvEndSetting = 0;
 			while( --trial > 0 || misc.get_time() - startTime < 10000 )
 			{
 				if( recvEndSetting >= playerCount-1)
@@ -4280,6 +4283,7 @@ int Game::mp_select_load_option(char *fileName)
 	int selfReadyFlag = 0;
 	int maxPlayer;
 	int shareRace = 1;		// host only, 0= exclusive race of each player
+	int recvEndSetting = 0;
 	int p;
 
 	err_when( tempConfig.race_id != (~nation_array)->race_id );
@@ -5560,6 +5564,9 @@ int Game::mp_select_load_option(char *fileName)
 					++recvSyncTestLevel;
 					offset += sizeof( MpStructSyncLevel );
 					break;
+				case MPMSG_END_SETTING:
+					++recvEndSetting;
+					break;
 				}  // end switch
 
 				if( !recvStartMsg || offset <= oldOffset )
@@ -5612,7 +5619,6 @@ int Game::mp_select_load_option(char *fileName)
 
 			trial = 5000;
 			startTime = misc.get_time();
-			int recvEndSetting = 0;
 			while( --trial > 0 || misc.get_time() - startTime < 10000 )
 			{
 				if( recvEndSetting >= playerCount-1)
