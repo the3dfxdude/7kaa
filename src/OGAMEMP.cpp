@@ -3346,10 +3346,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 								mRefreshFlag |= MGOPTION_PLAYERS;
 							}
 						}
-						if (remote.is_host) {
-							// forward message to everyone
-							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerReady));
-						}
 					}
 					break;
 				case MPMSG_PLAYER_UNREADY:
@@ -3361,10 +3357,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 								playerReadyFlag[p] = 0;
 								mRefreshFlag |= MGOPTION_PLAYERS;
 							}
-						}
-						if (remote.is_host) {
-							// forward message to everyone
-							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerUnready));
 						}
 					}
 					break;
@@ -4212,10 +4204,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 					if( ((MpStructBase *)recvPtr)->msg_id == MPMSG_END_SETTING )
 					{
 						recvEndSetting++;
-					}
-					if (remote.is_host) {
-						// forward message to everyone
-						mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructBase));
 					}
 				}
 			}
@@ -5140,10 +5128,6 @@ int Game::mp_select_load_option(char *fileName)
 								mRefreshFlag |= MGOPTION_PLAYERS;
 							}
 						}
-						if (remote.is_host) {
-							// forward message to everyone
-							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerReady));
-						}
 					}
 					break;
 				case MPMSG_PLAYER_UNREADY:
@@ -5155,10 +5139,6 @@ int Game::mp_select_load_option(char *fileName)
 								playerReadyFlag[p] = 0;
 								mRefreshFlag |= MGOPTION_PLAYERS;
 							}
-						}
-						if (remote.is_host) {
-							// forward message to everyone
-							mp_obj.send(BROADCAST_PID, recvPtr, sizeof(MpStructPlayerUnready));
 						}
 					}
 					break;
