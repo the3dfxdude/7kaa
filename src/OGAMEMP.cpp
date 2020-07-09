@@ -986,6 +986,7 @@ void Game::load_mp_game(char *fileName, int lobbied, char *game_host)
 	if( !mp_select_load_option(fileName) )
 	{
 		remote.deinit();
+		mp_close_session();
 #ifdef HAVE_LIBCURL
 		ws.deinit();
 #endif
