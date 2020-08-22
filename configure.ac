@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([7kaa], [2.15.4p1], [the3dfxdude@gmail.com], [],
+AC_INIT([7kaa], [2.15.5], [the3dfxdude@gmail.com], [],
 	[http://7kfans.com/])
 AC_CONFIG_SRCDIR([src/AM.cpp])
 AC_CONFIG_HEADERS([include/config.h])
