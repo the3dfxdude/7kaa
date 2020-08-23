@@ -87,4 +87,8 @@ doc/main.idx
 doc/main.log
 doc/main.out
 doc/main.toc
+doc/main.fdb_latexmk
+doc/main.fls
+doc/main.ilg
+doc/main.ind
 tools/genfont
