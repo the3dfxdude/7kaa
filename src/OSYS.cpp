@@ -851,7 +851,7 @@ void Sys::main_loop(int isLoadedGame)
                   // cannot compare every frame, as PROCESS_FRAME_DELAY >= 1
                   crc_store.record_all();
                   if( !remote.is_replay() )
-                     crc_store.send_all();
+                     crc_store.send_frame();
                }
                // ###### patch end Gilbert 20/1 ######//
 

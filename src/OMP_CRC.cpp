@@ -52,6 +52,7 @@
 #include <OSPY.h>
 // ###### patch end Gilbert 20/1 #######//
 #include <OTALKRES.h>
+#include <OVQUEUE.h>
 
 
 // ###### patch begin Gilbert 21/1 #####//
@@ -1481,3 +1482,11 @@ void TalkMsg::clear_ptr()
 {
 }
 //----------- End of function TalkMsg::clear_ptr -----------//
+
+
+//----------- Begin of function VLenQueue::crc8 -----------//
+uint8_t VLenQueue::crc8()
+{
+	return ::crc8((uint8_t*)queue_buf, queued_size);
+}
+//----------- End of function VLenQueue::crc8 -----------//

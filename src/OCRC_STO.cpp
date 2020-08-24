@@ -53,6 +53,8 @@ void CrcStore::deinit()
 	rebels.clear();
 	spies.clear();
 	talk_msgs.clear();
+	all_crc.clear();
+	frame_check_num = 0;
 }
 
 void CrcStore::record_nations()
@@ -66,6 +68,7 @@ void CrcStore::record_nations()
 		if( !nation_array.is_deleted(nationRecno) )
 			checkNum = nation_array[nationRecno]->crc8();
 		*(CRC_TYPE *)nations.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
@@ -80,6 +83,7 @@ void CrcStore::record_units()
 		if( !unit_array.is_deleted(unitRecno) )
 			checkNum = unit_array[unitRecno]->crc8();
 		*(CRC_TYPE *)units.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
@@ -94,6 +98,7 @@ void CrcStore::record_firms()
 		if( !firm_array.is_deleted(firmRecno) )
 			checkNum = firm_array[firmRecno]->crc8();
 		*(CRC_TYPE *)firms.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
@@ -108,6 +113,7 @@ void CrcStore::record_towns()
 		if( !town_array.is_deleted(townRecno) )
 			checkNum = town_array[townRecno]->crc8();
 		*(CRC_TYPE *)towns.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
@@ -122,6 +128,7 @@ void CrcStore::record_bullets()
 		if( !bullet_array.is_deleted(bulletRecno) )
 			checkNum = bullet_array[bulletRecno]->crc8();
 		*(CRC_TYPE *)bullets.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
@@ -139,6 +146,7 @@ void CrcStore::record_rebels()
 			checkNum = rebel_array[rebelRecno]->crc8();
 		}
 		*(CRC_TYPE *)rebels.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
@@ -156,6 +164,7 @@ void CrcStore::record_spies()
 			checkNum = spy_array[spyRecno]->crc8();
 		}
 		*(CRC_TYPE *)spies.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
@@ -173,11 +182,13 @@ void CrcStore::record_talk_msgs()
 			 checkNum = talk_res.get_talk_msg(talkRecno)->crc8();
 		}
 		*(CRC_TYPE *)talk_msgs.reserve(sizeof(CRC_TYPE)) = checkNum;
+		*(CRC_TYPE *)all_crc.reserve(sizeof(CRC_TYPE)) = checkNum;
 	}
 }
 
 void CrcStore::record_all()
 {
+	all_crc.clear();
 	record_nations();
 	record_units();
 	record_firms();
@@ -186,6 +197,7 @@ void CrcStore::record_all()
 	record_rebels();
 	record_spies();
 	record_talk_msgs();
+	frame_check_num = all_crc.crc8();
 }
 
 
@@ -216,6 +228,15 @@ void CrcStore::send_all()
 	charPtr = (char *)remote.new_send_queue_msg(MSG_COMPARE_TALK, talk_msgs.length() );
 	memcpy(charPtr, talk_msgs.queue_buf, talk_msgs.length() );
 }
+
+
+void CrcStore::send_frame()
+{
+	CRC_TYPE *dataPtr;
+	dataPtr = (CRC_TYPE *)remote.new_send_queue_msg(MSG_COMPARE_CRC, sizeof(CRC_TYPE) );
+	*dataPtr = frame_check_num;
+}
+
 
 // return 0 if equal
 // otherwise not equal
@@ -285,4 +306,17 @@ int CrcStore::compare_remote(uint32_t remoteMsgId, char *dataPtr)
 		diffOffset = 0;		// dummy code
 	}
 	return rc;
+}
+
+
+// return 0 if equal
+// otherwise not equal
+int CrcStore::compare_frame(char *dataPtr)
+{
+	if( *(CRC_TYPE*)dataPtr != frame_check_num )
+	{
+		send_all();
+		return 1;
+	}
+	return 0;
 }

@@ -27,6 +27,7 @@
 
 #include <OVQUEUE.h>
 #include <OSTR.h>
+#include <CRC.h>
 
 class CrcStore
 {
@@ -39,16 +40,26 @@ public:
 	VLenQueue rebels;
 	VLenQueue spies;
 	VLenQueue talk_msgs;
+	VLenQueue all_crc;
 
 	// #### patch begin Gilbert 23/1 #####//
 	String	crc_error_string;
 	// #### patch end Gilbert 23/1 #####//
+
+	CRC_TYPE frame_check_num;
 
 public:
 	CrcStore();
 	void	init();
 	void	deinit();
 
+	void	record_all();
+	void	send_all();
+	void	send_frame();
+	int	compare_remote(uint32_t remoteMsgId, char *);
+	int	compare_frame(char *dataPtr);
+
+private:
 	void	record_nations();
 	void	record_units();
 	void	record_firms();
@@ -58,11 +69,8 @@ public:
 	void	record_spies();
 	void	record_talk_msgs();
 
-	void	record_all();
-	void	send_all();
-	int	compare_remote(uint32_t remoteMsgId, char *);
 };
 
 extern CrcStore crc_store;
 
-#endif 
+#endif

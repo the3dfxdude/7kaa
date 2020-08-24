@@ -177,6 +177,8 @@ static MsgProcessFP msg_process_function_array[] =
 	&RemoteMsg::compare_remote_object,
 
 	&RemoteMsg::caravan_copy_route,
+
+	&RemoteMsg::compare_remote_crc,
 };
 
 //---------- Declare static functions ----------//
@@ -2866,16 +2868,28 @@ void	RemoteMsg::compare_remote_object()
 	err_when( id < MSG_COMPARE_NATION || id > MSG_COMPARE_TALK );
 
 	// ###### patch begin Gilbert 20/1 #######//
-	if( (remote.sync_test_level & 2) && (remote.sync_test_level >= 0)
-		&& crc_store.compare_remote(id, data_buf) )
+	if( crc_store.compare_remote(id, data_buf) )
 	{
-		remote.sync_test_level = ~2;	// signal error encountered
 		if( sys.debug_session )
 			err.run( _("Multiplayer Object Sync Error") );
 	}
 	// ###### patch end Gilbert 20/1 #######//
 }
 //------- End of function RemoteMsg::compare_remote_object -------//
+
+
+//------- Begin of function RemoteMsg::compare_remote_crc -------//
+void RemoteMsg::compare_remote_crc()
+{
+	err_when( id != MSG_COMPARE_CRC );
+
+	if( (remote.sync_test_level & 2) && (remote.sync_test_level >= 0)
+		&& crc_store.compare_frame(data_buf) )
+	{
+		remote.sync_test_level = ~2;	// signal error encountered
+	}
+}
+//------- End of function RemoteMsg::compare_remote_crc -------//
 
 
 //------- Begin of function RemoteMsg::unit_add_way_point -------//

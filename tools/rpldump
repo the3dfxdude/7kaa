@@ -140,6 +140,8 @@ my @msg_ids = (
 
 	['MSG_U_CARA_COPY_ROUTE', 'ss', [qw(sprite_recno copy_unit_recno)]],
 
+	['MSG_COMPARE_CRC', 'sC', [qw(crc)]],
+
 	['LAST_REMOTE_MSG_ID'],
 );
 
@@ -264,6 +266,10 @@ my (
 	$MSG_COMPARE_REBEL,
 	$MSG_COMPARE_SPY,
 	$MSG_COMPARE_TALK,
+
+	$MSG_U_CARA_COPY_ROUTE,
+
+	$MSG_COMPARE_CRC,
 
 	$LAST_REMOTE_MSG_ID,
 ) = (FIRST_REMOTE_MSG_ID)..(FIRST_REMOTE_MSG_ID+scalar(@msg_ids));
