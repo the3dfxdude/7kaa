@@ -130,20 +130,39 @@
     \fancyhf[lh,rh,ch]{}
     \fancyhf[leh]{\leftmark}
     \fancyhf[roh]{\rightmark}
-\usepackage{titlesec} % For modification of titles
+\usepackage[explicit]{titlesec} % For modification of titles
 % \titlespacing\command{left}{before}{after}
 % spacing: how to read {12pt plus 4pt minus 2pt}
 %           12pt is what we would like the spacing to be
 %           plus 4pt means that TeX can stretch it by at most 4pt
 %           minus 2pt means that TeX can shrink it by at most 2pt
+\titlespacing\chapter{0pt}{12pt plus 4pt minus 2pt}{12pt plus 6pt minus 2pt}
 \titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
 \titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
 \titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
+\titleformat%
+    {\chapter}% command
+    [display]% shape, one of: hang, block, display, runin, leftmargin, rightmargin, drop, wrap, frame
+    {\bfseries\Huge}% format
+    {\fontsize{40}{40}\selectfont\thechapter}% label
+    {0em}% sep
+    {
+        \vspace{-1.5em}
+        \hspace{1.5em}
+        \parbox{0.8\textwidth}{
+            \raggedright%
+            #1%
+        }
+    }% before-code
+    [
+        \vspace{0.1em}
+        \titlerule
+    ]% after-code
+
 
 \usepackage{makeidx} % Index
     \makeindex
 \usepackage[hidelinks]{hyperref} % For the index and TOC but not for external links. Non color, frameless links from the original manual.
-
 
 %\usepackage{showframe} % For testing.
 
