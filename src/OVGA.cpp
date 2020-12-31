@@ -908,9 +908,15 @@ void Vga::save_status_report()
       SDL_Rect rect;
       SDL_DisplayMode mode;
       float ddpi, hdpi, vdpi;
-      fprintf(file, "-- Display %d --\n", i);
-      if( !SDL_GetCurrentDisplayMode(i, &mode) )
-         fprintf(file, "Mode: %dx%dx%ubpp %dHz format=%s driver=%p\n", mode.w, mode.h, SDL_BITSPERPIXEL(mode.format), mode.refresh_rate, SDL_GetPixelFormatName(mode.format), mode.driverdata);
+      int num_modes, cur_mode, j;
+      num_modes = SDL_GetNumDisplayModes(i);
+      cur_mode = SDL_GetCurrentDisplayMode(i, NULL);
+      fprintf(file, "-- Display %d using mode %d--\n", i, cur_mode);
+      for( j=0; j<num_modes; j++ )
+      {
+          if( !SDL_GetDisplayMode(i, j, &mode) )
+              fprintf(file, "Mode %d: %dx%dx%ubpp %dHz format=%s driver=%p\n", j, mode.w, mode.h, SDL_BITSPERPIXEL(mode.format), mode.refresh_rate, SDL_GetPixelFormatName(mode.format), mode.driverdata);
+      }
       if( !SDL_GetDisplayDPI(i, &ddpi, &hdpi, &vdpi) )
          fprintf(file, "DPI: diag=%f horiz=%f vert=%f\n", ddpi, hdpi, vdpi);
       if( !SDL_GetDisplayBounds(i, &rect) )
