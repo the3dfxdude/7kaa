@@ -8,29 +8,29 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-01-17 15:19+0100\n"
+"PO-Revision-Date: 2021-02-27 09:59+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
-"Last-Translator: \n"
+"Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language: eo\n"
 
 #: src/CmdLine.cpp:46
 #, c-format
 msgid "The command line option %s requires an argument."
-msgstr ""
+msgstr "La komandlinia opcio %s bezonas argumenton."
 
 #: src/CmdLine.cpp:56
 msgid "Multiple startup mode options present on the command line."
-msgstr ""
+msgstr "Kelkaj opcioj de stariga modo en la komandlinio."
 
 #: src/ConfigAdv.cpp:219
 #, c-format
 msgid "Error in %s at line %d"
-msgstr ""
+msgstr "Eraro en %s en linio %d"
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
 #: src/OGAMEMP.cpp:1510 src/OGAMEMP.cpp:1610 src/OGAMEMP.cpp:3012
@@ -51,7 +51,7 @@ msgstr "Bone"
 #: src/OGAMEMP.cpp:2176 src/OGAMEMP.cpp:2239 src/OSPYA.cpp:354
 #: src/OTOWNIF.cpp:1265 src/OUNITIF.cpp:1042 src/OUNITIF.cpp:1078
 msgid "Cancel"
-msgstr ""
+msgstr "Nuligi"
 
 #. TRANSLATORS: <Month> <Day>, <Year>
 #: src/ODATE.cpp:231 src/ODATE.cpp:235
@@ -210,70 +210,70 @@ msgstr ""
 #: src/OTOWNIF.cpp:298 src/OTOWNIF.cpp:1415 src/OUNITIF.cpp:1154
 #: src/OU_MARIF.cpp:510
 msgid "Loyalty"
-msgstr ""
+msgstr "Fideleco"
 
 #: src/OFIRMIF.cpp:652 src/OFIRMIF.cpp:659 src/OFIRMIF.cpp:671
 #: src/OFIRMIF.cpp:685 src/OU_MARIF.cpp:510
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/OFIRMIF.cpp:687 src/OFIRMIF.cpp:735 src/OF_INN.cpp:432
 #: src/OF_INN.cpp:483 src/OUNITIF.cpp:1166 src/OU_MARIF.cpp:514
 msgid "Combat"
-msgstr ""
+msgstr "Batalo"
 
 #: src/OFIRMIF.cpp:696 src/OFIRMIF.cpp:744 src/OR_MIL.cpp:102
 #: src/OR_TECH.cpp:145 src/OR_TRADE.cpp:147 src/OU_MARIF.cpp:524
 msgid "Hit Points"
-msgstr ""
+msgstr "Trafpunktoj"
 
 #: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1414
 msgid "Spy Skill"
-msgstr ""
+msgstr "Spiona Lerteco"
 
 #: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1416
 msgid "Action"
-msgstr ""
+msgstr "Ago"
 
 #: src/OFIRMIF3.cpp:88
 msgid "Bribe"
-msgstr ""
+msgstr "Korupti"
 
 #: src/OFIRMIF3.cpp:116
 msgid "Bribe Succeeded."
-msgstr ""
+msgstr "Koruptado sukcesis."
 
 #: src/OFIRMIF3.cpp:122
 msgid "Bribe Failed."
-msgstr ""
+msgstr "Koruptado fiaskis."
 
 #. TRANSLATORS: Part of "Your Spy Was Caught And Executed."
 #: src/OFIRMIF3.cpp:123 src/OFIRMIF3.cpp:562 src/OFIRMIF3.cpp:581
 msgid "Your Spy Was Caught"
-msgstr ""
+msgstr "Via Spiono Estis Kaptita"
 
 #. TRANSLATORS: Part of "Your Spy Was Caught And Executed."
 #: src/OFIRMIF3.cpp:124 src/OFIRMIF3.cpp:564 src/OFIRMIF3.cpp:583
 msgid "And Executed."
-msgstr ""
+msgstr "Kaj Mortigita."
 
 #. TRANSLATORS: Offer <Amount>
 #: src/OFIRMIF3.cpp:247
-#, c-format
+#, fuzzy, c-format
 msgid "Offer %s"
-msgstr ""
+msgstr "Oferti %s"
 
 #: src/OFIRMIF3.cpp:545 src/OFIRMIF3.cpp:560
 msgid "Assassination Succeeded."
-msgstr ""
+msgstr "Murdo Sukcesis."
 
 #: src/OFIRMIF3.cpp:546
 msgid "Your Spy Escaped."
-msgstr ""
+msgstr "Via Spiono Foriris"
 
 #: src/OFIRMIF3.cpp:579
 msgid "Assassination Failed."
-msgstr ""
+msgstr "Murdo Fiaskis."
 
 #: src/OF_BASE.cpp:386 src/OF_CAMP.cpp:573 src/OGAMHALL.cpp:255
 #: src/OSaveGameArray.cpp:609 src/OUNIT.cpp:763 src/OUNITIF.cpp:1226
@@ -282,7 +282,7 @@ msgstr "Reĝo"
 
 #: src/OF_BASE.cpp:400 src/OF_CAMP.cpp:587 src/OR_MIL.cpp:100 src/OSKILL.cpp:35
 msgid "Leadership"
-msgstr ""
+msgstr "Estreco"
 
 #: src/OF_FACT.cpp:361
 msgid "Producing Clay Products"
@@ -303,7 +303,7 @@ msgstr ""
 # data/RESOURCE/HELP.RES:337
 #: src/OF_FACT.cpp:394 src/OF_MINE.cpp:297
 msgid "Monthly Production"
-msgstr ""
+msgstr "Monata Produktado"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:313
@@ -327,7 +327,7 @@ msgstr ""
 
 #: src/OF_HARB.cpp:638 src/OF_WAR.cpp:293 src/OTOWNIF.cpp:911
 msgid "Done"
-msgstr ""
+msgstr "Finita"
 
 #: src/OF_INN.cpp:447
 msgid "Hiring Cost"
