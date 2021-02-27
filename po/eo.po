@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-02-27 09:59+0100\n"
+"PO-Revision-Date: 2021-02-27 18:51+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -953,43 +953,43 @@ msgstr ""
 
 #: src/OGFILE.cpp:336
 msgid "Cannot read file header"
-msgstr ""
+msgstr "Ne povas legi dosieran kapon"
 
 #: src/OGFILE.cpp:338
 msgid "Incompatible save game"
-msgstr ""
+msgstr "Malkongrua luda konservaĵo"
 
 #: src/OGFILE.cpp:340
 msgid "Load game error"
-msgstr ""
+msgstr "Eraro ŝargante ludon"
 
 #: src/OHELP.cpp:507
 msgid "Norman General"
-msgstr ""
+msgstr "Normanda Generalo"
 
 #: src/OHELP.cpp:508
 msgid "Maya General"
-msgstr ""
+msgstr "Majaa Generalo"
 
 #: src/OHELP.cpp:509
 msgid "Greek General"
-msgstr ""
+msgstr "Greka Generalo"
 
 #: src/OHELP.cpp:510
 msgid "Viking General"
-msgstr ""
+msgstr "Vikinga Generalo"
 
 #: src/OHELP.cpp:511
 msgid "Persian General"
-msgstr ""
+msgstr "Persa Generalo"
 
 #: src/OHELP.cpp:512
 msgid "Chinese General"
-msgstr ""
+msgstr "Ĉina Generalo"
 
 #: src/OHELP.cpp:513
 msgid "Japanese General"
-msgstr ""
+msgstr "Japana Generalo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -8764,7 +8764,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:385
 msgid "Change Loyalty"
-msgstr ""
+msgstr "Ŝanĝi Fidelecon"
 
 # data/RESOURCE/HELP.RES:386
 msgid ""
@@ -8775,7 +8775,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:389
 msgid "Increase Power of Maya Soldiers"
-msgstr ""
+msgstr "Pliigi Povon de Majaaj Batalantoj"
 
 # data/RESOURCE/HELP.RES:390
 msgid ""
@@ -8786,7 +8786,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:393
 msgid "Summon Rain"
-msgstr ""
+msgstr "Voki Pluvon"
 
 # data/RESOURCE/HELP.RES:394
 msgid ""
@@ -8796,7 +8796,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:397
 msgid "Summon Tornadoes"
-msgstr ""
+msgstr "Voki Tornadojn"
 
 # data/RESOURCE/HELP.RES:398
 msgid ""
