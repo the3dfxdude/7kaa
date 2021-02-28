@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-02-27 18:51+0100\n"
+"PO-Revision-Date: 2021-02-28 10:08+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,7 +57,7 @@ msgstr "Nuligi"
 #: src/ODATE.cpp:231 src/ODATE.cpp:235
 #, c-format
 msgid "%s %d, %d"
-msgstr ""
+msgstr "%s %da, %d"
 
 #: src/ODATE.cpp:254
 msgctxt "Month|Full"
@@ -186,7 +186,7 @@ msgstr "Dec"
 #, c-format
 msgctxt "FirmUI|Name"
 msgid "%s %s %d"
-msgstr ""
+msgstr "%s %s %d"
 
 #. TRANSLATORS: <Town> <Short Firm Name>
 #. This is the name of the firm.
@@ -194,15 +194,15 @@ msgstr ""
 #, c-format
 msgctxt "FirmUI|Name"
 msgid "%s %s"
-msgstr ""
+msgstr "%s %s"
 
 #: src/OFIRMIF.cpp:86
 msgid "Under Construction"
-msgstr ""
+msgstr "Konstruante"
 
 #: src/OFIRMIF.cpp:643
 msgid "Residence"
-msgstr ""
+msgstr "Loĝejo"
 
 #: src/OFIRMIF.cpp:652 src/OFIRMIF.cpp:659 src/OFIRMIF2.cpp:95
 #: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:411 src/OF_CAMP.cpp:598
@@ -286,15 +286,15 @@ msgstr "Estreco"
 
 #: src/OF_FACT.cpp:361
 msgid "Producing Clay Products"
-msgstr ""
+msgstr "Produktante Argilajn Produktojn"
 
 #: src/OF_FACT.cpp:362
 msgid "Producing Copper Products"
-msgstr ""
+msgstr "Produktante Kuprajn Produktojn"
 
 #: src/OF_FACT.cpp:363
 msgid "Producing Iron Products"
-msgstr ""
+msgstr "Produktante Ferajn Produktojn"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # #-#-#-#-#  -  #-#-#-#-#
@@ -309,21 +309,21 @@ msgstr "Monata Produktado"
 # data/RESOURCE/HELP.RES:313
 #: src/OF_FACT.cpp:400
 msgid "Raw Material Stock"
-msgstr ""
+msgstr "Kruda Stoko"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:317
 #: src/OF_FACT.cpp:407 src/OR_TRADE.cpp:917
 msgid "Product Stock"
-msgstr ""
+msgstr "Produkta Kvanto"
 
 #: src/OF_HARB.cpp:464 src/OU_MARIF.cpp:87
 msgid "Units"
-msgstr ""
+msgstr "Unuoj"
 
 #: src/OF_HARB.cpp:465 src/OU_MARIF.cpp:88
 msgid "Goods"
-msgstr ""
+msgstr "Varoj"
 
 #: src/OF_HARB.cpp:638 src/OF_WAR.cpp:293 src/OTOWNIF.cpp:911
 msgid "Done"
@@ -331,67 +331,67 @@ msgstr "Finita"
 
 #: src/OF_INN.cpp:447
 msgid "Hiring Cost"
-msgstr ""
+msgstr "Dungaj Kostoj"
 
 #: src/OF_MARK.cpp:413
 msgid "You're not permitted to trade with this market."
-msgstr ""
+msgstr "Vi ne povas komerci kun ĉi tiu bazaro."
 
 #: src/OF_MARK.cpp:467
 msgid "Clear"
-msgstr ""
+msgstr "Forigi"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:289
 #: src/OF_MARK.cpp:479
 msgid "Stock"
-msgstr ""
+msgstr "Stoko"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:293
 #: src/OF_MARK.cpp:481
 msgid "Sales"
-msgstr ""
+msgstr "Vendoj"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:297
 #: src/OF_MARK.cpp:489
 msgid "Demand"
-msgstr ""
+msgstr "Mendado"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:301
 #: src/OF_MARK.cpp:508 src/OR_ECO.cpp:75 src/OR_TOWN.cpp:120
 msgid "Yearly Income"
-msgstr ""
+msgstr "Jara Enspezo"
 
 #: src/OF_MINE.cpp:263
 msgid "Mining Clay"
-msgstr ""
+msgstr "Minante Argilon"
 
 #: src/OF_MINE.cpp:264
 msgid "Mining Copper"
-msgstr ""
+msgstr "Minante Kupron"
 
 #: src/OF_MINE.cpp:265
 msgid "Mining Iron"
-msgstr ""
+msgstr "Minante Feron"
 
 #: src/OF_MINE.cpp:280
 msgid "No Natural Resources"
-msgstr ""
+msgstr "Neniu Natura Risurco"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:341
 #: src/OF_MINE.cpp:304
 msgid "Mined Stock"
-msgstr ""
+msgstr "Minita Stoko"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:345
 #: src/OF_MINE.cpp:307
 msgid "Untapped Reserve"
-msgstr ""
+msgstr "Neuzita Rezervo"
 
 #: src/OF_MONS.cpp:134
 msgid "Deezboanz Lair"
@@ -399,112 +399,112 @@ msgstr ""
 
 #: src/OF_MONS.cpp:135
 msgid "Rattus Lair"
-msgstr ""
+msgstr "Nesto de Rattus"
 
 #: src/OF_MONS.cpp:136
 msgid "Broosken Lair"
-msgstr ""
+msgstr "Nesto de Broosken"
 
 #: src/OF_MONS.cpp:137
 msgid "Haubudam Lair"
-msgstr ""
+msgstr "Nesto de Haubudam"
 
 #: src/OF_MONS.cpp:138
 msgid "Pfith Lair"
-msgstr ""
+msgstr "Nesto de Pfizo"
 
 #: src/OF_MONS.cpp:139
 msgid "Rokken Lair"
-msgstr ""
+msgstr "Nesto de Rokken"
 
 #: src/OF_MONS.cpp:140
 msgid "Doink Lair"
-msgstr ""
+msgstr "Nesto de Doink"
 
 #: src/OF_MONS.cpp:141
 msgid "Wyrm Lair"
-msgstr ""
+msgstr "Nesto de Virm"
 
 #: src/OF_MONS.cpp:142
 msgid "Droog Lair"
-msgstr ""
+msgstr "Nesto de Droog"
 
 #: src/OF_MONS.cpp:143
 msgid "Ick Lair"
-msgstr ""
+msgstr "Nesto de Ik"
 
 #: src/OF_MONS.cpp:144
 msgid "Sauroid Lair"
-msgstr ""
+msgstr "Nesto de Sauroid"
 
 #: src/OF_MONS.cpp:145
 msgid "Karrotten Lair"
-msgstr ""
+msgstr "Nesto de Karrotten"
 
 #: src/OF_MONS.cpp:146
 msgid "Holgh Lair"
-msgstr ""
+msgstr "Nesto de Holgo"
 
 #: src/OGAMEMP.cpp:526
 msgid "Create multiplayer session"
-msgstr ""
+msgstr "Krei seancon por pluraj ludantoj"
 
 #: src/OGAMEMP.cpp:527
 msgid "Session Name:"
-msgstr ""
+msgstr "Nomo de Seanco:"
 
 #: src/OGAMEMP.cpp:528
 msgid "Set Password:"
-msgstr ""
+msgstr "Agordi Pasvorton:"
 
 #: src/OGAMEMP.cpp:573 src/OGAMEMP.cpp:832
 msgid "Unable to connect from lobby"
-msgstr ""
+msgstr "Ne povis konekti el enkonduka paĝo"
 
 #: src/OGAMEMP.cpp:580 src/OGAMEMP.cpp:839
 msgid "Cannot initialize ENet"
-msgstr ""
+msgstr "ENet ne povas pravaloriziĝi"
 
 #: src/OGAMEMP.cpp:596 src/OGAMEMP.cpp:855
 msgid "Unable to retrieve leaderboard"
-msgstr ""
+msgstr "Ne eblas ricevi rangolisto"
 
 #: src/OGAMEMP.cpp:624 src/OGAMEMP.cpp:890
 msgid "Invalid game name"
-msgstr ""
+msgstr "Nevalida luda nomo"
 
 #: src/OGAMEMP.cpp:633 src/OGAMEMP.cpp:899
 msgid "Cannot create the game"
-msgstr ""
+msgstr "Ne povas krei la ludon"
 
 #: src/OGAMEMP.cpp:662 src/OGAMEMP.cpp:928
 msgid "Enter the game's address:"
-msgstr ""
+msgstr "Enigu la ludan adreson:"
 
 #: src/OGAMEMP.cpp:670 src/OGAMEMP.cpp:936
 msgid "Service not supported"
-msgstr ""
+msgstr "Servo ne subtenata"
 
 #: src/OGAMEMP.cpp:1044
 msgid "Local Area Network"
-msgstr ""
+msgstr "Loka reto"
 
 #. TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
 #: src/OGAMEMP.cpp:1046
 msgid "Enter Address"
-msgstr ""
+msgstr "Enigu Adreson"
 
 #: src/OGAMEMP.cpp:1051
 msgid "Host or join a game using the local area network"
-msgstr ""
+msgstr "Gastigi aŭ aliĝi al luda per la loka reto"
 
 #: src/OGAMEMP.cpp:1052
 msgid "Join a game by entering an address"
-msgstr ""
+msgstr "Aliĝi al ludo enigante adreson"
 
 #: src/OGAMEMP.cpp:1053
 msgid "Host or join a game over the internet"
-msgstr ""
+msgstr "Gastigi aŭ aliĝi al ludo per interreto"
 
 #: src/OGAMEMP.cpp:1200
 msgid ""
@@ -512,30 +512,37 @@ msgid ""
 "TIP: If you have just previously logged in using the same username, you can "
 "leave your password blank, and the previous session is used."
 msgstr ""
+"Enigu vian konton de 7kfans.com/forums por daŭrigi.\n"
+"KONSILETO: Se vi ĵus ensalutis uzante la saman uzantnomon, vi povas lasi "
+"vian pasvorton blanka, kaj la antaŭa seanco estos uzata."
 
 #: src/OGAMEMP.cpp:1201
 msgid "Username:"
-msgstr ""
+msgstr "Uzantnomo:"
 
 #: src/OGAMEMP.cpp:1202
 msgid "Password:"
-msgstr ""
+msgstr "Pasvorto:"
 
 #: src/OGAMEMP.cpp:1391
 msgid ""
 "It is not recommended to use this save game file name. Do you wish to "
 "continue?"
 msgstr ""
+"Oni ne rekomendas uzi ĉi tiun nomon de konservada dosiero. Ĉu vi volas "
+"daŭrigi?"
 
 #: src/OGAMEMP.cpp:1447
 msgid "Unable to connect to 7kfans.com"
-msgstr ""
+msgstr "Ne povis konekti al 7kfans.com"
 
 #: src/OGAMEMP.cpp:1738
 msgid ""
 "Unable to connect to the 7kfans.com service. Verify your account information "
 "and try again."
 msgstr ""
+"Ne povis konekti al la servo de 7kfans.com. Kontrolu la informon de via "
+"konto kaj provu denove. "
 
 #: src/OGAMEMP.cpp:1740
 msgid ""
@@ -690,13 +697,13 @@ msgstr ""
 #: src/OINGMENU.cpp:270 src/OR_NAT.cpp:332 src/OR_NAT.cpp:333
 #: src/OR_NAT.cpp:549
 msgid "Yes"
-msgstr ""
+msgstr "Jes"
 
 #: src/OGAMEND.cpp:218 src/OINGMENU.cpp:229 src/OINGMENU.cpp:254
 #: src/OINGMENU.cpp:270 src/OR_NAT.cpp:332 src/OR_NAT.cpp:333
 #: src/OR_NAT.cpp:550
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: src/OGAMEND.cpp:268
 msgid "You Have Lost the Game !"
@@ -855,7 +862,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:478 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
 msgid "Economy"
-msgstr ""
+msgstr "Ekonomio"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:46
@@ -921,7 +928,7 @@ msgstr ""
 
 #: src/OGAMMAIN.cpp:369
 msgid "Version"
-msgstr ""
+msgstr "Versio"
 
 #: src/OGAMSCE2.cpp:178
 msgid "Scenario files not found."
@@ -1324,7 +1331,7 @@ msgstr ""
 
 #: src/ONATIONB.cpp:56
 msgid "War"
-msgstr ""
+msgstr "Milito"
 
 #: src/ONATIONB.cpp:57
 msgid "Tense"
