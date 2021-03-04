@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-02-28 10:08+0100\n"
+"PO-Revision-Date: 2021-03-04 10:30+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -395,7 +395,7 @@ msgstr "Neuzita Rezervo"
 
 #: src/OF_MONS.cpp:134
 msgid "Deezboanz Lair"
-msgstr ""
+msgstr "Nesto de Deezboanz"
 
 #: src/OF_MONS.cpp:135
 msgid "Rattus Lair"
@@ -550,90 +550,96 @@ msgid ""
 "in.\n"
 "(No libcurl)"
 msgstr ""
+"Ne povis konekti al la 7kfans-servo. Legu 7kfans.com/wiki por ensaluti.\n"
+"(Mankas libcurl)"
 
 #: src/OGAMEMP.cpp:1930
 msgid "Unable to communicate with the network"
-msgstr ""
+msgstr "Ne povas komuniki kun la reto"
 
 #: src/OGAMEMP.cpp:1933
 msgid "Trying to connect to the service provider"
-msgstr ""
+msgstr "Provante konekti al la provizanto de servo"
 
 #: src/OGAMEMP.cpp:1948
 msgid ""
 "There is a new version of Seven Kingdoms: Ancient Adversaries at www.7kfans."
 "com"
 msgstr ""
+"Estas nova versio de Seven Kingdoms: Ancient Adversaries en www.7kfans.com"
 
 #: src/OGAMEMP.cpp:2062
 msgid "Enter the game's password:"
-msgstr ""
+msgstr "Enigu la ludan pasvorton:"
 
 #: src/OGAMEMP.cpp:2069
 msgid "Attempting to connect"
-msgstr ""
+msgstr "Provante konekti"
 
 #: src/OGAMEMP.cpp:2138
 msgid "The session you selected no longer exists."
-msgstr ""
+msgstr "La sesio, kiun vi elektis, ne plu ekzistas."
 
 #: src/OGAMEMP.cpp:2144
 msgid "Unable to connect"
-msgstr ""
+msgstr "Ne povas konekti."
 
 #: src/OGAMEMP.cpp:2149
 msgid "Failed to initiate connection"
-msgstr ""
+msgstr "Fiaskis la iniciaton de la konekto"
 
 #: src/OGAMEMP.cpp:2171
 msgid "Please wait while disconnecting..."
-msgstr ""
+msgstr "Bonvolu atendi dum malkonektado..."
 
 #: src/OGAMEMP.cpp:2234
 msgid "Retrieving leaderboard"
-msgstr ""
+msgstr "Ricevante ĉampionejon"
 
 #: src/OGAMEMP.cpp:2939 src/OGAMEMP.cpp:4854
 msgid "?anonymous?"
-msgstr ""
+msgstr "?anonima?"
 
 #: src/OGAMEMP.cpp:3012 src/OGAMEMP.cpp:4928
 msgid "The game host has disconnected."
-msgstr ""
+msgstr "La gasto de la ludo diskonektiĝis."
 
 #: src/OGAMEMP.cpp:3077 src/OGAMEMP.cpp:4994
 msgid "The game host has aborted the game."
-msgstr ""
+msgstr "La gasto de la ludo abortis la ludon."
 
 #: src/OGAMEMP.cpp:3386 src/OGAMEMP.cpp:5180
 msgid "Your game version does not match the host's version."
-msgstr ""
+msgstr "Via luda versio ne kongruas kun la versio de la gasto."
 
 #: src/OGAMEMP.cpp:3389 src/OGAMEMP.cpp:5183
 msgid "The game you tried to join is currently full."
-msgstr ""
+msgstr "La ludo, al kiu vi provis aliĝi estas nun plena."
 
 #: src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:5186
 msgid "The host refused to authorize your connection."
-msgstr ""
+msgstr "La gasto ne permesis rajtigi vian konekton."
 
 #: src/OGAMEMP.cpp:3395 src/OGAMEMP.cpp:5189
 msgid "You cannot join the game because the host is loading a save."
-msgstr ""
+msgstr "Vi ne povas aliĝi al la ludo, ĉar la gasto estas ŝargante konservaĵon."
 
 #: src/OGAMEMP.cpp:3398 src/OGAMEMP.cpp:5192
 msgid "You cannot join the game because the host is not loading a save."
 msgstr ""
+"Vi ne povas aliĝi al la ludo, ĉar la gasto ne estas ŝargante konservaĵon."
 
 #: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:5195
 msgid ""
 "You cannot join the game because the saved multiplayer game you selected is "
 "different."
 msgstr ""
+"Vi ne povas aliĝi al la ludo, ĉar la konservita ludo por pluraj ludantoj, "
+"kiun vi elektis, estas malsama."
 
 #: src/OGAMEMP.cpp:3404 src/OGAMEMP.cpp:5198
 msgid "The host refused the connection."
-msgstr ""
+msgstr "La gasto rifuzis la konekton."
 
 #: src/OGAMEMP.cpp:3452 src/OGAMEMP.cpp:5246
 msgid "The host is using a modified game which you are not running."
@@ -683,7 +689,7 @@ msgstr[1] ""
 
 #: src/OGAMEMP.cpp:5342 src/OGAMEMP.cpp:5497
 msgid "The game cannot start."
-msgstr ""
+msgstr "La ludo ne povas komenci."
 
 #: src/OGAMEMP.cpp:5557
 msgid "Incorrect kingdom information received from the host."
@@ -691,7 +697,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:218
 msgid "Do you want to continue to stay in the game?"
-msgstr ""
+msgstr "Ĉu vi volas resti en la ludo?"
 
 #: src/OGAMEND.cpp:218 src/OINGMENU.cpp:229 src/OINGMENU.cpp:254
 #: src/OINGMENU.cpp:270 src/OR_NAT.cpp:332 src/OR_NAT.cpp:333
@@ -707,7 +713,7 @@ msgstr "Ne"
 
 #: src/OGAMEND.cpp:268
 msgid "You Have Lost the Game !"
-msgstr ""
+msgstr "Vi Perdis la Ludon!"
 
 #: src/OGAMEND.cpp:276
 msgid "All Fryhtans have been Destroyed !"
@@ -799,7 +805,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:426
 msgid "Final Population"
-msgstr ""
+msgstr "Fina Loĝantaro"
 
 #: src/OGAMEND.cpp:427
 msgid "Final Treasure"
@@ -852,7 +858,7 @@ msgstr ""
 #: src/OGAMEND.cpp:476 src/OGAMHALL.cpp:271 src/OR_RANK.cpp:88
 #: src/OTOWNIF.cpp:294
 msgid "Population"
-msgstr ""
+msgstr "Loĝantaro"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/TUT_LIST.RES
@@ -876,7 +882,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Population Score"
-msgstr ""
+msgstr "Poentoj de loĝantaro"
 
 #: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Military Score"
@@ -3256,7 +3262,7 @@ msgstr ""
 #: src/OR_RANK.cpp:295
 #, c-format
 msgid "Achieve a Population of %s."
-msgstr ""
+msgstr "Atingi loĝantaron de %s."
 
 #. TRANSLATORS: Achieve an Economic Score of <Number>.
 #: src/OR_RANK.cpp:307
@@ -3409,7 +3415,7 @@ msgstr ""
 #: src/OR_TOWN.cpp:231
 #, c-format
 msgid "Total Population: %s"
-msgstr ""
+msgstr "Tuta Loĝantaro: %s"
 
 #: src/OR_TOWN.cpp:242 src/OTOWNIF.cpp:321
 msgid "Total"
@@ -8750,7 +8756,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:377
 msgid "Assassinate"
-msgstr ""
+msgstr "Mortigi"
 
 # data/RESOURCE/HELP.RES:378
 msgid ""
