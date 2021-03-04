@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-04 10:30+0100\n"
+"PO-Revision-Date: 2021-03-04 12:28+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -643,49 +643,51 @@ msgstr "La gasto rifuzis la konekton."
 
 #: src/OGAMEMP.cpp:3452 src/OGAMEMP.cpp:5246
 msgid "The host is using a modified game which you are not running."
-msgstr ""
+msgstr "La gasto uzas modifita ludo, kiun vi ne plenumas."
 
 #: src/OGAMEMP.cpp:4141 src/OGAMEMP.cpp:5588
 msgid "Connection string from host is corrupted"
-msgstr ""
+msgstr "Konekta ĉeno de gasto estas difektita"
 
 #: src/OGAMEMP.cpp:4148
 msgid "Cannot get random seeds from the host"
-msgstr ""
+msgstr "Ne povas akiri hazardajn fontojn el gasto"
 
 #: src/OGAMEMP.cpp:4154
 msgid "Cannot get game configuration information from the host"
-msgstr ""
+msgstr "Ne povas akiri ludan informon de agordaro el la gasto"
 
 #: src/OGAMEMP.cpp:4160 src/OGAMEMP.cpp:5595
 msgid "Cannot get kingdom information from the host"
-msgstr ""
+msgstr "Ne povas akiri regnan informon el la gasto"
 
 #: src/OGAMEMP.cpp:4166 src/OGAMEMP.cpp:5601
 msgid "The host cannot recognize your machine."
-msgstr ""
+msgstr "La gasto ne agnoskas vian maŝinon"
 
 #: src/OGAMEMP.cpp:4172 src/OGAMEMP.cpp:5607
 msgid "Cannot receive important information from the host"
-msgstr ""
+msgstr "Ne povas ricevi gravan informon el la gasto"
 
 #: src/OGAMEMP.cpp:4224 src/OGAMEMP.cpp:5653
 msgid "Some player(s) encountered errors when initializing the game."
-msgstr ""
+msgstr "(Kelkaj) ludanto(j) trovis erarojn dum la pravolorizado de la ludo."
 
 #: src/OGAMEMP.cpp:5336 src/OGAMEMP.cpp:5491
 #, c-format
 msgid "This multiplayer saved game needs %d human player"
 msgid_plural "This multiplayer saved game needs %d human players"
 msgstr[0] ""
+"Ĉi tiu ludo por pluraj ludantoj konservita bezonas %d homan ludanton"
 msgstr[1] ""
+"Ĉi tiu ludo por pluraj ludantoj konservita bezonas %d homajn ludantojn"
 
 #: src/OGAMEMP.cpp:5339 src/OGAMEMP.cpp:5494
 #, c-format
 msgid "while now there is %d human player."
 msgid_plural "while now there are %d human players."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "sed nun estas %d homa ludanto."
+msgstr[1] "sed nun estas %d homaj ludantoj."
 
 #: src/OGAMEMP.cpp:5342 src/OGAMEMP.cpp:5497
 msgid "The game cannot start."
@@ -693,7 +695,7 @@ msgstr "La ludo ne povas komenci."
 
 #: src/OGAMEMP.cpp:5557
 msgid "Incorrect kingdom information received from the host."
-msgstr ""
+msgstr "Malĝusta regna informo ricevita el la gasto."
 
 #: src/OGAMEND.cpp:218
 msgid "Do you want to continue to stay in the game?"
@@ -717,17 +719,19 @@ msgstr "Vi Perdis la Ludon!"
 
 #: src/OGAMEND.cpp:276
 msgid "All Fryhtans have been Destroyed !"
-msgstr ""
+msgstr "Ĉiuj Frihtanoj estis Detruitaj !"
 
 #: src/OGAMEND.cpp:280
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr ""
+"Via Regno Akiris la Plej Grandan Poentaron de Batalo kontraŭ Frihtanoj !"
 
 #. TRANSLATORS: <King>'s Kingdom has Achieved the Highest Fryhtan Battling Score !
 #: src/OGAMEND.cpp:286
 #, c-format
 msgid "%s's Kingdom has Achieved the Highest Fryhtan Battling Score !"
 msgstr ""
+"La Regno de %s Akiris la Plej Grandan Poentaron de Batalo kontraŭ Frihtanoj !"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:297
@@ -878,7 +882,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:481 src/OR_RANK.cpp:92
 msgid "Fryhtan Battling"
-msgstr ""
+msgstr "Bataloj kontraŭ Frihtanoj"
 
 #: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Population Score"
@@ -898,7 +902,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:529 src/OR_RANK.cpp:138
 msgid "Fryhtan Battling Score"
-msgstr ""
+msgstr "Poentaro de Bataloj kontraŭ Frihtanoj"
 
 #: src/OGAMEND.cpp:550 src/OR_RANK.cpp:161
 msgid "Total Score"
@@ -1623,7 +1627,7 @@ msgstr ""
 #: src/ONEWSENG.cpp:509
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Seĝo de Povo apud %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:510
 #, c-format
