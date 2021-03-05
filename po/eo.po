@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-04 14:29+0100\n"
+"PO-Revision-Date: 2021-03-05 13:19+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1632,88 +1632,88 @@ msgstr "Via Seĝo de Povo apud %s estis detruita de Frihtanoj."
 #: src/ONEWSENG.cpp:510
 #, c-format
 msgid "Your Factory near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Fabriko ĉe %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:511
 #, c-format
 msgid "Your Inn near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Gastejo ĉe %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:512
 #, c-format
 msgid "Your Market near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Bazaro ĉe %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:513
 #, c-format
 msgid "Your Fort near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Fortikaĵo ĉe %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:514
 #, c-format
 msgid "Your Mine near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Minejo ĉe %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:515
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Turo de Scienco ĉe %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:516
 #, c-format
 msgid "Your War Factory near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Milita Fabriko ĉe %s estis detruita de Frihtanoj."
 
 #: src/ONEWSENG.cpp:517
 #, c-format
 msgid "Your Harbor near %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via Haveno ĉe %s estis detruita de Frihtanoj."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed.
 #: src/ONEWSENG.cpp:523
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed."
-msgstr ""
+msgstr "Via Seĝo de Povo ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:524
 #, c-format
 msgid "Your Factory near %s has been destroyed."
-msgstr ""
+msgstr "Via Fabriko ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:525
 #, c-format
 msgid "Your Inn near %s has been destroyed."
-msgstr ""
+msgstr "Via Gastejo ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:526
 #, c-format
 msgid "Your Market near %s has been destroyed."
-msgstr ""
+msgstr "Via Bazaro ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:527
 #, c-format
 msgid "Your Fort near %s has been destroyed."
-msgstr ""
+msgstr "Via Fortikaĵo ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:528
 #, c-format
 msgid "Your Mine near %s has been destroyed."
-msgstr ""
+msgstr "Via Minejo ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:529
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed."
-msgstr ""
+msgstr "Via Turo de Scienco ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:530
 #, c-format
 msgid "Your War Factory near %s has been destroyed."
-msgstr ""
+msgstr "Via Milita Fabriko ĉe %s estis detruita."
 
 #: src/ONEWSENG.cpp:531
 #, c-format
 msgid "Your Harbor near %s has been destroyed."
-msgstr ""
+msgstr "Via Haveno ĉe %s estis detruita."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by a spy from <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:577
