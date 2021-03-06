@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-05 13:19+0100\n"
+"PO-Revision-Date: 2021-03-06 09:46+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -737,75 +737,75 @@ msgstr ""
 #: src/OGAMEND.cpp:297
 #, c-format
 msgid "Your Kingdom has Reached its Population Goal of %s !"
-msgstr ""
+msgstr "Via Rego Akiris ĝia Loĝantara Celo de %s!"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:302
 #, c-format
 msgid "%s's Kingdom has Reached its Population Goal of %s !"
-msgstr ""
+msgstr "La Rego de %s Akiris ĝia Loĝantara Celo de %s!"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:315
 #, c-format
 msgid "Your Kingdom has Reached its Economic Score Goal of %s !"
-msgstr ""
+msgstr "Via Rego Akiris ĝia Ekonomia Celo de %s!"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:320
 #, c-format
 msgid "%s's Kingdom has Reached its Economic Score Goal of %s !"
-msgstr ""
+msgstr "La Rego de %s Akiris ĝia Ekonomia Celo de %s!"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:333
 #, c-format
 msgid "Your Kingdom has Reached its Total Score Goal of %s !"
-msgstr ""
+msgstr "Via Rego Akiris ĝia Totala Poenta Celo de %s!"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:338
 #, c-format
 msgid "%s's Kingdom has Reached its Total Score Goal of %s !"
-msgstr ""
+msgstr "La Rego de %s Akiris ĝia Totala Poenta Celo de %s!"
 
 #: src/OGAMEND.cpp:350
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
-msgstr ""
+msgstr "Via Rego Venkis Ĉiujn Aliajn Regoj! "
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
 #: src/OGAMEND.cpp:355
 #, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
-msgstr ""
+msgstr "La Rego de %s Venkis Ĉiujn Aliajn Regoj! "
 
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
 #: src/OGAMEND.cpp:382
 #, c-format
 msgid "You Surrendered to %s's Kingdom on %s."
-msgstr ""
+msgstr "Vi rezignis al Rego de %s en %s."
 
 #: src/OGAMEND.cpp:389
 msgid "Your Kingdom has Failed to Achieve its Goal Within the Time Limit."
-msgstr ""
+msgstr "Via Rego fiaskis Akiri ĝia Celo ene de la Tempa Limo."
 
 #: src/OGAMEND.cpp:393
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
-msgstr ""
+msgstr "Via Rego disfalis al Malnobleca Malvenko!"
 
 #. TRANSLATORS: You Retired on <Date>.
 #: src/OGAMEND.cpp:408
 #, c-format
 msgid "You Retired on %s."
-msgstr ""
+msgstr "Vi Rezignis je %s."
 
 #: src/OGAMEND.cpp:423
 msgid "Duration of Your Rule"
-msgstr ""
+msgstr "Daŭro de Via Reĝo"
 
 #: src/OGAMEND.cpp:424
 msgid "Total Gaming Time"
-msgstr ""
+msgstr "Totala Tempo Ludante"
 
 #: src/OGAMEND.cpp:426
 msgid "Final Population"
@@ -813,7 +813,7 @@ msgstr "Fina Loĝantaro"
 
 #: src/OGAMEND.cpp:427
 msgid "Final Treasure"
-msgstr ""
+msgstr "Fina Trezoro"
 
 #: src/OGAMEND.cpp:429
 msgid "Enemy Soldiers Dispatched"
@@ -833,7 +833,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:435
 msgid "Enemy Ships Sunk"
-msgstr ""
+msgstr "Malamikaj Ŝipoj Dronitaj"
 
 #: src/OGAMEND.cpp:436
 msgid "King's Ships Missing"
