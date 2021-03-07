@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-06 09:46+0100\n"
+"PO-Revision-Date: 2021-03-07 11:01+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -269,7 +269,7 @@ msgstr "Murdo Sukcesis."
 
 #: src/OFIRMIF3.cpp:546
 msgid "Your Spy Escaped."
-msgstr "Via Spiono Foriris"
+msgstr "Via Spiono Foriris."
 
 #: src/OFIRMIF3.cpp:579
 msgid "Assassination Failed."
@@ -542,7 +542,7 @@ msgid ""
 "and try again."
 msgstr ""
 "Ne povis konekti al la servo de 7kfans.com. Kontrolu la informon de via "
-"konto kaj provu denove. "
+"konto kaj provu denove."
 
 #: src/OGAMEMP.cpp:1740
 msgid ""
@@ -582,7 +582,7 @@ msgstr "La sesio, kiun vi elektis, ne plu ekzistas."
 
 #: src/OGAMEMP.cpp:2144
 msgid "Unable to connect"
-msgstr "Ne povas konekti."
+msgstr "Ne povas konekti"
 
 #: src/OGAMEMP.cpp:2149
 msgid "Failed to initiate connection"
@@ -663,7 +663,7 @@ msgstr "Ne povas akiri regnan informon el la gasto"
 
 #: src/OGAMEMP.cpp:4166 src/OGAMEMP.cpp:5601
 msgid "The host cannot recognize your machine."
-msgstr "La gasto ne agnoskas vian maŝinon"
+msgstr "La gasto ne agnoskas vian maŝinon."
 
 #: src/OGAMEMP.cpp:4172 src/OGAMEMP.cpp:5607
 msgid "Cannot receive important information from the host"
@@ -771,13 +771,13 @@ msgstr "La Rego de %s Akiris ĝia Totala Poenta Celo de %s!"
 
 #: src/OGAMEND.cpp:350
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
-msgstr "Via Rego Venkis Ĉiujn Aliajn Regoj! "
+msgstr "Via Rego Venkis Ĉiujn Aliajn Regoj!"
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
 #: src/OGAMEND.cpp:355
 #, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
-msgstr "La Rego de %s Venkis Ĉiujn Aliajn Regoj! "
+msgstr "La Rego de %s Venkis Ĉiujn Aliajn Regoj!"
 
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
 #: src/OGAMEND.cpp:382
@@ -817,19 +817,19 @@ msgstr "Fina Trezoro"
 
 #: src/OGAMEND.cpp:429
 msgid "Enemy Soldiers Dispatched"
-msgstr ""
+msgstr "Disdonitaj Malamikaj Soldatoj"
 
 #: src/OGAMEND.cpp:430
 msgid "King's Soldiers Martyred"
-msgstr ""
+msgstr "Reĝaj Soldatoj Martirigitaj"
 
 #: src/OGAMEND.cpp:432
 msgid "Enemy Weapons Destroyed"
-msgstr ""
+msgstr "Malamikaj Armiloj Detruitaj"
 
 #: src/OGAMEND.cpp:433
 msgid "King's Weapons Rendered Obsolete"
-msgstr ""
+msgstr "Reĝaj Armiloj Malaktualigitaj"
 
 #: src/OGAMEND.cpp:435
 msgid "Enemy Ships Sunk"
@@ -837,15 +837,15 @@ msgstr "Malamikaj Ŝipoj Dronitaj"
 
 #: src/OGAMEND.cpp:436
 msgid "King's Ships Missing"
-msgstr ""
+msgstr "Reĝaj Ŝipoj Mankitaj"
 
 #: src/OGAMEND.cpp:438
 msgid "Enemy Buildings Destroyed"
-msgstr ""
+msgstr "Malamikaj Konstruaĵoj Detruitaj"
 
 #: src/OGAMEND.cpp:439
 msgid "King's Buildings Cleared"
-msgstr ""
+msgstr "Reĝaj Konstruaĵoj Vakigitaj"
 
 #: src/OGAMEND.cpp:441
 msgid "Enemy Civilians Collaterally Damaged"
@@ -857,7 +857,7 @@ msgstr ""
 
 #: src/OGAMEND.cpp:475 src/OR_NAT.cpp:136 src/OR_RANK.cpp:87
 msgid "Kingdom"
-msgstr ""
+msgstr "Rego"
 
 #: src/OGAMEND.cpp:476 src/OGAMHALL.cpp:271 src/OR_RANK.cpp:88
 #: src/OTOWNIF.cpp:294
@@ -868,7 +868,7 @@ msgstr "Loĝantaro"
 # data/RESOURCE/TUT_LIST.RES
 #: src/OGAMEND.cpp:477 src/OR_RANK.cpp:89 src/OSPYA.cpp:45
 msgid "Military"
-msgstr ""
+msgstr "Armeo"
 
 #: src/OGAMEND.cpp:478 src/OR_RANK.cpp:90 src/OSPYA.cpp:45
 msgid "Economy"
@@ -878,7 +878,7 @@ msgstr "Ekonomio"
 # data/RESOURCE/HELP.RES:46
 #: src/OGAMEND.cpp:479 src/OR_NAT.cpp:138 src/OR_RANK.cpp:91
 msgid "Reputation"
-msgstr ""
+msgstr "Famo"
 
 #: src/OGAMEND.cpp:481 src/OR_RANK.cpp:92
 msgid "Fryhtan Battling"
@@ -890,15 +890,15 @@ msgstr "Poentoj de loĝantaro"
 
 #: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Military Score"
-msgstr ""
+msgstr "Armea Poentaro"
 
 #: src/OGAMEND.cpp:528 src/OR_RANK.cpp:137
 msgid "Economic Score"
-msgstr ""
+msgstr "Ekonomia Poentaro"
 
 #: src/OGAMEND.cpp:529 src/OR_RANK.cpp:138
 msgid "Reputation Score"
-msgstr ""
+msgstr "Fama Poentaro"
 
 #: src/OGAMEND.cpp:529 src/OR_RANK.cpp:138
 msgid "Fryhtan Battling Score"
@@ -906,15 +906,15 @@ msgstr "Poentaro de Bataloj kontraŭ Frihtanoj"
 
 #: src/OGAMEND.cpp:550 src/OR_RANK.cpp:161
 msgid "Total Score"
-msgstr ""
+msgstr "Tuta Poentaro"
 
 #: src/OGAMEND.cpp:563 src/OR_RANK.cpp:174
 msgid "Final Score"
-msgstr ""
+msgstr "Fina Poentaro"
 
 #: src/OGAMEND.cpp:572 src/OR_RANK.cpp:183
 msgid "(Difficulty Rating)"
-msgstr ""
+msgstr "(Facileca Takso)"
 
 #: src/OGAMEND.cpp:588
 msgid "(Bonus)"
@@ -922,19 +922,19 @@ msgstr "(Bonuso)"
 
 #: src/OGAMEND.cpp:598 src/OR_RANK.cpp:194
 msgid "(Cheated)"
-msgstr ""
+msgstr "(Trompita)"
 
 #: src/OGAMHALL.cpp:263
 msgid "Score"
-msgstr ""
+msgstr "Poentoj"
 
 #: src/OGAMHALL.cpp:283
 msgid "Period"
-msgstr ""
+msgstr "Periodo"
 
 #: src/OGAMHALL.cpp:293 src/OGAMSCE2.cpp:462
 msgid "Difficulty"
-msgstr ""
+msgstr "Facileco"
 
 #: src/OGAMMAIN.cpp:369
 msgid "Version"
@@ -942,31 +942,31 @@ msgstr "Versio"
 
 #: src/OGAMSCE2.cpp:178
 msgid "Scenario files not found."
-msgstr ""
+msgstr "Scenaraj dosieroj ne trovitaj."
 
 #: src/OGAMSCE2.cpp:469
 msgid "Score Bonus"
-msgstr ""
+msgstr "Kromaj Poentoj"
 
 #: src/OGFILE.cpp:326
 msgid "Success"
-msgstr ""
+msgstr "Sukcese"
 
 #: src/OGFILE.cpp:328
 msgid "Error creating saved game file"
-msgstr ""
+msgstr "Eraro kreante dosieron de konservita ludo"
 
 #: src/OGFILE.cpp:330
 msgid "Error creating saved game header"
-msgstr ""
+msgstr "Eraro kreante kapon de konservita ludo"
 
 #: src/OGFILE.cpp:332
 msgid "Error writing saved game data"
-msgstr ""
+msgstr "Eraro skribante datumojn de konservita ludo"
 
 #: src/OGFILE.cpp:334
 msgid "Cannot open save game file"
-msgstr ""
+msgstr "Ne povas malfermi dosieron de konservita ludo"
 
 #: src/OGFILE.cpp:336
 msgid "Cannot read file header"
@@ -1012,19 +1012,19 @@ msgstr "Japana Generalo"
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:514 src/OHELP.cpp:562 src/OR_TRADE.cpp:86 src/OR_TRADE.cpp:141
 msgid "Caravan"
-msgstr ""
+msgstr "Karavano"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:515 src/OHELP.cpp:563
 msgid "Catapult"
-msgstr ""
+msgstr "Katapulto"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:516 src/OHELP.cpp:564
 msgid "Ballista"
-msgstr ""
+msgstr "Balisto"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -1036,7 +1036,7 @@ msgstr ""
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:518 src/OHELP.cpp:566
 msgid "Cannon"
-msgstr ""
+msgstr "Pafilego"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -1090,19 +1090,19 @@ msgstr ""
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:527 src/OHELP.cpp:575
 msgid "Thor"
-msgstr ""
+msgstr "Toro"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:528 src/OHELP.cpp:576
 msgid "Phoenix"
-msgstr ""
+msgstr "Fenikso"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:529 src/OHELP.cpp:577
 msgid "Kukulcan"
-msgstr ""
+msgstr "Kukulkano"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -1165,7 +1165,7 @@ msgstr ""
 
 #: src/OHELP.cpp:545
 msgid "Egyptian General"
-msgstr ""
+msgstr "Egipta Generalo"
 
 #: src/OHELP.cpp:546
 msgid "Mughul General"
@@ -1173,7 +1173,7 @@ msgstr ""
 
 #: src/OHELP.cpp:547
 msgid "Zulu General"
-msgstr ""
+msgstr "Zulua Generalo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -1201,31 +1201,31 @@ msgstr ""
 
 #: src/OHELP.cpp:555
 msgid "Norman King"
-msgstr ""
+msgstr "Normanda Reĝo"
 
 #: src/OHELP.cpp:556
 msgid "Maya King"
-msgstr ""
+msgstr "Majaa Reĝo"
 
 #: src/OHELP.cpp:557
 msgid "Greek King"
-msgstr ""
+msgstr "Greka Reĝo"
 
 #: src/OHELP.cpp:558
 msgid "Viking King"
-msgstr ""
+msgstr "Vikinga Reĝo"
 
 #: src/OHELP.cpp:559
 msgid "Persian King"
-msgstr ""
+msgstr "Persa Reĝo"
 
 #: src/OHELP.cpp:560
 msgid "Chinese King"
-msgstr ""
+msgstr "Ĉina Reĝo"
 
 #: src/OHELP.cpp:561
 msgid "Japanese King"
-msgstr ""
+msgstr "Japana Reĝo"
 
 #. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use King or All High whichever makes sense.
 #: src/OHELP.cpp:580
@@ -1325,7 +1325,7 @@ msgstr[1] "%d tagoj"
 
 #: src/OINGMENU.cpp:153
 msgid "Map I.D."
-msgstr ""
+msgstr "Kodo de mapo"
 
 #: src/OINGMENU.cpp:229
 msgid "Do you really want to retire?"
@@ -1349,11 +1349,11 @@ msgstr ""
 
 #: src/ONATIONB.cpp:58
 msgid "Neutral"
-msgstr ""
+msgstr "Neŭtra"
 
 #: src/ONATIONB.cpp:59
 msgid "Friendly"
-msgstr ""
+msgstr "Amika"
 
 #: src/ONATIONB.cpp:60
 msgid "Alliance"
@@ -7618,7 +7618,6 @@ msgid "The New World"
 msgstr "La Nova Mondo"
 
 # data/SCENARIO/NEWWORLD.SCT:5
-#, fuzzy
 msgid ""
 "It is rumored that the semi-mythical lands in the Western Ocean may actually "
 "exist. These lands may contain vast riches that could be the difference "
@@ -7627,7 +7626,13 @@ msgid ""
 "barbarous tribes living there and then use your new wealth to finance the "
 "destruction of your two powerful enemies. Victory will come when you stand "
 "alone. "
-msgstr "Oni diras, ke la"
+msgstr ""
+"Oni diras, ke la kvazaŭaj mitaj landoj en la Okcidenta Oceano povus ekzisti. "
+"Tiuj landoj povus havi vastajn riĉaĵojn, kiuj povus esti la diferenco inter "
+"estingo kaj supervivo por via malriĉa kaj malforta rego. Se tiuj onidiraj "
+"landoj vere ekzistas, kapti ilin antaŭ viaj malamikoj povas, subigi la "
+"barbarajn tribojn, kiuj tie loĝas kaj poste uzi vian novan riĉon por financi "
+"la detruado de viaj du povaj malamikoj. Venko venos, kiam vi restas sola. "
 
 # data/SCENARIO/NORMAN.SCT:1
 msgid "United Normandy"
