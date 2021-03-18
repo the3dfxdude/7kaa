@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2020-05-03 20:02+0200\n"
+"PO-Revision-Date: 2021-03-17 01:19-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
 "|| n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: src/CmdLine.cpp:46
 #, c-format
@@ -508,6 +508,7 @@ msgid "Host or join a game over the internet"
 msgstr "Stwórz lub dołącz do gry przez Internet"
 
 #: src/OGAMEMP.cpp:1200
+#, fuzzy
 msgid ""
 "Enter your 7kfans.com/forums account credentials to continue.\n"
 "TIP: If you have just previously logged in using the same username, you can "
@@ -715,7 +716,7 @@ msgstr "Przegrałeś!"
 
 #: src/OGAMEND.cpp:276
 msgid "All Fryhtans have been Destroyed !"
-msgstr "Wszystkie stwory zostały pokonane!"
+msgstr "Wszystkie stwory zostały pokonane !"
 
 #: src/OGAMEND.cpp:280
 msgid "Your Kingdom has Achieved the Highest Fryhtan Battling Score !"
@@ -765,13 +766,13 @@ msgstr "Królestwo %s osiągnęło docelowy główny wynik: %s !"
 
 #: src/OGAMEND.cpp:350
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
-msgstr "Twoje Królestwo pokonało wszystkie pozostałe Królestwa!"
+msgstr "Twoje Królestwo pokonało wszystkie pozostałe Królestwa !"
 
 #. TRANSLATORS: <King>'s Kingdom has Defeated All Other Kingdoms !
 #: src/OGAMEND.cpp:355
 #, c-format
 msgid "%s's Kingdom has Defeated All Other Kingdoms !"
-msgstr "Królestwo %s pokonało wszystkie pozostałe Królestwa!"
+msgstr "Królestwo %s pokonało wszystkie pozostałe Królestwa !"
 
 #. TRANSLATORS: You Surrendered to <King>'s Kingdom on <Date>.
 #: src/OGAMEND.cpp:382
@@ -785,7 +786,7 @@ msgstr "Twoje Królestwo nie osiągnęło wyznaczonego celu w limicie czasu."
 
 #: src/OGAMEND.cpp:393
 msgid "Your Kingdom has Gone Down to Ignominious Defeat !"
-msgstr "Twoje Królestwo przegrało przez haniebny upadek!"
+msgstr "Twoje Królestwo przegrało przez haniebny upadek !"
 
 #. TRANSLATORS: You Retired on <Date>.
 #: src/OGAMEND.cpp:408
@@ -1042,7 +1043,7 @@ msgstr "Jeżozwierz"
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:520 src/OHELP.cpp:568
 msgid "Trader"
-msgstr "PInka"
+msgstr "Pinka"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -3333,7 +3334,7 @@ msgstr "Od %s jest %s :"
 
 #: src/OR_NAT.cpp:907
 msgid "Please enter your chat message and press <Enter> to send."
-msgstr "Proszę wprowadź twoją wiadomość i naciśnij <Enter>by wysłać."
+msgstr "Proszę wprowadź twoją wiadomość i naciśnij <Enter> by wysłać."
 
 #. TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
 #: src/OR_RANK.cpp:243
