@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-07 11:01+0100\n"
+"PO-Revision-Date: 2021-03-27 16:44+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -849,11 +849,11 @@ msgstr "Reĝaj Konstruaĵoj Vakigitaj"
 
 #: src/OGAMEND.cpp:441
 msgid "Enemy Civilians Collaterally Damaged"
-msgstr ""
+msgstr "Malamikaj Civiluloj Sekundare Damaĝitaj"
 
 #: src/OGAMEND.cpp:442
 msgid "King's Civilians Cruelly Murdered"
-msgstr ""
+msgstr "Reĝaj Civiluloj Kruele Murdigitaj "
 
 #: src/OGAMEND.cpp:475 src/OR_NAT.cpp:136 src/OR_RANK.cpp:87
 msgid "Kingdom"
@@ -1030,7 +1030,7 @@ msgstr "Balisto"
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:517 src/OHELP.cpp:565
 msgid "Spitfire"
-msgstr ""
+msgstr "Fajrkraĉilo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -1042,43 +1042,43 @@ msgstr "Pafilego"
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:519 src/OHELP.cpp:567
 msgid "Porcupine"
-msgstr ""
+msgstr "Histriko"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:520 src/OHELP.cpp:568
 msgid "Trader"
-msgstr ""
+msgstr "Komercilo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:521 src/OHELP.cpp:569
 msgid "Transport"
-msgstr ""
+msgstr "Transportilo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:522 src/OHELP.cpp:570
 msgid "Caravel"
-msgstr ""
+msgstr "Karavelo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:523 src/OHELP.cpp:571
 msgid "Galleon"
-msgstr ""
+msgstr "Galiono"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:524 src/OHELP.cpp:572
 msgid "Dragon"
-msgstr ""
+msgstr "Drako"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:525 src/OHELP.cpp:573
 msgid "Jing Nung"
-msgstr ""
+msgstr "Jing Nung"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -1329,15 +1329,15 @@ msgstr "Kodo de mapo"
 
 #: src/OINGMENU.cpp:229
 msgid "Do you really want to retire?"
-msgstr ""
+msgstr "Ĉu vi vere volas rezigni?"
 
 #: src/OINGMENU.cpp:254
 msgid "Do you really want to quit to the Main Menu?"
-msgstr ""
+msgstr "Ĉu vi vere volas eliri al la Ĉefa Menuo?"
 
 #: src/OINGMENU.cpp:270
 msgid "Do you really want to quit Seven Kingdoms?"
-msgstr ""
+msgstr "Ĉu vi vere volas eliri el Seven Kingdoms?"
 
 #: src/ONATIONB.cpp:56
 msgid "War"
@@ -5328,23 +5328,23 @@ msgstr ""
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Ships"
-msgstr ""
+msgstr "Ŝipoj"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Weapons"
-msgstr ""
+msgstr "Armiloj"
 
 # data/RESOURCE/STD/00003-RAW.dbf
 msgid "Clay"
-msgstr ""
+msgstr "Argilo"
 
 # data/RESOURCE/STD/00003-RAW.dbf
 msgid "Copper"
-msgstr ""
+msgstr "Kupro"
 
 # data/RESOURCE/STD/00003-RAW.dbf
 msgid "Iron"
-msgstr ""
+msgstr "Fero"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Broosken"
@@ -5355,7 +5355,7 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Chinese"
-msgstr ""
+msgstr "Ĉinoj"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Deezboanz"
@@ -5381,7 +5381,7 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Greek"
-msgstr ""
+msgstr "Grekoj"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Haubudam"
@@ -5400,7 +5400,7 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Japanese"
-msgstr ""
+msgstr "Japanoj"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Karrotten"
