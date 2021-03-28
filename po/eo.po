@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-27 16:44+0100\n"
+"PO-Revision-Date: 2021-03-28 10:34+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -853,7 +853,7 @@ msgstr "Malamikaj Civiluloj Sekundare Damaĝitaj"
 
 #: src/OGAMEND.cpp:442
 msgid "King's Civilians Cruelly Murdered"
-msgstr "Reĝaj Civiluloj Kruele Murdigitaj "
+msgstr "Reĝaj Civiluloj Kruele Murdigitaj"
 
 #: src/OGAMEND.cpp:475 src/OR_NAT.cpp:136 src/OR_RANK.cpp:87
 msgid "Kingdom"
@@ -1084,7 +1084,7 @@ msgstr "Jing Nung"
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:526 src/OHELP.cpp:574
 msgid "Lord of Healing"
-msgstr ""
+msgstr "Ega Kuracisto"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -1108,60 +1108,60 @@ msgstr "Kukulkano"
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:530 src/OHELP.cpp:578
 msgid "Mind Turner"
-msgstr ""
+msgstr "Pensa Ŝanĝanto"
 
 #. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use General or Ordo whichever makes sense.
 #: src/OHELP.cpp:532
 msgid "Deezboanz General"
-msgstr ""
+msgstr "Generalo de Deezboanz"
 
 #: src/OHELP.cpp:533
 msgid "Rattus General"
-msgstr ""
+msgstr "Generalo de Rattus"
 
 #: src/OHELP.cpp:534
 msgid "Broosken General"
-msgstr ""
+msgstr "Generalo de Broosken"
 
 #: src/OHELP.cpp:535
 msgid "Haubudam General"
-msgstr ""
+msgstr "Generalo de Haubudam"
 
 #: src/OHELP.cpp:536
 msgid "Pfith General"
-msgstr ""
+msgstr "Generalo de Pfith"
 
 #: src/OHELP.cpp:537
 msgid "Rokken General"
-msgstr ""
+msgstr "Generalo de Rokken"
 
 #: src/OHELP.cpp:538
 msgid "Doink General"
-msgstr ""
+msgstr "Generalo de Doink"
 
 #: src/OHELP.cpp:539
 msgid "Wyrm General"
-msgstr ""
+msgstr "Generalo de Wyrm"
 
 #: src/OHELP.cpp:540
 msgid "Droog General"
-msgstr ""
+msgstr "Generalo de Droog"
 
 #: src/OHELP.cpp:541
 msgid "Ick General"
-msgstr ""
+msgstr "Generalo de Ick"
 
 #: src/OHELP.cpp:542
 msgid "Sauroid General"
-msgstr ""
+msgstr "Generalo de Sauroid"
 
 #: src/OHELP.cpp:543
 msgid "Karrotten General"
-msgstr ""
+msgstr "Generalo de Karrotten"
 
 #: src/OHELP.cpp:544
 msgid "Holgh General"
-msgstr ""
+msgstr "Generalo de Holgh"
 
 #: src/OHELP.cpp:545
 msgid "Egyptian General"
@@ -1169,7 +1169,7 @@ msgstr "Egipta Generalo"
 
 #: src/OHELP.cpp:546
 msgid "Mughul General"
-msgstr ""
+msgstr "Mogola Ĝeneralo"
 
 #: src/OHELP.cpp:547
 msgid "Zulu General"
@@ -1179,25 +1179,25 @@ msgstr "Zulua Generalo"
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:548 src/OHELP.cpp:596
 msgid "Isis"
-msgstr ""
+msgstr "Iziso"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:549 src/OHELP.cpp:597
 msgid "Djini"
-msgstr ""
+msgstr "Djini"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:550 src/OHELP.cpp:598
 msgid "uNkulunkulu"
-msgstr ""
+msgstr "uNkulunkulu"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 #: src/OHELP.cpp:551 src/OHELP.cpp:599
 msgid "Unicorn"
-msgstr ""
+msgstr "Unukornulo"
 
 #: src/OHELP.cpp:555
 msgid "Norman King"
@@ -1230,67 +1230,67 @@ msgstr "Japana Reĝo"
 #. TRANSLATORS: Unit icon help popup with rank title. In the original game, fryhtans used the human ranks in the help message. Use King or All High whichever makes sense.
 #: src/OHELP.cpp:580
 msgid "Deezboanz King"
-msgstr ""
+msgstr "Reĝo de Deezboanz"
 
 #: src/OHELP.cpp:581
 msgid "Rattus King"
-msgstr ""
+msgstr "Reĝo de Rattus"
 
 #: src/OHELP.cpp:582
 msgid "Broosken King"
-msgstr ""
+msgstr "Reĝo de Broosken"
 
 #: src/OHELP.cpp:583
 msgid "Haubudam King"
-msgstr ""
+msgstr "Reĝo de Haubudam"
 
 #: src/OHELP.cpp:584
 msgid "Pfith King"
-msgstr ""
+msgstr "Reĝo de Pfith"
 
 #: src/OHELP.cpp:585
 msgid "Rokken King"
-msgstr ""
+msgstr "Reĝo de Rokken"
 
 #: src/OHELP.cpp:586
 msgid "Doink King"
-msgstr ""
+msgstr "Reĝo de Doink"
 
 #: src/OHELP.cpp:587
 msgid "Wyrm King"
-msgstr ""
+msgstr "Reĝo de Wyrm"
 
 #: src/OHELP.cpp:588
 msgid "Droog King"
-msgstr ""
+msgstr "Reĝo de Droog"
 
 #: src/OHELP.cpp:589
 msgid "Ick King"
-msgstr ""
+msgstr "Reĝo de Ick"
 
 #: src/OHELP.cpp:590
 msgid "Sauroid King"
-msgstr ""
+msgstr "Reĝo de Sauroid"
 
 #: src/OHELP.cpp:591
 msgid "Karrotten King"
-msgstr ""
+msgstr "Reĝo de Karrotten"
 
 #: src/OHELP.cpp:592
 msgid "Holgh King"
-msgstr ""
+msgstr "Reĝo de Holgh"
 
 #: src/OHELP.cpp:593
 msgid "Egyptian King"
-msgstr ""
+msgstr "Egipta Reĝo"
 
 #: src/OHELP.cpp:594
 msgid "Mughul King"
-msgstr ""
+msgstr "Mogola Reĝo"
 
 #: src/OHELP.cpp:595
 msgid "Zulu King"
-msgstr ""
+msgstr "Zulua Reĝo"
 
 #. TRANSLATORS: Part of "%d hour(s) and %d minute(s)"
 #: src/OINFO.cpp:604
@@ -1345,7 +1345,7 @@ msgstr "Milito"
 
 #: src/ONATIONB.cpp:57
 msgid "Tense"
-msgstr ""
+msgstr "Streĉa"
 
 #: src/ONATIONB.cpp:58
 msgid "Neutral"
@@ -1361,23 +1361,23 @@ msgstr "Alianco"
 
 #: src/ONATIONB.cpp:65
 msgid "Duration of War Status"
-msgstr ""
+msgstr "Daŭro de Milita Stato"
 
 #: src/ONATIONB.cpp:66
 msgid "Duration of Tense Status"
-msgstr ""
+msgstr "Daŭro de Streĉa Stato"
 
 #: src/ONATIONB.cpp:67
 msgid "Duration of Neutral Status"
-msgstr ""
+msgstr "Daŭro de Neŭtra Stato"
 
 #: src/ONATIONB.cpp:68
 msgid "Duration of Friendly Status"
-msgstr ""
+msgstr "Daŭro de Amika Stato"
 
 #: src/ONATIONB.cpp:69
 msgid "Duration of Alliance Status"
-msgstr ""
+msgstr "Daŭro de Alianca Stato"
 
 #. TRANSLATORS: <Name>'s Kingdom
 #: src/ONATIONB.cpp:569 src/ONEWSENG.cpp:1740 src/ONEWSENG.cpp:1742
@@ -8036,23 +8036,23 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:34
 msgid "Food"
-msgstr ""
+msgstr "Manĝaĵo"
 
 # data/RESOURCE/HELP.RES:35
 msgid "This shows the store of food in your kingdom. "
-msgstr ""
+msgstr "Ĉi tiu montras la rezervo da manĝaĵo en via regno. "
 
 # data/RESOURCE/HELP.RES:39
 msgid "This shows the amount of treasure in your kingdom. "
-msgstr ""
+msgstr "Ĉi tiu montras la kvanto de trezoro en via regno"
 
 # data/RESOURCE/HELP.RES:42
 msgid "Date"
-msgstr ""
+msgstr "Dato"
 
 # data/RESOURCE/HELP.RES:43
 msgid "This shows the current Date. "
-msgstr ""
+msgstr "Ĉi tiu montras la nunan Daton."
 
 # data/RESOURCE/HELP.RES:47
 msgid "This shows your kingdom's reputation. "
@@ -8101,7 +8101,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:66
 msgid "Build"
-msgstr ""
+msgstr "Konstrui"
 
 # data/RESOURCE/HELP.RES:67
 msgid ""
