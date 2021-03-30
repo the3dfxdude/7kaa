@@ -31,10 +31,10 @@ Building the game
 ---------
 
 Required dependencies
-* GCC 4.6+ (C++11 compliant compiler)
-* SDL 2.0.8 (http://libsdl.org/)
-* enet 1.3.xx (http://enet.bespin.org/)
-* OpenAL-soft or equivalent driver (http://kcat.strangesoft.net/openal.html)
+* GCC 4.6+ C++11 compliant compiler
+* SDL 2.0.8
+* enet 1.3.xx Reliable UDP networking library
+* OpenAL-soft or equivalent driver
 
 Optional dependencies
 * Autoconf 2.65 (when using git snapshot)
