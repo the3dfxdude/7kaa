@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-28 10:34+0200\n"
+"PO-Revision-Date: 2021-03-31 09:30+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1384,7 +1384,7 @@ msgstr "Daŭro de Alianca Stato"
 #: src/ONEWSENG.cpp:1760 src/ONEWSENG.cpp:1762
 #, c-format
 msgid "%s's Kingdom"
-msgstr ""
+msgstr "Regno de %s"
 
 #: src/ONATIONB.cpp:2077 src/ONATIONB.cpp:2369
 #, c-format
@@ -1399,8 +1399,8 @@ msgstr[1] "%d monatoj"
 #, c-format
 msgid "%d Peasant in %s in %s's Kingdom%s is rebelling."
 msgid_plural "%d Peasants in %s in %s's Kingdom%s are rebelling."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Kampulo en %s en la Regno de %s%s ribelas."
+msgstr[1] "%d Kampuloj en %s en la Regno de %s%s ribelas."
 
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
@@ -1409,8 +1409,8 @@ msgstr[1] ""
 msgid "%d %s %s has emigrated from your village of %s to %s in %s's Kingdom%s."
 msgid_plural ""
 "%d %s %ss have emigrated from your village of %s to %s in %s's Kingdom%s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d %s %s elmigris el via vilaĝo de %s al %s en la regno de %s%s."
+msgstr[1] "%d %s %sj elmigris el via vilaĝo de %s al %s en la regno de %s%s."
 
 #. TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
 #. <Number> <Race> Peasants have emigrated from your village of <Town> to <Town> in <King>'s Kingdom<Color>.
@@ -1422,7 +1422,9 @@ msgid_plural ""
 "%d %s Peasants have emigrated from your village of %s to %s in %s's Kingdom"
 "%s."
 msgstr[0] ""
+"%d %s Kampulo elmigris el via vilaĝo de %s al %s en la regno de %s%s."
 msgstr[1] ""
+"%d %s Kampuloj elmigris el via vilaĝo de %s al %s en la regno de %s%s."
 
 #. TRANSLATORS: A <Race> <Worker> has emigrated from your village of <Town> to <Town>.
 #. <Number> <Race> <Worker>s have emigrated from your village of <Town> to <Town>.
@@ -1430,8 +1432,8 @@ msgstr[1] ""
 #, c-format
 msgid "%d %s %s has emigrated from your village of %s to %s."
 msgid_plural "%d %s %ss have emigrated from your village of %s to %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d %s %s elmigris el via vilaĝo de %s al %s."
+msgstr[1] "%d %s %sj elmigris el via vilaĝo de %s al %s."
 
 #. TRANSLATORS: A <Race> Peasant has emigrated from your village of <Town> to <Town>.
 #. <Number> <Race> Peasants have emigrated from your village of <Town> to <Town>.
@@ -1439,8 +1441,8 @@ msgstr[1] ""
 #, c-format
 msgid "%d %s Peasant has emigrated from your village of %s to %s."
 msgid_plural "%d %s Peasants have emigrated from your village of %s to %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d %s Kampulo elmigris el via vilaĝo de %s al %s."
+msgstr[1] "%d %s Kampuloj elmigris el via vilaĝo de %s al %s."
 
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
@@ -1450,8 +1452,8 @@ msgid ""
 "%d %s %s has immigrated from %s in %s's Kingdom%s to your village of %s."
 msgid_plural ""
 "%d %s %ss have immigrated from %s in %s's Kingdom%s to your village of %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d %s %s elmigris el %s en la regno de %s%s al via vilaĝo de %s."
+msgstr[1] "%d %s %sj elmigris el %s en la regno de %s%s al via vilaĝo de %s."
 
 #. TRANSLATORS: A <Race> Peasant has immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
 #. <Number> <Race> Peasants have immigrated from <Town> in <King>'s Kingdom<Color> to your village of <Town>.
@@ -1463,7 +1465,9 @@ msgid_plural ""
 "%d %s Peasants have immigrated from %s in %s's Kingdom%s to your village of "
 "%s."
 msgstr[0] ""
+"%d %s  Kampulo elmigris el %s en la regno de %s%s al via vilaĝo de %s."
 msgstr[1] ""
+"%d %s  Kampuloj elmigris el %s en la regno de %s%s al via vilaĝo de %s."
 
 #. TRANSLATORS: A <Race> <Worker> has immigrated from <Town> to your village of <Town>.
 #. <Number> <Race> <Worker>s have immigrated from <Town> to your village of <Town>.
@@ -1471,8 +1475,8 @@ msgstr[1] ""
 #, c-format
 msgid "%d %s %s has immigrated from %s to your village of %s."
 msgid_plural "%d %s %ss have immigrated from %s to your village of %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d %s %s elmigris el %s al via vilaĝo de %s."
+msgstr[1] "%d %s %sj elmigris el %s al via vilaĝo de %s."
 
 #. TRANSLATORS: A <Race> Peasant has immigrated from <Town> to your village of <Town>.
 #. <Number> <Race> Peasants have immigrated from <Town> to your village of <Town>.
@@ -1480,148 +1484,148 @@ msgstr[1] ""
 #, c-format
 msgid "%d %s Peasant has immigrated from %s to your village of %s."
 msgid_plural "%d %s Peasants have immigrated from %s to your village of %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d %s Kampulo elmigris el %s al via vilaĝo de %s."
+msgstr[1] "%d %s Kampuloj elmigris el %s al via vilaĝo de %s."
 
 #. TRANSLATORS: A new Kingdom has emerged under the leadership of <Name>.
 #: src/ONEWSENG.cpp:362
 #, c-format
 msgid "A new Kingdom has emerged under the leadership of %s."
-msgstr ""
+msgstr "Nova regno naskiĝis sub la gvidado de %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has been destroyed.
 #: src/ONEWSENG.cpp:380
 #, c-format
 msgid "%s's Kingdom%s has been destroyed."
-msgstr ""
+msgstr "La Regno de %s%s estis detruita."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has surrendered to you.
 #: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1325
 #, c-format
 msgid "%s's Kingdom%s has surrendered to you."
-msgstr ""
+msgstr "La Regno de %s%s rezignis al vi."
 
 #. TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
 #: src/ONEWSENG.cpp:408
 #, c-format
 msgid "%s's Kingdom%s has surrendered to %s's Kingdom%s."
-msgstr ""
+msgstr "La Regno de %s%s rezignis al la Regno de %s%s."
 
 #. TRANSLATORS: Your King, <Name>, has been slain.
 #: src/ONEWSENG.cpp:433
 #, c-format
 msgid "Your King, %s, has been slain."
-msgstr ""
+msgstr "Via Reĝo, %s, estis mortigita."
 
 #. TRANSLATORS: King <Name> of <King>'s Kingdom<Color> has been slain.
 #: src/ONEWSENG.cpp:438
 #, c-format
 msgid "King %s of %s's Kingdom%s has been slain."
-msgstr ""
+msgstr "Reĝo %s de la regno de %s%s estis murdita."
 
 #. TRANSLATORS: <Name> has ascended the throne as your new King.
 #: src/ONEWSENG.cpp:467
 #, c-format
 msgid "%s has ascended the throne as your new King."
-msgstr ""
+msgstr "%s subiris al trono kiel via nova Reĝo."
 
 #. TRANSLATORS: <Name> has ascended the throne as the new King of <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:472
 #, c-format
 msgid "%s has ascended the throne as the new King of %s's Kingdom%s."
-msgstr ""
+msgstr "%s subiris al trono kiel la nova Reĝo de la Regno de %s%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:481
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Seĝo de Povo apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:482
 #, c-format
 msgid "Your Factory near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Fabriko apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:483
 #, c-format
 msgid "Your Inn near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Gastejo apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:484
 #, c-format
 msgid "Your Market near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Bazaro apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:485
 #, c-format
 msgid "Your Fort near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Fortikaĵo apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:486
 #, c-format
 msgid "Your Mine near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Minejo apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:487
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Turo de Scienco apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:488
 #, c-format
 msgid "Your War Factory near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Milita Fabriko apud %s estis detruita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:489
 #, c-format
 msgid "Your Harbor near %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Haveno apud %s estis detruita de la Regno de %s%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Rebels.
 #: src/ONEWSENG.cpp:495
 #, c-format
 msgid "Your Seat of Power near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Seĝo de Povo apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:496
 #, c-format
 msgid "Your Factory near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Fabriko apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:497
 #, c-format
 msgid "Your Inn near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Gastejo apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:498
 #, c-format
 msgid "Your Market near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Bazaro apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:499
 #, c-format
 msgid "Your Fort near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Fortikaĵo apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:500
 #, c-format
 msgid "Your Mine near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Minejo apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:501
 #, c-format
 msgid "Your Tower of Science near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Turo de Scienco apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:502
 #, c-format
 msgid "Your War Factroy near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Milita Fabriko apud %s estis detruita de Ribeluloj."
 
 #: src/ONEWSENG.cpp:503
 #, c-format
 msgid "Your Harbor near %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via Haveno apud %s estis detruita de Ribeluloj."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by Fryhtans.
 #: src/ONEWSENG.cpp:509
@@ -1720,143 +1724,145 @@ msgstr "Via Haveno ĉe %s estis detruita."
 #, c-format
 msgid ""
 "Your Seat of Power near %s has been captured by a spy from %s's Kingdom%s."
-msgstr ""
+msgstr "Via Seĝo de Povo apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:578
 #, c-format
 msgid "Your Factory near %s has been captured by a spy from %s's Kingdom%s."
-msgstr ""
+msgstr "Via Fabriko apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:579
 #, c-format
 msgid "Your Inn near %s has been captured by a spy from %s's Kingdom%s."
-msgstr ""
+msgstr "Via Gastejo apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:580
 #, c-format
 msgid "Your Market near %s has been captured by a spy from %s's Kingdom%s."
-msgstr ""
+msgstr "Via Bazaro apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:581
 #, c-format
 msgid "Your Fort near %s has been captured by a spy from %s's Kingdom%s."
-msgstr ""
+msgstr "Via Fortikaĵo apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:582
 #, c-format
 msgid "Your Mine near %s has been captured by a spy from %s's Kingdom%s."
-msgstr ""
+msgstr "Via Minejo apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:583
 #, c-format
 msgid ""
 "Your Tower of Science near %s has been captured by a spy from %s's Kingdom%s."
 msgstr ""
+"Via Turo de Scienco apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:584
 #, c-format
 msgid ""
 "Your War Factory near %s has been captured by a spy from %s's Kingdom%s."
 msgstr ""
+"Via Milita Fabriko apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:585
 #, c-format
 msgid "Your Harbor near %s has been captured by a spy from %s's Kingdom%s."
-msgstr ""
+msgstr "Via Haveno apud %s estis kaptita de spiono de la Regno de %s%s."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been captured by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:591
 #, c-format
 msgid "Your Seat of Power near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Seĝo de Povo apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:592
 #, c-format
 msgid "Your Factory near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Fabriko apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:593
 #, c-format
 msgid "Your Inn near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Gastejo apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:594
 #, c-format
 msgid "Your Market near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Bazaro apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:595
 #, c-format
 msgid "Your Fort near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Fortikaĵo apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:596
 #, c-format
 msgid "Your Mine near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Minejo apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:597
 #, c-format
 msgid "Your Tower of Science near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Turo de Scienco apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:598
 #, c-format
 msgid "Your War Factory near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Milita Fabriko apud %s estis kaptita de la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:599
 #, c-format
 msgid "Your Harbor near %s has been captured by %s's Kingdom%s."
-msgstr ""
+msgstr "Via Haveno apud %s estis kaptita de la Regno de %s%s."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:655
 #, c-format
 msgid "Your village of %s has been destroyed by %s's Kingdom%s."
-msgstr ""
+msgstr "Via vilaĝo de %s estis detruita de la Regno de %s%s."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by Rebels.
 #: src/ONEWSENG.cpp:660
 #, c-format
 msgid "Your village of %s has been destroyed by Rebels."
-msgstr ""
+msgstr "Via vilaĝo de %s estis detruita de Ribeluloj."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed by Fryhtans.
 #: src/ONEWSENG.cpp:665
 #, c-format
 msgid "Your village of %s has been destroyed by Fryhtans."
-msgstr ""
+msgstr "Via vilaĝo de %s estis detruita de Frihtanoj."
 
 #. TRANSLATORS: Your village of <Town> has been destroyed.
 #: src/ONEWSENG.cpp:670
 #, c-format
 msgid "Your village of %s has been destroyed."
-msgstr ""
+msgstr "Via vilaĝo de %s estis detruita."
 
 #. TRANSLATORS: Your village of <Town> has been abandoned by its people.
 #: src/ONEWSENG.cpp:691
 #, c-format
 msgid "Your village of %s has been abandoned by its people."
-msgstr ""
+msgstr "Via vilaĝo de %s estis forlasita de ĝiaj loĝantoj"
 
 #. TRANSLATORS: Your village of <Town> has surrendered to <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:721
 #, c-format
 msgid "Your village of %s has surrendered to %s's Kingdom%s."
-msgstr ""
+msgstr "Via vilaĝo de %s rezignis al Regno de %s%s."
 
 #. TRANSLATORS: The village of <Town> in <King>'s Kingdom<Color> has surrendered to you.
 #: src/ONEWSENG.cpp:726
 #, c-format
 msgid "The village of %s in %s's Kingdom%s has surrendered to you."
-msgstr ""
+msgstr "La vilaĝo de %s en la Regno de %s%s rezignis al vi."
 
 #. TRANSLATORS: The independent village of <Town> has surrendered to you.
 #: src/ONEWSENG.cpp:731
 #, c-format
 msgid "The independent village of %s has surrendered to you."
-msgstr ""
+msgstr "La sendependa vilaĝo de %s rezignis al vi."
 
 #. TRANSLATORS: An All High <monster type> has been slain.
 #: src/ONEWSENG.cpp:740
@@ -2741,7 +2747,7 @@ msgstr[1] ""
 
 #: src/ONEWSENG.cpp:1525
 msgid "Make haste!"
-msgstr ""
+msgstr "Rapidu!"
 
 #: src/ONEWSENG.cpp:1537
 #, c-format
@@ -2762,16 +2768,16 @@ msgstr[1] ""
 #, c-format
 msgid "You have only %d year"
 msgid_plural "You have only %d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Al vi restas nur %d jaro"
+msgstr[1] "Al vi restas nur %d jaroj"
 
 #. TRANSLATORS: Part of "You have only %d year(s) and and %d month(s) left to achieve your goal."
 #: src/ONEWSENG.cpp:1556
 #, c-format
 msgid "and %d month left to achieve your goal."
 msgid_plural "and %d months left to achieve your goal."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "kaj %d monato por atingi vian celon."
+msgstr[1] "kaj %d monatoj por atingi vian celon."
 
 #. TRANSLATORS: A <Weapon> <Tech Level Number> of yours has broken down due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1566
@@ -4861,7 +4867,7 @@ msgstr ""
 
 #: src/OTALKRES.cpp:195 src/OTALKRES.cpp:1053
 msgid "Cancel."
-msgstr ""
+msgstr "Nuligi."
 
 #: src/OTALKRES.cpp:208
 msgid "Propose a trade treaty."
@@ -4961,11 +4967,11 @@ msgstr ""
 
 #: src/OTALKRES.cpp:417
 msgid "Which technology?"
-msgstr ""
+msgstr "Kiu teĥnologio?"
 
 #: src/OTALKRES.cpp:436
 msgid "Which version?"
-msgstr ""
+msgstr "Kiu versio?"
 
 #: src/OTALKRES.cpp:462
 msgid "How much do you offer?"
@@ -5109,7 +5115,7 @@ msgstr ""
 
 #: src/OUNITIF.cpp:1243
 msgid "Rebel"
-msgstr ""
+msgstr "Ribelulo"
 
 #: src/OUNITIF.cpp:1256 src/OUNITIF.cpp:1287
 msgid "Soldier"
@@ -5139,7 +5145,7 @@ msgstr ""
 
 #: src/OUNITIF.cpp:1276
 msgid "Spy"
-msgstr ""
+msgstr "Spiono"
 
 #: src/OUNITIF.cpp:1280
 msgid "Peasant"
@@ -5308,7 +5314,7 @@ msgstr ""
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Fryhtans"
-msgstr ""
+msgstr "Frihtanoj"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Loyalty & Reputation"
@@ -8597,7 +8603,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:285
 msgid "Game Menu"
-msgstr ""
+msgstr "Luda Menuo"
 
 # data/RESOURCE/HELP.RES:286
 msgid "Click on this button to bring up the Game Menu. "
