@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-03-31 09:30+0200\n"
+"PO-Revision-Date: 2021-04-20 17:23+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1867,55 +1867,55 @@ msgstr "La sendependa vilaĝo de %s rezignis al vi."
 #. TRANSLATORS: An All High <monster type> has been slain.
 #: src/ONEWSENG.cpp:740
 msgid "An All High Deezboanz has been slain."
-msgstr ""
+msgstr "Plej Granda Deezboanz estis murdita."
 
 #: src/ONEWSENG.cpp:741
 msgid "An All High Rattus has been slain."
-msgstr ""
+msgstr "Plej Granda Rattus estis murdita."
 
 #: src/ONEWSENG.cpp:742
 msgid "An All High Broosken has been slain."
-msgstr ""
+msgstr "Plej Granda Broosken estis murdita."
 
 #: src/ONEWSENG.cpp:743
 msgid "An All High Haubudam has been slain."
-msgstr ""
+msgstr "Plej Granda Haubudam estis murdita."
 
 #: src/ONEWSENG.cpp:744
 msgid "An All High Pfith has been slain."
-msgstr ""
+msgstr "Plej Granda Pfith estis murdita."
 
 #: src/ONEWSENG.cpp:745
 msgid "An All High Rokken has been slain."
-msgstr ""
+msgstr "Plej Granda Rokken estis murdita."
 
 #: src/ONEWSENG.cpp:746
 msgid "An All High Doink has been slain."
-msgstr ""
+msgstr "Plej Granda Doink estis murdita."
 
 #: src/ONEWSENG.cpp:747
 msgid "An All High Wyrm has been slain."
-msgstr ""
+msgstr "Plej Granda Wyrm estis murdita."
 
 #: src/ONEWSENG.cpp:748
 msgid "An All High Droog has been slain."
-msgstr ""
+msgstr "Plej Granda Droog estis murdita."
 
 #: src/ONEWSENG.cpp:749
 msgid "An All High Ick has been slain."
-msgstr ""
+msgstr "Plej Granda Ick estis murdita."
 
 #: src/ONEWSENG.cpp:750
 msgid "An All High Sauroid has been slain."
-msgstr ""
+msgstr "Plej Granda Sauroid estis murdita."
 
 #: src/ONEWSENG.cpp:751
 msgid "An All High Karrotten has been slain."
-msgstr ""
+msgstr "Plej Granda Karrotten estis murdita."
 
 #: src/ONEWSENG.cpp:752
 msgid "An All High Holgh has been slain."
-msgstr ""
+msgstr "Plej Granda Holgh estis murdita."
 
 #. TRANSLATORS: A <Fryhtan> Lair has been destroyed.
 #: src/ONEWSENG.cpp:774
@@ -3435,19 +3435,19 @@ msgstr ""
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OR_TRADE.cpp:77
 msgid "Market"
-msgstr ""
+msgstr "Bazaro"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OR_TRADE.cpp:78
 msgid "Factory"
-msgstr ""
+msgstr "Fabriko"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OR_TRADE.cpp:79
 msgid "Mine"
-msgstr ""
+msgstr "Minejo"
 
 #: src/OR_TRADE.cpp:80
 msgid "Any"
