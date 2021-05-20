@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-04-20 17:23+0200\n"
+"PO-Revision-Date: 2021-05-20 16:42+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1920,60 +1920,60 @@ msgstr "Plej Granda Holgh estis murdita."
 #. TRANSLATORS: A <Fryhtan> Lair has been destroyed.
 #: src/ONEWSENG.cpp:774
 msgid "A Deezboanz Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Deezboanz estis detruita."
 
 #: src/ONEWSENG.cpp:775
 msgid "A Rattus Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Rattus estis detruita."
 
 #: src/ONEWSENG.cpp:776
 msgid "A Broosken Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Broosken estis detruita."
 
 #: src/ONEWSENG.cpp:777
 msgid "A Haubudam Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Haubudam estis detruita."
 
 #: src/ONEWSENG.cpp:778
 msgid "A Pfith Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Pfith estis detruita."
 
 #: src/ONEWSENG.cpp:779
 msgid "A Rokken Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Rokken estis detruita."
 
 #: src/ONEWSENG.cpp:780
 msgid "A Doink Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Doink estis detruita."
 
 #: src/ONEWSENG.cpp:781
 msgid "A Wyrm Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Wyrm estis detruita."
 
 #: src/ONEWSENG.cpp:782
 msgid "A Droog Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Droog estis detruita."
 
 #: src/ONEWSENG.cpp:783
 msgid "An Ick Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Ick estis detruita."
 
 #: src/ONEWSENG.cpp:784
 msgid "A Sauroid Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Sauroid estis detruita."
 
 #: src/ONEWSENG.cpp:785
 msgid "A Karrotten Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Karrotten estis detruita."
 
 #: src/ONEWSENG.cpp:786
 msgid "A Holgh Lair has been destroyed."
-msgstr ""
+msgstr "Nesto de Holgh estis detruita."
 
 #. TRANSLATORS: You have acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:808
 msgid "You have acquired the Norman Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Normanda Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:809
 msgid "You have acquired the Mayan Scroll of Power."
@@ -5380,7 +5380,7 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Egyptian"
-msgstr ""
+msgstr "Egipta"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -5417,21 +5417,21 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Maya"
-msgstr ""
+msgstr "Majaa"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Mughul"
-msgstr ""
+msgstr "Mogola"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Norman"
-msgstr ""
+msgstr "Normanda"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
