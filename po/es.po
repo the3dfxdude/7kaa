@@ -4678,7 +4678,7 @@ msgstr "Exige la última tecnología del unicornio del reino de %s%s."
 #: src/OTALKENG.cpp:964
 #, c-format
 msgid "%s's Kingdom%s requests the latest Catapult technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología dela catapulta."
+msgstr "El reino de %1$s%2$s le pide la última tecnología de la catapulta."
 
 #: src/OTALKENG.cpp:965
 #, c-format
