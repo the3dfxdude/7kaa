@@ -5,7 +5,7 @@
 % Summary of changes: 
 
 % Stylistic:
-    % Replaced proprietary fonts with substitutable open fonts: Galliard with Accanthis and GloudyTextMT with ygothic
+    % Replaced proprietary fonts with substitutable open fonts: Galliard with Accanthis and GloudyTextMT with ygothic.
     % REMOVED ampersands.
 
 % Grammar:
@@ -57,37 +57,48 @@
 
 % v0.2
 
-	% REMOVED \clearpage where not needed.
-	% ADDED universalis font - incomplete.
-	% REMOVED installation instructions.
-	% Changed 7kaa icon to grayscale
-	% Removed references to the 7kfans.com\wiki link.
-	% 
+    % REMOVED \clearpage where not needed.
+    % Replaced proprietary font Univers with universalis - incomplete.
+    % REMOVED installation instructions.
+    % Changed 7kaa icon to grayscale.
+    % Removed references to the 7kfans.com\wiki link.
+    % ADDED one inch whitespace in addition to the margin for the chapter starts, modifying {before} in\titlespacing\chapter - from original manual.
+    % REMOVED dummy section from FAQ.
+    % Capitalized chapter titles as per original manual. Previously used M.L.A. style. Contents is not all capitalize like the INDEX in the original. This has the consequence of changing the chapter titles to all capital letters in the contents, yet in the original manual, they are not all capital letters.
 
 % -- Changelog end -- %
 
 % ---------------------------------------------------------------------- %
 
-% -- Notes and TODO -- %
+% -- TODO -- %
 
-    % the original manual "has been designed as an in-depth reference book."
-    % https://writingcenter.unc.edu/tips-and-tools/gender-inclusive-language/
-    % https://style.mla.org/commas-conj-mods/
-    % https://style.mla.org/scare-quotes-origins/
     % Indexing new content: mChat, website pages, 7kfans multiplayer service, download, Experimental Builds, and cheatcodes. Expand on "network play" index entry?
-    % Fix header. - Even manually code.
-    % Replace Univers font with Universalis(?) for Chapter titles, TOC, and Index.
+    % Replace Univers font with Universalis for frontpage, chapter titles, TOC, and index.
     % Restore purple cover.
     % Fix FAQ sectioning and header. - currently using a dummy section.
     % CODE CLEAN UP.
+    % Restore original voice.
     % Some tile graphics extend past top textline. - some due to Huge font.
     % Organize key/mouse commands.
+
+% -- TODO end -- %
+
+% -- Notes -- % 
+
+    % the original manual "has been designed as an in-depth reference book."
     % Uses in, cm, pt, etc. Use just one type?
     % Ancient Adversaries" does not align with the Seven Kingdoms graphic.
-    % Restore orginal voice
     % Disagreement between troop and troops in pronoun use.
-    % Capitalization is not consistant.
-    % Period usage in the hotkeys/mouse commands/cheats. the box in the mouse commands looks a bit gray. hotkeys are slightly indented in the original. 
+    % Capitalization is not consistent.
+    % Period usage in the hotkeys/mouse commands/cheats.
+    % the box in the mouse commands looks a bit gray.
+    % hotkeys are slightly indented in the original. 
     % itemize is used only once. it's in the 7kfans credits.
-        
-% -- Notes and TODO end -- %
+
+% -- Notes end -- %
+
+% -- References -- %
+
+    % https://writingcenter.unc.edu/tips-and-tools/gender-inclusive-language/
+    % https://style.mla.org/commas-conj-mods/
+    % https://style.mla.org/scare-quotes-origins/
