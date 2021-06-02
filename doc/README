@@ -1,6 +1,43 @@
-% -- Changelog -- %
+% Greetings reader, my purpose is a complete restoration of the original manual with the updates. Special attention has been given to preserving the original author's voice; Overall, however, this is a different manual with lots of minor and major differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux and compiled with pdflatex. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
 
-% Greetings reader, my purpose is a complete restoration of the original manual with the updates. Special attention has been given to preserving the original author's voice; Overall, however, this is a different manual with lots of minor and major differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux. I tried to let LaTeX do everything automatically, but it isn't perfect nor am I; for I had never used LaTeX, so many errors remain such as the bad box issues I completely ignored unless it was visually disruptive. There is still much to improve. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
+% -- TODO -- %
+
+    % Add index entries - mChat, community project, https://7kfans.com/, forums, download page, 7kfans.com multiplayer service, and cheat mode/cheat codes.
+    % Organize key/mouse commands.
+    % Align "Ancient Adversaries" with the Seven Kingdoms graphic.
+    % Restore purple cover.
+    % CODE CLEAN UP.
+    % Restore original voice.
+
+% -- TODO end -- %
+
+% -- Notes -- % 
+
+    % the original manual "has been designed as an in-depth reference book."
+    % Acrobat Distiller 3.02 for Power Macintosh
+    % FrameMaker 5.1.1
+    % Invoice, Portrait (5.51 × 8.51 inch)
+    % Fonts: (ITC) Galliard (Serif) - Black, Bold, Roman, Italic, BoldItalic. GloudyTextMT. Univers (neo-grotesque sans-serif).
+    % Some tile graphics extend past top textline. - some due to Huge font. Issue with specific font and size declaration. See font documentation.
+    % Uses in, cm, pt, etc. Use just one type? Use in instead of cm.
+    % Disagreement between troop and troops in pronoun use.
+    % Capitalization is not consistent.
+    % Period usage in the hotkeys/mouse commands/cheats.
+    % the box in the mouse commands looks a bit gray.
+    % hotkeys are slightly indented in the original. 
+    % itemize is used only once. it's in the 7kfans credits.
+
+% -- Notes end -- %
+
+% -- References -- %
+
+    % https://writingcenter.unc.edu/tips-and-tools/gender-inclusive-language/
+    % https://style.mla.org/commas-conj-mods/
+    % https://style.mla.org/scare-quotes-origins/
+    
+% -- References end -- %
+
+% -- Changelog -- %
 
 % Summary of changes: 
 
@@ -58,47 +95,15 @@
 % v0.2
 
     % REMOVED \clearpage where not needed.
-    % Replaced proprietary font Univers with universalis - incomplete.
+    % Defined sectioning as textsf.
+    % Standardized on listing roles as volunteering for 7kfans credits.
+    % Changed from textgoth to textswab.
     % REMOVED installation instructions.
     % Changed 7kaa icon to grayscale.
     % Removed references to the 7kfans.com\wiki link.
-    % ADDED one inch whitespace in addition to the margin for the chapter starts, modifying {before} in\titlespacing\chapter - from original manual.
-    % REMOVED dummy section from FAQ.
+    % ADDED 1.4 inch whitespace in addition to the margin for the chapter starts, modifying {before} in \titlespacing\chapter - from original manual.
+    % REMOVED dummy section from FAQ and removed sectioning for bf text.
     % Capitalized chapter titles as per original manual. Previously used M.L.A. style. Contents is not all capitalize like the INDEX in the original. This has the consequence of changing the chapter titles to all capital letters in the contents, yet in the original manual, they are not all capital letters.
+    % Created new assets Itrade and Icaravan and included them in document with new text regarding updated trade scroll and idle caravans. Expand.
 
 % -- Changelog end -- %
-
-% ---------------------------------------------------------------------- %
-
-% -- TODO -- %
-
-    % Indexing new content: mChat, website pages, 7kfans multiplayer service, download, Experimental Builds, and cheatcodes. Expand on "network play" index entry?
-    % Replace Univers font with Universalis for frontpage, chapter titles, TOC, and index.
-    % Restore purple cover.
-    % Fix FAQ sectioning and header. - currently using a dummy section.
-    % CODE CLEAN UP.
-    % Restore original voice.
-    % Some tile graphics extend past top textline. - some due to Huge font.
-    % Organize key/mouse commands.
-
-% -- TODO end -- %
-
-% -- Notes -- % 
-
-    % the original manual "has been designed as an in-depth reference book."
-    % Uses in, cm, pt, etc. Use just one type?
-    % Ancient Adversaries" does not align with the Seven Kingdoms graphic.
-    % Disagreement between troop and troops in pronoun use.
-    % Capitalization is not consistent.
-    % Period usage in the hotkeys/mouse commands/cheats.
-    % the box in the mouse commands looks a bit gray.
-    % hotkeys are slightly indented in the original. 
-    % itemize is used only once. it's in the 7kfans credits.
-
-% -- Notes end -- %
-
-% -- References -- %
-
-    % https://writingcenter.unc.edu/tips-and-tools/gender-inclusive-language/
-    % https://style.mla.org/commas-conj-mods/
-    % https://style.mla.org/scare-quotes-origins/

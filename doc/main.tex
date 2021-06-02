@@ -25,9 +25,10 @@
 % Fonts:
 \usepackage[utf8]{inputenc} % Now we can write UTF8 characters directly in the .tex files
 \usepackage[T1]{fontenc} % T1 fonts are 8 bit fonts with a large amount of glyphs
-%\usepackage{universalis} % Titlepage, TOC, chapter, sectioning, and index font.
+\usepackage{universalis} % TOC, chapter, sectioning, and index font.
+\usepackage{yfonts} % Swab: For first paragraphs.
 \usepackage{accanthis} % Main font.
-\usepackage{yfonts} % ygothic: For first paragraphs.
+
 
 % Graphics, figures and tables:
 \usepackage{graphicx} % Basic support for figures
@@ -52,7 +53,7 @@
 %           12pt is what we would like the spacing to be
 %           plus 4pt means that TeX can stretch it by at most 4pt
 %           minus 2pt means that TeX can shrink it by at most 2pt
-\titlespacing\chapter{0pt}{12pt plus 4pt minus 2pt}{12pt plus 6pt minus 2pt}
+\titlespacing\chapter{0pt}{1.4in}{12pt plus 6pt minus 2pt}
 \titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
 \titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
 \titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
@@ -82,10 +83,12 @@
 %\usepackage{showframe} % For testing.
 
 % -- New Environment -- %
+
 % -- New Environment end -- %
 
 % -- Additional Options -- %
 
+%\linespread{.5}
 \setlength{\parskip}{1ex} % From the original manual.
 \setlength{\parindent}{0pt} % From the original manual.
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]} % Indentation command.
@@ -107,8 +110,7 @@ Seven Kingdoms: Ancient Adversaries OSS Project} % Do not change.
 \frontmatter
 \maketitle
 
-\pdfbookmark{Copyright Notice}{CopyrightNotice}
-\section*{Copyright Notice}
+\section{\textsf{Copyright Notice}}
 
 Seven Kingdoms: Ancient Adversaries Instruction Manual
 
@@ -120,49 +122,45 @@ This manual is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU General Public License along with this manual.  If not, see <http://www.gnu.org/licenses/>.
 
-\subsection*{Other Copyright}
+\subsection{\textsf{Other Copyright}}
 
-\subsubsection*{Music}
+\subsubsection{\textsf{Music}}
 
-% ø letter and (c)
+% ø letter
 
-The music is the work of Bjørn Lynne, Copyright (c) 1997, and is not provided under the GPL. It may be freely downloaded and used with Seven Kingdoms: Ancient Adversaries but not modified or repurposed into derivative works.
+The music is the work of Bjørn Lynne, Copyright 1997, and is not provided under the GPL. It may be freely downloaded and used with Seven Kingdoms: Ancient Adversaries but not modified or repurposed into derivative works.
 
-\subsubsection*{Trademark}
+\subsubsection{\textsf{Trademark}}
 
 Seven Kingdoms is a trademark of Enlight Software Ltd., and the 7kfans project is using the trademark with permission. This license does not constitute a transfer of any ownership, rights, or authority to the trademarks owned by Enlight. Any questions regarding use must be directed to Enlight.
 
 \clearpage
 
-\pdfbookmark{Project Introduction}{ProjectIntroduction}
-\section*{Project Introduction}
+\section{\textsf{Project Introduction}}
 
 % Hyphenation here
 
-\textgoth{\Huge{I}}n 2009, Trevor Chan from Enlight Software released the source code for \textit{Seven Kingdoms: Ancient Adversaries}. He released it under a community project so that developers can provide some long awaited bug fixes and address some other game-play issues.
+\textswab{\Huge{I}}n 2009, Trevor Chan from Enlight Software released the source code for \textit{Seven Kingdoms: Ancient Adversaries}. He released it under a community project so that developers can provide some long awaited bug fixes and address some other game-play issues.
 
 The official website for \textit{Seven Kingdoms: Ancient Adversaries} OSS Project is at https://7kfans.com/. Here you will find the forums and download page.
 
-\textit{Seven Kingdoms: Ancient Adversaries} has been under active development since its 2009 release. If you want to see what has been fixed or changed, see the changelogs for the official releases under News. 
+\textit{Seven Kingdoms: Ancient Adversaries} has been under active development since its 2009 release. If you want to see what has been fixed or changed, see the changelogs for the official releases under News.
 
 This manual is part of the community project. It has been updated to reflect the current status of \textit{Seven Kingdoms: Ancient Adversaries}.
 
-
-\pdfbookmark{Registration}{Registration}
-\section*{Registration}
+\section{\textsf{Registration}}
 
 \index{registering}
 
-\textgoth{\Huge{R}}egister for a forums account. An account is necessary to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
+\textswab{\Huge{R}}egister for a forums account. An account is necessary to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
 
-\pdfbookmark{Questions or Problems}{QuestionsOrProblems}
-\section*{Questions or Problems}
+\section{\textsf{Questions or Problems}}
 
-\textgoth{\Huge{I}}f you have difficulties with this game and cannot find the solution in this manual, post your question or problem on the forums for assistance from a member of the community.
+\textswab{\Huge{I}}f you have difficulties with this game and cannot find the solution in this manual, post your question or problem on the forums for assistance from a member of the community.
 
 \clearpage
-\pdfbookmark{\contentsname}{Contents}
 \tableofcontents
+\addtocontents{toc}{\sffamily}
 
 \mainmatter
 \include{introduction}
@@ -192,6 +190,6 @@ This manual is part of the community project. It has been updated to reflect the
 
 \cleardoublepage
 \addcontentsline{toc}{chapter}{Index}
-\printindex
+\textsf{\printindex}
 
 \end{document}
