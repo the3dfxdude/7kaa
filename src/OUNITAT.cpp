@@ -854,38 +854,18 @@ void Unit::gain_experience()
 
 	//--- if this is a soldier led by a commander, increase the leadership of its commander -----//
 
-	if( leader_unit_recno )
+	if( is_leader_in_range() )
 	{
 		Unit* leaderUnit = unit_array[leader_unit_recno];
-		int	leaderXLoc= -1, leaderYLoc;
 
-		if( leaderUnit->is_visible() )
+		leaderUnit->inc_minor_skill_level(1);
+
+		//-- give additional increase if the leader has skill potential on leadership --//
+
+		if( leaderUnit->skill.skill_potential > 0 )
 		{
-			leaderXLoc = cur_x_loc();
-			leaderYLoc = cur_y_loc();
-		}
-		else if( leaderUnit->unit_mode == UNIT_MODE_OVERSEE )
-		{
-			Firm* firmPtr = firm_array[leaderUnit->unit_mode_para];
-
-			leaderXLoc = firmPtr->center_x;
-			leaderYLoc = firmPtr->center_y;
-		}
-		else
-			leaderXLoc = -1;
-
-		if( leaderXLoc >= 0 &&
-			 misc.points_distance( cur_x_loc(), cur_y_loc(), leaderXLoc, leaderYLoc ) <= EFFECTIVE_LEADING_DISTANCE )
-		{
-			leaderUnit->inc_minor_skill_level(1);
-
-			//-- give additional increase if the leader has skill potential on leadership --//
-
-			if( leaderUnit->skill.skill_potential > 0 )
-			{
-				if( misc.random(10-leaderUnit->skill.skill_potential/10)==0 )
-					leaderUnit->inc_minor_skill_level(5);
-			}
+			if( misc.random(10-leaderUnit->skill.skill_potential/10)==0 )
+				leaderUnit->inc_minor_skill_level(5);
 		}
 
 		//--- if this soldier has leadership potential and is led by a commander ---//
