@@ -186,7 +186,7 @@ void RaceRes::load_name()
 
 			for( j=1 ; j<=MAX_RACE ; j++ )
 			{
-				if( strcmp( race_res[j]->code, misc.nullify(raceName->name+2, RaceInfo::CODE_LEN) )==0 )
+				if( strcmp( race_res[j]->code, raceName->name+2 )==0 )
 				{
 					raceId = j;
 					break;
