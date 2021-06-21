@@ -62,7 +62,6 @@ public :
    int  sort_offset;
    char sort_type;
 
-   short body_lock_cnt;
    char* body_buf;	    // cur_pos and last_ele are start from 1 (not 0)
 
    //----------------------------------------------//
@@ -73,8 +72,6 @@ public :
    ~DynArray();
 
    void  resize(int);
-   void  lock_body() { body_lock_cnt++; };
-   void  unlock_body() { body_lock_cnt--; };
 
    void  linkin(const void*);
 	void  linkin_unique(const void*);

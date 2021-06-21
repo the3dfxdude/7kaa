@@ -43,7 +43,6 @@ DynArray::DynArray(int eleSize,int blockNum)
    ele_size  = eleSize;
    block_num = blockNum;
 
-   body_lock_cnt=0;
    body_buf = mem_add( ele_size*block_num );
 
    cur_pos=0;
@@ -72,9 +71,6 @@ DynArray::~DynArray()
 //
 void DynArray::resize( int newNum )
 {
-   if( body_lock_cnt )
-      err.run("Cannot move array");
-
    //-------------------------------------------------------//
    //
    // The Mem::resize() and realloc() may not function properly in
@@ -107,8 +103,6 @@ void DynArray::zap(int resizeFlag)
 	{
 		if( ele_num != block_num )			// if the current record no. is already block_num, no resizing needed
 		{
-			if( body_lock_cnt )
-				err.run("Cannot move array");
 			ele_num  = block_num;
 			body_buf = mem_resize(body_buf, ele_size*ele_num );
 		}
@@ -507,9 +501,6 @@ enum { DYN_ARRAY_RECORD_SIZE = 29 };
 //
 int DynArray::write_file(File* filePtr)
 {
-	if( body_lock_cnt )
-		err.run("Cannot move array");
-
 	if (!write_with_record_size(filePtr, this, &visit_dyn_array<FileWriterVisitor>,
 										 DYN_ARRAY_RECORD_SIZE))
 		return 0;
@@ -537,9 +528,6 @@ int DynArray::write_file(File* filePtr)
 //
 int DynArray::read_file(File* filePtr)
 {
-	if( body_lock_cnt )
-		err.run("Cannot move array");
-
 	if (!read_with_record_size(filePtr, this, &visit_dyn_array<FileReaderVisitor>,
 										DYN_ARRAY_RECORD_SIZE))
 		return 0;
