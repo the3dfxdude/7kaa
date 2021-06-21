@@ -799,6 +799,7 @@ void TerrainRes::load_anim_info()
 	int	animFrameCount = 0;
 	char *animFrameBitmap[MAX_TERRAIN_ANIM_FRAME];
 	memset(lastAnimRec.filename, ' ', lastAnimRec.FILE_NAME_LEN);
+	memset(lastAnimRec.base_file, ' ', lastAnimRec.FILE_NAME_LEN);
 	
 	//---------- read in TERANM.DBF -------//
 //	int j,k,l;
