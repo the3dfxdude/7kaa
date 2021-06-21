@@ -2,12 +2,28 @@
 
 % -- TODO -- %
 
-    % Add index entries - mChat, community project, https://7kfans.com/, forums, download page, 7kfans.com multiplayer service, and cheat mode/cheat codes.
+    % Add index entries - mChat, community project, https://7kfans.com/, forums, download page, 7kfans.com multiplayer service, and cheat mode/cheat codes, idle caravans.
     % Organize key/mouse commands.
+    % set text as \raggedright. Currently prefer left and right justified text.
+    % set chapter sectioning with small caps (font lacks them).
+    % set sectioning to mimic original manual - bolder / different size.
+    % adjust space between sectioning.
+    % make title on title page bolder.
+    % remove sectioning numbers.
+    % make TOC entries not capital letters.
+    % include recent contributor.
+    % fix large letters not appearing in index.
+    % fix bugs.
+    % "index anchor is in the wrong spot. It is before the section break, so it's on the last page of credits."
+    % reduce whitespace in chapter 16.
+    % sort 7kfans credits as chronological.
     % Align "Ancient Adversaries" with the Seven Kingdoms graphic.
     % Restore purple cover.
-    % CODE CLEAN UP.
-    % Restore original voice.
+    % Expand on  
+    	* Added trade locations to the trade report.
+ 	* Sort and filter trade locations based on the map selected caravan.
+ 	* Allow setting stops using the trade report.
+ 	* Allow copying trade routes using the trade report.
 
 % -- TODO end -- %
 
@@ -31,13 +47,14 @@
 
 % -- References -- %
 
-    % https://writingcenter.unc.edu/tips-and-tools/gender-inclusive-language/
-    % https://style.mla.org/commas-conj-mods/
-    % https://style.mla.org/scare-quotes-origins/
+    % https://cdn.akamai.steamstatic.com/steam/apps/450140/manuals/Seven_Kingdoms_Ancient_Adversaries_manual.pdf?t=1458663750
+    % https://archive.org/details/Seven_Kingdoms
     
 % -- References end -- %
 
 % -- Changelog -- %
+
+% v0.2.0
 
 % Summary of changes: 
 
@@ -92,7 +109,7 @@
     % REMOVED spinners and troubleshooting index entries.
     % Respelled multi-player to multiplayer and single-player to single player.
 
-% v0.2
+% v0.2.1
 
     % REMOVED \clearpage where not needed.
     % Defined sectioning as textsf.
@@ -105,5 +122,9 @@
     % REMOVED dummy section from FAQ and removed sectioning for bf text.
     % Capitalized chapter titles as per original manual. Previously used M.L.A. style. Contents is not all capitalize like the INDEX in the original. This has the consequence of changing the chapter titles to all capital letters in the contents, yet in the original manual, they are not all capital letters.
     % Created new assets Itrade and Icaravan and included them in document with new text regarding updated trade scroll and idle caravans. Expand.
+
+% v0.2.2-dev
+
+    % 
 
 % -- Changelog end -- %
