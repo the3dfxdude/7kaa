@@ -227,8 +227,6 @@ err_out:
 //
 void ConfigAdv::reset()
 {
-	big_dynarray_mode = 1;
-
 	locale[0] = 0;
 
 	monster_alternate_attack_curve = 0;

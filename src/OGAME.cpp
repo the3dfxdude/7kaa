@@ -72,7 +72,6 @@
 // ##### begin Gilbert 2/10 #######//
 #include <OFIRMDIE.h>
 // ##### end Gilbert 2/10 #######//
-#include <ConfigAdv.h>
 
 //---------------- DETECT_SPREAD ----------------//
 //
@@ -173,16 +172,6 @@ int Game::init(int loadGameCall)
 	effect_array.init();
 	tornado_array.init();
 	war_point_array.init();
-
-	if( config_adv.big_dynarray_mode )
-	{
-		firm_array.resize(5000);
-		town_array.resize(5000);
-		unit_array.resize(5000);
-		bullet_array.resize(5000);
-		rebel_array.resize(5000);
-		spy_array.resize(5000);
-	}
 
    //------ init game surface class ----------//
 
