@@ -58,6 +58,9 @@ public:
 	int   file_read(void*, unsigned);
 	int   file_write(void*, unsigned);
 
+	int     file_put_char(int8_t);
+	int8_t  file_get_char();
+
 	int     file_put_short(int16_t);
 	int16_t file_get_short();
 

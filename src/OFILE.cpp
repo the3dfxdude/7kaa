@@ -237,6 +237,43 @@ int File::file_read(void* dataBuf, unsigned dataSize)
 //---------- End of function File::file_read ----------//
 
 
+int File::file_put_char(int8_t value)
+{
+	err_when(!file_handle);
+
+	fwrite(&value, 1, sizeof(int8_t), file_handle);
+
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			err.run("[File::file_put_short] error occured while writing file: %s\n", file_name);
+		else
+			ERR("[File::file_put_short] error occured while writing file: %s\n", file_name);
+		return 0;
+	}
+
+	return 1;
+}
+
+int8_t File::file_get_char()
+{
+	err_when(!file_handle);
+
+	int8_t value;
+	fread(&value, 1, sizeof(int8_t), file_handle);
+
+	if (ferror(file_handle))
+	{
+		if (handle_error)
+			err.run("[File::file_get_char] error occured while reading file: %s\n", file_name);
+		else
+			ERR("[File::file_get_char] error occured while reading file: %s\n", file_name);
+		return 0;
+	}
+
+	return value;
+}
+
 int File::file_put_short(int16_t value)
 {
 	err_when(!file_handle);
@@ -246,9 +283,9 @@ int File::file_put_short(int16_t value)
 	if (ferror(file_handle))
 	{
 		if (handle_error)
-			err.run("[File::file_put_short] error occured while writing file: %s\n", file_name);
+			err.run("[File::file_put_char] error occured while writing file: %s\n", file_name);
 		else
-			ERR("[File::file_put_short] error occured while writing file: %s\n", file_name);
+			ERR("[File::file_put_char] error occured while writing file: %s\n", file_name);
 		return 0;
 	}
 
