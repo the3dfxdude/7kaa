@@ -177,12 +177,17 @@ public:
 	#ifdef DYNARRAY_DEBUG_ELEMENT_ACCESS
 		Spy* operator[](int recNo);
 	#else
-		Spy* operator[](int recNo)	  { return (Spy*) get(recNo); }
+		Spy* operator[](int recNo)	  { return (Spy*) get_ptr(recNo); }
 	#endif
 
-	int     is_deleted(int recNo)   { return ((Spy*)get(recNo))->spy_recno==0; }
+	int     is_deleted(int recNo);
 };
 
+inline int SpyArray::is_deleted(int recNo)
+{
+	Spy* spyPtr = (Spy*) get_ptr(recNo);
+	return !spyPtr || !spyPtr->spy_recno;
+}
 
 extern SpyArray spy_array;
 

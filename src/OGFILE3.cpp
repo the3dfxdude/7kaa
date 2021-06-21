@@ -2194,7 +2194,47 @@ static char* create_rebel_func()
 //
 int SpyArray::write_file(File* filePtr)
 {
-	return DynArrayB::write_file( filePtr );
+	filePtr->file_put_unsigned_short(29); // sizeof(DynArray)
+	// write DynArray -- 29 bytes
+	filePtr->file_put_long(ele_num);
+	filePtr->file_put_long(block_num);
+	filePtr->file_put_long(cur_pos);
+	filePtr->file_put_long(last_ele);
+	filePtr->file_put_long(15); // sizeof(Spy)
+	filePtr->file_put_long(sort_offset);
+	filePtr->file_put_char(sort_type);
+	filePtr->file_put_long(0);
+
+        //---------- write body_buf ---------//
+
+	if( last_ele > 0 )
+	{
+		filePtr->file_put_unsigned_short(15*last_ele); // sizeof(Spy)*last_ele
+
+		for( int i=1; i<=last_ele; i++ )
+		{
+			Spy* spyPtr = spy_array[i];
+			// write Spy -- 15 bytes
+			filePtr->file_put_short(spyPtr->spy_recno);
+			filePtr->file_put_char(spyPtr->spy_place);
+			filePtr->file_put_short(spyPtr->spy_place_para);
+			filePtr->file_put_char(spyPtr->spy_skill);
+			filePtr->file_put_char(spyPtr->spy_loyalty);
+			filePtr->file_put_char(spyPtr->true_nation_recno);
+			filePtr->file_put_char(spyPtr->cloaked_nation_recno);
+			filePtr->file_put_char(spyPtr->notify_cloaked_nation_flag);
+			filePtr->file_put_char(spyPtr->exposed_flag);
+			filePtr->file_put_char(spyPtr->race_id);
+			filePtr->file_put_unsigned_short(spyPtr->name_id);
+			filePtr->file_put_char(spyPtr->action_mode);
+		}
+	}
+
+	//---------- write empty_room_array ---------//
+
+	write_empty_room(filePtr);
+
+	return 1;
 }
 //--------- End of function SpyArray::write_file ---------------//
 
@@ -2203,7 +2243,54 @@ int SpyArray::write_file(File* filePtr)
 //
 int SpyArray::read_file(File* filePtr)
 {
-	return DynArrayB::read_file( filePtr );
+	unsigned short recSize = filePtr->file_get_unsigned_short();
+	if( recSize != 29 )
+		return 0;
+
+	filePtr->file_get_long(); // skip overwriting ele_num
+	filePtr->file_get_long(); // skip overwriting block_num
+	filePtr->file_get_long(); // skip overwriting cur_pos
+	int32_t num = filePtr->file_get_long(); // skip overwriting last_ele
+	filePtr->file_get_long(); // skip overwriting ele_size
+	filePtr->file_get_long(); // skip overwriting sort_offset
+	filePtr->file_get_char(); // skip overwriting sort_type
+	filePtr->file_get_long();
+
+	//---------- read body_buf ---------//
+
+	if( num > 0 )
+	{
+		filePtr->file_get_unsigned_short(); // skip body_buf record len
+
+		for( int i=0; i<num; i++ )
+		{
+			int spy_recno = spy_array.add_spy();
+			Spy* spyPtr = spy_array[spy_recno];
+
+			spyPtr->spy_recno = filePtr->file_get_short();
+			spyPtr->spy_place = filePtr->file_get_char();
+			spyPtr->spy_place_para = filePtr->file_get_short();
+			spyPtr->spy_skill = filePtr->file_get_char();
+			spyPtr->spy_loyalty = filePtr->file_get_char();
+			spyPtr->true_nation_recno = filePtr->file_get_char();
+			spyPtr->cloaked_nation_recno = filePtr->file_get_char();
+			spyPtr->notify_cloaked_nation_flag = filePtr->file_get_char();
+			spyPtr->exposed_flag = filePtr->file_get_char();
+			spyPtr->race_id = filePtr->file_get_char();
+			spyPtr->name_id = filePtr->file_get_unsigned_short();
+			spyPtr->action_mode = filePtr->file_get_char();
+		}
+	}
+
+	//---------- read empty_room_array ---------//
+
+	read_empty_room(filePtr);
+
+	//------------------------------------------//
+
+	start();    // go top
+
+	return 1;
 }
 //--------- End of function SpyArray::read_file ---------------//
 

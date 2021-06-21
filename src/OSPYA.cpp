@@ -52,7 +52,7 @@ static Button	button_secret_report_cancel;
 
 //--------- Begin of function SpyArray::SpyArray ----------//
 
-SpyArray::SpyArray() : DynArrayB(sizeof(Spy), 10)
+SpyArray::SpyArray() : DynArrayB(sizeof(Spy*), 10)
 {
 }
 //--------- End of function SpyArray::SpyArary ----------//
@@ -98,34 +98,34 @@ void SpyArray::deinit()
 //
 int SpyArray::add_spy(int unitRecno, int spySkill)
 {
-	Spy 	spy;
+	Spy* spyPtr;
 	Unit* unitPtr = unit_array[unitRecno];
 
-	memset( &spy, 0, sizeof(spy) );
+	spyPtr = new Spy;
 
-	spy.spy_place 			= SPY_MOBILE;
-	spy.spy_place_para	= unitRecno;
-	spy.spy_skill 			= spySkill;
-	spy.spy_loyalty 		= unitPtr->loyalty;
-	spy.race_id			   = unitPtr->race_id;
-	spy.name_id				= unitPtr->name_id;
+	spyPtr->spy_place	= SPY_MOBILE;
+	spyPtr->spy_place_para	= unitRecno;
+	spyPtr->spy_skill	= spySkill;
+	spyPtr->spy_loyalty	= unitPtr->loyalty;
+	spyPtr->race_id		= unitPtr->race_id;
+	spyPtr->name_id		= unitPtr->name_id;
 
 	err_when( unitPtr->race_id < 1 || unitPtr->race_id > MAX_RACE );
 
 	err_when( nation_array.is_deleted(unitPtr->nation_recno) );
 
-	spy.true_nation_recno    = unitPtr->nation_recno;
-	spy.cloaked_nation_recno = unitPtr->nation_recno;
+	spyPtr->true_nation_recno    = unitPtr->nation_recno;
+	spyPtr->cloaked_nation_recno = unitPtr->nation_recno;
 
 	//--- spies hold a use right of the name id even though the unit itself will register the usage right of the name already ---//
 
-	race_res[spy.race_id]->use_name_id(spy.name_id);		// the spy will free it up in deinit(). Keep an additional right because when a spy is assigned to a town, the normal program will free up the name id., so we have to keep an additional copy
+	race_res[spyPtr->race_id]->use_name_id(spyPtr->name_id);		// the spy will free it up in deinit(). Keep an additional right because when a spy is assigned to a town, the normal program will free up the name id., so we have to keep an additional copy
 
 	//------- link in the spy_array -------//
 
-	linkin( &spy );
+	linkin( &spyPtr );
 
-	((Spy*)get())->spy_recno = recno();
+	spyPtr->spy_recno = recno();
 
 	return recno();
 }
@@ -141,13 +141,13 @@ int SpyArray::add_spy(int unitRecno, int spySkill)
 //
 int SpyArray::add_spy()
 {
-	Spy spy;
+	Spy* spyPtr;
 
-	memset( &spy, 0, sizeof(spy) );
+	spyPtr = new Spy;
 
-	linkin( &spy );
+	linkin( &spyPtr );
 
-	((Spy*)get())->spy_recno = recno();
+	spyPtr->spy_recno = recno();
 
 	return recno();
 }
@@ -712,7 +712,7 @@ int SpyArray::needed_view_secret_skill(int viewMode)
 
 Spy* SpyArray::operator[](int recNo)
 {
-	Spy* spyPtr = (Spy*) get(recNo);
+	Spy* spyPtr = (Spy*) get_ptr(recNo);
 
 	if( !spyPtr || spyPtr->spy_recno==0 )
 		err.run( "SpyArray[] is deleted" );
