@@ -27,16 +27,14 @@
 #include <ONATION.h>
 #include <OSPY.h>
 
-#define THIS ptr()
-
-//--------- Begin of function SpyProcess::process_ai ----------//
+//--------- Begin of function Spy::process_ai ----------//
 //
-void SpyProcess::process_ai()
+void Spy::process_ai()
 {
 	if( spy_recno%30 == info.game_date%30 )		// think about changing actions once 30 days
 		think_reward();
 
-	switch( THIS->spy_place )
+	switch( spy_place )
 	{
 		case SPY_TOWN:
 			if( spy_recno%30 == info.game_date%30 )
@@ -54,29 +52,29 @@ void SpyProcess::process_ai()
 			break;
 	}
 }
-//---------- End of function SpyProcess::process_ai ----------//
+//---------- End of function Spy::process_ai ----------//
 
 
-//--------- Begin of function SpyProcess::think_town_spy ----------//
+//--------- Begin of function Spy::think_town_spy ----------//
 //
-void SpyProcess::think_town_spy()
+void Spy::think_town_spy()
 {
-	Town* townPtr = town_array[THIS->spy_place_para];
+	Town* townPtr = town_array[spy_place_para];
 
-	if( townPtr->nation_recno == THIS->true_nation_recno )		// anti-spy
+	if( townPtr->nation_recno == true_nation_recno )		// anti-spy
 		return;
 
 	//------ if it's an independent town ------//
 
 	if( townPtr->nation_recno == 0 )
 	{
-		THIS->set_action_mode(SPY_SOW_DISSENT);
+		set_action_mode(SPY_SOW_DISSENT);
 
 		//--- if the resistance has already drop low enough, the spy no longer needs to be in the town ---//
 
-		if( townPtr->race_loyalty_array[THIS->race_id-1] < MIN_INDEPENDENT_DEFEND_LOYALTY  )
+		if( townPtr->race_loyalty_array[race_id-1] < MIN_INDEPENDENT_DEFEND_LOYALTY  )
 		{
-			THIS->mobilize_town_spy();
+			mobilize_town_spy();
 		}
 	}
 	else
@@ -90,36 +88,36 @@ void SpyProcess::think_town_spy()
 		//
 		//--------------------------------------------------//
 
-		Nation* trueNation = nation_array[THIS->true_nation_recno];
+		Nation* trueNation = nation_array[true_nation_recno];
 
 		if( townPtr->average_loyalty() < 50 - trueNation->pref_loyalty_concern/10 )		// pref_loyalty_concern actually does apply to here, we just use a preference var so that the decision making process will vary between nations
 		{
-			THIS->set_action_mode(SPY_SOW_DISSENT);
+			set_action_mode(SPY_SOW_DISSENT);
 		}
 		else
 		{
 			if( misc.random(5)==0 )			// 20% chance of sowing dissents.
-				THIS->set_action_mode(SPY_SOW_DISSENT);
+				set_action_mode(SPY_SOW_DISSENT);
 			else
-				THIS->set_action_mode(SPY_IDLE);
+				set_action_mode(SPY_IDLE);
 		}
 	}
 }
-//---------- End of function SpyProcess::think_town_spy ----------//
+//---------- End of function Spy::think_town_spy ----------//
 
 
-//--------- Begin of function SpyProcess::think_firm_spy ----------//
+//--------- Begin of function Spy::think_firm_spy ----------//
 //
-void SpyProcess::think_firm_spy()
+void Spy::think_firm_spy()
 {
-	Firm* firmPtr = firm_array[THIS->spy_place_para];
+	Firm* firmPtr = firm_array[spy_place_para];
 
-	if( firmPtr->nation_recno == THIS->true_nation_recno )		// anti-spy
+	if( firmPtr->nation_recno == true_nation_recno )		// anti-spy
 		return;
 
 	//-------- try to capturing the firm --------//
 
-	if( THIS->capture_firm() )
+	if( capture_firm() )
 		return;
 
 	//-------- think about bribing ---------//
@@ -136,26 +134,26 @@ void SpyProcess::think_firm_spy()
 
 	else if( misc.random(3)==0 )           // 1/10 chance to set it to idle to prevent from being caught
 	{
-		THIS->set_action_mode(SPY_IDLE);
+		set_action_mode(SPY_IDLE);
 	}
 	else if( misc.random(2)==0 &&
-				THIS->can_sabotage() && firmPtr->is_operating() && firmPtr->productivity >= 20 )
+				can_sabotage() && firmPtr->is_operating() && firmPtr->productivity >= 20 )
 	{
-		THIS->set_action_mode(SPY_SABOTAGE);
+		set_action_mode(SPY_SABOTAGE);
 	}
 	else
 	{
-		THIS->set_action_mode(SPY_SOW_DISSENT);
+		set_action_mode(SPY_SOW_DISSENT);
 	}
 }
-//---------- End of function SpyProcess::think_firm_spy ----------//
+//---------- End of function Spy::think_firm_spy ----------//
 
 
-//--------- Begin of function SpyProcess::think_bribe ----------//
+//--------- Begin of function Spy::think_bribe ----------//
 //
-int SpyProcess::think_bribe()
+int Spy::think_bribe()
 {
-	Firm* firmPtr = firm_array[THIS->spy_place_para];
+	Firm* firmPtr = firm_array[spy_place_para];
 
 	//--- only bribe enemies in military camps ---//
 
@@ -169,15 +167,15 @@ int SpyProcess::think_bribe()
 
 	//---- see if the overseer can be bribe (kings and your own spies can't be bribed) ----//
 
-	if( !firmPtr->can_spy_bribe(0, THIS->true_nation_recno ) )		// 0-bribe the overseer
+	if( !firmPtr->can_spy_bribe(0, true_nation_recno ) )		// 0-bribe the overseer
 		return 0;
 
 	//------ first check our financial status ------//
 
-	Nation* ownNation = nation_array[THIS->true_nation_recno];
+	Nation* ownNation = nation_array[true_nation_recno];
 	Unit*   overseerUnit = unit_array[firmPtr->overseer_recno];
 
-	if( THIS->spy_skill < MIN(50, overseerUnit->skill.skill_level) ||
+	if( spy_skill < MIN(50, overseerUnit->skill.skill_level) ||
 		 !ownNation->ai_should_spend(30) )
 	{
 		return 0;
@@ -224,28 +222,28 @@ int SpyProcess::think_bribe()
 
 	Spy* newSpy = spy_array[newSpyRecno];
 
-	err_when( newSpy->true_nation_recno != THIS->true_nation_recno );
+	err_when( newSpy->true_nation_recno != true_nation_recno );
 	err_when( newSpy->spy_place != SPY_FIRM );
 
 	if( newSpy->capture_firm() )			// try to capture the firm now
 	{
-		err_when( firm_array[newSpy->spy_place_para]->nation_recno != THIS->true_nation_recno );
+		err_when( firm_array[newSpy->spy_place_para]->nation_recno != true_nation_recno );
 
 		newSpy->drop_spy_identity();		// drop the spy identity of the newly bribed spy if the capture is successful, this will save the spying costs
 	}
 
 	return 1;
 }
-//---------- End of function SpyProcess::think_bribe ----------//
+//---------- End of function Spy::think_bribe ----------//
 
 
-//--------- Begin of function SpyProcess::think_reward ----------//
+//--------- Begin of function Spy::think_reward ----------//
 //
 // Think about rewarding this spy.
 //
-int SpyProcess::think_reward()
+int Spy::think_reward()
 {
-	Nation* ownNation = nation_array[THIS->true_nation_recno];
+	Nation* ownNation = nation_array[true_nation_recno];
 
 	//----------------------------------------------------------//
 	// The need to secure high loyalty on this unit is based on:
@@ -254,39 +252,39 @@ int SpyProcess::think_reward()
 	// -soldiers commanded by this unit
 	//----------------------------------------------------------//
 
-	int neededLoyalty = THIS->spy_skill * (100+ownNation->pref_loyalty_concern) / 100;
+	int neededLoyalty = spy_skill * (100+ownNation->pref_loyalty_concern) / 100;
 
 	neededLoyalty = MAX( UNIT_BETRAY_LOYALTY+10, neededLoyalty );		// 10 points above the betray loyalty level to prevent betrayal
 	neededLoyalty = MIN( 100, neededLoyalty );
 
 	//------- if the loyalty is already high enough ------//
 
-	if( THIS->spy_loyalty >= neededLoyalty )
+	if( spy_loyalty >= neededLoyalty )
 		return 0;
 
 	//---------- see how many cash & profit we have now ---------//
 
-	int rewardNeedRating = neededLoyalty - THIS->spy_loyalty;
+	int rewardNeedRating = neededLoyalty - spy_loyalty;
 
-	if( THIS->spy_loyalty < UNIT_BETRAY_LOYALTY+5 )
+	if( spy_loyalty < UNIT_BETRAY_LOYALTY+5 )
 		rewardNeedRating += 50;
 
 	if( ownNation->ai_should_spend(rewardNeedRating) )
 	{
-		THIS->reward(COMMAND_AI);
+		reward(COMMAND_AI);
 		return 1;
 	}
 
 	return 0;
 }
-//---------- End of function SpyProcess::think_reward ----------//
+//---------- End of function Spy::think_reward ----------//
 
 
-//--------- Begin of function SpyProcess::think_mobile_spy ----------//
+//--------- Begin of function Spy::think_mobile_spy ----------//
 //
-int SpyProcess::think_mobile_spy()
+int Spy::think_mobile_spy()
 {
-	Unit* unitPtr = unit_array[THIS->spy_place_para];
+	Unit* unitPtr = unit_array[spy_place_para];
 
    //--- if the spy is on the ship, nothing can be done ---//
 
@@ -296,29 +294,29 @@ int SpyProcess::think_mobile_spy()
 	//---- if the spy has stopped and there is no new action ----//
 
 	if( unitPtr->is_ai_all_stop() &&
-		 (!THIS->notify_cloaked_nation_flag || THIS->cloaked_nation_recno==0) )
+		 (!notify_cloaked_nation_flag || cloaked_nation_recno==0) )
 	{
 		return think_mobile_spy_new_action();
 	}
 
 	return 0;
 }
-//---------- End of function SpyProcess::think_mobile_spy ----------//
+//---------- End of function Spy::think_mobile_spy ----------//
 
 
-//-------- Begin of function SpyProcess::think_mobile_spy_new_action --------//
+//-------- Begin of function Spy::think_mobile_spy_new_action --------//
 //
-int SpyProcess::think_mobile_spy_new_action()
+int Spy::think_mobile_spy_new_action()
 {
-	Nation* trueNation = nation_array[THIS->true_nation_recno];
+	Nation* trueNation = nation_array[true_nation_recno];
 
-	err_when( THIS->spy_place != SPY_MOBILE );
+	err_when( spy_place != SPY_MOBILE );
 
-	int spyRegionId = unit_array[THIS->spy_place_para]->region_id();
+	int spyRegionId = unit_array[spy_place_para]->region_id();
 
 	//----- try to sneak into an enemy camp ------//
 
-	int firmRecno = trueNation->think_assign_spy_target_camp(THIS->race_id, spyRegionId);
+	int firmRecno = trueNation->think_assign_spy_target_camp(race_id, spyRegionId);
 
 	if( firmRecno )
 	{
@@ -329,7 +327,7 @@ int SpyProcess::think_mobile_spy_new_action()
 
 	//--- try to sneak into an enemy town or an independent town ---//
 
-	int townRecno = trueNation->think_assign_spy_target_town(THIS->race_id, spyRegionId);
+	int townRecno = trueNation->think_assign_spy_target_town(race_id, spyRegionId);
 
 	if( townRecno )
 	{
@@ -359,7 +357,7 @@ int SpyProcess::think_mobile_spy_new_action()
 
 	else //------- try to assign to one of our own towns -------//
 	{
-		int townRecno = trueNation->think_assign_spy_own_town(THIS->race_id, spyRegionId);
+		int townRecno = trueNation->think_assign_spy_own_town(race_id, spyRegionId);
 
 		if( townRecno )
 		{
@@ -377,26 +375,26 @@ int SpyProcess::think_mobile_spy_new_action()
 
 	if( dropIdentity )
 	{
-		THIS->drop_spy_identity();
+		drop_spy_identity();
 		return 1;
 	}
 
 	return 0;
 }
-//---------- End of function SpyProcess::think_mobile_spy_new_action --------//
+//---------- End of function Spy::think_mobile_spy_new_action --------//
 
 
-//-------- Begin of function SpyProcess::add_assign_spy_action --------//
+//-------- Begin of function Spy::add_assign_spy_action --------//
 //
-int SpyProcess::add_assign_spy_action(int destXLoc, int destYLoc, int cloakedNationRecno)
+int Spy::add_assign_spy_action(int destXLoc, int destYLoc, int cloakedNationRecno)
 {
-	err_when( THIS->spy_place != SPY_MOBILE );
-	err_when( unit_array.is_deleted(THIS->spy_place_para) );
+	err_when( spy_place != SPY_MOBILE );
+	err_when( unit_array.is_deleted(spy_place_para) );
 
-	return nation_array[THIS->true_nation_recno]->add_action( destXLoc, destYLoc,
-			 -1, -1, ACTION_AI_ASSIGN_SPY, cloakedNationRecno, 1, THIS->spy_place_para );
+	return nation_array[true_nation_recno]->add_action( destXLoc, destYLoc,
+			 -1, -1, ACTION_AI_ASSIGN_SPY, cloakedNationRecno, 1, spy_place_para );
 }
-//---------- End of function SpyProcess::add_assign_spy_action --------//
+//---------- End of function Spy::add_assign_spy_action --------//
 
 
 //--------- Begin of function Spy::ai_spy_being_attacked ----------//
@@ -452,11 +450,11 @@ int Spy::ai_spy_being_attacked(int attackerUnitRecno)
 //---------- End of function Spy::ai_spy_being_attacked ----------//
 
 
-//--------- Begin of function SpyProcess::think_assassinate ----------//
+//--------- Begin of function Spy::think_assassinate ----------//
 //
-int SpyProcess::think_assassinate()
+int Spy::think_assassinate()
 {
-	Firm* firmPtr = firm_array[THIS->spy_place_para];
+	Firm* firmPtr = firm_array[spy_place_para];
 
 	//--- only bribe enemies in military camps ---//
 
@@ -472,18 +470,18 @@ int SpyProcess::think_assassinate()
 
 	int attackRating, defenseRating, otherDefenderCount;
 
-	if( !THIS->get_assassinate_rating(firmPtr->overseer_recno, attackRating, defenseRating, otherDefenderCount) )		// return 0 if assassination is not possible
+	if( !get_assassinate_rating(firmPtr->overseer_recno, attackRating, defenseRating, otherDefenderCount) )		// return 0 if assassination is not possible
 		return 0;
 
-	Nation* trueNation = nation_array[THIS->true_nation_recno];
+	Nation* trueNation = nation_array[true_nation_recno];
 
 	if( attackRating + misc.random(20+trueNation->pref_spy/2) > defenseRating )		// the random number is to increase the chance of attempting assassination
 	{
-		THIS->assassinate(firmPtr->overseer_recno, COMMAND_AI);
+		assassinate(firmPtr->overseer_recno, COMMAND_AI);
 		return 1;
 	}
 
 	return 0;
 }
-//---------- End of function SpyProcess::think_assassinate ----------//
+//---------- End of function Spy::think_assassinate ----------//
 

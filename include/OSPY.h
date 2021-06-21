@@ -123,6 +123,18 @@ public:
 
 	//------- AI functions -------//
 
+	void	process_ai();
+	void	think_town_spy();
+	void	think_firm_spy();
+	int 	think_mobile_spy();
+
+	int 	think_bribe();
+	int 	think_assassinate();
+	int	think_reward();
+
+	int 	think_mobile_spy_new_action();
+	int 	add_assign_spy_action(int destXLoc, int destYLoc, int cloakedNationRecno);
+
 	int 	ai_spy_being_attacked(int attackerUnitRecno);
 
 	// #### patch begin Gilbert 20/1 ######//
@@ -190,35 +202,6 @@ inline int SpyArray::is_deleted(int recNo)
 }
 
 extern SpyArray spy_array;
-
-//----------------------------------------//
-
-class SpyProcess
-{
-private:
-	short spy_recno;
-
-public:
-	SpyProcess(short recno) { spy_recno = recno; };
-
-	//------- AI functions -------//
-
-	void	process_ai();
-	void	think_town_spy();
-	void	think_firm_spy();
-	int 	think_mobile_spy();
-
-	int 	think_bribe();
-	int 	think_assassinate();
-	int	think_reward();
-
-	int 	think_mobile_spy_new_action();
-	int 	add_assign_spy_action(int destXLoc, int destYLoc, int cloakedNationRecno);
-
-private:
-	Spy *ptr() { return spy_array[spy_recno]; };
-
-};
 
 //----------------------------------------//
 
