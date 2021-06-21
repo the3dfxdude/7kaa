@@ -565,7 +565,7 @@ static void disp_nation_info()
 			str = _("%s's Kingdom's Food");
 			snprintf( xstr, MAX_STR_LEN+1, str, nationPtr->king_name(1) );
 
-			font_san.field( x1, y+=16, xstr, x2, nationPtr->food, 2, x3, INFO_REPAINT );
+			font_san.field( x1, y+=16, xstr, x2, nationPtr->food, 1, x3, INFO_REPAINT );
 		}
 	}
 

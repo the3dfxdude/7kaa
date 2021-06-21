@@ -1,0 +1,109 @@
+% Greetings reader, my purpose is a complete restoration of the original manual with the updates. Special attention has been given to preserving the original author's voice; Overall, however, this is a different manual with lots of minor and major differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux and compiled with pdflatex. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
+
+% -- TODO -- %
+
+    % Add index entries - mChat, community project, https://7kfans.com/, forums, download page, 7kfans.com multiplayer service, and cheat mode/cheat codes.
+    % Organize key/mouse commands.
+    % Align "Ancient Adversaries" with the Seven Kingdoms graphic.
+    % Restore purple cover.
+    % CODE CLEAN UP.
+    % Restore original voice.
+
+% -- TODO end -- %
+
+% -- Notes -- % 
+
+    % the original manual "has been designed as an in-depth reference book."
+    % Acrobat Distiller 3.02 for Power Macintosh
+    % FrameMaker 5.1.1
+    % Invoice, Portrait (5.51 × 8.51 inch)
+    % Fonts: (ITC) Galliard (Serif) - Black, Bold, Roman, Italic, BoldItalic. GloudyTextMT. Univers (neo-grotesque sans-serif).
+    % Some tile graphics extend past top textline. - some due to Huge font. Issue with specific font and size declaration. See font documentation.
+    % Uses in, cm, pt, etc. Use just one type? Use in instead of cm.
+    % Disagreement between troop and troops in pronoun use.
+    % Capitalization is not consistent.
+    % Period usage in the hotkeys/mouse commands/cheats.
+    % the box in the mouse commands looks a bit gray.
+    % hotkeys are slightly indented in the original. 
+    % itemize is used only once. it's in the 7kfans credits.
+
+% -- Notes end -- %
+
+% -- References -- %
+
+    % https://writingcenter.unc.edu/tips-and-tools/gender-inclusive-language/
+    % https://style.mla.org/commas-conj-mods/
+    % https://style.mla.org/scare-quotes-origins/
+    
+% -- References end -- %
+
+% -- Changelog -- %
+
+% Summary of changes: 
+
+% Stylistic:
+    % Replaced proprietary fonts with substitutable open fonts: Galliard with Accanthis and GloudyTextMT with ygothic.
+    % REMOVED ampersands.
+
+% Grammar:
+    % Used gender neutral term when referring to all Greater Beings.
+
+% Punctuation:    
+    % Modified comma usage: consistency with comma rules, REMOVED comma stops, and separated beginning clauses; REMOVED Oxford commas.
+    % REMOVED en and em dashes.
+    % REMOVED scare quotes.
+    % REMOVED the two dot, non spaced ellipsis; ".."
+
+% Formatting:
+    % Text is both left and right justified.
+    % More or less whitespace in different locations.
+    % Condensed some sentences into 3 sentence minimum paragraphs to correct spacing issues.
+    % New manual is a bit longer.
+    % Some graphics are different sizes but close approximations to the original.
+    % Used simple LaTeX, non colored, ~4in tables.
+    % Additional TOC entries. - Standard LaTeX. - Subsections included.
+    % ADDED additional sub/sections.
+    % Capitalized sectioning according to M.L.A. except for trade situations and FAQ.
+    % Used standard LaTeX chapter heading/counter.
+
+% Content:
+    % ADDED re-publication date to front page.
+    % ADDED the author, original and new, to front page.
+    % REMOVED copyright notice.
+    % ADDED GPL header, music copyright notice, and Enlight trademark notice with help from the3dfxdude.
+    % REMOVED Imagic from manual such as warranty, registration, and help -- except for Imagic credits.
+    % ADDED introduction for the open source project, quoted from jlac1024.
+    % ADDED website information such as frontpage/news, wiki, forum, download.
+    % Rewrote installation chapter with help from the3dfxdude.
+    % ADDED information about 7kfans.com multiplayer service.
+    % REMOVED troubleshooting information.
+    % Updated 7k icon to (color) 7kaa icon.
+    % Rearranged interface chapter to preceed the village chapter.
+    % Updated reputation penalties with help from the3dfxdude.
+    % ADDED and updated hotkeys from MicroVirus' documentation.
+    % ADDED more mouse commands from MicroVirus' documentation.
+    % ADDED cheat codes from MicroVirus' documentation.
+    % ADDED 7kfans credits.
+    % Credited manual content authors.
+    % Updated lobby graphic to show new lobby.
+    % Rearranged material such as registration (repurposed), mouse commands.
+    % Fixed factual errors.
+    % REMOVED CD-ROM references.
+    % REMOVED spinners and troubleshooting index entries.
+    % Respelled multi-player to multiplayer and single-player to single player.
+
+% v0.2
+
+    % REMOVED \clearpage where not needed.
+    % Defined sectioning as textsf.
+    % Standardized on listing roles as volunteering for 7kfans credits.
+    % Changed from textgoth to textswab.
+    % REMOVED installation instructions.
+    % Changed 7kaa icon to grayscale.
+    % Removed references to the 7kfans.com\wiki link.
+    % ADDED 1.4 inch whitespace in addition to the margin for the chapter starts, modifying {before} in \titlespacing\chapter - from original manual.
+    % REMOVED dummy section from FAQ and removed sectioning for bf text.
+    % Capitalized chapter titles as per original manual. Previously used M.L.A. style. Contents is not all capitalize like the INDEX in the original. This has the consequence of changing the chapter titles to all capital letters in the contents, yet in the original manual, they are not all capital letters.
+    % Created new assets Itrade and Icaravan and included them in document with new text regarding updated trade scroll and idle caravans. Expand.
+
+% -- Changelog end -- %

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-27 16:23-0700\n"
+"POT-Creation-Date: 2021-05-14 08:14-0500\n"
 "PO-Revision-Date: 2020-06-30 21:53-0400\n"
 "Last-Translator: Lenny Andreu\n"
 "Language-Team: \n"
@@ -34,22 +34,22 @@ msgid "Error in %s at line %d"
 msgstr "Error en %s en la linea %d"
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
-#: src/OGAMEMP.cpp:1510 src/OGAMEMP.cpp:1610 src/OGAMEMP.cpp:3012
-#: src/OGAMEMP.cpp:3077 src/OGAMEMP.cpp:3386 src/OGAMEMP.cpp:3389
-#: src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:3395 src/OGAMEMP.cpp:3398
-#: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:3404 src/OGAMEMP.cpp:3452
-#: src/OGAMEMP.cpp:4928 src/OGAMEMP.cpp:4994 src/OGAMEMP.cpp:5180
-#: src/OGAMEMP.cpp:5183 src/OGAMEMP.cpp:5186 src/OGAMEMP.cpp:5189
-#: src/OGAMEMP.cpp:5192 src/OGAMEMP.cpp:5195 src/OGAMEMP.cpp:5198
-#: src/OGAMEMP.cpp:5246
+#: src/OGAMEMP.cpp:1511 src/OGAMEMP.cpp:1611 src/OGAMEMP.cpp:3014
+#: src/OGAMEMP.cpp:3079 src/OGAMEMP.cpp:3383 src/OGAMEMP.cpp:3386
+#: src/OGAMEMP.cpp:3389 src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:3395
+#: src/OGAMEMP.cpp:3398 src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:3449
+#: src/OGAMEMP.cpp:4921 src/OGAMEMP.cpp:4987 src/OGAMEMP.cpp:5165
+#: src/OGAMEMP.cpp:5168 src/OGAMEMP.cpp:5171 src/OGAMEMP.cpp:5174
+#: src/OGAMEMP.cpp:5177 src/OGAMEMP.cpp:5180 src/OGAMEMP.cpp:5183
+#: src/OGAMEMP.cpp:5231
 msgid "Ok"
 msgstr "Aceptar"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/resource/help.res:70
 #: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:284
-#: src/OGAMEMP.cpp:1511 src/OGAMEMP.cpp:1611 src/OGAMEMP.cpp:2074
-#: src/OGAMEMP.cpp:2176 src/OGAMEMP.cpp:2239 src/OSPYA.cpp:354
+#: src/OGAMEMP.cpp:1512 src/OGAMEMP.cpp:1612 src/OGAMEMP.cpp:2075
+#: src/OGAMEMP.cpp:2177 src/OGAMEMP.cpp:2240 src/OSPYA.cpp:354
 #: src/OTOWNIF.cpp:1265 src/OUNITIF.cpp:1042 src/OUNITIF.cpp:1078
 msgid "Cancel"
 msgstr "Cancelar"
@@ -208,7 +208,7 @@ msgstr "Residencia"
 #: src/OFIRMIF.cpp:652 src/OFIRMIF.cpp:659 src/OFIRMIF2.cpp:95
 #: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:411 src/OF_CAMP.cpp:598
 #: src/OINFO.cpp:744 src/OR_MIL.cpp:101 src/OR_SPY.cpp:77 src/OR_TOWN.cpp:87
-#: src/OTOWNIF.cpp:298 src/OTOWNIF.cpp:1415 src/OUNITIF.cpp:1154
+#: src/OTOWNIF.cpp:298 src/OTOWNIF.cpp:1413 src/OUNITIF.cpp:1154
 #: src/OU_MARIF.cpp:510
 msgid "Loyalty"
 msgstr "Lealtad"
@@ -228,11 +228,11 @@ msgstr "Combate"
 msgid "Hit Points"
 msgstr "Puntos de impacto"
 
-#: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1414
+#: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1412
 msgid "Spy Skill"
 msgstr "Habilidad de espía"
 
-#: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1416
+#: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1414
 msgid "Action"
 msgstr "Acción"
 
@@ -499,28 +499,28 @@ msgstr "Introduzca la dirección del juego:"
 msgid "Service not supported"
 msgstr "El servicio no es compatible"
 
-#: src/OGAMEMP.cpp:1044
+#: src/OGAMEMP.cpp:1045
 msgid "Local Area Network"
 msgstr "Red de área local"
 
 #. TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
-#: src/OGAMEMP.cpp:1046
+#: src/OGAMEMP.cpp:1047
 msgid "Enter Address"
 msgstr "Introduzca la dirección"
 
-#: src/OGAMEMP.cpp:1051
+#: src/OGAMEMP.cpp:1052
 msgid "Host or join a game using the local area network"
 msgstr "Alojar o unirse a una partida usando la red de área local"
 
-#: src/OGAMEMP.cpp:1052
+#: src/OGAMEMP.cpp:1053
 msgid "Join a game by entering an address"
 msgstr "Unirse a una partida ingresando una dirección"
 
-#: src/OGAMEMP.cpp:1053
+#: src/OGAMEMP.cpp:1054
 msgid "Host or join a game over the internet"
 msgstr "Alojar o unirse a una partida por internet"
 
-#: src/OGAMEMP.cpp:1200
+#: src/OGAMEMP.cpp:1201
 msgid ""
 "Enter your 7kfans.com/forums account credentials to continue.\n"
 "TIP: If you have just previously logged in using the same username, you can "
@@ -530,15 +530,15 @@ msgstr ""
 "Pista: Si ya ha ingresado previamente usando el mismo nombre de usuario, "
 "puede dejar su contraseña en blanco y la sesión previa será utilizada."
 
-#: src/OGAMEMP.cpp:1201
+#: src/OGAMEMP.cpp:1202
 msgid "Username:"
 msgstr "Nombre de usuario:"
 
-#: src/OGAMEMP.cpp:1202
+#: src/OGAMEMP.cpp:1203
 msgid "Password:"
 msgstr "Contraseña:"
 
-#: src/OGAMEMP.cpp:1391
+#: src/OGAMEMP.cpp:1392
 msgid ""
 "It is not recommended to use this save game file name. Do you wish to "
 "continue?"
@@ -546,11 +546,11 @@ msgstr ""
 "No se recomienda utilizar este nombre de archivo para el guardado del juego, "
 "¿Desea continuar?"
 
-#: src/OGAMEMP.cpp:1447
+#: src/OGAMEMP.cpp:1448
 msgid "Unable to connect to 7kfans.com"
 msgstr "No se puede conectar a 7kfans.com"
 
-#: src/OGAMEMP.cpp:1738
+#: src/OGAMEMP.cpp:1739
 msgid ""
 "Unable to connect to the 7kfans.com service. Verify your account information "
 "and try again."
@@ -558,25 +558,25 @@ msgstr ""
 "No se pudo conectar al servicio de 7kfans.com. Verifique la información de "
 "su cuenta y pruebe otra vez."
 
-#: src/OGAMEMP.cpp:1740
+#: src/OGAMEMP.cpp:1741
+#, fuzzy
 msgid ""
-"Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to log "
-"in.\n"
+"Unable to connect to the 7kfans service.\n"
 "(No libcurl)"
 msgstr ""
 "No se pudo conectar al servicio de 7kfans.com. Vea en 7kfans.com/wiki como "
 "ingresar.\n"
 "(Sin libcurl)"
 
-#: src/OGAMEMP.cpp:1930
+#: src/OGAMEMP.cpp:1931
 msgid "Unable to communicate with the network"
 msgstr "No se puede comunicar con la red"
 
-#: src/OGAMEMP.cpp:1933
+#: src/OGAMEMP.cpp:1934
 msgid "Trying to connect to the service provider"
 msgstr "Intentado conectar con el provedor del servicio"
 
-#: src/OGAMEMP.cpp:1948
+#: src/OGAMEMP.cpp:1949
 msgid ""
 "There is a new version of Seven Kingdoms: Ancient Adversaries at www.7kfans."
 "com"
@@ -584,71 +584,71 @@ msgstr ""
 "Hay una nueva versión de Seven Kingdoms: Ancient Adversaries en www.7kfans."
 "com"
 
-#: src/OGAMEMP.cpp:2062
+#: src/OGAMEMP.cpp:2063
 msgid "Enter the game's password:"
 msgstr "Ingrese la contraseña de la partida:"
 
-#: src/OGAMEMP.cpp:2069
+#: src/OGAMEMP.cpp:2070
 msgid "Attempting to connect"
 msgstr "Intentando conectar"
 
-#: src/OGAMEMP.cpp:2138
+#: src/OGAMEMP.cpp:2139
 msgid "The session you selected no longer exists."
 msgstr "La sesión que ha seleccionado ya no existe."
 
-#: src/OGAMEMP.cpp:2144
+#: src/OGAMEMP.cpp:2145
 msgid "Unable to connect"
 msgstr "No se puede conectar"
 
-#: src/OGAMEMP.cpp:2149
+#: src/OGAMEMP.cpp:2150
 msgid "Failed to initiate connection"
 msgstr "Error al iniciar la conexión"
 
-#: src/OGAMEMP.cpp:2171
+#: src/OGAMEMP.cpp:2172
 msgid "Please wait while disconnecting..."
 msgstr "Por favor, espere mientras se desconecta..."
 
-#: src/OGAMEMP.cpp:2234
+#: src/OGAMEMP.cpp:2235
 msgid "Retrieving leaderboard"
 msgstr "Recuperando la tabla de posiciones"
 
-#: src/OGAMEMP.cpp:2939 src/OGAMEMP.cpp:4854
+#: src/OGAMEMP.cpp:2941 src/OGAMEMP.cpp:4847
 msgid "?anonymous?"
 msgstr "¿Anónimo?"
 
-#: src/OGAMEMP.cpp:3012 src/OGAMEMP.cpp:4928
+#: src/OGAMEMP.cpp:3014 src/OGAMEMP.cpp:4921
 msgid "The game host has disconnected."
 msgstr "El anfitrión del juego se ha desconectado."
 
-#: src/OGAMEMP.cpp:3077 src/OGAMEMP.cpp:4994
+#: src/OGAMEMP.cpp:3079 src/OGAMEMP.cpp:4987
 msgid "The game host has aborted the game."
 msgstr "El anfitrión del juego ha abortado el juego."
 
-#: src/OGAMEMP.cpp:3386 src/OGAMEMP.cpp:5180
+#: src/OGAMEMP.cpp:3383 src/OGAMEMP.cpp:5165
 msgid "Your game version does not match the host's version."
 msgstr "Su versión del juego no coincide con la version del anfitrión."
 
-#: src/OGAMEMP.cpp:3389 src/OGAMEMP.cpp:5183
+#: src/OGAMEMP.cpp:3386 src/OGAMEMP.cpp:5168
 msgid "The game you tried to join is currently full."
 msgstr "El juego al que se intentó unir está lleno."
 
-#: src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:5186
+#: src/OGAMEMP.cpp:3389 src/OGAMEMP.cpp:5171
 msgid "The host refused to authorize your connection."
 msgstr "El anfitrión se negó a autorizar su conexión."
 
-#: src/OGAMEMP.cpp:3395 src/OGAMEMP.cpp:5189
+#: src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:5174
 msgid "You cannot join the game because the host is loading a save."
 msgstr ""
 "No se puede unir al juego porque el anfitrión esta cargando una partida "
 "guardada."
 
-#: src/OGAMEMP.cpp:3398 src/OGAMEMP.cpp:5192
+#: src/OGAMEMP.cpp:3395 src/OGAMEMP.cpp:5177
 msgid "You cannot join the game because the host is not loading a save."
 msgstr ""
 "No se puede conectar al juego porque el anfitrión no esta cargando una "
 "partida guardada."
 
-#: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:5195
+#: src/OGAMEMP.cpp:3398 src/OGAMEMP.cpp:5180
 msgid ""
 "You cannot join the game because the saved multiplayer game you selected is "
 "different."
@@ -656,65 +656,65 @@ msgstr ""
 "No se puede unir al juego porque la partida guardada de multijugador que ha "
 "seleccionado es diferente."
 
-#: src/OGAMEMP.cpp:3404 src/OGAMEMP.cpp:5198
+#: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:5183
 msgid "The host refused the connection."
 msgstr "El anfitrión ha rechazado la conexión."
 
-#: src/OGAMEMP.cpp:3452 src/OGAMEMP.cpp:5246
+#: src/OGAMEMP.cpp:3449 src/OGAMEMP.cpp:5231
 msgid "The host is using a modified game which you are not running."
 msgstr ""
 "El servidor esta usando una versión modificada del juego la cual usted no "
 "esta corriendo."
 
-#: src/OGAMEMP.cpp:4141 src/OGAMEMP.cpp:5588
+#: src/OGAMEMP.cpp:4138 src/OGAMEMP.cpp:5576
 msgid "Connection string from host is corrupted"
 msgstr "Cadena de conexión del anfitrión está dañada"
 
-#: src/OGAMEMP.cpp:4148
+#: src/OGAMEMP.cpp:4145
 msgid "Cannot get random seeds from the host"
 msgstr "No se puede obtener semillas aleatorias desde el anfitrión"
 
-#: src/OGAMEMP.cpp:4154
+#: src/OGAMEMP.cpp:4151
 msgid "Cannot get game configuration information from the host"
 msgstr ""
 "No se puede obtener información de configuración de la partida desde el "
 "anfitrión"
 
-#: src/OGAMEMP.cpp:4160 src/OGAMEMP.cpp:5595
+#: src/OGAMEMP.cpp:4157 src/OGAMEMP.cpp:5583
 msgid "Cannot get kingdom information from the host"
 msgstr "No se puede obtener información del reino desde el anfitrión"
 
-#: src/OGAMEMP.cpp:4166 src/OGAMEMP.cpp:5601
+#: src/OGAMEMP.cpp:4163 src/OGAMEMP.cpp:5589
 msgid "The host cannot recognize your machine."
 msgstr "El anfitrión no puede reconocer su máquina."
 
-#: src/OGAMEMP.cpp:4172 src/OGAMEMP.cpp:5607
+#: src/OGAMEMP.cpp:4169 src/OGAMEMP.cpp:5595
 msgid "Cannot receive important information from the host"
 msgstr "No se puede recibir información importante desde el anfitrión"
 
-#: src/OGAMEMP.cpp:4224 src/OGAMEMP.cpp:5653
+#: src/OGAMEMP.cpp:4216 src/OGAMEMP.cpp:5635
 msgid "Some player(s) encountered errors when initializing the game."
 msgstr "Algún(os) jugadores encontraron errores al inicializar la partida."
 
-#: src/OGAMEMP.cpp:5336 src/OGAMEMP.cpp:5491
+#: src/OGAMEMP.cpp:5321 src/OGAMEMP.cpp:5476
 #, c-format
 msgid "This multiplayer saved game needs %d human player"
 msgid_plural "This multiplayer saved game needs %d human players"
 msgstr[0] "Esta partida guardada de multijugador necesita %d jugador humano"
 msgstr[1] "Esta partida guardada de multijugador necesita %d jugadores humanos"
 
-#: src/OGAMEMP.cpp:5339 src/OGAMEMP.cpp:5494
+#: src/OGAMEMP.cpp:5324 src/OGAMEMP.cpp:5479
 #, c-format
 msgid "while now there is %d human player."
 msgid_plural "while now there are %d human players."
 msgstr[0] "mientras que hay %d jugador humano."
 msgstr[1] "mientras que hay %d jugadores humanos."
 
-#: src/OGAMEMP.cpp:5342 src/OGAMEMP.cpp:5497
+#: src/OGAMEMP.cpp:5327 src/OGAMEMP.cpp:5482
 msgid "The game cannot start."
 msgstr "La partida no puede comenzar."
 
-#: src/OGAMEMP.cpp:5557
+#: src/OGAMEMP.cpp:5542
 msgid "Incorrect kingdom information received from the host."
 msgstr "Se ha recibido información incorrecta del reino desde el anfitrión."
 
@@ -3127,7 +3127,7 @@ msgstr "Productos de cobre"
 msgid "Iron Products"
 msgstr "Productos de hierro"
 
-#: src/OREMOTEM.cpp:464 src/OSYS2.cpp:1023
+#: src/OREMOTEM.cpp:466 src/OSYS2.cpp:1023
 msgid "Multiplayer Random Seed Sync Error"
 msgstr "Error en sincronía de semilla aleatoria de multijugador"
 
@@ -3873,11 +3873,11 @@ msgstr "Error al cargar partida"
 msgid "Game Loaded Successfully"
 msgstr "Partida cargada correctamente"
 
-#: src/OSYS.cpp:2726
+#: src/OSYS.cpp:2731
 msgid "Game Saved Successfully"
 msgstr "Partida guardada con éxito"
 
-#: src/OSYS.cpp:2798
+#: src/OSYS.cpp:2803
 msgid "Unable to locate the game resources"
 msgstr "Imposible encontrar los archivos del juego"
 
@@ -4678,7 +4678,7 @@ msgstr "Exige la última tecnología del unicornio del reino de %s%s."
 #: src/OTALKENG.cpp:964
 #, c-format
 msgid "%s's Kingdom%s requests the latest Catapult technology from you."
-msgstr "El reino de %1$s%2$s le pide la última tecnología dela catapulta."
+msgstr "El reino de %1$s%2$s le pide la última tecnología de la catapulta."
 
 #: src/OTALKENG.cpp:965
 #, c-format
