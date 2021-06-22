@@ -102,7 +102,7 @@ public:
 	void		defense(short targetRecno, int useRangeAttack=0);
 	void		defense_inside_camp(short unitRecno, short targetRecno);
 	void		defense_outside_camp(short unitRecno, short targetRecno);
-	void		clear_defense_mode();
+	void		clear_defense_mode(int firmRecno);
 
 	int	 	mobilize_worker(int workerId, char remoteAction);
 	int  		mobilize_overseer();

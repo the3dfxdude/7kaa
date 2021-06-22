@@ -3373,7 +3373,7 @@ void Firm::change_nation(int newNationRecno)
 	//------ clear defense mode for military camp -----//
 
 	if(firm_id==FIRM_CAMP)
-		((FirmCamp*)this)->clear_defense_mode();
+		((FirmCamp*)this)->clear_defense_mode(firm_recno);
 
 	//---- update nation_unit_count_array[] ----//
 

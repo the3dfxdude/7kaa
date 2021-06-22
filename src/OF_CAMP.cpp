@@ -93,7 +93,7 @@ void FirmCamp::deinit()
 
 	overseer_recno = saveOverseerRecno;
 
-	clear_defense_mode();
+	clear_defense_mode(firmRecno);
 
 	//---- reset all units whose home_camp_firm_recno is this firm ----//
 
@@ -153,7 +153,7 @@ void FirmCamp::reset_attack_camp(int firmRecno)
 
 
 //--------- Begin of function FirmCamp::clear_defense_mode ---------//
-void FirmCamp::clear_defense_mode()
+void FirmCamp::clear_defense_mode(int firmRecno)
 {
 	//------------------------------------------------------------------//
 	// change defense unit's to non-defense mode
@@ -170,7 +170,7 @@ void FirmCamp::clear_defense_mode()
 
 		err_when(unitPtr->cur_action==SPRITE_DIE || unitPtr->action_mode==ACTION_DIE || unitPtr->hit_points<=0);
 		if(unitPtr->in_auto_defense_mode() && unitPtr->action_misc==ACTION_MISC_DEFENSE_CAMP_RECNO &&
-			unitPtr->action_misc_para==firm_recno)
+			unitPtr->action_misc_para==firmRecno)
 			unitPtr->clear_unit_defense_mode();
 	}
 
