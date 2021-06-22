@@ -371,33 +371,37 @@ void Unit::process_auto_defense_detect_target()
 	if(!action_para2)
 	{
 		err_when(action_misc!=ACTION_MISC_DEFENSE_CAMP_RECNO || !action_misc_para);
-		int back = 0;
-		FirmCamp *campPtr;
-		Unit *targetPtr;
 
 		if(firm_array.is_deleted(action_misc_para))
-			back++;
-		else
 		{
-			campPtr = (FirmCamp*) firm_array[action_misc_para];
-			if(unit_array.is_deleted(campPtr->defend_target_recno))
-				back++;
-			else
-			{
-				targetPtr = unit_array[campPtr->defend_target_recno];
-				if(targetPtr->action_mode!=ACTION_ATTACK_FIRM || targetPtr->action_para!=campPtr->firm_recno)
-					back++;
-			}
-		}
-
-		if(!back)
-		{
-			//action_mode2 = ACTION_AUTO_DEFENSE_DETECT_TARGET;
-			action_para2 = AUTO_DEFENSE_DETECT_COUNT;
+			process_auto_defense_back_camp();
 			return;
 		}
 
-		process_auto_defense_back_camp();
+		Firm *firmPtr = firm_array[action_misc_para];
+		if(firmPtr->firm_id!=FIRM_CAMP || firmPtr->nation_recno!=nation_recno)
+		{
+			process_auto_defense_back_camp();
+			return;
+		}
+
+		FirmCamp *campPtr = firmPtr->cast_to_FirmCamp();
+		campPtr = (FirmCamp*) firm_array[action_misc_para];
+		if(unit_array.is_deleted(campPtr->defend_target_recno))
+		{
+			process_auto_defense_back_camp();
+			return;
+		}
+
+		Unit *targetPtr = unit_array[campPtr->defend_target_recno];
+		if(targetPtr->action_mode!=ACTION_ATTACK_FIRM || targetPtr->action_para!=campPtr->firm_recno)
+		{
+			process_auto_defense_back_camp();
+			return;
+		}
+
+		//action_mode2 = ACTION_AUTO_DEFENSE_DETECT_TARGET;
+		action_para2 = AUTO_DEFENSE_DETECT_COUNT;
 		return;
 	}
 
