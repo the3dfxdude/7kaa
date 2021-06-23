@@ -79,12 +79,24 @@ void SpyArray::init()
 //
 void SpyArray::deinit()
 {
-	if( size()==0 )
-		return;
+	//----- delete Spy objects ------//
 
-	//-------- zap the array -----------//
+	if( size() > 0 )
+	{
+		Spy* spyPtr;
 
-	zap();
+		for( int i=1 ; i<=size() ; i++ )
+		{
+			spyPtr = (Spy*) get_ptr(i);
+
+			if( spyPtr )
+				delete spyPtr;
+		}
+
+		//-------- zap the array -----------//
+
+		zap();
+	}
 }
 //---------- End of function SpyArray::deinit ----------//
 
@@ -160,7 +172,10 @@ int SpyArray::add_spy()
 //
 void SpyArray::del_spy(int spyRecno)
 {
-	spy_array[spyRecno]->deinit();
+	Spy* spyPtr = operator[](spyRecno);
+
+	spyPtr->deinit();
+	delete spyPtr;
 
 	linkout(spyRecno);
 }
