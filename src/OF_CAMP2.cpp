@@ -74,13 +74,11 @@ void FirmCamp::process_ai()
 
 	//--- if the firm is empty and should be closed, sell/destruct it now ---//
 
-	if( should_close_flag )
+	if( should_close_flag && worker_count==0 && patrol_unit_count==0
+		&& coming_unit_count==0 && ai_status != CAMP_IN_DEFENSE )
 	{
-		if( worker_count==0 )
-		{
-			ai_del_firm();
-			return;
-		}
+		ai_del_firm();
+		return;
 	}
 
 	//----- think about assigning a better commander -----//
