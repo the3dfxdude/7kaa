@@ -58,7 +58,7 @@ int Nation::process_action(int priorityActionRecno, int processActionMode)
 
 	int divider = 4-config.ai_aggressiveness;		// the more nations there, the less process count
 	int nationRecno = nation_recno;
-	int maxSessionProcessCount = 70 / nation_array.nation_count / MAX(divider,1);
+	int maxSessionProcessCount = 70 / MAX(nation_array.nation_count,1) / MAX(divider,1);
 
 	for( actionRecno=1 ; actionRecno<=action_count() &&
 		  (thisSessionProcessCount < maxSessionProcessCount || processActionMode) && !doneFlag ;		// if processActionMode has been specific, then all messages in the queue of this type will be processed
