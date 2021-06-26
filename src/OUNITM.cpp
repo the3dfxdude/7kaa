@@ -1842,6 +1842,8 @@ void Unit::process_wait()
 //
 void Unit::set_next(int newNextX, int newNextY, int para, int blockedChecked)
 {
+	err_when(!is_visible());
+
 	int curNextXLoc = next_x_loc();
    int curNextYLoc = next_y_loc();
 	int newNextXLoc = newNextX >> ZOOM_X_SHIFT_COUNT;

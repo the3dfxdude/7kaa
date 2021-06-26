@@ -475,6 +475,11 @@ void Unit::assign(int assignXLoc, int assignYLoc, short curAssignUnitNum)
 	if(hit_points<=0 || action_mode==ACTION_DIE || cur_action==SPRITE_DIE)
 		return;
 
+	//----------- BUGHERE : cannot assign when on a ship -----------//
+	err_when(!is_visible())
+	if(!is_visible())
+		return;
+
 	//----------- cannot assign for caravan -----------//
 	if(unit_id==UNIT_CARAVAN)
 		return;
