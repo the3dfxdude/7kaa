@@ -2209,11 +2209,17 @@ int SpyArray::write_file(File* filePtr)
 
 	if( last_ele > 0 )
 	{
+		Spy spyBlank;
+		memset(&spyBlank, 0, sizeof(spyBlank));
+
 		filePtr->file_put_unsigned_short(15*last_ele); // sizeof(Spy)*last_ele
 
 		for( int i=1; i<=last_ele; i++ )
 		{
-			Spy* spyPtr = spy_array[i];
+			Spy* spyPtr = (Spy*) get_ptr(i);
+			if( !spyPtr )
+				spyPtr = &spyBlank;
+
 			// write Spy -- 15 bytes
 			filePtr->file_put_short(spyPtr->spy_recno);
 			filePtr->file_put_char(spyPtr->spy_place);
@@ -2247,10 +2253,11 @@ int SpyArray::read_file(File* filePtr)
 	if( recSize != 29 )
 		return 0;
 
-	filePtr->file_get_long(); // skip overwriting ele_num
+	int32_t fileEleNum = filePtr->file_get_long(); // skip overwriting ele_num
+	resize(fileEleNum);
 	filePtr->file_get_long(); // skip overwriting block_num
 	filePtr->file_get_long(); // skip overwriting cur_pos
-	int32_t num = filePtr->file_get_long(); // skip overwriting last_ele
+	int32_t readNum = filePtr->file_get_long(); // skip overwriting last_ele
 	filePtr->file_get_long(); // skip overwriting ele_size
 	filePtr->file_get_long(); // skip overwriting sort_offset
 	filePtr->file_get_char(); // skip overwriting sort_type
@@ -2258,27 +2265,49 @@ int SpyArray::read_file(File* filePtr)
 
 	//---------- read body_buf ---------//
 
-	if( num > 0 )
+	if( readNum > 0 )
 	{
 		filePtr->file_get_unsigned_short(); // skip body_buf record len
 
-		for( int i=0; i<num; i++ )
+		for( int i=0; i<readNum; i++ )
 		{
-			int spy_recno = spy_array.add_spy();
-			Spy* spyPtr = spy_array[spy_recno];
+			int spy_recno = filePtr->file_get_short();
 
-			spyPtr->spy_recno = filePtr->file_get_short();
-			spyPtr->spy_place = filePtr->file_get_char();
-			spyPtr->spy_place_para = filePtr->file_get_short();
-			spyPtr->spy_skill = filePtr->file_get_char();
-			spyPtr->spy_loyalty = filePtr->file_get_char();
-			spyPtr->true_nation_recno = filePtr->file_get_char();
-			spyPtr->cloaked_nation_recno = filePtr->file_get_char();
-			spyPtr->notify_cloaked_nation_flag = filePtr->file_get_char();
-			spyPtr->exposed_flag = filePtr->file_get_char();
-			spyPtr->race_id = filePtr->file_get_char();
-			spyPtr->name_id = filePtr->file_get_unsigned_short();
-			spyPtr->action_mode = filePtr->file_get_char();
+			if( spy_recno )
+			{
+				spy_recno = spy_array.add_spy();
+
+				Spy* spyPtr = spy_array[spy_recno];
+				//spyPtr->spy_recno = spy_recno;
+				spyPtr->spy_place = filePtr->file_get_char();
+				spyPtr->spy_place_para = filePtr->file_get_short();
+				spyPtr->spy_skill = filePtr->file_get_char();
+				spyPtr->spy_loyalty = filePtr->file_get_char();
+				spyPtr->true_nation_recno = filePtr->file_get_char();
+				spyPtr->cloaked_nation_recno = filePtr->file_get_char();
+				spyPtr->notify_cloaked_nation_flag = filePtr->file_get_char();
+				spyPtr->exposed_flag = filePtr->file_get_char();
+				spyPtr->race_id = filePtr->file_get_char();
+				spyPtr->name_id = filePtr->file_get_unsigned_short();
+				spyPtr->action_mode = filePtr->file_get_char();
+			}
+			else
+			{
+				add_blank(1);     // it's a DynArrayB function
+
+				// read 13 zeroed bytes
+				filePtr->file_get_char(); //skip spy_place
+				filePtr->file_get_short(); //skip spy_place_para
+				filePtr->file_get_char(); //skip spy_skill
+				filePtr->file_get_char(); // skip spy_loyalty
+				filePtr->file_get_char(); // skip true_nation_recno
+				filePtr->file_get_char(); // skip cloaked_nation_recno
+				filePtr->file_get_char(); // skip notify_cloaked_nation_flag
+				filePtr->file_get_char(); // skip exposed_flag
+				filePtr->file_get_char(); // skip race_id
+				filePtr->file_get_unsigned_short(); // skip name_id
+				filePtr->file_get_char(); // skip action_mode
+			}
 		}
 	}
 
