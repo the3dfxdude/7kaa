@@ -910,7 +910,7 @@ static void put_firm_rec(int recNo, int x, int y, int refreshFlag)
 
 		x+=110;
 
-		vga_back.put_bitmap( x, y, raw_res.small_raw_icon(firmPtr2->product_raw_id) );
+		vga_back.put_bitmap( x, y, raw_res.small_product_icon(firmPtr2->product_raw_id) );
 
 		x+=15;
 
