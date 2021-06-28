@@ -172,8 +172,10 @@ int Unit::move_to_range_attack(int targetXLoc, int targetYLoc, short miscNo, sho
 			removedStep++;
 		}
 
-		if(found)
+		if(found || i<3) // found a spot or there is at least more node to try
 			break;
+
+		// one more node to try
 
 		editNode1 = editNode2;
 		editNode2--;
