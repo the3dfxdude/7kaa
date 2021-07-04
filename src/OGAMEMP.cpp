@@ -2413,9 +2413,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	{
 		SessionDesc *current_session;
 
-		tempConfig.race_id = 0;
-		tempConfig.player_nation_color = 0;
-
 		current_session = mp_obj.get_current_session();
 
 		// ask host for an id, race, and color code
