@@ -679,6 +679,7 @@ void Unit::target_move(Unit* targetUnit)
 					//range_attack_x_loc = range_attack_y_loc = -1;
 					err_when(action_mode!=ACTION_ATTACK_UNIT);
 					err_when(action_para!=targetUnit->sprite_recno);
+					choose_best_attack_mode(attackDistance, targetUnit->mobile_type);
 				}
 			}
 		}
