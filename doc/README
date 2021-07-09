@@ -1,8 +1,23 @@
 % Greetings reader, my purpose is a complete restoration of the original manual with the updates. Special attention has been given to preserving the original author's voice; Overall, however, this is a different manual with lots of minor and major differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux and compiled with pdflatex. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
 
+% -- Building the manual  -- %
+
+Required dependencies:
+* texlive-core
+* texlive-fontsextra
+
+Optional dependencies
+* latexmk
+
+To compile, run
+
+$ latexmk or pdflatex "main.tex"
+
+% -- Building the manual end -- %
+
 % -- TODO -- %
 
-    % Add index entries - mChat, community project, https://7kfans.com/, forums, download page, 7kfans.com multiplayer service, and cheat mode/cheat codes, idle caravans.
+    % Add index entries - mChat, community project, https://7kfans.com/, forums, download page, 7kfans.com multiplayer service, and cheat mode/cheat codes, idle caravans/ships.
     % Organize key/mouse commands.
     % set text as \raggedright. Currently prefer left and right justified text.
     % set chapter sectioning with small caps (font lacks them).
@@ -24,6 +39,9 @@
  	* Sort and filter trade locations based on the map selected caravan.
  	* Allow setting stops using the trade report.
  	* Allow copying trade routes using the trade report.
+    % Improve new assets Itrade and Icaravan.
+    % set TOC and index as universalis font. \textsf{}
+    % add missing hot keys.
 
 % -- TODO end -- %
 
@@ -47,7 +65,7 @@
 
 % -- References -- %
 
-    % https://cdn.akamai.steamstatic.com/steam/apps/450140/manuals/Seven_Kingdoms_Ancient_Adversaries_manual.pdf?t=1458663750
+    % https://cdn.akamai.steamstatic.com/steam/apps/450140/manuals/Seven_Kingdoms_Ancient_Adversaries_manual.pdf
     % https://archive.org/details/Seven_Kingdoms
     
 % -- References end -- %
@@ -125,6 +143,8 @@
 
 % v0.2.2-dev
 
-    % 
+    % reduced textswab to huge.
+    % commented out titlesec code.
+    %
 
 % -- Changelog end -- %
