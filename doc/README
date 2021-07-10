@@ -2,16 +2,13 @@
 
 % -- Building the manual  -- %
 
-Required dependencies:
-* texlive-core
-* texlive-fontsextra
-
-Optional dependencies
-* latexmk
-
-To compile, run
-
-$ latexmk or pdflatex "main.tex"
+% Required dependencies:
+% * texlive-core
+% * texlive-fontsextra - accanthis (https://www.ctan.org/texarchive/fonts/accanthis) and universalis (https://www.ctan.org/texarchive/fonts/universalis)
+% Optional dependencies
+% * latexmk
+% To compile, run
+% $ latexmk or pdflatex main.tex
 
 % -- Building the manual end -- %
 
@@ -26,9 +23,13 @@ $ latexmk or pdflatex "main.tex"
     % make title on title page bolder.
     % remove sectioning numbers.
     % make TOC entries not capital letters.
-    % include recent contributor.
     % fix large letters not appearing in index.
-    % fix bugs.
+    % fix bugs:
+    	% Manual: Incomplete Tabular Box https://github.com/the3dfxdude/7kaa/issues/210
+    	% Extra Whitespace in the Manual https://github.com/the3dfxdude/7kaa/issues/209
+    	% A Few Bugs in the Manual https://github.com/the3dfxdude/7kaa/issues/206 
+    	% Sectioning and Text Spacing https://github.com/the3dfxdude/7kaa/issues/202
+    	% Chapter Headings Misaligned https://github.com/the3dfxdude/7kaa/issues/203
     % "index anchor is in the wrong spot. It is before the section break, so it's on the last page of credits."
     % reduce whitespace in chapter 16.
     % sort 7kfans credits as chronological.
@@ -42,6 +43,8 @@ $ latexmk or pdflatex "main.tex"
     % Improve new assets Itrade and Icaravan.
     % set TOC and index as universalis font. \textsf{}
     % add missing hot keys.
+    % modify header text to mimic original manual.
+    % change chapter number font.
 
 % -- TODO end -- %
 
@@ -52,6 +55,7 @@ $ latexmk or pdflatex "main.tex"
     % FrameMaker 5.1.1
     % Invoice, Portrait (5.51 × 8.51 inch)
     % Fonts: (ITC) Galliard (Serif) - Black, Bold, Roman, Italic, BoldItalic. GloudyTextMT. Univers (neo-grotesque sans-serif).
+    
     % Some tile graphics extend past top textline. - some due to Huge font. Issue with specific font and size declaration. See font documentation.
     % Uses in, cm, pt, etc. Use just one type? Use in instead of cm.
     % Disagreement between troop and troops in pronoun use.
@@ -59,7 +63,6 @@ $ latexmk or pdflatex "main.tex"
     % Period usage in the hotkeys/mouse commands/cheats.
     % the box in the mouse commands looks a bit gray.
     % hotkeys are slightly indented in the original. 
-    % itemize is used only once. it's in the 7kfans credits.
 
 % -- Notes end -- %
 
@@ -144,7 +147,9 @@ $ latexmk or pdflatex "main.tex"
 % v0.2.2-dev
 
     % reduced textswab to huge.
-    % commented out titlesec code.
-    %
+    % commented out titlesec code. Recommented and font size reduced to huge and 30.
+    % force smallcaps for universalis by defining starting capital letters as \Huge vs. \huge. This has the effect of making the top text buggy. Original manual has the text in small italics instead of bold/etc. Opposing page has Seven Kingdoms: Ancient Adversaries in italics. And it does not include sectioning numbering. Due to bugs, this is being held off.
+    % included recent contributor.
+    % 
 
 % -- Changelog end -- %
