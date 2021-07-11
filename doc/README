@@ -5,9 +5,9 @@
 % Required dependencies:
 % * texlive-core
 % * texlive-fontsextra - accanthis (https://www.ctan.org/texarchive/fonts/accanthis) and universalis (https://www.ctan.org/texarchive/fonts/universalis)
-% Optional dependencies
+% Optional dependencies:
 % * latexmk
-% To compile, run
+% To compile, run:
 % $ latexmk or pdflatex main.tex
 
 % -- Building the manual end -- %
@@ -35,11 +35,11 @@
     % sort 7kfans credits as chronological.
     % Align "Ancient Adversaries" with the Seven Kingdoms graphic.
     % Restore purple cover.
-    % Expand on  
-    	* Added trade locations to the trade report.
- 	* Sort and filter trade locations based on the map selected caravan.
- 	* Allow setting stops using the trade report.
- 	* Allow copying trade routes using the trade report.
+    % Expand on:  
+        % Added trade locations to the trade report.
+        % Sort and filter trade locations based on the map selected caravan.
+        % Allow setting stops using the trade report.
+        % Allow copying trade routes using the trade report.
     % Improve new assets Itrade and Icaravan.
     % set TOC and index as universalis font. \textsf{}
     % add missing hot keys.
@@ -55,7 +55,7 @@
     % FrameMaker 5.1.1
     % Invoice, Portrait (5.51 × 8.51 inch)
     % Fonts: (ITC) Galliard (Serif) - Black, Bold, Roman, Italic, BoldItalic. GloudyTextMT. Univers (neo-grotesque sans-serif).
-    
+
     % Some tile graphics extend past top textline. - some due to Huge font. Issue with specific font and size declaration. See font documentation.
     % Uses in, cm, pt, etc. Use just one type? Use in instead of cm.
     % Disagreement between troop and troops in pronoun use.
@@ -75,7 +75,7 @@
 
 % -- Changelog -- %
 
-% v0.2.0
+% v0.3.0
 
 % Summary of changes: 
 
@@ -130,7 +130,7 @@
     % REMOVED spinners and troubleshooting index entries.
     % Respelled multi-player to multiplayer and single-player to single player.
 
-% v0.2.1
+% v0.3.1
 
     % REMOVED \clearpage where not needed.
     % Defined sectioning as textsf.
@@ -144,12 +144,13 @@
     % Capitalized chapter titles as per original manual. Previously used M.L.A. style. Contents is not all capitalize like the INDEX in the original. This has the consequence of changing the chapter titles to all capital letters in the contents, yet in the original manual, they are not all capital letters.
     % Created new assets Itrade and Icaravan and included them in document with new text regarding updated trade scroll and idle caravans. Expand.
 
-% v0.2.2-dev
+% v0.3.2-dev
 
     % reduced textswab to huge.
     % commented out titlesec code. Recommented and font size reduced to huge and 30.
     % force smallcaps for universalis by defining starting capital letters as \Huge vs. \huge. This has the effect of making the top text buggy. Original manual has the text in small italics instead of bold/etc. Opposing page has Seven Kingdoms: Ancient Adversaries in italics. And it does not include sectioning numbering. Due to bugs, this is being held off.
     % included recent contributor.
+    % README - changed internal and arbitrary versioning to 0.3 to reflect the status of the manual being in its third iteration (7k -> 7kaa -> 7kaa GPLv2).
     % 
 
 % -- Changelog end -- %
