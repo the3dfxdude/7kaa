@@ -650,7 +650,9 @@ int Unit::idle_detect_attack(int startLoc, int dimensionInput, char defenseMode)
 	//-----------------------------------------------------------------------------------------------//
 	// adjust waiting_term for default_mode
 	//-----------------------------------------------------------------------------------------------//
-	int lowestBit = (++waiting_term)%detectDelay;
+	++waiting_term;
+	waiting_term = MAX(waiting_term,0); //**BUGHERE
+	int lowestBit = waiting_term%detectDelay;
 
 	if(action_mode2==ACTION_STOP)
 	{

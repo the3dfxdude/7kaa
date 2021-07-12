@@ -1399,7 +1399,13 @@ void Misc::cal_move_around_a_point(short num, short width, short height, int& xS
 	short maxSqtSize = (width>height) ? height+1 : width+1;
 	//short num2 = num%(maxSqtSize*maxSqtSize) + 1;
 	short num2 = (num-1)%(maxSqtSize*maxSqtSize) + 1;
-	
+
+	if(num2<=1)
+	{
+		xShift = yShift = 0;
+		return;
+	}
+
 	if(num2<=MOVE_AROUND_TABLE_SIZE)
 	{
 		xShift = int(*(move_around_table_x+num2-1));
