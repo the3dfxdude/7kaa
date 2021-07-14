@@ -425,6 +425,9 @@ void Sys::detect_button()
 		if( nation_array.player_recno==0 && i<7 )		// when the player has lost the game, the only report available is ranking report only
 			continue;
 
+		if( nation_array.nation_count==0 && i==7 )		// unless there are no nations at all, then the ranking report is also disabled
+			continue;
+
 		if( mouse.single_click( x, y, x+VIEW_MODE_BUTTON_WIDTH-1, y+VIEW_MODE_BUTTON_HEIGHT-1 ) )
 		{
 			int newMode = viewModeArray[i];
@@ -1157,6 +1160,15 @@ void Sys::disp_view_mode(int observeMode)
 				darkenX[j-MIN_MODE_TO_DISPLAY]+darkenWidth-1, 
 				darkenY[j-MIN_MODE_TO_DISPLAY]+darkenHeight-1, -8 );
 		}
+	}
+
+	// darken view mode 8 if there are no nations to rank
+	if( !nation_array.nation_count )
+	{
+			vga_front.adjust_brightness(
+				darkenX[8-MIN_MODE_TO_DISPLAY], darkenY[8-MIN_MODE_TO_DISPLAY],
+				darkenX[8-MIN_MODE_TO_DISPLAY]+darkenWidth-1,
+				darkenY[8-MIN_MODE_TO_DISPLAY]+darkenHeight-1, -8 );
 	}
 }
 //--------- End of funtion Sys::disp_view_mode ---------//

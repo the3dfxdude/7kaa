@@ -131,6 +131,9 @@ void Info::disp_rank(int refreshFlag)
 //
 static void disp_score()
 {
+	if( !nation_array.nation_count ) // no one to rank
+		return;
+
 	int x=NATION_SCORE_X1+6, y=NATION_SCORE_Y1+6;
 
 	static const char* rankStrArray[] =
