@@ -4,7 +4,7 @@
 
 % Required dependencies:
 % * texlive-core
-% * texlive-fontsextra - accanthis (https://www.ctan.org/texarchive/fonts/accanthis) and universalis (https://www.ctan.org/texarchive/fonts/universalis)
+% * texlive-fontsextra - accanthis and universalis
 % Optional dependencies:
 % * latexmk
 % To compile, run:
@@ -17,7 +17,7 @@
     % Add index entries - mChat, community project, https://7kfans.com/, forums, download page, 7kfans.com multiplayer service, and cheat mode/cheat codes, idle caravans/ships.
     % Organize key/mouse commands.
     % set text as \raggedright. Currently prefer left and right justified text.
-    % set chapter sectioning with small caps (font lacks them).
+    % set chapter sectioning with small caps (universalis font lacks them). force with \Huge vs. \huge font declaration.
     % set sectioning to mimic original manual - bolder / different size.
     % adjust space between sectioning.
     % make title on title page bolder.
@@ -30,21 +30,28 @@
     	% A Few Bugs in the Manual https://github.com/the3dfxdude/7kaa/issues/206 
     	% Sectioning and Text Spacing https://github.com/the3dfxdude/7kaa/issues/202
     	% Chapter Headings Misaligned https://github.com/the3dfxdude/7kaa/issues/203
+	% BUG HERE: ~ pg 11, pg 12, pg 14, pg 17, pg 18, pg 44, pg 47, pg 62, pg 64, pg 65, pg 69, pg 73, pg 93, pg 86, pg 87, pg 91 ...
     % "index anchor is in the wrong spot. It is before the section break, so it's on the last page of credits."
     % reduce whitespace in chapter 16.
     % sort 7kfans credits as chronological.
     % Align "Ancient Adversaries" with the Seven Kingdoms graphic.
     % Restore purple cover.
     % Expand on:  
-        % Added trade locations to the trade report.
-        % Sort and filter trade locations based on the map selected caravan.
-        % Allow setting stops using the trade report.
-        % Allow copying trade routes using the trade report.
+        % Added trade locations to the trade report. pg#?
+        % Sort and filter trade locations based on the map selected caravan. pg#?
+        % Allow setting stops using the trade report. pg#? select caravan and right-click on location within the trade scroll to set stop.
+        % Allow copying trade routes using the trade report. pg#? Select caravan and right-click on another caravan to clone the trade stop.
     % Improve new assets Itrade and Icaravan.
-    % set TOC and index as universalis font. \textsf{}
+    % set TOC and index as universalis font. \textsf{} and modify index file.
     % add missing hot keys.
     % modify header text to mimic original manual.
-    % change chapter number font.
+    % change chapter number font and size.
+    % make chapter number align with chapter title on bottom line
+    % Modify titlesec code to remove the bugs it creates.
+    % Period usage in the hotkeys/mouse commands/cheats.
+    % the box in the mouse commands looks a bit gray.
+    % hotkeys are slightly indented in the original. 
+    % 
 
 % -- TODO end -- %
 
@@ -60,9 +67,6 @@
     % Uses in, cm, pt, etc. Use just one type? Use in instead of cm.
     % Disagreement between troop and troops in pronoun use.
     % Capitalization is not consistent.
-    % Period usage in the hotkeys/mouse commands/cheats.
-    % the box in the mouse commands looks a bit gray.
-    % hotkeys are slightly indented in the original. 
 
 % -- Notes end -- %
 
@@ -148,9 +152,10 @@
 
     % reduced textswab to huge.
     % commented out titlesec code. Recommented and font size reduced to huge and 30.
-    % force smallcaps for universalis by defining starting capital letters as \Huge vs. \huge. This has the effect of making the top text buggy. Original manual has the text in small italics instead of bold/etc. Opposing page has Seven Kingdoms: Ancient Adversaries in italics. And it does not include sectioning numbering. Due to bugs, this is being held off.
+    % force smallcaps for universalis by defining starting capital letters as \Huge vs. \huge. This has the effect of making the header text buggy. Original manual has the text in small italics instead of bold/etc. Opposing page has Seven Kingdoms: Ancient Adversaries in italics. And it does not include sectioning numbering. It is most likely the universalis font. Due to bugs, this is being held off.
     % included recent contributor.
     % README - changed internal and arbitrary versioning to 0.3 to reflect the status of the manual being in its third iteration (7k -> 7kaa -> 7kaa GPLv2).
+    % Begin using v0.3.2-dev to coincide with 2.15.5-dev in the README.
     % 
 
 % -- Changelog end -- %
