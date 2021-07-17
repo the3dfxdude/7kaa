@@ -645,7 +645,10 @@ void UnitCaravan::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAc
 	//-------------------------------------------------------//
 	update_stop_list();
 
-	if(dest_stop_id)
+	//-------------------------------------------------------//
+	// handle if current stop changed when mobile
+	//-------------------------------------------------------//
+	if(dest_stop_id && journey_status!=INSIDE_FIRM)
 	{
 		if((newStopFirmRecno=stop_array[dest_stop_id-1].firm_recno) != oldStopFirmRecno)
 		{
@@ -655,7 +658,7 @@ void UnitCaravan::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAc
 			journey_status = ON_WAY_TO_FIRM;
 		}
 	}
-	else
+	else if(journey_status!=INSIDE_FIRM)
 		stop2();
 
 	if( unit_array.selected_recno == sprite_recno )
@@ -860,7 +863,8 @@ void UnitCaravan::update_stop_list()
 	if(!ourFirmExist) // none of the markets belong to our nation
 	{
 		memset(stop_array, 0, MAX_STOP_FOR_CARAVAN * sizeof(CaravanStop));
-		journey_status		= ON_WAY_TO_FIRM;
+		if(journey_status != INSIDE_FIRM)
+			journey_status = ON_WAY_TO_FIRM;
 		dest_stop_id		= 0;
 		stop_defined_num	= 0;
 		return;
@@ -1011,6 +1015,15 @@ void UnitCaravan::pre_process()
 	err_when(action_mode==ACTION_DIE || cur_action==SPRITE_DIE || hit_points<=0);
 
 	//-----------------------------------------------------------------------------//
+	// process when in firm
+	//-----------------------------------------------------------------------------//
+	if(journey_status==INSIDE_FIRM)
+	{
+		caravan_in_firm();
+		return;
+	}
+
+	//-----------------------------------------------------------------------------//
 	// stop action if no stop is defined
 	//-----------------------------------------------------------------------------//
 	if(!stop_defined_num)
@@ -1100,10 +1113,7 @@ void UnitCaravan::pre_process()
 	//-----------------------------------------------------------------------------//
 	err_when(stop_defined_num<=1);
 
-	if(journey_status==INSIDE_FIRM)
-		caravan_in_firm();
-	else
-		caravan_on_way();
+	caravan_on_way();
 }
 //----------- End of function UnitCaravan::pre_process -----------//
 

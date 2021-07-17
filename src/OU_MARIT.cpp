@@ -225,7 +225,8 @@ void UnitMarine::update_stop_list()
 	if(!ourFirmExist) // none of the markets belong to our nation
 	{
 		memset(stop_array, 0, MAX_STOP_FOR_SHIP * sizeof(ShipStop));
-		journey_status		= ON_WAY_TO_FIRM;
+		if(journey_status != INSIDE_FIRM)
+			journey_status = ON_WAY_TO_FIRM;
 		dest_stop_id		= 0;
 		stop_defined_num	= 0;
 		return;
@@ -350,6 +351,12 @@ void UnitMarine::pre_process()
 
 	if(auto_mode) // process trading automatically, same as caravan
 	{
+		if(journey_status==INSIDE_FIRM)
+		{
+			ship_in_firm();
+			return;
+		}
+
 		if(!stop_defined_num)
 			return;
 
@@ -414,10 +421,7 @@ void UnitMarine::pre_process()
 
 		//------------ if there are more than one defined stop ---------------//
 		err_when(stop_defined_num<=1);
-		if(journey_status==INSIDE_FIRM)
-			ship_in_firm();
-		else
-			ship_on_way();
+		ship_on_way();
 	}
 	else if(journey_status==INSIDE_FIRM)
 		ship_in_firm(0); // autoMode is off

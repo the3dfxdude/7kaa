@@ -1193,7 +1193,10 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 	//-------------------------------------------------------//
 	update_stop_list();
 
-	if(dest_stop_id)
+	//-------------------------------------------------------//
+	// handle if current stop changed when mobile
+	//-------------------------------------------------------//
+	if(dest_stop_id && journey_status!=INSIDE_FIRM)
 	{
 		short newStopFirmRecno;
 		err_when(firm_array.is_deleted(stop_array[dest_stop_id-1].firm_recno));
@@ -1205,7 +1208,7 @@ void UnitMarine::set_stop(int stopId, int stopXLoc, int stopYLoc, char remoteAct
 			journey_status = ON_WAY_TO_FIRM;
 		}
 	}
-	else
+	else if(journey_status!=INSIDE_FIRM)
 		stop2();
 
 	//-------------------------------------------------------//
