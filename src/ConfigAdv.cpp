@@ -250,6 +250,7 @@ void ConfigAdv::reset()
 	town_loyalty_qol = 1;
 
 	unit_loyalty_require_local_leader = 1;
+	unit_spy_fixed_target_loyalty = 0;
 	unit_target_move_range_cycle = 0;
 
 	vga_allow_highdpi = 0;
@@ -385,6 +386,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "unit_loyalty_require_local_leader") )
 	{
 		if( !read_bool(value, &unit_loyalty_require_local_leader) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "unit_spy_fixed_target_loyalty") )
+	{
+		if( !read_bool(value, &unit_spy_fixed_target_loyalty) )
 			return 0;
 		update_check_sum(name, value);
 	}
