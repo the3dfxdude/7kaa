@@ -318,3 +318,19 @@ void MonsterRes::stop_attack_nation(short nationRecno)
    }
 }
 //----------- End of function MonsterRes::stop_attack_nation ---------//
+
+
+//---------- Begin of function MonsterRes::get_monster_by_unit_id -----------//
+
+MonsterInfo* MonsterRes::get_monster_by_unit_id(int unitId)
+{
+	int i;
+	for( i=0 ; i<monster_count ; i++ )
+	{
+		MonsterInfo* monsterInfo = monster_info_array+i;
+		if( monsterInfo->unit_id == unitId )
+			return monsterInfo;
+	}
+	return NULL;
+}
+//------------ End of function MonsterRes::get_monster_by_unit_id -----------//

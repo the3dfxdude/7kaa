@@ -748,8 +748,14 @@ void Battle::create_test_unit(int nationRecno)
 				{
 					// force the location to be even number
 					int unitRecno = unit_array.add_unit( unitId, nationRecno, RANK_SOLDIER, 100, (xLoc+x)& ~1, (yLoc+y) & ~1 );
+					Unit* unitPtr = unit_array[unitRecno];
 
-					unit_array[unitRecno]->set_combat_level(100);
+					unitPtr->set_combat_level(100);
+					if( unit_res[unitPtr->unit_id]->unit_class == UNIT_CLASS_MONSTER )
+					{
+						// normally set by the monster firm, but there is no monster firm
+						unitPtr->set_monster_id(monster_res.get_monster_by_unit_id(unitId)->monster_id);
+					}
 				}
 			}
 		}

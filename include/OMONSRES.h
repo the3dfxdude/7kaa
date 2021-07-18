@@ -99,6 +99,7 @@ public:
 	int			read_file(File* filePtr);
 
 	MonsterInfo* operator[](int monsterId);      // pass monsterId  as recno
+	MonsterInfo* get_monster_by_unit_id(int unitId);
 
 private:
 	void        load_monster_info();
