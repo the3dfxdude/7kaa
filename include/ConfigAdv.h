@@ -74,6 +74,7 @@ public:
 
 	// unit settings
 	char			unit_loyalty_require_local_leader;
+	char			unit_target_move_range_cycle;
 
 	// vga settings
 	char			vga_allow_highdpi;

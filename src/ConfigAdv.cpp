@@ -250,6 +250,7 @@ void ConfigAdv::reset()
 	town_loyalty_qol = 1;
 
 	unit_loyalty_require_local_leader = 1;
+	unit_target_move_range_cycle = 0;
 
 	vga_allow_highdpi = 0;
 	vga_full_screen = 1;
@@ -384,6 +385,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "unit_loyalty_require_local_leader") )
 	{
 		if( !read_bool(value, &unit_loyalty_require_local_leader) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "unit_target_move_range_cycle") )
+	{
+		if( !read_bool(value, &unit_target_move_range_cycle) )
 			return 0;
 		update_check_sum(name, value);
 	}
