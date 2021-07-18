@@ -193,6 +193,7 @@ void Battle::run(NewNationPara *mpGame, int mpPlayerCount)
 		world.visit(0, 0, MAX_WORLD_X_LOC-1, MAX_WORLD_Y_LOC-1, 0, 0);
 
 		config.blacken_map = 0;
+		config.fog_of_war = 0;
 	}
 
 	// ######## begin Gilbert 11/11 #######//
@@ -661,6 +662,7 @@ void Battle::run_replay()
 	NewNationPara *mpGame = (NewNationPara *)mem_add(sizeof(NewNationPara)*MAX_NATION);
 	int mpPlayerCount = 0;
 	FilePath full_path(sys.dir_config);
+	Config tmpConfig = config;
 
 	full_path += "NONAME.RPL";
 	if( full_path.error_flag )
@@ -676,6 +678,7 @@ void Battle::run_replay()
 	mem_del(mpGame);
 	remote.deinit();
 	game.deinit();
+	config = tmpConfig;
 }
 //--------- End of function Battle::run_replay ---------//
 
