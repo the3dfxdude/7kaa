@@ -1367,13 +1367,13 @@ void News::lightning_damage()
 		{
 			if( short_para5 )
 			{
-				// TRANSLATORS: Your King <Name> has been struck and killed by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your King %s has been struck and killed by lightning."), unitName);
+				// TRANSLATORS: Your King has been struck and killed by lightning.
+				str = _("Your King has been struck and killed by lightning.");
 			}
 			else
 			{
-				// TRANSLATORS: Your King <Name> has been struck and injured by lightning.
-				snprintf(str, MAX_STR_LEN+1, _("Your King %s has been struck and injured by lightning."), unitName);
+				// TRANSLATORS: Your King has been struck and injured by lightning.
+				str = _("Your King has been struck and injured by lightning.");
 			}
 		}
 		else
