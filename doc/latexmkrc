@@ -1,4 +1,4 @@
-@default_files = ("main.tex"); # compile only main.tex
+@default_files = ("7kaa.tex"); # compile only 7kaa.tex
 $recorder = 1;
 $pdf_mode = 1; # tex -> PDF
 $bibtex_use = 2;

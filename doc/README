@@ -30,7 +30,24 @@
     	% A Few Bugs in the Manual https://github.com/the3dfxdude/7kaa/issues/206 
     	% Sectioning and Text Spacing https://github.com/the3dfxdude/7kaa/issues/202
     	% Chapter Headings Misaligned https://github.com/the3dfxdude/7kaa/issues/203
-	% BUG HERE: ~ pg 11, pg 12, pg 14, pg 17, pg 18, pg 44, pg 47, pg 62, pg 64, pg 65, pg 69, pg 73, pg 93, pg 86, pg 87, pg 91 ...
+	% BUG HERE: ~ 
+		% pg 11, line . 
+		% pg 12, line . 
+		% pg 14, line . 
+		% pg 17, line . 
+		% pg 18, line . 
+		% pg 44, line . 
+		% pg 47, line . 
+		% pg 62, line . 
+		% pg 64, line . 
+		% pg 65, line . 
+		% pg 69, line . 
+		% pg 73, line . 
+		% pg 93, line . 
+		% pg 86, line . 
+		% pg 87, line . 
+		% pg 91, line . 
+		% ...
     % "index anchor is in the wrong spot. It is before the section break, so it's on the last page of credits."
     % reduce whitespace in chapter 16.
     % sort 7kfans credits as chronological.
@@ -39,8 +56,8 @@
     % Expand on:  
         % Added trade locations to the trade report. pg#?
         % Sort and filter trade locations based on the map selected caravan. pg#?
-        % Allow setting stops using the trade report. pg#? select caravan and right-click on location within the trade scroll to set stop.
-        % Allow copying trade routes using the trade report. pg#? Select caravan and right-click on another caravan to clone the trade stop.
+        % Allow setting stops using the trade report. pg#? select caravan and right-click on location within the trade scroll to set the trade stop.
+        % Allow copying trade routes using the trade report. pg#? Select caravan and right-click on another caravan within the trade scroll to clone the trade stop.
     % Improve new assets Itrade and Icaravan.
     % set TOC and index as universalis font. \textsf{} and modify index file.
     % add missing hot keys.
@@ -134,7 +151,7 @@
     % REMOVED spinners and troubleshooting index entries.
     % Respelled multi-player to multiplayer and single-player to single player.
 
-% v0.3.1
+% v0.3.1 (2.15.5-dev)
 
     % REMOVED \clearpage where not needed.
     % Defined sectioning as textsf.
@@ -148,7 +165,7 @@
     % Capitalized chapter titles as per original manual. Previously used M.L.A. style. Contents is not all capitalize like the INDEX in the original. This has the consequence of changing the chapter titles to all capital letters in the contents, yet in the original manual, they are not all capital letters.
     % Created new assets Itrade and Icaravan and included them in document with new text regarding updated trade scroll and idle caravans. Expand.
 
-% v0.3.2-dev
+% v0.3.2-dev (2.15.5-dev)
 
     % reduced textswab to huge.
     % commented out titlesec code. Recommented and font size reduced to huge and 30.
@@ -156,6 +173,7 @@
     % included recent contributor.
     % README - changed internal and arbitrary versioning to 0.3 to reflect the status of the manual being in its third iteration (7k -> 7kaa -> 7kaa GPLv2).
     % Begin using v0.3.2-dev to coincide with 2.15.5-dev in the README.
+    % from 2.14.7 to 2.15.0 - added game manual. Manual versions = 2.15.4p1, 2.15.4, 2.15.3, 2.15.2, 2.15.1, and 2.15.0.
     % 
 
 % -- Changelog end -- %
