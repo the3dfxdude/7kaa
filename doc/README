@@ -8,7 +8,7 @@
 % Optional dependencies:
 % * latexmk
 % To compile, run:
-% $ latexmk or pdflatex main.tex
+% $ latexmk or pdflatex 7kaa.tex
 
 % -- Building the manual end -- %
 
