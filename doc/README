@@ -31,23 +31,28 @@
     	% Sectioning and Text Spacing https://github.com/the3dfxdude/7kaa/issues/202
     	% Chapter Headings Misaligned https://github.com/the3dfxdude/7kaa/issues/203
 	% BUG HERE: ~ 
-		% pg 11, line . 
-		% pg 12, line . 
-		% pg 14, line . 
-		% pg 17, line . 
-		% pg 18, line . 
-		% pg 44, line . 
-		% pg 47, line . 
-		% pg 62, line . 
-		% pg 64, line . 
-		% pg 65, line . 
-		% pg 69, line . 
-		% pg 73, line . 
-		% pg 93, line . 
-		% pg 86, line . 
-		% pg 87, line . 
-		% pg 91, line . 
-		% ...
+		% pg 11, line . Image extends into bottom margin.
+		% pg 12, line . (1) Wrapfig environment issue. (2) Image extends into bottom margin.
+		% pg 13, line . Wrapfig environment issue.
+		% pg 14, line . Image extends into bottom margin.
+		% pg 17, line . (1) Incomplete tabular box due to poor \parbox coding. (2) Incorrect top box size.
+		% pg 18, line . (1) Incorrect top box size. (2) Incomplete tabular box due to poor \parbox coding. (3) Too much whitespace between tabular environments.
+		% pg 44, line . Image extends into bottom margin.
+		% pg 45, line . Wrapfig environment issue.
+		% pg 47, line . Wrapfig environment issue.
+		% pg 63, line . Wrapfig environment issue.
+		% pg 65, line . Image extends into bottom margin.
+		% pg 66, line . Wrapfig environment issue.
+		% pg 70, line . Wrapfig environment issue.
+		% pg 73, line . Image extends into bottom margin.
+		% pg 74, line . Wrapfig environment issue.
+		% pg 83, line . Misaligned graphic with bottom caption.
+		% pg 86, line . !
+		% pg 87, line . !
+		% pg 90, line . chapter title bug
+		% pg 91, line . !
+		% pg 148, line . chapter title bug
+		% ... 
     % "index anchor is in the wrong spot. It is before the section break, so it's on the last page of credits."
     % reduce whitespace in chapter 16.
     % sort 7kfans credits as chronological.
@@ -67,7 +72,11 @@
     % Modify titlesec code to remove the bugs it creates.
     % Period usage in the hotkeys/mouse commands/cheats.
     % the box in the mouse commands looks a bit gray.
-    % hotkeys are slightly indented in the original. 
+    % hotkeys are slightly indented in the original.
+    % prepare files for detexing
+    % add translator comments
+    % add commented caption code
+    % add babel support and multilingual fonts
     % 
 
 % -- TODO end -- %
@@ -90,7 +99,6 @@
 % -- References -- %
 
     % https://cdn.akamai.steamstatic.com/steam/apps/450140/manuals/Seven_Kingdoms_Ancient_Adversaries_manual.pdf
-    % https://archive.org/details/Seven_Kingdoms
     
 % -- References end -- %
 
@@ -164,16 +172,14 @@
     % REMOVED dummy section from FAQ and removed sectioning for bf text.
     % Capitalized chapter titles as per original manual. Previously used M.L.A. style. Contents is not all capitalize like the INDEX in the original. This has the consequence of changing the chapter titles to all capital letters in the contents, yet in the original manual, they are not all capital letters.
     % Created new assets Itrade and Icaravan and included them in document with new text regarding updated trade scroll and idle caravans. Expand.
-
-% v0.3.2-dev (2.15.5-dev)
-
     % reduced textswab to huge.
-    % commented out titlesec code. Recommented and font size reduced to huge and 30.
+    % commented out titlesec code. Recommented and font size reduced to huge.
     % force smallcaps for universalis by defining starting capital letters as \Huge vs. \huge. This has the effect of making the header text buggy. Original manual has the text in small italics instead of bold/etc. Opposing page has Seven Kingdoms: Ancient Adversaries in italics. And it does not include sectioning numbering. It is most likely the universalis font. Due to bugs, this is being held off.
     % included recent contributor.
     % README - changed internal and arbitrary versioning to 0.3 to reflect the status of the manual being in its third iteration (7k -> 7kaa -> 7kaa GPLv2).
-    % Begin using v0.3.2-dev to coincide with 2.15.5-dev in the README.
+    % Begin using v0.3.1 to coincide with 2.15.5-dev in the README.
     % from 2.14.7 to 2.15.0 - added game manual. Manual versions = 2.15.4p1, 2.15.4, 2.15.3, 2.15.2, 2.15.1, and 2.15.0.
-    % 
+    % Added metadata
+    %
 
 % -- Changelog end -- %
