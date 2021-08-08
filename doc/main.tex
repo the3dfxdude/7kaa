@@ -47,34 +47,34 @@
     \fancyhf[leh]{\leftmark}
     \fancyhf[roh]{\rightmark}
     
-%\usepackage[explicit]{titlesec} % For modification of titles
-%% \titlespacing\command{left}{before}{after}
-%% spacing: how to read {12pt plus 4pt minus 2pt}
-%%           12pt is what we would like the spacing to be
-%%           plus 4pt means that TeX can stretch it by at most 4pt
-%%           minus 2pt means that TeX can shrink it by at most 2pt
-%\titlespacing\chapter{0pt}{1.4in}{12pt plus 6pt minus 2pt}
-%\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
-%\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
-%\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
-%\titleformat%
-%{\chapter}% command
-%[display]% shape, one of: hang, block, display, runin, leftmargin, rightmargin, drop, wrap, frame
-%{\bfseries\Huge}% format
-%{\fontsize{40}{40}\selectfont\thechapter}% label
-%{0em}% sep
-%{
-%	\vspace{-1.5em}
-%	\hspace{1.5em}
-%	\parbox{0.8\textwidth}{
-%		\raggedright%
-%		#1%
-%	}
-%}% before-code
-%[
-%\vspace{0.1em}
-%\titlerule
-%]% after-code
+\usepackage[explicit]{titlesec} % For modification of titles
+% \titlespacing\command{left}{before}{after}
+% spacing: how to read {12pt plus 4pt minus 2pt}
+%           12pt is what we would like the spacing to be
+%           plus 4pt means that TeX can stretch it by at most 4pt
+%           minus 2pt means that TeX can shrink it by at most 2pt
+\titlespacing\chapter{0pt}{1.4in}{12pt plus 6pt minus 2pt}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{-4pt plus 6pt minus 2pt}
+\titleformat%
+{\chapter}% command
+[display]% shape, one of: hang, block, display, runin, leftmargin, rightmargin, drop, wrap, frame
+{\bfseries\Huge}% format
+{\fontsize{40}{40}\selectfont\thechapter}% label
+{0em}% sep
+{
+	\vspace{-1.5em}
+	\hspace{1.5em}
+	\parbox{0.8\textwidth}{
+		\raggedright%
+		#1%
+	}
+}% before-code
+[
+\vspace{0.1em}
+\titlerule
+]% after-code
 
 \usepackage{makeidx} % Index
     \makeindex
@@ -162,28 +162,28 @@ This manual is part of the community project. It has been updated to reflect the
 \addtocontents{toc}
 
 \mainmatter
-\include{introduction}
-\include{starting_new_game}
-\include{information_interface}
-\include{village}
-\include{buildings_workers_links}
-\include{force_and_its_use}
-\include{developing_your_economy}
-\include{developing_weapons}
-\include{harbors_ships}
-\include{mercenaries}
-\include{diplomacy}
-\include{creating_empire}
-\include{spies_espionage}
-\include{nationalities}
-\include{fryhtans_their_ways}
-\include{seats_of_powers_and_greater_beings}
-\include{rebellion_rebels}
-\include{fire_forces_nature}
-\include{assorted_costs_amounts}
-\include{strategy_tips}
-\include{faq}
-\include{credits}
+\include{./src/introduction}
+\include{./src/starting_new_game}
+\include{./src/information_interface}
+\include{./src/village}
+\include{./src/buildings_workers_links}
+\include{./src/force_and_its_use}
+\include{./src/developing_your_economy}
+\include{./src/developing_weapons}
+\include{./src/harbors_ships}
+\include{./src/mercenaries}
+\include{./src/diplomacy}
+\include{./src/creating_empire}
+\include{./src/spies_espionage}
+\include{./src/nationalities}
+\include{./src/fryhtans_their_ways}
+\include{./src/seats_of_powers_and_greater_beings}
+\include{./src/rebellion_rebels}
+\include{./src/fire_forces_nature}
+\include{./src/assorted_costs_amounts}
+\include{./src/strategy_tips}
+\include{./src/faq}
+\include{./src/credits}
 
 \backmatter
 
