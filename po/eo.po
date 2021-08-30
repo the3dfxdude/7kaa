@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-05-20 16:42+0200\n"
+"PO-Revision-Date: 2021-08-30 02:39+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language: eo\n"
 
@@ -737,37 +737,37 @@ msgstr ""
 #: src/OGAMEND.cpp:297
 #, c-format
 msgid "Your Kingdom has Reached its Population Goal of %s !"
-msgstr "Via Rego Akiris ĝia Loĝantara Celo de %s!"
+msgstr "Via Regno Akiris ĝian Loĝantaran Celon de %s!"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:302
 #, c-format
 msgid "%s's Kingdom has Reached its Population Goal of %s !"
-msgstr "La Rego de %s Akiris ĝia Loĝantara Celo de %s!"
+msgstr "La Rego de %s Akiris ĝian Loĝantaran Celon de %s!"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:315
 #, c-format
 msgid "Your Kingdom has Reached its Economic Score Goal of %s !"
-msgstr "Via Rego Akiris ĝia Ekonomia Celo de %s!"
+msgstr "Via Rego Akiris ĝian Ekonomian Celon de %s!"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:320
 #, c-format
 msgid "%s's Kingdom has Reached its Economic Score Goal of %s !"
-msgstr "La Rego de %s Akiris ĝia Ekonomia Celo de %s!"
+msgstr "La Rego de %s Akiris ĝian Ekonomian Celon de %s!"
 
 #. TRANSLATORS: Your Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:333
 #, c-format
 msgid "Your Kingdom has Reached its Total Score Goal of %s !"
-msgstr "Via Rego Akiris ĝia Totala Poenta Celo de %s!"
+msgstr "Via Rego Akiris ĝian Totalan Poentan Celon de %s!"
 
 #. TRANSLATORS: <King>'s Kingdom has Reached its Population/Economic Score/Total Score Goal of <Number> !
 #: src/OGAMEND.cpp:338
 #, c-format
 msgid "%s's Kingdom has Reached its Total Score Goal of %s !"
-msgstr "La Rego de %s Akiris ĝia Totala Poenta Celo de %s!"
+msgstr "La Rego de %s Akiris ĝian Totalan Poentan Celon de %s!"
 
 #: src/OGAMEND.cpp:350
 msgid "Your Kingdom has Defeated All Other Kingdoms !"
@@ -1973,100 +1973,100 @@ msgstr "Nesto de Holgh estis detruita."
 #. TRANSLATORS: You have acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:808
 msgid "You have acquired the Norman Scroll of Power."
-msgstr "Vi akiris la Normanda Pergamenon de Povo."
+msgstr "Vi akiris la Normandan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:809
 msgid "You have acquired the Mayan Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Majaan Pergamenon de Povo"
 
 #: src/ONEWSENG.cpp:810
 msgid "You have acquired the Greek Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Grekan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:811
 msgid "You have acquired the Viking Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Vikingan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:812
 msgid "You have acquired the Persian Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Persan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:813
 msgid "You have acquired the Chinese Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Ĉinan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:814
 msgid "You have acquired the Japanese Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Japanan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:815
 msgid "You have acquired the Egyptian Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Egiptan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:816
 msgid "You have acquired the Mughul Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Mogolan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:817
 msgid "You have acquired the Zulu Scroll of Power."
-msgstr ""
+msgstr "Vi akiris la Zuluan Pergamenon de Povo."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has acquired the <Race> Scroll of Power.
 #: src/ONEWSENG.cpp:822
 #, c-format
 msgid "%s's Kingdom%s has acquired the Norman Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Normandan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:823
 #, c-format
 msgid "%s's Kingdom%s has acquired the Mayan Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Majaan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:824
 #, c-format
 msgid "%s's Kingdom%s has acquired the Greek Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Grekan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:825
 #, c-format
 msgid "%s's Kingdom%s has acquired the Viking Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Vikingan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:826
 #, c-format
 msgid "%s's Kingdom%s has acquired the Persian Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Persan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:827
 #, c-format
 msgid "%s's Kingdom%s has acquired the Chinese Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Ĉinan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:828
 #, c-format
 msgid "%s's Kingdom%s has acquired the Japanese Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Japanan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:829
 #, c-format
 msgid "%s's Kingdom%s has acquired the Egyptian Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Egiptan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:830
 #, c-format
 msgid "%s's Kingdom%s has acquired the Mughul Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Mogolan Pergamenon de Povo."
 
 #: src/ONEWSENG.cpp:831
 #, c-format
 msgid "%s's Kingdom%s has acquired the Zulu Scroll of Power."
-msgstr ""
+msgstr "%s-a Rego%s akiris la Zuluan Pergamenon de Povo."
 
 #. TRANSLATORS: You have recovered <Amount> worth of treasure from the Fryhtans.
 #: src/ONEWSENG.cpp:875
 #, c-format
 msgid "You have recovered %s worth of treasure from the Fryhtans."
-msgstr ""
+msgstr "Vi reakiris la trezoran valoron de %s el la Frihtanoj."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town> in <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:883
@@ -2075,6 +2075,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Seat of Power "
 "near %s in %s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Seĝo de Povo apud "
+"%s en la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:884
 #, c-format
@@ -2082,6 +2084,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Factory near %s "
 "in %s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Fabriko apud %s en "
+"la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:885
 #, c-format
@@ -2089,6 +2093,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Inn near %s in "
 "%s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Gastejo apud %s en "
+"la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:886
 #, c-format
@@ -2096,6 +2102,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Market near %s in "
 "%s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Bazaro apud %s en "
+"la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:887
 #, c-format
@@ -2103,6 +2111,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Fort near %s in "
 "%s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Fortikaĵo apud %s "
+"en la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:888
 #, c-format
@@ -2110,6 +2120,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Mine near %s in "
 "%s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Minejo apud %s en "
+"la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:889
 #, c-format
@@ -2117,6 +2129,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Tower of Science "
 "near %s in %s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Turo de Scienco "
+"apud %s en la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:890
 #, c-format
@@ -2124,6 +2138,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a War Factory near "
 "%s in %s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Milita Fabriko "
+"apud %s en la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:891
 #, c-format
@@ -2131,6 +2147,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Harbor near %s in "
 "%s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Haveno apud %s en "
+"la Regno de %s%s."
 
 #: src/ONEWSENG.cpp:892
 #, c-format
@@ -2138,6 +2156,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Fryhtan Lair near "
 "%s in %s's Kingdom%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Frihtana Nesto "
+"apud %s en la Regno de %s%s."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to a <Firm> near <Town>.
 #: src/ONEWSENG.cpp:897
@@ -2146,35 +2166,42 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Seat of Power "
 "near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Seĝo de Povo apud "
+"%s."
 
 #: src/ONEWSENG.cpp:898
 #, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Factory near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Fabriko apud %s."
 
 #: src/ONEWSENG.cpp:899
 #, c-format
 msgid "Your spy has been exposed and executed on his mission to a Inn near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Gastejo apud %s."
 
 #: src/ONEWSENG.cpp:900
 #, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Market near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Bazaro apud %s."
 
 #: src/ONEWSENG.cpp:901
 #, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Fort near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Fortikaĵo apud %s."
 
 #: src/ONEWSENG.cpp:902
 #, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Mine near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Minejo apud %s."
 
 #: src/ONEWSENG.cpp:903
 #, c-format
@@ -2182,6 +2209,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Tower of Science "
 "near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Turo de Scienco "
+"apud %s."
 
 #: src/ONEWSENG.cpp:904
 #, c-format
@@ -2189,12 +2218,15 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a War Factory near "
 "%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Milita Fabriko "
+"apud %s."
 
 #: src/ONEWSENG.cpp:905
 #, c-format
 msgid ""
 "Your spy has been exposed and executed on his mission to a Harbor near %s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Haveno apud %s."
 
 #: src/ONEWSENG.cpp:906
 #, c-format
@@ -2202,6 +2234,8 @@ msgid ""
 "Your spy has been exposed and executed on his mission to a Fryhtan Lair near "
 "%s."
 msgstr ""
+"Via spiono estis malkovrita kaj mortigita en lia misio al Frihtana Nesto "
+"apud %s."
 
 #. TRANSLATORS: Your spy has been exposed and executed on his mission to <Town> in <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:951
@@ -2215,7 +2249,7 @@ msgstr ""
 #: src/ONEWSENG.cpp:956
 #, c-format
 msgid "Your spy has been exposed and executed on his mission to %s."
-msgstr ""
+msgstr "Via spiono estis malkovrita kaj mortigita en lia misio al %s."
 
 #. TRANSLATORS: Your spy <Name> has been exposed and executed on his mission to <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:964
@@ -3106,7 +3140,7 @@ msgstr ""
 
 #: src/OR_MIL.cpp:378
 msgid "In Fort"
-msgstr ""
+msgstr "En Fortikaĵo"
 
 #: src/OR_MIL.cpp:381
 msgid "In Seat"
@@ -3451,7 +3485,7 @@ msgstr "Minejo"
 
 #: src/OR_TRADE.cpp:80
 msgid "Any"
-msgstr ""
+msgstr "Neniu"
 
 #: src/OR_TRADE.cpp:87 src/OR_TRADE.cpp:143
 msgid "Ship"
@@ -3516,15 +3550,15 @@ msgstr ""
 
 #: src/OR_TRADE.cpp:952
 msgid "Markets"
-msgstr ""
+msgstr "Bazaroj"
 
 #: src/OR_TRADE.cpp:959
 msgid "Factories"
-msgstr ""
+msgstr "Fabrikoj"
 
 #: src/OR_TRADE.cpp:966
 msgid "Mines"
-msgstr ""
+msgstr "Minejoj"
 
 #: src/OSITEDRW.cpp:48
 msgid "Natural Resource"
@@ -3588,7 +3622,7 @@ msgstr ""
 
 #: src/OSPY.cpp:602
 msgid "Sleep"
-msgstr ""
+msgstr "Dormi"
 
 #: src/OSPY.cpp:606
 msgid "Sow Dissent"
@@ -4947,7 +4981,7 @@ msgstr ""
 
 #: src/OTALKRES.cpp:227
 msgid "Surrender."
-msgstr ""
+msgstr "Rezigni."
 
 #: src/OTALKRES.cpp:258
 msgid "Request an embargo on trade with which kingdom?"
@@ -4984,7 +5018,7 @@ msgstr ""
 
 #: src/OTALKRES.cpp:494
 msgid "Confirm."
-msgstr ""
+msgstr "Konfirmi."
 
 #: src/OTALKRES.cpp:898
 msgid ""
@@ -5010,7 +5044,7 @@ msgstr ""
 
 #: src/OTOWNIF.cpp:322
 msgid "Avg"
-msgstr ""
+msgstr "Avĝ"
 
 #: src/OTOWNIF.cpp:356
 msgid "Controlled by Rebels"
@@ -5040,7 +5074,7 @@ msgstr ""
 
 #: src/OTOWNIF.cpp:1262
 msgid "Disabled"
-msgstr ""
+msgstr "Malebligita"
 
 #: src/OTUTOR.cpp:501
 msgid "Next Training"
@@ -5062,7 +5096,7 @@ msgstr ""
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OUNIT.cpp:768 src/OUNITIF.cpp:1234
 msgid "General"
-msgstr ""
+msgstr "Ĝeneralo"
 
 #. TRANSLATORS: Please select a location to build the <Firm>.
 #: src/OUNITIF.cpp:1009
@@ -5129,19 +5163,19 @@ msgstr ""
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OUNITIF.cpp:1264
 msgid "Miner"
-msgstr ""
+msgstr "Ministo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OUNITIF.cpp:1268
 msgid "Worker"
-msgstr ""
+msgstr "Laboristo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OUNITIF.cpp:1272
 msgid "Scientist"
-msgstr ""
+msgstr "Sciencisto"
 
 #: src/OUNITIF.cpp:1276
 msgid "Spy"
@@ -5149,15 +5183,15 @@ msgstr "Spiono"
 
 #: src/OUNITIF.cpp:1280
 msgid "Peasant"
-msgstr ""
+msgstr "Kamparano"
 
 #: src/OUNITIF.cpp:1290
 msgid "Civilian"
-msgstr ""
+msgstr "Civilulo"
 
 #: src/OUNITIF.cpp:1373
 msgid "Enemies Nearby"
-msgstr ""
+msgstr "Malamikoj Apude"
 
 #: src/OUNITIF.cpp:1384
 msgid "Spy Cloak:"
@@ -5472,15 +5506,15 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Zulu"
-msgstr ""
+msgstr "Zulua"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Fort"
-msgstr ""
+msgstr "Fortikaĵo"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Fryhtan Lair"
-msgstr ""
+msgstr "Fritahna Nesto"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Harbor"
@@ -5488,7 +5522,7 @@ msgstr ""
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Inn"
-msgstr ""
+msgstr "Gastejo"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Prayer"
