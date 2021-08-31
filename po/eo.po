@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-08-31 00:59+0200\n"
+"PO-Revision-Date: 2021-09-01 00:22+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -259,7 +259,7 @@ msgstr "Kaj Mortigita."
 
 #. TRANSLATORS: Offer <Amount>
 #: src/OFIRMIF3.cpp:247
-#, fuzzy, c-format
+#, c-format
 msgid "Offer %s"
 msgstr "Oferti %s"
 
@@ -2845,56 +2845,61 @@ msgstr[1] "kaj %d monatoj por atingi vian celon."
 msgid ""
 "A Catapult %s of yours has broken down due to the lack of maintenance funds."
 msgstr ""
+"Unu el viaj Katapultoj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1567
 #, c-format
 msgid ""
 "A Ballista %s of yours has broken down due to the lack of maintenance funds."
-msgstr ""
+msgstr "Unu el viaj Balistoj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1568
 #, c-format
 msgid ""
 "A Spitfire %s of yours has broken down due to the lack of maintenance funds."
 msgstr ""
+"Unu el viaj Fajrkraĉiloj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1569
 #, c-format
 msgid ""
 "A Cannon %s of yours has broken down due to the lack of maintenance funds."
-msgstr ""
+msgstr "Unu el viaj Pafilegoj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1570
 #, c-format
 msgid ""
 "A Porcupine %s of yours has broken down due to the lack of maintenance funds."
-msgstr ""
+msgstr "Unu el viaj Histrikoj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #. TRANSLATORS: A <Ship> of yours has broken down due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1572
 msgid "A Trader of yours has broken down due to the lack of maintenance funds."
 msgstr ""
+"Unu el viaj Komerciloj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1573
 msgid ""
 "A Transport of yours has broken down due to the lack of maintenance funds."
 msgstr ""
+"Unu el viaj Transportiloj rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1574
 msgid ""
 "A Caravel of yours has broken down due to the lack of maintenance funds."
-msgstr ""
+msgstr "Unu el viaj Karaveloj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1575
 msgid ""
 "A Galleon of yours has broken down due to the lack of maintenance funds."
-msgstr ""
+msgstr "Unu el viaj Galionoj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1577
 #, c-format
 msgid ""
 "A Unicorn %s of yours has broken down due to the lack of maintenance funds."
 msgstr ""
+"Unu el viaj Unukornuloj %s rompiĝis pro la manko de subtenaj monrimedoj."
 
 #. TRANSLATORS: Your <Firm> near <Town> has fallen into disrepair due to the lack of maintenance funds.
 #: src/ONEWSENG.cpp:1615
@@ -2903,41 +2908,42 @@ msgid ""
 "Your Seat of Power near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
 msgstr ""
+"Via Seĝo de Povo apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1616
 #, c-format
 msgid ""
 "Your Factory near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
-msgstr ""
+msgstr "Via Fabriko apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1617
 #, c-format
 msgid ""
 "Your Inn near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
-msgstr ""
+msgstr "Via Gastejo apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1618
 #, c-format
 msgid ""
 "Your Market near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
-msgstr ""
+msgstr "Via Bazaro apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1619
 #, c-format
 msgid ""
 "Your Fort near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
-msgstr ""
+msgstr "Via Fortikaĵo apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1620
 #, c-format
 msgid ""
 "Your Mine near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
-msgstr ""
+msgstr "Via Minejo apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1621
 #, c-format
@@ -2945,6 +2951,7 @@ msgid ""
 "Your Tower of Science near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
 msgstr ""
+"Via Turo de Scienco apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1622
 #, c-format
@@ -2952,217 +2959,218 @@ msgid ""
 "Your War Factory near %s has fallen into disrepair due to the lack of "
 "maintenance funds."
 msgstr ""
+"Via Milita Fabriko apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #: src/ONEWSENG.cpp:1623
 #, c-format
 msgid ""
 "Your Harbor near %s has fallen into disrepair due to the lack of maintenance "
 "funds."
-msgstr ""
+msgstr "Via Haveno apud %s difektiĝis pro la manko de subtenaj monrimedoj."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has retired and quit the game.
 #: src/ONEWSENG.cpp:1674
 #, c-format
 msgid "%s's Kingdom%s has retired and quit the game."
-msgstr ""
+msgstr "La Regno de %s%s rezignis kaj eliris el la ludo."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> has quit the game.
 #: src/ONEWSENG.cpp:1692
 #, c-format
 msgid "%s's Kingdom%s has quit the game."
-msgstr ""
+msgstr "La Regno de %s%s eliris el la ludo."
 
 #. TRANSLATORS: The current game has been saved to <File>.
 #: src/ONEWSENG.cpp:1710
 #, c-format
 msgid "The current game has been saved to %s."
-msgstr ""
+msgstr "La nuna ludo estis konservita kiel %s."
 
 #. TRANSLATORS: The connection with <King>'s Kingdom<Color> has been lost.
 #: src/ONEWSENG.cpp:1728
 #, c-format
 msgid "The connection with %s's Kingdom%s has been lost."
-msgstr ""
+msgstr "La konekto kun la Regno de %s%s perdiĝis."
 
 #: src/ORAWRES.cpp:285
 msgid "Clay Products"
-msgstr ""
+msgstr "Argilaj Produktoj"
 
 #: src/ORAWRES.cpp:286
 msgid "Copper Products"
-msgstr ""
+msgstr "Kupraj Produktoj"
 
 #: src/ORAWRES.cpp:287
 msgid "Iron Products"
-msgstr ""
+msgstr "Feraj Produktoj"
 
 #: src/OREMOTEM.cpp:464 src/OSYS2.cpp:1023
 msgid "Multiplayer Random Seed Sync Error"
-msgstr ""
+msgstr "Plurludanta Eraro de Fonta Sinkronigo"
 
 #: src/OREMOTEM.cpp:2874 src/OSYS2.cpp:1025
 msgid "Multiplayer Object Sync Error"
-msgstr ""
+msgstr "Plurludanta Eraro de Objekta Sinkronigo"
 
 #: src/OR_ECO.cpp:74
 msgid "Income Item"
-msgstr ""
+msgstr "Enspeza Ano"
 
 #: src/OR_ECO.cpp:107
 msgid "Expense Item"
-msgstr ""
+msgstr "Elspeza Ano"
 
 #: src/OR_ECO.cpp:108 src/OR_TOWN.cpp:119
 msgid "Yearly Expense"
-msgstr ""
+msgstr "Jaraj Elspezoj"
 
 #: src/OR_ECO.cpp:168
 msgid "Total Yearly Income"
-msgstr ""
+msgstr "Tutaj Jaraj Enspezoj"
 
 #: src/OR_ECO.cpp:178
 msgid "Total Yearly Expenses"
-msgstr ""
+msgstr "Tutaj Jaraj Elspezoj"
 
 #: src/OR_ECO.cpp:187
 msgid "Yearly Balance"
-msgstr ""
+msgstr "Jara Bilanco"
 
 #: src/OR_ECO.cpp:201
 msgid "Sale of Goods"
-msgstr ""
+msgstr "Vendo de Varoj"
 
 #: src/OR_ECO.cpp:202
 msgid "Exports"
-msgstr ""
+msgstr "Eksportaĵoj"
 
 #: src/OR_ECO.cpp:203
 msgid "Taxes"
-msgstr ""
+msgstr "Impostoj"
 
 #: src/OR_ECO.cpp:204
 msgid "Recovered Treasure"
-msgstr ""
+msgstr "Reakiritaj Trezoroj"
 
 #: src/OR_ECO.cpp:205
 msgid "Worker Income"
-msgstr ""
+msgstr "Laboranta Enspezo"
 
 #: src/OR_ECO.cpp:206
 msgid "Sale of Buildings"
-msgstr ""
+msgstr "Vendo de Konstruaĵoj"
 
 #: src/OR_ECO.cpp:207
 msgid "Aid/Tribute from Other Kingdoms"
-msgstr ""
+msgstr "Helpo/Tributo el Aliaj Regnoj"
 
 #: src/OR_ECO.cpp:208
 msgid "Cheating"
-msgstr ""
+msgstr "Trompo"
 
 #: src/OR_ECO.cpp:232
 msgid "General Costs"
-msgstr ""
+msgstr "Ĝeneralaj Kostoj"
 
 #: src/OR_ECO.cpp:233
 msgid "Spy Costs"
-msgstr ""
+msgstr "Spionaj Kostoj"
 
 #: src/OR_ECO.cpp:234
 msgid "Other Mobile Human Unit Costs"
-msgstr ""
+msgstr "Aliaj Moveblaj Kostoj de Homaj Unuoj"
 
 #: src/OR_ECO.cpp:235
 msgid "Caravan Costs"
-msgstr ""
+msgstr "Karavanaj Kostoj"
 
 #: src/OR_ECO.cpp:236
 msgid "Weapons Costs"
-msgstr ""
+msgstr "Armaj Kostoj"
 
 #: src/OR_ECO.cpp:237
 msgid "Ship Costs"
-msgstr ""
+msgstr "Ŝipaj Kostoj"
 
 #: src/OR_ECO.cpp:238
 msgid "Buildings Costs"
-msgstr ""
+msgstr "Konstruaĵaj Kostoj"
 
 #: src/OR_ECO.cpp:239
 msgid "Training Units"
-msgstr ""
+msgstr "Trejnado de Unuoj"
 
 #: src/OR_ECO.cpp:240
 msgid "Hiring Units"
-msgstr ""
+msgstr "Dungado de Unuoj"
 
 #: src/OR_ECO.cpp:241
 msgid "Honoring Units"
-msgstr ""
+msgstr "Honorado de Unuoj"
 
 #: src/OR_ECO.cpp:242
 msgid "Foreign Worker Salaries"
-msgstr ""
+msgstr "Salajro de Fremdaj Laborantoj"
 
 #: src/OR_ECO.cpp:243
 msgid "Grants to Your Villagers"
-msgstr ""
+msgstr "Donacoj al Viaj Vilaĝanoj"
 
 #: src/OR_ECO.cpp:244
 msgid "Grants to Other Villagers"
-msgstr ""
+msgstr "Donacoj al Aliaj Vilaĝanoj"
 
 #: src/OR_ECO.cpp:245
 msgid "Imports"
-msgstr ""
+msgstr "Importaĵoj"
 
 #: src/OR_ECO.cpp:246
 msgid "Aid/Tribute to Other Kingdoms"
-msgstr ""
+msgstr "Helpo/Tributo al Aliaj Regnoj"
 
 #: src/OR_ECO.cpp:247
 msgid "Bribes"
-msgstr ""
+msgstr "Subaĉetaĵoj"
 
 #: src/OR_MIL.cpp:99
 msgid "Commander"
-msgstr ""
+msgstr "Komandanto"
 
 #: src/OR_MIL.cpp:103
 msgid "Commanded Soldiers"
-msgstr ""
+msgstr "Komanditaj Soldatoj"
 
 #: src/OR_MIL.cpp:104 src/OR_NAT.cpp:139
 msgid "Status"
-msgstr ""
+msgstr "Stato"
 
 #: src/OR_MIL.cpp:129
 msgid "Unit Type"
-msgstr ""
+msgstr "Speco de Unuo"
 
 #: src/OR_MIL.cpp:130
 msgid "No. of Units"
-msgstr ""
+msgstr "Nombro de Unuoj"
 
 #: src/OR_MIL.cpp:226
 #, c-format
 msgid "Total Commanders: %s"
-msgstr ""
+msgstr "Totalaj Komandantoj: %s"
 
 #: src/OR_MIL.cpp:232
 #, c-format
 msgid "Total Soldiers Under Command: %s"
-msgstr ""
+msgstr "Totalaj Soldatoj Sub Komandado: %s"
 
 #: src/OR_MIL.cpp:238
 #, c-format
 msgid "Total Soldiers: %s"
-msgstr ""
+msgstr "Totalaj Soldatoj: %s"
 
 #: src/OR_MIL.cpp:285
 #, c-format
 msgid "Total Units: %s"
-msgstr ""
+msgstr "Totalaj Unuoj: %s"
 
 #: src/OR_MIL.cpp:378
 msgid "In Fort"
@@ -3170,47 +3178,47 @@ msgstr "En Fortikaĵo"
 
 #: src/OR_MIL.cpp:381
 msgid "In Seat"
-msgstr ""
+msgstr "En Seĝo"
 
 #: src/OR_MIL.cpp:388 src/OR_SPY.cpp:266
 msgid "On Ship"
-msgstr ""
+msgstr "En Ŝipo"
 
 #: src/OR_MIL.cpp:392 src/OR_SPY.cpp:270
 msgid "Mobile"
-msgstr ""
+msgstr "Movebla"
 
 #: src/OR_MIL.cpp:470
 msgid "Human General"
-msgstr ""
+msgstr "Homa Ĝeneralo"
 
 #: src/OR_NAT.cpp:69
 msgid "Information"
-msgstr ""
+msgstr "Informo"
 
 #: src/OR_NAT.cpp:70
 msgid "Diplomacy"
-msgstr ""
+msgstr "Diplomatio"
 
 #: src/OR_NAT.cpp:71
 msgid "Chat"
-msgstr ""
+msgstr "Konversacio"
 
 #: src/OR_NAT.cpp:72
 msgid "Diplomatic Log"
-msgstr ""
+msgstr "Diplomata Protokolo"
 
 #: src/OR_NAT.cpp:73
 msgid "Debug"
-msgstr ""
+msgstr "Sencimigi"
 
 #: src/OR_NAT.cpp:80
 msgid "Send to the selected kingdom"
-msgstr ""
+msgstr "Sendi al la elektita regno"
 
 #: src/OR_NAT.cpp:81
 msgid "Send to all allied human controlled kingdoms"
-msgstr ""
+msgstr "Sendi al ĉiuj aliancaj regnoj kontrolitaj de homoj"
 
 #: src/OR_NAT.cpp:82
 msgid "Send to all human controlled kingdoms"
@@ -3232,11 +3240,11 @@ msgstr ""
 
 #: src/OR_NAT.cpp:508
 msgid "Your Food"
-msgstr ""
+msgstr "Via Manĝaĵo"
 
 #: src/OR_NAT.cpp:513
 msgid "Your Treasure"
-msgstr ""
+msgstr "Via Trezuro"
 
 #: src/OR_NAT.cpp:515
 msgid "Your Continuous Peace Time"
@@ -3610,7 +3618,7 @@ msgstr ""
 # data/RESOURCE/HELP.RES:38
 #: src/OSITEDRW.cpp:76
 msgid "Treasure"
-msgstr ""
+msgstr "Trezuro"
 
 #: src/OSITEDRW.cpp:81
 msgid "Worth"
