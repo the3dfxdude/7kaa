@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-09-01 00:22+0200\n"
+"PO-Revision-Date: 2021-09-02 01:12+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3222,7 +3222,7 @@ msgstr "Sendi al ĉiuj aliancaj regnoj kontrolitaj de homoj"
 
 #: src/OR_NAT.cpp:82
 msgid "Send to all human controlled kingdoms"
-msgstr ""
+msgstr "Sendi al ĉiujn regnojn kontrolitajn de homoj"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:365
@@ -3232,11 +3232,11 @@ msgstr "Permesi Ataki"
 
 #: src/OR_NAT.cpp:172 src/OR_NAT.cpp:604
 msgid "Trade Treaty"
-msgstr ""
+msgstr "Komerca Traktato"
 
 #: src/OR_NAT.cpp:174
 msgid "Trade Amount"
-msgstr ""
+msgstr "Komerca Kvanto"
 
 #: src/OR_NAT.cpp:508
 msgid "Your Food"
@@ -3248,25 +3248,25 @@ msgstr "Via Trezuro"
 
 #: src/OR_NAT.cpp:515
 msgid "Your Continuous Peace Time"
-msgstr ""
+msgstr "Via Daŭra Pactempo"
 
 #. TRANSLATORS: Your Yearly Import from <King>'s Kingdom
 #: src/OR_NAT.cpp:520
 #, c-format
 msgid "Your Yearly Import from %s's Kingdom"
-msgstr ""
+msgstr "Via Jara Importo de la Regno de %s"
 
 #. TRANSLATORS: Your Yearly Export to <King>'s Kingdom
 #: src/OR_NAT.cpp:526
 #, c-format
 msgid "Your Yearly Export to %s's Kingdom"
-msgstr ""
+msgstr "Via Jara Eksporto al la Regno de %s"
 
 #. TRANSLATORS: Continuous Peace Time of <King>'s Kingdom
 #: src/OR_NAT.cpp:532
 #, c-format
 msgid "Continuous Peace Time of %s's Kingdom"
-msgstr ""
+msgstr "Daŭra Pactempo de la Regno de %s"
 
 #. TRANSLATORS: Allow Your Units to Attack <Kings>'s Kingdom
 #: src/OR_NAT.cpp:544
@@ -3278,63 +3278,63 @@ msgstr "Permesas al Viaj Unuoj Ataki al Rego de %s"
 #: src/OR_NAT.cpp:559
 #, c-format
 msgid "%s's Kingdom's Treasure"
-msgstr ""
+msgstr "Trezuro de la Regno de %s"
 
 #. TRANSLATORS: <King>'s Kingdom's Food
 #: src/OR_NAT.cpp:565
 #, c-format
 msgid "%s's Kingdom's Food"
-msgstr ""
+msgstr "Manĝaĵo de la Regno de %s"
 
 #. TRANSLATORS: <King>'s Kingdom's Diplomatic Status with Other Kingdoms:
 #: src/OR_NAT.cpp:581
 #, c-format
 msgid "%s's Kingdom's Diplomatic Status with Other Kingdoms:"
-msgstr ""
+msgstr "Diplomata Stato de la Regno de %s kun Aliaj Regnoj:"
 
 #. TRANSLATORS: To<Nation color> on <Date> :
 #: src/OR_NAT.cpp:874
 #, c-format
 msgid "To%s on %s :"
-msgstr ""
+msgstr "Al%s je %s :"
 
 #. TRANSLATORS: From<Nation color> on <Date> :
 #: src/OR_NAT.cpp:877
 #, c-format
 msgid "From%s on %s :"
-msgstr ""
+msgstr "El%s je %s :"
 
 #: src/OR_NAT.cpp:907
 msgid "Please enter your chat message and press <Enter> to send."
-msgstr ""
+msgstr "Bonvolu enigi vian retbabilan mesaĝon kaj prenu <Enigu> por sendi. "
 
 #. TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
 #: src/OR_RANK.cpp:243
 #, c-format
 msgid "GOAL: Achieve One of the Following Before %s:"
-msgstr ""
+msgstr "CELO: Atingi Unu el la Jenaj antaŭ %s:"
 
 #: src/OR_RANK.cpp:247
 msgid "GOAL: Achieve One of the Following:"
-msgstr ""
+msgstr "CELO: Atingi Unu el la Jenaj:"
 
 #. TRANSLATORS: GOAL: Defeat All Other Kingdoms Before <Date>.
 #: src/OR_RANK.cpp:255
 #, c-format
 msgid "GOAL: Defeat All Other Kingdoms Before %s."
-msgstr ""
+msgstr "CELO: Venki Ĉiujn Aliajn Regnojn Antaŭ %s."
 
 #: src/OR_RANK.cpp:259
 msgid "GOAL: Defeat All Other Kingdoms."
-msgstr ""
+msgstr "CELO: Venki Ĉiujn Aliajn Regnojn."
 
 #: src/OR_RANK.cpp:274
 msgid "Defeat All Other Kingdoms."
-msgstr ""
+msgstr "Detruu Ĉiujn Aliajn Frihtanojn"
 
 #: src/OR_RANK.cpp:283
 msgid "Destroy All Fryhtans."
-msgstr ""
+msgstr "Detruu Ĉiujn Frihtanojn"
 
 #. TRANSLATORS: Achieve a Population of <Number>.
 #: src/OR_RANK.cpp:295
@@ -3346,19 +3346,19 @@ msgstr "Atingi loĝantaron de %s."
 #: src/OR_RANK.cpp:307
 #, c-format
 msgid "Achieve an Economic Score of %s."
-msgstr ""
+msgstr "Atingi Ekonomian Poentaron de %s."
 
 #. TRANSLATORS: Achieve a Total Score of <Number>.
 #: src/OR_RANK.cpp:319
 #, c-format
 msgid "Achieve a Total Score of %s."
-msgstr ""
+msgstr "Atingi Totalan Poentaron de %s."
 
 #. TRANSLATORS: Total Playing Time: <Time duration>
 #: src/OR_RANK.cpp:338
 #, c-format
 msgid "Total Playing Time: %s"
-msgstr ""
+msgstr "Totala Tempo Ludante: %s"
 
 #. TRANSLATORS: Ordinal number for ranking players
 #: src/OR_RANK.cpp:472
@@ -3391,15 +3391,15 @@ msgstr "7a"
 
 #: src/OR_SPY.cpp:73
 msgid "Spy Name"
-msgstr ""
+msgstr "Spiona Nomo"
 
 #: src/OR_SPY.cpp:74
 msgid "Cloak"
-msgstr ""
+msgstr "Mantelo"
 
 #: src/OR_SPY.cpp:75 src/OR_TRADE.cpp:201
 msgid "Location"
-msgstr ""
+msgstr "Loko"
 
 #: src/OR_SPY.cpp:76
 msgid "Skill"
@@ -3416,7 +3416,7 @@ msgstr ""
 
 #: src/OR_TECH.cpp:114
 msgid "Present Version"
-msgstr ""
+msgstr "Nuna Versio"
 
 #: src/OR_TECH.cpp:115
 msgid "Researching Version"
@@ -3444,15 +3444,15 @@ msgstr[1] ""
 
 #: src/OR_TOWN.cpp:84
 msgid "Village"
-msgstr ""
+msgstr "Vilaĝo"
 
 #: src/OR_TOWN.cpp:85
 msgid "Villagers"
-msgstr ""
+msgstr "Vilaĝanoj"
 
 #: src/OR_TOWN.cpp:86 src/OTOWNIF.cpp:295
 msgid "Peasants"
-msgstr ""
+msgstr "Kamparanoj"
 
 #: src/OR_TOWN.cpp:88
 msgid "Races"
@@ -3523,19 +3523,19 @@ msgstr "Neniu"
 
 #: src/OR_TRADE.cpp:87 src/OR_TRADE.cpp:143
 msgid "Ship"
-msgstr ""
+msgstr "Ŝipo"
 
 #: src/OR_TRADE.cpp:149
 msgid "Stop 1"
-msgstr ""
+msgstr "Haltejo 1"
 
 #: src/OR_TRADE.cpp:150
 msgid "Stop 2"
-msgstr ""
+msgstr "Haltejo 2"
 
 #: src/OR_TRADE.cpp:151
 msgid "Stop 3"
-msgstr ""
+msgstr "Haltejo 3"
 
 #: src/OR_TRADE.cpp:152
 msgid "Goods Carried"
@@ -3557,7 +3557,7 @@ msgstr ""
 #: src/OR_TRADE.cpp:424
 #, c-format
 msgid "Total Ships: %s"
-msgstr ""
+msgstr "Totalaj Ŝipoj: %s"
 
 #: src/OR_TRADE.cpp:430
 #, c-format
@@ -3567,7 +3567,7 @@ msgstr "*Senfara Karavanoj: %s"
 #: src/OR_TRADE.cpp:441
 #, c-format
 msgid "Total Locations: %s"
-msgstr ""
+msgstr "Totalaj Lokoj: %s"
 
 #: src/OR_TRADE.cpp:445
 #, c-format
@@ -3580,7 +3580,7 @@ msgstr ""
 
 #: src/OR_TRADE.cpp:931 src/OSITEDRW.cpp:54
 msgid "Reserve"
-msgstr ""
+msgstr "Rezervo"
 
 #: src/OR_TRADE.cpp:952
 msgid "Markets"
@@ -7499,7 +7499,7 @@ msgstr ""
 
 # data/SCENARIO/7FOR7.SCT:1
 msgid "Seven Forts for Seven Generals"
-msgstr ""
+msgstr "Sep Fortikaĵoj kaj Sep Ĝeneraloj"
 
 # data/SCENARIO/7FOR7.SCT:5
 msgid ""
@@ -7514,7 +7514,7 @@ msgstr ""
 
 # data/SCENARIO/C&D.SCT:1
 msgid "Cloak & Dagger"
-msgstr ""
+msgstr "Mantelo kaj Dago"
 
 # data/SCENARIO/C&D.SCT:5
 msgid ""
@@ -7740,7 +7740,7 @@ msgstr ""
 
 # data/SCENARIO/PIRATES.SCT:1
 msgid "Pirates"
-msgstr ""
+msgstr "Piratoj"
 
 # data/SCENARIO/PIRATES.SCT:5
 msgid ""
@@ -7755,7 +7755,7 @@ msgstr ""
 
 # data/SCENARIO/PRNCTKAO.SCT:1
 msgid "Prince Takao"
-msgstr ""
+msgstr "Princo Takao"
 
 # data/SCENARIO/PRNCTKAO.SCT:5
 msgid ""
@@ -7766,6 +7766,12 @@ msgid ""
 "situation has stabilized, you must act as an honorable son and take revenge "
 "on your father's enemies.  Destroy them utterly. "
 msgstr ""
+"Via patro, la Reĝo, estis mortigita kaj ĉiuj el liaj fortikaĵoj detruitaj.  "
+"Kelkaj vilaĝoj ankoraŭ konservas ilian fidelecon al via familio, sed ilia "
+"nivelo de fideleco malkreskas rapide. Via tasko estas preni la kronon de via "
+"patro kaj reestabli vian estrecon super tiuj restantaj vilaĝoj.  Kiam la "
+"situacio stabiliĝas, vi devas agi kiel honora filo kaj venĝi vin kontraŭ la "
+"malamikoj de via patro.  Detruu ilin tute. "
 
 # data/SCENARIO/QUESUCCN.SCT:1
 msgid "A Question of Succession"
@@ -8545,7 +8551,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:229
 msgid "Nothing"
-msgstr ""
+msgstr "Nenio"
 
 # data/RESOURCE/HELP.RES:230
 msgid ""
