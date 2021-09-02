@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-09-02 01:12+0200\n"
+"PO-Revision-Date: 2021-09-02 19:02+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3403,16 +3403,16 @@ msgstr "Loko"
 
 #: src/OR_SPY.cpp:76
 msgid "Skill"
-msgstr ""
+msgstr "Lerteco"
 
 #: src/OR_SPY.cpp:135
 #, c-format
 msgid "Total Spies: %s"
-msgstr ""
+msgstr "Totalaj Spionoj: %s"
 
 #: src/OR_TECH.cpp:87 src/OSPYA.cpp:45
 msgid "Technology"
-msgstr ""
+msgstr "Teknologio"
 
 #: src/OR_TECH.cpp:114
 msgid "Present Version"
@@ -3420,27 +3420,27 @@ msgstr "Nuna Versio"
 
 #: src/OR_TECH.cpp:115
 msgid "Researching Version"
-msgstr ""
+msgstr "Esplorada Versio"
 
 #: src/OR_TECH.cpp:116
 msgid "Research Progress"
-msgstr ""
+msgstr "Esplora progreso"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OR_TECH.cpp:117
 msgid "Tower of Science"
-msgstr ""
+msgstr "Turo de Scienco"
 
 #: src/OR_TECH.cpp:144 src/OUNITIF.cpp:1247
 msgid "Greater Being"
-msgstr ""
+msgstr "Pli Granda Estaĵo"
 
 #: src/OR_TECH.cpp:366
 msgid "Acquired Scroll:"
 msgid_plural "Acquired Scrolls:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Akirita Rulo:"
+msgstr[1] "Akiritaj Ruloj:"
 
 #: src/OR_TOWN.cpp:84
 msgid "Village"
@@ -3456,39 +3456,39 @@ msgstr "Kamparanoj"
 
 #: src/OR_TOWN.cpp:88
 msgid "Races"
-msgstr ""
+msgstr "Rasoj"
 
 #: src/OR_TOWN.cpp:112
 msgid "Structure"
-msgstr ""
+msgstr "Konstruaĵo"
 
 #: src/OR_TOWN.cpp:113
 msgid "Unit Cost"
-msgstr ""
+msgstr "Unua Kosto"
 
 #: src/OR_TOWN.cpp:117
 msgid "No. of Structures"
-msgstr ""
+msgstr "No. de Konstruaĵoj"
 
 #: src/OR_TOWN.cpp:202
 #, c-format
 msgid "Total Villages: %s"
-msgstr ""
+msgstr "Totalaj Vilaĝoj: %s"
 
 #: src/OR_TOWN.cpp:208
 #, c-format
 msgid "Total Villagers: %s"
-msgstr ""
+msgstr "Totalaj Vilaĝanoj: %s"
 
 #: src/OR_TOWN.cpp:214
 #, c-format
 msgid "Total Peasants: %s"
-msgstr ""
+msgstr "Totalaj Kamparanoj: %s"
 
 #: src/OR_TOWN.cpp:227
 #, c-format
 msgid "Total Other Human Units: %s"
-msgstr ""
+msgstr "Totalaj Aliaj Homaj Unuoj: %s"
 
 #: src/OR_TOWN.cpp:231
 #, c-format
@@ -3497,7 +3497,7 @@ msgstr "Tuta Loĝantaro: %s"
 
 #: src/OR_TOWN.cpp:242 src/OTOWNIF.cpp:321
 msgid "Total"
-msgstr ""
+msgstr "Totalo"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
@@ -3539,20 +3539,20 @@ msgstr "Haltejo 3"
 
 #: src/OR_TRADE.cpp:152
 msgid "Goods Carried"
-msgstr ""
+msgstr "Varoj Portitaj"
 
 #: src/OR_TRADE.cpp:202
 msgid "Stock/Sales/Demand"
-msgstr ""
+msgstr "Stoko/Vendoj/Demando"
 
 #: src/OR_TRADE.cpp:204
 msgid "(In Range of Unit)"
-msgstr ""
+msgstr "(En Atingopovo de Unuo)"
 
 #: src/OR_TRADE.cpp:422
 #, c-format
 msgid "Total Caravans: %s"
-msgstr ""
+msgstr "Totalaj Karavanoj: %s"
 
 #: src/OR_TRADE.cpp:424
 #, c-format
@@ -3576,7 +3576,7 @@ msgstr "*Senfara Lokoj: %s"
 
 #: src/OR_TRADE.cpp:906 src/OR_TRADE.cpp:942
 msgid "Raw Stock"
-msgstr ""
+msgstr "Kruda Stoko"
 
 #: src/OR_TRADE.cpp:931 src/OSITEDRW.cpp:54
 msgid "Reserve"
@@ -3596,23 +3596,23 @@ msgstr "Minejoj"
 
 #: src/OSITEDRW.cpp:48
 msgid "Natural Resource"
-msgstr ""
+msgstr "Natura Materialo"
 
 #: src/OSITEDRW.cpp:53
 msgid "Resource"
-msgstr ""
+msgstr "Materialo"
 
 #: src/OSITEDRW.cpp:61
 msgid "Scroll of Power"
-msgstr ""
+msgstr "Rulo de Povo"
 
 #: src/OSITEDRW.cpp:68
 msgid "Nationality"
-msgstr ""
+msgstr "Nacio"
 
 #: src/OSITEDRW.cpp:69
 msgid "Invoke"
-msgstr ""
+msgstr "Alvoki"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:38
@@ -3622,37 +3622,37 @@ msgstr "Trezuro"
 
 #: src/OSITEDRW.cpp:81
 msgid "Worth"
-msgstr ""
+msgstr "Valuo"
 
 #: src/OSKILL.cpp:34
 msgid "Construction"
-msgstr ""
+msgstr "Konstruado"
 
 #: src/OSKILL.cpp:36
 msgid "Mining"
-msgstr ""
+msgstr "Minado"
 
 #: src/OSKILL.cpp:37
 msgid "Manufacture"
-msgstr ""
+msgstr "Fabrikado"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/TUT_LIST.RES
 #: src/OSKILL.cpp:38
 msgid "Research"
-msgstr ""
+msgstr "Esplorado"
 
 #: src/OSKILL.cpp:39 src/OUNITIF.cpp:1186
 msgid "Spying"
-msgstr ""
+msgstr "Spionado"
 
 #: src/OSKILL.cpp:40
 msgid "Praying"
-msgstr ""
+msgstr "Preĝado"
 
 #: src/OSPY.cpp:599
 msgid "Counter-Spy"
-msgstr ""
+msgstr "Kontraŭ-Spioni"
 
 #: src/OSPY.cpp:602
 msgid "Sleep"
@@ -3660,15 +3660,15 @@ msgstr "Dormi"
 
 #: src/OSPY.cpp:606
 msgid "Sow Dissent"
-msgstr ""
+msgstr "Semi Malkonsenton"
 
 #: src/OSPY.cpp:609
 msgid "Sabotage"
-msgstr ""
+msgstr "Saboti"
 
 #: src/OSPYA.cpp:45
 msgid "Kingdoms"
-msgstr ""
+msgstr "Regnoj"
 
 #: src/OSPYA.cpp:45
 msgid "Villages"
@@ -3678,78 +3678,80 @@ msgstr "Vilaĝoj"
 # data/RESOURCE/TUT_LIST.RES
 #: src/OSPYA.cpp:45
 msgid "Trade"
-msgstr ""
+msgstr "Komerco"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/TUT_LIST.RES
 #: src/OSPYA.cpp:45
 msgid "Espionage"
-msgstr ""
+msgstr "Spionado"
 
 #: src/OSPYA.cpp:331
 msgid "Steal which type of secrets?"
-msgstr ""
+msgstr "Kiajn sekretojn ŝteli?"
 
 #: src/OSYS.cpp:536
 msgid "Unable to determine a location for storing the game configuration"
-msgstr ""
+msgstr "Ne povis difini lokon por konservi la ludajn agordojn"
 
 #. TRANSLATORS: Waiting for <King>'s Kingdom
 #: src/OSYS.cpp:907
 #, c-format
 msgid "Waiting for %s's Kingdom"
-msgstr ""
+msgstr "Atendante al Regno de %s"
 
 #: src/OSYS.cpp:1540
 msgid "Cheat Mode Enabled."
-msgstr ""
+msgstr "Trompa Reĝimo Ebligita."
 
 #: src/OSYS.cpp:1616
 msgid "Opaque report mode"
-msgstr ""
+msgstr "Maldiafana raporta modo"
 
 #: src/OSYS.cpp:1618
 msgid "Transparent report mode"
-msgstr ""
+msgstr "Diafana raporta modo"
 
 #: src/OSYS.cpp:1824
 msgid ""
 "Your technology has advanced.\n"
 "You can now invoke all Greater Beings."
 msgstr ""
+"Via teknologio progresis.\n"
+"Vi povas nun alvoki ĉiujn Pli Grandajn Estaĵojn."
 
 #: src/OSYS.cpp:1856
 msgid "Your king is now immortal."
-msgstr ""
+msgstr "Via reĝo estas nun senmorta."
 
 #: src/OSYS.cpp:1858
 msgid "King immortal mode is now disabled."
-msgstr ""
+msgstr "Reĝimo de senmorta reĝo estas nun malebligita."
 
 #: src/OSYS.cpp:1886
 msgid "Fast build is now disabled."
-msgstr ""
+msgstr "Rapida konstruado estas nun malebligita."
 
 #: src/OSYS.cpp:1888
 msgid "Fast build is now enabled."
-msgstr ""
+msgstr "Rapida konstruado estas nun ebligita."
 
 #: src/OSYS.cpp:2647
 #, c-format
 msgid "The current screen has been written to file %s."
-msgstr ""
+msgstr "La nuna ekrano estis konservita en dosiero %s."
 
 #: src/OSYS.cpp:2688
 msgid "Failed Loading Game"
-msgstr ""
+msgstr "Ŝarĝi Ludon Fiaskis"
 
 #: src/OSYS.cpp:2699
 msgid "Game Loaded Successfully"
-msgstr ""
+msgstr "Ludo Sukcese Ŝarĝita"
 
 #: src/OSYS.cpp:2726
 msgid "Game Saved Successfully"
-msgstr ""
+msgstr "Ludo Sukcese Konservita"
 
 #: src/OSYS.cpp:2798
 msgid "Unable to locate the game resources"
@@ -3769,15 +3771,15 @@ msgstr ""
 
 #: src/OSaveGameArray.cpp:617
 msgid "Game Date"
-msgstr ""
+msgstr "Luda Dato"
 
 #: src/OSaveGameArray.cpp:625
 msgid "File Name"
-msgstr ""
+msgstr "Dosiernomo"
 
 #: src/OSaveGameArray.cpp:637
 msgid "File Date"
-msgstr ""
+msgstr "Dosiera dato"
 
 #: src/OSaveGameArray.cpp:676
 msgid "Overwrite the existing saved game?"
@@ -3813,127 +3815,127 @@ msgstr ""
 #: src/OTALKENG.cpp:213
 #, c-format
 msgid "%s's Kingdom%s proposes a trade treaty to you."
-msgstr ""
+msgstr "La Regno de %s%s proponas komercan traktaton al vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> proposes a friendly treaty to you.
 #: src/OTALKENG.cpp:218
 #, c-format
 msgid "%s's Kingdom%s proposes a friendly treaty to you."
-msgstr ""
+msgstr "La Regno de %s%s proponas amikecan traktaton al vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> proposes an alliance treaty to you.
 #: src/OTALKENG.cpp:223
 #, c-format
 msgid "%s's Kingdom%s proposes an alliance treaty to you."
-msgstr ""
+msgstr "La Regno de %s%s proponas aliancan traktaton al vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your proposed trade treaty.
 #: src/OTALKENG.cpp:236
 #, c-format
 msgid "%s's Kingdom%s accepts your proposed trade treaty."
-msgstr ""
+msgstr "La Regno de %s%s akceptas vian proponitan komercan traktaton."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your proposed friendly treaty.
 #: src/OTALKENG.cpp:241
 #, c-format
 msgid "%s's Kingdom%s accepts your proposed friendly treaty."
-msgstr ""
+msgstr "La Regno de %s%s akceptas vian proponitan amikecan traktaton."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your proposed alliance treaty.
 #: src/OTALKENG.cpp:246
 #, c-format
 msgid "%s's Kingdom%s accepts your proposed alliance treaty."
-msgstr ""
+msgstr "La Regno de %s%s akceptas vian proponitan aliancan traktaton."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your proposed trade treaty.
 #: src/OTALKENG.cpp:254
 #, c-format
 msgid "%s's Kingdom%s rejects your proposed trade treaty."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas vian proponitan komercan traktaton."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your proposed friendly treaty.
 #: src/OTALKENG.cpp:259
 #, c-format
 msgid "%s's Kingdom%s rejects your proposed friendly treaty."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas vian proponitan amikecan traktaton."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your proposed alliance treaty.
 #: src/OTALKENG.cpp:264
 #, c-format
 msgid "%s's Kingdom%s rejects your proposed alliance treaty."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas vian proponitan aliancan traktaton."
 
 #. TRANSLATORS: You accept the trade treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:275
 #, c-format
 msgid "You accept the trade treaty proposed by %s's Kingdom%s."
-msgstr ""
+msgstr "Vi akceptas la komercan traktaton proponitan de la Regno de %s%s."
 
 #. TRANSLATORS: You accept the friendly treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:280
 #, c-format
 msgid "You accept the friendly treaty proposed by %s's Kingdom%s."
-msgstr ""
+msgstr "Vi akceptas la amikecan traktaton proponitan de la Regno de %s%s."
 
 #. TRANSLATORS: You accept the alliance treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:285
 #, c-format
 msgid "You accept the alliance treaty proposed by %s's Kingdom%s."
-msgstr ""
+msgstr "Vi akceptas la aliancan traktaton proponitan de la Regno de %s%s."
 
 #. TRANSLATORS: You reject the trade treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:293
 #, c-format
 msgid "You reject the trade treaty proposed by %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas la komercan traktaton proponitan de la Regno de %s%s."
 
 #. TRANSLATORS: You reject the friendly treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:298
 #, c-format
 msgid "You reject the friendly treaty proposed by %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas la komercan amikecan proponitan de la Regno de %s%s."
 
 #. TRANSLATORS: You reject the alliance treaty proposed by <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:303
 #, c-format
 msgid "You reject the alliance treaty proposed by %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas la aliancan traktaton proponitan de la Regno de %s%s."
 
 #. TRANSLATORS: You terminate your trade treaty with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:331
 #, c-format
 msgid "You terminate your trade treaty with %s's Kingdom%s."
-msgstr ""
+msgstr "Vi finas vian komercan traktaton kun la Regno de %s%s."
 
 #. TRANSLATORS: You terminate your friendly treaty with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:336
 #, c-format
 msgid "You terminate your friendly treaty with %s's Kingdom%s."
-msgstr ""
+msgstr "Vi finas vian amikecan traktaton kun la Regno de %s%s."
 
 #. TRANSLATORS: You terminate your alliance treaty with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:341
 #, c-format
 msgid "You terminate your alliance treaty with %s's Kingdom%s."
-msgstr ""
+msgstr "Vi finas vian aliancan traktaton kun la Regno de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> terminates its trade treaty with you.
 #: src/OTALKENG.cpp:349
 #, c-format
 msgid "%s's Kingdom%s terminates its trade treaty with you."
-msgstr ""
+msgstr "La Regno de %s%s finas sian komercan traktaton kun vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> terminates its friendly treaty with you.
 #: src/OTALKENG.cpp:354
 #, c-format
 msgid "%s's Kingdom%s terminates its friendly treaty with you."
-msgstr ""
+msgstr "La Regno de %s%s finas sian amikecan traktaton kun vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> terminates its alliance treaty with you.
 #: src/OTALKENG.cpp:359
 #, c-format
 msgid "%s's Kingdom%s terminates its alliance treaty with you."
-msgstr ""
+msgstr "La Regno de %s%s finas sian aliancan traktaton kun vi."
 
 #. TRANSLATORS: You request a cease-fire with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:389
@@ -5552,7 +5554,7 @@ msgstr "Fritahna Nesto"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Harbor"
-msgstr ""
+msgstr "Haveno"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Inn"
@@ -5564,7 +5566,7 @@ msgstr ""
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Seat of Power"
-msgstr ""
+msgstr "Seĝo de Povo"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Solider"
@@ -5572,7 +5574,7 @@ msgstr ""
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "War Factory"
-msgstr ""
+msgstr "Milita Fabriko"
 
 # data/RESOURCE/TUT_INTR/00000-1BAS_MIL.TXT:1
 msgid ""
