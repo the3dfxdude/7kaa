@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-09-02 19:02+0200\n"
+"PO-Revision-Date: 2021-09-03 20:43+0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -261,7 +261,7 @@ msgstr "Kaj Mortigita."
 #: src/OFIRMIF3.cpp:247
 #, c-format
 msgid "Offer %s"
-msgstr "Oferti %s"
+msgstr "Oferi %s"
 
 #: src/OFIRMIF3.cpp:545 src/OFIRMIF3.cpp:560
 msgid "Assassination Succeeded."
@@ -3755,19 +3755,19 @@ msgstr "Ludo Sukcese Konservita"
 
 #: src/OSYS.cpp:2798
 msgid "Unable to locate the game resources"
-msgstr ""
+msgstr "Ne povis loki la ludajn risurcojn"
 
 #: src/OSaveGameArray.cpp:201
 msgid "You haven't saved any games yet."
-msgstr ""
+msgstr "Vi ankoraŭ ne konservis iun ludon."
 
 #: src/OSaveGameArray.cpp:387
 msgid "Empty Game Slot"
-msgstr ""
+msgstr "Malplena Luda Fendo"
 
 #: src/OSaveGameArray.cpp:537
 msgid "Cannot delete this slot"
-msgstr ""
+msgstr "Ne povas forigi ĉi tiun fendon"
 
 #: src/OSaveGameArray.cpp:617
 msgid "Game Date"
@@ -3783,33 +3783,33 @@ msgstr "Dosiera dato"
 
 #: src/OSaveGameArray.cpp:676
 msgid "Overwrite the existing saved game?"
-msgstr ""
+msgstr "Ĉu anstataŭigi la ekzistantan konservitan ludon?"
 
 #: src/OSaveGameArray.cpp:737
 msgid "Cannot save the game because the path is too long"
-msgstr ""
+msgstr "Ne povas konservi la ludon, ĉar la vojo estas tro longa"
 
 #: src/OSaveGameArray.cpp:892
 msgid "This saved game will be deleted. Proceed?"
-msgstr ""
+msgstr "Ĉi tiu ludo estos forigita. Ĉu daŭrigi?"
 
 #. TRANSLATORS: You propose a trade treaty to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:195
 #, c-format
 msgid "You propose a trade treaty to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi proponas komercan traktaton al la Regno de %s%s."
 
 #. TRANSLATORS: You propose a friendly treaty to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:200
 #, c-format
 msgid "You propose a friendly treaty to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi proponas amikecan traktaton al la Regno de %s%s."
 
 #. TRANSLATORS: You propose an alliance treaty to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:205
 #, c-format
 msgid "You propose an alliance treaty to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi proponas aliancan traktaton al la Regno de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> proposes a trade treaty to you.
 #: src/OTALKENG.cpp:213
@@ -3941,229 +3941,230 @@ msgstr "La Regno de %s%s finas sian aliancan traktaton kun vi."
 #: src/OTALKENG.cpp:389
 #, c-format
 msgid "You request a cease-fire with %s's Kingdom%s."
-msgstr ""
+msgstr "Vi petas militpaŭzon kun la Regno de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests a cease-fire.
 #: src/OTALKENG.cpp:394
 #, c-format
 msgid "%s's Kingdom%s requests a cease-fire."
-msgstr ""
+msgstr "La Regno de %s%s petas militpaŭzon."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to a cease-fire.
 #: src/OTALKENG.cpp:403
 #, c-format
 msgid "%s's Kingdom%s agrees to a cease-fire."
-msgstr ""
+msgstr "La Regno de %s%s konsentas pri militpaŭzo."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses a cease-fire.
 #: src/OTALKENG.cpp:406
 #, c-format
 msgid "%s's Kingdom%s refuses a cease-fire."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas militpaŭzon."
 
 #. TRANSLATORS: You agree to a cease-fire with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:412
 #, c-format
 msgid "You agree to a cease-fire with %s's Kingdom%s."
-msgstr ""
+msgstr "Vi konsentas pri militpaŭzo kun la Regno de %s%s."
 
 #. TRANSLATORS: You refuse a cease-fire with <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:415
 #, c-format
 msgid "You refuse a cease-fire with %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas militpaŭzon kun la Regno de %s%s."
 
 #. TRANSLATORS: You request <King 1>'s Kingdom<Color> to declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:445
 #, c-format
 msgid "You request %s's Kingdom%s to declare war on %s's Kingdom%s."
-msgstr ""
+msgstr "Vi petas al Regno de %s%s deklari militon kontraŭ la Regno de %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> requests that you declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:450
 #, c-format
 msgid "%s's Kingdom%s requests that you declare war on %s's Kingdom%s."
 msgstr ""
+"La Regno de %s%s petas, ke vi deklaru militon kontraŭ la Regno de %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> agrees to declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:459
 #, c-format
 msgid "%s's Kingdom%s agrees to declare war on %s's Kingdom%s."
-msgstr ""
+msgstr "La Regno de %s%s akceptas deklari militon kontraŭ la Regno de %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> refuses to declare war on <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:462
 #, c-format
 msgid "%s's Kingdom%s refuses to declare war on %s's Kingdom%s."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas deklari militon kontraŭ la Regno de %s%s."
 
 #. TRANSLATORS: You agree to declare war on <King>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:468
 #, c-format
 msgid "You agree to declare war on %s's Kingdom%s."
-msgstr ""
+msgstr "Vi akceptas deklari militon al la Regno de %s%s."
 
 #. TRANSLATORS: You refuse to declare war on <King>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:471
 #, c-format
 msgid "You refuse to declare war on %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas deklari militon al la Regno de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> offers <Amount> for 10 units of food.
 #: src/OTALKENG.cpp:494
 #, c-format
 msgid "%s's Kingdom%s offers %s for 10 units of food."
-msgstr ""
+msgstr "La Regno de %s%s oferis %s kontraŭ 10 unuoj de manĝaĵo."
 
 #. TRANSLATORS: You request to purchase <Number> units of food from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:522
 #, c-format
 msgid "You request to purchase %s units of food from %s's Kingdom%s."
-msgstr ""
+msgstr "Vi petas aĉeti %s unuojn de manĝaĵo el la Regno de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests to purchase <Number> units of food from you.
 #: src/OTALKENG.cpp:527
 #, c-format
 msgid "%s's Kingdom%s requests to purchase %s units of food from you."
-msgstr ""
+msgstr "La Regno de %s%s petas aĉeti %s unuojn de manĝaĵoj el vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:536
 #, c-format
 msgid "%s's Kingdom%s agrees to sell %s units of food to you."
-msgstr ""
+msgstr "La Regno de %s%s akceptas vendi %s al vi unuojn de manĝaĵo."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> refuses to sell <Number> units of food to you.
 #: src/OTALKENG.cpp:539
 #, c-format
 msgid "%s's Kingdom%s refuses to sell %s units of food to you."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas vendi al vi %s unuojn de manĝaĵo."
 
 #. TRANSLATORS: You agree to sell <Number> units of food to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:545
 #, c-format
 msgid "You agree to sell %s units of food to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi akceptas vendi %s unuojn de manĝaĵo al la Regno de %s%s."
 
 #. TRANSLATORS: You refuse to sell <Number> units of food to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:548
 #, c-format
 msgid "You refuse to sell %s units of food to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas vendi %s unuojn de manĝaĵo al la Regno de %s%s."
 
 #. TRANSLATORS: You declare war on <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:570
 #, c-format
 msgid "You declare war on %s's Kingdom%s."
-msgstr ""
+msgstr "Vi deklaras militon al la Regno de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> declares war on you.
 #: src/OTALKENG.cpp:575
 #, c-format
 msgid "%s's Kingdom%s declares war on you."
-msgstr ""
+msgstr "La Regno de %s%s deklaras al vi militon."
 
 #. TRANSLATORS: You offer <King>'s Kingdom<Color> <Amount> in aid.
 #: src/OTALKENG.cpp:615
 #, c-format
 msgid "You offer %s's Kingdom%s %s in aid."
-msgstr ""
+msgstr "Vi proponas al la Regno de %s%s %s helpe."
 
 #. TRANSLATORS: You offer <King>'s Kingdom<Color> <Amount> in tribute.
 #: src/OTALKENG.cpp:620
 #, c-format
 msgid "You offer %s's Kingdom%s %s in tribute."
-msgstr ""
+msgstr "Vi proponas al la Regno de %s%s %s tribute."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> offers you <Amount> in aid.
 #: src/OTALKENG.cpp:628
 #, c-format
 msgid "%s's Kingdom%s offers you %s in aid."
-msgstr ""
+msgstr "La Regno de %s%s proponas al vi %s helpe."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> offers you <Amount> in tribute.
 #: src/OTALKENG.cpp:633
 #, c-format
 msgid "%s's Kingdom%s offers you %s in tribute."
-msgstr ""
+msgstr "La Regno de %s%s proponas al vi %s tribute."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your aid of <Amount>.
 #: src/OTALKENG.cpp:646
 #, c-format
 msgid "%s's Kingdom%s accepts your aid of %s."
-msgstr ""
+msgstr "La Regno de %s%s akceptas vian helpon de %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> accepts your tribute of <Amount>.
 #: src/OTALKENG.cpp:651
 #, c-format
 msgid "%s's Kingdom%s accepts your tribute of %s."
-msgstr ""
+msgstr "La Regno de %s%s akceptas vian tributon de %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your aid of <Amount>.
 #: src/OTALKENG.cpp:659
 #, c-format
 msgid "%s's Kingdom%s rejects your aid of %s."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas vian helpon de %s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> rejects your tribute of <Amount>.
 #: src/OTALKENG.cpp:664
 #, c-format
 msgid "%s's Kingdom%s rejects your tribute of %s."
-msgstr ""
+msgstr "La Regno de %s%s rifuzas vian tributon de %s."
 
 #. TRANSLATORS: You accept the <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:675
-#, c-format
+#, fuzzy, c-format
 msgid "You accept the %s's Kingdom%s in aid from %s."
-msgstr ""
+msgstr "Vi akceptas la helpon el la Regno de %s%s de %s."
 
 #. TRANSLATORS: You accept the <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:680
-#, c-format
+#, fuzzy, c-format
 msgid "You accept the %s's Kingdom%s in tribute from %s."
-msgstr ""
+msgstr "Vi akceptas la tributon el la Regno de %s%s de %s."
 
 #. TRANSLATORS: You reject the <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:688
-#, c-format
+#, fuzzy, c-format
 msgid "You reject the %s's Kingdom%s in aid from %s."
-msgstr ""
+msgstr "Vi rifuzas la helpon el la Regno de %s%s de %s."
 
 #. TRANSLATORS: You reject the <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:693
-#, c-format
+#, fuzzy, c-format
 msgid "You reject the %s's Kingdom%s in tribute from %s."
-msgstr ""
+msgstr "Vi rifuzas la tributon el la Regno de %s%s de %s."
 
 #. TRANSLATORS: You request <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:734
 #, c-format
 msgid "You request %s in aid from %s's Kingdom%s."
-msgstr ""
+msgstr "Vi petas %s helpe el la Regno de %s%s."
 
 #. TRANSLATORS: You demand <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:737
 #, c-format
 msgid "You demand %s in tribute from %s's Kingdom%s."
-msgstr ""
+msgstr "Vi petas %s tribute el la Regno de %s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests <Amount> in aid from you.
 #: src/OTALKENG.cpp:743
 #, c-format
 msgid "%s's Kingdom%s requests %s in aid from you."
-msgstr ""
+msgstr "La Regno de %s%s petas %s helpe el vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> demands <Amount> in tribute from you.
 #: src/OTALKENG.cpp:746
 #, c-format
 msgid "%s's Kingdom%s demands %s in tribute from you."
-msgstr ""
+msgstr "La Regno de %s%s petas %s tribute el vi."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to give you <Amount> in aid.
 #: src/OTALKENG.cpp:758
 #, c-format
 msgid "%s's Kingdom%s agrees to give you %s in aid."
-msgstr ""
+msgstr "La Regno de %s%s akceptas doni al vi %s helpe."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> agrees to pay you <Amount> in tribute.
 #: src/OTALKENG.cpp:760
@@ -5001,7 +5002,7 @@ msgstr ""
 
 #: src/OTALKRES.cpp:223
 msgid "Request aid."
-msgstr ""
+msgstr "Peti helpon."
 
 #: src/OTALKRES.cpp:224
 msgid "Offer to transfer technology."
