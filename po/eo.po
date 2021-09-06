@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-27 16:23-0700\n"
-"PO-Revision-Date: 2021-09-04 19:09+0200\n"
+"POT-Creation-Date: 2021-05-14 08:14-0500\n"
+"PO-Revision-Date: 2021-09-06 02:16+0200\n"
+"Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
-"Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
-"Language: eo\n"
 
 #: src/CmdLine.cpp:46
 #, c-format
@@ -33,22 +33,22 @@ msgid "Error in %s at line %d"
 msgstr "Eraro en %s en linio %d"
 
 #: src/OBOX.cpp:180 src/OBOX.cpp:207 src/OBOX.cpp:210 src/OBOX.cpp:262
-#: src/OGAMEMP.cpp:1510 src/OGAMEMP.cpp:1610 src/OGAMEMP.cpp:3012
-#: src/OGAMEMP.cpp:3077 src/OGAMEMP.cpp:3386 src/OGAMEMP.cpp:3389
-#: src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:3395 src/OGAMEMP.cpp:3398
-#: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:3404 src/OGAMEMP.cpp:3452
-#: src/OGAMEMP.cpp:4928 src/OGAMEMP.cpp:4994 src/OGAMEMP.cpp:5180
-#: src/OGAMEMP.cpp:5183 src/OGAMEMP.cpp:5186 src/OGAMEMP.cpp:5189
-#: src/OGAMEMP.cpp:5192 src/OGAMEMP.cpp:5195 src/OGAMEMP.cpp:5198
-#: src/OGAMEMP.cpp:5246
+#: src/OGAMEMP.cpp:1511 src/OGAMEMP.cpp:1611 src/OGAMEMP.cpp:3014
+#: src/OGAMEMP.cpp:3079 src/OGAMEMP.cpp:3383 src/OGAMEMP.cpp:3386
+#: src/OGAMEMP.cpp:3389 src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:3395
+#: src/OGAMEMP.cpp:3398 src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:3449
+#: src/OGAMEMP.cpp:4921 src/OGAMEMP.cpp:4987 src/OGAMEMP.cpp:5165
+#: src/OGAMEMP.cpp:5168 src/OGAMEMP.cpp:5171 src/OGAMEMP.cpp:5174
+#: src/OGAMEMP.cpp:5177 src/OGAMEMP.cpp:5180 src/OGAMEMP.cpp:5183
+#: src/OGAMEMP.cpp:5231
 msgid "Ok"
 msgstr "Bone"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/HELP.RES:70
 #: src/OBOX.cpp:213 src/OBOX.cpp:265 src/OFIRMIF3.cpp:241 src/OF_RESE.cpp:284
-#: src/OGAMEMP.cpp:1511 src/OGAMEMP.cpp:1611 src/OGAMEMP.cpp:2074
-#: src/OGAMEMP.cpp:2176 src/OGAMEMP.cpp:2239 src/OSPYA.cpp:354
+#: src/OGAMEMP.cpp:1512 src/OGAMEMP.cpp:1612 src/OGAMEMP.cpp:2075
+#: src/OGAMEMP.cpp:2177 src/OGAMEMP.cpp:2240 src/OSPYA.cpp:354
 #: src/OTOWNIF.cpp:1265 src/OUNITIF.cpp:1042 src/OUNITIF.cpp:1078
 msgid "Cancel"
 msgstr "Nuligi"
@@ -207,7 +207,7 @@ msgstr "Loĝejo"
 #: src/OFIRMIF.cpp:652 src/OFIRMIF.cpp:659 src/OFIRMIF2.cpp:95
 #: src/OFIRMIF3.cpp:523 src/OF_BASE.cpp:411 src/OF_CAMP.cpp:598
 #: src/OINFO.cpp:744 src/OR_MIL.cpp:101 src/OR_SPY.cpp:77 src/OR_TOWN.cpp:87
-#: src/OTOWNIF.cpp:298 src/OTOWNIF.cpp:1415 src/OUNITIF.cpp:1154
+#: src/OTOWNIF.cpp:298 src/OTOWNIF.cpp:1413 src/OUNITIF.cpp:1154
 #: src/OU_MARIF.cpp:510
 msgid "Loyalty"
 msgstr "Fideleco"
@@ -227,11 +227,11 @@ msgstr "Batalo"
 msgid "Hit Points"
 msgstr "Trafpunktoj"
 
-#: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1414
+#: src/OFIRMIF2.cpp:94 src/OTOWNIF.cpp:1412
 msgid "Spy Skill"
 msgstr "Spiona Lerteco"
 
-#: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1416
+#: src/OFIRMIF2.cpp:96 src/OR_SPY.cpp:78 src/OTOWNIF.cpp:1414
 msgid "Action"
 msgstr "Ago"
 
@@ -485,28 +485,28 @@ msgstr "Enigu la ludan adreson:"
 msgid "Service not supported"
 msgstr "Servo ne subtenata"
 
-#: src/OGAMEMP.cpp:1044
+#: src/OGAMEMP.cpp:1045
 msgid "Local Area Network"
 msgstr "Loka reto"
 
 #. TRANSLATORS: This is a button label for entering a web or IP Address for connecting to an online game
-#: src/OGAMEMP.cpp:1046
+#: src/OGAMEMP.cpp:1047
 msgid "Enter Address"
 msgstr "Enigu Adreson"
 
-#: src/OGAMEMP.cpp:1051
+#: src/OGAMEMP.cpp:1052
 msgid "Host or join a game using the local area network"
 msgstr "Gastigi aŭ aliĝi al luda per la loka reto"
 
-#: src/OGAMEMP.cpp:1052
+#: src/OGAMEMP.cpp:1053
 msgid "Join a game by entering an address"
 msgstr "Aliĝi al ludo enigante adreson"
 
-#: src/OGAMEMP.cpp:1053
+#: src/OGAMEMP.cpp:1054
 msgid "Host or join a game over the internet"
 msgstr "Gastigi aŭ aliĝi al ludo per interreto"
 
-#: src/OGAMEMP.cpp:1200
+#: src/OGAMEMP.cpp:1201
 msgid ""
 "Enter your 7kfans.com/forums account credentials to continue.\n"
 "TIP: If you have just previously logged in using the same username, you can "
@@ -516,15 +516,15 @@ msgstr ""
 "KONSILETO: Se vi ĵus ensalutis uzante la saman uzantnomon, vi povas lasi "
 "vian pasvorton blanka, kaj la antaŭa seanco estos uzata."
 
-#: src/OGAMEMP.cpp:1201
+#: src/OGAMEMP.cpp:1202
 msgid "Username:"
 msgstr "Uzantnomo:"
 
-#: src/OGAMEMP.cpp:1202
+#: src/OGAMEMP.cpp:1203
 msgid "Password:"
 msgstr "Pasvorto:"
 
-#: src/OGAMEMP.cpp:1391
+#: src/OGAMEMP.cpp:1392
 msgid ""
 "It is not recommended to use this save game file name. Do you wish to "
 "continue?"
@@ -532,11 +532,11 @@ msgstr ""
 "Oni ne rekomendas uzi ĉi tiun nomon de konservada dosiero. Ĉu vi volas "
 "daŭrigi?"
 
-#: src/OGAMEMP.cpp:1447
+#: src/OGAMEMP.cpp:1448
 msgid "Unable to connect to 7kfans.com"
 msgstr "Ne povis konekti al 7kfans.com"
 
-#: src/OGAMEMP.cpp:1738
+#: src/OGAMEMP.cpp:1739
 msgid ""
 "Unable to connect to the 7kfans.com service. Verify your account information "
 "and try again."
@@ -544,92 +544,96 @@ msgstr ""
 "Ne povis konekti al la servo de 7kfans.com. Kontrolu la informon de via "
 "konto kaj provu denove."
 
-#: src/OGAMEMP.cpp:1740
+#: src/OGAMEMP.cpp:1741
+#, fuzzy
+#| msgid ""
+#| "Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to "
+#| "log in.\n"
+#| "(No libcurl)"
 msgid ""
-"Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to log "
-"in.\n"
+"Unable to connect to the 7kfans service.\n"
 "(No libcurl)"
 msgstr ""
 "Ne povis konekti al la 7kfans-servo. Legu 7kfans.com/wiki por ensaluti.\n"
 "(Mankas libcurl)"
 
-#: src/OGAMEMP.cpp:1930
+#: src/OGAMEMP.cpp:1931
 msgid "Unable to communicate with the network"
 msgstr "Ne povas komuniki kun la reto"
 
-#: src/OGAMEMP.cpp:1933
+#: src/OGAMEMP.cpp:1934
 msgid "Trying to connect to the service provider"
 msgstr "Provante konekti al la provizanto de servo"
 
-#: src/OGAMEMP.cpp:1948
+#: src/OGAMEMP.cpp:1949
 msgid ""
 "There is a new version of Seven Kingdoms: Ancient Adversaries at www.7kfans."
 "com"
 msgstr ""
 "Estas nova versio de Seven Kingdoms: Ancient Adversaries en www.7kfans.com"
 
-#: src/OGAMEMP.cpp:2062
+#: src/OGAMEMP.cpp:2063
 msgid "Enter the game's password:"
 msgstr "Enigu la ludan pasvorton:"
 
-#: src/OGAMEMP.cpp:2069
+#: src/OGAMEMP.cpp:2070
 msgid "Attempting to connect"
 msgstr "Provante konekti"
 
-#: src/OGAMEMP.cpp:2138
+#: src/OGAMEMP.cpp:2139
 msgid "The session you selected no longer exists."
 msgstr "La sesio, kiun vi elektis, ne plu ekzistas."
 
-#: src/OGAMEMP.cpp:2144
+#: src/OGAMEMP.cpp:2145
 msgid "Unable to connect"
 msgstr "Ne povas konekti"
 
-#: src/OGAMEMP.cpp:2149
+#: src/OGAMEMP.cpp:2150
 msgid "Failed to initiate connection"
 msgstr "Fiaskis la iniciaton de la konekto"
 
-#: src/OGAMEMP.cpp:2171
+#: src/OGAMEMP.cpp:2172
 msgid "Please wait while disconnecting..."
 msgstr "Bonvolu atendi dum malkonektado..."
 
-#: src/OGAMEMP.cpp:2234
+#: src/OGAMEMP.cpp:2235
 msgid "Retrieving leaderboard"
 msgstr "Ricevante ĉampionejon"
 
-#: src/OGAMEMP.cpp:2939 src/OGAMEMP.cpp:4854
+#: src/OGAMEMP.cpp:2941 src/OGAMEMP.cpp:4847
 msgid "?anonymous?"
 msgstr "?anonima?"
 
-#: src/OGAMEMP.cpp:3012 src/OGAMEMP.cpp:4928
+#: src/OGAMEMP.cpp:3014 src/OGAMEMP.cpp:4921
 msgid "The game host has disconnected."
 msgstr "La gasto de la ludo diskonektiĝis."
 
-#: src/OGAMEMP.cpp:3077 src/OGAMEMP.cpp:4994
+#: src/OGAMEMP.cpp:3079 src/OGAMEMP.cpp:4987
 msgid "The game host has aborted the game."
 msgstr "La gasto de la ludo abortis la ludon."
 
-#: src/OGAMEMP.cpp:3386 src/OGAMEMP.cpp:5180
+#: src/OGAMEMP.cpp:3383 src/OGAMEMP.cpp:5165
 msgid "Your game version does not match the host's version."
 msgstr "Via luda versio ne kongruas kun la versio de la gasto."
 
-#: src/OGAMEMP.cpp:3389 src/OGAMEMP.cpp:5183
+#: src/OGAMEMP.cpp:3386 src/OGAMEMP.cpp:5168
 msgid "The game you tried to join is currently full."
 msgstr "La ludo, al kiu vi provis aliĝi estas nun plena."
 
-#: src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:5186
+#: src/OGAMEMP.cpp:3389 src/OGAMEMP.cpp:5171
 msgid "The host refused to authorize your connection."
 msgstr "La gasto ne permesis rajtigi vian konekton."
 
-#: src/OGAMEMP.cpp:3395 src/OGAMEMP.cpp:5189
+#: src/OGAMEMP.cpp:3392 src/OGAMEMP.cpp:5174
 msgid "You cannot join the game because the host is loading a save."
 msgstr "Vi ne povas aliĝi al la ludo, ĉar la gasto estas ŝargante konservaĵon."
 
-#: src/OGAMEMP.cpp:3398 src/OGAMEMP.cpp:5192
+#: src/OGAMEMP.cpp:3395 src/OGAMEMP.cpp:5177
 msgid "You cannot join the game because the host is not loading a save."
 msgstr ""
 "Vi ne povas aliĝi al la ludo, ĉar la gasto ne estas ŝargante konservaĵon."
 
-#: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:5195
+#: src/OGAMEMP.cpp:3398 src/OGAMEMP.cpp:5180
 msgid ""
 "You cannot join the game because the saved multiplayer game you selected is "
 "different."
@@ -637,43 +641,43 @@ msgstr ""
 "Vi ne povas aliĝi al la ludo, ĉar la konservita ludo por pluraj ludantoj, "
 "kiun vi elektis, estas malsama."
 
-#: src/OGAMEMP.cpp:3404 src/OGAMEMP.cpp:5198
+#: src/OGAMEMP.cpp:3401 src/OGAMEMP.cpp:5183
 msgid "The host refused the connection."
 msgstr "La gasto rifuzis la konekton."
 
-#: src/OGAMEMP.cpp:3452 src/OGAMEMP.cpp:5246
+#: src/OGAMEMP.cpp:3449 src/OGAMEMP.cpp:5231
 msgid "The host is using a modified game which you are not running."
 msgstr "La gasto uzas modifita ludo, kiun vi ne plenumas."
 
-#: src/OGAMEMP.cpp:4141 src/OGAMEMP.cpp:5588
+#: src/OGAMEMP.cpp:4138 src/OGAMEMP.cpp:5576
 msgid "Connection string from host is corrupted"
 msgstr "Konekta ĉeno de gasto estas difektita"
 
-#: src/OGAMEMP.cpp:4148
+#: src/OGAMEMP.cpp:4145
 msgid "Cannot get random seeds from the host"
 msgstr "Ne povas akiri hazardajn fontojn el gasto"
 
-#: src/OGAMEMP.cpp:4154
+#: src/OGAMEMP.cpp:4151
 msgid "Cannot get game configuration information from the host"
 msgstr "Ne povas akiri ludan informon de agordaro el la gasto"
 
-#: src/OGAMEMP.cpp:4160 src/OGAMEMP.cpp:5595
+#: src/OGAMEMP.cpp:4157 src/OGAMEMP.cpp:5583
 msgid "Cannot get kingdom information from the host"
 msgstr "Ne povas akiri regnan informon el la gasto"
 
-#: src/OGAMEMP.cpp:4166 src/OGAMEMP.cpp:5601
+#: src/OGAMEMP.cpp:4163 src/OGAMEMP.cpp:5589
 msgid "The host cannot recognize your machine."
 msgstr "La gasto ne agnoskas vian maŝinon."
 
-#: src/OGAMEMP.cpp:4172 src/OGAMEMP.cpp:5607
+#: src/OGAMEMP.cpp:4169 src/OGAMEMP.cpp:5595
 msgid "Cannot receive important information from the host"
 msgstr "Ne povas ricevi gravan informon el la gasto"
 
-#: src/OGAMEMP.cpp:4224 src/OGAMEMP.cpp:5653
+#: src/OGAMEMP.cpp:4216 src/OGAMEMP.cpp:5635
 msgid "Some player(s) encountered errors when initializing the game."
 msgstr "(Kelkaj) ludanto(j) trovis erarojn dum la pravolorizado de la ludo."
 
-#: src/OGAMEMP.cpp:5336 src/OGAMEMP.cpp:5491
+#: src/OGAMEMP.cpp:5321 src/OGAMEMP.cpp:5476
 #, c-format
 msgid "This multiplayer saved game needs %d human player"
 msgid_plural "This multiplayer saved game needs %d human players"
@@ -682,18 +686,18 @@ msgstr[0] ""
 msgstr[1] ""
 "Ĉi tiu ludo por pluraj ludantoj konservita bezonas %d homajn ludantojn"
 
-#: src/OGAMEMP.cpp:5339 src/OGAMEMP.cpp:5494
+#: src/OGAMEMP.cpp:5324 src/OGAMEMP.cpp:5479
 #, c-format
 msgid "while now there is %d human player."
 msgid_plural "while now there are %d human players."
 msgstr[0] "sed nun estas %d homa ludanto."
 msgstr[1] "sed nun estas %d homaj ludantoj."
 
-#: src/OGAMEMP.cpp:5342 src/OGAMEMP.cpp:5497
+#: src/OGAMEMP.cpp:5327 src/OGAMEMP.cpp:5482
 msgid "The game cannot start."
 msgstr "La ludo ne povas komenci."
 
-#: src/OGAMEMP.cpp:5557
+#: src/OGAMEMP.cpp:5542
 msgid "Incorrect kingdom information received from the host."
 msgstr "Malĝusta regna informo ricevita el la gasto."
 
@@ -783,7 +787,7 @@ msgstr "La Rego de %s Venkis Ĉiujn Aliajn Regoj!"
 #: src/OGAMEND.cpp:382
 #, c-format
 msgid "You Surrendered to %s's Kingdom on %s."
-msgstr "Vi rezignis al Rego de %s en %s."
+msgstr "Vi kapitulacis al la Regno de %s en %s."
 
 #: src/OGAMEND.cpp:389
 msgid "Your Kingdom has Failed to Achieve its Goal Within the Time Limit."
@@ -1503,13 +1507,13 @@ msgstr "La Regno de %s%s estis detruita."
 #: src/ONEWSENG.cpp:403 src/OTALKENG.cpp:1325
 #, c-format
 msgid "%s's Kingdom%s has surrendered to you."
-msgstr "La Regno de %s%s rezignis al vi."
+msgstr "La Regno de %s%s kapitulacis al vi."
 
 #. TRANSLATORS: <King 1's Kingdom> has surrendered to <King 2's Kingdom>.
 #: src/ONEWSENG.cpp:408
 #, c-format
 msgid "%s's Kingdom%s has surrendered to %s's Kingdom%s."
-msgstr "La Regno de %s%s rezignis al la Regno de %s%s."
+msgstr "La Regno de %s%s kapitulacis al la Regno de %s%s."
 
 #. TRANSLATORS: Your King, <Name>, has been slain.
 #: src/ONEWSENG.cpp:433
@@ -1850,19 +1854,19 @@ msgstr "Via vilaĝo de %s estis forlasita de ĝiaj loĝantoj."
 #: src/ONEWSENG.cpp:721
 #, c-format
 msgid "Your village of %s has surrendered to %s's Kingdom%s."
-msgstr "Via vilaĝo de %s rezignis al Regno de %s%s."
+msgstr "Via vilaĝo de %s kapitulacis al la Regno de %s%s."
 
 #. TRANSLATORS: The village of <Town> in <King>'s Kingdom<Color> has surrendered to you.
 #: src/ONEWSENG.cpp:726
 #, c-format
 msgid "The village of %s in %s's Kingdom%s has surrendered to you."
-msgstr "La vilaĝo de %s en la Regno de %s%s rezignis al vi."
+msgstr "La vilaĝo de %s en la Regno de %s%s kapitulacis al vi."
 
 #. TRANSLATORS: The independent village of <Town> has surrendered to you.
 #: src/ONEWSENG.cpp:731
 #, c-format
 msgid "The independent village of %s has surrendered to you."
-msgstr "La sendependa vilaĝo de %s rezignis al vi."
+msgstr "La sendependa vilaĝo de %s kapitulacis al vi."
 
 #. TRANSLATORS: An All High <monster type> has been slain.
 #: src/ONEWSENG.cpp:740
@@ -3004,7 +3008,7 @@ msgstr "Kupraj Produktoj"
 msgid "Iron Products"
 msgstr "Feraj Produktoj"
 
-#: src/OREMOTEM.cpp:464 src/OSYS2.cpp:1023
+#: src/OREMOTEM.cpp:466 src/OSYS2.cpp:1023
 msgid "Multiplayer Random Seed Sync Error"
 msgstr "Plurludanta Eraro de Fonta Sinkronigo"
 
@@ -3749,11 +3753,11 @@ msgstr "Ŝarĝi Ludon Fiaskis"
 msgid "Game Loaded Successfully"
 msgstr "Ludo Sukcese Ŝarĝita"
 
-#: src/OSYS.cpp:2726
+#: src/OSYS.cpp:2731
 msgid "Game Saved Successfully"
 msgstr "Ludo Sukcese Konservita"
 
-#: src/OSYS.cpp:2798
+#: src/OSYS.cpp:2803
 msgid "Unable to locate the game resources"
 msgstr "Ne povis loki la ludajn risurcojn"
 
@@ -4861,25 +4865,25 @@ msgstr "La Regno de %s%s petas tujan militan helpon el vi."
 #: src/OTALKENG.cpp:1156
 #, c-format
 msgid "%s's Kingdom%s agrees to immediately send your requested military aid."
-msgstr ""
+msgstr "La Regno de %s%s akceptas tuj sendi vian petitan militan helpon."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> denies you your requested military aid.
 #: src/OTALKENG.cpp:1159
 #, c-format
 msgid "%s's Kingdom%s denies you your requested military aid."
-msgstr ""
+msgstr "La Regno de %s%s neas al via petit\t"
 
 #. TRANSLATORS: You agree to immediately send military aid to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1165
 #, c-format
 msgid "You agree to immediately send military aid to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi akceptas tuj sendi militan helpon al la Regno de %s%s."
 
 #. TRANSLATORS: You refuse to send military aid to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1168
 #, c-format
 msgid "You refuse to send military aid to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas sendi militan helpon al la Regno de %s%s."
 
 #. TRANSLATORS: You request <King 1>'s Kingdom<Color> to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:1204
@@ -4887,6 +4891,7 @@ msgstr ""
 msgid ""
 "You request %s's Kingdom%s to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
+"Vi petas al la Regno de %s%s aliĝi al komerca embargo kun la Regno de %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> requests you to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:1209
@@ -4894,18 +4899,21 @@ msgstr ""
 msgid ""
 "%s's Kingdom%s requests you to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
+"La Regno de %s%s petas al vi aliĝi al komerca embargo kun la Regno de %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> agrees to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:1218
 #, c-format
 msgid "%s's Kingdom%s agrees to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
+"La Regno de %s%s akceptas aliĝi al komerca embargo kun la Regno de %s%s."
 
 #. TRANSLATORS: <King 1>'s Kingdom<Color> refuses to join an embargo on trade with <King 2>'s Kingdom<Kingdom color>.
 #: src/OTALKENG.cpp:1221
 #, c-format
 msgid "%s's Kingdom%s refuses to join an embargo on trade with %s's Kingdom%s."
 msgstr ""
+"La Regno de %s%s rifuzas aliĝi al komerca embargo kun la Regno de %s%s."
 
 #. TRANSLATORS: You agree to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1227
@@ -4914,6 +4922,8 @@ msgid ""
 "You agree to join an embargo on trade with %s's Kingdom%s as requested by "
 "%s's Kingdom%s."
 msgstr ""
+"Vi akceptas aliĝi al komerca embargo kun la Regno de %s%s kiel petis la "
+"Regno de %s%s."
 
 #. TRANSLATORS: You refuse to join an embargo on trade with <King 1>'s Kingdom<Kingdom color> as requested by <King 2>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1230
@@ -4922,12 +4932,14 @@ msgid ""
 "You refuse to join an embargo on trade with %s's Kingdom%s as requested by "
 "%s's Kingdom%s."
 msgstr ""
+"Vi rifuzas aliĝi al komerca embargo kun la Regno de %s%s kiel petis la Regno "
+"de %s%s."
 
 #. TRANSLATORS: You offer <Amount> for the throne of <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1269
 #, c-format
 msgid "You offer %s for the throne of %s's Kingdom%s."
-msgstr ""
+msgstr "Vi proponas %s kontraŭ la trono de la Regno de %s%s."
 
 #. TRANSLATORS: To unite our two Kingdoms under his rule, King <Name> offers <Amount> for your throne.
 #: src/OTALKENG.cpp:1274
@@ -4935,35 +4947,37 @@ msgstr ""
 msgid ""
 "To unite our two Kingdoms under his rule, King %s offers %s for your throne."
 msgstr ""
+"Por kunigi du Regnojn sub lia regado, la Reĝo %s proponas %s kontraŭ via "
+"trono."
 
 #. TRANSLATORS: King <Name> agrees to take your money in exchange for his throne.
 #: src/OTALKENG.cpp:1283
 #, c-format
 msgid "King %s agrees to take your money in exchange for his throne."
-msgstr ""
+msgstr "La Reĝo %s akceptas preni vian monon kontraŭ lia trono."
 
 #. TRANSLATORS: King <Name> refuses to dishonor himself by selling his throne!
 #: src/OTALKENG.cpp:1286
 #, c-format
 msgid "King %s refuses to dishonor himself by selling his throne!"
-msgstr ""
+msgstr "La Reĝo %s rifuzas malhonori sin vendante sian tronon!"
 
 #: src/OTALKENG.cpp:1292
 msgid "You agree to take the money in exchange for your throne."
-msgstr ""
+msgstr "Vi akceptas preni monon kontraŭ via trono."
 
 #. TRANSLATORS: You refuse to dishonor yourself by selling your throne to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1297
 #, c-format
 msgid ""
 "You refuse to dishonor yourself by selling your throne to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi rifuzas malhonori vin vendante vian tronon al la Regno de %s%s."
 
 #. TRANSLATORS: You have surrendered to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1320
 #, c-format
 msgid "You have surrendered to %s's Kingdom%s."
-msgstr ""
+msgstr "Vi kapitulacis al la Regno de %s%s."
 
 #: src/OTALKRES.cpp:52
 msgid "The message has been sent."
@@ -5007,11 +5021,11 @@ msgstr "Fini nian aliancan traktaton."
 
 #: src/OTALKRES.cpp:214
 msgid "Request immediate military aid."
-msgstr ""
+msgstr "Peti tujan militan helpon."
 
 #: src/OTALKRES.cpp:215
 msgid "Request a trade embargo."
-msgstr ""
+msgstr "Peti komercan embargon."
 
 #: src/OTALKRES.cpp:216
 msgid "Request a cease-fire."
@@ -5019,11 +5033,11 @@ msgstr "Peti militpaŭzon."
 
 #: src/OTALKRES.cpp:217
 msgid "Request a declaration of war against a foe."
-msgstr ""
+msgstr "Peti deklaron de milito kontraŭ malamiko."
 
 #: src/OTALKRES.cpp:218
 msgid "Request to purchase food."
-msgstr ""
+msgstr "Peti aĉeti manĝaĵon."
 
 #: src/OTALKRES.cpp:219
 msgid "Declare war."
@@ -5031,15 +5045,15 @@ msgstr "Deklari militon."
 
 #: src/OTALKRES.cpp:220
 msgid "Offer to pay tribute."
-msgstr ""
+msgstr "Proponi pagi tributon."
 
 #: src/OTALKRES.cpp:221
 msgid "Demand tribute."
-msgstr ""
+msgstr "Postuli tributon."
 
 #: src/OTALKRES.cpp:222
 msgid "Offer aid."
-msgstr ""
+msgstr "Proponi helpon."
 
 #: src/OTALKRES.cpp:223
 msgid "Request aid."
@@ -5047,15 +5061,15 @@ msgstr "Peti helpon."
 
 #: src/OTALKRES.cpp:224
 msgid "Offer to transfer technology."
-msgstr ""
+msgstr "Proponi teknologion."
 
 #: src/OTALKRES.cpp:225
 msgid "Request technology."
-msgstr ""
+msgstr "Peti teknologion."
 
 #: src/OTALKRES.cpp:226
 msgid "Offer to purchase throne and unite kingdoms."
-msgstr ""
+msgstr "Proponi aĉeti tronon kaj kuniĝi regnoj."
 
 #: src/OTALKRES.cpp:227
 msgid "Surrender."
@@ -5063,7 +5077,7 @@ msgstr "Rezigni."
 
 #: src/OTALKRES.cpp:258
 msgid "Request an embargo on trade with which kingdom?"
-msgstr ""
+msgstr "Kun kiu regno peti komercan embargon?"
 
 #: src/OTALKRES.cpp:303
 msgid "Declare war on which kingdom?"
@@ -5071,11 +5085,11 @@ msgstr "Al kiu regno deklari militon?"
 
 #: src/OTALKRES.cpp:345
 msgid "How much food do you want to purchase?"
-msgstr ""
+msgstr "Kiom da manĝaĵo vi volas aĉeti?"
 
 #: src/OTALKRES.cpp:360
 msgid "How much do you offer for 10 units of food?"
-msgstr ""
+msgstr "Kiom vi oferas kontraŭ 10 unuoj de manĝaĵo?"
 
 #: src/OTALKRES.cpp:417
 msgid "Which technology?"
@@ -5087,12 +5101,12 @@ msgstr "Kiu versio?"
 
 #: src/OTALKRES.cpp:462
 msgid "How much do you offer?"
-msgstr ""
+msgstr "Kiom vi oferas?"
 
 #: src/OTALKRES.cpp:491
 #, c-format
 msgid "Do you really want to Surrender to %s's Kingdom?"
-msgstr ""
+msgstr "Ĉu vi vere volas Kapitulaci al la Regno de %s?"
 
 #: src/OTALKRES.cpp:494
 msgid "Confirm."
@@ -5103,10 +5117,12 @@ msgid ""
 "You've sent too many messages to this kingdom. You cannot send any new "
 "messages until the existing ones are processed."
 msgstr ""
+"Vi sendis tro da mesaĝoj al ĉi tiu regno. Vi ne povas sendi neniun novan "
+"mesaĝon ĝis la ekzistantaj estu traktitaj."
 
 #: src/OTALKRES.cpp:1087
 msgid "Continue."
-msgstr ""
+msgstr "Daŭrigi."
 
 #: src/OTALKRES.cpp:1336
 msgid "Accept."
@@ -5114,11 +5130,11 @@ msgstr "Akcepti."
 
 #: src/OTALKRES.cpp:1338
 msgid "Reject."
-msgstr ""
+msgstr "Rifuzi."
 
 #: src/OTOWNIF.cpp:304
 msgid "Resistance"
-msgstr ""
+msgstr "Rezisto"
 
 #: src/OTOWNIF.cpp:322
 msgid "Avg"
@@ -5126,29 +5142,31 @@ msgstr "Avĝ"
 
 #: src/OTOWNIF.cpp:356
 msgid "Controlled by Rebels"
-msgstr ""
+msgstr "Kontrolita de Ribeluloj"
 
 #: src/OTOWNIF.cpp:892
 msgid "Train (Cost: $30, Skill: 20)"
-msgstr ""
+msgstr "Trejni (Kosto: $30, Lerteco: 20)"
 
 #: src/OTOWNIF.cpp:968
 msgid "Manufacturing"
-msgstr ""
+msgstr "Fabrikado"
 
 #: src/OTOWNIF.cpp:1246
 msgid "Automatically Collect Tax from Villagers when their Loyalty reaches:"
-msgstr ""
+msgstr "Aŭtomate Kolekti Takson el Vilaĝanoj kiam iliaj Fideleco atingas:"
 
 #: src/OTOWNIF.cpp:1248
 msgid "Automatically Grant Money to Villagers when their Loyalty drops below:"
-msgstr ""
+msgstr "Aŭtomate Koncedi Monon al Vilaĝanoj kiam ilia Fideleco falas sub:"
 
 #: src/OTOWNIF.cpp:1251
 msgid ""
 "(Left-click below to apply to this village. Right-click below to apply to "
 "all your villages.)"
 msgstr ""
+"(Maldekstre-klaku malsupre por apliki al ĉi tiu vilaĝo. Dekstre-klaku "
+"malsupre por apliki al ĉiuj viaj vilaĝoj.)"
 
 #: src/OTOWNIF.cpp:1262
 msgid "Disabled"
@@ -5156,15 +5174,15 @@ msgstr "Malebligita"
 
 #: src/OTUTOR.cpp:501
 msgid "Next Training"
-msgstr ""
+msgstr "Sekva Trejnado"
 
 #: src/OTUTOR.cpp:502
 msgid "Quit Training"
-msgstr ""
+msgstr "Ĉesi Trejnado"
 
 #: src/OTUTOR2.cpp:133
 msgid "Tutorial files not found."
-msgstr ""
+msgstr "Lernilaj dosieroj ne trovitaj."
 
 #: src/OUNIT.cpp:755 src/OUNITIF.cpp:1232
 msgid "Rebel Leader"
@@ -5179,47 +5197,47 @@ msgstr "Ĝeneralo"
 #. TRANSLATORS: Please select a location to build the <Firm>.
 #: src/OUNITIF.cpp:1009
 msgid "Please select a location to build the Seat of Power."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Seĝon de Povo."
 
 #: src/OUNITIF.cpp:1010
 msgid "Please select a location to build the Factory."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Fabrikon."
 
 #: src/OUNITIF.cpp:1011
 msgid "Please select a location to build the Inn."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Gastejon."
 
 #: src/OUNITIF.cpp:1012
 msgid "Please select a location to build the Market."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Bazaron."
 
 #: src/OUNITIF.cpp:1013
 msgid "Please select a location to build the Fort."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Fortikaĵon."
 
 #: src/OUNITIF.cpp:1014
 msgid "Please select a location to build the Mine."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Minejon."
 
 #: src/OUNITIF.cpp:1015
 msgid "Please select a location to build the Tower of Science."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Turon de Scienco."
 
 #: src/OUNITIF.cpp:1016
 msgid "Please select a location to build the War Factory."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Militan Fabrikon."
 
 #: src/OUNITIF.cpp:1017
 msgid "Please select a location to build the Harbor."
-msgstr ""
+msgstr "Bonvolu elekti lokon por konstrui la Havenon."
 
 #: src/OUNITIF.cpp:1076
 msgid "Please select a location to settle."
-msgstr ""
+msgstr "Bonvolu elekti lokon por enloĝiĝi."
 
 #: src/OUNITIF.cpp:1194
 msgid "Contribution"
-msgstr ""
+msgstr "Kontribuado"
 
 #: src/OUNITIF.cpp:1239
 msgid "Defending Villager"
@@ -5235,7 +5253,7 @@ msgstr "Soldato"
 
 #: src/OUNITIF.cpp:1260
 msgid "Construction Worker"
-msgstr ""
+msgstr "Konstruada Laboranto"
 
 # #-#-#-#-#  7kaa.res.pot  #-#-#-#-#
 # data/RESOURCE/STD/00007-FIRM.dbf
@@ -5273,72 +5291,72 @@ msgstr "Malamikoj Apude"
 
 #: src/OUNITIF.cpp:1384
 msgid "Spy Cloak:"
-msgstr ""
+msgstr "Spiona Mantelo:"
 
 #: src/OU_CARA.cpp:162 src/OU_CARA.cpp:183 src/OU_MARIF.cpp:613
 #: src/OU_MARIF.cpp:633
 msgid "Set Stop"
-msgstr ""
+msgstr "Agordi Haltejon"
 
 #: src/OU_CARA.cpp:178 src/OU_MARIF.cpp:628
 msgid "Pick up:"
-msgstr ""
+msgstr "Kolekti:"
 
 #: src/OU_CARA.cpp:191 src/OU_MARIF.cpp:641
 msgid "View Stop"
-msgstr ""
+msgstr "Vidi Haltejon"
 
 #: src/OU_MONS.cpp:55
 msgid "All High Deezboanz"
-msgstr ""
+msgstr "Plej Granda Deezboanz"
 
 #: src/OU_MONS.cpp:56
 msgid "All High Rattus"
-msgstr ""
+msgstr "Plej Granda Rattus"
 
 #: src/OU_MONS.cpp:57
 msgid "All High Broosken"
-msgstr ""
+msgstr "Plej Granda Broosken"
 
 #: src/OU_MONS.cpp:58
 msgid "All High Haubudam"
-msgstr ""
+msgstr "Plej Granda Haubudam"
 
 #: src/OU_MONS.cpp:59
 msgid "All High Pfith"
-msgstr ""
+msgstr "Plej Granda Pfith"
 
 #: src/OU_MONS.cpp:60
 msgid "All High Rokken"
-msgstr ""
+msgstr "Plej Granda Rokken"
 
 #: src/OU_MONS.cpp:61
 msgid "All High Doink"
-msgstr ""
+msgstr "Plej Granda Doink"
 
 #: src/OU_MONS.cpp:62
 msgid "All High Wyrm"
-msgstr ""
+msgstr "Plej Granda Wyrm"
 
 #: src/OU_MONS.cpp:63
 msgid "All High Droog"
-msgstr ""
+msgstr "Plej Granda Droog"
 
 #: src/OU_MONS.cpp:64
 msgid "All High Ick"
-msgstr ""
+msgstr "Plej Granda Ick"
 
 #: src/OU_MONS.cpp:65
 msgid "All High Sauroid"
-msgstr ""
+msgstr "Plej Granda Sauroid"
 
 #: src/OU_MONS.cpp:66
 msgid "All High Karrotten"
-msgstr ""
+msgstr "Plej Granda Karrotten"
 
 #: src/OU_MONS.cpp:67
 msgid "All High Holgh"
-msgstr ""
+msgstr "Plej Granda Holgh"
 
 #: src/OU_MONS.cpp:71
 msgid "Deezboanz Ordo"
