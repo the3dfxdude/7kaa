@@ -758,7 +758,11 @@ int main(int argc, char **argv)
 		if( !glyphs[i] )
 		{
 			printf("Unable to render char %d\n", i);
+			// store 1 pixel bitmap
 			glyphs[i] = SDL_CreateRGBSurface(0, 1, 1, 8, 0, 0, 0, 0);
+			info[i].offset_y = 0;
+			info[i].width = 1;
+			info[i].height = 1;
 		}
 		init_info_bmp_offset(&info[i], &offset);
 
