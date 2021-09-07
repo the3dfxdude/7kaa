@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-09-06 02:16+0200\n"
+"PO-Revision-Date: 2021-09-07 19:21+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -3310,7 +3310,7 @@ msgstr "El%s je %s :"
 
 #: src/OR_NAT.cpp:907
 msgid "Please enter your chat message and press <Enter> to send."
-msgstr "Bonvolu enigi vian retbabilan mesaĝon kaj prenu <Enigu> por sendi. "
+msgstr "Bonvolu enigi vian retbabilan mesaĝon kaj prenu <Enigu> por sendi."
 
 #. TRANSLATORS: GOAL: Achieve One of the Following Before <Date>:
 #: src/OR_RANK.cpp:243
@@ -3334,11 +3334,11 @@ msgstr "CELO: Venki Ĉiujn Aliajn Regnojn."
 
 #: src/OR_RANK.cpp:274
 msgid "Defeat All Other Kingdoms."
-msgstr "Detruu Ĉiujn Aliajn Frihtanojn"
+msgstr "Detruu Ĉiujn Aliajn Regnojn."
 
 #: src/OR_RANK.cpp:283
 msgid "Destroy All Fryhtans."
-msgstr "Detruu Ĉiujn Frihtanojn"
+msgstr "Detruu Ĉiujn Frihtanojn."
 
 #. TRANSLATORS: Achieve a Population of <Number>.
 #: src/OR_RANK.cpp:295
@@ -4871,7 +4871,7 @@ msgstr "La Regno de %s%s akceptas tuj sendi vian petitan militan helpon."
 #: src/OTALKENG.cpp:1159
 #, c-format
 msgid "%s's Kingdom%s denies you your requested military aid."
-msgstr "La Regno de %s%s neas al via petit\t"
+msgstr "La Regno de %s%s neas al vi vian petitan militan helpon."
 
 #. TRANSLATORS: You agree to immediately send military aid to <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:1165
@@ -5360,63 +5360,63 @@ msgstr "Plej Granda Holgh"
 
 #: src/OU_MONS.cpp:71
 msgid "Deezboanz Ordo"
-msgstr ""
+msgstr "Deezboanz Gvidanta"
 
 #: src/OU_MONS.cpp:72
 msgid "Rattus Ordo"
-msgstr ""
+msgstr "Rattus Gvidanta"
 
 #: src/OU_MONS.cpp:73
 msgid "Broosken Ordo"
-msgstr ""
+msgstr "Broosken Gvidanta"
 
 #: src/OU_MONS.cpp:74
 msgid "Haubudam Ordo"
-msgstr ""
+msgstr "Haubudam Gvidanta"
 
 #: src/OU_MONS.cpp:75
 msgid "Pfith Ordo"
-msgstr ""
+msgstr "Pfith Gvidanta"
 
 #: src/OU_MONS.cpp:76
 msgid "Rokken Ordo"
-msgstr ""
+msgstr "Rokken Gvidanta"
 
 #: src/OU_MONS.cpp:77
 msgid "Doink Ordo"
-msgstr ""
+msgstr "Doink Gvidanta"
 
 #: src/OU_MONS.cpp:78
 msgid "Wyrm Ordo"
-msgstr ""
+msgstr "Wyrm Gvidanta"
 
 #: src/OU_MONS.cpp:79
 msgid "Droog Ordo"
-msgstr ""
+msgstr "Droog Gvidanta"
 
 #: src/OU_MONS.cpp:80
 msgid "Ick Ordo"
-msgstr ""
+msgstr "Ick Gvidanta"
 
 #: src/OU_MONS.cpp:81
 msgid "Sauroid Ordo"
-msgstr ""
+msgstr "Sauroid Gvidanta"
 
 #: src/OU_MONS.cpp:82
 msgid "Karrotten Ordo"
-msgstr ""
+msgstr "Karrotten Gvidanta"
 
 #: src/OU_MONS.cpp:83
 msgid "Holgh Ordo"
-msgstr ""
+msgstr "Holgh Gvidanta"
 
 #: src/OVGABUF.cpp:73
 msgid "An error occurred creating the front surface!"
-msgstr ""
+msgstr "Eraro okazis kreante la antaŭan surfacon!"
 
 #: src/OVGABUF.cpp:75
 msgid "An error occurred creating the back surface!"
-msgstr ""
+msgstr "Eraro okazis kreante la malantaŭan surfacon!"
 
 #: src/OWORLD_Z.cpp:985 src/OWORLD_Z.cpp:1005
 msgid "(Spy)"
@@ -5424,7 +5424,7 @@ msgstr "(Spiona)"
 
 #: src/ReplayFile.cpp:115
 msgid "The selected replay file uses an unsupported format."
-msgstr ""
+msgstr "La elektita dosiero de ripeto uzas malsubtenatan dosierformon."
 
 #: src/ReplayFile.cpp:125
 #, c-format
@@ -5432,15 +5432,17 @@ msgid ""
 "Replay version %u.%u.%u.%u.%u mismatches with current game version %u.%u.%u."
 "%u.%u"
 msgstr ""
+"Versio de ripeto %u.%u.%u.%u.%u ne kongruas kun nuna luda versio %u.%u.%u.%u."
+"%u"
 
 # POT extraction from 7KAA data files
 # data/RESOURCE/TUT_LIST.RES
 msgid "Basic Economics"
-msgstr ""
+msgstr "Baza Ekonomiko"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Capturing Villages"
-msgstr ""
+msgstr "Kaptado de Vilaĝoj"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Fryhtans"
@@ -5448,19 +5450,19 @@ msgstr "Frihtanoj"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Loyalty & Reputation"
-msgstr ""
+msgstr "Fideleco kaj Reputacio"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Mercenaries"
-msgstr ""
+msgstr "Dungatoj"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Seaborne Trade"
-msgstr ""
+msgstr "Komerco per Ŝipo"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Seats of Power & Greater Beings"
-msgstr ""
+msgstr "Seĝoj de Povo kaj pli Grandaj Estaĵoj"
 
 # data/RESOURCE/TUT_LIST.RES
 msgid "Ships"
@@ -5484,7 +5486,7 @@ msgstr "Fero"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Broosken"
-msgstr ""
+msgstr "Broosken"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -5495,15 +5497,15 @@ msgstr "Ĉinoj"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Deezboanz"
-msgstr ""
+msgstr "Deezboanz"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Doink"
-msgstr ""
+msgstr "Doink"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Droog"
-msgstr ""
+msgstr "Droog"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -5521,15 +5523,15 @@ msgstr "Grekoj"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Haubudam"
-msgstr ""
+msgstr "Haubudam"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Holgh"
-msgstr ""
+msgstr "Holgh"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Ick"
-msgstr ""
+msgstr "Ick"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -5540,7 +5542,7 @@ msgstr "Japanoj"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Karrotten"
-msgstr ""
+msgstr "Karrotten"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -5568,34 +5570,34 @@ msgstr "Normanda"
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Persian"
-msgstr ""
+msgstr "Persian"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Pfith"
-msgstr ""
+msgstr "Pfith"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Rattus"
-msgstr ""
+msgstr "Rattus"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Rokken"
-msgstr ""
+msgstr "Rokken"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Sauroid"
-msgstr ""
+msgstr "Sauroid"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00006-RACE.dbf
 msgid "Viking"
-msgstr ""
+msgstr "Vikinga"
 
 # data/RESOURCE/STD/00005-UNIT.dbf
 msgid "Wyrm"
-msgstr ""
+msgstr "Wyrm"
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/STD/00005-UNIT.dbf
@@ -5622,7 +5624,7 @@ msgstr "Gastejo"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Prayer"
-msgstr ""
+msgstr "Preĝanto"
 
 # data/RESOURCE/STD/00007-FIRM.dbf
 msgid "Seat of Power"
@@ -5675,6 +5677,10 @@ msgid ""
 "will also learn how to recover their hoarded treasures, including the long-"
 "lost Scrolls of Power. "
 msgstr ""
+"En ĉi tiu leciono vi lernos kiel loki la Nestojn de la Frihtanoj kaj la "
+"kialoj pro kiuj povas esti tre rekompencante ataki kaj venki ilin. Vi ankaŭ "
+"lernos kiel reakiri iliajn akumulitajn trezorojn, inkluzive de la longe "
+"perditaj Ruloj de Povo. "
 
 # data/RESOURCE/TUT_INTR/00004-4WEAPONS.TXT:1
 msgid ""
@@ -5684,6 +5690,10 @@ msgid ""
 "effectiveness. Special attention will be given to the most unusual weapon, "
 "the Porcupine. "
 msgstr ""
+"En ĉi tiu leciono vi lernos uzi vian Arman Esploradon konstruante Militajn "
+"Fabrikojn kaj la fabrikadon de Armiloj. Vi ankaŭ lernos kiel kontroli tiujn "
+"Armilojn bataleje kaj kiel  maksimumigi ilian efektivecon. Speciala atento "
+"estos donita al la plej nekutima armilo, la Histriko. "
 
 # data/RESOURCE/TUT_INTR/00005-5BAS_NAV.TXT:1
 msgid ""
@@ -5692,6 +5702,10 @@ msgid ""
 "then how to disembark the troops. You will also learn the benefits of on-"
 "board Leadership and how it can enhance your fighting ability. "
 msgstr ""
+"En ĉi tiu leciono vi lernos kiel konstrui Havenon kaj uzi ĝin por konstrui "
+"Ŝipojn. Vi lernos kiel ŝarĝi ilin kun trupoj, kiel movi ilin kaj poste kiel "
+"elŝipigi la trupojn. Vi ankaŭ lernos la avantaĝoj de enŝipa Estreco kaj kiel "
+"ĝi povas plibonigi vian batalan kapablon. "
 
 # data/RESOURCE/TUT_INTR/00006-7MERCENA.TXT:1
 msgid ""
@@ -5699,6 +5713,9 @@ msgid ""
 "Mercenaries from the world over. You will also learn how to evaluate their "
 "skills and then how to hire them to work for your Kingdom. "
 msgstr ""
+"En ĉi tiu leciono vi lernos kiel konstrui Gastejon, kiel uzi ĝin por allogi "
+"Dungatojn el la tuta mondo. Vi ankaŭ lernos kiel taksi ĝiajn kapablojn kaj "
+"kiel dungi ilin por labori por via Regno. "
 
 # data/RESOURCE/TUT_INTR/00007-9SEATPOW.TXT:1
 msgid ""
@@ -5707,19 +5724,26 @@ msgid ""
 "Power, you will learn How to Usher In the Faithful, and how to make use of "
 "their powers of prayer to invoke Greater Beings.  "
 msgstr ""
+"En ĉi tiu leciono vi lernos Kiel Plej Bone Uzi la Rulojn de Povo, kaj Kiel "
+"Konstrui kaj Uzi Seĝojn de Povo. Post lerni pri Seĝoj de Povo, vi lernos "
+"Kiel Konduki al la Fidelaj kaj kiel uzi iliajn povojn de preĝoj por alvoki "
+"Pli Grandajn Estaĵojn.  "
 
 # data/RESOURCE/TUT_INTR/00008-3RESEARC.TXT:1
 msgid ""
 "In this lesson you will learn how to build a Tower of Science and then use "
 "it to conduct research into advanced Weaponry and Ships. "
 msgstr ""
+"En ĉi tiu leciono vi lernos kiel konstrui Turon de Scienco kaj poste uzi ĝin "
+"por esplori pri altnivelaj Armiloj kaj Ŝipoj. "
 
 # data/RESOURCE/TUT_INTR/00009-2B_TRADE.TXT:1
+#, fuzzy
 msgid ""
 "With these basic concepts of economics understood, you will next learn how "
 "to conduct international and domestic Trade and how to transport Raw "
 "Materials. "
-msgstr ""
+msgstr "Kompreninte tiujn bazajn konceptojn de "
 
 # data/RESOURCE/TUT_INTR/00010-LOYALTY.TXT:1
 msgid ""
@@ -5728,13 +5752,19 @@ msgid ""
 "reputation of a tyrant, and how to project the image of being a true and "
 "noble King. "
 msgstr ""
+"En ĉi tiu leciono vi lernos la multajn aferojn, kiujn vi povas fari por "
+"sekurigi la fidelecon de viaj homoj. Ni ankaŭ temis kiel eviti akiri la "
+"reputacion de tirano kaj kiel protekti la bildon de esti vera kaj nobela "
+"Reĝo. "
 
 # data/RESOURCE/TUT_INTR/00011-SPYING.TXT:1
+#, fuzzy
 msgid ""
 "In this lesson you will learn how to train or hire Spies, how to infiltrate "
 "the ranks of the enemy and how to use Spies to bribe, sabotage, capture and "
 "steal. "
 msgstr ""
+"En ĉi tiu leciono vi lernos kiel trejni aŭ dungi Spionoj, kiel infiltri "
 
 # data/RESOURCE/TUT_INTR/00012-10CAPTUR.TXT:1
 msgid ""
@@ -5742,24 +5772,33 @@ msgid ""
 "Villages. When you finish, you will know how to bring large numbers of "
 "people into your Empire quickly. "
 msgstr ""
+"En ĉi tiu leciono vi lernos kiel kapti kaj sendependajn kaj malamikajn "
+"Vilaĝojn. Kiam vi finos, vi ankaŭ scios kiel envenigi grandan nombron de "
+"homoj al via Imperio rapide. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:3
 msgid ""
 "To conduct research on Weapons and Ships, your Kingdom must posses at least "
 "one Tower of Science. "
 msgstr ""
+"Por esplori pri Armiloj kaj Ŝipoj, via Regno devas havi almenaŭ unu Turon de "
+"Scienco. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:5
 msgid ""
 "To construct a Tower, you should first train a Peasant in the skill of "
 "Research. "
 msgstr ""
+"Por konstrui Turon, vi unue devas trejni Kamparanon al la scipovo de "
+"Esplorado. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:8
 msgid ""
 "When the new researcher has exited your Village, select him and order him to "
 "build a Tower of Science, within Linking distance of the Village. "
 msgstr ""
+"Kiam la nova esploristo eliras el via Vilaĝo, elektu lin kaj ordoni lin "
+"konstrui Turon de Sciencon, ene de Ligila distanco de la Vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:10
 msgid ""
@@ -5767,12 +5806,16 @@ msgid ""
 "Link to the Village operating, Peasants will quickly volunteer for positions "
 "inside. "
 msgstr ""
+"Kiam la konstruaĵo estos finita, la esploristo restos en la Turo. Funkciante "
+"la Ligilo al la Vilaĝo, Kamparanoj rapide iĝos volontuloj por oficoj ene. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:13
 msgid ""
 "To begin a research project, select the Tower of Science and Click on the "
 "Research Tile. "
 msgstr ""
+"Por komenci esploradan projekto elektu la Turon de Scienco kaj Klaku en la "
+"Esploradan Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:16
 msgid ""
@@ -5780,12 +5823,16 @@ msgid ""
 "yet unavailable, because you do not yet have the knowledge to even begin "
 "thinking about them. "
 msgstr ""
+"Oni prezentis nun al vi opciojn de projektoj. Kelkaj projektoj estas ankoraŭ "
+"maldisponeblaj, ĉar vi ne havas ankoraŭ la scion por eĉ pensi pri ili. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:19
 msgid ""
 "Click now on one of the two choices. When you have done so, your group of "
 "researchers will immediately get to work. "
 msgstr ""
+"AlKlaku nun unu el la du opcioj. Kiam vi faris tion, via grupo de "
+"esploristoj tuj laboros. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:22
 msgid ""
@@ -5793,12 +5840,17 @@ msgid ""
 "will increase over time, however; later projects will finish much more "
 "quickly than your first ones do. "
 msgstr ""
+"Vi rimarkos, ke la Lerteca Nivelo de la esploristoj estas tre malgranda. Ĝi "
+"tamen pliiĝos iom post iom. Postaj projektoj finos multe pli rapide ol viaj "
+"unuaj. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:25
 msgid ""
 "When a research project has been completed, you will be notified in a news "
 "message at the bottom of your screen. "
 msgstr ""
+"Kiam la esplorada projekto estas plenigita, oni sciigos al vi novaĵan "
+"mesaĝon en la malsupro via ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:27
 msgid ""
@@ -5806,6 +5858,9 @@ msgid ""
 "researched. Once the Mark I research of a Weapon has been completed, your "
 "researchers will immediately begin work on the Mark II. "
 msgstr ""
+"En la plimulto de la Armilaj projektoj, estas tri eblaj niveloj por esplori. "
+"Kiam la esplorada Nivelo I estas plenigita, viaj esploristoj tuj laboros por "
+"la Nivelo II. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:30
 msgid ""
@@ -5813,6 +5868,9 @@ msgid ""
 "Towers of Science and designate a new project. You may, of course, change "
 "projects any time you wish. "
 msgstr ""
+"Kiam projekto de Nivelo III estas plenigita, vi devas reiri al viaj Turoj de "
+"Sciencoj kaj elekti novan projekton. Vi povas kompreneble ŝanĝi la "
+"projektojn ĉiam, kiam vi volas. "
 
 # data/RESOURCE/TUT_TEXT/00000-3RESEARC.TXT:33
 msgid ""
@@ -5820,6 +5878,9 @@ msgid ""
 "Click on the Technology Scroll at the top of your screen, or press the F6 "
 "key on your keyboard.  "
 msgstr ""
+"Vi vidi vian esploradan progreson kaj vian nunan teknologian nivelon rapide, "
+"Alklaku la Teknologian Rulon en la supro de via ekrano, aŭ premu la F6-"
+"klavon en via klavaro.  "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:3
 msgid ""
@@ -5828,6 +5889,11 @@ msgid ""
 "your King can build Harbors. When selecting a site to build a Harbor, make "
 "sure that the large square is flashing before you Click your mouse. "
 msgstr ""
+"Antaŭ vi volas konstrui eĉ unu Ŝipon, vi devas konstrui Havenon. Havenoj "
+"povas esti konstruitaj nur en difinitaj lokoj en marbordaj regionoj. Nur "
+"Konstrua unuoj aŭ via Reĝo povas konstrui Havenojn. Kiam vi elektas lokon "
+"por konstrui Havenon, kontrolu, ke la granda kvadrato estas fulmante antaŭ "
+"vi Klaku per muso. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:7
 msgid ""
@@ -5835,16 +5901,21 @@ msgid ""
 "Tile. Clicking on that Tile will present you with a list of Ships you can "
 "build. The Ships available depend on the research you have done. "
 msgstr ""
+"Kiam la Haveno estas konstruita, Alklaki ĝin montros la Kahelon por Konstrui "
+"Ŝipon. Alklaki tiun kahelon montros al vi la liston de Ŝipoj, kiujn vi povas "
+"konstrui. La Ŝipoj disponeblaj dependas de la esplorado, kiun vi faris. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:11
 msgid ""
 "You can build Transports and Traders without having to do any research. "
 "Caravels and Galleons require research. Let us first build a Transport. "
 msgstr ""
+"Vi povas konstrui Transportilojn kaj Komercilojn sen fari iun esploradon. "
+"Karaveloj kaj Galionoj bezonas esploradon. Ni unue konstruu Transportilon. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:14
 msgid "Click on the Transport Button. "
-msgstr ""
+msgstr "Alklaku la Butonon de Transportilo. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:16
 msgid ""
@@ -5852,22 +5923,29 @@ msgid ""
 "You'll see the Ship listed in the Harbor's registry. A maximum of four ships "
 "may be in the Harbor at any one time. "
 msgstr ""
+"Post iu ajn Ŝipo estas konstruita, ĝi restos en la sekureco de la Haveno. Vi "
+"vidos la Ŝipon listigitan en la Havena registro. Maksimumo de kvar ŝipoj "
+"povas esti en la Haveno samtempe. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:20
 msgid ""
 "To move the Ship out of your Harbor, first Click on it in the Harbor "
 "registry, then Click on the Set Sail Tile. "
 msgstr ""
+"Por movi Ŝipo el via Haveno unue Alklaku ĝin en la Havenan registron, poste "
+"Alklaku la Ŝipveturi-Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:23
 msgid "Your Transport will now appear immediately outside the Harbor. "
-msgstr ""
+msgstr "Via Transportilo aperos nun tuj ekster la Haveno. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:25
 msgid ""
 "Transports are for transporting Soldiers or Weapons; let's look next at how "
 "to load them. "
 msgstr ""
+"Transportiloj estas por transporti Soldatojn kaj Armilojn; ni vidu poste "
+"kiel ŝarĝi ilin. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:27
 msgid ""
@@ -5875,6 +5953,9 @@ msgid ""
 "Transport. You will see those units and your Transport moving towards the "
 "shore at the same time. "
 msgstr ""
+"Elektu maksimume naŭ Soldatojn aŭ Armilojn, poste Dekstre-Alklaku la "
+"Transportilon. Vi vidos tiujn unuojn kaj vian Transportilon movantajn al la "
+"marbordo samtempe. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:30
 msgid ""
@@ -5882,6 +5963,9 @@ msgid ""
 "Clicking on the Transport will then show all the units inside. The numbers "
 "you see next to the units are their Hit-Points. "
 msgstr ""
+"Kiam la du kuniĝas, la elektitaj unuoj iros sub la Transportilon. Alklaki la "
+"Transportilon montros tiam ĉiujn unuojn ene. La nombroj, kiujn vi vidas apud "
+"la unuoj estas iliaj Vivaj-Poentoj. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:34
 msgid ""
@@ -5889,6 +5973,9 @@ msgid ""
 "then Click on the Disembark Tile.  This will unload the entire ship's "
 "company. The units will all be selected and ready for your orders. "
 msgstr ""
+"Por elŝipiĝi unuoj el Transportilo, unue movu la Ŝipon supren al marbordo "
+"kaj poste Alklaku la Elŝipiĝi-Kahelon.  Tio elŝipigos la tutan ŝipan trupon. "
+"La unuoj estos ĉiuj elektitaj kaj pretaj por viaj komandoj."
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:38
 msgid ""
@@ -5896,6 +5983,9 @@ msgid ""
 "and then Right-Click on the picture of the unit you wish to disembark. That "
 "unit will then exit the Transport and stand on the shore. "
 msgstr ""
+"Se vi deziras elŝipigi nur unu unuon, unue movu la Transportilon al la "
+"marbordo kaj poste Dekstre-Alklaku la bildon de la unuo, kiun vi volas "
+"elŝipigi. Tiu unuo poste eliros el la Transportilo kaj stari en la barbordo. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:41
 msgid ""
@@ -5903,6 +5993,8 @@ msgid ""
 "your disposal. These two Ships are built in the same way you build your "
 "Transport. "
 msgstr ""
+"Se vi faris esploron, vi ankaŭ havos Karavelojn kaj Galionojn disponeblajn. "
+"Tiuj du Ŝipoj estas konstruitaj same kiel vi konstruas vian Transportilon. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:44
 msgid ""
@@ -5910,12 +6002,18 @@ msgid ""
 "are built with Cannon aboard. Caravels and Galleons can thus both transport "
 "goods and units, and attack enemy Ships and targets on shore. "
 msgstr ""
+"Malkiel Transportiloj kaj Komerciloj, kiuj estas sendefenda, Karaveloj kaj "
+"Galionoj estas konstruitaj kun pafilegoj enŝipe. Karaveloj kaj Galionoj "
+"povas do transporti varojn kaj unuojn kaj ataki malamikajn ŝipojn kaj celojn "
+"marborde. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:47
 msgid ""
 "You may order your Ships to attack the enemy in exactly the same way you "
 "order your Soldiers on land. "
 msgstr ""
+"Vi povas komandi al viaj Ŝipoj ataki la malamikon same ĝuste kiel vi "
+"komandas al viaj soldatoj surtere. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:49
 msgid ""
@@ -5923,12 +6021,17 @@ msgid ""
 "a high Leadership Level. A General with a Leadership Level of 100 will "
 "double the effectiveness of a Cannon as compared to a Ship with no Leaders. "
 msgstr ""
+"La povo de tiuj Ŝipaj Pafilegoj povas esti plibonigita enŝipigante Ĝeneralon "
+"kun granda Estreca nivelo. Ĝeneralo kun Estreca Nivelo de 100 duobligos la "
+"efektivecon de Pafilego kompare al Ŝipo sen Estroj."
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:3
 msgid ""
 "For a Kingdom separated by the sea from other Kingdoms and resources, sea-"
 "borne trade will become important to your survival. "
 msgstr ""
+"Por Regno apartigita per la maro de aliaj Regnoj kaj materialoj, mara "
+"komerco iĝos grava por via supervivo.  "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:5
 msgid ""
@@ -8408,7 +8511,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:137
 msgid "Disembark from Ship"
-msgstr ""
+msgstr "Elŝipiĝi"
 
 # data/RESOURCE/HELP.RES:138
 msgid ""
