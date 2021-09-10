@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-09-07 19:21+0200\n"
+"PO-Revision-Date: 2021-09-11 01:37+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -1173,7 +1173,7 @@ msgstr "Egipta Generalo"
 
 #: src/OHELP.cpp:546
 msgid "Mughul General"
-msgstr "Mogola Ĝeneralo"
+msgstr "Mogola Generalo"
 
 #: src/OHELP.cpp:547
 msgid "Zulu General"
@@ -2385,7 +2385,7 @@ msgstr "Sendependa unuo %s aliĝis al via armeo."
 #: src/ONEWSENG.cpp:1080
 #, c-format
 msgid "General %s has renounced you and become independent."
-msgstr "Ĝeneralo %s forlasis vin kaj iĝis sendependa."
+msgstr "Generalo %s forlasis vin kaj iĝis sendependa."
 
 #. TRANSLATORS: <Name> has renounced you and become independent.
 #: src/ONEWSENG.cpp:1085
@@ -2397,7 +2397,7 @@ msgstr "%s forlasis vin kaj iĝis sendependa."
 #: src/ONEWSENG.cpp:1095
 #, c-format
 msgid "General %s has betrayed you and turned towards %s's Kingdom%s."
-msgstr "Ĝeneralo %s perfidis vin kaj turnis al Regno de %s%s."
+msgstr "Generalo %s perfidis vin kaj turnis al Regno de %s%s."
 
 #. TRANSLATORS: <Name> has betrayed you and turned towards <King>'s Kingdom<Color>.
 #: src/ONEWSENG.cpp:1100
@@ -2409,7 +2409,7 @@ msgstr "%s perfidis vin kaj turnis al Regno de %s%s."
 #: src/ONEWSENG.cpp:1108
 #, c-format
 msgid "General %s of %s's Kingdom%s has defected to your forces."
-msgstr "Ĝeneralo %s de la Regno de %s%s aliĝis al via armeo."
+msgstr "Generalo %s de la Regno de %s%s aliĝis al via armeo."
 
 #. TRANSLATORS: <Name> of <King>'s Kingdom<Color> has defected to your forces.
 #: src/ONEWSENG.cpp:1113
@@ -2421,7 +2421,7 @@ msgstr "%s de la Regno de %s%s aliĝis al via armeo."
 #: src/ONEWSENG.cpp:1135
 #, c-format
 msgid "Your general, %s, has been slain."
-msgstr "Via ĝeneralo, %s, estis mortigita."
+msgstr "Via generalo, %s, estis mortigita."
 
 #. TRANSLATORS: Your King, <Name>, has been assassinated by an enemy spy.
 #: src/ONEWSENG.cpp:1161
@@ -2433,7 +2433,7 @@ msgstr "Via Reĝo, %s, estis mortigita de malamika spiono."
 #: src/ONEWSENG.cpp:1166
 #, c-format
 msgid "Your general, %s, has been assassinated by an enemy spy."
-msgstr "Via ĝeneralo, %s, estis mortigita de malamika spiono."
+msgstr "Via generalo, %s, estis mortigita de malamika spiono."
 
 #: src/ONEWSENG.cpp:1172
 msgid "The enemy spy has been killed."
@@ -2447,7 +2447,7 @@ msgstr "Malamika spiono estis mortigita dum li klopodis mortigi vian Reĝon."
 msgid ""
 "An enemy spy has been killed while attempting to assassinate your General."
 msgstr ""
-"Malamika spiono estis mortigita dum li klopodis mortigi vian Ĝeneralon."
+"Malamika spiono estis mortigita dum li klopodis mortigi vian Generalon."
 
 #. TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
 #: src/ONEWSENG.cpp:1202
@@ -2469,75 +2469,75 @@ msgstr "Via Fera Minejo elĉerpis ĝian Feran rezervon."
 #: src/ONEWSENG.cpp:1226
 #, c-format
 msgid "Your scientists have finished their Catapult Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Katapulto de Nivelo %s."
+msgstr "Viaj sciencistoj finis ilian esploradon de Katapulto de Nivelo %s."
 
 #: src/ONEWSENG.cpp:1227
 #, c-format
 msgid "Your scientists have finished their Porcupine Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Histriko de Nivelo %s."
+msgstr "Viaj sciencistoj finis ilian esploradon de Histriko de Nivelo %s."
 
 #: src/ONEWSENG.cpp:1228
 #, c-format
 msgid "Your scientists have finished their Ballista Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Balisto de Nivelo %s."
+msgstr "Viaj sciencistoj finis ilian esploradon de Balisto de Nivelo %s."
 
 #: src/ONEWSENG.cpp:1229
 #, c-format
 msgid "Your scientists have finished their Cannon Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Pafilego de Nivelo %s."
+msgstr "Viaj sciencistoj finis ilian esploradon de Pafilego de Nivelo %s."
 
 #: src/ONEWSENG.cpp:1230
 #, c-format
 msgid "Your scientists have finished their Spitfire Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Fajrkraĉilo de Nivelo %s."
+msgstr "Viaj sciencistoj finis ilian esploradon de Fajrkraĉilo de Nivelo %s."
 
 #: src/ONEWSENG.cpp:1231
 #, c-format
 msgid "Your scientists have finished their Caravel Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Karavelo de Nivelo %s."
+msgstr "Viaj sciencistoj finis ilian esploradon de Karavelo de Nivelo %s."
 
 #: src/ONEWSENG.cpp:1232
 #, c-format
 msgid "Your scientists have finished their Galleon Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Galiono de Nivelo %s."
+msgstr "Viah sciencistoj finis ilian esploradon de Galiono de Nivelo %s."
 
 #: src/ONEWSENG.cpp:1233
 #, c-format
 msgid "Your scientists have finished their Unicorn Mark %s research."
-msgstr "Via sciencistoj finis ilia esplorado de Unukornulo de Nivelo %s."
+msgstr "Viaj sciencistoj finis ilian esploradon de Unukornulo de Nivelo %s."
 
 #. TRANSLATORS: Your scientists have finished their <Tech> research.
 #: src/ONEWSENG.cpp:1238
 msgid "Your scientists have finished their Catapult research."
-msgstr "Via sciencistoj finis ilia esplorado de Katapulto."
+msgstr "Viaj sciencistoj finis ilian esploradon de Katapulto."
 
 #: src/ONEWSENG.cpp:1239
 msgid "Your scientists have finished their Porcupine research."
-msgstr "Via sciencistoj finis ilia esplorado de Histriko."
+msgstr "Viaj sciencistoj finis ilian esploradon de Histriko."
 
 #: src/ONEWSENG.cpp:1240
 msgid "Your scientists have finished their Ballista research."
-msgstr "Via sciencistoj finis ilia esplorado de Balisto."
+msgstr "Viaj sciencistoj finis ilian esploradon de Balisto."
 
 #: src/ONEWSENG.cpp:1241
 msgid "Your scientists have finished their Cannon research."
-msgstr "Via sciencistoj finis ilia esplorado de Pafilego."
+msgstr "Viaj sciencistoj finis ilian esploradon de Pafilego."
 
 #: src/ONEWSENG.cpp:1242
 msgid "Your scientists have finished their Spitfire research."
-msgstr "Via sciencistoj finis ilia esplorado de Fajrkraĉilo."
+msgstr "Viaj sciencistoj finis ilian esploradon de Fajrkraĉilo."
 
 #: src/ONEWSENG.cpp:1243
 msgid "Your scientists have finished their Caravel research."
-msgstr "Via sciencistoj finis ilia esplorado de Karavelo."
+msgstr "Viaj sciencistoj finis ilian esploradon de Karavelo."
 
 #: src/ONEWSENG.cpp:1244
 msgid "Your scientists have finished their Galleon research."
-msgstr "Via sciencistoj finis ilia esplorado de Galiono."
+msgstr "Viaj sciencistoj finis ilian esploradon de Galiono."
 
 #: src/ONEWSENG.cpp:1245
 msgid "Your scientists have finished their Unicorn research."
-msgstr "Via sciencistoj finis ilia esplorado de Unukornulo."
+msgstr "Viaj sciencistoj finis ilian esploradon de Unukornulo."
 
 #. TRANSLATORS: Your <Firm> near <Town> has been destroyed by lightning.
 #: src/ONEWSENG.cpp:1276
@@ -2709,13 +2709,13 @@ msgstr "Via Haveno estis batita de fulmo."
 #: src/ONEWSENG.cpp:1358
 #, c-format
 msgid "Your General %s has been struck and killed by lightning."
-msgstr "Via Ĝeneralo %s estis batita kaj mortigita de fulmo."
+msgstr "Via Generalo %s estis batita kaj mortigita de fulmo."
 
 #. TRANSLATORS: Your General <Name> has been struck and injured by lightning.
 #: src/ONEWSENG.cpp:1363
 #, c-format
 msgid "Your General %s has been struck and injured by lightning."
-msgstr "Via Ĝeneralo %s estis batita kaj vundita de fulmo."
+msgstr "Via Generalo %s estis batita kaj vundita de fulmo."
 
 #. TRANSLATORS: Your King <Name> has been struck and killed by lightning.
 #: src/ONEWSENG.cpp:1371
@@ -3194,7 +3194,7 @@ msgstr "Movebla"
 
 #: src/OR_MIL.cpp:470
 msgid "Human General"
-msgstr "Homa Ĝeneralo"
+msgstr "Homa Generalo"
 
 #: src/OR_NAT.cpp:69
 msgid "Information"
@@ -5192,7 +5192,7 @@ msgstr "Ribela Estro"
 # data/RESOURCE/STD/00007-FIRM.dbf
 #: src/OUNIT.cpp:768 src/OUNITIF.cpp:1234
 msgid "General"
-msgstr "Ĝeneralo"
+msgstr "Generalo"
 
 #. TRANSLATORS: Please select a location to build the <Firm>.
 #: src/OUNITIF.cpp:1009
@@ -5975,7 +5975,7 @@ msgid ""
 msgstr ""
 "Por elŝipiĝi unuoj el Transportilo, unue movu la Ŝipon supren al marbordo "
 "kaj poste Alklaku la Elŝipiĝi-Kahelon.  Tio elŝipigos la tutan ŝipan trupon. "
-"La unuoj estos ĉiuj elektitaj kaj pretaj por viaj komandoj."
+"La unuoj estos ĉiuj elektitaj kaj pretaj por viaj komandoj. "
 
 # data/RESOURCE/TUT_TEXT/00001-5BAS_NAV.TXT:38
 msgid ""
@@ -6021,9 +6021,9 @@ msgid ""
 "a high Leadership Level. A General with a Leadership Level of 100 will "
 "double the effectiveness of a Cannon as compared to a Ship with no Leaders. "
 msgstr ""
-"La povo de tiuj Ŝipaj Pafilegoj povas esti plibonigita enŝipigante Ĝeneralon "
-"kun granda Estreca nivelo. Ĝeneralo kun Estreca Nivelo de 100 duobligos la "
-"efektivecon de Pafilego kompare al Ŝipo sen Estroj."
+"La povo de tiuj Ŝipaj Pafilegoj povas esti plibonigita enŝipigante Generalon "
+"kun granda Estreca nivelo. Generalo kun Estreca Nivelo de 100 duobligos la "
+"efektivecon de Pafilego kompare al Ŝipo sen Estroj. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:3
 msgid ""
@@ -6038,11 +6038,15 @@ msgid ""
 "In some cases, even when you are not cut off by water, sea-borne Trade along "
 "a coastline may be much faster than trade by Caravan. "
 msgstr ""
+"En kelkaj kazoj, eĉ kiam vi ne estas izolita per akvo, mara Komerco laŭlonge "
+"de la marbordo povus esti pli rapida ol komerco per Karavano. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:7
 msgid ""
 "Ships that can be used for trade are your Traders, Caravels and Galleons. "
 msgstr ""
+"Ŝipoj, kiuj povas esti uzata por komerci estas viaj Komerciloj, Karaveloj "
+"kaj Galionoj. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:9
 msgid ""
@@ -6050,6 +6054,9 @@ msgid ""
 "engage in trade. With Trading Ships, you may carry Raw Materials from "
 "distant Mines to where your Factories are located. "
 msgstr ""
+"Viaj Komercaj Ŝipoj povas ankaŭ provizi simplan transporton sen engaĝi en "
+"komerco. Per Komercaj Ŝipoj vi povas porti Krudajn Materialojn el distaj "
+"Minejoj, al kie viaj Fabrikoj estas. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:12
 msgid ""
@@ -6057,6 +6064,9 @@ msgid ""
 "other Harbor required in a trading route can belong either to your Kingdom, "
 "or to another Kingdom with which you have a trade treaty. "
 msgstr ""
+"Por krei maran komercan itineron devas esti almenaŭ unu Haveno. La alia "
+"bezonata Haveno en komerca itinero povas aparteni aŭ al via Regno aŭ al alia "
+"Regno, kun kiu vi havas komercan traktaton. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:15
 msgid ""
@@ -6065,34 +6075,46 @@ msgid ""
 "have nothing to carry, as Harbors keep no goods in storage. They are simply "
 "a link between resource places and your Ships. "
 msgstr ""
+"Iu ajn Haveno uzita kiel finstacio en komerca itinero devas esti Ligita al "
+"aŭ Bazaroj, aŭ Minejoj aŭ Fabrikoj. Se ligilo ne estas farita, la Komercaj "
+"Ŝipoj havos nenion por porti, ĉar Havenoj ne havas varojn en konservejo. Ili "
+"simple estas ligiloj inter materialejoj kaj viaj Ŝipoj. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:19
 msgid ""
 "To set your stops on your trading route, first select your Ship. It must, of "
 "course, be outside the Harbor. "
 msgstr ""
+"Por krei viajn haltejojn en via komerca itinero unue elekti vian Ŝipon. Ĝi "
+"devas, kompreneble, esti ekster la Haveno. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:22
 msgid ""
 "If you have selected a Caravel or a Galleon, you will have two choices of "
 "what to view inside the Ship: Goods or Units. "
 msgstr ""
+"Se vi elektis Karavelon aŭ Galionon, vi havos du elektojn de kiun vidi ene "
+"de la Ŝipo: Varoj aŭ Unuoj. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:24
 msgid "For trading purposes, you will need to Click on the Goods Button. "
-msgstr ""
+msgstr "Por komercaj celoj vi devos Alklaki la Butonon de Varoj. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:26
 msgid ""
 "Now you will see that, as with your Caravans, you can set three different "
 "stops for your Trading Ships. "
 msgstr ""
+"Nun vi vidos, ke, kiel per viaj Karavanoj, vi povas krei tri malsamajn "
+"haltejojn por viaj Komercaj Ŝipoj. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:28
 msgid ""
 "When you Click on the Ship's Set Stop Button, your Hand Cursor will change "
 "into the Ship & Arrow Cursor. Use this cursor to Click on the first Harbor. "
 msgstr ""
+"Kiam vi Alklakas la Ŝipan Butonon de Agordi Haltejon, via Mana Kursoro iĝos "
+"la Ŝipa kaj Saga Kursoro. Uzu ĉi tiun kursoron por Alklaki la unuan Havenon. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:31
 msgid ""
@@ -6100,18 +6122,25 @@ msgid ""
 "available will depend upon what the Harbor is linked to. You may also choose "
 "not to pick up anything. "
 msgstr ""
+"Nun vi vidos listo de aĵoj, kiujn vi povas preni el tiu Haveno. La aĵoj "
+"disponeblaj dependos je, al kio la Haveno estas ligita. Vi ankaŭ povas "
+"elekti nenion preni. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:35
 msgid ""
 "For your second or third stops you will need to Click on other Harbors. When "
 "you do, lists of goods you can pick up will appear. "
 msgstr ""
+"Por viaj duaj kaj triaj haltejoj vi devos Alklaki aliajn Havenojn. Kiam vi "
+"faras tion, listo de varoj, kiujn vi povas preni, aperos. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:38
 msgid ""
 "If a second Harbor is your own, your Ship will drop off the goods, if any, "
 "that you picked up from the first Harbor. "
 msgstr ""
+"Se unua Haveno estas via, via Ŝipo lasos la varojn, se estas iuj ajn, kiujn "
+"vi prenis en la unua Haveno. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:40
 msgid ""
@@ -6119,6 +6148,8 @@ msgid ""
 "off any goods. In foreign Harbors you will only be able to pick up goods "
 "from Markets linked to them. "
 msgstr ""
+"Se la dua Haveno apartenas al alia Regno, vi ne povos lasi neniun varon. En "
+"fremdaj Havenoj vi nur eblos preni varojn el Bazaroj ligitaj al ili. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:43
 msgid ""
@@ -6126,6 +6157,9 @@ msgid ""
 "or Mines linked to their Harbors. This is to make sure Kingdoms can keep "
 "control over their production and distribution. "
 msgstr ""
+"Vi NE povas preni Finitaj Varoj aŭ Krudaj Materialoj el fremdaj Fabrikoj aŭ "
+"Minejoj ligitaj al iliaj Havenoj. Tio estas por certigi, ke Regnoj povas "
+"kontroli sian produktadon kaj distribuadon. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:46
 msgid ""
@@ -6133,6 +6167,9 @@ msgid ""
 "right of the Goods Button. If you Click on this button it will change to a "
 "\"C\" Button. "
 msgstr ""
+"Kiam Galiono aŭ Karavelo estas elektita, vi rimarkos \"T\"-Butonon "
+"maldekstre de la Butono de Varoj. Se vi Alklakas ĉi tiun butonon, ĝi fariĝos "
+"\"C\"-Butono. "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:49
 msgid ""
@@ -6140,6 +6177,9 @@ msgid ""
 "route. If at any time you wish to regain total control over that Ship you "
 "must Click on the button, changing it to a \"C\". "
 msgstr ""
+"Kiam la butono estas starigita kiel \"T\", la Ŝipo daŭrigos ŝipi laŭ sia "
+"komerca itinero. Se iam vi volas reakiri tutan kontrolon de tiu Ŝipo, vi "
+"devos Alklaki la butonon, ŝanĝante ĝin al \"C\". "
 
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:52
 msgid ""
@@ -6148,6 +6188,10 @@ msgid ""
 "Clicking on the \"C\" Button will change it back into a \"T\". Your Ship "
 "will then immediately return to its existing trading route.    "
 msgstr ""
+"Kiam la butono estas starigita kiel \"C\", vi povas uzi la Ŝipon por aliaj "
+"celoj, kiel transporti soldatojn aŭ por mara milito.  Kiam tiuj taskoj estas "
+"finitaj, Alklaki la \"C\"-Butonon ŝanĝos ĝi ree al \"T\". Via Ŝipo reiros "
+"tuj al ĝia ekzistanta komerca itinero.  "
 
 # data/RESOURCE/TUT_TEXT/00003-8FRYHTAN.TXT:3
 msgid ""
@@ -6156,12 +6200,17 @@ msgid ""
 "world map as white dots, slightly smaller than those denoting Independent "
 "Villages. "
 msgstr ""
+"Tra la lando vi renkontos kun kelkaj Frihtanaj Nestoj; ĉi tiuj enhavas "
+"grandan varion de danĝeraj estaĵoj. La Nestoj aperos en via mondomapo kiel "
+"blankaj punktoj, iom pli malgrandaj ol tiuj indikante sendependajn Vilaĝojn. "
 
 # data/RESOURCE/TUT_TEXT/00003-8FRYHTAN.TXT:6
 msgid ""
 "If left alone, these Fryhtans will seldom attack you; if you disturb them, "
 "however, they will sally forth and attack without mercy. "
 msgstr ""
+"Lasitaj solaj tiuj Frihtanoj malofte atakos vin; se vi ĝenas ilin, tamen, "
+"ili fortege eliros kaj atakos vin sen kompato. "
 
 # data/RESOURCE/TUT_TEXT/00003-8FRYHTAN.TXT:8
 msgid ""
@@ -6169,6 +6218,9 @@ msgid ""
 "well as ancient Scrolls of Power; the latter will give you the ability to "
 "build Your Seats of Power. "
 msgstr ""
+"Do kial vi ĝenus ilin? Frihtanaj Nestoj enhavas grandan riĉecon de oro, kaj "
+"malnovaj Rulojn de Povo; la lasta ebligos al vi konstrui Viajn Seĝojn de "
+"Povo. "
 
 # data/RESOURCE/TUT_TEXT/00003-8FRYHTAN.TXT:11
 msgid ""
@@ -6177,11 +6229,15 @@ msgid ""
 "dispersing from the Lair, you will be able to pick up the treasures they "
 "drop. "
 msgstr ""
+"Ne provu ataki Frihtanan Neston, krom se viaj trupoj estas bonege trejnitaj "
+"kaj multnombraj. Se vi sukcesas venki la hordon, kiu eliras el la nesto, vi "
+"eblos akiri la trezorojn, kiujn ili faligas. "
 
 # data/RESOURCE/TUT_TEXT/00003-8FRYHTAN.TXT:14
 msgid ""
 "Do this by sending one of your soldiers to the spot where the treasure lies. "
 msgstr ""
+"Faru tion sendante unu el viaj soldatoj al la ejo, kie restas la trezoro.  "
 
 # data/RESOURCE/TUT_TEXT/00003-8FRYHTAN.TXT:16
 msgid ""
@@ -6189,6 +6245,8 @@ msgid ""
 "attacking the Lair until it is destroyed. Inside you will find a final hoard "
 "of treasure. "
 msgstr ""
+"Kiam ĉiuj la Frihtanoj de specifa Nesto estas mortigitaj, daŭre ataku la "
+"Neston ĝis ĝi estas detruita. Ene vi trovos finan amason de trezoro. "
 
 # data/RESOURCE/TUT_TEXT/00003-8FRYHTAN.TXT:19
 msgid ""
@@ -6196,12 +6254,17 @@ msgid ""
 "most precious of all, however, are the Scrolls of Power. To see how to make "
 "use of these, please continue to the next section.  "
 msgstr ""
+"La plej granda parto de la trezoro konsistas el moneroj kaj aliaj altvaloraj "
+"objektoj; la plej altvaloraj tamen estas la Ruloj de Povo. Por vidi kiel uzi "
+"ĝin bonvolu iri al la sekva sekcio.  "
 
 # data/RESOURCE/TUT_TEXT/00004-7MERCENA.TXT:3
 msgid ""
 "A quick -- although sometimes expensive -- way of building a multi-cultural "
 "Kingdom of highly skilled people is to hire Mercenaries. "
 msgstr ""
+"Rapida -- kvamkam iam kosta -- maniero konstrui multkulturan Regnon de tre "
+"lertaj homoj estas dungi Dungatojn. "
 
 # data/RESOURCE/TUT_TEXT/00004-7MERCENA.TXT:5
 msgid ""
@@ -6209,6 +6272,10 @@ msgid ""
 "an Inn, you should use a Construction Worker. Inns, unlike other buildings, "
 "need not be placed within Linking distance of any other structure. "
 msgstr ""
+"Dungatoj estas dungitaj en Gastejoj, do por komenci ni devas unue konstrui "
+"unu. Por konstrui Gastejon vi devas uzi Konstruadan Laboranton. Gastejoj, "
+"malkiel aliaj konstruaĵoj, ne devas esti lokita ene de Ligila distanco de "
+"alia strukturo. "
 
 # data/RESOURCE/TUT_TEXT/00004-7MERCENA.TXT:9
 msgid ""
@@ -6216,12 +6283,17 @@ msgid ""
 "the Inn will display the people present inside. These people will leave "
 "after a while, to be replaced by new faces. "
 msgstr ""
+"Kiam via Gastejo estas konstruita, Dungatoj ekalvenos. Alklaki la Gastejon "
+"montros la homojn ene. Tiuj homoj eliros post iom da tempo, kaj estos "
+"anstataŭigita de novaj vizaĝoj. "
 
 # data/RESOURCE/TUT_TEXT/00004-7MERCENA.TXT:13
 msgid ""
 "To the right of the Mercenaries' images you will see their skills, skill "
 "levels and asking prices. The asking price is a one-time payment. "
 msgstr ""
+"Dekstre de la bildoj de dungatoj vi vidos iliajn lertecojn, lerteca niveloj "
+"kaj demandata kosto. La demandata kosto estas unufoja pago. "
 
 # data/RESOURCE/TUT_TEXT/00004-7MERCENA.TXT:16
 msgid ""
@@ -6229,6 +6301,9 @@ msgid ""
 "Click on the Hire tile. When you do, the Mercenary will exit the Inn and "
 "wait for your further commands. "
 msgstr ""
+"Se vi elektas dungi specifan Dungaton, Alklaku lian bildon kaj poste alklaku "
+"la Dungi-kahelon. Kiam vi ĝin faras, la Dungato eliros el la Gastejo kaj "
+"atendos por pluaj komandoj. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:3
 msgid ""
@@ -6237,6 +6312,10 @@ msgid ""
 "learn how to capture an Independent Village without the use of force; you'll "
 "also learn how to capture an enemy Village with the use of force. "
 msgstr ""
+"Vi plej altvalora resurso, homoj, troviĝas en grandaj nombroj aŭ en "
+"Sendependaj Vilaĝoj aŭ en malamikaj Vilaĝoj. En ĉi tiu leciono vi lernos "
+"kiel kapti Sendependan Vilaĝon sen uzi la forton; vi ankaŭ lernos kiel kapti "
+"malamikan Vilaĝon uzante la forton. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:6
 msgid ""
@@ -6245,6 +6324,9 @@ msgid ""
 "the same as your own. To find one quickly, first Click on any Independent "
 "Village. "
 msgstr ""
+"Ni komencos kun Sendependaj Vilaĝoj. La plej facilaj kapti estas tiuj "
+"loĝataj de unu nacieco, speciale si la nacieco estas la sama ol la via. Por "
+"trovi unu rapide unue Alklaku iun ajn Sendependan Vilaĝon. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:10
 msgid ""
@@ -6252,6 +6334,9 @@ msgid ""
 "Click on it. For each nationality there will be one row listing the number "
 "of people, peasants and their resistance level to your rule. "
 msgstr ""
+"Vi povos scii, se la Vilaĝo havas unu naciecon Alklakante ĝin. Por ĉiu "
+"nacieco estos unu vico listigante la nombron de homoj, kamparanoj kaj ilian "
+"rezistan nivelon kontraŭ via regado. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:13
 msgid ""
@@ -6259,6 +6344,9 @@ msgid ""
 "key on your keyboard. This will cycle you through all of the Independent "
 "Villages in the world. "
 msgstr ""
+"Se vi havas Sendependan Vilaĝon elektitan, prenu la maldekstran aŭ la "
+"dekstran sagoklavon de via klavaro. Tio iros cikle al ĉiuj Sendependaj "
+"Vilaĝoj en la mondo. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:16
 msgid ""
@@ -6266,18 +6354,25 @@ msgid ""
 "far left of the row. You will also be able to distinguish them by the style "
 "of houses in the Village. "
 msgstr ""
+"Vi povas scii la naciecon de la Vilaĝanoj per la bildeto en la tuta dekstro "
+"de la vico. Vi ankaŭ povos distingi ilin per la fasono de la domoj en la "
+"Vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:19
 msgid ""
 "If you have found an ideal Village, one of your nationality and one "
 "relatively close to you, then you may begin the process of absorbing it. "
 msgstr ""
+"Se vi trovis idealan Vilaĝon, unu de via nacieco kaj relative malproksima de "
+"vi, tiam vi povas komenci la proceso de asimili ĝin. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:21
 msgid ""
 "You should first send a Construction worker to build a Fort within linking "
 "distance of the selected Village. "
 msgstr ""
+"Vi unue devas sendi Konstruadan laboranton por konstrui fortikaĵon ene de "
+"ligila distanco al la elektita Vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:23
 msgid ""
@@ -6285,6 +6380,9 @@ msgid ""
 "leadership ability. This will cause the Village's resistance to you to "
 "decrease rather quickly. "
 msgstr ""
+"Kiam la Fortikaĵo estas kompletita, vi bezonas plenigi ĝin de komandanto de "
+"granda estreca lerteco. Tio malkreskigos la Vilaĝa rezisto kontraŭ vi "
+"rapidege. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:26
 msgid ""
@@ -6292,12 +6390,18 @@ msgid ""
 "your King. Whichever you use, send him into the new Fort. If you do use your "
 "King, be sure to send with him an escort of well-trained troops. "
 msgstr ""
+"Se vi ne havas Generalon kun granda estreca lerteco, tiam estas plej bone "
+"uzi vian Reĝon. Kiun ajn vi uzos, sendu lin al la nova Fortikaĵo. Se vi uzas "
+"via Reĝo, estu certe pri tio, ke vi sendas kun li eskorton de bone trejnitaj "
+"trupoj. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:30
 msgid ""
 "With the leader in the Fort, you will see the resistance of the Village "
 "decrease. To see this, you must select the Village by Left-Clicking on it. "
 msgstr ""
+"Kun la estro en la Fortikaĵo, vi vidos malkreski la rezisto de la Vilaĝo. "
+"Por vidi tion, vi devas elekti la Vilaĝon Maldekstre-Alklikante ĝin. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:33
 msgid ""
@@ -6305,6 +6409,9 @@ msgid ""
 "resistance level. The number on the right is the level to which it is "
 "decreasing. "
 msgstr ""
+"La nombro montrita en la maldekstro de la Vilaĝa fenestro estas la nuna "
+"rezista nivelo. La nombro en la dekstro estas la nivelo, al kiu ĝi "
+"malkreskas. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:36
 msgid ""
@@ -6312,6 +6419,9 @@ msgid ""
 "early stages of the game, however, when your reputation is still low, it's "
 "unlikely a Village's resistance will decrease to 0, no matter what you do. "
 msgstr ""
+"Kiam la nivelo malkreskas al nul, la Vilaĝo aliĝos al via Imperio. En la "
+"fruaj fazoj de la ludo, tamen, kiam via reputacio estas ankoraŭ malgranda, "
+"estas neverŝajne, ke Vilaĝa rezisto malkreskos al 0, kion ajn vi faras. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:39
 msgid ""
@@ -6321,6 +6431,11 @@ msgid ""
 "especially if the village has a large population, so don't do it until the "
 "Resistance level is already quite low. "
 msgstr ""
+"Se la Rezisto ne plu malkreskas, sed ĝi ne estas ankoraŭ 0, vi povas "
+"malkreskigi ĝin plu Alklakante la Doni-Kahelon. Kiam vi faras tion, la "
+"Vilaĝa rezisto malkreskos ĉirkaŭ 10 poentoj. Tio povas esti tre multekosta, "
+"speciale se la vilaĝo havas grandan loĝantaro, do ne faru ĝin ĝis la Rezista "
+"nivelo estas jam tre malgranda. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:44
 msgid ""
@@ -6328,6 +6443,9 @@ msgid ""
 "return your King to his home Fort. You will, however, need to leave a new "
 "General in the new Village's Fort. "
 msgstr ""
+"Kiam la Vilaĝo altigas vian flagon kaj iĝas via, vi devas verŝajne revenigi "
+"vian Reĝon al lia hejma Fortikaĵo. Vi tamen bezonos lasi novan Generalon en "
+"la nova Vilaĝa Fortikaĵo. "
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:47
@@ -6338,6 +6456,9 @@ msgid ""
 "best to choose the common soldier with the highest leadership level in your "
 "army. After he is selected, Click on the Promote Tile. "
 msgstr ""
+"Por fari novan Generalo vi devas promocii ordinaran soldaton. Estas plej "
+"bone elekti ordinaran soldaton kun la plej granda nivelo de estreco en via "
+"armeo. Post li estas elektita, Alklaku la Promocii-Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:52
 msgid ""
@@ -6345,6 +6466,9 @@ msgid ""
 "Star. Now send him into the Fort, so that he can begin to exert his control "
 "over the new Village. "
 msgstr ""
+"Kiel vi povas vidi, la Glava Bildeto de ordinara soldato ŝanĝis al Generala "
+"stelo. Nun sendu lin al la Fortikaĵo, por ke li povas komenci praktiki lian "
+"kontrolon super la novan Vilaĝon. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:55
 msgid ""
@@ -6352,6 +6476,9 @@ msgid ""
 "enemy Forts are still Linked to them. Your first task must then be to "
 "destroy the Forts, if present. "
 msgstr ""
+"Vi nun traktos pri malamikaj Vilaĝoj.  Vi ne povas kapti neniun malamikan "
+"Vilaĝon, se malamikaj Fortikaĵoj estas ankoraŭ ligita al ĝi. Do via unua "
+"tasko devas esti detrui la Fortikaĵojn, se ekzistas. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:58
 msgid ""
@@ -6359,6 +6486,9 @@ msgid ""
 "just as you did above. Forts may be built by any soldier, not just by "
 "Construction workers. "
 msgstr ""
+"Kiam la malamika Fortikaĵo aŭ Fortikaĵoj estas detruitaj, vi devas konstrui "
+"propran, same kiel vi faris antaŭe. Fortikaĵoj povas esti konstruitaj de iu "
+"ajn soldato, ne nur de Konstruadaj laborantoj. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:61
 msgid ""
@@ -6368,6 +6498,11 @@ msgid ""
 "Village. When their resistance falls to zero, return your troops to the "
 "Fort. The Village should then surrender. "
 msgstr ""
+"Kiam la Fortikaĵo estas konstruita kaj plenigita de Generalo aŭ via Reĝo, la "
+"malamika Vilaĝo devas baldaŭ agnoski vian regadon kaj levi vian flagon. Se "
+"ili daŭras tro longe por agnoski vi kiel lordo, eliru el via Fortikaĵo kaj "
+"ataku la Vilaĝon. Kiam ilia rezisto malkreskas al nul, revenigu viajn "
+"trupojn al la Fortikaĵo. La vilaĝo devas tiam kapitulaci. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:3
 msgid ""
@@ -6379,6 +6514,12 @@ msgid ""
 "things move faster, or press lower numbers to slow things down.  Pressing 0 "
 "will pause the game. "
 msgstr ""
+"En ĉi tiuj lecionoj por Sep Regnoj (Seven Kingdoms) ni traktos ĉiun ĉefan "
+"aspekton de la ludo. Por iri al la sekva aŭ antaŭa paĝo de leciono vi povas "
+"aŭ Alklaki la Sagajn Butonojn en via ekrano aŭ preni la \"<\" kaj \">\" "
+"klavojn en via klavaro. Ĉiu leciono komencos la ludon rulante je rapideco de "
+"3. Prenu pli grandaj nombroj en via klavaro por rapidigu aferojn aŭ prenu "
+"pli malgrandaj nombro por malrapidigu aferojn.  Preni 0 paŭzos la ludon. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:7
 msgid ""
@@ -6386,6 +6527,9 @@ msgid ""
 "then go through the rest in order. This is because later lessons will make "
 "use of techniques outlined in previous ones. "
 msgstr ""
+"Estas tre rekomendita, ke vi komencu vian unuan trejnadan lecionon kaj poste "
+"iru al la restantaj en ordo. Tio estas, ĉar postaj lecionoj uzos teknikojn "
+"difinitajn en antaŭaj. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:11
 msgid ""
@@ -6393,6 +6537,9 @@ msgid ""
 "a few seconds. This will pause the game and bring up a tooltip, describing "
 "the button's or icon's function. "
 msgstr ""
+"Dum la ludado provu preni vian kursoron super iu ajn butono aŭ bildeto dum "
+"kelkaj sekundoj. Tio paŭzos la ludon kaj montros butonan informon "
+"priskribante la butonan aŭ bildetan funkcion.  "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:14
 msgid ""
@@ -6401,6 +6548,10 @@ msgid ""
 "the game is paused.  When the game is started again, the units will carry "
 "out their orders. "
 msgstr ""
+"Povas esti, ke vi ankaŭ deziras ŝanĝi la rapidecon de la ludo al pli "
+"malrapida ol ordinara. 0 paŭzos la ludon; 9 estas la pli rapida. Vi povas "
+"komandi viajn unuojn, dum la ludo estas paŭzita.  Kiam la ludo estas "
+"komencita denove, la unuoj sekvos la komandojn. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:17
 msgid ""
@@ -6408,10 +6559,13 @@ msgid ""
 "building a prosperous Kingdom and keeping it safe from those who would take "
 "it from you. "
 msgstr ""
+"En ĉi tiu trejnada leciono oni instruos al vi la plej bazaj metodoj por "
+"konstrui prosperan Regnon kaj kiel protekti ĝin kontraŭ tiuj, kiuj prenus "
+"ĝin de vi. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:21
 msgid "The game begins with the Recruiting of at least one Troop of Soldiers. "
-msgstr ""
+msgstr "La ludo komencas kun la Varbado de almenaŭ unu Trupo de Soldatoj.  "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:23
 msgid ""
@@ -6419,6 +6573,8 @@ msgid ""
 "working their fields as Peasants. Click on your Village with your Hand "
 "Cursor. "
 msgstr ""
+"Tiuj Soldatoj estos elektita el via unua Vilaĝo, kie ili nun laboras siajn "
+"kampojn kiel Kamparanoj. Alklaku vian Vilaĝon per via Mana Kursoro. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:26
 msgid ""
@@ -6427,6 +6583,10 @@ msgid ""
 "Peasants (which should be the same at this time) and their level of loyalty "
 "to the King, which will begin the game at 100. "
 msgstr ""
+"Vi nun vidos informon pri la homoj loĝantaj en via Vilaĝo en la fenestro "
+"dekstre malsupre. Montritaj estas ilia totala nombro, la nombro de "
+"Kamparanoj (kiu devas esti la sama nun) kaj ilia nivelo de fideleco al la "
+"Reĝo, kiu la ludo komencos kun 100. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:29
 msgid ""
@@ -6434,6 +6594,9 @@ msgid ""
 "King's command. You should therefore Click eight times on the Recruit Tile "
 "at the bottom left of the Village Control Area. "
 msgstr ""
+"Vi volas Varbi ek el tiuj Kamparanoj por servi kiel Soldatoj sub la "
+"komandado de la Reĝo. Vi devas do Alklaki ek-foje la Varbi-Kahelon en la "
+"maldekstra malsupro de la Vilaĝa regoregiono. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:33
 msgid ""
@@ -6441,6 +6604,9 @@ msgid ""
 "now standing outside. With eight Clicks you should now see eight Peasants "
 "milling around, outside the Village. "
 msgstr ""
+"Per ĉiu Klako vi rimarkos, ke unu Kamparano lasis la Vilaĝo kaj nun staras "
+"ekstere. Per ek Klakoj vi devos vidi ek Kamparanojn ĉirkaŭe, ekster la "
+"Vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:36
 msgid ""
@@ -6448,6 +6614,9 @@ msgid ""
 "Level of the village decreases. Be careful to watch your Loyalty Level when "
 "Recruiting. "
 msgstr ""
+"Vi devas ankaŭ rimarki, ke per ĉiu Klako de la Alvoki-Kahelo, la Fideleca "
+"Nivelo de la vilaĝo malkreskas. Estu atenta por vidi la Fideleca Nivelo dum "
+"Varbado. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:39
 msgid ""
@@ -7109,6 +7278,8 @@ msgid ""
 "A Porcupine is a Weapon designed to be destroyed by your own forces. Send "
 "one or -- better yet -- several Porcupines into the midst of the enemy. "
 msgstr ""
+"Histriko estas Armilo destinita al esti detruita de via propra armeo. Sendu "
+"unu aŭ -- pli bone -- kelkajn Histrikojn en la mezo de viaj malamikoj. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:38
 msgid ""
@@ -7117,6 +7288,10 @@ msgid ""
 "holding down the Shift key on your keyboard, Click the Green Hand Cursor on "
 "a Porcupine. "
 msgstr ""
+"Nu, per Pafilego, Katapulto, Fajrkraĉilo aŭ flama sago (Egipta), celu kaj "
+"ataku Histrikon. Por fari tion unue elektu iun ajn armilon. Poste, premante "
+"la Majuskligan klavon de via klavaro, Alklaku sur Histriko la Kursoron de "
+"Verda Mano . "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:42
 msgid ""
@@ -7124,12 +7299,16 @@ msgid ""
 "a fire. If you have any other Porcupines adjacent to the one you targeted, "
 "it will cause a chain reaction explosion between all of them. "
 msgstr ""
+"Kiam via misilo trafos la Histrikon, ĝi igos ĝin eksplodi kaj komenci "
+"fajron. Se vi havas aliajn Histrikojn apud la celita, ili kreos ĉen-reakcian "
+"eksplodon iter ĉiuj el ili. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:45
 msgid ""
 "This chain reaction can cause great devastation in the ranks of enemy "
 "soldiers.  "
 msgstr ""
+"Ĉi tiu ĉenreakcio kreos grandan detruon en la vicoj de malamikaj soldatoj.  "
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:3
 msgid ""
@@ -7673,7 +7852,7 @@ msgstr ""
 
 # data/SCENARIO/7FOR7.SCT:1
 msgid "Seven Forts for Seven Generals"
-msgstr "Sep Fortikaĵoj kaj Sep Ĝeneraloj"
+msgstr "Sep Fortikaĵoj kaj Sep Generaloj"
 
 # data/SCENARIO/7FOR7.SCT:5
 msgid ""
@@ -8387,7 +8566,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:82
 msgid "Collect Tax"
-msgstr ""
+msgstr "Kolekti Takson"
 
 # data/RESOURCE/HELP.RES:83
 msgid ""
@@ -8430,7 +8609,7 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/HELP.RES:105
 msgid "Grant"
-msgstr ""
+msgstr "Doni"
 
 # data/RESOURCE/HELP.RES:102
 msgid ""
@@ -8545,7 +8724,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:153
 msgid "Promote"
-msgstr ""
+msgstr "Promocii"
 
 # data/RESOURCE/HELP.RES:154
 msgid "This promotes the selected common soldier to a General. "
@@ -8553,14 +8732,18 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:157
 msgid "Recruit"
-msgstr ""
+msgstr "Varbi"
 
 # data/RESOURCE/HELP.RES:158
+#, fuzzy
 msgid ""
 "This recruits a peasant from the selected village. For each click, one "
 "peasant exits. This tile is disabled if there are no more peasants in the "
 "village. "
 msgstr ""
+"Tio varbas kamparanon el la elektita vilaĝo. Po ĉiu klako unu kamparano "
+"eliras. Ĉi tiu kahelo estas malebligita, se ne restas kamparanoj en la "
+"vilaĝo."
 
 # data/RESOURCE/HELP.RES:161
 msgid "Conduct Research"
