@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-09-11 01:37+0200\n"
+"PO-Revision-Date: 2021-09-14 04:51+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -5639,14 +5639,13 @@ msgid "War Factory"
 msgstr "Milita Fabriko"
 
 # data/RESOURCE/TUT_INTR/00000-1BAS_MIL.TXT:1
-#, fuzzy
 msgid ""
 "In this first lesson you will learn how to recruit a group of Peasants and "
 "then train them as a Troop of Soldiers. You will learn how to Sortie your "
 "Troop from your Fort and how to quickly select and control it in the field. "
 msgstr ""
 "En ĉi tiu unua leciono vi lernos kiel varbi grupon de Kamparanoj kaj poste "
-"trejni ilin kiel Trupo de Soldatoj. Vi lernos kiel Atiki kun via Trupo el "
+"trejni ilin kiel Trupo de Soldatoj. Vi lernos kiel Elirigi vian Trupon el "
 "via Fortikaĵo kaj kiel rapide elekti kaj kontroli ĝin en la kampo. "
 
 # data/RESOURCE/TUT_INTR/00001-2BAS_ECO.TXT:1
@@ -6624,6 +6623,9 @@ msgid ""
 "the right is the level to which it is increasing or decreasing. The arrow "
 "indicates the direction of the movement. "
 msgstr ""
+"La nombro maldekstre nun montras la nunan Fidelecan Nivelon. La nombro "
+"dekstre estas la nivelo, al kiu ĝi kreskas aŭ malkreskas. La sago montras la "
+"direkto de la movo. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:43
 msgid ""
@@ -6631,6 +6633,10 @@ msgid ""
 "is they who grow the food. You can see how much food you have by looking at "
 "the number to the right of the bread icon, at the top center of your screen. "
 msgstr ""
+"Vi devas esti ankaŭ singarda lasi sufiĉaj Kamparanoj en la kampo, ĉar estas "
+"ili, kiuj kultivas la manĝaĵojn. Vi povas vidi kiom da manĝaĵo vi havas "
+"rigardante la nombro dekstre de la pana bildeto, en la supra centro de via "
+"ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:46
 msgid ""
@@ -6639,6 +6645,10 @@ msgid ""
 "the box around them. Release your mouse button when all eight Peasants are "
 "inside the box. "
 msgstr ""
+"Grupe Elektu la Kamparanoj ekster via Vilaĝo desegnante elektadan kvadraton "
+"ĉirkaŭ ili. Faru tion prenante vian Dekstra musan butonon kaj poste tirante "
+"la kvadraton ĉirkaŭ ili. Malprenu la musan butonon, kiam la ek Kamparanoj "
+"estas ene de la kvadrato. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:50
 msgid ""
@@ -6646,6 +6656,9 @@ msgid ""
 "begin their training. Right-Click your crooked Golden Arrow Cursor on the "
 "Fort. "
 msgstr ""
+"Nun, elektitaj la ek Kamparanoj, ordonu al ili eniri en la Fortikaĵon por "
+"komenci iliajn trejnadon. Dekstre-Alklaku per via malrekta Ora Saga Kursoro "
+"la Fortikaĵon. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:53
 msgid ""
@@ -6653,6 +6666,9 @@ msgid ""
 "battle or while aboard Ships. If there's no General or King in the Fort, no "
 "training will take place. "
 msgstr ""
+"Soldatoj nur povas trejni kaj pligrandigi siaj Batalajn Kapablojn en "
+"Fortikaĵoj, dum batalo aŭ sur Ŝipoj. Se ne estas Generalo aŭ Reĝo en la "
+"Fortikaĵo, neniu trejnado okazos. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:56
 msgid ""
@@ -6660,6 +6676,9 @@ msgid ""
 "After basic training, they should be just good enough to hold their own in a "
 "small battle. "
 msgstr ""
+"Vi devus nun trejni ĉi tiun novan Trupon ĝis kompetenta nivelo de Batala "
+"Lerteco. Post baza trejnado ili devus esti nur sufiĉe bonaj por defendi sin "
+"en bataleto. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:59
 msgid ""
@@ -6667,23 +6686,31 @@ msgid ""
 "see the King, as well as the eight new Recruits. The King is now training "
 "that Troop of eight Recruits in Combat Skills. "
 msgstr ""
+"Por atenti la trejnadon de viaj Kamparanoj, Alklaku la Fortikaĵon. Ene vi "
+"vidos la Reĝon kaj ankaŭ la ek novajn Rekrutojn. La Reĝo estas nun trejnante "
+"tiun Trupon de ek Rekrutoj en Batalaj Lertecoj. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:63
 msgid ""
 "You'll see a number next to each soldier's picture. This is his Combat "
 "Skill, which ranges from a minimum of 10 to a maximum of 100. "
 msgstr ""
+"Vi vidos nombron apud la bildeto de ĉiu soldato. Tio estas lia Batala "
+"Lerteco, kiu etendiĝas de 10 minimume ĝis 100 maksimume. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:66
 msgid ""
 "Over time, the Combat Skills of soldiers will increase while they're "
 "undergoing training with the King. "
 msgstr ""
+"Iom post iom la Batala Lerteco de soldatoj kreskos dum ili estas trejnante "
+"kun la Reĝo. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:68
 msgid ""
 "To move your Troops out of your Fort immediately, Click on the Sortie Tile. "
 msgstr ""
+"Por elirigu viajn soldatojn el via forto tuje, Klaku en la Eliri-Kahelo. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:71
 msgid ""
@@ -6691,6 +6718,9 @@ msgid ""
 "the Fort. They are already selected and ready to move. The soldiers will all "
 "have Sword Icons over their heads. The King will have a Crown Icon. "
 msgstr ""
+"Vi povas nun vidi la tutan Trupon, kun la Reĝo komandante, starante ekster "
+"via Fortikaĵo. Ili estas jam elektita kaj preta por moviĝi. Ĉiuj Soldatoj "
+"havos Glavajn Bildetojn super siaj kapoj. La Reĝo havos Kronan Bildeton. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:75
 msgid ""
@@ -6698,18 +6728,25 @@ msgid ""
 "illustrate, first Click on the Fort or the Village (anything to de-select "
 "the Troops). "
 msgstr ""
+"Nun estas tempo por lerni rapidan kaj facilan maniero elekti tutan grupon. "
+"Por ilustri, unue Alklaku la Fortikaĵon aŭ la Vilaĝon (io ajn por malelekti "
+"la Trupojn). "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:78
 msgid ""
 "Now that the Troops are no longer selected, Right-Click on any Soldier of "
 "your Troop. "
 msgstr ""
+"Nun, kiam viaj Trupoj ne plu estas elektitaj, Dekstre-Alklaku iun ajn "
+"Soldaton de via Trupo. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:80
 msgid ""
 "As you can see, the entire Troop has been selected again. This is the "
 "fastest method of selection; it's especially useful in the heat of battle. "
 msgstr ""
+"Kiel vi povas vidi, la tutan Trupon estis elektita denove. Ĉi tiu estas la "
+"plej rapida maniero elekti; ĝi estas speciale utila dum batalo. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:83
 msgid ""
@@ -6717,24 +6754,33 @@ msgid ""
 "Click on him. You may then direct him anywhere by himself. He will still "
 "remain a member of that Troop, unless he is sent into a Fort. "
 msgstr ""
+"Se vi deziras elekti unuopan soldaton, vi devas Alklaki kaj ne Dekstre-"
+"Alklaki lin. Vi povas poste gvidi lin ien ajn sole. Li ankoraŭ restos kiel "
+"membro de tiu Trupo, krom se li estas sendita al Fortikaĵo. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:87
 msgid ""
 "To move your selected Troop, Right-Click either on any area of the main "
 "screen, or on the small World Map. "
 msgstr ""
+"Por movi vian elektitan Trupon Dekstre-Alklaku aŭ iu ajn regiono de la ĉefa "
+"ekrano aŭ en la eta Monda Karto. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:89
 msgid ""
 "To order it to disengage from all activity and move to the selected area, "
 "Double-Click on that area. "
 msgstr ""
+"Por malokupiĝi je ĉiu agado kaj movi al elektita regiono, Duoble-Alklaku "
+"tiun regionon. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:91
 msgid ""
 "To center your main screen over a certain area of the world quickly, Click "
 "on that area of the small World Map. "
 msgstr ""
+"Por centrigi vian ĉefan ekranon en iu regiono de la mondo rapide, Alklaku "
+"tiun regionon de la eta Monda Karto. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:93
 msgid ""
@@ -6742,6 +6788,9 @@ msgid ""
 "by Clicking on the Withdraw Tile.  If your Fort has been destroyed, this "
 "Tile will not be available. "
 msgstr ""
+"Nun vi devas revenigi la Trupon al la Fortikaĵo por daŭra trejnado. Faru "
+"tion Alklakante la Revenigi-Kahelo.  Se via Fortikaĵo estis detruita, tiu "
+"Kahelo ne estas disponebla. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:97
 msgid ""
@@ -6749,6 +6798,9 @@ msgid ""
 "Click on the Next Training Button.  To continue this game as a normal game, "
 "Click on the Quit Training Button. "
 msgstr ""
+"Vi nun finis ĉi tiu trejnada leciono.  Por iri al la sekva leciono, Alklaku "
+"la Butonon de Sekva Trejnado.  Por daŭrigi ĉi tiun ludon kiel ordinara ludo, "
+"Alklaku la Butonon de Ĉesi Trejnadon. "
 
 # data/RESOURCE/TUT_TEXT/00006-1BAS_MIL.TXT:99
 msgid ""
@@ -6757,6 +6809,10 @@ msgid ""
 "Button.  Then select the lesson you want to review.  When you Click on the "
 "Start Button, the lesson will be overlaid on your present game.   "
 msgstr ""
+"Se vi deziras reekzameni lecionon ene de iu ajn ludo, Alklaku la Menuan "
+"Butonon en la dekstra supro de via ekrano kaj poste Alklaku la Trejnadan "
+"Butonon.  Tiam elektu la lecionon, kiun vi volas reekzameni.  Kiam vi "
+"Alklakas la Komenci-Butonon, la leciono estos metita sur via nuna ludo.  "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:3
 msgid ""
@@ -6764,6 +6820,8 @@ msgid ""
 "keeping their loyalty will play a large part in determining your success in "
 "the game. "
 msgstr ""
+"Via popolo estas via plej valora resurso. Via sukceso gajnante kaj tenante "
+"ilian fidelecon ludos grandan rolon en decidi vian sukceson en la ludo. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:6
 msgid ""
@@ -6771,6 +6829,8 @@ msgid ""
 "village, you will see the loyalty level for each nationality listed on the "
 "right. "
 msgstr ""
+"Por vidi la fidelecon de vilaĝo aŭ de unuo, alklaku ĝin. Post alklaki "
+"vilaĝon, vi vidos la fideleco nivelo de ĉiu nacieco listigita dekstre. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:9
 msgid ""
@@ -6779,6 +6839,10 @@ msgid ""
 "nationality in your village, you will see the average of the villagers' "
 "loyalties listed at the bottom. "
 msgstr ""
+"Vi povus ankaŭ vidi alian nombron dekstre de la fideleca nombro; tio estas "
+"la nivelo al kiu kreskas aŭ malkreskas.  Se estas pli ol unu nacieco en via "
+"vilaĝo, vi vidos la averaĝo de la vilaĝaj fidelecoj listigita en la "
+"malsupro. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:11
 msgid ""
@@ -6787,6 +6851,10 @@ msgid ""
 "may include another number, indicating the level to which loyalty is rising "
 "or falling. "
 msgstr ""
+"Por taksi la fidelecon de unuo, alklaku lin. Dekstre vi vidos nombro "
+"esprimas lian fidelecon. Kiel kun viaj vilaĝoj, la fideleca nivelo povas "
+"inkludi alian nombron montrantan la nivelo, al kiu la fideleco kreskas aŭ "
+"malkreskas. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:14
 msgid ""
@@ -6795,6 +6863,10 @@ msgid ""
 "village is selected, try Clicking the Grant Tile. This will distribute 10 "
 "dollars to each villager and increase his loyalty by 10 points. "
 msgstr ""
+"Se la fideleco de unu el viaj vilaĝoj estas tro malgranda kaj vi deziras "
+"pliigi ĝin rapide, estas kelkaj aferoj, kiujn vi povas fari. Unue, kiam la "
+"vilaĝo estas elektita, provu Alklaki la Doni-Kahelon. Tio disdonos 10 "
+"dolarojn al ĉiu vilaĝano kaj pliigos lian fidelecon per 10 poentoj. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:19
 msgid ""
@@ -6803,6 +6875,10 @@ msgid ""
 "granted. It is therefore best to wait a while after you Grant money to a "
 "village before you do it again. "
 msgstr ""
+"Rimarku, ke se vi alklakas la Doni-Kahelon plurfoje la kvanto de pliiĝo en "
+"fideleco malkreskos; la homoj pensas, ke la kroman monon estas kutima. Do "
+"estas plej bone atendi iom, post vi Donis monon al vilaĝo, antaŭ fari ĝin "
+"denove. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:22
 msgid ""
@@ -6811,6 +6887,10 @@ msgid ""
 "case a grant will cost you 30 dollars for each villager. This is one way to "
 "lower an independent village's resistance to 0, but it is costly and risky. "
 msgstr ""
+"Se vi havas fortikaĵo okupita de Generalo aŭ Reĝo kaj ligita al sendependa "
+"vilaĝo, vi povas doni monon al tiuj vilaĝanoj ankaŭ. Ĉi-kaze donaco kostos "
+"al vi po 30 dolaron por vilaĝano. Tio estas maniero malkreskigi la reziston "
+"de sendependa vilaĝo al 0, sed ĝi estas kosta kaj riska. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:25
 msgid ""
@@ -6818,6 +6898,9 @@ msgid ""
 "see this, select a unit, other than your King, whose loyalty level is below "
 "100. Now click on the Honor Tile. "
 msgstr ""
+"Vi povas kreskigi la fidelecon de viaj unuoj simile.  Por vidi tion elekti "
+"unuon, escepte de via Reĝo, kies fideleca nivelo estas sub 100. Nun alklaku "
+"la Honori-Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:29
 msgid ""
@@ -6827,6 +6910,12 @@ msgid ""
 "inside your buildings.  To do this, select one of your Buildings. Then "
 "choose one unit's picture; then Click on the Honor Tile. "
 msgstr ""
+"Doni Honorojn alpinglos medalon al la brusto de via elektita unuo kaj "
+"kreskigos lian fidelecon al via Regno. Tio estas speciale utila por "
+"dungatoj, kiuj havas naturan malgrandan fidelecon al via Regno. Honoroj "
+"ankaŭ povas esti donitaj al unuoj ene de viaj konstruaĵoj.  Por fari tion "
+"elektu unu el viaj Konstruaĵoj. Tiam elektu la bildon de ajn unuo; poste "
+"Klaku la Honori-Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:32
 msgid ""
@@ -6835,6 +6924,10 @@ msgid ""
 "reputation to the right of the \"Thumbs Up\" or \"Thumbs Down\" icon at the "
 "top of your screen. "
 msgstr ""
+"La fidelecaj niveloj de viaj homoj, en vilaĝoj kaj ekstere, povas tre esti "
+"afektita de la reputacio de via Regno. Vi povas vidi la reputacion de via "
+"Regno dekstre de la \"Dikfingro al supro\" aŭ \"Dikfingro al malsupro\" "
+"bildeto en la supro de via ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:35
 msgid ""
@@ -6842,6 +6935,9 @@ msgid ""
 "Kingdoms; a higher reputation will help to keep your people loyal, and will "
 "also tend to draw immigrants to your Kingdom. "
 msgstr ""
+"Estos ĉiam por vi avantaĝa havi pli bonan reputacion ol aliaj Regnoj; pli "
+"granda reputacio helpos teni viajn homojn fidelajn kaj ĝi altiros "
+"enmigrintojn al via Regno. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:37
 msgid ""
@@ -6849,6 +6945,10 @@ msgid ""
 "civilians, do not attack caravans or traders, do not allow your civilians to "
 "be killed and do not initiate sneak attacks on your allies or friends. "
 msgstr ""
+"Kion vi devas eviti, se vi volas konservi vian reputacion? Ne ataku "
+"civilulojn, ne ataku karavanojn aŭ komercistojn, ne lasu, ke viaj civiluloj "
+"estu mortigita kaj ne komencu embuskajn atakojn kontraŭ viaj aliancanoj aŭ "
+"amikoj. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:40
 msgid ""
@@ -6857,12 +6957,18 @@ msgid ""
 "King with a high leadership level. If your King is slain, it is therefore "
 "important to give the throne to a soldier with a high leadership level. "
 msgstr ""
+"Kion vi devas fari por helpi kreskigi vian reputacion? Se vi ne faras ion "
+"malbonan, via reputacio kreskos konstante sole.  Tio supozas, ke vi Havas "
+"Reĝo kun granda estreca nivelo. Se via Reĝo estas mortigita, estas do grave "
+"doni la tronon al soldato kun granda estreca nivelo. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:44
 msgid ""
 "Another thing you may do to raise your reputation more quickly is to attack "
 "Fryhtan Lairs.  Everybody respects the extermination of these creatures. "
 msgstr ""
+"Alia afero, kiun vi povas fari por kreskigi vian reputacion pli rapide, "
+"estas ataki Frihtanajn Nestojn. Ĉiuj respektas la forigon de tiuj estaĵoj. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:46
 msgid ""
@@ -6871,6 +6977,10 @@ msgid ""
 "peasants too often.  It is also important, obviously, not to run out of "
 "food. "
 msgstr ""
+"Kion vi devus eviti, se vi deziras konservi la fidelecon de viaj vilaĝanoj "
+"kun alta nivelo? Evitu taksi viajn vilaĝanojn tro kaj evitu varbi tro "
+"multajn kamparanojn tro ofte.  Estas ankaŭ grave, kompreneble, ne elĉerpi la "
+"manĝaĵon. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:49
 msgid ""
@@ -6879,12 +6989,18 @@ msgid ""
 "It is just as important to appoint a General of the same nationality as the "
 "majority of the people in the village. "
 msgstr ""
+"Kion vi devus fari por helpi kreskigi la fidelecon de viaj vilaĝanoj? En "
+"fortikaĵoj ligitaj al novaj vilaĝoj komisii kiel Generalo al soldato kun "
+"granda estreca nivelo. Estas tiel same grave komisii Generalon de la sama "
+"nacieco kiel la plej granda parto de la popolo en la vilaĝo."
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:58
 msgid ""
 "It is also prudent to make sure your people have access to consumer goods, "
 "by having well-stocked markets linked to their villages. "
 msgstr ""
+"Estas ankaŭ prudenta certigi, ke viaj homoj povas atingi komercaĵojn, "
+"havante bone stokitaj bazaroj ligitaj al iliaj vilaĝoj. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:60
 msgid ""
@@ -6893,6 +7009,10 @@ msgid ""
 "fort to enforce your will.  It is wise, therefore, to return your troops to "
 "their home fort on occasion. "
 msgstr ""
+"Eble vi rimarkis, ke kiam vi sendas viajn lokajn trupojn al batalo, la "
+"fideleco de la vilaĝanoj malkreskas. Tio okazas, ĉar ne restas neniu en la "
+"fortikaĵo por obeigi ilin.  Estas do saĝe revenigi viajn trupojn al iliaj "
+"hejma fortikaĵo okaze. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:62
 msgid ""
@@ -7098,13 +7218,15 @@ msgstr ""
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:79
 msgid "To build a Market, you should first train a Peasant in Construction. "
-msgstr ""
+msgstr "Por konstrui Bazaron vi unue devas trejni Kamparano por Konstruado. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:81
 msgid ""
 "When the newly trained Construction worker exits the Village, select him and "
 "then Click on the Build Tile. "
 msgstr ""
+"Kiam la nove trejnita Konstruada laboristo eliras el la Vilaĝo, elektu lin "
+"kaj poste Alklaku la Konstrui-Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:84
 msgid ""
@@ -8548,11 +8670,11 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:74
 msgid "Capture"
-msgstr ""
+msgstr "Kapti"
 
 # data/RESOURCE/HELP.RES:75
 msgid "This captures the selected structure for your kingdom. "
-msgstr ""
+msgstr "Ĉi tiu kaptas la elektitan konstruaĵon por via regno. "
 
 # data/RESOURCE/HELP.RES:78
 msgid "Change Production"
@@ -8595,6 +8717,8 @@ msgid ""
 "This orders your troops to sortie whenever the fort or linked structures are "
 "attacked. "
 msgstr ""
+"Tio ordenas al viaj trupoj eliri ĉiam, kiam la fortikaĵo aŭ ligitaj "
+"konstruaĵoj estas atakitaj. "
 
 # data/RESOURCE/HELP.RES:97
 msgid "Demote Unit"
@@ -8655,22 +8779,26 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:121
 msgid "Build a Ship"
-msgstr ""
+msgstr "Konstrui Ŝipon"
 
 # data/RESOURCE/HELP.RES:122
 msgid ""
 "This takes you to a menu where you can select ships to build in this harbor. "
 msgstr ""
+"Tio venigos vin al menuo, kie vi povas elekti ŝipojn konstruotajn en ĉi tiu "
+"haveno. "
 
 # data/RESOURCE/HELP.RES:125
 msgid "Make a Weapon"
-msgstr ""
+msgstr "Faru Armilon"
 
 # data/RESOURCE/HELP.RES:126
 msgid ""
 "This takes you to a menu where you can select weapons to make in this war "
 "factory. "
 msgstr ""
+"Tio venigos al vi al menuo, kie vi povas elekti armilojn farotajn en ĉi tiu "
+"milita fabriko. "
 
 # data/RESOURCE/HELP.RES:129
 msgid "Mobilize Workers"
@@ -8700,19 +8828,19 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:141
 msgid "Sortie"
-msgstr ""
+msgstr "Eliri"
 
 # data/RESOURCE/HELP.RES:142
 msgid "This sorties the troop from this fort. "
-msgstr ""
+msgstr "Tio elirigas la trupon de ĉi tiu Fortikaĵo. "
 
 # data/RESOURCE/HELP.RES:145
 msgid "Withdraw"
-msgstr ""
+msgstr "Revenigi"
 
 # data/RESOURCE/HELP.RES:146
 msgid "This immediately withdraws your troop to its home fort. "
-msgstr ""
+msgstr "Tio tuj revenigi vian trupon al ĝia hejma fortikaĵo. "
 
 # data/RESOURCE/HELP.RES:149
 msgid "Previous Menu"
@@ -8762,13 +8890,15 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/HELP.RES:173
 msgid "Honors"
-msgstr ""
+msgstr "Honoroj"
 
 # data/RESOURCE/HELP.RES:166
 msgid ""
 "This awards an honor to the selected unit. For each honor, the unit's "
 "loyalty increases by 10 points. This is disabled for the King. "
 msgstr ""
+"Tio donas honoron al la elektita unuo. La fideleco de unuo kreskas po 10 "
+"poentoj por honoro. Tio estas malebligita por la Reĝo. "
 
 # data/RESOURCE/HELP.RES:170
 msgid ""
@@ -8776,6 +8906,9 @@ msgid ""
 "each honor, the unit's loyalty increases by 10 points. This is disabled for "
 "the King. "
 msgstr ""
+"Tio donas honoron al la elektita Generalo aŭ soldato en ĉi tiu fortikaĵo. La "
+"fideleco de la unuo kreskas po 10 poentoj por honoro. Tio estas malebligita "
+"por la Reĝo. "
 
 # data/RESOURCE/HELP.RES:174
 msgid ""
@@ -8783,6 +8916,9 @@ msgid ""
 "Power. For each honor, the unit's loyalty increases by 10 points. This is "
 "disabled for the King. "
 msgstr ""
+"Tio donas honoron al la elektita Generalo aŭ preĝanto en ĉi tiu Seĝo de "
+"povo. La fideleco de la unuo kreskas po 10 poentoj por honoro. Tio estas "
+"malebligita por la Reĝo. "
 
 # data/RESOURCE/HELP.RES:177
 msgid "Sail out of Harbor"
@@ -8868,7 +9004,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:213
 msgid "Train"
-msgstr ""
+msgstr "Trejni"
 
 # data/RESOURCE/HELP.RES:214
 msgid ""
@@ -8876,6 +9012,9 @@ msgid ""
 "are no more peasants in the village or if you do not have a General in a "
 "fort linked to the village. "
 msgstr ""
+"Tio trejnas vilaĝano por elektita lerteco. Tiu kahelo estas malebligita, se "
+"ne restas kamparanoj en la vilaĝo aŭ se vi ne havas en Generalon en "
+"fortikaĵo ligita al la vilaĝo. "
 
 # data/RESOURCE/HELP.RES:217
 msgid "View Secrets"
@@ -8988,11 +9127,11 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:265
 msgid "Sell Structure"
-msgstr ""
+msgstr "Vendi Konstruaĵo"
 
 # data/RESOURCE/HELP.RES:266
 msgid "Click here to sell this structure. "
-msgstr ""
+msgstr "Alklaku ĉi tie por vendi ĉi tiun konstruaĵon. "
 
 # data/RESOURCE/HELP.RES:269
 msgid "Sturcture Repair Icon"
