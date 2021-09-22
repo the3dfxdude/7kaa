@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-09-14 04:51+0200\n"
+"PO-Revision-Date: 2021-09-22 19:43+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -4551,9 +4551,9 @@ msgstr "Vi demandas la lastan Unukornulan teknologion el la Regno de%s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests the latest <Tech> technology from you.
 #: src/OTALKENG.cpp:964
-#, fuzzy, c-format
+#, c-format
 msgid "%s's Kingdom%s requests the latest Catapult technology from you."
-msgstr "La R"
+msgstr "La Regno de %s%s postulas la lastan Katapultan teknologion el vi."
 
 #: src/OTALKENG.cpp:965
 #, c-format
@@ -6992,7 +6992,7 @@ msgstr ""
 "Kion vi devus fari por helpi kreskigi la fidelecon de viaj vilaĝanoj? En "
 "fortikaĵoj ligitaj al novaj vilaĝoj komisii kiel Generalo al soldato kun "
 "granda estreca nivelo. Estas tiel same grave komisii Generalon de la sama "
-"nacieco kiel la plej granda parto de la popolo en la vilaĝo."
+"nacieco kiel la plej granda parto de la popolo en la vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:58
 msgid ""
@@ -7021,6 +7021,10 @@ msgid ""
 "loyalty decrease.  Don't panic.  Their loyalty will decrease slowly enough "
 "that they'll stay loyal to you while away at battle. "
 msgstr ""
+"Esti fore de via hejmo ankaŭ havas negativan efikon por la fideleco de viaj "
+"trupoj.  Tuj kiam vi elirigas ilin el ilia fortikaĵo, vi vidos ilian "
+"fidelecon malkreski.  Ne paniku.  Ilia fideleco malkreskas tiel sufiĉe "
+"malrapide, ke ili restos fidelaj al vi dum fore en batalo. "
 
 # data/RESOURCE/TUT_TEXT/00007-LOYALTY.TXT:64
 msgid ""
@@ -7028,6 +7032,9 @@ msgid ""
 "big mistake.  If their loyalty falls to 30 or lower, they may change their "
 "colors and march off to ally with another Kingdom. "
 msgstr ""
+"Se via mono elĉerpiĝas, vi ne povos pagi viajn trupojn.  Tio estas grava "
+"eraro.  Se ilia fideleco malkreskas al 30 aŭ malsupre, ili povus ŝanĝi "
+"iliajn kolorojn kaj foriri por ligiĝi kun alia regno. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:3
 msgid ""
@@ -7035,6 +7042,9 @@ msgid ""
 "desirable to have your own source of Raw Materials. That source will be a "
 "working Mine. "
 msgstr ""
+"Por eviti troan dependecon de kapricoj de malpli grandaj Regnoj, estas "
+"dezirinde havi vian propan fonto de Krudaj Materialoj. Tiu fonto estos "
+"funkcianta Minejo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:6
 msgid ""
@@ -7042,24 +7052,33 @@ msgid ""
 "Resources. It will appear as a small black dot on your World Map, and as a "
 "graphic image of that resource on your main screen. "
 msgstr ""
+"Vi povos vidi, apud via Vilaĝo, demetaĵon de Naturaj Materialoj. Ĝi aperos "
+"kiel eta nigra punkto en via Monda Karto, kaj kiel grafika bildo de tiu "
+"resurso en via ĉefa ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:9
 msgid ""
 "Click on the image on the map on your main screen to see what kind of "
 "Natural Resource it is. You will also discover the size of the deposit. "
 msgstr ""
+"Alklaku la bildon en la karto en via ĉefa ekrano por vidi, kia Natura "
+"Resurso ĝi estas. Vi ankaŭ  malkovros la grandon de la demetaĵo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:11
 msgid ""
 "You must build a Mine to exploit a Natural Resource. The best unit to build "
 "a Mine is a Miner. "
 msgstr ""
+"Vi devas konstrui minejon por ekspluati Naturan Resurso. La plej bona unuo "
+"por konstrui minejo estas Ministo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:14
 msgid ""
 "Train a Miner by first Clicking on your Village and then Clicking on the "
 "Train Tile. "
 msgstr ""
+"Trejnu Ministo unue Alklikante vian Vilaĝon kaj poste Alklikante la Trejni-"
+"Kahelo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:17
 msgid ""
@@ -7067,35 +7086,48 @@ msgid ""
 "train more, Click on the number until it shows the number of Miners you want "
 "to train; then Click on the Done Button. "
 msgstr ""
+"Alklaki unufoje la Minadan opcion trejnos unu Ministo. Se vi deziras trejni "
+"plu, Alklaku la nombron ĝis ĝi montras la nombron de Ministoj, kiujn vi "
+"volas trejni; poste Alklaku la Finita-Butonon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:20
 msgid ""
 "After a Miner has been trained, select him and then Click on the Build Tile. "
 msgstr ""
+"Post Ministo estas trejnita, elektu lin kaj poste Alklaku la Konstrui-"
+"Kahelo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:23
 msgid ""
 "You will see that Miners can only build Mines. Click on the Build Mine "
 "Button. "
 msgstr ""
+"Vi povos vidi, ke Ministoj nur povas konstrui Minejojn. Alklaku la Butonon "
+"de Konstrui Minejon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:26
 msgid ""
 "Your Hand Cursor has now changed into a Hammer & Nail cursor along with a "
 "large purple flashing square. "
 msgstr ""
+"Via Mana Kursoro ŝanĝis al Martela kaj Najla kursoro kun granda purpura "
+"fulmanta kvadrato. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:28
 msgid ""
 "The square will be flashing when it is over an open area of land, and black "
 "when it is over an area where nothing can be built. "
 msgstr ""
+"La kvadrato fulmos, kiam ĝi estas super malfermita regiono de tero, kaj "
+"estos nigra, kiam ĝi estas super regiono, kie ne eblas konstrui nenion. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:30
 msgid ""
 "Click your mouse once when the square is flashing and is over the Natural "
 "Resource image. "
 msgstr ""
+"Alklaku vian muson, kiam la kvadrato fulmas kaj estas super bildo de Natura "
+"Resurso. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:32
 msgid ""
@@ -7103,12 +7135,17 @@ msgid ""
 "Raw Materials. If you have trained more than one Miner, group select them "
 "and send them into the Mine with a Right-Click. "
 msgstr ""
+"Kiam la Minejo estas konstruita, la Ministo komencos lian laboron ekstrakti "
+"Krudajn Materialojn. Se vi trejnis pli ol unu Ministo, grupe-elektu ilin kaj "
+"sendi ilin al la Minejo per Dekstra-Klako. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:35
 msgid ""
 "A Mine can hold eight Miners. If there are any jobs left in the Mine, "
 "Peasants from your Village will now start going to work there. "
 msgstr ""
+"Minejo povas teni ek Ministojn. Se estas iu laboro restanta en la Minejo, "
+"Kamparanoj de via Vilaĝo komencos labori tie. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:38
 msgid ""
@@ -7117,6 +7154,9 @@ msgid ""
 "Linking range of your Village, you would have to send the Peasants there "
 "yourself. "
 msgstr ""
+"Kamparanoj iras per si mem al via Minejo, ĉar estas aktiva Ligila Linio "
+"inter la Vilaĝo kaj la Minejo. Se la Minejo estus pli malproksima ol la "
+"Ligila distanco de via Vilaĝo, vi mem devus sendi la kamparanojn tien. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:41
 msgid ""
@@ -7124,6 +7164,9 @@ msgid ""
 "learn their skill at work. They will, however, begin with half the skill of "
 "trained Miners. "
 msgstr ""
+"Ne estas necese trejni tiujn Kamparanojn kiel Ministoj; ili iom post iom "
+"lernos ilian lertecon en la laboro. Ili tamen komencos kun duono de la "
+"lerteco de trejnitaj Ministoj. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:44
 msgid ""
@@ -7131,6 +7174,9 @@ msgid ""
 "Mine's Raw Materials into Finished Goods you can sell, you must build a "
 "Factory. "
 msgstr ""
+"Vi nun bezonas uzi la Krudajn Materialojn de via Minejo. Por ŝanĝi la "
+"Krudajn Materialojn de la Minejo en Finitaj Varoj, kiujn vi povas vendi, vi "
+"devas konstrui Fabrikon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:47
 msgid ""
@@ -7138,30 +7184,41 @@ msgid ""
 "Manufacturing. Do this in the same way you trained your Miner, except this "
 "time, choose the Manufacturing option. "
 msgstr ""
+"Por konstrui Fabrikon vi devas unue Trejni unu aŭ pli Kamparanoj je "
+"Fabrikado. Faru tion same kiel vi trejnis vian Ministon, sed ĉi-foje elektu "
+"la Fabrikadan opcion. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:50
 msgid ""
 "After your Manufacturer has been trained, select him and then Click on the "
 "Build Tile. "
 msgstr ""
+"Post via Fabrikisto estas trejnita, elektu lin kaj poste Alklaku la Konstrui-"
+"Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:53
 msgid ""
 "You will see that Manufacturers can build only Factories or War Factories. "
 "To build a Factory, Click on the Factory Button. "
 msgstr ""
+"Vi vidos, ke la Fabrikistoj povas konstrui nur Fabrikojn aŭ Militajn "
+"Fabrikojn. Por konstrui Fabrikon, Alklaku la Fabrikan Butonon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:56
 msgid ""
 "Your Hand Cursor has now changed into a Hammer & Nail Cursor, combined with "
 "a large black or purple flashing square. "
 msgstr ""
+"Via Mana Kursoro ĵus ŝanĝis al Martela kaj Najla Kursoro, kun granda nigra "
+"aŭ purpura fulmanta kvadrato. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:58
 msgid ""
 "Click your mouse when the square is flashing and when there are Linking "
 "Lines between it, your Mine and your Village. "
 msgstr ""
+"Alklaku vian muson, kiam la kvadrato estas fulmante kaj kiam estas Ligilaj "
+"Linioj inter ĝi, via Minejo kaj via Vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:60
 msgid ""
@@ -7169,18 +7226,25 @@ msgid ""
 "Mine to the Factory, and will allow Peasants from your Village to volunteer "
 "to work in the Factory. "
 msgstr ""
+"Tiuj Ligiloj ebligos transloki Krudajn Materialojn rekte el la Minejo al la "
+"Fabriko, kaj ebligos al Kamparanoj el via Vilaĝo volonte labori en la "
+"Fabriko. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:62
 msgid ""
 "After your Factory has been built, the Manufacturer who built it will go to "
 "work there, and Peasants from the Village will begin to volunteer. "
 msgstr ""
+"Post via Fabriko estas konstruita, la Fabrikisto, kiu konstruis ĝis iris "
+"labori tien, kaj Kamparanoj el la vilaĝo komencos volonte labori. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:64
 msgid ""
 "If you have trained more than one Manufacturer, send them quickly into the "
 "Factory before the Peasants take up all the existing places. "
 msgstr ""
+"Se vi trejnis pli ol unu Fabrikiston, sendu ilin rapide en la Fabrikon antaŭ "
+"la Kamparanoj prenas ĉiujn ekzistantajn lokojn. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:66
 msgid ""
@@ -7189,13 +7253,20 @@ msgid ""
 "it will change into a green cross. This will prevent any Peasants from "
 "volunteering for work in the Factory. "
 msgstr ""
+"Alion, kiun vi povas fari, estas malfermi la Ligilon inter la Vilaĝo kaj la "
+"Fabriko Alklikante la turnantan Verdan kaj Flavan ringon. Se vi malfermas la "
+"Ligilon, ĝi ŝanĝos al verda kruco. Tio malebligos, ke Kamparanoj volonte "
+"laboru en la Fabriko. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:70
+#, fuzzy
 msgid ""
 "When a Factory is built within Linking distance of a Mine, it will "
 "automatically adjust its production to suit the type of Raw Material coming "
 "from the Mine. "
 msgstr ""
+"Kiam Fabriko estas konstruita ene de Ligila distanco de Minejo, ĝi aŭtomate "
+"adaptos ĝian produk"
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:72
 msgid ""
@@ -7203,18 +7274,25 @@ msgid ""
 "have to adjust your Factory's production manually by Clicking on the Change "
 "Production Tile. "
 msgstr ""
+"Se vi poste konstruas Fabrikon for de Ligila distanco de Minejo, vi devos "
+"alĝustigi la produkton de via Fabriko mane Alklikante la Ŝanĝi-Produkton-"
+"Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:75
 msgid ""
 "With your Factory full of workers and the Raw Materials coming in from the "
 "Mine, you have started producing Finished Goods. "
 msgstr ""
+"Kun via Fabriko plena de laborantoj kaj la Krudaj Materialoj venante el la "
+"Minejo vi komencis produkti Finitajn Varojn. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:77
 msgid ""
 "These Finished Goods will pile up inside and outside your Factory, unless "
 "you have a Market from which to sell them. "
 msgstr ""
+"Tiuj Finitaj Varoj amasiĝos en kaj ekster via Fabriko, krom vi havas "
+"Bazaron, kie vendi ilin. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:79
 msgid "To build a Market, you should first train a Peasant in Construction. "
@@ -7233,18 +7311,24 @@ msgid ""
 "You will see that a Construction worker will be able to build every kind of "
 "building. To build a Market, Click on the Market option. "
 msgstr ""
+"Vi vidos, ke Konstruada laboranto povos konstrui ĉiun specon de konstruaĵo. "
+"Por konstrui Bazaron, Alklaku la opcion de Bazaro. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:87
 msgid ""
 "Your Hand Cursor will change into a Hammer & Nail Cursor, with a black or "
 "purple flashing square.  "
 msgstr ""
+"Via Mana Kursoro ŝanĝos al Martela kaj Najla Kursoro, kun nigra aŭ purpura "
+"fulmanta kvadrato.  "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:89
 msgid ""
 "Click your mouse when the square is flashing and when there are Linking "
 "Lines between it, your Factory and your Village. "
 msgstr ""
+"Alklaku vian muson, kiam la kvadrato fulmas kaj kiam estas Ligilajn Liniojn "
+"inter ĝi, via Fabriko kaj via Vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:91
 msgid ""
@@ -7252,18 +7336,24 @@ msgid ""
 "sale. With a Link to the Village, Villagers will be able to buy goods from "
 "the Market. "
 msgstr ""
+"Per Ligilo al Fabriko, Finitaj Varoj estos senditaj al la Bazaro por vendi "
+"ilin. Per Ligilo al la Vilaĝo, la Vilaĝanoj povos aĉeti varojn el la Bazaro. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:94
 msgid ""
 "When a Market is finished, you will begin to see goods from the Factory "
 "arriving  there. "
 msgstr ""
+"Kiam Bazaro estas finita, vi komencos vidi varojn el la Fabriko alvenante "
+"tien. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:96
 msgid ""
 "Your Construction worker will now be standing outside the Market. Select him "
 "and send him into the Fort. "
 msgstr ""
+"Via Konstruada laboranto staros ekster la Bazaro. Elektu lin kaj sendu lin "
+"en la Fortikaĵon. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:99
 msgid ""
@@ -7273,19 +7363,27 @@ msgid ""
 "and then Click or Right-Click on the hammer icon you'll see to the left of "
 "the blue bar. "
 msgstr ""
+"Ĉiu konstruaĵo povas enhavi unu Konstruadan Laboranton. Kiam li estas en "
+"konstruaĵo, Konstruada Laboranto riparos la konstruaĵon krom ĝi estas "
+"atakata. Por elirigi Konstruadan Laboranton el la konstruaĵo, unue elektu la "
+"konstruaĵon kaj poste Alklaku aŭ Dekstre-Alklaku la martelan bildeton, kiun "
+"vi vidos en la maldekstro de la blua breto. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:102
 msgid ""
 "If you now Click on the Market, you will see information on how much money "
 "is flowing into your treasury. "
 msgstr ""
+"Se vi nun Alklakas la Bazaron, vi vidos informon, pri kiom da mono vi "
+"gajnas. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:104
+#, fuzzy
 msgid ""
 "You will also notice that there is space in the Market for three different "
 "types of goods. To generate the most money for your Empire, you must do your "
 "best to fill these spaces with a variety of goods. "
-msgstr ""
+msgstr "Vi ankaŭ rimarkos, ke estas spaco "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:107
 msgid ""
@@ -7294,18 +7392,26 @@ msgid ""
 "Finished Goods or Raw Materials from other Kingdoms. You will learn how to "
 "do both in the next lesson. "
 msgstr ""
+"Oni povas fari tion aŭ Minante malsamajn Naturajn Resursojn kaj poste "
+"konstruante Fabrikojn por produkti malsamajn Finitajn Varojn, aŭ importante "
+"Finitajn Varojn aŭ Krudajn Materialojn el aliaj Regnoj. Vi lernos kiel faru "
+"ambaŭ en la sekva leciono."
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:110
 msgid ""
 "A simpler way to get money is to tax your people. There are several ways of "
 "doing so: "
 msgstr ""
+"Simpla maniero kolekti monon estas taksi viajn homojn. Estas kelkaj manieroj "
+"fari tion: "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:113
 msgid ""
 "The most basic way is to select one of your Villages and then Click on the "
 "Tax Tile. "
 msgstr ""
+"La plej baza maniero estas elekti unu el viaj Vilaĝoj kaj poste Alklaki en "
+"la Taksi-Kahelo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:116
 msgid ""
@@ -7313,6 +7419,8 @@ msgid ""
 "cause their loyalty to decrease, so taxing too much can be a dangerous "
 "proposition. "
 msgstr ""
+"Tio tuj liberigos $5 de ĉiu Vilaĝa loĝanto. Tio ankaŭ malkreskigos ilian "
+"fidelecon, do taksi tro povas esti danĝera propono. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:119
 msgid ""
@@ -7321,6 +7429,10 @@ msgid ""
 "of them will collect tax from that Village whenever its Loyalty Level "
 "reaches the number on the button. "
 msgstr ""
+"Pli sistema maniero kolekti taksojn el viaj homoj estas Dekstre-Alklaki la "
+"Taksi-Kahelon. Tio montros elektaron de butonoj. Se vi Alklakas unu el ili, "
+"oni kolektos taksojn el tiu Vilaĝo ĉiam, kiam ĝia Fideleca Nivelo atingas la "
+"nombro en la malsupro. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:123
 msgid ""
@@ -8423,7 +8535,7 @@ msgstr ""
 
 # data/SCENARI2/SCN_09.SCT:1
 msgid "Fryhtanfest"
-msgstr ""
+msgstr "Frihtanfesto"
 
 # data/SCENARI2/SCN_09.SCT:5
 msgid ""
@@ -8432,6 +8544,9 @@ msgid ""
 "the world's human kingdoms. Destroying them will also result in victory for "
 "you. "
 msgstr ""
+"En ĉi tiu misio vi havos 15 jarojn por forigi la Frihtanojn de la mondo. Se "
+"vi laciĝas de tiu ĉi nobla tasko, vi povus anstataŭ turni vian glavon al la "
+"humanaj regnoj de la mondo. Detrui ilin ankaŭ donos al vi venkon. "
 
 # data/SCENARI2/SCN_10.SCT:1
 msgid "Impassable Isthmus"
@@ -8678,7 +8793,7 @@ msgstr "Ĉi tiu kaptas la elektitan konstruaĵon por via regno. "
 
 # data/RESOURCE/HELP.RES:78
 msgid "Change Production"
-msgstr ""
+msgstr "Ŝanĝi Produkton"
 
 # data/RESOURCE/HELP.RES:79
 msgid ""
