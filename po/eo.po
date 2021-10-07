@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-09-22 19:43+0200\n"
+"PO-Revision-Date: 2021-10-07 11:35+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -7395,7 +7395,7 @@ msgstr ""
 "Oni povas fari tion aŭ Minante malsamajn Naturajn Resursojn kaj poste "
 "konstruante Fabrikojn por produkti malsamajn Finitajn Varojn, aŭ importante "
 "Finitajn Varojn aŭ Krudajn Materialojn el aliaj Regnoj. Vi lernos kiel faru "
-"ambaŭ en la sekva leciono."
+"ambaŭ en la sekva leciono. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:110
 msgid ""
@@ -7441,6 +7441,10 @@ msgid ""
 "from all of your present and future Villages whenever their Loyalty Level "
 "reaches this number.   "
 msgstr ""
+"Se vi same deziras kolekti taksojn el ĉiuj viaj vilaĝanoj, Dekstre-Alklaku "
+"ĉi tiun nombron anstataŭ Alklaki ĝin. Vi tiam kolektos takson el ĉiuj el "
+"viaj nunaj kaj estontaj Vilaĝoj ĉiam, kiam ilia Fideleca Nivelo atingas ĉi "
+"tiun nombron.  "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:3
 msgid ""
@@ -7448,18 +7452,25 @@ msgid ""
 "You have acquired it to better confound your enemies. Putting this knowledge "
 "to use demands that you build a War Factory. "
 msgstr ""
+"Vi ne akiris scion pri Armiloj nur pro scii. Vi akiris ĝin por pli bone "
+"konfuzi viajn malamikojn. Uzi ĉi tiun scion bezonas, ke vi konstruas Militan "
+"Fabrikon. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:7
 msgid ""
 "A War Factory is built in the same manner as a Factory, and is staffed with "
 "the same kind of skilled Manufacturers. "
 msgstr ""
+"Oni konstruas Militan Fabrikon same kiel Fabriko, kaj ĝi estas plenigita de "
+"la sama speco de lertaj Fabrikistoj. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:9
 msgid ""
 "You now want to make a single Weapon. To make a weapon, first select the War "
 "Factory you've built, then Click on the Make Weapon Tile. "
 msgstr ""
+"Vi nun volas fari unu Armilon. Por fari armilon unue elektu la Militan "
+"Fabrikon, kiun vi konstruis, poste Alklaku la Fari-Armilon-Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:13
 msgid ""
@@ -7467,12 +7478,17 @@ msgid ""
 "Weapon that you wish to make. That weapon will exit the War Factory as soon "
 "as it is finished. "
 msgstr ""
+"Tio venigos vin al la areo de fabrikado de Armilo. Alklaku unufoje la nomon "
+"de la Armilo, kiun vi volas fari. Tiu armilo eliros el la Milita Fabriko, "
+"tuj kiam ĝi estas finita. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:17
 msgid ""
 "You'll probably want to build a large number of weapons simultaneously. To "
 "do so, Click on the Make Weapon Tile as before. "
 msgstr ""
+"Verŝajne vi volas konstrui grandan nombron de armiloj samtempe. Por fari "
+"tion Alklaku la Fari-Armilon-Kahelon kiel antaŭe. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:20
 msgid ""
@@ -7480,19 +7496,26 @@ msgid ""
 "to the right of a Weapon or Weapons until the number you wish to build is "
 "displayed. When you are finished, Click on the Done Button. "
 msgstr ""
+"Nun, anstataŭ Alklaki la nomon de unu Armilo, Alklaku la nombron dekstre de "
+"la Armilo aŭ Armiloj ĝis la nombro, kiun vi volas konstrui estas montrita. "
+"Kiam vi estas finita, Alklaku la Farita-Butonon. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:23
+#, fuzzy
 msgid ""
 "Production of all Weapons will then take place in the order you originally "
 "selected them. "
 msgstr ""
+"La produktado de ĉiuj armiloj tiam okazos laŭ la ordo, kiun vi origine "
+"elektis. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:26
+#, fuzzy
 msgid ""
 "Weapons, like Soldiers, may be assigned to Forts under the leadership of a "
 "General. Unlike Soldiers, however, the Hit-Points of Weapons cannot "
 "increase. "
-msgstr ""
+msgstr "Armiloj, kiel Soldatoj, po"
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:29
 msgid ""
@@ -7500,12 +7523,17 @@ msgid ""
 "their effectiveness from the leadership rating of their commander. Once "
 "combined into a Troop, they will also be easier to control. "
 msgstr ""
+"Armiloj kombinitaj en Trupo, sub komandanto, ricevos plifortigon al ilia "
+"efektiveco el la estreca valoro de ilia komandanto. Kombinitaj en Trupo ili "
+"estos ankaŭ pli facile kontroleblaj. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:32
 msgid ""
 "Weapons are selected and targeted in exactly the same way as Soldiers. The "
 "exception is the Porcupine. "
 msgstr ""
+"Armiloj estas elektitaj kaj celita precize same kiel Soldatoj. La escepto "
+"estas la Histriko. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:35
 msgid ""
@@ -7551,6 +7579,10 @@ msgid ""
 "Kingdoms will regain the lost knowledge of how to build Seats of Power and "
 "how to invoke Greater Beings. "
 msgstr ""
+"Ĉiu nacio en la Sep Regnoj (Seven Kingdoms) serĉos ĝian propan Rulon de "
+"Povo, prenitaj jaroj antaŭe de la Frihtanoj. Per tiuj Ruloj la Regnoj "
+"reakiros la perditan scion pri kiel konstrui Seĝojn de Povo kaj kiel alvoki "
+"Pli Grandajn Estaĵojn. "
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:6
 msgid ""
@@ -7558,6 +7590,9 @@ msgid ""
 "using a Construction Worker, a General or your King, providing they are of "
 "the same nationality as the scroll. "
 msgstr ""
+"Kiam vi reakiras Rulon de Povo, vi povas konstrui Seĝon de Povo per "
+"Konstruada Laboranto, Generalo aŭ via Reĝo, se ili estas de la sama nacieco "
+"kiel la rulo. "
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:8
 msgid ""
@@ -7565,6 +7600,9 @@ msgid ""
 "so that they may gather in prayer and Invoke the Greater Being who helped "
 "the people in ages past. "
 msgstr ""
+"Por ke la Seĝo de Povo utilas, ĝi devos malfermi ĝiajn pordojn al la "
+"fidelaj, por ke ili povas kunveni preĝante kaj alvoki la Pli Grandan "
+"Estaĵon, kiu helpis la homojn en pasintaj epokoj. "
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:10
 msgid ""
@@ -7573,6 +7611,10 @@ msgid ""
 "Power, to lead the people in prayer. As they pray, you will see your units "
 "slowly increasing the efficacy of their prayer . "
 msgstr ""
+"Por kunvenigi la homojn, sendu ĝis ek Kamparanoj en la Seĝon de Povo per "
+"Dekstre-Alklako. Vi ankaŭ devas komisii Generalon aŭ Reĝo al Seĝo de Povo, "
+"por gvidi la homojn en preĝo. Kiam ili preĝas, vi vidos viajn unuojn "
+"malrapide pliigi la efikecon de ilia preĝo. "
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:14
 msgid ""
@@ -7581,42 +7623,58 @@ msgid ""
 "can Invoke the Greater Being at his full strength and power, by Clicking on "
 "the Invoke Tile. "
 msgstr ""
+"Vi scios, ke la preĝoj de viaj unuoj atingis la deziratan nivelon, kiam vi "
+"vidas la bluan breton dekstre de la Pli Granda Estaĵo plenigita je 100%. Nun "
+"vi povas alvoki la Pli Granda Estaĵo kun lia tuta forto kaj povo Alklakante "
+"la Alvoki-Kahelon. "
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:18
 msgid ""
 "You can summon a Greater Being before the prayers have reached 100%, but one "
 "summoned before his time will not last as long in this world. "
 msgstr ""
+"Vi povas alvoki Pli Grandan Estaĵon antaŭ la preĝantoj atingis 100%, sed unu "
+"alvokita antaŭ lia tempo ne daŭros tiel longe en ĉi tiu mondo. "
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:20
 msgid ""
 "Greater Beings differ widely in their powers; you should refer to your "
 "manual for more details.  "
 msgstr ""
+"Pli Grandaj Estaĵoj ege malsimilos pri iliaj povoj; vi devas konsulti vian "
+"manlibron por pri da informo.  "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:3
 msgid ""
 "At the beginning of the game you will have only one Village, so domestic "
 "trade will not yet be possible. That leaves Trade with foreign Kingdoms. "
 msgstr ""
+"En la komenco de la ludo vi havos nur unu Vilaĝon, do hejma komerco ankoraŭ "
+"ne eblos. Restas la Komerco kun fremda Regnoj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:6
 msgid ""
 "You won't be able to import anything, either, unless you have a trade treaty "
 "with a foreign Kingdom. "
 msgstr ""
+"Vi ankaŭ ne povos importi ion, krom se vi havas komercan traktaton kun "
+"fremda Regno. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:8
 msgid ""
 "To make a trade treaty, you must either press the F1 key on your keyboard or "
 "else Click on the Kingdoms Scroll at the top left of your screen. "
 msgstr ""
+"Por estigi komercan traktaton vi devas aŭ premi la F1-klavon en via klavaro "
+"aŭ Alklaki la Rulo de Regnoj en la maldekstra supro de via ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:10
 msgid ""
 "You will now see information on all the Kingdoms of the world that have been "
 "discovered by your people. "
 msgstr ""
+"Vi nun vidos informon pri ĉiuj la Regnoj de la mondo, kiuj estis eltrovitaj "
+"de viaj homoj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:12
 msgid ""
@@ -7624,6 +7682,9 @@ msgid ""
 "Below that area you will then see a row of new buttons. Click on the "
 "Diplomacy Button. "
 msgstr ""
+"Por komenci kontakton vi devas unue Alklaki unu el la Regnoj listigitaj. "
+"Malsupre de tiu regiono vi tiam vidos vicon de novaj butonoj. Alklaku la "
+"Diplomatio-Butonon. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:16
 msgid ""
@@ -7631,6 +7692,9 @@ msgid ""
 "\"Propose a trade treaty.\" Click on this option and your message will be "
 "sent to the selected Kingdom. "
 msgstr ""
+"Oni montros al vi longa listo de opcioj, la unua estas \"Proponi komercan "
+"traktaton.\" Alklaku ĉi tiun opcion kaj via mesaĝo estos sendita al la "
+"elektita Regno. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:19
 msgid ""
@@ -7638,12 +7702,17 @@ msgid ""
 "answer is being returned. When the answer arrives, it will be displayed at "
 "the bottom of your main screen. "
 msgstr ""
+"Estos mallonga prokrasto dum la mesaĝo estas liverita kaj respondo estas "
+"resendita. Kiam la respondo alvenas, ĝi estos montrita en la malsupro de via "
+"ĉefa ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:22
 msgid ""
 "If a lesser Kingdom has accepted your proposal, you can then pick up goods "
 "from their Markets, and they can also pick up goods from yours. "
 msgstr ""
+"Se malpli granda Regno akceptis vian proponon, vi povas kolekti varojn el "
+"iliaj Bazaroj, kaj ili ankaŭ povas kolekti varojn el la viaj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:24
 msgid ""
@@ -7652,6 +7721,10 @@ msgid ""
 "their insult at another time. You may make the same proposal to other "
 "Kingdoms until one of them accepts. "
 msgstr ""
+"Se Regno rifuzis vian proponon, vi povas provi kun alia Regno, provi kun la "
+"sama Regno ree poste aŭ teni rankoron kaj pagigi al ili pro ilia insulto en "
+"alia tempo. Vi povas fari la saman proponon al aliaj Regnoj ĝis unu el ili "
+"akceptas. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:27
 msgid ""
@@ -7659,31 +7732,42 @@ msgid ""
 "Kingdom does so, you will see their message at the bottom of the main "
 "screen. "
 msgstr ""
+"Vi ne estas la nura Regno, kiu povas komenci komercan traktaton. Se alia "
+"Regno faras la samon, vi vidos ilia mesaĝo en la malsupro de la ĉefa ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:30
+#, fuzzy
 msgid ""
 "If you want to reply to this message, Click on the colored square next to "
 "it. This will take you to the Kingdoms Scroll page, where you can Click on "
 "either Accept or Reject. "
 msgstr ""
+"Se vi volas respondi al ĉi tiu mesaĝo, Alklaku la koloritan kvadraton apud "
+"ĝi. Tio "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:33
 msgid ""
 "If you have established a trade treaty with another Kingdom, you can then "
 "pick up any goods you want from their Markets. "
 msgstr ""
+"Se vi starigis komercan traktaton kun alia Regno, vi povas kolekti iujn ajn "
+"varojn, kiujn vi volas el iliaj Bazaroj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:35
 msgid ""
 "To do that you will need to hire a Caravan. Since all Caravans are hired in "
 "Markets, Click now on your Market.   "
 msgstr ""
+"Por fari tion vi devas dungi Karavanon. Ĉar ĉiuj Karavanoj estas dungitaj en "
+"Bazaroj, Alklaku nun vian Bazaron.   "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:38
 msgid ""
 "A Caravan will be hired when you Click on the Hire Caravan Tile. It will "
 "stand outside on the South side of the Market. "
 msgstr ""
+"Karavano estos dungita, kiam vi Alklakas la Dungi-Karavanon-Kahelon. Ĝi "
+"staros ekstere en la Suda flanko de la Bazaro. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:41
 msgid ""
@@ -7691,54 +7775,69 @@ msgid ""
 "to support your Caravan. Each of your Caravans needs 10 Villagers to support "
 "it. "
 msgstr ""
+"La Dungi-Karavanon-Kahelo estos malebligita, se vi ne havas sufiĉajn "
+"Vilaĝanojn por subteni vian Karavanon. Ĉiuj el viaj Karavanoj bezonas 10 "
+"Vilaĝanojn por siaj subtenoj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:44
 msgid ""
 "If you later lose some of your Village population, you will not lose the "
 "Caravans you already hired. "
 msgstr ""
+"Se vi poste perdas iujn el via Vilaĝa loĝantaro, vi ne perdos la Karavanojn, "
+"kiujn vi jam dungis. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:46
 msgid "Now select the Caravan you've hired. "
-msgstr ""
+msgstr "Nun elektu la Karavanon, kiun vi dungis. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:48
 msgid ""
 "To import goods from a foreign Kingdom, you must send your Caravan to one of "
 "their Markets to pick up the goods you want. "
 msgstr ""
+"Por importi varojn el fremda Regno vi devas sendi vian Karavanon al unu el "
+"iliaj Merkatoj por kolekti la varojn, kiujn vi volas. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:50
+#, fuzzy
 msgid ""
 "Note that in the window on the lower right, the First Stop of your Caravan "
 "has been set by default to the market where the Caravan was hired. You will "
 "want to set the Second Stop as a Market in a foreign Kingdom. "
-msgstr ""
+msgstr "Rimarku, ke en la malsupra dekstra fenestro"
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:53
+#, fuzzy
 msgid ""
 "To do that, Click on the Set Stop Button in the second row. Your Hand Cursor "
 "will change into a Camel & Arrow Cursor. With the new Cursor, Left-Click on "
 "a Market in a Kingdom you've established a treaty with. "
-msgstr ""
+msgstr "Por fari tion, Alklaku la "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:57
 msgid ""
 "Be sure to choose a foreign Market that is displaying some goods. If the "
 "Market is empty, your Caravan will return with nothing. "
 msgstr ""
+"Estu certa pri tio, ke vi elektas Bazaron, kiu montras iujn varojn. Se la "
+"Bazaro estas malplena, via Karavano revenos kun nenio. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:59
 msgid ""
 "When you Click on a Market, you will be presented with a small list of "
 "buttons; these allow you to choose which goods to pick up from that Market. "
 msgstr ""
+"Kiam vi Alklakas Bazaron, oni montros al vi listeton de butonoj; ĉi tiuj "
+"permesas al vi elekti kiujn varojn kolekti el tiu Bazaro. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:61
 msgid ""
 "Click on the buttons of the goods you want, making sure that they are goods "
 "you're not already producing and selling in your Market. "
 msgstr ""
+"Alklaku la butonojn de la varoj, kiujn vi volas, certigante, ke ili estas "
+"varoj, kiuj vi ne jam produktas kaj vendas en via Bazaro. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:63
 msgid ""
@@ -7746,6 +7845,9 @@ msgid ""
 "arrives, it will pick up the selected goods and return to its home Market to "
 "drop them off. "
 msgstr ""
+"Via Karavano devas esti survoje al fremda Bazaro. Kiam ĝi alvenas, ĝi "
+"kolektos la elektitajn varojn kaj revenos al sia hejma Bazaro por malŝarĝi "
+"ilin. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:66
 msgid ""
@@ -7753,6 +7855,8 @@ msgid ""
 "Kingdom will also make a profit on the sale of the imported goods to your "
 "people. "
 msgstr ""
+"La fremda Bazaro gajnos monon pro la vendo de siaj varoj al vi, kaj via "
+"Regno ankaŭ profitos de la vendo de la importitaj varoj al viaj homoj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:68
 msgid ""
@@ -7760,6 +7864,9 @@ msgid ""
 "foreign Markets. The goods on sale in Markets are solely under the control "
 "of the Kingdoms that built them. "
 msgstr ""
+"Vi devas kompreni, ke vi NE havas permeson malŝarĝi neniun varon en fremdaj "
+"Bazaroj. La varoj vendataj en Bazaroj estas nur sub la kontrolo de la "
+"Regnoj, kiuj konstruis ilin. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:71
 msgid ""
@@ -7767,12 +7874,18 @@ msgid ""
 "either wait for their Caravans to come to your Markets and pick up the goods "
 "that you have for sale; "
 msgstr ""
+"Se vi volas vendi viajn varojn al fremda Regno, vi povas fari du aferojn: aŭ "
+"atendi, ke iliaj Karavanoj venu al viaj Bazaroj kaj kolektu la varojn, kiujn "
+"vi vendas; "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:73
 msgid ""
 ". . . or build your own Markets within Linking distance of their Villages. "
 "Then you can send Caravans to drop your goods off near a foreign Village. "
 msgstr ""
+"... aŭ konstrui viajn proprajn Bazarojn ene de Ligila distanco de iliaj "
+"Vilaĝoj. Tiam vi povas sendi Karavanojn por malŝarĝi viajn varojn apud "
+"fremda Vilaĝo. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:76
 msgid ""
@@ -7780,18 +7893,26 @@ msgid ""
 "Caravan control area is set as your Market. To pick up goods from your "
 "Market, you must Click on the small buttons showing what is available there. "
 msgstr ""
+"Por malŝarĝi varojn, vi unue devas porti ilin. La unua vico de la "
+"kontrolregiono de via Karavano estas agordita kiel via Bazaro. Por kolekti "
+"varojn de via Bazaro vi devas Alklaki la butonetojn montrantajn, kio estas "
+"disponebla tie. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:80
 msgid ""
 "You will notice that there are two other buttons: A and N. If you Click on "
 "A, your Caravan will Automatically pick up your surpluses. "
 msgstr ""
+"Vi rimarkos, ke estas du aliaj butonoj: A kaj N. Se vi Alklakas A-n, via "
+"Karavano Aŭtomate kolektos vian eksceson de produktoj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:83
 msgid ""
 "If you Click on N, your Caravan will pick up Nothing. This is useful when "
 "your route is between a Mine and a Factory, as described below. "
 msgstr ""
+"Se vi Alklakas N-n, via Karavano kolektos Nenion. Tio estas utila, kiam via "
+"itinero estas inter Minejo kaj Fabriko, kiel malantaŭe estas priskribita. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:86
 msgid ""
@@ -7799,6 +7920,9 @@ msgid ""
 "Caravan will pick up the selected goods from your Market and then drop them "
 "off at your Second Stop. "
 msgstr ""
+"Se vi mem volas elekti, Alklaku la varojn, kiujn vi deziras eksporti. Via "
+"Karavano kolektos la elektitajn varojn el via Bazaro kaj poste malŝarĝos "
+"ilin en via Dua Haltejo. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:89
 msgid ""
@@ -7806,6 +7930,9 @@ msgid ""
 "you can use these techniques to move goods between areas with surplus and "
 "areas with shortages. "
 msgstr ""
+"Kiam via Regno estas pli granda kaj vi havas pli ol unu Vilaĝon kaj pli ol "
+"unu Bazaron, vi povas uzi tiujn teknikojn por movi varojn inter regionoj kun "
+"ekscesoj kaj regionoj kun mankoj. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:91
 msgid ""
@@ -8864,7 +8991,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:109
 msgid "Hire Caravan"
-msgstr ""
+msgstr "Dungi Karavanon"
 
 # data/RESOURCE/HELP.RES:110
 msgid ""
