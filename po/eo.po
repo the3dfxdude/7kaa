@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-10-07 11:35+0200\n"
+"PO-Revision-Date: 2021-10-10 19:35+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -6391,7 +6391,7 @@ msgid ""
 msgstr ""
 "Se vi ne havas Generalon kun granda estreca lerteco, tiam estas plej bone "
 "uzi vian Reĝon. Kiun ajn vi uzos, sendu lin al la nova Fortikaĵo. Se vi uzas "
-"via Reĝo, estu certe pri tio, ke vi sendas kun li eskorton de bone trejnitaj "
+"via Reĝo, estu certa pri tio, ke vi sendas kun li eskorton de bone trejnitaj "
 "trupoj. "
 
 # data/RESOURCE/TUT_TEXT/00005-10CAPTUR.TXT:30
@@ -7808,12 +7808,14 @@ msgid ""
 msgstr "Rimarku, ke en la malsupra dekstra fenestro"
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:53
-#, fuzzy
 msgid ""
 "To do that, Click on the Set Stop Button in the second row. Your Hand Cursor "
 "will change into a Camel & Arrow Cursor. With the new Cursor, Left-Click on "
 "a Market in a Kingdom you've established a treaty with. "
-msgstr "Por fari tion, Alklaku la "
+msgstr ""
+"Por fari tion, Alklaku la Agordi-Haltejon-Butonon en la dua vico. Via Mana "
+"Kursoro ŝanĝos al Kamela kaj Saga Kursoro. Kun la nova Kursoro Maldekstre-"
+"Alklaku Bazaron en Regno, kun kiu vi estigis traktaton. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:57
 msgid ""
@@ -7941,6 +7943,10 @@ msgid ""
 "will always buy from their own Markets first, and only buy from you if their "
 "Market does not sell what you're offering. "
 msgstr ""
+"Estu certa pri tio, ke la varoj, kiujn vi planas eksporti al viaj Bazaroj en "
+"fremdaj Regnoj, ne estas jam vendataj en la Bazaroj de tiu Regno.  Fremdaj "
+"homoj ĉiam aĉetos el viaj propraj Bazaroj unue, kaj nur aĉetos el vi, se "
+"ilia Bazaro ne vendas, kiun vi ofertas. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:93
 msgid ""
@@ -7949,6 +7955,10 @@ msgid ""
 "set to another stop. You may, alternately, set a new stop on top of the old "
 "one.  The old one will be replaced with the new. "
 msgstr ""
+"Se vi deziras malelekti haltejon el unu el la haltejoj, kiujn vi elektis, "
+"Alklaku la X-Butonon de tiu haltejo. La haltejo estos malelektita kaj preta "
+"por, ke vi agordas alian haltejon. Vi povas, alterne, agordi novan haltejon "
+"sur la malnova.  La malnova estos anstataŭita de la nova. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:97
 msgid ""
@@ -7956,6 +7966,9 @@ msgid ""
 "one of the stops you've set, Click on the View Stop Button.  When you do so, "
 "your main screen will be centered over that stop. "
 msgstr ""
+"Se vi estas iom konfuzita kun via itinero kaj deziras vidi la ejon de unu el "
+"la haltejoj, kiujn vi agordis, Alklaku la Vidi-Haltejon-Butonon.  Kiam vi "
+"faras tion, via ĉefa ekrano estos centrigita super tiu haltejo. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:99
 msgid ""
@@ -7964,6 +7977,10 @@ msgid ""
 "treaty at any time by Clicking on the \"Terminate our trade treaty\" option "
 "under the Kingdoms Scroll /Diplomacy Button. "
 msgstr ""
+"Se vi iras al milito kontraŭ Regno, kun kiu vi estigis komercan traktaton, "
+"la traktato estos aŭtomate finita. Vi ankaŭ povas fini komercan traktaton "
+"kiam ajn Alklakante la \"Fini nian komercan traktaton\" opcion sub la Rulo "
+"de Regnoj / Diplomatia Butono. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:102
 msgid ""
@@ -7971,10 +7988,13 @@ msgid ""
 "direct Linking distance to a Factory. In this case, you'll need to use a "
 "Caravan to move the Raw Material from the Mine to the Factory. "
 msgstr ""
+"Karavanoj ankaŭ estas necesaĵoj, se vi nun laboras je Minejon pli "
+"malproksime de Ligila distanco al Fabriko. Ĉi-kaze vi devos uzi Karavanon "
+"por movi la Krudajn Materialojn el la Minejo al la Fabriko. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:105
 msgid "To do so, first hire a Caravan in one of your Markets. "
-msgstr ""
+msgstr "Por fari tion, unue dungi Karavanon en unu el viaj Bazaroj.  "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:107
 msgid ""
@@ -7982,6 +8002,9 @@ msgid ""
 "it. You should change the first stop, because you will want the Caravan to "
 "go from the Mine directly to the Factory. "
 msgstr ""
+"La defaŭlta unua haltejo por ĉi tiu Karavano estas nun la Bazaro, kie vi "
+"dungis ĝin. Vi devas ŝanĝi la unuan haltejon, ĉar vi volos, ke la Karavano "
+"iru el la minejo rekte al la Fabriko. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:110
 msgid ""
@@ -7989,6 +8012,9 @@ msgid ""
 "now Click on the Mine. As you can see, your Caravan has begun to move "
 "towards the Mine. "
 msgstr ""
+"Alklaku la Agordi-Haltejon-Butonon en la unua vico. Uzante la Kamela kaj "
+"Saga Bildeto nun Alklaku la Minejon. Kiel vi povas vidi, via Karavano "
+"komencis movi al la Minejo. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:114
 msgid ""
@@ -7998,14 +8024,20 @@ msgid ""
 "up any Finished Goods from the Factory by checking that the small Finished "
 "Goods Icon is not pressed in. "
 msgstr ""
+"Vi nun devas agordi la Fabrikon kiel la dua haltejo. Alklaku la Agordi-"
+"Haltejon-Butonon en la dua vico kaj poste Alklaku la Fabrikon, kie vi "
+"intencas procezi la Minejajn Krudajn Materialojn. Certiĝu, ke la Karavano ne "
+"kolektos neniun Finitan Varon el la Fabriko kontrolante, ke la eta Bildeto "
+"de Finitaj Varoj ne estas premita. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:118
+#, fuzzy
 msgid ""
 "Because the Factory is beyond direct Linking distance with the Mine, you may "
 "have to set the production there manually, to match the Mine's Raw "
 "Materials.  Do this by Clicking on the Change Production Tile until the "
 "Factory's production matches the incoming Raw Material. "
-msgstr ""
+msgstr "Ĉar la Fabriko estas "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:121
 msgid ""
@@ -8013,6 +8045,10 @@ msgid ""
 "a trade treaty with those Kingdoms, you will be able to send your Caravans "
 "there to pick up those Raw Materials, just as you do with your Mine. "
 msgstr ""
+"Iufoje vi vidos âceteblajn Krudajn Materialojn en fremdaj Bazaroj. Se vi "
+"havas komercan traktaton kun tiuj Regnoj, vi povos sendi viajn Karavanojn "
+"tie por kolekti tiujn Krudajn Materialojn, same kiel vi faras kun via "
+"Minejo. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:124
 msgid ""
@@ -8020,12 +8056,17 @@ msgid ""
 "if you have a trade treaty with that Kingdom. All trade must take place "
 "through the Market. "
 msgstr ""
+"Vi NE povas sendi Karavanon al fremda Minejo por kolekti Krudajn "
+"Materialojn, eĉ se vi havas komercan traktaton kun tiu Regno. Ĉiu komerco "
+"devas okazi per la Bazaro. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:3
 msgid ""
 "To conduct espionage against your current or future enemies, you must train "
 "or hire Spies. "
 msgstr ""
+"Por direkti spionadon kontraŭ viaj nunaj aŭ estontaj malamikoj vi devas "
+"trejni aŭ dungi Spionojn. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:5
 msgid ""
@@ -8033,6 +8074,9 @@ msgid ""
 "then Clicking on the Spying option. Spies may also be hired in Inns, along "
 "with other mercenaries. "
 msgstr ""
+"Spionoj estas trejnitaj elektante Vilaĝon, Alklakante la Trejni-Kahelon kaj "
+"poste Alklakante la Spionado-opcion. Spionoj povas ankaŭ esti dungitaj en "
+"Gastejoj, kun aliaj dungatoj. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:8
 msgid ""
@@ -8040,6 +8084,9 @@ msgid ""
 "Counterspies, or be placed in Independent Villages or Foreign Kingdoms, for "
 "more dangerous duties. "
 msgstr ""
+"Spionoj povas aŭ esti senditaj al viaj propraj Vilaĝoj aŭ konstruaĵoj por "
+"agi kiel kontraŭspionoj, aŭ esti metitaj en Sendependaj Vilaĝoj aŭ fremdaj "
+"Regnoj, por pli danĝeraj devoj. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:10
 msgid ""
@@ -8048,12 +8095,19 @@ msgid ""
 "Independent Villages. Change the color by clicking on one of the color "
 "squares at the bottom right. "
 msgstr ""
+"Por sendi Spionon al fremda Regno aŭ Sendependa Vilaĝo, unue ŝanĝu la "
+"koloron de lia mantelo al tiu de la destinata celo. Elektu blankon por "
+"Sendependaj Vilaĝoj. Ŝanĝu la koloron alklakante unu el la koloraj kvadratoj "
+"en la dekstre malsupro. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:14
 msgid ""
 "Above the color choices you will see the Sneak Tile. This Tile means that "
 "when you change the color of your Spy's cloak, it will be done secretly. "
 msgstr ""
+"Super la koloraj elektoj vi vidos la Kaŝe-Ŝanĝiĝi-Kahelon. Ĉi tiu Kahelo "
+"signifas, ke kiam vi ŝanĝas la koloron de vian Spionan mantelon, tio fariĝos "
+"kaŝe. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:18
 msgid ""
@@ -8062,6 +8116,10 @@ msgid ""
 "of that color that a person from your Kingdom has betrayed you and joined "
 "them. "
 msgstr ""
+"Se vi Alklakas la Kaŝe-Ŝanĝiĝi-Kahelon, ĝi ŝanĝos al la Kapitulaci-Kahelon. "
+"Kiam tiu ĉi kahelo estas aktiva, la ŝanĝado de Spiona koloro sciigos la "
+"Regnon de tiu koloro pri tio, ke homo de via Regno perfidas vin kaj aliĝis "
+"al ili. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:22
 msgid ""
@@ -8070,6 +8128,10 @@ msgid ""
 "change into a Flag and Arrow Cursor; use it to click on the targeted "
 "Village. Your Spy will now travel to and infiltrate the targeted Village. "
 msgstr ""
+"Por infiltri Fremdan aŭ Sendependan Vilaĝon per via Spiono vi devas alklaki "
+"la Enloĝiĝi-Butonon dum via Spiono estas elektita. La Mana Kursoro tiam "
+"ŝanĝos al Flaga kaj Saga Kursoro; uzu ĝin por alklaki la celatan Vilaĝon. "
+"Via Spiono nun vojaĝos kaj infiltros la celatan Vilaĝon. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:27
 msgid ""
@@ -8078,6 +8140,10 @@ msgid ""
 "Spy, you will see, on the right, the Spying Tile. Click on this Tile to "
 "bring up your Spy's options. "
 msgstr ""
+"Kiam via Spiono enloĝiĝis en Vilaĝo, li havos kelkajn opciojn disponeblajn "
+"por li. Kiam vi elektas Vilaĝon, kiun vi infiltris kun via Spiono, vi vidos, "
+"en la dekstro, la Spionado-Kahelon. Alklaku ĉi tiun kahelon por montri la "
+"opciojn de via Spiono. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:32
 msgid ""
@@ -8085,6 +8151,9 @@ msgid ""
 "The default task is Sleeping. To toggle from Sleeping to Sowing Dissent, "
 "Click the Tile again. "
 msgstr ""
+"En Vilaĝo Spiono havos nur du opciojn: Dormi aŭ Semi Malkonsenton. La "
+"defaŭlta tasko estas Dormi. Por ŝanĝi el Dormi al Semi Malkonsenton, Alklaku "
+"la Kahelon denove. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:36
 msgid ""
@@ -8093,6 +8162,9 @@ msgid ""
 "becoming more familiar with their ways. A Spy will not be exposed while he "
 "is in this mode. "
 msgstr ""
+"Dum dormado Spiono ne plenumos spiona ago. Li estos kun la lokaj homoj "
+"gajnante ilian fidon kaj kutimiĝante al iliaj manieroj. Spiono ne estos en "
+"danĝero dum en ĉi tiu modo. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:40
 msgid ""
@@ -8100,6 +8172,9 @@ msgid ""
 "This is important, because a Spy with a high Skill Level will be more "
 "effective in his work; he will also decrease his risk of exposure. "
 msgstr ""
+"Kiam li estas infiltrita, la lerteca nivelo de via Spiono komencos kreski "
+"malrapide. Tio estas grava, ĉar Spiono kun granda Lerteca Nivelo estos pli "
+"efika en lia laboro; li ankaŭ malkreskigos la risko de malkovro. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:43
 msgid ""
@@ -8108,6 +8183,10 @@ msgid ""
 "Independent Village's resistance to your rule, and to lower the Loyalty "
 "Level in the Villages or Buildings of other Kingdoms. "
 msgstr ""
+"Semante Malkonsenton via Spiono helpos la homoj ĉirkaŭ li vidi la "
+"advantaĝojn iĝi parto de via Imperio. Ĝia tasko estas malkreskigi la rezisto "
+"de Sendependa Vilaĝo al via regad kaj malkreskigi la Fidelecan Nivelon en la "
+"Vilaĝoj kaj Konstruaĵoj de aliaj Regnoj. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:46
 msgid ""
@@ -8115,12 +8194,17 @@ msgid ""
 "people of his own nationality, as he speaks their language and understands "
 "their customs. "
 msgstr ""
+"Estas grave kompreni, ke Spiono estos multe pli efika kun homoj de lia sama "
+"nacieco, ĉar li parolas iliajn lingvojn kaj komprenas iliajn kutimojn. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:48
 msgid ""
 "To infiltrate an enemy Building, such as a Mine, Factory, War Factory or "
 "Tower of Science, Right-Click on the Building with your Spy selected. "
 msgstr ""
+"Por infiltri malamikan Konstruaĵon, kiel Minejon, Fabrikon, Militan Fabrikon "
+"aŭ Turon de Sciencon, Dekstre-Alklaku la Konstruaĵon per via Spiono "
+"elektita. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:50
 msgid ""
@@ -8129,6 +8213,10 @@ msgid ""
 "the Spy will be hired for work in a Building. You will, however, have no "
 "control over which Building the Spy is sent to work in. "
 msgstr ""
+"Se la Konstruaĵo estas plena de laborantoj, estos neeble infiltri; kun "
+"Spiono jam enloĝiĝita en malamika Vilaĝo, tamen, estas ŝanco, ke la Spiono "
+"estu dungota por labori en Konstruaĵo. Vi tamen ne havos kontrolon, pri al "
+"kiu Konstruaĵo la Spiono estas sendita por labori. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:54
 msgid ""
@@ -8136,14 +8224,18 @@ msgid ""
 "Sabotage or Steal Information. He can also Sleep (which means he will "
 "function as a normal worker). "
 msgstr ""
+"Kiam li estas en Konstruaĵo, via Spiono havos la okazon Subaĉeti, Saboti aŭ "
+"Ŝteli Informon. Li ankaŭ povas Dormi (tio signifas, ke li funkcios kiel "
+"kutima laboranto). "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:56
+#, fuzzy
 msgid ""
 "If you choose Sabotage, the Spy will do his best to slow production in the "
 "Building. In a Mine he will slow the extraction of Raw Material, in a "
 "Factory or War Factory he will slow the production of Goods and Weapons, and "
 "in a Tower of Science he will slow Research. "
-msgstr ""
+msgstr "Se vi elektis Saboti, la Spiono faros "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:59
 msgid ""
@@ -8151,12 +8243,18 @@ msgid ""
 "his spying activities. If the enemy refuses the bribe, your Spy will be "
 "exposed and executed. "
 msgstr ""
+"Se vi elektas Subaĉeti, via Spiono petos al malamika unuo, ke li aliĝu al li "
+"en liaj spionadaj agoj. Se la malamiko rifuzas la subaĉeton, via Spiono "
+"estos malkovrita kaj mortigita. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:62
 msgid ""
 "To Bribe an enemy unit, select the Enemy Building the Spy has infiltrated. "
 "Then Click on the picture of the Enemy Unit you wish to bribe. "
 msgstr ""
+"Por subaĉeti malamikan unuon, elektu la Malamikan Konstruaĵon, kiun la "
+"Spiono infiltris. Poste Alklaku la bildon de la Malamika Unuo, kiun vi volas "
+"subaĉeti. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:65
 msgid ""
@@ -8165,6 +8263,10 @@ msgid ""
 "accepts the bribe, he will become yours and, like your first Spy, will "
 "slowly increase his Skill Level. "
 msgstr ""
+"Alklaku en la Subaĉeti-Kahelon. Vi nun vidos ŝprucfenestron de diversaj "
+"monaj kvantoj. Alklaku la kvanton, kiun vi deziras proponi al la malamika "
+"unuo. Se li akceptas la subaĉeton, li iĝos via kaj, kiel via unua Spiono, "
+"malrapide pliigos lian Lertecan Nivelon.  "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:71
 msgid ""
@@ -8172,6 +8274,9 @@ msgid ""
 "will be presented with a list of subjects; they're the same as the subjects "
 "beneath the Scrolls on the top of your screen. "
 msgstr ""
+"Se vi deziras ŝteli informon, Alklaku la Ŝteli-Informon-Kahelon. Oni montros "
+"al vi liston de temoj; ili estas la samaj ol la temoj sub la Ruloj en la "
+"supro de via ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:75
 msgid ""
@@ -8179,6 +8284,9 @@ msgid ""
 "higher his Skill Level, the more sensitive the information he will have "
 "access to. "
 msgstr ""
+"La informo, kiun la Spiono povas atingi, dependas de lia lerteca nivelo. Ju "
+"pli granda lia Lerteca Nivelo, des pli delikata la informo, kiun li povos "
+"atingi. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:78
 msgid ""
@@ -8186,6 +8294,9 @@ msgid ""
 "information; he can then discover who the enemy's Spies are, and where they "
 "are located. "
 msgstr ""
+"Se lia Lerteca Nivelo atingas 90, via Spino akiros aliron al Spionada "
+"informo; li povos tiam malkovri, kiuj estas la malamikaj Spionoj, kaj kie "
+"ili troviĝas. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:80
 msgid ""
@@ -8195,6 +8306,11 @@ msgid ""
 "enemy Fort, you may capture it even if there are loyal enemy units still in "
 "the Fort. "
 msgstr ""
+"Se via Spiono aŭ Spionoj estas nur loĝantoj de Malamika Konstruaĵo, vi havos "
+"la opcion Kapti la Konstruaĵon. Dum la Konstruaĵo estas elektita, Alklaki la "
+"Kapti-Kahelon iĝos ĝi via. Se via Spiono estas Generalo en malamika "
+"Fortikaĵo, vi povas kapti ĝin eĉ se ankoraŭ estas fidelaj malamikaj unuoj en "
+"la Fortikaĵo. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:85
 msgid ""
@@ -8203,6 +8319,10 @@ msgid ""
 "building and then on the Assassinate Button. You do not need to select the "
 "enemy target as the commander is the only possible one. "
 msgstr ""
+"Spiono en Fortikaĵo aŭ en Seĝo de Povo eblos klopodi mortigon de la malamika "
+"komandanto, ne gravas, se li estas Generalo aŭ Reĝo. Por fari tion Alklaku "
+"la konstruaĵon kaj poste en la Mortigi- Butonon. Vi ne devas elekti la "
+"malamikan celon, ĉar la komandanto estas la nura eblo. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:89
 msgid ""
@@ -8210,6 +8330,9 @@ msgid ""
 "the Building or Village where he resides, Click on the Spy Tile, select your "
 "Spy and then Click on the Evacuate Tile option.  "
 msgstr ""
+"Se vi deziras, ke via Spiono evakuu infiltritan regionon, vi devas unue "
+"elekti la Konstruaĵon aŭ Vilaĝon, en kiu li loĝas, Alklaku la Spioni-"
+"Kahelon, elektu vian Spionon kaj poste Alklaku la Evakui-Kahelan opcion.  "
 
 # data/SCENARIO/7FOR7.SCT:1
 msgid "Seven Forts for Seven Generals"
@@ -8225,6 +8348,13 @@ msgid ""
 "click on their names in the top section. A reminder of your goal will be "
 "displayed in the bottom section. "
 msgstr ""
+"Vi komencos ĉi tiun mision kun sep generaloj, ĉiu de malsama nacieco. Ili "
+"ĉiuj posedas la plej grandajn batalan kaj komandantan lertecojn. Estas via "
+"decido fari la plej bonan uzadon de ĉi tiuj lertecoj en via vetkuro por "
+"atingi totalan poentaron de 1000. Vi povas kontroli vian totalan poentaron "
+"en la meza sekcio de la Rangolista Rulo (F8). Por kontroli la poentaro de "
+"aliaj Regnoj, alklaku iliajn nomojn en la supra sekcio. Memorigo de via celo "
+"estos montrita en la malsupra sekcio. "
 
 # data/SCENARIO/C&D.SCT:1
 msgid "Cloak & Dagger"
@@ -8237,10 +8367,14 @@ msgid ""
 "weak kingdom to complete world domination. In order to win you must "
 "completely destroy every other kingdom. "
 msgstr ""
+"Vi komencos ĉi tiun mision kun kelkaj spionoj en gravaj malamikaj "
+"fortikaĵoj. Vi devas bone uzi tiujn agentojn en via serĉo por altigi vian "
+"malfortan regnon al tuta monda dominado. Por venki vi devas tute detrui "
+"ĉiujn aliajn regnojn. "
 
 # data/SCENARIO/DESBOW.SCT:1
 msgid "Desperate Bowmen"
-msgstr ""
+msgstr "Malesperaj Pafarkistoj"
 
 # data/SCENARIO/DESBOW.SCT:5
 msgid ""
@@ -8252,10 +8386,17 @@ msgid ""
 "ultimately, rule the world. To be victorious you must completely destroy the "
 "world's other kingdoms. "
 msgstr ""
+"Vi komencos ĉi tiun mision kun ses fortikaĵoj plenaj de bone trejnitaj "
+"Persaj pafarkistoj. La problemo estas, ke viaj trezoroj kaj grenejoj estos "
+"baldaŭ malplenaj, tio povos instigi al viaj pafarkistoj proponi iliajn "
+"oficojn aliloke. Vi devas do unue trovi la oron kaj manĝaĵon, kiuj konservos "
+"la fidelecon de viaj pafarkistoj, kaj poste uzi ĉi tiujn bone trejnitajn "
+"homojn por konstrui imperion kaj, fine, ruli la mondon. Por venki vi devas "
+"tute detrui la aliajn regnojn de la mondo. "
 
 # data/SCENARIO/DESPERDO.SCT:1
 msgid "Desperados"
-msgstr ""
+msgstr "Eksterleĝuloj"
 
 # data/SCENARIO/DESPERDO.SCT:5
 msgid ""
@@ -8823,13 +8964,15 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:30
 msgid "Ranking Report"
-msgstr ""
+msgstr "Raporto de Rangolisto "
 
 # data/RESOURCE/HELP.RES:31
 msgid ""
 "Click on this scroll or press F8 to bring up the Ranking Report. Click on it "
 "again or press ESC to close it. "
 msgstr ""
+"Alklaku ĉi tiun rulon aŭ premu F8 por montri la Raporton de Rangolisto. "
+"Alklaku ĝin denove aŭ premu ESC-n por malfermi ĝin. "
 
 # data/RESOURCE/HELP.RES:34
 msgid "Food"
@@ -8888,13 +9031,14 @@ msgstr ""
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/HELP.RES:181
 msgid "Offer Bribe"
-msgstr ""
+msgstr "Proponi Subaĉeton"
 
 # data/RESOURCE/HELP.RES:63
+#, fuzzy
 msgid ""
 "Make a bribe with the selected spy. This takes you to a menu where you can "
 "choose the amount of the bribe to offer to the selected foreign unit. "
-msgstr ""
+msgstr "Subaĉeti per la elektita spiono. Tio "
 
 # data/RESOURCE/HELP.RES:66
 msgid "Build"
@@ -8940,7 +9084,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:86
 msgid "Continue"
-msgstr ""
+msgstr "Daŭrigi"
 
 # data/RESOURCE/HELP.RES:89
 msgid "At Ease"
@@ -9113,7 +9257,7 @@ msgid ""
 msgstr ""
 "Tio varbas kamparanon el la elektita vilaĝo. Po ĉiu klako unu kamparano "
 "eliras. Ĉi tiu kahelo estas malebligita, se ne restas kamparanoj en la "
-"vilaĝo."
+"vilaĝo. "
 
 # data/RESOURCE/HELP.RES:161
 msgid "Conduct Research"
@@ -9181,7 +9325,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:185
 msgid "Settle"
-msgstr ""
+msgstr "Enloĝiĝi"
 
 # data/RESOURCE/HELP.RES:186
 msgid ""
@@ -9189,6 +9333,9 @@ msgid ""
 "established village. If this unit is a spy, this tile can also be used to "
 "settle the spy in an enemy's village. "
 msgstr ""
+"Tio ordonas al la elektitaj homoj enloĝiĝi en vaka lando aŭ en establita "
+"vilaĝo. Se ĉi tiu unuo estas spiono, ĉi tiu kahelo ankaŭ povas esti uzita "
+"por enloĝigi la spionon en malamika vilaĝo. "
 
 # data/RESOURCE/HELP.RES:189
 msgid "Spy Menu"
