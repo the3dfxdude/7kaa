@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-10-15 13:53+0200\n"
+"PO-Revision-Date: 2021-10-15 13:54+0200\n"
 "Last-Translator: Lenny Andreu\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -559,13 +559,11 @@ msgstr ""
 "su cuenta y pruebe otra vez."
 
 #: src/OGAMEMP.cpp:1741
-#, fuzzy
 msgid ""
 "Unable to connect to the 7kfans service.\n"
 "(No libcurl)"
 msgstr ""
-"No se pudo conectar al servicio de 7kfans.com. Vea en 7kfans.com/wiki como "
-"ingresar.\n"
+"No se pudo conectar al servicio de 7kfans.com.\n"
 "(Sin libcurl)"
 
 #: src/OGAMEMP.cpp:1931
