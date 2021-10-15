@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-10-10 19:35+0200\n"
+"PO-Revision-Date: 2021-10-15 12:21+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -8399,6 +8399,7 @@ msgid "Desperados"
 msgstr "Eksterleĝuloj"
 
 # data/SCENARIO/DESPERDO.SCT:5
+#, fuzzy
 msgid ""
 "At the end of the \"The War to End all Wars for a While\", a band of "
 "unemployed mercenaries roams the ravaged countryside. Take control of this "
@@ -8408,10 +8409,12 @@ msgid ""
 "warmongering past. Ultimate victory will be gained by the destruction of all "
 "other kingdoms. "
 msgstr ""
+"Je la fino de la \"Milito por Fini ĉiujn Militojn dum iom da Tempo\", aro de "
+"senlaboraj dungatoj vagis la ruini"
 
 # data/SCENARIO/ERADICAT.SCT:1
 msgid "Eradication"
-msgstr ""
+msgstr "Ekstermado"
 
 # data/SCENARIO/ERADICAT.SCT:5
 msgid ""
@@ -8424,10 +8427,18 @@ msgid ""
 "in the top section. A reminder of your goal will be displayed in the bottom "
 "section. "
 msgstr ""
+"Via mondo estas invadita de Frihtanoj kaj via Regno, kaj ankaŭ la aliaj, "
+"estas malforta kaj preskaŭ senhelpa. Vi devas alianci kun ĉi tiuj aliaj "
+"Regnoj kaj ekstermi ĉiujn Frihtanojn. Post ĉiu el ili estas detruita, venkon "
+"atingos la regno kun la plej granda Poentaro de bataloj kontraŭ Frihtanoj. "
+"Vi povas kontroli vian Poentaron de Bataloj kontraŭ Frihtanoj en la meza "
+"sekcio de la Rangolista Rulo (F8). Por kontroli la poentaron de aliaj "
+"regnoj, alklaku iliajn nomojn en la supra sekcio. Memorigo de via celo estos "
+"montrita en la malsupra sekcio. "
 
 # data/SCENARIO/FTFRAUTN.SCT:1
 msgid "Fight for Autonomy"
-msgstr ""
+msgstr "Batalo por Aŭtonomeco"
 
 # data/SCENARIO/FTFRAUTN.SCT:5
 msgid ""
@@ -8437,10 +8448,15 @@ msgid ""
 "Kingdoms. Final victory will come with the destruction of every person who "
 "does not wear your colors. "
 msgstr ""
+"La homoj en via hejmlando estas regitaj de fortikaĵo kontrolita de malamiko. "
+"Detruu ĉi tiun fortikaĵon kaj ĝiajn soldatojn kaj restarigu vian regadon sub "
+"viaj homoj. Poste, por sekurigi eternan liberecon, detruu ĉiujn aliajn "
+"Regnojn. Fina venko alvenos kun la detruo de ĉiu homo, kiu ne portas viajn "
+"kolorojn. "
 
 # data/SCENARIO/H&M.SCT:1
 msgid "Winning Hearts & Minds"
-msgstr ""
+msgstr "Gajnante Korojn kaj Mensojn"
 
 # data/SCENARIO/H&M.SCT:5
 msgid ""
@@ -8453,10 +8469,18 @@ msgid ""
 "other Kingdoms, click on their names in the top section. A reminder of your "
 "goal will be displayed in the bottom section. "
 msgstr ""
+"Kvankam vi komencas ĉi tiun mision kun ĉiuj teknologiaj avantaĝoj, la Japana "
+"Rulo de Povo kaj trupo de bonege trejnitaj soldatoj, vi ne havos kamparanojn "
+"kaj kontrolos neniun vilaĝon. Por venki vi devas atingi loĝantaron de 700 "
+"ene de 20 jaroj kaj, kompreneble, eviti, ke aliaj Regnoj faru la samon. Vi "
+"povas kontroli vian Loĝantaran Poentaron en la meza sekcio de la Rangolista "
+"Rulo (F8). Por kontroli la Loĝantaran Poentaron de aliaj Regnoj, alklaku "
+"iliajn nomojn en la supra sekcio. Memorigo de via celo estos montrita en la "
+"malsupra sekcio. "
 
 # data/SCENARIO/INSULPOS.SCT:1
 msgid "An Insular Possession"
-msgstr ""
+msgstr "Insula Posedaĵo"
 
 # data/SCENARIO/INSULPOS.SCT:5
 msgid ""
@@ -8470,12 +8494,22 @@ msgid ""
 "kingdoms, click on their names in the top section. A reminder of your goal "
 "will be displayed in the bottom section. "
 msgstr ""
+"Via hejmlando estas eta, subevoluinta lando apartiga de la \"civilizita\" "
+"kontinento. Via celo estas rapide atingi kaj superi aliajn Regnojn antaŭ ili "
+"povu superforti vin per iliaj dekadencaj manieroj. Atingu ekonomian "
+"poentaron de 600 ene de 25 jaroj (kaj antaŭ ĉiuj aliaj regnoj) kaj vi "
+"venkos. Vi ankaŭ venkos, se vi povas detrui ĉiujn aliajn regnojn antaŭ tiu "
+"tempo. Vi povas kontroli vian Ekonomian Poentaron en la meza sekcio de la "
+"Rangolista Rulo (F8). Por kontroli la Ekonomian Poentaron de aliaj regnoj, "
+"alklaku iliajn nomojn en la supra sekcio. Memorigo de via celo estos "
+"montrita en la malsupra sekcio. "
 
 # data/SCENARIO/IRONFIST.SCT:1
 msgid "Iron Fist & Velvet Glove"
-msgstr ""
+msgstr "Fera Pugno kaj Velura Ganto"
 
 # data/SCENARIO/IRONFIST.SCT:5
+#, fuzzy
 msgid ""
 "You have built your large empire through treachery and bloody conquest. Your "
 "reputation has reached rock bottom  and your people are beginning to tire of "
@@ -8487,10 +8521,19 @@ msgid ""
 "the top section. A reminder of your goal will be displayed in the bottom "
 "section. Destroying all of the other kingdoms will also ensure your victory. "
 msgstr ""
+"Vi konstruis vian grandan imperion per perfida kaj sanga konkero. Via "
+"reputacio atingis fundon kaj viaj homoj komencas laciĝi de via regado. Ĉu vi "
+"sukcese ŝanĝos viajn manierojn kaj trovos rimedon por trakti ĉi tiun krizon "
+"aŭ ĉu vi daŭros kiel antaŭe kaj suferos la  konsekvencojn? Via celo estas "
+"atingi totalan poentaron de 1000 antaŭ ĉiuj aliaj regnoj. Vi povas kontroli "
+"vian Totalan Poentaron en la meza sekcio de la Rangolista Rulo (F8). Por "
+"kontroli la Totalan Poentaron de aliaj regnoj, alklaku iliajn nomojn en la "
+"supra sekcio. Memorigo de via celo estos montrita en la malsupra sekcio. "
+"Detrui ĉiujn aliajn regnojn ankaŭ certigos vian venkon. "
 
 # data/SCENARIO/KUKULCNS.SCT:1
 msgid "Kukulcan's People"
-msgstr ""
+msgstr "Kukulkanaj Homoj"
 
 # data/SCENARIO/KUKULCNS.SCT:5
 msgid ""
@@ -8500,10 +8543,15 @@ msgid ""
 "powers to your advantage. Your goal is nothing less than the total defeat of "
 "the unfaithful within 20 years. "
 msgstr ""
+"Kvankam viaj homoj malhavas la nombrojn, riĉecon kaj teknologion de viaj "
+"malamikoj, vi havas ion, kion ili ĉiuj malhavas: la subteno de la granda Dio "
+"Kukulkano. Uzu la fidon de viaj homoj por alvoki Kukulkanon kaj konduki "
+"liajn povojn por via avantaĝo. Via celo estas nenio malpli ol la tuta "
+"malvenko de la malfidelaj ene de 20 jaroj. "
 
 # data/SCENARIO/MAKEBREK.SCT:1
 msgid "Make or Break"
-msgstr ""
+msgstr "Fari aŭ Rompi"
 
 # data/SCENARIO/MAKEBREK.SCT:5
 msgid ""
@@ -8515,10 +8563,12 @@ msgid ""
 "immediately or by staving off collapse and defeating them at a later date. "
 "Either way, victory will only come when you stand alone. "
 msgstr ""
+"Vi posedas ĉiujn teknologiojn kaj grandan nombron de armiloj. Kvankam ĉi tio "
+"fortigas vin, ĝi "
 
 # data/SCENARIO/MELTPOT.SCT:1
 msgid "Melting Pot"
-msgstr ""
+msgstr "Diversaj Kulturoj"
 
 # data/SCENARIO/MELTPOT.SCT:5
 msgid ""
@@ -8527,10 +8577,14 @@ msgid ""
 "melting-pot society to total world dominance. You will achieve victory only "
 "with the total elimination of all rivals. "
 msgstr ""
+"Kvankam povas esti tre avantaĝe havi multrasan Regnon, tio povas esti ankaŭ "
+"la kialo de malpaco. Superi ĉi tiujn malfacilaĵojn kaj gvidi vian "
+"multkulturan societon al tuta monda regado. Vi akiros venkon nur per la tuta "
+"forigado de ĉiuj rivaloj. "
 
 # data/SCENARIO/MONORWAR.SCT:1
 msgid "Make Money or War?"
-msgstr ""
+msgstr "Ĉu Fari Monon aŭ Militon?"
 
 # data/SCENARIO/MONORWAR.SCT:5
 msgid ""
@@ -8541,6 +8595,11 @@ msgid ""
 "demands? Whichever path you choose, you must be the only kingdom remaining "
 "to be declared the victor. "
 msgstr ""
+"Kvankam vi havas vastan komercantan imperion, via Reĝo kaj via armeo estas "
+"malfortaj. Aliaj, pli fortaj regnoj postulas tributon el vi. Ĉu vi pagos la "
+"tributon kaj kondutos diskrete aŭ ĉu vi uzos vian monon por krei fortan "
+"armeon kaj puni tiujn, kiuj arogus fari postulojn? Kiun ajn vojon vi "
+"elektas, vi devas esti la nura restanta regno por esti deklarita venkanto. "
 
 # data/SCENARIO/NEWWORLD.SCT:1
 msgid "The New World"
@@ -8565,7 +8624,7 @@ msgstr ""
 
 # data/SCENARIO/NORMAN.SCT:1
 msgid "United Normandy"
-msgstr ""
+msgstr "Unuigita Normandio"
 
 # data/SCENARIO/NORMAN.SCT:5
 msgid ""
@@ -8575,10 +8634,15 @@ msgid ""
 "to spy and to be spied upon. You will be victorious when there is only one "
 "kingdom remaining; your own. "
 msgstr ""
+"Via celo en ĉi tiu misio estas unuigi ĉiujn militantajn Normanajn regnojn "
+"sub via regado. Por fari tion vi devas senkompate venki ĉiujn pretendantojn, "
+"kvankam al vi povas esti avantaĝe ŝajnigi amikecon foje. Estu preparita "
+"spioni kaj esti spionita. Vi venkos, kiam estas nur unu restanta regno: via "
+"propra. "
 
 # data/SCENARIO/NOTLOST.SCT:1
 msgid "Not all those who Wander are Lost"
-msgstr ""
+msgstr "Ne ĉiuj, kiuj Vagas, estas Perditaj"
 
 # data/SCENARIO/NOTLOST.SCT:5
 msgid ""
@@ -8592,6 +8656,15 @@ msgid ""
 "of your goal will be displayed in the bottom section. Victory will also come "
 "with the total defeat of other kingdoms within the allotted time period. "
 msgstr ""
+"Via armeo ĵus suferis egan malvenkon batale.  Nur via Reĝo restas viva. "
+"Kvankam via situacio estas senespera, via granda trezoro estas bone kaŝita, "
+"kaj per ĝi vi povus fine venĝi. Vi havas 20 jarojn por kreskigi vian "
+"loĝantaron al 500.  Vi devas fari tion antaŭ ĉiuj aliaj regnoj. Vi povas "
+"kontroli vian Loĝantaran Poentaron en la meza sekcio de la Rangolista Rulo "
+"(F8). Por kontroli la Loĝantaran Poentaron de aliaj regnoj, alklaku iliajn "
+"nomojn en la supra sekcio. Memorigo de via celo estos montrita en la "
+"malsupra sekcio. Venko ankaŭ venos per la tuta malvenko de aliaj regnoj ene "
+"de la asignita tempo. "
 
 # data/SCENARIO/PIRATES.SCT:1
 msgid "Pirates"
@@ -8607,6 +8680,12 @@ msgid ""
 "begin with no King, you must choose one from among the captains of your "
 "fleet. "
 msgstr ""
+"Kvar ŝipoj kaj kvar bone trejnitaj ŝipanaroj de senkompataj piratoj estas "
+"ĉio, kion vi havas por fronti la povon de ses malamikaj regnoj. Oni konsilas "
+"al vi trovi regnon libera de la danĝeroj de tiuj regnoj kaj estigi tie via "
+"regado. Via fina celo estas reveni kun forto al la landoj de viaj malamikoj "
+"kaj igi ilin viaj propraj. Neniu malamika unuo devas resti surtere. Ĉar vi "
+"komencos sen Reĝo, vi devas elekti unu el inter viaj ŝipestroj. "
 
 # data/SCENARIO/PRNCTKAO.SCT:1
 msgid "Prince Takao"
@@ -8629,8 +8708,9 @@ msgstr ""
 "malamikoj de via patro.  Detruu ilin tute. "
 
 # data/SCENARIO/QUESUCCN.SCT:1
+#, fuzzy
 msgid "A Question of Succession"
-msgstr ""
+msgstr "Afero pri Postuleco"
 
 # data/SCENARIO/QUESUCCN.SCT:5
 msgid ""
@@ -8640,10 +8720,14 @@ msgid ""
 "survival will depend upon it. Victory will be achieved when your kingdom "
 "stands alone.  "
 msgstr ""
+"Via Reĝo estas ĉirkaŭita kaj batalas pro lia vivo. Se li estas mortigita, vi "
+"devos elekti la sukcedanton de lia trono. Viaj elektoj estas du bonaj ĉefoj "
+"de malplimulta fakcio aŭ malforta estro de plimulto. Elektu bone, ĉar via "
+"supervivo dependas de tio. Vi atingos venkon, kiam via regno estas la nura.  "
 
 # data/SCENARIO/RESDEP.SCT:1
 msgid "Resource Depletion"
-msgstr ""
+msgstr "Resurca Malpleniĝo"
 
 # data/SCENARIO/RESDEP.SCT:5
 msgid ""
@@ -8654,10 +8738,16 @@ msgid ""
 "difficulties and lead your people into everlasting peace and prosperity by "
 "making all enemy lands and subjects your own. "
 msgstr ""
+"Nun via loĝantaro estas granda kaj via enspezo estas bonega. La malfacileco "
+"estas, ke via deponejoj de naturaj resursoj estos baldaŭ malplenigitaj. La "
+"riĉeco kaj la kohero de via imperio dependas en via kapablo trovi novajn "
+"fontojn de enspezoj por subteni la vivmanieron de via popolo. Superu ĉi "
+"tiujn malfacilaĵojn kaj gvidu vian popolon al eterna paco kaj prospero "
+"submetante ĉiujn malamikajn landojn kaj subulojn. "
 
 # data/SCENARIO/TREADCAR.SCT:1
 msgid "Tread Carefully"
-msgstr ""
+msgstr "Paŝu Zorge"
 
 # data/SCENARIO/TREADCAR.SCT:5
 msgid ""
@@ -8666,10 +8756,14 @@ msgid ""
 "carefully build your power until you are strong enough to defeat the other "
 "two kingdoms. Only then will you achieve victory. "
 msgstr ""
+"Vi estas la plej malforta de la tri regnoj de la mondo kaj vi devas konduti "
+"zorge ĉirkaŭ viaj du pli grandaj konkurantoj. Supervivu vian komencan "
+"situacion kaj zorge pliigi vian povon ĝis vi estas sufiĉe forta por venki la "
+"aliajn du regnojn. Nur tiam vi atingos venkon. "
 
 # data/SCENARIO/VIKBLITZ.SCT:1
 msgid "Viking Blitz"
-msgstr ""
+msgstr "Vikinga Fulma Atako"
 
 # data/SCENARIO/VIKBLITZ.SCT:5
 msgid ""
@@ -8681,10 +8775,16 @@ msgid ""
 "their names in the top section. A reminder of your goal will be displayed in "
 "the bottom section. "
 msgstr ""
+"Vi havos kvin kaj dudek aferojn en ĉi tiu misio: kvin fortikaĵoj plenigitaj "
+"de la plej bonaj Vikingaj berserkoj kaj 20 jaroj por konkeri la mondon. Se "
+"vi povas atingi loĝantaron de 500 vi ankaŭ venkos. Vi povas kontroli vian "
+"Loĝantaran Poentaron en la meza sekcio de la Rangolista Rulo (F8). Por "
+"kontroli la Loĝantaran Poentaron de aliaj regnoj alklaku iliajn nomojn en la "
+"supra sekcio. Memorigo de via celo estos montrita en la malsupra sekcio. "
 
 # data/SCENARIO/WEAKENED.SCT:1
 msgid "A Weakened State"
-msgstr ""
+msgstr "Malfortigita Stato"
 
 # data/SCENARIO/WEAKENED.SCT:5
 msgid ""
@@ -8693,10 +8793,14 @@ msgid ""
 "the liberation of all of the world's peoples from their oppressors. When you "
 "stand, the world shall truly be free and you will be the victor. "
 msgstr ""
+"Je la fino de longa kaj detrua milito vi kaj via konkuranto estas ege "
+"malfortigitaj. Retiriĝu, regrupiĝu kaj preparu vian armeon por fini vian "
+"mision: la liberiĝo de ĉiuj mondaj homoj de iliaj subpremantoj. Kiam vi "
+"restos nure, la mondo vere estos libera kaj vi estos venkinto. "
 
 # data/SCENARI2/SCN_01.SCT:1
 msgid "The Quick & the Dead"
-msgstr ""
+msgstr "La Rapida kaj la Morta"
 
 # data/SCENARI2/SCN_01.SCT:5
 msgid ""
@@ -8706,10 +8810,14 @@ msgid ""
 "destruction of the world's remaining independent kingdom before two years "
 "have passed.   "
 msgstr ""
+"Venos la tempon en la vivo de ĉiu juna homo, kiam li devos forlasi liajn "
+"marbordojn, vojaĝi al foraj landoj kaj akiri famon detruante tion, kion "
+"aliaj pacience konstruis. Via tasko en ĉi tiu misio estas fini la detruon de "
+"la sendependaj regnoj restantaj en la mondo antaŭ, ke du jarojn pasu.  "
 
 # data/SCENARI2/SCN_02.SCT:1
 msgid "Go Forth & Multiply"
-msgstr ""
+msgstr "Ekiru kaj Multiĝu"
 
 # data/SCENARI2/SCN_02.SCT:5
 msgid ""
@@ -8720,10 +8828,16 @@ msgid ""
 "other Kingdoms, click on their names in the top section. A reminder of your "
 "goal will be displayed in the bottom section. "
 msgstr ""
+"Uzu la grandajn deponejojn de naturaj resursoj apud via vilaĝo por konstrui "
+"potencan ekonomian fundamenton. Per ĉi tiu ekonomia riĉeco vi devus povi "
+"kreskigi loĝantaron de 100 antaŭ ĉiuj aliaj regnoj. Vi povas kontroli vian "
+"loĝantaron sub la Rangolista Rulo (F8). Por kontroli la loĝantaron de aliaj "
+"Regnoj alklaku iliajn nomojn en la supra sekcio. Memorigo de via celo estos "
+"montrita en la malsupra sekcio. "
 
 # data/SCENARI2/SCN_03.SCT:1
 msgid "The Riches of Kemet"
-msgstr ""
+msgstr "La Riĉaĵoj de Kemet"
 
 # data/SCENARI2/SCN_03.SCT:5
 msgid ""
@@ -8734,12 +8848,19 @@ msgid ""
 "the economic score of other Kingdoms, click on their names in the top "
 "section. A reminder of your goal will be displayed in the bottom section. "
 msgstr ""
+"Vi troviĝas en lando riĉa de natura resursoj.  Bone uzu la mondan abundon "
+"por kreskigi vian enspezon kaj pliigi la ekonomian poentaron de via Regno al "
+"200. Tio devas esti farita ene de la tempo de kvin jaroj. Vi povas kontroli "
+"vian ekonomian poentaron sub la Rangolista Rulo (F8). Por kontroli la "
+"ekonomian poentaron de aliaj Regnoj alklaku iliajn nomojn en la supra "
+"sekcio. Memorigo de via celo estos montrita en la malsupra sekcio. "
 
 # data/SCENARI2/SCN_04.SCT:1
 msgid "Shaken to the Core"
-msgstr ""
+msgstr "Skuita ĝis la Kerno"
 
 # data/SCENARI2/SCN_04.SCT:5
+#, fuzzy
 msgid ""
 "While king and army are away pacifying a foreign land, your Kingdom has been "
 "rocked by an earthquake. Your population has plummeted and food is scarce.  "
@@ -8748,10 +8869,13 @@ msgid ""
 "score under the Ranking Scroll (F8). To check on the economic score of other "
 "Kingdoms, click on their names in the top section. "
 msgstr ""
+"Dum regno kaj armeo estas for pacifante fremdan landon via Regno estas "
+"trafita de tertremo. Via loĝantaro falis kaj manĝaĵo estas malabunda.  Vi "
+"devas "
 
 # data/SCENARI2/SCN_05.SCT:1
 msgid "The Great Mughul"
-msgstr ""
+msgstr "La Granda Mogolo"
 
 # data/SCENARI2/SCN_05.SCT:5
 msgid ""
@@ -8761,10 +8885,15 @@ msgid ""
 "Scroll (F8). To check on the total score of other Kingdoms, click on their "
 "names in the top section. "
 msgstr ""
+"Iĝu la plej granda de ĉiuj Mogolaj Imperiestroj gvidante vian Regnon al "
+"totala poentaro de 500. Vi ne devas lasi, ke pli ol 15 jaroj pasu antaŭ vi "
+"plenumu vian taskon. Vi povas kontroli vian totalan poentaron sub la "
+"Rangolista Rulo (F8). Por kontroli la totalan poentaron de aliaj Regnoj, "
+"alklaku iliajn nomojn en la supra sekcio. "
 
 # data/SCENARI2/SCN_06.SCT:1
 msgid "Plague"
-msgstr ""
+msgstr "Pesto"
 
 # data/SCENARI2/SCN_06.SCT:5
 msgid ""
@@ -8773,10 +8902,15 @@ msgid ""
 "increase your food supply. When your people's bellies are full, send them "
 "into the field to utterly destroy your rival kingdom. "
 msgstr ""
+"Via regno perdis la plej grandan parton de ĝiaj kamparanoj pro atako de "
+"biena pieda funga pesto. Por venki en ĉi tiu misio vi devas unue stabiligi "
+"kaj poste pliigi vian provizon de manĝaĵo. Kiam la ventroj de viaj homoj "
+"estas plenaj, sendu ilin al la batalejo por komplete detrui vian konkurantan "
+"regnon. "
 
 # data/SCENARI2/SCN_07.SCT:1
 msgid "All That is Gold"
-msgstr ""
+msgstr "Ĉio, Kio estas Oro"
 
 # data/SCENARI2/SCN_07.SCT:5
 msgid ""
@@ -8786,10 +8920,15 @@ msgid ""
 "on your economic score under the Ranking Scroll (F8). To check on the "
 "economic score of other Kingdoms, click on their names in the top section. "
 msgstr ""
+"Kvankam vi komencos ĉi tiun mision kun malgranda trezoro, vi devas havi "
+"sufiĉajn kapablojn por kreskigi la ekonomian poentaron de via Regno al 300. "
+"Vi havos dek jarojn por fari tion. Vi povas kontroli vian ekonomian "
+"poentaron sub la Rangolista Rulo (F8). Por kontroli la ekonomian poentaron "
+"de aliaj Regnoj alklaku iliajn nomojn en la supra sekcio. "
 
 # data/SCENARI2/SCN_08.SCT:1
 msgid "First Born"
-msgstr ""
+msgstr "Unuenaskito"
 
 # data/SCENARI2/SCN_08.SCT:5
 msgid ""
@@ -8800,6 +8939,12 @@ msgid ""
 "under the Ranking Scroll (F8). To check on the populations of other "
 "Kingdoms, click on their names in the top section. "
 msgstr ""
+"Per via delonge establita templo al la fekundeca Diino Iziso, vi devas havi "
+"malmultajn malfacilaĵojn por alvoki ŝian helpon por la celo pliigi vian "
+"Regnan loĝantaron al 500, tasko, kiun vi devas plenumi ene de dek jaroj. Ne "
+"kolerigu la Diino per via fiasko. Vi povas kontroli vian loĝantaran "
+"poentaron sub la Rangolista Rulo (F8). Por kontroli la loĝantarojn de aliaj "
+"regnoj, alklaku iliajn nomojn en la supra sekcio. "
 
 # data/SCENARI2/SCN_09.SCT:1
 msgid "Fryhtanfest"
@@ -8818,9 +8963,10 @@ msgstr ""
 
 # data/SCENARI2/SCN_10.SCT:1
 msgid "Impassable Isthmus"
-msgstr ""
+msgstr "Netransirebla Istmo"
 
 # data/SCENARI2/SCN_10.SCT:5
+#, fuzzy
 msgid ""
 "Your enemy lies to the south across a narrow spit of land - too narrow for a "
 "single soldier to cross. Although the insult that caused your enmity has "
@@ -8828,10 +8974,15 @@ msgid ""
 "utterly. You must not tarry too long in your quest as you have been allowed "
 "a mere four years. "
 msgstr ""
+"Via malamiko troviĝas en la sudo, trans mallarĝa peco de tero -- tro "
+"mallarĝa, por ke unu soldato transiru. Kvankam la insulto, kiun via malamiko "
+"kaŭzis, estas longe forgesita, estas plej bone esti en la sekura flanko kaj "
+"komplete detrui ilin. Vi ne devas prokrasti multe vian taskon, ĉar oni donis "
+"al vi nur kvar jarojn."
 
 # data/SCENARI2/SCN_11.SCT:1
 msgid "The Great Lakes"
-msgstr ""
+msgstr "La Grandaj Lagoj"
 
 # data/SCENARI2/SCN_11.SCT:5
 msgid ""
@@ -8881,7 +9032,7 @@ msgstr ""
 
 # data/SCENARI2/SCN_15.SCT:1
 msgid "Lowlands"
-msgstr ""
+msgstr "Malaltaj Landoj"
 
 # data/SCENARI2/SCN_15.SCT:5
 msgid ""
@@ -8891,6 +9042,12 @@ msgid ""
 "claimed if you reach a total score of 1,000 points within this time. You may "
 "check up on your total score under the Ranking Scroll (F8). "
 msgstr ""
+"Vi estas la estro de la nura Regno en la fekundaj Malaltaj Landoj.  Ĉiu "
+"malpli fortaj regnoj dominas la regionoj de Altaj Landoj riĉaj en resursoj. "
+"Vi havos 12 jarojn por meti ĉi tiujn barbarojn sub via regado. Venko ankaŭ "
+"povas esti asertita, se vi atingas totalan poentaron de 1 000 poentoj ene ĉi "
+"tiu tempo. Vi povas kontroli vian totalan poentaron sub la Rangolista Rulo "
+"(F8). "
 
 # data/RESOURCE/HELP.RES:2
 msgid "Kingdoms Report"
@@ -8964,7 +9121,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:30
 msgid "Ranking Report"
-msgstr "Raporto de Rangolisto "
+msgstr "Raporto de Rangolisto"
 
 # data/RESOURCE/HELP.RES:31
 msgid ""
