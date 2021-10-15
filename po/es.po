@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-10-10 14:47+0200\n"
+"PO-Revision-Date: 2021-10-15 13:53+0200\n"
 "Last-Translator: Lenny Andreu\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -9056,7 +9056,7 @@ msgstr ""
 
 # data/scenari2/scn_02.sct:1
 msgid "Go Forth & Multiply"
-msgstr "Ve fuerte y multiplica"
+msgstr "Póngase en marcha y reprodúzcase"
 
 # data/scenari2/scn_02.sct:5
 msgid ""
