@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-10-15 12:21+0200\n"
+"PO-Revision-Date: 2021-10-16 16:19+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -545,16 +545,11 @@ msgstr ""
 "konto kaj provu denove."
 
 #: src/OGAMEMP.cpp:1741
-#, fuzzy
-#| msgid ""
-#| "Unable to connect to the 7kfans service. See 7kfans.com/wiki on how to "
-#| "log in.\n"
-#| "(No libcurl)"
 msgid ""
 "Unable to connect to the 7kfans service.\n"
 "(No libcurl)"
 msgstr ""
-"Ne povis konekti al la 7kfans-servo. Legu 7kfans.com/wiki por ensaluti.\n"
+"Ne povis konekti al la 7kfans-servo.\n"
 "(Mankas libcurl)"
 
 #: src/OGAMEMP.cpp:1931
@@ -8991,10 +8986,13 @@ msgid ""
 "which to \"persuade\" this Kingdom that it would be much better off not "
 "existing. "
 msgstr ""
+"Agresema Zulua Regno establiĝis inter la du Grandaj Lagoj, blokante via "
+"itineron al la Nordaj Dezertaj Teroj. Vi havas sep jarojn por \"konvinki\" "
+"ĉi tiun Regnon, ke estus pli bone, ke ĝi ne ekzistu. "
 
 # data/SCENARI2/SCN_12.SCT:1
 msgid "Eye of the Storm"
-msgstr ""
+msgstr "Mezo de la Ŝtormo"
 
 # data/SCENARI2/SCN_12.SCT:5
 msgid ""
@@ -9003,12 +9001,16 @@ msgid ""
 "for their evil deeds. Use all means at your disposal - rely on and trust in "
 "no one. "
 msgstr ""
+"Vi heredis Regnon ĉirkaŭitan de multaj batalemaj nacioj. Vi devas supervivi "
+"iliajn atakadojn kaj ie trovi manieron pagigi al ili iliajn malbonajn agojn. "
+"Uzu ĉiujn rimedojn je via dispono -- dependu de neniu kaj kredu neniun. "
 
 # data/SCENARI2/SCN_13.SCT:1
 msgid "A Warlike People"
-msgstr ""
+msgstr "Militemaj Homoj"
 
 # data/SCENARI2/SCN_13.SCT:5
+#, fuzzy
 msgid ""
 "Although you have no industry or technology and must import all of your "
 "goods, you have a long tradition of strong and proud warriors. It is these "
@@ -9017,10 +9019,15 @@ msgid ""
 "by having the highest Fryhtan battling score upon the elimination of the "
 "last Fryhtan. "
 msgstr ""
+"Kvankam vi ne havas industrion nek teknologion kaj devas importi ĉiujn viajn "
+"varojn, vi havas longan tradicion de fortaj kaj fieraj batalantoj. Ĉi tiuj "
+"batalantoj estas kiuj devas protekti vin kontraŭ la adaj impetoj de viaj "
+"malamikoj.  Vi povas atingi finan venkon aŭ forigante ĉiujn aliajn homajn "
+"Regnojn aŭ havante la plej grandan Frihtanan bataladan poentaron"
 
 # data/SCENARI2/SCN_14.SCT:1
 msgid "Nine Lord's Quest"
-msgstr ""
+msgstr "La Serĉo de Naŭ Lordoj"
 
 # data/SCENARI2/SCN_14.SCT:5
 msgid ""
@@ -9029,6 +9036,10 @@ msgid ""
 "granted to them for a mere seven years, so do not waste time with trade or "
 "with treaties. "
 msgstr ""
+"Naŭ Lordoj, kiuj posedas la plej altaj niveloj de batalada lerteco kaj "
+"estreco, estas en misio por igi la konatan mondon siaj. Iliaj povoj estis "
+"donitaj al ili por nur sep jaroj, do ne perdu tempon kun komerco kaj "
+"traktatoj. "
 
 # data/SCENARI2/SCN_15.SCT:1
 msgid "Lowlands"
@@ -9051,73 +9062,85 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:2
 msgid "Kingdoms Report"
-msgstr ""
+msgstr "Raporto de Regnoj"
 
 # data/RESOURCE/HELP.RES:3
 msgid ""
 "Click on this scroll or press F1 to bring up the Kingdoms Report. Click on "
 "it again or press ESC to close it. "
 msgstr ""
+"Alklaku ĉi tiun rulon aŭ premu F1 por montri la Raporton de Regnoj. Alklaku "
+"ĝin denove aŭ premu ESC-n por malfermi ĝin. "
 
 # data/RESOURCE/HELP.RES:6
 msgid "Villages Report"
-msgstr ""
+msgstr "Raporto de Vilaĝoj"
 
 # data/RESOURCE/HELP.RES:7
 msgid ""
 "Click on this scroll or press F2 to bring up the Villages Report. Click on "
 "it again or press ESC to close it. "
 msgstr ""
+"Alklaku ĉi tiun rulon aŭ premu F2 por montri la Raporto de Vilaĝoj. Alklaku "
+"ĝin denove aŭ premu ESC-n por malfermi ĝin. "
 
 # data/RESOURCE/HELP.RES:10
 msgid "Economy Report"
-msgstr ""
+msgstr "Ekonomia Raporto"
 
 # data/RESOURCE/HELP.RES:11
 msgid ""
 "Click on this scroll or press F3 to bring up the Economy Report. Click on it "
 "again or press ESC to close it. "
 msgstr ""
+"Alklaku ĉi tiun rulon aŭ premu F3 por montri la Ekonomian Raporton. Alklaku "
+"ĝin denove aŭ premu ESC-n por malfermi ĝin. "
 
 # data/RESOURCE/HELP.RES:14
 msgid "Trade Report"
-msgstr ""
+msgstr "Komerca Raporto"
 
 # data/RESOURCE/HELP.RES:15
 msgid ""
 "Click on this scroll or press F4 to bring up the Trade Report. Click on it "
 "again or press ESC to close it. "
-msgstr ""
+msgstr "Alklaku ĉi tiun rulon aŭ premu F4 por montri la Komercan Raporton. "
 
 # data/RESOURCE/HELP.RES:18
 msgid "Military Report"
-msgstr ""
+msgstr "Milita Raporto"
 
 # data/RESOURCE/HELP.RES:19
 msgid ""
 "Click on this scroll or press F5 to bring up the Military Report. Click on "
 "it again or press ESC to close it. "
 msgstr ""
+"Alklaku ĉi tiun rulon aŭ premu F5 por montri la Militan Raporton. Alklaku "
+"ĝin denove aŭ premu ESC-n por malfermi ĝin. "
 
 # data/RESOURCE/HELP.RES:22
 msgid "Technology Report"
-msgstr ""
+msgstr "Teknologia Raporto"
 
 # data/RESOURCE/HELP.RES:23
 msgid ""
 "Click on this scroll or press F6 to bring up the Technology Report. Click on "
 "it again or press ESC to close it. "
 msgstr ""
+"Alklaku ĉi tiun rulon aŭ premu F5 por montri la Teknologian Raporton. "
+"Alklaku ĝin denove aŭ premu ESC-n por malfermi ĝin. "
 
 # data/RESOURCE/HELP.RES:26
 msgid "Espionage Report"
-msgstr ""
+msgstr "Raporto de Spionado"
 
 # data/RESOURCE/HELP.RES:27
 msgid ""
 "Click on this scroll or press F7 to bring up the Espionage Report. Click on "
 "it again or press ESC to close it. "
 msgstr ""
+"Alklaku ĉi tiun rulon aŭ premu F5 por montri la Raporton de Spionado. "
+"Alklaku ĝin denove aŭ premu ESC-n por malfermi ĝin. "
 
 # data/RESOURCE/HELP.RES:30
 msgid "Ranking Report"
@@ -9153,35 +9176,38 @@ msgstr "Ĉi tiu montras la nunan Daton. "
 
 # data/RESOURCE/HELP.RES:47
 msgid "This shows your kingdom's reputation. "
-msgstr ""
+msgstr "Ĉi tio montras la reputacion de via regno. "
 
 # data/RESOURCE/HELP.RES:50
 msgid "Terrain Map"
-msgstr ""
+msgstr "Terena Mapo"
 
 # data/RESOURCE/HELP.RES:51
+#, fuzzy
 msgid ""
 "This map shows the world's natural features and the location of villages and "
 "units. "
-msgstr ""
+msgstr "Ĉi tiu mapo montras la "
 
 # data/RESOURCE/HELP.RES:54
 msgid "Kingdom Power Map"
-msgstr ""
+msgstr "Mapo de Regna Povo"
 
 # data/RESOURCE/HELP.RES:55
 msgid ""
 "This map shows the political boundaries of every kingdom and the location of "
 "villages and units. "
 msgstr ""
+"Ĉi tiu mapo montras la politikajn limojn de ĉiuj regnoj kaj la lokon de "
+"vilaĝoj kaj unuoj. "
 
 # data/RESOURCE/HELP.RES:58
 msgid "Villages and Units Map"
-msgstr ""
+msgstr "Mapo de Vilaĝoj kaj Unuoj"
 
 # data/RESOURCE/HELP.RES:59
 msgid "This map shows the location of villages and units. "
-msgstr ""
+msgstr "Ĉi tiu mapo montras la lokon de vilaĝoj kaj unuoj. "
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/HELP.RES:62
@@ -9206,10 +9232,12 @@ msgid ""
 "This enables you to choose a structure to build. If you do not have enough "
 "money to build a structure, this tile is disabled. "
 msgstr ""
+"Ĉi tio ebligas al vi elekti konstruaĵo por konstrui. Se vi ne havas sufiĉan "
+"monon por konstrui konstruaĵon, ĉi tiu kahelo estas malebligita. "
 
 # data/RESOURCE/HELP.RES:71
 msgid "This cancels your present action. "
-msgstr ""
+msgstr "Ĉi tio nuligas vian nunan agon. "
 
 # data/RESOURCE/HELP.RES:74
 msgid "Capture"
@@ -9228,6 +9256,8 @@ msgid ""
 "This toggles production in this factory between iron, copper, and clay "
 "products. "
 msgstr ""
+"Ĉi tio baskulas la produktadon en ĉi tiu fabriko inter feraj, kupraj kaj "
+"argilaj produktoj. "
 
 # data/RESOURCE/HELP.RES:82
 msgid "Collect Tax"
@@ -9238,6 +9268,9 @@ msgid ""
 "This collects tax from the selected village. If you right-click, you will be "
 "able to set a maximum loyalty level to tax your villagers automatically. "
 msgstr ""
+"Ĉi tio kolektas takson el la elektita vilaĝo. Se vi Dekstre-Alklakas, vi "
+"povos agordi maksimuman fidelecan nivelon por aŭtomate taksi viajn "
+"vilaĝanojn. "
 
 # data/RESOURCE/HELP.RES:86
 msgid "Continue"
@@ -9245,15 +9278,15 @@ msgstr "Daŭrigi"
 
 # data/RESOURCE/HELP.RES:89
 msgid "At Ease"
-msgstr ""
+msgstr "Kviete"
 
 # data/RESOURCE/HELP.RES:90
 msgid "This orders your troops to remain in the fort even when attacked. "
-msgstr ""
+msgstr "Ĉi tio ordonas viajn trupojn resti en la fortikaĵo eĉ kiam atakitaj. "
 
 # data/RESOURCE/HELP.RES:93
 msgid "Alert"
-msgstr ""
+msgstr "Averte"
 
 # data/RESOURCE/HELP.RES:94
 msgid ""
@@ -9265,11 +9298,11 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:97
 msgid "Demote Unit"
-msgstr ""
+msgstr "Degradi Unuon"
 
 # data/RESOURCE/HELP.RES:98
 msgid "This demotes the selected General to a common soldier. "
-msgstr ""
+msgstr "Ĉi tio degradas la elektitan Generalon al ordinara soldato. "
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/HELP.RES:101
@@ -9283,12 +9316,16 @@ msgid ""
 "This grants money to the selected village. If you right-click, you will be "
 "able to set a loyalty level to grant money automatically. "
 msgstr ""
+"Ĉi tio donas monon al la elektita vilaĝo. Se vi dekstre-alklakas, vi povas "
+"agordi fidelecan nivelon por aŭtomate doni monon. "
 
 # data/RESOURCE/HELP.RES:106
 msgid ""
 "This grants money to the selected village to lower the villagers' loyalty or "
 "resistance. "
 msgstr ""
+"Ĉi tio donas monon al la elektita vilaĝo por malpliigi la vilaĝanajn "
+"fidelecon aŭ reziston. "
 
 # data/RESOURCE/HELP.RES:109
 msgid "Hire Caravan"
@@ -9300,18 +9337,21 @@ msgid ""
 "goods. It is disabled if you have too few villagers to support any more "
 "caravans. 10 villagers are needed to support each caravan. "
 msgstr ""
+"Ĉi tio dungas karavanon de ĉi tiu bazaro, por ke vi povas komerci kaj movi "
+"varojn. Ĝi estas malebligita, se vi havas tro malmultaj vilaĝanoj por "
+"subteni pli karavanojn. 10 vilaĝanoj estas bezonataj por subteni karavanon. "
 
 # data/RESOURCE/HELP.RES:113
 msgid "Hire Mercenary"
-msgstr ""
+msgstr "Dungi Soldulon"
 
 # data/RESOURCE/HELP.RES:114
 msgid "This hires the selected mercenary to be in your service. "
-msgstr ""
+msgstr "Ĉi tio dungas la elektitan soldulon, por ke li servu vin. "
 
 # data/RESOURCE/HELP.RES:117
 msgid "Invoke Greater Being"
-msgstr ""
+msgstr "Alvoki Pli Grandan Estaĵon"
 
 # data/RESOURCE/HELP.RES:118
 msgid ""
@@ -9319,6 +9359,9 @@ msgid ""
 "This tile is disabled until you have enough praying points to make "
 "invocation possible. "
 msgstr ""
+"Ĉi tio alvokas Pli Grandan Estaĵon, kiu tiam aperos super via Seĝo de Povo. "
+"Ĉi tiu kahelo estas malebligita ĝis vi havas sufiĉajn preĝajn poentojn por "
+"ebligi alvokon. "
 
 # data/RESOURCE/HELP.RES:121
 msgid "Build a Ship"
@@ -9345,19 +9388,19 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:129
 msgid "Mobilize Workers"
-msgstr ""
+msgstr "Movi Laborantojn"
 
 # data/RESOURCE/HELP.RES:130
 msgid "This causes all workers to exit the building immediately. "
-msgstr ""
+msgstr "Ĉi tio tuj elirigas ĉiujn laborantojn el la konstruaĵo. "
 
 # data/RESOURCE/HELP.RES:133
 msgid "Mobilize Spy"
-msgstr ""
+msgstr "Movi Spionon"
 
 # data/RESOURCE/HELP.RES:134
 msgid "This sends the selected spy out of the place where he has infiltrated. "
-msgstr ""
+msgstr "Ĉi tio sendas la elektitan spionon ekster la loko, kiun li infiltris. "
 
 # data/RESOURCE/HELP.RES:137
 msgid "Disembark from Ship"
@@ -9368,6 +9411,8 @@ msgid ""
 "The disembarks all of the units from this ship. This tile is disabled if "
 "your ship is not close enough to the shore. "
 msgstr ""
+"La elŝipiĝo de ĉiuj unuoj de ĉi tiu ŝipo. Ĉi tiu kahelo estas malebligita, "
+"se via ŝipo ne estas sufiĉe proksime al la marbordo. "
 
 # data/RESOURCE/HELP.RES:141
 msgid "Sortie"
@@ -9387,11 +9432,11 @@ msgstr "Tio tuj revenigi vian trupon al ĝia hejma fortikaĵo. "
 
 # data/RESOURCE/HELP.RES:149
 msgid "Previous Menu"
-msgstr ""
+msgstr "Antaŭa Menuo"
 
 # data/RESOURCE/HELP.RES:150
 msgid "This returns you to the previous menu. "
-msgstr ""
+msgstr "Ĉi tio revenigas vin al la antaŭa menuo. "
 
 # data/RESOURCE/HELP.RES:153
 msgid "Promote"
@@ -9399,7 +9444,7 @@ msgstr "Promocii"
 
 # data/RESOURCE/HELP.RES:154
 msgid "This promotes the selected common soldier to a General. "
-msgstr ""
+msgstr "Ĉi tio promocias la elektitan ordinaran soldaton al Generalo. "
 
 # data/RESOURCE/HELP.RES:157
 msgid "Recruit"
@@ -9418,13 +9463,15 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:161
 msgid "Conduct Research"
-msgstr ""
+msgstr "Fari Esploradon"
 
 # data/RESOURCE/HELP.RES:162
 msgid ""
 "This orders the start of a research project. This is disabled if all "
 "possible research has been completed. "
 msgstr ""
+"Ĉi tio ordonas komenci esploradan projekton. Tio estas malebligita, se ĉiuj "
+"eblaj esploradojn kompletiĝis. "
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/HELP.RES:165
@@ -9465,13 +9512,15 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:177
 msgid "Sail out of Harbor"
-msgstr ""
+msgstr "Eliri el Haveno"
 
 # data/RESOURCE/HELP.RES:178
 msgid ""
 "This orders the selected ship to sail out of the harbor and await your "
 "further commands. "
 msgstr ""
+"Ĉi tio ordonas al la elektita ŝipo eliri el haveno kaj atendi viajn pluajn "
+"ordonojn. "
 
 # data/RESOURCE/HELP.RES:182
 msgid ""
@@ -9479,6 +9528,10 @@ msgid ""
 "offer to the selected foreign unit. If more than one spy is in the building, "
 "you will also be prompted to select one of your spies to do the offer. "
 msgstr ""
+"Ĉi tio irigas vin al menuo, kie vi povas elekti la kvanton de la subaĉeto, "
+"kiun proponi al la elektita fremda unuo. Se estas pli ol unu spiono en la "
+"konstruaĵo, vi ankaŭ estos invitita elekti unu el viaj spionoj por fari la "
+"proponon. "
 
 # data/RESOURCE/HELP.RES:185
 msgid "Settle"
@@ -9496,57 +9549,64 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:189
 msgid "Spy Menu"
-msgstr ""
+msgstr "Spiona Menuo"
 
 # data/RESOURCE/HELP.RES:190
 msgid "Go to the spy menu. "
-msgstr ""
+msgstr "Iri al la spiono menuo. "
 
 # data/RESOURCE/HELP.RES:193
 msgid "Capture Enemy Structure"
-msgstr ""
+msgstr "Kapti Malamikan Konstruaĵon"
 
 # data/RESOURCE/HELP.RES:194
 msgid ""
 "This orders the selected spy to capture the enemy structure in which he is "
 "located. "
 msgstr ""
+"Ĉi tio ordonas al la elektita spiono kapti la malamikan konstruaĵon, kie li "
+"troviĝas. "
 
 # data/RESOURCE/HELP.RES:197
 msgid "Spy's Task"
-msgstr ""
+msgstr "Spiona Tasko"
 
 # data/RESOURCE/HELP.RES:198
 msgid "This orders your spy to change his task. "
-msgstr ""
+msgstr "Ĉi tio ordonas al via spiono ŝanĝi lian taskon. "
 
 # data/RESOURCE/HELP.RES:201
 msgid "Notification Currently Disabled. Click to Enable."
-msgstr ""
+msgstr "Sciigo Nune Malebligita. Alklaku por Ebligi."
 
 # data/RESOURCE/HELP.RES:202
 msgid ""
 "When this is disabled, it keeps your spy's change of color a secret. You "
 "retain the ability to control your spy's movement. "
 msgstr ""
+"Kiam ĉi tio estas malebligita, konservas la ŝanĝo de koloro de via spiono "
+"kaŝita. Vi retenas la kapablon kontroli la movadon de via spiono. "
 
 # data/RESOURCE/HELP.RES:205
 msgid "Notification Currently Enabled. Click to Disable."
-msgstr ""
+msgstr "Sciigo Nun Ebligita. Alklaku por Malebligi."
 
 # data/RESOURCE/HELP.RES:206
 msgid ""
 "When this is enabled, it announces your spy's change of color to the kingdom "
 "that he is joining. You lose your ability to control your spy's movement. "
 msgstr ""
+"Kiam ĉi tio estas ebligita, ĝi sciigas la ŝanĝon de koloro de via spiono al "
+"la regno, al kiu li aliĝas. Vi perdas la kapablon kontroli la movojn de via "
+"spiono. "
 
 # data/RESOURCE/HELP.RES:209
 msgid "Succeed to the Crown"
-msgstr ""
+msgstr "Heredi la Kronon"
 
 # data/RESOURCE/HELP.RES:210
 msgid "This elevates the selected unit to the Crown. "
-msgstr ""
+msgstr "Ĉi tio levas la elektitan unuon al la Krono. "
 
 # data/RESOURCE/HELP.RES:213
 msgid "Train"
@@ -9564,7 +9624,7 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:217
 msgid "View Secrets"
-msgstr ""
+msgstr "Vidi Sekretojn"
 
 # data/RESOURCE/HELP.RES:218
 msgid ""
@@ -9572,6 +9632,9 @@ msgid ""
 "secrets to view. The secrets that you can view depend on the skill level of "
 "your spy. "
 msgstr ""
+"Ĉi tio irigas vin al menuo, kie vi povas elekti la specon de sekretoj de ĉi "
+"tiu regnoj por vidi. La sekretoj, kiujn vi povas vidi, dependas de la "
+"lerteca nivelo de via spiono. "
 
 # data/RESOURCE/HELP.RES:221
 msgid "Drop Spy Identity"
@@ -9583,13 +9646,15 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:225
 msgid "Automatic"
-msgstr ""
+msgstr "Aŭtomate"
 
 # data/RESOURCE/HELP.RES:226
 msgid ""
 "With this set, your caravans and ships will automatically pick up the "
 "surplus goods from this market or harbor. "
 msgstr ""
+"Per ĉi tio agordita viaj karavanoj kaj ŝipoj aŭtomate kolektos la ekscesajn "
+"varojn el ĉi tiu bazaro aŭ haveno. "
 
 # data/RESOURCE/HELP.RES:229
 msgid "Nothing"
@@ -9600,76 +9665,85 @@ msgid ""
 "With this set, your caravans and ships will not pick up anything from this "
 "market or harbor. "
 msgstr ""
+"Per ĉi tio agordita, viaj karavanoj kaj ŝipoj kolektos nenion el ĉi tiu "
+"bazaro aŭ haveno. "
 
 # data/RESOURCE/HELP.RES:233
 msgid "Disband Unit"
-msgstr ""
+msgstr "Forigi Unuon"
 
 # data/RESOURCE/HELP.RES:234
 msgid ""
 "This disbands the selected unit. If the selected unit is a foreign spy, it "
 "executes him. "
 msgstr ""
+"Ĉi tio forigas la elektitan unuon. Se la elektita unuo estas fremda spiono, "
+"ĝi mortigas lin. "
 
 # data/RESOURCE/HELP.RES:237
 msgid "Set Caravan Stop"
-msgstr ""
+msgstr "Agordi Karavanan Haltejon"
 
 # data/RESOURCE/HELP.RES:238
 msgid ""
 "After you press this button, click your cursor on the location where you "
 "want your caravan to stop. "
 msgstr ""
+"Post vi premas ĉi tiun butonon, alklaku per via kursoro la ejon, kie vi "
+"volas, ke via karavano haltu. "
 
 # data/RESOURCE/HELP.RES:241
 msgid "View Caravan Stop"
-msgstr ""
+msgstr "Vidi Karavanan Haltejon"
 
 # data/RESOURCE/HELP.RES:242
 msgid "Click here to center the map over this caravan stop. "
-msgstr ""
+msgstr "Alklaku ĉi tie por centrigi la mapon super ĉi tiu karavana haltejo. "
 
 # data/RESOURCE/HELP.RES:245
 msgid "Delete Caravan Stop"
-msgstr ""
+msgstr "Forigi Karavanan Haltejon"
 
 # data/RESOURCE/HELP.RES:246
 msgid "Click here to delete this caravan stop. "
-msgstr ""
+msgstr "Alklaku ĉi tie por forigi ĉi tiun karavanan haltejon. "
 
 # data/RESOURCE/HELP.RES:249
 msgid "Set Trade Ship Stop"
-msgstr ""
+msgstr "Agordi Haltejon de Komerca Ŝipo"
 
 # data/RESOURCE/HELP.RES:250
 msgid ""
 "After you press this button, click your cursor on the harbor where you want "
 "your trade ship to stop. "
 msgstr ""
+"Post vi prenas ĉi tiun butonon alklaku per via kursoro la havenon, kie vi "
+"volas, ke via komerca ŝipo haltu. "
 
 # data/RESOURCE/HELP.RES:253
 msgid "View Trade Ship Stop"
-msgstr ""
+msgstr "Vidi Haltejon de Komerca Ŝipo"
 
 # data/RESOURCE/HELP.RES:254
 msgid "Click here to center the map over this trade ship stop. "
 msgstr ""
+"Alklaku ĉi tie por centrigi la mapon super ĉi tiu haltejo de komerca ŝipo. "
 
 # data/RESOURCE/HELP.RES:257
 msgid "Delete Trade Ship Stop"
-msgstr ""
+msgstr "Forigi Haltejon de Komerca Ŝipo"
 
 # data/RESOURCE/HELP.RES:258
 msgid "Click here to delete this trade ship stop. "
-msgstr ""
+msgstr "Alklaku ĉi tie por forigi ĉi tiun haltejon de komerca ŝipo. "
 
 # data/RESOURCE/HELP.RES:261
 msgid "Demolish Structure"
-msgstr ""
+msgstr "Malkonstrui Konstruaĵon"
 
 # data/RESOURCE/HELP.RES:262
 msgid "Click here to demolish this structure. "
-msgstr ""
+msgstr "Alklaku ĉi tie por malkonstrui ĉi tiun konstruaĵon. "
 
 # data/RESOURCE/HELP.RES:265
 msgid "Sell Structure"
@@ -9681,41 +9755,47 @@ msgstr "Alklaku ĉi tie por vendi ĉi tiun konstruaĵon. "
 
 # data/RESOURCE/HELP.RES:269
 msgid "Sturcture Repair Icon"
-msgstr ""
+msgstr "Bildeto de Riparado de Konstruaĵo"
 
 # data/RESOURCE/HELP.RES:270
 msgid ""
 "This icon shows there is a construction worker stationed in this structure. "
 "Click or right-click on this icon to mobilize the construction worker. "
 msgstr ""
+"Ĉi tiu bildeto montras, ke estas konstruada laboranto en ĉi tiu konstruaĵo. "
+"Klaku aŭ dekstre-klaku ĉi tiun bildeton por movi la konstruadan laboranton. "
 
 # data/RESOURCE/HELP.RES:273
 msgid "Zoom to Activity"
-msgstr ""
+msgstr "Iri al Ago"
 
 # data/RESOURCE/HELP.RES:274
 msgid ""
 "Click on this box to reply to the message or to see the location of the "
 "event. "
 msgstr ""
+"Alklaku ĉi tiun fenestron por respondi al la mesaĝon aŭ vidi la lokon de "
+"evento. "
 
 # data/RESOURCE/HELP.RES:277
 msgid "News Log"
-msgstr ""
+msgstr "Novaĵaj Protokoloj"
 
 # data/RESOURCE/HELP.RES:278
 msgid "Click on this to bring up the news log. "
-msgstr ""
+msgstr "Alklaku ĉi tion por montri la novaĵan protokolon. "
 
 # data/RESOURCE/HELP.RES:281
 msgid "Clear News Messages"
-msgstr ""
+msgstr "Forigi Novaĵajn Mesaĝojn"
 
 # data/RESOURCE/HELP.RES:282
 msgid ""
 "Click on this to clear all news messages on the screen. You can also press X "
 "on your keyboard. "
 msgstr ""
+"Alklaku ĉi tion por forigi ĉiujn novaĵajn meŝaĝojn en la ekrano. Vi ankaŭ "
+"povas premi X-n en via klavaro. "
 
 # data/RESOURCE/HELP.RES:285
 msgid "Game Menu"
@@ -9723,11 +9803,12 @@ msgstr "Luda Menuo"
 
 # data/RESOURCE/HELP.RES:286
 msgid "Click on this button to bring up the Game Menu. "
-msgstr ""
+msgstr "Alklaku ĉi tiun butonon por montri la Ludan Menuon. "
 
 # data/RESOURCE/HELP.RES:290
+#, fuzzy
 msgid "This shows the current stock of this type of goods in the market. "
-msgstr ""
+msgstr "Ĉi tio montras la nuna"
 
 # data/RESOURCE/HELP.RES:294
 msgid ""
@@ -9895,10 +9976,12 @@ msgid ""
 "When you Click on this tile, your selected spy will attempt to assassinate "
 "the fort's King or General. "
 msgstr ""
+"Kiam vi Alklakas ĉi tiun kahelon, via elektita spiono penos mortigi la Reĝo "
+"aŭ la Generalo de la fortikaĵo. "
 
 # data/RESOURCE/HELP.RES:381
 msgid "Dispense Healing"
-msgstr ""
+msgstr "Disdoni Kuracon"
 
 # data/RESOURCE/HELP.RES:382
 msgid ""
@@ -9906,6 +9989,9 @@ msgid ""
 "circle. Place this circle over your injured units and Click again. Repeat "
 "until the Lord of Healing's power has been depleted. "
 msgstr ""
+"Kiam vi Alklakas ĉi tiun kahelon, via kursoro ŝanĝos al granda blanka "
+"cirklo. Meti ĉi tiun cirklon super viaj vunditaj unuoj kaj Klaku denove. "
+"Ripetu ĝis la povo de la Ega Kuracisto elĉerpiĝu. "
 
 # data/RESOURCE/HELP.RES:385
 msgid "Change Loyalty"
@@ -9917,6 +10003,9 @@ msgid ""
 "circle. Place this circle over your target and Click again. Repeat until the "
 "Mind Turner's power has been depleted. "
 msgstr ""
+"Kiam vi Alklakas ĉi tiun kahelon, via kursoro ŝanĝos al granda blanka "
+"cirklo. Meti ĉi tiun cirklon super via celo kaj Klaku denove. Ripetu ĝis la "
+"povo de la Pensa Ŝanĝanto elĉerpiĝu. "
 
 # data/RESOURCE/HELP.RES:389
 msgid "Increase Power of Maya Soldiers"
@@ -9928,6 +10017,9 @@ msgid ""
 "circle. Place this circle over your soldiers and Click again. Repeat until "
 "Kukulcan's power has been depleted. "
 msgstr ""
+"Kiam vi Alklakas ĉi tiun kahelon, via kursoro ŝanĝos al granda blanka "
+"cirklo. Meti ĉi tiun cirklon super viaj soldatoj kaj Klaku denove. Ripetu "
+"ĝis la povo de Kukulkano elĉerpiĝu. "
 
 # data/RESOURCE/HELP.RES:393
 msgid "Summon Rain"
@@ -9938,6 +10030,8 @@ msgid ""
 "When you Click on this tile, it will cause the rains to come to the whole "
 "world. Repeat until Thor's power has been depleted. "
 msgstr ""
+"Kiam vi Alklakas ĉi tiun kahelon, ĝi venigos la pluvojn de la tuta mondo. "
+"Ripetu ĝis la povo de Toro elĉerpiĝu. "
 
 # data/RESOURCE/HELP.RES:397
 msgid "Summon Tornadoes"
@@ -9949,3 +10043,6 @@ msgid ""
 "Place this square over your target and Click again. Repeat until Thor's "
 "power has been depleted. "
 msgstr ""
+"Kiam vi Alklakas ĉi tiun kahelon, via kursoro ŝanĝos al eta kvadrato. Meti "
+"ĉi tiun kvadraton super via celo kaj Klaku denove. Ripetu ĝis la povo de "
+"Toro elĉerpiĝu. "
