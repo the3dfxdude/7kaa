@@ -1,4 +1,5 @@
 @default_files = ("main.tex"); # compile only main.tex
+$makeindex = "makeindex -s simpleidx.ist main.idx";
 $recorder = 1;
 $pdf_mode = 1; # tex -> PDF
 $bibtex_use = 2;
