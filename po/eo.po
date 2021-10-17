@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 08:14-0500\n"
-"PO-Revision-Date: 2021-10-16 16:19+0200\n"
+"PO-Revision-Date: 2021-10-17 15:38+0200\n"
 "Last-Translator: Jorge Maldonado Ventura <jorgesumle@freakspot.net>\n"
 "Language-Team: \n"
 "Language: eo\n"
@@ -2446,17 +2446,14 @@ msgstr ""
 
 #. TRANSLATORS: Your <Clay/Copper/Iron> Mine has exhausted its <Clay/Copper/Iron> deposit.
 #: src/ONEWSENG.cpp:1202
-#, fuzzy
 msgid "Your Clay Mine has exhausted its Clay deposit."
 msgstr "Via Argila Minejo elĉerpis ĝian Argilan rezervon."
 
 #: src/ONEWSENG.cpp:1203
-#, fuzzy
 msgid "Your Copper Mine has exhausted its Copper deposit."
 msgstr "Via Kupra Minejo elĉerpis ĝian Kupran rezervon."
 
 #: src/ONEWSENG.cpp:1204
-#, fuzzy
 msgid "Your Iron Mine has exhausted its Iron deposit."
 msgstr "Via Fera Minejo elĉerpis ĝian Feran rezervon."
 
@@ -4113,27 +4110,27 @@ msgstr "La Regno de %s%s rifuzas vian tributon de %s."
 
 #. TRANSLATORS: You accept the <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:675
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the %s's Kingdom%s in aid from %s."
-msgstr "Vi akceptas la helpon el la Regno de %s%s de %s."
+msgstr "Vi akceptas %s helpe el la Regno de %s%s."
 
 #. TRANSLATORS: You accept the <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:680
-#, fuzzy, c-format
+#, c-format
 msgid "You accept the %s's Kingdom%s in tribute from %s."
-msgstr "Vi akceptas la tributon el la Regno de %s%s de %s."
+msgstr "Vi akceptas %s tribute el la Regno de %s%s."
 
 #. TRANSLATORS: You reject the <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:688
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the %s's Kingdom%s in aid from %s."
-msgstr "Vi rifuzas la helpon el la Regno de %s%s de %s."
+msgstr "Vi rifuzas %s helpe el la Regno de %s%s."
 
 #. TRANSLATORS: You reject the <Amount> in tribute from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:693
-#, fuzzy, c-format
+#, c-format
 msgid "You reject the %s's Kingdom%s in tribute from %s."
-msgstr "Vi rifuzas la tributon el la Regno de %s%s de %s."
+msgstr "Vi rifuzas %s tribute el la Regno de %s%s."
 
 #. TRANSLATORS: You request <Amount> in aid from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:734
@@ -4505,44 +4502,44 @@ msgstr "Vi petas la lastan Unukornulan teknologion el la Regno de %s%s."
 
 #. TRANSLATORS: You demand the latest <Tech> technology from <King>'s Kingdom<Color>.
 #: src/OTALKENG.cpp:952
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Catapult technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Katapultan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Katapultan teknologion el la Regno de%s%s."
 
 #: src/OTALKENG.cpp:953
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Porcupine technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Histrikan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Histrikan teknologion el la Regno de%s%s."
 
 #: src/OTALKENG.cpp:954
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Ballista technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Balistan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Balistan teknologion el la Regno de%s%s."
 
 #: src/OTALKENG.cpp:955
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Cannon technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Pafilegan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Pafilegan teknologion el la Regno de%s%s."
 
 #: src/OTALKENG.cpp:956
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Spitfire technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Fajrkraĉilan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Fajrkraĉilan teknologion el la Regno de%s%s."
 
 #: src/OTALKENG.cpp:957
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Caravel technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Karavelan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Karavelan teknologion el la Regno de%s%s."
 
 #: src/OTALKENG.cpp:958
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Galleon technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Galionan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Galionan teknologion el la Regno de%s%s."
 
 #: src/OTALKENG.cpp:959
-#, fuzzy, c-format
+#, c-format
 msgid "You demand the latest Unicorn technology from %s's Kingdom%s."
-msgstr "Vi demandas la lastan Unukornulan teknologion el la Regno de%s%s."
+msgstr "Vi postulas la lastan Unukornulan teknologion el la Regno de%s%s."
 
 #. TRANSLATORS: <King>'s Kingdom<Color> requests the latest <Tech> technology from you.
 #: src/OTALKENG.cpp:964
@@ -5656,13 +5653,16 @@ msgstr ""
 "vi lernos kiel efike kolekti taksojn el via popolo. "
 
 # data/RESOURCE/TUT_INTR/00002-6SEATRAD.TXT:1
-#, fuzzy
 msgid ""
 "In this lesson you learn how to use your Ships for trading with distant "
 "Kingdoms, or for linking the distant parts of your empire. You will also "
 "learn how to set ports of call, and how to manage cargo for your Ships, as "
 "well as how to switch between Automatic Trading mode and Control mode. "
-msgstr "En ĉi tiu leciono vi lernos kiel uzi viajn Ŝipojn por komerci kun "
+msgstr ""
+"En ĉi tiu leciono vi lernos kiel uzi viajn Ŝipojn por komerci kun disaj "
+"Regnoj aŭ por ligi la disajn partojn de via imperio. Vi ankaŭ lernos kiel "
+"agordi ŝiphaltejojn kaj kiel administri la kargon por viaj Ŝipoj, kaj ankaŭ "
+"kiel ŝanĝi inter Aŭtomata Komerca modo kaj Kontrola modo. "
 
 # data/RESOURCE/TUT_INTR/00003-8FRYHTAN.TXT:1
 msgid ""
@@ -5732,12 +5732,13 @@ msgstr ""
 "por esplori pri altnivelaj Armiloj kaj Ŝipoj. "
 
 # data/RESOURCE/TUT_INTR/00009-2B_TRADE.TXT:1
-#, fuzzy
 msgid ""
 "With these basic concepts of economics understood, you will next learn how "
 "to conduct international and domestic Trade and how to transport Raw "
 "Materials. "
-msgstr "Kompreninte tiujn bazajn konceptojn de "
+msgstr ""
+"Kompreninte tiujn bazajn konceptojn de ekonomio vi lernos kiel fari "
+"internacian kaj hejman Komercon kaj kiel transporti Krudajn Materialojn. "
 
 # data/RESOURCE/TUT_INTR/00010-LOYALTY.TXT:1
 msgid ""
@@ -5752,13 +5753,14 @@ msgstr ""
 "Reĝo. "
 
 # data/RESOURCE/TUT_INTR/00011-SPYING.TXT:1
-#, fuzzy
 msgid ""
 "In this lesson you will learn how to train or hire Spies, how to infiltrate "
 "the ranks of the enemy and how to use Spies to bribe, sabotage, capture and "
 "steal. "
 msgstr ""
-"En ĉi tiu leciono vi lernos kiel trejni aŭ dungi Spionoj, kiel infiltri "
+"En ĉi tiu leciono vi lernos kiel trejni aŭ dungi Spionoj, kiel infiltri la "
+"vicojn de la malamiko kaj kiel uzi Spionojn por subaĉeti, saboti, kapti kaj "
+"ŝteli. "
 
 # data/RESOURCE/TUT_INTR/00012-10CAPTUR.TXT:1
 msgid ""
@@ -7254,14 +7256,14 @@ msgstr ""
 "laboru en la Fabriko. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:70
-#, fuzzy
 msgid ""
 "When a Factory is built within Linking distance of a Mine, it will "
 "automatically adjust its production to suit the type of Raw Material coming "
 "from the Mine. "
 msgstr ""
 "Kiam Fabriko estas konstruita ene de Ligila distanco de Minejo, ĝi aŭtomate "
-"adaptos ĝian produk"
+"adaptos ĝian produktadon al la speco de Kruda Materialo venanta el la "
+"Minejo. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:72
 msgid ""
@@ -7373,12 +7375,14 @@ msgstr ""
 "gajnas. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:104
-#, fuzzy
 msgid ""
 "You will also notice that there is space in the Market for three different "
 "types of goods. To generate the most money for your Empire, you must do your "
 "best to fill these spaces with a variety of goods. "
-msgstr "Vi ankaŭ rimarkos, ke estas spaco "
+msgstr ""
+"Vi ankaŭ rimarkos, ke estas spaco en la bazaro por tri malsamaj specoj de "
+"varoj. Por maksimume generi monon por via Imperio vi devas fari laŭeble plej "
+"bone por plenigi tiujn spacojn per malsamaj varoj. "
 
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:107
 msgid ""
@@ -7473,7 +7477,7 @@ msgid ""
 "Weapon that you wish to make. That weapon will exit the War Factory as soon "
 "as it is finished. "
 msgstr ""
-"Tio venigos vin al la areo de fabrikado de Armilo. Alklaku unufoje la nomon "
+"Tio irigos vin al la areo de fabrikado de Armilo. Alklaku unufoje la nomon "
 "de la Armilo, kiun vi volas fari. Tiu armilo eliros el la Milita Fabriko, "
 "tuj kiam ĝi estas finita. "
 
@@ -7496,21 +7500,22 @@ msgstr ""
 "Kiam vi estas finita, Alklaku la Farita-Butonon. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:23
-#, fuzzy
 msgid ""
 "Production of all Weapons will then take place in the order you originally "
 "selected them. "
 msgstr ""
-"La produktado de ĉiuj armiloj tiam okazos laŭ la ordo, kiun vi origine "
+"La produktado de ĉiuj Armiloj tiam okazos laŭ la ordo, kiun vi origine "
 "elektis. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:26
-#, fuzzy
 msgid ""
 "Weapons, like Soldiers, may be assigned to Forts under the leadership of a "
 "General. Unlike Soldiers, however, the Hit-Points of Weapons cannot "
 "increase. "
-msgstr "Armiloj, kiel Soldatoj, po"
+msgstr ""
+"Armiloj, kiel Soldatoj, povas esti asignitaj al Fortikaĵoj sub la estreco de "
+"Generalo. Tamen, malkiel Soldatoj, la Trafa-Poentoj de Armiloj ne povas "
+"kreski. "
 
 # data/RESOURCE/TUT_TEXT/00009-4WEAPONS.TXT:29
 msgid ""
@@ -7731,14 +7736,14 @@ msgstr ""
 "Regno faras la samon, vi vidos ilia mesaĝo en la malsupro de la ĉefa ekrano. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:30
-#, fuzzy
 msgid ""
 "If you want to reply to this message, Click on the colored square next to "
 "it. This will take you to the Kingdoms Scroll page, where you can Click on "
 "either Accept or Reject. "
 msgstr ""
 "Se vi volas respondi al ĉi tiu mesaĝo, Alklaku la koloritan kvadraton apud "
-"ĝi. Tio "
+"ĝi. Tio montros al vi la paĝo de la Rulo de Regnoj, kie vi povas Alklaki aŭ "
+"Akcepti aŭ Rifuzi. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:33
 msgid ""
@@ -7795,12 +7800,14 @@ msgstr ""
 "iliaj Merkatoj por kolekti la varojn, kiujn vi volas. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:50
-#, fuzzy
 msgid ""
 "Note that in the window on the lower right, the First Stop of your Caravan "
 "has been set by default to the market where the Caravan was hired. You will "
 "want to set the Second Stop as a Market in a foreign Kingdom. "
-msgstr "Rimarku, ke en la malsupra dekstra fenestro"
+msgstr ""
+"Rimarku, ke en la malsupra dekstra fenestro la Unua Haltejo de via Karavano "
+"estis defaŭlte agordita al la bazaro, kie la Karavano estis dungita. Vi "
+"volos agordi la Duan Haltejon kiel Bazaro en fremda Regno. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:53
 msgid ""
@@ -8026,13 +8033,16 @@ msgstr ""
 "de Finitaj Varoj ne estas premita. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:118
-#, fuzzy
 msgid ""
 "Because the Factory is beyond direct Linking distance with the Mine, you may "
 "have to set the production there manually, to match the Mine's Raw "
 "Materials.  Do this by Clicking on the Change Production Tile until the "
 "Factory's production matches the incoming Raw Material. "
-msgstr "Ĉar la Fabriko estas "
+msgstr ""
+"Ĉar la Fabriko estas ekster rekta Ligila distanco de la Minejo, vi eble "
+"devos agordi la produktadon tie mane, por kongrui kun la Minejaj Krudaj "
+"Materialoj. Faru tion Alklakante la Ŝanĝi-Produktadon-Kahelon ĝis la Fabrika "
+"produktado kongruas kun la ricevata Kruda Materialo. "
 
 # data/RESOURCE/TUT_TEXT/00011-2B_TRADE.TXT:121
 msgid ""
@@ -8224,13 +8234,16 @@ msgstr ""
 "kutima laboranto). "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:56
-#, fuzzy
 msgid ""
 "If you choose Sabotage, the Spy will do his best to slow production in the "
 "Building. In a Mine he will slow the extraction of Raw Material, in a "
 "Factory or War Factory he will slow the production of Goods and Weapons, and "
 "in a Tower of Science he will slow Research. "
-msgstr "Se vi elektis Saboti, la Spiono faros "
+msgstr ""
+"Se vi elektis Saboti, la Spiono faros laŭeble plej bone por malrapidigi la "
+"produktadon en la Konstruaĵo. En Minejo li malrapidigos la ekstraktado de "
+"Kruda Materialo, en Fabriko aŭ Milita Fabriko li malrapidigos la produktadon "
+"de Varojn kaj Armilojn, kaj en Turo de Scienco li malrapidigos Esploradon. "
 
 # data/RESOURCE/TUT_TEXT/00012-SPYING.TXT:59
 msgid ""
@@ -8394,7 +8407,6 @@ msgid "Desperados"
 msgstr "Eksterleĝuloj"
 
 # data/SCENARIO/DESPERDO.SCT:5
-#, fuzzy
 msgid ""
 "At the end of the \"The War to End all Wars for a While\", a band of "
 "unemployed mercenaries roams the ravaged countryside. Take control of this "
@@ -8405,7 +8417,11 @@ msgid ""
 "other kingdoms. "
 msgstr ""
 "Je la fino de la \"Milito por Fini ĉiujn Militojn dum iom da Tempo\", aro de "
-"senlaboraj dungatoj vagis la ruini"
+"senlaboraj dungatoj vagis la ruinigita kamparo. Kontrolu ĉi tiun bandon, "
+"elektu Reĝo inter ili kaj penu reestigi la detruitan Regnon, por kiu ili "
+"unufoje batalis. Vi devas supervivi la neeviteblajn atakojn de viaj malnovaj "
+"malamikoj kaj poste detrui ilin kiel peno pro ilia batalema estinto. Fina "
+"venko estos atingita per la detruo de ĉiuj aliaj regnoj. "
 
 # data/SCENARIO/ERADICAT.SCT:1
 msgid "Eradication"
@@ -8504,7 +8520,6 @@ msgid "Iron Fist & Velvet Glove"
 msgstr "Fera Pugno kaj Velura Ganto"
 
 # data/SCENARIO/IRONFIST.SCT:5
-#, fuzzy
 msgid ""
 "You have built your large empire through treachery and bloody conquest. Your "
 "reputation has reached rock bottom  and your people are beginning to tire of "
@@ -8703,9 +8718,8 @@ msgstr ""
 "malamikoj de via patro.  Detruu ilin tute. "
 
 # data/SCENARIO/QUESUCCN.SCT:1
-#, fuzzy
 msgid "A Question of Succession"
-msgstr "Afero pri Postuleco"
+msgstr "Afero pri Heredo"
 
 # data/SCENARIO/QUESUCCN.SCT:5
 msgid ""
@@ -8855,7 +8869,6 @@ msgid "Shaken to the Core"
 msgstr "Skuita ĝis la Kerno"
 
 # data/SCENARI2/SCN_04.SCT:5
-#, fuzzy
 msgid ""
 "While king and army are away pacifying a foreign land, your Kingdom has been "
 "rocked by an earthquake. Your population has plummeted and food is scarce.  "
@@ -8866,7 +8879,10 @@ msgid ""
 msgstr ""
 "Dum regno kaj armeo estas for pacifante fremdan landon via Regno estas "
 "trafita de tertremo. Via loĝantaro falis kaj manĝaĵo estas malabunda.  Vi "
-"devas "
+"devas forpuŝi malsategon, rekonstrui vian ruinigitan regnon kaj kreskigi "
+"vian ekonomian poentaron al 400 ene de 10 jaroj. Vi povas kontroli vian "
+"ekonomian poentaron sub la Rangolista Rulo (F8). Por kontroli la ekonomian "
+"poentaron de aliaj Regnoj alklaku iliajn nomojn en la supra sekcio. "
 
 # data/SCENARI2/SCN_05.SCT:1
 msgid "The Great Mughul"
@@ -8961,7 +8977,6 @@ msgid "Impassable Isthmus"
 msgstr "Netransirebla Istmo"
 
 # data/SCENARI2/SCN_10.SCT:5
-#, fuzzy
 msgid ""
 "Your enemy lies to the south across a narrow spit of land - too narrow for a "
 "single soldier to cross. Although the insult that caused your enmity has "
@@ -8973,7 +8988,7 @@ msgstr ""
 "mallarĝa, por ke unu soldato transiru. Kvankam la insulto, kiun via malamiko "
 "kaŭzis, estas longe forgesita, estas plej bone esti en la sekura flanko kaj "
 "komplete detrui ilin. Vi ne devas prokrasti multe vian taskon, ĉar oni donis "
-"al vi nur kvar jarojn."
+"al vi nur kvar jarojn. "
 
 # data/SCENARI2/SCN_11.SCT:1
 msgid "The Great Lakes"
@@ -9010,7 +9025,6 @@ msgid "A Warlike People"
 msgstr "Militemaj Homoj"
 
 # data/SCENARI2/SCN_13.SCT:5
-#, fuzzy
 msgid ""
 "Although you have no industry or technology and must import all of your "
 "goods, you have a long tradition of strong and proud warriors. It is these "
@@ -9023,7 +9037,8 @@ msgstr ""
 "varojn, vi havas longan tradicion de fortaj kaj fieraj batalantoj. Ĉi tiuj "
 "batalantoj estas kiuj devas protekti vin kontraŭ la adaj impetoj de viaj "
 "malamikoj.  Vi povas atingi finan venkon aŭ forigante ĉiujn aliajn homajn "
-"Regnojn aŭ havante la plej grandan Frihtanan bataladan poentaron"
+"Regnojn aŭ havante la plej grandan Frihtanan bataladan poentaron post la "
+"forigo de la lasta Frihtano. "
 
 # data/SCENARI2/SCN_14.SCT:1
 msgid "Nine Lord's Quest"
@@ -9183,11 +9198,11 @@ msgid "Terrain Map"
 msgstr "Terena Mapo"
 
 # data/RESOURCE/HELP.RES:51
-#, fuzzy
 msgid ""
 "This map shows the world's natural features and the location of villages and "
 "units. "
-msgstr "Ĉi tiu mapo montras la "
+msgstr ""
+"Ĉi tiu mapo montras la naturajn ecojn kaj la lokon de vilaĝoj kaj unuoj. "
 
 # data/RESOURCE/HELP.RES:54
 msgid "Kingdom Power Map"
@@ -9217,11 +9232,12 @@ msgid "Offer Bribe"
 msgstr "Proponi Subaĉeton"
 
 # data/RESOURCE/HELP.RES:63
-#, fuzzy
 msgid ""
 "Make a bribe with the selected spy. This takes you to a menu where you can "
 "choose the amount of the bribe to offer to the selected foreign unit. "
-msgstr "Subaĉeti per la elektita spiono. Tio "
+msgstr ""
+"Subaĉeti per la elektita spiono. Tio irigos vin al menuo, kie vi povas "
+"elekti la kvanton de la subaĉeto por proponi al la elektita fremda unuo. "
 
 # data/RESOURCE/HELP.RES:66
 msgid "Build"
@@ -9371,7 +9387,7 @@ msgstr "Konstrui Ŝipon"
 msgid ""
 "This takes you to a menu where you can select ships to build in this harbor. "
 msgstr ""
-"Tio venigos vin al menuo, kie vi povas elekti ŝipojn konstruotajn en ĉi tiu "
+"Tio irigos vin al menuo, kie vi povas elekti ŝipojn konstruotajn en ĉi tiu "
 "haveno. "
 
 # data/RESOURCE/HELP.RES:125
@@ -9383,7 +9399,7 @@ msgid ""
 "This takes you to a menu where you can select weapons to make in this war "
 "factory. "
 msgstr ""
-"Tio venigos al vi al menuo, kie vi povas elekti armilojn farotajn en ĉi tiu "
+"Tio irigos al vi al menuo, kie vi povas elekti armilojn farotajn en ĉi tiu "
 "milita fabriko. "
 
 # data/RESOURCE/HELP.RES:129
@@ -9451,14 +9467,13 @@ msgid "Recruit"
 msgstr "Varbi"
 
 # data/RESOURCE/HELP.RES:158
-#, fuzzy
 msgid ""
 "This recruits a peasant from the selected village. For each click, one "
 "peasant exits. This tile is disabled if there are no more peasants in the "
 "village. "
 msgstr ""
-"Tio varbas kamparanon el la elektita vilaĝo. Po ĉiu klako unu kamparano "
-"eliras. Ĉi tiu kahelo estas malebligita, se ne restas kamparanoj en la "
+"Tio varbas kamparanon el la elektita vilaĝo. Ĉiu klako elirigas unu "
+"kamparanon. Ĉi tiu kahelo estas malebligita, se ne restas kamparanoj en la "
 "vilaĝo. "
 
 # data/RESOURCE/HELP.RES:161
@@ -9638,11 +9653,11 @@ msgstr ""
 
 # data/RESOURCE/HELP.RES:221
 msgid "Drop Spy Identity"
-msgstr ""
+msgstr "Forigi Spionan Identecon"
 
 # data/RESOURCE/HELP.RES:222
 msgid "This causes the spy to give up his spy identity. "
-msgstr ""
+msgstr "Ĉi tio igas, ke la spiono forigas lian spionan identecon. "
 
 # data/RESOURCE/HELP.RES:225
 msgid "Automatic"
@@ -9806,34 +9821,41 @@ msgid "Click on this button to bring up the Game Menu. "
 msgstr "Alklaku ĉi tiun butonon por montri la Ludan Menuon. "
 
 # data/RESOURCE/HELP.RES:290
-#, fuzzy
 msgid "This shows the current stock of this type of goods in the market. "
-msgstr "Ĉi tio montras la nuna"
+msgstr "Ĉi tio montras la nunan stokon de ĉi tiaj varoj en la bazaro. "
 
 # data/RESOURCE/HELP.RES:294
 msgid ""
 "This shows the total sales of this type of goods in the market in the past "
 "365 days. "
 msgstr ""
+"Ĉi tio montras la totalan vendon de ĉi tiaj varoj en la bazaroj en la "
+"pasintaj 365 tagoj. "
 
 # data/RESOURCE/HELP.RES:298
 msgid ""
 "This shows the monthly demand for goods from villages linked to this market. "
 msgstr ""
+"Ĉi tio montras la monatan demandon de varoj el vilaĝoj ligitaj al ĉi tiu "
+"bazaro. "
 
 # data/RESOURCE/HELP.RES:302
 msgid "This shows the total income of this market in the past 365 days. "
 msgstr ""
+"Ĉi tio montras la totalan enspezon de ĉi tiu bazaroj en la pasintaj 365 "
+"tagoj. "
 
 # data/RESOURCE/HELP.RES:305
 msgid "Clear Stock"
-msgstr ""
+msgstr "Forigi Stokon"
 
 # data/RESOURCE/HELP.RES:306
 msgid ""
 "Click on this button to clear all of the stock of this type of goods in the "
 "market. "
 msgstr ""
+"Alklaku ĉi tiun butonon por forigi la tutan stokon de ĉi tiaj varoj en la "
+"bazaro. "
 
 # #-#-#-#-#  -  #-#-#-#-#
 # data/RESOURCE/HELP.RES:310
@@ -9843,6 +9865,8 @@ msgid ""
 "This shows the quantity of the product manufactured by this factory in the "
 "past 30 days. "
 msgstr ""
+"Ĉi tio montras la kvanto de la produktoj produktitaj de ĉi tiu fabriko en la "
+"pasintaj 30 tagoj. "
 
 # data/RESOURCE/HELP.RES:314
 msgid ""
@@ -9850,55 +9874,62 @@ msgid ""
 "this factory. The maximum capacity for storing the stock in a factory is "
 "500. "
 msgstr ""
+"Ĉi tio montras la nuna stokon de la krudaj materialoj uzitaj por produkti en "
+"ĉi tiu fabriko. La maksimuma stoka enhaveco de fabriko estas 500.  "
 
 # data/RESOURCE/HELP.RES:318
 msgid ""
 "This shows the current stock of the finished goods in this factory. The "
 "maximum capacity for storing the stock in a factory is 500. "
 msgstr ""
+"Ĉi tio montras la nunan stokon de la finitaj varoj en ĉi tiu fabriko. La "
+"maksimuma stoka enhaveco de fabriko estas 500. "
 
 # data/RESOURCE/HELP.RES:321
 msgid "Cancel Weapon Production"
-msgstr ""
+msgstr "Nuligi Armilan Produktadon"
 
 # data/RESOURCE/HELP.RES:322
 msgid "Click on this to cancel producing the current weapon. "
-msgstr ""
+msgstr "Alklaku ĉi tion por nuligi la produktadon de la nuna armilo. "
 
 # data/RESOURCE/HELP.RES:325
 msgid "Cancel Building Ship"
-msgstr ""
+msgstr "Nuligi Konstruadon de Ŝipo"
 
 # data/RESOURCE/HELP.RES:326
 msgid "Click on this to cancel building the current ship. "
-msgstr ""
+msgstr "Alklaku ĉi tion por nuligi la konstruadon de la nuna ŝipo. "
 
 # data/RESOURCE/HELP.RES:329
 msgid "Cancel Training"
-msgstr ""
+msgstr "Nuligi Trejnadon"
 
 # data/RESOURCE/HELP.RES:330
 msgid "Click on this to cancel training the current unit. "
-msgstr ""
+msgstr "Alklaku ĉi tion por nuligi la trejnadon de la nuna unuo. "
 
 # data/RESOURCE/HELP.RES:333
 msgid "Cancel Building Structure"
-msgstr ""
+msgstr "Nuligi Konstruadon de Konstruaĵo"
 
 # data/RESOURCE/HELP.RES:334
 msgid "Click on this to cancel building the current structure. "
-msgstr ""
+msgstr "Alklaku ĉi tio por nuligi la konstruadon de la nuna konstruaĵo. "
 
 # data/RESOURCE/HELP.RES:342
 msgid ""
 "This shows the amount of material that has already been mined and is being "
 "stored at the mine. "
 msgstr ""
+"Ĉi tio montras la kvanto da materialo, kiun jam estis minita kaj estas "
+"konservita en la minejo. "
 
 # data/RESOURCE/HELP.RES:346
 msgid ""
 "This shows the amount of natural resources still remaining underground. "
 msgstr ""
+"Ĉi tio montras la kvanton de naturaj resursoj ankoraŭ subtere restantaj. "
 
 # data/RESOURCE/HELP.RES:349
 msgid "Yearly Import"
@@ -9909,6 +9940,8 @@ msgid ""
 "This shows the monetary amount of your yearly imports from the selected "
 "kingdom. "
 msgstr ""
+"Ĉi tio montras la monan kvanton de viaj jaraj importaĵoj el la elektita "
+"regno. "
 
 # data/RESOURCE/HELP.RES:353
 msgid "Yearly Export"
@@ -9919,46 +9952,58 @@ msgid ""
 "This shows the monetary amount of your yearly exports to the selected "
 "kingdom. "
 msgstr ""
+"Ĉi tio montras la monan kvanton de viaj jaraj eksportaĵoj al la elektita "
+"regno. "
 
 # data/RESOURCE/HELP.RES:357
 msgid "Duration of the Current Status"
-msgstr ""
+msgstr "Daŭro de la Nuna Stato"
 
 # data/RESOURCE/HELP.RES:358
 msgid ""
 "This shows the amount of time that you have been in the current diplomatic "
 "status with the selected kingdom. "
 msgstr ""
+"Ĉi tio montras la kvanton da tempo, en kiu vi estis en la nuna diplomata "
+"stato kun la elektita regno. "
 
 # data/RESOURCE/HELP.RES:361
 msgid "Continuous Peace"
-msgstr ""
+msgstr "Daŭra Paco"
 
 # data/RESOURCE/HELP.RES:362
 msgid ""
 "This shows the amount of time that you have been at peace with the selected "
 "kingdom. "
 msgstr ""
+"Ĉi tio montras la kvanto da tempo, en kiu vi estis en paco kun la elektita "
+"regno. "
 
 # data/RESOURCE/HELP.RES:366
 msgid ""
 "If this is set to 'Yes', you will be able to target and attack the units and "
 "structures of the selected kingdom. If it is set to 'No', you will not. "
 msgstr ""
+"Se ĉi tio estas agordita kiel 'Jes', vi povos celi kaj ataki la unuojn kaj "
+"konstruaĵojn de la elektita regno. Se ĝi estas agordita kiel 'Ne', vi ne "
+"povos. "
 
 # data/RESOURCE/HELP.RES:369
 msgid "Passive Mode Enabled. Click for Aggressive Mode."
-msgstr ""
+msgstr "Pasiva Modo Ebligita. Klaku por Agresema Modo."
 
 # data/RESOURCE/HELP.RES:370
 msgid ""
 "When toggled to this mode, your units will not fight unless attacked. If "
 "ordered to change location, they will not stop to fight off an attack. "
 msgstr ""
+"Kiam baskuligita en ĉi tiu modo, viaj unuoj ne batalos, krom se ili estas "
+"atakitaj. Se oni ordonas al ili ŝanĝi iliajn lokojn, ili ne haltos por "
+"forpuŝi atakon. "
 
 # data/RESOURCE/HELP.RES:373
 msgid "Aggressive Mode Enabled. Click for Passive Mode."
-msgstr ""
+msgstr "Agresema Modo Ebligita. Klaku por Pasiva Modo."
 
 # data/RESOURCE/HELP.RES:374
 msgid ""
@@ -9966,6 +10011,9 @@ msgid ""
 "their area, but they will not follow it out of the area. If ordered to "
 "change location, they will stop to fight off an attack and then continue. "
 msgstr ""
+"Kiam baskuligita en ĉi tiu modo, viaj unuoj aŭtomate atakos malamikon en "
+"iliaj regionoj, sed ili ne sekvos al ekster la regiono. Se oni ordonas al "
+"ili ŝanĝi la lokon, ili haltos por forpuŝi atakon kaj poste ili daŭros. "
 
 # data/RESOURCE/HELP.RES:377
 msgid "Assassinate"
