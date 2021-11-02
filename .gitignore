@@ -84,6 +84,7 @@ po/stamp-po
 doc/*.aux
 doc/src/*.aux
 doc/main.synctex.gz
+main.synctex(busy)
 doc/*.pdf
 doc/main.idx
 doc/main.log
