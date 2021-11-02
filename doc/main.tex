@@ -44,7 +44,7 @@
     \setlength{\headheight}{22.44pt} % 22.44pt used to avoid errors.
     \renewcommand{\headrulewidth}{.5pt} % From original manual?
     \fancyhf[lh,rh,ch]{}
-    \fancyhf[leh]{\leftmark}
+    \fancyhf[leh]{\nouppercase{\textit{\leftmark}}}
     \fancyhf[roh]{\textit{Seven Kingdoms: Ancient Adversaries}}
     
 \usepackage[explicit]{titlesec} % For modification of titles
@@ -86,6 +86,9 @@
 % \raggedright % From the original manual.
 \setcounter{tocdepth}{1} % Display only chapters and sections in toc - from the original manual.
 \setcounter{secnumdepth}{0}
+\makeatletter
+\renewcommand\@dotsep{140} % default value 4.5
+\makeatother
 % -- New Environment end -- %
 
 % -- Additional Options -- %
