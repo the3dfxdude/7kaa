@@ -31,7 +31,7 @@
 
 % Graphics, figures and tables:
 \usepackage{graphicx} % Basic support for figures
-	\graphicspath{{assets/}}
+\graphicspath{{assets/}}
 \usepackage{wrapfig} % Wrap figure around text
 \usepackage{xcolor} % An extended support for colors, required by tabu
 \usepackage{colortbl} % Pretty colored tables, required by tabu
@@ -75,6 +75,13 @@
 \vspace{0.1em}
 \titlerule
 ]% after-code
+
+\titleformat{\section}
+{\sffamily\LARGE\bfseries}{\thesection}{1em}{#1}
+\titleformat{\subsection}
+{\sffamily\large\bfseries}{\thesubsection}{1em}{#1}
+\titleformat{\subsubsection}
+{\sffamily\normalsize\bfseries}{\thesubsubsection}{1em}{#1}
 
 \usepackage{makeidx} % Index
     \makeindex
