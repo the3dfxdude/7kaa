@@ -318,16 +318,16 @@ void Info::detect_trade()
 		}
 	}
 
-	//-------- detect the firm browser ---------//
-
-	if( browse_firm.detect() )
+	//-------- detect selecting a stop ---------//
+	if( (power.command_id == COMMAND_SET_CARAVAN_STOP || power.command_id == COMMAND_SET_SHIP_STOP) &&
+		mouse.is_mouse_event() &&
+		mouse.mouse_event_type == LEFT_BUTTON &&
+		unit_array[power.command_unit_recno]->is_visible() )
 	{
-		browse_firm_recno = browse_firm.recno();
-
-		if( power.command_id == COMMAND_SET_CARAVAN_STOP &&
-			unit_array[power.command_unit_recno]->is_visible() )
+		int recNo = browse_firm.mouse_over();
+		if( recNo && power.command_id == COMMAND_SET_CARAVAN_STOP )
 		{
-			Firm* firmPtr = firm_array[ get_report_data2(browse_firm_recno) ];
+			Firm* firmPtr = firm_array[ get_report_data2(recNo) ];
 			UnitCaravan* unitPtr = (UnitCaravan*) unit_array[power.command_unit_recno];
 			if( unitPtr->can_set_stop(firmPtr->firm_recno) )
 			{
@@ -339,12 +339,12 @@ void Info::detect_trade()
 				unitPtr->set_stop(power.command_para, firmPtr->center_x, firmPtr->center_y, COMMAND_PLAYER);              // command_para is the id. of the stop
 			}
 			power.command_id = 0;
+			return;
 		}
 
-		else if( power.command_id == COMMAND_SET_SHIP_STOP &&
-			unit_array[power.command_unit_recno]->is_visible() )
+		if( recNo && power.command_id == COMMAND_SET_SHIP_STOP )
 		{
-			Firm* firmPtr = firm_array[ get_report_data2(browse_firm_recno) ];
+			Firm* firmPtr = firm_array[ get_report_data2(recNo) ];
 			UnitMarine* unitPtr = (UnitMarine*) unit_array[power.command_unit_recno];
 			if( unitPtr->can_set_stop(firmPtr->firm_recno) )
 			{
@@ -356,9 +356,17 @@ void Info::detect_trade()
 				unitPtr->set_stop(power.command_para, firmPtr->center_x, firmPtr->center_y, COMMAND_PLAYER);              // command_para is the id. of the stop
 			}
 			power.command_id = 0;
+			return;
 		}
+	}
 
-		else if( browse_firm.double_click )
+	//-------- detect the firm browser ---------//
+
+	if( browse_firm.detect() )
+	{
+		browse_firm_recno = browse_firm.recno();
+
+		if( browse_firm.double_click )
 		{
 			Firm* firmPtr = firm_array[ get_report_data2(browse_firm_recno) ];
 
