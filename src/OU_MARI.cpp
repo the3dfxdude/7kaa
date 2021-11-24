@@ -773,3 +773,68 @@ int UnitMarine::can_resign()
    return unit_count == 0;
 }
 //------- End of function UnitMarine::can_resign -------//
+
+
+//--------- Begin of function UnitMarine::copy_route ---------//
+//
+// Copies trade route from copyUnitRecno to this ship.
+//
+void UnitMarine::copy_route(short copyUnitRecno, int remoteAction)
+{
+	if( sprite_recno == copyUnitRecno )
+		return;
+
+	UnitMarine* copyUnit = (UnitMarine*)unit_array[copyUnitRecno];
+
+	if( copyUnit->nation_recno != nation_recno )
+		return;
+
+	if( remote.is_enable() && !remoteAction )
+	{
+		// packet structure : <unit recno> <copy recno>
+		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_U_SHIP_COPY_ROUTE, 2*sizeof(short));
+		*shortPtr = sprite_recno;
+
+		shortPtr[1] = copyUnitRecno;
+		return;
+	}
+
+	// clear existing stops
+	int num_stops = stop_defined_num;
+	for( int i=0; i<num_stops; i++ )
+		del_stop(1, COMMAND_AUTO); // stop ids shift up
+
+	ShipStop* shipStopA = copyUnit->stop_array;
+	ShipStop* shipStopB = stop_array;
+	for( int i=0; i<MAX_STOP_FOR_CARAVAN; i++, shipStopA++, shipStopB++ )
+	{
+		if( !shipStopA->firm_recno )
+			break;
+
+		if( firm_array.is_deleted(shipStopA->firm_recno) )
+			continue;
+
+		Firm* firmPtr = firm_array[shipStopA->firm_recno];
+		set_stop(i+1, shipStopA->firm_loc_x1, shipStopA->firm_loc_y1, COMMAND_AUTO);
+
+		if( shipStopA->pick_up_type == AUTO_PICK_UP )
+		{
+			set_stop_pick_up(i+1, AUTO_PICK_UP, COMMAND_AUTO );
+		}
+
+		else if( shipStopA->pick_up_type == NO_PICK_UP )
+		{
+			set_stop_pick_up(i+1, NO_PICK_UP, COMMAND_AUTO );
+		}
+
+		else
+		{
+			for( int b=0; b<MAX_PICK_UP_GOODS; ++b )
+			{
+				if( shipStopA->pick_up_array[b] != shipStopB->pick_up_array[b] )
+					set_stop_pick_up(i+1, b+1, COMMAND_PLAYER);
+			}
+		}
+	}
+}
+//---------- End of function UnitMarine::copy_route ----------//

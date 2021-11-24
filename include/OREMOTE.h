@@ -165,6 +165,8 @@ enum { MSG_QUEUE_HEADER=FIRST_REMOTE_MSG_ID,
 
 		 MSG_COMPARE_CRC,
 
+		 MSG_U_SHIP_COPY_ROUTE,
+
 		 LAST_REMOTE_MSG_ID			// keep this item last
 	  };
 
@@ -229,6 +231,7 @@ public:
 	void	ship_del_stop();
 	void	ship_change_mode();
 	void	ship_selected();
+	void	ship_copy_route();
 	void	god_cast();
 	void	change_spy_nation();
 	void	notify_cloaked_nation();

@@ -179,6 +179,8 @@ static MsgProcessFP msg_process_function_array[] =
 	&RemoteMsg::caravan_copy_route,
 
 	&RemoteMsg::compare_remote_crc,
+
+	&RemoteMsg::ship_copy_route,
 };
 
 //---------- Declare static functions ----------//
@@ -1382,6 +1384,36 @@ void RemoteMsg::ship_change_mode()
 	}
 }
 // ------- End of function RemoteMsg::ship_change_mode ------//
+
+
+// ------- Begin of function RemoteMsg::ship_copy_route ------//
+void RemoteMsg::ship_copy_route()
+{
+	err_when( id != MSG_U_SHIP_COPY_ROUTE);
+	// packet structure : <unit recno> <copy unit recno>
+	short *shortPtr = (short *)data_buf;
+	short unitCount= 2;
+	validate_selected_unit_array(shortPtr, unitCount);
+
+	if( unitCount > 0)
+	{
+		Unit *unitPtr = unit_array[*shortPtr];
+		UnitMarine *shipPtr;
+		if( unitPtr->unit_id != UNIT_VESSEL )
+		{
+			err_here();
+		}
+		else
+		{
+#ifdef DEBUG_LONG_LOG
+			long_log->printf("ship %d copy route from %d\n", shortPtr[0], shortPtr[1]);
+#endif
+			shipPtr = (UnitMarine *)unitPtr;
+			shipPtr->copy_route(shortPtr[1], COMMAND_REMOTE);
+		}
+	}
+}
+// ------- End of function RemoteMsg::ship_copy_route ------//
 
 
 // ------- Begin of function RemoteMsg::change_spy_nation ------//
