@@ -70,6 +70,7 @@ enum { FIRM_BROWSE_X1 = ZOOM_X1+6,
 static VBrowseIF browse_caravan, browse_ship, browse_firm;
 static char mode_unit, mode_firm;
 static short selected_unit_recno, selected_harbor_recno, unit_x, unit_y, browse_firm_recno, idle_caravans, idle_firms;
+static Button button_copy;
 
 #define MAX_FIRM_REPORT_MODE 4
 static const char* firm_mode_str_array[MAX_FIRM_REPORT_MODE] =
@@ -114,6 +115,9 @@ static void put_stop_info(int x, int y, TradeStop* tradeStop);
 
 static int  sort_firm( const void *a, const void *b );
 static int  sort_unit( const void *a, const void *b );
+
+static int  can_copy_caravan();
+static int  can_copy_ship();
 
 //--------- Begin of function Info::disp_trade ---------//
 //
@@ -223,6 +227,37 @@ void Info::disp_trade(int refreshFlag)
 	//------------ display buttons -------------//
 
 	disp_button();
+
+	if( can_copy_caravan() )
+	{
+		int x1, y1, x2, y2;
+		if( browse_caravan.mouse_over(&x1, &y1, &x2, &y2) )
+		{
+			button_copy.paint_text(x2-20, y1-4, "P", 1, button_copy.button_wait>0);
+			button_copy.enable_flag = 1;
+		}
+		else
+		{
+			button_copy.enable_flag = 0;
+		}
+	}
+	else if( can_copy_ship() )
+	{
+		int x1, y1, x2, y2;
+		if( browse_ship.mouse_over(&x1, &y1, &x2, &y2) )
+		{
+			button_copy.paint_text(x2-20, y1-4, "P", 1, button_copy.button_wait>0);
+			button_copy.enable_flag = 1;
+		}
+		else
+		{
+			button_copy.enable_flag = 0;
+		}
+	}
+	else
+	{
+		button_copy.enable_flag = 0;
+	}
 }
 //----------- End of function Info::disp_trade -----------//
 
@@ -231,7 +266,31 @@ void Info::disp_trade(int refreshFlag)
 //
 void Info::detect_trade()
 {
+	if( button_copy.detect() )
+	{
+		if( can_copy_caravan() )
+		{
+			UnitCaravan* unitPtr = (UnitCaravan*) unit_array[ get_report_data(browse_caravan.mouse_over()) ];
+			unitPtr->copy_route(unit_array.selected_recno, COMMAND_PLAYER);
+		}
+		else if( can_copy_ship() )
+		{
+			UnitMarine* unitPtr = (UnitMarine*) unit_array[ get_report_data(browse_ship.mouse_over()) ];
+			unitPtr->copy_route(unit_array.selected_recno, COMMAND_PLAYER);
+		}
+		return;
+	}
+	if( button_copy.button_wait )
+		return;
+
 	//-------- detect the caravan browser ---------//
+
+	if( button_copy.detect() )
+	{
+		return;
+	}
+	if( button_copy.button_wait )
+		return;
 
 	if( mode_unit == BROWSE_CARAVAN && browse_caravan.detect() )
 	{
@@ -242,18 +301,6 @@ void Info::detect_trade()
 			Unit* unitPtr = unit_array[ get_report_data(browse_caravan_recno) ];
 
 			world.go_loc(unitPtr->next_x_loc(), unitPtr->next_y_loc(), 1);
-		}
-	}
-
-	else if( mode_unit == BROWSE_CARAVAN && browse_caravan.detect_right() )
-	{
-		browse_caravan_recno = browse_caravan.recno();
-
-		if( unit_array.selected_recno && unit_array[unit_array.selected_recno]->unit_id == UNIT_CARAVAN )
-		{
-			UnitCaravan* unitPtr = (UnitCaravan*) unit_array[ get_report_data(browse_caravan_recno) ];
-			if( unitPtr->nation_recno == nation_array.player_recno )
-				unitPtr->copy_route(unit_array.selected_recno, COMMAND_PLAYER);
 		}
 	}
 
@@ -1134,3 +1181,25 @@ static int sort_unit( const void *a, const void *b )
 	return unitPtr1->name_id - unitPtr2->name_id;
 }
 //------- End of function sort_unit ------//
+
+
+//------ Begin of function can_copy_caravan ------//
+//
+static int can_copy_caravan()
+{
+	return mode_unit == BROWSE_CARAVAN && unit_array.selected_recno && unit_array[unit_array.selected_recno]->unit_id == UNIT_CARAVAN;
+}
+//------- End of function can_copy_caravan ------//
+
+
+//------ Begin of function can_copy_ship ------//
+//
+static int can_copy_ship()
+{
+	if( mode_unit != BROWSE_SHIP || !unit_array.selected_recno )
+		return 0;
+
+	Unit* unitPtr = unit_array[unit_array.selected_recno];
+	return unit_res[unitPtr->unit_id]->carry_goods_capacity > 0;
+}
+//------- End of function can_copy_ship ------//
