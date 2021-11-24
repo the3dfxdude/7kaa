@@ -178,6 +178,8 @@ public:
 	int   write_derived_file(File *);
 	virtual void fix_attack_info();         // set attack_info_array appropriately
 
+	void    copy_route(short copyUnitRecno, int remoteAction);
+
 	//------- ai functions --------//
 
 	void 	process_ai();
