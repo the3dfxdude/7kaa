@@ -26,6 +26,7 @@
 #include <OVGA.h>
 #include <OVBROWIF.h>
 #include <vga_util.h>
+#include <OMOUSE.h>
 
 
 //---------- Begin of function VBrowseIF::VBrowseIF -------//
@@ -165,3 +166,32 @@ void VBrowseIF::disp_rec(int recNo, int x, int y, int refreshFlag)
 	sys.yield();
 }
 //---------- End of function VBrowseIF::disp_rec -----------//
+
+
+//-------- Begin of function VBrowseIF::mouse_over ----------//
+//
+// return the number of the record the mouse is over
+// optionally passes the geometry of the box the mouse is hovering over
+// if not over a record, the return is zero, and geometry is not initialized
+int VBrowseIF::mouse_over(int *x1, int *y1, int *x2, int *y2)
+{
+	int recNo, recX, recY;
+	for( recNo=top_rec_no ; recNo<=total_rec_num && recNo<top_rec_no+disp_max_rec ; recNo++ )
+	{
+		recY = iy1 + (recNo-top_rec_no)/x_max_rec * (rec_height+rec_y_space);
+		recX = ix1 + (recNo-top_rec_no)%x_max_rec * (rec_width+rec_x_space);
+		if( mouse.in_area(recX, recY, recX+rec_width, recY+rec_height) )
+		{
+			if( x1 )
+				*x1 = recX;
+			if( y1 )
+				*y1 = recY;
+			if( x2 )
+				*x2 = recX+rec_width;
+			if( y2 )
+				*y2 = recY+rec_height;
+			return recNo;
+		}
+	}
+	return 0;
+}

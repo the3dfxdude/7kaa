@@ -46,6 +46,7 @@ public:
 	void	init_var(int totalRec, int recNo);
 	void  refresh(int= -1,int= -1);
 	void  paint();
+	int   mouse_over(int *x1=NULL, int *y1=NULL, int *x2=NULL, int *y2=NULL);
 
 protected:
 	void	disp_all();
