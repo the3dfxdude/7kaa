@@ -8566,7 +8566,7 @@ msgstr "Делать или перерыв"
 # data/scenario/makebrek.sct:5
 msgid ""
 "You possess all technologies and a large number of weapons. Although this "
-"makes you powerful it is also a powerful drain upon your resources. All "
+"makes you powerful, it is also a powerful drain upon your resources. All "
 "other Kingdoms, fearing your power, have allied against you and put you in "
 "position of defeating them all at once or of going bankrupt and collapsing. "
 "Find your way out of this crisis, either by defeating your enemies "
