@@ -7408,7 +7408,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "When a Market is finished, you will begin to see goods from the Factory "
-"arriving  there. "
+"arriving there. "
 msgstr ""
 "Wenn ein Markt abgeschlossen ist, werden Sie beginnen, die aus dem Werk der "
 "Ankunft dort zu sehen."

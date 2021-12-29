@@ -7339,7 +7339,7 @@ msgstr ""
 # data/RESOURCE/TUT_TEXT/00008-2BAS_ECO.TXT:94
 msgid ""
 "When a Market is finished, you will begin to see goods from the Factory "
-"arriving  there. "
+"arriving there. "
 msgstr ""
 "Kiam Bazaro estas finita, vi komencos vidi varojn el la Fabriko alvenante "
 "tien. "

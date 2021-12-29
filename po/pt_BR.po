@@ -6897,7 +6897,7 @@ msgstr ""
 # data/resource/tut_text/00008-2BAS_ECO.txt:94
 msgid ""
 "When a Market is finished, you will begin to see goods from the Factory "
-"arriving  there. "
+"arriving there. "
 msgstr ""
 
 # data/resource/tut_text/00008-2BAS_ECO.txt:96
