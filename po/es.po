@@ -8735,7 +8735,7 @@ msgstr "Puño de hierro y el guante aterciopelado"
 # data/scenario/ironfist.sct:5
 msgid ""
 "You have built your large empire through treachery and bloody conquest. Your "
-"reputation has reached rock bottom  and your people are beginning to tire of "
+"reputation has reached rock bottom and your people are beginning to tire of "
 "your rule. Will you succeed in changing your ways and finding a way to deal "
 "with this crisis or will you go on as before and suffer the consequences? "
 "Your goal is to reach a total score of 1000 before any other kingdom. You "
@@ -9229,7 +9229,7 @@ msgstr "Los Grandes Lagos"
 
 # data/scenari2/scn_11.sct:5
 msgid ""
-"An aggressive Zulu Kingdom  has been established between the two Great "
+"An aggressive Zulu Kingdom has been established between the two Great "
 "Lakes, blocking your route to the Northern Wastes. You have seven years in "
 "which to \"persuade\" this Kingdom that it would be much better off not "
 "existing. "
