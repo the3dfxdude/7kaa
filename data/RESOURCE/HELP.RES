@@ -266,7 +266,7 @@ Sell Structure
 Click here to sell this structure.
 ~
 REPAIR
-Sturcture Repair Icon
+Structure Repair Icon
 This icon shows there is a construction worker stationed in this structure. Click or right-click on this icon to mobilize the construction worker.
 ~
 REPLYDIP
