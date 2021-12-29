@@ -6892,7 +6892,7 @@ msgid ""
 "To gather the people, send up to eight Peasants into the Seat of Power with "
 "a Right-Click. You must also assign either a General or a King to a Seat of "
 "Power, to lead the people in prayer. As they pray, you will see your units "
-"slowly increasing the efficacy of their prayer . "
+"slowly increasing the efficacy of their prayer. "
 msgstr ""
 
 # data/RESOURCE/TUT_TEXT/00010-9SEATPOW.TXT:14
