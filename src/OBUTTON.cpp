@@ -240,6 +240,22 @@ void Button::hide(char backColor)
 //------------ End of function Button::hide ---------//
 
 
+//--------- Begin of function Button::hide ----------//
+//
+// Hide and disable the button using the back buffer
+//
+void Button::hide()
+{
+	if( init_flag )
+	{
+		init_flag = 0;
+		if( x1 >= 0 )        // when create() hasn't been called x1 is -1
+			vga_util.blt_buf( x1, y1, x2, y2, 0 );
+	}
+}
+//------------ End of function Button::hide ---------//
+
+
 //--------- Begin of function Button::show ----------//
 //
 // Show a button hiden by hide().

@@ -110,6 +110,7 @@ public:
    int  detect(unsigned=0,unsigned=0,int=0,int=0);
 
    void hide(char);
+	void hide();
    void show();
 
 	void push()        { if(!is_pushed) paint(1); }
