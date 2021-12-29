@@ -396,3 +396,7 @@ When you Click on this tile, it will cause the rains to come to the whole world.
 GODTORNA
 Summon Tornadoes
 When you Click on this tile, your cursor will change into a small square. Place this square over your target and Click again. Repeat until Thor's power has been depleted.
+~
+REPAIRQ
+Structure Repair Icon
+This icon shows there is not a construction worker stationed here for repair but an idle worker may be requested. Click or right-click on this icon to request sending a construction worker.

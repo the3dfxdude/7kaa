@@ -27,6 +27,7 @@
 #include <ONATION.h>
 #include <ORACERES.h>
 #include <OUNIT.h>
+#include <OREMOTE.h>
 
 //--------- Begin of function Firm::kill_overseer ---------//
 //
@@ -174,3 +175,100 @@ int Firm::locate_space(int removeFirm, int &xLoc, int &yLoc, int xLoc2, int yLoc
 }
 //----------- End of function Firm::locate_space -----------//
 
+
+//--------- Begin of function Firm::find_idle_builder ---------//
+
+int Firm::find_idle_builder(int nearest)
+{
+	Unit	*unitPtr;
+	short	minDist = 0x1000;
+	int	unitRecno = 0;
+
+	for( int i=unit_array.size(); i>0; i-- )
+	{
+		if( unit_array.is_deleted(i) )
+			continue;
+
+		unitPtr = unit_array[i];
+
+		if( unitPtr->nation_recno!=nation_recno || !unitPtr->race_id )
+			continue;
+
+		if( unitPtr->skill.skill_id != SKILL_CONSTRUCTION )
+			continue;
+
+		if( unitPtr->is_visible() && unitPtr->region_id() != region_id )
+			continue;
+
+		if( unitPtr->unit_mode == UNIT_MODE_CONSTRUCT )
+		{
+			Firm *firmPtr = firm_array[unitPtr->unit_mode_para];
+
+			if( firmPtr->under_construction || (firmPtr->hit_points*100/firmPtr->max_hit_points)<=90 || info.game_date <= firmPtr->last_attacked_date+8 )
+				continue;
+		}
+		else if( unitPtr->unit_mode == UNIT_MODE_UNDER_TRAINING )
+		{
+			continue;
+		}
+		else if( unitPtr->action_mode == ACTION_ASSIGN_TO_FIRM && unitPtr->action_para2 == firm_recno )
+		{
+			return i;
+		}
+		else if( unitPtr->action_mode != ACTION_STOP )
+		{
+			continue;
+		}
+
+		if( !nearest )
+			return i;
+
+		short curDist = misc.points_distance(unitPtr->next_x_loc(), unitPtr->next_y_loc(), loc_x1, loc_y1);
+		if( curDist < minDist )
+		{
+			unitRecno = i;
+			minDist = curDist;
+		}
+	}
+
+	return unitRecno;
+}
+//----------- End of function Firm::find_idle_builder -----------//
+
+
+//--------- Begin of function Firm::send_idle_builder_here ---------//
+
+void Firm::send_idle_builder_here(char remoteAction)
+{
+	if( builder_recno )
+		return;
+
+	if( remote.is_enable() && !remoteAction )
+	{
+		// packet structure : <firm recno>
+		short *shortPtr = (short *)remote.new_send_queue_msg(MSG_FIRM_REQ_BUILDER, sizeof(short));
+		*shortPtr = firm_recno;
+		return;
+	}
+
+	int unitRecno = find_idle_builder(1);
+	if( !unitRecno )
+		return;
+
+	Unit *unitPtr = unit_array[unitRecno];
+	if( unitPtr->unit_mode==UNIT_MODE_CONSTRUCT )
+	{
+		Firm *firmPtr = firm_array[unitPtr->unit_mode_para];
+
+		// order idle unit out of the building
+		if( !firmPtr->set_builder(0) )
+		{
+			return;
+		}
+	}
+
+	unitPtr->assign(loc_x1, loc_y1);
+
+	return;
+}
+//----------- End of function Firm::send_idle_builder_here -----------//

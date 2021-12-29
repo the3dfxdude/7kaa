@@ -48,6 +48,7 @@
 //---------- Define static variables ------------//
 
 static Button3D button_sell, button_destruct, button_builder;
+static Button button_request_builder;
 static short  	 pop_disp_y1;
 static char     worker_id_array[MAX_WORKER];
 static Firm*    cur_firm_ptr;
@@ -260,6 +261,8 @@ void Firm::disp_basic_info(int dispY1, int refreshFlag)
 	sliderX2 = INFO_X2-64;
 
 	int showRepairIcon = builder_recno && !under_construction && should_show_info();
+	int showReqRepairIcon = !builder_recno && !under_construction && should_show_info() && own_firm() && find_idle_builder(0);
+	err_when( showRepairIcon && showReqRepairIcon )
 
 	if( refreshFlag == INFO_REPAINT )
 	{
@@ -290,22 +293,49 @@ void Firm::disp_basic_info(int dispY1, int refreshFlag)
 
 		if( showRepairIcon )
 		{
+			button_request_builder.init_flag = 0;
 			button_builder.paint( INFO_X1+30, dispY1+1, "REPAIRU", "REPAIRD" );	// Builder
 			button_builder.set_help_code( "REPAIR" );
+		}
+
+		else if( showReqRepairIcon )
+		{
+			button_builder.init_flag = 0;
+			button_request_builder.paint_text( INFO_X1+30, dispY1+1, "R", 1, 0 );
+			button_request_builder.set_help_code( "REPAIRQ" );
 		}
 	}
 	else	//--------- INFO_UPDATE --------//
 	{
-		if( showRepairIcon != button_builder.enable_flag )
+		if( showRepairIcon )
 		{
-			if( showRepairIcon )
+			button_request_builder.hide();
+
+			if( !button_builder.init_flag || !button_builder.enable_flag )
 			{
 				button_builder.paint( INFO_X1+30, dispY1+1, "REPAIRU", "REPAIRD" );	// Builder
 				button_builder.set_help_code( "REPAIR" );
 			}
-			else
-				button_builder.hide();
 		}
+
+		else if( showReqRepairIcon )
+		{
+			button_builder.hide();
+			button_builder.reset();
+
+			if( !button_request_builder.init_flag || !button_request_builder.enable_flag )
+			{
+				button_request_builder.paint_text( INFO_X1+30, dispY1+1, "R", 1, 0 );
+				button_request_builder.set_help_code( "REPAIRQ" );
+			}
+		}
+
+		else
+		{
+			button_builder.hide();
+			button_request_builder.hide();
+		}
+
 	}
 
 	disp_hit_point(dispY1);
@@ -342,6 +372,11 @@ int Firm::detect_basic_info()
 		}
 
 		return 1;
+	}
+
+	else if( button_request_builder.init_flag && button_request_builder.detect(0, 0, 1) )
+	{
+		send_idle_builder_here(COMMAND_PLAYER);
 	}
 
 	//---------------------------------------//

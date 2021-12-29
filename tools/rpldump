@@ -139,8 +139,9 @@ my @msg_ids = (
 	['MSG_COMPARE_TALK', 'sC*', [qw(array_len crc)]],
 
 	['MSG_U_CARA_COPY_ROUTE', 'ss', [qw(sprite_recno copy_unit_recno)]],
-
 	['MSG_COMPARE_CRC', 'sC', [qw(crc)]],
+	['MSG_U_SHIP_COPY_ROUTE', 'ss', [qw(sprite_recno copy_unit_recno)]],
+	['MSG_FIRM_REQ_BUILDER', 's', [qw(firm_recno)]],
 
 	['LAST_REMOTE_MSG_ID'],
 );
