@@ -9769,7 +9769,7 @@ msgid "Click here to sell this structure. "
 msgstr "Kliknij by sprzedać budynek. "
 
 # data/RESOURCE/HELP.RES:269
-msgid "Sturcture Repair Icon"
+msgid "Structure Repair Icon"
 msgstr "Ikona naprawy budynku"
 
 # data/RESOURCE/HELP.RES:270

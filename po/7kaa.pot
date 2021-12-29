@@ -8534,7 +8534,7 @@ msgid "Click here to sell this structure. "
 msgstr ""
 
 # data/RESOURCE/HELP.RES:269
-msgid "Sturcture Repair Icon"
+msgid "Structure Repair Icon"
 msgstr ""
 
 # data/RESOURCE/HELP.RES:270

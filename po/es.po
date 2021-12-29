@@ -10014,7 +10014,7 @@ msgid "Click here to sell this structure. "
 msgstr "Haga clic aquí para vender esta estructura. "
 
 # data/resource/help.res:269
-msgid "Sturcture Repair Icon"
+msgid "Structure Repair Icon"
 msgstr "Icono de reparación de estructura"
 
 # data/resource/help.res:270

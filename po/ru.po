@@ -9815,7 +9815,7 @@ msgstr "Щелкнув здесь вы продадите это сооруже�
 
 # data/resource/help.res:269
 #, fuzzy
-msgid "Sturcture Repair Icon"
+msgid "Structure Repair Icon"
 msgstr "Иконка восстановления сооружения"
 
 # data/resource/help.res:270

@@ -9829,7 +9829,7 @@ msgid "Click here to sell this structure. "
 msgstr "Wenn Sie hier klicken wird diese Struktur verkaufen."
 
 #, fuzzy
-msgid "Sturcture Repair Icon"
+msgid "Structure Repair Icon"
 msgstr "Struktur Reparatur Symbol"
 
 #, fuzzy
