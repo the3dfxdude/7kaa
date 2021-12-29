@@ -291,6 +291,8 @@ public:
 	int 		should_show_info();
 
 	int		set_builder(short newBuilderRecno);
+	int		find_idle_builder(int nearest);
+	void		send_idle_builder_here(char remoteAction);
 
 	virtual void sell_firm(char remoteAction);
 	void		destruct_firm(char remoteAction);

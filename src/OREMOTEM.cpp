@@ -177,10 +177,9 @@ static MsgProcessFP msg_process_function_array[] =
 	&RemoteMsg::compare_remote_object,
 
 	&RemoteMsg::caravan_copy_route,
-
 	&RemoteMsg::compare_remote_crc,
-
 	&RemoteMsg::ship_copy_route,
+	&RemoteMsg::firm_request_builder,
 };
 
 //---------- Declare static functions ----------//
@@ -2989,3 +2988,17 @@ void RemoteMsg::player_quit()
 		news_array.multi_quit_game(*shortPtr);
 }
 // ------- End of function RemoteMsg::player_quit ---------//
+
+
+// ------- Begin of function RemoteMsg::firm_request_builder ---------//
+void RemoteMsg::firm_request_builder()
+{
+	err_when( id != MSG_FIRM_REQ_BUILDER);
+	// packet structure : <firm recno>
+	short *shortPtr = (short *)data_buf;
+	if( validate_firm(*shortPtr) )
+	{
+		firm_array[*shortPtr]->send_idle_builder_here(COMMAND_REMOTE);
+	}
+}
+// ------- End of function RemoteMsg::firm_request_builder ---------//
