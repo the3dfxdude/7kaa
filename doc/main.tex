@@ -31,7 +31,7 @@
 
 % Graphics, figures and tables:
 \usepackage{graphicx} % Basic support for figures
-	\graphicspath{{assets/}}
+\graphicspath{{assets/}}
 \usepackage{wrapfig} % Wrap figure around text
 \usepackage{xcolor} % An extended support for colors, required by tabu
 \usepackage{colortbl} % Pretty colored tables, required by tabu
@@ -61,11 +61,11 @@
 {\chapter}% command
 [display]% shape, one of: hang, block, display, runin, leftmargin, rightmargin, drop, wrap, frame
 {\bfseries\sffamily\huge}% format
-{\fontsize{30}{30}\selectfont\thechapter}% label
+{\fontsize{35}{35}\selectfont\thechapter}% label
 {0em}% sep
 {
-	\vspace{-1.5em}
-	\hspace{1.5em}
+	\vspace{-1.69em}
+	\hspace{2.2em}
 	\parbox{0.8\textwidth}{
 		\raggedright%
 		#1%
@@ -75,6 +75,13 @@
 \vspace{0.1em}
 \titlerule
 ]% after-code
+
+\titleformat{\section}
+{\sffamily\LARGE\bfseries}{\thesection}{1em}{#1}
+\titleformat{\subsection}
+{\sffamily\Large\bfseries}{\thesubsection}{1em}{#1}
+\titleformat{\subsubsection}
+{\sffamily\large\bfseries}{\thesubsubsection}{1em}{#1}
 
 \usepackage{makeidx} % Index
     \makeindex
@@ -114,7 +121,7 @@ Seven Kingdoms: Ancient Adversaries OSS Project} % Do not change.
 \frontmatter
 \maketitle
 
-\section*{\textsf{Copyright Notice}}
+\section*{Copyright Notice}
 
 Seven Kingdoms: Ancient Adversaries Instruction Manual
 
@@ -126,19 +133,19 @@ This manual is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU General Public License along with this manual.  If not, see <http://www.gnu.org/licenses/>.
 
-\subsection*{\textsf{Other Copyright}}
+\subsection*{Other Copyright}
 
-\subsubsection*{\textsf{Music}}
+\subsubsection*{Music}
 
 The music is the work of Bjørn Lynne, Copyright 1997, and is not provided under the GPL. It may be freely downloaded and used with Seven Kingdoms: Ancient Adversaries but not modified or repurposed into derivative works.
 
-\subsubsection*{\textsf{Trademark}}
+\subsubsection*{Trademark}
 
 Seven Kingdoms is a trademark of Enlight Software Ltd., and the 7kfans project is using the trademark with permission. This license does not constitute a transfer of any ownership, rights, or authority to the trademarks owned by Enlight. Any questions regarding use must be directed to Enlight.
 
 \clearpage
 
-\section*{\textsf{Project Introduction}}
+\section*{Project Introduction}
 
 \textswab{\huge{I}}n 2009, Trevor Chan from Enlight Software released the source code for \textit{Seven Kingdoms: Ancient Adversaries}. He released it under a community project so that developers can provide some long awaited bug fixes and address some other game-play issues.
 
@@ -148,13 +155,13 @@ The official website for \textit{Seven Kingdoms: Ancient Adversaries} OSS Projec
 
 This manual is part of the community project. It has been updated to reflect the current status of \textit{Seven Kingdoms: Ancient Adversaries}.
 
-\section*{\textsf{Registration}}
+\section*{Registration}
 
 \index{registering}
 
 \textswab{\huge{R}}egister for a forums account. An account is necessary to post on the forums, use the mChat feature, and to play using the 7kfans.com multiplayer service.
 
-\section*{\textsf{Questions or Problems}}
+\section*{Questions or Problems}
 
 \textswab{\huge{I}}f you have difficulties with this game and cannot find the solution in this manual, post your question or problem on the forums for assistance from a member of the community.
 
@@ -165,8 +172,8 @@ This manual is part of the community project. It has been updated to reflect the
 \mainmatter
 \include{src/introduction}
 \include{src/starting_new_game}
-\include{src/information_interface}
 \include{src/village}
+\include{src/information_interface}
 \include{src/buildings_workers_links}
 \include{src/force_and_its_use}
 \include{src/developing_your_economy}
@@ -189,7 +196,7 @@ This manual is part of the community project. It has been updated to reflect the
 \backmatter
 
 \cleardoublepage
-\addcontentsline{toc}{chapter}{index}
+\addcontentsline{toc}{chapter}{Index}
 \printindex
 
 \end{document}
