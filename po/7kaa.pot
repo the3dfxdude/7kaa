@@ -5871,7 +5871,7 @@ msgstr ""
 # data/RESOURCE/TUT_TEXT/00002-6SEATRAD.TXT:49
 msgid ""
 "When the button is set to \"T,\" the Ship will continue to ply its trade "
-"route. If at any time you wish to regain total control over that Ship you "
+"route. If at any time you wish to regain total control over that Ship, you "
 "must Click on the button, changing it to a \"C\". "
 msgstr ""
 

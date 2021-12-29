@@ -6203,7 +6203,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "When the button is set to \"T,\" the Ship will continue to ply its trade "
-"route. If at any time you wish to regain total control over that Ship you "
+"route. If at any time you wish to regain total control over that Ship, you "
 "must Click on the button, changing it to a \"C\". "
 msgstr ""
 "Wenn der Knopf auf 'T' wird das Schiff weiterhin seine Handelsroute "
