@@ -8574,7 +8574,11 @@ msgid ""
 "Either way, victory will only come when you stand alone. "
 msgstr ""
 "Vi posedas ĉiujn teknologiojn kaj grandan nombron de armiloj. Kvankam ĉi tio "
-"fortigas vin, ĝi "
+"fortigas vin, ĝi estas ankaŭ granda kosto de viaj rimedoj. Ĉiuj aliaj Regnoj, "
+"timante vian povon, alinciĝis kontraŭ vi kaj metis vin en pozicio venki ĉiujn "
+"ili samtempe aŭ bankroti kaj kolapsi. Trovi elirejon el ĉi tiu krizo, aŭ "
+"venkante viajn malamikojn tuj aŭ preventante kolapson kaj venkante ilin je "
+"posta tempo. Ambaŭmaniere venko nur venos, kiam vi restas sola. "
 
 # data/SCENARIO/MELTPOT.SCT:1
 msgid "Melting Pot"
