@@ -3279,6 +3279,20 @@ void Town::setup_link()
 			continue;
 		}
 
+		//----- check for empty link slots -----//
+
+		if( linked_firm_count >= MAX_LINKED_FIRM_TOWN )
+		{
+			err_here();
+			break;
+		}
+
+		if( firmPtr->linked_town_count >= MAX_LINKED_FIRM_TOWN )
+		{
+			err_here();
+			continue;  // linking must be mutual so skip this firm
+		}
+
 		//------- determine the default link status ------//
 
 		if( firmPtr->nation_recno == nation_recno )   // if the two firms are of the same nation, get the default link status which is based on the types of the firms
@@ -3293,37 +3307,24 @@ void Town::setup_link()
 
 		//-------- add the link now -------//
 
-		if( linked_firm_count < MAX_LINKED_FIRM_TOWN )
-		{
-			linked_firm_array[linked_firm_count] = firmRecno;
-			linked_firm_enable_array[linked_firm_count] = defaultLinkStatus;
+		linked_firm_array[linked_firm_count] = firmRecno;
+		linked_firm_enable_array[linked_firm_count] = defaultLinkStatus;
 
-			linked_firm_count++;
-		}
-		else
-		{
-			err_here();
-		}
+		linked_firm_count++;
 
-		if( firmPtr->linked_town_count < MAX_LINKED_TOWN_TOWN )
-		{
-			if( defaultLinkStatus==LINK_ED )		// Reverse the link status for the opposite linker
-				defaultLinkStatus=LINK_DE;
+		// now link from the firm's side
+		if( defaultLinkStatus==LINK_ED )		// Reverse the link status for the opposite linker
+			defaultLinkStatus=LINK_DE;
 
-			else if( defaultLinkStatus==LINK_DE )
-				defaultLinkStatus=LINK_ED;
+		else if( defaultLinkStatus==LINK_DE )
+			defaultLinkStatus=LINK_ED;
 
-			firmPtr->linked_town_array[firmPtr->linked_town_count] = town_recno;
-			firmPtr->linked_town_enable_array[firmPtr->linked_town_count] = defaultLinkStatus;
+		firmPtr->linked_town_array[firmPtr->linked_town_count] = town_recno;
+		firmPtr->linked_town_enable_array[firmPtr->linked_town_count] = defaultLinkStatus;
 
-			firmPtr->linked_town_count++;
-			if(firmPtr->firm_ai)
-				firmPtr->ai_link_checked = 0;
-		}
-		else
-		{
-			err_here();
-		}
+		firmPtr->linked_town_count++;
+		if(firmPtr->firm_ai)
+			firmPtr->ai_link_checked = 0;
 	}
 
 	//----- build town-to-town link relationship -------//
@@ -3356,43 +3357,44 @@ void Town::setup_link()
 			continue;
 		}
 
+		//----- check for empty link slots -----//
+
+		if( linked_town_count >= MAX_LINKED_TOWN_TOWN )
+		{
+			err_here();
+			break;
+		}
+
+		if( townPtr->linked_town_count >= MAX_LINKED_TOWN_TOWN )
+		{
+			err_here();
+			continue;  // linking must be mutual so skip this town
+		}
+
 		//------- determine the default link status ------//
 
 		defaultLinkStatus = LINK_EE;
 
 		//-------- add the link now -------//
 
-		if( linked_town_count < MAX_LINKED_TOWN_TOWN )
-		{
-			linked_town_array[linked_town_count] = townRecno;
-			linked_town_enable_array[linked_town_count] = defaultLinkStatus;
+		linked_town_array[linked_town_count] = townRecno;
+		linked_town_enable_array[linked_town_count] = defaultLinkStatus;
 
-			linked_town_count++;
-		}
-		else
-		{
-			err_here();
-		}
+		linked_town_count++;
 
-		if( townPtr->linked_town_count < MAX_LINKED_TOWN_TOWN )
-		{
-			if( defaultLinkStatus==LINK_ED )		// Reverse the link status for the opposite linker
-				defaultLinkStatus=LINK_DE;
+		// now link from the other town's side
+		if( defaultLinkStatus==LINK_ED )		// Reverse the link status for the opposite linker
+			defaultLinkStatus=LINK_DE;
 
-			else if( defaultLinkStatus==LINK_DE )
-				defaultLinkStatus=LINK_ED;
+		else if( defaultLinkStatus==LINK_DE )
+			defaultLinkStatus=LINK_ED;
 
-			townPtr->linked_town_array[townPtr->linked_town_count] = town_recno;
-			townPtr->linked_town_enable_array[townPtr->linked_town_count] = defaultLinkStatus;
+		townPtr->linked_town_array[townPtr->linked_town_count] = town_recno;
+		townPtr->linked_town_enable_array[townPtr->linked_town_count] = defaultLinkStatus;
 
-			townPtr->linked_town_count++;
-			if(townPtr->ai_town)
-				townPtr->ai_link_checked = 0;
-		}
-		else
-		{
-			err_here();
-		}
+		townPtr->linked_town_count++;
+		if(townPtr->ai_town)
+			townPtr->ai_link_checked = 0;
 	}
 }
 //-------- End of function Town::setup_link -----------//
