@@ -54,6 +54,7 @@
 #include <OUNITRES.h>
 #include <locale.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
 
 
 //---------- define static member vars -------------//
@@ -824,6 +825,11 @@ int Firm::mobilize_builder(short recno)
 	err_when(unitPtr->unit_mode != UNIT_MODE_CONSTRUCT);
 
 	unitPtr->set_mode(0);
+
+	//--- set builder to non-aggressive, except ai ---//
+	if( !config_adv.firm_mobilize_civilian_aggressive && !unitPtr->ai_unit )
+		unitPtr->aggressive_mode = 0;
+
 	return 1;
 }
 //----------- End of function Firm::mobilize_builder --------//
@@ -2546,6 +2552,10 @@ int Firm::create_worker_unit(Worker& thisWorker)
 
 	if( !firm_res[firm_id]->live_in_town )		// if the unit does not live in town, increase the unit count now
 		unit_res[unitPtr->unit_id]->dec_nation_unit_count(nation_recno);
+
+	//--- set non-military units to non-aggressive, except ai ---//
+	if( !config_adv.firm_mobilize_civilian_aggressive && unitPtr->race_id>0 && unitPtr->skill.skill_id != SKILL_LEADING && !unitPtr->ai_unit )
+		unitPtr->aggressive_mode = 0;
 
 	return unitRecno;
 }

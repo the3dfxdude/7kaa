@@ -227,6 +227,8 @@ err_out:
 //
 void ConfigAdv::reset()
 {
+	firm_mobilize_civilian_aggressive = 0;
+
 	locale[0] = 0;
 
 	monster_alternate_attack_curve = 0;
@@ -281,6 +283,12 @@ int ConfigAdv::set(char *name, char *value)
 		char *key;
 		if( !read_key(value, &key, &event) || !mouse.bind_key(event.type, key) )
 			return 0;
+	}
+	else if( !strcmp(name, "firm_mobilize_civilian_aggressive") )
+	{
+		if( !read_bool(value, &firm_mobilize_civilian_aggressive) )
+			return 0;
+		update_check_sum(name, value);
 	}
 	else if( !strcmp(name, "locale") )
 	{

@@ -44,6 +44,9 @@ public:
 	uint32_t		checksum;
 	uint32_t		flags;
 
+	// firm settings
+	char			firm_mobilize_civilian_aggressive;
+
 	// locale settings
 	char			locale[LOCALE_LEN+1];
 
