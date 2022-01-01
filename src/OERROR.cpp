@@ -36,6 +36,7 @@
 #include <ALL.h>
 
 #include <dbglog.h>
+#include <CmdLine.h>
 
 DBGLOG_DEFAULT_CHANNEL(fatal);
 
@@ -264,7 +265,7 @@ void Error::run( const char *format, ... )
 	OutputDebugString( strBuf );
 #endif
 
-	if( sys.init_flag )
+	if( sys.init_flag && cmd_line.enable_if )
 		box.msg( strBuf, 0 );
 	else
 		sys.show_error_dialog( "%s\n", strBuf );
