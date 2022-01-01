@@ -26,6 +26,7 @@
 #include <OFIRM.h>
 #include <OTOWN.h>
 #include <OUNIT.h>
+#include <ConfigAdv.h>
 
 
 //------- Begin of function Unit::think_aggressive_action --------//
@@ -400,6 +401,18 @@ void Unit::ask_team_help_attack(Unit* attackerUnit)
 			Unit* unitPtr = unit_array[ unitRecno ];
 
 			if( unitPtr->cur_action==SPRITE_IDLE && unitPtr->is_visible() )
+			{
+				unitPtr->attack_unit(attackerUnit->sprite_recno);
+				return;
+			}
+
+			if( config_adv.unit_ai_team_help && (unitPtr->ai_unit||!nation_recno) &&
+				unitPtr->hit_points > 15.0f &&
+				(unitPtr->action_mode==ACTION_STOP ||
+				unitPtr->action_mode==ACTION_ASSIGN_TO_FIRM ||
+				unitPtr->action_mode==ACTION_ASSIGN_TO_TOWN ||
+				unitPtr->action_mode==ACTION_SETTLE)
+				)
 			{
 				unitPtr->attack_unit(attackerUnit->sprite_recno);
 				return;

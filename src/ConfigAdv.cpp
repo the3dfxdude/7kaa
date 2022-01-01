@@ -251,6 +251,7 @@ void ConfigAdv::reset()
 	town_ai_emerge_town_pop_limit = 1000;
 	town_loyalty_qol = 1;
 
+	unit_ai_team_help = 1;
 	unit_loyalty_require_local_leader = 1;
 	unit_spy_fixed_target_loyalty = 0;
 	unit_target_move_range_cycle = 0;
@@ -388,6 +389,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "town_loyalty_qol") )
 	{
 		if( !read_bool(value, &town_loyalty_qol) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "unit_ai_team_help") )
+	{
+		if( !read_bool(value, &unit_ai_team_help) )
 			return 0;
 		update_check_sum(name, value);
 	}

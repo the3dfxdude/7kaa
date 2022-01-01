@@ -76,6 +76,7 @@ public:
 	char			town_loyalty_qol;
 
 	// unit settings
+	char			unit_ai_team_help;
 	char			unit_loyalty_require_local_leader;
 	char			unit_spy_fixed_target_loyalty;
 	char			unit_target_move_range_cycle;
