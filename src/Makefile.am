@@ -201,6 +201,7 @@ bin_PROGRAMS = 7kaa
 	OTALKFRE.cpp \
 	OTALKGER.cpp \
 	OTALKMSG.cpp \
+	OTALKRE2.cpp \
 	OTALKRES.cpp \
 	OTALKSPA.cpp \
 	OTECHRES.cpp \

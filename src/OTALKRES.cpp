@@ -716,6 +716,10 @@ int TalkRes::ai_send_talk_msg(int toNationRecno, int fromNationRecno, int talkId
 // Now records in talk_msg_array cannot be deleted as
 // news_array.diplomacy() use recno to refer to talk_msg_array.
 //
+// jesse -- 2021:
+// This function calls linkin (send_talk_msg_now). It must not be called from
+// the TalkMsg class. talkMsgPtr argument must not be in talk_msg_array.
+//
 void TalkRes::send_talk_msg(TalkMsg* talkMsgPtr, char remoteAction)
 {
 	//-------- send multiplayer -----------//
@@ -759,7 +763,7 @@ void TalkRes::send_talk_msg(TalkMsg* talkMsgPtr, char remoteAction)
 	//---- if it's a notification message ----//
 
 	if( talkMsgPtr->reply_type == REPLY_NOT_NEEDED )
-		talkMsgPtr->process_accepted_reply();
+		process_accepted_reply(talkMsgPtr);
 }
 //-------- End of function TalkRes::send_talk_msg ---------//
 
@@ -865,6 +869,9 @@ void TalkRes::reply_talk_msg(int talkMsgRecno, char replyType, char remoteAction
 
 		case NATION_AI:
 			fromNation->ai_notify_reply( talkMsgRecno );		// notify the AI nation about this reply.
+			if( is_talk_msg_deleted(talkMsgRecno) )
+				return;
+			talkMsgPtr = get_talk_msg(talkMsgRecno);
 			break;
 
 		case NATION_REMOTE:
@@ -874,12 +881,18 @@ void TalkRes::reply_talk_msg(int talkMsgRecno, char replyType, char remoteAction
 	//------- if the offer is accepted -------//
 
 	if( talkMsgPtr->reply_type == REPLY_ACCEPT )
-		talkMsgPtr->process_accepted_reply();
+	{
+		process_accepted_reply(talkMsgPtr);
+		if( is_talk_msg_deleted(talkMsgRecno) )
+			return;
+		talkMsgPtr = get_talk_msg(talkMsgRecno);
+	}
 
 	//--- if the player has replyed the message, remove it from the news display ---//
 
 	if( talkMsgPtr->to_nation_recno == nation_array.player_recno )
 		news_array.remove(NEWS_DIPLOMACY, talkMsgRecno);
+
 }
 //-------- End of function TalkRes::reply_talk_msg ---------//
 

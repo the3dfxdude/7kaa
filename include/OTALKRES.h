@@ -96,8 +96,6 @@ public:
 	int		is_valid_to_reply();
 	int		can_accept();
 
-	void		process_accepted_reply();
-
 	void		propose_treaty(short treatyType);
 	void     end_treaty(short treatyType);
 	void		request_military_aid();
@@ -208,6 +206,7 @@ private:
 	int   		detect_talk_choices();
 
 	void			process_talk_msg();
+	void			process_accepted_reply(TalkMsg *talkMsg);
 
 };
 #pragma pack()
