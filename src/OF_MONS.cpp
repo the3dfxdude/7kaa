@@ -564,7 +564,9 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 	if( !generalUnitRecno )
 		return 0;
 
-	unit_array[generalUnitRecno]->set_monster_soldier_id(monsterInFirm->soldier_monster_id);
+	Unit* generalUnit = unit_array[generalUnitRecno];
+	generalUnit->team_id = unit_array.cur_team_id;
+	generalUnit->set_monster_soldier_id(monsterInFirm->soldier_monster_id);
 
 	int mobilizedCount = 1;
 
@@ -585,6 +587,7 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 
 			if( unitRecno )
 			{
+				unit_array[unitRecno]->team_id = unit_array.cur_team_id;
 				unit_array[unitRecno]->leader_unit_recno = generalUnitRecno;
 				mobilizedCount++;
 
@@ -596,7 +599,16 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 			else
 				break; // no space for init_sprite
 		}
-   }
+	}
+
+	//------- set the team_info of the general -------//
+
+	err_when( !generalUnit->team_info );
+
+	for( int i=0 ; i<patrol_unit_count ; i++ )
+		generalUnit->team_info->member_unit_array[i] = patrol_unit_array[i];
+
+	generalUnit->team_info->member_count = patrol_unit_count;
 
 	//---- delete the monster general record from the array ----//
 
@@ -605,6 +617,7 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 	misc.del_array_rec(monster_general_array, monster_general_count, sizeof(MonsterInFirm), generalId);
 
 	monster_general_count--;
+	unit_array.cur_team_id++;
 
 	return mobilizedCount;
 }

@@ -322,6 +322,20 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 	{
 		if( parentNationPtr )
 			parentNationPtr->change_reputation(REPUTATION_INCREASE_PER_ATTACK_MONSTER);
+
+		//--- if a member in a troop is under attack, ask for other troop members to help ---//
+
+		if( info.game_date%2 == sprite_recno%2 )
+		{
+			if( targetUnit->leader_unit_recno ||
+				 (targetUnit->team_info && targetUnit->team_info->member_count > 1) )
+			{
+				if( !unit_array.is_deleted(parentUnit->sprite_recno) )		// it is possible that parentUnit is dying right now 
+				{
+					targetUnit->ask_team_help_attack(parentUnit);
+				}
+			}
+		}
 	}
 
 	//------------------------------------------//
