@@ -288,14 +288,17 @@ void TownArray::think_new_independent_town()
 
 	//--- add 1 to 2 wanderer per month per race ---//
 
-	for( i=0 ; i<MAX_RACE ; i++ )
+	int raceId;
+
+	for( i=0 ; i<config_adv.race_random_list_max ; i++ )
 	{
-		race_wander_pop_array[i] += 2+misc.random(5);
+		raceId = config_adv.race_random_list[i];
+		race_wander_pop_array[raceId-1] += 2+misc.random(5);
 	}
 
 	//----- check if there are enough wanderers to set up a new town ---//
 
-	int raceId = random_race();
+	raceId = random_race();
 
 	for( i=0 ; i<MAX_RACE ; i++ )
 	{
