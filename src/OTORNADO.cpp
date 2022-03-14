@@ -356,6 +356,10 @@ void TornadoArray::draw_dot()
 		if( !tornadoPtr )
 			continue;
 
+		// ------  only if visible ------//
+		if( !tornadoPtr->is_in_loc_rect(0, MAX_WORLD_X_LOC-1, 0, MAX_WORLD_Y_LOC-1) || tornadoPtr->is_shealth() )
+			continue;
+
 		mapX = MAP_X1 + tornadoPtr->cur_x_loc();
 		mapY = MAP_Y1 + tornadoPtr->cur_y_loc();
 

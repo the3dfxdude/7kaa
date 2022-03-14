@@ -1573,10 +1573,9 @@ void ZoomMatrix::draw_objects()
 			continue;
 		tornadoPtr = tornado_array[i];
 		// ######### begin Gilbert 28/5 #########//
-		// if( tornadoPtr->is_shealth() )
-		if( // tornadoPtr->is_shealth() || 
-			tornadoPtr->cur_x_loc() < zoomXLoc1 || tornadoPtr->cur_x_loc() > zoomXLoc2 ||
-			tornadoPtr->cur_y_loc() < zoomYLoc1 || tornadoPtr->cur_y_loc() > zoomYLoc2 )
+		if( !tornadoPtr->is_in_loc_rect(zoomXLoc1, zoomXLoc2, zoomYLoc1, zoomYLoc2) )
+			continue;
+		if( tornadoPtr->is_shealth() )
 			continue;
 		// ######### end Gilbert 28/5 #########//
 
