@@ -148,6 +148,7 @@ public:
 			  void	set_guard_off();
 			  int		is_guarding()     { return guard_count > 0; }
 	virtual int		is_shealth();
+	int			is_in_loc_rect(short x1, short x2, short y1, short y2) { return cur_x_loc() >= x1 && cur_y_loc() >= y1 && cur_x_loc() <= x2 && cur_y_loc() <= y2; };
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();
