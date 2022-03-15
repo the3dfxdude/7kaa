@@ -260,7 +260,7 @@ void ConfigAdv::reset()
 	vga_full_screen = 1;
 	vga_full_screen_desktop = 1;
 	vga_keep_aspect_ratio = 1;
-	vga_pause_on_focus_loss = 1;
+	vga_pause_on_focus_loss = 0;
 
 	vga_window_width = 0;
 	vga_window_height = 0;
