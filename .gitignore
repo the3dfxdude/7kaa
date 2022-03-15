@@ -31,6 +31,8 @@ m4/pkg.m4
 m4/sdl2.m4
 ABOUT-NLS
 config.rpath
+m4/ax_cxx_compile_stdcxx.m4
+m4/ax_cxx_compile_stdcxx_11.m4
 m4/codeset.m4
 m4/extern-inline.m4
 m4/fcntl-o.m4
