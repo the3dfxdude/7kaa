@@ -79,6 +79,11 @@ struct ScenInfo
 	int		play_status;
 };
 
+struct OptionInfo
+{
+	short x1, y1, x2, y2;
+};
+
 //-------- Define class Game -----------//
 
 struct Location;
@@ -160,6 +165,8 @@ private:
 	int			mp_select_session();
 	void			mp_disp_players();
 	int			mp_select_load_option(char *);
+	char *get_bitmap_by_name(const char *bitmap_name);
+	void update_main_menu_button(int x, int y, OptionInfo menu_button, char * bitmap);
 };
 #pragma pack()
 

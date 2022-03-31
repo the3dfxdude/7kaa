@@ -43,17 +43,146 @@
 #define DISABLE_MULTI_PLAYER
 #define DISABLE_SINGLE_PLAYER_NEW_GAME
 #endif
+# define SWORD_BUTTON_INSTANCES_SIZE 6
 
 //----------- Define structure ---------//
 
-struct OptionInfo
-{
-	short x1, y1, x2, y2;
-};
+// struct OptionInfo
+// {
+// 	short x1, y1, x2, y2;
+// };
 
 // -------- define constant ----------//
 
 enum { SWORD1_X = 258, SWORD1_Y = 194 };
+
+enum BITMAP_SWORD
+{
+	IDLE,
+	HOVER,
+	ACTIVE
+};
+
+const char *BITMAP_SWORD_VAL[3] = {"SWRD-1", "SWRD-1B", "SWRD-1C"};
+const char *BITMAP_SWORD2_VAL[3] = {"SWRD-2", "SWRD-2B", "SWRD-2C"};
+const char *BITMAP_SWORD4_VAL[3] = {"SWRD-4", "SWRD-4B", "SWRD-2C"};
+
+const char *BITMAP_SWORD_SINGLEPLAYER_VAL[3] = {
+#ifndef DISABLE_SINGLE_PLAYER_NEW_GAME
+	BITMAP_SWORD2_VAL[0],
+	BITMAP_SWORD2_VAL[1],
+	BITMAP_SWORD2_VAL[2],
+#else
+	BITMAP_SWORD4_VAL[0],
+	BITMAP_SWORD4_VAL[1],
+	BITMAP_SWORD4_VAL[2],
+#endif
+};
+
+struct SwordButton
+		{
+			short width, height, variant;
+};
+struct ButtonLocation
+{
+	short margin_left, margin_top;
+};
+
+enum sword_button_variants
+{
+	SWORD1 = 0,
+	SWORD2 = 1,
+	SWORD3 = 2,
+	SWORD4 = 3,
+	SWORD5 = 4,
+	SHORT_SWORD = 5
+};
+
+static SwordButton SWORD_BUTTON_INSTANCES[SWORD_BUTTON_INSTANCES_SIZE] = {
+		{276, 52, SWORD1},
+		{276, 45, SWORD2},
+		{276, 55, SWORD3},
+		{276, 38, SWORD4},
+		{276, 71, SWORD5},
+		{214, 42, SHORT_SWORD},
+};
+
+/**
+ * @brief Get the bitmap from the name
+ * 
+ * @param bitmap_name 
+ * @return char* The pointer to the bitmap
+ */
+char * Game::get_bitmap_by_name(const char* bitmap_name){
+	char *bitmap = NULL;
+	int resSize;
+	File *resFile;
+	resFile = image_interface.get_file(bitmap_name, resSize);
+	bitmap = mem_add(resSize);
+	resFile->file_read(bitmap, resSize);
+	return bitmap;
+}
+
+/**
+ * @brief Update the button on the screen with the desired bitmap 
+ * 
+ * @param x Start location on X
+ * @param y Statt location on Y
+ * @param menu_button The button and the two corners (top-left and right-bottom)
+ * @param bitmap The bitmap to show (and the variant, normal, bright, darken)
+ */
+void Game::update_main_menu_button(int x, int y, OptionInfo menu_button, char *bitmap)
+{
+	mouse.hide_area(menu_button.x1, menu_button.y1,
+									menu_button.x2, menu_button.y2);
+	vga_front.put_bitmap_area(x, y,
+														bitmap,
+														menu_button.x1 - x, menu_button.y1 - y,
+														menu_button.x2 - x, menu_button.y2 - y);
+	mouse.show_area();
+}
+
+/**
+ * @brief Calculate the coordinates of the new button based upon X and Y reference plus left/top margins
+ * 
+ * @param start_x Start reference point for X (from left to right)
+ * @param start_y Start reference point for Y (from top to bottom)
+ * @param button_variant  Index of sword_button_variants
+ * @param button_box_array Indicate the margin left and top for the button (think as offset)
+ * @return OptionInfo with the 4 coordinates of the element
+ */
+OptionInfo generate_button(int start_x, int start_y, int button_variant, ButtonLocation button_box_array) {
+	err_when(button_variant > SWORD_BUTTON_INSTANCES_SIZE);
+	SwordButton definition_button = SWORD_BUTTON_INSTANCES[button_variant];
+	short x1 = button_box_array.margin_left + start_x;
+	short y1 = button_box_array.margin_top + start_y;
+	short x2 = x1 + definition_button.width;
+	short y2 = y1 + definition_button.height;
+	OptionInfo instance_button = { x1, y1, x2, y2 };
+	return instance_button;
+}
+
+/**
+ * @brief Get the menu button list object, iterating over the button variants, and the box definition (margin/offset).
+ * Needs a starting coordinates (x,y) and it will advance over the Y value (prev + margins)
+ * 
+ * @param[out] source Where the output list will be placed
+ * @param size The ammount of buttons, it should be between the lenght of button_variant and button_box_array
+ * @param start_x The X starting point, this is fixed (does not add the prev value, just the margin)
+ * @param start_y The Y starting point, this gets the offset of previous button on the list, so this displace the new one.
+ * @param button_variant The array of buttons that will be added, like SWORD1, SHORT_SWORD
+ * @param button_box_array The margin/offset definiton per button, left ant top respectively.
+ * @todo Check for the size of the arrays of the for
+ */
+void get_main_menu_button_list(OptionInfo *source, int size, int start_x, int start_y, int button_variant[], ButtonLocation button_box_array[]){
+	short y1 = start_y;
+	for (int i = 0; i < size; i++)
+	{
+		OptionInfo button = generate_button(start_x, y1, button_variant[i], button_box_array[i]);
+		y1 = button.y2;
+		source[i] = button;
+	}
+}
 
 //---------- Begin of function Game::main_menu ----------//
 //
@@ -61,18 +190,21 @@ void Game::main_menu()
 {
 	enum { MAIN_OPTION_COUNT = 6 };
 
-	static OptionInfo main_option_array[MAIN_OPTION_COUNT] =
-	{
-		{ 6+SWORD1_X,  11+SWORD1_Y, 282+SWORD1_X ,  63+SWORD1_Y },
-		{ 6+SWORD1_X,  68+SWORD1_Y, 282+SWORD1_X , 113+SWORD1_Y },
-		{ 6+SWORD1_X, 121+SWORD1_Y, 282+SWORD1_X , 176+SWORD1_Y },
-		// ####### begin Gilbert 20/10 ######//
-		// { 6+SWORD1_X, 189+SWORD1_Y, 282+SWORD1_X , 219+SWORD1_Y },
-		{ 6+SWORD1_X, 184+SWORD1_Y, 282+SWORD1_X , 222+SWORD1_Y },
-		// ####### end Gilbert 20/10 ######//
-		{ 6+SWORD1_X, 224+SWORD1_Y, 282+SWORD1_X , 295+SWORD1_Y },
-		{40+SWORD1_X, 297+SWORD1_Y, 254+SWORD1_X , 337+SWORD1_Y },
-	};
+	static OptionInfo main_option_array[MAIN_OPTION_COUNT];
+	ButtonLocation main_option_box_array[MAIN_OPTION_COUNT] = {{6, 11}, {6, 5}, {6, 8}, {6, 8}, {6, 2}, {40, 2}};
+	int main_option_button_variant_array[MAIN_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SWORD5, SHORT_SWORD};
+	get_main_menu_button_list(main_option_array, MAIN_OPTION_COUNT, SWORD1_X, SWORD1_Y, main_option_button_variant_array, main_option_box_array);
+	// {
+	// 	{ 6+SWORD1_X,  11+SWORD1_Y, 282+SWORD1_X ,  63+SWORD1_Y },
+	// 	{ 6+SWORD1_X,  68+SWORD1_Y, 282+SWORD1_X , 113+SWORD1_Y },
+	// 	{ 6+SWORD1_X, 121+SWORD1_Y, 282+SWORD1_X , 176+SWORD1_Y },
+	// 	// ####### begin Gilbert 20/10 ######//
+	// 	// { 6+SWORD1_X, 189+SWORD1_Y, 282+SWORD1_X , 219+SWORD1_Y },
+	// 	{ 6+SWORD1_X, 184+SWORD1_Y, 282+SWORD1_X , 222+SWORD1_Y },
+	// 	// ####### end Gilbert 20/10 ######//
+	// 	{ 6+SWORD1_X, 224+SWORD1_Y, 282+SWORD1_X , 295+SWORD1_Y },
+	// 	{40+SWORD1_X, 297+SWORD1_Y, 254+SWORD1_X , 337+SWORD1_Y },
+	// };
 
 	char main_option_flag[MAIN_OPTION_COUNT] = 
 	{
@@ -122,42 +254,19 @@ void Game::main_menu()
 			disp_version();
 
 			if(!menuBitmap)
-			{
-				int resSize;
-				File *resFile;
-				resFile = image_interface.get_file("SWRD-1", resSize);
-				menuBitmap = mem_add(resSize);
-				resFile->file_read(menuBitmap, resSize);
-			}
+				menuBitmap = get_bitmap_by_name(BITMAP_SWORD_VAL[BITMAP_SWORD::IDLE]);
+			
 			if(!brightBitmap)
-			{
-				int resSize;
-				File *resFile;
-				resFile = image_interface.get_file("SWRD-1B", resSize);
-				brightBitmap = mem_add(resSize);
-				resFile->file_read(brightBitmap, resSize);
-			}
+				brightBitmap = get_bitmap_by_name(BITMAP_SWORD_VAL[BITMAP_SWORD::HOVER]);
+			
 			if(!darkBitmap)
-			{
-				int resSize;
-				File *resFile;
-				resFile = image_interface.get_file("SWRD-1C", resSize);
-				darkBitmap = mem_add(resSize);
-				resFile->file_read(darkBitmap, resSize);
-			}
+				darkBitmap = get_bitmap_by_name(BITMAP_SWORD_VAL[BITMAP_SWORD::ACTIVE]);
+			
 			
 			for( i = 0; i < MAIN_OPTION_COUNT; ++i )
 			{
-				if( main_option_flag[i] >= 0 )
-				{
-					mouse.hide_area(main_option_array[i].x1, main_option_array[i].y1,
-						main_option_array[i].x2, main_option_array[i].y2);
-					vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, 
-						main_option_flag[i] ? menuBitmap : darkBitmap,
-						main_option_array[i].x1 - SWORD1_X, main_option_array[i].y1 - SWORD1_Y,
-						main_option_array[i].x2 - SWORD1_X, main_option_array[i].y2 - SWORD1_Y);
-					mouse.show_area();
-				}
+				if (main_option_flag[i] >= 0)
+					update_main_menu_button(SWORD1_X, SWORD1_Y, main_option_array[i], main_option_flag[i] ? menuBitmap : darkBitmap);
 			}
 			pointingOption = -1;
 			refreshFlag=0;
@@ -194,26 +303,13 @@ void Game::main_menu()
 			// put un-highlighted option back
 			i = pointingOption;
 			if( i >= 0 && i < MAIN_OPTION_COUNT )
-			{
-				mouse.hide_area(main_option_array[i].x1, main_option_array[i].y1,
-					main_option_array[i].x2, main_option_array[i].y2);
-				vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, menuBitmap,
-					main_option_array[i].x1 - SWORD1_X, main_option_array[i].y1 - SWORD1_Y,
-					main_option_array[i].x2 - SWORD1_X, main_option_array[i].y2 - SWORD1_Y);
-				mouse.show_area();
-			}
+				update_main_menu_button(SWORD1_X, SWORD1_Y, main_option_array[i], menuBitmap);
 
 			// put new hightlighted option
 			i = newPointingOption;
 			if( i >= 0 && i < MAIN_OPTION_COUNT )
-			{
-				mouse.hide_area(main_option_array[i].x1, main_option_array[i].y1,
-					main_option_array[i].x2, main_option_array[i].y2);
-				vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, brightBitmap,
-					main_option_array[i].x1 - SWORD1_X, main_option_array[i].y1 - SWORD1_Y,
-					main_option_array[i].x2 - SWORD1_X, main_option_array[i].y2 - SWORD1_Y);
-				mouse.show_area();
-			}
+				update_main_menu_button(SWORD1_X, SWORD1_Y, main_option_array[i], brightBitmap);
+			
 			pointingOption = newPointingOption;
 		}
 		// ######### end Gilbert 23/7 ##########//
@@ -403,30 +499,34 @@ void Game::disp_version()
 void Game::single_player_menu()
 {
 	enum { SINGLE_PLAYER_OPTION_COUNT = 5 };
-
-#ifndef DISABLE_SINGLE_PLAYER_NEW_GAME 
-	static OptionInfo single_player_option_array[SINGLE_PLAYER_OPTION_COUNT] =
-	{
-		{ 5+SWORD1_X,  10+SWORD1_Y, 282+SWORD1_X,  62+SWORD1_Y },
-		{ 5+SWORD1_X,  67+SWORD1_Y, 282+SWORD1_X, 112+SWORD1_Y },
-		{ 5+SWORD1_X, 120+SWORD1_Y, 282+SWORD1_X, 175+SWORD1_Y },
-		{ 5+SWORD1_X, 182+SWORD1_Y, 282+SWORD1_X, 223+SWORD1_Y },
-		{40+SWORD1_X, 238+SWORD1_Y, 254+SWORD1_X, 280+SWORD1_Y },
-	};
+	static OptionInfo single_player_option_array[SINGLE_PLAYER_OPTION_COUNT];
+#ifndef DISABLE_SINGLE_PLAYER_NEW_GAME
+	ButtonLocation single_player_option_box_array[SINGLE_PLAYER_OPTION_COUNT] = {{6, 10}, {6, 5}, {6, 8}, {6, 8}, {40, 15}};
+	static int single_player_option_button_variant_array[SINGLE_PLAYER_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SHORT_SWORD};
+	get_main_menu_button_list(single_player_option_array, SINGLE_PLAYER_OPTION_COUNT, SWORD1_X, SWORD1_Y, single_player_option_button_variant_array, single_player_option_box_array);
+	// {
+	// 	{ 5+SWORD1_X,  10+SWORD1_Y, 282+SWORD1_X,  62+SWORD1_Y },
+	// 	{ 5+SWORD1_X,  67+SWORD1_Y, 282+SWORD1_X, 112+SWORD1_Y },
+	// 	{ 5+SWORD1_X, 120+SWORD1_Y, 282+SWORD1_X, 175+SWORD1_Y },
+	// 	{ 5+SWORD1_X, 182+SWORD1_Y, 282+SWORD1_X, 223+SWORD1_Y },
+	// 	{40+SWORD1_X, 238+SWORD1_Y, 254+SWORD1_X, 280+SWORD1_Y },
+	// };
 
 	static char single_player_option_flag[SINGLE_PLAYER_OPTION_COUNT] =
 	{
 		1, 1, 1, 1, 1,				// 1 = in use, 0 = darken, -1 = invisible
 	};
 #else
-	static OptionInfo single_player_option_array[SINGLE_PLAYER_OPTION_COUNT] =
-	{
-		{ 2+SWORD1_X,  10+SWORD1_Y, 286+SWORD1_X,  65+SWORD1_Y },
-		{ 2+SWORD1_X,  67+SWORD1_Y, 286+SWORD1_X, 109+SWORD1_Y },
-		{ 2+SWORD1_X, 112+SWORD1_Y, 286+SWORD1_X, 171+SWORD1_Y },
-		{ 2+SWORD1_X, 112+SWORD1_Y, 286+SWORD1_X, 171+SWORD1_Y },       // not used
-		{38+SWORD1_X, 174+SWORD1_Y, 256+SWORD1_X, 216+SWORD1_Y },
-	};
+	ButtonLocation single_player_option_box_array[SINGLE_PLAYER_OPTION_COUNT] = {{2, 10}, {2, 5}, {2, 3}, {2, -55}, {38, 4}};
+	static int single_player_option_button_variant_array[SINGLE_PLAYER_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SHORT_SWORD};
+	get_main_menu_button_list(single_player_option_array, SINGLE_PLAYER_OPTION_COUNT, SWORD1_X, SWORD1_Y, single_player_option_button_variant_array, single_player_option_box_array);
+	// {
+	// 	{ 2+SWORD1_X,  10+SWORD1_Y, 286+SWORD1_X,  65+SWORD1_Y },
+	// 	{ 2+SWORD1_X,  67+SWORD1_Y, 286+SWORD1_X, 109+SWORD1_Y },
+	// 	{ 2+SWORD1_X, 112+SWORD1_Y, 286+SWORD1_X, 171+SWORD1_Y },
+	// 	{ 2+SWORD1_X, 112+SWORD1_Y, 286+SWORD1_X, 171+SWORD1_Y },       // not used
+	// 	{38+SWORD1_X, 174+SWORD1_Y, 256+SWORD1_X, 216+SWORD1_Y },
+	// };
 
 	static char single_player_option_flag[SINGLE_PLAYER_OPTION_COUNT] =
 	{
@@ -469,54 +569,18 @@ void Game::single_player_menu()
 			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 
 			if(!menuBitmap)
-			{
-				int resSize;
-				File *resFile;
-#ifndef DISABLE_SINGLE_PLAYER_NEW_GAME 
-				resFile = image_interface.get_file("SWRD-2", resSize);
-#else
-				resFile = image_interface.get_file("SWRD-4", resSize);
-#endif
-				menuBitmap = mem_add(resSize);
-				resFile->file_read(menuBitmap, resSize);
-			}
+				menuBitmap = get_bitmap_by_name(BITMAP_SWORD_SINGLEPLAYER_VAL[BITMAP_SWORD::IDLE]);
+			
 			if(!brightBitmap)
-			{
-				int resSize;
-				File *resFile;
-#ifndef DISABLE_SINGLE_PLAYER_NEW_GAME
-				resFile = image_interface.get_file("SWRD-2B", resSize);
-#else
-				resFile = image_interface.get_file("SWRD-4B", resSize);
-#endif
-				brightBitmap = mem_add(resSize);
-				resFile->file_read(brightBitmap, resSize);
-			}
+				brightBitmap = get_bitmap_by_name(BITMAP_SWORD_SINGLEPLAYER_VAL[BITMAP_SWORD::HOVER]);
+				
 			if(!darkBitmap)
-			{
-				int resSize;
-				File *resFile;
-#ifndef DISABLE_SINGLE_PLAYER_NEW_GAME
-				resFile = image_interface.get_file("SWRD-2C", resSize);
-#else
-				resFile = image_interface.get_file("SWRD-2C", resSize); // no SWRD-4C
-#endif
-				darkBitmap = mem_add(resSize);
-				resFile->file_read(darkBitmap, resSize);
-			}
+				darkBitmap = get_bitmap_by_name(BITMAP_SWORD_SINGLEPLAYER_VAL[BITMAP_SWORD::ACTIVE]);
 
 			for( i = 0; i < SINGLE_PLAYER_OPTION_COUNT; ++i )
 			{
 				if( single_player_option_flag[i] >= 0)
-				{
-					mouse.hide_area(single_player_option_array[i].x1, single_player_option_array[i].y1,
-						single_player_option_array[i].x2, single_player_option_array[i].y2);
-					vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, 
-						single_player_option_flag[i] ? menuBitmap : darkBitmap,
-						single_player_option_array[i].x1 - SWORD1_X, single_player_option_array[i].y1 - SWORD1_Y,
-						single_player_option_array[i].x2 - SWORD1_X, single_player_option_array[i].y2 - SWORD1_Y);
-					mouse.show_area();
-				}
+					update_main_menu_button(SWORD1_X, SWORD1_Y, single_player_option_array[i], single_player_option_flag[i] ? menuBitmap : darkBitmap);
 			}
 			pointingOption = -1;
 			refreshFlag=0;
@@ -554,26 +618,14 @@ void Game::single_player_menu()
 			// put un-highlighted option back
 			i = pointingOption;
 			if( i >= 0 && i < SINGLE_PLAYER_OPTION_COUNT )
-			{
-				mouse.hide_area(single_player_option_array[i].x1, single_player_option_array[i].y1,
-					single_player_option_array[i].x2, single_player_option_array[i].y2);
-				vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, menuBitmap,
-					single_player_option_array[i].x1 - SWORD1_X, single_player_option_array[i].y1 - SWORD1_Y,
-					single_player_option_array[i].x2 - SWORD1_X, single_player_option_array[i].y2 - SWORD1_Y);
-				mouse.show_area();
-			}
+				update_main_menu_button(SWORD1_X, SWORD1_Y, single_player_option_array[i], menuBitmap);
+			
 
 			// put new hightlighted option
 			i = newPointingOption;
 			if( i >= 0 && i < SINGLE_PLAYER_OPTION_COUNT )
-			{
-				mouse.hide_area(single_player_option_array[i].x1,single_player_option_array[i].y1,
-					single_player_option_array[i].x2,single_player_option_array[i].y2);
-				vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, brightBitmap,
-					single_player_option_array[i].x1 -SWORD1_X,single_player_option_array[i].y1 -SWORD1_Y,
-					single_player_option_array[i].x2 -SWORD1_X,single_player_option_array[i].y2 -SWORD1_Y);
-				mouse.show_area();
-			}
+				update_main_menu_button(SWORD1_X, SWORD1_Y, single_player_option_array[i], brightBitmap);
+			
 			pointingOption = newPointingOption;
 		}
 
@@ -680,14 +732,17 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 {
 	enum { MULTI_PLAYER_OPTION_COUNT = 5 };
 
-	static OptionInfo multi_player_option_array[MULTI_PLAYER_OPTION_COUNT] =
-	{
-		{ 5+SWORD1_X,  10+SWORD1_Y, 282+SWORD1_X,  62+SWORD1_Y },
-		{ 5+SWORD1_X,  67+SWORD1_Y, 282+SWORD1_X, 112+SWORD1_Y },
-		{ 5+SWORD1_X, 120+SWORD1_Y, 282+SWORD1_X, 175+SWORD1_Y },
-		{ 5+SWORD1_X, 182+SWORD1_Y, 282+SWORD1_X, 223+SWORD1_Y },
-		{40+SWORD1_X, 238+SWORD1_Y, 254+SWORD1_X, 280+SWORD1_Y },
-	};
+	static OptionInfo multi_player_option_array[MULTI_PLAYER_OPTION_COUNT];
+	ButtonLocation multi_player_option_box_array[MULTI_PLAYER_OPTION_COUNT] = {{6, 10}, {6, 5}, {6, 8}, {6, 8}, {40, 15}};
+	static int multi_player_option_button_variant_array[MULTI_PLAYER_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SHORT_SWORD};
+	get_main_menu_button_list(multi_player_option_array, MULTI_PLAYER_OPTION_COUNT, SWORD1_X, SWORD1_Y, multi_player_option_button_variant_array, multi_player_option_box_array);
+	// {
+	// 	{ 5+SWORD1_X,  10+SWORD1_Y, 282+SWORD1_X,  62+SWORD1_Y },
+	// 	{ 5+SWORD1_X,  67+SWORD1_Y, 282+SWORD1_X, 112+SWORD1_Y },
+	// 	{ 5+SWORD1_X, 120+SWORD1_Y, 282+SWORD1_X, 175+SWORD1_Y },
+	// 	{ 5+SWORD1_X, 182+SWORD1_Y, 282+SWORD1_X, 223+SWORD1_Y },
+	// 	{40+SWORD1_X, 238+SWORD1_Y, 254+SWORD1_X, 280+SWORD1_Y },
+	// };
 
 	static char multi_player_option_flag[MULTI_PLAYER_OPTION_COUNT] =
 	{
@@ -726,42 +781,20 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 
 			if(!menuBitmap)
-			{
-				int resSize;
-				File *resFile;
-				resFile = image_interface.get_file("SWRD-2", resSize);
-				menuBitmap = mem_add(resSize);
-				resFile->file_read(menuBitmap, resSize);
-			}
+				menuBitmap = get_bitmap_by_name(BITMAP_SWORD2_VAL[BITMAP_SWORD::IDLE]);
+			
 			if(!brightBitmap)
-			{
-				int resSize;
-				File *resFile;
-				resFile = image_interface.get_file("SWRD-2B", resSize);
-				brightBitmap = mem_add(resSize);
-				resFile->file_read(brightBitmap, resSize);
-			}
+				brightBitmap = get_bitmap_by_name(BITMAP_SWORD2_VAL[BITMAP_SWORD::HOVER]);
+				
 			if(!darkBitmap)
-			{
-				int resSize;
-				File *resFile;
-				resFile = image_interface.get_file("SWRD-2C", resSize);
-				darkBitmap = mem_add(resSize);
-				resFile->file_read(darkBitmap, resSize);
-			}
+				darkBitmap = get_bitmap_by_name(BITMAP_SWORD_VAL[BITMAP_SWORD::ACTIVE]);
+
 
 			for( i = 0; i < MULTI_PLAYER_OPTION_COUNT; ++i )
 			{
 				if( multi_player_option_flag[i] >= 0 )
-				{
-					mouse.hide_area(multi_player_option_array[i].x1, multi_player_option_array[i].y1,
-						multi_player_option_array[i].x2, multi_player_option_array[i].y2);
-					vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, 
-						multi_player_option_flag[i] ? menuBitmap : darkBitmap,
-						multi_player_option_array[i].x1 - SWORD1_X, multi_player_option_array[i].y1 - SWORD1_Y,
-						multi_player_option_array[i].x2 - SWORD1_X, multi_player_option_array[i].y2 - SWORD1_Y);
-					mouse.show_area();
-				}
+					update_main_menu_button(SWORD1_X, SWORD1_Y, multi_player_option_array[i], multi_player_option_flag[i] ? menuBitmap : darkBitmap);
+				
 			}
 
 			pointingOption = -1;
@@ -800,26 +833,14 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 			// put un-highlighted option back
 			i = pointingOption;
 			if( i >= 0 && i < MULTI_PLAYER_OPTION_COUNT )
-			{
-				mouse.hide_area(multi_player_option_array[i].x1, multi_player_option_array[i].y1,
-					multi_player_option_array[i].x2, multi_player_option_array[i].y2);
-				vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, menuBitmap,
-					multi_player_option_array[i].x1 - SWORD1_X, multi_player_option_array[i].y1 - SWORD1_Y,
-					multi_player_option_array[i].x2 - SWORD1_X, multi_player_option_array[i].y2 - SWORD1_Y);
-				mouse.show_area();
-			}
+				update_main_menu_button(SWORD1_X, SWORD1_Y, multi_player_option_array[i], menuBitmap);
+			
 
 			// put new hightlighted option
 			i = newPointingOption;
 			if( i >= 0 && i < MULTI_PLAYER_OPTION_COUNT )
-			{
-				mouse.hide_area(multi_player_option_array[i].x1, multi_player_option_array[i].y1,
-					multi_player_option_array[i].x2, multi_player_option_array[i].y2);
-				vga_front.put_bitmap_area(SWORD1_X, SWORD1_Y, brightBitmap,
-					multi_player_option_array[i].x1 - SWORD1_X, multi_player_option_array[i].y1 - SWORD1_Y,
-					multi_player_option_array[i].x2 - SWORD1_X, multi_player_option_array[i].y2 - SWORD1_Y);
-				mouse.show_area();
-			}
+				update_main_menu_button(SWORD1_X, SWORD1_Y, multi_player_option_array[i], brightBitmap);
+			
 			pointingOption = newPointingOption;
 		}
 
