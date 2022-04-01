@@ -78,7 +78,7 @@ static void split_line(char *line);
 void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNationRecno, int retireFlag)
 {
 	//--- set scenario as complete if they didn't retire ---//
-	if(!retireFlag)
+	if(!retireFlag && !playerDestroyed)
 		playerStats.set_scenario_play_status(scenario_file_name, nsPlayerStats::PlayStatus::COMPLETED);
 
 	//--- skip all game ending screens if in demo mode ---//
