@@ -278,6 +278,11 @@ void Spy::next_day()
 			Firm* firmPtr = firm_array[spy_place_para];
 			world.visit( firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2, EXPLORE_RANGE-1 );
 		}
+		else if( unitPtr->unit_mode == UNIT_MODE_CONSTRUCT )
+		{
+			Firm* firmPtr = firm_array[unitPtr->unit_mode_para];
+			world.visit( firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2, EXPLORE_RANGE-1 );
+		}
 		else if( unitPtr->unit_mode == UNIT_MODE_ON_SHIP )
 		{
 			Unit* shipPtr = unit_array[unitPtr->unit_mode_para];
