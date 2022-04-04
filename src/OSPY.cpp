@@ -177,8 +177,19 @@ int Spy::get_loc(int& xLoc, int& yLoc)
 		case SPY_MOBILE:
 			if( !unit_array.is_deleted(spy_place_para) )
 			{
-				xLoc = unit_array[spy_place_para]->next_x_loc();
-				yLoc = unit_array[spy_place_para]->next_y_loc();
+				Unit* unitPtr = unit_array[spy_place_para];
+
+				if( unitPtr->unit_mode == UNIT_MODE_ON_SHIP )
+				{
+					Unit* shipPtr = unit_array[unitPtr->unit_mode_para];
+					xLoc = shipPtr->next_x_loc();
+					yLoc = shipPtr->next_y_loc();
+				}
+				else
+				{
+					xLoc = unitPtr->next_x_loc();
+					yLoc = unitPtr->next_y_loc();
+				}
 				return 1;
 			}
 			break;
