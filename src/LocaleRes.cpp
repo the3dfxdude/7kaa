@@ -115,10 +115,20 @@ void LocaleRes::deinit()
 void LocaleRes::load()
 {
 #ifdef ENABLE_NLS
-	setlocale(LC_ALL, config_adv.locale);
-	char *ctype = setlocale(LC_CTYPE, NULL);
-	if( !ctype )
-		return;
+	const char *ctype;
+	if( config_adv.locale[0] )
+	{
+		if( !setlocale(LC_ALL, config_adv.locale) )
+			return;
+		ctype = config_adv.locale;
+	}
+	else
+	{
+		setlocale(LC_ALL, "");
+		ctype = setlocale(LC_CTYPE, NULL);
+		if( !ctype )
+			return;
+	}
 
 	LocaleRec *localeRec;
 	String localeDbName;
