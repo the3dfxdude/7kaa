@@ -122,9 +122,17 @@ enable_enet=yes
 
 # Configuration options
 
+
 AC_ARG_ENABLE([asm],
   AS_HELP_STRING([--enable-asm], [enable x86 asm optimizations]),
   [], [enable_asm=no]
+)
+
+AC_ARG_ENABLE([networking],
+  AS_HELP_STRING([--disable-networking], [disable enet support]),
+  [ enable_enet=no
+    enable_curl=no
+  ], [enable_enet=yes]
 )
 
 AC_ARG_ENABLE([curl],
@@ -176,6 +184,12 @@ AS_IF([test "$enable_asm" = yes], [
   AC_SUBST([JWASM_FMT],["$jwasm_fmt"])
 ])
 
+AS_IF([test x"$enable_enet" != xno], [
+ AS_IF([test x"$enable_multiplayer" = xyes], [
+    echo You must use enet, when multiplayer is enabled.
+    exit
+  ])
+])
 
 # Library dependencies
 
@@ -314,6 +328,9 @@ AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
 AS_IF([test "$enable_multiplayer" = auto], [
   enable_multiplayer=yes
   AS_IF([test "$fpu_type" != 387], [
+    enable_multiplayer=no
+  ])
+  AS_IF([test "$enable_enet" = xno], [
     enable_multiplayer=no
   ])
 ])
