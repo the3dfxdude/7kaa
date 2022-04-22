@@ -123,6 +123,14 @@ enable_enet=yes
 # Configuration options
 
 
+AC_ARG_ENABLE([emscripten],
+              AS_HELP_STRING([--enable-emscripten], [build for the web]),
+              [], [ 
+              enable_emscripten=yes
+              ]
+)
+
+
 AC_ARG_ENABLE([asm],
   AS_HELP_STRING([--enable-asm], [enable x86 asm optimizations]),
   [], [enable_asm=no]
@@ -166,6 +174,30 @@ AS_CASE(["$host"],
   ]
 )
 
+AS_IF([test x"$enable_emscripten" = xyes], [
+    
+    error=false
+    
+    AS_IF([test x"$enable_enet" = xyes],
+    [ echo You cannot enable enet, when compiling to web
+      error=true
+    ])
+
+    AS_IF([test x"$enable_curl" = xyes],
+    [ echo You cannot enable curl, when compiling to web
+      error=true
+    ])
+    
+    AS_IF([test x"$enable_multiplayer" = xyes],
+    [ echo You cannot enable multiplayer, when compiling to web
+    error=true
+    ])
+    
+    AS_IF([test x"$error" = xtrue],
+    [ exit
+    ])
+])
+
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
@@ -185,6 +217,15 @@ AS_IF([test "$enable_asm" = yes], [
 ])
 
 AS_IF([test x"$enable_enet" != xno], [
+ AS_IF([test x"$enable_multiplayer" = xyes], [
+    echo You must use enet, when multiplayer is enabled.
+    exit
+  ])
+])
+
+
+
+AS_IF([test x"$enable_enet" = xno], [
  AS_IF([test x"$enable_multiplayer" = xyes], [
     echo You must use enet, when multiplayer is enabled.
     exit
