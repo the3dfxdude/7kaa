@@ -39,7 +39,11 @@ const uint16_t UDP_MONITOR_PORT = 19383;
 
 inline bool cmp_addr(ENetAddress *a, ENetAddress *b)
 {
+#ifdef EMSCRIPTEN
+	return true;
+#else
 	return a->host == b->host && a->port == b->port;
+#endif
 }
 
 // to start a multiplayer game, first check if it is called from a
@@ -54,13 +58,17 @@ inline bool cmp_addr(ENetAddress *a, ENetAddress *b)
 namespace {
 	ENetAddress empty_address()
 	{
+#ifdef EMSCRIPTEN
+		return nullptr;
+#else
 		ENetAddress address;
 		address.host = ENET_HOST_ANY;
 		address.port = ENET_PORT_ANY;
 		return address;
+#endif
 	}
 }
-
+#ifndef EMSCRIPTEN
 MultiPlayer::MultiPlayer() :
 	current_sessions(sizeof(SessionDesc), 10),
 	my_player("?my_player?", empty_address())
@@ -72,6 +80,11 @@ MultiPlayer::MultiPlayer() :
 	joined_session.flags = 0;
 	recv_buf = NULL;
 }
+#else
+MultiPlayer::MultiPlayer()
+{
+}
+#endif
 
 MultiPlayer::~MultiPlayer()
 {
@@ -80,6 +93,9 @@ MultiPlayer::~MultiPlayer()
 
 void MultiPlayer::init(ProtocolType protocol_type)
 {
+#ifdef EMSCRIPTEN
+        return;
+#else
 	if (init_flag)
 		return;
 
@@ -113,10 +129,14 @@ void MultiPlayer::init(ProtocolType protocol_type)
 	recv_buffer_size = MP_RECV_BUFFER_SIZE;
 
 	init_flag = 1;
+#endif
 }
 
 void MultiPlayer::deinit()
 {
+#ifdef EMSCRIPTEN
+        return;
+#else
 	if (!init_flag) {
 		return;
 	}
@@ -152,6 +172,7 @@ void MultiPlayer::deinit()
 	if (recv_buf) {
 		delete [] recv_buf;
 	}
+#endif
 }
 
 // init_lobbied
@@ -159,6 +180,7 @@ void MultiPlayer::deinit()
 // Returns non-zero on success.
 int MultiPlayer::init_lobbied(int maxPlayers, char *cmdLine)
 {
+#ifndef EMSCRIPTEN
 	MSG("Launching a multiplayer game from command line maxPlayers=%d, cmdLine='%s'\n", maxPlayers, cmdLine);
 
 	if (cmdLine) {
@@ -182,6 +204,7 @@ int MultiPlayer::init_lobbied(int maxPlayers, char *cmdLine)
 		// hosting doesn't work yet
 		lobbied_flag = 1;
 	}
+#endif
 
 	return 1;
 }
@@ -189,7 +212,11 @@ int MultiPlayer::init_lobbied(int maxPlayers, char *cmdLine)
 // return 0=not lobbied, 1=auto create, 2=auto join, 4=selectable
 int MultiPlayer::is_lobbied()
 {
+#ifdef EMSCRIPTEN
+	return false;
+#else
 	return lobbied_flag;
+#endif
 }
 
 // get_lobbied_name() is used to get the player's name when the game is
@@ -205,16 +232,27 @@ void MultiPlayer::poll_supported_protocols()
 
 bool MultiPlayer::is_protocol_supported(ProtocolType protocol)
 {
+#ifdef EMSCRIPTEN
+	return false;
+#else
 	return (protocol & supported_protocols) != 0;
+#endif
 }
 
 int MultiPlayer::is_update_available()
 {
+#ifdef EMSCRIPTEN
+	return false;
+#else
 	return update_available;
+#endif
 }
 
 ENetSocket MultiPlayer::create_socket(uint16_t port)
 {
+#ifdef EMSCRIPTEN
+	return NULL;
+#else
 	ENetSocket socket;
 	ENetAddress address;
 
@@ -233,12 +271,15 @@ ENetSocket MultiPlayer::create_socket(uint16_t port)
 	enet_socket_set_option(socket, ENET_SOCKOPT_NONBLOCK, 1);
 
 	return socket;
+#endif
 }
 
 void MultiPlayer::destroy_socket(ENetSocket socket)
 {
+#ifndef EMSCRIPTEN
 	if (socket != ENET_SOCKET_NULL)
 		enet_socket_destroy(socket);
+#endif
 }
 
 // Open a multiplayer game port to enable the network service. If successful,
@@ -246,6 +287,7 @@ void MultiPlayer::destroy_socket(ENetSocket socket)
 // try a second time using any port.
 int MultiPlayer::open_port(uint16_t port, int fallback)
 {
+#ifndef EMSCRIPTEN
 	ENetAddress address;
 
 	err_when(!init_flag);
@@ -268,20 +310,23 @@ int MultiPlayer::open_port(uint16_t port, int fallback)
 
 	if (fallback)
 		return open_port(0, 0);
-
+#endif
 	return 0;
 }
 
 void MultiPlayer::close_port()
 {
+#ifndef EMSCRIPTEN
 	if (host) {
 		enet_host_destroy(host);
 		host = NULL;
 	}
+#endif
 }
 
 int MultiPlayer::set_service_provider(const char *host)
 {
+#ifndef EMSCRIPTEN
 	if (host) {
 		enet_address_set_host(&service_provider, host);
 		service_provider.port = UDP_MONITOR_PORT;
@@ -290,10 +335,14 @@ int MultiPlayer::set_service_provider(const char *host)
 	}
 
 	return service_provider.host != ENET_HOST_ANY;
+#else
+	return false;
+#endif
 }
 
 int MultiPlayer::poll_sessions()
 {
+#ifndef EMSCRIPTEN
 	ENetAddress a;
 	ENetBuffer b;
 	int ret;
@@ -369,6 +418,9 @@ int MultiPlayer::poll_sessions()
 	}
 
 	return ret;
+#else
+	return MP_POLL_NO_UPDATE;
+#endif
 }
 
 // return a session description
@@ -377,36 +429,48 @@ int MultiPlayer::poll_sessions()
 // return pointer to a session, NULL if no more
 SessionDesc *MultiPlayer::get_session(int i)
 {
+#ifndef EMSCRIPTEN
 	if( i <= 0 || i > current_sessions.size() )
 		return NULL;
 	return (SessionDesc *)current_sessions.get(i);
+#else
+	return NULL;
+#endif
 }
 
 SessionDesc *MultiPlayer::get_session(ENetAddress *address)
 {
+#ifndef EMSCRIPTEN
 	int i;
 	for (i = 1; i <= current_sessions.size(); i++) {
 		SessionDesc *p = (SessionDesc *)current_sessions.get(i);
 		if (p && cmp_addr(&p->address, address))
 			return p;
 	}
+#endif
 	return NULL;
 }
 
 SessionDesc *MultiPlayer::get_session(guuid_t id)
 {
+#ifndef EMSCRIPTEN
 	int i;
 	for (i = 1; i <= current_sessions.size(); i++) {
 		SessionDesc *p = (SessionDesc *)current_sessions.get(i);
 		if (p && !misc.uuid_compare(p->session_id, id))
 			return p;
 	}
+#endif
 	return NULL;
 }
 
 SessionDesc *MultiPlayer::get_current_session()
 {
+#ifndef EMSCRIPTEN
 	return &joined_session;
+#else
+	return NULL;
+#endif
 }
 
 // create a new session
@@ -417,6 +481,7 @@ SessionDesc *MultiPlayer::get_current_session()
 // return 1 if success
 int MultiPlayer::create_session(char *sessionName, char *password, int maxPlayers)
 {
+#ifndef EMSCRIPTEN
 	const char *name;
 
 	err_when(!init_flag || maxPlayers <= 0 || maxPlayers > MAX_NATION || host);
@@ -452,12 +517,15 @@ int MultiPlayer::create_session(char *sessionName, char *password, int maxPlayer
 
 	set_my_player_id(1);
 	player_pool[0] = &my_player; // can we skip polling players?
-
 	return 1;
+#else
+	return 0;
+#endif
 }
 
 int MultiPlayer::connect_host()
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 	PlayerDesc *game_host;
 
@@ -478,6 +546,9 @@ int MultiPlayer::connect_host()
 	peer->data = game_host;
 
 	return 1;
+#else
+	return 0;
+#endif
 }
 
 // join a session
@@ -485,6 +556,7 @@ int MultiPlayer::connect_host()
 //
 int MultiPlayer::join_session(SessionDesc *session)
 {
+#ifndef EMSCRIPTEN
 	err_when(!session || host);
 
 	if (!open_port(0, 0)) {
@@ -497,12 +569,16 @@ int MultiPlayer::join_session(SessionDesc *session)
 	connect_host();
 
 	return 1;
+#else
+	return 0;
+#endif
 }
 
 // Call close_session when leaving any session. Returns the number of
 // disconnect procedures started.
 int MultiPlayer::close_session()
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 	int count;
 
@@ -519,15 +595,21 @@ int MultiPlayer::close_session()
 	}
 
 	return count;
+#else
+	return 0;
+#endif
 }
 
 void MultiPlayer::game_starting()
 {
+#ifndef EMSCRIPTEN
 	packet_mode = ENET_PACKET_FLAG_UNSEQUENCED;
+#endif
 }
 
 void MultiPlayer::disable_new_connections()
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 
 	joined_session.flags &= ~SessionFlags::Pregame;
@@ -539,6 +621,7 @@ void MultiPlayer::disable_new_connections()
 				enet_peer_disconnect(peer, 0);
 		}
 	}
+#endif
 }
 
 // Returns the next available player id. Used by the game host for adding players.
@@ -559,6 +642,7 @@ uint32_t MultiPlayer::get_avail_player_id()
 // Returns 1 if the player was added.
 int MultiPlayer::add_pending_player(PlayerDesc *player)
 {
+#ifndef EMSCRIPTEN
 	unsigned int i;
 
 	for (i = 0; i < MAX_NATION; i++) {
@@ -572,6 +656,9 @@ int MultiPlayer::add_pending_player(PlayerDesc *player)
 	pending_pool[i] = player;
 
 	return 1;
+#else
+	return 0;
+#endif
 }
 
 // Returns NULL if player is not pending.
@@ -579,6 +666,7 @@ int MultiPlayer::add_pending_player(PlayerDesc *player)
 // becomes the responsiblity of the caller.
 PlayerDesc *MultiPlayer::yank_pending_player(uint32_t playerId)
 {
+#ifndef EMSCRIPTEN
 	unsigned int i;
 	PlayerDesc *player;
 
@@ -595,6 +683,9 @@ PlayerDesc *MultiPlayer::yank_pending_player(uint32_t playerId)
 	pending_pool[i] = NULL;
 
 	return player;
+#else
+	return NULL;
+#endif
 }
 
 // Returns NULL if player is not pending.
@@ -602,6 +693,7 @@ PlayerDesc *MultiPlayer::yank_pending_player(uint32_t playerId)
 // becomes the responsiblity of the caller.
 PlayerDesc *MultiPlayer::yank_pending_player(ENetAddress *address)
 {
+#ifndef EMSCRIPTEN
 	unsigned int i;
 	PlayerDesc *player;
 
@@ -619,6 +711,9 @@ PlayerDesc *MultiPlayer::yank_pending_player(ENetAddress *address)
 	pending_pool[i] = NULL;
 
 	return player;
+#else
+	return NULL;
+#endif
 }
 
 // Adds a player that previously was unknown. Creates a player descriptor if needed, and
@@ -629,6 +724,7 @@ PlayerDesc *MultiPlayer::yank_pending_player(ENetAddress *address)
 // Returns 0 when the player was not added.
 int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address, char contact)
 {
+#ifndef EMSCRIPTEN
 	PlayerDesc *player = NULL;
 	ENetPeer *peer;
 
@@ -683,6 +779,9 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 	MSG("Player '%s' (%d) recognized.\n", player->name, playerId);
 
 	return 1;
+#else
+	return 0;
+#endif
 }
 
 // Called when a player is identifying himself. The game organizer validates
@@ -692,6 +791,7 @@ int MultiPlayer::add_player(uint32_t playerId, char *name, ENetAddress *address,
 // Returns 0 when a player is not authorized.
 int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 	PlayerDesc *player;
 
@@ -717,10 +817,14 @@ int MultiPlayer::auth_player(uint32_t playerId, char *name, char *password)
 	update_player_pool();
 
 	return 1;
+#else
+	return 0;
+#endif
 }
 
 void MultiPlayer::create_my_player(char *playerName)
 {
+#ifndef EMSCRIPTEN
 	const char *name;
 	if (strlen(playerName))
 		name = playerName;
@@ -728,22 +832,26 @@ void MultiPlayer::create_my_player(char *playerName)
 		name = "?Anonymous?";
 
 	my_player = PlayerDesc(name, empty_address());
+#endif
 }
 
 int MultiPlayer::set_my_player_id(uint32_t playerId)
 {
+#ifndef EMSCRIPTEN
 	my_player_id = playerId;
 	my_player.id = playerId;
 	my_player.authorized = 1;
 
 	MSG("You have been assigned id=%d\n", playerId);
-
+#endif
+	
 	return 1;
 }
 
 // Deletes a player by id, disconnecting if necessary.
 void MultiPlayer::delete_player(uint32_t playerId)
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 	PlayerDesc *player;
 
@@ -765,19 +873,23 @@ void MultiPlayer::delete_player(uint32_t playerId)
 
 	MSG("Player '%s' (%d) deleted.\n", player->name, playerId);
 	delete player;
+#endif
 }
 
 static int sort_players(const void *a, const void *b)
 {
+#ifndef EMSCRIPTEN
 	if (((PlayerDesc *)a)->id < ((PlayerDesc *)b)->id)
 		return -1;
 	if (((PlayerDesc *)a)->id > ((PlayerDesc *)b)->id)
 		return 1;
+#endif
 	return 0;
 }
 
 int MultiPlayer::poll_players()
 {
+#ifndef EMSCRIPTEN
 	static unsigned long last_broadcast_time;
 	static int poll_time;
 	unsigned long current_time;
@@ -892,10 +1004,14 @@ int MultiPlayer::poll_players()
 	}
 
 	return ret;
+#else
+	return MP_POLL_NO_SESSION;
+#endif
 }
 
 void MultiPlayer::update_player_pool()
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 	int i;
 
@@ -923,20 +1039,26 @@ void MultiPlayer::update_player_pool()
 		player_pool[i] = NULL;
 
 	qsort(&player_pool, joined_session.player_count, sizeof(player_pool[0]), &sort_players);
+#endif
 }
 
 // retrieve the ith-1 index from the player pool array
 PlayerDesc *MultiPlayer::get_player(int i)
 {
+#ifndef EMSCRIPTEN
 	if (i < 1 || i > MAX_NATION)
 		return NULL;
 
 	return player_pool[i-1];
+#else
+	return NULL;
+#endif
 }
 
 // retrieve the player by ID value from the player pool array
 PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 {
+#ifndef EMSCRIPTEN
 	unsigned int i;
 
 	for (i = 0; i < MAX_NATION; i++) {
@@ -948,11 +1070,15 @@ PlayerDesc *MultiPlayer::search_player(uint32_t playerId)
 		return NULL;
 
 	return player_pool[i];
+#else
+	return NULL;
+#endif
 }
 
 // retrieve the player by ID value from enet peer arrary
 ENetPeer *MultiPlayer::get_peer(uint32_t playerId)
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 
 	err_when(!host);
@@ -971,13 +1097,14 @@ ENetPeer *MultiPlayer::get_peer(uint32_t playerId)
 	if (peer < &host->peers[host->peerCount]) {
 		return peer;
 	}
-
+#endif
 	return NULL;
 }
 
 // retrieve the player by ID value from enet peer arrary
 ENetPeer *MultiPlayer::get_peer(ENetAddress *address)
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 
 	err_when(!host);
@@ -990,6 +1117,7 @@ ENetPeer *MultiPlayer::get_peer(ENetAddress *address)
 	if (peer < &host->peers[host->peerCount]) {
 		return peer;
 	}
+#endif
 
 	return NULL;
 }
@@ -1002,6 +1130,7 @@ ENetPeer *MultiPlayer::get_peer(ENetAddress *address)
 //
 int MultiPlayer::is_player_connecting(uint32_t playerId)
 {
+#ifndef EMSCRIPTEN
 	ENetPeer *peer;
 
 	if (playerId == my_player_id)
@@ -1012,11 +1141,18 @@ int MultiPlayer::is_player_connecting(uint32_t playerId)
 		return 0;
 
 	return peer->state == ENET_PEER_STATE_CONNECTED;
+#else
+	return false;
+#endif
 }
 
 int MultiPlayer::get_player_count()
 {
+#ifndef EMSCRIPTEN
 	return joined_session.player_count;
+#else
+	return 0;
+#endif
 }
 
 // send udp message
@@ -1027,6 +1163,7 @@ int MultiPlayer::get_player_count()
 //
 int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 {
+#ifndef EMSCRIPTEN
 	ENetPacket *packet;
 
 	err_when(!host || msg_size > MP_RECV_MAX_BUFFER_SIZE);
@@ -1063,10 +1200,14 @@ int MultiPlayer::send(uint32_t to, void *data, uint32_t msg_size)
 	}
 
 	return 1;
+#else
+	return 0;
+#endif
 }
 
 void MultiPlayer::send_user_session_status(ENetAddress *a)
 {
+#ifndef EMSCRIPTEN
 	ENetBuffer b;
 	MpMsgUserSessionStatus m;
 
@@ -1090,10 +1231,12 @@ void MultiPlayer::send_user_session_status(ENetAddress *a)
 	strncpy(m.session_name, joined_session.session_name, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(host->socket, a, &b, 1);
+#endif
 }
 
 void MultiPlayer::send_req_login_id()
 {
+#ifndef EMSCRIPTEN
 	ENetBuffer b;
 	MpMsgReqLoginId m;
 
@@ -1104,10 +1247,12 @@ void MultiPlayer::send_req_login_id()
 	strncpy(m.name, my_player.name, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
+#endif
 }
 
 void MultiPlayer::send_poll_sessions()
 {
+#ifndef EMSCRIPTEN
 	ENetBuffer b;
 	MpMsgPollSessions m;
 
@@ -1118,10 +1263,12 @@ void MultiPlayer::send_poll_sessions()
 	misc.uuid_copy(m.login_id, service_login_id);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
+#endif
 }
 
 void MultiPlayer::send_req_session_id()
 {
+#ifndef EMSCRIPTEN
 	ENetBuffer b;
 	MpMsgReqSessionId m;
 
@@ -1137,10 +1284,12 @@ void MultiPlayer::send_req_session_id()
 	memcpy(m.session_password, joined_session.password, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
+#endif
 }
 
 void MultiPlayer::send_req_session_addr()
 {
+#ifndef EMSCRIPTEN
 	ENetBuffer b;
 	MpMsgReqSessionAddr m;
 
@@ -1156,10 +1305,12 @@ void MultiPlayer::send_req_session_addr()
 	memcpy(m.session_password, joined_session.password, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(session_monitor, &service_provider, &b, 1);
+#endif
 }
 
 void MultiPlayer::send_ping(ENetSocket s, ENetAddress *a)
 {
+#ifndef EMSCRIPTEN
 	ENetBuffer b;
 	MpMsgPing m;
 
@@ -1174,10 +1325,12 @@ void MultiPlayer::send_ping(ENetSocket s, ENetAddress *a)
 	m.msg_id = MPMSG_PING;
 
 	enet_socket_send(s, a, &b, 1);
+#endif
 }
 
 void MultiPlayer::send_req_host_nat_punch()
 {
+#ifndef EMSCRIPTEN
 	ENetBuffer b;
 	MpMsgReqHostNatPunch m;
 
@@ -1197,18 +1350,22 @@ void MultiPlayer::send_req_host_nat_punch()
 	memcpy(m.session_password, joined_session.password, MP_FRIENDLY_NAME_LEN);
 
 	enet_socket_send(host->socket, &service_provider, &b, 1);
+#endif
 }
 
 void MultiPlayer::send_service_ping()
 {
+#ifndef EMSCRIPTEN
 	if (session_monitor == ENET_SOCKET_NULL)
 		return;
 
 	send_ping(session_monitor, &service_provider);
+#endif
 }
 
 void MultiPlayer::do_host_nat_punch(MpMsgHostNatPunch *in)
 {
+#ifndef EMSCRIPTEN
 	ENetAddress a;
 	ENetBuffer b;
 	MpMsgPing m;
@@ -1220,6 +1377,7 @@ void MultiPlayer::do_host_nat_punch(MpMsgHostNatPunch *in)
 	a.port = in->port;
 
 	send_ping(host->socket, &a);
+#endif
 }
 
 // Returns pointer to the recv_buf when a message is received, with size set.
@@ -1235,6 +1393,7 @@ void MultiPlayer::do_host_nat_punch(MpMsgHostNatPunch *in)
 // Currently, pointers for from and size are always expected.
 char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 {
+#ifndef EMSCRIPTEN
 	int ret;
 	ENetEvent event;
 	PlayerDesc *player;
@@ -1322,6 +1481,9 @@ char *MultiPlayer::receive(uint32_t *from, uint32_t *size, int *sysMsgCount)
 	}
 
 	return got_recv;
+#else
+	return NULL;
+#endif
 }
 
 /*
@@ -1334,13 +1496,18 @@ static int sort_session_id(const void *a, const void *b)
 
 static int sort_session_name(const void *a, const void *b)
 {
+#ifndef EMSCRIPTEN
 	return strcmp( ((SessionDesc *)a)->session_name, ((SessionDesc *)b)->session_name );
+#else
+	return 0;
+#endif
 }
 
 // sort current_sessions
 // <int> sortType, 1=sort by GUID, 2=sort by session name
 void MultiPlayer::sort_sessions(int sortType)
 {
+#ifndef EMSCRIPTEN
 
 	// BUGHERE : quick_sort is a DynArray function but current_sessions is DynArrayB
 	switch(sortType)
@@ -1355,10 +1522,12 @@ void MultiPlayer::sort_sessions(int sortType)
 	default:
 		err_here();
 	}
+#endif
 }
 
 int MultiPlayer::retrieve_packet(ENetEvent *event, uint32_t *size)
 {
+#ifndef EMSCRIPTEN
 	int status = 0;
 	if (event->packet->dataLength > recv_buffer_size) {
 		if (recv_buf) {
@@ -1375,4 +1544,7 @@ int MultiPlayer::retrieve_packet(ENetEvent *event, uint32_t *size)
 	}
 	enet_packet_destroy(event->packet);
 	return status;
+#else
+	return 0;
+#endif
 }
