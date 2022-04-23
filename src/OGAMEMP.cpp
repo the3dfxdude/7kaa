@@ -1745,6 +1745,7 @@ const char *login_failed_msg = N_("Unable to connect to the 7kfans service.\n(No
 //-------- Begin of function Game::mp_select_session --------//
 int Game::mp_select_session()
 {
+#ifndef EMSCRIPTEN
 
 #define SSOPTION_PAGE           0x00000010
 #define SSOPTION_POLL_SESSION   0x00000001
@@ -1880,6 +1881,7 @@ int Game::mp_select_session()
 
 				// ------- update choice ---------- //
 				choice = 0;
+				
 				for( s = 1; mp_obj.get_session(s); ++s )
 				{
 					if( misc.uuid_compare(sessionGuid, mp_obj.get_session(s)->session_id) )
@@ -2034,8 +2036,11 @@ exit_poll:
 
 	if( !vga_front.buf_locked )
 		vga_front.lock_buf();
-
 	return choice;
+#else
+	return 0;
+#endif
+	
 }
 //-------- End of function Game::mp_select_session --------//
 
@@ -2045,6 +2050,7 @@ exit_poll:
 // connection is seen for a period of time.
 int Game::mp_join_session(int session_id)
 {
+#ifndef EMSCRIPTEN
 	Button buttonCancel;
 	int width;
 	const int box_button_margin = 32; // BOX_BUTTON_MARGIN
@@ -2152,6 +2158,9 @@ END:
 	}
 
 	return mp_obj.is_player_connecting(1);
+#else
+	return 0;
+#endif
 }
 
 
@@ -2331,6 +2340,7 @@ int Game::mp_get_leader_board()
 // return 0 = cancel, 1 = ok
 int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 {
+#ifndef EMSCRIPTEN
 	const int offsetY = 212;
 	char optionMode = OPTION_BASIC;
 	char menuTitleBitmap[] = "TOP-NMPG";
@@ -4220,6 +4230,9 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 	}		// end if(retFlag)
 
 	return retFlag;
+#else
+	return 0;
+#endif
 }
 #ifdef Y_SHIFT
 	#error
@@ -4232,6 +4245,7 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 // return 0 = cancel, 1 = ok
 int Game::mp_select_load_option(char *fileName)
 {
+#ifndef EMSCRIPTEN
 	const int offsetY = 212;
 	char optionMode = OPTION_BASIC;
 	char menuTitleBitmap[] = "TOP-LMPG";
@@ -5644,6 +5658,9 @@ int Game::mp_select_load_option(char *fileName)
 	}
 
 	return retFlag;
+#else
+	return 0;
+#endif
 }
 #ifdef Y_SHIFT
 	#error
