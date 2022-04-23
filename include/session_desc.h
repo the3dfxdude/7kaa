@@ -22,9 +22,17 @@
 #ifndef __SESSIONDESC_H
 #define __SESSIONDESC_H
 
+#ifndef EMSCRIPTEN
 #include <MPTYPES.h>
 #include <misc_uuid.h>
 #include <enet/enet.h>
+#else
+typedef void * ENetAddress;
+typedef void ENetEvent;
+typedef void * ENetSocket;
+typedef void ENetPeer;
+typedef void ENetPacket;
+#endif
 
 struct SessionFlags {
 	enum {
@@ -37,6 +45,7 @@ struct SessionFlags {
 
 struct SessionDesc
 {
+#ifndef EMSCRIPTEN
 	char session_name[MP_FRIENDLY_NAME_LEN+1];
 	char password[MP_FRIENDLY_NAME_LEN+1];
 	guuid_t session_id;
@@ -47,6 +56,7 @@ struct SessionDesc
 
 	SessionDesc() = default;
 	SessionDesc(const char* session_name, const guuid_t& session_id, uint32_t flags, const ENetAddress& address);
+#endif
 };
 
 #endif

@@ -25,7 +25,7 @@
 #include <GAMEDEF.h>
 #include <cstring>
 
-
+#ifndef EMSCRIPTEN
 SessionDesc::SessionDesc(const char* session_name, const guuid_t& session_id, uint32_t flags, const ENetAddress& address)
 	: /*session_name*/
 	  password{},
@@ -39,3 +39,4 @@ SessionDesc::SessionDesc(const char* session_name, const guuid_t& session_id, ui
 	this->session_name[MP_FRIENDLY_NAME_LEN] = 0;
 	misc.uuid_copy(this->session_id, session_id);
 }
+#endif

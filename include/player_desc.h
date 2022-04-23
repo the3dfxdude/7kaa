@@ -25,11 +25,16 @@
 #ifndef __PLAYER_DESC_H
 #define __PLAYER_DESC_H
 
+#ifndef EMSCRIPTEN
 #include <MPTYPES.h>
 #include <enet/enet.h>
+#else
+#include <session_desc.h>
+#endif
 
 class PlayerDesc
 {
+#ifndef EMSCRIPTEN
 public:
 	uint32_t id;
 	char name[MP_FRIENDLY_NAME_LEN+1];
@@ -37,6 +42,7 @@ public:
 	ENetAddress address;
 
 	PlayerDesc(const char* name, const ENetAddress& address);
+#endif
 };
 
 #endif // __PLAYER_DESC_H

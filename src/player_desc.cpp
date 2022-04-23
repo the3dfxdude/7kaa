@@ -25,7 +25,7 @@
 
 #include <player_desc.h>
 #include <string.h>
-
+#ifndef EMSCRIPTEN
 PlayerDesc::PlayerDesc(const char* name, const ENetAddress& address)
 	: id(0),
 	  authorized(0),
@@ -34,3 +34,4 @@ PlayerDesc::PlayerDesc(const char* name, const ENetAddress& address)
 	strncpy(this->name, name, MP_FRIENDLY_NAME_LEN + 1);
 	this->name[MP_FRIENDLY_NAME_LEN] = '\0';
 }
+#endif

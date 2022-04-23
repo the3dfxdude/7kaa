@@ -30,7 +30,11 @@
 #include <player_desc.h>
 #include <ODYNARRB.h>
 #include <stdint.h>
+
+#ifndef EMSCRIPTEN
 #include <enet/enet.h>
+#endif
+
 #include <OMISC.h>
 
 
@@ -144,6 +148,7 @@ struct MpMsgHostNatPunch {
 class MultiPlayer
 {
 private:
+#ifndef EMSCRIPTEN
 
 	int               init_flag;
 	int               lobbied_flag;
@@ -169,15 +174,22 @@ private:
 	guuid_t            service_login_id;
 
 	int update_available;
+#endif
 
 public:
-
+  
 	MultiPlayer();
 	~MultiPlayer();
 
 	void   init(ProtocolType);
 	void   deinit();
-	bool   is_initialized() const { return init_flag != 0; }
+	bool   is_initialized() const { 
+#ifdef EMSCRIPTEN
+          return false;	  
+#else
+	  return init_flag != 0; 
+#endif	  
+	}
 
 	// ------- functions on lobby -------- //
 	int    init_lobbied(int maxPlayers, char * cmdLine);
@@ -214,7 +226,13 @@ public:
 	PlayerDesc* search_player(uint32_t playerId);
 	int         is_player_connecting(uint32_t playerId);
 	int         get_player_count();
-	uint32_t    get_my_player_id() const { return my_player_id; }
+	uint32_t    get_my_player_id() const { 
+#ifdef EMSCRIPTEN
+	  return 0;
+#else
+	  return my_player_id; 
+#endif
+	}
 
 	// ------- functions on message passing ------//
 	int    send(uint32_t to, void * data, uint32_t msg_size);
