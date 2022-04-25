@@ -38,8 +38,9 @@ static void disp_credits_2();
 static void disp_credits_3();
 static void disp_credits_4();
 static void disp_credits_5();
-static void disp_credits(int y, char** creditNameArray);
 */
+static void disp_credits_6();
+static void disp_credits(int y, const char** creditNameArray);
 
 //------ Begin of function Game::view_credits ------//
 
@@ -96,6 +97,17 @@ void Game::view_credits()
 		return;								// 60 seconds to time out
 	}
 #endif
+
+	//------ display the 6th page -----//
+
+	vga_util.disp_image_file("CREDITS6");
+	disp_credits_6();
+
+	if( mouse.wait_press(60)==2 )		// return 2 if pressed ESC or right mouse click
+	{
+		vga_util.finish_disp_image_file();
+		return;								// 60 seconds to time out
+	}
 
 	vga_util.finish_disp_image_file();
 }
@@ -241,12 +253,46 @@ static void disp_credits_4()
 }
 //------ End of static function disp_credits_4 ------//
 
+*/
+
+//------ Begin of static function disp_credits_4 ------//
+
+static void disp_credits_6()
+{
+	static const char* credit_name_array[] =
+	{
+		"Jesse Allen",
+		"Lenny Andreu",
+		"Colombo",
+		"L. Alberto Gimenez",
+		"jlac1024",
+		"Microvirus",
+		"Timothy Rink",
+		"sraboy",
+		"Alex Streit",
+		"toaster",
+		"Aleksey V.",
+		"Unavowed",
+		NULL
+	};
+
+	//----------------------------------//
+
+	int y=260;
+
+	font_news.center_put( 0, y, VGA_WIDTH-1, y+font_bible.height()-1,
+		"www.7kfans.com" );
+
+	disp_credits(y, credit_name_array);
+}
+//------ End of static function disp_credits_6 ------//
+
 
 //------ Begin of static function disp_credits ------//
 
-static void disp_credits(int y, char** creditNameArray)
+static void disp_credits(int y, const char** creditNameArray)
 {
-	y+=font_bible.height()+13;
+	y+=font_news.height()+13;
 
 	String str;
 
@@ -279,10 +325,9 @@ static void disp_credits(int y, char** creditNameArray)
 			}
 		}
 
-		font_bible.center_put( 0, y, VGA_WIDTH-1, y+font_bible.height()-1, str );
-		y+=font_bible.height()+3;
+		font_news.center_put( 0, y, VGA_WIDTH-1, y+font_news.height()-1, str );
+		y+=font_news.height()+3;
 	}
 }
 //------ End of static function disp_credits ------//
 
-*/
