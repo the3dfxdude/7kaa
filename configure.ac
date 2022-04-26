@@ -112,13 +112,14 @@ input_backend=sdl    # sdl
 video_backend=sdl    # sdl
 platform=posix
 jwasm_fmt="-elf -zt0"
-enable_enet=yes
 
 # Set in argument handlers:
 # enable_asm=no
 # enable_curl=yes
 # enable_debug=no
 # enable_dynamic_support_libs=no
+# enable_enet=yes
+# enable_multiplayer=yes
 
 # Configuration options
 
@@ -138,13 +139,18 @@ AC_ARG_ENABLE([debug],
 )
 
 AC_ARG_ENABLE([multiplayer],
-  AS_HELP_STRING([--enable-multiplayer], [enable multiplayer support in menu]),
-  [enable_multiplayer=yes], [enable_multiplayer=auto]
+  AS_HELP_STRING([--disable-multiplayer], [disable multiplayer support in menu]),
+  [], [enable_multiplayer=yes]
 )
 
 AC_ARG_ENABLE([dynamic-mingw-gnulibs],
   AS_HELP_STRING([--enable-dynamic-mingw-gnulibs], [enable dynamic linking to gnu libs on mingw]),
   [], [enable_dynamic_mingw_gnulibs=no]
+)
+
+AC_ARG_ENABLE([enet],
+  AS_HELP_STRING([--disable-enet], [disable enet support]),
+  [], [enable_enet=yes]
 )
 
 
@@ -164,6 +170,24 @@ AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
 AM_CONDITIONAL([USE_WINDOWS],  [test "$platform"      = windows])
 AM_CONDITIONAL([USE_ASM],      [test "$enable_asm"    = yes])
 AM_CONDITIONAL([USE_CURL],     [test "$enable_curl"   = yes])
+AM_CONDITIONAL([USE_ENET],     [test "$enable_enet"   = yes])
+
+# Sync multiplayer support options
+AS_IF([test "$enable_multiplayer" = yes], [
+  AS_IF([test "$fpu_type" != 387], [
+    enable_multiplayer=no
+  ])
+  AS_IF([test "$enable_enet" != yes], [
+    enable_multiplayer=no
+  ])
+  AS_IF([test "$enable_enet" != yes], [
+    AC_MSG_NOTICE([Disabled: Multiplayer requires enet and 387 support])
+  ])
+])
+AS_IF([test "$enable_multiplayer" != yes], [
+  enable_curl=no
+  enable_enet=no
+])
 
 
 # Jwasm assembler set-up
@@ -311,12 +335,6 @@ AS_IF([test "$input_backend" = sdl || test "$video_backend" = sdl], [
 	    [Define to 1 if using SDL as the video/input backend])
 ])
 
-AS_IF([test "$enable_multiplayer" = auto], [
-  enable_multiplayer=yes
-  AS_IF([test "$fpu_type" != 387], [
-    enable_multiplayer=no
-  ])
-])
 AS_IF([test "$enable_multiplayer" != yes], [
   AC_DEFINE([DISABLE_MULTI_PLAYER], [1], [Define to 1 if the multiplayer menu option is disabled])
 ])
@@ -338,6 +356,12 @@ AS_IF([test "$enable_debug" = yes], [
 AS_IF([test "$enable_asm" = yes], [
   AC_DEFINE([USE_ASM], [1], [
     Define to 1 if using assembly routines
+  ])
+])
+
+AS_IF([test "$enable_enet" = yes], [
+  AC_DEFINE([USE_ENET], [1], [
+    Define to 1 if using enet support
   ])
 ])
 
@@ -365,5 +389,5 @@ AC_MSG_NOTICE([video backend: $video_backend])
 AC_MSG_NOTICE([input backend: $input_backend])
 echo
 AC_MSG_NOTICE([x86 asm: $enable_asm])
-AC_MSG_NOTICE([multiplayer: $enable_multiplayer])
+AC_MSG_NOTICE([multiplayer: menu=$enable_multiplayer curl=$enable_curl enet=$enable_enet fpu=$fpu_type])
 AC_MSG_NOTICE([debugging features: $enable_debug])

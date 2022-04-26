@@ -30,7 +30,14 @@
 #include <player_desc.h>
 #include <ODYNARRB.h>
 #include <stdint.h>
+#ifdef USE_ENET
 #include <enet/enet.h>
+#else
+typedef void ENetEvent;
+typedef void * ENetHost;
+typedef void * ENetSocket;
+typedef void ENetPeer;
+#endif
 #include <OMISC.h>
 
 

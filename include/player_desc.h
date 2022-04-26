@@ -26,7 +26,11 @@
 #define __PLAYER_DESC_H
 
 #include <MPTYPES.h>
+#ifdef USE_ENET
 #include <enet/enet.h>
+#else
+typedef void * ENetAddress;
+#endif
 
 class PlayerDesc
 {

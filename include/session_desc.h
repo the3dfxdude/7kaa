@@ -24,7 +24,11 @@
 
 #include <MPTYPES.h>
 #include <misc_uuid.h>
+#ifdef USE_ENET
 #include <enet/enet.h>
+#else
+typedef void * ENetAddress;
+#endif
 
 struct SessionFlags {
 	enum {
