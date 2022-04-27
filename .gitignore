@@ -96,5 +96,6 @@ doc/main.fdb_latexmk
 doc/main.fls
 doc/main.ilg
 doc/main.ind
-tools/genfont
 tools/bmpicn
+tools/genfont
+tools/icnpack
