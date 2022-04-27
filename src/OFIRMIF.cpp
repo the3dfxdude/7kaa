@@ -47,8 +47,7 @@
 
 //---------- Define static variables ------------//
 
-static Button3D button_sell, button_destruct, button_builder;
-static Button button_request_builder;
+static Button3D button_sell, button_destruct, button_builder, button_request_builder;
 static short  	 pop_disp_y1;
 static char     worker_id_array[MAX_WORKER];
 static Firm*    cur_firm_ptr;
@@ -301,7 +300,7 @@ void Firm::disp_basic_info(int dispY1, int refreshFlag)
 		else if( showReqRepairIcon )
 		{
 			button_builder.init_flag = 0;
-			button_request_builder.paint_text( INFO_X1+30, dispY1+1, "R", 1, 0 );
+			button_request_builder.paint( INFO_X1+30, dispY1+1, "REPAIRQU", "REPAIRQD" );
 			button_request_builder.set_help_code( "REPAIRQ" );
 		}
 	}
@@ -310,6 +309,7 @@ void Firm::disp_basic_info(int dispY1, int refreshFlag)
 		if( showRepairIcon )
 		{
 			button_request_builder.hide();
+			button_request_builder.reset();
 
 			if( !button_builder.init_flag || !button_builder.enable_flag )
 			{
@@ -325,7 +325,7 @@ void Firm::disp_basic_info(int dispY1, int refreshFlag)
 
 			if( !button_request_builder.init_flag || !button_request_builder.enable_flag )
 			{
-				button_request_builder.paint_text( INFO_X1+30, dispY1+1, "R", 1, 0 );
+				button_request_builder.paint( INFO_X1+30, dispY1+1, "REPAIRQU", "REPAIRQD" );
 				button_request_builder.set_help_code( "REPAIRQ" );
 			}
 		}
