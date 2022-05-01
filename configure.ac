@@ -197,11 +197,12 @@ AS_IF([test x"$enable_emscripten" = xyes], [
     [ exit
     ])
     
-    GLOBAL_CFLAGS="$GLOBAL_CFLAGS -sALLOW_MEMORY_GROWTH"
-    GLOBAL_LDFLAGS="$GLOBAL_LDFLAGS --shell-file=../shell.html --preload-file ../@data"
+    GLOBAL_CFLAGS="$GLOBAL_CFLAGS -sASYNCIFY -sALLOW_MEMORY_GROWTH"
+    GLOBAL_LDFLAGS="$GLOBAL_LDFLAGS  -sASYNCIFY --shell-file=../shell.html --preload-file ../data@"
     EXEEXT=".html"
 ])
 
+AM_CONDITIONAL(COMPILER_IS_EMSCRIPTEN, [test x"$enable_emscripten" = xyes])
 AM_CONDITIONAL([AUDIO_OPENAL], [test "$audio_backend" = openal])
 AM_CONDITIONAL([INPUT_SDL],    [test "$input_backend" = sdl])
 AM_CONDITIONAL([VIDEO_SDL],    [test "$video_backend" = sdl])
