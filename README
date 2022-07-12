@@ -69,7 +69,7 @@ Optional dependencies
   -> Packagers: Copy music into program data folder or PACKAGE_DATA_DIR
   -> Make sure the file names are in upper-case
 * NSIS for building a Windows installer
-* TeX Live with latexmk, fontaxes, accanthis, universalis, and yfonts. 
+* TeX Live with latexmk, fontaxes, accanthis, universalis, and yfonts 
 
 Running locally from source build
 --------
