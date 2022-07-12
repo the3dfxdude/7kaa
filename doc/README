@@ -1,16 +1,4 @@
-% Greetings reader, my purpose is a complete restoration of the original manual with the updates. Special attention has been given to preserving the original author's voice; Overall, however, this is a different manual with lots of minor and major differences, written with Modern Language Association style guidance and coded in LaTeX with Texstudio on a minimalist Texlive distribution on GNU/Linux and compiled with pdflatex. I welcome fellow community members to contribute to this manual. Signed with gratitude to everyone who put effort in it.
-
-% -- Building the manual  -- %
-
-% Required dependencies:
-% * texlive-core
-% * texlive-fontsextra - accanthis and universalis
-% Optional dependencies:
-% * latexmk
-% To compile, run:
-% $ latexmk or pdflatex main.tex
-
-% -- Building the manual end -- %
+NOTE: this README is essentially deprecated and will be heavily rewritten once changes I made over the years are reverted to align with a more preservationist method of development. The changelog is no longer needed since I use git more. Any TODO or bugs will be noted in an issue tracker. I will keep some information about dependencies and compiling and also some general style guidance for needed additions to blend in well.
 
 % -- TODO -- %
 
@@ -69,13 +57,6 @@
     % Capitalization is not consistent.
 
 % -- Notes end -- %
-
-% -- References -- %
-
-    % https://cdn.akamai.steamstatic.com/steam/apps/450140/manuals/Seven_Kingdoms_Ancient_Adversaries_manual.pdf
-    % https://archive.org/details/Seven_Kingdoms
-    
-% -- References end -- %
 
 % -- Changelog -- %
 
