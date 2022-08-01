@@ -28,9 +28,10 @@ use lib $FindBin::Bin;
 
 use dbf;
 
-if (@ARGV != 4) {
-	print "Usage: $0 ptr.dbf file.res filename_field ptr_field file_ext\n";
+if (@ARGV < 4) {
+	print "Usage: $0 ptr.dbf file.res filename_field ptr_field <file_ext>\n";
 	print "Extracts files from res that are enumerated and offset in the dbf file. This is the LIBDB or ResourceDb style format.\n";
+	print "If file extension is not specified, then .ICN is used.\n";
 	exit 0;
 }
 my ($dbf_file, $res_file, $filename_field, $ptr_field, $ext) = @ARGV;
