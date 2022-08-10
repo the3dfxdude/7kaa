@@ -1,7 +1,7 @@
 Seven Kingdoms: Ancient Adversaries
 -----------------------------------
 
-Release version 2.15.5
+Release version 2.15.6
 Project website: www.7kfans.com
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
@@ -11,33 +11,8 @@ details of the license. We are indebted to Enlight for making the 7kfans
 project possible and giving a new chance to build a community for fans
 of the game.
 
-Summary of changes from 2.15.4 to 2.15.5
+Summary of changes from 2.15.5 to 2.15.6
 ---------
- * Fixed UI regression in setting auto taxing
- * Improved stability of starting a multiplayer game
- * Reduced load of crc checking in multiplayer
- * Improved formatting of the game manual
- * Fixed wrongly applied leadership gain when the leader was not in range
- * Fixed more crashes
- * Improved AI's handling of combat mission at sea
- * Reset powered attack type when line-of-sight is broken
- * Improved idle-attack detection when there are many units in the game
- * Fixed incorrect pathing when unit is in a building or on a ship
- * Do not cycle powered attack when the target moves, correcting the usage behavior of Egyptian fire arrows
- * Added Esperanto translation
- * Added support for copying trade routes for trade ships
- * Added a copy trade route button when hovering the mouse over units in the trade report
- * More trade report improvements
- * Added a request builder button when a building is selected
- * Set the default for mobilizing civilians to non-aggressive mode to prevent inadvertantly sending them to their death
- * Corrected building linkage when buildings are densely placed
- * Corrected AI related bugs
- * Improved the AI's ability to send help to an ally
- * Improved Fryhtan AI to help an Ordo under attack
- * Fixed crashes related to bullets
- * Fixed spy vision of a spy on a ship
- * Fixed spy vision of a spy assigned to building for construction or repair
- * Added a credits screen
 
 
 System Requirements
