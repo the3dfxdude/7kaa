@@ -338,6 +338,9 @@ void Help::disp()
 
 		for( i=0 ; i<help_info_count ; i++, helpInfo++ )
 		{
+			if( helpInfo->help_code[0] ) // only checking HelpInfo with location defined
+				continue;
+
 			if( spotX >= helpInfo->area_x1 && spotY >= helpInfo->area_y1 &&
 				 spotX <= helpInfo->area_x2 && spotY <= helpInfo->area_y2 )
 			{
