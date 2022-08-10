@@ -162,6 +162,8 @@ void Help::load(char* helpFileName)
 		{
 			strncpy( iptr->help_code, tokenStr, iptr->HELP_CODE_LEN );
 			iptr->help_code[iptr->HELP_CODE_LEN] = '\0';
+
+			iptr->area_x1 = iptr->area_y1 = iptr->area_x2 = iptr->area_y2 = 0;
 		}
 
 		//------ if it's a help area position ------//
@@ -172,6 +174,8 @@ void Help::load(char* helpFileName)
 			iptr->area_y1 = (short) fileTxt.get_num();
 			iptr->area_x2 = (short) fileTxt.get_num();
 			iptr->area_y2 = (short) fileTxt.get_num();
+
+			iptr->help_code[0] = '\0';
 		}
 		else
 			err_here();
