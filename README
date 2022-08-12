@@ -44,6 +44,7 @@ Optional dependencies
   -> Packagers: Copy music into program data folder or PACKAGE_DATA_DIR
   -> Make sure the file names are in upper-case
 * NSIS for building a Windows installer
+* TeX Live with latexmk, fontaxes, accanthis, universalis, and yfonts for generating the game manual in pdf
 
 
 Running locally from source build
