@@ -154,12 +154,14 @@ int String::at(char* searchStr)
 //
 void String::catf(const char *format, ...)
 {
+   int l = strlen(str_buf);
+   int left = MAX_STR_LEN-l;
+   if( left <= 0 )
+      return;
    va_list valist;
    va_start(valist, format);
-   vsnprintf(work_buf, MAX_STR_LEN+1, format, valist);
+   vsnprintf(str_buf+l, left+1, format, valist);
    va_end(valist);
-   strncat(str_buf, work_buf, MAX_STR_LEN);
-   str_buf[MAX_STR_LEN] = '\0';
 }
 //---------- End of function String::catf ---------------//
 
@@ -203,29 +205,28 @@ String& String::operator=(long value)
 
 String& String::operator+=(String& s)
 {
-   strncat( str_buf, s.str_buf, MAX_STR_LEN );
+   strncat( str_buf, s.str_buf, MAX_STR_LEN-strlen(str_buf) );
    str_buf[MAX_STR_LEN] = '\0';
    return *this;
 }
 
 String& String::operator+=(char *s)
 {
-   strncat( str_buf, s, MAX_STR_LEN );
+   strncat( str_buf, s, MAX_STR_LEN-strlen(str_buf) );
    str_buf[MAX_STR_LEN] = '\0';
    return *this;
 }
 
 String& String::operator+=(const char *s)
 {
-   strncat( str_buf, s, MAX_STR_LEN );
+   strncat( str_buf, s, MAX_STR_LEN-strlen(str_buf) );
    str_buf[MAX_STR_LEN] = '\0';
    return *this;
 }
 
 String& String::operator+=(long value)
 {
-   strncat( str_buf, misc.format(value), MAX_STR_LEN );
-   str_buf[MAX_STR_LEN] = '\0';
+   (*this) += misc.format(value);
    return *this;
 }
 
@@ -236,14 +237,23 @@ String& String::operator+=(long value)
 
 String& String::operator*=(int n)
 {
-  memcpy( work_buf, str_buf, len()+1 );
+   int l = strlen(str_buf);
+   if( !l )
+      return *this;
 
-  for(int i=1; i<n; i++)
-     strncat(str_buf, work_buf, MAX_STR_LEN);
+   int left = MAX_STR_LEN-l;
+   char *end = str_buf+l;
 
-  str_buf[MAX_STR_LEN] = '\0';
+   for( int i=1; i<n && left > 0; i++ )
+   {
+      int w = left>l ? l : left;
+      memcpy(end, str_buf, w);
+      left -= w;
+      end += w;
+   }
+   *end = '\0';
 
-  return *this;
+   return *this;
 }
 
 //---------- End of operator*= functions -----------//
