@@ -26,6 +26,7 @@
 
 #include <ALL.h>
 #include <OCONFIG.h>
+#include <OBUTTCUS.h>
 
 //-------- Define game modes -----------//
 
@@ -84,6 +85,8 @@ struct OptionInfo
 	short x1, y1, x2, y2;
 };
 
+enum { MAIN_OPTION_COUNT = 6 };
+
 //-------- Define class Game -----------//
 
 struct Location;
@@ -97,7 +100,7 @@ public:
 	char			started_flag;
 	char			game_mode;
 	char			game_has_ended;		// whether game_end() has been called once already and the player is now just staying in the game to continue to play or observe
-
+	ButtonCustom main_menu_button_list[MAIN_OPTION_COUNT];
 	//-------- color remap info -------//
 
 	ColorRemap	color_remap_array[MAX_COLOR_SCHEME+1];
@@ -165,7 +168,6 @@ private:
 	int			mp_select_session();
 	void			mp_disp_players();
 	int			mp_select_load_option(char *);
-	char *get_bitmap_by_name(const char *bitmap_name);
 	void update_main_menu_button(int x, int y, OptionInfo menu_button, char * bitmap);
 };
 #pragma pack()
