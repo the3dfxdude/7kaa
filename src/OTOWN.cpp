@@ -1846,16 +1846,37 @@ void Town::think_rebel()
 
 	//--- rebel if 2/3 of the population becomes discontented ---//
 
-	int i, discontentedCount=0, rebelLeaderRaceId=0, largestRebelRace=0;
+	int i, discontentedCount=0, rebelLeaderRaceId=0, largestRebelRace=0, trainRaceId=0;
+	int restrictRebelCount[MAX_RACE];
+
+	if( train_unit_recno )
+		trainRaceId = unit_array[train_unit_recno]->race_id;
 
 	for( i=0 ; i<MAX_RACE ; i++ )
 	{
-		if( race_pop_array[i] <= race_spy_count_array[i] )	// spies do not rebel together with the rebellion
-			continue;
+		restrictRebelCount[i] = race_spy_count_array[i];  // spies do not rebel together with the rebellion
 
-		if( race_loyalty_array[i] <= REBEL_LOYALTY )
+		if( race_pop_array[i]>0 && race_loyalty_array[i] <= REBEL_LOYALTY )
 		{
 			discontentedCount += race_pop_array[i];
+
+			// count firm spies that reside in this town
+			for( int j=0 ; j<linked_firm_count ; j++ )
+			{
+				Firm* firmPtr = firm_array[linked_firm_array[j]];
+				for( int k=0 ; k<firmPtr->worker_count ; k++ )
+				{
+					Worker* workerPtr = firmPtr->worker_array+k;
+					if( workerPtr->spy_recno && workerPtr->town_recno == town_recno )
+						restrictRebelCount[i]++;
+				}
+			}
+
+			if( trainRaceId==i+1 )
+				restrictRebelCount[i]++; // unit under training cannot rebel
+
+			if( race_pop_array[i] <= restrictRebelCount[i] )
+				continue; // no one can lead from this group
 
 			if( race_pop_array[i] > largestRebelRace )
 			{
@@ -1865,10 +1886,11 @@ void Town::think_rebel()
 		}
 	}
 
+	if( !rebelLeaderRaceId ) // no discontention or no one can lead
+		return;
+
 	if( population == 1 )			// if population is 1 only, handle otherwise
 	{
-		if( !rebelLeaderRaceId )
-			return;
 	}
 	else
 	{
@@ -1912,13 +1934,13 @@ void Town::think_rebel()
 
 	for( i=0 ; i<MAX_RACE ; i++ )
 	{
-		if( race_pop_array[i] <= race_spy_count_array[i] || race_loyalty_array[i] > REBEL_LOYALTY )
+		if( race_pop_array[i] <= restrictRebelCount[i] || race_loyalty_array[i] > REBEL_LOYALTY )
 			continue;
 
 		if( population==1 )		// if only one peasant left, break, so not all peasants will rebel 
 			break;
 
-		raceRebelCount = (int) (race_pop_array[i]-race_spy_count_array[i]) * (30+misc.random(30)) / 100;		// 30% - 60% of the unit will rebel.
+		raceRebelCount = (int) (race_pop_array[i]-restrictRebelCount[i]) * (30+misc.random(30)) / 100;		// 30% - 60% of the unit will rebel.
 		err_when(raceRebelCount+1 > MAX_TOWN_POPULATION); // plus 1 for the leader, cannot excess MAX_TOWN_POPULATION, consider the case these units settle immediately
 
 		for( j=0 ; j<raceRebelCount ; j++ )		// no. of rebel units of this race
