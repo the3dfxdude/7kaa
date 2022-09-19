@@ -314,10 +314,16 @@ int Sys::init_directx()
 
    //---------- Initialize Audio ----------//
 
-   DEBUG_LOG("Attempt audio.init()");
-   if( cmd_line.enable_if )
+   if( cmd_line.enable_audio )
+   {
+      DEBUG_LOG("Attempt audio.init()");
       audio.init();
-   DEBUG_LOG(audio.wav_init_flag);
+      DEBUG_LOG(audio.wav_init_flag);
+   }
+   else
+   {
+      DEBUG_LOG("Audio backend disabled");
+   }
    music.init();
    se_ctrl.init();
 

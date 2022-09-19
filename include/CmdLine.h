@@ -34,6 +34,7 @@ enum StartupMode
 
 struct CmdLine
 {
+	int		enable_audio;
 	int		enable_if;
 	int		game_speed;
 	StartupMode	startup_mode;

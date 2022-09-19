@@ -29,6 +29,7 @@
 
 CmdLine::CmdLine()
 {
+	enable_audio = 1;
 	enable_if = 1;
 	game_speed = -1;
 	startup_mode = STARTUP_NORMAL;
@@ -77,6 +78,7 @@ int CmdLine::init(int argc, char **argv)
 	const char *lobbyHostOption = "-host";
 	const char *lobbyNameOption = "-name";
 	const char *demoOption = "-demo";
+	const char *noAudioOption = "-noaudio";
 	const char *noIfOption = "-noif";
 	const char *speedOption = "-speed";
 	const char *windowOption = "-win";
@@ -104,10 +106,17 @@ int CmdLine::init(int argc, char **argv)
 		{
 			set_startup_mode(STARTUP_DEMO);
 		}
+		else if( !strcmp(argv[i], noAudioOption) )
+		{
+			enable_audio = 0;
+		}
 		else if( !strcmp(argv[i], noIfOption) )
 		{
 			if( cmd_line.startup_mode == STARTUP_DEMO )
+			{
+				enable_audio = 0;
 				enable_if = 0;
+			}
 		}
 		else if( !strcmp(argv[i], speedOption) )
 		{
