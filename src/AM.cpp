@@ -383,7 +383,7 @@ int main(int argc, char **argv)
 		config.help_mode = NO_HELP;
 		game.init();
 		game.game_mode = GAME_DEMO;
-		info.init_random_seed(0);
+		info.init_random_seed(cmd_line.rnd);
 		battle.run(0);
 		game.deinit();
 		break;
