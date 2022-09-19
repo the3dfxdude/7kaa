@@ -47,6 +47,9 @@ public:
 	// firm settings
 	char			firm_mobilize_civilian_aggressive;
 
+	// bug fix settings
+	char			fix_recruit_dec_loyalty;
+
 	// locale settings
 	char			locale[LOCALE_LEN+1];
 

@@ -229,6 +229,8 @@ void ConfigAdv::reset()
 {
 	firm_mobilize_civilian_aggressive = 0;
 
+	fix_recruit_dec_loyalty = 1;
+
 	locale[0] = 0;
 
 	monster_alternate_attack_curve = 0;
@@ -288,6 +290,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "firm_mobilize_civilian_aggressive") )
 	{
 		if( !read_bool(value, &firm_mobilize_civilian_aggressive) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "fix_recruit_dec_loyalty") )
+	{
+		if( !read_bool(value, &fix_recruit_dec_loyalty) )
 			return 0;
 		update_check_sum(name, value);
 	}
