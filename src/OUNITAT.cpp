@@ -574,6 +574,8 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	Firm *targetFirm = firm_array[locPtr->firm_recno()];
 	err_when(!targetFirm);
 
+	Nation *attackNationPtr = nation_array.is_deleted(attackNationRecno) ? NULL : nation_array[attackNationRecno];
+
 	//------------------------------------------------------------------------------//
 	// change relation to hostile
 	// check for NULL to skip unhandled case by bullets
@@ -582,10 +584,10 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 	if( attackUnit!=NULL && attackUnit->cur_action!=SPRITE_DIE &&
 		 targetFirm->nation_recno != attackNationRecno )		// the target and the attacker's nations are different (it's possible that when a unit who has just changed nation has its bullet hitting its own nation)
 	{
-		if( attackNationRecno && targetFirm->nation_recno )
+		if( attackNationPtr && targetFirm->nation_recno )
 		{
 			//### trevor 29/9 ###//
-			nation_array[attackNationRecno]->set_at_war_today();
+			attackNationPtr->set_at_war_today();
 			nation_array[targetFirm->nation_recno]->set_at_war_today(attackUnit->sprite_recno);
 			//### trevor 29/9 ###//
 		}
@@ -604,8 +606,8 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		//------ increase battling fryhtan score -------//
 
-		if( attackNationRecno && targetFirm->firm_id == FIRM_MONSTER )
-			nation_array[attackNationRecno]->kill_monster_score += (float) 0.01;
+		if( attackNationPtr && targetFirm->firm_id == FIRM_MONSTER )
+			attackNationPtr->kill_monster_score += (float) 0.01;
 	}
 
 	//---------- add indicator on the map ----------//
@@ -633,8 +635,8 @@ void Unit::hit_firm(Unit* attackUnit, int targetXLoc, int targetYLoc, float atta
 
 		if( targetFirm->nation_recno )
 		{
-			if( attackNationRecno )
-				nation_array[attackNationRecno]->enemy_firm_destroyed++;
+			if( attackNationPtr )
+				attackNationPtr->enemy_firm_destroyed++;
 
 			nation_array[targetFirm->nation_recno]->own_firm_destroyed++;
 		}
