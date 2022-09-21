@@ -750,7 +750,7 @@ void FirmMonster::clear_defense_mode()
 
 	for(int i=unit_array.size(); i>=1; --i)
 	{
-		if(unit_array.is_deleted(i))
+		if(unit_array.is_truly_deleted(i))
 			continue;
 
 		unitPtr = unit_array[i];

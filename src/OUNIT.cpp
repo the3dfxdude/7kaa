@@ -692,6 +692,7 @@ void Unit::deinit_unit_mode()
 
 		FirmMonster* firmMonster = (FirmMonster*) firm_array[unit_mode_para];
 
+		err_when( !firmMonster );
 		err_when( firmMonster->firm_id != FIRM_MONSTER );
 
 		firmMonster->reduce_defender_count(rank_id);
