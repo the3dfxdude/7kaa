@@ -407,6 +407,7 @@ void Unit::ask_team_help_attack(Unit* attackerUnit)
 			}
 
 			if( config_adv.unit_ai_team_help && (unitPtr->ai_unit||!nation_recno) &&
+				unitPtr->is_visible() &&
 				unitPtr->hit_points > 15.0f &&
 				(unitPtr->action_mode==ACTION_STOP ||
 				unitPtr->action_mode==ACTION_ASSIGN_TO_FIRM ||
