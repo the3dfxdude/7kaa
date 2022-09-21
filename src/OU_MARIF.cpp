@@ -492,7 +492,8 @@ void UnitMarine::disp_unit_info(int dispY1, int refreshFlag)
 		if( lastSelected != selected_unit_id > 0 )
 		{
 			lastSelected = selected_unit_id > 0;
-			vga_util.blt_buf( INFO_X1, dispY1, INFO_X2, dispY1+71, 0 );
+			info.disp();			// redisplay the interface
+			return;
 		}
 	}
 
