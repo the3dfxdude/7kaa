@@ -1069,7 +1069,7 @@ void UnitArray::assign_to_ship(int shipXLoc, int shipYLoc, int divided, short* s
 						continue;
 
 					locPtr = world.get_loc(checkXLoc, checkYLoc);
-					if(locPtr->region_id!=regionId || !locPtr->can_move(UNIT_LAND))
+					if(locPtr->region_id!=regionId || !locPtr->walkable())
 						continue;
 
 					unitPtr = (Unit*) get_ptr(newSelectedArray[i]);
