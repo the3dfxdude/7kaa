@@ -716,9 +716,12 @@ int TalkRes::ai_send_talk_msg(int toNationRecno, int fromNationRecno, int talkId
 // Now records in talk_msg_array cannot be deleted as
 // news_array.diplomacy() use recno to refer to talk_msg_array.
 //
-// jesse -- 2021:
-// This function calls linkin (send_talk_msg_now). It must not be called from
-// the TalkMsg class. talkMsgPtr argument must not be in talk_msg_array.
+//###### begin jesse 2022/10/2 #######//
+// This function calls linkin (send_talk_msg_now). This must not be called from
+// the TalkMsg class. The talkMsgPtr argument must not be in talk_msg_array.
+// If the calling function is referencing any pointers into talk_msg_array,
+// they must be treated as invalid after calling this function.
+//###### end jesse 2022/10/2 #######//
 //
 void TalkRes::send_talk_msg(TalkMsg* talkMsgPtr, char remoteAction)
 {

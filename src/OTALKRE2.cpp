@@ -32,6 +32,11 @@ static void delete_msg_in_reverse(TalkMsg *talkMsg);
 
 //------- Begin of function TalkRes::process_accepted_reply --------//
 //
+//###### begin jesse 2022/10/2 #######//
+// talkMsg may be invalidated after calling send_msg_now. If calling
+// send_msg_now, do it after processing the talkMsg.
+//###### end jesse 2022/10/2 #######//
+//
 void TalkRes::process_accepted_reply(TalkMsg *talkMsg)
 {
 	//---- delete duplicate message in reverse now this has been accepted ----//
@@ -130,40 +135,39 @@ void TalkRes::process_accepted_reply(TalkMsg *talkMsg)
 		case TALK_REQUEST_DECLARE_WAR:
 			if( fromNation->get_relation_status(talkMsg->talk_para1) == NATION_HOSTILE )	// the requesting nation must be at war with the enemy
 			{
-
-				//-- if we are currently allied or friendly with the nation, we need to terminate the friendly/alliance treaty first --//
-
 				TalkMsg talkMsgReply;
-
-				if( toNation->get_relation_status(talkMsg->talk_para1) == NATION_ALLIANCE )
-				{
-					memset(&talkMsgReply, 0, sizeof(TalkMsg));
-
-					talkMsgReply.to_nation_recno   = (char) talkMsg->talk_para1;
-					talkMsgReply.from_nation_recno = talkMsg->to_nation_recno;
-					talkMsgReply.talk_id           = TALK_END_ALLIANCE_TREATY;
-
-					send_talk_msg( &talkMsgReply, COMMAND_AUTO );
-				}
-
-				else if( toNation->get_relation_status(talkMsg->talk_para1) == NATION_FRIENDLY )
-				{
-					memset(&talkMsgReply, 0, sizeof(TalkMsg));
-
-					talkMsgReply.to_nation_recno   = (char) talkMsg->talk_para1;
-					talkMsgReply.from_nation_recno = talkMsg->to_nation_recno;
-					talkMsgReply.talk_id           = TALK_END_FRIENDLY_TREATY;
-
-					send_talk_msg( &talkMsgReply, COMMAND_AUTO );
-				}
-
-				//--- send a declare war message to the target kingdom ---//
-
 				memset(&talkMsgReply, 0, sizeof(TalkMsg));
 
 				talkMsgReply.to_nation_recno   = (char) talkMsg->talk_para1;
 				talkMsgReply.from_nation_recno = talkMsg->to_nation_recno;
 				talkMsgReply.talk_id           = TALK_DECLARE_WAR;
+
+				//-- if we are currently allied or friendly with the nation, we need to terminate the friendly/alliance treaty first --//
+
+				if( toNation->get_relation_status(talkMsg->talk_para1) == NATION_ALLIANCE )
+				{
+					TalkMsg breakTreatyMsg;
+					memset(&breakTreatyMsg, 0, sizeof(TalkMsg));
+
+					breakTreatyMsg.to_nation_recno   = (char) talkMsg->talk_para1;
+					breakTreatyMsg.from_nation_recno = talkMsg->to_nation_recno;
+					breakTreatyMsg.talk_id           = TALK_END_ALLIANCE_TREATY;
+
+					send_talk_msg( &breakTreatyMsg, COMMAND_AUTO );
+				}
+
+				else if( toNation->get_relation_status(talkMsg->talk_para1) == NATION_FRIENDLY )
+				{
+					TalkMsg breakTreatyMsg;
+					memset(&breakTreatyMsg, 0, sizeof(TalkMsg));
+
+					breakTreatyMsg.to_nation_recno   = (char) talkMsg->talk_para1;
+					breakTreatyMsg.from_nation_recno = talkMsg->to_nation_recno;
+					breakTreatyMsg.talk_id           = TALK_END_FRIENDLY_TREATY;
+					send_talk_msg( &breakTreatyMsg, COMMAND_AUTO );
+				}
+
+				//--- send a declare war message to the target kingdom ---//
 
 				send_talk_msg( &talkMsgReply, COMMAND_AUTO );
 
