@@ -716,6 +716,8 @@ int Nation::think_give_tribute_aid(TalkMsg* rejectedMsg)
 	int talkId;
 	int talkNationRecno = rejectedMsg->to_nation_recno;
 	int rejectedTalkId  = rejectedMsg->talk_id;
+	int rejectedMsgPara1 = rejectedMsg->talk_para1;
+	int rejectedMsgPara2 = rejectedMsg->talk_para2;
 	NationRelation* nationRelation = get_relation(talkNationRecno);
 
 	if( nationRelation->status >= NATION_FRIENDLY )
@@ -784,7 +786,7 @@ int Nation::think_give_tribute_aid(TalkMsg* rejectedMsg)
 
 		nationRelation->last_talk_reject_date_array[rejectedTalkId-1] = 0;		// reset the rejected talk id.
 
-		talk_res.ai_send_talk_msg(talkNationRecno, nation_recno, rejectedTalkId, rejectedMsg->talk_para1, rejectedMsg->talk_para2 );
+		talk_res.ai_send_talk_msg(talkNationRecno, nation_recno, rejectedTalkId, rejectedMsgPara1, rejectedMsgPara2 );
 	}
 
 	return rc;
