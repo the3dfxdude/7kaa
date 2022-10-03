@@ -1175,6 +1175,7 @@ void TalkRes::process_talk_msg()
 			talkMsg->reply_type = REPLY_REJECT;
 
 			nation_array[talkMsg->from_nation_recno]->ai_notify_reply(i);
+			talkMsg = get_talk_msg(i); // in case talkMsg ptr was invalidated in resize
 		}
 
 		//--- delete the talk message after a year ---//
