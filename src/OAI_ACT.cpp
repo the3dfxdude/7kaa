@@ -729,14 +729,20 @@ void Nation::auto_next_action(ActionNode* actionNode)
 	switch( actionNode->action_mode )
 	{
 		case ACTION_AI_SEA_TRAVEL:
-			actionNode->action_mode = ACTION_AI_SEA_TRAVEL2;
-			actionNode->instance_count = 1;	// only move one ship, it was previously set to the no. units to aboard the ship
-			actionRecno = add_action(actionNode, 1);			// 1-immediate process flag
+			{
+				ActionNode nextAction = *actionNode;
+				nextAction.action_mode = ACTION_AI_SEA_TRAVEL2;
+				nextAction.instance_count = 1;	// only move one ship, it was previously set to the no. units to aboard the ship
+				actionRecno = add_action(&nextAction, 1);			// 1-immediate process flag
+			}
 			break;
 
 		case ACTION_AI_SEA_TRAVEL2:
-			actionNode->action_mode = ACTION_AI_SEA_TRAVEL3;
-			actionRecno = add_action(actionNode, 1);			// 1-immediate process flag
+			{
+				ActionNode nextAction = *actionNode;
+				nextAction.action_mode = ACTION_AI_SEA_TRAVEL3;
+				actionRecno = add_action(&nextAction, 1);			// 1-immediate process flag
+			}
 			break;
 	}
 
