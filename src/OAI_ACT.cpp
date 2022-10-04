@@ -170,6 +170,8 @@ int Nation::process_action(int priorityActionRecno, int processActionMode)
 		if( nation_array.is_deleted(nationRecno) )		// diplomatic option can result in surrendering 
 			return 0;
 
+		actionNode = get_action(actionRecno);  // in case an action_array resize invalidated the prior ptr copy
+
 		thisSessionProcessCount++;
 
 		//------ check the return result -------//
