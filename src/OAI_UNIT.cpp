@@ -394,6 +394,9 @@ int Nation::train_unit(int skillId, int raceId, short destX, short destY, int& t
 		if( townPtr->region_id != destRegionId )
 			continue;
 
+		if( raceId && townPtr->jobless_race_pop_array[raceId-1] <= 0 )
+			continue;
+
 		//--------------------------------------//
 
 		curDist = misc.points_distance(townPtr->center_x, townPtr->center_y, destX, destY);
@@ -415,7 +418,7 @@ int Nation::train_unit(int skillId, int raceId, short destX, short destY, int& t
 	townPtr = town_array[trainTownRecno];
 
 	if( !raceId )
-		raceId = townPtr->pick_random_race(1, 1);		// 1-pick has job units also, 1-pick spy units
+		raceId = townPtr->pick_random_race(0, 1);		// 0-pick jobless units, 1-pick spy units
 
 	if( !raceId )
 		return 0;
@@ -423,6 +426,7 @@ int Nation::train_unit(int skillId, int raceId, short destX, short destY, int& t
 	int unitRecno = townPtr->recruit(skillId, raceId, COMMAND_AI);
 
 	if( !unitRecno )
+		// can happen when training a spy and the selected recruit is an enemy spy
 		return 0;
 
 	townPtr->train_unit_action_id = actionId;		// set train_unit_action_id so the unit can immediately execute the action when he has finished training.
