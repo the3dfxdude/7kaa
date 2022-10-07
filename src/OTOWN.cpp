@@ -2040,7 +2040,7 @@ int Town::create_rebel_unit(int raceId, int isLeader)
 
 	if( recruitable_race_pop(raceId, 0)==0 )	// 0-don't recruit spies as the above code should have handle spies already
 	{
-		if( !unjob_town_people(raceId, 0) )		// 0-don't unjob overseer
+		if( !unjob_town_people(raceId, 0, 0) )		// 0-don't unjob spies, 0-don't unjob overseer
 			return 0;
 
 		if( recruitable_race_pop(raceId,0)==0 )	// if the unjob unit is a spy too, then don't rebel
@@ -2608,7 +2608,7 @@ int Town::mobilize_town_people(int raceId, int decPop, int mobileSpyFlag)
 
 	if( recruitable_race_pop(raceId, mobileSpyFlag)==0 )
 	{
-		if( !unjob_town_people(raceId, 0) )		// 0-don't unjob overseer
+		if( !unjob_town_people(raceId, mobileSpyFlag, 0) )		// 0-don't unjob overseer
 			return 0;
 
 		err_when( recruitable_race_pop(raceId, mobileSpyFlag)==0 );
@@ -3002,7 +3002,7 @@ void Town::kill_town_people(int raceId, int attackerNationRecno)
 
 	if( recruitable_race_pop(raceId,1)==0 )
 	{
-		if( !unjob_town_people(raceId, 1) )				// unjob overseer if the only person left is a overseer
+		if( !unjob_town_people(raceId, 1, 1) )				// 1-unjob spies, 1-unjob overseer if the only person left is a overseer
 			return;
 
 		err_when( recruitable_race_pop(raceId,1)==0 );
@@ -3047,7 +3047,7 @@ void Town::kill_town_people(int raceId, int attackerNationRecno)
 //
 // return: <int> a town person has been made jobless
 //
-int Town::unjob_town_people(int raceId, int unjobOverseer, int killOverseer)
+int Town::unjob_town_people(int raceId, int unjobSpy, int unjobOverseer, int killOverseer)
 {
 	//---- if no jobless people, workers will then get killed -----//
 
@@ -3067,17 +3067,20 @@ int Town::unjob_town_people(int raceId, int unjobOverseer, int killOverseer)
 
 		for( workerId=1 ; workerId<=firmPtr->worker_count ; workerId++, workerPtr++ )
 		{
+			if( config_adv.fix_town_unjob_worker && !unjobSpy && workerPtr->spy_recno )
+				continue;
+
 			//--- if the worker lives in this town ----//
 
 			if( workerPtr->race_id == raceId &&
 				 workerPtr->town_recno == town_recno )
 			{
-				if(!firmPtr->resign_worker(workerId))
+				if( !firmPtr->resign_worker(workerId) && !config_adv.fix_town_unjob_worker )
 					return 0;
 
 				err_when(population>MAX_TOWN_POPULATION);
 				err_when( jobless_race_pop_array[raceId-1] != racePop+1 );
-				return 1;
+				return jobless_race_pop_array[raceId-1] == racePop+1;
 			}
 		}
 	}

@@ -49,6 +49,7 @@ public:
 
 	// bug fix settings
 	char			fix_recruit_dec_loyalty;
+	char			fix_town_unjob_worker;
 
 	// locale settings
 	char			locale[LOCALE_LEN+1];

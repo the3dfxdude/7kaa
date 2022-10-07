@@ -381,7 +381,7 @@ private:
 	void  think_migrate();
 	int 	think_migrate_one(Town* targetTown, int raceId, int townDistance);
 	void  migrate(int raceId, int destTownZoneRecno, int newLoyalty);
-	int	unjob_town_people(int raceId, int unjobOverseer, int killOverseer=0);
+	int	unjob_town_people(int raceId, int unjobSpy, int unjobOverseer, int killOverseer=0);
 
 	int	think_layout_id();
 
