@@ -46,6 +46,7 @@ public:
 
 	// firm settings
 	char			firm_mobilize_civilian_aggressive;
+	char			firm_migrate_stricter_rules;
 
 	// bug fix settings
 	char			fix_recruit_dec_loyalty;

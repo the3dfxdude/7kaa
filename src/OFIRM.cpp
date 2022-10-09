@@ -2811,17 +2811,20 @@ void Firm::think_worker_migrate()
 			if( workerPtr->town_recno == townRecno )
 				continue;
 
-			//-- do not migrate if the target town's population of that race is less than half of the population of the current town --//
-
 			raceId = workerPtr->race_id;
 			workerTownPtr = town_array[workerPtr->town_recno];
+
+			//-- do not migrate if the target town's population of that race is less than half of the population of the current town --//
 
 			if( townPtr->race_pop_array[raceId-1] < workerTownPtr->race_pop_array[raceId-1]/2 )
 				continue;
 
-			//------ calc the current and target attractiveness level ------//
+			//-- do not migrate if the target town might not be a place this worker will stay --//
 
-			workerTownPtr = town_array[workerPtr->town_recno];
+			if( config_adv.firm_migrate_stricter_rules && townPtr->race_loyalty_array[raceId-1] < 40 ) // < 40 is considered as negative force
+				continue;
+
+			//------ calc the current and target attractiveness level ------//
 
 			if( workerTownPtr->nation_recno )
 				curBaseAttractLevel = (int) nation_array[workerTownPtr->nation_recno]->reputation;
@@ -2838,7 +2841,7 @@ void Firm::think_worker_migrate()
 									workerTownPtr->race_harmony(raceId) +
 									((int)workerPtr->loyalty() - 40);     		 // loyalty > 40 is considered as positive force, < 40 is considered as negative force
 
-			if( targetAttractLevel > curAttractLevel )
+			if( config_adv.firm_migrate_stricter_rules ? targetAttractLevel - curAttractLevel > MIN_MIGRATE_ATTRACT_LEVEL/2 : targetAttractLevel > curAttractLevel )
 			{
 				int newLoyalty = MAX( REBEL_LOYALTY+1, targetAttractLevel/2 );
 
