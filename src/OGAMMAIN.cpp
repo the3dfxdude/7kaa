@@ -746,18 +746,17 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 // ####### end Gilbert 13/2 ########//
 {
 	enum { MULTI_PLAYER_OPTION_COUNT = 5 };
-
-	static OptionInfo multi_player_option_array[MULTI_PLAYER_OPTION_COUNT];
-	ButtonLocation multi_player_option_box_array[MULTI_PLAYER_OPTION_COUNT] = {{6, 10}, {6, 5}, {6, 8}, {6, 8}, {40, 15}};
-	static int multi_player_option_button_variant_array[MULTI_PLAYER_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SHORT_SWORD};
-	get_main_menu_button_list(multi_player_option_array, MULTI_PLAYER_OPTION_COUNT, SWORD1_X, SWORD1_Y, multi_player_option_button_variant_array, multi_player_option_box_array);
-	// {
-	// 	{ 5+SWORD1_X,  10+SWORD1_Y, 282+SWORD1_X,  62+SWORD1_Y },
-	// 	{ 5+SWORD1_X,  67+SWORD1_Y, 282+SWORD1_X, 112+SWORD1_Y },
-	// 	{ 5+SWORD1_X, 120+SWORD1_Y, 282+SWORD1_X, 175+SWORD1_Y },
-	// 	{ 5+SWORD1_X, 182+SWORD1_Y, 282+SWORD1_X, 223+SWORD1_Y },
-	// 	{40+SWORD1_X, 238+SWORD1_Y, 254+SWORD1_X, 280+SWORD1_Y },
-	// };
+	ButtonCustom button_list[MULTI_PLAYER_OPTION_COUNT];
+	ButtonLocation multi_player_option_box_array[MULTI_PLAYER_OPTION_COUNT] = {
+		{6, 10}, {6, 5}, {6, 8}, {6, 8}, {40, 15}
+	};
+	int multi_player_option_button_variant_array[MULTI_PLAYER_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SHORT_SWORD};
+	setup_button_list(SWORD1_X, SWORD1_Y,
+										button_list,
+										MULTI_PLAYER_OPTION_COUNT,
+										multi_player_option_box_array,
+										multi_player_option_button_variant_array,
+										MENU_TYPE::MULTIPLAYER);
 
 	static char multi_player_option_flag[MULTI_PLAYER_OPTION_COUNT] =
 	{
@@ -770,15 +769,16 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 
 	int refreshFlag = 1, i;
 	mouse_cursor.set_icon(CURSOR_NORMAL);
-	char *menuBitmap = NULL;
-	char *brightBitmap = NULL;
-	char *darkBitmap = NULL;
 	int pointingOption = -1;
 
+	for (i = 0; i < MULTI_PLAYER_OPTION_COUNT; i++)
+	{
+		if(multi_player_option_flag[i] == -1)
+			button_list[i].disable();
+	}
 
 	//---------- detect buttons -----------//
-
-	while(1)
+	while (1)
 	{
 		sys.yield();
 		vga.flip();
@@ -795,21 +795,10 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 
 			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 
-			if(!menuBitmap)
-				menuBitmap = get_bitmap_by_name(BITMAP_SWORD2_VAL[BITMAP_SWORD::IDLE]);
-			
-			if(!brightBitmap)
-				brightBitmap = get_bitmap_by_name(BITMAP_SWORD2_VAL[BITMAP_SWORD::HOVER]);
-				
-			if(!darkBitmap)
-				darkBitmap = get_bitmap_by_name(BITMAP_SWORD_VAL[BITMAP_SWORD::ACTIVE]);
-
-
 			for( i = 0; i < MULTI_PLAYER_OPTION_COUNT; ++i )
 			{
-				if( multi_player_option_flag[i] >= 0 )
-					update_main_menu_button(SWORD1_X, SWORD1_Y, multi_player_option_array[i], multi_player_option_flag[i] ? menuBitmap : darkBitmap);
-				
+				if (button_list[i].enable_flag == 1)
+					button_list[i].paint(0);
 			}
 
 			pointingOption = -1;
@@ -827,63 +816,18 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 		// ###### end Gilbert 18/9 ########//
 
 		// display main menu
-		int newPointingOption = -1;
-		for(i = 0; i < MULTI_PLAYER_OPTION_COUNT; ++i)
-		{
-			if( multi_player_option_flag[i] > 0 &&
-				mouse.in_area(multi_player_option_array[i].x1, multi_player_option_array[i].y1,
-				multi_player_option_array[i].x2, multi_player_option_array[i].y2) )
-			{
-				newPointingOption = i;
-				break;
-			}
-		}
-
-		if( pointingOption != newPointingOption)
-		{
-			err_when( !menuBitmap );
-			err_when( !brightBitmap );
-			err_when( !darkBitmap );
-
-			// put un-highlighted option back
-			i = pointingOption;
-			if( i >= 0 && i < MULTI_PLAYER_OPTION_COUNT )
-				update_main_menu_button(SWORD1_X, SWORD1_Y, multi_player_option_array[i], menuBitmap);
-			
-
-			// put new hightlighted option
-			i = newPointingOption;
-			if( i >= 0 && i < MULTI_PLAYER_OPTION_COUNT )
-				update_main_menu_button(SWORD1_X, SWORD1_Y, multi_player_option_array[i], brightBitmap);
-			
-			pointingOption = newPointingOption;
-		}
+		pointingOption = update_hover_button(button_list, MULTI_PLAYER_OPTION_COUNT, pointingOption);
 
 		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
+		if(!mouse.single_click(0, 0, VGA_WIDTH, VGA_HEIGHT))
+			continue;
 
-		OptionInfo* optionInfo = multi_player_option_array;
-
-		for( int i=0 ; i<MULTI_PLAYER_OPTION_COUNT ; i++, optionInfo++ )
+		for( int i=0 ; i<MULTI_PLAYER_OPTION_COUNT ; i++ )
 		{
-			if( multi_player_option_flag[i] > 0 &&
-				mouse.single_click( optionInfo->x1, optionInfo->y1, optionInfo->x2, optionInfo->y2 ) )
+			if (button_list[i].enable_flag &&
+					button_list[i].pushed_flag == 0 &&
+					button_list[i].detect() == 1)
 			{
-				// free some resource
-				if( menuBitmap )
-				{
-					mem_del(menuBitmap);
-					menuBitmap = NULL;
-				}
-				if( brightBitmap )
-				{
-					mem_del(brightBitmap);
-					brightBitmap = NULL;
-				}
-				if( darkBitmap )
-				{
-					mem_del(darkBitmap);
-					darkBitmap = NULL;
-				}
 				refreshFlag = 1;
 
 				switch(i+1)
@@ -923,14 +867,8 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 				return;
 			}
 		}
+		
 	}
-
-	if( menuBitmap )
-		mem_del(menuBitmap);
-	if( brightBitmap )
-		mem_del(brightBitmap);
-	if( darkBitmap )
-		mem_del(darkBitmap);
 }
 //------------ End of function Game::multi_player_menu -----------//
 
