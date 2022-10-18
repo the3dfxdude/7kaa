@@ -122,6 +122,12 @@ static SwordButton SWORD_BUTTON_INSTANCES[SWORD_BUTTON_INSTANCES_SIZE] = {
 		{214, 42, SHORT_SWORD},
 };
 
+/**
+ * @brief Handles the button updates
+ *
+ * @param button Current reference
+ * @param i Additional parameter that could inform that the button is highlighted (2)
+ */
 static void disp_virtual_button(ButtonCustom *button, int i);
 /**
  * @brief Get the bitmap from the name
@@ -256,12 +262,6 @@ void setup_button_list(int start_x, int start_y,
 	}
 }
 
-/**
- * @brief Get the bitmap from the name
- * 
- * @param bitmap_name 
- * @return char* The pointer to the bitmap
- */
 char * get_bitmap_by_name(const char* bitmap_name){
 	char *bitmap = NULL;
 	int resSize;
