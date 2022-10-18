@@ -172,15 +172,6 @@ void setup_button_list(int start_x, int start_y,
 		}
 		char value = menu_type + '0';
 		const char values[] = {value, '\0'};
-		// button_param = &values[0];
-		// sprintf(button_param, "%d", menu_type + '0');
-		printf("Are equal? %d\n", strncmp(button_param, values, 2));
-		printf("button_param : %d, 0x%x, relative addr: %d, addr: %p \n", *button_param, *button_param, button_param, button_param);
-		printf("Size of - button_param : %d, relative addr: %d \n", sizeof(*button_param), sizeof(button_param));
-		for(int index = 0; index < sizeof(value); index++)
-		{
-				printf("byte %d - 0x%02hhx\n", index, button_param[index]);
-		}
 		service_button_list[b]
 				.create(currentX, currentY,
 								SWORD_BUTTON_INSTANCES[button_variant_index].width + currentX, SWORD_BUTTON_INSTANCES[button_variant_index].height + currentY,
@@ -232,21 +223,6 @@ static void disp_virtual_button(ButtonCustom *button, int i)
 	pointer = (const char *)button->custom_para.ptr;
 	int menu_type = (*pointer) - '0';
 	err_when(menu_type > 2 || menu_type < 0);
-	// const char (**bitmap_list) = BITMAP_SWORD_VAL;
-	// printf("bitmap_list %d %d \n", sizeof((char**)(button->custom_para).ptr), sizeof(menu_type));
-
-  // printf("menu_type %d 0x%x\n", menu_type, menu_type);
-	// printf("addr button->custom_para.ptr %p\n", button->custom_para.ptr);
-	// printf("* button->custom_para.ptr %d\n", (int *)button->custom_para.ptr);
-	// printf("Size of - menu_type : %d, * button->custom_para.ptr %d\n", sizeof(menu_type), sizeof((int *)button->custom_para.ptr));
-	
-	// for(int index = 0; index < sizeof(menu_type); index++)
-	// {
-	// 		printf("byte %d - 0x%02hhx\n", index, ((char*)button->custom_para.ptr)[index]);
-	// }
-
-
-	// int i_menu = menu_type;
 	const char(**current_bitmap) = BITMAP_SWORD_VAL_C[menu_type];
 
 	// Pushed or highlighted or normal
