@@ -80,13 +80,6 @@ struct ScenInfo
 	int		play_status;
 };
 
-struct OptionInfo
-{
-	short x1, y1, x2, y2;
-};
-
-enum { MAIN_OPTION_COUNT = 6 };
-
 //-------- Define class Game -----------//
 
 struct Location;
