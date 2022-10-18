@@ -69,20 +69,33 @@ const char *BITMAP_SWORD_VAL[3] = {"SWRD-1", "SWRD-1B", "SWRD-1C"};
 const char *BITMAP_SWORD2_VAL[3] = {"SWRD-2", "SWRD-2B", "SWRD-2C"};
 const char *BITMAP_SWORD4_VAL[3] = {"SWRD-4", "SWRD-4B", "SWRD-2C"};
 
+enum MENU_TYPE
+{
+	MAIN_MENU,
+	SINGLEPLAYER,
+	MULTIPLAYER
+};
 const char *BITMAP_SWORD_SINGLEPLAYER_VAL[3] = {
 #ifndef DISABLE_SINGLE_PLAYER_NEW_GAME
-	BITMAP_SWORD2_VAL[0],
-	BITMAP_SWORD2_VAL[1],
-	BITMAP_SWORD2_VAL[2],
+		BITMAP_SWORD2_VAL[0],
+		BITMAP_SWORD2_VAL[1],
+		BITMAP_SWORD2_VAL[2],
 #else
-	BITMAP_SWORD4_VAL[0],
-	BITMAP_SWORD4_VAL[1],
-	BITMAP_SWORD4_VAL[2],
+		BITMAP_SWORD4_VAL[0],
+		BITMAP_SWORD4_VAL[1],
+		BITMAP_SWORD4_VAL[2],
 #endif
 };
 
+const char *BITMAP_SWORD_VAL_C[][3] = 
+{
+		{ BITMAP_SWORD_VAL[0], BITMAP_SWORD_VAL[1], BITMAP_SWORD_VAL[2] },
+		{ BITMAP_SWORD_SINGLEPLAYER_VAL[0], BITMAP_SWORD_SINGLEPLAYER_VAL[1], BITMAP_SWORD_SINGLEPLAYER_VAL[2] },
+		{ BITMAP_SWORD2_VAL[0], BITMAP_SWORD2_VAL[1], BITMAP_SWORD2_VAL[2]}
+};
+
 struct SwordButton
-		{
+{
 			short width, height, variant;
 };
 struct ButtonLocation
@@ -110,22 +123,136 @@ static SwordButton SWORD_BUTTON_INSTANCES[SWORD_BUTTON_INSTANCES_SIZE] = {
 };
 
 static void disp_virtual_button(ButtonCustom *button, int i);
+/**
+ * @brief Get the bitmap from the name
+ *
+ * @param bitmap_name
+ * @return char* The pointer to the bitmap
+ */
+char *get_bitmap_by_name(const char *bitmap_name);
 
-void setup_main_menu_button_list(ButtonCustom *serviceButtonList, int count) {
+/**
+ * @brief Iterate over the list and check if there is any button under the pointer (or anything else maybe)
+ *
+ * @param button_list An array of buttons
+ * @param count The size of the array
+ * @param last_active The latest detected button index (from the array) on which the pointer was over
+ * @return The current new pointing button index
+ */
+int update_hover_button(ButtonCustom *button_list, int count, int last_active ){
+		int newPointingOption = -1;
+		for (int i = 0; i < count; ++i)
+		{
+			if( button_list[i].detect_hover())
+			{
+				newPointingOption = i;
+				break;
+			}
+		}
 
-	ButtonLocation main_option_box_array[MAIN_OPTION_COUNT] = {{6, 11}, {6, 5}, {6, 8}, {6, 8}, {6, 2}, {40, 2}};
-	int b;
+		if(last_active != newPointingOption)
+		{
+			// put un-highlighted option back
+			if( last_active >= 0 && last_active < count )
+				button_list[last_active].paint(0);
+
+			// put new hightlighted option
+			if( newPointingOption >= 0 && newPointingOption < count )
+				button_list[newPointingOption].paint(0, 2);
+
+			return newPointingOption;
+		}
+		return last_active;
+}
+
+static void disp_virtual_button(ButtonCustom *button, int i)
+{
+	// run_main_menu_option(i+1)
+	int x = SWORD1_X,
+			y = SWORD1_Y;
+	const char * pointer = nullptr;
+	pointer = (const char *)button->custom_para.ptr;
+	int menu_type = (*pointer) - '0';
+	err_when(menu_type > 2 || menu_type < 0);
+	// const char (**bitmap_list) = BITMAP_SWORD_VAL;
+	// printf("bitmap_list %d %d \n", sizeof((char**)(button->custom_para).ptr), sizeof(menu_type));
+
+  // printf("menu_type %d 0x%x\n", menu_type, menu_type);
+	// printf("addr button->custom_para.ptr %p\n", button->custom_para.ptr);
+	// printf("* button->custom_para.ptr %d\n", (int *)button->custom_para.ptr);
+	// printf("Size of - menu_type : %d, * button->custom_para.ptr %d\n", sizeof(menu_type), sizeof((int *)button->custom_para.ptr));
+	
+	// for(int index = 0; index < sizeof(menu_type); index++)
+	// {
+	// 		printf("byte %d - 0x%02hhx\n", index, ((char*)button->custom_para.ptr)[index]);
+	// }
+
+
+	// int i_menu = menu_type;
+	const char(**current_bitmap) = BITMAP_SWORD_VAL_C[menu_type];
+
+	// Pushed or highlighted or normal
+	char *bitmap = get_bitmap_by_name(button->pushed_flag ? current_bitmap[BITMAP_SWORD::ACTIVE] : i == 2 ? current_bitmap[BITMAP_SWORD::HOVER]
+																																																							: current_bitmap[BITMAP_SWORD::IDLE]);
+
+	mouse.hide_area(button->x1, button->y1, button->x2, button->y2);
+	vga_front.put_bitmap_area(x, y,
+															bitmap,
+															button->x1 - x, button->y1 - y,
+															button->x2 - x, button->y2 - y);
+	mem_del(bitmap);
+	mouse.show_area();
+}
+
+void setup_button_list(int start_x, int start_y,
+											 ButtonCustom *service_button_list,
+											 int count,
+											 ButtonLocation button_box_list[],
+											 int button_variant_list[],
+											 MENU_TYPE menu_type)
+{
+
+	int b, button_variant_index;
 	int currentX = 0,
-	 currentY = SWORD1_Y;
-	for( b = 0; b < count; b++ )
+			currentY = start_y;
+
+	for (b = 0; b < count; b++)
 	{
-		currentX = SWORD1_X + main_option_box_array[b].margin_left;
-		currentY += main_option_box_array[b].margin_top;
-		serviceButtonList[b]
+		button_variant_index = button_variant_list[b];
+		err_when(button_variant_index > SWORD_BUTTON_INSTANCES_SIZE);
+		currentX = start_x + button_box_list[b].margin_left;
+		currentY += button_box_list[b].margin_top;
+		const char *button_param = nullptr;
+		switch (menu_type)
+		{
+		case MENU_TYPE::MAIN_MENU :
+			button_param = "0";
+			break;
+		case MENU_TYPE::SINGLEPLAYER :
+			button_param = "1";
+			break;
+		case MENU_TYPE::MULTIPLAYER :
+			button_param = "2";
+			break;
+		default:
+			break;
+		}
+		char value = menu_type + '0';
+		const char values[] = {value, '\0'};
+		// button_param = &values[0];
+		// sprintf(button_param, "%d", menu_type + '0');
+		printf("Are equal? %d\n", strncmp(button_param, values, 2));
+		printf("button_param : %d, 0x%x, relative addr: %d, addr: %p \n", *button_param, *button_param, button_param, button_param);
+		printf("Size of - button_param : %d, relative addr: %d \n", sizeof(*button_param), sizeof(button_param));
+		for(int index = 0; index < sizeof(value); index++)
+		{
+				printf("byte %d - 0x%02hhx\n", index, button_param[index]);
+		}
+		service_button_list[b]
 				.create(currentX, currentY,
-								SWORD_BUTTON_INSTANCES[b].width + currentX, SWORD_BUTTON_INSTANCES[b].height + currentY,
-								disp_virtual_button, ButtonCustomPara(NULL, 0), 0);
-		currentY += SWORD_BUTTON_INSTANCES[b].height;
+								SWORD_BUTTON_INSTANCES[button_variant_index].width + currentX, SWORD_BUTTON_INSTANCES[button_variant_index].height + currentY,
+								disp_virtual_button, ButtonCustomPara((void*) button_param, 0), 0);
+		currentY += SWORD_BUTTON_INSTANCES[button_variant_index].height;
 	}
 }
 
@@ -210,33 +337,15 @@ void get_main_menu_button_list(OptionInfo *source, int size, int start_x, int st
 void Game::main_menu()
 {
 	enum { MAIN_OPTION_COUNT = 6 };
-	/*
-		Check if there is a need to redraw the menu
-			then draw the menu options (clicked and non clicked)
-			reset pointOption ( pointingOption)
-			reset redraw (refreshFlag)
-		Declare options, detect if there is a need for highligh mouse over
-		Update the bitmap
-		Check if there is a click on any button
-			then update the option, and request an update on the menu list
-	*/
-	static OptionInfo main_option_array[MAIN_OPTION_COUNT];
-	ButtonLocation main_option_box_array[MAIN_OPTION_COUNT] = {{6, 11}, {6, 5}, {6, 8}, {6, 8}, {6, 2}, {40, 2}};
-	int main_option_button_variant_array[MAIN_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SWORD5, SHORT_SWORD};
-	// get_main_menu_button_list(main_option_array, MAIN_OPTION_COUNT, SWORD1_X, SWORD1_Y, main_option_button_variant_array, main_option_box_array);
-	// ButtonCustom main_menu_button_list_aux[SWORD_BUTTON_INSTANCES_SIZE] = {0}
-	setup_main_menu_button_list(main_menu_button_list,SWORD_BUTTON_INSTANCES_SIZE );
-	// {
-	// 	{ 6+SWORD1_X,  11+SWORD1_Y, 282+SWORD1_X ,  63+SWORD1_Y },
-	// 	{ 6+SWORD1_X,  68+SWORD1_Y, 282+SWORD1_X , 113+SWORD1_Y },
-	// 	{ 6+SWORD1_X, 121+SWORD1_Y, 282+SWORD1_X , 176+SWORD1_Y },
-	// 	// ####### begin Gilbert 20/10 ######//
-	// 	// { 6+SWORD1_X, 189+SWORD1_Y, 282+SWORD1_X , 219+SWORD1_Y },
-	// 	{ 6+SWORD1_X, 184+SWORD1_Y, 282+SWORD1_X , 222+SWORD1_Y },
-	// 	// ####### end Gilbert 20/10 ######//
-	// 	{ 6+SWORD1_X, 224+SWORD1_Y, 282+SWORD1_X , 295+SWORD1_Y },
-	// 	{40+SWORD1_X, 297+SWORD1_Y, 254+SWORD1_X , 337+SWORD1_Y },
-	// };
+	ButtonCustom main_menu_button_list[MAIN_OPTION_COUNT];
+	ButtonLocation option_box_array[MAIN_OPTION_COUNT] = {
+		{6, 11}, {6, 5}, {6, 8}, {6, 8}, {6, 2}, {40, 2}
+	};
+	int button_variant_array[MAIN_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SWORD5, SHORT_SWORD};
+	setup_button_list(SWORD1_X, SWORD1_Y,
+										main_menu_button_list,
+										MAIN_OPTION_COUNT,
+										option_box_array, button_variant_array, MENU_TYPE::MAIN_MENU);
 
 	char main_option_flag[MAIN_OPTION_COUNT] = 
 	{
@@ -263,8 +372,13 @@ void Game::main_menu()
 
 	mouse_cursor.set_icon(CURSOR_NORMAL);
 	vga_front.bar(0,0,VGA_WIDTH-1,VGA_HEIGHT-1,V_BLACK);
-	OptionInfo* optionInfo;
 	int pointingOption = -1;
+
+	for (i = 0; i < MAIN_OPTION_COUNT; i++)
+	{
+		if(main_option_flag[i] == -1)
+			main_menu_button_list[i].disable();
+	}
 
 	while(1)
 	{
@@ -274,7 +388,6 @@ void Game::main_menu()
 
 		if( refreshFlag )
 		{
-			printf("Redraw menu\n");
 			mouse_cursor.set_icon(CURSOR_NORMAL);
 
 			image_interface.put_to_buf( &vga_back, "M_MAIN" );
@@ -302,34 +415,9 @@ void Game::main_menu()
 			music.stop();
 		}
 
-		// display main menu
-		int newPointingOption = -1;
-		for (i = 0; i < MAIN_OPTION_COUNT; ++i)
-		{
-			if( main_menu_button_list[i].enable_flag == 1 &&
-				mouse.in_area(main_menu_button_list[i].x1, main_menu_button_list[i].y1, main_menu_button_list[i].x2, main_menu_button_list[i].y2)
-				)
-			{
-				newPointingOption = i;
-				break;
-			}
-		}
-
-		if(pointingOption != newPointingOption)
-		{
-
-			// put un-highlighted option back
-			if( pointingOption >= 0 && pointingOption < MAIN_OPTION_COUNT )
-				main_menu_button_list[pointingOption].paint(0);
-
-			// put new hightlighted option
-			if( newPointingOption >= 0 && newPointingOption < MAIN_OPTION_COUNT )
-				main_menu_button_list[newPointingOption].paint(0, 2);
-
-			pointingOption = newPointingOption;
-		}
+		pointingOption = update_hover_button(main_menu_button_list, MAIN_OPTION_COUNT, pointingOption);
 		// ######### end Gilbert 23/7 ##########//
-	
+
 		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
 
 		//---------- detect buttons -----------//
@@ -338,21 +426,17 @@ void Game::main_menu()
 		vga.flip();
 		mouse.get_event();
 
-		optionInfo = main_option_array;
-		int push_detection = -1;
 		// Reset exit-to-main-menu flag
 		if (sys.signal_exit_flag == 2) sys.signal_exit_flag = 0;
 		
 		if(mouse.single_click(0, 0, VGA_WIDTH, VGA_HEIGHT))
 		{
-			printf("Detecting click\n");
 			for (i = 0; i < MAIN_OPTION_COUNT; i++)
 			{
 
 				if (main_menu_button_list[i].pushed_flag == 0 &&
 						main_menu_button_list[i].detect() == 1)
 				{
-					printf("Detecting button %d ... is pushed: %d\n", i, main_menu_button_list[i].pushed_flag);
 					main_menu_button_list[i].paint(1);
 					run_main_menu_option(i+1);
 					refreshFlag = 1;
@@ -379,7 +463,6 @@ void Game::main_menu()
 
 	music.stop();
 	//--------------------------------------//
-
 }
 //------------ End of function Game::main_menu -----------//
 
@@ -915,64 +998,6 @@ void Game::multi_player_menu(int lobbied, char *game_host)
 		mem_del(darkBitmap);
 }
 //------------ End of function Game::multi_player_menu -----------//
-
-static void disp_virtual_button(ButtonCustom *button, int i)
-{
-	// run_main_menu_option(i+1)
-	int x = SWORD1_X,
-			y = SWORD1_Y;
-	// Pushed or highlighted or normal
-
-	char* bitmap = get_bitmap_by_name( button->pushed_flag ?
-	 BITMAP_SWORD_VAL[BITMAP_SWORD::ACTIVE] : 
-	 	i == 2 ?
-			BITMAP_SWORD_VAL[BITMAP_SWORD::HOVER] :
-				BITMAP_SWORD_VAL[BITMAP_SWORD::IDLE]);
-	
-	printf("Is button pushed? :%d - fp param : %d - init_flag: %d - is_elastic: %d \n", button->pushed_flag, i, button->init_flag, button->elastic_flag);
-	mouse.hide_area(button->x1, button->y1, button->x2, button->y2);
-	vga_front.put_bitmap_area(x, y,
-															bitmap,
-															button->x1 - x, button->y1 - y,
-															button->x2 - x, button->y2 - y);
-	// IMGcopy(vga_front.buf_ptr(), vga_front.buf_pitch(),
-	// 					vga_back.buf_ptr(), vga_back.buf_pitch(),
-	// 					button->x1, button->y1, button->x2, button->y2);
-	if( button->pushed_flag )
-	{
-		
-		// copy from back buffer to front buffer
-		
-	}
-	else
-	{
-		// // copy from back buffer to front buffer, but the area is
-		// // darkened by 2 scale
-		// IMGcopyRemap(vga_front.buf_ptr(), vga_front.buf_pitch(),
-		// 	vga_back.buf_ptr(), vga_back.buf_pitch(),
-		// 	button->x1, button->y1, button->x2, button->y2,
-		// 	vga.vga_color_table->get_table(-2) );
-
-		// // draw black frame
-		// if( button->x2-button->x1+1 == BASIC_OPTION_X_SPACE &&
-		// 	button->y2-button->y1+1 == BASIC_OPTION_HEIGHT )
-		// {
-		// 	image_interface.put_front(button->x1, button->y1, "BAS_DOWN");
-		// }
-		// else if( button->x2-button->x1+1 == COLOR_OPTION_X_SPACE &&
-		// 	button->y2-button->y1+1 == COLOR_OPTION_HEIGHT )
-		// {
-		// 	image_interface.put_front(button->x1, button->y1, "COL_DOWN");
-		// }
-		// else if( button->x2-button->x1+1 == SERVICE_OPTION_X_SPACE &&
-		// 	button->y2-button->y1+1 == SERVICE_OPTION_HEIGHT )
-		// {
-		// 	image_menu.put_front(button->x1, button->y1, "NMPG-1BD");
-		// }
-	}
-	free(bitmap);
-	mouse.show_area();
-}
 
 #endif
 
