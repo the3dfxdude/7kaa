@@ -579,18 +579,17 @@ void Game::disp_version()
 void Game::single_player_menu()
 {
 	enum { SINGLE_PLAYER_OPTION_COUNT = 5 };
-	static OptionInfo single_player_option_array[SINGLE_PLAYER_OPTION_COUNT];
+	ButtonCustom button_list[SINGLE_PLAYER_OPTION_COUNT];
+	
 #ifndef DISABLE_SINGLE_PLAYER_NEW_GAME
 	ButtonLocation single_player_option_box_array[SINGLE_PLAYER_OPTION_COUNT] = {{6, 10}, {6, 5}, {6, 8}, {6, 8}, {40, 15}};
 	static int single_player_option_button_variant_array[SINGLE_PLAYER_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SHORT_SWORD};
-	get_main_menu_button_list(single_player_option_array, SINGLE_PLAYER_OPTION_COUNT, SWORD1_X, SWORD1_Y, single_player_option_button_variant_array, single_player_option_box_array);
-	// {
-	// 	{ 5+SWORD1_X,  10+SWORD1_Y, 282+SWORD1_X,  62+SWORD1_Y },
-	// 	{ 5+SWORD1_X,  67+SWORD1_Y, 282+SWORD1_X, 112+SWORD1_Y },
-	// 	{ 5+SWORD1_X, 120+SWORD1_Y, 282+SWORD1_X, 175+SWORD1_Y },
-	// 	{ 5+SWORD1_X, 182+SWORD1_Y, 282+SWORD1_X, 223+SWORD1_Y },
-	// 	{40+SWORD1_X, 238+SWORD1_Y, 254+SWORD1_X, 280+SWORD1_Y },
-	// };
+	setup_button_list(SWORD1_X, SWORD1_Y,
+										button_list,
+										SINGLE_PLAYER_OPTION_COUNT,
+										single_player_option_box_array,
+										single_player_option_button_variant_array,
+										MENU_TYPE::SINGLEPLAYER);
 
 	static char single_player_option_flag[SINGLE_PLAYER_OPTION_COUNT] =
 	{
@@ -599,14 +598,12 @@ void Game::single_player_menu()
 #else
 	ButtonLocation single_player_option_box_array[SINGLE_PLAYER_OPTION_COUNT] = {{2, 10}, {2, 5}, {2, 3}, {2, -55}, {38, 4}};
 	static int single_player_option_button_variant_array[SINGLE_PLAYER_OPTION_COUNT] = {SWORD1, SWORD2, SWORD3, SWORD4, SHORT_SWORD};
-	get_main_menu_button_list(single_player_option_array, SINGLE_PLAYER_OPTION_COUNT, SWORD1_X, SWORD1_Y, single_player_option_button_variant_array, single_player_option_box_array);
-	// {
-	// 	{ 2+SWORD1_X,  10+SWORD1_Y, 286+SWORD1_X,  65+SWORD1_Y },
-	// 	{ 2+SWORD1_X,  67+SWORD1_Y, 286+SWORD1_X, 109+SWORD1_Y },
-	// 	{ 2+SWORD1_X, 112+SWORD1_Y, 286+SWORD1_X, 171+SWORD1_Y },
-	// 	{ 2+SWORD1_X, 112+SWORD1_Y, 286+SWORD1_X, 171+SWORD1_Y },       // not used
-	// 	{38+SWORD1_X, 174+SWORD1_Y, 256+SWORD1_X, 216+SWORD1_Y },
-	// };
+	setup_button_list(SWORD1_X, SWORD1_Y,
+										button_list,
+										SINGLE_PLAYER_OPTION_COUNT,
+										single_player_option_box_array,
+										single_player_option_button_variant_array,
+										MENU_TYPE::SINGLEPLAYER);
 
 	static char single_player_option_flag[SINGLE_PLAYER_OPTION_COUNT] =
 	{
@@ -623,9 +620,6 @@ void Game::single_player_menu()
 	// sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
 	int refreshFlag = 1, i;
 	mouse_cursor.set_icon(CURSOR_NORMAL);
-	char *menuBitmap = NULL;
-	char *brightBitmap = NULL;
-	char *darkBitmap = NULL;
 	int pointingOption = -1;
 
 
@@ -648,20 +642,12 @@ void Game::single_player_menu()
 
 			vga_util.blt_buf(0,0,VGA_WIDTH-1, VGA_HEIGHT-1);
 
-			if(!menuBitmap)
-				menuBitmap = get_bitmap_by_name(BITMAP_SWORD_SINGLEPLAYER_VAL[BITMAP_SWORD::IDLE]);
-			
-			if(!brightBitmap)
-				brightBitmap = get_bitmap_by_name(BITMAP_SWORD_SINGLEPLAYER_VAL[BITMAP_SWORD::HOVER]);
-				
-			if(!darkBitmap)
-				darkBitmap = get_bitmap_by_name(BITMAP_SWORD_SINGLEPLAYER_VAL[BITMAP_SWORD::ACTIVE]);
-
 			for( i = 0; i < SINGLE_PLAYER_OPTION_COUNT; ++i )
 			{
-				if( single_player_option_flag[i] >= 0)
-					update_main_menu_button(SWORD1_X, SWORD1_Y, single_player_option_array[i], single_player_option_flag[i] ? menuBitmap : darkBitmap);
+				if (button_list[i].enable_flag == 1)
+					button_list[i].paint(0);
 			}
+
 			pointingOption = -1;
 			refreshFlag=0;
 		}
@@ -677,63 +663,19 @@ void Game::single_player_menu()
 		// ###### end Gilbert 18/9 ########//
 
 		// display main menu
-		int newPointingOption = -1;
-		for(i = 0; i < SINGLE_PLAYER_OPTION_COUNT; ++i)
-		{
-			if( single_player_option_flag[i] > 0 &&
-				mouse.in_area(single_player_option_array[i].x1, single_player_option_array[i].y1,
-				single_player_option_array[i].x2, single_player_option_array[i].y2) )
-			{
-				newPointingOption = i;
-				break;
-			}
-		}
-
-		if( pointingOption != newPointingOption)
-		{
-			err_when( !menuBitmap );
-			err_when( !brightBitmap );
-			err_when( !darkBitmap );
-
-			// put un-highlighted option back
-			i = pointingOption;
-			if( i >= 0 && i < SINGLE_PLAYER_OPTION_COUNT )
-				update_main_menu_button(SWORD1_X, SWORD1_Y, single_player_option_array[i], menuBitmap);
-			
-
-			// put new hightlighted option
-			i = newPointingOption;
-			if( i >= 0 && i < SINGLE_PLAYER_OPTION_COUNT )
-				update_main_menu_button(SWORD1_X, SWORD1_Y, single_player_option_array[i], brightBitmap);
-			
-			pointingOption = newPointingOption;
-		}
+		pointingOption = update_hover_button(button_list, SINGLE_PLAYER_OPTION_COUNT, pointingOption);
 
 		sys.blt_virtual_buf();		// blt the virtual front buffer to the screen
 
-		OptionInfo* optionInfo = single_player_option_array;
+		if(!mouse.single_click(0, 0, VGA_WIDTH, VGA_HEIGHT))
+			continue;
 
-		for( int i=0 ; i<SINGLE_PLAYER_OPTION_COUNT ; i++, optionInfo++ )
+		for( int i=0 ; i<SINGLE_PLAYER_OPTION_COUNT ; i++)
 		{
-			if( single_player_option_flag[i] > 0 &&
-				mouse.single_click( optionInfo->x1, optionInfo->y1, optionInfo->x2, optionInfo->y2 ) )
+			if (button_list[i].enable_flag &&
+					button_list[i].pushed_flag == 0 &&
+					button_list[i].detect() == 1)
 			{
-				// free some resource
-				if( menuBitmap )
-				{
-					mem_del(menuBitmap);
-					menuBitmap = NULL;
-				}
-				if( brightBitmap )
-				{
-					mem_del(brightBitmap);
-					brightBitmap = NULL;
-				}
-				if( darkBitmap )
-				{
-					mem_del(darkBitmap);
-					darkBitmap = NULL;
-				}
 
 				refreshFlag = 1;
 
@@ -777,13 +719,6 @@ void Game::single_player_menu()
 			}
 		}
 	}
-
-	if( menuBitmap )
-		mem_del(menuBitmap);
-	if( brightBitmap )
-		mem_del(brightBitmap);
-	if( darkBitmap )
-		mem_del(darkBitmap);
 }
 //------------ End of function Game::single_player_menu -----------//
 
