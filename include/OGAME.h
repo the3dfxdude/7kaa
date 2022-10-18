@@ -93,7 +93,6 @@ public:
 	char			started_flag;
 	char			game_mode;
 	char			game_has_ended;		// whether game_end() has been called once already and the player is now just staying in the game to continue to play or observe
-	// ButtonCustom main_menu_button_list[MAIN_OPTION_COUNT];
 	//-------- color remap info -------//
 
 	ColorRemap	color_remap_array[MAX_COLOR_SCHEME+1];
