@@ -236,6 +236,12 @@ void ButtonCustom::hide()
 }
 //----------- End of function ButtonCustom::hide -------------//
 
+bool ButtonCustom::detect_hover(){
+	if( !init_flag || !enable_flag || pushed_flag || button_wait )
+		return false;
+
+	return mouse.in_area(x1, y1, x2, y2);
+}
 
 //----------- Begin of function ButtonCustom::disp_text_button_func -------------//
 //

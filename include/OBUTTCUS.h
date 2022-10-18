@@ -82,7 +82,7 @@ public:
 
 	void disable()     { if(enable_flag)  { enable_flag=0; paint(); } }
 	void enable()      { if(!enable_flag) { enable_flag=1; paint(); } }
-
+	bool detect_hover();
 	static void disp_text_button_func(ButtonCustom *, int repaintBody);
 
 };
