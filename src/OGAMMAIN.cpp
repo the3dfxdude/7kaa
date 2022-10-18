@@ -137,6 +137,58 @@ static void disp_virtual_button(ButtonCustom *button, int i);
  */
 char *get_bitmap_by_name(const char *bitmap_name);
 
+void setup_button_list(int start_x, int start_y,
+											 ButtonCustom *service_button_list,
+											 int count,
+											 ButtonLocation button_box_list[],
+											 int button_variant_list[],
+											 MENU_TYPE menu_type)
+{
+
+	int b, button_variant_index;
+	int currentX = 0,
+			currentY = start_y;
+
+	for (b = 0; b < count; b++)
+	{
+		button_variant_index = button_variant_list[b];
+		err_when(button_variant_index > SWORD_BUTTON_INSTANCES_SIZE);
+		currentX = start_x + button_box_list[b].margin_left;
+		currentY += button_box_list[b].margin_top;
+		const char *button_param = nullptr;
+		switch (menu_type)
+		{
+		case MENU_TYPE::MAIN_MENU :
+			button_param = "0";
+			break;
+		case MENU_TYPE::SINGLEPLAYER :
+			button_param = "1";
+			break;
+		case MENU_TYPE::MULTIPLAYER :
+			button_param = "2";
+			break;
+		default:
+			break;
+		}
+		char value = menu_type + '0';
+		const char values[] = {value, '\0'};
+		// button_param = &values[0];
+		// sprintf(button_param, "%d", menu_type + '0');
+		printf("Are equal? %d\n", strncmp(button_param, values, 2));
+		printf("button_param : %d, 0x%x, relative addr: %d, addr: %p \n", *button_param, *button_param, button_param, button_param);
+		printf("Size of - button_param : %d, relative addr: %d \n", sizeof(*button_param), sizeof(button_param));
+		for(int index = 0; index < sizeof(value); index++)
+		{
+				printf("byte %d - 0x%02hhx\n", index, button_param[index]);
+		}
+		service_button_list[b]
+				.create(currentX, currentY,
+								SWORD_BUTTON_INSTANCES[button_variant_index].width + currentX, SWORD_BUTTON_INSTANCES[button_variant_index].height + currentY,
+								disp_virtual_button, ButtonCustomPara((void*) button_param, 0), 0);
+		currentY += SWORD_BUTTON_INSTANCES[button_variant_index].height;
+	}
+}
+
 /**
  * @brief Iterate over the list and check if there is any button under the pointer (or anything else maybe)
  *
@@ -210,58 +262,6 @@ static void disp_virtual_button(ButtonCustom *button, int i)
 	mouse.show_area();
 }
 
-void setup_button_list(int start_x, int start_y,
-											 ButtonCustom *service_button_list,
-											 int count,
-											 ButtonLocation button_box_list[],
-											 int button_variant_list[],
-											 MENU_TYPE menu_type)
-{
-
-	int b, button_variant_index;
-	int currentX = 0,
-			currentY = start_y;
-
-	for (b = 0; b < count; b++)
-	{
-		button_variant_index = button_variant_list[b];
-		err_when(button_variant_index > SWORD_BUTTON_INSTANCES_SIZE);
-		currentX = start_x + button_box_list[b].margin_left;
-		currentY += button_box_list[b].margin_top;
-		const char *button_param = nullptr;
-		switch (menu_type)
-		{
-		case MENU_TYPE::MAIN_MENU :
-			button_param = "0";
-			break;
-		case MENU_TYPE::SINGLEPLAYER :
-			button_param = "1";
-			break;
-		case MENU_TYPE::MULTIPLAYER :
-			button_param = "2";
-			break;
-		default:
-			break;
-		}
-		char value = menu_type + '0';
-		const char values[] = {value, '\0'};
-		// button_param = &values[0];
-		// sprintf(button_param, "%d", menu_type + '0');
-		printf("Are equal? %d\n", strncmp(button_param, values, 2));
-		printf("button_param : %d, 0x%x, relative addr: %d, addr: %p \n", *button_param, *button_param, button_param, button_param);
-		printf("Size of - button_param : %d, relative addr: %d \n", sizeof(*button_param), sizeof(button_param));
-		for(int index = 0; index < sizeof(value); index++)
-		{
-				printf("byte %d - 0x%02hhx\n", index, button_param[index]);
-		}
-		service_button_list[b]
-				.create(currentX, currentY,
-								SWORD_BUTTON_INSTANCES[button_variant_index].width + currentX, SWORD_BUTTON_INSTANCES[button_variant_index].height + currentY,
-								disp_virtual_button, ButtonCustomPara((void*) button_param, 0), 0);
-		currentY += SWORD_BUTTON_INSTANCES[button_variant_index].height;
-	}
-}
-
 char * get_bitmap_by_name(const char* bitmap_name){
 	char *bitmap = NULL;
 	int resSize;
@@ -270,66 +270,6 @@ char * get_bitmap_by_name(const char* bitmap_name){
 	bitmap = mem_add(resSize);
 	resFile->file_read(bitmap, resSize);
 	return bitmap;
-}
-/*
- * @brief Update the button on the screen with the desired bitmap 
- * 
- * @param x Start location on X
- * @param y Statt location on Y
- * @param menu_button The button and the two corners (top-left and right-bottom)
- * @param bitmap The bitmap to show (and the variant, normal, bright, darken)
- */
-void Game::update_main_menu_button(int x, int y, OptionInfo menu_button, char *bitmap)
-{
-	mouse.hide_area(menu_button.x1, menu_button.y1,
-									menu_button.x2, menu_button.y2);
-	vga_front.put_bitmap_area(x, y,
-														bitmap,
-														menu_button.x1 - x, menu_button.y1 - y,
-														menu_button.x2 - x, menu_button.y2 - y);
-	mouse.show_area();
-}
-
-/**
- * @brief Calculate the coordinates of the new button based upon X and Y reference plus left/top margins
- * 
- * @param start_x Start reference point for X (from left to right)
- * @param start_y Start reference point for Y (from top to bottom)
- * @param button_variant  Index of sword_button_variants
- * @param button_box_array Indicate the margin left and top for the button (think as offset)
- * @return OptionInfo with the 4 coordinates of the element
- */
-OptionInfo generate_button(int start_x, int start_y, int button_variant, ButtonLocation button_box_array) {
-	err_when(button_variant > SWORD_BUTTON_INSTANCES_SIZE);
-	SwordButton definition_button = SWORD_BUTTON_INSTANCES[button_variant];
-	short x1 = button_box_array.margin_left + start_x;
-	short y1 = button_box_array.margin_top + start_y;
-	short x2 = x1 + definition_button.width;
-	short y2 = y1 + definition_button.height;
-	OptionInfo instance_button = { x1, y1, x2, y2 };
-	return instance_button;
-}
-
-/**
- * @brief Get the menu button list object, iterating over the button variants, and the box definition (margin/offset).
- * Needs a starting coordinates (x,y) and it will advance over the Y value (prev + margins)
- * 
- * @param[out] source Where the output list will be placed
- * @param size The ammount of buttons, it should be between the lenght of button_variant and button_box_array
- * @param start_x The X starting point, this is fixed (does not add the prev value, just the margin)
- * @param start_y The Y starting point, this gets the offset of previous button on the list, so this displace the new one.
- * @param button_variant The array of buttons that will be added, like SWORD1, SHORT_SWORD
- * @param button_box_array The margin/offset definiton per button, left ant top respectively.
- * @todo Check for the size of the arrays of the for
- */
-void get_main_menu_button_list(OptionInfo *source, int size, int start_x, int start_y, int button_variant[], ButtonLocation button_box_array[]){
-	short y1 = start_y;
-	for (int i = 0; i < size; i++)
-	{
-		OptionInfo button = generate_button(start_x, y1, button_variant[i], button_box_array[i]);
-		y1 = button.y2;
-		source[i] = button;
-	}
 }
 
 //---------- Begin of function Game::main_menu ----------//

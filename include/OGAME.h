@@ -100,7 +100,7 @@ public:
 	char			started_flag;
 	char			game_mode;
 	char			game_has_ended;		// whether game_end() has been called once already and the player is now just staying in the game to continue to play or observe
-	ButtonCustom main_menu_button_list[MAIN_OPTION_COUNT];
+	// ButtonCustom main_menu_button_list[MAIN_OPTION_COUNT];
 	//-------- color remap info -------//
 
 	ColorRemap	color_remap_array[MAX_COLOR_SCHEME+1];
@@ -168,7 +168,6 @@ private:
 	int			mp_select_session();
 	void			mp_disp_players();
 	int			mp_select_load_option(char *);
-	void update_main_menu_button(int x, int y, OptionInfo menu_button, char * bitmap);
 };
 #pragma pack()
 
