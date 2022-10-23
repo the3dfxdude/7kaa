@@ -588,6 +588,8 @@ void FirmResearch::process_research()
 
 			se_res.far_sound(center_x, center_y, 1, 'F', firm_id, "FINS", 
 				'S', unit_res[tech_res[techId]->unit_id]->sprite_id);
+			if( firm_recno == firm_array.selected_recno )
+				info.disp();
 		}
 	}
 }
