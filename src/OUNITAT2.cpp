@@ -1207,7 +1207,12 @@ void Unit::process_attack_firm()
 	// check attack conditions
 	//------------------------------------------------------------//
 	if(firm_array.is_deleted(action_para))
-		clearOrder++;
+	{
+		if(!config_adv.unit_finish_attack_move || cur_action==SPRITE_ATTACK)
+			clearOrder++;
+		else
+			return;
+	}
 	else
 	{
 		targetFirm = firm_array[action_para];
