@@ -358,7 +358,7 @@ int Unit::reactivate_idle_action()
 
       case ACTION_ATTACK_FIRM:
                locPtr = world.get_loc(action_x_loc2, action_y_loc2);
-               if(!locPtr->is_firm())
+               if(locPtr->firm_recno()!=action_para2)
                   stop2(); // stop since target is already destroyed
                else
                {
