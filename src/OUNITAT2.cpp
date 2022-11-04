@@ -49,6 +49,10 @@
 #undef DEBUG
 #endif
 
+//--------- Declare static functions ---------//
+static void invalidate_attack_target(Unit *unitPtr);
+
+
 //--------- Begin of function Unit::attack_unit ---------//
 // overloaded function.
 // the unit calling this function is to attack target by (1) default
@@ -1196,6 +1200,9 @@ void Unit::process_attack_firm()
 	}
 
 	//------- if the targeted firm has been destroyed --------//
+	if(!action_para)
+		return;
+
 	err_when(!action_para || action_mode!=ACTION_ATTACK_FIRM || !can_attack());	// unable to attack
 	// ###### begin Gilbert 17/3 #######//
 	//err_when(attack_info_array[cur_attack].attack_range != attack_range);
@@ -1211,7 +1218,11 @@ void Unit::process_attack_firm()
 		if(!config_adv.unit_finish_attack_move || cur_action==SPRITE_ATTACK)
 			clearOrder++;
 		else
+		{
+			// keep attack action alive to finish movement before going idle
+			invalidate_attack_target(this);
 			return;
+		}
 	}
 	else
 	{
@@ -2261,3 +2272,22 @@ void Unit::process_attack_wall()
 	err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
 }
 //----------- End of function Unit::process_attack_wall -----------//
+
+
+//--------- Begin of static function invalidate_attack_target ---------//
+//
+// Invalidates the attack parameter. If the idle action is the same,
+// invalidate that parameter also.
+//
+static void invalidate_attack_target(Unit *unitPtr)
+{
+	if( unitPtr->action_mode2 == unitPtr->action_mode &&
+		unitPtr->action_para2 == unitPtr->action_para2 &&
+		unitPtr->action_x_loc2 == unitPtr->action_x_loc &&
+		unitPtr->action_y_loc2 == unitPtr->action_y_loc )
+	{
+		unitPtr->action_para2 = 0;
+	}
+	unitPtr->action_para = 0;
+}
+//----------- End of function invalidate_attack_target -----------//
