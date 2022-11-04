@@ -1670,6 +1670,10 @@ void Unit::process_attack_town()
 		return;
 	}
 
+	//------- if the targeted town has been destroyed --------//
+	if(!action_para)
+		return;
+
 	err_when(!action_para || action_mode!=ACTION_ATTACK_TOWN || !can_attack());	// unable to attack
 	// ###### begin Gilbert 17/3 #######//
 	//err_when(attack_info_array[cur_attack].attack_range != attack_range);
@@ -1681,7 +1685,16 @@ void Unit::process_attack_town()
 	// check attack conditions
 	//------------------------------------------------------------//
 	if(town_array.is_deleted(action_para))
-		clearOrder++;
+	{
+		if(!config_adv.unit_finish_attack_move || cur_action==SPRITE_ATTACK)
+			clearOrder++;
+		else
+		{
+			// keep attack action alive to finish movement before going idle
+			invalidate_attack_target(this);
+			return;
+		}
+	}
 	else
 	{
 		targetTown = town_array[action_para];

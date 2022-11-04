@@ -378,7 +378,7 @@ int Unit::reactivate_idle_action()
 
       case ACTION_ATTACK_TOWN:
                locPtr = world.get_loc(action_x_loc2, action_y_loc2);
-               if(!locPtr->is_town())
+               if(!action_para2 || !locPtr->is_town())
                   stop2(); // stop since target is deleted
                else if(space_for_attack(action_x_loc2, action_y_loc2, UNIT_LAND, STD_TOWN_LOC_WIDTH, STD_TOWN_LOC_HEIGHT))
                {
