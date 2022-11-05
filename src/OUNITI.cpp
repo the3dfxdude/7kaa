@@ -338,7 +338,7 @@ int Unit::reactivate_idle_action()
                return 0; // do nothing
 
       case ACTION_ATTACK_UNIT:
-               if(unit_array.is_deleted(action_para2))
+               if(!action_para2 || unit_array.is_deleted(action_para2))
                   stop2();
                else
                {

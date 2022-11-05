@@ -400,6 +400,11 @@ void Unit::process_attack_unit()
 		return;
 	}
 
+	//------- if the targeted unit has been destroyed --------//
+	if(!action_para)
+		return;
+
+
 	err_when(!action_para || action_mode!=ACTION_ATTACK_UNIT ||	!can_attack());	// unable to attack
 
 	// ###### begin Gilbert 17/3 #######//
@@ -413,7 +418,16 @@ void Unit::process_attack_unit()
 	Unit* targetUnit;
 
 	if(unit_array.is_deleted(action_para) || action_para==sprite_recno)
-		clearOrder++;
+	{
+		if(!config_adv.unit_finish_attack_move || cur_action==SPRITE_ATTACK)
+			clearOrder++;
+		else
+		{
+			// keep attack action alive to finish movement before going idle
+			invalidate_attack_target(this);
+			return;
+		}
+	}
 	else
 	{
 		targetUnit = unit_array[action_para];
