@@ -2145,8 +2145,11 @@ void Unit::process_attack_wall()
 	Location *locPtr = world.get_loc(action_x_loc, action_y_loc);
 	if(!locPtr->is_wall())
 	{
-		stop2(KEEP_DEFENSE_MODE);
-		err_when(cur_action==SPRITE_ATTACK && action_mode==ACTION_STOP);
+		if(!config_adv.unit_finish_attack_move || cur_action==SPRITE_ATTACK)
+		{
+			stop2(KEEP_DEFENSE_MODE);
+			err_when(cur_action==SPRITE_ATTACK && action_mode==ACTION_STOP);
+		}
 		return;
 	}
 
