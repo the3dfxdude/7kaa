@@ -504,7 +504,6 @@ static int select_option()
 		vga_front.lock_buf();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )

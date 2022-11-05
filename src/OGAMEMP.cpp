@@ -1105,7 +1105,6 @@ int Game::mp_select_service()
 		vga_front.lock_buf();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if (sys.signal_exit_flag == 1)
@@ -1297,7 +1296,6 @@ int Game::mp_select_mode(char *defSaveFileName, int service_mode)
 		vga_front.lock_buf();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -1563,7 +1561,6 @@ int Game::input_box(const char *tell_string, char *buf, int len, char hide_input
 		input_box.paint();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -1698,7 +1695,6 @@ int Game::input_name_pass(const char *txt[], char *name, int name_len, char *pas
 		getGroup.paint();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -1820,7 +1816,6 @@ int Game::mp_select_session()
 		vga_front.lock_buf();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if( sys.signal_exit_flag == 1 )
@@ -2103,7 +2098,6 @@ int Game::mp_join_session(int session_id)
 		vga_front.lock_buf();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
@@ -2196,7 +2190,6 @@ void Game::mp_close_session()
 		vga_front.lock_buf();
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		if (buttonCancel.detect(buttonCancel.str_buf[0], KEY_ESC) ||
@@ -2252,7 +2245,6 @@ int Game::mp_get_leader_board()
 		break;
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 		
 		if( sys.signal_exit_flag == 1 )
@@ -2762,7 +2754,6 @@ int Game::mp_select_option(NewNationPara *nationPara, int *mpPlayerCount)
 		// ####### end Gilbert 23/10 #######//
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		// Note: sys.signal_exit_flag is detected at the same point as the cancel/abort button
@@ -4670,7 +4661,6 @@ int Game::mp_select_load_option(char *fileName)
 		// ####### begin Gilbert 24/10 ########//
 
 		sys.yield();
-		vga.flip();
 		mouse.get_event();
 
 		// Note: sys.signal_exit_flag is detected at the same point as the cancel/abort button

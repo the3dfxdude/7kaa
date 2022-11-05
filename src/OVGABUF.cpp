@@ -30,6 +30,7 @@
 #include <OVGA.h>
 #include <OVGABUF.h>
 #include <gettext.h>
+#include <CmdLine.h>
 
 //-------- Begin of function VgaBuf::VgaBuf ----------//
 
@@ -137,7 +138,11 @@ void VgaBuf::unlock_buf()
 	err_when( !buf_locked );
 
 	if( 1 )
+	{
 		buf_locked = 0;
+		if( cmd_line.enable_if && is_front )
+			vga.flip();
+	}
 	else
 	{
 		if( is_front )
