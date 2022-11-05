@@ -119,6 +119,12 @@ void InGameMenu::enter(char untilExitFlag)
    }
 }
 
+static const char *land_mass_msg[] =
+{
+N_("Small"),
+N_("Medium"),
+N_("Large")
+};
 void InGameMenu::disp(int needRepaint)
 {
    if( !active_flag )
@@ -154,6 +160,8 @@ void InGameMenu::disp(int needRepaint)
 
       str += ": ";
       str += info.random_seed;
+      str += " ";
+      str += land_mass_msg[config.land_mass-1];
       font_bible.center_put( MAP_ID_X1, MAP_ID_Y1, MAP_ID_X2, MAP_ID_Y2, str);
 
       refresh_flag = 0;
