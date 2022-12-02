@@ -98,6 +98,9 @@ public:
 	int			vga_window_width;
 	int			vga_window_height;
 
+	// wall settings
+	char			wall_building_allowed;
+
 public:
 	ConfigAdv();
 	~ConfigAdv();

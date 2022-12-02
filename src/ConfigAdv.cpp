@@ -271,6 +271,8 @@ void ConfigAdv::reset()
 	vga_window_width = 0;
 	vga_window_height = 0;
 
+	wall_building_allowed = 0;
+
 	// after applying defaults, checksum is not required
 	checksum = 0;
 	flags &= ~FLAG_CKSUM_REQ;
@@ -485,6 +487,11 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "vga_window_width") )
 	{
 		if( !read_int(value, &vga_window_width) )
+			return 0;
+	}
+	else if( !strcmp(name, "wall_building_allowed") )
+	{
+		if( !read_bool(value, &wall_building_allowed) )
 			return 0;
 	}
 	else

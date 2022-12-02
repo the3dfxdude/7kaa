@@ -43,6 +43,7 @@
 #include <OSERES.h>
 #include <OREMOTE.h>
 #include <ONEWS.h>
+#include <ConfigAdv.h>
 
 
 //------------ Define static class variables ------------//
@@ -172,7 +173,8 @@ void World::process()
 {
 	//-------- process wall ----------//
 
-	form_world_wall();
+	if( config_adv.wall_building_allowed )
+		form_world_wall();
 
 	//-------- process fire -----------//
 
