@@ -257,7 +257,7 @@ void ConfigAdv::reset()
 	town_loyalty_qol = 1;
 
 	unit_ai_team_help = 1;
-	unit_finish_attack_move = 0;
+	unit_finish_attack_move = 1;
 	unit_loyalty_require_local_leader = 1;
 	unit_spy_fixed_target_loyalty = 0;
 	unit_target_move_range_cycle = 0;
