@@ -253,6 +253,7 @@ void ConfigAdv::reset()
 
 	town_ai_emerge_nation_pop_limit = 60 * MAX_NATION;
 	town_ai_emerge_town_pop_limit = 1000;
+	town_migration = 1;
 	town_loyalty_qol = 1;
 
 	unit_ai_team_help = 1;
@@ -406,6 +407,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "town_ai_emerge_town_pop_limit") )
 	{
 		if( !read_int(value, &town_ai_emerge_town_pop_limit) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "town_migration") )
+	{
+		if( !read_bool(value, &town_migration) )
 			return 0;
 		update_check_sum(name, value);
 	}
