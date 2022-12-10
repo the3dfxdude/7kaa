@@ -186,6 +186,24 @@ int FirmMarket::is_market_linked_to_town(int ownBaseTownOnly)
 //
 void FirmMarket::ai_update_link_status()
 {
+	//---- make sure the restocking type is defined ----//
+
+	if( restock_type == RESTOCK_ANY )
+	{
+		MarketGoods* marketGoods = market_goods_array;
+
+		int i;
+		for( i=MAX_MARKET_GOODS ; i>0 ; i--, marketGoods++ )
+		{
+			if( marketGoods->raw_id )
+				break;
+		}
+		if( i>0 )
+			restock_type = RESTOCK_RAW;
+		else
+			restock_type = RESTOCK_PRODUCT;
+	}
+
 	//---- consider enabling/disabling links to firms ----//
 
 	Nation* nationPtr = nation_array[nation_recno];
@@ -201,7 +219,7 @@ void FirmMarket::ai_update_link_status()
 
 		//-------- check product type ----------//
 
-		if( is_retail_market )
+		if( is_retail_market() )
 			rc = firmPtr->firm_id == FIRM_FACTORY;
 		else
 			rc = firmPtr->firm_id == FIRM_MINE || firmPtr->firm_id == FIRM_FACTORY;		// for output raw materials to the factory to manufacture
@@ -326,7 +344,7 @@ int FirmMarket::think_import_new_product()
 
 	int minTradePop = 10;
 
-	if( is_retail_market )
+	if( is_retail_market() )
 	{
 		for( int productId=1 ; productId<=MAX_PRODUCT ; productId++ )
 		{
@@ -348,7 +366,7 @@ int FirmMarket::think_import_new_product()
 
 	//--- first check if we can build a new factory to manufacture the products ---//
 
-	if( !is_retail_market && is_market_linked_to_town(1) )		// 1-only count towns that are our own and are base towns
+	if( is_raw_market() && is_market_linked_to_town(1) )		// 1-only count towns that are our own and are base towns
 	{
 		if( !no_neighbor_space &&
 			 nationPtr->total_jobless_population >= MAX_WORKER*2 &&
@@ -894,4 +912,3 @@ int FirmMarket::ai_create_new_trade(Firm* firmPtr, int stop1PickUpType, int stop
 	return 1;
 }
 //-------- End of function FirmMarket::ai_create_new_trade -------//
-

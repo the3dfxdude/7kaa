@@ -726,7 +726,7 @@ int Town::think_build_market()
 		//------ if this market is our own one ------//
 
 		if( firmPtr->nation_recno == nation_recno &&
-			 ((FirmMarket*)firmPtr)->is_retail_market )
+			 ((FirmMarket*)firmPtr)->is_retail_market() )
 		{
 			return 0;
 		}

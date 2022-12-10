@@ -166,6 +166,7 @@ enum { MSG_QUEUE_HEADER=FIRST_REMOTE_MSG_ID,
 		 MSG_COMPARE_CRC,
 		 MSG_U_SHIP_COPY_ROUTE,
 		 MSG_FIRM_REQ_BUILDER,
+		 MSG_F_MARKET_RESTOCK,
 
 		 LAST_REMOTE_MSG_ID			// keep this item last
 	  };
@@ -314,6 +315,7 @@ public:
 
 	void	caravan_copy_route();
 	void	firm_request_builder();
+	void	market_switch_restock();
 };
 
 //----------- Define class Remote -----------//

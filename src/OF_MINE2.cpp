@@ -113,7 +113,7 @@ int FirmMine::think_build_market()
 		//------ if this market is our own one ------//
 
 		if( firmPtr->nation_recno == nation_recno &&
-			 ((FirmMarket*)firmPtr)->is_retail_market==0 )  // if it already has a raw material market, then no need to build a new one
+			 ((FirmMarket*)firmPtr)->is_raw_market() )  // if it already has a raw material market, then no need to build a new one
 		{
 			return 0;
 		}

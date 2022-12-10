@@ -949,7 +949,7 @@ void FirmMarket::init_crc(FirmMarketCrc *c)
 
 	c->no_linked_town_since_date = no_linked_town_since_date;
 	c->last_import_new_goods_date = last_import_new_goods_date;
-	c->is_retail_market = is_retail_market;
+	c->restock_type = restock_type;
 }
 //----------- End of function FirmMarket::init_crc -----------//
 

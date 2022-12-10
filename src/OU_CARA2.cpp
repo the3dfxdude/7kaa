@@ -252,13 +252,13 @@ void UnitCaravan::think_set_pick_up_type()
 	}
 
 	if( firmPtr2->nation_recno == nation_recno &&		// only when the market is our own, we can use it as a TO market
-		 ((FirmMarket*)firmPtr2)->is_retail_market )
+		 ((FirmMarket*)firmPtr2)->is_retail_market() )
 	{
 		think_set_pick_up_type2( 1, 2 );
 	}
 
 	if( firmPtr1->nation_recno == nation_recno &&
-		 ((FirmMarket*)firmPtr1)->is_retail_market )
+		 ((FirmMarket*)firmPtr1)->is_retail_market() )
 	{
 		think_set_pick_up_type2( 2, 1 );
 	}

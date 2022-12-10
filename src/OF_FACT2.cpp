@@ -105,7 +105,7 @@ int FirmFactory::think_build_market()
 		//----- if this is a retail market of our own ------//
 
 		if( firmPtr->nation_recno == nation_recno &&
-			 ((FirmMarket*)firmPtr)->is_retail_market )
+			 ((FirmMarket*)firmPtr)->is_retail_market() )
 		{
 			return 0;
 		}

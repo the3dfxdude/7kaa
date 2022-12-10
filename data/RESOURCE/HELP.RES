@@ -400,3 +400,11 @@ When you Click on this tile, your cursor will change into a small square. Place 
 REPAIRQ
 Structure Repair Icon
 This icon shows there is not a construction worker stationed here for repair but an idle worker may be requested. Click or right-click on this icon to request sending a construction worker.
+~
+MK_RSTKF
+Restocking Source
+This shows you which type of linked buildings this market may restock from.
+~
+MK_RSTKS
+Switch Restocking Source
+Click this button to change the type of linked buildings this market may restock from. This allows you to control this market's purpose.

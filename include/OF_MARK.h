@@ -49,6 +49,12 @@
 
 #define  MAX_MARKET_STOCK 		500
 
+enum { RESTOCK_ANY = 0,
+	RESTOCK_PRODUCT,
+	RESTOCK_RAW,
+	RESTOCK_NONE,
+};
+
 //------- Define class MarketInfo --------//
 
 #pragma pack(1)
@@ -101,7 +107,10 @@ public:
 
 	int			 no_linked_town_since_date;
 	int			 last_import_new_goods_date;
-	char			 is_retail_market;					// if 1, then it sells consumer products only, if 0, it sells raw materials only
+
+	//--------------------------------//
+
+	char			 restock_type;
 
 public:
 	FirmMarket();
@@ -132,6 +141,10 @@ public:
 	void		process_ai();	// ai process entry point
 
 	int		read_derived_file(File* filePtr);
+
+	int		is_raw_market();
+	int		is_retail_market();
+	void		switch_restock();
 
 	//-------------- multiplayer checking codes ---------------//
 	virtual	uint8_t crc8();

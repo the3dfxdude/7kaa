@@ -180,6 +180,7 @@ static MsgProcessFP msg_process_function_array[] =
 	&RemoteMsg::compare_remote_crc,
 	&RemoteMsg::ship_copy_route,
 	&RemoteMsg::firm_request_builder,
+	&RemoteMsg::market_switch_restock,
 };
 
 //---------- Declare static functions ----------//
@@ -3002,3 +3003,22 @@ void RemoteMsg::firm_request_builder()
 	}
 }
 // ------- End of function RemoteMsg::firm_request_builder ---------//
+
+
+// ------- Begin of function RemoteMsg::switch_restock ---------//
+void RemoteMsg::market_switch_restock()
+{
+	err_when(id != MSG_F_MARKET_RESTOCK);
+	// packet structure : <firm recno>
+	short *shortPtr = (short *)data_buf;
+	if( validate_firm(*shortPtr) )
+	{
+		FirmMarket *firmMarket = firm_array[*shortPtr]->cast_to_FirmMarket();
+
+		if(!firmMarket)
+			err_here();
+		else
+			firmMarket->switch_restock();
+	}
+}
+// ------- End of function RemoteMsg::switch_restock ---------//

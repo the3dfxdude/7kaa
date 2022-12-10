@@ -75,6 +75,7 @@ static Point slot_point_array[] =
 
 static Button3D button_hire_caravan;
 static Button 	 button_clear_stock[MAX_MARKET_GOODS];
+static Button   button_switch_restock;
 
 //--------- Begin of function FirmMarket::FirmMarket ---------//
 //
@@ -92,7 +93,7 @@ FirmMarket::FirmMarket()
 	no_linked_town_since_date  = 0;
 	last_import_new_goods_date = 0;
 	// ####### patch begin Gilbert 23/1 #######//
-	is_retail_market = 0;
+	restock_type = RESTOCK_ANY;
 	// ####### end begin Gilbert 23/1 #######//
 }
 //----------- End of function FirmMarket::FirmMarket -----------//
@@ -114,13 +115,13 @@ void FirmMarket::init_derived()
 
 	town_array.distribute_demand();
 
-	//-------- set is_retail_market (for AI only) --------//
+	//-------- set restock_type for AI only --------//
 
 	if( firm_ai )
 	{
 		Firm *firmPtr, *otherFirm;
 
-		is_retail_market = 1;		// set it to 1 first
+		restock_type = RESTOCK_PRODUCT;		// default to product
 
 		for( int i=0 ; i<linked_firm_count ; i++ )
 		{
@@ -144,7 +145,7 @@ void FirmMarket::init_derived()
 				if( otherFirm->nation_recno == nation_recno &&
 					 otherFirm->firm_recno 	 != firm_recno &&
 					 otherFirm->firm_id		 == FIRM_MARKET &&
-					 ((FirmMarket*)otherFirm)->is_retail_market==0 )
+					 ((FirmMarket*)otherFirm)->is_raw_market() )
 				{
 					break;
 				}
@@ -152,7 +153,7 @@ void FirmMarket::init_derived()
 
 			if( j<0 )	// if the mine doesn't have any links to other markets
 			{
-				is_retail_market = 0;
+				restock_type = RESTOCK_RAW;
 				break;
 			}
 		}
@@ -254,7 +255,7 @@ void FirmMarket::put_info(int refreshFlag)
 	disp_income(INFO_Y1+209, refreshFlag );	  // 1-display income figure
 
 	if( refreshFlag == INFO_REPAINT )
-		button_hire_caravan.paint( INFO_X1, INFO_Y1+236, 'A', "HIRECARA" );
+		button_hire_caravan.paint( INFO_X1, INFO_Y1+251, 'A', "HIRECARA" );
 
 	if( can_hire_caravan() )
 		button_hire_caravan.enable();
@@ -300,6 +301,22 @@ int FirmMarket::detect_info()
 			se_ctrl.immediate_sound("TURN_OFF");
 			return 1;
 		}
+	}
+
+	if( button_switch_restock.detect() )
+	{
+		if( !remote.is_enable() )
+		{
+			switch_restock();
+		}
+		else
+		{
+			// message structure : <firm recno>
+			short *shortPtr = (short *)remote.new_send_queue_msg(MSG_F_MARKET_RESTOCK, sizeof(short) );
+			shortPtr[0] = firm_recno;
+		}
+		se_ctrl.immediate_sound("TURN_OFF");
+		return 1;
 	}
 
 	//----- detect hire caravan button -------//
@@ -494,6 +511,13 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 //----------- End of function FirmMarket::put_market_info -----------//
 
 
+const char *restocking_msg[] =
+{
+	N_("Any"),
+	N_("Factory"),
+	N_("Mine"),
+	N_("None"),
+};
 //--------- Begin of function FirmMarket::disp_income ---------//
 //
 // Display monthly expense information.
@@ -501,11 +525,18 @@ void FirmMarket::put_market_info(int dispY1, int refreshFlag)
 void FirmMarket::disp_income(int dispY1, int refreshFlag)
 {
 	if( refreshFlag == INFO_REPAINT )
-		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+23 );
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+39 );
 
 	int x=INFO_X1+4, y=dispY1+4;
 
 	font_san.field( x, y, _("Yearly Income"), x+110, (int) income_365days(), 2, x+200, refreshFlag, "MK_INCOM" );
+	font_san.field( x, y+16, _("Restock From"), x+110, restocking_msg[restock_type], x+200, refreshFlag, "MK_RSTKF" );
+
+	if( nation_recno == nation_array.player_recno )
+	{
+		button_switch_restock.paint_text( INFO_X2-20, y+18, INFO_X2-3, y+36, ">" );	// change restocking
+		button_switch_restock.set_help_code( "MK_RSTKS" );
+	}
 }
 //----------- End of function FirmMarket::disp_income -----------//
 
@@ -596,8 +627,7 @@ void FirmMarket::input_goods(int maxInputQty)
 
 		//--------- if it's a mine ------------//
 
-		if( firmPtr->firm_id == FIRM_MINE &&
-      	 (!firm_ai || !is_retail_market ) ) 
+		if( firmPtr->firm_id == FIRM_MINE && is_raw_market() )
 		{
 			firmMine = (FirmMine*) firmPtr;
 
@@ -642,8 +672,7 @@ void FirmMarket::input_goods(int maxInputQty)
 
 		//--------- if it's a factory ------------//
 
-		else if( firmPtr->firm_id == FIRM_FACTORY &&
-					(!firm_ai || is_retail_market ) )
+		else if( firmPtr->firm_id == FIRM_FACTORY && is_retail_market() )
 		{
 			firmFactory = (FirmFactory*) firmPtr;
 
@@ -695,12 +724,12 @@ void FirmMarket::input_goods(int maxInputQty)
 		{
 			if( !is_inputing_array[i] && marketGoods->stock_qty==0 )
 			{
-				if( firmPtr->firm_id == FIRM_MINE )
+				if( firmPtr->firm_id == FIRM_MINE && is_raw_market() )
 				{
 					set_goods(1, ((FirmMine*)firmPtr)->raw_id, i);
 					break;
 				}
-				else if( firmPtr->firm_id == FIRM_FACTORY )
+				else if( firmPtr->firm_id == FIRM_FACTORY && is_retail_market() )
 				{
 					set_goods(0, ((FirmFactory*)firmPtr)->product_raw_id, i);
 					break;
@@ -935,6 +964,11 @@ int FirmMarket::read_derived_file(File* filePtr)
 			market_product_array[productId-1] = market_goods_array + i;
 	}
 
+        //---- force ai to update restocking type and links after load ----//
+
+	if( firm_ai )
+		ai_link_checked = 0;
+
 	return 1;
 }
 //----------- End of function FirmMarket::read_derived_file -----------//
@@ -987,3 +1021,40 @@ void FirmMarket::update_trade_link()
 }
 //------ End of function FirmMarket::update_trade_link -----//
 
+
+//----- Begin of function FirmMarket::is_raw_market -----//
+//
+int FirmMarket::is_raw_market()
+{
+	if( restock_type == RESTOCK_RAW )
+		return 1;
+	if( restock_type == RESTOCK_ANY )
+		return 1;
+	return 0;
+}
+//------ End of function FirmMarket::is_raw_market -----//
+
+
+//----- Begin of function FirmMarket::is_retail_market -----//
+//
+int FirmMarket::is_retail_market()
+{
+	if( restock_type == RESTOCK_PRODUCT )
+		return 1;
+	if( restock_type == RESTOCK_ANY )
+		return 1;
+	return 0;
+}
+//------ End of function FirmMarket::is_raw_market -----//
+
+
+//----- Begin of function FirmMarket::switch_restock -----//
+//
+void FirmMarket::switch_restock()
+{
+	if( ++restock_type > RESTOCK_NONE )
+		restock_type = RESTOCK_ANY;
+	if( firm_array.selected_recno == firm_recno )
+		info.disp();
+}
+//------ End of function FirmMarket::switch_restock -----//

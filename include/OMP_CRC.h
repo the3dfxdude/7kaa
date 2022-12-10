@@ -192,7 +192,7 @@ struct FirmMarketCrc : FirmCrc
 
 	int		no_linked_town_since_date;
 	int		last_import_new_goods_date;
-	char		is_retail_market;
+	char		restock_type;
 };
 
 struct FirmMineCrc : FirmCrc
