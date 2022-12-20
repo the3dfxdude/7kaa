@@ -49,7 +49,7 @@ static char current_monster_action_mode;
 
 static int fryhtan_attacks_per_six_months(int numOfLairs);
 static int fryhtan_random_attack();
-
+static void disp_worker_hit_points(int x1, int y1, int x2, int hitPoints, int maxHitPoints);
 
 //--------- Begin of function FirmMonster::init_derived ---------//
 //
@@ -164,10 +164,8 @@ void FirmMonster::put_info(int refreshFlag)
 {
 	disp_basic_info(INFO_Y1, refreshFlag);
 
-	if( !config.show_ai_info && nation_recno!=nation_array.player_recno )
-		return;
-
-	disp_monster_info(INFO_Y1+54, refreshFlag);
+	if( should_show_info() )
+		disp_monster_info(INFO_Y1+54, refreshFlag);
 }
 //----------- End of function FirmMonster::put_info -----------//
 
@@ -187,18 +185,74 @@ int FirmMonster::detect_info()
 //----------- End of function FirmMonster::detect_info -----------//
 
 
+extern const char *monster_name_king[];
 //--------- Begin of function FirmMonster::disp_monster_info ---------//
 //
 void FirmMonster::disp_monster_info(int dispY1, int refreshFlag)
 {
-	return;
+	int x=INFO_X1+6, y=dispY1+4, x1=x+UNIT_LARGE_ICON_WIDTH+8;
 
 	//---------------- paint the panel --------------//
 
 	if( refreshFlag == INFO_REPAINT )
-		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+22 );
+	{
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+UNIT_LARGE_ICON_WIDTH+6 );
 
-	int x=INFO_X1+4, y=dispY1+3;
+		if( monster_king.monster_id )
+		{
+			MonsterInfo* monsterInfo = monster_res[monster_king.monster_id];
+			UnitInfo* unitInfo = unit_res[monsterInfo->unit_id];
+
+			font_san.put( x1, y+UNIT_LARGE_ICON_HEIGHT/2-6, _(monster_name_king[monster_king.monster_id-1]) );
+
+			vga_front.put_bitmap(x, y, unitInfo->get_large_icon_ptr(RANK_KING));
+
+			//------ display hit points bar --------//
+
+			disp_worker_hit_points( x, y+UNIT_LARGE_ICON_HEIGHT, x+UNIT_LARGE_ICON_WIDTH, monster_king.hit_points, monster_king.max_hit_points );
+		}
+	}
+
+	dispY1 = y+UNIT_LARGE_ICON_HEIGHT+12;
+
+	//---------------- paint the ordo panel --------------//
+
+	if( refreshFlag == INFO_REPAINT )
+	{
+		vga_util.d3_panel_up( INFO_X1, dispY1, INFO_X2, dispY1+(UNIT_LARGE_ICON_HEIGHT+4)*3+25 );
+		font_san.center_put( INFO_X1, dispY1+1, INFO_X2, dispY1+21, _("Ordos") );
+	}
+
+	//------ display ordo composition -------//
+
+	dispY1+=22;
+
+	for( int i=0 ; i<MAX_MONSTER_GENERAL_IN_FIRM ; i++ )
+	{
+		x = INFO_X1+4+i%3*67;
+		y = dispY1+i/3*(UNIT_LARGE_ICON_HEIGHT+6);
+
+		if( i<monster_general_count )
+		{
+			MonsterInFirm* monsterPtr = &monster_general_array[i];
+			MonsterInfo* monsterInfo = monster_res[monsterPtr->monster_id];
+			UnitInfo* unitInfo = unit_res[monsterInfo->unit_id];
+			if( refreshFlag==INFO_REPAINT )
+				vga_front.put_bitmap(x, y, unitInfo->get_large_icon_ptr(RANK_GENERAL));
+
+			//------ display hit points bar --------//
+
+			disp_worker_hit_points( x, y+UNIT_LARGE_ICON_HEIGHT, x+UNIT_LARGE_ICON_WIDTH, monsterPtr->hit_points, monsterPtr->max_hit_points );
+
+			//----- display ordo troop size ------//
+
+			font_san.disp(x+UNIT_LARGE_ICON_WIDTH+5, y+UNIT_LARGE_ICON_HEIGHT/2-6, monsterPtr->soldier_count, 1, x+UNIT_LARGE_ICON_WIDTH+19);
+		}
+		else
+		{
+			vga_util.blt_buf( x, y, x+UNIT_LARGE_ICON_WIDTH+19, y+UNIT_LARGE_ICON_HEIGHT+6, 0 );
+		}
+	}
 }
 //----------- End of function FirmMonster::disp_monster_info -----------//
 
@@ -375,6 +429,9 @@ void FirmMonster::set_king(int monsterId, int combatLevel)
 	monster_king.monster_id 	= monsterId;
 	monster_king.set_combat_level(combatLevel);
 	monster_king.hit_points 	= monster_king.max_hit_points;
+
+	if( firm_array.selected_recno == firm_recno )
+		sys.need_redraw_flag = 1;
 }
 //----------- End of function FirmMonster::set_king -----------//
 
@@ -430,6 +487,9 @@ void FirmMonster::add_general(int generalUnitRecno)
 			waiting_soldier_count--;
 		}
 	}
+
+	if( firm_array.selected_recno == firm_recno )
+		sys.need_redraw_flag = 1;
 }
 //----------- End of function FirmMonster::add_general -----------//
 
@@ -501,6 +561,9 @@ int FirmMonster::recruit_general(int soldierCount)
 
 	monster_general_count++;
 
+	if( firm_array.selected_recno == firm_recno )
+		sys.need_redraw_flag = 1;
+
 	return 1;
 }
 //----------- End of function FirmMonster::recruit_general -----------//
@@ -536,6 +599,9 @@ int FirmMonster::mobilize_king()
 		return 0;
 
 	monster_king.monster_id = 0;
+
+	if( firm_array.selected_recno == firm_recno )
+		sys.need_redraw_flag = 1;
 
 	return 1;
 }
@@ -618,6 +684,9 @@ int FirmMonster::mobilize_general(int generalId, int mobilizeSoldier)
 
 	monster_general_count--;
 	unit_array.cur_team_id++;
+
+	if( firm_array.selected_recno == firm_recno )
+		sys.need_redraw_flag = 1;
 
 	return mobilizedCount;
 }
@@ -1194,3 +1263,53 @@ int FirmMonster::think_attack_human()
 }
 //-------- End of function FirmMonster::think_attack_human -------//
 
+
+//--------- Begin of function disp_worker_hit_points ---------//
+//
+static void disp_worker_hit_points(int x1, int y1, int x2, int hitPoints, int maxHitPoints)
+{
+	//------- determine the hit bar type -------//
+
+	#define HIT_BAR_TYPE_COUNT  3
+
+	int  hit_bar_color_array[HIT_BAR_TYPE_COUNT] = { 0xA8, 0xB4, 0xAC };
+	int  hit_bar_max_array[HIT_BAR_TYPE_COUNT] 	= { 50, 100, 200 };
+	char hitBarColor;
+
+	for( int i=0 ; i<HIT_BAR_TYPE_COUNT ; i++ )
+	{
+		if( maxHitPoints <= hit_bar_max_array[i] || i==HIT_BAR_TYPE_COUNT-1 )
+		{
+			hitBarColor = hit_bar_color_array[i];
+			break;
+		}
+	}
+
+	//------- draw the hit points bar -------//
+
+	enum { HIT_BAR_DARK_BORDER = 3,
+			 HIT_BAR_BODY 		   = 1 };
+
+	int barWidth = (x2-x1+1) * hitPoints / MAX(hitPoints, maxHitPoints);
+
+	vga_front.bar( x1, y1, x1+barWidth-1, y1+1, hitBarColor + HIT_BAR_BODY );
+
+	if( x1+barWidth <= x2 )
+		vga_util.blt_buf( x1+barWidth, y1, x2, y1+1, 0 );
+
+	y1+=2;
+
+	vga_front.bar( x1, y1, x1+barWidth-1, y1, hitBarColor + HIT_BAR_DARK_BORDER );
+	vga_front.bar( x1+barWidth, y1, x1+barWidth, y1, V_BLACK );
+
+	if( x1+barWidth+1 <= x2 )
+		vga_util.blt_buf( x1+barWidth+1, y1, x2, y1, 0 );
+
+	y1++;
+
+	vga_front.bar( x1+1, y1, x1+barWidth, y1, V_BLACK );
+
+	if( x1+barWidth+1 <= x2 )
+		vga_util.blt_buf( x1+barWidth+1, y1, x2, y1, 0 );
+}
+//----------- End of function disp_worker_hit_points -----------//
