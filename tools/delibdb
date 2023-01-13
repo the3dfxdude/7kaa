@@ -70,6 +70,10 @@ for (my $i = 0; $i < $records; $i++) {
 		print "Error while reading record $i for $filename_field\n";
 		exit 1;
 	}
+	if ($filename eq '') {
+		print "No bitmap for record $i\n";
+		next;
+	}
 	my $packed_ptr = $dbf->get_value($i, $ptr_idx);
 	if (!defined($packed_ptr)) {
 		print "Error while reading record $i for $ptr_field\n";
