@@ -28,7 +28,7 @@ $STRIP dest/7kaa.exe
 cd doc
 latexmk
 cd ..
-cp doc/main.pdf dest/7kaa-manual.pdf
+cp doc/7kaa.pdf dest/7kaa-manual.pdf
 
 # Still need to add music and dlls
 # then run NSIS on install.nsi

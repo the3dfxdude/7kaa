@@ -1,5 +1,5 @@
-@default_files = ("main.tex"); # compile only main.tex
-$makeindex = "makeindex -s simpleidx.ist main.idx";
+@default_files = ("7kaa.tex"); # compile only 7kaa.tex
+$makeindex = "makeindex -s 7kaa.ist 7kaa.idx";
 $recorder = 1;
 $pdf_mode = 1; # tex -> PDF
 $bibtex_use = 2;
