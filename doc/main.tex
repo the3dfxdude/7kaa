@@ -32,6 +32,7 @@
 % Graphics, figures and tables:
 \usepackage{graphicx} % Basic support for figures
 \graphicspath{{assets/}}
+\usepackage{pdfpages}
 \usepackage{wrapfig} % Wrap figure around text
 \usepackage{xcolor} % An extended support for colors, required by tabu
 \usepackage{colortbl} % Pretty colored tables, required by tabu
@@ -108,6 +109,8 @@
 % -- Additional Options end -- %
 
 \begin{document}
+
+\setcounter{page}{0}\includepdf[fitpaper=true]{cover-front}
 
 \title{
 \includegraphics[width=0.9\linewidth]{7klogo}~\\[1cm]
