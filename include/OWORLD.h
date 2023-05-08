@@ -142,6 +142,7 @@ public:
 										  int spaceLocWidth, int spaceLocHeight, int maxTries,
 										  int regionId=0, int buildSite=0, char teraMask=1);
 	int		is_adjacent_region( int x, int y, int regionId );
+	int		is_harbor_region(int xLoc, int yLoc, int landRegionId, int seaRegionId);
 
 	void 		draw_link_line(int srcFirmId, int srcTownRecno, int srcXLoc1, int srcYLoc1, int srcXLoc2, int srcYLoc2, int giveEffectiveDis=0);
 

@@ -216,7 +216,7 @@ int Nation::ai_build_harbor(int landRegionId, int seaRegionId)
 		if( !locPtr->can_build_whole_harbor() )
 			continue;
 
-		if( !world.is_adjacent_region(xLoc, yLoc, seaRegionId) )
+		if( !world.is_harbor_region(xLoc, yLoc, landRegionId, seaRegionId) )
 			continue;
 
 		if( !world.can_build_firm(xLoc, yLoc, FIRM_HARBOR) )
