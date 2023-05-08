@@ -2445,8 +2445,8 @@ void Unit::del_team_member(int unitRecno)
 // are any units with hit_points <= 0, delete them.
 //
 // Those unit may just be killed, so soon that the Unit's set_die()
-// function hsa been called yet. validate_team() function must
-// be called before all issunig any new team actions.
+// function hasn't been called yet. The validate_team() function must
+// be called before issuing any new team actions.
 //
 void Unit::validate_team()
 {
