@@ -334,6 +334,9 @@ int Nation::think_surrender()
 		if( nation_array.is_deleted(i) || i==nation_recno )
 			continue;
 
+		if( !get_relation(i)->has_contact )		// don't surrender to a nation without contact
+			continue;
+
 		nationPtr = nation_array[i];
 
 		if( nationPtr->cash <= 300 )		// don't surrender to an economically handicapped nation
