@@ -31,8 +31,12 @@ use File::Spec;
 use dbf;
 
 if (@ARGV < 5) {
-	print "Usage: $0 ptr.dbf file.res input_dir filename_field ptr_field file_ext\n";
-	print "Puts all files defined by dbf in res. Input_dir must have all the files.\n";
+	print <<EOF;
+Usage: $0 ptr.dbf file.res input_dir filename_field ptr_field file_ext
+Puts all files defined by dbf in res. Input_dir must have all the files.
+A repacked res file may change the offsets, so a ptr.dbf.new is written
+to sync these changes, which you will need to rename and repack std.set.
+EOF
 	exit 0;
 }
 my ($dbf_file, $res_file, $input_dir, $filename_field, $ptr_field, $ext) = @ARGV;
