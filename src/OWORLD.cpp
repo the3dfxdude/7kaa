@@ -2241,7 +2241,6 @@ int World::is_harbor_region(int xLoc, int yLoc, int landRegionId, int seaRegionI
 			if( regionId != landRegionId &&
 				regionId != seaRegionId )
 			{
-				//printf("here2!\n");
 				return 0;
 			}
 		}
