@@ -261,7 +261,7 @@ void Firm::disp_basic_info(int dispY1, int refreshFlag)
 
 	int showRepairIcon = builder_recno && !under_construction && should_show_info();
 	int showReqRepairIcon = !builder_recno && !under_construction && should_show_info() && own_firm() && find_idle_builder(0);
-	err_when( showRepairIcon && showReqRepairIcon )
+	err_when( showRepairIcon && showReqRepairIcon );
 
 	if( refreshFlag == INFO_REPAINT )
 	{

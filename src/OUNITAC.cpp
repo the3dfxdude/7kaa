@@ -476,7 +476,7 @@ void Unit::assign(int assignXLoc, int assignYLoc, short curAssignUnitNum)
 		return;
 
 	//----------- BUGHERE : cannot assign when on a ship -----------//
-	err_when(!is_visible())
+	err_when(!is_visible());
 	if(!is_visible())
 		return;
 

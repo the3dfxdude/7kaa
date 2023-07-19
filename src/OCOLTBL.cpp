@@ -191,7 +191,7 @@ void ColorTable::generate_table(int absScale, PalDesc & palD, RGBColor (*fp)(RGB
 {
 	int palSize = palD.pal_size;
 
-	err_when(absScale < 0 || palD.reserved_color < 0 || palD.pal == NULL);
+	err_when(absScale < 0 || palD.reserved_count < 0 || palD.pal == NULL);
 	err_when(palSize > MAX_COLOUR_TABLE_SIZE);
 	deinit();
 
