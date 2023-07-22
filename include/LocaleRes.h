@@ -64,11 +64,13 @@ public:
 
 	void init();
 	void deinit();
-	void load();
+	void load(const char *locale);
 
 #ifdef ENABLE_NLS
 	const char *conv_str(iconv_t cd, const char *s);
 #endif
+	const char *get_locale_dir();
+	const char *get_messages_locale();
 };
 
 extern LocaleRes locale_res;

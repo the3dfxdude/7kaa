@@ -81,6 +81,7 @@ CXXFLAGS="$save_CXXFLAGS"
 
 # Checks for header files.
 dnl AC_CHECK_HEADERS([])
+gt_LC_MESSAGES
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CANONICAL_HOST
@@ -95,7 +96,7 @@ AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 
 # Checks for library functions.
-AC_CHECK_FUNCS([_NSGetExecutablePath])
+AC_CHECK_FUNCS_ONCE([_NSGetExecutablePath setenv])
 
 AX_STRING_STRCASECMP
 if test x"$ac_cv_string_strcasecmp" = "xno" ; then

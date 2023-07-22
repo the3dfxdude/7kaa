@@ -312,7 +312,7 @@ int main(int argc, char **argv)
 	}
 	config_adv.init();
 	if( config_adv.locale[0] )
-		locale_res.load();
+		locale_res.load(config_adv.locale);
 
 	//----- read command line arguments -----//
 
