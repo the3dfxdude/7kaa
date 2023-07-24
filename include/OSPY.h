@@ -95,6 +95,7 @@ public:
 	int   can_change_cloaked_nation(int newNationRecno);
 
 	int	capture_firm();
+	int	can_capture_firm();
 
 	void	reward(int remoteAction);
 	void 	set_exposed(int remoteAction);

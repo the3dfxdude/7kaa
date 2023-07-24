@@ -922,25 +922,15 @@ int Spy::capture_firm()
 	if( spy_place != SPY_FIRM )
 		return 0;
 
+	if( !can_capture_firm() )
+		return 0;
+
 	Firm* firmPtr = firm_array[spy_place_para];
 
 	//------- if the spy is the overseer of the firm --------//
 
 	if( firm_res[firmPtr->firm_id]->need_overseer )
 	{
-		//-----------------------------------------------------//
-		//
-		// If the firm needs an overseer, the firm can only be
-		// captured if the spy is the overseer of the firm.
-		//
-		//-----------------------------------------------------//
-
-		if( !firmPtr->overseer_recno ||
-			 unit_array[firmPtr->overseer_recno]->spy_recno != spy_recno )
-		{
-			return 0;
-		}
-
 		//---------------------------------------------------//
 		//
 		// For those soldiers who disagree with the spy general will
@@ -1006,19 +996,6 @@ int Spy::capture_firm()
 	{
 		//------ otherwise the spy is a worker of the firm -------//
 
-		//---- check whether it's true that the only units in the firms are our spies ---//
-
-		Worker* workerPtr = firmPtr->worker_array;
-
-		for( int i=0 ; i<firmPtr->worker_count ; i++, workerPtr++ )
-		{
-			if( !workerPtr->spy_recno )		// this worker is not a spy
-				return 0;
-
-			if( spy_array[workerPtr->spy_recno]->true_nation_recno != true_nation_recno )
-				return 0;							// this worker is a spy, but not belong to the same nation
-		}
-
 		//--------- add news message --------//
 
 		if( firmPtr->nation_recno == nation_array.player_recno )
@@ -1037,6 +1014,57 @@ int Spy::capture_firm()
 	return 1;
 }
 //---------- End of function Spy::capture_firm ----------//
+
+
+//--------- Begin of function Spy::can_capture_firm ----------//
+//
+// Report if the spy can capture the firm.
+//
+int Spy::can_capture_firm()
+{
+	if( spy_place != SPY_FIRM )
+		return 0;
+
+	Firm* firmPtr = firm_array[spy_place_para];
+
+	//------- if the spy is the overseer of the firm --------//
+
+	if( firm_res[firmPtr->firm_id]->need_overseer )
+	{
+		//-----------------------------------------------------//
+		//
+		// If the firm needs an overseer, the firm can only be
+		// captured if the spy is the overseer of the firm.
+		//
+		//-----------------------------------------------------//
+
+		if( !firmPtr->overseer_recno ||
+			 unit_array[firmPtr->overseer_recno]->spy_recno != spy_recno )
+		{
+			return 0;
+		}
+
+		return 1;
+	}
+
+	//------ otherwise the spy is a worker of the firm -------//
+
+	//---- check whether it's true that the only units in the firms are our spies ---//
+
+	Worker* workerPtr = firmPtr->worker_array;
+
+	for( int i=0 ; i<firmPtr->worker_count ; i++, workerPtr++ )
+	{
+		if( !workerPtr->spy_recno )		// this worker is not a spy
+			return 0;
+
+		if( spy_array[workerPtr->spy_recno]->true_nation_recno != true_nation_recno )
+			return 0;							// this worker is a spy, but not belong to the same nation
+	}
+
+	return 1;
+}
+//---------- End of function Spy::can_capture_firm ----------//
 
 
 //-------- Begin of function Spy::mobilize_spy ------//
