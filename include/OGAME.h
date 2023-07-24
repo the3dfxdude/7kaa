@@ -39,7 +39,8 @@ enum { GAME_PREGAME=1,
 		 // ####### begin Gilbert 2/9 ######//
 		 GAME_CREDITS,
 		 // ####### end Gilbert 2/9 ######//
-		 GAME_DEMO
+		 GAME_DEMO,
+		 GAME_POSTGAME
 	  };
 
 //--------- Define struct ColorRemapMethod ----------//

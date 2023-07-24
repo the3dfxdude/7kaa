@@ -242,6 +242,7 @@ void Game::deinit(int loadGameCall)
 {
 	if( !init_flag )
 		return;
+	game_mode = GAME_POSTGAME;
 
 	power.disable();     // disable power, which handle mouse inputs
 
