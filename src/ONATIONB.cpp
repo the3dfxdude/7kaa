@@ -236,8 +236,8 @@ void NationBase::deinit()
 		// so there  will be no more spies of this nation. 
 		//-----------------------------------------------------//
 
-		if( spyPtr->true_nation_recno == nation_recno )		// drop spy identities of spies in towns, firms and mobile ones
-			spyPtr->drop_spy_identity();	
+		if( spyPtr->true_nation_recno == nation_recno )		// retire counter-spies immediately
+			spyPtr->drop_spy_identity();
 
 		//-----------------------------------------------------//
 		// For spies of other nation cloaked as this nation,
@@ -246,10 +246,22 @@ void NationBase::deinit()
 		//-----------------------------------------------------//
 
 		else if( spyPtr->cloaked_nation_recno == nation_recno )
-			spyPtr->change_cloaked_nation(spyPtr->true_nation_recno);
+		{
+			// changing cloak is normally only allowed when mobile
 
-		err_when( spyPtr->true_nation_recno == nation_recno ||		// there should be no more spies associated with this nation 
-				    spyPtr->cloaked_nation_recno == nation_recno );
+			if( spyPtr->spy_place == SPY_FIRM )
+			{
+				// at least try to return spoils before it goes poof
+				if( !spyPtr->can_capture_firm() || !spyPtr->capture_firm() )
+					spyPtr->mobilize_firm_spy();
+			}
+			else if( spyPtr->spy_place == SPY_TOWN )
+				spyPtr->mobilize_town_spy();
+			if( spyPtr->spy_place == SPY_MOBILE ) // what about on transport??
+				spyPtr->change_cloaked_nation(spyPtr->true_nation_recno);
+
+			err_when( spyPtr->cloaked_nation_recno == nation_recno );	// there should be no more spies associated with this nation
+		}
 	}
 
 	//----- deinit all units belonging to this nation -----//
