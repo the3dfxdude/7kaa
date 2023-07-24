@@ -77,9 +77,12 @@ static void split_line(char *line);
 //
 void Game::game_end(int winNationRecno, int playerDestroyed, int surrenderToNationRecno, int retireFlag)
 {
-	//--- set scenario as complete if they didn't retire ---//
-	if(!retireFlag && !playerDestroyed)
+	//--- set scenario as complete if the player wins ---//
+	if( nation_array.player_recno && winNationRecno == nation_array.player_recno )
+	{
+		err_when( playerDestroyed || surrenderToNationRecno || retireFlag );
 		playerStats.set_scenario_play_status(scenario_file_name, nsPlayerStats::PlayStatus::COMPLETED);
+	}
 
 	//--- skip all game ending screens if in demo mode ---//
 
