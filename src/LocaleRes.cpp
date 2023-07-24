@@ -136,12 +136,9 @@ void LocaleRes::load(const char *locale)
 	{
 		setlocale(LC_MESSAGES, locale);
 		setlocale(LC_CTYPE, locale);
-#ifndef HAVE_LC_MESSAGES
-		// Gettext fakes the setlocale for LC_MESSAGES above via a
-		// wrapper, set the env var the same way since the var is
-		// actually used by gettext instead of the real setlocale.
+		// The gettext team says setting the env var is the best way to
+		// inform gettext of the change.
 		setenv("LC_MESSAGES", locale, 1);
-#endif
 	}
 	locale = get_messages_locale();
 
@@ -274,8 +271,8 @@ const char *LocaleRes::get_messages_locale()
 	locale = setlocale(LC_MESSAGES, NULL);
 	if( locale && locale[0] )
 		return locale;
-#else /* Missing LC_MESSAGES */
-	// gettext uses the env vars on this platform
+#endif
+
 	locale = getenv("LC_ALL");
 	if( locale && locale[0] )
 		return locale;
@@ -287,7 +284,7 @@ const char *LocaleRes::get_messages_locale()
 	locale = getenv("LANG");
 	if( locale && locale[0] )
 		return locale;
-#endif
+
 	// We don't spend the time to map what Windows uses for locales. And
 	// some platforms don't have a POSIX setlocale, so if the user does not
 	// manually set an option in this case, we don't know the locale.
