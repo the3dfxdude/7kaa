@@ -206,14 +206,12 @@ void Unit::process_idle()
 	}
 
    err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
-   err_when(action_mode==ACTION_ATTACK_UNIT && action_para==0);
 
 	//--------- reactivate action -----------//
 
 	if(reactivate_idle_action())
    {
       err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
-      err_when(action_mode==ACTION_ATTACK_UNIT && action_para==0);
       return; // true if an action is reactivated
    }
 
@@ -239,7 +237,6 @@ void Unit::process_idle()
 	//-**************** simulate aat ********************-//
 
    err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
-   err_when(action_mode==ACTION_ATTACK_UNIT && action_para==0);
 
 	//----------- for ai unit idle -----------//
 
@@ -251,7 +248,6 @@ void Unit::process_idle()
 
 	err_when(!can_attack());
 	err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
-	err_when(action_mode==ACTION_ATTACK_UNIT && action_para==0);
 
 	//--- only detect attack if in aggressive mode or the unit is a monster ---//
 
@@ -264,12 +260,10 @@ void Unit::process_idle()
 		if( idle_detect_attack() )
 		{
 			err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
-			err_when(action_mode==ACTION_ATTACK_UNIT && action_para==0);
 			return; // target detected
 		}
 
 		err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
-		err_when(action_mode==ACTION_ATTACK_UNIT && action_para==0);
 	}
 
 	//------------------------------------------------------------------//
