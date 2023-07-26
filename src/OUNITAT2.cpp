@@ -259,7 +259,6 @@ void Unit::attack_unit(short targetRecno, int xOffset, int yOffset, int resetBlo
 	{
 		//------------ old order ------------//
 		err_when(action_mode==ACTION_STOP && cur_action==SPRITE_ATTACK);
-		err_when(action_mode==ACTION_ATTACK_UNIT && !action_para);
 
 		if(cur_action!=SPRITE_IDLE)
 		{

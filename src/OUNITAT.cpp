@@ -394,8 +394,7 @@ void Unit::unit_auto_guarding(Unit *attackUnit)
 			changeToAttack++;  //else continue to attack the target unit
 		else
 		{
-			err_when(!action_para);
-			if(unit_array.is_deleted(action_para))
+			if(!action_para || unit_array.is_deleted(action_para))
 				changeToAttack++; // attack new target
 		}
 	}
