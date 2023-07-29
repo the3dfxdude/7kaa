@@ -460,7 +460,7 @@ int Config::single_player_difficulty()
 		score += 7;
 	if( fog_of_war )
 		score += 7;
-	score += (7 - start_up_raw_site) * 5;
+	score += (7 - MAX(start_up_raw_site, 7)) * 5;
 
 //	if( start_up_cash <= SMALL_STARTUP_RESOURCE )
 //		score += 16;

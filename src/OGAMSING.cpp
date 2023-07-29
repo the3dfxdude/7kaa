@@ -815,15 +815,15 @@ static int select_option()
 		{
 			if( rawSiteInc.detect() )
 			{
-				if( ++tempConfig.start_up_raw_site > 7 )
-					tempConfig.start_up_raw_site = 7;
+				if( ++tempConfig.start_up_raw_site > MAX_RAW_RES_SITE )
+					tempConfig.start_up_raw_site = MAX_RAW_RES_SITE;
 				tempConfig.difficulty_level = OPTION_CUSTOM;
 				refreshFlag |= SGOPTION_RAW | SGOPTION_DIFFICULTY;
 			}
 			else if( rawSiteDec.detect() )
 			{
-				if( --tempConfig.start_up_raw_site < 1 )
-					tempConfig.start_up_raw_site = 1;
+				if( --tempConfig.start_up_raw_site < MIN_RAW_RES_SITE )
+					tempConfig.start_up_raw_site = MIN_RAW_RES_SITE;
 				tempConfig.difficulty_level = OPTION_CUSTOM;
 				refreshFlag |= SGOPTION_RAW | SGOPTION_DIFFICULTY;
 
