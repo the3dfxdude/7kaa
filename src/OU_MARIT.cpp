@@ -382,6 +382,8 @@ void UnitMarine::pre_process()
 			if(curXLoc<firmPtr->loc_x1-moveStep || curXLoc>firmPtr->loc_x2+moveStep ||
 				curYLoc<firmPtr->loc_y1-moveStep || curYLoc>firmPtr->loc_y2+moveStep)
 			{
+				if(!is_visible())
+					return; // may get here if player manually ordered ship to dock
 				//### begin alex 6/10 ###//
 				/*if((move_to_x_loc>=firmPtr->loc_x1-moveStep || move_to_x_loc<=firmPtr->loc_x2+moveStep) &&
 					(move_to_y_loc>=firmPtr->loc_y1-moveStep || move_to_y_loc<=firmPtr->loc_y2+moveStep))
