@@ -608,7 +608,7 @@ int Misc::str_icmpx( const char* str1, const char* str2 )
    err_when( !str1 || !str2 );
 
    int i;
-   register int a,b;
+   REGISTER int a,b;
 
 
    for (i=0 ; (a=str1[i]) != '\0' && (b=str2[i]) != '\0' ; i++)

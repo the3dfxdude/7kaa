@@ -79,6 +79,21 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 )
 CXXFLAGS="$save_CXXFLAGS"
 
+AC_MSG_CHECKING(checking for register keyword)
+AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+int main()
+{
+  register int x;
+  return 0;
+}
+  )],[
+    AC_MSG_RESULT(yes)
+    have_register=yes
+  ],[
+    AC_MSG_RESULT(no)
+  ]
+)
+
 # Checks for header files.
 dnl AC_CHECK_HEADERS([])
 gt_LC_MESSAGES
@@ -363,6 +378,16 @@ AS_IF([test "$enable_asm" = yes], [
 AS_IF([test "$enable_enet" = yes], [
   AC_DEFINE([USE_ENET], [1], [
     Define to 1 if using enet support
+  ])
+])
+
+AS_IF([test "$have_register" = yes], [
+  AC_DEFINE([REGISTER], [register], [
+    Define to the register keyword your compiler allows
+  ])
+],[
+  AC_DEFINE([REGISTER], [], [
+    Define to the register keyword your compiler allows
   ])
 ])
 

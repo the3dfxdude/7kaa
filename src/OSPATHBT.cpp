@@ -50,7 +50,7 @@ void NodePriorityQueue::reset_priority_queue()
 void NodePriorityQueue::insert_node(Node *insertNode)
 {
 	unsigned int i = ++size;
-	register int f=insertNode->node_f;
+	REGISTER int f=insertNode->node_f;
 	Node **localElements = elements;
 	
 	while(i>1 && localElements[i/2]->node_f > f)
