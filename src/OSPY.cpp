@@ -278,7 +278,6 @@ void Spy::next_day()
 
 	if( true_nation_recno == nation_array.player_recno )
 	{
-		Unit* unitPtr = unit_array[spy_place_para];
 		if( spy_place == SPY_TOWN )
 		{
 			Town* townPtr = town_array[spy_place_para];
@@ -289,30 +288,38 @@ void Spy::next_day()
 			Firm* firmPtr = firm_array[spy_place_para];
 			world.visit( firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2, EXPLORE_RANGE-1 );
 		}
-		else if( unitPtr->unit_mode == UNIT_MODE_CONSTRUCT )
+		else if( spy_place == SPY_MOBILE )
 		{
-			Firm* firmPtr = firm_array[unitPtr->unit_mode_para];
-			world.visit( firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2, EXPLORE_RANGE-1 );
-		}
-		else if( unitPtr->unit_mode == UNIT_MODE_ON_SHIP )
-		{
-			Unit* shipPtr = unit_array[unitPtr->unit_mode_para];
-			if( shipPtr->unit_mode == UNIT_MODE_IN_HARBOR )
+			Unit* unitPtr = unit_array[spy_place_para];
+			if( unitPtr->unit_mode == UNIT_MODE_CONSTRUCT )
 			{
-				Firm* firmPtr = firm_array[shipPtr->unit_mode_para];
+				Firm* firmPtr = firm_array[unitPtr->unit_mode_para];
 				world.visit( firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2, EXPLORE_RANGE-1 );
 			}
-			else
+			else if( unitPtr->unit_mode == UNIT_MODE_ON_SHIP )
 			{
-				int xloc1 = shipPtr->next_x_loc();
-				int yloc1 = shipPtr->next_y_loc();
-				int xloc2 = xloc1+shipPtr->sprite_info->loc_width-1;
-				int yloc2 = yloc1+shipPtr->sprite_info->loc_height-1;
-				int range = unit_res[shipPtr->unit_id]->visual_range;
+				Unit* shipPtr = unit_array[unitPtr->unit_mode_para];
+				if( shipPtr->unit_mode == UNIT_MODE_IN_HARBOR )
+				{
+					Firm* firmPtr = firm_array[shipPtr->unit_mode_para];
+					world.visit( firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2, EXPLORE_RANGE-1 );
+				}
+				else
+				{
+					int xloc1 = shipPtr->next_x_loc();
+					int yloc1 = shipPtr->next_y_loc();
+					int xloc2 = xloc1+shipPtr->sprite_info->loc_width-1;
+					int yloc2 = yloc1+shipPtr->sprite_info->loc_height-1;
+					int range = unit_res[shipPtr->unit_id]->visual_range;
 
-				world.unveil(xloc1, yloc1, xloc2, yloc2);
-				world.visit(xloc1, yloc1, xloc2, yloc2, range);
+					world.unveil(xloc1, yloc1, xloc2, yloc2);
+					world.visit(xloc1, yloc1, xloc2, yloc2, range);
+				}
 			}
+		}
+		else
+		{
+			err_here();
 		}
 	}
 
