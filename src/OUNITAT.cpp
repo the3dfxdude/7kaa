@@ -178,13 +178,13 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 			{
 				if( targetNationRecno )
 				{
-					targetNationPtr->civilian_killed(targetUnit->race_id, 0);
+					targetNationPtr->civilian_killed(targetUnit->race_id, 0, 1);
 					targetNationPtr->own_civilian_killed++;
 				}
 
 				if( parentNationPtr )
 				{
-					parentNationPtr->civilian_killed(targetUnit->race_id, 1);
+					parentNationPtr->civilian_killed(targetUnit->race_id, 1, 1);
 					parentNationPtr->enemy_civilian_killed++;
 				}
 			}
@@ -192,13 +192,13 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 			{
 				if( targetNationRecno )
 				{
-					targetNationPtr->civilian_killed(targetUnit->race_id, 0);
+					targetNationPtr->civilian_killed(targetUnit->race_id, 0, 0);
 					targetNationPtr->own_civilian_killed++;
 				}
 
 				if( parentNationPtr )
 				{
-					parentNationPtr->civilian_killed(targetUnit->race_id, 0);
+					parentNationPtr->civilian_killed(targetUnit->race_id, 1, 0);
 					parentNationPtr->enemy_civilian_killed++;
 				}
 			}
@@ -243,10 +243,10 @@ void Unit::hit_target(Unit* parentUnit, Unit* targetUnit, float attackDamage, sh
 			{
 				// Race-Id of 0 means a loyalty penalty applied for all races
 				if( targetNationRecno )
-					targetNationPtr->civilian_killed(0, -1);
+					targetNationPtr->civilian_killed(0, 0, 3);
 
 				if( parentNationPtr )
-					parentNationPtr->civilian_killed(0, 3);
+					parentNationPtr->civilian_killed(0, 1, 3);
 			}
 		}
 

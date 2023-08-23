@@ -1545,34 +1545,58 @@ int NationBase::total_tech_level(int unitClass)
 //								  0 - all races, when a Caravan is killed, 0 will
 //								  be passed, the loyalty of all races will be decreased.
 //
-// <int> penaltyLevel - positive value if this nation caused the death
-//								  negative value if this nation suffered the death
-//								  any nonzero value means loyalty will be decreased by
-//								  by that absolute amount
+// <int> isAttacker - 1 if attacker nation, 0 if casualty nation
 //
-// Reputation penalties are based on severity coded below.
-// (Attacker,Defender)
-// Killed caravan: (-10,-3)
-// Killed town connected civilian: (-1,-0.3)
-// Killed any other non-combat mobile unit: (-0.3,-0.3)
-void NationBase::civilian_killed(int civilianRaceId, int penaltyLevel)
+// <int> penaltyType - the penalty to apply based on the damage incured
+//								  0 - mobile civilian recruit
+//								  1 - civilian in defense of a town
+//								  2 - civilian residing in town
+//								  3 - civilian trade unit
+//
+void NationBase::civilian_killed(int civilianRaceId, int isAttacker, int penaltyType)
 {
-	if( penaltyLevel )
-		change_all_people_loyalty(-abs(penaltyLevel), civilianRaceId);
-
-	if( penaltyLevel > 0 ) // caused the death by attacking a town or caravan
+	if( isAttacker )
 	{
-		if( civilianRaceId==0 )				// a caravan
-			change_reputation(-(float)10);
-		else
-			change_reputation(-(float)1);
+		if( penaltyType == 0 ) // mobile civilian
+		{
+			change_reputation(-0.3f);
+		}
+		else if( penaltyType == 1 ) // town defender
+		{
+			change_all_people_loyalty(-1.0f, civilianRaceId);
+			change_reputation(-1.0f);
+		}
+		else if( penaltyType == 2 ) // town resident
+		{
+			change_all_people_loyalty(-2.0f, civilianRaceId);
+			change_reputation(-1.0f);
+		}
+		else if( penaltyType == 3 ) // trader
+		{
+			change_all_people_loyalty(-2.0f, civilianRaceId);
+			change_reputation(-10.0f);
+		}
 	}
-	else // suffered the death or minor low-combat civilian death
+	else // is casualty
 	{
-		if( civilianRaceId==0 )				// a caravan
-			change_reputation(-(float)3);
-		else
-			change_reputation(-(float)0.3);
+		if( penaltyType == 0 ) // mobile civilian
+		{
+			change_reputation(-0.3f);
+		}
+		else if( penaltyType == 1 ) // town defender
+		{
+			change_reputation(-0.3f);
+		}
+		else if( penaltyType == 2 ) // town resident
+		{
+			change_all_people_loyalty(-1.0f, civilianRaceId);
+			change_reputation(-0.3f);
+		}
+		else if( penaltyType == 3 ) // trader
+		{
+			change_all_people_loyalty(-0.6f, civilianRaceId);
+			change_reputation(-2.0f);
+		}
 	}
 }
 //----------- End of function NationBase::civilian_killed ---------//
@@ -1813,11 +1837,11 @@ void NationBase::defeated()
 //
 // Change the loyalty of all the people in your nation.
 //
-// <int> loyaltyChange - degree of loyalty change
+// <float> loyaltyChange - degree of loyalty change
 // [int] raceId		  - if this is given, then only people of this race
 //								 will be affected. (default: 0)
 //
-void NationBase::change_all_people_loyalty(int loyaltyChange, int raceId)
+void NationBase::change_all_people_loyalty(float loyaltyChange, int raceId)
 {
 	//---- update loyalty of units in this nation ----//
 
@@ -1840,7 +1864,7 @@ void NationBase::change_all_people_loyalty(int loyaltyChange, int raceId)
 		//--------- update loyalty change ----------//
 
 		if( !raceId || unitPtr->race_id == raceId )
-			unitPtr->change_loyalty(loyaltyChange);
+			unitPtr->change_loyalty((int)loyaltyChange);
 	}
 
 	//---- update loyalty of units in camps ----//
@@ -1866,7 +1890,7 @@ void NationBase::change_all_people_loyalty(int loyaltyChange, int raceId)
 			for(int j=firmPtr->worker_count-1 ; j>=0 ; j--, workerPtr++ )
 			{
 				if( !raceId || workerPtr->race_id == raceId )
-					workerPtr->change_loyalty(loyaltyChange);
+					workerPtr->change_loyalty((int)loyaltyChange);
 			}
 		}
 	}
@@ -1890,7 +1914,7 @@ void NationBase::change_all_people_loyalty(int loyaltyChange, int raceId)
 		if( raceId )		// decrease loyalty of a specific race
 		{
 			if( townPtr->race_pop_array[raceId-1] > 0 )
-				townPtr->change_loyalty(raceId, (float) loyaltyChange);
+				townPtr->change_loyalty(raceId, loyaltyChange);
 		}
 		else					// decrease loyalty of all races
 		{
@@ -1899,7 +1923,7 @@ void NationBase::change_all_people_loyalty(int loyaltyChange, int raceId)
 				if( townPtr->race_pop_array[j]==0 )
 					continue;
 
-				townPtr->change_loyalty(j+1, (float) loyaltyChange);
+				townPtr->change_loyalty(j+1, loyaltyChange);
 			}
 		}
 	}

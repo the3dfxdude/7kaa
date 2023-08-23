@@ -3042,10 +3042,10 @@ void Town::kill_town_people(int raceId, int attackerNationRecno)
 	//---- killing civilian people decreases loyalty -----//
 
 	if( nation_recno && attackerNationRecno )					// your people's loyalty decreases because you cannot protect them.
-		nation_array[nation_recno]->civilian_killed(raceId, -1);		// but only when your units are killed by enemies, neutral disasters are not counted
+		nation_array[nation_recno]->civilian_killed(raceId, 0, 2);		// but only when your units are killed by enemies, neutral disasters are not counted
 
 	if( attackerNationRecno )        //	the attacker's people's loyalty decreases because of the killing actions.
-		nation_array[attackerNationRecno]->civilian_killed(raceId, 2);		// the nation is the attacking one
+		nation_array[attackerNationRecno]->civilian_killed(raceId, 1, 2);		// the nation is the attacking one
 
 	// -------- sound effect ---------//
 
