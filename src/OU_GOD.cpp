@@ -290,6 +290,9 @@ void UnitGod::cast_power(int xLoc, int yLoc)
 {
 	err_when( !god_res[god_id]->can_cast_power );
 
+	if( firm_array.is_deleted(base_firm_recno) )
+		return;
+
 	//------- consumer pray points --------//
 	/* This must be done here to avoid an exploit where a human player 
 	 * can cast an ability and then order the god to move within a 
@@ -297,7 +300,8 @@ void UnitGod::cast_power(int xLoc, int yLoc)
 	 * used for the Chinese and Norman dragons so the function is also
 	 * called in UnitGod::process_attack() for the dragons.
 	 */
-	consume_power_pray_points();		
+	if( !consume_power_pray_points() )
+		return;
 
 	//---- viking god does not need a range for casting power ----//
 
@@ -678,19 +682,16 @@ void UnitGod::maya_cast_power(Worker* workerPtr, int nationRecno, int divider)
 
 //--------- Begin of function UnitGod::consume_power_pray_points ---------//
 //
-void UnitGod::consume_power_pray_points()
+// return one if points consumed, otherwise zero.
+//
+int UnitGod::consume_power_pray_points()
 {
+	if( firm_array.is_deleted(base_firm_recno) )
+		return 0;
+
 	FirmBase* firmBase = (FirmBase*) firm_array[base_firm_recno];
 
 	err_when( firmBase->firm_id != FIRM_BASE );
-
-	//--- if the seat of power supporting this unit is destroyed, this unit dies ---//
-
-	if( !firmBase )
-	{
-		hit_points = (float)0;
-		return;
-	}
 
 	firmBase->pray_points -= god_res[god_id]->power_pray_points;
 
@@ -698,6 +699,8 @@ void UnitGod::consume_power_pray_points()
 		firmBase->pray_points = (float) 0;
 
 	hit_points = (short) firmBase->pray_points;
+
+	return 1;
 }
 //---------- End of function UnitGod::consume_power_pray_points ----------//
 

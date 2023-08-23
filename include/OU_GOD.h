@@ -63,7 +63,7 @@ public:
 	virtual void    init_crc(UnitGodCrc *c);
 
 private:
-	void consume_power_pray_points();
+	int consume_power_pray_points();
 
 	void cast_on_loc(int castXLoc, int castYLoc);
 	void cast_on_unit(int unitRecno, int divider);
