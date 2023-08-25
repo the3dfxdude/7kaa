@@ -1003,6 +1003,12 @@ int Misc::diagonal_distance(int x1, int y1, int x2, int y2)
 // <int> x1, y1 = the starting point of the diagonal line
 // <int> x2, y2 = the ending point of the diagonal line
 //
+// This function can be used for measuring distances between
+// two identically sized shapes. It should not be used when
+// measuring between two different (one odd) sized shapes and
+// the center being a simple integer (x1+x2)/2 for example.
+// For a more accurate measurement, use rects_distance().
+//
 int Misc::points_distance(int x1, int y1, int x2, int y2)
 {
 	int x = abs(x1-x2);
@@ -1011,6 +1017,54 @@ int Misc::points_distance(int x1, int y1, int x2, int y2)
 	return MAX(x, y);
 }
 //---------- End of function Misc::points_distance ---------//
+
+
+//------- Begin of function Misc::rects_distance ---------//
+//
+// Given two rectangles 'A' and 'B' in a pair of x and y coordinates, find the
+// distance between the two rectanges, returning the maximum of the horizontal
+// and vertical directions.
+//
+// <int> ax1, ay1, ax2, ay2 = edge coordinates of rectangle A
+// <int> bx1, by1, bx2, by2 = edge coordinates of rectangle B
+// <int> edgeA = if not true measure to center of rectange A
+// <int> edgeB = if not true measure to center of rectange B
+//
+// If measuring to an edge, then the provided coordinates are used. Otherwise,
+// when a rectangle size is evenly divisible, the center four coordinates are
+// equally considered the center. If it is odd, there will only be one center
+// coordinate to the shape.
+//
+int Misc::rects_distance(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2, int edgeA, int edgeB)
+{
+	int x,y;
+
+	if( !edgeA )
+	{
+		int dx = (ax2-ax1)/2;
+		int dy = (ay2-ay1)/2;
+		ax1 += dx;
+		ax2 -= dx;
+		ay1 += dy;
+		ay2 -= dy;
+	}
+
+	if( !edgeB )
+	{
+		int dx = (bx2-bx1)/2;
+		int dy = (by2-by1)/2;
+		bx1 += dx;
+		bx2 -= dx;
+		by1 += dy;
+		by2 -= dy;
+	}
+
+	x = MIN(abs(ax1-bx2),abs(ax2-bx1));
+	y = MIN(abs(ay1-by2),abs(ay2-by1));
+
+	return MAX(x, y);
+}
+//---------- End of function Misc::rects_distance ---------//
 
 
 //------- Begin of function Misc::get_random_seed --------//

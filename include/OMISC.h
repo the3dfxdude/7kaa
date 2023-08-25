@@ -96,6 +96,7 @@ public:
    int   sqrt(long);
 	int   diagonal_distance(int,int,int,int);
 	int   points_distance(int,int,int,int);
+	int   rects_distance(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2, int edgeA=0, int edgeB=0);
 	float round(float,int,int=0);
    float round_dec(float);
 
