@@ -1253,8 +1253,8 @@ int Town::ai_settle_new(int raceId)
 
 	//------- it must be within the effective town-to-town distance ---//
 
-	if( misc.points_distance( center_x, center_y, xLoc+1+(STD_TOWN_LOC_WIDTH-1)/2,
-		yLoc+1+(STD_TOWN_LOC_HEIGHT-1)/2 ) > EFFECTIVE_TOWN_TOWN_DISTANCE )
+	if( misc.rects_distance(loc_x1, loc_y1, loc_x2, loc_y2, xLoc, yLoc, xLoc+STD_TOWN_LOC_WIDTH-1,
+		yLoc+STD_TOWN_LOC_HEIGHT-1) > EFFECTIVE_TOWN_TOWN_DISTANCE )
 	{
 		return 0;
 	}

@@ -458,8 +458,9 @@ int TownArray::think_town_loc(int maxTries, int& xLoc, int& yLoc)
 
 			townPtr = town_array[townRecno];
 
-			if( misc.points_distance(xLoc+1, yLoc+1, townPtr->center_x,		// xLoc+1 and yLoc+1 to take the center location of the town
-				 townPtr->center_y) < MIN_INTER_TOWN_DISTANCE )
+			if( misc.rects_distance(xLoc, yLoc, xLoc+STD_TOWN_LOC_WIDTH-1, yLoc+STD_TOWN_LOC_HEIGHT-1,
+					townPtr->loc_x1, townPtr->loc_y1,
+					townPtr->loc_x2, townPtr->loc_y2) < MIN_INTER_TOWN_DISTANCE )
 			{
 				break;
 			}
@@ -477,8 +478,9 @@ int TownArray::think_town_loc(int maxTries, int& xLoc, int& yLoc)
 
 			firmPtr = firm_array[firmRecno];
 
-			if( misc.points_distance(xLoc+1, yLoc+1, firmPtr->center_x,
-				 firmPtr->center_y) < MONSTER_ATTACK_NEIGHBOR_RANGE )
+			if( misc.rects_distance(xLoc, yLoc, xLoc+STD_TOWN_LOC_WIDTH-1, yLoc+STD_TOWN_LOC_HEIGHT-1,
+					firmPtr->loc_x1, firmPtr->loc_y1,
+					firmPtr->loc_x2, firmPtr->loc_y2) < MONSTER_ATTACK_NEIGHBOR_RANGE )
 			{
 				break;
 			}
@@ -647,7 +649,7 @@ int TownArray::find_nearest_town(int xLoc, int yLoc, int nationRecno)
 
 		townPtr = town_array[i];
 
-		curDistance = misc.points_distance( xLoc, yLoc, townPtr->center_x, townPtr->center_y );
+		curDistance = misc.rects_distance(xLoc, yLoc, xLoc, yLoc, townPtr->loc_x1, townPtr->loc_y1, townPtr->loc_x2, townPtr->loc_y2);
 
 		if( nationRecno && townPtr->nation_recno != nationRecno )
 			continue;

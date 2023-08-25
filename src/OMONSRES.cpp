@@ -232,8 +232,9 @@ int MonsterInfo::create_firm_monster()
 
       Town* townPtr = town_array[townRecno];
 
-      if( misc.points_distance(xLoc, yLoc, townPtr->center_x,
-          townPtr->center_y) < MIN_MONSTER_CIVILIAN_DISTANCE )
+      if( misc.rects_distance(xLoc, yLoc, xLoc+firmInfo->loc_width, yLoc+firmInfo->loc_height,
+          townPtr->loc_x1, townPtr->loc_y1,
+          townPtr->loc_x2, townPtr->loc_y2) < MIN_MONSTER_CIVILIAN_DISTANCE )
       {
          return 0;
       }
