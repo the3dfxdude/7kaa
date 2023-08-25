@@ -369,10 +369,13 @@ int Nation::ai_settle_to_other_town(ActionNode* actionNode)
 	if( !raceId )
 		return -1;
 
-	//---- if cannot recruit because the loyalty is too low ---//
+	//---- if cannot recruit because the loyalty is too low, try reward ---//
 
-	if( !townPtr->can_recruit(raceId) && townPtr->has_linked_own_camp )
+	if( !townPtr->can_recruit(raceId) )
 	{
+		if( !townPtr->has_linked_own_camp ) // need overseer to reward
+			return 0;
+
 		int minRecruitLoyalty = MIN_RECRUIT_LOYALTY + townPtr->recruit_dec_loyalty(raceId, 0);
 
 		//--- if cannot recruit because of low loyalty, reward the town people now ---//
