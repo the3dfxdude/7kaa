@@ -599,7 +599,7 @@ int FirmMarket::think_export_product()
 		if( townPtr->no_neighbor_space )		// if there is no space in the neighbor area for building a new firm.
 			continue;
 
-		if( misc.points_distance( center_x, center_y, townPtr->center_x, center_y ) > MAX_WORLD_X_LOC/4 )		// don't consider if it is too far away
+		if( misc.points_distance( center_x, center_y, townPtr->center_x, townPtr->center_y ) > MAX_WORLD_X_LOC/4 )		// don't consider if it is too far away
 			continue;
 
       //-----------------------------------------//
