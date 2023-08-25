@@ -3071,8 +3071,8 @@ void Firm::setup_link()
 
 		//---------- check if the firm is close enough to this firm -------//
 
-		if( misc.points_distance( firmPtr->center_x, firmPtr->center_y,
-			 center_x, center_y ) > EFFECTIVE_FIRM_FIRM_DISTANCE )
+		if( misc.rects_distance(firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2,
+			loc_x1, loc_y1, loc_x2, loc_y2) > EFFECTIVE_FIRM_FIRM_DISTANCE )
 		{
 			continue;
 		}
@@ -3158,8 +3158,8 @@ void Firm::setup_link()
 
       //------ check if the town is close enough to this firm -------//
 
-      if( misc.points_distance( townPtr->center_x, townPtr->center_y,
-			 center_x, center_y ) > EFFECTIVE_FIRM_TOWN_DISTANCE )
+      if( misc.rects_distance(townPtr->loc_x1, townPtr->loc_y1, townPtr->loc_x2, townPtr->loc_y2,
+			loc_x1, loc_y1, loc_x2, loc_y2) > EFFECTIVE_FIRM_TOWN_DISTANCE )
       {
          continue;
       }

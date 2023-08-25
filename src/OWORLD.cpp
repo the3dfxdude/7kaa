@@ -1336,8 +1336,8 @@ void World::draw_link_line(int srcFirmId, int srcTownRecno, int srcXLoc1,
 
 			//-------- check the distance --------//
 
-			if( misc.points_distance( townPtr->center_x, townPtr->center_y,
-				 srcXLoc, srcYLoc ) > effectiveDis )
+			if( misc.rects_distance(townPtr->loc_x1, townPtr->loc_y1, townPtr->loc_x2, townPtr->loc_y2,
+				 srcXLoc1, srcYLoc1, srcXLoc2, srcYLoc2) > effectiveDis )
 			{
 				continue;
 			}
@@ -1396,8 +1396,8 @@ void World::draw_link_line(int srcFirmId, int srcTownRecno, int srcXLoc1,
 
 		//-------- check the distance --------//
 
-		if( misc.points_distance( firmPtr->center_x, firmPtr->center_y,
-			 srcXLoc, srcYLoc ) > effectiveDis )
+		if( misc.rects_distance(firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2,
+			 srcXLoc1, srcYLoc1, srcXLoc2, srcYLoc2) > effectiveDis )
 		{
 			continue;
 		}
