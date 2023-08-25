@@ -715,7 +715,8 @@ void FirmInn::auto_defense(short targetRecno)
 			if(townPtr->nation_recno!=nation_recno)
 				continue;
 
-			dist = misc.points_distance(center_x, center_y, townPtr->center_x, townPtr->center_y);
+			dist = misc.rects_distance(loc_x1, loc_y1, loc_x2, loc_y2,
+				townPtr->loc_x1, townPtr->loc_y1, townPtr->loc_x2, townPtr->loc_y2);
 			if(dist <= EFFECTIVE_FIRM_TOWN_DISTANCE)
 				townPtr->auto_defense(targetRecno);
 		}

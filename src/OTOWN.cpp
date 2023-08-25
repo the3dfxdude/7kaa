@@ -2531,8 +2531,8 @@ bool Town::can_migrate(int destTownRecno, bool migrateNow, int raceId)
 
 			//---- if the target town is within the effective range of this firm ----//
 
-			if( misc.points_distance( destTown->center_x, destTown->center_y,
-				 firmPtr->center_x, firmPtr->center_y ) > EFFECTIVE_FIRM_TOWN_DISTANCE )
+			if( misc.rects_distance(destTown->loc_x1, destTown->loc_y1, destTown->loc_x2, destTown->loc_y2,
+				 firmPtr->loc_x1, firmPtr->loc_y1, firmPtr->loc_x2, firmPtr->loc_y2) > EFFECTIVE_FIRM_TOWN_DISTANCE )
 			{
 				continue;
 			}
@@ -2702,8 +2702,9 @@ void Town::being_attacked(int attackerUnitRecno, float attackDamage)
 
 	// only call out defender when the attacking unit is within the effective defending distance
 
-	if( misc.points_distance( attackerUnit->cur_x_loc(), attackerUnit->cur_y_loc(),
-		 center_x, center_y ) <= EFFECTIVE_DEFEND_TOWN_DISTANCE )
+	if( misc.rects_distance(attackerUnit->cur_x_loc(), attackerUnit->cur_y_loc(),
+		attackerUnit->cur_x_loc(), attackerUnit->cur_y_loc(),
+		loc_x1, loc_y1, loc_x2, loc_y2) <= EFFECTIVE_DEFEND_TOWN_DISTANCE )
 	{
 		int loopCount=0;
 

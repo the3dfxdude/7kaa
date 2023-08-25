@@ -1098,8 +1098,8 @@ int Firm::assign_settle(int raceId, int unitLoyalty, int isOverseer)
 	if( world.locate_space( &xLoc, &yLoc, loc_x2, loc_y2, STD_TOWN_LOC_WIDTH,
 									STD_TOWN_LOC_HEIGHT, UNIT_LAND, region_id, 1 ) )		// the town must be in the same region as this firm.
    {
-      if( misc.points_distance( center_x, center_y, xLoc+(STD_TOWN_LOC_WIDTH-1)/2,
-          yLoc+(STD_TOWN_LOC_HEIGHT-1)/2 ) <= EFFECTIVE_FIRM_TOWN_DISTANCE )
+      if( misc.rects_distance(xLoc, yLoc, xLoc+STD_TOWN_LOC_WIDTH-1, yLoc+STD_TOWN_LOC_HEIGHT-1,
+          loc_x1, loc_y1, loc_x2, loc_y2) <= EFFECTIVE_FIRM_TOWN_DISTANCE )
       {
 			int townRecno = town_array.add_town( nation_recno, raceId, xLoc, yLoc );
 
@@ -2875,8 +2875,8 @@ void Firm::worker_migrate(int workerId, int destTownRecno, int newLoyalty)
 	Town* destTown		 = town_array[destTownRecno];
 
    err_when( !raceId );
-   err_when( misc.points_distance( center_x, center_y, destTown->center_x,
-				 destTown->center_y ) > EFFECTIVE_FIRM_TOWN_DISTANCE );
+	err_when( misc.rects_distance(loc_x1, loc_y1, loc_x2, loc_y2, destTown->loc_x1, destTown->loc_y1,
+		destTown->loc_x2, destTown->loc_y2) > EFFECTIVE_FIRM_TOWN_DISTANCE );
 
 	//------------- add news --------------//
 
