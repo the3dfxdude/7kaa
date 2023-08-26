@@ -1778,23 +1778,29 @@ int Town::think_scout()
 
 	//-------------------------------------------//
 
-	int destX, destY;
+	int destX, destY, dir;
 
-	if( misc.random(2)==0 )
-		destX = center_x + 50 + misc.random(50);
-	else
-		destX = center_x - 50 - misc.random(50);
+	dir = misc.random(4);
 
-	if( misc.random(2)==0 )
-		destY = center_y + 50 + misc.random(50);
-	else
-		destY = center_y - 50 - misc.random(50);
-
-	destX = MAX(0, destX);
-	destX = MIN(MAX_WORLD_X_LOC-1, destX);
-
-	destY = MAX(0, destY);
-	destY = MIN(MAX_WORLD_Y_LOC-1, destY);
+	switch(dir)
+	{
+	case 0:
+		destX = misc.random(MAX_WORLD_X_LOC-1-20) + 10;
+		destY = 10;
+		break;
+	case 1:
+		destX = 190;
+		destY = misc.random(MAX_WORLD_Y_LOC-1-20) + 10;
+		break;
+	case 2:
+		destX = misc.random(MAX_WORLD_X_LOC-1-20) + 10;
+		destY = 190;
+		break;
+	case 3:
+		destX = 10;
+		destY = misc.random(MAX_WORLD_Y_LOC-1-20) + 10;
+		break;
+	}
 
 	ownNation->add_action( destX, destY, loc_x1, loc_y1, ACTION_AI_SCOUT, 0);
 
