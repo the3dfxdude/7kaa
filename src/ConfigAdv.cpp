@@ -257,6 +257,7 @@ void ConfigAdv::reset()
 	town_loyalty_qol = 1;
 
 	unit_ai_team_help = 1;
+	unit_allow_path_power_mode = 0;
 	unit_finish_attack_move = 1;
 	unit_loyalty_require_local_leader = 1;
 	unit_spy_fixed_target_loyalty = 0;
@@ -439,6 +440,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "unit_loyalty_require_local_leader") )
 	{
 		if( !read_bool(value, &unit_loyalty_require_local_leader) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "unit_allow_path_power_mode") )
+	{
+		if( !read_bool(value, &unit_allow_path_power_mode) )
 			return 0;
 		update_check_sum(name, value);
 	}

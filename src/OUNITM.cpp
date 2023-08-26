@@ -33,6 +33,7 @@
 #include <OSERES.h>
 #include <OLOG.h>
 #include <OEFFECT.h>
+#include <ConfigAdv.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when
@@ -654,8 +655,13 @@ int Unit::search(int destXLoc, int destYLoc, int preserveAction, short searchMod
 //
 void Unit::select_search_sub_mode(int sx, int sy, int dx, int dy, short nationRecno, short searchMode)
 {
-	//seek_path.set_sub_mode(); // cancel the selection
-	//return;
+	if( !config_adv.unit_allow_path_power_mode )
+	{
+		// cancel the selection
+		seek_path.set_sub_mode();
+		seek_path_reuse.set_sub_mode();
+		return;
+	}
 
 	err_when(mobile_type!=UNIT_LAND);
 
