@@ -55,6 +55,9 @@ public:
 	// locale settings
 	char			locale[LOCALE_LEN+1];
 
+	// mine settings
+	char			mine_unlimited_reserve;
+
 	// monster settings
 	char			monster_alternate_attack_curve;
 	int			monster_attack_divisor;

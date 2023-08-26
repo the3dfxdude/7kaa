@@ -235,6 +235,8 @@ void ConfigAdv::reset()
 
 	locale[0] = 0;
 
+	mine_unlimited_reserve = 0;
+
 	monster_alternate_attack_curve = 0;
 	monster_attack_divisor = 4;
 
@@ -322,6 +324,12 @@ int ConfigAdv::set(char *name, char *value)
 	{
 		strncpy(locale, value, LOCALE_LEN);
 		locale[LOCALE_LEN] = 0;
+	}
+	else if( !strcmp(name, "mine_unlimited_reserve") )
+	{
+		if( !read_bool(value, &mine_unlimited_reserve) )
+			return 0;
+		update_check_sum(name, value);
 	}
 	else if( !strcmp(name, "monster_alternate_attack_curve") )
 	{

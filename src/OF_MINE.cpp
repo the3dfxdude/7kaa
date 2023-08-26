@@ -37,6 +37,7 @@
 #include <OF_FACT.h>
 #include <OBUTT3D.h>
 #include "gettext.h"
+#include <ConfigAdv.h>
 
 //------- define static vars -------//
 
@@ -404,6 +405,8 @@ void FirmMine::produce_raw()
 	produceQty = MIN( produceQty, max_stock_qty-stock_qty );
 
 	reserve_qty -= produceQty;
+	if( config_adv.mine_unlimited_reserve && reserve_qty < 1500 )
+		reserve_qty = 1500;
 	stock_qty	+= produceQty;
 
 	cur_month_production += produceQty;
