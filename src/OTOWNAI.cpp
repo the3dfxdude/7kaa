@@ -1786,19 +1786,35 @@ int Town::think_scout()
 	{
 	case 0:
 		destX = misc.random(MAX_WORLD_X_LOC-1-20) + 10;
-		destY = 10;
+		if( center_x - destX > 100 )
+			destX = center_x - (center_x - destX) % 100;
+		if( destX - center_x > 100 )
+			destX = center_x + (destX - center_x) % 100;
+		destY = MAX(center_y-100,10);
 		break;
 	case 1:
-		destX = 190;
+		destX = MIN(center_x+100,MAX_WORLD_X_LOC-1-10);
 		destY = misc.random(MAX_WORLD_Y_LOC-1-20) + 10;
+		if( center_y - destY > 100 )
+			destY = center_y - (center_y - destY) % 100;
+		if( destY - center_y > 100 )
+			destY = center_y + (destY - center_y) % 100;
 		break;
 	case 2:
 		destX = misc.random(MAX_WORLD_X_LOC-1-20) + 10;
-		destY = 190;
+		if( center_x - destX > 100 )
+			destX = center_x - (center_x - destX) % 100;
+		if( destX - center_x > 100 )
+			destX = center_x + (destX - center_x) % 100;
+		destY = MIN(center_y+100,MAX_WORLD_Y_LOC-1-10);
 		break;
 	case 3:
-		destX = 10;
+		destX = MAX(center_x-100,10);
 		destY = misc.random(MAX_WORLD_Y_LOC-1-20) + 10;
+		if( center_y - destY > 100 )
+			destY = center_y - (center_y - destY) % 100;
+		if( destY - center_y > 100 )
+			destY = center_y + (destY - center_y) % 100;
 		break;
 	}
 
