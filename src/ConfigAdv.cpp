@@ -232,6 +232,7 @@ void ConfigAdv::reset()
 
 	fix_path_blocked_by_team = 1;
 	fix_recruit_dec_loyalty = 1;
+	fix_sea_travel_final_move = 1;
 	fix_town_unjob_worker = 1;
 
 	locale[0] = 0;
@@ -318,6 +319,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "fix_recruit_dec_loyalty") )
 	{
 		if( !read_bool(value, &fix_recruit_dec_loyalty) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "fix_sea_travel_final_move") )
+	{
+		if( !read_bool(value, &fix_sea_travel_final_move) )
 			return 0;
 		update_check_sum(name, value);
 	}

@@ -51,6 +51,7 @@ public:
 	// bug fix settings
 	char			fix_path_blocked_by_team;
 	char			fix_recruit_dec_loyalty;
+	char			fix_sea_travel_final_move;
 	char			fix_town_unjob_worker;
 
 	// locale settings

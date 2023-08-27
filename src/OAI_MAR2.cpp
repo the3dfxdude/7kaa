@@ -26,6 +26,7 @@
 #include <OU_MARI.h>
 #include <OF_HARB.h>
 #include <ONATION.h>
+#include <ConfigAdv.h>
 
 //-------- Begin of function Nation::ai_sea_travel -------//
 //
@@ -206,9 +207,10 @@ int Nation::ai_sea_travel3(ActionNode* actionNode)
 
 	unitMarine->unload_all_units(COMMAND_AI);		// unload all units now
 
-	return 1;		// finish the action.
+	if( !config_adv.fix_sea_travel_final_move )
+		return 1;		// finish the action.
 
-/*
+
 	//---------- 5. Validate all units ----------//
 
 	for( int i=unitCount-1 ; i>=0 ; i-- )
@@ -290,7 +292,6 @@ int Nation::ai_sea_travel3(ActionNode* actionNode)
 	actionNode->instance_count = actionNode->processing_instance_count+1;		// set the instance count so process_action() won't cause error.
 
 	return 1;
-*/
 }
 //-------- End of function Nation::ai_sea_travel3 -------//
 
