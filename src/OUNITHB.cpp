@@ -27,6 +27,7 @@
 #include <OTOWN.h>
 #include <OUNIT.h>
 #include <OTERRAIN.h>
+#include <ConfigAdv.h>
 
 #ifdef NO_DEBUG_UNIT
 #undef err_when
@@ -261,7 +262,10 @@ void Unit::handle_blocked_move_s11(Unit *unitPtr)
 						}
 						else if((unitPtr->next_x_loc() != move_to_x_loc || unitPtr->next_y_loc() != move_to_y_loc) &&
 							(unitPtr->cur_action==SPRITE_IDLE && unitPtr->action_mode2==ACTION_STOP))
-							move_to_my_loc(unitPtr); // push the blocking unit and exchange their destination
+							if( config_adv.fix_path_blocked_by_team )
+								handle_blocked_by_idle_unit(unitPtr);
+							else
+								move_to_my_loc(unitPtr); // push the blocking unit and exchange their destination
 						else if(unitPtr->action_mode == ACTION_SETTLE)
 							set_wait(); // wait for the settler
 						else if(waiting_term>MAX_WAITING_TERM_SAME)

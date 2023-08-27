@@ -49,6 +49,7 @@ public:
 	char			firm_migrate_stricter_rules;
 
 	// bug fix settings
+	char			fix_path_blocked_by_team;
 	char			fix_recruit_dec_loyalty;
 	char			fix_town_unjob_worker;
 

@@ -230,6 +230,7 @@ void ConfigAdv::reset()
 	firm_mobilize_civilian_aggressive = 0;
 	firm_migrate_stricter_rules = 1;
 
+	fix_path_blocked_by_team = 1;
 	fix_recruit_dec_loyalty = 1;
 	fix_town_unjob_worker = 1;
 
@@ -305,6 +306,12 @@ int ConfigAdv::set(char *name, char *value)
 	else if( !strcmp(name, "firm_migrate_stricter_rules") )
 	{
 		if( !read_bool(value, &firm_migrate_stricter_rules) )
+			return 0;
+		update_check_sum(name, value);
+	}
+	else if( !strcmp(name, "fix_path_blocked_by_team") )
+	{
+		if( !read_bool(value, &fix_path_blocked_by_team) )
 			return 0;
 		update_check_sum(name, value);
 	}
