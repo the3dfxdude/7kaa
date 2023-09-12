@@ -547,6 +547,9 @@ void Vga::handle_messages()
       case SDL_TEXTINPUT:
          mouse.add_typing_event(event.text.text, misc.get_time());
          break;
+      case SDL_RENDER_TARGETS_RESET:
+         sys.need_redraw_flag = 1;
+         break;
       case SDL_TEXTEDITING:
       case SDL_JOYAXISMOTION:
       case SDL_JOYBALLMOTION:
@@ -554,7 +557,7 @@ void Vga::handle_messages()
       case SDL_JOYBUTTONDOWN:
       case SDL_JOYBUTTONUP:
       default:
-         MSG("unhandled event %d\n", event.type);
+         MSG("unhandled event %x\n", event.type);
          break;
       }
    }
