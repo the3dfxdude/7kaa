@@ -627,6 +627,9 @@ static void disp_nation_info()
 //
 static void detect_nation_info()
 {
+	if( !nation_array.player_recno || nation_array.player_recno != info.viewing_nation_recno )
+		return;
+
 	int nationRecno = nation_filter(browse_nation.recno());
 
 	Nation* viewingNation = nation_array[info.viewing_nation_recno];

@@ -2832,6 +2832,9 @@ void RemoteMsg::nation_set_should_attack()
 	short *shortPtr = (short *)data_buf;
 
 	err_when( *shortPtr != remote.nation_processing );
+	if( *shortPtr != remote.nation_processing )
+		return;
+
 	if( !nation_array.is_deleted(*shortPtr) && !nation_array.is_deleted(shortPtr[1]) )
 	{
 #ifdef DEBUG_LONG_LOG
