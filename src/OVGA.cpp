@@ -439,7 +439,7 @@ void Vga::handle_messages()
                   real_x = bound_x1;
                   logical_x = mouse.bound_x1;
                }
-               else if( real_x >= bound_x2 )
+               else if( real_x > bound_x2 )
                {
                   do_warp = 1;
                   real_x = bound_x2;
@@ -451,7 +451,7 @@ void Vga::handle_messages()
                   real_y = bound_y1;
                   logical_y = mouse.bound_y1;
                }
-               else if( real_y >= bound_y2 )
+               else if( real_y > bound_y2 )
                {
                   do_warp = 1;
                   real_y = bound_y2;
