@@ -450,7 +450,10 @@ int FirmCamp::ai_recruit(int recruitCombatLevel)
 			if( townPtr->jobless_race_pop_array[raceId-1] > 0 &&
 				 townPtr->race_loyalty_array[raceId-1] < 40 )
 			{
-				if( townPtr->accumulated_reward_penalty > 30 )		// if the reward penalty is too high, do reward
+				if( townPtr->accumulated_reward_penalty > 30 )		// if the reward penalty is too high, don't reward
+					break;
+
+				if( nation_array[nation_recno]->cash <= 0 )		// must have cash to reward
 					break;
 
 				townPtr->reward(COMMAND_AI);
