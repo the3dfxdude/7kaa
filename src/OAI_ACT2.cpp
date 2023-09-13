@@ -390,8 +390,11 @@ int Nation::ai_settle_to_other_town(ActionNode* actionNode)
 			if( !townPtr->can_recruit(raceId) )	// if still cannot be recruited, return 0 now
 				return 0;
 		}
-
-		return 0;
+		else
+		{
+			// can't recruit for some other reason
+			return 0;
+		}
 	}
 
 	//------------------------------------------------------//
