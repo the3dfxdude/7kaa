@@ -450,12 +450,16 @@ int Nation::find_best_capturer(int townRecno, int raceId, int& bestTargetResista
 //
 int Nation::mobilize_capturer(int unitRecno)
 {
-	//--- if the picked unit is an overseer of an existng camp ---//
 
 	Unit* unitPtr = unit_array[unitRecno];
 
 	if( unitPtr->unit_mode == UNIT_MODE_OVERSEE )
 	{
+		//--- if the picked unit is an overseer of an existing camp ---//
+
+		if( cash < EXPENSE_TRAIN_UNIT ) // training a replacement costs money
+			return 0;
+
 		Firm* firmPtr = firm_array[unitPtr->unit_mode_para];
 		Town* townPtr;
 
