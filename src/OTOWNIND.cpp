@@ -280,6 +280,8 @@ int Town::form_new_nation()
 			break;
 	}
 
+	nation_array.update_statistic();
+
 	return nationRecno;
 }
 //----------- End of function Town::form_new_nation ---------//
