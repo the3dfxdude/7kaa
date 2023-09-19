@@ -1004,11 +1004,15 @@ int Misc::diagonal_distance(int x1, int y1, int x2, int y2)
 // <int> x2, y2 = the ending point of the diagonal line
 //
 // This function can be used for measuring distances between
-// two identically sized shapes. It should not be used when
-// measuring between two different (one odd) sized shapes and
-// the center being a simple integer (x1+x2)/2 for example.
-// For a more accurate measurement, use rects_distance().
+// two points in space. It can also be used to measure between
+// shapes, but it is unreliable if the shape has one dimension
+// size that is evenly divisible. Because the formula frequently
+// used to calculate the center of a shape is a simple (x1+x2)/2,
+// this means the center is often not precise in game logic.
 //
+// For a more accurate measurement, use rects_distance() as that
+// will pick a group of coordinates that represent a center, then
+// calculates a distance.
 int Misc::points_distance(int x1, int y1, int x2, int y2)
 {
 	int x = abs(x1-x2);
