@@ -2232,7 +2232,9 @@ void Town::think_migrate()
 		if( townPtr->population>=MAX_TOWN_POPULATION )
 			continue;
 
-		townDistance = misc.points_distance(center_x, center_y, townPtr->center_x, townPtr->center_y);
+		townDistance = misc.rects_distance(loc_x1, loc_y1, loc_x2, loc_y2,
+			townPtr->loc_x1, townPtr->loc_y1,
+			townPtr->loc_x2, townPtr->loc_y2);
 
 #ifndef ENABLE_LONG_DISTANCE_MIGRATION
 		if( townDistance > EFFECTIVE_TOWN_TOWN_DISTANCE )
@@ -3390,10 +3392,11 @@ void Town::setup_link()
 
 		townPtr = town_array[townRecno];
 
-		//------ check if the town is close enough to this firm -------//
+		//------ check if the town is close enough to this town -------//
 
-		if( misc.points_distance( townPtr->center_x, townPtr->center_y,
-			 center_x, center_y ) > EFFECTIVE_TOWN_TOWN_DISTANCE )
+		if( misc.rects_distance(townPtr->loc_x1, townPtr->loc_y1,
+			townPtr->loc_x2, townPtr->loc_y2,
+			loc_x1, loc_y1, loc_x2, loc_y2) > EFFECTIVE_TOWN_TOWN_DISTANCE )
 		{
 			continue;
 		}

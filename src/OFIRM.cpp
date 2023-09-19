@@ -1142,7 +1142,8 @@ int Firm::find_settle_town()
 		if( townPtr->nation_recno != nation_recno )
 			continue;
 
-		townDistance = misc.points_distance( townPtr->center_x, townPtr->center_y, center_x, center_y );
+		townDistance = misc.rects_distance(townPtr->loc_x1, townPtr->loc_y1, townPtr->loc_x2, townPtr->loc_y2,
+			loc_x1, loc_y1, loc_x2, loc_y2);
 
 		if( townDistance < minDistance )
 		{

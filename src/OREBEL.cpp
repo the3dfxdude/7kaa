@@ -749,8 +749,8 @@ int Rebel::think_capture_attack_town()
 		if( world.get_region_id(townPtr->loc_x1, townPtr->loc_y1) != curRegionId )
 			continue;
 
-		townDistance = misc.points_distance( leaderXLoc, leaderYLoc,
-							townPtr->center_x, townPtr->center_y );
+		townDistance = misc.rects_distance(leaderXLoc, leaderYLoc, leaderXLoc, leaderYLoc,
+			townPtr->loc_x1, townPtr->loc_y1, townPtr->loc_x2, townPtr->loc_y2);
 
 		if( townDistance < closestTownDistance )
 		{
