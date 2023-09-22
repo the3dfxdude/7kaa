@@ -128,7 +128,7 @@ enum { COMMAND_PLAYER=0, COMMAND_REMOTE=1, COMMAND_AI, COMMAND_AUTO };
 #define SPY_KILLED_REPUTATION_DECREASE		3
 
 #define MIN_RAW_RES_SITE		1
-#define MAX_RAW_RES_SITE		14
+#define MAX_RAW_RES_SITE		10
 
 //-----------------------------------------------//
 
