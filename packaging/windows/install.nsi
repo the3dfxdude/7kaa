@@ -55,8 +55,8 @@ SetCompressor /SOLID lzma
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_LICENSE "COPYING"
-  !insertmacro MUI_PAGE_LICENSE "COPYING-Music.txt"
+  ;!insertmacro MUI_PAGE_LICENSE "COPYING"
+  ;!insertmacro MUI_PAGE_LICENSE "COPYING-Music.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   

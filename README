@@ -3,6 +3,7 @@ Seven Kingdoms: Ancient Adversaries
 
 Release version 2.15.6
 Project website: www.7kfans.com
+Downloads and source repo: sourceforge.net/projects/skfans
 
 This is a GPL release of the Seven Kingdoms: Ancient Adversaries thanks to
 Enlight Software which granted the ability to license the game under a
@@ -13,6 +14,39 @@ of the game.
 
 Summary of changes from 2.15.5 to 2.15.6
 ---------
+* Fixed bugs related to rebelling
+* Improved AI on handling rebellions
+* Fixed several crash bugs
+* Fixed small graphic update bugs
+* Fixed bug when assigning to ship
+* Fixed AI declare war bug
+* Fixed AI give tribute bug
+* Greatly improved AI sea based missions
+* Improved AI on training and recruiting
+* Cleaned up some deinit code
+* Improved handling of town migration with workers
+* Improved AI to be move aggressive in attack missions
+* Improved validation of attack actions
+* Added display of the land mass size in the F10 menu
+* Enabled town peasant migration
+* Created button for markets to control stocking type -- thanks MicroVirus and
+   sraboy
+* Added Phoenix vision on fryhtan lairs
+* Improved AI at building harbors
+* Fixed bugs related to AI surrenders
+* Improved locale code
+* Made English the default language on Windows
+* Increased the max number of raw resource sites to 10
+* Fixed bug on trade ship docking and exiting
+* Reduced penalty on trade unit destruction
+* Improved distance calculating so placing buildings and towns on any side is
+   treated the same
+* Fixed some path finding issues
+* Enabled the ability for AI to scout the map
+* Fixed screen edge mouse handling bug
+* Fixed exploit when spying on an enemy nation report
+* Improved AI handling on granting money to towns and recruiting
+* Increased the speed of speed level 9
 
 
 System Requirements
@@ -41,7 +75,7 @@ configure their system -- you are expected to know how to use your tools.
 
 Required dependencies
 * GCC 4.6+ C++11 compliant compiler
-* SDL 2.0.8
+* SDL 2.24.0+
 * enet 1.3.xx Reliable UDP networking library
 * OpenAL-soft or equivalent driver
 
