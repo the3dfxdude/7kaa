@@ -22,9 +22,9 @@
 //Description : Locale Resources
 
 #include <stdlib.h>
+#include <locale.h>
 #ifdef ENABLE_NLS
 #include <libintl.h>
-#include <locale.h>
 #endif
 
 #include <ALL.h>
